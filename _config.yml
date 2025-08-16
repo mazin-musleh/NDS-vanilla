@@ -1,0 +1,35 @@
+title: هيئة الحكومة الرقمية
+description: هيئة الحكومة الرقمية، هي المرجع الوطني المختص بتنظيم أعمال الحكومة الرقمية في الجهات الحكومية؛ للوصول إلى حكومة رقمية استباقية ومُبادرة قادرة على تقديم خدمات ذات كفاءة عالية؛ لتحقيق التكامل في مجال الحكومة الرقمية بين كافة الجهات الحكومية.
+baseurl: ""
+url: ""
+
+# Brand Logo
+brandLogo: /assets/img/DGA-logo.svg
+headerBrandW: 132
+headerBrandH: 42
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+#theme: minima
+
+# Custom settings
+author: Mazin Musleh
+author_profile: https://www.linkedin.com/in/mazin-musleh/
+lang: ar
+dir: rtl
+
+# Plugins
+#plugins:
+  #- jekyll-feed
+  #- jekyll-sitemap
+plugins: []
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - .sass-cache
+  - .jekyll-cache

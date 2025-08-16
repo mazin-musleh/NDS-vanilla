@@ -1,0 +1,162 @@
+<nav class="nds-main-nav" id="ndsMainNav">
+    <div class="nds-nav-container nds-content-container">
+        <a href="{{ '/' | relative_url }}" class="nds-brand">
+            <img src="{{ site.brandLogo | relative_url }}" width="{{ site.headerBrandW }}" height="{{ site.headerBrandH }}" alt="{{ site.title }}">
+        </a>
+        <ul class="nds-nav-minimal">
+            <li class="nds-nav-item nds-dropdown iconOnly important hidden">
+                <a href="#" class="nds-nav-link" data-toggle="dropdown" title="قائمة مهمة">
+                    <i class="hgi hgi-stroke hgi-translation icon"></i>
+                    <span class="label">قائمة مهمة</span>
+                </a>
+                <div class="nds-dropdown-menu widthFit">
+                    <div class="nds-column">
+                        <a href="#" class="nds-dropdown-item">رابط</a>
+                        <a href="#" class="nds-dropdown-item">رابط</a>
+                        <a href="#" class="nds-dropdown-item">رابط</a>
+                        <a href="#" class="nds-dropdown-item">رابط</a>
+                    </div>
+                </div>
+            </li>
+            <li class="nds-mainNav-toggler nds-nav-item" data-toggle="navbar">
+                <span class="nds-nav-link">
+                    <i class="hgi hgi-stroke hgi-menu-01 icon"></i>
+                </span>
+            </li>
+        </ul>
+
+        <div class="nds-collapse" id="ndsNavCollapse">
+            <ul class="nds-nav-primary scrollH">
+                <li class="nds-nav-item">
+                    <a href="{{ '/' | relative_url }}" class="nds-nav-link">الرئيسية</a>
+                </li>
+                <li class="nds-nav-item nds-dropdown">
+                    <a href="#" class="nds-nav-link" data-toggle="dropdown">الخدمات</a>
+                    <div class="nds-dropdown-menu">
+                        <div class="nds-content-container nds-dropdown-columns nds-grid">
+                            <div class="nds-column">
+                                <div class="nds-dropdown-title">الكليات</div>
+                                <div class="nds-list">
+                                    <a href="#">كلية العلوم الإدارية والمالية</a>
+                                    <a href="#">كلية الحوسبة والمعلوماتية</a>
+                                    <a href="#">كلية العلوم الصحية</a>
+                                    <a href="#">كلية العلوم والدراسات النظرية</a>
+                                    <a href="#">الكلية التطبيقية</a>
+                                </div>
+                            </div>
+                            <div class="nds-column">
+                                <div class="nds-dropdown-title">الفروع</div>
+                                <div class="nds-list nds-multi-column-list">
+                                    <a href="#">الرياض</a>
+                                    <a href="#">الدمام</a>
+                                    <a href="#">جدة</a>
+                                    <a href="#">المدينة المنورة</a>
+                                    <a href="#">القصيم</a>
+                                    <a href="#">أبها</a>
+                                    <a href="#">تبوك</a>
+                                    <a href="#">جازان</a>
+                                    <a href="#">الأحساء</a>
+                                    <a href="#">نجران</a>
+                                    <a href="#">حائل</a>
+                                    <a href="#">الجوف</a>
+                                    <a href="#">ينبع</a>
+                                    <a href="#">العلا</a>
+                                    <a href="#">القراءات</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nds-nav-item nds-dropdown">
+                    <a href="#" class="nds-nav-link" data-toggle="dropdown">من نحن</a>
+                    <div class="nds-dropdown-menu">
+                        <div class="nds-content-container nds-dropdown-columns nds-rowList">
+                            <div class="nds-list">
+                                <a href="{{ '/about' | relative_url }}">عن الجامعة</a>
+                                <a href="#">الرؤية والرسالة</a>
+                                <a href="#">الأهداف</a>
+                                <a href="#">الهيكل التنظيمي</a>
+                                <a href="#">القيادات</a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nds-nav-item">
+                    <a href="{{ '/services' | relative_url }}" class="nds-nav-link">الخدمات</a>
+                </li>
+                <li class="nds-nav-item">
+                    <a href="{{ '/contact' | relative_url }}" class="nds-nav-link">اتصل بنا</a>
+                </li>
+                <li class="nds-nav-item showMore">
+                    <a href="#" class="nds-nav-link" title="أظهر المزيد">
+                        <i class="hgi hgi-stroke hgi-arrow-down-01 toggleArrow icon"></i>
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="nds-nav-secondary">
+                <li class="nds-nav-item CTA">
+                    <a href="https://design.dga.gov.sa/guidelines" class="nds-nav-link" title="الإرشادات">
+                        <span class="label">الإرشادات</span>
+                    </a>
+                </li>
+                <li class="nds-nav-item nds-dropdown iconOnly search">
+                    <button class="nds-nav-link" data-toggle="dropdown" title="البحث">
+                        <i class="hgi hgi-stroke hgi-search-01 icon"></i>
+                        <span class="label">البحث</span>
+                    </button>
+                    <div class="nds-dropdown-menu">
+                        <div class="nds-content-container">
+                            <div class="nds-search-box">
+                                <div class="nds-search-content">
+                                    <div class="nds-form-control">
+                                        <i class="hgi hgi-stroke hgi-search-01 icon"></i>
+                                        <input id="mainSearch" type="text" class="nds-search-input" name="search" placeholder="البحث...">
+                                        <div class="nds-form-action">
+                                            <button class="voiceInput"><i class="hgi hgi-stroke hgi-mic-01 icon"></i></button>
+                                            <button class="clear hidden"><i class="hgi hgi-stroke hgi-cancel-01 icon"></i></button>
+                                        </div>
+                                    </div>
+                                    <button class="nds-btn nds-btn-primary">بحث</button>
+                                </div>
+                                <span class="nds-dropdown-title">اقتراحات</span>
+                                <div class="nds-tags nds-autoFill" data-target="mainSearch">
+                                    <button class="nds-tag"><i class="hgi hgi-stroke hgi-rounded hgi-plus-sign"></i>القبول</button>
+                                    <button class="nds-tag"><i class="hgi hgi-stroke hgi-rounded hgi-plus-sign"></i>الرسوم الدراسية</button>
+                                    <button class="nds-tag"><i class="hgi hgi-stroke hgi-rounded hgi-plus-sign"></i>التقويم الأكاديمي</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nds-nav-item nds-dropdown iconOnly lang">
+                    <a href="#" class="nds-nav-link" data-toggle="dropdown" title="اللغة">
+                        <i class="hgi hgi-stroke hgi-translation icon"></i>
+                        <span class="label">English</span>
+                    </a>
+                    <div class="nds-dropdown-menu widthFit">
+                        <div class="nds-column">
+                            <a href="#" class="nds-dropdown-item">العربية</a>
+                            <a href="#" class="nds-dropdown-item">English</a>
+                            <a href="#" class="nds-dropdown-item">Français</a>
+                            <a href="#" class="nds-dropdown-item">Español</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="nds-nav-item nds-dropdown iconOnly login">
+                    <a href="#" class="nds-nav-link" data-toggle="dropdown" title="تسجيل الدخول">
+                        <i class="hgi hgi-stroke hgi-user icon"></i>
+                        <span class="label">تسجيل الدخول</span>
+                    </a>
+                    <div class="nds-dropdown-menu widthFit">
+                        <div class="nds-column">
+                            <a href="#" class="nds-dropdown-item">تسجيل الدخول</a>
+                            <a href="#" class="nds-dropdown-item">إنشاء حساب</a>
+                            <a href="#" class="nds-dropdown-item">نسيت كلمة المرور؟</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
