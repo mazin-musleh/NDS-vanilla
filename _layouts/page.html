@@ -1,0 +1,21 @@
+---
+layout: default
+---
+
+{% include hero.html hero_type="sub" %}
+
+<div class="contentLayout wSideMenu">
+    {% include sideMenu.html %}
+    
+    <div class="mainContent">
+        <article class="page-content">
+            <header class="page-header">
+                <h1>{{ page.title }}</h1>
+            </header>
+            
+            <div class="page-body">
+                {{ content }}
+            </div>
+        </article>
+    </div>
+</div>

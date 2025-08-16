@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: 'ar' }}" dir="{{ page.direction | default: 'rtl' }}">
+
+{% include head.html %}
+<body>
+    {% include topbar.html %}
+    {% include header.html %}
+    
+    <main>
+        {{ content }}
+    </main>
+    
+    {% include footer.html %}
+    
+    <!-- Scripts -->
+    <script defer src="{{ '/assets/js/nds-navController.js' | relative_url }}?ver=1.044"></script>
+    <script defer src="{{ '/assets/js/nds-extras.js' | relative_url }}?ver=1.044"></script>
+</body>
+</html>

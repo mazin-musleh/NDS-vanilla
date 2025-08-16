@@ -1,0 +1,70 @@
+{% assign hero_type = include.hero_type | default: 'main' %}
+{% if hero_type == 'sub' %}
+<section class="nds-hero-section sub" aria-label="قسم العرض الرئيسي"
+    style="--hero_image: url('{{ page.hero_image | default: '/assets/img/seugate-1.webp' }}');">
+    <div class="nds-heroContent nds-content-container">
+        <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
+            <ol class="nds-breadcrumb">
+                <li><a href="{{ '/' | relative_url }}">الرئيسية</a></li>
+                {% if page.breadcrumb %}
+                {% for crumb in page.breadcrumb %}
+                {% if forloop.last %}
+                <li aria-current="page">{{ crumb }}</li>
+                {% else %}
+                <li><a href="#">{{ crumb }}</a></li>
+                {% endif %}
+                {% endfor %}
+                {% else %}
+                <li aria-current="page">{{ page.title }}</li>
+                {% endif %}
+            </ol>
+        </nav>
+        <div class="nds-shareablePage">
+            <h1 class="nds-heroTitle">{{ page.hero_title | default: site.title }}</h1>
+            <div id="nds-sharePage">
+                <button id="nds-sharePageBtn" class="textIcon" aria-expanded="false">
+                    <i class="hgi hgi-stroke hgi-share-01 icon"></i>
+                    <span class="text">مشاركة الصفحة</span>
+                </button>
+                <ul id="nds-sharePage-dropdown" class="nds-sharePage-dropdown">
+                    <li class="textIcon share-x">
+                        <i class="hgi hgi-stroke hgi-new-twitter icon"></i>
+                        <span class="text">إكس</span>
+                    </li>
+                    <li class="textIcon share-linkedin">
+                        <i class="hgi hgi-stroke hgi-linkedin-02 icon"></i>
+                        <span class="text">لينكدإن</span>
+                    </li>
+                    <li class="textIcon share-whatsapp">
+                        <i class="hgi hgi-stroke hgi-whatsapp icon"></i>
+                        <span class="text">واتساب</span>
+                    </li>
+                    <li class="textIcon share-copy">
+                        <i class="hgi hgi-stroke hgi-link-04 icon"></i>
+                        <span class="text">نسخ الرابط</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+{% else %}
+<section class="nds-hero-section" aria-label="قسم العرض الرئيسي">
+    <div class="swiper nds-heroSwiper">
+        <div class="swiper-wrapper">
+            <div class="nds-hero-image-wrapper" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                <img src="{{ page.hero_image | default: '/assets/img/seugate-1.webp' }}" class="nds-hero-image" alt=""
+                    style="width: 100%; height: 100%; object-fit: cover; object-position: {{ page.hero_image_pos | default: '50% 50%' }}; display: block;"
+                    fetchpriority="high">
+            </div>
+            <div class="nds-heroContent nds-content-container" style="position: relative; z-index: 3;">
+                <h1 class="nds-heroTitle">{{ page.hero_title | default: site.title }}</h1>
+                <p class="nds-heroDesc">{{ page.hero_description | default: site.description }}</p>
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-prev d-none"></div>
+        <div class="swiper-button-next d-none"></div>
+    </div>
+</section>
+{% endif %}
