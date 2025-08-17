@@ -16,13 +16,19 @@
     white-space: nowrap;
     position: relative;
     box-sizing: border-box;
-    transition: all 0.2s ease;
     vertical-align: middle;
 }
 
 .nds-btn:focus {
-    outline: 2px solid var(--colors-primary-sa-flag-600-primary);
-    outline-offset: 2px;
+    outline: 2px solid var(--colors-base-black) !important;
+    outline-offset: -2px !important;
+    box-shadow: inset 0 0 0 4px var(--colors-base-white) !important;
+}
+
+.nds-btn:active {
+    outline: 2px solid var(--colors-base-black) !important;
+    outline-offset: -2px !important;
+    box-shadow: inset 0 0 0 4px var(--colors-base-white) !important;
 }
 
 .nds-btn:disabled {
