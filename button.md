@@ -585,12 +585,12 @@ document.addEventListener('DOMContentLoaded', function() {
         .active-demo.nds-btn-primary { background-color: var(--button-background-primary-pressed); border-color: var(--button-background-primary-pressed); }
         .hover-demo.nds-btn-neutral { background-color: var(--button-background-black-hovered); border-color: var(--button-background-black-hovered); }
         .active-demo.nds-btn-neutral { background-color: var(--button-background-black-pressed); border-color: var(--button-background-black-pressed); }
-        .hover-demo.nds-btn-secondary-solid { background-color: var(--button-background-neutral-hovered); border-color: var(--border-neutral-secondary); }
+        .hover-demo.nds-btn-secondary-solid { background-color: var(--button-background-neutral-hovered); border-color: var(--button-background-neutral-hovered); }
         .active-demo.nds-btn-secondary-solid { background-color: var(--button-background-neutral-pressed); border-color: var(--button-background-neutral-pressed); }
-        .hover-demo.nds-btn-secondary-outline { background-color: var(--button-background-transparent-hovered); border-color: var(--border-neutral-secondary); }
-        .active-demo.nds-btn-secondary-outline { background-color: var(--button-background-transparent-pressed); border-color: var(--button-background-transparent-pressed); }
-        .hover-demo.nds-btn-subtle { background-color: var(--button-background-neutral-hovered); }
-        .active-demo.nds-btn-subtle { background-color: var(--button-background-transparent-pressed); }
+        .hover-demo.nds-btn-secondary-outline { background-color: var(--button-background-neutral-default); border-color: var(--border-neutral-secondary); }
+        .active-demo.nds-btn-secondary-outline { background-color: var(--button-background-neutral-pressed); border-color: var(--border-neutral-primary); }
+        .hover-demo.nds-btn-subtle { background-color: var(--button-background-neutral-default); border-color: var(--button-background-neutral-default); }
+        .active-demo.nds-btn-subtle { background-color: var(--button-background-neutral-pressed); border-color: var(--border-neutral-secondary); }
         .hover-demo.nds-btn-transparent { background-color: var(--button-background-transparent-hovered); color: var(--button-label-transparent-hovered-on-color); }
         .active-demo.nds-btn-transparent { background-color: var(--button-background-transparent-pressed); color: var(--button-label-transparent-pressed-on-color); }
         .nds-btn-active { background-color: var(--button-background-primary-selected) !important; color: var(--text-oncolor-primary) !important; border-color: var(--button-background-primary-selected) !important; }
