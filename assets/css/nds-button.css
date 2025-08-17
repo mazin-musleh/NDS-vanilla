@@ -1,4 +1,4 @@
-/* ===== NDS BUTTON COMPONENT ===== */
+/* ===== NDS BUTTON COMPONENT - FIGMA SPECIFICATIONS ===== */
 
 /* Base Button Styles */
 .nds-btn {
@@ -16,7 +16,8 @@
     white-space: nowrap;
     position: relative;
     box-sizing: border-box;
-    transition: none;
+    transition: all 0.2s ease;
+    vertical-align: middle;
 }
 
 .nds-btn:focus {
@@ -59,9 +60,7 @@
     line-height: 1.875rem; /* 30px */
 }
 
-/* ===== BUTTON TYPES ===== */
-
-/* 1. Primary Button */
+/* ===== PRIMARY BUTTON (Green) ===== */
 .nds-btn-primary {
     background-color: var(--colors-primary-sa-flag-600-primary);
     color: var(--text-oncolor-primary);
@@ -86,7 +85,7 @@
     border-color: var(--background-disabled);
 }
 
-/* 2. Neutral Button */
+/* ===== NEUTRAL BUTTON (Dark Gray) ===== */
 .nds-btn-neutral {
     background-color: var(--colors-neutral-800);
     color: var(--text-oncolor-primary);
@@ -111,7 +110,7 @@
     border-color: var(--background-disabled);
 }
 
-/* 3. Secondary Solid Button */
+/* ===== SECONDARY SOLID BUTTON (Light Gray) ===== */
 .nds-btn-secondary-solid {
     background-color: var(--background-neutral-100);
     color: var(--text-default);
@@ -136,7 +135,7 @@
     border-color: var(--border-disabled);
 }
 
-/* 4. Secondary Outline Button */
+/* ===== SECONDARY OUTLINE BUTTON ===== */
 .nds-btn-secondary-outline {
     background-color: transparent;
     color: var(--text-default);
@@ -161,7 +160,7 @@
     border-color: var(--border-disabled);
 }
 
-/* 5. Subtle Button */
+/* ===== SUBTLE BUTTON ===== */
 .nds-btn-subtle {
     background-color: transparent;
     color: var(--text-default);
@@ -186,7 +185,7 @@
     border-color: transparent;
 }
 
-/* 6. Transparent Button */
+/* ===== TRANSPARENT BUTTON ===== */
 .nds-btn-transparent {
     background-color: transparent;
     color: var(--colors-primary-sa-flag-600-primary);
@@ -211,9 +210,7 @@
     border-color: transparent;
 }
 
-/* ===== BUTTON OPTIONS ===== */
-
-/* Destructive Variants */
+/* ===== DESTRUCTIVE VARIANTS (Red) ===== */
 .nds-btn-destructive.nds-btn-primary {
     background-color: var(--colors-red-600);
     border-color: var(--colors-red-600);
@@ -260,7 +257,7 @@
     color: var(--colors-red-800);
 }
 
-/* On-color Variants (for dark backgrounds) */
+/* ===== ON-COLOR VARIANTS (For Dark Backgrounds) ===== */
 .nds-btn-oncolor.nds-btn-primary {
     background-color: var(--colors-base-white);
     color: var(--colors-primary-sa-flag-600-primary);
@@ -305,7 +302,7 @@
     background-color: var(--colors-alpha-alpha-white-20);
 }
 
-/* Icon-only Buttons */
+/* ===== ICON-ONLY BUTTONS ===== */
 .nds-btn-icon-only {
     aspect-ratio: 1;
     padding: 0;
@@ -331,17 +328,16 @@
     padding: 0;
 }
 
-/* Lead Icon (icon on the left) */
+/* ===== ICON POSITIONING ===== */
 .nds-btn-lead-icon {
     flex-direction: row;
 }
 
-/* Trail Icon (icon on the right) */
 .nds-btn-trail-icon {
     flex-direction: row-reverse;
 }
 
-/* Button Icons */
+/* ===== BUTTON ICONS ===== */
 .nds-btn i.hgi {
     font-size: 1.2em;
     flex-shrink: 0;
@@ -359,12 +355,12 @@
     font-size: 1.4em;
 }
 
-/* Full Width Button */
+/* ===== FULL WIDTH BUTTON ===== */
 .nds-btn-full {
     width: 100%;
 }
 
-/* Button Groups */
+/* ===== BUTTON GROUPS ===== */
 .nds-btn-group {
     display: inline-flex;
     border-radius: var(--radius-md);
@@ -396,7 +392,7 @@
     border-right-width: 1px;
 }
 
-/* Loading State */
+/* ===== LOADING STATE ===== */
 .nds-btn-loading {
     position: relative;
     pointer-events: none;
@@ -437,10 +433,10 @@
     100% { transform: rotate(360deg); }
 }
 
-/* ===== BUTTON SHOWCASE STYLES ===== */
+/* ===== SHOWCASE STYLES ===== */
 .button-showcase {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: var(--spacing-4xl);
     margin-top: var(--spacing-4xl);
 }
@@ -458,7 +454,7 @@
 
 .button-label {
     font-size: 0.875rem;
-    font-weight: 500;
+    font-weight: 600;
     color: var(--text-secondary-paragraph);
     text-align: center;
     margin-bottom: var(--spacing-sm);
@@ -495,6 +491,19 @@
     margin: var(--spacing-lg) 0;
 }
 
+/* State demonstration styles */
+.state-demo {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-md);
+    width: 100%;
+    max-width: 600px;
+}
+
+.state-demo .nds-btn {
+    min-width: 120px;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .button-showcase {
@@ -509,6 +518,10 @@
     
     .button-grid {
         grid-template-columns: 1fr;
+    }
+    
+    .state-demo {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
