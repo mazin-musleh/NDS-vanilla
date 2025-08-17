@@ -144,20 +144,20 @@
 
 .nds-btn-secondary-solid:hover {
     background-color: var(--button-background-neutral-hovered);
-    border-color: var(--border-neutral-primary);
+    border-color: var(--button-background-neutral-hovered);
     color: var(--text-default);
 }
 
 .nds-btn-secondary-solid.active,
 .nds-btn-secondary-solid.selected {
     background-color: var(--button-background-neutral-selected);
-    border-color: var(--border-neutral-secondary);
+    border-color: var(--button-background-neutral-selected);
     color: var(--text-default);
 }
 
 .nds-btn-secondary-solid:active {
     background-color: var(--button-background-neutral-pressed);
-    border-color: var(--border-neutral-primary);
+    border-color: var(--button-background-neutral-pressed);
     color: var(--text-default);
 }
 
