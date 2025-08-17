@@ -654,28 +654,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Copy to clipboard functionality
    window.copyButtonHTML = function(button) {
         const buttonCard = button.closest('.button-card');
-        const targetButton = buttonCard.querySelector('button:not(.copy-btn)');
-        const targetGroup = buttonCard.querySelector('.nds-btn-group');
+        const codeElement = buttonCard.querySelector('code');
         
-        let htmlToCopy = '';
-        
-        if (targetGroup) {
-            // For button groups, copy the entire group
-            htmlToCopy = targetGroup.outerHTML;
-        } else if (targetButton) {
-            // For individual buttons, copy the button HTML
-            htmlToCopy = targetButton.outerHTML;
-        }
-        
-        // Clean up the HTML (remove demo classes)
-        htmlToCopy = htmlToCopy
-            .replace(/\s+class="([^"]*?)(?:\s+(?:hover-demo|active-demo|nds-btn-active))([^"]*?)"/g, ' class="$1$2"')
-            .replace(/\s+class="([^"]*?)(?:hover-demo|active-demo|nds-btn-active)\s*([^"]*?)"/g, ' class="$1$2"')
-            .replace(/\s+class="(?:hover-demo|active-demo|nds-btn-active)\s*([^"]*?)"/g, ' class="$1"')
-            .replace(/\s+class="(?:hover-demo|active-demo|nds-btn-active)"/g, '')
-            .replace(/\s+class=""/g, '')
-            .replace(/\s+/g, ' ')
-            .trim();
+        // Get the clean HTML from the code element
+        const htmlToCopy = codeElement.textContent;
         
         navigator.clipboard.writeText(htmlToCopy).then(function() {
             const originalIcon = button.innerHTML;
