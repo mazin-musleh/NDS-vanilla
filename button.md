@@ -238,7 +238,7 @@ direction: rtl
                     <div class="button-classes">
                         <div class="usage-header">
                             <span>Usage</span>
-                            <button class="copy-btn" onclick="copyButtonHTML(this)" data-button-selector=".nds-btn.nds-btn-transparent.nds-btn-destructive.nds-btn-md">
+                            <button class="copy-btn" onclick="copyButtonHTML(this)">
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
@@ -251,11 +251,11 @@ direction: rtl
                     <div class="button-classes">
                         <div class="usage-header">
                             <span>Usage</span>
-                            <button class="copy-btn" onclick="copyButtonHTML(this)" data-button-selector=".nds-btn.nds-btn-secondary-solid.nds-btn-destructive.nds-btn-md">
+                            <button class="copy-btn" onclick="copyButtonHTML(this)">
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
-                        <code><button class="nds-btn nds-btn-secondary-solid nds-btn-destructive nds-btn-md">Delete Account</button></code>
+                        <code>&lt;button class="nds-btn nds-btn-secondary-solid nds-btn-destructive nds-btn-md"&gt;Delete Account&lt;/button&gt;</code>
                     </div>
                 </div>
                 <div class="button-card">
@@ -264,11 +264,11 @@ direction: rtl
                     <div class="button-classes">
                         <div class="usage-header">
                             <span>Usage</span>
-                            <button class="copy-btn" onclick="copyButtonHTML(this)" data-button-selector=".nds-btn.nds-btn-subtle.nds-btn-destructive.nds-btn-md">
+                            <button class="copy-btn" onclick="copyButtonHTML(this)">
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
-                        <code><button class="nds-btn nds-btn-subtle nds-btn-destructive nds-btn-md">Clear Data</button></code>
+                        <code>&lt;button class="nds-btn nds-btn-subtle nds-btn-destructive nds-btn-md"&gt;Clear Data&lt;/button&gt;</code>
                     </div>
                 </div>
             </div>
