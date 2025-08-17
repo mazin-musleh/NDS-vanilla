@@ -1252,60 +1252,6 @@ html[dir="ltr"] .nds-breadcrumb li:not(:last-child)::after {
     animation: slideDown var(--nds-transition) forwards;
 }
 
-.nds-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--buttons-sm-padding, 8px) var(--buttons-lg-padding, 16px);
-    gap: var(--buttons-md-gap, 4px);
-    border-radius: var(--radius-sm);
-    font-size: var(--nds-text-lg-FS);
-    cursor: pointer;
-    height: 40px;
-}
-
-.nds-btn-primary {
-    background-color: var(--button-background-primary-default);
-    color: var(--text-oncolor-primary);
-    border: 1px solid var(--button-background-primary-default);
-}
-
-.nds-btn-primary:hover {
-    background-color: var(--button-background-primary-hovered);
-}
-
-.nds-btn-primary:active {
-    background-color: var(--button-background-primary-pressed);
-}
-
-.nds-btn-secondary {
-    background-color: var(--button-background-neutral-primary);
-    color: var(--text-oncolor-neutral);
-    border: 1px solid var(--border-neutral-primary);
-}
-
-.nds-btn-secondary:hover {
-    background-color: var(--button-background-neutral-hovered);
-}
-
-.nds-btn-secondary:active {
-    background-color: var(--button-background-neutral-pressed);
-}
-
-.nds-btn-neutral {
-    background-color: var(--button-background-black-default);
-    color: var(--text-oncolor-primary);
-    border: 1px solid var(--border-black-default);
-}
-
-.nds-btn-neutral:hover {
-    background-color: var(--button-background-black-hovered);
-}
-
-.nds-btn-neutral:active {
-    background-color: var(--button-background-black-pressed);
-}
-
 .nds-hero-section .nds-heroContent .nds-shareablePage {
     display: flex;
     justify-content: space-between;
