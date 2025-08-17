@@ -297,17 +297,21 @@
 }
 
 .nds-btn-destructive.nds-btn-transparent {
+    background-color: var(--button-background-transparent-default);
     color: var(--button-background-danger-primary-default);
+    border-color: var(--button-background-transparent-default);
 }
 
 .nds-btn-destructive.nds-btn-transparent:hover {
-    background-color: var(--button-background-danger-secondary-default);
+    background-color: var(--button-background-transparent-hovered);
     color: var(--button-background-danger-primary-hovered);
+    border-color: var(--button-background-transparent-default);
 }
 
 .nds-btn-destructive.nds-btn-transparent:active {
-    background-color: var(--button-background-danger-secondary-hovered);
+    background-color: var(--button-background-transparent-pressed);
     color: var(--button-background-danger-primary-pressed);
+    border-color: var(--button-background-transparent-default);
 }
 
 /* ===== DESTRUCTIVE SECONDARY SOLID BUTTON ===== */
