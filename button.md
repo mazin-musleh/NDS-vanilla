@@ -557,7 +557,7 @@ document.addEventListener('DOMContentLoaded', function() {
        .button-classes code {
             display: block;
             background-color: var(--background-white);
-            color: var(--colors-red-600);
+            color: var(--text-default);
             font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
             font-size: 0.75rem;
             line-height: 1.4;
@@ -565,7 +565,7 @@ document.addEventListener('DOMContentLoaded', function() {
             border-radius: var(--radius-xs);
             border: 1px solid var(--border-neutral-tertiary);
             overflow-x: auto;
-            white-space: nowrap;
+            direction: ltr;
         }
         
         .copy-btn {
