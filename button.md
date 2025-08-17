@@ -280,19 +280,92 @@ direction: rtl
 <section id="buttonOnColor" class="content-section">
     <div class="container">
         <div class="sectionHead">
-            <h2 class="title">أزرار على الخلفيات الملونة</h2>
-            <p class="desc">أزرار مصممة للاستخدام على الخلفيات الداكنة</p>
+            <h2 class="title">جميع أنواع الأزرار على الخلفيات الملونة</h2>
+            <p class="desc">عرض شامل لجميع أنواع الأزرار بحالاتها المختلفة على الخلفيات الداكنة</p>
         </div>
         <div class="sectionContent">
             <div class="dark-bg">
-                <div class="button-showcase" style="grid-template-columns: repeat(3, 1fr);">
+                <!-- Neutral Buttons -->
+                <div class="button-variant-section">
+                    <h3 class="variant-title">Neutral</h3>
+                    <div class="button-state-row">
+                        <button class="nds-btn nds-btn-neutral nds-btn-md">Default</button>
+                        <button class="nds-btn nds-btn-neutral nds-btn-md hover-demo">Hover</button>
+                        <button class="nds-btn nds-btn-neutral nds-btn-md active-demo">Active</button>
+                        <button class="nds-btn nds-btn-neutral nds-btn-md nds-btn-active">Selected</button>
+                        <button class="nds-btn nds-btn-neutral nds-btn-md" disabled>Disabled</button>
+                    </div>
+                </div>
+
+                <!-- Primary On-Color Buttons -->
+                <div class="button-variant-section">
+                    <h3 class="variant-title">Primary</h3>
+                    <div class="button-state-row">
+                        <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-md">Default</button>
+                        <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-md hover-demo">Hover</button>
+                        <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-md active-demo">Active</button>
+                        <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-md nds-btn-active">Selected</button>
+                        <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-md" disabled>Disabled</button>
+                    </div>
+                </div>
+
+                <!-- Secondary Solid On-Color Buttons -->
+                <div class="button-variant-section">
+                    <h3 class="variant-title">Secondary-Solid</h3>
+                    <div class="button-state-row">
+                        <button class="nds-btn nds-btn-secondary-solid nds-btn-oncolor nds-btn-md">Default</button>
+                        <button class="nds-btn nds-btn-secondary-solid nds-btn-oncolor nds-btn-md hover-demo">Hover</button>
+                        <button class="nds-btn nds-btn-secondary-solid nds-btn-oncolor nds-btn-md active-demo">Active</button>
+                        <button class="nds-btn nds-btn-secondary-solid nds-btn-oncolor nds-btn-md nds-btn-active">Selected</button>
+                        <button class="nds-btn nds-btn-secondary-solid nds-btn-oncolor nds-btn-md" disabled>Disabled</button>
+                    </div>
+                </div>
+
+                <!-- Secondary Outline On-Color Buttons -->
+                <div class="button-variant-section">
+                    <h3 class="variant-title">Secondary-Outline</h3>
+                    <div class="button-state-row">
+                        <button class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-md">Default</button>
+                        <button class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-md hover-demo">Hover</button>
+                        <button class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-md active-demo">Active</button>
+                        <button class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-md nds-btn-active">Selected</button>
+                        <button class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-md" disabled>Disabled</button>
+                    </div>
+                </div>
+
+                <!-- Subtle On-Color Buttons -->
+                <div class="button-variant-section">
+                    <h3 class="variant-title">Subtle</h3>
+                    <div class="button-state-row">
+                        <button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-md">Default</button>
+                        <button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-md hover-demo">Hover</button>
+                        <button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-md active-demo">Active</button>
+                        <button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-md nds-btn-active">Selected</button>
+                        <button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-md" disabled>Disabled</button>
+                    </div>
+                </div>
+
+                <!-- Transparent On-Color Buttons -->
+                <div class="button-variant-section">
+                    <h3 class="variant-title">Transparent</h3>
+                    <div class="button-state-row">
+                        <button class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-md">Default</button>
+                        <button class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-md hover-demo">Hover</button>
+                        <button class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-md active-demo">Active</button>
+                        <button class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-md nds-btn-active">Selected</button>
+                        <button class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-md" disabled>Disabled</button>
+                    </div>
+                </div>
+
+                <!-- Usage Examples -->
+                <div class="button-showcase" style="grid-template-columns: repeat(3, 1fr); margin-top: var(--spacing-4xl);">
                     <div class="button-card" style="background: transparent; border: 1px solid rgba(255,255,255,0.2);">
                         <div class="button-label" style="color: white;">On-color Primary</div>
                         <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-md">Primary Button</button>
                         <div class="button-classes">
                             <div class="usage-header">
                                 <span>Usage</span>
-                                <button class="copy-btn" onclick="copyButtonHTML(this)" data-button-selector=".nds-btn.nds-btn-primary.nds-btn-oncolor.nds-btn-md">
+                                <button class="copy-btn" onclick="copyButtonHTML(this)">
                                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                                 </button>
                             </div>
@@ -305,7 +378,7 @@ direction: rtl
                         <div class="button-classes">
                             <div class="usage-header">
                                 <span>Usage</span>
-                                <button class="copy-btn" onclick="copyButtonHTML(this)" data-button-selector=".nds-btn.nds-btn-secondary-outline.nds-btn-oncolor.nds-btn-md">
+                                <button class="copy-btn" onclick="copyButtonHTML(this)">
                                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                                 </button>
                             </div>
@@ -318,7 +391,7 @@ direction: rtl
                         <div class="button-classes">
                             <div class="usage-header">
                                 <span>Usage</span>
-                                <button class="copy-btn" onclick="copyButtonHTML(this)" data-button-selector=".nds-btn.nds-btn-transparent.nds-btn-oncolor.nds-btn-md">
+                                <button class="copy-btn" onclick="copyButtonHTML(this)">
                                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                                 </button>
                             </div>
@@ -600,6 +673,36 @@ document.addEventListener('DOMContentLoaded', function() {
             background-color: var(--colors-green-600);
             color: var(--text-oncolor-primary);
             border-color: var(--colors-green-600);
+        }
+        
+        .button-variant-section {
+            margin-bottom: var(--spacing-4xl);
+        }
+        
+        .variant-title {
+            color: var(--text-oncolor-primary);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-lg);
+            text-align: left;
+        }
+        
+        .button-state-row {
+            display: flex;
+            gap: var(--spacing-lg);
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        @media (max-width: 768px) {
+            .button-state-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .button-state-row .nds-btn {
+                width: 100%;
+            }
         }
     `;
     document.head.appendChild(style);
