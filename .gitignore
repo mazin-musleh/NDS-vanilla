@@ -33,3 +33,4 @@ Desktop.ini
 # IDE
 .vscode/
 .idea/
+.env
