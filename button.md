@@ -91,8 +91,8 @@ direction: rtl
                     <div class="button-label">Primary Button States</div>
                     <div class="state-demo" style="grid-template-columns: repeat(4, 1fr);">
                         <button class="nds-btn nds-btn-primary nds-btn-md">Default</button>
-                        <button class="nds-btn nds-btn-primary nds-btn-md" style="background-color: var(--colors-primary-sa-flag-700); border-color: var(--colors-primary-sa-flag-700);">Hover</button>
-                        <button class="nds-btn nds-btn-primary nds-btn-md" style="background-color: var(--colors-primary-sa-flag-800); border-color: var(--colors-primary-sa-flag-800);">Active</button>
+                        <button class="nds-btn nds-btn-primary nds-btn-md hover-demo">Hover</button>
+                        <button class="nds-btn nds-btn-primary nds-btn-md active-demo">Active</button>
                         <button class="nds-btn nds-btn-primary nds-btn-md" disabled>Disabled</button>
                     </div>
                 </div>
@@ -102,8 +102,8 @@ direction: rtl
                     <div class="button-label">Neutral Button States</div>
                     <div class="state-demo" style="grid-template-columns: repeat(4, 1fr);">
                         <button class="nds-btn nds-btn-neutral nds-btn-md">Default</button>
-                        <button class="nds-btn nds-btn-neutral nds-btn-md" style="background-color: var(--colors-neutral-900); border-color: var(--colors-neutral-900);">Hover</button>
-                        <button class="nds-btn nds-btn-neutral nds-btn-md" style="background-color: var(--colors-neutral-950); border-color: var(--colors-neutral-950);">Active</button>
+                        <button class="nds-btn nds-btn-neutral nds-btn-md hover-demo">Hover</button>
+                        <button class="nds-btn nds-btn-neutral nds-btn-md active-demo">Active</button>
                         <button class="nds-btn nds-btn-neutral nds-btn-md" disabled>Disabled</button>
                     </div>
                 </div>
@@ -113,8 +113,8 @@ direction: rtl
                     <div class="button-label">Secondary Outline States</div>
                     <div class="state-demo" style="grid-template-columns: repeat(4, 1fr);">
                         <button class="nds-btn nds-btn-secondary-outline nds-btn-md">Default</button>
-                        <button class="nds-btn nds-btn-secondary-outline nds-btn-md" style="background-color: var(--colors-neutral-50); border-color: var(--border-neutral-secondary);">Hover</button>
-                        <button class="nds-btn nds-btn-secondary-outline nds-btn-md" style="background-color: var(--colors-neutral-100); border-color: var(--colors-neutral-400);">Active</button>
+                        <button class="nds-btn nds-btn-secondary-outline nds-btn-md hover-demo">Hover</button>
+                        <button class="nds-btn nds-btn-secondary-outline nds-btn-md active-demo">Active</button>
                         <button class="nds-btn nds-btn-secondary-outline nds-btn-md" disabled>Disabled</button>
                     </div>
                 </div>
@@ -124,8 +124,8 @@ direction: rtl
                     <div class="button-label">Transparent Button States</div>
                     <div class="state-demo" style="grid-template-columns: repeat(4, 1fr);">
                         <button class="nds-btn nds-btn-transparent nds-btn-md">Default</button>
-                        <button class="nds-btn nds-btn-transparent nds-btn-md" style="background-color: var(--colors-primary-sa-flag-50); color: var(--colors-primary-sa-flag-700);">Hover</button>
-                        <button class="nds-btn nds-btn-transparent nds-btn-md" style="background-color: var(--colors-primary-sa-flag-100); color: var(--colors-primary-sa-flag-800);">Active</button>
+                        <button class="nds-btn nds-btn-transparent nds-btn-md hover-demo">Hover</button>
+                        <button class="nds-btn nds-btn-transparent nds-btn-md active-demo">Active</button>
                         <button class="nds-btn nds-btn-transparent nds-btn-md" disabled>Disabled</button>
                     </div>
                 </div>
@@ -200,7 +200,7 @@ direction: rtl
                 <!-- Lead Icon -->
                 <div class="button-card">
                     <div class="button-label">Lead Icon (Icon + Text)</div>
-                    <button class="nds-btn nds-btn-primary nds-btn-lead-icon nds-btn-md">
+                    <button class="nds-btn nds-btn-primary nds-btn-md">
                         <i class="hgi hgi-stroke hgi-plus-sign"></i>
                         Add Item
                     </button>
@@ -209,9 +209,9 @@ direction: rtl
                 <!-- Trail Icon -->
                 <div class="button-card">
                     <div class="button-label">Trail Icon (Text + Icon)</div>
-                    <button class="nds-btn nds-btn-secondary-solid nds-btn-trail-icon nds-btn-md">
-                        Download
+                    <button class="nds-btn nds-btn-secondary-solid nds-btn-md nds-btn-trail-icon">
                         <i class="hgi hgi-stroke hgi-download-01"></i>
+                        Download
                     </button>
                 </div>
                 
@@ -266,7 +266,7 @@ direction: rtl
                     <div class="button-label">Button Group - Secondary</div>
                     <div class="nds-btn-group">
                         <button class="nds-btn nds-btn-secondary-solid nds-btn-md">First</button>
-                        <button class="nds-btn nds-btn-secondary-solid nds-btn-md" style="background-color: var(--colors-primary-sa-flag-600-primary); color: var(--text-oncolor-primary); border-color: var(--colors-primary-sa-flag-600-primary);">Second</button>
+                        <button class="nds-btn nds-btn-secondary-solid nds-btn-md nds-btn-active">Second</button>
                         <button class="nds-btn nds-btn-secondary-solid nds-btn-md">Third</button>
                     </div>
                 </div>
@@ -308,6 +308,21 @@ direction: rtl
 <script>
 // Button interaction functionality
 document.addEventListener('DOMContentLoaded', function() {
+    // Add CSS for demo states
+    const style = document.createElement('style');
+    style.textContent = `
+        .hover-demo.nds-btn-primary { background-color: var(--colors-primary-sa-flag-700); border-color: var(--colors-primary-sa-flag-700); }
+        .active-demo.nds-btn-primary { background-color: var(--colors-primary-sa-flag-800); border-color: var(--colors-primary-sa-flag-800); }
+        .hover-demo.nds-btn-neutral { background-color: var(--colors-neutral-900); border-color: var(--colors-neutral-900); }
+        .active-demo.nds-btn-neutral { background-color: var(--colors-neutral-950); border-color: var(--colors-neutral-950); }
+        .hover-demo.nds-btn-secondary-outline { background-color: var(--colors-neutral-50); border-color: var(--border-neutral-secondary); }
+        .active-demo.nds-btn-secondary-outline { background-color: var(--colors-neutral-100); border-color: var(--colors-neutral-400); }
+        .hover-demo.nds-btn-transparent { background-color: var(--colors-primary-sa-flag-50); color: var(--colors-primary-sa-flag-700); }
+        .active-demo.nds-btn-transparent { background-color: var(--colors-primary-sa-flag-100); color: var(--colors-primary-sa-flag-800); }
+        .nds-btn-active { background-color: var(--colors-primary-sa-flag-600-primary) !important; color: var(--text-oncolor-primary) !important; border-color: var(--colors-primary-sa-flag-600-primary) !important; }
+    `;
+    document.head.appendChild(style);
+    
     // Loading button demo
     const loadingButtons = document.querySelectorAll('.nds-btn-loading');
     loadingButtons.forEach(button => {
@@ -327,15 +342,11 @@ document.addEventListener('DOMContentLoaded', function() {
             button.addEventListener('click', function() {
                 // Remove active state from all buttons in group
                 buttons.forEach(btn => {
-                    btn.style.backgroundColor = '';
-                    btn.style.color = '';
-                    btn.style.borderColor = '';
+                    btn.classList.remove('nds-btn-active');
                 });
                 
                 // Add active state to clicked button
-                this.style.backgroundColor = 'var(--colors-primary-sa-flag-600-primary)';
-                this.style.color = 'var(--text-oncolor-primary)';
-                this.style.borderColor = 'var(--colors-primary-sa-flag-600-primary)';
+                this.classList.add('nds-btn-active');
             });
         });
     });
