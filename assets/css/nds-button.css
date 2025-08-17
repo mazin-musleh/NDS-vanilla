@@ -310,6 +310,44 @@
     color: var(--button-background-danger-primary-pressed);
 }
 
+/* ===== DESTRUCTIVE SECONDARY SOLID BUTTON ===== */
+.nds-btn-destructive.nds-btn-secondary-solid {
+    background-color: var(--button-background-danger-secondary-default);
+    color: var(--button-background-danger-primary-default);
+    border-color: var(--button-background-danger-secondary-default);
+}
+
+.nds-btn-destructive.nds-btn-secondary-solid:hover {
+    background-color: var(--button-background-danger-secondary-hovered);
+    color: var(--button-background-danger-primary-hovered);
+    border-color: var(--button-background-danger-secondary-hovered);
+}
+
+.nds-btn-destructive.nds-btn-secondary-solid:active {
+    background-color: var(--button-background-danger-secondary-pressed);
+    color: var(--button-background-danger-primary-pressed);
+    border-color: var(--button-background-danger-secondary-pressed);
+}
+
+/* ===== DESTRUCTIVE SUBTLE BUTTON ===== */
+.nds-btn-destructive.nds-btn-subtle {
+    background-color: var(--button-background-transparent-default);
+    color: var(--button-background-danger-primary-default);
+    border-color: var(--button-background-transparent-default);
+}
+
+.nds-btn-destructive.nds-btn-subtle:hover {
+    background-color: var(--button-background-danger-secondary-default);
+    color: var(--button-background-danger-primary-hovered);
+    border-color: var(--button-background-danger-secondary-default);
+}
+
+.nds-btn-destructive.nds-btn-subtle:active {
+    background-color: var(--button-background-danger-secondary-hovered);
+    color: var(--button-background-danger-primary-pressed);
+    border-color: var(--button-background-danger-secondary-hovered);
+}
+
 /* ===== ON-COLOR VARIANTS (For Dark Backgrounds) ===== */
 .nds-btn-oncolor.nds-btn-primary {
     background-color: var(--button-background-oncolor-default);

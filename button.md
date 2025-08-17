@@ -245,6 +245,32 @@ direction: rtl
                         <code>&lt;button class="nds-btn nds-btn-transparent nds-btn-destructive nds-btn-md"&gt;Cancel Button&lt;/button&gt;</code>
                     </div>
                 </div>
+                <div class="button-card">
+                    <div class="button-label">Destructive Secondary Solid</div>
+                    <button class="nds-btn nds-btn-secondary-solid nds-btn-destructive nds-btn-md">Delete Account</button>
+                    <div class="button-classes">
+                        <div class="usage-header">
+                            <span>Usage</span>
+                            <button class="copy-btn" onclick="copyButtonHTML(this)" data-button-selector=".nds-btn.nds-btn-secondary-solid.nds-btn-destructive.nds-btn-md">
+                                <i class="hgi hgi-stroke hgi-copy-01"></i>
+                            </button>
+                        </div>
+                        <code><button class="nds-btn nds-btn-secondary-solid nds-btn-destructive nds-btn-md">Delete Account</button></code>
+                    </div>
+                </div>
+                <div class="button-card">
+                    <div class="button-label">Destructive Subtle</div>
+                    <button class="nds-btn nds-btn-subtle nds-btn-destructive nds-btn-md">Clear Data</button>
+                    <div class="button-classes">
+                        <div class="usage-header">
+                            <span>Usage</span>
+                            <button class="copy-btn" onclick="copyButtonHTML(this)" data-button-selector=".nds-btn.nds-btn-subtle.nds-btn-destructive.nds-btn-md">
+                                <i class="hgi hgi-stroke hgi-copy-01"></i>
+                            </button>
+                        </div>
+                        <code><button class="nds-btn nds-btn-subtle nds-btn-destructive nds-btn-md">Clear Data</button></code>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
