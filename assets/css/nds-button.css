@@ -30,7 +30,7 @@
     pointer-events: none;
 }
 
-/* Button Sizes */
+/* ===== BUTTON SIZES ===== */
 .nds-btn-sm {
     height: 36px;
     padding: 0 var(--spacing-md);
@@ -81,9 +81,9 @@
 }
 
 .nds-btn-primary:disabled {
-    background-color: var(--colors-neutral-200);
-    color: var(--colors-neutral-400);
-    border-color: var(--colors-neutral-200);
+    background-color: var(--background-disabled);
+    color: var(--text-default-disabled);
+    border-color: var(--background-disabled);
 }
 
 /* 2. Neutral Button */
@@ -106,34 +106,34 @@
 }
 
 .nds-btn-neutral:disabled {
-    background-color: var(--colors-neutral-200);
-    color: var(--colors-neutral-400);
-    border-color: var(--colors-neutral-200);
+    background-color: var(--background-disabled);
+    color: var(--text-default-disabled);
+    border-color: var(--background-disabled);
 }
 
 /* 3. Secondary Solid Button */
 .nds-btn-secondary-solid {
-    background-color: var(--colors-neutral-100);
+    background-color: var(--background-neutral-100);
     color: var(--text-default);
     border-color: var(--border-neutral-primary);
 }
 
 .nds-btn-secondary-solid:hover {
-    background-color: var(--colors-neutral-200);
+    background-color: var(--background-neutral-200);
     border-color: var(--border-neutral-secondary);
     color: var(--text-default);
 }
 
 .nds-btn-secondary-solid:active {
-    background-color: var(--colors-neutral-300);
+    background-color: var(--background-neutral-300);
     border-color: var(--colors-neutral-400);
     color: var(--text-default);
 }
 
 .nds-btn-secondary-solid:disabled {
-    background-color: var(--colors-neutral-100);
-    color: var(--colors-neutral-400);
-    border-color: var(--colors-neutral-200);
+    background-color: var(--background-disabled);
+    color: var(--text-default-disabled);
+    border-color: var(--border-disabled);
 }
 
 /* 4. Secondary Outline Button */
@@ -144,21 +144,21 @@
 }
 
 .nds-btn-secondary-outline:hover {
-    background-color: var(--colors-neutral-50);
+    background-color: var(--background-neutral-50);
     border-color: var(--border-neutral-secondary);
     color: var(--text-default);
 }
 
 .nds-btn-secondary-outline:active {
-    background-color: var(--colors-neutral-100);
+    background-color: var(--background-neutral-100);
     border-color: var(--colors-neutral-400);
     color: var(--text-default);
 }
 
 .nds-btn-secondary-outline:disabled {
     background-color: transparent;
-    color: var(--colors-neutral-400);
-    border-color: var(--colors-neutral-200);
+    color: var(--text-default-disabled);
+    border-color: var(--border-disabled);
 }
 
 /* 5. Subtle Button */
@@ -169,20 +169,20 @@
 }
 
 .nds-btn-subtle:hover {
-    background-color: var(--colors-neutral-100);
+    background-color: var(--background-neutral-100);
     border-color: transparent;
     color: var(--text-default);
 }
 
 .nds-btn-subtle:active {
-    background-color: var(--colors-neutral-200);
+    background-color: var(--background-neutral-200);
     border-color: transparent;
     color: var(--text-default);
 }
 
 .nds-btn-subtle:disabled {
     background-color: transparent;
-    color: var(--colors-neutral-400);
+    color: var(--text-default-disabled);
     border-color: transparent;
 }
 
@@ -207,7 +207,7 @@
 
 .nds-btn-transparent:disabled {
     background-color: transparent;
-    color: var(--colors-neutral-400);
+    color: var(--text-default-disabled);
     border-color: transparent;
 }
 
@@ -451,7 +451,7 @@
     align-items: center;
     gap: var(--spacing-lg);
     padding: var(--spacing-3xl);
-    border: 1px solid var(--colors-neutral-200);
+    border: 1px solid var(--border-neutral-secondary);
     border-radius: var(--radius-md);
     background-color: var(--background-white);
 }
