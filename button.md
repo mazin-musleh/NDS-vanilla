@@ -21,32 +21,50 @@ direction: rtl
                 <div class="button-card">
                     <div class="button-label">Primary Button</div>
                     <button class="nds-btn nds-btn-primary nds-btn-md">Primary Button</button>
-                    <div class="button-classes">Classes: <code>nds-btn nds-btn-primary nds-btn-md</code></div>
+                    <div class="button-classes">
+                        <code>nds-btn nds-btn-primary nds-btn-md</code>
+                        <button class="copy-btn" onclick="copyToClipboard('nds-btn nds-btn-primary nds-btn-md')">Copy</button>
+                    </div>
                 </div>
                 <div class="button-card">
                     <div class="button-label">Neutral Button</div>
                     <button class="nds-btn nds-btn-neutral nds-btn-md">Neutral Button</button>
-                    <div class="button-classes">Classes: <code>nds-btn nds-btn-neutral nds-btn-md</code></div>
+                    <div class="button-classes">
+                        <code>nds-btn nds-btn-neutral nds-btn-md</code>
+                        <button class="copy-btn" onclick="copyToClipboard('nds-btn nds-btn-neutral nds-btn-md')">Copy</button>
+                    </div>
                 </div>
                 <div class="button-card">
                     <div class="button-label">Secondary Solid</div>
                     <button class="nds-btn nds-btn-secondary-solid nds-btn-md">Secondary Solid Button</button>
-                    <div class="button-classes">Classes: <code>nds-btn nds-btn-secondary-solid nds-btn-md</code></div>
+                    <div class="button-classes">
+                        <code>nds-btn nds-btn-secondary-solid nds-btn-md</code>
+                        <button class="copy-btn" onclick="copyToClipboard('nds-btn nds-btn-secondary-solid nds-btn-md')">Copy</button>
+                    </div>
                 </div>
                 <div class="button-card">
                     <div class="button-label">Secondary Outline</div>
                     <button class="nds-btn nds-btn-secondary-outline nds-btn-md">Secondary Outline Button</button>
-                    <div class="button-classes">Classes: <code>nds-btn nds-btn-secondary-outline nds-btn-md</code></div>
+                    <div class="button-classes">
+                        <code>nds-btn nds-btn-secondary-outline nds-btn-md</code>
+                        <button class="copy-btn" onclick="copyToClipboard('nds-btn nds-btn-secondary-outline nds-btn-md')">Copy</button>
+                    </div>
                 </div>
                 <div class="button-card">
                     <div class="button-label">Subtle Button</div>
                     <button class="nds-btn nds-btn-subtle nds-btn-md">Subtle Button</button>
-                    <div class="button-classes">Classes: <code>nds-btn nds-btn-subtle nds-btn-md</code></div>
+                    <div class="button-classes">
+                        <code>nds-btn nds-btn-subtle nds-btn-md</code>
+                        <button class="copy-btn" onclick="copyToClipboard('nds-btn nds-btn-subtle nds-btn-md')">Copy</button>
+                    </div>
                 </div>
                 <div class="button-card">
                     <div class="button-label">Transparent Button</div>
                     <button class="nds-btn nds-btn-transparent nds-btn-md">Transparent Button</button>
-                    <div class="button-classes">Classes: <code>nds-btn nds-btn-transparent nds-btn-md</code></div>
+                    <div class="button-classes">
+                        <code>nds-btn nds-btn-transparent nds-btn-md</code>
+                        <button class="copy-btn" onclick="copyToClipboard('nds-btn nds-btn-transparent nds-btn-md')">Copy</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -65,22 +83,34 @@ direction: rtl
                 <div class="button-card">
                     <div class="button-label">Small (36px)</div>
                     <button class="nds-btn nds-btn-primary nds-btn-sm">Small Button</button>
-                    <div class="button-classes">Classes: <code>nds-btn nds-btn-primary nds-btn-sm</code></div>
+                    <div class="button-classes">
+                        <code>nds-btn nds-btn-primary nds-btn-sm</code>
+                        <button class="copy-btn" onclick="copyToClipboard('nds-btn nds-btn-primary nds-btn-sm')">Copy</button>
+                    </div>
                 </div>
                 <div class="button-card">
                     <div class="button-label">Medium (44px)</div>
                     <button class="nds-btn nds-btn-primary nds-btn-md">Medium Button</button>
-                    <div class="button-classes">Classes: <code>nds-btn nds-btn-primary nds-btn-md</code></div>
+                    <div class="button-classes">
+                        <code>nds-btn nds-btn-primary nds-btn-md</code>
+                        <button class="copy-btn" onclick="copyToClipboard('nds-btn nds-btn-primary nds-btn-md')">Copy</button>
+                    </div>
                 </div>
                 <div class="button-card">
                     <div class="button-label">Large (52px)</div>
                     <button class="nds-btn nds-btn-primary nds-btn-lg">Large Button</button>
-                    <div class="button-classes">Classes: <code>nds-btn nds-btn-primary nds-btn-lg</code></div>
+                    <div class="button-classes">
+                        <code>nds-btn nds-btn-primary nds-btn-lg</code>
+                        <button class="copy-btn" onclick="copyToClipboard('nds-btn nds-btn-primary nds-btn-lg')">Copy</button>
+                    </div>
                 </div>
                 <div class="button-card">
                     <div class="button-label">Extra Large (60px)</div>
                     <button class="nds-btn nds-btn-primary nds-btn-xl">Extra Large Button</button>
-                    <div class="button-classes">Classes: <code>nds-btn nds-btn-primary nds-btn-xl</code></div>
+                    <div class="button-classes">
+                        <code>nds-btn nds-btn-primary nds-btn-xl</code>
+                        <button class="copy-btn" onclick="copyToClipboard('nds-btn nds-btn-primary nds-btn-xl')">Copy</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -105,7 +135,6 @@ direction: rtl
                         <button class="nds-btn nds-btn-primary nds-btn-md active-demo">Active</button>
                         <button class="nds-btn nds-btn-primary nds-btn-md" disabled>Disabled</button>
                     </div>
-                    <div class="button-classes">Classes: <code>nds-btn nds-btn-primary nds-btn-md</code> + state classes</div>
                 </div>
                 
                 <!-- Neutral States -->
@@ -117,7 +146,6 @@ direction: rtl
                         <button class="nds-btn nds-btn-neutral nds-btn-md active-demo">Active</button>
                         <button class="nds-btn nds-btn-neutral nds-btn-md" disabled>Disabled</button>
                     </div>
-                    <div class="button-classes">Classes: <code>nds-btn nds-btn-neutral nds-btn-md</code> + state classes</div>
                 </div>
                 
                 <!-- Secondary Outline States -->
@@ -129,7 +157,6 @@ direction: rtl
                         <button class="nds-btn nds-btn-secondary-outline nds-btn-md active-demo">Active</button>
                         <button class="nds-btn nds-btn-secondary-outline nds-btn-md" disabled>Disabled</button>
                     </div>
-                    <div class="button-classes">Classes: <code>nds-btn nds-btn-secondary-outline nds-btn-md</code> + state classes</div>
                 </div>
                 
                 <!-- Transparent States -->
@@ -141,7 +168,6 @@ direction: rtl
                         <button class="nds-btn nds-btn-transparent nds-btn-md active-demo">Active</button>
                         <button class="nds-btn nds-btn-transparent nds-btn-md" disabled>Disabled</button>
                     </div>
-                    <div class="button-classes">Classes: <code>nds-btn nds-btn-transparent nds-btn-md</code> + state classes</div>
                 </div>
             </div>
         </div>
@@ -160,17 +186,26 @@ direction: rtl
                 <div class="button-card">
                     <div class="button-label">Destructive Primary</div>
                     <button class="nds-btn nds-btn-primary nds-btn-destructive nds-btn-md">Delete Button</button>
-                    <div class="button-classes">Classes: <code>nds-btn nds-btn-primary nds-btn-destructive nds-btn-md</code></div>
+                    <div class="button-classes">
+                        <code>nds-btn nds-btn-primary nds-btn-destructive nds-btn-md</code>
+                        <button class="copy-btn" onclick="copyToClipboard('nds-btn nds-btn-primary nds-btn-destructive nds-btn-md')">Copy</button>
+                    </div>
                 </div>
                 <div class="button-card">
                     <div class="button-label">Destructive Outline</div>
                     <button class="nds-btn nds-btn-secondary-outline nds-btn-destructive nds-btn-md">Remove Button</button>
-                    <div class="button-classes">Classes: <code>nds-btn nds-btn-secondary-outline nds-btn-destructive nds-btn-md</code></div>
+                    <div class="button-classes">
+                        <code>nds-btn nds-btn-secondary-outline nds-btn-destructive nds-btn-md</code>
+                        <button class="copy-btn" onclick="copyToClipboard('nds-btn nds-btn-secondary-outline nds-btn-destructive nds-btn-md')">Copy</button>
+                    </div>
                 </div>
                 <div class="button-card">
                     <div class="button-label">Destructive Transparent</div>
                     <button class="nds-btn nds-btn-transparent nds-btn-destructive nds-btn-md">Cancel Button</button>
-                    <div class="button-classes">Classes: <code>nds-btn nds-btn-transparent nds-btn-destructive nds-btn-md</code></div>
+                    <div class="button-classes">
+                        <code>nds-btn nds-btn-transparent nds-btn-destructive nds-btn-md</code>
+                        <button class="copy-btn" onclick="copyToClipboard('nds-btn nds-btn-transparent nds-btn-destructive nds-btn-md')">Copy</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -190,17 +225,26 @@ direction: rtl
                     <div class="button-card" style="background: transparent; border: 1px solid rgba(255,255,255,0.2);">
                         <div class="button-label" style="color: white;">On-color Primary</div>
                         <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-md">Primary Button</button>
-                        <div class="button-classes">Classes: <code>nds-btn nds-btn-primary nds-btn-oncolor nds-btn-md</code></div>
+                        <div class="button-classes">
+                            <code>nds-btn nds-btn-primary nds-btn-oncolor nds-btn-md</code>
+                            <button class="copy-btn" onclick="copyToClipboard('nds-btn nds-btn-primary nds-btn-oncolor nds-btn-md')">Copy</button>
+                        </div>
                     </div>
                     <div class="button-card" style="background: transparent; border: 1px solid rgba(255,255,255,0.2);">
                         <div class="button-label" style="color: white;">On-color Outline</div>
                         <button class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-md">Outline Button</button>
-                        <div class="button-classes">Classes: <code>nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-md</code></div>
+                        <div class="button-classes">
+                            <code>nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-md</code>
+                            <button class="copy-btn" onclick="copyToClipboard('nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-md')">Copy</button>
+                        </div>
                     </div>
                     <div class="button-card" style="background: transparent; border: 1px solid rgba(255,255,255,0.2);">
                         <div class="button-label" style="color: white;">On-color Transparent</div>
                         <button class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-md">Transparent Button</button>
-                        <div class="button-classes">Classes: <code>nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-md</code></div>
+                        <div class="button-classes">
+                            <code>nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-md</code>
+                            <button class="copy-btn" onclick="copyToClipboard('nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-md')">Copy</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -224,7 +268,10 @@ direction: rtl
                         <i class="hgi hgi-stroke hgi-plus-sign"></i>
                         Add Item
                     </button>
-                    <div class="button-classes">Classes: <code>nds-btn nds-btn-primary nds-btn-md</code></div>
+                    <div class="button-classes">
+                        <code>nds-btn nds-btn-primary nds-btn-md</code>
+                        <button class="copy-btn" onclick="copyToClipboard('nds-btn nds-btn-primary nds-btn-md')">Copy</button>
+                    </div>
                 </div>
                 
                 <!-- Trail Icon -->
@@ -234,7 +281,10 @@ direction: rtl
                         <i class="hgi hgi-stroke hgi-download-01"></i>
                         Download
                     </button>
-                    <div class="button-classes">Classes: <code>nds-btn nds-btn-secondary-solid nds-btn-md nds-btn-trail-icon</code></div>
+                    <div class="button-classes">
+                        <code>nds-btn nds-btn-secondary-solid nds-btn-md nds-btn-trail-icon</code>
+                        <button class="copy-btn" onclick="copyToClipboard('nds-btn nds-btn-secondary-solid nds-btn-md nds-btn-trail-icon')">Copy</button>
+                    </div>
                 </div>
                 
                 <!-- Icon Only -->
@@ -243,7 +293,10 @@ direction: rtl
                     <button class="nds-btn nds-btn-primary nds-btn-icon-only nds-btn-md" aria-label="Settings">
                         <i class="hgi hgi-stroke hgi-settings-02"></i>
                     </button>
-                    <div class="button-classes">Classes: <code>nds-btn nds-btn-primary nds-btn-icon-only nds-btn-md</code></div>
+                    <div class="button-classes">
+                        <code>nds-btn nds-btn-primary nds-btn-icon-only nds-btn-md</code>
+                        <button class="copy-btn" onclick="copyToClipboard('nds-btn nds-btn-primary nds-btn-icon-only nds-btn-md')">Copy</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -262,17 +315,26 @@ direction: rtl
                 <div class="button-card">
                     <div class="button-label">Full Width Primary</div>
                     <button class="nds-btn nds-btn-primary nds-btn-md nds-btn-full">Full Width Primary Button</button>
-                    <div class="button-classes">Classes: <code>nds-btn nds-btn-primary nds-btn-md nds-btn-full</code></div>
+                    <div class="button-classes">
+                        <code>nds-btn nds-btn-primary nds-btn-md nds-btn-full</code>
+                        <button class="copy-btn" onclick="copyToClipboard('nds-btn nds-btn-primary nds-btn-md nds-btn-full')">Copy</button>
+                    </div>
                 </div>
                 <div class="button-card">
                     <div class="button-label">Full Width Secondary</div>
                     <button class="nds-btn nds-btn-secondary-solid nds-btn-md nds-btn-full">Full Width Secondary Button</button>
-                    <div class="button-classes">Classes: <code>nds-btn nds-btn-secondary-solid nds-btn-md nds-btn-full</code></div>
+                    <div class="button-classes">
+                        <code>nds-btn nds-btn-secondary-solid nds-btn-md nds-btn-full</code>
+                        <button class="copy-btn" onclick="copyToClipboard('nds-btn nds-btn-secondary-solid nds-btn-md nds-btn-full')">Copy</button>
+                    </div>
                 </div>
                 <div class="button-card">
                     <div class="button-label">Full Width Outline</div>
                     <button class="nds-btn nds-btn-secondary-outline nds-btn-md nds-btn-full">Full Width Outline Button</button>
-                    <div class="button-classes">Classes: <code>nds-btn nds-btn-secondary-outline nds-btn-md nds-btn-full</code></div>
+                    <div class="button-classes">
+                        <code>nds-btn nds-btn-secondary-outline nds-btn-md nds-btn-full</code>
+                        <button class="copy-btn" onclick="copyToClipboard('nds-btn nds-btn-secondary-outline nds-btn-md nds-btn-full')">Copy</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -295,7 +357,10 @@ direction: rtl
                         <button class="nds-btn nds-btn-secondary-solid nds-btn-md nds-btn-active">Second</button>
                         <button class="nds-btn nds-btn-secondary-solid nds-btn-md">Third</button>
                     </div>
-                    <div class="button-classes">Classes: <code>nds-btn-group</code> + <code>nds-btn nds-btn-secondary-solid nds-btn-md</code></div>
+                    <div class="button-classes">
+                        <code>nds-btn-group</code> + <code>nds-btn nds-btn-secondary-solid nds-btn-md</code>
+                        <button class="copy-btn" onclick="copyToClipboard('nds-btn-group')">Copy</button>
+                    </div>
                 </div>
                 <div class="button-card">
                     <div class="button-label">Button Group - Outline</div>
@@ -304,7 +369,10 @@ direction: rtl
                         <button class="nds-btn nds-btn-secondary-outline nds-btn-md">Option B</button>
                         <button class="nds-btn nds-btn-secondary-outline nds-btn-md">Option C</button>
                     </div>
-                    <div class="button-classes">Classes: <code>nds-btn-group</code> + <code>nds-btn nds-btn-secondary-outline nds-btn-md</code></div>
+                    <div class="button-classes">
+                        <code>nds-btn-group</code> + <code>nds-btn nds-btn-secondary-outline nds-btn-md</code>
+                        <button class="copy-btn" onclick="copyToClipboard('nds-btn-group')">Copy</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -327,7 +395,10 @@ direction: rtl
                         <button class="nds-btn nds-btn-secondary-solid nds-btn-loading nds-btn-md">Processing Button</button>
                         <button class="nds-btn nds-btn-transparent nds-btn-loading nds-btn-md">Saving Button</button>
                     </div>
-                    <div class="button-classes">Classes: <code>nds-btn nds-btn-[type] nds-btn-loading nds-btn-md</code></div>
+                    <div class="button-classes">
+                        <code>nds-btn nds-btn-[type] nds-btn-loading nds-btn-md</code>
+                        <button class="copy-btn" onclick="copyToClipboard('nds-btn nds-btn-primary nds-btn-loading nds-btn-md')">Copy</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -356,6 +427,36 @@ document.addEventListener('DOMContentLoaded', function() {
             color: var(--text-primary);
             font-weight: 500;
             font-size: 0.75rem;
+            flex: 1;
+        }
+        
+        .button-classes {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .copy-btn {
+            background-color: var(--colors-primary-sa-flag-600-primary);
+            color: var(--text-oncolor-primary);
+            border: none;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-xs);
+            font-size: 0.75rem;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        
+        .copy-btn:hover {
+            background-color: var(--colors-primary-sa-flag-700);
+        }
+        
+        .copy-btn:active {
+            background-color: var(--colors-primary-sa-flag-800);
+        }
+        
+        .copy-btn.copied {
+            background-color: var(--colors-green-600);
         }
     `;
     document.head.appendChild(style);
@@ -402,5 +503,27 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     });
+    
+    // Copy to clipboard functionality
+    window.copyToClipboard = function(text) {
+        navigator.clipboard.writeText(text).then(function() {
+            // Find the button that was clicked
+            const buttons = document.querySelectorAll('.copy-btn');
+            buttons.forEach(btn => {
+                if (btn.onclick.toString().includes(text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))) {
+                    const originalText = btn.textContent;
+                    btn.textContent = 'Copied!';
+                    btn.classList.add('copied');
+                    
+                    setTimeout(() => {
+                        btn.textContent = originalText;
+                        btn.classList.remove('copied');
+                    }, 2000);
+                }
+            });
+        }).catch(function(err) {
+            console.error('Failed to copy text: ', err);
+        });
+    };
 });
 </script>
