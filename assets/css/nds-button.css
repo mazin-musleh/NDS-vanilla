@@ -120,12 +120,12 @@
 .nds-btn-secondary-solid {
     background-color: var(--button-background-neutral-default);
     color: var(--text-default);
-    border-color: var(--border-neutral-primary);
+    border-color: var(--button-background-neutral-default);
 }
 
 .nds-btn-secondary-solid:hover {
     background-color: var(--button-background-neutral-hovered);
-    border-color: var(--border-neutral-secondary);
+    border-color: var(--button-background-neutral-hovered);
     color: var(--text-default);
 }
 
