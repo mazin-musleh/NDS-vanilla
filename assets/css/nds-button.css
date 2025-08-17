@@ -441,7 +441,8 @@
 
 /* ===== SHOWCASE STYLES ===== */
 .button-showcase {
-    display: grid;
+    display: flex;
+    flex-wrap: wrap;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: var(--spacing-4xl);
     margin-top: var(--spacing-4xl);
@@ -451,6 +452,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    flex: 1 1 25%;
     gap: var(--spacing-lg);
     padding: var(--spacing-3xl);
     border: 1px solid var(--border-neutral-secondary);
@@ -504,10 +506,6 @@
     gap: var(--spacing-md);
     width: 100%;
     max-width: 600px;
-}
-
-.state-demo .nds-btn {
-    min-width: 120px;
 }
 
 /* Responsive Design */

@@ -258,7 +258,7 @@ direction: rtl
             <p class="desc">أزرار تمتد لتشغل العرض الكامل للحاوي</p>
         </div>
         <div class="sectionContent">
-            <div class="button-showcase" style="grid-template-columns: 1fr; max-width: 600px; margin: 0 auto;">
+            <div class="button-showcase" style="flex-direction: column; max-width: 600px; margin: 0 auto;">
                 <div class="button-card">
                     <div class="button-label">Full Width Primary</div>
                     <button class="nds-btn nds-btn-primary nds-btn-md nds-btn-full">Full Width Primary Button</button>
@@ -401,21 +401,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.classList.add('nds-btn-active');
             });
         });
-    });
-    
-    // Demonstrate hover states on state demo buttons
-    const stateDemoButtons = document.querySelectorAll('.state-demo .nds-btn');
-    stateDemoButtons.forEach(button => {
-        if (!button.disabled && !button.textContent.includes('Hover') && !button.textContent.includes('Active')) {
-            button.addEventListener('mouseenter', function() {
-                // Add visual feedback for demonstration
-                this.style.transform = 'translateY(-1px)';
-            });
-            
-            button.addEventListener('mouseleave', function() {
-                this.style.transform = '';
-            });
-        }
     });
 });
 </script>
