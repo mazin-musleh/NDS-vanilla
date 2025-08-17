@@ -68,20 +68,20 @@
 
 /* ===== PRIMARY BUTTON (Green) ===== */
 .nds-btn-primary {
-    background-color: var(--colors-primary-sa-flag-600-primary);
+    background-color: var(--button-background-primary-default);
     color: var(--text-oncolor-primary);
-    border-color: var(--colors-primary-sa-flag-600-primary);
+    border-color: var(--button-background-primary-default);
 }
 
 .nds-btn-primary:hover {
-    background-color: var(--colors-primary-sa-flag-700);
-    border-color: var(--colors-primary-sa-flag-700);
+    background-color: var(--button-background-primary-hovered);
+    border-color: var(--button-background-primary-hovered);
     color: var(--text-oncolor-primary);
 }
 
 .nds-btn-primary:active {
-    background-color: var(--colors-primary-sa-flag-800);
-    border-color: var(--colors-primary-sa-flag-800);
+    background-color: var(--button-background-primary-pressed);
+    border-color: var(--button-background-primary-pressed);
     color: var(--text-oncolor-primary);
 }
 
@@ -93,20 +93,20 @@
 
 /* ===== NEUTRAL BUTTON (Dark Gray) ===== */
 .nds-btn-neutral {
-    background-color: var(--colors-neutral-800);
+    background-color: var(--button-background-black-default);
     color: var(--text-oncolor-primary);
-    border-color: var(--colors-neutral-800);
+    border-color: var(--button-background-black-default);
 }
 
 .nds-btn-neutral:hover {
-    background-color: var(--colors-neutral-900);
-    border-color: var(--colors-neutral-900);
+    background-color: var(--button-background-black-hovered);
+    border-color: var(--button-background-black-hovered);
     color: var(--text-oncolor-primary);
 }
 
 .nds-btn-neutral:active {
-    background-color: var(--colors-neutral-950);
-    border-color: var(--colors-neutral-950);
+    background-color: var(--button-background-black-pressed);
+    border-color: var(--button-background-black-pressed);
     color: var(--text-oncolor-primary);
 }
 
@@ -118,20 +118,20 @@
 
 /* ===== SECONDARY SOLID BUTTON (Light Gray) ===== */
 .nds-btn-secondary-solid {
-    background-color: var(--background-neutral-100);
+    background-color: var(--button-background-neutral-default);
     color: var(--text-default);
     border-color: var(--border-neutral-primary);
 }
 
 .nds-btn-secondary-solid:hover {
-    background-color: var(--background-neutral-200);
+    background-color: var(--button-background-neutral-hovered);
     border-color: var(--border-neutral-secondary);
     color: var(--text-default);
 }
 
 .nds-btn-secondary-solid:active {
-    background-color: var(--background-neutral-300);
-    border-color: var(--colors-neutral-400);
+    background-color: var(--button-background-neutral-pressed);
+    border-color: var(--button-background-neutral-pressed);
     color: var(--text-default);
 }
 
@@ -143,157 +143,157 @@
 
 /* ===== SECONDARY OUTLINE BUTTON ===== */
 .nds-btn-secondary-outline {
-    background-color: transparent;
+    background-color: var(--button-background-transparent-default);
     color: var(--text-default);
     border-color: var(--border-neutral-primary);
 }
 
 .nds-btn-secondary-outline:hover {
-    background-color: var(--background-neutral-50);
+    background-color: var(--button-background-transparent-hovered);
     border-color: var(--border-neutral-secondary);
     color: var(--text-default);
 }
 
 .nds-btn-secondary-outline:active {
-    background-color: var(--background-neutral-100);
-    border-color: var(--colors-neutral-400);
+    background-color: var(--button-background-transparent-pressed);
+    border-color: var(--button-background-transparent-pressed);
     color: var(--text-default);
 }
 
 .nds-btn-secondary-outline:disabled {
-    background-color: transparent;
+    background-color: var(--button-background-transparent-default);
     color: var(--text-default-disabled);
     border-color: var(--border-disabled);
 }
 
 /* ===== SUBTLE BUTTON ===== */
 .nds-btn-subtle {
-    background-color: transparent;
+    background-color: var(--button-background-transparent-default);
     color: var(--text-default);
-    border-color: transparent;
+    border-color: var(--button-background-transparent-default);
 }
 
 .nds-btn-subtle:hover {
-    background-color: var(--background-neutral-100);
-    border-color: transparent;
+    background-color: var(--button-background-transparent-hovered);
+    border-color: var(--button-background-transparent-default);
     color: var(--text-default);
 }
 
 .nds-btn-subtle:active {
-    background-color: var(--background-neutral-200);
-    border-color: transparent;
+    background-color: var(--button-background-transparent-pressed);
+    border-color: var(--button-background-transparent-default);
     color: var(--text-default);
 }
 
 .nds-btn-subtle:disabled {
-    background-color: transparent;
+    background-color: var(--button-background-transparent-default);
     color: var(--text-default-disabled);
-    border-color: transparent;
+    border-color: var(--button-background-transparent-default);
 }
 
 /* ===== TRANSPARENT BUTTON ===== */
 .nds-btn-transparent {
-    background-color: transparent;
-    color: var(--colors-primary-sa-flag-600-primary);
-    border-color: transparent;
+    background-color: var(--button-background-transparent-default);
+    color: var(--button-background-primary-default);
+    border-color: var(--button-background-transparent-default);
 }
 
 .nds-btn-transparent:hover {
-    background-color: var(--colors-primary-sa-flag-50);
-    border-color: transparent;
-    color: var(--colors-primary-sa-flag-700);
+    background-color: var(--button-background-transparent-hovered);
+    border-color: var(--button-background-transparent-default);
+    color: var(--button-label-transparent-hovered-on-color);
 }
 
 .nds-btn-transparent:active {
-    background-color: var(--colors-primary-sa-flag-100);
-    border-color: transparent;
-    color: var(--colors-primary-sa-flag-800);
+    background-color: var(--button-background-transparent-pressed);
+    border-color: var(--button-background-transparent-default);
+    color: var(--button-label-transparent-pressed-on-color);
 }
 
 .nds-btn-transparent:disabled {
-    background-color: transparent;
+    background-color: var(--button-background-transparent-default);
     color: var(--text-default-disabled);
-    border-color: transparent;
+    border-color: var(--button-background-transparent-default);
 }
 
 /* ===== DESTRUCTIVE VARIANTS (Red) ===== */
 .nds-btn-destructive.nds-btn-primary {
-    background-color: var(--colors-red-600);
-    border-color: var(--colors-red-600);
+    background-color: var(--button-background-danger-primary-default);
+    border-color: var(--button-background-danger-primary-default);
 }
 
 .nds-btn-destructive.nds-btn-primary:hover {
-    background-color: var(--colors-red-700);
-    border-color: var(--colors-red-700);
+    background-color: var(--button-background-danger-primary-hovered);
+    border-color: var(--button-background-danger-primary-hovered);
 }
 
 .nds-btn-destructive.nds-btn-primary:active {
-    background-color: var(--colors-red-800);
-    border-color: var(--colors-red-800);
+    background-color: var(--button-background-danger-primary-pressed);
+    border-color: var(--button-background-danger-primary-pressed);
 }
 
 .nds-btn-destructive.nds-btn-secondary-outline {
-    color: var(--colors-red-600);
-    border-color: var(--colors-red-600);
+    color: var(--button-background-danger-primary-default);
+    border-color: var(--button-background-danger-primary-default);
 }
 
 .nds-btn-destructive.nds-btn-secondary-outline:hover {
-    background-color: var(--colors-red-50);
-    color: var(--colors-red-700);
-    border-color: var(--colors-red-700);
+    background-color: var(--button-background-danger-secondary-default);
+    color: var(--button-background-danger-primary-hovered);
+    border-color: var(--button-background-danger-primary-hovered);
 }
 
 .nds-btn-destructive.nds-btn-secondary-outline:active {
-    background-color: var(--colors-red-100);
-    color: var(--colors-red-800);
-    border-color: var(--colors-red-800);
+    background-color: var(--button-background-danger-secondary-hovered);
+    color: var(--button-background-danger-primary-pressed);
+    border-color: var(--button-background-danger-primary-pressed);
 }
 
 .nds-btn-destructive.nds-btn-transparent {
-    color: var(--colors-red-600);
+    color: var(--button-background-danger-primary-default);
 }
 
 .nds-btn-destructive.nds-btn-transparent:hover {
-    background-color: var(--colors-red-50);
-    color: var(--colors-red-700);
+    background-color: var(--button-background-danger-secondary-default);
+    color: var(--button-background-danger-primary-hovered);
 }
 
 .nds-btn-destructive.nds-btn-transparent:active {
-    background-color: var(--colors-red-100);
-    color: var(--colors-red-800);
+    background-color: var(--button-background-danger-secondary-hovered);
+    color: var(--button-background-danger-primary-pressed);
 }
 
 /* ===== ON-COLOR VARIANTS (For Dark Backgrounds) ===== */
 .nds-btn-oncolor.nds-btn-primary {
-    background-color: var(--colors-base-white);
-    color: var(--colors-primary-sa-flag-600-primary);
-    border-color: var(--colors-base-white);
+    background-color: var(--button-background-oncolor-default);
+    color: var(--button-background-primary-default);
+    border-color: var(--button-background-oncolor-default);
 }
 
 .nds-btn-oncolor.nds-btn-primary:hover {
-    background-color: var(--colors-alpha-alpha-white-90);
-    border-color: var(--colors-alpha-alpha-white-90);
+    background-color: var(--button-background-oncolor-hovered);
+    border-color: var(--button-background-oncolor-hovered);
 }
 
 .nds-btn-oncolor.nds-btn-primary:active {
-    background-color: var(--colors-alpha-alpha-white-80);
-    border-color: var(--colors-alpha-alpha-white-80);
+    background-color: var(--button-background-oncolor-pressed);
+    border-color: var(--button-background-oncolor-pressed);
 }
 
 .nds-btn-oncolor.nds-btn-secondary-outline {
-    background-color: transparent;
+    background-color: var(--button-background-transparent-default);
     color: var(--colors-base-white);
-    border-color: var(--colors-alpha-alpha-white-60);
+    border-color: var(--border-oncolor-transparent-30);
 }
 
 .nds-btn-oncolor.nds-btn-secondary-outline:hover {
-    background-color: var(--colors-alpha-alpha-white-10);
-    border-color: var(--colors-alpha-alpha-white-80);
+    background-color: var(--button-background-transparent-hovered);
+    border-color: var(--alpha-white-80);
 }
 
 .nds-btn-oncolor.nds-btn-secondary-outline:active {
-    background-color: var(--colors-alpha-alpha-white-20);
-    border-color: var(--colors-base-white);
+    background-color: var(--button-background-transparent-pressed);
+    border-color: var(--button-background-oncolor-default);
 }
 
 .nds-btn-oncolor.nds-btn-transparent {
@@ -301,11 +301,11 @@
 }
 
 .nds-btn-oncolor.nds-btn-transparent:hover {
-    background-color: var(--colors-alpha-alpha-white-10);
+    background-color: var(--button-background-transparent-hovered);
 }
 
 .nds-btn-oncolor.nds-btn-transparent:active {
-    background-color: var(--colors-alpha-alpha-white-20);
+    background-color: var(--button-background-transparent-pressed);
 }
 
 /* ===== ICON-ONLY BUTTONS ===== */

@@ -583,16 +583,16 @@ document.addEventListener('DOMContentLoaded', function() {
     demoStyle.textContent = `
         .hover-demo.nds-btn-primary { background-color: var(--colors-primary-sa-flag-700); border-color: var(--colors-primary-sa-flag-700); }
         .active-demo.nds-btn-primary { background-color: var(--colors-primary-sa-flag-800); border-color: var(--colors-primary-sa-flag-800); }
-        .hover-demo.nds-btn-neutral { background-color: var(--colors-neutral-900); border-color: var(--colors-neutral-900); }
-        .active-demo.nds-btn-neutral { background-color: var(--colors-neutral-950); border-color: var(--colors-neutral-950); }
-        .hover-demo.nds-btn-secondary-solid { background-color: var(--background-neutral-200); border-color: var(--border-neutral-secondary); }
-        .active-demo.nds-btn-secondary-solid { background-color: var(--background-neutral-300); border-color: var(--colors-neutral-400); }
-        .hover-demo.nds-btn-secondary-outline { background-color: var(--colors-neutral-50); border-color: var(--border-neutral-secondary); }
-        .active-demo.nds-btn-secondary-outline { background-color: var(--colors-neutral-100); border-color: var(--colors-neutral-400); }
-        .hover-demo.nds-btn-subtle { background-color: var(--background-neutral-100); }
-        .active-demo.nds-btn-subtle { background-color: var(--background-neutral-200); }
-        .hover-demo.nds-btn-transparent { background-color: var(--colors-primary-sa-flag-50); color: var(--colors-primary-sa-flag-700); }
-        .active-demo.nds-btn-transparent { background-color: var(--colors-primary-sa-flag-100); color: var(--colors-primary-sa-flag-800); }
+        .hover-demo.nds-btn-neutral { background-color: var(--button-background-black-hovered); border-color: var(--button-background-black-hovered); }
+        .active-demo.nds-btn-neutral { background-color: var(--button-background-black-pressed); border-color: var(--button-background-black-pressed); }
+        .hover-demo.nds-btn-secondary-solid { background-color: var(--button-background-neutral-hovered); border-color: var(--border-neutral-secondary); }
+        .active-demo.nds-btn-secondary-solid { background-color: var(--button-background-neutral-pressed); border-color: var(--button-background-neutral-pressed); }
+        .hover-demo.nds-btn-secondary-outline { background-color: var(--button-background-transparent-hovered); border-color: var(--border-neutral-secondary); }
+        .active-demo.nds-btn-secondary-outline { background-color: var(--button-background-transparent-pressed); border-color: var(--button-background-transparent-pressed); }
+        .hover-demo.nds-btn-subtle { background-color: var(--button-background-transparent-hovered); }
+        .active-demo.nds-btn-subtle { background-color: var(--button-background-transparent-pressed); }
+        .hover-demo.nds-btn-transparent { background-color: var(--button-background-transparent-hovered); color: var(--button-label-transparent-hovered-on-color); }
+        .active-demo.nds-btn-transparent { background-color: var(--button-background-transparent-pressed); color: var(--button-label-transparent-pressed-on-color); }
         .nds-btn-active { background-color: var(--colors-primary-sa-flag-600-primary) !important; color: var(--text-oncolor-primary) !important; border-color: var(--colors-primary-sa-flag-600-primary) !important; }
     `;
     document.head.appendChild(demoStyle);
