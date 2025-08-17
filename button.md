@@ -9,8 +9,6 @@ lang: ar
 direction: rtl
 ---
 
-<link rel="stylesheet" href="{{ '/assets/css/nds-button.css' | relative_url }}">
-
 <!-- Button Types Overview -->
 <section id="buttonTypesOverview" class="content-section">
     <div class="container">
@@ -22,27 +20,27 @@ direction: rtl
             <div class="button-showcase">
                 <div class="button-card">
                     <div class="button-label">Primary Button</div>
-                    <button class="nds-btn nds-btn-primary nds-btn-md">Primary</button>
+                    <button class="nds-btn nds-btn-primary nds-btn-md">Primary Button</button>
                 </div>
                 <div class="button-card">
                     <div class="button-label">Neutral Button</div>
-                    <button class="nds-btn nds-btn-neutral nds-btn-md">Neutral</button>
+                    <button class="nds-btn nds-btn-neutral nds-btn-md">Neutral Button</button>
                 </div>
                 <div class="button-card">
                     <div class="button-label">Secondary Solid</div>
-                    <button class="nds-btn nds-btn-secondary-solid nds-btn-md">Secondary Solid</button>
+                    <button class="nds-btn nds-btn-secondary-solid nds-btn-md">Secondary Solid Button</button>
                 </div>
                 <div class="button-card">
                     <div class="button-label">Secondary Outline</div>
-                    <button class="nds-btn nds-btn-secondary-outline nds-btn-md">Secondary Outline</button>
+                    <button class="nds-btn nds-btn-secondary-outline nds-btn-md">Secondary Outline Button</button>
                 </div>
                 <div class="button-card">
                     <div class="button-label">Subtle Button</div>
-                    <button class="nds-btn nds-btn-subtle nds-btn-md">Subtle</button>
+                    <button class="nds-btn nds-btn-subtle nds-btn-md">Subtle Button</button>
                 </div>
                 <div class="button-card">
                     <div class="button-label">Transparent Button</div>
-                    <button class="nds-btn nds-btn-transparent nds-btn-md">Transparent</button>
+                    <button class="nds-btn nds-btn-transparent nds-btn-md">Transparent Button</button>
                 </div>
             </div>
         </div>
@@ -57,22 +55,22 @@ direction: rtl
             <p class="desc">أربعة أحجام: صغير (36px)، متوسط (44px)، كبير (52px)، كبير جداً (60px)</p>
         </div>
         <div class="sectionContent">
-            <div class="button-showcase">
+            <div class="button-showcase" style="grid-template-columns: repeat(4, 1fr);">
                 <div class="button-card">
                     <div class="button-label">Small (36px)</div>
-                    <button class="nds-btn nds-btn-primary nds-btn-sm">Small</button>
+                    <button class="nds-btn nds-btn-primary nds-btn-sm">Small Button</button>
                 </div>
                 <div class="button-card">
                     <div class="button-label">Medium (44px)</div>
-                    <button class="nds-btn nds-btn-primary nds-btn-md">Medium</button>
+                    <button class="nds-btn nds-btn-primary nds-btn-md">Medium Button</button>
                 </div>
                 <div class="button-card">
                     <div class="button-label">Large (52px)</div>
-                    <button class="nds-btn nds-btn-primary nds-btn-lg">Large</button>
+                    <button class="nds-btn nds-btn-primary nds-btn-lg">Large Button</button>
                 </div>
                 <div class="button-card">
                     <div class="button-label">Extra Large (60px)</div>
-                    <button class="nds-btn nds-btn-primary nds-btn-xl">Extra Large</button>
+                    <button class="nds-btn nds-btn-primary nds-btn-xl">Extra Large Button</button>
                 </div>
             </div>
         </div>
@@ -91,7 +89,7 @@ direction: rtl
                 <!-- Primary States -->
                 <div class="button-card">
                     <div class="button-label">Primary Button States</div>
-                    <div class="state-demo">
+                    <div class="state-demo" style="grid-template-columns: repeat(4, 1fr);">
                         <button class="nds-btn nds-btn-primary nds-btn-md">Default</button>
                         <button class="nds-btn nds-btn-primary nds-btn-md" style="background-color: var(--colors-primary-sa-flag-700); border-color: var(--colors-primary-sa-flag-700);">Hover</button>
                         <button class="nds-btn nds-btn-primary nds-btn-md" style="background-color: var(--colors-primary-sa-flag-800); border-color: var(--colors-primary-sa-flag-800);">Active</button>
@@ -102,7 +100,7 @@ direction: rtl
                 <!-- Neutral States -->
                 <div class="button-card">
                     <div class="button-label">Neutral Button States</div>
-                    <div class="state-demo">
+                    <div class="state-demo" style="grid-template-columns: repeat(4, 1fr);">
                         <button class="nds-btn nds-btn-neutral nds-btn-md">Default</button>
                         <button class="nds-btn nds-btn-neutral nds-btn-md" style="background-color: var(--colors-neutral-900); border-color: var(--colors-neutral-900);">Hover</button>
                         <button class="nds-btn nds-btn-neutral nds-btn-md" style="background-color: var(--colors-neutral-950); border-color: var(--colors-neutral-950);">Active</button>
@@ -113,7 +111,7 @@ direction: rtl
                 <!-- Secondary Outline States -->
                 <div class="button-card">
                     <div class="button-label">Secondary Outline States</div>
-                    <div class="state-demo">
+                    <div class="state-demo" style="grid-template-columns: repeat(4, 1fr);">
                         <button class="nds-btn nds-btn-secondary-outline nds-btn-md">Default</button>
                         <button class="nds-btn nds-btn-secondary-outline nds-btn-md" style="background-color: var(--colors-neutral-50); border-color: var(--border-neutral-secondary);">Hover</button>
                         <button class="nds-btn nds-btn-secondary-outline nds-btn-md" style="background-color: var(--colors-neutral-100); border-color: var(--colors-neutral-400);">Active</button>
@@ -124,7 +122,7 @@ direction: rtl
                 <!-- Transparent States -->
                 <div class="button-card">
                     <div class="button-label">Transparent Button States</div>
-                    <div class="state-demo">
+                    <div class="state-demo" style="grid-template-columns: repeat(4, 1fr);">
                         <button class="nds-btn nds-btn-transparent nds-btn-md">Default</button>
                         <button class="nds-btn nds-btn-transparent nds-btn-md" style="background-color: var(--colors-primary-sa-flag-50); color: var(--colors-primary-sa-flag-700);">Hover</button>
                         <button class="nds-btn nds-btn-transparent nds-btn-md" style="background-color: var(--colors-primary-sa-flag-100); color: var(--colors-primary-sa-flag-800);">Active</button>
@@ -147,30 +145,15 @@ direction: rtl
             <div class="button-showcase">
                 <div class="button-card">
                     <div class="button-label">Destructive Primary</div>
-                    <div class="button-row">
-                        <button class="nds-btn nds-btn-primary nds-btn-destructive nds-btn-sm">Delete</button>
-                        <button class="nds-btn nds-btn-primary nds-btn-destructive nds-btn-md">Delete</button>
-                        <button class="nds-btn nds-btn-primary nds-btn-destructive nds-btn-lg">Delete</button>
-                        <button class="nds-btn nds-btn-primary nds-btn-destructive nds-btn-xl">Delete</button>
-                    </div>
+                    <button class="nds-btn nds-btn-primary nds-btn-destructive nds-btn-md">Delete Button</button>
                 </div>
                 <div class="button-card">
                     <div class="button-label">Destructive Outline</div>
-                    <div class="button-row">
-                        <button class="nds-btn nds-btn-secondary-outline nds-btn-destructive nds-btn-sm">Remove</button>
-                        <button class="nds-btn nds-btn-secondary-outline nds-btn-destructive nds-btn-md">Remove</button>
-                        <button class="nds-btn nds-btn-secondary-outline nds-btn-destructive nds-btn-lg">Remove</button>
-                        <button class="nds-btn nds-btn-secondary-outline nds-btn-destructive nds-btn-xl">Remove</button>
-                    </div>
+                    <button class="nds-btn nds-btn-secondary-outline nds-btn-destructive nds-btn-md">Remove Button</button>
                 </div>
                 <div class="button-card">
                     <div class="button-label">Destructive Transparent</div>
-                    <div class="button-row">
-                        <button class="nds-btn nds-btn-transparent nds-btn-destructive nds-btn-sm">Cancel</button>
-                        <button class="nds-btn nds-btn-transparent nds-btn-destructive nds-btn-md">Cancel</button>
-                        <button class="nds-btn nds-btn-transparent nds-btn-destructive nds-btn-lg">Cancel</button>
-                        <button class="nds-btn nds-btn-transparent nds-btn-destructive nds-btn-xl">Cancel</button>
-                    </div>
+                    <button class="nds-btn nds-btn-transparent nds-btn-destructive nds-btn-md">Cancel Button</button>
                 </div>
             </div>
         </div>
@@ -189,30 +172,15 @@ direction: rtl
                 <div class="button-showcase" style="grid-template-columns: repeat(3, 1fr);">
                     <div class="button-card" style="background: transparent; border: 1px solid rgba(255,255,255,0.2);">
                         <div class="button-label" style="color: white;">On-color Primary</div>
-                        <div class="button-row">
-                            <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-sm">Primary</button>
-                            <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-md">Primary</button>
-                            <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-lg">Primary</button>
-                            <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-xl">Primary</button>
-                        </div>
+                        <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-md">Primary Button</button>
                     </div>
                     <div class="button-card" style="background: transparent; border: 1px solid rgba(255,255,255,0.2);">
                         <div class="button-label" style="color: white;">On-color Outline</div>
-                        <div class="button-row">
-                            <button class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-sm">Outline</button>
-                            <button class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-md">Outline</button>
-                            <button class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-lg">Outline</button>
-                            <button class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-xl">Outline</button>
-                        </div>
+                        <button class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-md">Outline Button</button>
                     </div>
                     <div class="button-card" style="background: transparent; border: 1px solid rgba(255,255,255,0.2);">
                         <div class="button-label" style="color: white;">On-color Transparent</div>
-                        <div class="button-row">
-                            <button class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-sm">Transparent</button>
-                            <button class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-md">Transparent</button>
-                            <button class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-lg">Transparent</button>
-                            <button class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-xl">Transparent</button>
-                        </div>
+                        <button class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-md">Transparent Button</button>
                     </div>
                 </div>
             </div>
@@ -232,66 +200,27 @@ direction: rtl
                 <!-- Lead Icon -->
                 <div class="button-card">
                     <div class="button-label">Lead Icon (Icon + Text)</div>
-                    <div class="button-row">
-                        <button class="nds-btn nds-btn-primary nds-btn-lead-icon nds-btn-sm">
-                            <i class="hgi hgi-stroke hgi-plus-sign"></i>
-                            Add
-                        </button>
-                        <button class="nds-btn nds-btn-primary nds-btn-lead-icon nds-btn-md">
-                            <i class="hgi hgi-stroke hgi-plus-sign"></i>
-                            Add Item
-                        </button>
-                        <button class="nds-btn nds-btn-primary nds-btn-lead-icon nds-btn-lg">
-                            <i class="hgi hgi-stroke hgi-plus-sign"></i>
-                            Add Item
-                        </button>
-                        <button class="nds-btn nds-btn-primary nds-btn-lead-icon nds-btn-xl">
-                            <i class="hgi hgi-stroke hgi-plus-sign"></i>
-                            Add Item
-                        </button>
-                    </div>
+                    <button class="nds-btn nds-btn-primary nds-btn-lead-icon nds-btn-md">
+                        <i class="hgi hgi-stroke hgi-plus-sign"></i>
+                        Add Item
+                    </button>
                 </div>
                 
                 <!-- Trail Icon -->
                 <div class="button-card">
                     <div class="button-label">Trail Icon (Text + Icon)</div>
-                    <div class="button-row">
-                        <button class="nds-btn nds-btn-secondary-solid nds-btn-trail-icon nds-btn-sm">
-                            Download
-                            <i class="hgi hgi-stroke hgi-download-01"></i>
-                        </button>
-                        <button class="nds-btn nds-btn-secondary-solid nds-btn-trail-icon nds-btn-md">
-                            Download
-                            <i class="hgi hgi-stroke hgi-download-01"></i>
-                        </button>
-                        <button class="nds-btn nds-btn-secondary-solid nds-btn-trail-icon nds-btn-lg">
-                            Download
-                            <i class="hgi hgi-stroke hgi-download-01"></i>
-                        </button>
-                        <button class="nds-btn nds-btn-secondary-solid nds-btn-trail-icon nds-btn-xl">
-                            Download
-                            <i class="hgi hgi-stroke hgi-download-01"></i>
-                        </button>
-                    </div>
+                    <button class="nds-btn nds-btn-secondary-solid nds-btn-trail-icon nds-btn-md">
+                        Download
+                        <i class="hgi hgi-stroke hgi-download-01"></i>
+                    </button>
                 </div>
                 
                 <!-- Icon Only -->
                 <div class="button-card">
                     <div class="button-label">Icon Only Buttons</div>
-                    <div class="button-row">
-                        <button class="nds-btn nds-btn-primary nds-btn-icon-only nds-btn-sm" aria-label="Settings">
-                            <i class="hgi hgi-stroke hgi-settings-02"></i>
-                        </button>
-                        <button class="nds-btn nds-btn-primary nds-btn-icon-only nds-btn-md" aria-label="Settings">
-                            <i class="hgi hgi-stroke hgi-settings-02"></i>
-                        </button>
-                        <button class="nds-btn nds-btn-primary nds-btn-icon-only nds-btn-lg" aria-label="Settings">
-                            <i class="hgi hgi-stroke hgi-settings-02"></i>
-                        </button>
-                        <button class="nds-btn nds-btn-primary nds-btn-icon-only nds-btn-xl" aria-label="Settings">
-                            <i class="hgi hgi-stroke hgi-settings-02"></i>
-                        </button>
-                    </div>
+                    <button class="nds-btn nds-btn-primary nds-btn-icon-only nds-btn-md" aria-label="Settings">
+                        <i class="hgi hgi-stroke hgi-settings-02"></i>
+                    </button>
                 </div>
             </div>
         </div>
@@ -309,15 +238,15 @@ direction: rtl
             <div class="button-showcase" style="grid-template-columns: 1fr; max-width: 600px; margin: 0 auto;">
                 <div class="button-card">
                     <div class="button-label">Full Width Primary</div>
-                    <button class="nds-btn nds-btn-primary nds-btn-md nds-btn-full">Full Width Button</button>
+                    <button class="nds-btn nds-btn-primary nds-btn-md nds-btn-full">Full Width Primary Button</button>
                 </div>
                 <div class="button-card">
                     <div class="button-label">Full Width Secondary</div>
-                    <button class="nds-btn nds-btn-secondary-solid nds-btn-md nds-btn-full">Full Width Button</button>
+                    <button class="nds-btn nds-btn-secondary-solid nds-btn-md nds-btn-full">Full Width Secondary Button</button>
                 </div>
                 <div class="button-card">
                     <div class="button-label">Full Width Outline</div>
-                    <button class="nds-btn nds-btn-secondary-outline nds-btn-md nds-btn-full">Full Width Button</button>
+                    <button class="nds-btn nds-btn-secondary-outline nds-btn-md nds-btn-full">Full Width Outline Button</button>
                 </div>
             </div>
         </div>
@@ -366,88 +295,9 @@ direction: rtl
                 <div class="button-card">
                     <div class="button-label">Loading States</div>
                     <div class="button-row">
-                        <button class="nds-btn nds-btn-primary nds-btn-loading nds-btn-md">Loading...</button>
-                        <button class="nds-btn nds-btn-secondary-solid nds-btn-loading nds-btn-md">Processing...</button>
-                        <button class="nds-btn nds-btn-transparent nds-btn-loading nds-btn-md">Saving...</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Complete Matrix - All Types with All Sizes -->
-<section id="buttonMatrix" class="content-section">
-    <div class="container">
-        <div class="sectionHead">
-            <h2 class="title">المصفوفة الكاملة - جميع الأنواع بجميع الأحجام</h2>
-            <p class="desc">عرض شامل لجميع أنواع الأزرار بجميع الأحجام المتاحة</p>
-        </div>
-        <div class="sectionContent">
-            <div class="button-showcase">
-                <!-- Primary All Sizes -->
-                <div class="button-card">
-                    <div class="button-label">Primary - All Sizes</div>
-                    <div class="button-row">
-                        <button class="nds-btn nds-btn-primary nds-btn-sm">SM</button>
-                        <button class="nds-btn nds-btn-primary nds-btn-md">MD</button>
-                        <button class="nds-btn nds-btn-primary nds-btn-lg">LG</button>
-                        <button class="nds-btn nds-btn-primary nds-btn-xl">XL</button>
-                    </div>
-                </div>
-                
-                <!-- Neutral All Sizes -->
-                <div class="button-card">
-                    <div class="button-label">Neutral - All Sizes</div>
-                    <div class="button-row">
-                        <button class="nds-btn nds-btn-neutral nds-btn-sm">SM</button>
-                        <button class="nds-btn nds-btn-neutral nds-btn-md">MD</button>
-                        <button class="nds-btn nds-btn-neutral nds-btn-lg">LG</button>
-                        <button class="nds-btn nds-btn-neutral nds-btn-xl">XL</button>
-                    </div>
-                </div>
-                
-                <!-- Secondary Solid All Sizes -->
-                <div class="button-card">
-                    <div class="button-label">Secondary Solid - All Sizes</div>
-                    <div class="button-row">
-                        <button class="nds-btn nds-btn-secondary-solid nds-btn-sm">SM</button>
-                        <button class="nds-btn nds-btn-secondary-solid nds-btn-md">MD</button>
-                        <button class="nds-btn nds-btn-secondary-solid nds-btn-lg">LG</button>
-                        <button class="nds-btn nds-btn-secondary-solid nds-btn-xl">XL</button>
-                    </div>
-                </div>
-                
-                <!-- Secondary Outline All Sizes -->
-                <div class="button-card">
-                    <div class="button-label">Secondary Outline - All Sizes</div>
-                    <div class="button-row">
-                        <button class="nds-btn nds-btn-secondary-outline nds-btn-sm">SM</button>
-                        <button class="nds-btn nds-btn-secondary-outline nds-btn-md">MD</button>
-                        <button class="nds-btn nds-btn-secondary-outline nds-btn-lg">LG</button>
-                        <button class="nds-btn nds-btn-secondary-outline nds-btn-xl">XL</button>
-                    </div>
-                </div>
-                
-                <!-- Subtle All Sizes -->
-                <div class="button-card">
-                    <div class="button-label">Subtle - All Sizes</div>
-                    <div class="button-row">
-                        <button class="nds-btn nds-btn-subtle nds-btn-sm">SM</button>
-                        <button class="nds-btn nds-btn-subtle nds-btn-md">MD</button>
-                        <button class="nds-btn nds-btn-subtle nds-btn-lg">LG</button>
-                        <button class="nds-btn nds-btn-subtle nds-btn-xl">XL</button>
-                    </div>
-                </div>
-                
-                <!-- Transparent All Sizes -->
-                <div class="button-card">
-                    <div class="button-label">Transparent - All Sizes</div>
-                    <div class="button-row">
-                        <button class="nds-btn nds-btn-transparent nds-btn-sm">SM</button>
-                        <button class="nds-btn nds-btn-transparent nds-btn-md">MD</button>
-                        <button class="nds-btn nds-btn-transparent nds-btn-lg">LG</button>
-                        <button class="nds-btn nds-btn-transparent nds-btn-xl">XL</button>
+                        <button class="nds-btn nds-btn-primary nds-btn-loading nds-btn-md">Loading Button</button>
+                        <button class="nds-btn nds-btn-secondary-solid nds-btn-loading nds-btn-md">Processing Button</button>
+                        <button class="nds-btn nds-btn-transparent nds-btn-loading nds-btn-md">Saving Button</button>
                     </div>
                 </div>
             </div>
