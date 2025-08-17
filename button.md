@@ -20,7 +20,12 @@ direction: rtl
             <div class="button-showcase">
                 <div class="button-card">
                     <div class="button-label">Primary Button</div>
-                    <button class="nds-btn nds-btn-primary nds-btn-md">Primary Button</button>
+                    <div class="state-demo" style="grid-template-columns: repeat(4, 1fr);">
+                        <button class="nds-btn nds-btn-primary nds-btn-md">Default</button>
+                        <button class="nds-btn nds-btn-primary nds-btn-md hover-demo">Hover</button>
+                        <button class="nds-btn nds-btn-primary nds-btn-md active-demo">Active</button>
+                        <button class="nds-btn nds-btn-primary nds-btn-md" disabled>Disabled</button>
+                    </div>
                     <div class="button-classes">
                         <div class="usage-header">
                             <span>Usage</span>
@@ -33,7 +38,12 @@ direction: rtl
                 </div>
                 <div class="button-card">
                     <div class="button-label">Neutral Button</div>
-                    <button class="nds-btn nds-btn-neutral nds-btn-md">Neutral Button</button>
+                    <div class="state-demo" style="grid-template-columns: repeat(4, 1fr);">
+                        <button class="nds-btn nds-btn-neutral nds-btn-md">Default</button>
+                        <button class="nds-btn nds-btn-neutral nds-btn-md hover-demo">Hover</button>
+                        <button class="nds-btn nds-btn-neutral nds-btn-md active-demo">Active</button>
+                        <button class="nds-btn nds-btn-neutral nds-btn-md" disabled>Disabled</button>
+                    </div>
                     <div class="button-classes">
                         <div class="usage-header">
                             <span>Usage</span>
@@ -46,7 +56,12 @@ direction: rtl
                 </div>
                 <div class="button-card">
                     <div class="button-label">Secondary Solid</div>
-                    <button class="nds-btn nds-btn-secondary-solid nds-btn-md">Secondary Solid Button</button>
+                    <div class="state-demo" style="grid-template-columns: repeat(4, 1fr);">
+                        <button class="nds-btn nds-btn-secondary-solid nds-btn-md">Default</button>
+                        <button class="nds-btn nds-btn-secondary-solid nds-btn-md hover-demo">Hover</button>
+                        <button class="nds-btn nds-btn-secondary-solid nds-btn-md active-demo">Active</button>
+                        <button class="nds-btn nds-btn-secondary-solid nds-btn-md" disabled>Disabled</button>
+                    </div>
                     <div class="button-classes">
                         <div class="usage-header">
                             <span>Usage</span>
@@ -59,7 +74,12 @@ direction: rtl
                 </div>
                 <div class="button-card">
                     <div class="button-label">Secondary Outline</div>
-                    <button class="nds-btn nds-btn-secondary-outline nds-btn-md">Secondary Outline Button</button>
+                    <div class="state-demo" style="grid-template-columns: repeat(4, 1fr);">
+                        <button class="nds-btn nds-btn-secondary-outline nds-btn-md">Default</button>
+                        <button class="nds-btn nds-btn-secondary-outline nds-btn-md hover-demo">Hover</button>
+                        <button class="nds-btn nds-btn-secondary-outline nds-btn-md active-demo">Active</button>
+                        <button class="nds-btn nds-btn-secondary-outline nds-btn-md" disabled>Disabled</button>
+                    </div>
                     <div class="button-classes">
                         <div class="usage-header">
                             <span>Usage</span>
@@ -72,7 +92,12 @@ direction: rtl
                 </div>
                 <div class="button-card">
                     <div class="button-label">Subtle Button</div>
-                    <button class="nds-btn nds-btn-subtle nds-btn-md">Subtle Button</button>
+                    <div class="state-demo" style="grid-template-columns: repeat(4, 1fr);">
+                        <button class="nds-btn nds-btn-subtle nds-btn-md">Default</button>
+                        <button class="nds-btn nds-btn-subtle nds-btn-md hover-demo">Hover</button>
+                        <button class="nds-btn nds-btn-subtle nds-btn-md active-demo">Active</button>
+                        <button class="nds-btn nds-btn-subtle nds-btn-md" disabled>Disabled</button>
+                    </div>
                     <div class="button-classes">
                         <div class="usage-header">
                             <span>Usage</span>
@@ -85,7 +110,12 @@ direction: rtl
                 </div>
                 <div class="button-card">
                     <div class="button-label">Transparent Button</div>
-                    <button class="nds-btn nds-btn-transparent nds-btn-md">Transparent Button</button>
+                    <div class="state-demo" style="grid-template-columns: repeat(4, 1fr);">
+                        <button class="nds-btn nds-btn-transparent nds-btn-md">Default</button>
+                        <button class="nds-btn nds-btn-transparent nds-btn-md hover-demo">Hover</button>
+                        <button class="nds-btn nds-btn-transparent nds-btn-md active-demo">Active</button>
+                        <button class="nds-btn nds-btn-transparent nds-btn-md" disabled>Disabled</button>
+                    </div>
                     <div class="button-classes">
                         <div class="usage-header">
                             <span>Usage</span>
@@ -160,63 +190,6 @@ direction: rtl
                             </button>
                         </div>
                         <code>&lt;button class="nds-btn nds-btn-primary nds-btn-xl"&gt;Extra Large Button&lt;/button&gt;</code>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Interactive States -->
-<section id="buttonStates" class="content-section">
-    <div class="container">
-        <div class="sectionHead">
-            <h2 class="title">الحالات التفاعلية</h2>
-            <p class="desc">جميع الحالات: عادي، تمرير، نشط، معطل</p>
-        </div>
-        <div class="sectionContent">
-            <div class="button-showcase">
-                <!-- Primary States -->
-                <div class="button-card">
-                    <div class="button-label">Primary Button States</div>
-                    <div class="state-demo" style="grid-template-columns: repeat(4, 1fr);">
-                        <button class="nds-btn nds-btn-primary nds-btn-md">Default</button>
-                        <button class="nds-btn nds-btn-primary nds-btn-md hover-demo">Hover</button>
-                        <button class="nds-btn nds-btn-primary nds-btn-md active-demo">Active</button>
-                        <button class="nds-btn nds-btn-primary nds-btn-md" disabled>Disabled</button>
-                    </div>
-                </div>
-                
-                <!-- Neutral States -->
-                <div class="button-card">
-                    <div class="button-label">Neutral Button States</div>
-                    <div class="state-demo" style="grid-template-columns: repeat(4, 1fr);">
-                        <button class="nds-btn nds-btn-neutral nds-btn-md">Default</button>
-                        <button class="nds-btn nds-btn-neutral nds-btn-md hover-demo">Hover</button>
-                        <button class="nds-btn nds-btn-neutral nds-btn-md active-demo">Active</button>
-                        <button class="nds-btn nds-btn-neutral nds-btn-md" disabled>Disabled</button>
-                    </div>
-                </div>
-                
-                <!-- Secondary Outline States -->
-                <div class="button-card">
-                    <div class="button-label">Secondary Outline States</div>
-                    <div class="state-demo" style="grid-template-columns: repeat(4, 1fr);">
-                        <button class="nds-btn nds-btn-secondary-outline nds-btn-md">Default</button>
-                        <button class="nds-btn nds-btn-secondary-outline nds-btn-md hover-demo">Hover</button>
-                        <button class="nds-btn nds-btn-secondary-outline nds-btn-md active-demo">Active</button>
-                        <button class="nds-btn nds-btn-secondary-outline nds-btn-md" disabled>Disabled</button>
-                    </div>
-                </div>
-                
-                <!-- Transparent States -->
-                <div class="button-card">
-                    <div class="button-label">Transparent Button States</div>
-                    <div class="state-demo" style="grid-template-columns: repeat(4, 1fr);">
-                        <button class="nds-btn nds-btn-transparent nds-btn-md">Default</button>
-                        <button class="nds-btn nds-btn-transparent nds-btn-md hover-demo">Hover</button>
-                        <button class="nds-btn nds-btn-transparent nds-btn-md active-demo">Active</button>
-                        <button class="nds-btn nds-btn-transparent nds-btn-md" disabled>Disabled</button>
                     </div>
                 </div>
             </div>
@@ -612,8 +585,12 @@ document.addEventListener('DOMContentLoaded', function() {
         .active-demo.nds-btn-primary { background-color: var(--colors-primary-sa-flag-800); border-color: var(--colors-primary-sa-flag-800); }
         .hover-demo.nds-btn-neutral { background-color: var(--colors-neutral-900); border-color: var(--colors-neutral-900); }
         .active-demo.nds-btn-neutral { background-color: var(--colors-neutral-950); border-color: var(--colors-neutral-950); }
+        .hover-demo.nds-btn-secondary-solid { background-color: var(--background-neutral-200); border-color: var(--border-neutral-secondary); }
+        .active-demo.nds-btn-secondary-solid { background-color: var(--background-neutral-300); border-color: var(--colors-neutral-400); }
         .hover-demo.nds-btn-secondary-outline { background-color: var(--colors-neutral-50); border-color: var(--border-neutral-secondary); }
         .active-demo.nds-btn-secondary-outline { background-color: var(--colors-neutral-100); border-color: var(--colors-neutral-400); }
+        .hover-demo.nds-btn-subtle { background-color: var(--background-neutral-100); }
+        .active-demo.nds-btn-subtle { background-color: var(--background-neutral-200); }
         .hover-demo.nds-btn-transparent { background-color: var(--colors-primary-sa-flag-50); color: var(--colors-primary-sa-flag-700); }
         .active-demo.nds-btn-transparent { background-color: var(--colors-primary-sa-flag-100); color: var(--colors-primary-sa-flag-800); }
         .nds-btn-active { background-color: var(--colors-primary-sa-flag-600-primary) !important; color: var(--text-oncolor-primary) !important; border-color: var(--colors-primary-sa-flag-600-primary) !important; }
