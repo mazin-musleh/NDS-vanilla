@@ -591,8 +591,8 @@ document.addEventListener('DOMContentLoaded', function() {
         .active-demo.nds-btn-secondary-outline { background-color: var(--button-background-neutral-pressed); border-color: var(--border-neutral-primary); }
         .hover-demo.nds-btn-subtle { background-color: var(--button-background-neutral-default); border-color: var(--button-background-neutral-default); }
         .active-demo.nds-btn-subtle { background-color: var(--button-background-neutral-pressed); border-color: var(--border-neutral-secondary); }
-        .hover-demo.nds-btn-transparent { background-color: var(--button-background-transparent-hovered); color: var(--button-label-transparent-hovered-on-color); }
-        .active-demo.nds-btn-transparent { background-color: var(--button-background-transparent-pressed); color: var(--button-label-transparent-pressed-on-color); }
+        .hover-demo.nds-btn-transparent { background-color: var(--button-background-transparent-hovered); color: var(--button-background-primary-hovered); border-color: var(--button-background-transparent-default); }
+        .active-demo.nds-btn-transparent { background-color: var(--button-background-transparent-pressed); color: var(--button-background-primary-pressed); border-color: var(--button-background-transparent-default); }
         .nds-btn-active { background-color: var(--button-background-primary-selected) !important; color: var(--text-oncolor-primary) !important; border-color: var(--button-background-primary-selected) !important; }
     `;
     document.head.appendChild(demoStyle);
