@@ -19,13 +19,8 @@
     vertical-align: middle;
 }
 
-.nds-btn:focus {
-    outline: 2px solid var(--colors-base-black) !important;
-    outline-offset: -2px !important;
-    box-shadow: inset 0 0 0 4px var(--colors-base-white) !important;
-}
-
-.nds-btn.focus {
+.nds-btn.focus,
+.nds-btn:focus-visible {
     outline: 2px solid var(--colors-base-black) !important;
     outline-offset: -2px !important;
     box-shadow: inset 0 0 0 4px var(--colors-base-white) !important;
@@ -41,41 +36,56 @@
 .nds-btn-sm {
     height: 36px;
     padding: 0 var(--spacing-md);
-    font-size: 0.875rem; /* 14px */
-    line-height: 1.25rem; /* 20px */
+    font-size: 0.875rem;
+    /* 14px */
+    line-height: 1.25rem;
+    /* 20px */
 }
 
 .nds-btn-md {
     height: 44px;
     padding: 0 var(--spacing-xl);
-    font-size: 1rem; /* 16px */
-    line-height: 1.5rem; /* 24px */
+    font-size: 1rem;
+    /* 16px */
+    line-height: 1.5rem;
+    /* 24px */
 }
 
 .nds-btn-lg {
     height: 52px;
     padding: 0 var(--spacing-2xl);
-    font-size: 1.125rem; /* 18px */
-    line-height: 1.75rem; /* 28px */
+    font-size: 1.125rem;
+    /* 18px */
+    line-height: 1.75rem;
+    /* 28px */
 }
 
 .nds-btn-xl {
     height: 60px;
     padding: 0 var(--spacing-3xl);
-    font-size: 1.25rem; /* 20px */
-    line-height: 1.875rem; /* 30px */
+    font-size: 1.25rem;
+    /* 20px */
+    line-height: 1.875rem;
+    /* 30px */
 }
 
 /* ===== PRIMARY BUTTON (Green) ===== */
 .nds-btn-primary {
     background-color: var(--button-background-primary-default);
-    color: var(--text-oncolor-primary);
     border-color: var(--button-background-primary-default);
+    color: var(--text-oncolor-primary);
 }
 
 .nds-btn-primary:hover {
     background-color: var(--button-background-primary-hovered);
     border-color: var(--button-background-primary-hovered);
+    color: var(--text-oncolor-primary);
+}
+
+.nds-btn-primary.active,
+.nds-btn-primary.selected {
+    background-color: var(--button-background-primary-selected);
+    border-color: var(--button-background-primary-selected);
     color: var(--text-oncolor-primary);
 }
 
@@ -87,20 +97,29 @@
 
 .nds-btn-primary:disabled {
     background-color: var(--background-disabled);
-    color: var(--text-default-disabled);
     border-color: var(--background-disabled);
+    color: var(--text-default-disabled);
 }
 
 /* ===== NEUTRAL BUTTON (Dark Gray) ===== */
 .nds-btn-neutral {
     background-color: var(--button-background-black-default);
-    color: var(--text-oncolor-primary);
     border-color: var(--button-background-black-default);
+    color: var(--text-oncolor-primary);
 }
+
 
 .nds-btn-neutral:hover {
     background-color: var(--button-background-black-hovered);
     border-color: var(--button-background-black-hovered);
+    color: var(--text-oncolor-primary);
+}
+
+
+.nds-btn-neutral.active,
+.nds-btn-neutral.selected {
+    background-color: var(--button-background-black-selected);
+    border-color: var(--button-background-black-selected);
     color: var(--text-oncolor-primary);
 }
 
@@ -112,108 +131,136 @@
 
 .nds-btn-neutral:disabled {
     background-color: var(--background-disabled);
-    color: var(--text-default-disabled);
     border-color: var(--background-disabled);
+    color: var(--text-default-disabled);
 }
 
 /* ===== SECONDARY SOLID BUTTON (Light Gray) ===== */
 .nds-btn-secondary-solid {
     background-color: var(--button-background-neutral-default);
-    color: var(--text-default);
     border-color: var(--button-background-neutral-default);
+    color: var(--text-default);
 }
 
 .nds-btn-secondary-solid:hover {
     background-color: var(--button-background-neutral-hovered);
-    border-color: var(--button-background-neutral-hovered);
+    border-color: var(--border-neutral-primary);
+    color: var(--text-default);
+}
+
+.nds-btn-secondary-solid.active,
+.nds-btn-secondary-solid.selected {
+    background-color: var(--button-background-neutral-selected);
+    border-color: var(--border-neutral-secondary);
     color: var(--text-default);
 }
 
 .nds-btn-secondary-solid:active {
     background-color: var(--button-background-neutral-pressed);
-    border-color: var(--button-background-neutral-pressed);
+    border-color: var(--border-neutral-primary);
     color: var(--text-default);
 }
 
 .nds-btn-secondary-solid:disabled {
     background-color: var(--background-disabled);
+    border-color: var(--button-background-neutral-default);
     color: var(--text-default-disabled);
-    border-color: var(--border-disabled);
 }
 
 /* ===== SECONDARY OUTLINE BUTTON ===== */
 .nds-btn-secondary-outline {
-    background-color: var(--button-background-transparent-default);
-    color: var(--text-default);
-    border-color: var(--border-neutral-primary);
-}
-
-.nds-btn-secondary-outline:hover {
     background-color: var(--button-background-transparent-hovered);
     border-color: var(--border-neutral-secondary);
     color: var(--text-default);
 }
 
+.nds-btn-secondary-outline:hover {
+    background-color: var(--button-background-neutral-default);
+    border-color: var(--border-neutral-secondary);
+    color: var(--text-default);
+}
+
+.nds-btn-secondary-outline.active,
+.nds-btn-secondary-outline.selected {
+    background-color: var(--button-background-neutral-selected);
+    border-color: var(--border-neutral-primary);
+    color: var(--text-default);
+}
+
 .nds-btn-secondary-outline:active {
-    background-color: var(--button-background-transparent-pressed);
-    border-color: var(--button-background-transparent-pressed);
+    background-color: var(--button-background-neutral-pressed);
+    border-color: var(--border-neutral-primary);
     color: var(--text-default);
 }
 
 .nds-btn-secondary-outline:disabled {
     background-color: var(--button-background-transparent-default);
+    border-color: var(--border-neutral-secondary);
     color: var(--text-default-disabled);
-    border-color: var(--border-disabled);
 }
 
 /* ===== SUBTLE BUTTON ===== */
 .nds-btn-subtle {
     background-color: var(--button-background-transparent-default);
-    color: var(--text-default);
     border-color: var(--button-background-transparent-default);
+    color: var(--text-default);
 }
 
 .nds-btn-subtle:hover {
-    background-color: var(--button-background-transparent-hovered);
+    background-color: var(--button-background-neutral-default);
+    border-color: var(--button-background-neutral-default);
+    color: var(--text-default);
+}
+
+.nds-btn-subtle.active,
+.nds-btn-subtle.selected {
+    background-color: var(--button-background-neutral-selected);
     border-color: var(--button-background-transparent-default);
     color: var(--text-default);
 }
 
 .nds-btn-subtle:active {
-    background-color: var(--button-background-transparent-pressed);
-    border-color: var(--button-background-transparent-default);
+    background-color: var(--button-background-neutral-pressed);
+    border-color: var(--border-neutral-secondary);
     color: var(--text-default);
 }
 
 .nds-btn-subtle:disabled {
     background-color: var(--button-background-transparent-default);
-    color: var(--text-default-disabled);
     border-color: var(--button-background-transparent-default);
+    color: var(--text-default-disabled);
 }
 
 /* ===== TRANSPARENT BUTTON ===== */
 .nds-btn-transparent {
     background-color: var(--button-background-transparent-default);
-    color: var(--button-background-primary-default);
     border-color: var(--button-background-transparent-default);
+    color: var(--text-default);
 }
 
 .nds-btn-transparent:hover {
     background-color: var(--button-background-transparent-hovered);
     border-color: var(--button-background-transparent-default);
-    color: var(--button-label-transparent-hovered-on-color);
+    color: var(--button-background-primary-hovered);
+}
+
+.nds-btn-transparent.active,
+.nds-btn-transparent.selected {
+    background-color: var(--button-background-transparent-selected);
+    border-color: var(--button-background-transparent-default);
+    color: var(--button-background-primary-selected);
 }
 
 .nds-btn-transparent:active {
     background-color: var(--button-background-transparent-pressed);
     border-color: var(--button-background-transparent-default);
-    color: var(--button-label-transparent-pressed-on-color);
+    color: var(--button-background-primary-pressed);
 }
 
 .nds-btn-transparent:disabled {
     background-color: var(--button-background-transparent-default);
-    color: var(--text-default-disabled);
     border-color: var(--button-background-transparent-default);
+    color: var(--text-default-disabled);
 }
 
 /* ===== DESTRUCTIVE VARIANTS (Red) ===== */
@@ -435,8 +482,13 @@
 }
 
 @keyframes nds-btn-spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 /* ===== SHOWCASE STYLES ===== */
@@ -514,16 +566,16 @@
         grid-template-columns: 1fr;
         gap: var(--spacing-3xl);
     }
-    
+
     .button-row {
         flex-direction: column;
         gap: var(--spacing-md);
     }
-    
+
     .button-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .state-demo {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -534,7 +586,7 @@
     .nds-btn {
         border-width: 2px;
     }
-    
+
     .nds-btn:focus {
         outline-width: 3px;
     }
