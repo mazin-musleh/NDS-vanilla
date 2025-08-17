@@ -1,0 +1,195 @@
+---
+layout: page
+title: الأزرار
+hero_title: مكونات الأزرار
+hero_description: مجموعة شاملة من أنماط الأزرار المختلفة وفقاً لنظام التصميم الموحد
+hero_image: /assets/img/sliderShapeGray.svg
+breadcrumb: ["المكونات", "الأزرار"]
+lang: ar
+direction: rtl
+---
+
+<link rel="stylesheet" href="{{ '/assets/css/nds-button.css' | relative_url }}">
+
+<div class="nds-content-container">
+    <section class="component-section">
+        <h2>الأزرار الأساسية</h2>
+        <p>الأزرار الأساسية المستخدمة في النظام مع الألوان والأحجام المختلفة.</p>
+        
+        <div class="component-demo">
+            <div class="button-group">
+                <button class="nds-btn nds-btn-primary">أساسي</button>
+                <button class="nds-btn nds-btn-secondary">ثانوي</button>
+                <button class="nds-btn nds-btn-tertiary">ثالثي</button>
+                <button class="nds-btn nds-btn-neutral">محايد</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="component-section">
+        <h2>أزرار الحالات</h2>
+        <p>أزرار للحالات المختلفة مثل النجاح والخطأ والتحذير.</p>
+        
+        <div class="component-demo">
+            <div class="button-group">
+                <button class="nds-btn nds-btn-success">نجح</button>
+                <button class="nds-btn nds-btn-warning">تحذير</button>
+                <button class="nds-btn nds-btn-error">خطأ</button>
+                <button class="nds-btn nds-btn-info">معلومات</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="component-section">
+        <h2>أحجام الأزرار</h2>
+        <p>الأزرار متوفرة بأحجام مختلفة لتناسب السياقات المختلفة.</p>
+        
+        <div class="component-demo">
+            <div class="button-group">
+                <button class="nds-btn nds-btn-primary nds-btn-sm">صغير</button>
+                <button class="nds-btn nds-btn-primary nds-btn-md">متوسط</button>
+                <button class="nds-btn nds-btn-primary nds-btn-lg">كبير</button>
+                <button class="nds-btn nds-btn-primary nds-btn-xl">كبير جداً</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="component-section">
+        <h2>أزرار مع الأيقونات</h2>
+        <p>أزرار تحتوي على أيقونات لتوضيح الوظيفة بصرياً.</p>
+        
+        <div class="component-demo">
+            <div class="button-group">
+                <button class="nds-btn nds-btn-primary">
+                    <i class="hgi hgi-stroke hgi-plus-sign"></i>
+                    إضافة
+                </button>
+                <button class="nds-btn nds-btn-secondary">
+                    <i class="hgi hgi-stroke hgi-edit-02"></i>
+                    تعديل
+                </button>
+                <button class="nds-btn nds-btn-error">
+                    <i class="hgi hgi-stroke hgi-delete-02"></i>
+                    حذف
+                </button>
+                <button class="nds-btn nds-btn-info">
+                    <i class="hgi hgi-stroke hgi-download-01"></i>
+                    تحميل
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section class="component-section">
+        <h2>أزرار الأيقونات فقط</h2>
+        <p>أزرار تحتوي على أيقونات فقط للمساحات المحدودة.</p>
+        
+        <div class="component-demo">
+            <div class="button-group">
+                <button class="nds-btn nds-btn-primary nds-btn-icon" aria-label="إضافة">
+                    <i class="hgi hgi-stroke hgi-plus-sign"></i>
+                </button>
+                <button class="nds-btn nds-btn-secondary nds-btn-icon" aria-label="تعديل">
+                    <i class="hgi hgi-stroke hgi-edit-02"></i>
+                </button>
+                <button class="nds-btn nds-btn-error nds-btn-icon" aria-label="حذف">
+                    <i class="hgi hgi-stroke hgi-delete-02"></i>
+                </button>
+                <button class="nds-btn nds-btn-neutral nds-btn-icon" aria-label="إعدادات">
+                    <i class="hgi hgi-stroke hgi-settings-02"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section class="component-section">
+        <h2>أزرار شفافة</h2>
+        <p>أزرار بخلفية شفافة للاستخدام في السياقات الخاصة.</p>
+        
+        <div class="component-demo">
+            <div class="button-group">
+                <button class="nds-btn nds-btn-ghost nds-btn-primary">شفاف أساسي</button>
+                <button class="nds-btn nds-btn-ghost nds-btn-secondary">شفاف ثانوي</button>
+                <button class="nds-btn nds-btn-ghost nds-btn-error">شفاف خطأ</button>
+                <button class="nds-btn nds-btn-ghost nds-btn-success">شفاف نجح</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="component-section">
+        <h2>أزرار معطلة</h2>
+        <p>حالة الأزرار عندما تكون معطلة وغير قابلة للتفاعل.</p>
+        
+        <div class="component-demo">
+            <div class="button-group">
+                <button class="nds-btn nds-btn-primary" disabled>أساسي معطل</button>
+                <button class="nds-btn nds-btn-secondary" disabled>ثانوي معطل</button>
+                <button class="nds-btn nds-btn-success" disabled>نجح معطل</button>
+                <button class="nds-btn nds-btn-error" disabled>خطأ معطل</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="component-section">
+        <h2>أزرار بعرض كامل</h2>
+        <p>أزرار تمتد لتشغل العرض الكامل للحاوي.</p>
+        
+        <div class="component-demo">
+            <div class="button-group-vertical">
+                <button class="nds-btn nds-btn-primary nds-btn-full">زر بعرض كامل</button>
+                <button class="nds-btn nds-btn-secondary nds-btn-full">
+                    <i class="hgi hgi-stroke hgi-arrow-left-01"></i>
+                    زر بعرض كامل مع أيقونة
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section class="component-section">
+        <h2>مجموعات الأزرار</h2>
+        <p>أزرار مجمعة معاً لتشكيل وحدة واحدة.</p>
+        
+        <div class="component-demo">
+            <div class="nds-btn-group">
+                <button class="nds-btn nds-btn-secondary">الأول</button>
+                <button class="nds-btn nds-btn-secondary nds-btn-active">الثاني</button>
+                <button class="nds-btn nds-btn-secondary">الثالث</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="component-section">
+        <h2>أزرار التبديل</h2>
+        <p>أزرار يمكن تبديلها بين حالتين مختلفتين.</p>
+        
+        <div class="component-demo">
+            <div class="button-group">
+                <button class="nds-btn nds-btn-toggle" data-toggle="button">
+                    <i class="hgi hgi-stroke hgi-heart-01"></i>
+                    إعجاب
+                </button>
+                <button class="nds-btn nds-btn-toggle nds-btn-active" data-toggle="button">
+                    <i class="hgi hgi-stroke hgi-bookmark-01"></i>
+                    محفوظ
+                </button>
+                <button class="nds-btn nds-btn-toggle" data-toggle="button">
+                    <i class="hgi hgi-stroke hgi-share-01"></i>
+                    مشاركة
+                </button>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+// Toggle button functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const toggleButtons = document.querySelectorAll('[data-toggle="button"]');
+    
+    toggleButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            this.classList.toggle('nds-btn-active');
+        });
+    });
+});
+</script>
