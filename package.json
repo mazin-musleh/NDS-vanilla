@@ -1,0 +1,12 @@
+{
+  "name": "nds-jekyll-site",
+  "version": "1.0.0",
+  "description": "National Design System Jekyll Site",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["jekyll", "design-system", "arabic"],
+  "author": "Mazin Musleh",
+  "license": "ISC"
+}
