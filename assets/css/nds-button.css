@@ -59,7 +59,9 @@
     line-height: 1.875rem; /* 30px */
 }
 
-/* Primary Button */
+/* ===== BUTTON TYPES ===== */
+
+/* 1. Primary Button */
 .nds-btn-primary {
     background-color: var(--colors-primary-sa-flag-600-primary);
     color: var(--text-oncolor-primary);
@@ -78,110 +80,265 @@
     color: var(--text-oncolor-primary);
 }
 
-.nds-btn-primary:focus {
-    background-color: var(--colors-primary-sa-flag-600-primary);
-    border-color: var(--colors-primary-sa-flag-600-primary);
-    color: var(--text-oncolor-primary);
-    outline: 2px solid var(--colors-primary-sa-flag-600-primary);
-    outline-offset: 2px;
-}
-
 .nds-btn-primary:disabled {
     background-color: var(--colors-neutral-200);
     color: var(--colors-neutral-400);
     border-color: var(--colors-neutral-200);
 }
 
-/* Secondary Button */
-.nds-btn-secondary {
-    background-color: var(--colors-neutral-100);
-    color: var(--text-default);
-    border-color: var(--colors-neutral-300);
+/* 2. Neutral Button */
+.nds-btn-neutral {
+    background-color: var(--colors-neutral-800);
+    color: var(--text-oncolor-primary);
+    border-color: var(--colors-neutral-800);
 }
 
-.nds-btn-secondary:hover {
+.nds-btn-neutral:hover {
+    background-color: var(--colors-neutral-900);
+    border-color: var(--colors-neutral-900);
+    color: var(--text-oncolor-primary);
+}
+
+.nds-btn-neutral:active {
+    background-color: var(--colors-neutral-950);
+    border-color: var(--colors-neutral-950);
+    color: var(--text-oncolor-primary);
+}
+
+.nds-btn-neutral:disabled {
     background-color: var(--colors-neutral-200);
+    color: var(--colors-neutral-400);
+    border-color: var(--colors-neutral-200);
+}
+
+/* 3. Secondary Solid Button */
+.nds-btn-secondary-solid {
+    background-color: var(--colors-neutral-100);
+    color: var(--text-default);
+    border-color: var(--border-neutral-primary);
+}
+
+.nds-btn-secondary-solid:hover {
+    background-color: var(--colors-neutral-200);
+    border-color: var(--border-neutral-secondary);
+    color: var(--text-default);
+}
+
+.nds-btn-secondary-solid:active {
+    background-color: var(--colors-neutral-300);
     border-color: var(--colors-neutral-400);
     color: var(--text-default);
 }
 
-.nds-btn-secondary:active {
-    background-color: var(--colors-neutral-300);
-    border-color: var(--colors-neutral-500);
-    color: var(--text-default);
-}
-
-.nds-btn-secondary:focus {
-    background-color: var(--colors-neutral-100);
-    border-color: var(--colors-neutral-300);
-    color: var(--text-default);
-    outline: 2px solid var(--colors-primary-sa-flag-600-primary);
-    outline-offset: 2px;
-}
-
-.nds-btn-secondary:disabled {
+.nds-btn-secondary-solid:disabled {
     background-color: var(--colors-neutral-100);
     color: var(--colors-neutral-400);
     border-color: var(--colors-neutral-200);
 }
 
-/* Ghost Button */
-.nds-btn-ghost {
+/* 4. Secondary Outline Button */
+.nds-btn-secondary-outline {
     background-color: transparent;
-    color: var(--colors-primary-sa-flag-600-primary);
-    border-color: var(--colors-primary-sa-flag-600-primary);
+    color: var(--text-default);
+    border-color: var(--border-neutral-primary);
 }
 
-.nds-btn-ghost:hover {
+.nds-btn-secondary-outline:hover {
+    background-color: var(--colors-neutral-50);
+    border-color: var(--border-neutral-secondary);
+    color: var(--text-default);
+}
+
+.nds-btn-secondary-outline:active {
+    background-color: var(--colors-neutral-100);
+    border-color: var(--colors-neutral-400);
+    color: var(--text-default);
+}
+
+.nds-btn-secondary-outline:disabled {
+    background-color: transparent;
+    color: var(--colors-neutral-400);
+    border-color: var(--colors-neutral-200);
+}
+
+/* 5. Subtle Button */
+.nds-btn-subtle {
+    background-color: transparent;
+    color: var(--text-default);
+    border-color: transparent;
+}
+
+.nds-btn-subtle:hover {
+    background-color: var(--colors-neutral-100);
+    border-color: transparent;
+    color: var(--text-default);
+}
+
+.nds-btn-subtle:active {
+    background-color: var(--colors-neutral-200);
+    border-color: transparent;
+    color: var(--text-default);
+}
+
+.nds-btn-subtle:disabled {
+    background-color: transparent;
+    color: var(--colors-neutral-400);
+    border-color: transparent;
+}
+
+/* 6. Transparent Button */
+.nds-btn-transparent {
+    background-color: transparent;
+    color: var(--colors-primary-sa-flag-600-primary);
+    border-color: transparent;
+}
+
+.nds-btn-transparent:hover {
     background-color: var(--colors-primary-sa-flag-50);
+    border-color: transparent;
     color: var(--colors-primary-sa-flag-700);
-    border-color: var(--colors-primary-sa-flag-700);
 }
 
-.nds-btn-ghost:active {
+.nds-btn-transparent:active {
     background-color: var(--colors-primary-sa-flag-100);
+    border-color: transparent;
     color: var(--colors-primary-sa-flag-800);
-    border-color: var(--colors-primary-sa-flag-800);
 }
 
-.nds-btn-ghost:focus {
-    background-color: transparent;
-    color: var(--colors-primary-sa-flag-600-primary);
-    border-color: var(--colors-primary-sa-flag-600-primary);
-    outline: 2px solid var(--colors-primary-sa-flag-600-primary);
-    outline-offset: 2px;
-}
-
-.nds-btn-ghost:disabled {
+.nds-btn-transparent:disabled {
     background-color: transparent;
     color: var(--colors-neutral-400);
-    border-color: var(--colors-neutral-200);
+    border-color: transparent;
+}
+
+/* ===== BUTTON OPTIONS ===== */
+
+/* Destructive Variants */
+.nds-btn-destructive.nds-btn-primary {
+    background-color: var(--colors-red-600);
+    border-color: var(--colors-red-600);
+}
+
+.nds-btn-destructive.nds-btn-primary:hover {
+    background-color: var(--colors-red-700);
+    border-color: var(--colors-red-700);
+}
+
+.nds-btn-destructive.nds-btn-primary:active {
+    background-color: var(--colors-red-800);
+    border-color: var(--colors-red-800);
+}
+
+.nds-btn-destructive.nds-btn-secondary-outline {
+    color: var(--colors-red-600);
+    border-color: var(--colors-red-600);
+}
+
+.nds-btn-destructive.nds-btn-secondary-outline:hover {
+    background-color: var(--colors-red-50);
+    color: var(--colors-red-700);
+    border-color: var(--colors-red-700);
+}
+
+.nds-btn-destructive.nds-btn-secondary-outline:active {
+    background-color: var(--colors-red-100);
+    color: var(--colors-red-800);
+    border-color: var(--colors-red-800);
+}
+
+.nds-btn-destructive.nds-btn-transparent {
+    color: var(--colors-red-600);
+}
+
+.nds-btn-destructive.nds-btn-transparent:hover {
+    background-color: var(--colors-red-50);
+    color: var(--colors-red-700);
+}
+
+.nds-btn-destructive.nds-btn-transparent:active {
+    background-color: var(--colors-red-100);
+    color: var(--colors-red-800);
+}
+
+/* On-color Variants (for dark backgrounds) */
+.nds-btn-oncolor.nds-btn-primary {
+    background-color: var(--colors-base-white);
+    color: var(--colors-primary-sa-flag-600-primary);
+    border-color: var(--colors-base-white);
+}
+
+.nds-btn-oncolor.nds-btn-primary:hover {
+    background-color: var(--colors-alpha-alpha-white-90);
+    border-color: var(--colors-alpha-alpha-white-90);
+}
+
+.nds-btn-oncolor.nds-btn-primary:active {
+    background-color: var(--colors-alpha-alpha-white-80);
+    border-color: var(--colors-alpha-alpha-white-80);
+}
+
+.nds-btn-oncolor.nds-btn-secondary-outline {
+    background-color: transparent;
+    color: var(--colors-base-white);
+    border-color: var(--colors-alpha-alpha-white-60);
+}
+
+.nds-btn-oncolor.nds-btn-secondary-outline:hover {
+    background-color: var(--colors-alpha-alpha-white-10);
+    border-color: var(--colors-alpha-alpha-white-80);
+}
+
+.nds-btn-oncolor.nds-btn-secondary-outline:active {
+    background-color: var(--colors-alpha-alpha-white-20);
+    border-color: var(--colors-base-white);
+}
+
+.nds-btn-oncolor.nds-btn-transparent {
+    color: var(--colors-base-white);
+}
+
+.nds-btn-oncolor.nds-btn-transparent:hover {
+    background-color: var(--colors-alpha-alpha-white-10);
+}
+
+.nds-btn-oncolor.nds-btn-transparent:active {
+    background-color: var(--colors-alpha-alpha-white-20);
 }
 
 /* Icon-only Buttons */
-.nds-btn-icon {
+.nds-btn-icon-only {
     aspect-ratio: 1;
     padding: 0;
 }
 
-.nds-btn-icon.nds-btn-sm {
+.nds-btn-icon-only.nds-btn-sm {
     width: 36px;
     padding: 0;
 }
 
-.nds-btn-icon.nds-btn-md {
+.nds-btn-icon-only.nds-btn-md {
     width: 44px;
     padding: 0;
 }
 
-.nds-btn-icon.nds-btn-lg {
+.nds-btn-icon-only.nds-btn-lg {
     width: 52px;
     padding: 0;
 }
 
-.nds-btn-icon.nds-btn-xl {
+.nds-btn-icon-only.nds-btn-xl {
     width: 60px;
     padding: 0;
+}
+
+/* Lead Icon (icon on the left) */
+.nds-btn-lead-icon {
+    flex-direction: row;
+}
+
+/* Trail Icon (icon on the right) */
+.nds-btn-trail-icon {
+    flex-direction: row-reverse;
 }
 
 /* Button Icons */
@@ -239,37 +396,6 @@
     border-right-width: 1px;
 }
 
-.nds-btn-group .nds-btn:hover + .nds-btn,
-.nds-btn-group .nds-btn:focus + .nds-btn,
-.nds-btn-group .nds-btn.nds-btn-active + .nds-btn {
-    border-right-width: 0;
-}
-
-/* Toggle Buttons */
-.nds-btn-toggle {
-    background-color: var(--colors-neutral-100);
-    color: var(--text-default);
-    border-color: var(--colors-neutral-300);
-}
-
-.nds-btn-toggle:hover {
-    background-color: var(--colors-neutral-200);
-    border-color: var(--colors-neutral-400);
-    color: var(--text-default);
-}
-
-.nds-btn-toggle.nds-btn-active {
-    background-color: var(--colors-primary-sa-flag-600-primary);
-    color: var(--text-oncolor-primary);
-    border-color: var(--colors-primary-sa-flag-600-primary);
-}
-
-.nds-btn-toggle.nds-btn-active:hover {
-    background-color: var(--colors-primary-sa-flag-700);
-    border-color: var(--colors-primary-sa-flag-700);
-    color: var(--text-oncolor-primary);
-}
-
 /* Loading State */
 .nds-btn-loading {
     position: relative;
@@ -291,15 +417,18 @@
     animation: nds-btn-spin 1s linear infinite;
 }
 
-.nds-btn-loading.nds-btn-primary::after {
+.nds-btn-loading.nds-btn-primary::after,
+.nds-btn-loading.nds-btn-neutral::after {
     border-top-color: var(--text-oncolor-primary);
 }
 
-.nds-btn-loading.nds-btn-secondary::after {
+.nds-btn-loading.nds-btn-secondary-solid::after,
+.nds-btn-loading.nds-btn-secondary-outline::after,
+.nds-btn-loading.nds-btn-subtle::after {
     border-top-color: var(--text-default);
 }
 
-.nds-btn-loading.nds-btn-ghost::after {
+.nds-btn-loading.nds-btn-transparent::after {
     border-top-color: var(--colors-primary-sa-flag-600-primary);
 }
 
@@ -308,58 +437,10 @@
     100% { transform: rotate(360deg); }
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .nds-btn-group {
-        flex-direction: column;
-    }
-    
-    .nds-btn-group .nds-btn {
-        border-radius: 0;
-        border-bottom-width: 0;
-        border-right-width: 1px;
-    }
-    
-    .nds-btn-group .nds-btn:first-child {
-        border-top-left-radius: var(--radius-md);
-        border-top-right-radius: var(--radius-md);
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
-    }
-    
-    .nds-btn-group .nds-btn:last-child {
-        border-top-left-radius: 0;
-        border-top-right-radius: 0;
-        border-bottom-left-radius: var(--radius-md);
-        border-bottom-right-radius: var(--radius-md);
-        border-bottom-width: 1px;
-    }
-}
-
-/* High Contrast Mode Support */
-@media (prefers-contrast: high) {
-    .nds-btn {
-        border-width: 2px;
-    }
-    
-    .nds-btn:focus {
-        outline-width: 3px;
-    }
-}
-
-/* Print Styles */
-@media print {
-    .nds-btn {
-        background: transparent !important;
-        color: #000 !important;
-        border: 1px solid #000 !important;
-    }
-}
-
-/* Button Showcase Styles */
+/* ===== BUTTON SHOWCASE STYLES ===== */
 .button-showcase {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: var(--spacing-4xl);
     margin-top: var(--spacing-4xl);
 }
@@ -368,7 +449,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--spacing-md);
+    gap: var(--spacing-lg);
     padding: var(--spacing-3xl);
     border: 1px solid var(--colors-neutral-200);
     border-radius: var(--radius-md);
@@ -399,6 +480,22 @@
     flex-wrap: wrap;
 }
 
+.button-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: var(--spacing-lg);
+    width: 100%;
+}
+
+/* Dark background for on-color examples */
+.dark-bg {
+    background-color: var(--colors-neutral-800);
+    padding: var(--spacing-3xl);
+    border-radius: var(--radius-md);
+    margin: var(--spacing-lg) 0;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
     .button-showcase {
         grid-template-columns: 1fr;
@@ -408,5 +505,29 @@
     .button-row {
         flex-direction: column;
         gap: var(--spacing-md);
+    }
+    
+    .button-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+    .nds-btn {
+        border-width: 2px;
+    }
+    
+    .nds-btn:focus {
+        outline-width: 3px;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .nds-btn {
+        background: transparent !important;
+        color: #000 !important;
+        border: 1px solid #000 !important;
     }
 }
