@@ -1775,6 +1775,11 @@ html[dir="ltr"] .nds-sideMenu ul ul li.has-sub ul {
     transform: translateY(-50%);
 }
 
+html[dir="ltr"] .nds-sideMenu>nav>ul>li>a:before {
+    right: unset;
+    left: 0;
+}
+
 .nds-sideMenu>nav>ul>li>a:hover:before {
     display: block;
     background-color: var(--background-neutral-400);

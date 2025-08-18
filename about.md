@@ -3,16 +3,18 @@ layout: page
 title: About
 hero_image: /assets/img/sliderShapeGray.svg
 permalink: /about/
+lang: en
+direction: ltr
 ---
 
 <!-- Content Sections -->
 <section id="whoWeAre" class="content-section">
     <div class="container">
         <div class="sectionHead">
-            <h2 id="whoWeAreHeading" class="title">من نحن</h2>
-            <p class="desc">مؤسسة تعليمية حكومية تقدم التعليم العالي والتعلم مدى الحياة</p>
-            <button type="button" class="btn btn-primary readMore" aria-label="قراءة المزيد">
-                قراءة المزيد <i class="bi bi-arrow-left" aria-hidden="true"></i>
+            <h2 id="whoWeAreHeading" class="title">Who We Are</h2>
+            <p class="desc">A government educational institution providing higher education and lifelong learning</p>
+            <button type="button" class="btn btn-primary readMore" aria-label="Read More">
+                Read More <i class="bi bi-arrow-right" aria-hidden="true"></i>
             </button>
         </div>
         <div class="sectionContent">
@@ -20,22 +22,22 @@ permalink: /about/
                 <div class="statisticCard">
                     <i class="hgi hgi-stroke hgi-square-lock-01 icon"></i>
                     <span class="number numberFormat counterValue">+49160</span>
-                    <span class="text">الطلبة</span>
+                    <span class="text">Students</span>
                 </div>
                 <div class="statisticCard">
                     <i class="hgi hgi-stroke hgi-square-lock-01 icon"></i>
                     <span class="number numberFormat counterValue">+1024</span>
-                    <span class="text">أعضاء هيئة التدريس</span>
+                    <span class="text">Faculty Members</span>
                 </div>
                 <div class="statisticCard">
                     <i class="hgi hgi-stroke hgi-square-lock-01 icon"></i>
                     <span class="number numberFormat counterValue">+18506</span>
-                    <span class="text">الخريجين</span>
+                    <span class="text">Graduates</span>
                 </div>
                 <div class="statisticCard">
                     <i class="hgi hgi-stroke hgi-square-lock-01 icon"></i>
                     <span class="number numberFormat counterValue">15</span>
-                    <span class="text">الفروع</span>
+                    <span class="text">Branches</span>
                 </div>
             </div>
         </div>
