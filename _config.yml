@@ -1,5 +1,5 @@
-title: هيئة الحكومة الرقمية
-description: هيئة الحكومة الرقمية، هي المرجع الوطني المختص بتنظيم أعمال الحكومة الرقمية في الجهات الحكومية؛ للوصول إلى حكومة رقمية استباقية ومُبادرة قادرة على تقديم خدمات ذات كفاءة عالية؛ لتحقيق التكامل في مجال الحكومة الرقمية بين كافة الجهات الحكومية.
+title: Digital Government Authority
+description: The Digital Government Authority is the national reference specialized in organizing digital government business in government agencies; to achieve a proactive and initiative digital government capable of providing high-efficiency services; to achieve integration in the field of digital government among all government agencies.
 baseurl: ""
 url: ""
 
@@ -16,8 +16,8 @@ highlighter: rouge
 # Custom settings
 author: Mazin Musleh
 author_profile: https://www.linkedin.com/in/mazin-musleh/
-lang: ar
-dir: rtl
+lang: en
+dir: ltr
 
 # Plugins
 #plugins:
