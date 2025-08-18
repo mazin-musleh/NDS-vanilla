@@ -1,0 +1,56 @@
+# Arabic translations
+site:
+  title: "النظام التصميمي الوطني للمملكة العربية السعودية"
+  hero_title: "النظام التصميمي الوطني للمملكة العربية السعودية"
+  description: "تمكين تجربة الحكومة الرقمية بلغة تصميم موحدة."
+  hero_description: "تمكين تجربة الحكومة الرقمية بلغة تصميم موحدة."
+
+sections:
+  who_we_are: "من نحن"
+  who_we_are_desc: "مؤسسة حكومية تعليمية تقدم التعليم العالي والتعلم مدى الحياة"
+
+stats:
+  students: "طالب"
+  faculty: "عضو هيئة تدريس"
+  graduates: "خريج"
+  branches: "فرع"
+
+buttons:
+  read_more: "اقرأ المزيد"
+
+navigation:
+  home: "الرئيسية"
+  about: "عن النظام"
+  components: "المكونات"
+  guidelines: "المبادئ التوجيهية"
+  resources: "الموارد"
+  design_tokens: "رموز التصميم"
+  documentation: "التوثيق"
+
+components:
+  buttons: "الأزرار"
+  forms: "النماذج"
+  navigation: "التنقل"
+  cards: "البطاقات"
+  typography: "الطباعة"
+
+footer:
+  main_links: "الروابط الرئيسية"
+  components: "المكونات"
+  contact_support: "الاتصال والدعم"
+  follow_us: "تابعنا على"
+  mobile_app: "تطبيق الجوال"
+  location: "الموقع"
+  contact_us: "تواصل معنا"
+  site_map: "خريطة الموقع"
+  terms_conditions: "الشروط والأحكام"
+  privacy_policy: "سياسة الخصوصية"
+  accessibility: "إمكانية الوصول"
+  all_rights_reserved: "جميع الحقوق محفوظة"
+  template_developed: "تم تطوير هذا القالب بواسطة"
+
+cookies:
+  title: "ملفات تعريف الارتباط"
+  content: "يستخدم هذا الموقع ملفات تعريف الارتباط لضمان سهولة الاستخدام وضمان تجربة تصفح محسّنة. من خلال الاستمرار في تصفح هذا الموقع، فإنك تقر بقبول استخدام ملفات تعريف الارتباط."
+  accept: "قبول"
+  decline: "رفض"

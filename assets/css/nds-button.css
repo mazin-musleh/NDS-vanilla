@@ -2,6 +2,7 @@
 
 /* Base Button Styles */
 .nds-btn {
+    width: fit-content;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -23,7 +24,16 @@
 .nds-btn:focus-visible {
     outline: 2px solid var(--colors-base-black) !important;
     outline-offset: -2px !important;
-    box-shadow: inset 0 0 0 4px var(--colors-base-white) !important;
+    box-shadow: inset 0 0 0 3px var(--colors-base-white) !important;
+}
+
+.nds-btn.nds-btn-oncolor.nds-btn-primary:not(.nds-btn-destructive).focus,
+.nds-btn.nds-btn-oncolor.nds-btn-primary:not(.nds-btn-destructive):focus-visible,
+.nds-btn.nds-btn-oncolor.nds-btn-neutral.focus,
+.nds-btn.nds-btn-oncolor.nds-btn-neutral:focus-visible {
+    outline: 2px solid var(--colors-base-white) !important;
+    outline-offset: -2px !important;
+    box-shadow: inset 0 0 0 3px var(--colors-base-black) !important;
 }
 
 .nds-btn:disabled {
@@ -59,6 +69,8 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
 
 .nds-btn,
 .nds-btn-lg {
+    --nds-btn-height: 40px;
+    --nds-btn-space: calc(var(--nds-btn-height) - var(--spacing-lg) - 4px);
     height: 40px;
     padding: 0 var(--spacing-lg);
     font-size: 1.125rem;
@@ -66,6 +78,8 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
 }
 
 .nds-btn-md {
+    --nds-btn-height: 32px;
+    --nds-btn-space: calc(var(--nds-btn-height) - var(--spacing-md) - 4px);
     height: 32px;
     padding: 0 var(--spacing-md);
     font-size: 1rem;
@@ -73,6 +87,8 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
 }
 
 .nds-btn-sm {
+    --nds-btn-height: 24px;
+    --nds-btn-space: calc(var(--nds-btn-height) - var(--spacing-sm) - 4px);
     height: 24px;
     padding: 0 var(--spacing-sm);
     font-size: 0.875rem;
@@ -760,7 +776,7 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
 }
 
 .nds-btn-icon-only.nds-btn-menu {
-    width: unset;
+    width: fit-content;
 }
 
 /* ===== ICON POSITIONING ===== */
@@ -835,29 +851,31 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 1rem;
-    height: 1rem;
-    margin: -0.5rem 0 0 -0.5rem;
-    border: 2px solid transparent;
-    border-top: 2px solid currentColor;
+    width: var(--nds-btn-space);
+    height: var(--nds-btn-space);
+    margin: calc(var(--nds-btn-space)*-1/2) 0 0 calc(var(--nds-btn-space)*-1/2);
+    border: 3px solid var(--nds-spinner-track-color);
+    border-top: 3px solid currentColor;
     border-radius: 50%;
     animation: nds-btn-spin 1s linear infinite;
-    border-bottom-color: var(--alpha-white-30);
 }
 
 .nds-btn-loading.nds-btn-primary::after,
 .nds-btn-loading.nds-btn-neutral::after {
     border-top-color: var(--text-oncolor-primary);
+    --nds-spinner-track-color: var(--alpha-white-20);
 }
 
 .nds-btn-loading.nds-btn-secondary-solid::after,
 .nds-btn-loading.nds-btn-secondary-outline::after,
 .nds-btn-loading.nds-btn-subtle::after {
     border-top-color: var(--text-default);
+    --nds-spinner-track-color: var(--alpha-black-10);
 }
 
 .nds-btn-loading.nds-btn-transparent::after {
     border-top-color: var(--colors-primary-sa-flag-600-primary);
+    --nds-spinner-track-color: var(--alpha-black-10);
 }
 
 /* Destructive Button Loading States */
@@ -967,7 +985,6 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
 .button-card {
     display: flex;
     flex-direction: column;
-    align-items: center;
     flex: 1 1 100%;
     gap: var(--spacing-lg);
     padding: var(--spacing-3xl);
@@ -976,7 +993,8 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
     background-color: var(--background-white);
 }
 
-.dark-bg .button-card {
+.dark-bg .button-card,
+.dark-bg .nds-demo-card .demo-container {
     background: unset;
     color: var(--text-oncolor-primary);
 }
@@ -985,18 +1003,17 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
     font-size: 0.875rem;
     font-weight: 600;
     color: var(--text-secondary-paragraph);
-    text-align: center;
     margin-bottom: var(--spacing-sm);
 }
 
-.dark-bg .button-label {
+.dark-bg .button-label,
+.dark-bg .demo-label {
     color: var(--text-oncolor-primary);
 }
 
 .button-example {
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: var(--spacing-lg);
     width: 100%;
 }
@@ -1005,7 +1022,6 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
     display: flex;
     gap: var(--spacing-lg);
     align-items: center;
-    justify-content: center;
     flex-wrap: wrap;
 }
 
@@ -1024,20 +1040,15 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
     margin-top: var(--spacing-2xl);
 }
 
-/* Dark background for on-color examples */
-.dark-bg {
-    background-color: var(--background-sa-flag);
-    padding: var(--spacing-3xl);
-    border-radius: var(--radius-md);
-    margin: var(--spacing-lg) 0;
-}
 
 /* Dark background for on-color examples */
-.dark-bg.green-bg {
+.dark-bg.green-bg .button-card,
+.dark-bg.green-bg .nds-demo-card .demo-container {
     background-color: var(--background-sa-flag);
 }
 
-.dark-bg.black-bg {
+.dark-bg.black-bg .button-card,
+.dark-bg.black-bg .nds-demo-card .demo-container {
     background-color: var(--background-neutral-800);
 }
 
@@ -1112,8 +1123,7 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
 /* State demonstration styles */
 .state-demo {
     display: flex;
-    flex-wrap: nowrap;
-    justify-content: center;
+    flex-wrap: wrap;
     align-items: center;
     gap: var(--spacing-md);
     width: 100%;

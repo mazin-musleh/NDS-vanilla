@@ -1,0 +1,34 @@
+{% comment %}
+  Localization helper with URL parameter detection
+  Usage: {% include localize.html key="footer.main_links" %}
+{% endcomment %}
+
+{% comment %} Detect language from URL parameter {% endcomment %}
+{% assign current_lang = null %}
+{% assign url_parts = page.url | split: '?' %}
+{% if url_parts[1] %}
+  {% assign query_params = url_parts[1] | split: '&' %}
+  {% for param in query_params %}
+    {% assign key_value = param | split: '=' %}
+    {% if key_value[0] == 'lang' %}
+      {% assign current_lang = key_value[1] %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% comment %} Fallback to page lang or site default {% endcomment %}
+{% unless current_lang %}
+  {% assign current_lang = page.lang | default: site.default_lang | default: 'en' %}
+{% endunless %}
+
+{% assign translation_data = site.data.locales[current_lang] %}
+
+{% assign key_parts = include.key | split: '.' %}
+{% assign translation = translation_data %}
+
+{% for part in key_parts %}
+  {% assign translation = translation[part] %}
+{% endfor %}
+
+{{ translation | default: include.key }}

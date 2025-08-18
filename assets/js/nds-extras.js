@@ -1713,7 +1713,7 @@
 // Thousands Separators
 (function () {
     'use strict';
-    const ThousandsNumbers = document.querySelectorAll('.numberFormat');
+    const ThousandsNumbers = document.querySelectorAll('.nds-number-format');
     if (ThousandsNumbers.length > 0) {
         ThousandsNumbers.forEach(el => {
             const num = parseInt(el.textContent.replace(/,/g, ''), 10);
@@ -1728,7 +1728,7 @@
 (function () {
     'use strict';
     document.addEventListener('DOMContentLoaded', () => {
-        const counters = document.querySelectorAll('.counterValue');
+        const counters = document.querySelectorAll('.nds-counter-value');
 
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {

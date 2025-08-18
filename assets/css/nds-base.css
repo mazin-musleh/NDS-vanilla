@@ -62,7 +62,7 @@ button,
 *:focus-visible {
     outline: 2px solid #000 !important;
     outline-offset: -2px !important;
-    box-shadow: inset 0 0 0 4px #fff !important;
+    box-shadow: inset 0 0 0 3px #fff !important;
     border-radius: var(--radius-sm);
 }
 
@@ -2058,7 +2058,7 @@ main {
     display: none !important;
 }
 
-/* Content Sections */
+/* Content Sections - Legacy Support */
 .content-section>.container {
     padding: var(--spacing-5xl) var(--spacing-2xl);
     max-width: var(--nds-content-MaxWidth);
@@ -2095,6 +2095,146 @@ main {
     border: unset !important;
 }
 
+/* NDS Content Sections - New Naming Convention */
+.nds-content-section {
+    background-color: var(--background-white);
+}
+
+.nds-content-section.noBg {
+    background-color: unset !important;
+    box-shadow: unset !important;
+    border: unset !important;
+}
+
+.nds-section-content-container {
+    padding: var(--spacing-2xl) var(--spacing-2xl);
+    max-width: var(--nds-content-MaxWidth);
+    margin: auto;
+}
+
+.nds-content-section.noBg .nds-section-content-container {
+    padding: 0 var(--spacing-lg);
+}
+
+.nds-content-section.noBg:first-of-type .nds-section-content-container {
+    padding-top: var(--spacing-2xl);
+}
+
+.nds-content-section.noBg:last-of-type .nds-section-content-container {
+    padding-bottom: var(--spacing-2xl);
+}
+
+.nds-section-head {
+    margin-bottom: var(--spacing-4xl, 32px);
+}
+
+.nds-section-title {
+    font-size: var(--nds-display-md-FS, 36px);
+    line-height: var(--nds-display-md-LH, 44px);
+    font-weight: bold;
+    color: var(--text-display, #1f2a37);
+    margin-bottom: var(--spacing-lg, 16px);
+}
+
+.nds-section-description {
+    font-size: var(--nds-text-lg-FS, 18px);
+    line-height: var(--nds-text-lg-LH, 26px);
+    color: var(--text-default, #161616);
+    margin-bottom: var(--spacing-2xl, 24px);
+    max-width: var(--maxwidth-paragraph-max-width, 720px);
+}
+
+.nds-btn-readMore {
+    margin: var(--spacing-xl, 20px) auto 0;
+    display: flex;
+}
+
+.nds-section-content {
+    margin-top: var(--spacing-4xl, 32px);
+}
+
+/* Statistics Component */
+.nds-statistics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-2xl, 24px);
+    margin-top: var(--spacing-3xl, 28px);
+}
+
+.nds-statistic-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: var(--spacing-2xl, 24px);
+    background-color: var(--background-neutral-100, #f3f4f6);
+    border-radius: var(--radius-lg, 12px);
+    border: 1px solid var(--border-subtle, #e5e5e5);
+    transition: var(--nds-transition);
+}
+
+.nds-statistic-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--nds-shadow);
+}
+
+.nds-statistic-icon {
+    font-size: 2rem;
+    color: var(--icon-primary, #1B8354);
+    margin-bottom: var(--spacing-md, 12px);
+}
+
+.nds-statistic-number {
+    font-size: var(--nds-display-sm-FS, 30px);
+    line-height: var(--nds-display-sm-LH, 38px);
+    font-weight: bold;
+    color: var(--text-primary, #161616);
+    margin-bottom: var(--spacing-sm, 8px);
+}
+
+.nds-statistic-text {
+    font-size: var(--nds-text-md-FS, 16px);
+    line-height: var(--nds-text-md-LH, 24px);
+    color: var(--text-secondary, #525252);
+    font-weight: 500;
+}
+
+/* Number formatting and counter utilities */
+.nds-number-format {
+    font-variant-numeric: tabular-nums;
+}
+
+.nds-counter-value {
+    display: inline-block;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .nds-statistics {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-lg, 16px);
+    }
+    
+    .nds-statistic-card {
+        padding: var(--spacing-lg, 16px);
+    }
+    
+    .nds-section-title {
+        font-size: var(--nds-display-sm-FS, 30px);
+        line-height: var(--nds-display-sm-LH, 38px);
+    }
+}
+
+@media (max-width: 480px) {
+    .nds-statistics {
+        grid-template-columns: 1fr;
+    }
+    
+    .nds-section-content-container {
+        padding: var(--spacing-lg) var(--spacing-lg);
+    }
+}
+
 .nds-footer {
     display: block;
     background-color: var(--background-sa-flag);
@@ -2108,7 +2248,6 @@ main {
     grid-template-columns: repeat(4, 1fr);
     gap: 2rem;
     margin-bottom: 2rem;
-    text-align: right;
 }
 
 .nds-footer .nds-footer-column {
