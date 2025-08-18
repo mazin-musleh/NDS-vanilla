@@ -1,0 +1,56 @@
+# English translations
+site:
+  title: "National Design System for Saudi Arabia"
+  hero_title: "National Design System for Saudi Arabia"
+  description: "Enabling the digital government experience with a unified design language."
+  hero_description: "Enabling the digital government experience with a unified design language."
+
+sections:
+  who_we_are: "Who We Are"
+  who_we_are_desc: "A government educational institution providing higher education and lifelong learning"
+
+stats:
+  students: "Students"
+  faculty: "Faculty Members"
+  graduates: "Graduates"
+  branches: "Branches"
+
+buttons:
+  read_more: "Read More"
+
+navigation:
+  home: "Home"
+  about: "About Us"
+  components: "Components"
+  guidelines: "Guidelines"
+  resources: "Resources"
+  design_tokens: "Design Tokens"
+  documentation: "Documentation"
+
+components:
+  buttons: "Buttons"
+  forms: "Forms"
+  navigation: "Navigation"
+  cards: "Cards"
+  typography: "Typography"
+
+footer:
+  main_links: "Main Links"
+  components: "Components"
+  contact_support: "Contact & Support"
+  follow_us: "Follow Us"
+  mobile_app: "Mobile App"
+  location: "Location"
+  contact_us: "Contact Us"
+  site_map: "Site Map"
+  terms_conditions: "Terms & Conditions"
+  privacy_policy: "Privacy Policy"
+  accessibility: "Accessibility"
+  all_rights_reserved: "All Rights Reserved"
+  template_developed: "Template developed by"
+
+cookies:
+  title: "Cookies"
+  content: "This website uses cookies to ensure ease of use and provide an enhanced browsing experience. By continuing to browse this site, you acknowledge and accept the use of cookies."
+  accept: "Accept"
+  decline: "Decline"

@@ -1,50 +1,50 @@
 <!-- _includes/footer.html -->
-<footer class="nds-footer" role="contentinfo" aria-label="تذييل الموقع">
+<footer class="nds-footer" role="contentinfo" aria-label="Site Footer">
     <div class="nds-content-container">
         <div class="nds-footer-content">
             <!-- Column 1: Main Links -->
             <div class="nds-footer-column">
-                <h2 class="nds-footer-heading">الروابط الرئيسية</h2>
+                <h2 class="nds-footer-heading">{% include localize.html key="footer.main_links" %}</h2>
                 <ul class="nds-footer-links-list">
-                    <li><a href="{{ '/' | relative_url }}">الرئيسية</a></li>
-                    <li><a href="{{ '/about' | relative_url }}">عن الجامعة</a></li>
-                    <li><a href="{{ '/services' | relative_url }}">الخدمات</a></li>
-                    <li><a href="#">القبول والتسجيل</a></li>
-                    <li><a href="#">الأخبار والفعاليات</a></li>
-                    <li><a href="#">التقويم الأكاديمي</a></li>
-                    <li><a href="#">البحث العلمي</a></li>
+                    <li><a href="{{ '/' | relative_url }}">{% include localize.html key="navigation.home" %}</a></li>
+                    <li><a href="{{ '/about' | relative_url }}">{% include localize.html key="navigation.about" %}</a></li>
+                    <li><a href="{{ '/button' | relative_url }}">{% include localize.html key="navigation.components" %}</a></li>
+                    <li><a href="#">{% include localize.html key="navigation.guidelines" %}</a></li>
+                    <li><a href="#">{% include localize.html key="navigation.design_tokens" %}</a></li>
+                    <li><a href="#">{% include localize.html key="navigation.resources" %}</a></li>
+                    <li><a href="#">{% include localize.html key="navigation.documentation" %}</a></li>
                 </ul>
             </div>
             
-            <!-- Column 2: Colleges -->
+            <!-- Column 2: Components -->
             <div class="nds-footer-column">
-                <h2 class="nds-footer-heading">الكليات</h2>
+                <h2 class="nds-footer-heading">{% include localize.html key="footer.components" %}</h2>
                 <ul class="nds-footer-links-list">
-                    <li><a href="#">كلية العلوم الإدارية والمالية</a></li>
-                    <li><a href="#">كلية الحوسبة والمعلوماتية</a></li>
-                    <li><a href="#">كلية العلوم الصحية</a></li>
-                    <li><a href="#">كلية العلوم والدراسات النظرية</a></li>
-                    <li><a href="#">الكلية التطبيقية</a></li>
+                    <li><a href="{{ '/button' | relative_url }}">{% include localize.html key="components.buttons" %}</a></li>
+                    <li><a href="#">{% include localize.html key="components.forms" %}</a></li>
+                    <li><a href="#">{% include localize.html key="components.navigation" %}</a></li>
+                    <li><a href="#">{% include localize.html key="components.cards" %}</a></li>
+                    <li><a href="#">{% include localize.html key="components.typography" %}</a></li>
                 </ul>
             </div>
             
             <!-- Column 3: Contact & Support -->
             <div class="nds-footer-column">
-                <h2 class="nds-footer-heading">الاتصال والدعم</h2>
+                <h2 class="nds-footer-heading">{% include localize.html key="footer.contact_support" %}</h2>
                 <ul class="nds-footer-links-list">
                     <li>
                         <a href="#">
-                            <i class="hgi hgi-stroke hgi-location-01 icon"></i> مقرات الجامعة
+                            <i class="hgi hgi-stroke hgi-location-01 icon"></i> {% include localize.html key="footer.location" %}
                         </a>
                     </li>
                     <li>
-                        <a href="https://eservice.seu.edu.sa/contactus/index.html" target="_blank">
-                            <i class="hgi hgi-stroke hgi-headphones icon"></i> تواصل معنا
+                        <a href="#" target="_blank">
+                            <i class="hgi hgi-stroke hgi-headphones icon"></i> {% include localize.html key="footer.contact_us" %}
                         </a>
                     </li>
                     <li>
-                        <a href="mailto:info@seu.edu.sa">
-                            <i class="hgi hgi-stroke hgi-mail-01 icon"></i> info@seu.edu.sa
+                        <a href="mailto:design@dga.gov.sa">
+                            <i class="hgi hgi-stroke hgi-mail-01 icon"></i> design@dga.gov.sa
                         </a>
                     </li>
                 </ul>
@@ -52,38 +52,38 @@
             
             <!-- Column 4: Follow Us -->
             <div class="nds-footer-column">
-                <h2 class="nds-footer-heading">تابعنا على</h2>
+                <h2 class="nds-footer-heading">{% include localize.html key="footer.follow_us" %}</h2>
                 <div class="nds-footer-social-icons">
-                    <a href="#" class="nds-footer-social-icon" aria-label="متابعة الجامعة السعودية الإلكترونية عبر تويتر">
+                    <a href="#" class="nds-footer-social-icon" aria-label="Follow National Design System on Twitter">
                         <i class="hgi hgi-stroke hgi-new-twitter"></i>
                     </a>
-                    <a href="#" class="nds-footer-social-icon" aria-label="متابعة الجامعة السعودية الإلكترونية عبر فيسبوك">
+                    <a href="#" class="nds-footer-social-icon" aria-label="Follow National Design System on Facebook">
                         <i class="hgi hgi-stroke hgi-facebook-02"></i>
                     </a>
-                    <a href="#" class="nds-footer-social-icon" aria-label="متابعة الجامعة السعودية الإلكترونية عبر يوتيوب">
+                    <a href="#" class="nds-footer-social-icon" aria-label="Follow National Design System on YouTube">
                         <i class="hgi hgi-stroke hgi-youtube"></i>
                     </a>
-                    <a href="#" class="nds-footer-social-icon" aria-label="متابعة الجامعة السعودية الإلكترونية عبر لينكدإن">
+                    <a href="#" class="nds-footer-social-icon" aria-label="Follow National Design System on LinkedIn">
                         <i class="hgi hgi-stroke hgi-linkedin-02"></i>
                     </a>
                 </div>
                 
-                <h2 class="nds-footer-heading">تطبيق الجوال SEU</h2>
+                <h2 class="nds-footer-heading">{% include localize.html key="footer.mobile_app" %}</h2>
                 <div class="nds-footer-mobile-app-icons">
-                    <a href="https://apps.apple.com/sa/app/الجامعة-السعودية-الإلكترونية/id6742192342" class="nds-footer-app-icon" target="_blank" aria-label="متجر ابل">
+                    <a href="#" class="nds-footer-app-icon" target="_blank" aria-label="Apple App Store">
                         <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect x="0.5" y="0.5" width="47" height="47" rx="5.5" stroke="white"/>
                             <path d="M31.3067 24.8334C31.3177 23.8368 31.5918 22.8619 32.1072 21.9953C32.6116 21.1287 33.3464 20.4029 34.2236 19.8829C33.6644 19.1138 32.9296 18.4747 32.0743 18.0306C31.2189 17.5865 30.2649 17.3373 29.289 17.3048C27.2054 17.099 25.1986 18.5072 24.1349 18.5072C23.0713 18.5072 21.4263 17.3265 19.6718 17.359C18.5313 17.3915 17.4238 17.7165 16.4588 18.2797C15.4828 18.8539 14.6823 19.6555 14.134 20.6087C11.7434 24.6059 13.5309 30.4771 15.8228 33.716C16.9742 35.2976 18.312 37.0633 20.0666 36.9983C21.7882 36.9333 22.4243 35.9475 24.4968 35.9475C26.5694 35.9475 27.1506 36.9983 28.938 36.9658C30.7803 36.9333 31.9427 35.3734 33.0503 33.781C33.8727 32.6544 34.5087 31.4087 34.9254 30.0871C33.8508 29.6538 32.9406 28.9172 32.3046 27.9856C31.6576 27.054 31.3177 25.96 31.3177 24.8334H31.3067Z" fill="currentColor"/>
                             <path d="M27.9293 15.1705C28.9382 14.0114 29.4316 12.5165 29.311 11C27.7758 11.1517 26.3612 11.8666 25.3413 12.9823C24.8479 13.524 24.4641 14.1631 24.2228 14.8564C23.9816 15.5496 23.8829 16.2754 23.9267 17.0012C24.6943 17.0012 25.451 16.8495 26.1419 16.5354C26.8327 16.2213 27.4468 15.7555 27.9293 15.1813V15.1705Z" fill="currentColor"/>
                         </svg>
                     </a>
-                    <a href="https://play.google.com/store/apps/details?id=com.seu.services" target="_blank" class="nds-footer-app-icon" aria-label="متجر جوجل بلاي">
+                    <a href="#" target="_blank" class="nds-footer-app-icon" aria-label="Google Play Store">
                         <svg width="48" height="49" viewBox="0 0 48 49" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect x="0.5" y="0.5" width="47" height="48" rx="5.5" stroke="white"/>
                             <path d="M14.2079 12L26.4575 24.1642L29.8128 20.809L14.9643 12.2318C14.7203 12.0854 14.4519 12.0122 14.2079 12ZM13.183 12.5612C13.0732 12.7565 13 12.9883 13 13.2445V36.8775C13 37.0727 13.0366 37.2435 13.1098 37.39L25.6401 24.9451L13.183 12.5612ZM30.8376 21.3825L27.2506 24.9573L30.8376 28.5077L35.2177 25.9944C35.84 25.6283 35.9254 25.1769 35.9254 24.9329C35.9254 24.5303 35.6692 24.152 35.2299 23.9202C34.8517 23.725 32.0821 22.1023 30.8254 21.3702L30.8376 21.3825ZM26.4575 25.7504L14.1103 38C14.3177 38 14.5373 37.939 14.7447 37.8292C15.2328 37.5486 25.0178 31.8874 25.0178 31.8874L29.8494 29.1178L26.4697 25.7626L26.4575 25.7504Z" fill="currentColor"/>
                         </svg>
                     </a>
-                    <a href="https://appgallery.huawei.com/app/C114113665" target="_blank" class="nds-footer-app-icon" aria-label="متجر هواوي">
+                    <a href="#" target="_blank" class="nds-footer-app-icon" aria-label="Huawei AppGallery">
                         <svg width="48" height="49" viewBox="0 0 48 49" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect x="0.5" y="0.5" width="47" height="48" rx="5.5" stroke="white"/>
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M29.27 12H18.15C12.9 12 11 13.97 11 19.31V30.67C11 36.03 12.93 37.98 18.15 37.98H29.27C34.52 37.98 36.42 36.01 36.42 30.67V19.31C36.45 13.97 34.52 12 29.27 12ZM16.03 25.01H16.7V28.4H16.03V27.03H14.5V28.4H13.83V25.01H14.5V26.38H16.03V25.01ZM19.84 26.94C19.84 27.48 19.57 27.79 19.09 27.79C18.61 27.79 18.34 27.49 18.34 26.92V25H17.67V26.95C17.67 27.9 18.18 28.46 19.09 28.46C20 28.46 20.54 27.92 20.54 26.92V25H19.87V26.95H19.84V26.94ZM27.63 27.33L26.88 25H26.32L25.57 27.33L24.85 25H24.13L25.28 28.39H25.84L26.59 26.15L27.34 28.39H27.9L29.05 25H28.35L27.63 27.33ZM30.29 26.94H31.52V26.31H30.29V25.62H32.09V24.99H29.65V28.38H32.17V27.75H30.32V26.93H30.29V26.94ZM32.94 28.4H33.61V25.01H32.94V28.4ZM21.85 27.68L21.56 28.39H20.86L22.31 25H22.9L24.35 28.39H23.65L23.36 27.68H21.85ZM22.09 27.09H23.11L22.6 25.89L22.09 27.09ZM23.72 20.68C21.39 20.68 19.49 18.73 19.49 16.35H20.08C20.08 18.4 21.71 20.07 23.72 20.07C25.73 20.07 27.36 18.4 27.36 16.35H27.95C27.95 18.73 26.05 20.68 23.72 20.68Z" fill="currentColor"/>
@@ -97,24 +97,24 @@
         <div class="nds-footer-bottom">
             <div class="nds-footer-copyright">
                 <div class="nds-footer-links">
-                    <a href="{{ '/site-map' | relative_url }}">خريطة الموقع</a>
+                    <a href="{{ '/site-map' | relative_url }}">{% include localize.html key="footer.site_map" %}</a>
                     <span class="nds-footer-separator">|</span>
-                    <a href="{{ '/terms-and-conditions' | relative_url }}">الشروط والأحكام</a>
+                    <a href="{{ '/terms-and-conditions' | relative_url }}">{% include localize.html key="footer.terms_conditions" %}</a>
                     <span class="nds-footer-separator">|</span>
-                    <a href="{{ '/privacy-policy' | relative_url }}">سياسة الخصوصية</a>
+                    <a href="{{ '/privacy-policy' | relative_url }}">{% include localize.html key="footer.privacy_policy" %}</a>
                     <span class="nds-footer-separator">|</span>
-                    <a href="{{ '/service-level-agreement' | relative_url }}">اتفاقية مستوى الخدمة</a>
+                    <a href="{{ '/accessibility' | relative_url }}">{% include localize.html key="footer.accessibility" %}</a>
                 </div>
                 <div class="nds-footer-copy-right">
-                    <span>جميع الحقوق محفوظة {{ site.title }} © {{ site.time | date: '%Y' }}</span><br>
-                    <a id="authorCopyright" href="{{ site.author_profile | relative_url }}"><span>تم تطوير هذا القالب بواسطة {{ site.author }}</span><i class="hgi hgi-stroke hgi-link-square-02"></i></a>
+                    <span>{% include localize.html key="footer.all_rights_reserved" %} {{ site.title }} © {{ site.time | date: '%Y' }}</span><br>
+                    <a id="authorCopyright" href="{{ site.author_profile | relative_url }}"><span>{% include localize.html key="footer.template_developed" %} {{ site.author }}</span><i class="hgi hgi-stroke hgi-link-square-02"></i></a>
                 </div>
             </div>
             <div class="nds-footer-logos">
-                <img src="{{ '/assets/img/seu-white-logo.svg' | relative_url }}" loading="lazy" width="71" height="40" alt="شعار الجامعة السعودية الإلكترونية">
-                <img src="{{ '/assets/img/2030-vision.svg' | relative_url }}" loading="lazy" width="60" height="40" alt="رؤية 2030">
+                <img src="{{ '/assets/img/DGA-logo-icon.svg' | relative_url }}" loading="lazy" width="71" height="40" alt="Digital Government Authority Logo">
+                <img src="{{ '/assets/img/2030-vision.svg' | relative_url }}" loading="lazy" width="60" height="40" alt="Saudi Vision 2030">
                 <a href="https://my.gov.sa" target="_blank">
-                    <img loading="lazy" src="https://seu.edu.sa/media/1116096/شعار-المنصة-الوطنية.svg" alt="dga stamp" width="182" height="60">
+                    <img loading="lazy" src="https://seu.edu.sa/media/1116096/شعار-المنصة-الوطنية.svg" alt="National Platform Logo" width="182" height="60">
                 </a>
             </div>
         </div>
@@ -136,17 +136,17 @@
     </div>
 
     <div class="cookie-popup-content">
-        <span id="ndsCookiesContent">يستخدم هذا الموقع ملفات تعريف الارتباط لضمان سهولة الاستخدام وضمان تجربة تصفح محسّنة. من خلال الاستمرار في تصفح هذا الموقع، فإنك تقر بقبول استخدام ملفات تعريف الارتباط.</span>
+        <span id="ndsCookiesContent">{% include localize.html key="cookies.content" %}</span>
     </div>
 
     <div class="cookie-popup-links">
-        <a href="https://seu.edu.sa/ar/about/terms-and-conditions/" id="ndsCookiesTermsLink">الشروط والأحكام</a>
+        <a href="{{ '/terms-and-conditions' | relative_url }}" id="ndsCookiesTermsLink">{% include localize.html key="footer.terms_conditions" %}</a>
         <span>|</span>
-        <a href="https://seu.edu.sa/ar/about/policy-and-privacy/" id="ndsCookiesPrivacyLink">سياسة الخصوصية</a>
+        <a href="{{ '/privacy-policy' | relative_url }}" id="ndsCookiesPrivacyLink">{% include localize.html key="footer.privacy_policy" %}</a>
     </div>
 
     <div class="cookie-popup-actions">
-        <button class="nds-btn nds-btn-primary" id="ndsCookiesAcceptBtn">قبول</button>
-        <button class="nds-btn nds-btn-secondary" id="ndsCookiesDeclineBtn">رفض</button>
+        <button class="nds-btn nds-btn-primary" id="ndsCookiesAcceptBtn">{% include localize.html key="cookies.accept" %}</button>
+        <button class="nds-btn nds-btn-secondary" id="ndsCookiesDeclineBtn">{% include localize.html key="cookies.decline" %}</button>
     </div>
 </div>
