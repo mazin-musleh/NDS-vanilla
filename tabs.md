@@ -22,7 +22,14 @@ direction: ltr
             <div class="nds-demo-card">
                 <div class="demo-header">
                     <div class="demo-label">Basic Tabs</div>
-                    <div class="demo-action"></div>
+                    <div class="demo-action">
+                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggle="noBg" data-target=".demo-container">
+                            <span class="label">Remove bg</span>
+                        </button>
+                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggle="center" data-target="#basicTabs .nds-tab-list">
+                            <span class="label">Center</span>
+                        </button>
+                    </div>
                 </div>
                 <div class="demo-container">
                     <div class="nds-tabs" id="basicTabs">
@@ -76,7 +83,7 @@ direction: ltr
                 <div class="code-example">
                     <div class="usage-header">
                         <span>Usage</span>
-                        <button class="copy-btn" onclick="copyTabHTML(this)">
+                        <button class="copy-btn">
                             <i class="hgi hgi-stroke hgi-copy-01"></i>
                         </button>
                     </div>
@@ -105,7 +112,14 @@ direction: ltr
             <div class="nds-demo-card">
                 <div class="demo-header">
                     <div class="demo-label">Tabs with Icons</div>
-                    <div class="demo-action"></div>
+                    <div class="demo-action">
+                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggle="noBg" data-target=".demo-container">
+                            <span class="label">Remove bg</span>
+                        </button>
+                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggle="center" data-target="#iconTabs .nds-tab-list">
+                            <span class="label">Center</span>
+                        </button>
+                    </div>
                 </div>
                 <div class="demo-container">
                     <div class="nds-tabs" id="iconTabs">
@@ -279,7 +293,7 @@ direction: ltr
                 <div class="code-example">
                     <div class="usage-header">
                         <span>Usage</span>
-                        <button class="copy-btn" onclick="copyTabHTML(this)">
+                        <button class="copy-btn">
                             <i class="hgi hgi-stroke hgi-copy-01"></i>
                         </button>
                     </div>
@@ -358,40 +372,3 @@ direction: ltr
     </div>
 </section>
 
-<script>
-function copyTabHTML(button) {
-    const codeBlock = button.closest('.code-example').querySelector('code');
-    const text = codeBlock.textContent;
-    
-    if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(text).then(() => {
-            showCopyFeedback(button);
-        });
-    } else {
-        // Fallback for older browsers
-        const textArea = document.createElement('textarea');
-        textArea.value = text;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textArea);
-        showCopyFeedback(button);
-    }
-}
-
-function showCopyFeedback(button) {
-    const original = button.innerHTML;
-    button.innerHTML = '<i class="hgi hgi-stroke hgi-checkmark-circle-01"></i>';
-    button.style.color = 'var(--color-success-default, #10b981)';
-    
-    setTimeout(() => {
-        button.innerHTML = original;
-        button.style.color = '';
-    }, 2000);
-}
-
-// Listen for tab changes
-document.addEventListener('nds:tab:change', function(e) {
-    console.log('Tab changed:', e.detail);
-});
-</script>
