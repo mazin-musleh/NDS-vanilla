@@ -8,7 +8,7 @@
     justify-content: center;
     gap: var(--spacing-xs);
     border: 1px solid transparent;
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-sm);
     font-family: 'IBM Plex Sans Arabic', sans-serif;
     font-weight: 500;
     text-decoration: none;
@@ -73,8 +73,8 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
     --nds-btn-space: calc(var(--nds-btn-height) - var(--spacing-lg) - 4px);
     height: 40px;
     padding: 0 var(--spacing-lg);
-    font-size: 1.125rem;
-    line-height: 1.75rem;
+    font-size: var(--nds-text-md-FS);
+    line-height: var(--nds-text-md-LH);
 }
 
 .nds-btn-md {
@@ -82,8 +82,8 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
     --nds-btn-space: calc(var(--nds-btn-height) - var(--spacing-md) - 4px);
     height: 32px;
     padding: 0 var(--spacing-md);
-    font-size: 1rem;
-    line-height: 1.5rem;
+    font-size: var(--nds-text-sm-FS);
+    line-height: var(--nds-text-sm-LH);
 }
 
 .nds-btn-sm {
@@ -91,8 +91,8 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
     --nds-btn-space: calc(var(--nds-btn-height) - var(--spacing-sm) - 4px);
     height: 24px;
     padding: 0 var(--spacing-sm);
-    font-size: 0.875rem;
-    line-height: 1.25rem;
+    font-size: var(--nds-text-xs-FS);
+    line-height: var(--nds-text-xs-LH);
 }
 
 
@@ -1000,14 +1000,14 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
 }
 
 .button-label {
-    font-size: 0.875rem;
+    font-size: var(--nds-text-sm-FS, 14px);
     font-weight: 600;
     color: var(--text-secondary-paragraph);
     margin-bottom: var(--spacing-sm);
 }
 
 .dark-bg .button-label,
-.dark-bg .demo-label {
+.dark-bg .demo-container {
     color: var(--text-oncolor-primary);
 }
 
@@ -1036,7 +1036,6 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
     display: flex;
     gap: var(--spacing-md);
     align-content: center;
-    justify-content: center;
     margin-top: var(--spacing-2xl);
 }
 
@@ -1065,7 +1064,7 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
     justify-content: space-between;
     align-items: center;
     margin-bottom: var(--spacing-sm);
-    font-size: 0.875rem;
+    font-size: var(--nds-text-sm-FS, 14px);
     font-weight: 600;
     color: var(--text-default);
 }
@@ -1075,8 +1074,8 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
     background-color: var(--background-white);
     color: var(--text-default);
     font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-    font-size: 0.75rem;
-    line-height: 1.4;
+    font-size: var(--nds-text-xs-FS, 12px);
+    line-height: var(--nds-text-xs-LH, 18px);
     padding: var(--spacing-sm);
     border-radius: var(--radius-xs);
     border: 1px solid var(--border-neutral-tertiary);

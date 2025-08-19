@@ -20,7 +20,10 @@ direction: ltr
             
             <!-- Basic Tabs Example -->
             <div class="nds-demo-card">
-                <div class="demo-label">Basic Tabs</div>
+                <div class="demo-header">
+                    <div class="demo-label">Basic Tabs</div>
+                    <div class="demo-action"></div>
+                </div>
                 <div class="demo-container">
                     <div class="nds-tabs" id="basicTabs">
                         <nav class="nds-tab-list" role="tablist" aria-label="Basic tab navigation">
@@ -100,7 +103,10 @@ direction: ltr
 
             <!-- Tabs with Icons -->
             <div class="nds-demo-card">
-                <div class="demo-label">Tabs with Icons</div>
+                <div class="demo-header">
+                    <div class="demo-label">Tabs with Icons</div>
+                    <div class="demo-action"></div>
+                </div>
                 <div class="demo-container">
                     <div class="nds-tabs" id="iconTabs">
                         <nav class="nds-tab-list" role="tablist" aria-label="Icon tab navigation">
@@ -165,7 +171,10 @@ direction: ltr
 
             <!-- Vertical Tabs -->
             <div class="nds-demo-card">
-                <div class="demo-label">Vertical Tabs</div>
+                <div class="demo-header">
+                    <div class="demo-label">Vertical Tabs</div>
+                    <div class="demo-action"></div>
+                </div>
                 <div class="demo-container">
                     <div class="nds-tabs nds-tabs-vertical" id="verticalTabs">
                         <nav class="nds-tab-list" role="tablist" aria-label="Vertical tab navigation" aria-orientation="vertical">

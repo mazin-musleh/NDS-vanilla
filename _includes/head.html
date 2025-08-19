@@ -18,8 +18,8 @@
             --nds-sideMenu-width: 260px;
             --nds-nav-background-color: #fff;
             --nds-minimal-nav-bp: 960px;
-            --nds-content-MaxWidth: var(--width-4xl, 1440px);
-            --nds-viewport-base-padding: var(--spacing-5xl, 40px);
+            --nds-content-MaxWidth: var(--width-3xl, 1280px);
+            --nds-viewport-base-padding: var(--spacing-4xl, 32px);
             --nds-viewport-padding: var(--nds-viewport-base-padding);
             --nds-shadow: 0px 3.288px 6.575px -1.644px rgba(16, 24, 40, 0.10), 0px 1.644px 3.288px -1.644px rgba(16, 24, 40, 0.06);
             --nds-shadow-top: 0px -3.288px 6.575px -1.644px rgba(16, 24, 40, 0.10), 0px -1.644px 3.288px -1.644px rgba(16, 24, 40, 0.06);
@@ -145,7 +145,7 @@
             background-repeat: no-repeat;
             background-color: #f5f7f9;
             height: fit-content;
-            min-height: 150px;
+            min-height: 100px;
             box-shadow: inset 0px -2px 4px rgba(0, 0, 0, 0.05);
             padding: var(--spacing-2xl, 20px) 0;
         }
@@ -197,8 +197,8 @@
 
         .nds-hero-section .nds-heroContent .nds-heroTitle,
         .nds-hero-section .nds-heroContent .pageTitle {
-            font-size: var(--nds-display-md-FS, 36px);
-            line-height: var(--nds-display-md-LH, 44px);
+            font-size: var(--nds-display-clamp-md-FS, 36px);
+            line-height: var(--nds-display-clamp-md-LH, 44px);
             letter-spacing: -0.02rem;
             font-weight: bold;
             position: relative;
@@ -206,9 +206,9 @@
         }
 
         .nds-hero-section .nds-heroContent .nds-heroTitle {
-            font-size: var(--nds-display-md-FS, 36px);
-            line-height: var(--nds-display-md-LH, 44px);
-            margin-bottom: var(--nds-display-md-MB, 9.5px);
+            font-size: var(--nds-display-clamp-md-FS, 36px);
+            line-height: var(--nds-display-clamp-md-LH, 44px);
+            margin-bottom: var(--nds-display-clamp-md-MB, 9.5px);
         }
 
         .nds-hero-section.sub .nds-heroContent .nds-heroDesc {
@@ -216,8 +216,8 @@
         }
 
         .nds-hero-section .nds-heroContent .nds-heroDesc {
-            font-size: var(--nds-display-xs-FS);
-            line-height: var(--nds-display-xs-LH);
+            font-size: var(--nds-display-clamp-xs-FS);
+            line-height: var(--nds-display-clamp-xs-LH);
             max-width: var(--maxwidth-paragraph-max-width, 720px);
         }
 
@@ -295,10 +295,6 @@
         @media (max-width: 768px) {
             .nds-hero-section {
                 height: 500px;
-            }
-
-            .nds-hero-section.sub {
-                height: 100px;
             }
 
             .nds-hero-shape>img,
@@ -385,6 +381,12 @@
         onload="this.media='all'">
     <noscript>
         <link rel="stylesheet" href="{{ '/assets/css/nds-tabs.css' | relative_url }}">
+    </noscript>
+
+    <link rel="stylesheet" href="{{ '/assets/css/nds-showcase.css' | relative_url }}" media="print"
+        onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet" href="{{ '/assets/css/nds-showcase.css' | relative_url }}">
     </noscript>
 
     <link rel="icon" type="image/svg+xml" href="{{ '/assets/img/favicon.svg' | relative_url }}"
