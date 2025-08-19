@@ -23,14 +23,6 @@ languages: [en, ar]
 lang: en
 dir: ltr
 
-# Language-specific configurations
-lang_config:
-  en:
-    dir: ltr
-    font_family: "'IBM Plex Sans English', sans-serif"
-  ar:
-    dir: rtl
-    font_family: "'IBM Plex Sans Arabic', sans-serif"
 
 # Plugins
 #plugins:

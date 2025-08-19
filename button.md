@@ -10,7 +10,7 @@ direction: ltr
 ---
 
 <!-- Button Types Overview -->
-<section id="buttonTypesOverview" class="nds-content-section noBg">
+<section id="buttonTypesOverview" class="nds-content-section">
     <div class="nds-section-content-container">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Six Button Types</h2>
@@ -42,7 +42,7 @@ direction: ltr
                     <div class="code-example">
                         <div class="usage-header">
                             <span>Usage</span>
-                            <button class="copy-btn" onclick="copyButtonHTML(this)">
+                            <button class="copy-btn">
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
@@ -75,7 +75,7 @@ direction: ltr
                     <div class="code-example">
                         <div class="usage-header">
                             <span>Usage</span>
-                            <button class="copy-btn" onclick="copyButtonHTML(this)">
+                            <button class="copy-btn">
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
@@ -108,7 +108,7 @@ direction: ltr
                     <div class="code-example">
                         <div class="usage-header">
                             <span>Usage</span>
-                            <button class="copy-btn" onclick="copyButtonHTML(this)">
+                            <button class="copy-btn">
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
@@ -141,7 +141,7 @@ direction: ltr
                     <div class="code-example">
                         <div class="usage-header">
                             <span>Usage</span>
-                            <button class="copy-btn" onclick="copyButtonHTML(this)">
+                            <button class="copy-btn">
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
@@ -174,7 +174,7 @@ direction: ltr
                     <div class="code-example">
                         <div class="usage-header">
                             <span>Usage</span>
-                            <button class="copy-btn" onclick="copyButtonHTML(this)">
+                            <button class="copy-btn">
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
@@ -207,7 +207,7 @@ direction: ltr
                     <div class="code-example">
                         <div class="usage-header">
                             <span>Usage</span>
-                            <button class="copy-btn" onclick="copyButtonHTML(this)">
+                            <button class="copy-btn">
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
@@ -221,7 +221,7 @@ direction: ltr
             <div class="button-showcase oncolor-buttons">
                 <div class="nds-demo-card">
                     <div class="demo-header">
-                        <div class="demo-label">Primary Button</div>
+                        <div class="demo-label">Primary Button On-Color</div>
                         <div class="demo-action">
                             <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="green">
                                 <span class="label">Green</span>
@@ -250,7 +250,7 @@ direction: ltr
                     <div class="code-example">
                         <div class="usage-header">
                             <span>Usage</span>
-                            <button class="copy-btn" onclick="copyButtonHTML(this)">
+                            <button class="copy-btn">
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
@@ -261,7 +261,7 @@ direction: ltr
                 </div>
                 <div class="nds-demo-card">
                     <div class="demo-header">
-                        <div class="demo-label">Neutral Button</div>
+                        <div class="demo-label">Neutral Button On-Color</div>
                         <div class="demo-action">
                             <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="green">
                                 <span class="label">Green</span>
@@ -290,7 +290,7 @@ direction: ltr
                     <div class="code-example">
                         <div class="usage-header">
                             <span>Usage</span>
-                            <button class="copy-btn" onclick="copyButtonHTML(this)">
+                            <button class="copy-btn">
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
@@ -301,7 +301,7 @@ direction: ltr
                 </div>
                 <div class="nds-demo-card">
                     <div class="demo-header">
-                        <div class="demo-label">Secondary Solid</div>
+                        <div class="demo-label">Secondary Solid On-Color</div>
                         <div class="demo-action">
                             <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="green">
                                 <span class="label">Green</span>
@@ -330,7 +330,7 @@ direction: ltr
                     <div class="code-example">
                         <div class="usage-header">
                             <span>Usage</span>
-                            <button class="copy-btn" onclick="copyButtonHTML(this)">
+                            <button class="copy-btn">
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
@@ -341,7 +341,7 @@ direction: ltr
                 </div>
                 <div class="nds-demo-card">
                     <div class="demo-header">
-                        <div class="demo-label">Secondary Outline</div>
+                        <div class="demo-label">Secondary Outline On-Color</div>
                         <div class="demo-action">
                             <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="green">
                                 <span class="label">Green</span>
@@ -370,7 +370,7 @@ direction: ltr
                     <div class="code-example">
                         <div class="usage-header">
                             <span>Usage</span>
-                            <button class="copy-btn" onclick="copyButtonHTML(this)">
+                            <button class="copy-btn">
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
@@ -381,7 +381,7 @@ direction: ltr
                 </div>
                 <div class="nds-demo-card">
                     <div class="demo-header">
-                        <div class="demo-label">Subtle Button</div>
+                        <div class="demo-label">Subtle Button On-Color</div>
                         <div class="demo-action">
                             <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="green">
                                 <span class="label">Green</span>
@@ -410,7 +410,7 @@ direction: ltr
                     <div class="code-example">
                         <div class="usage-header">
                             <span>Usage</span>
-                            <button class="copy-btn" onclick="copyButtonHTML(this)">
+                            <button class="copy-btn">
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
@@ -421,7 +421,7 @@ direction: ltr
                 </div>
                 <div class="nds-demo-card">
                     <div class="demo-header">
-                        <div class="demo-label">Transparent Button</div>
+                        <div class="demo-label">Transparent Button On-Color</div>
                         <div class="demo-action">
                             <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="green">
                                 <span class="label">Green</span>
@@ -450,7 +450,7 @@ direction: ltr
                     <div class="code-example">
                         <div class="usage-header">
                             <span>Usage</span>
-                            <button class="copy-btn" onclick="copyButtonHTML(this)">
+                            <button class="copy-btn">
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
@@ -465,7 +465,7 @@ direction: ltr
 </section>
 
 <!-- Destructive Buttons with States -->
-<section id="buttonDestructive" class="nds-content-section noBg">
+<section id="buttonDestructive" class="nds-content-section">
     <div class="nds-section-content-container">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Destructive Buttons</h2>
@@ -493,7 +493,7 @@ direction: ltr
                     <div class="code-example">
                         <div class="usage-header">
                             <span>Usage</span>
-                            <button class="copy-btn" onclick="copyButtonHTML(this)">
+                            <button class="copy-btn">
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
@@ -523,7 +523,7 @@ direction: ltr
                     <div class="code-example">
                         <div class="usage-header">
                             <span>Usage</span>
-                            <button class="copy-btn" onclick="copyButtonHTML(this)">
+                            <button class="copy-btn">
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
@@ -553,7 +553,7 @@ direction: ltr
                     <div class="code-example">
                         <div class="usage-header">
                             <span>Usage</span>
-                            <button class="copy-btn" onclick="copyButtonHTML(this)">
+                            <button class="copy-btn">
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
@@ -583,7 +583,7 @@ direction: ltr
                     <div class="code-example">
                         <div class="usage-header">
                             <span>Usage</span>
-                            <button class="copy-btn" onclick="copyButtonHTML(this)">
+                            <button class="copy-btn">
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
@@ -613,7 +613,7 @@ direction: ltr
                     <div class="code-example">
                         <div class="usage-header">
                             <span>Usage</span>
-                            <button class="copy-btn" onclick="copyButtonHTML(this)">
+                            <button class="copy-btn">
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
@@ -655,7 +655,7 @@ direction: ltr
                     <div class="code-example">
                         <div class="usage-header">
                             <span>Usage</span>
-                            <button class="copy-btn" onclick="copyButtonHTML(this)">
+                            <button class="copy-btn">
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
@@ -696,7 +696,7 @@ direction: ltr
                     <div class="code-example">
                         <div class="usage-header">
                             <span>Usage</span>
-                            <button class="copy-btn" onclick="copyButtonHTML(this)">
+                            <button class="copy-btn">
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
@@ -737,7 +737,7 @@ direction: ltr
                     <div class="code-example">
                         <div class="usage-header">
                             <span>Usage</span>
-                            <button class="copy-btn" onclick="copyButtonHTML(this)">
+                            <button class="copy-btn">
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
@@ -774,7 +774,7 @@ direction: ltr
                     <div class="code-example">
                         <div class="usage-header">
                             <span>Usage</span>
-                            <button class="copy-btn" onclick="copyButtonHTML(this)">
+                            <button class="copy-btn">
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
@@ -812,7 +812,7 @@ direction: ltr
                     <div class="code-example">
                         <div class="usage-header">
                             <span>Usage</span>
-                            <button class="copy-btn" onclick="copyButtonHTML(this)">
+                            <button class="copy-btn">
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
@@ -827,7 +827,7 @@ direction: ltr
 </section>
 
 <!-- Icon Buttons -->
-<section id="buttonIcons" class="nds-content-section noBg">
+<section id="buttonIcons" class="nds-content-section">
     <div class="nds-section-content-container">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Buttons with Icons</h2>
@@ -850,7 +850,7 @@ direction: ltr
                     <div class="code-example">
                         <div class="usage-header">
                             <span>Usage</span>
-                            <button class="copy-btn" onclick="copyButtonHTML(this)">
+                            <button class="copy-btn">
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
@@ -876,7 +876,7 @@ direction: ltr
                     <div class="code-example">
                         <div class="usage-header">
                             <span>Usage</span>
-                            <button class="copy-btn" onclick="copyButtonHTML(this)">
+                            <button class="copy-btn">
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
@@ -901,7 +901,7 @@ direction: ltr
                     <div class="code-example">
                         <div class="usage-header">
                             <span>Usage</span>
-                            <button class="copy-btn" onclick="copyButtonHTML(this)">
+                            <button class="copy-btn">
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
@@ -926,7 +926,7 @@ direction: ltr
                     <div class="code-example">
                         <div class="usage-header">
                             <span>Usage</span>
-                            <button class="copy-btn" onclick="copyButtonHTML(this)">
+                            <button class="copy-btn">
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
@@ -950,7 +950,7 @@ direction: ltr
                     <div class="code-example">
                         <div class="usage-header">
                             <span>Usage</span>
-                            <button class="copy-btn" onclick="copyButtonHTML(this)">
+                            <button class="copy-btn">
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
@@ -966,7 +966,7 @@ direction: ltr
 </section>
 
 <!-- Button Sizes -->
-<section id="buttonSizes" class="nds-content-section noBg">
+<section id="buttonSizes" class="nds-content-section">
     <div class="nds-section-content-container">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Button Sizes</h2>
@@ -986,7 +986,7 @@ direction: ltr
                     <div class="code-example">
                         <div class="usage-header">
                             <span>Usage</span>
-                            <button class="copy-btn" onclick="copyButtonHTML(this)">
+                            <button class="copy-btn">
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
@@ -1007,7 +1007,7 @@ direction: ltr
                     <div class="code-example">
                         <div class="usage-header">
                             <span>Usage</span>
-                            <button class="copy-btn" onclick="copyButtonHTML(this)">
+                            <button class="copy-btn">
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
@@ -1028,7 +1028,7 @@ direction: ltr
                     <div class="code-example">
                         <div class="usage-header">
                             <span>Usage</span>
-                            <button class="copy-btn" onclick="copyButtonHTML(this)">
+                            <button class="copy-btn">
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
@@ -1049,7 +1049,7 @@ direction: ltr
                     <div class="code-example">
                         <div class="usage-header">
                             <span>Usage</span>
-                            <button class="copy-btn" onclick="copyButtonHTML(this)">
+                            <button class="copy-btn">
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
@@ -1064,7 +1064,7 @@ direction: ltr
 </section>
 
 <!-- Loading State -->
-<section id="buttonLoading" class="nds-content-section noBg">
+<section id="buttonLoading" class="nds-content-section">
     <div class="nds-section-content-container">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Loading State</h2>
@@ -1090,7 +1090,7 @@ direction: ltr
                     <div class="code-example">
                         <div class="usage-header">
                             <span>Usage</span>
-                            <button class="copy-btn" onclick="copyButtonHTML(this)">
+                            <button class="copy-btn">
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
@@ -1105,112 +1105,3 @@ direction: ltr
 </section>
 
 
-<script>
-
-
-    // Function to initialize individual demo card background switchers
-    function initializeDemoCardSwitchers() {
-        const demoCards = document.querySelectorAll('.nds-demo-card');
-        
-        demoCards.forEach(card => {
-            const demoAction = card.querySelector('.demo-action');
-            const demoContainer = card.querySelector('.demo-container');
-            
-            if (demoAction && demoContainer) {
-                const bgButtons = demoAction.querySelectorAll('.demo-bg-btn');
-                
-                // Check if this card contains oncolor buttons
-                const hasOncolorButtons = demoContainer.querySelector('.nds-btn-oncolor');
-                
-                if (bgButtons.length > 0 && hasOncolorButtons) {
-                    bgButtons.forEach(button => {
-                        button.addEventListener('click', () => {
-                            const bgColor = button.getAttribute('data-bg');
-                            
-                            // Remove existing background classes
-                            demoContainer.classList.remove('green-bg', 'black-bg');
-                            
-                            // Add new background class
-                            if (bgColor === 'green') {
-                                demoContainer.classList.add('green-bg');
-                                updateButtonsForBackground(demoContainer, 'green');
-                            } else if (bgColor === 'black') {
-                                demoContainer.classList.add('black-bg');
-                                updateButtonsForBackground(demoContainer, 'black');
-                            }
-                            
-                            // Update button states
-                            bgButtons.forEach(btn => btn.classList.remove('selected'));
-                            button.classList.add('selected');
-                        });
-                    });
-                    
-                    // Initialize with green background by default only for oncolor cards
-                    demoContainer.classList.add('green-bg');
-                    if (bgButtons[0]) {
-                        bgButtons[0].classList.add('selected');
-                    }
-                }
-            }
-        });
-    }
-
-    // Function to update buttons for background color
-    function updateButtonsForBackground(container, bgColor) {
-        const buttons = container.querySelectorAll('.nds-btn');
-        
-        buttons.forEach(button => {
-            if (bgColor === 'black' || bgColor === 'green') {
-                // Add oncolor class for colored backgrounds
-                if (!button.classList.contains('nds-btn-oncolor')) {
-                    button.classList.add('nds-btn-oncolor');
-                }
-            } else {
-                // Remove oncolor class for default background
-                button.classList.remove('nds-btn-oncolor');
-            }
-        });
-    }
-
-    // Initialize demo card switchers
-    function initializeAllSwitchers() {
-        initializeDemoCardSwitchers();
-    }
-
-    // Run when DOM is loaded
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initializeAllSwitchers);
-    } else {
-        initializeAllSwitchers();
-    }
-    // Button interaction functionality
-    document.addEventListener('DOMContentLoaded', function () {
-
-        // Copy to clipboard functionality
-        window.copyButtonHTML = function (button) {
-            const buttonCard = button.closest('.nds-demo-card');
-            const codeElement = buttonCard.querySelector('code');
-
-            if (!buttonCard || !codeElement) {
-                console.error('Could not find card or code element');
-                return;
-            }
-
-            // Get the clean HTML from the code element
-            const htmlToCopy = codeElement.textContent;
-
-            navigator.clipboard.writeText(htmlToCopy).then(function () {
-                const originalIcon = button.innerHTML;
-                button.innerHTML = '<i class="hgi hgi-stroke hgi-checkmark-circle-01"></i>';
-                button.classList.add('copied');
-
-                setTimeout(() => {
-                    button.innerHTML = originalIcon;
-                    button.classList.remove('copied');
-                }, 2000);
-            }).catch(function (err) {
-                console.error('Failed to copy HTML: ', err);
-            });
-        };
-    });
-</script>

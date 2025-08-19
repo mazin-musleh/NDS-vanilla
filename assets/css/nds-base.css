@@ -626,6 +626,7 @@ nav.nds-main-nav .nds-nav-minimal .nds-dropdown-menu {
     z-index: 1001;
     height: 0;
     max-height: 60vh;
+    min-height: 1px; /*fix gfx bug at 0*/
     overflow-y: auto;
     transition: height var(--nds-transition);
 }
@@ -1247,6 +1248,7 @@ html[dir="ltr"] .nds-breadcrumb li:not(:last-child)::after {
     border: none;
     font-size: var(--nds-display-clamp-md-FS);
     line-height: var(--nds-display-clamp-md-LH);
+    letter-spacing: -0.02rem;
     color: #666;
     cursor: pointer;
     padding: var(--spacing-sm);
@@ -1364,6 +1366,7 @@ html[dir="ltr"] .nds-breadcrumb li:not(:last-child)::after {
     width: 150px;
     color: var(--text-default);
 }
+
 html[dir="ltr"] #nds-sharePage-dropdown {
     left: unset;
     right: 0;
@@ -1947,6 +1950,9 @@ html[dir="ltr"] .hgi-loaded .nds-sideMenu ul>li.has-sub>a:after {
         transform: scale(-1);
         font-weight: 600;
     }
+        html[dir="ltr"] .hgi-loaded #sideMenuToggle::after {
+        transform: scale(1);
+    }
 
     .hgi-loaded #sideMenuToggle.draggable::after {
         content: "㮌";
@@ -2170,6 +2176,7 @@ main {
 .nds-section-title {
     font-size: var(--nds-display-clamp-md-FS, 36px);
     line-height: var(--nds-display-clamp-md-LH, 44px);
+    letter-spacing: -0.02rem;
     font-weight: bold;
     color: var(--text-display, #1f2a37);
     margin-bottom: var(--spacing-lg, 16px);
@@ -2226,6 +2233,7 @@ main {
 .nds-statistic-number {
     font-size: var(--nds-display-clamp-sm-FS, 30px);
     line-height: var(--nds-display-clamp-sm-LH, 38px);
+    letter-spacing: -0.02rem;
     font-weight: bold;
     color: var(--text-primary, #161616);
     margin-bottom: var(--spacing-sm, 8px);
@@ -2234,7 +2242,7 @@ main {
 .nds-statistic-text {
     font-size: var(--nds-text-clamp-md-FS, 16px);
     line-height: var(--nds-text-clamp-md-LH, 24px);
-    color: var(--text-secondary, #525252);
+    color: var(--text-default, #161616);
     font-weight: 500;
 }
 
@@ -2258,10 +2266,6 @@ main {
         padding: var(--spacing-lg, 16px);
     }
 
-    .nds-section-title {
-        font-size: var(--nds-display-clamp-sm-FS, 30px);
-        line-height: var(--nds-display-clamp-sm-LH, 38px);
-    }
 }
 
 @media (max-width: 480px) {
@@ -2445,6 +2449,7 @@ main {
     height: 40px;
     width: auto;
     transition: opacity 0.3s ease;
+    filter: brightness(0) invert(1);
 }
 
 .nds-footer .nds-footer-logos img:hover {

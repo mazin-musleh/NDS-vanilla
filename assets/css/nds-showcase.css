@@ -18,6 +18,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  gap: var(--spacing-lg);
   padding: var(--spacing-md, 12px) var(--spacing-lg, 16px);
   background: var(--background-neutral-50, #f9fafb);
   border-bottom: 1px solid var(--border-neutral-200, #e5e7eb);
@@ -89,10 +90,13 @@
   background-color: var(--background-neutral-900, #1f2937);
 }
 
+.demo-container.noBg {
+  background-color: var(--background-neutral-100, #f3f4f6);
+}
+
 /* Code Example */
 .code-example {
   background: var(--background-neutral-900, #1f2937);
-  border-top: 1px solid var(--border-neutral-200, #e5e7eb);
   padding: var(--spacing-lg, 16px);
   margin: 0;
 }
@@ -151,6 +155,9 @@
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
   font-size: var(--nds-text-sm-FS, 12px);
   line-height: 1.6;
+  direction: ltr;
+  text-align: left;
+  display: block;
 }
 
 /* Responsive Design */
