@@ -141,27 +141,7 @@
   margin-bottom: var(--spacing-xs, 8px);
 }
 
-/* Demo Specific Styles */
-.nds-demo-card {
-  background: var(--background-white, #ffffff);
-  border: 1px solid var(--border-neutral-200, #e5e7eb);
-  border-radius: var(--radius-lg, 8px);
-  margin-bottom: var(--spacing-xl, 24px);
-  overflow: hidden;
-}
-
-.demo-label {
-  padding: var(--spacing-md, 12px) var(--spacing-lg, 16px);
-  background: var(--background-neutral-50, #f9fafb);
-  border-bottom: 1px solid var(--border-neutral-200, #e5e7eb);
-  font-weight: 600;
-  color: var(--text-default, #161616);
-  font-size: var(--nds-text-md-FS, 14px);
-}
-
-.demo-container {
-  padding: var(--spacing-lg, 16px);
-}
+/* Demo Specific Styles moved to nds-showcase.css */
 
 /* Dashboard Stats */
 .dashboard-stats {
@@ -231,63 +211,7 @@
   width: 200px;
 }
 
-/* Code Example */
-.code-example {
-  background: var(--background-neutral-900, #1f2937);
-  border-top: 1px solid var(--border-neutral-200, #e5e7eb);
-  padding: var(--spacing-lg, 16px);
-  margin: 0;
-}
-
-.usage-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: var(--spacing-md, 12px);
-}
-
-.usage-header span {
-  color: var(--text-oncolor-primary, #ffffff);
-  font-weight: 600;
-  font-size: var(--nds-text-sm-FS, 12px);
-}
-
-.copy-btn {
-  background: transparent;
-  border: 1px solid var(--border-neutral-600, #4b5563);
-  color: var(--text-oncolor-secondary, #d1d5db);
-  padding: var(--spacing-xs, 8px);
-  border-radius: var(--radius-sm, 4px);
-  cursor: pointer;
-  transition: all var(--nds-transition, 0.25s ease);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.copy-btn:hover {
-  background: var(--background-neutral-800, #374151);
-  border-color: var(--border-neutral-500, #6b7280);
-}
-
-.copy-btn .hgi {
-  font-size: 14px;
-}
-
-.code-example pre {
-  margin: 0;
-  padding: 0;
-  background: transparent;
-  border: none;
-  overflow-x: auto;
-}
-
-.code-example code {
-  color: var(--text-oncolor-secondary, #d1d5db);
-  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-  font-size: var(--nds-text-sm-FS, 12px);
-  line-height: 1.6;
-}
+/* Code Example styles moved to nds-showcase.css */
 
 /* Accessibility Info */
 .accessibility-info {
@@ -439,10 +363,6 @@ html[dir="rtl"] .nds-tabs.nds-tabs-vertical .nds-tab[aria-selected="true"] {
   
   .dashboard-stats {
     grid-template-columns: 1fr;
-  }
-  
-  .demo-container {
-    padding: var(--spacing-md, 12px);
   }
   
   .setting-item select {

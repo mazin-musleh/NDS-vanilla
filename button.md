@@ -10,7 +10,7 @@ direction: ltr
 ---
 
 <!-- Button Types Overview -->
-<section id="buttonTypesOverview" class="nds-content-section">
+<section id="buttonTypesOverview" class="nds-content-section noBg">
     <div class="nds-section-content-container">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Six Button Types</h2>
@@ -19,7 +19,10 @@ direction: ltr
         <div class="nds-section-content">
             <div class="button-showcase">
                 <div class="nds-demo-card">
-                    <div class="demo-label">Primary Button</div>
+                    <div class="demo-header">
+                        <div class="demo-label">Primary Button</div>
+                        <div class="demo-action"></div>
+                    </div>
                     <div class="demo-container">
                         <div class="state-demo">
                             <button class="nds-btn nds-btn-primary nds-btn-lg" data-state="default"><span
@@ -49,7 +52,10 @@ direction: ltr
                     </div>
                 </div>
                 <div class="nds-demo-card">
-                    <div class="demo-label">Neutral Button</div>
+                    <div class="demo-header">
+                        <div class="demo-label">Neutral Button</div>
+                        <div class="demo-action"></div>
+                    </div>
                     <div class="demo-container">
                         <div class="state-demo">
                             <button class="nds-btn nds-btn-neutral nds-btn-lg" data-state="default"><span
@@ -79,7 +85,10 @@ direction: ltr
                     </div>
                 </div>
                 <div class="nds-demo-card">
-                    <div class="demo-label">Secondary Solid</div>
+                    <div class="demo-header">
+                        <div class="demo-label">Secondary Solid</div>
+                        <div class="demo-action"></div>
+                    </div>
                     <div class="demo-container">
                         <div class="state-demo">
                             <button class="nds-btn nds-btn-secondary-solid nds-btn-lg" data-state="default"><span
@@ -103,11 +112,16 @@ direction: ltr
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
-                        <code>&lt;button class="nds-btn nds-btn-secondary-solid nds-btn-lg"&gt;&lt;span class="label"&gt;Secondary Solid Button&lt;/span&gt;&lt;/button&gt;</code>
+                        <pre><code>&lt;button class="nds-btn nds-btn-secondary-solid nds-btn-lg"&gt;
+  &lt;span class="label"&gt;Secondary Solid Button&lt;/span&gt;
+&lt;/button&gt;</code></pre>
                     </div>
                 </div>
                 <div class="nds-demo-card">
-                    <div class="demo-label">Secondary Outline</div>
+                    <div class="demo-header">
+                        <div class="demo-label">Secondary Outline</div>
+                        <div class="demo-action"></div>
+                    </div>
                     <div class="demo-container">
                         <div class="state-demo">
                             <button class="nds-btn nds-btn-secondary-outline nds-btn-lg" data-state="default"><span
@@ -131,11 +145,16 @@ direction: ltr
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
-                        <code>&lt;button class="nds-btn nds-btn-secondary-outline nds-btn-lg"&gt;&lt;span class="label"&gt;Secondary Outline Button&lt;/span&gt;&lt;/button&gt;</code>
+                        <pre><code>&lt;button class="nds-btn nds-btn-secondary-outline nds-btn-lg"&gt;
+  &lt;span class="label"&gt;Secondary Outline Button&lt;/span&gt;
+&lt;/button&gt;</code></pre>
                     </div>
                 </div>
                 <div class="nds-demo-card">
-                    <div class="demo-label">Subtle Button</div>
+                    <div class="demo-header">
+                        <div class="demo-label">Subtle Button</div>
+                        <div class="demo-action"></div>
+                    </div>
                     <div class="demo-container">
                         <div class="state-demo">
                             <button class="nds-btn nds-btn-subtle nds-btn-lg" data-state="default"><span
@@ -159,11 +178,16 @@ direction: ltr
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
-                        <code>&lt;button class="nds-btn nds-btn-subtle nds-btn-lg"&gt;&lt;span class="label"&gt;Subtle Button&lt;/span&gt;&lt;/button&gt;</code>
+                        <pre><code>&lt;button class="nds-btn nds-btn-subtle nds-btn-lg"&gt;
+  &lt;span class="label"&gt;Subtle Button&lt;/span&gt;
+&lt;/button&gt;</code></pre>
                     </div>
                 </div>
                 <div class="nds-demo-card">
-                    <div class="demo-label">Transparent Button</div>
+                    <div class="demo-header">
+                        <div class="demo-label">Transparent Button</div>
+                        <div class="demo-action"></div>
+                    </div>
                     <div class="demo-container">
                         <div class="state-demo">
                             <button class="nds-btn nds-btn-transparent nds-btn-lg" data-state="default"><span
@@ -187,20 +211,26 @@ direction: ltr
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
-                        <code>&lt;button class="nds-btn nds-btn-transparent nds-btn-lg"&gt;&lt;span class="label"&gt;Transparent Button&lt;/span&gt;&lt;/button&gt;</code>
+                        <pre><code>&lt;button class="nds-btn nds-btn-transparent nds-btn-lg"&gt;
+  &lt;span class="label"&gt;Transparent Button&lt;/span&gt;
+&lt;/button&gt;</code></pre>
                     </div>
                 </div>
             </div>
 
-            <div class="showcase-bgcolor-switcher">
-                <button class="nds-btn nds-btn-primary nds-btn-lg" data-state="default"><span class="label">Green
-                        background</span></button>
-                <button class="nds-btn nds-btn-neutral nds-btn-lg" data-state="default"><span class="label">Black
-                        background</span></button>
-            </div>
-            <div class="button-showcase bgcolor-switch dark-bg ">
+            <div class="button-showcase oncolor-buttons">
                 <div class="nds-demo-card">
-                    <div class="demo-label">Primary Button</div>
+                    <div class="demo-header">
+                        <div class="demo-label">Primary Button</div>
+                        <div class="demo-action">
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="green">
+                                <span class="label">Green</span>
+                            </button>
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="black">
+                                <span class="label">Black</span>
+                            </button>
+                        </div>
+                    </div>
                     <div class="demo-container">
                         <div class="state-demo">
                             <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-lg"
@@ -224,11 +254,23 @@ direction: ltr
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
-                        <code>&lt;button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-lg"&gt;&lt;span class="label"&gt;Primary Button&lt;/span&gt;&lt;/button&gt;</code>
+                        <pre><code>&lt;button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-lg"&gt;
+  &lt;span class="label"&gt;Primary Button&lt;/span&gt;
+&lt;/button&gt;</code></pre>
                     </div>
                 </div>
                 <div class="nds-demo-card">
-                    <div class="demo-label">Neutral Button</div>
+                    <div class="demo-header">
+                        <div class="demo-label">Neutral Button</div>
+                        <div class="demo-action">
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="green">
+                                <span class="label">Green</span>
+                            </button>
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="black">
+                                <span class="label">Black</span>
+                            </button>
+                        </div>
+                    </div>
                     <div class="demo-container">
                         <div class="state-demo">
                             <button class="nds-btn nds-btn-neutral nds-btn-oncolor nds-btn-lg"
@@ -252,11 +294,23 @@ direction: ltr
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
-                        <code>&lt;button class="nds-btn nds-btn-neutral nds-btn-oncolor nds-btn-lg"&gt;&lt;span class="label"&gt;Neutral Button&lt;/span&gt;&lt;/button&gt;</code>
+                        <pre><code>&lt;button class="nds-btn nds-btn-neutral nds-btn-oncolor nds-btn-lg"&gt;
+  &lt;span class="label"&gt;Neutral Button&lt;/span&gt;
+&lt;/button&gt;</code></pre>
                     </div>
                 </div>
                 <div class="nds-demo-card">
-                    <div class="demo-label">Secondary Solid</div>
+                    <div class="demo-header">
+                        <div class="demo-label">Secondary Solid</div>
+                        <div class="demo-action">
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="green">
+                                <span class="label">Green</span>
+                            </button>
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="black">
+                                <span class="label">Black</span>
+                            </button>
+                        </div>
+                    </div>
                     <div class="demo-container">
                         <div class="state-demo">
                             <button class="nds-btn nds-btn-secondary-solid nds-btn-oncolor nds-btn-lg"
@@ -280,13 +334,23 @@ direction: ltr
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
-                        <code>&lt;button class="nds-btn nds-btn-secondary-solid nds-btn-oncolor nds-btn-lg"&gt;
+                        <pre><code>&lt;button class="nds-btn nds-btn-secondary-solid nds-btn-oncolor nds-btn-lg"&gt;
   &lt;span class="label"&gt;Secondary Solid Button&lt;/span&gt;
-&lt;/button&gt;</code>
+&lt;/button&gt;</code></pre>
                     </div>
                 </div>
                 <div class="nds-demo-card">
-                    <div class="demo-label">Secondary Outline</div>
+                    <div class="demo-header">
+                        <div class="demo-label">Secondary Outline</div>
+                        <div class="demo-action">
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="green">
+                                <span class="label">Green</span>
+                            </button>
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="black">
+                                <span class="label">Black</span>
+                            </button>
+                        </div>
+                    </div>
                     <div class="demo-container">
                         <div class="state-demo">
                             <button class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-lg"
@@ -310,13 +374,23 @@ direction: ltr
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
-                        <code>&lt;button class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-lg"&gt;
+                        <pre><code>&lt;button class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-lg"&gt;
   &lt;span class="label"&gt;Secondary Outline Button&lt;/span&gt;
-&lt;/button&gt;</code>
+&lt;/button&gt;</code></pre>
                     </div>
                 </div>
                 <div class="nds-demo-card">
-                    <div class="demo-label">Subtle Button</div>
+                    <div class="demo-header">
+                        <div class="demo-label">Subtle Button</div>
+                        <div class="demo-action">
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="green">
+                                <span class="label">Green</span>
+                            </button>
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="black">
+                                <span class="label">Black</span>
+                            </button>
+                        </div>
+                    </div>
                     <div class="demo-container">
                         <div class="state-demo">
                             <button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-lg" data-state="default"><span
@@ -340,13 +414,23 @@ direction: ltr
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
-                        <code>&lt;button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-lg"&gt;
+                        <pre><code>&lt;button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-lg"&gt;
   &lt;span class="label"&gt;Subtle Button&lt;/span&gt;
-&lt;/button&gt;</code>
+&lt;/button&gt;</code></pre>
                     </div>
                 </div>
                 <div class="nds-demo-card">
-                    <div class="demo-label">Transparent Button</div>
+                    <div class="demo-header">
+                        <div class="demo-label">Transparent Button</div>
+                        <div class="demo-action">
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="green">
+                                <span class="label">Green</span>
+                            </button>
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="black">
+                                <span class="label">Black</span>
+                            </button>
+                        </div>
+                    </div>
                     <div class="demo-container">
                         <div class="state-demo">
                             <button class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-lg"
@@ -381,7 +465,7 @@ direction: ltr
 </section>
 
 <!-- Destructive Buttons with States -->
-<section id="buttonDestructive" class="nds-content-section">
+<section id="buttonDestructive" class="nds-content-section noBg">
     <div class="nds-section-content-container">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Destructive Buttons</h2>
@@ -390,7 +474,10 @@ direction: ltr
         <div class="nds-section-content">
             <div class="button-showcase">
                 <div class="nds-demo-card">
-                    <div class="demo-label">Destructive Primary</div>
+                    <div class="demo-header">
+                        <div class="demo-label">Destructive Primary</div>
+                        <div class="demo-action"></div>
+                    </div>
                     <div class="demo-container">
                         <div class="state-demo">
                             <button class="nds-btn nds-btn-primary nds-btn-destructive nds-btn-lg"
@@ -417,7 +504,10 @@ direction: ltr
                 </div>
 
                 <div class="nds-demo-card">
-                    <div class="demo-label">Destructive Secondary Solid</div>
+                    <div class="demo-header">
+                        <div class="demo-label">Destructive Secondary Solid</div>
+                        <div class="demo-action"></div>
+                    </div>
                     <div class="demo-container">
                         <div class="state-demo">
                             <button class="nds-btn nds-btn-secondary-solid nds-btn-destructive nds-btn-lg"
@@ -444,7 +534,10 @@ direction: ltr
                 </div>
 
                 <div class="nds-demo-card">
-                    <div class="demo-label">Destructive Outline</div>
+                    <div class="demo-header">
+                        <div class="demo-label">Destructive Outline</div>
+                        <div class="demo-action"></div>
+                    </div>
                     <div class="demo-container">
                         <div class="state-demo">
                             <button class="nds-btn nds-btn-secondary-outline nds-btn-destructive nds-btn-lg"
@@ -471,7 +564,10 @@ direction: ltr
                 </div>
 
                 <div class="nds-demo-card">
-                    <div class="demo-label">Destructive Subtle</div>
+                    <div class="demo-header">
+                        <div class="demo-label">Destructive Subtle</div>
+                        <div class="demo-action"></div>
+                    </div>
                     <div class="demo-container">
                         <div class="state-demo">
                             <button class="nds-btn nds-btn-subtle nds-btn-destructive nds-btn-lg"
@@ -498,7 +594,10 @@ direction: ltr
                 </div>
 
                 <div class="nds-demo-card">
-                    <div class="demo-label">Destructive Transparent</div>
+                    <div class="demo-header">
+                        <div class="demo-label">Destructive Transparent</div>
+                        <div class="demo-action"></div>
+                    </div>
                     <div class="demo-container">
                         <div class="state-demo">
                             <button class="nds-btn nds-btn-transparent nds-btn-destructive nds-btn-lg"
@@ -526,17 +625,21 @@ direction: ltr
             </div>
 
             <!-- Background Switcher for On-Color Destructive Buttons -->
-            <div class="showcase-bgcolor-switcher">
-                <button class="nds-btn nds-btn-primary nds-btn-lg" data-state="default"><span class="label">Green
-                        background</span></button>
-                <button class="nds-btn nds-btn-neutral nds-btn-lg" data-state="default"><span class="label">Black
-                        background</span></button>
-            </div>
 
             <!-- On-Color Destructive Buttons with States -->
-            <div class="button-showcase bgcolor-switch dark-bg">
+            <div class="button-showcase">
                 <div class="nds-demo-card">
-                    <div class="demo-label">Destructive Primary On-Color</div>
+                    <div class="demo-header">
+                        <div class="demo-label">Destructive Primary On-Color</div>
+                        <div class="demo-action">
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="green">
+                                <span class="label">Green</span>
+                            </button>
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="black">
+                                <span class="label">Black</span>
+                            </button>
+                        </div>
+                    </div>
                     <div class="demo-container">
                         <div class="state-demo">
                             <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-destructive nds-btn-lg"
@@ -563,7 +666,17 @@ direction: ltr
                 </div>
 
                 <div class="nds-demo-card">
-                    <div class="demo-label">Destructive Secondary Solid On-Color</div>
+                    <div class="demo-header">
+                        <div class="demo-label">Destructive Secondary Solid On-Color</div>
+                        <div class="demo-action">
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="green">
+                                <span class="label">Green</span>
+                            </button>
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="black">
+                                <span class="label">Black</span>
+                            </button>
+                        </div>
+                    </div>
                     <div class="demo-container">
                         <div class="state-demo">
                             <button
@@ -594,7 +707,17 @@ direction: ltr
                 </div>
 
                 <div class="nds-demo-card">
-                    <div class="demo-label">Destructive Outline On-Color</div>
+                    <div class="demo-header">
+                        <div class="demo-label">Destructive Outline On-Color</div>
+                        <div class="demo-action">
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="green">
+                                <span class="label">Green</span>
+                            </button>
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="black">
+                                <span class="label">Black</span>
+                            </button>
+                        </div>
+                    </div>
                     <div class="demo-container">
                         <div class="state-demo">
                             <button
@@ -625,7 +748,17 @@ direction: ltr
                 </div>
 
                 <div class="nds-demo-card">
-                    <div class="demo-label">Destructive Subtle On-Color</div>
+                    <div class="demo-header">
+                        <div class="demo-label">Destructive Subtle On-Color</div>
+                        <div class="demo-action">
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="green">
+                                <span class="label">Green</span>
+                            </button>
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="black">
+                                <span class="label">Black</span>
+                            </button>
+                        </div>
+                    </div>
                     <div class="demo-container">
                         <div class="state-demo">
                             <button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-destructive nds-btn-lg"
@@ -652,7 +785,17 @@ direction: ltr
                 </div>
 
                 <div class="nds-demo-card">
-                    <div class="demo-label">Destructive Transparent On-Color</div>
+                    <div class="demo-header">
+                        <div class="demo-label">Destructive Transparent On-Color</div>
+                        <div class="demo-action">
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="green">
+                                <span class="label">Green</span>
+                            </button>
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="black">
+                                <span class="label">Black</span>
+                            </button>
+                        </div>
+                    </div>
                     <div class="demo-container">
                         <div class="state-demo">
                             <button class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-destructive nds-btn-lg"
@@ -684,7 +827,7 @@ direction: ltr
 </section>
 
 <!-- Icon Buttons -->
-<section id="buttonIcons" class="nds-content-section">
+<section id="buttonIcons" class="nds-content-section noBg">
     <div class="nds-section-content-container">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Buttons with Icons</h2>
@@ -694,7 +837,10 @@ direction: ltr
             <div class="button-showcase">
                 <!-- Lead Icon -->
                 <div class="nds-demo-card">
-                    <div class="demo-label">Lead Icon (Icon + Text)</div>
+                    <div class="demo-header">
+                        <div class="demo-label">Lead Icon (Icon + Text)</div>
+                        <div class="demo-action"></div>
+                    </div>
                     <div class="demo-container">
                         <button class="nds-btn nds-btn-primary nds-btn-lg">
                             <i class="hgi hgi-stroke hgi-plus-sign"></i>
@@ -717,7 +863,10 @@ direction: ltr
 
                 <!-- Trail Icon -->
                 <div class="nds-demo-card">
-                    <div class="demo-label">Trail Icon (Text + Icon)</div>
+                    <div class="demo-header">
+                        <div class="demo-label">Trail Icon (Text + Icon)</div>
+                        <div class="demo-action"></div>
+                    </div>
                     <div class="demo-container">
                         <button class="nds-btn nds-btn-secondary-solid nds-btn-lg nds-btn-trail-icon">
                             <i class="hgi hgi-stroke hgi-download-02"></i>
@@ -740,7 +889,10 @@ direction: ltr
 
                 <!-- Icon Only -->
                 <div class="nds-demo-card">
-                    <div class="demo-label">Icon Only Buttons</div>
+                    <div class="demo-header">
+                        <div class="demo-label">Icon Only Buttons</div>
+                        <div class="demo-action"></div>
+                    </div>
                     <div class="demo-container">
                         <button class="nds-btn nds-btn-primary nds-btn-icon-only nds-btn-lg" aria-label="Settings">
                             <i class="hgi hgi-stroke hgi-settings-02"></i>
@@ -761,7 +913,10 @@ direction: ltr
 
                 <!-- menu -->
                 <div class="nds-demo-card">
-                    <div class="demo-label">Menu Buttons</div>
+                    <div class="demo-header">
+                        <div class="demo-label">Menu Buttons</div>
+                        <div class="demo-action"></div>
+                    </div>
                     <div class="demo-container">
                         <button class="nds-btn nds-btn-menu nds-btn-primary nds-btn-icon-only nds-btn-lg"
                             aria-label="Settings">
@@ -782,7 +937,10 @@ direction: ltr
                 </div>
                 <!-- menu with Label -->
                 <div class="nds-demo-card">
-                    <div class="demo-label">Menu Buttons</div>
+                    <div class="demo-header">
+                        <div class="demo-label">Menu Buttons</div>
+                        <div class="demo-action"></div>
+                    </div>
                     <div class="demo-container">
                         <button class="nds-btn nds-btn-menu nds-btn-primary nds-btn-lg" aria-label="Settings">
                             <i class="hgi hgi-stroke hgi-folder-library"></i>
@@ -808,7 +966,7 @@ direction: ltr
 </section>
 
 <!-- Button Sizes -->
-<section id="buttonSizes" class="nds-content-section">
+<section id="buttonSizes" class="nds-content-section noBg">
     <div class="nds-section-content-container">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Button Sizes</h2>
@@ -817,7 +975,10 @@ direction: ltr
         <div class="nds-section-content">
             <div class="button-showcase">
                 <div class="nds-demo-card">
-                    <div class="demo-label">Small (24px)</div>
+                    <div class="demo-header">
+                        <div class="demo-label">Small (24px)</div>
+                        <div class="demo-action"></div>
+                    </div>
                     <div class="demo-container">
                         <button class="nds-btn nds-btn-primary nds-btn-sm"><span class="label">Small
                                 Button</span></button>
@@ -829,13 +990,16 @@ direction: ltr
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
-                        <code>&lt;button class="nds-btn nds-btn-primary nds-btn-sm"&gt;
+                        <pre><code>&lt;button class="nds-btn nds-btn-primary nds-btn-sm"&gt;
   &lt;span class="label"&gt;Small Button&lt;/span&gt;
-&lt;/button&gt;</code>
+&lt;/button&gt;</code></pre>
                     </div>
                 </div>
                 <div class="nds-demo-card">
-                    <div class="demo-label">Medium (32px)</div>
+                    <div class="demo-header">
+                        <div class="demo-label">Medium (32px)</div>
+                        <div class="demo-action"></div>
+                    </div>
                     <div class="demo-container">
                         <button class="nds-btn nds-btn-primary nds-btn-md"><span class="label">Medium
                                 Button</span></button>
@@ -847,13 +1011,16 @@ direction: ltr
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
-                        <code>&lt;button class="nds-btn nds-btn-primary nds-btn-md"&gt;
+                        <pre><code>&lt;button class="nds-btn nds-btn-primary nds-btn-md"&gt;
   &lt;span class="label"&gt;Medium Button&lt;/span&gt;
-&lt;/button&gt;</code>
+&lt;/button&gt;</code></pre>
                     </div>
                 </div>
                 <div class="nds-demo-card">
-                    <div class="demo-label">Large (40px)</div>
+                    <div class="demo-header">
+                        <div class="demo-label">Large (40px)</div>
+                        <div class="demo-action"></div>
+                    </div>
                     <div class="demo-container">
                         <button class="nds-btn nds-btn-primary nds-btn-lg"><span class="label">Large
                                 Button</span></button>
@@ -865,13 +1032,16 @@ direction: ltr
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
-                        <code>&lt;button class="nds-btn nds-btn-primary nds-btn-lg"&gt;
+                        <pre><code>&lt;button class="nds-btn nds-btn-primary nds-btn-lg"&gt;
   &lt;span class="label"&gt;Large Button&lt;/span&gt;
-&lt;/button&gt;</code>
+&lt;/button&gt;</code></pre>
                     </div>
                 </div>
                 <div class="nds-demo-card">
-                    <div class="demo-label">Full Width Primary</div>
+                    <div class="demo-header">
+                        <div class="demo-label">Full Width Primary</div>
+                        <div class="demo-action"></div>
+                    </div>
                     <div class="demo-container">
                         <button class="nds-btn nds-btn-primary nds-btn-lg nds-btn-full"><span class="label">Full
                                 Width Primary Button</span></button>
@@ -894,7 +1064,7 @@ direction: ltr
 </section>
 
 <!-- Loading State -->
-<section id="buttonLoading" class="nds-content-section">
+<section id="buttonLoading" class="nds-content-section noBg">
     <div class="nds-section-content-container">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Loading State</h2>
@@ -903,7 +1073,10 @@ direction: ltr
         <div class="nds-section-content">
             <div class="button-showcase">
                 <div class="nds-demo-card">
-                    <div class="demo-label">Loading States</div>
+                    <div class="demo-header">
+                        <div class="demo-label">Loading States</div>
+                        <div class="demo-action"></div>
+                    </div>
                     <div class="demo-container">
                         <div class="button-row">
                             <button class="nds-btn nds-btn-primary nds-btn-loading nds-btn-lg"><span
@@ -931,48 +1104,77 @@ direction: ltr
     </div>
 </section>
 
+
 <script>
 
-    // Function to initialize a single switcher
-    function initializeSwitcher(switcherElement) {
-        // Find the target element - closest .bgcolor-switch to this switcher
-        const targetElement = switcherElement.closest('.bgcolor-switch') ||
-            switcherElement.parentElement.querySelector('.bgcolor-switch');
 
-        // Get both buttons within this specific switcher
-        const greenBtn = switcherElement.querySelector('button:first-child');
-        const blackBtn = switcherElement.querySelector('button:last-child');
-
-        // Function to set background color for this specific target
-        function setBackgroundColor(color) {
-            if (color === 'green') {
-                targetElement.classList.remove('black-bg');
-                targetElement.classList.add('green-bg');
-            } else if (color === 'black') {
-                targetElement.classList.remove('green-bg');
-                targetElement.classList.add('black-bg');
+    // Function to initialize individual demo card background switchers
+    function initializeDemoCardSwitchers() {
+        const demoCards = document.querySelectorAll('.nds-demo-card');
+        
+        demoCards.forEach(card => {
+            const demoAction = card.querySelector('.demo-action');
+            const demoContainer = card.querySelector('.demo-container');
+            
+            if (demoAction && demoContainer) {
+                const bgButtons = demoAction.querySelectorAll('.demo-bg-btn');
+                
+                // Check if this card contains oncolor buttons
+                const hasOncolorButtons = demoContainer.querySelector('.nds-btn-oncolor');
+                
+                if (bgButtons.length > 0 && hasOncolorButtons) {
+                    bgButtons.forEach(button => {
+                        button.addEventListener('click', () => {
+                            const bgColor = button.getAttribute('data-bg');
+                            
+                            // Remove existing background classes
+                            demoContainer.classList.remove('green-bg', 'black-bg');
+                            
+                            // Add new background class
+                            if (bgColor === 'green') {
+                                demoContainer.classList.add('green-bg');
+                                updateButtonsForBackground(demoContainer, 'green');
+                            } else if (bgColor === 'black') {
+                                demoContainer.classList.add('black-bg');
+                                updateButtonsForBackground(demoContainer, 'black');
+                            }
+                            
+                            // Update button states
+                            bgButtons.forEach(btn => btn.classList.remove('selected'));
+                            button.classList.add('selected');
+                        });
+                    });
+                    
+                    // Initialize with green background by default only for oncolor cards
+                    demoContainer.classList.add('green-bg');
+                    if (bgButtons[0]) {
+                        bgButtons[0].classList.add('selected');
+                    }
+                }
             }
-        }
-
-        // Add click event listeners for this switcher
-        greenBtn.addEventListener('click', () => {
-            setBackgroundColor('green');
         });
-
-        blackBtn.addEventListener('click', () => {
-            setBackgroundColor('black');
-        });
-
-        // Initialize with green as default
-        setBackgroundColor('green');
     }
 
-    // Initialize all switchers on the page
-    function initializeAllSwitchers() {
-        const allSwitchers = document.querySelectorAll('.showcase-bgcolor-switcher');
-        allSwitchers.forEach(switcher => {
-            initializeSwitcher(switcher);
+    // Function to update buttons for background color
+    function updateButtonsForBackground(container, bgColor) {
+        const buttons = container.querySelectorAll('.nds-btn');
+        
+        buttons.forEach(button => {
+            if (bgColor === 'black' || bgColor === 'green') {
+                // Add oncolor class for colored backgrounds
+                if (!button.classList.contains('nds-btn-oncolor')) {
+                    button.classList.add('nds-btn-oncolor');
+                }
+            } else {
+                // Remove oncolor class for default background
+                button.classList.remove('nds-btn-oncolor');
+            }
         });
+    }
+
+    // Initialize demo card switchers
+    function initializeAllSwitchers() {
+        initializeDemoCardSwitchers();
     }
 
     // Run when DOM is loaded
@@ -986,8 +1188,13 @@ direction: ltr
 
         // Copy to clipboard functionality
         window.copyButtonHTML = function (button) {
-            const buttonCard = button.closest('.button-card');
+            const buttonCard = button.closest('.nds-demo-card');
             const codeElement = buttonCard.querySelector('code');
+
+            if (!buttonCard || !codeElement) {
+                console.error('Could not find card or code element');
+                return;
+            }
 
             // Get the clean HTML from the code element
             const htmlToCopy = codeElement.textContent;
