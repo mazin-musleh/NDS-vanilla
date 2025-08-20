@@ -2029,6 +2029,7 @@ main {
 
 .contentLayout .mainContent {
     width: calc(100%);
+    min-width: 400px;
     display: flex;
     flex-wrap: wrap;
 }
