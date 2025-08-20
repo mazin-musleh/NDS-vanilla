@@ -9,7 +9,6 @@
     // Initialize when DOM is ready
     document.addEventListener('DOMContentLoaded', function() {
         initializeCopyButtons();
-        initializeDemoCardSwitchers();
         initializeDemoToggleButtons();
     });
 
@@ -77,75 +76,75 @@
         }, 2000);
     }
 
-    // Background switcher functionality for oncolor button demos
-    function initializeDemoCardSwitchers() {
-        const demoCards = document.querySelectorAll('.nds-demo-card');
-        
-        demoCards.forEach(card => {
-            const demoAction = card.querySelector('.demo-action');
-            const demoContainer = card.querySelector('.demo-container');
-            
-            if (demoAction && demoContainer) {
-                const bgButtons = demoAction.querySelectorAll('.demo-bg-btn');
-                
-                // Check if this card contains oncolor buttons
-                const hasOncolorButtons = demoContainer.querySelector('.nds-btn-oncolor');
-                
-                if (bgButtons.length > 0 && hasOncolorButtons) {
-                    initializeSingleCardSwitcher(card, bgButtons, demoContainer);
-                }
-            }
-        });
-    }
 
-    function initializeSingleCardSwitcher(card, bgButtons, demoContainer) {
-        bgButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const bgColor = button.getAttribute('data-bg');
-                
-                // Remove existing background classes
-                demoContainer.classList.remove('green-bg', 'black-bg');
-                
-                // Add new background class
-                if (bgColor === 'green') {
-                    demoContainer.classList.add('green-bg');
-                    updateButtonsForBackground(demoContainer, 'green');
-                } else if (bgColor === 'black') {
-                    demoContainer.classList.add('black-bg');
-                    updateButtonsForBackground(demoContainer, 'black');
-                }
-                
-                // Update button states
-                bgButtons.forEach(btn => btn.classList.remove('selected'));
-                button.classList.add('selected');
-            });
-        });
-        
-        // Initialize with green background by default only for oncolor cards
-        demoContainer.classList.add('green-bg');
-        if (bgButtons[0]) {
-            bgButtons[0].classList.add('selected');
-        }
-    }
-
-    function updateButtonsForBackground(container, bgColor) {
+    function updateButtonsForBackground(container, bgType) {
         const buttons = container.querySelectorAll('.nds-btn');
         
         buttons.forEach(button => {
-            if (bgColor === 'black' || bgColor === 'green') {
+            if (bgType === 'colored') {
                 // Add oncolor class for colored backgrounds
                 if (!button.classList.contains('nds-btn-oncolor')) {
                     button.classList.add('nds-btn-oncolor');
                 }
             } else {
-                // Remove oncolor class for default background
+                // Remove oncolor class for default/none background
                 button.classList.remove('nds-btn-oncolor');
             }
         });
     }
 
+    function handleCodeUpdate(demoCard, updateType, isActive) {
+        const codeElement = demoCard.querySelector('.code-example code');
+        if (!codeElement) return;
+        
+        const currentCode = codeElement.textContent;
+        
+        if (updateType === 'cardView') {
+            // Handle cardView class updates for tabs
+            if (isActive) {
+                const updatedCode = currentCode.replace(
+                    'class="nds-tabs"',
+                    'class="nds-tabs cardView"'
+                ).replace(
+                    'class="nds-tabs nds-tabs-vertical"',
+                    'class="nds-tabs nds-tabs-vertical cardView"'
+                );
+                codeElement.textContent = updatedCode;
+            } else {
+                const updatedCode = currentCode.replace(
+                    'class="nds-tabs cardView"',
+                    'class="nds-tabs"'
+                ).replace(
+                    'class="nds-tabs nds-tabs-vertical cardView"',
+                    'class="nds-tabs nds-tabs-vertical"'
+                );
+                codeElement.textContent = updatedCode;
+            }
+        }
+    }
+
     // Demo toggle button functionality
     function initializeDemoToggleButtons() {
+        // Initialize cards with default backgrounds based on data attributes
+        document.querySelectorAll('.nds-demo-card').forEach(card => {
+            const demoContainer = card.querySelector('.demo-container');
+            const hasOncolorButtons = demoContainer && demoContainer.querySelector('.nds-btn-oncolor');
+            
+            // Find default background button (marked with data-default="true")
+            const defaultBgButton = card.querySelector('[data-bg-group][data-default="true"]');
+            
+            if (hasOncolorButtons && defaultBgButton) {
+                const defaultClass = defaultBgButton.getAttribute('data-toggle');
+                const bgType = defaultBgButton.getAttribute('data-bg-type');
+                
+                if (defaultClass) {
+                    demoContainer.classList.add(defaultClass);
+                    defaultBgButton.classList.add('selected');
+                    updateButtonsForBackground(demoContainer, bgType || 'colored');
+                }
+            }
+        });
+        
         // Event delegation for all demo toggle buttons
         document.addEventListener('click', function(e) {
             const toggleBtn = e.target.closest('.demo-toggle-btn');
@@ -157,42 +156,163 @@
 
     function handleToggleClick(button) {
         const toggleClass = button.getAttribute('data-toggle');
-        const targetSelector = button.getAttribute('data-target');
+        let targetSelector = button.getAttribute('data-target');
         
-        if (!toggleClass || !targetSelector) {
-            console.error('Toggle button missing required data attributes');
+        if (!toggleClass) {
+            console.error('Toggle button missing data-toggle attribute');
+            return;
+        }
+
+        const demoCard = button.closest('.nds-demo-card');
+        if (!demoCard) {
+            console.error('Toggle button must be inside a demo card');
             return;
         }
 
         let targetElement;
         
-        // If target is just a class (like .demo-container), find it relative to the button
-        if (targetSelector.startsWith('.')) {
-            const demoCard = button.closest('.nds-demo-card');
-            targetElement = demoCard ? demoCard.querySelector(targetSelector) : null;
+        // If no target is specified, use default from data attribute or fallback
+        if (!targetSelector) {
+            targetSelector = button.getAttribute('data-default-target');
+            
+            if (!targetSelector) {
+                console.error('No target specified for toggle button. Add data-target or data-default-target attribute.');
+                return;
+            }
+        }
+        
+        // Always find the target relative to the demo card, regardless of selector type
+        if (targetSelector.startsWith('#')) {
+            // Remove the # and find by ID within the demo card
+            const idSelector = targetSelector.substring(1);
+            const idParts = idSelector.split(' ');
+            const elementId = idParts[0];
+            const subSelector = idParts.slice(1).join(' ');
+            
+            const elementById = demoCard.querySelector(`#${elementId}`);
+            if (elementById && subSelector) {
+                targetElement = elementById.querySelector(subSelector);
+            } else {
+                targetElement = elementById;
+            }
         } else {
-            // Otherwise use global selector
-            targetElement = document.querySelector(targetSelector);
+            // Use the selector directly within the demo card
+            targetElement = demoCard.querySelector(targetSelector);
         }
 
         if (!targetElement) {
-            console.error('Target element not found:', targetSelector);
+            console.error('Target element not found:', targetSelector, 'in demo card');
             return;
         }
 
-        // Toggle the class
-        targetElement.classList.toggle(toggleClass);
+        // Check if this is a background toggle button
+        const isBackgroundToggle = button.hasAttribute('data-bg-group');
+        const bgGroup = button.getAttribute('data-bg-group');
         
-        // Update button state to show active/inactive
-        button.classList.toggle('selected');
+        if (isBackgroundToggle) {
+            // For background toggles, find all buttons in the same group and clear their classes
+            const groupButtons = demoCard.querySelectorAll(`[data-bg-group="${bgGroup}"]`);
+            const classesToRemove = [];
+            
+            // Collect all possible background classes from the group
+            groupButtons.forEach(btn => {
+                const btnToggleClass = btn.getAttribute('data-toggle');
+                if (btnToggleClass && btnToggleClass !== toggleClass) {
+                    classesToRemove.push(btnToggleClass);
+                }
+            });
+            
+            // Remove all background classes from target
+            targetElement.classList.remove(...classesToRemove);
+            
+            // Add the new class
+            targetElement.classList.add(toggleClass);
+            
+            // Update button states in the group
+            groupButtons.forEach(btn => btn.classList.remove('selected'));
+            button.classList.add('selected');
+            
+            // Handle special functionality based on data attributes
+            const bgType = button.getAttribute('data-bg-type');
+            if (bgType === 'colored') {
+                // For colored backgrounds, add oncolor class to buttons
+                updateButtonsForBackground(targetElement, 'colored');
+            } else if (bgType === 'none') {
+                // For no background, remove oncolor classes
+                updateButtonsForBackground(targetElement, 'none');
+            }
+            
+            // Handle special functionality for tabs (cardView toggle)
+            const tabsElement = button.getAttribute('data-tabs-target');
+            if (tabsElement) {
+                const tabsEl = demoCard.querySelector(tabsElement);
+                if (tabsEl) {
+                    const tabsClass = button.getAttribute('data-tabs-class') || 'cardView';
+                    // For background groups, cardView should match the toggle state
+                    if (button.classList.contains('selected')) {
+                        tabsEl.classList.add(tabsClass);
+                    } else {
+                        tabsEl.classList.remove(tabsClass);
+                    }
+                }
+            }
+            
+            // Handle special code updates
+            const codeUpdate = button.getAttribute('data-code-update');
+            if (codeUpdate) {
+                handleCodeUpdate(demoCard, codeUpdate, button.classList.contains('selected'));
+            }
+            
+        } else {
+            // For other toggles (like center), use the normal toggle behavior
+            targetElement.classList.toggle(toggleClass);
+        }
+        
+        // Handle special toggle functionality
+        if (toggleClass === 'center') {
+            // Update code example for center class
+            const codeElement = demoCard ? demoCard.querySelector('.code-example code') : null;
+            
+            if (codeElement) {
+                const currentCode = codeElement.textContent;
+                const hasClass = targetElement.classList.contains(toggleClass);
+                
+                if (hasClass) {
+                    // Add center class to the code - handle both regular and icon tab lists
+                    let updatedCode = currentCode.replace(
+                        'class="nds-tab-list"',
+                        'class="nds-tab-list center"'
+                    ).replace(
+                        'class="nds-tab-list" role="tablist" aria-label="Icon tab navigation"',
+                        'class="nds-tab-list center" role="tablist" aria-label="Icon tab navigation"'
+                    );
+                    codeElement.textContent = updatedCode;
+                } else {
+                    // Remove center class from the code - handle both regular and icon tab lists
+                    let updatedCode = currentCode.replace(
+                        'class="nds-tab-list center"',
+                        'class="nds-tab-list"'
+                    ).replace(
+                        'class="nds-tab-list center" role="tablist" aria-label="Icon tab navigation"',
+                        'class="nds-tab-list" role="tablist" aria-label="Icon tab navigation"'
+                    );
+                    codeElement.textContent = updatedCode;
+                }
+            }
+        }
+        
+        // Update button state to show active/inactive for non-background toggles
+        if (toggleClass !== 'green-bg' && toggleClass !== 'black-bg' && toggleClass !== 'noBg') {
+            button.classList.toggle('selected');
+        }
     }
 
     // Expose global functions for backward compatibility if needed
     window.NDSShowcase = {
         handleCopyClick: handleCopyClick,
         showCopyFeedback: showCopyFeedback,
-        initializeDemoCardSwitchers: initializeDemoCardSwitchers,
-        initializeDemoToggleButtons: initializeDemoToggleButtons
+        initializeDemoToggleButtons: initializeDemoToggleButtons,
+        updateButtonsForBackground: updateButtonsForBackground
     };
 
 })();

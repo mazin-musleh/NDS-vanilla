@@ -23,10 +23,10 @@ direction: ltr
                 <div class="demo-header">
                     <div class="demo-label">Basic Tabs</div>
                     <div class="demo-action">
-                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggle="noBg" data-target=".demo-container">
+                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggle="noBg" data-bg-group="bg" data-bg-type="none" data-default-target=".demo-container" data-tabs-target=".nds-tabs" data-tabs-class="cardView" data-code-update="cardView">
                             <span class="label">Remove bg</span>
                         </button>
-                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggle="center" data-target="#basicTabs .nds-tab-list">
+                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggle="center" data-default-target=".nds-tab-list">
                             <span class="label">Center</span>
                         </button>
                     </div>
@@ -113,10 +113,10 @@ direction: ltr
                 <div class="demo-header">
                     <div class="demo-label">Tabs with Icons</div>
                     <div class="demo-action">
-                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggle="noBg" data-target=".demo-container">
+                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggle="noBg" data-bg-group="bg" data-bg-type="none" data-default-target=".demo-container" data-tabs-target=".nds-tabs" data-tabs-class="cardView" data-code-update="cardView">
                             <span class="label">Remove bg</span>
                         </button>
-                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggle="center" data-target="#iconTabs .nds-tab-list">
+                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggle="center" data-default-target=".nds-tab-list">
                             <span class="label">Center</span>
                         </button>
                     </div>
@@ -181,13 +181,55 @@ direction: ltr
                         </div>
                     </div>
                 </div>
+                <div class="code-example">
+                    <div class="usage-header">
+                        <span>Usage</span>
+                        <button class="copy-btn">
+                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                        </button>
+                    </div>
+                    <pre><code>&lt;div class="nds-tabs"&gt;
+  &lt;nav class="nds-tab-list" role="tablist" aria-label="Icon tab navigation"&gt;
+    &lt;button class="nds-tab nds-tab-with-icon" role="tab" aria-selected="true" aria-controls="panel-1" id="tab-1"&gt;
+      &lt;i class="hgi hgi-stroke hgi-home-05"&gt;&lt;/i&gt;
+      &lt;span class="nds-tab-label"&gt;Dashboard&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;button class="nds-tab nds-tab-with-icon" role="tab" aria-selected="false" aria-controls="panel-2" id="tab-2"&gt;
+      &lt;i class="hgi hgi-stroke hgi-analytics-01"&gt;&lt;/i&gt;
+      &lt;span class="nds-tab-label"&gt;Analytics&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;button class="nds-tab nds-tab-with-icon" role="tab" aria-selected="false" aria-controls="panel-3" id="tab-3"&gt;
+      &lt;i class="hgi hgi-stroke hgi-settings-01"&gt;&lt;/i&gt;
+      &lt;span class="nds-tab-label"&gt;Settings&lt;/span&gt;
+    &lt;/button&gt;
+  &lt;/nav&gt;
+  &lt;div class="nds-tab-content"&gt;
+    &lt;div class="nds-tab-panel" role="tabpanel" id="panel-1" aria-labelledby="tab-1"&gt;
+      Content for dashboard tab
+    &lt;/div&gt;
+    &lt;div class="nds-tab-panel hidden" role="tabpanel" id="panel-2" aria-labelledby="tab-2"&gt;
+      Content for analytics tab
+    &lt;/div&gt;
+    &lt;div class="nds-tab-panel hidden" role="tabpanel" id="panel-3" aria-labelledby="tab-3"&gt;
+      Content for settings tab
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                </div>
             </div>
 
             <!-- Vertical Tabs -->
             <div class="nds-demo-card">
                 <div class="demo-header">
                     <div class="demo-label">Vertical Tabs</div>
-                    <div class="demo-action"></div>
+                    <div class="demo-action">
+                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggle="noBg" data-bg-group="bg" data-bg-type="none" data-default-target=".demo-container" data-tabs-target=".nds-tabs" data-tabs-class="cardView" data-code-update="cardView">
+                            <span class="label">Remove bg</span>
+                        </button>
+                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggle="center" data-default-target=".nds-tab-list">
+                            <span class="label">Center</span>
+                        </button>
+                    </div>
                 </div>
                 <div class="demo-container">
                     <div class="nds-tabs nds-tabs-vertical" id="verticalTabs">

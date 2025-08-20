@@ -852,7 +852,7 @@ html[dir="ltr"] body.minimal nav.nds-main-nav .nds-nav-primary .nds-nav-link::be
 
 @media (max-width: 576px) {
 
-    .nds-topbar .infoContainer:not(.dga-tab) {
+    .nds-topbar .infoContainer {
         display: none;
     }
 
@@ -869,6 +869,16 @@ html[dir="ltr"] body.minimal nav.nds-main-nav .nds-nav-primary .nds-nav-link::be
 /* ========================================
    DGA DROPDOWN STYLES
    ======================================== */
+#dgaDigitalStamp {
+    display: block;
+    background-color: var(--background-white);
+    position: relative;
+    height: 0;
+    box-shadow: var(--nds-shadow);
+    z-index: 1051;
+    overflow: hidden;
+    transition: height var(--nds-transition);
+}
 
 .nds-topbar .dga-tab {
     position: absolute;
@@ -897,7 +907,7 @@ html[dir="ltr"] body.minimal nav.nds-main-nav .nds-nav-primary .nds-nav-link::be
     transition-delay: calc(var(--nds-transition-speed) * 1s);
 }
 
-.nds-topbar.dga-expanded .dga-tab .toggleArrow {
+#dgaDigitalStamp.dga-expanded .dga-tab .toggleArrow {
     transform: rotate(180deg);
 }
 
@@ -935,32 +945,32 @@ html[dir="ltr"] body.minimal nav.nds-main-nav .nds-nav-primary .nds-nav-link::be
     overflow: clip;
 }
 
-.nds-topbar.dga-expanded .dga-content,
-.nds-topbar.dga-expanding .dga-content {
+#dgaDigitalStamp.dga-expanded .dga-content,
+#dgaDigitalStamp.dga-expanding .dga-content {
     display: block;
     height: fit-content;
 }
 
-.nds-topbar.dga-expanding:not(.dga-expanded) .dga-content {
+#dgaDigitalStamp.dga-expanding:not(.dga-expanded) .dga-content {
     height: 100%;
 }
 
 .saudi-security-notices-container {
-    margin-top: var(--spacing-5xl);
+    margin: var(--spacing-4xl) auto;
     display: flex;
-    gap: 20px;
+    gap: var(--spacing-xl);
     flex-wrap: wrap;
 }
 
 .saudi-gov-security-card {
     background-color: var(--background-neutral-100);
-    border-radius: 12px;
-    padding: 25px;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-2xl);
     flex: 1;
     min-width: 300px;
     display: flex;
     align-items: flex-start;
-    gap: 20px;
+    gap: var(--spacing-xl);
     border: 1px solid var(--border-background-neutral);
     transition: transform var(--nds-transition), box-shadow var(--nds-transition);
 }
@@ -969,13 +979,13 @@ html[dir="ltr"] body.minimal nav.nds-main-nav .nds-nav-primary .nds-nav-link::be
     width: 100%;
     margin: 0 auto;
     background-color: var(--background-neutral-100);
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     padding: var(--spacing-xl) var(--spacing-2xl);
     border: 1px solid var(--border-background-neutral);
     line-height: 24px;
     text-align: center;
     display: flex;
-    gap: var(--spacing-1-5);
+    gap: var(--spacing-sm);
     flex: 0 0 100%;
     justify-content: center;
     align-items: center;
@@ -1020,14 +1030,15 @@ html[dir="ltr"] body.minimal nav.nds-main-nav .nds-nav-primary .nds-nav-link::be
 
 @media (max-width: 768px) {
     .saudi-security-notices-container {
+        margin: var(--spacing-xl) auto;
         flex-direction: column;
-        gap: 10px;
+        gap: var(--spacing-lg);
     }
 
     .saudi-gov-security-card {
         text-align: center;
-        padding: 20px;
-        gap: 10px;
+        padding: var(--spacing-xl);
+        gap: var(--spacing-lg);
     }
 
     .saudi-notice-primary-heading {
