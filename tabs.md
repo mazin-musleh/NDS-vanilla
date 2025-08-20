@@ -23,10 +23,13 @@ direction: ltr
                 <div class="demo-header">
                     <div class="demo-label">Basic Tabs</div>
                     <div class="demo-action">
-                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggle="noBg" data-bg-group="bg" data-bg-type="none" data-default-target=".demo-container" data-tabs-target=".nds-tabs" data-tabs-class="cardView" data-code-update="cardView">
+                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='["vertical-tabs", ".nds-tabs", "tabLayout"]'>
+                            <span class="label">Vertical</span>
+                        </button>
+                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='[["noBg", ".demo-container", "cardView"], ["cardView", ".nds-tabs", "tabsStyle"]]'>
                             <span class="label">Remove bg</span>
                         </button>
-                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggle="center" data-default-target=".nds-tab-list">
+                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='["center", ".nds-tab-list", "tabsAlign"]'>
                             <span class="label">Center</span>
                         </button>
                     </div>
@@ -34,10 +37,10 @@ direction: ltr
                 <div class="demo-container">
                     <div class="nds-tabs" id="basicTabs">
                         <nav class="nds-tab-list" role="tablist" aria-label="Basic tab navigation">
-                            <button class="nds-tab" role="tab" aria-selected="true" aria-controls="panel-home" id="tab-home" tabindex="0">
+                            <button class="nds-tab" role="tab" aria-selected="true" aria-controls="panel-home" id="tab-home" tabindex="0" data-label="Home">
                                 <span class="nds-tab-label">Home</span>
                             </button>
-                            <button class="nds-tab" role="tab" aria-selected="false" aria-controls="panel-services" id="tab-services" tabindex="-1">
+                            <button class="nds-tab" role="tab" aria-selected="false" aria-controls="panel-services" id="tab-services" tabindex="-1" data-label="Services">
                                 <span class="nds-tab-label">Services</span>
                             </button>
                             <button class="nds-tab" role="tab" aria-selected="false" aria-controls="panel-about" id="tab-about" tabindex="-1">
@@ -87,7 +90,7 @@ direction: ltr
                             <i class="hgi hgi-stroke hgi-copy-01"></i>
                         </button>
                     </div>
-                    <pre><code>&lt;div class="nds-tabs"&gt;
+                    <code>&lt;div class="nds-tabs"&gt;
   &lt;nav class="nds-tab-list" role="tablist" aria-label="Tab navigation"&gt;
     &lt;button class="nds-tab" role="tab" aria-selected="true" aria-controls="panel-1" id="tab-1"&gt;
       &lt;span class="nds-tab-label"&gt;Tab 1&lt;/span&gt;
@@ -104,7 +107,7 @@ direction: ltr
       Content for tab 2
     &lt;/div&gt;
   &lt;/div&gt;
-&lt;/div&gt;</code></pre>
+&lt;/div&gt;</code>
                 </div>
             </div>
 
@@ -113,10 +116,13 @@ direction: ltr
                 <div class="demo-header">
                     <div class="demo-label">Tabs with Icons</div>
                     <div class="demo-action">
-                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggle="noBg" data-bg-group="bg" data-bg-type="none" data-default-target=".demo-container" data-tabs-target=".nds-tabs" data-tabs-class="cardView" data-code-update="cardView">
+                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='["vertical-tabs", ".nds-tabs", "tabLayout"]'>
+                            <span class="label">Vertical</span>
+                        </button>
+                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='[["noBg", ".demo-container", "containerBg"], ["cardView", ".nds-tabs", "tabsStyle"]]'>
                             <span class="label">Remove bg</span>
                         </button>
-                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggle="center" data-default-target=".nds-tab-list">
+                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='["center", ".nds-tab-list", "tabsAlign"]'>
                             <span class="label">Center</span>
                         </button>
                     </div>
@@ -188,7 +194,7 @@ direction: ltr
                             <i class="hgi hgi-stroke hgi-copy-01"></i>
                         </button>
                     </div>
-                    <pre><code>&lt;div class="nds-tabs"&gt;
+                    <code>&lt;div class="nds-tabs"&gt;
   &lt;nav class="nds-tab-list" role="tablist" aria-label="Icon tab navigation"&gt;
     &lt;button class="nds-tab nds-tab-with-icon" role="tab" aria-selected="true" aria-controls="panel-1" id="tab-1"&gt;
       &lt;i class="hgi hgi-stroke hgi-home-05"&gt;&lt;/i&gt;
@@ -214,149 +220,7 @@ direction: ltr
       Content for settings tab
     &lt;/div&gt;
   &lt;/div&gt;
-&lt;/div&gt;</code></pre>
-                </div>
-            </div>
-
-            <!-- Vertical Tabs -->
-            <div class="nds-demo-card">
-                <div class="demo-header">
-                    <div class="demo-label">Vertical Tabs</div>
-                    <div class="demo-action">
-                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggle="noBg" data-bg-group="bg" data-bg-type="none" data-default-target=".demo-container" data-tabs-target=".nds-tabs" data-tabs-class="cardView" data-code-update="cardView">
-                            <span class="label">Remove bg</span>
-                        </button>
-                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggle="center" data-default-target=".nds-tab-list">
-                            <span class="label">Center</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="demo-container">
-                    <div class="nds-tabs nds-tabs-vertical" id="verticalTabs">
-                        <nav class="nds-tab-list" role="tablist" aria-label="Vertical tab navigation" aria-orientation="vertical">
-                            <button class="nds-tab nds-tab-with-icon" role="tab" aria-selected="true" aria-controls="panel-profile" id="tab-profile" tabindex="0">
-                                <i class="hgi hgi-stroke hgi-user-01"></i>
-                                <span class="nds-tab-label">Profile Settings</span>
-                            </button>
-                            <button class="nds-tab nds-tab-with-icon" role="tab" aria-selected="false" aria-controls="panel-security" id="tab-security" tabindex="-1">
-                                <i class="hgi hgi-stroke hgi-lock-01"></i>
-                                <span class="nds-tab-label">Security & Privacy</span>
-                            </button>
-                            <button class="nds-tab nds-tab-with-icon" role="tab" aria-selected="false" aria-controls="panel-notifications" id="tab-notifications" tabindex="-1">
-                                <i class="hgi hgi-stroke hgi-notification-02"></i>
-                                <span class="nds-tab-label">Notifications</span>
-                            </button>
-                            <button class="nds-tab nds-tab-with-icon" role="tab" aria-selected="false" aria-controls="panel-billing" id="tab-billing" tabindex="-1">
-                                <i class="hgi hgi-stroke hgi-credit-card-01"></i>
-                                <span class="nds-tab-label">Billing & Payment</span>
-                            </button>
-                            <button class="nds-tab nds-tab-with-icon" role="tab" aria-selected="false" aria-controls="panel-support" id="tab-support" tabindex="-1">
-                                <i class="hgi hgi-stroke hgi-help-circle"></i>
-                                <span class="nds-tab-label">Help & Support</span>
-                            </button>
-                        </nav>
-                        <div class="nds-tab-content">
-                            <div class="nds-tab-panel" role="tabpanel" id="panel-profile" aria-labelledby="tab-profile" tabindex="0">
-                                <h3>Profile Settings</h3>
-                                <p>Manage your personal information and account preferences.</p>
-                                <div class="settings-options">
-                                    <div class="setting-item">
-                                        <label>Display Name</label>
-                                        <input type="text" value="Ahmed Al-Rashid" />
-                                    </div>
-                                    <div class="setting-item">
-                                        <label>Email Address</label>
-                                        <input type="email" value="ahmed@example.com" />
-                                    </div>
-                                    <div class="setting-item">
-                                        <label>Phone Number</label>
-                                        <input type="tel" value="+966 50 123 4567" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="nds-tab-panel hidden" role="tabpanel" id="panel-security" aria-labelledby="tab-security" tabindex="0">
-                                <h3>Security & Privacy</h3>
-                                <p>Configure your security settings and privacy preferences.</p>
-                                <div class="settings-options">
-                                    <div class="setting-item">
-                                        <label>Two-Factor Authentication</label>
-                                        <input type="checkbox" checked> Enable 2FA for enhanced security
-                                    </div>
-                                    <div class="setting-item">
-                                        <label>Login Notifications</label>
-                                        <input type="checkbox" checked> Notify me of new login attempts
-                                    </div>
-                                    <div class="setting-item">
-                                        <label>Data Sharing</label>
-                                        <input type="checkbox"> Allow data sharing for service improvement
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="nds-tab-panel hidden" role="tabpanel" id="panel-notifications" aria-labelledby="tab-notifications" tabindex="0">
-                                <h3>Notification Preferences</h3>
-                                <p>Choose how and when you want to receive notifications.</p>
-                                <div class="settings-options">
-                                    <div class="setting-item">
-                                        <label>Email Notifications</label>
-                                        <input type="checkbox" checked> Receive email updates
-                                    </div>
-                                    <div class="setting-item">
-                                        <label>SMS Notifications</label>
-                                        <input type="checkbox"> Receive SMS alerts
-                                    </div>
-                                    <div class="setting-item">
-                                        <label>Push Notifications</label>
-                                        <input type="checkbox" checked> Enable browser notifications
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="nds-tab-panel hidden" role="tabpanel" id="panel-billing" aria-labelledby="tab-billing" tabindex="0">
-                                <h3>Billing & Payment</h3>
-                                <p>Manage your payment methods and billing information.</p>
-                                <div class="contact-info">
-                                    <p><strong>Current Plan:</strong> Premium Subscription</p>
-                                    <p><strong>Next Billing:</strong> March 15, 2024</p>
-                                    <p><strong>Payment Method:</strong> •••• •••• •••• 1234</p>
-                                </div>
-                            </div>
-                            <div class="nds-tab-panel hidden" role="tabpanel" id="panel-support" aria-labelledby="tab-support" tabindex="0">
-                                <h3>Help & Support</h3>
-                                <p>Get assistance and find answers to common questions.</p>
-                                <div class="contact-info">
-                                    <p><strong>Documentation:</strong> <a href="#">View User Guide</a></p>
-                                    <p><strong>Contact Support:</strong> support@digital.gov.sa</p>
-                                    <p><strong>Phone Support:</strong> 920-000-000</p>
-                                    <p><strong>Live Chat:</strong> Available 24/7</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="code-example">
-                    <div class="usage-header">
-                        <span>Usage</span>
-                        <button class="copy-btn">
-                            <i class="hgi hgi-stroke hgi-copy-01"></i>
-                        </button>
-                    </div>
-                    <pre><code>&lt;div class="nds-tabs nds-tabs-vertical"&gt;
-  &lt;nav class="nds-tab-list" role="tablist" aria-label="Vertical navigation" aria-orientation="vertical"&gt;
-    &lt;button class="nds-tab" role="tab" aria-selected="true" aria-controls="panel-1" id="tab-1"&gt;
-      &lt;span class="nds-tab-label"&gt;Tab 1&lt;/span&gt;
-    &lt;/button&gt;
-    &lt;button class="nds-tab" role="tab" aria-selected="false" aria-controls="panel-2" id="tab-2"&gt;
-      &lt;span class="nds-tab-label"&gt;Tab 2&lt;/span&gt;
-    &lt;/button&gt;
-  &lt;/nav&gt;
-  &lt;div class="nds-tab-content"&gt;
-    &lt;div class="nds-tab-panel" role="tabpanel" id="panel-1" aria-labelledby="tab-1"&gt;
-      Content for tab 1
-    &lt;/div&gt;
-    &lt;div class="nds-tab-panel hidden" role="tabpanel" id="panel-2" aria-labelledby="tab-2"&gt;
-      Content for tab 2
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;</code></pre>
+&lt;/div&gt;</code>
                 </div>
             </div>
 

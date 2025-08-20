@@ -6,6 +6,7 @@
   font-display: swap;
   src: url(../fonts/IBMPlexSansArabic-Regular.woff2) format('woff2');
 }
+
 /* arabic */
 @font-face {
   font-family: 'IBM Plex Sans Arabic';
@@ -14,6 +15,7 @@
   font-display: swap;
   src: url(../fonts/IBMPlexSansArabic-Medium.woff2) format('woff2');
 }
+
 /* arabic */
 @font-face {
   font-family: 'IBM Plex Sans Arabic';

@@ -19,7 +19,7 @@
   justify-content: space-between;
   align-items: center;
   gap: var(--spacing-lg);
-  padding: var(--spacing-md, 12px) var(--spacing-lg, 16px);
+  padding: var(--spacing-lg, 12px);
   background: var(--background-neutral-50, #f9fafb);
   border-bottom: 1px solid var(--border-neutral-200, #e5e7eb);
   font-weight: 600;
@@ -47,7 +47,7 @@
 
 /* Demo Container */
 .demo-container {
-  padding: var(--spacing-3xl, 24px) var(--spacing-xl, 16px);
+  padding: var(--spacing-4xl, 16px);
 }
 
 /* State Demo */
@@ -73,12 +73,14 @@
   margin-bottom: var(--spacing-xl, 24px);
 }
 
-/* Button Showcase Background Switch */
-.button-showcase.bgcolor-switch {
-  /* Base styles for background switching showcase sections */
+.demo-container.black-bg,.demo-container.dark-bg {
+  background-color: var(--background-neutral-900, #1f2937);
+}
+.demo-container.green-bg,.oncolor-buttons .demo-container {
+  background-color: var(--background-sa-flag, #074c30);
 }
 
-.demo-container.green-bg {
+.demo-container.green-bg,.demo-container.dark-bg {
   background-color: var(--background-sa-flag, #074c30);
 }
 
@@ -86,9 +88,7 @@
   background-color: var(--background-neutral-900, #1f2937);
 }
 
-.demo-container.dark-bg {
-  background-color: var(--background-neutral-900, #1f2937);
-}
+
 
 .demo-container.noBg {
   background-color: var(--background-neutral-100, #f3f4f6);
@@ -158,12 +158,18 @@
   direction: ltr;
   text-align: left;
   display: block;
+  white-space: pre;
+  overflow-x: auto;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
   .demo-container {
-    padding: var(--spacing-md, 12px);
+    padding: var(--spacing-2xl, 20px);
   }
 
   .demo-header {
