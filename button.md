@@ -223,10 +223,10 @@ direction: ltr
                     <div class="demo-header">
                         <div class="demo-label">Primary Button On-Color</div>
                         <div class="demo-action">
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="green">
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggle="green-bg" data-bg-group="bg" data-bg-type="colored" data-default-target=".demo-container" data-default="true">
                                 <span class="label">Green</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="black">
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggle="black-bg" data-bg-group="bg" data-bg-type="colored" data-default-target=".demo-container">
                                 <span class="label">Black</span>
                             </button>
                         </div>
@@ -263,10 +263,10 @@ direction: ltr
                     <div class="demo-header">
                         <div class="demo-label">Neutral Button On-Color</div>
                         <div class="demo-action">
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="green">
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggle="green-bg" data-bg-group="bg" data-bg-type="colored" data-default-target=".demo-container" data-default="true">
                                 <span class="label">Green</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="black">
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggle="black-bg" data-bg-group="bg" data-bg-type="colored" data-default-target=".demo-container">
                                 <span class="label">Black</span>
                             </button>
                         </div>
@@ -303,10 +303,10 @@ direction: ltr
                     <div class="demo-header">
                         <div class="demo-label">Secondary Solid On-Color</div>
                         <div class="demo-action">
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="green">
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggle="green-bg" data-bg-group="bg" data-bg-type="colored" data-default-target=".demo-container" data-default="true">
                                 <span class="label">Green</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="black">
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggle="black-bg" data-bg-group="bg" data-bg-type="colored" data-default-target=".demo-container">
                                 <span class="label">Black</span>
                             </button>
                         </div>
@@ -343,10 +343,10 @@ direction: ltr
                     <div class="demo-header">
                         <div class="demo-label">Secondary Outline On-Color</div>
                         <div class="demo-action">
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="green">
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggle="green-bg" data-bg-group="bg" data-bg-type="colored" data-default-target=".demo-container" data-default="true">
                                 <span class="label">Green</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="black">
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggle="black-bg" data-bg-group="bg" data-bg-type="colored" data-default-target=".demo-container">
                                 <span class="label">Black</span>
                             </button>
                         </div>
@@ -383,10 +383,10 @@ direction: ltr
                     <div class="demo-header">
                         <div class="demo-label">Subtle Button On-Color</div>
                         <div class="demo-action">
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="green">
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggle="green-bg" data-bg-group="bg" data-bg-type="colored" data-default-target=".demo-container" data-default="true">
                                 <span class="label">Green</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="black">
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggle="black-bg" data-bg-group="bg" data-bg-type="colored" data-default-target=".demo-container">
                                 <span class="label">Black</span>
                             </button>
                         </div>
@@ -423,10 +423,10 @@ direction: ltr
                     <div class="demo-header">
                         <div class="demo-label">Transparent Button On-Color</div>
                         <div class="demo-action">
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="green">
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggle="green-bg" data-bg-group="bg" data-bg-type="colored" data-default-target=".demo-container" data-default="true">
                                 <span class="label">Green</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="black">
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggle="black-bg" data-bg-group="bg" data-bg-type="colored" data-default-target=".demo-container">
                                 <span class="label">Black</span>
                             </button>
                         </div>
@@ -632,10 +632,10 @@ direction: ltr
                     <div class="demo-header">
                         <div class="demo-label">Destructive Primary On-Color</div>
                         <div class="demo-action">
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="green">
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggle="green-bg" data-bg-group="bg" data-bg-type="colored" data-default-target=".demo-container" data-default="true">
                                 <span class="label">Green</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="black">
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggle="black-bg" data-bg-group="bg" data-bg-type="colored" data-default-target=".demo-container">
                                 <span class="label">Black</span>
                             </button>
                         </div>
@@ -669,10 +669,10 @@ direction: ltr
                     <div class="demo-header">
                         <div class="demo-label">Destructive Secondary Solid On-Color</div>
                         <div class="demo-action">
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="green">
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggle="green-bg" data-bg-group="bg" data-bg-type="colored" data-default-target=".demo-container" data-default="true">
                                 <span class="label">Green</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="black">
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggle="black-bg" data-bg-group="bg" data-bg-type="colored" data-default-target=".demo-container">
                                 <span class="label">Black</span>
                             </button>
                         </div>
@@ -710,10 +710,10 @@ direction: ltr
                     <div class="demo-header">
                         <div class="demo-label">Destructive Outline On-Color</div>
                         <div class="demo-action">
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="green">
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggle="green-bg" data-bg-group="bg" data-bg-type="colored" data-default-target=".demo-container" data-default="true">
                                 <span class="label">Green</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="black">
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggle="black-bg" data-bg-group="bg" data-bg-type="colored" data-default-target=".demo-container">
                                 <span class="label">Black</span>
                             </button>
                         </div>
@@ -751,10 +751,10 @@ direction: ltr
                     <div class="demo-header">
                         <div class="demo-label">Destructive Subtle On-Color</div>
                         <div class="demo-action">
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="green">
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggle="green-bg" data-bg-group="bg" data-bg-type="colored" data-default-target=".demo-container" data-default="true">
                                 <span class="label">Green</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="black">
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggle="black-bg" data-bg-group="bg" data-bg-type="colored" data-default-target=".demo-container">
                                 <span class="label">Black</span>
                             </button>
                         </div>
@@ -788,10 +788,10 @@ direction: ltr
                     <div class="demo-header">
                         <div class="demo-label">Destructive Transparent On-Color</div>
                         <div class="demo-action">
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="green">
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggle="green-bg" data-bg-group="bg" data-bg-type="colored" data-default-target=".demo-container" data-default="true">
                                 <span class="label">Green</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-bg-btn" data-bg="black">
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggle="black-bg" data-bg-group="bg" data-bg-type="colored" data-default-target=".demo-container">
                                 <span class="label">Black</span>
                             </button>
                         </div>

@@ -1,53 +1,52 @@
-<div class="nds-topbar" aria-label="الشريط العلوي يحتوي على معلومات الطقس والوقت والموقع والروابط السريعة للوصول">
-    <div id="dgaDigitalStamp" class="dga-content">
-        <div class="saudi-security-notices-container nds-content-container">
-            <!-- gov Links Notice -->
-            <div class="saudi-gov-security-card">
-                <div class="saudi-security-icon-wrapper">
-                    <i class="hgi hgi-stroke hgi-link-04 icon"></i>
-                </div>
-                <div class="saudi-notice-content-block">
-                    <div class="saudi-notice-primary-heading" id="domain-title">
-                        روابط المواقع الالكترونية الرسمية السعودية تنتهي بـ <span
-                            class="saudi-domain-highlight-text">gov.sa</span>
-                    </div>
-                    <div class="saudi-notice-description-text" id="domain-desc">
-                        جميع روابط المواقع الرسمية التابعة للجهات الحكومية في المملكة العربية السعودية تنتهي بـ .gov.sa
-                    </div>
-                </div>
+<div id="dgaDigitalStamp" class="dga-content">
+    <div class="saudi-security-notices-container nds-content-container">
+        <!-- gov Links Notice -->
+        <div class="saudi-gov-security-card">
+            <div class="saudi-security-icon-wrapper">
+                <i class="hgi hgi-stroke hgi-link-04 icon"></i>
             </div>
-            <!-- HTTPS Security Notice -->
-            <div class="saudi-gov-security-card">
-                <div class="saudi-security-icon-wrapper">
-                    <i class="hgi hgi-stroke hgi-square-lock-01 icon"></i>
-                    <div class="saudi-security-verification-badge">✓</div>
+            <div class="saudi-notice-content-block">
+                <div class="saudi-notice-primary-heading" id="domain-title">
+                    روابط المواقع الالكترونية الرسمية السعودية تنتهي بـ <span
+                        class="saudi-domain-highlight-text">gov.sa</span>
                 </div>
-                <div class="saudi-notice-content-block">
-                    <div class="saudi-notice-primary-heading" id="https-title">
-                        المواقع الالكترونية الحكومية تستخدم بروتوكول <span
-                            class="saudi-domain-highlight-text">HTTPS</span> للتشفير و الأمان.
-                    </div>
-                    <div class="saudi-notice-description-text" id="https-desc">
-                        المواقع الالكترونية الآمنة في المملكة العربية السعودية تستخدم بروتوكول HTTPS للتشفير.
-                    </div>
+                <div class="saudi-notice-description-text" id="domain-desc">
+                    جميع روابط المواقع الرسمية التابعة للجهات الحكومية في المملكة العربية السعودية تنتهي بـ .gov.sa
                 </div>
-            </div>
-            <div class="saudi-gov-security-register">
-                <img src="{{ '/assets/img/DGA-logo-icon.svg' | relative_url }}" width="21" height="31"
-                    alt="هيئة الحكومة الرقمية" loading="lazy">
-                    <span id="register-text">مسجل لدى هيئة الحكومة الرقمية برقم:</span>
-                    <a class="registration-number" href="https://raqmi.dga.gov.sa/platforms/DigitalStamp/ShowCertificate/4990"
-                    target="_blank">20240520402</a>
             </div>
         </div>
+        <!-- HTTPS Security Notice -->
+        <div class="saudi-gov-security-card">
+            <div class="saudi-security-icon-wrapper">
+                <i class="hgi hgi-stroke hgi-square-lock-01 icon"></i>
+                <div class="saudi-security-verification-badge">✓</div>
+            </div>
+            <div class="saudi-notice-content-block">
+                <div class="saudi-notice-primary-heading" id="https-title">
+                    المواقع الالكترونية الحكومية تستخدم بروتوكول <span class="saudi-domain-highlight-text">HTTPS</span>
+                    للتشفير و الأمان.
+                </div>
+                <div class="saudi-notice-description-text" id="https-desc">
+                    المواقع الالكترونية الآمنة في المملكة العربية السعودية تستخدم بروتوكول HTTPS للتشفير.
+                </div>
+            </div>
+        </div>
+        <div class="saudi-gov-security-register">
+            <img src="{{ '/assets/img/DGA-logo-icon.svg' | relative_url }}" width="21" height="31"
+                alt="هيئة الحكومة الرقمية" loading="lazy">
+            <span id="register-text">مسجل لدى هيئة الحكومة الرقمية برقم:</span>
+            <a class="registration-number" href="https://raqmi.dga.gov.sa/platforms/DigitalStamp/ShowCertificate/4990"
+                target="_blank">20240520402</a>
+        </div>
     </div>
+</div>
+<div class="nds-topbar" aria-label="الشريط العلوي يحتوي على معلومات الطقس والوقت والموقع والروابط السريعة للوصول">
     <div class="nds-content-container">
         <div class="infoContainer">
             <span id="nds-date" class="textIcon" data-calendar="hijri"></span>
             <span id="nds-realTimeClock" class="textIcon"></span>
         </div>
-        <button class="infoContainer dga-tab textIcon" role="button" aria-expanded="false"
-            aria-controls="dgaDigitalStamp">
+        <button class="infoContainer dga-tab textIcon" role="button" aria-expanded="false" aria-controls="dgaDigitalStamp">
             <span class="bigScreenText" id="big-screen-text">موقع حكومي رسمي تابع لحكومة المملكة العربية
                 السعودية:</span>
             <span class="smallScreenText" id="small-screen-text">موقع حكومي رسمي:</span>

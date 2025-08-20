@@ -884,15 +884,15 @@
         if (!DOM.topbar || !DOM.dgaContent) return;
 
         const DURATION = state.getTransitionSpeed();
-        DOM.topbar.classList.add('dga-expanding');
-        setTimeout(() => DOM.topbar.classList.remove('dga-expanding'), DURATION);
+        DOM.dgaContent.classList.add('dga-expanding');
+        setTimeout(() => DOM.dgaContent.classList.remove('dga-expanding'), DURATION);
 
-        DOM.topbar.classList.toggle('dga-expanded');
+        DOM.dgaContent.classList.toggle('dga-expanded');
 
-        const isExpanded = DOM.topbar.classList.contains('dga-expanded');
+        const isExpanded = DOM.dgaContent.classList.contains('dga-expanded');
         DOM.dgaTab?.setAttribute('aria-expanded', isExpanded);
-        DOM.topbar.style.height = DOM.topbar.classList.contains('dga-expanded') ?
-            `calc(${DOM.dgaContent.offsetHeight}px - 0px)` : '';
+        DOM.dgaContent.style.height = DOM.dgaContent.classList.contains('dga-expanded') ?
+            `${DOM.dgaContent.scrollHeight}px` : '0px';
 
         setTimeout(() => {
             updatePositions();
@@ -913,7 +913,7 @@
                 minimal.forEach(d => utils.dropdownCloser.closeSingle(d));
                 
                 setTimeout(() => {
-                    if (DOM.topbar?.classList.contains('dga-expanded')) {
+                    if (DOM.dgaContent?.classList.contains('dga-expanded')) {
                         toggleDGA();
                         setTimeout(() => {
                             animateNavbar(true, false);
@@ -926,7 +926,7 @@
             }
         }
 
-        if (DOM.topbar?.classList.contains('dga-expanded')) {
+        if (DOM.dgaContent?.classList.contains('dga-expanded')) {
             toggleDGA();
             setTimeout(() => {
                 const hasAnyOpenDropdowns = utils.dropdownCloser.hasOpen();
@@ -972,7 +972,7 @@
                     totalDelay = Math.max(totalDelay, hasOpenSecondary ? DURATION * 2.2 : DURATION * 1.2);
                 }
                 
-                if (DOM.topbar?.classList.contains('dga-expanded')) {
+                if (DOM.dgaContent?.classList.contains('dga-expanded')) {
                     performDGAToggle();
                     totalDelay = Math.max(totalDelay, DURATION);
                 }
@@ -982,7 +982,7 @@
                 
                 setTimeout(() => animateDropdown(dropdown, true), totalDelay);
             }
-            else if (!state.isMinimal && DOM.topbar?.classList.contains('dga-expanded')) {
+            else if (!state.isMinimal && DOM.dgaContent?.classList.contains('dga-expanded')) {
                 toggleDGA();
                 setTimeout(() => {
                     const closeDelay = closeOthers();
@@ -1037,7 +1037,7 @@
         const clickY = event.clientY;
         const safeRange = 50;
 
-        if (DOM.topbar?.classList.contains('dga-expanded') && DOM.dgaContent &&
+        if (DOM.dgaContent?.classList.contains('dga-expanded') && DOM.dgaContent &&
             !DOM.dgaTab?.contains(event.target) && !DOM.dgaContent.contains(event.target)) {
 
             const dgaElements = [DOM.dgaTab, DOM.dgaContent].filter(Boolean);
@@ -1174,7 +1174,7 @@
             animateDropdown(dropdown, false);
         });
 
-        if (DOM.topbar?.classList.contains('dga-expanded')) {
+        if (DOM.dgaContent?.classList.contains('dga-expanded')) {
             performDGAToggle();
         }
     };

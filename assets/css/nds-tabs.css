@@ -59,9 +59,9 @@ nav.nds-tab-list.center {
   border-radius: var(--radius-sm) var(--radius-sm) 0 0;
   background: transparent;
   color: var(--text-primary-paragraph, #384250);
-  font-size: var(--nds-text-md-FS, 14px);
+  font-size: var(--nds-text-clamp-md-FS, 16px);
   font-weight: 500;
-  line-height: var(--nds-text-md-LH, 20px);
+  line-height: var(--nds-text-clamp-md-LH, 24px);
   cursor: pointer;
   white-space: nowrap;
   min-width: fit-content;
@@ -121,9 +121,10 @@ nav.nds-tab-list.center {
 }
 
 /* Tab with Icon */
-.nds-tab-with-icon .hgi {
-  font-size: 16px;
-  line-height: 1;
+.nds-tab-with-icon i {
+  font-size: var(--nds-text-clamp-lg-FS);
+  line-height: var(--nds-text-clamp-lg-LH);
+  font-weight: 400;
 }
 
 /* Tab Content Container */
@@ -360,10 +361,6 @@ html[dir="rtl"] .nds-tabs.nds-tabs-vertical .nds-tab[aria-selected="true"] {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .nds-tab {
-    padding: var(--spacing-sm, 8px) var(--spacing-md, 12px);
-    font-size: var(--nds-text-sm-FS, 12px);
-  }
 
   .nds-tab-panel {
     padding: var(--spacing-lg, 16px);
