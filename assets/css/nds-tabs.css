@@ -12,6 +12,10 @@
   flex-direction: row;
 }
 
+.nds-tab-list-container {
+  position: relative;
+}
+
 /* Tab List */
 .nds-tab-list {
   display: flex;
@@ -29,9 +33,18 @@
   flex-direction: column;
   flex-wrap: nowrap;
   min-width: fit-content;
+  padding-left: 3px;
+  position: sticky;
+  z-index: 2;
+  top: var(--nds-nav-height);
 }
 
-.nds-tab-list::after {
+html[dir="ltr"] .nds-tabs.vertical-tabs .nds-tab-list {
+  padding-right: 3px;
+  padding-left: unset;
+}
+
+.nds-tab-list-container::after {
   content: '';
   position: absolute;
   bottom: 0;
@@ -43,15 +56,15 @@
   border-radius: 999px;
 }
 
-.nds-tabs.vertical-tabs .nds-tab-list::after {
+.nds-tabs.vertical-tabs .nds-tab-list-container::after {
   left: 0;
   height: 100%;
   width: 3px;
 }
 
-html[dir="ltr"] .nds-tabs.vertical-tabs .nds-tab-list::after {
+html[dir="ltr"] .nds-tabs.vertical-tabs .nds-tab-list-container::after {
   right: 0;
-  left:unset;
+  left: unset;
 }
 
 nav.nds-tab-list.center {
@@ -97,15 +110,12 @@ nav.nds-tab-list.center {
 
 .nds-tabs.vertical-tabs .nds-tab {
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  width: 100%;
   margin-bottom: unset;
-  margin-left: 3px;
 }
 
 html[dir="ltr"] .nds-tabs.vertical-tabs .nds-tab {
   border-radius: var(--radius-sm) 0 0 var(--radius-sm);
-  margin-left: unset;
-  margin-right: 3px;
-  
 }
 
 .nds-tab:hover {
@@ -142,7 +152,7 @@ html[dir="ltr"] .nds-tab:after {
   width: 3px !important;
   height: calc(100% - var(--spacing-md) * 2);
   margin-bottom: unset;
-  margin-left: -3px;
+  margin-left: 3px;
   top: var(--spacing-md);
 }
 
@@ -172,7 +182,7 @@ html[dir="ltr"] .nds-tabs.vertical-tabs .nds-tab:after {
 }
 
 /* Tab Label */
-.nds-tab[aria-selected="true"] .nds-tab-label{
+.nds-tab[aria-selected="true"] .nds-tab-label {
   border-bottom-color: var(--border-primary, #1b8354);
   color: var(--text-default, #161616);
   /* font-weight: 700; */
@@ -194,25 +204,24 @@ html[dir="ltr"] .nds-tabs.vertical-tabs .nds-tab:after {
   width: 100%;
 }
 
-.noBg .nds-tab-content,
-.cardView .nds-tab-content {
+.nds-tabs.cardView .nds-tab-content {
   border-radius: var(--radius-md);
   box-shadow: var(--nds-shadow);
   margin-top: var(--tab-horizontal-tab-md-button-h-padding);
 }
 
-.nds-tabs.vertical-tabs .noBg .nds-tab-content,.noBg .nds-tabs.vertical-tabs .nds-tab-content,.nds-tabs.vertical-tabs .cardView .nds-tab-content {
-    border-radius: var(--radius-md);
-    box-shadow: var(--nds-shadow);
-    margin-top: unset;
-    margin-right: var(--tab-horizontal-tab-md-button-h-padding);
+.nds-tabs.vertical-tabs.cardView .nds-tab-content {
+  border-radius: var(--radius-md);
+  box-shadow: var(--nds-shadow);
+  margin-top: unset;
+  margin-right: var(--tab-horizontal-tab-md-button-h-padding);
 }
 
-html[dir="ltr"] .nds-tabs.vertical-tabs .noBg .nds-tab-content,html[dir="ltr"] .noBg .nds-tabs.vertical-tabs .nds-tab-content,html[dir="ltr"] .nds-tabs.vertical-tabs .cardView .nds-tab-content {
-    border-radius: var(--radius-md);
-    box-shadow: var(--nds-shadow);
-    margin-top: unset;
-    margin-left: var(--tab-horizontal-tab-md-button-h-padding);
+html[dir="ltr"] .nds-tabs.vertical-tabs.cardView .nds-tab-content {
+  border-radius: var(--radius-md);
+  box-shadow: var(--nds-shadow);
+  margin-top: unset;
+  margin-left: var(--tab-horizontal-tab-md-button-h-padding);
 }
 
 /* Tab Panel */

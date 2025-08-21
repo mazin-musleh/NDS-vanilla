@@ -1763,3 +1763,117 @@
         });
     });
 })();
+
+// Horizontal row scroll functionality
+(() => {
+    'use strict';
+    
+    const initializeRowScroll = () => {
+        const container = document.querySelector('.oneRowContent');
+        if (!container) return;
+
+        // Set initial scroll behavior
+        container.style.scrollBehavior = 'smooth';
+
+        function scrollToTarget(target) {
+            if (!container || !target) return;
+
+            target.scrollIntoView({
+                behavior: 'smooth',
+                inline: 'center',
+                block: 'nearest', // This prevents vertical scrolling
+                scrollMode: 'if-needed' // Optional, prevents unnecessary scroll
+            });
+        }
+
+        // On click
+        document.querySelectorAll('.oneRowContent > *').forEach(item => {
+            item.addEventListener('click', function () {
+                scrollToTarget(this);
+            });
+        });
+
+        // Mouse wheel horizontal scroll
+        let isScrolling = false;
+        container.addEventListener('wheel', (e) => {
+            // Only handle vertical wheel events for horizontal scrolling
+            if (Math.abs(e.deltaX) >= Math.abs(e.deltaY)) return;
+            
+            e.preventDefault();
+            if (isScrolling) return;
+            
+            isScrolling = true;
+            container.style.scrollBehavior = 'auto';
+            
+            const scrollAmount = e.deltaY * -0.8;
+            const startScroll = container.scrollLeft;
+            let frame = 0;
+            const duration = 150;
+            
+            const animate = () => {
+                frame += 16;
+                const progress = Math.min(frame / duration, 1);
+                const easeOut = 1 - Math.pow(1 - progress, 3);
+                
+                container.scrollLeft = startScroll + (scrollAmount * easeOut);
+                
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                } else {
+                    isScrolling = false;
+                    container.style.scrollBehavior = 'smooth';
+                }
+            };
+            requestAnimationFrame(animate);
+        }, { passive: false });
+
+        // Drag scroll functionality
+        let dragState = { active: false, startX: 0, scrollLeft: 0 };
+        
+        container.addEventListener('mousedown', (e) => {
+            dragState = {
+                active: true,
+                startX: e.pageX,
+                scrollLeft: container.scrollLeft
+            };
+            
+            Object.assign(container.style, {
+                cursor: 'grabbing',
+                userSelect: 'none',
+                scrollBehavior: 'auto'
+            });
+            
+            e.preventDefault();
+        });
+        
+        const handleMouseUp = () => {
+            if (dragState.active) {
+                dragState.active = false;
+                Object.assign(container.style, {
+                    cursor: '',
+                    userSelect: '',
+                    scrollBehavior: 'smooth'
+                });
+            }
+        };
+        
+        const handleMouseMove = (e) => {
+            if (!dragState.active) return;
+            e.preventDefault();
+            container.scrollLeft = dragState.scrollLeft - (e.pageX - dragState.startX) * 1.0;
+        };
+        
+        document.addEventListener('mouseup', handleMouseUp);
+        document.addEventListener('mousemove', handleMouseMove);
+    };
+
+    // Auto-initialize row scroll
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializeRowScroll);
+    } else {
+        setTimeout(initializeRowScroll, 50);
+    }
+
+    // Expose globally
+    window.initializeRowScroll = initializeRowScroll;
+})();

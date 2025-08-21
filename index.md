@@ -3,7 +3,6 @@ layout: home
 title_key: site.title
 hero_title_key: site.hero_title
 hero_description_key: site.hero_description
-hero_image: /assets/img/riyadhcenter.jpg
 hero_image_pos: 50% 10%
 # Remove hardcoded lang - will be set dynamically
 ---

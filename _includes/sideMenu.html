@@ -2,7 +2,7 @@
     <button id="sideMenuToggle" class="sideMenuToggle" aria-label="Sidebar Menu"></button>
     <nav>
         <ul class="topLevel">
-            <li{% if page.url == "/" %} class="active"{% endif %}><a href="/">Home</a></li>
+            <li{% if page.url == "/" %} class="active"{% endif %}><a href="{{ '/' | relative_url }}">Home</a></li>
             <li class="has-sub">
                 <a href="#" aria-haspopup="true" aria-expanded="false">Main Item 5</a>
                 <ul>
@@ -11,12 +11,12 @@
                     <li><a href="#">Sub Item 3</a></li>
                 </ul>
             </li>
-            <li{% if page.url == "/about.html" or page.url == "/about/" %} class="active"{% endif %}><a href="{{ '/about' | relative_url }}">About</a></li>
+            <li{% if page.url == "/about.html" or page.url == "/about/" %} class="active"{% endif %}><a href="{{ '/about/' | relative_url }}">About</a></li>
             <li class="has-sub{% if page.url contains '/button' or page.url contains '/tabs' %} open{% endif %}">
                 <a href="#" aria-haspopup="true" aria-expanded="{% if page.url contains '/button' or page.url contains '/tabs' %}true{% else %}false{% endif %}">Components</a>
                 <ul>
-                    <li{% if page.url contains '/button' %} class="active"{% endif %}><a href="{{ '/button' | relative_url }}">Buttons</a></li>
-                    <li{% if page.url contains '/tabs' %} class="active"{% endif %}><a href="{{ '/tabs' | relative_url }}">Tabs</a></li>
+                    <li{% if page.url contains '/button' %} class="active"{% endif %}><a href="{{ '/button.html' | relative_url }}">Buttons</a></li>
+                    <li{% if page.url contains '/tabs' %} class="active"{% endif %}><a href="{{ '/tabs.html' | relative_url }}">Tabs</a></li>
                 </ul>
             </li>
             <li class="has-sub">

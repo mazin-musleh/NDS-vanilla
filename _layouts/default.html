@@ -13,6 +13,9 @@
     {% include footer.html %}
     
     <!-- Scripts -->
+    <script>
+        window.ndsBasePath = '{{ "" | relative_url }}';
+    </script>
     <script defer src="{{ '/assets/js/nds-navController.js' | relative_url }}?ver=1.044"></script>
     <script defer src="{{ '/assets/js/nds-extras.js' | relative_url }}?ver=1.044"></script>
     <script defer src="{{ '/assets/js/nds-tabs.js' | relative_url }}?ver=1.000"></script>

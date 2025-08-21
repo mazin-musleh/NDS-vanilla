@@ -3,7 +3,6 @@ layout: page
 title: Buttons
 hero_title: Button Components - National Design System
 hero_description: A comprehensive collection of different button styles according to Figma specifications
-hero_image: /assets/img/sliderShapeGray.svg
 breadcrumb: ["Components", "Buttons"]
 lang: en
 direction: ltr
@@ -253,10 +252,7 @@ direction: ltr
                         <div class="demo-header">
                             <div class="demo-label">Primary Button On-Color</div>
                             <div class="demo-action">
-                                <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                    data-toggler='["green-bg", ".demo-container", "containerBg"]'>
-                                    <span class="label">Green</span>
-                                </button>
+                                
                                 <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
                                     data-toggler='["black-bg", ".demo-container", "containerBg"]'>
                                     <span class="label">Black</span>
@@ -295,10 +291,7 @@ direction: ltr
                         <div class="demo-header">
                             <div class="demo-label">Neutral Button On-Color</div>
                             <div class="demo-action">
-                                <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                    data-toggler='["green-bg", ".demo-container", "containerBg"]'>
-                                    <span class="label">Green</span>
-                                </button>
+                                
                                 <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
                                     data-toggler='["black-bg", ".demo-container", "containerBg"]'>
                                     <span class="label">Black</span>
@@ -337,10 +330,7 @@ direction: ltr
                         <div class="demo-header">
                             <div class="demo-label">Secondary Solid On-Color</div>
                             <div class="demo-action">
-                                <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                    data-toggler='["green-bg", ".demo-container", "containerBg"]'>
-                                    <span class="label">Green</span>
-                                </button>
+                                
                                 <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
                                     data-toggler='["black-bg", ".demo-container", "containerBg"]'>
                                     <span class="label">Black</span>
@@ -379,10 +369,7 @@ direction: ltr
                         <div class="demo-header">
                             <div class="demo-label">Secondary Outline On-Color</div>
                             <div class="demo-action">
-                                <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                    data-toggler='["green-bg", ".demo-container", "containerBg"]'>
-                                    <span class="label">Green</span>
-                                </button>
+                                
                                 <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
                                     data-toggler='["black-bg", ".demo-container", "containerBg"]'>
                                     <span class="label">Black</span>
@@ -421,10 +408,7 @@ direction: ltr
                         <div class="demo-header">
                             <div class="demo-label">Subtle Button On-Color</div>
                             <div class="demo-action">
-                                <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                    data-toggler='["green-bg", ".demo-container", "containerBg"]'>
-                                    <span class="label">Green</span>
-                                </button>
+                                
                                 <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
                                     data-toggler='["black-bg", ".demo-container", "containerBg"]'>
                                     <span class="label">Black</span>
@@ -463,10 +447,7 @@ direction: ltr
                         <div class="demo-header">
                             <div class="demo-label">Transparent Button On-Color</div>
                             <div class="demo-action">
-                                <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                    data-toggler='["green-bg", ".demo-container", "containerBg"]'>
-                                    <span class="label">Green</span>
-                                </button>
+                                
                                 <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
                                     data-toggler='["black-bg", ".demo-container", "containerBg"]'>
                                     <span class="label">Black</span>
@@ -699,10 +680,7 @@ direction: ltr
                         <div class="demo-header">
                             <div class="demo-label">Destructive Primary On-Color</div>
                             <div class="demo-action">
-                                <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                    data-toggler='["green-bg", ".demo-container", "containerBg"]'>
-                                    <span class="label">Green</span>
-                                </button>
+                                
                                 <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
                                     data-toggler='["black-bg", ".demo-container", "containerBg"]'>
                                     <span class="label">Black</span>
@@ -739,10 +717,7 @@ direction: ltr
                         <div class="demo-header">
                             <div class="demo-label">Destructive Secondary Solid On-Color</div>
                             <div class="demo-action">
-                                <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                    data-toggler='["green-bg", ".demo-container", "containerBg"]'>
-                                    <span class="label">Green</span>
-                                </button>
+                                
                                 <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
                                     data-toggler='["black-bg", ".demo-container", "containerBg"]'>
                                     <span class="label">Black</span>
@@ -782,10 +757,7 @@ direction: ltr
                         <div class="demo-header">
                             <div class="demo-label">Destructive Outline On-Color</div>
                             <div class="demo-action">
-                                <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                    data-toggler='["green-bg", ".demo-container", "containerBg"]'>
-                                    <span class="label">Green</span>
-                                </button>
+                                
                                 <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
                                     data-toggler='["black-bg", ".demo-container", "containerBg"]'>
                                     <span class="label">Black</span>
@@ -825,10 +797,7 @@ direction: ltr
                         <div class="demo-header">
                             <div class="demo-label">Destructive Subtle On-Color</div>
                             <div class="demo-action">
-                                <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                    data-toggler='["green-bg", ".demo-container", "containerBg"]'>
-                                    <span class="label">Green</span>
-                                </button>
+                                
                                 <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
                                     data-toggler='["black-bg", ".demo-container", "containerBg"]'>
                                     <span class="label">Black</span>
@@ -865,10 +834,7 @@ direction: ltr
                         <div class="demo-header">
                             <div class="demo-label">Destructive Transparent On-Color</div>
                             <div class="demo-action">
-                                <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                    data-toggler='["green-bg", ".demo-container", "containerBg"]'>
-                                    <span class="label">Green</span>
-                                </button>
+                                
                                 <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
                                     data-toggler='["black-bg", ".demo-container", "containerBg"]'>
                                     <span class="label">Black</span>

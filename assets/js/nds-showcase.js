@@ -101,8 +101,8 @@
             const demoContainer = card.querySelector('.demo-container');
             const hasOncolorButtons = demoContainer && demoContainer.querySelector('.nds-btn-oncolor');
             
-            // Find first background toggle button for initialization
-            const firstBgButton = card.querySelector('.demo-toggle-btn[data-toggler*="green-bg"], .demo-toggle-btn[data-toggler*="colored"]');
+            // Find first background toggle button for initialization by looking for any background-related toggles
+            const firstBgButton = card.querySelector('.demo-toggle-btn[data-toggler*="Bg"], .demo-toggle-btn[data-toggler*="bg"]');
             
             if (hasOncolorButtons && firstBgButton) {
                 // Trigger click on first button to apply initial state
@@ -129,16 +129,16 @@
                 const parsed = JSON.parse(togglerData);
                 
                 if (Array.isArray(parsed) && parsed.length >= 2) {
-                    // Check if it's a single pair [class, target, type?] or multiple pairs [[class, target, type?], [class, target, type?]]
+                    // Check if it's a single operation or multiple operations
                     if (typeof parsed[0] === 'string') {
-                        // Single pair: ["classname", "target"] or ["classname", "target", "type"]
+                        // Single operation: ["class1 class2 class3", "target", "type"]
                         togglePairs = [[parsed[0], parsed[1], parsed[2]]];
                     } else {
-                        // Multiple pairs: [["class1", "target1", "type1"], ["class2", "target2", "type2"]]
+                        // Multiple operations: [["class1 class2", "target1", "type1"], ["class3", "target2", "type2"]]
                         togglePairs = parsed;
                     }
                 } else {
-                    console.error('data-toggler must be [classname, target] or [[class1, target1], [class2, target2]]');
+                    console.error('data-toggler must be ["class1 class2", "target", "type?"] or multiple arrays');
                     return;
                 }
             } catch (e) {
@@ -164,10 +164,10 @@
             return;
         }
 
-        // Process each toggle pair
-        togglePairs.forEach(([className, targetSelector, type]) => {
-            if (!className || !targetSelector) {
-                console.error('Each toggle pair must have [classname, target] or [classname, target, type]');
+        // Process each toggle operation
+        togglePairs.forEach(([classNames, targetSelector, type]) => {
+            if (!classNames || !targetSelector) {
+                console.error('Each toggle operation must have ["class1 class2", "target", "type?"]');
                 return;
             }
             
@@ -195,70 +195,19 @@
                 return;
             }
             
-            if (type) {
-                // For typed actions, handle mutual exclusion
-                const isCurrentlyActive = targetElement.classList.contains(className);
-                
-                if (isCurrentlyActive) {
-                    // If clicking the same button, remove the class (toggle off)
-                    targetElement.classList.remove(className);
-                } else {
-                    // For mutual exclusion: first find all classes of the same type
-                    const allTogglers = demoCard.querySelectorAll('[data-toggler]');
-                    const sameTypeClasses = new Set();
-                    
-                    allTogglers.forEach(togglerBtn => {
-                        const otherTogglerData = togglerBtn.getAttribute('data-toggler');
-                        if (!otherTogglerData) return;
-                        
-                        try {
-                            const parsed = JSON.parse(otherTogglerData);
-                            let otherPairs = [];
-                            
-                            if (Array.isArray(parsed) && parsed.length >= 2) {
-                                if (typeof parsed[0] === 'string') {
-                                    otherPairs = [[parsed[0], parsed[1], parsed[2]]];
-                                } else {
-                                    otherPairs = parsed;
-                                }
-                            }
-                            
-                            otherPairs.forEach(([otherClass, otherTarget, otherType]) => {
-                                if (otherType === type && otherTarget === targetSelector) {
-                                    sameTypeClasses.add(otherClass);
-                                }
-                            });
-                        } catch (e) {
-                            // Ignore invalid JSON
-                        }
-                    });
-                    
-                    // Remove ALL classes of the same type from the target element
-                    sameTypeClasses.forEach(classToRemove => {
-                        targetElement.classList.remove(classToRemove);
-                    });
-                    
-                    // Add the new class
-                    targetElement.classList.add(className);
+            // Split class names and toggle each one
+            const classArray = classNames.trim().split(/\s+/);
+            classArray.forEach(className => {
+                if (className) {
+                    targetElement.classList.toggle(className);
                 }
-            } else {
-                // No type, use normal toggle behavior
-                targetElement.classList.toggle(className);
-            }
-            
-            // Handle background color updates for buttons
-            if (className === 'green-bg' || className === 'black-bg') {
-                const hasClass = targetElement.classList.contains(className);
-                updateButtonsForBackground(targetElement, hasClass ? 'colored' : 'none');
-            } else if (className === 'noBg') {
-                updateButtonsForBackground(targetElement, 'none');
-            }
+            });
             
             // Handle code updates for any class changes on targets
             updateCodeExample(demoCard, targetElement);
         });
         
-        // Update button selected states for all typed toggles
+        // Update button selected states based on whether their classes are currently active
         const allTogglers = demoCard.querySelectorAll('[data-toggler]');
         allTogglers.forEach(togglerBtn => {
             const otherTogglerData = togglerBtn.getAttribute('data-toggler');
@@ -277,10 +226,15 @@
                 }
                 
                 let hasAnyActiveClass = false;
-                otherPairs.forEach(([otherClass, otherTarget, otherType]) => {
-                    if (otherType) { // Only check typed toggles
-                        const otherTargetElement = demoCard.querySelector(otherTarget);
-                        if (otherTargetElement && otherTargetElement.classList.contains(otherClass)) {
+                otherPairs.forEach(([otherClassNames, otherTarget]) => {
+                    const otherTargetElement = demoCard.querySelector(otherTarget);
+                    if (otherTargetElement) {
+                        // Check if any of the classes are active
+                        const classArray = otherClassNames.trim().split(/\s+/);
+                        const hasActiveClass = classArray.some(className => 
+                            className && otherTargetElement.classList.contains(className)
+                        );
+                        if (hasActiveClass) {
                             hasAnyActiveClass = true;
                         }
                     }
@@ -288,18 +242,13 @@
                 
                 if (hasAnyActiveClass) {
                     togglerBtn.classList.add('selected');
-                } else if (otherPairs.some(([, , otherType]) => otherType)) { // Only remove selected from typed toggles
+                } else {
                     togglerBtn.classList.remove('selected');
                 }
             } catch (e) {
                 // Ignore invalid JSON
             }
         });
-        
-        // For non-typed toggles, update button selected state
-        if (!togglePairs.some(([, , type]) => type)) {
-            button.classList.toggle('selected');
-        }
     }
 
     // Update code example to reflect actual element classes

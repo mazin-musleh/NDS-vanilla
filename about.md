@@ -1,7 +1,6 @@
 ---
 layout: page
 title: About
-hero_image: /assets/img/sliderShapeGray.svg
 permalink: /about/
 lang: en
 direction: ltr
