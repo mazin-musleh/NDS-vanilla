@@ -2,8 +2,7 @@
 layout: page
 title: Tabs
 hero_title: Tab Components - National Design System
-hero_description: Interactive tab navigation components with proper ARIA accessibility and content switching functionality
-hero_image: /assets/img/sliderShapeGray.svg
+hero_description: Interactive tab navigation components with proper ARIA accessibility and content switching
 breadcrumb: ["Components", "Tabs"]
 lang: en
 direction: ltr
@@ -14,51 +13,74 @@ direction: ltr
     <div class="nds-section-content-container">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Tab Navigation</h2>
-            <p class="nds-section-description">Interactive tabs for organizing and switching between different content sections</p>
+            <p class="nds-section-description">Interactive tabs for organizing and switching between different content
+                sections</p>
         </div>
         <div class="nds-section-content">
-            
+
             <!-- Basic Tabs Example -->
             <div class="nds-demo-card">
                 <div class="demo-header">
                     <div class="demo-label">Basic Tabs</div>
                     <div class="demo-action">
-                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='["vertical-tabs", ".nds-tabs", "tabLayout"]'>
+                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                            data-toggler='[["vertical-tabs", ".nds-tabs", "tabLayout"], ["oneRowContent", ".nds-tab-list", "tabLayout"]]'>
                             <span class="label">Vertical</span>
                         </button>
-                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='[["noBg", ".demo-container", "cardView"], ["cardView", ".nds-tabs", "tabsStyle"]]'>
-                            <span class="label">Remove bg</span>
+                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                            data-toggler='[["noBg", ".demo-container", "cardView"], ["cardView", ".nds-tabs", "tabsStyle"]]'>
+                            <span class="label">Card View</span>
                         </button>
-                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='["center", ".nds-tab-list", "tabsAlign"]'>
+                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                            data-toggler='["center", ".nds-tab-list", "tabsAlign"]'>
                             <span class="label">Center</span>
                         </button>
                     </div>
                 </div>
                 <div class="demo-container">
                     <div class="nds-tabs" id="basicTabs">
-                        <nav class="nds-tab-list" role="tablist" aria-label="Basic tab navigation">
-                            <button class="nds-tab" role="tab" aria-selected="true" aria-controls="panel-home" id="tab-home" tabindex="0" data-label="Home">
-                                <span class="nds-tab-label">Home</span>
-                            </button>
-                            <button class="nds-tab" role="tab" aria-selected="false" aria-controls="panel-services" id="tab-services" tabindex="-1" data-label="Services">
-                                <span class="nds-tab-label">Services</span>
-                            </button>
-                            <button class="nds-tab" role="tab" aria-selected="false" aria-controls="panel-about" id="tab-about" tabindex="-1">
-                                <span class="nds-tab-label">About</span>
-                            </button>
-                            <button class="nds-tab" role="tab" aria-selected="false" aria-controls="panel-contact" id="tab-contact" tabindex="-1">
-                                <span class="nds-tab-label">Contact</span>
-                            </button>
-                        </nav>
+                        <div class="nds-tab-list-container">
+                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Basic tab navigation">
+                                <button class="nds-tab" role="tab" aria-selected="true" aria-controls="panel-home"
+                                    id="tab-home" tabindex="0" data-label="Home">
+                                    <span class="nds-tab-label">Home</span>
+                                </button>
+                                <button class="nds-tab" role="tab" aria-selected="false" aria-controls="panel-services"
+                                    id="tab-services" tabindex="-1" data-label="Services">
+                                    <span class="nds-tab-label">Services</span>
+                                </button>
+                                <button class="nds-tab" role="tab" aria-selected="false" aria-controls="panel-about"
+                                    id="tab-about" tabindex="-1">
+                                    <span class="nds-tab-label">About</span>
+                                </button>
+                                <button class="nds-tab" role="tab" aria-selected="false" aria-controls="panel-about"
+                                    id="tab-about" tabindex="-1">
+                                    <span class="nds-tab-label">About</span>
+                                </button>
+                                <button class="nds-tab" role="tab" aria-selected="false" aria-controls="panel-about"
+                                    id="tab-about" tabindex="-1">
+                                    <span class="nds-tab-label">About</span>
+                                </button>
+                                <button class="nds-tab" role="tab" aria-selected="false" aria-controls="panel-contact"
+                                    id="tab-contact" tabindex="-1">
+                                    <span class="nds-tab-label">Contact</span>
+                                </button>
+                            </nav>
+                        </div>
                         <div class="nds-tab-content">
-                            <div class="nds-tab-panel" role="tabpanel" id="panel-home" aria-labelledby="tab-home" tabindex="0">
+                            <div class="nds-tab-panel" role="tabpanel" id="panel-home" aria-labelledby="tab-home"
+                                tabindex="0">
                                 <h3>Home Content</h3>
-                                <p>Welcome to our platform. Here you'll find the latest updates and important information about our services and offerings.</p>
-                                <p>This is the main dashboard where users can quickly access key features and get an overview of their account status.</p>
+                                <p>Welcome to our platform. Here you'll find the latest updates and important
+                                    information about our services and offerings.</p>
+                                <p>This is the main dashboard where users can quickly access key features and get an
+                                    overview of their account status.</p>
                             </div>
-                            <div class="nds-tab-panel hidden" role="tabpanel" id="panel-services" aria-labelledby="tab-services" tabindex="0">
+                            <div class="nds-tab-panel hidden" role="tabpanel" id="panel-services"
+                                aria-labelledby="tab-services" tabindex="0">
                                 <h3>Our Services</h3>
-                                <p>We offer a comprehensive range of digital government services designed to make your life easier.</p>
+                                <p>We offer a comprehensive range of digital government services designed to make your
+                                    life easier.</p>
                                 <ul>
                                     <li>Document Processing</li>
                                     <li>Online Applications</li>
@@ -66,12 +88,17 @@ direction: ltr
                                     <li>Support Services</li>
                                 </ul>
                             </div>
-                            <div class="nds-tab-panel hidden" role="tabpanel" id="panel-about" aria-labelledby="tab-about" tabindex="0">
+                            <div class="nds-tab-panel hidden" role="tabpanel" id="panel-about"
+                                aria-labelledby="tab-about" tabindex="0">
                                 <h3>About Us</h3>
-                                <p>The National Design System is part of Saudi Arabia's digital transformation initiative, providing consistent and accessible user experiences across all government digital services.</p>
-                                <p>Our mission is to create unified, user-friendly interfaces that serve citizens efficiently and effectively.</p>
+                                <p>The National Design System is part of Saudi Arabia's digital transformation
+                                    initiative, providing consistent and accessible user experiences across all
+                                    government digital services.</p>
+                                <p>Our mission is to create unified, user-friendly interfaces that serve citizens
+                                    efficiently and effectively.</p>
                             </div>
-                            <div class="nds-tab-panel hidden" role="tabpanel" id="panel-contact" aria-labelledby="tab-contact" tabindex="0">
+                            <div class="nds-tab-panel hidden" role="tabpanel" id="panel-contact"
+                                aria-labelledby="tab-contact" tabindex="0">
                                 <h3>Contact Information</h3>
                                 <p>Get in touch with us through the following channels:</p>
                                 <div class="contact-info">
@@ -91,14 +118,16 @@ direction: ltr
                         </button>
                     </div>
                     <code>&lt;div class="nds-tabs"&gt;
-  &lt;nav class="nds-tab-list" role="tablist" aria-label="Tab navigation"&gt;
-    &lt;button class="nds-tab" role="tab" aria-selected="true" aria-controls="panel-1" id="tab-1"&gt;
-      &lt;span class="nds-tab-label"&gt;Tab 1&lt;/span&gt;
-    &lt;/button&gt;
-    &lt;button class="nds-tab" role="tab" aria-selected="false" aria-controls="panel-2" id="tab-2"&gt;
-      &lt;span class="nds-tab-label"&gt;Tab 2&lt;/span&gt;
-    &lt;/button&gt;
-  &lt;/nav&gt;
+  &lt;div class="nds-tab-list-container"&gt;
+    &lt;nav class="nds-tab-list" role="tablist" aria-label="Tab navigation"&gt;
+      &lt;button class="nds-tab" role="tab" aria-selected="true" aria-controls="panel-1" id="tab-1"&gt;
+        &lt;span class="nds-tab-label"&gt;Tab 1&lt;/span&gt;
+      &lt;/button&gt;
+      &lt;button class="nds-tab" role="tab" aria-selected="false" aria-controls="panel-2" id="tab-2"&gt;
+        &lt;span class="nds-tab-label"&gt;Tab 2&lt;/span&gt;
+      &lt;/button&gt;
+    &lt;/nav&gt;
+  &lt;/div&gt;
   &lt;div class="nds-tab-content"&gt;
     &lt;div class="nds-tab-panel" role="tabpanel" id="panel-1" aria-labelledby="tab-1"&gt;
       Content for tab 1
@@ -116,35 +145,44 @@ direction: ltr
                 <div class="demo-header">
                     <div class="demo-label">Tabs with Icons</div>
                     <div class="demo-action">
-                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='["vertical-tabs", ".nds-tabs", "tabLayout"]'>
+                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                            data-toggler='["vertical-tabs", ".nds-tabs", "tabLayout"]'>
                             <span class="label">Vertical</span>
                         </button>
-                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='[["noBg", ".demo-container", "containerBg"], ["cardView", ".nds-tabs", "tabsStyle"]]'>
-                            <span class="label">Remove bg</span>
+                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                            data-toggler='[["noBg", ".demo-container", "containerBg"], ["cardView", ".nds-tabs", "tabsStyle"]]'>
+                            <span class="label">Card View</span>
                         </button>
-                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='["center", ".nds-tab-list", "tabsAlign"]'>
+                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                            data-toggler='["center", ".nds-tab-list", "tabsAlign"]'>
                             <span class="label">Center</span>
                         </button>
                     </div>
                 </div>
                 <div class="demo-container">
                     <div class="nds-tabs" id="iconTabs">
-                        <nav class="nds-tab-list" role="tablist" aria-label="Icon tab navigation">
-                            <button class="nds-tab nds-tab-with-icon" role="tab" aria-selected="true" aria-controls="panel-dashboard" id="tab-dashboard" tabindex="0">
-                                <i class="hgi hgi-stroke hgi-home-05"></i>
-                                <span class="nds-tab-label">Dashboard</span>
-                            </button>
-                            <button class="nds-tab nds-tab-with-icon" role="tab" aria-selected="false" aria-controls="panel-analytics" id="tab-analytics" tabindex="-1">
-                                <i class="hgi hgi-stroke hgi-analytics-01"></i>
-                                <span class="nds-tab-label">Analytics</span>
-                            </button>
-                            <button class="nds-tab nds-tab-with-icon" role="tab" aria-selected="false" aria-controls="panel-settings" id="tab-settings" tabindex="-1">
-                                <i class="hgi hgi-stroke hgi-settings-01"></i>
-                                <span class="nds-tab-label">Settings</span>
-                            </button>
-                        </nav>
+                        <div class="nds-tab-list-container">
+                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Icon tab navigation">
+                                <button class="nds-tab nds-tab-with-icon" role="tab" aria-selected="true"
+                                    aria-controls="panel-dashboard" id="tab-dashboard" tabindex="0">
+                                    <i class="hgi hgi-stroke hgi-home-05"></i>
+                                    <span class="nds-tab-label">Dashboard</span>
+                                </button>
+                                <button class="nds-tab nds-tab-with-icon" role="tab" aria-selected="false"
+                                    aria-controls="panel-analytics" id="tab-analytics" tabindex="-1">
+                                    <i class="hgi hgi-stroke hgi-analytics-01"></i>
+                                    <span class="nds-tab-label">Analytics</span>
+                                </button>
+                                <button class="nds-tab nds-tab-with-icon" role="tab" aria-selected="false"
+                                    aria-controls="panel-settings" id="tab-settings" tabindex="-1">
+                                    <i class="hgi hgi-stroke hgi-settings-01"></i>
+                                    <span class="nds-tab-label">Settings</span>
+                                </button>
+                            </nav>
+                        </div>
                         <div class="nds-tab-content">
-                            <div class="nds-tab-panel" role="tabpanel" id="panel-dashboard" aria-labelledby="tab-dashboard" tabindex="0">
+                            <div class="nds-tab-panel" role="tabpanel" id="panel-dashboard"
+                                aria-labelledby="tab-dashboard" tabindex="0">
                                 <h3>Dashboard</h3>
                                 <p>Your main dashboard with key metrics and quick access to important features.</p>
                                 <div class="dashboard-stats">
@@ -162,12 +200,16 @@ direction: ltr
                                     </div>
                                 </div>
                             </div>
-                            <div class="nds-tab-panel hidden" role="tabpanel" id="panel-analytics" aria-labelledby="tab-analytics" tabindex="0">
+                            <div class="nds-tab-panel hidden" role="tabpanel" id="panel-analytics"
+                                aria-labelledby="tab-analytics" tabindex="0">
                                 <h3>Analytics</h3>
-                                <p>Detailed analytics and reports to help you understand usage patterns and performance metrics.</p>
-                                <p>View comprehensive data about user interactions, system performance, and service utilization.</p>
+                                <p>Detailed analytics and reports to help you understand usage patterns and performance
+                                    metrics.</p>
+                                <p>View comprehensive data about user interactions, system performance, and service
+                                    utilization.</p>
                             </div>
-                            <div class="nds-tab-panel hidden" role="tabpanel" id="panel-settings" aria-labelledby="tab-settings" tabindex="0">
+                            <div class="nds-tab-panel hidden" role="tabpanel" id="panel-settings"
+                                aria-labelledby="tab-settings" tabindex="0">
                                 <h3>Settings</h3>
                                 <p>Configure your preferences and manage your account settings.</p>
                                 <div class="settings-options">
@@ -195,20 +237,22 @@ direction: ltr
                         </button>
                     </div>
                     <code>&lt;div class="nds-tabs"&gt;
-  &lt;nav class="nds-tab-list" role="tablist" aria-label="Icon tab navigation"&gt;
-    &lt;button class="nds-tab nds-tab-with-icon" role="tab" aria-selected="true" aria-controls="panel-1" id="tab-1"&gt;
-      &lt;i class="hgi hgi-stroke hgi-home-05"&gt;&lt;/i&gt;
-      &lt;span class="nds-tab-label"&gt;Dashboard&lt;/span&gt;
-    &lt;/button&gt;
-    &lt;button class="nds-tab nds-tab-with-icon" role="tab" aria-selected="false" aria-controls="panel-2" id="tab-2"&gt;
-      &lt;i class="hgi hgi-stroke hgi-analytics-01"&gt;&lt;/i&gt;
-      &lt;span class="nds-tab-label"&gt;Analytics&lt;/span&gt;
-    &lt;/button&gt;
-    &lt;button class="nds-tab nds-tab-with-icon" role="tab" aria-selected="false" aria-controls="panel-3" id="tab-3"&gt;
-      &lt;i class="hgi hgi-stroke hgi-settings-01"&gt;&lt;/i&gt;
-      &lt;span class="nds-tab-label"&gt;Settings&lt;/span&gt;
-    &lt;/button&gt;
-  &lt;/nav&gt;
+  &lt;div class="nds-tab-list-container"&gt;
+    &lt;nav class="nds-tab-list" role="tablist" aria-label="Icon tab navigation"&gt;
+      &lt;button class="nds-tab nds-tab-with-icon" role="tab" aria-selected="true" aria-controls="panel-1" id="tab-1"&gt;
+        &lt;i class="hgi hgi-stroke hgi-home-05"&gt;&lt;/i&gt;
+        &lt;span class="nds-tab-label"&gt;Dashboard&lt;/span&gt;
+      &lt;/button&gt;
+      &lt;button class="nds-tab nds-tab-with-icon" role="tab" aria-selected="false" aria-controls="panel-2" id="tab-2"&gt;
+        &lt;i class="hgi hgi-stroke hgi-analytics-01"&gt;&lt;/i&gt;
+        &lt;span class="nds-tab-label"&gt;Analytics&lt;/span&gt;
+      &lt;/button&gt;
+      &lt;button class="nds-tab nds-tab-with-icon" role="tab" aria-selected="false" aria-controls="panel-3" id="tab-3"&gt;
+        &lt;i class="hgi hgi-stroke hgi-settings-01"&gt;&lt;/i&gt;
+        &lt;span class="nds-tab-label"&gt;Settings&lt;/span&gt;
+      &lt;/button&gt;
+    &lt;/nav&gt;
+  &lt;/div&gt;
   &lt;div class="nds-tab-content"&gt;
     &lt;div class="nds-tab-panel" role="tabpanel" id="panel-1" aria-labelledby="tab-1"&gt;
       Content for dashboard tab
@@ -249,7 +293,7 @@ direction: ltr
                     <li><code>aria-label</code> - Accessible name for tab navigation</li>
                     <li><code>tabindex</code> - Keyboard navigation control</li>
                 </ul>
-                
+
                 <h3>Keyboard Navigation</h3>
                 <ul>
                     <li><kbd>Left/Right Arrow</kbd> - Navigate between horizontal tabs (reversed in RTL)</li>
@@ -259,14 +303,15 @@ direction: ltr
                     <li><kbd>Home</kbd> - Move to first tab</li>
                     <li><kbd>End</kbd> - Move to last tab</li>
                 </ul>
-                
+
                 <h3>Horizontal vs Vertical Navigation</h3>
                 <ul>
-                    <li><strong>Horizontal Tabs:</strong> Use Left/Right arrows (reversed in RTL), Up/Down also work</li>
+                    <li><strong>Horizontal Tabs:</strong> Use Left/Right arrows (reversed in RTL), Up/Down also work
+                    </li>
                     <li><strong>Vertical Tabs:</strong> Use Up/Down arrows only, Left/Right are disabled</li>
                     <li><strong>Home/End:</strong> Always go to first/last tab regardless of orientation</li>
                 </ul>
-                
+
                 <h3>RTL Support</h3>
                 <ul>
                     <li><strong>Horizontal tabs:</strong> Left/Right arrows reversed for natural RTL navigation</li>
@@ -277,4 +322,3 @@ direction: ltr
         </div>
     </div>
 </section>
-

@@ -5,9 +5,8 @@
 .nds-demo-card {
   background: var(--background-white, #ffffff);
   border: 1px solid var(--border-neutral-200, #e5e7eb);
-  border-radius: var(--radius-lg, 8px);
+  border-radius: var(--radiusmd, 8px);
   margin-bottom: var(--spacing-xl, 24px);
-  overflow: hidden;
   box-shadow: var(--nds-shadow);
   flex: 1 1 var(--nds-demo-card-width, 100%);
 }
@@ -24,7 +23,9 @@
   border-bottom: 1px solid var(--border-neutral-200, #e5e7eb);
   font-weight: 600;
   color: var(--text-default, #161616);
+  border-radius: var(--radiusmd, 8px) var(--radiusmd, 8px) 0 0;
   font-size: var(--nds-text-md-FS, 14px);
+  overflow: hidden;
 }
 
 /* Demo Label */

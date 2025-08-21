@@ -12,7 +12,8 @@
     // Load translations from Jekyll-generated JSON
     async function loadTranslations() {
         try {
-            const response = await fetch('/translations.json');
+            const basePath = window.ndsBasePath || '';
+            const response = await fetch(`${basePath}/translations.json`);
             ndsTranslations = await response.json();
         } catch (error) {
             console.error('Failed to load translations:', error);

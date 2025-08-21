@@ -1165,6 +1165,22 @@ html[dir="ltr"] .nds-breadcrumb li:not(:last-child)::after {
 
 
 
+.oneRowContent {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto;
+    max-width: 100%;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+}
+
+.oneRowContent>* {
+    white-space: nowrap;
+    width: fit-content;
+}
+
+
 .cookie-popup {
     position: fixed;
     bottom: 0;
@@ -2029,7 +2045,7 @@ main {
 
 .contentLayout .mainContent {
     width: calc(100%);
-    min-width: 400px;
+    min-width: 300px;
     display: flex;
     flex-wrap: wrap;
 }

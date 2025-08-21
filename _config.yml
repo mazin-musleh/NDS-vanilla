@@ -1,12 +1,16 @@
 title: Digital Government Authority
 description: The Digital Government Authority is the national reference specialized in organizing digital government business in government agencies; to achieve a proactive and initiative digital government capable of providing high-efficiency services; to achieve integration in the field of digital government among all government agencies.
-baseurl: ""
+baseurl: "/_site"
 url: ""
 
 # Brand Logo
 brandLogo: /assets/img/DGA-logo.svg
 headerBrandW: 132
 headerBrandH: 42
+
+# Hero Settings
+hero_image: /assets/img/riyadhcenter.jpg
+#hero_image_sub: /assets/img/sliderShapeGray.svg
 
 # Build settings
 markdown: kramdown
