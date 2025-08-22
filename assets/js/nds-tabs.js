@@ -11,7 +11,7 @@
         constructor(tabsContainer) {
             this.tabsContainer = tabsContainer;
             this.tabList = tabsContainer.querySelector('.nds-tab-list');
-            this.tabs = Array.from(tabsContainer.querySelectorAll('.nds-tab'));
+            this.tabs = Array.from(tabsContainer.querySelectorAll('.nds-tab:not(.showMore)'));
             this.panels = Array.from(tabsContainer.querySelectorAll('.nds-tab-panel'));
             
             if (!this.tabList || this.tabs.length === 0 || this.panels.length === 0) {

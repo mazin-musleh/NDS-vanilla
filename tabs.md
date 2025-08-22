@@ -69,8 +69,8 @@ direction: ltr
                                     id="tab-resources" tabindex="-1">
                                     <span class="nds-tab-label">Resources</span>
                                 </button>
-                                <button class="nds-tab" role="tab" aria-selected="false" aria-controls="panel-documentation"
-                                    id="tab-documentation" tabindex="-1">
+                                <button class="nds-tab" role="tab" aria-selected="false"
+                                    aria-controls="panel-documentation" id="tab-documentation" tabindex="-1">
                                     <span class="nds-tab-label">Documentation</span>
                                 </button>
                                 <button class="nds-tab" role="tab" aria-selected="false" aria-controls="panel-news"
@@ -84,6 +84,9 @@ direction: ltr
                                 <button class="nds-tab" role="tab" aria-selected="false" aria-controls="panel-settings"
                                     id="tab-settings" tabindex="-1">
                                     <span class="nds-tab-label">Settings</span>
+                                </button>
+                                <button class="nds-tab showMore"><i
+                                        class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
                             </nav>
                         </div>
@@ -147,14 +150,18 @@ direction: ltr
                             <div class="nds-tab-panel hidden" role="tabpanel" id="panel-documentation"
                                 aria-labelledby="tab-documentation" tabindex="0">
                                 <h3>Documentation</h3>
-                                <p>Comprehensive documentation for the National Design System components and guidelines.</p>
-                                <p>Learn how to implement and customize components according to government standards.</p>
+                                <p>Comprehensive documentation for the National Design System components and guidelines.
+                                </p>
+                                <p>Learn how to implement and customize components according to government standards.
+                                </p>
                             </div>
-                            <div class="nds-tab-panel hidden" role="tabpanel" id="panel-news"
-                                aria-labelledby="tab-news" tabindex="0">
+                            <div class="nds-tab-panel hidden" role="tabpanel" id="panel-news" aria-labelledby="tab-news"
+                                tabindex="0">
                                 <h3>Latest News</h3>
-                                <p>Stay updated with the latest announcements and updates from the design system team.</p>
-                                <p>New component releases, feature updates, and important notices are published here.</p>
+                                <p>Stay updated with the latest announcements and updates from the design system team.
+                                </p>
+                                <p>New component releases, feature updates, and important notices are published here.
+                                </p>
                             </div>
                             <div class="nds-tab-panel hidden" role="tabpanel" id="panel-feedback"
                                 aria-labelledby="tab-feedback" tabindex="0">
@@ -186,6 +193,9 @@ direction: ltr
       &lt;/button&gt;
       &lt;button class="nds-tab" role="tab" aria-selected="false" aria-controls="panel-2" id="tab-2"&gt;
         &lt;span class="nds-tab-label"&gt;Tab 2&lt;/span&gt;
+      &lt;/button&gt;
+      &lt;button class="nds-tab showMore"&gt;&lt;i
+        class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"&gt;&lt;/i&gt;
       &lt;/button&gt;
     &lt;/nav&gt;
   &lt;/div&gt;
@@ -242,6 +252,9 @@ direction: ltr
                                     aria-controls="panel-settings" id="tab-settings" tabindex="-1">
                                     <i class="hgi hgi-stroke hgi-settings-01"></i>
                                     <span class="nds-tab-label">Settings</span>
+                                </button>
+                                <button class="nds-tab showMore"><i
+                                        class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
                             </nav>
                         </div>
@@ -303,7 +316,7 @@ direction: ltr
                     </div>
                     <code>&lt;div class="nds-tabs"&gt;
   &lt;div class="nds-tab-list-container"&gt;
-    &lt;nav class="nds-tab-list" role="tablist" aria-label="Icon tab navigation"&gt;
+    &lt;nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Icon tab navigation"&gt;
       &lt;button class="nds-tab nds-tab-with-icon" role="tab" aria-selected="true" aria-controls="panel-1" id="tab-1"&gt;
         &lt;i class="hgi hgi-stroke hgi-home-05"&gt;&lt;/i&gt;
         &lt;span class="nds-tab-label"&gt;Dashboard&lt;/span&gt;
@@ -315,6 +328,9 @@ direction: ltr
       &lt;button class="nds-tab nds-tab-with-icon" role="tab" aria-selected="false" aria-controls="panel-3" id="tab-3"&gt;
         &lt;i class="hgi hgi-stroke hgi-settings-01"&gt;&lt;/i&gt;
         &lt;span class="nds-tab-label"&gt;Settings&lt;/span&gt;
+      &lt;/button&gt;
+      &lt;button class="nds-tab showMore"&gt;&lt;i
+        class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"&gt;&lt;/i&gt;
       &lt;/button&gt;
     &lt;/nav&gt;
   &lt;/div&gt;
