@@ -1172,13 +1172,54 @@ html[dir="ltr"] .nds-breadcrumb li:not(:last-child)::after {
     overflow-y: hidden;
     scrollbar-width: none;
     scroll-behavior: smooth;
+    position: relative;
 }
 
 .oneRowContent>* {
     white-space: nowrap;
     width: fit-content;
 }
+.oneRowContent.hasMore>*.showMore {
+    position: sticky;
+    background-color: var(--nds-nav-background-color);
+    z-index: 2;
+    transition: opacity var(--nds-transition);
+    transform: translateX(0);
+}
+.oneRowContent:not(.hasMore)>*.showMore {
+    display: none;
+}
 
+.oneRowContent.hasMore>*.showMore {
+    left: 0;
+    margin-right: var(--spacing-md);
+    box-shadow: 2px 0px 8px 2px rgba(0, 0, 0, 0.08);
+}
+html[dir="ltr"] .oneRowContent.hasMore>*.showMore {
+    left: unset;
+    right: 0;
+    margin-right: unset;
+    margin-left: var(--spacing-md);
+    box-shadow: -2px 0px 8px 2px rgba(0, 0, 0, 0.08);
+}
+.oneRowContent.hasMore>*.showMore {
+    display: block;
+}
+.oneRowContent.hasMore>*.showMore i {
+    transition: transform 0.1s ease;
+}
+
+.oneRowContent.hasMore.atEnd>*.showMore i {
+    transform: rotate(180deg);
+}
+
+html[dir="ltr"] .oneRowContent.hasMore>*.showMore i {
+    transform: rotate(180deg);
+}
+
+html[dir="ltr"] .oneRowContent.hasMore.atEnd>*.showMore i {
+    transform: rotate(0deg)!important;
+}
 
 .cookie-popup {
     position: fixed;

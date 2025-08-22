@@ -12,7 +12,7 @@
     // Load translations from Jekyll-generated JSON
     async function loadTranslations() {
         try {
-            const basePath = window.ndsBasePath || '';
+            const basePath = new URL('.', document.baseURI).pathname.replace(/\/$/, '');
             const response = await fetch(`${basePath}/translations.json`);
             ndsTranslations = await response.json();
         } catch (error) {

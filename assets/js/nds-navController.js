@@ -519,6 +519,9 @@
             DOM.primary.addEventListener('click', (e) => {
                 const showMore = e.target.closest('.nds-nav-item.showMore');
                 if (!showMore) return;
+                
+                // Only handle showMore within this navigation container
+                if (!DOM.primary.contains(showMore)) return;
 
                 e.preventDefault();
                 e.stopPropagation();
@@ -557,7 +560,10 @@
                 DOM.primary.style.scrollBehavior = 'auto';
 
                 const startScroll = DOM.primary.scrollLeft;
-                const scrollAmount = e.deltaY * -0.8;
+                // Check RTL direction for proper scroll direction
+                const isRTL = document.documentElement.dir === 'rtl';
+                const scrollMultiplier = isRTL ? -0.8 : 0.8;
+                const scrollAmount = e.deltaY * scrollMultiplier;
                 let frame = 0;
 
                 const animate = () => {

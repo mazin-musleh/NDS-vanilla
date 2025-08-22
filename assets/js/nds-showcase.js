@@ -239,11 +239,21 @@
             targetElements.forEach(targetElement => {
                 // Split class names and toggle each one
                 const classArray = classNames.trim().split(/\s+/);
+                
                 classArray.forEach(className => {
                     if (className) {
                         targetElement.classList.toggle(className);
                     }
                 });
+                
+                // Special handling for VerticalTabs: trigger scroll logic after any oneRowContent change
+                if (type === 'VerticalTabs' && classArray.includes('oneRowContent')) {
+                    setTimeout(() => {
+                        if (window.initializeRowScroll) {
+                            window.initializeRowScroll(true); // Force update for already initialized elements
+                        }
+                    }, 100);
+                }
                 
                 // Handle code updates for specific class changes
                 updateCodeExampleForClasses(demoCard, targetElement, classArray);
@@ -361,11 +371,23 @@
                                             deselectionTargetElements.forEach(targetElement => {
                                                 // Remove classes that were added by the deselected button
                                                 const classArray = classNames.trim().split(/\s+/);
+                                                const otherButtonType = otherTypes[0]; // We know it's single type
+                                                
+                                                
                                                 classArray.forEach(className => {
                                                     if (className && targetElement.classList.contains(className)) {
                                                         targetElement.classList.remove(className);
                                                     }
                                                 });
+                                                
+                                                // Special handling for VerticalTabs deselection: trigger scroll logic after any oneRowContent change
+                                                if (otherButtonType === 'VerticalTabs' && classArray.includes('oneRowContent')) {
+                                                    setTimeout(() => {
+                                                        if (window.initializeRowScroll) {
+                                                            window.initializeRowScroll(true); // Force update for already initialized elements
+                                                        }
+                                                    }, 100);
+                                                }
                                                 
                                                 // Update code example after removing classes
                                                 updateCodeExampleForClasses(demoCard, targetElement, classArray);
