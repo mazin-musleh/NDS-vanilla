@@ -1803,9 +1803,17 @@
 
         // On click
         document.querySelectorAll('.oneRowContent > *').forEach(item => {
-            item.addEventListener('click', function () {
+            item.addEventListener('click', function (e) {
                 // Check if parent still has the class
                 if (!this.parentElement?.classList.contains('oneRowContent')) return;
+                
+                // Prevent click if we just finished dragging
+                if (dragState.hasDragged) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return;
+                }
+                
                 // Only scroll if scrolling is needed
                 if (!needsScroll()) return;
                 scrollToTarget(this);
@@ -1860,7 +1868,7 @@
         }, { passive: false });
 
         // Drag scroll functionality - only if scrolling is needed
-        let dragState = { active: false, startX: 0, scrollLeft: 0 };
+        let dragState = { active: false, startX: 0, scrollLeft: 0, hasDragged: false };
         
         container.addEventListener('mousedown', (e) => {
             // Check if element still has the class
@@ -1879,7 +1887,8 @@
             dragState = {
                 active: true,
                 startX: e.pageX,
-                scrollLeft: container.scrollLeft
+                scrollLeft: container.scrollLeft,
+                hasDragged: false
             };
             
             Object.assign(container.style, {
@@ -1887,8 +1896,6 @@
                 userSelect: 'none',
                 scrollBehavior: 'auto'
             });
-            
-            e.preventDefault();
         });
         
         const handleMouseUp = () => {
@@ -1899,6 +1906,13 @@
                     userSelect: '',
                     scrollBehavior: container.classList.contains('oneRowContent') ? 'smooth' : ''
                 });
+                
+                // Prevent clicks briefly after dragging
+                if (dragState.hasDragged) {
+                    setTimeout(() => {
+                        dragState.hasDragged = false;
+                    }, 100);
+                }
             }
         };
         
@@ -1910,6 +1924,12 @@
                 return;
             }
             e.preventDefault();
+            
+            // Mark as dragged if moved more than 3 pixels
+            if (Math.abs(e.pageX - dragState.startX) > 3) {
+                dragState.hasDragged = true;
+            }
+            
             container.scrollLeft = dragState.scrollLeft - (e.pageX - dragState.startX) * 1.0;
         };
         
