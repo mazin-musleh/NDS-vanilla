@@ -182,7 +182,6 @@ nav.nds-main-nav .nds-nav-minimal {
     display: flex;
     align-items: center;
     list-style: none;
-    gap: var(--spacing-md);
 }
 
 nav.nds-main-nav .nds-nav-minimal .nds-nav-item {
@@ -255,7 +254,7 @@ i.icon {
     line-height: 0;
 }
 
-nav.nds-main-nav .nds-nav-secondary .nds-nav-item.iconOnly .nds-nav-link .label {
+.nds-nav-item.iconOnly .nds-nav-link .label {
     display: none;
 }
 

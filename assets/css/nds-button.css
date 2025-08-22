@@ -746,6 +746,12 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
     aspect-ratio: 1;
     padding: 0;
 }
+.nds-btn-icon-only .label {
+    display: none;
+}
+.nds-btn-label-only i {
+    display: none;
+}
 
 .nds-btn-icon-only.nds-btn-sm {
     width: 24px;

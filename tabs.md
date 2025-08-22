@@ -24,12 +24,16 @@ direction: ltr
                     <div class="demo-label">Basic Tabs</div>
                     <div class="demo-action">
                         <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                            data-toggler='[["vertical-tabs", ".nds-tabs", "tabLayout"], ["oneRowContent", ".nds-tab-list", "tabLayout"]]'>
+                            data-toggler='[["nds-vertical-tabs", ".nds-tabs", "tabLayout"], ["oneRowContent", ".nds-tab-list", "VerticalTabs"]]'>
                             <span class="label">Vertical</span>
                         </button>
                         <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                            data-toggler='[["noBg", ".demo-container", "cardView"], ["cardView", ".nds-tabs", "tabsStyle"]]'>
+                            data-toggler='[["cardView", ".nds-tabs", "cardView"],["noBg", ".demo-container", "cardView"]]'>
                             <span class="label">Card View</span>
+                        </button>
+                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                            data-toggler='["withDivider", ".nds-tabs", "addDivider"]'>
+                            <span class="label">Divider</span>
                         </button>
                         <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
                             data-toggler='["center", ".nds-tab-list", "tabsAlign"]'>
@@ -53,17 +57,33 @@ direction: ltr
                                     id="tab-about" tabindex="-1">
                                     <span class="nds-tab-label">About</span>
                                 </button>
-                                <button class="nds-tab" role="tab" aria-selected="false" aria-controls="panel-about"
-                                    id="tab-about" tabindex="-1">
-                                    <span class="nds-tab-label">About</span>
-                                </button>
-                                <button class="nds-tab" role="tab" aria-selected="false" aria-controls="panel-about"
-                                    id="tab-about" tabindex="-1">
-                                    <span class="nds-tab-label">About</span>
-                                </button>
                                 <button class="nds-tab" role="tab" aria-selected="false" aria-controls="panel-contact"
                                     id="tab-contact" tabindex="-1">
                                     <span class="nds-tab-label">Contact</span>
+                                </button>
+                                <button class="nds-tab" role="tab" aria-selected="false" aria-controls="panel-support"
+                                    id="tab-support" tabindex="-1">
+                                    <span class="nds-tab-label">Support</span>
+                                </button>
+                                <button class="nds-tab" role="tab" aria-selected="false" aria-controls="panel-resources"
+                                    id="tab-resources" tabindex="-1">
+                                    <span class="nds-tab-label">Resources</span>
+                                </button>
+                                <button class="nds-tab" role="tab" aria-selected="false" aria-controls="panel-documentation"
+                                    id="tab-documentation" tabindex="-1">
+                                    <span class="nds-tab-label">Documentation</span>
+                                </button>
+                                <button class="nds-tab" role="tab" aria-selected="false" aria-controls="panel-news"
+                                    id="tab-news" tabindex="-1">
+                                    <span class="nds-tab-label">News</span>
+                                </button>
+                                <button class="nds-tab" role="tab" aria-selected="false" aria-controls="panel-feedback"
+                                    id="tab-feedback" tabindex="-1">
+                                    <span class="nds-tab-label">Feedback</span>
+                                </button>
+                                <button class="nds-tab" role="tab" aria-selected="false" aria-controls="panel-settings"
+                                    id="tab-settings" tabindex="-1">
+                                    <span class="nds-tab-label">Settings</span>
                                 </button>
                             </nav>
                         </div>
@@ -107,6 +127,47 @@ direction: ltr
                                     <p><strong>Address:</strong> Digital Government Authority, Riyadh, Saudi Arabia</p>
                                 </div>
                             </div>
+                            <div class="nds-tab-panel hidden" role="tabpanel" id="panel-support"
+                                aria-labelledby="tab-support" tabindex="0">
+                                <h3>Support Center</h3>
+                                <p>Find help and assistance with our comprehensive support resources.</p>
+                                <ul>
+                                    <li>Technical Documentation</li>
+                                    <li>FAQ Section</li>
+                                    <li>Live Chat Support</li>
+                                    <li>Video Tutorials</li>
+                                </ul>
+                            </div>
+                            <div class="nds-tab-panel hidden" role="tabpanel" id="panel-resources"
+                                aria-labelledby="tab-resources" tabindex="0">
+                                <h3>Resources</h3>
+                                <p>Access downloadable resources and tools for developers and designers.</p>
+                                <p>Browse our collection of design assets, code snippets, and implementation guides.</p>
+                            </div>
+                            <div class="nds-tab-panel hidden" role="tabpanel" id="panel-documentation"
+                                aria-labelledby="tab-documentation" tabindex="0">
+                                <h3>Documentation</h3>
+                                <p>Comprehensive documentation for the National Design System components and guidelines.</p>
+                                <p>Learn how to implement and customize components according to government standards.</p>
+                            </div>
+                            <div class="nds-tab-panel hidden" role="tabpanel" id="panel-news"
+                                aria-labelledby="tab-news" tabindex="0">
+                                <h3>Latest News</h3>
+                                <p>Stay updated with the latest announcements and updates from the design system team.</p>
+                                <p>New component releases, feature updates, and important notices are published here.</p>
+                            </div>
+                            <div class="nds-tab-panel hidden" role="tabpanel" id="panel-feedback"
+                                aria-labelledby="tab-feedback" tabindex="0">
+                                <h3>Feedback</h3>
+                                <p>We value your feedback and suggestions for improving the design system.</p>
+                                <p>Submit your ideas, report issues, or share your experience with our components.</p>
+                            </div>
+                            <div class="nds-tab-panel hidden" role="tabpanel" id="panel-settings"
+                                aria-labelledby="tab-settings" tabindex="0">
+                                <h3>Settings</h3>
+                                <p>Configure your preferences and customize your experience with the design system.</p>
+                                <p>Adjust theme settings, language preferences, and accessibility options.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -146,12 +207,16 @@ direction: ltr
                     <div class="demo-label">Tabs with Icons</div>
                     <div class="demo-action">
                         <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                            data-toggler='["vertical-tabs", ".nds-tabs", "tabLayout"]'>
+                            data-toggler='[["nds-vertical-tabs", ".nds-tabs", "tabLayout"], ["oneRowContent", ".nds-tab-list", "VerticalTabs"]]'>
                             <span class="label">Vertical</span>
                         </button>
                         <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                            data-toggler='[["noBg", ".demo-container", "containerBg"], ["cardView", ".nds-tabs", "tabsStyle"]]'>
+                            data-toggler='[["cardView", ".nds-tabs", "cardView"],["noBg", ".demo-container", "cardView"]]'>
                             <span class="label">Card View</span>
+                        </button>
+                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                            data-toggler='["withDivider", ".nds-tabs", "addDivider"]'>
+                            <span class="label">Divider</span>
                         </button>
                         <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
                             data-toggler='["center", ".nds-tab-list", "tabsAlign"]'>

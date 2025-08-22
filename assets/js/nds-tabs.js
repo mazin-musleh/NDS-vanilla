@@ -1,13 +1,12 @@
 /**
  * NDS Tabs Component
- * Provides accessible tab navigation functionality with proper ARIA support
+ * Simple, accessible tab navigation functionality
  * Based on WAI-ARIA Authoring Practices Guide
  */
 
 (function() {
     'use strict';
 
-    // Tab component class
     class NDSTabs {
         constructor(tabsContainer) {
             this.tabsContainer = tabsContainer;
@@ -49,8 +48,15 @@
             // Click events
             this.tabs.forEach((tab, index) => {
                 tab.addEventListener('click', (e) => {
-                    e.preventDefault();
+                    // Only prevent default if tab is a link to avoid navigation
+                    if (tab.tagName.toLowerCase() === 'a' && tab.getAttribute('href')) {
+                        e.preventDefault();
+                    }
+                    
                     this.switchToTab(index);
+                    
+                    // For mouse clicks, don't force focus - let browser handle naturally
+                    // This prevents visible focus ring from appearing on mouse interaction
                 });
             });
 
@@ -84,61 +90,41 @@
 
             switch (e.key) {
                 case 'ArrowLeft':
-                    e.preventDefault();
                     if (isVertical) {
-                        // In vertical tabs, left/right arrows don't navigate
                         return;
                     }
                     if (isRTL) {
-                        // In RTL, left arrow goes to next tab
                         targetIndex = currentIndex < this.tabs.length - 1 ? currentIndex + 1 : 0;
                     } else {
-                        // In LTR, left arrow goes to previous tab
                         targetIndex = currentIndex > 0 ? currentIndex - 1 : this.tabs.length - 1;
                     }
                     break;
 
                 case 'ArrowRight':
-                    e.preventDefault();
                     if (isVertical) {
-                        // In vertical tabs, left/right arrows don't navigate
                         return;
                     }
                     if (isRTL) {
-                        // In RTL, right arrow goes to previous tab
                         targetIndex = currentIndex > 0 ? currentIndex - 1 : this.tabs.length - 1;
                     } else {
-                        // In LTR, right arrow goes to next tab
                         targetIndex = currentIndex < this.tabs.length - 1 ? currentIndex + 1 : 0;
                     }
                     break;
 
                 case 'ArrowUp':
-                    e.preventDefault();
                     targetIndex = currentIndex > 0 ? currentIndex - 1 : this.tabs.length - 1;
                     break;
 
                 case 'ArrowDown':
-                    e.preventDefault();
                     targetIndex = currentIndex < this.tabs.length - 1 ? currentIndex + 1 : 0;
                     break;
 
                 case 'Home':
-                    e.preventDefault();
-                    if (isVertical) {
-                        targetIndex = 0;
-                    } else {
-                        targetIndex = isRTL ? this.tabs.length - 1 : 0;
-                    }
+                    targetIndex = isRTL && !isVertical ? this.tabs.length - 1 : 0;
                     break;
 
                 case 'End':
-                    e.preventDefault();
-                    if (isVertical) {
-                        targetIndex = this.tabs.length - 1;
-                    } else {
-                        targetIndex = isRTL ? 0 : this.tabs.length - 1;
-                    }
+                    targetIndex = isRTL && !isVertical ? 0 : this.tabs.length - 1;
                     break;
 
                 case 'Enter':
@@ -151,6 +137,7 @@
                     return;
             }
 
+            e.preventDefault();
             this.focusTab(targetIndex);
         }
 

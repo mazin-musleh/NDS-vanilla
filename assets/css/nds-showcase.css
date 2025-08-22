@@ -9,6 +9,7 @@
   margin-bottom: var(--spacing-xl, 24px);
   box-shadow: var(--nds-shadow);
   flex: 1 1 var(--nds-demo-card-width, 100%);
+  min-width: 200px;
 }
 
 /* Demo Header */

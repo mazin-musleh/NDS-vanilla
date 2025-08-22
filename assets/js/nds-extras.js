@@ -1769,8 +1769,19 @@
     'use strict';
     
     const initializeRowScroll = () => {
-        const container = document.querySelector('.oneRowContent');
-        if (!container) return;
+        const containers = document.querySelectorAll('.oneRowContent');
+        if (!containers.length) return;
+
+        containers.forEach(container => {
+            // Skip if already initialized
+            if (container.hasAttribute('data-onerow-initialized')) return;
+            container.setAttribute('data-onerow-initialized', 'true');
+
+            initializeSingleContainer(container);
+        });
+    };
+
+    const initializeSingleContainer = (container) => {
 
         // Set initial scroll behavior
         container.style.scrollBehavior = 'smooth';
@@ -1781,22 +1792,43 @@
             target.scrollIntoView({
                 behavior: 'smooth',
                 inline: 'center',
-                block: 'nearest', // This prevents vertical scrolling
-                scrollMode: 'if-needed' // Optional, prevents unnecessary scroll
+                block: 'nearest',
+                scrollMode: 'if-needed'
             });
+        }
+
+        function needsScroll() {
+            return container.scrollWidth > container.clientWidth;
         }
 
         // On click
         document.querySelectorAll('.oneRowContent > *').forEach(item => {
             item.addEventListener('click', function () {
+                // Check if parent still has the class
+                if (!this.parentElement?.classList.contains('oneRowContent')) return;
+                // Only scroll if scrolling is needed
+                if (!needsScroll()) return;
                 scrollToTarget(this);
             });
         });
 
-        // Mouse wheel horizontal scroll
+        // Mouse wheel horizontal scroll - only if scrolling is needed
         let isScrolling = false;
         container.addEventListener('wheel', (e) => {
-            // Only handle vertical wheel events for horizontal scrolling
+            // Check if element still has the class
+            if (!container.classList.contains('oneRowContent')) {
+                // Reset styles and return
+                Object.assign(container.style, {
+                    cursor: '',
+                    userSelect: '',
+                    scrollBehavior: ''
+                });
+                return;
+            }
+            
+            // Only handle wheel if scrolling is needed
+            if (!needsScroll()) return;
+            
             if (Math.abs(e.deltaX) >= Math.abs(e.deltaY)) return;
             
             e.preventDefault();
@@ -1827,10 +1859,23 @@
             requestAnimationFrame(animate);
         }, { passive: false });
 
-        // Drag scroll functionality
+        // Drag scroll functionality - only if scrolling is needed
         let dragState = { active: false, startX: 0, scrollLeft: 0 };
         
         container.addEventListener('mousedown', (e) => {
+            // Check if element still has the class
+            if (!container.classList.contains('oneRowContent')) {
+                Object.assign(container.style, {
+                    cursor: '',
+                    userSelect: '',
+                    scrollBehavior: ''
+                });
+                return;
+            }
+            
+            // Only enable drag if scrolling is needed
+            if (!needsScroll()) return;
+            
             dragState = {
                 active: true,
                 startX: e.pageX,
@@ -1852,20 +1897,25 @@
                 Object.assign(container.style, {
                     cursor: '',
                     userSelect: '',
-                    scrollBehavior: 'smooth'
+                    scrollBehavior: container.classList.contains('oneRowContent') ? 'smooth' : ''
                 });
             }
         };
         
         const handleMouseMove = (e) => {
             if (!dragState.active) return;
+            // Check if element still has the class
+            if (!container.classList.contains('oneRowContent')) {
+                handleMouseUp();
+                return;
+            }
             e.preventDefault();
             container.scrollLeft = dragState.scrollLeft - (e.pageX - dragState.startX) * 1.0;
         };
         
         document.addEventListener('mouseup', handleMouseUp);
         document.addEventListener('mousemove', handleMouseMove);
-    };
+    }; // end initializeSingleContainer
 
     // Auto-initialize row scroll
     if (document.readyState === 'loading') {
