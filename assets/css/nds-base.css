@@ -127,7 +127,7 @@ nav.nds-main-nav {
     right: 0;
     background-color: var(--nds-nav-background-color);
     height: var(--nds-nav-height);
-    box-shadow: var(--nds-shadow);
+    box-shadow: var(--shadow-md);
     z-index: 1000;
 }
 
@@ -621,7 +621,7 @@ nav.nds-main-nav .nds-nav-minimal .nds-dropdown-menu {
     position: fixed;
     left: 0;
     right: 0;
-    box-shadow: var(--nds-shadow);
+    box-shadow: var(--shadow-md);
     z-index: 1001;
     height: 0;
     max-height: 60vh;
@@ -725,7 +725,7 @@ body.minimal nav.nds-main-nav .nds-collapse {
     left: 0;
     right: 0;
     background-color: var(--background-white);
-    box-shadow: var(--nds-shadow);
+    box-shadow: var(--shadow-md);
     height: 0;
     max-height: 60svh;
     overflow-y: hidden;
@@ -837,7 +837,7 @@ nav.nds-main-nav .nds-nav-minimal .nds-dropdown-menu {
     left: 0;
     right: 0;
     background-color: var(--background-white);
-    box-shadow: var(--nds-shadow);
+    box-shadow: var(--shadow-md);
     z-index: 1002;
     max-height: 40vh;
     overflow-y: hidden;
@@ -873,7 +873,7 @@ html[dir="ltr"] body.minimal nav.nds-main-nav .nds-nav-primary .nds-nav-link::be
     background-color: var(--background-white);
     position: relative;
     height: 0;
-    box-shadow: var(--nds-shadow);
+    box-shadow: var(--shadow-md);
     z-index: 1051;
     overflow: hidden;
     transition: height var(--nds-transition);
@@ -896,7 +896,7 @@ html[dir="ltr"] body.minimal nav.nds-main-nav .nds-nav-primary .nds-nav-link::be
     border-radius: 0 0 var(--radius-lg) var(--radius-lg);
     display: flex;
     justify-content: center;
-    box-shadow: var(--nds-shadow);
+    box-shadow: var(--shadow-md);
     padding: 0 20px;
     white-space: nowrap;
 }
@@ -1346,7 +1346,7 @@ html[dir="ltr"] .nds-breadcrumb li:not(:last-child)::after {
     font-size: 1rem;
     align-items: center;
     justify-content: center;
-    box-shadow: var(--nds-shadow);
+    box-shadow: var(--shadow-md);
 }
 
 #nds-sharePageBtn:hover {
@@ -1385,7 +1385,7 @@ html[dir="ltr"] .nds-breadcrumb li:not(:last-child)::after {
     border-radius: var(--radius-sm);
     border: 1px solid var(--colors-neutral-300);
     display: none;
-    box-shadow: var(--nds-shadow);
+    box-shadow: var(--shadow-md);
     background-color: #fff;
     border-radius: var(--radius-md);
     font-size: 1rem;
@@ -1619,15 +1619,15 @@ button.nds-tag:active {
     width: var(--nds-sideMenu-width);
     min-width: var(--nds-sideMenu-width);
     background-color: var(--background-white);
-    box-shadow: var(--nds-shadow);
+    box-shadow: var(--shadow-md);
     padding: var(--spacing-md);
     border-radius: var(--radius-md);
     min-height: fit-content;
     z-index: 2;
 }
 
-.contentLayout.toEdge .nds-sideMenu {
-    border-radius: 0;
+.contentLayout.toEdge .nds-sideMenu,.contentLayout.toEdge .nds-content-section {
+    border-radius: 0!important;
 }
 
 #sideMenuToggle {
@@ -1957,7 +1957,7 @@ html[dir="ltr"] .hgi-loaded .nds-sideMenu ul>li.has-sub>a:after {
         justify-content: center;
         top: 40vh;
         transform: translateX(calc((var(--nds-sideMenu-width) - var(--spacing-md)) * -1));
-        box-shadow: var(--nds-shadow);
+        box-shadow: var(--shadow-md);
     }
 
     #sideMenuToggle.draggable {
@@ -2096,13 +2096,14 @@ main {
 }
 
 .contentLayout.toEdge.wSideMenu .mainContent {
-    padding: var(--spacing-2xl);
+    padding: 0;
+    row-gap: 0;
 }
 
 .contentLayout.wSideMenu .mainContent>section {
     width: 100%;
     min-width: 300px;
-    box-shadow: var(--nds-shadow);
+    box-shadow: var(--shadow-md);
     border-radius: var(--radius-md);
 }
 
@@ -2158,7 +2159,7 @@ main {
 
 .content-section:not(.noBg),
 .content-section.white {
-    background-color: var(--background-white);
+    background-color: var(--background-body);
 }
 
 .content-section.noBg {
@@ -2248,7 +2249,7 @@ main {
 
 .nds-statistic-card:hover {
     transform: translateY(-2px);
-    box-shadow: var(--nds-shadow);
+    box-shadow: var(--shadow-md);
 }
 
 .nds-statistic-icon {

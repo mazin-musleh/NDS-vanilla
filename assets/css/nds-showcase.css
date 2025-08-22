@@ -4,10 +4,10 @@
 /* Demo Card Container */
 .nds-demo-card {
   background: var(--background-white, #ffffff);
-  border: 1px solid var(--border-neutral-200, #e5e7eb);
-  border-radius: var(--radiusmd, 8px);
+  border: 1px solid var(--border-neutral-secondary, #e5e7eb);
+  border-radius: var(--radius-md, 8px);
   margin-bottom: var(--spacing-xl, 24px);
-  box-shadow: var(--nds-shadow);
+  box-shadow: var(--shadow-md);
   flex: 1 1 var(--nds-demo-card-width, 100%);
   min-width: 200px;
 }
@@ -21,10 +21,10 @@
   gap: var(--spacing-lg);
   padding: var(--spacing-lg, 12px);
   background: var(--background-neutral-50, #f9fafb);
-  border-bottom: 1px solid var(--border-neutral-200, #e5e7eb);
+  border-bottom: 1px solid var(--border-neutral-secondary, #e5e7eb);
   font-weight: 600;
   color: var(--text-default, #161616);
-  border-radius: var(--radiusmd, 8px) var(--radiusmd, 8px) 0 0;
+  border-radius: var(--radius-md, 8px) var(--radius-md, 8px) 0 0;
   font-size: var(--nds-text-md-FS, 14px);
   overflow: hidden;
 }
@@ -93,7 +93,7 @@
 
 
 .demo-container.noBg {
-  background-color: var(--background-neutral-100, #f3f4f6);
+  background-color: var(--background-body, #f9fafb);
 }
 
 /* Code Example */
