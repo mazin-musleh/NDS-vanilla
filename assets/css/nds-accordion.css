@@ -1,0 +1,240 @@
+/**
+ * NDS Accordion Component
+ * Collapsible accordion component with NDS design tokens
+ */
+
+/* Accordion Container */
+.nds-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid var(--border-neutral-secondary);
+    border-radius: var(--radius-md);
+    background-color: var(--background-white);
+    box-shadow: var(--shadow-md);
+}
+
+/* Accordion Item */
+.nds-accordion-item {
+    position: relative;
+    border-bottom: 1px solid var(--border-neutral-secondary);
+}
+
+.nds-accordion-item:last-child {
+    border-bottom: none;
+}
+
+/* Accordion Header */
+.nds-accordion-header {
+    margin: 0;
+    padding: 0;
+    font-size: inherit;
+    font-weight: inherit;
+}
+
+/* Accordion Button - Uses NDS Button Classes */
+.nds-btn-accordion {
+    /* Override button default styles for accordion-specific behavior */
+    width: 100% !important;
+    justify-content: flex-start !important;
+    text-align: left !important;
+    border-radius: 0 !important;
+    padding: var(--accordion-lg-header-padding) !important;
+}
+
+/* Accordion Button with Leading Icon */
+.nds-btn-accordion.nds-btn-menu {
+    gap: var(--accordion-lg-header-gap);
+}
+
+.nds-accordion-leading-icon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+    color: var(--text-secondary);
+}
+
+/* Accordion Title */
+.nds-accordion-title {
+    flex: 1;
+    text-align: left;
+}
+
+/* Accordion Chevron Icon */
+.nds-accordion-icon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+    margin-left: auto;
+    color: var(--text-secondary);
+    transition: var(--transition-base);
+    transform: rotate(0deg);
+}
+
+.nds-btn-accordion:not(.collapsed) .nds-accordion-icon {
+    transform: rotate(180deg);
+}
+
+/* RTL Support */
+[dir="rtl"] .nds-btn-accordion {
+    text-align: right;
+}
+
+[dir="rtl"] .nds-accordion-title {
+    text-align: right;
+}
+
+[dir="rtl"] .nds-accordion-icon {
+    margin-left: 0;
+    margin-right: auto;
+}
+
+/* Accordion Collapse */
+.nds-accordion-collapse {
+    display: none;
+    background-color: var(--background-white);
+    overflow: hidden;
+}
+
+.nds-accordion-collapse.show {
+    display: block;
+}
+
+.nds-accordion-collapse.collapsing {
+    display: block;
+    height: 0;
+    overflow: hidden;
+    transition: height 0.3s ease;
+}
+
+/* Accordion Body */
+.nds-accordion-body {
+    padding: var(--spacing-lg);
+    color: var(--text-default);
+}
+
+/* Flush Variant */
+.nds-accordion-flush {
+    border: none;
+    border-radius: 0;
+}
+
+.nds-accordion-flush .nds-accordion-item {
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+}
+
+.nds-accordion-flush .nds-accordion-item:first-child {
+    border-top: none;
+}
+
+.nds-accordion-flush .nds-accordion-item:last-child {
+    border-bottom: 1px solid var(--border-neutral-secondary);
+}
+
+.nds-accordion-flush .nds-btn-accordion {
+    border-radius: 0;
+}
+
+/* Always Open Variant */
+.nds-accordion.always-open .nds-accordion-item {
+    /* No special styling needed - behavior handled by JavaScript */
+}
+
+/* Demo Page Specific Styles */
+.support-options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
+}
+
+.support-item {
+    padding: var(--spacing-sm);
+    background-color: var(--background-secondary);
+    border-radius: var(--border-radius-sm);
+}
+
+.account-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background-color: var(--background-secondary);
+    border-radius: var(--border-radius-sm);
+}
+
+.feature-item i {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+    color: var(--button-background-primary-default);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .nds-btn-accordion {
+        padding: var(--spacing-md);
+        font-size: var(--font-size-sm);
+    }
+    
+    .nds-accordion-body {
+        padding: var(--spacing-md);
+    }
+    
+    .account-features {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Animation States */
+.nds-accordion-item {
+    transition: var(--transition-base);
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+    .nds-accordion {
+        border-color: var(--text-primary);
+        border-width: 2px;
+    }
+    
+    .nds-btn-accordion:focus {
+        outline-width: 3px;
+    }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    .nds-accordion-icon,
+    .nds-accordion-collapse.collapsing {
+        transition: none;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .nds-accordion-collapse {
+        display: block !important;
+        height: auto !important;
+    }
+    
+    .nds-btn-accordion {
+        background-color: transparent;
+    }
+    
+    .nds-accordion-icon {
+        display: none;
+    }
+}

@@ -125,6 +125,11 @@ nav.nds-tab-list.center {
   z-index: 2;
 }
 
+.nds-tab.showMore {
+  border-radius: 0;
+  box-shadow: 4px 0px 0px 4px var(--nds-nav-background-color);
+}
+
 .nds-tabs.nds-vertical-tabs .nds-tab {
   border-radius: var(--radius-sm);
   width: 100%;

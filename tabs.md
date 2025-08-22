@@ -125,9 +125,9 @@ direction: ltr
                                 <h3>Contact Information</h3>
                                 <p>Get in touch with us through the following channels:</p>
                                 <div class="contact-info">
-                                    <p><strong>Email:</strong> support@digital.gov.sa</p>
+                                    <p><strong>Email:</strong> support@nds.gov.sa</p>
                                     <p><strong>Phone:</strong> 920-000-000</p>
-                                    <p><strong>Address:</strong> Digital Government Authority, Riyadh, Saudi Arabia</p>
+                                    <p><strong>Address:</strong> National Design System, Riyadh, Saudi Arabia</p>
                                 </div>
                             </div>
                             <div class="nds-tab-panel hidden" role="tabpanel" id="panel-support"
