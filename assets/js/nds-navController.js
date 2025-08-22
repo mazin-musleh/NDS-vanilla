@@ -209,6 +209,7 @@
                 }
 
                 this.manageCTAPlacement();
+                this.managePABPlacement();
                 return true;
             }
             return false;
@@ -256,6 +257,78 @@
                 } else if (DOM.secondary && ctaItem.parentElement !== DOM.secondary) {
                     DOM.secondary.appendChild(ctaItem);
                 }
+
+                const minimalNav = DOM.nav?.querySelector('.nds-nav-minimal');
+                if (minimalNav && minimalNav.children.length === 0 && !minimalNav.hasAttribute('data-keep')) {
+                    minimalNav.remove();
+                }
+            }
+        },
+
+        managePABPlacement() {
+            const pabItems = document.querySelectorAll('.nds-nav-item.PAB');
+            if (!pabItems.length) return;
+
+            const isSecondaryVisible = DOM.secondary && getComputedStyle(DOM.secondary).display !== 'none';
+            if (!isSecondaryVisible) return;
+
+            if (state.isMinimal) {
+                let minimalNav = DOM.nav?.querySelector('.nds-nav-minimal');
+
+                if (!minimalNav) {
+                    minimalNav = document.createElement('nav');
+                    minimalNav.className = 'nds-nav-minimal';
+
+                    if (DOM.nav?.firstChild) {
+                        DOM.nav.insertBefore(minimalNav, DOM.nav.firstChild);
+                    } else {
+                        DOM.nav?.appendChild(minimalNav);
+                    }
+                }
+
+                // Create placeholders first, then move items in order
+                pabItems.forEach((pabItem, index) => {
+                    if (pabItem.parentElement !== minimalNav) {
+                        const existingPlaceholder = document.querySelector(`.nds-pab-placeholder[data-placeholder="pab-position-${index}"]`);
+                        if (!existingPlaceholder && pabItem.parentElement === DOM.secondary) {
+                            const placeholder = document.createElement('li');
+                            placeholder.className = 'nds-pab-placeholder';
+                            placeholder.style.display = 'none';
+                            placeholder.setAttribute('data-placeholder', `pab-position-${index}`);
+                            pabItem.parentElement.insertBefore(placeholder, pabItem);
+                        }
+                    }
+                });
+
+                // Find insertion point once
+                const ctaItems = minimalNav.querySelectorAll('.nds-nav-item.CTA');
+                let insertAfter = ctaItems.length > 0 ? ctaItems[ctaItems.length - 1] : null;
+
+                // Move PAB items in order to preserve their sequence
+                pabItems.forEach((pabItem) => {
+                    if (pabItem.parentElement !== minimalNav) {
+                        if (insertAfter) {
+                            // Insert after the reference element
+                            minimalNav.insertBefore(pabItem, insertAfter.nextSibling);
+                        } else {
+                            // No CTA items, insert at the beginning
+                            minimalNav.insertBefore(pabItem, minimalNav.firstChild);
+                        }
+                        // Update reference for next PAB item
+                        insertAfter = pabItem;
+                    }
+                });
+            } else {
+                pabItems.forEach((pabItem, index) => {
+                    const placeholder = document.querySelector(`.nds-pab-placeholder[data-placeholder="pab-position-${index}"]`);
+
+                    if (placeholder && DOM.secondary && pabItem.parentElement !== DOM.secondary) {
+                        placeholder.parentElement.insertBefore(pabItem, placeholder);
+                        placeholder.remove();
+                    } else if (DOM.secondary && pabItem.parentElement !== DOM.secondary) {
+                        DOM.secondary.appendChild(pabItem);
+                    }
+                });
 
                 const minimalNav = DOM.nav?.querySelector('.nds-nav-minimal');
                 if (minimalNav && minimalNav.children.length === 0 && !minimalNav.hasAttribute('data-keep')) {
@@ -1184,6 +1257,7 @@
 
         utils.updateBodyClass();
         utils.manageCTAPlacement();
+        utils.managePABPlacement();
 
         setupEventListeners();
 

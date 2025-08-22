@@ -187,68 +187,210 @@
                     targetElement = elementById;
                 }
             } else {
-                targetElement = demoCard.querySelector(targetSelector);
+                // For class selectors, ensure exact match to avoid matching classes that contain the target class
+                if (targetSelector.startsWith('.')) {
+                    const className = targetSelector.substring(1);
+                    const allElements = demoCard.querySelectorAll('*');
+                    targetElement = Array.from(allElements).find(el => 
+                        el.classList.contains(className) && 
+                        Array.from(el.classList).includes(className)
+                    );
+                } else {
+                    targetElement = demoCard.querySelector(targetSelector);
+                }
             }
 
-            if (!targetElement) {
-                console.error('Target element not found:', targetSelector, 'in demo card');
+            // Find ALL matching elements, not just the first one
+            let targetElements = [];
+            
+            // Always find the target relative to the demo card
+            if (targetSelector.startsWith('#')) {
+                const idSelector = targetSelector.substring(1);
+                const idParts = idSelector.split(' ');
+                const elementId = idParts[0];
+                const subSelector = idParts.slice(1).join(' ');
+                
+                const elementById = demoCard.querySelector(`#${elementId}`);
+                if (elementById && subSelector) {
+                    targetElements = Array.from(elementById.querySelectorAll(subSelector));
+                } else if (elementById) {
+                    targetElements = [elementById];
+                }
+            } else {
+                // For class selectors, find all matching elements
+                if (targetSelector.startsWith('.')) {
+                    const className = targetSelector.substring(1);
+                    const allElements = demoCard.querySelectorAll('*');
+                    targetElements = Array.from(allElements).filter(el => 
+                        el.classList.contains(className) && 
+                        Array.from(el.classList).includes(className)
+                    );
+                } else {
+                    targetElements = Array.from(demoCard.querySelectorAll(targetSelector));
+                }
+            }
+
+            if (!targetElements.length) {
+                console.error('Target elements not found:', targetSelector, 'in demo card');
                 return;
             }
             
-            // Split class names and toggle each one
-            const classArray = classNames.trim().split(/\s+/);
-            classArray.forEach(className => {
-                if (className) {
-                    targetElement.classList.toggle(className);
-                }
-            });
-            
-            // Handle code updates for any class changes on targets
-            updateCodeExample(demoCard, targetElement);
-        });
-        
-        // Update button selected states based on whether their classes are currently active
-        const allTogglers = demoCard.querySelectorAll('[data-toggler]');
-        allTogglers.forEach(togglerBtn => {
-            const otherTogglerData = togglerBtn.getAttribute('data-toggler');
-            if (!otherTogglerData) return;
-            
-            try {
-                const parsed = JSON.parse(otherTogglerData);
-                let otherPairs = [];
-                
-                if (Array.isArray(parsed) && parsed.length >= 2) {
-                    if (typeof parsed[0] === 'string') {
-                        otherPairs = [[parsed[0], parsed[1], parsed[2]]];
-                    } else {
-                        otherPairs = parsed;
-                    }
-                }
-                
-                let hasAnyActiveClass = false;
-                otherPairs.forEach(([otherClassNames, otherTarget]) => {
-                    const otherTargetElement = demoCard.querySelector(otherTarget);
-                    if (otherTargetElement) {
-                        // Check if any of the classes are active
-                        const classArray = otherClassNames.trim().split(/\s+/);
-                        const hasActiveClass = classArray.some(className => 
-                            className && otherTargetElement.classList.contains(className)
-                        );
-                        if (hasActiveClass) {
-                            hasAnyActiveClass = true;
-                        }
+            // Apply class changes to ALL matching elements
+            targetElements.forEach(targetElement => {
+                // Split class names and toggle each one
+                const classArray = classNames.trim().split(/\s+/);
+                classArray.forEach(className => {
+                    if (className) {
+                        targetElement.classList.toggle(className);
                     }
                 });
                 
-                if (hasAnyActiveClass) {
-                    togglerBtn.classList.add('selected');
-                } else {
-                    togglerBtn.classList.remove('selected');
-                }
-            } catch (e) {
-                // Ignore invalid JSON
-            }
+                // Handle code updates for specific class changes
+                updateCodeExampleForClasses(demoCard, targetElement, classArray);
+            });
         });
+        
+        // Simple button selection: just toggle the clicked button and handle type-based mutual exclusion
+        const buttonTogglerData = button.getAttribute('data-toggler');
+        if (buttonTogglerData) {
+            try {
+                const parsed = JSON.parse(buttonTogglerData);
+                let operations = [];
+                
+                if (Array.isArray(parsed) && parsed.length >= 2) {
+                    if (typeof parsed[0] === 'string') {
+                        operations = [[parsed[0], parsed[1], parsed[2]]];
+                    } else {
+                        operations = parsed;
+                    }
+                }
+                
+                // Get unique types for this button
+                const buttonTypes = [...new Set(operations.map(([,, type]) => type || 'default'))];
+                
+                // Handle type-based mutual exclusion for single-type buttons only
+                if (buttonTypes.length === 1) {
+                    const buttonType = buttonTypes[0];
+                    
+                    // First, deselect other buttons with the same type (if any are selected)
+                    const allTogglers = demoCard.querySelectorAll('[data-toggler]');
+                    allTogglers.forEach(otherButton => {
+                        if (otherButton === button) return;
+                        
+                        const otherData = otherButton.getAttribute('data-toggler');
+                        if (otherData) {
+                            try {
+                                const otherParsed = JSON.parse(otherData);
+                                let otherOperations = [];
+                                
+                                if (Array.isArray(otherParsed) && otherParsed.length >= 2) {
+                                    if (typeof otherParsed[0] === 'string') {
+                                        otherOperations = [[otherParsed[0], otherParsed[1], otherParsed[2]]];
+                                    } else {
+                                        otherOperations = otherParsed;
+                                    }
+                                }
+                                
+                                const otherTypes = [...new Set(otherOperations.map(([,, type]) => type || 'default'))];
+                                
+                                // Deselect if other button is single-type, same type, and currently selected
+                                if (otherTypes.length === 1 && otherTypes[0] === buttonType && otherButton.classList.contains('selected')) {
+                                    otherButton.classList.remove('selected');
+                                    
+                                    // Also reverse the class changes for the deselected button
+                                    otherOperations.forEach(([classNames, targetSelector]) => {
+                                        if (!classNames || !targetSelector) return;
+                                        
+                                        let targetElement;
+                                        
+                                        // Find target element same way as main logic
+                                        if (targetSelector.startsWith('#')) {
+                                            const idSelector = targetSelector.substring(1);
+                                            const idParts = idSelector.split(' ');
+                                            const elementId = idParts[0];
+                                            const subSelector = idParts.slice(1).join(' ');
+                                            
+                                            const elementById = demoCard.querySelector(`#${elementId}`);
+                                            if (elementById && subSelector) {
+                                                targetElement = elementById.querySelector(subSelector);
+                                            } else {
+                                                targetElement = elementById;
+                                            }
+                                        } else {
+                                            if (targetSelector.startsWith('.')) {
+                                                const className = targetSelector.substring(1);
+                                                const allElements = demoCard.querySelectorAll('*');
+                                                targetElement = Array.from(allElements).find(el => 
+                                                    el.classList.contains(className) && 
+                                                    Array.from(el.classList).includes(className)
+                                                );
+                                            } else {
+                                                targetElement = demoCard.querySelector(targetSelector);
+                                            }
+                                        }
+                                        
+                                        // Find ALL matching elements for deselection too
+                                        let deselectionTargetElements = [];
+                                        
+                                        if (targetSelector.startsWith('#')) {
+                                            const idSelector = targetSelector.substring(1);
+                                            const idParts = idSelector.split(' ');
+                                            const elementId = idParts[0];
+                                            const subSelector = idParts.slice(1).join(' ');
+                                            
+                                            const elementById = demoCard.querySelector(`#${elementId}`);
+                                            if (elementById && subSelector) {
+                                                deselectionTargetElements = Array.from(elementById.querySelectorAll(subSelector));
+                                            } else if (elementById) {
+                                                deselectionTargetElements = [elementById];
+                                            }
+                                        } else {
+                                            if (targetSelector.startsWith('.')) {
+                                                const className = targetSelector.substring(1);
+                                                const allElements = demoCard.querySelectorAll('*');
+                                                deselectionTargetElements = Array.from(allElements).filter(el => 
+                                                    el.classList.contains(className) && 
+                                                    Array.from(el.classList).includes(className)
+                                                );
+                                            } else {
+                                                deselectionTargetElements = Array.from(demoCard.querySelectorAll(targetSelector));
+                                            }
+                                        }
+                                        
+                                        if (deselectionTargetElements.length) {
+                                            deselectionTargetElements.forEach(targetElement => {
+                                                // Remove classes that were added by the deselected button
+                                                const classArray = classNames.trim().split(/\s+/);
+                                                classArray.forEach(className => {
+                                                    if (className && targetElement.classList.contains(className)) {
+                                                        targetElement.classList.remove(className);
+                                                    }
+                                                });
+                                                
+                                                // Update code example after removing classes
+                                                updateCodeExampleForClasses(demoCard, targetElement, classArray);
+                                            });
+                                        }
+                                    });
+                                }
+                            } catch (e) {
+                                // Ignore invalid JSON
+                            }
+                        }
+                    });
+                }
+                
+                // Now toggle the clicked button
+                button.classList.toggle('selected');
+                
+            } catch (e) {
+                // Fallback: just toggle the button
+                button.classList.toggle('selected');
+            }
+        } else {
+            // Fallback: just toggle the button
+            button.classList.toggle('selected');
+        }
     }
 
     // Update code example to reflect actual element classes
@@ -256,25 +398,71 @@
         const codeElement = demoCard.querySelector('.code-example code');
         if (!codeElement) return;
         
-        // Create a mapping of elements in the demo to their corresponding code representations
-        const demoContainer = demoCard.querySelector('.demo-container');
-        if (!demoContainer) return;
-        
-        // Get all elements that might be represented in the code
-        const elementsToSync = [
-            { element: demoContainer.querySelector('.nds-tabs'), codeSelector: '.nds-tabs' },
-            { element: demoContainer.querySelector('.nds-tab-list'), codeSelector: '.nds-tab-list' }
-        ].filter(item => item.element); // Only keep elements that exist
+        if (!changedElement) return;
         
         let updatedCode = codeElement.textContent;
         
-        // Update each element's class in the code to match the actual DOM
-        elementsToSync.forEach(({ element, codeSelector }) => {
-            const actualClasses = Array.from(element.classList).join(' ');
+        // Get the base class name (first class) of the changed element to identify it in the code
+        const baseClassName = Array.from(changedElement.classList)[0];
+        if (!baseClassName) return;
+        
+        const actualClasses = Array.from(changedElement.classList).join(' ');
+        
+        // Find and replace the class attribute for this exact element in the code
+        // Use word boundary to ensure exact class match and avoid partial matches
+        const classRegex = new RegExp(`class="((?:[\\w-]+\\s+)*)?${baseClassName.replace(/[-[\]/{}()*+?.\\^$|]/g, "\\$&")}(\\s[\\w-\\s]*)?"`, 'g');
+        updatedCode = updatedCode.replace(classRegex, (match, before, after) => {
+            // Only replace if the baseClassName appears as a complete word, not as part of another class
+            const classesInMatch = match.match(/class="([^"]*)"/)[1].split(/\s+/);
+            if (classesInMatch.includes(baseClassName)) {
+                return `class="${actualClasses}"`;
+            }
+            return match;
+        });
+        
+        codeElement.textContent = updatedCode;
+    }
+
+    // Update code example for specific class changes only
+    function updateCodeExampleForClasses(demoCard, changedElement, changedClasses) {
+        const codeElement = demoCard.querySelector('.code-example code');
+        if (!codeElement) return;
+        
+        if (!changedElement || !changedClasses) return;
+        
+        let updatedCode = codeElement.textContent;
+        
+        // Get the base class name (first class) of the changed element to identify it in the code
+        const baseClassName = Array.from(changedElement.classList)[0];
+        if (!baseClassName) return;
+        
+        // Find the class attribute for this element
+        const classRegex = new RegExp(`class="([^"]*\\s+)?${baseClassName.replace(/[-[\]/{}()*+?.\\^$|]/g, "\\$&")}(\\s[^"]*)?"`, 'g');
+        
+        updatedCode = updatedCode.replace(classRegex, (match) => {
+            const classMatch = match.match(/class="([^"]*)"/);
+            if (!classMatch) return match;
             
-            // Find and replace the class attribute for this element in the code
-            const classRegex = new RegExp(`class="${codeSelector.substring(1)}[^"]*"`, 'g');
-            updatedCode = updatedCode.replace(classRegex, `class="${actualClasses}"`);
+            let existingClasses = classMatch[1].split(/\s+/).filter(Boolean);
+            const classesInMatch = [...existingClasses];
+            
+            // Only update if this element contains the base class
+            if (!classesInMatch.includes(baseClassName)) return match;
+            
+            // For each changed class, toggle it in the code
+            changedClasses.forEach(className => {
+                if (changedElement.classList.contains(className)) {
+                    // Class is present on element, add it to code if not already there
+                    if (!existingClasses.includes(className)) {
+                        existingClasses.push(className);
+                    }
+                } else {
+                    // Class is not on element, remove it from code
+                    existingClasses = existingClasses.filter(cls => cls !== className);
+                }
+            });
+            
+            return `class="${existingClasses.join(' ')}"`;
         });
         
         codeElement.textContent = updatedCode;

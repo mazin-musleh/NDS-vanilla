@@ -173,318 +173,318 @@ direction: ltr
                     <div class="demo-header">
                         <div class="demo-label">Subtle Button</div>
                         <div class="demo-action">
-                                <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                    data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                                    <span class="label">Remove bg</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <button class="nds-btn nds-btn-subtle nds-btn-lg" data-state="default"><span
-                                        class="label">Default</span></button>
-                                <button class="nds-btn nds-btn-subtle nds-btn-lg" data-state="hover"><span
-                                        class="label">Hover</span></button>
-                                <button class="nds-btn nds-btn-subtle nds-btn-lg" data-state="active"><span
-                                        class="label">Active</span></button>
-                                <button class="nds-btn nds-btn-subtle nds-btn-lg selected" data-state="selected"><span
-                                        class="label">Selected</span></button>
-                                <button class="nds-btn nds-btn-subtle nds-btn-lg focus" data-state="focused"><span
-                                        class="label">Focused</span></button>
-                                <button class="nds-btn nds-btn-subtle nds-btn-lg" disabled><span
-                                        class="label">Disabled</span></button>
-                            </div>
-                        </div>
-                        <div class="code-example">
-                            <div class="usage-header">
-                                <span>Usage</span>
-                                <button class="copy-btn">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                </button>
-                            </div>
-                            <code>&lt;button class="nds-btn nds-btn-subtle nds-btn-lg"&gt;
-  &lt;span class="label"&gt;Subtle Button&lt;/span&gt;
-&lt;/button&gt;</code>
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                                <span class="label">Remove bg</span>
+                            </button>
                         </div>
                     </div>
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Transparent Button</div>
-                            <div class="demo-action">
-                                <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                    data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                                    <span class="label">Remove bg</span>
-                                </button>
-                            </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <button class="nds-btn nds-btn-subtle nds-btn-lg" data-state="default"><span
+                                    class="label">Default</span></button>
+                            <button class="nds-btn nds-btn-subtle nds-btn-lg" data-state="hover"><span
+                                    class="label">Hover</span></button>
+                            <button class="nds-btn nds-btn-subtle nds-btn-lg" data-state="active"><span
+                                    class="label">Active</span></button>
+                            <button class="nds-btn nds-btn-subtle nds-btn-lg selected" data-state="selected"><span
+                                    class="label">Selected</span></button>
+                            <button class="nds-btn nds-btn-subtle nds-btn-lg focus" data-state="focused"><span
+                                    class="label">Focused</span></button>
+                            <button class="nds-btn nds-btn-subtle nds-btn-lg" disabled><span
+                                    class="label">Disabled</span></button>
                         </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <button class="nds-btn nds-btn-transparent nds-btn-lg" data-state="default"><span
-                                        class="label">Default</span></button>
-                                <button class="nds-btn nds-btn-transparent nds-btn-lg" data-state="hover"><span
-                                        class="label">Hover</span></button>
-                                <button class="nds-btn nds-btn-transparent nds-btn-lg" data-state="active"><span
-                                        class="label">Active</span></button>
-                                <button class="nds-btn nds-btn-transparent nds-btn-lg selected"
-                                    data-state="selected"><span class="label">Selected</span></button>
-                                <button class="nds-btn nds-btn-transparent nds-btn-lg focus" data-state="focused"><span
-                                        class="label">Focused</span></button>
-                                <button class="nds-btn nds-btn-transparent nds-btn-lg" disabled><span
-                                        class="label">Disabled</span></button>
-                            </div>
+                    </div>
+                    <div class="code-example">
+                        <div class="usage-header">
+                            <span>Usage</span>
+                            <button class="copy-btn">
+                                <i class="hgi hgi-stroke hgi-copy-01"></i>
+                            </button>
                         </div>
-                        <div class="code-example">
-                            <div class="usage-header">
-                                <span>Usage</span>
-                                <button class="copy-btn">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                </button>
-                            </div>
-                            <code>&lt;button class="nds-btn nds-btn-transparent nds-btn-lg"&gt;
-  &lt;span class="label"&gt;Transparent Button&lt;/span&gt;
+                        <code>&lt;button class="nds-btn nds-btn-subtle nds-btn-lg"&gt;
+  &lt;span class="label"&gt;Subtle Button&lt;/span&gt;
 &lt;/button&gt;</code>
-                        </div>
                     </div>
                 </div>
-
-                <div class="button-showcase oncolor-buttons">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Primary Button On-Color</div>
-                            <div class="demo-action">
-                                
-                                <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                    data-toggler='["black-bg", ".demo-container", "containerBg"]'>
-                                    <span class="label">Black</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container dark-bg">
-                            <div class="state-demo">
-                                <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-lg"
-                                    data-state="default"><span class="label">Default</span></button>
-                                <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-lg"
-                                    data-state="hover"><span class="label">Hover</span></button>
-                                <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-lg"
-                                    data-state="active"><span class="label">Active</span></button>
-                                <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-lg selected"
-                                    data-state="selected"><span class="label">Selected</span></button>
-                                <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-lg focus"
-                                    data-state="focused"><span class="label">Focused</span></button>
-                                <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-lg" disabled><span
-                                        class="label">Disabled</span></button>
-                            </div>
-                        </div>
-                        <div class="code-example">
-                            <div class="usage-header">
-                                <span>Usage</span>
-                                <button class="copy-btn">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                </button>
-                            </div>
-                            <code>&lt;button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-lg"&gt;
-  &lt;span class="label"&gt;Primary Button&lt;/span&gt;
-&lt;/button&gt;</code>
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Transparent Button</div>
+                        <div class="demo-action">
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                                <span class="label">Remove bg</span>
+                            </button>
                         </div>
                     </div>
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Neutral Button On-Color</div>
-                            <div class="demo-action">
-                                
-                                <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                    data-toggler='["black-bg", ".demo-container", "containerBg"]'>
-                                    <span class="label">Black</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container dark-bg">
-                            <div class="state-demo">
-                                <button class="nds-btn nds-btn-neutral nds-btn-oncolor nds-btn-lg"
-                                    data-state="default"><span class="label">Default</span></button>
-                                <button class="nds-btn nds-btn-neutral nds-btn-oncolor nds-btn-lg"
-                                    data-state="hover"><span class="label">Hover</span></button>
-                                <button class="nds-btn nds-btn-neutral nds-btn-oncolor nds-btn-lg"
-                                    data-state="active"><span class="label">Active</span></button>
-                                <button class="nds-btn nds-btn-neutral nds-btn-oncolor nds-btn-lg selected"
-                                    data-state="selected"><span class="label">Selected</span></button>
-                                <button class="nds-btn nds-btn-neutral nds-btn-oncolor nds-btn-lg focus"
-                                    data-state="focused"><span class="label">Focused</span></button>
-                                <button class="nds-btn nds-btn-neutral nds-btn-oncolor nds-btn-lg" disabled><span
-                                        class="label">Disabled</span></button>
-                            </div>
-                        </div>
-                        <div class="code-example">
-                            <div class="usage-header">
-                                <span>Usage</span>
-                                <button class="copy-btn">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                </button>
-                            </div>
-                            <code>&lt;button class="nds-btn nds-btn-neutral nds-btn-oncolor nds-btn-lg"&gt;
-  &lt;span class="label"&gt;Neutral Button&lt;/span&gt;
-&lt;/button&gt;</code>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <button class="nds-btn nds-btn-transparent nds-btn-lg" data-state="default"><span
+                                    class="label">Default</span></button>
+                            <button class="nds-btn nds-btn-transparent nds-btn-lg" data-state="hover"><span
+                                    class="label">Hover</span></button>
+                            <button class="nds-btn nds-btn-transparent nds-btn-lg" data-state="active"><span
+                                    class="label">Active</span></button>
+                            <button class="nds-btn nds-btn-transparent nds-btn-lg selected" data-state="selected"><span
+                                    class="label">Selected</span></button>
+                            <button class="nds-btn nds-btn-transparent nds-btn-lg focus" data-state="focused"><span
+                                    class="label">Focused</span></button>
+                            <button class="nds-btn nds-btn-transparent nds-btn-lg" disabled><span
+                                    class="label">Disabled</span></button>
                         </div>
                     </div>
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Secondary Solid On-Color</div>
-                            <div class="demo-action">
-                                
-                                <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                    data-toggler='["black-bg", ".demo-container", "containerBg"]'>
-                                    <span class="label">Black</span>
-                                </button>
-                            </div>
+                    <div class="code-example">
+                        <div class="usage-header">
+                            <span>Usage</span>
+                            <button class="copy-btn">
+                                <i class="hgi hgi-stroke hgi-copy-01"></i>
+                            </button>
                         </div>
-                        <div class="demo-container dark-bg">
-                            <div class="state-demo">
-                                <button class="nds-btn nds-btn-secondary-solid nds-btn-oncolor nds-btn-lg"
-                                    data-state="default"><span class="label">Default</span></button>
-                                <button class="nds-btn nds-btn-secondary-solid nds-btn-oncolor nds-btn-lg"
-                                    data-state="hover"><span class="label">Hover</span></button>
-                                <button class="nds-btn nds-btn-secondary-solid nds-btn-oncolor nds-btn-lg"
-                                    data-state="active"><span class="label">Active</span></button>
-                                <button class="nds-btn nds-btn-secondary-solid nds-btn-oncolor nds-btn-lg selected"
-                                    data-state="selected"><span class="label">Selected</span></button>
-                                <button class="nds-btn nds-btn-secondary-solid nds-btn-oncolor nds-btn-lg focus"
-                                    data-state="focused"><span class="label">Focused</span></button>
-                                <button class="nds-btn nds-btn-secondary-solid nds-btn-oncolor nds-btn-lg"
-                                    disabled><span class="label">Disabled</span></button>
-                            </div>
-                        </div>
-                        <div class="code-example">
-                            <div class="usage-header">
-                                <span>Usage</span>
-                                <button class="copy-btn">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                </button>
-                            </div>
-                            <code>&lt;button class="nds-btn nds-btn-secondary-solid nds-btn-oncolor nds-btn-lg"&gt;
-  &lt;span class="label"&gt;Secondary Solid Button&lt;/span&gt;
-&lt;/button&gt;</code>
-                        </div>
-                    </div>
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Secondary Outline On-Color</div>
-                            <div class="demo-action">
-                                
-                                <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                    data-toggler='["black-bg", ".demo-container", "containerBg"]'>
-                                    <span class="label">Black</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container dark-bg">
-                            <div class="state-demo">
-                                <button class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-lg"
-                                    data-state="default"><span class="label">Default</span></button>
-                                <button class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-lg"
-                                    data-state="hover"><span class="label">Hover</span></button>
-                                <button class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-lg"
-                                    data-state="active"><span class="label">Active</span></button>
-                                <button class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-lg selected"
-                                    data-state="selected"><span class="label">Selected</span></button>
-                                <button class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-lg focus"
-                                    data-state="focused"><span class="label">Focused</span></button>
-                                <button class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-lg"
-                                    disabled><span class="label">Disabled</span></button>
-                            </div>
-                        </div>
-                        <div class="code-example">
-                            <div class="usage-header">
-                                <span>Usage</span>
-                                <button class="copy-btn">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                </button>
-                            </div>
-                            <code>&lt;button class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-lg"&gt;
-  &lt;span class="label"&gt;Secondary Outline Button&lt;/span&gt;
-&lt;/button&gt;</code>
-                        </div>
-                    </div>
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Subtle Button On-Color</div>
-                            <div class="demo-action">
-                                
-                                <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                    data-toggler='["black-bg", ".demo-container", "containerBg"]'>
-                                    <span class="label">Black</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container dark-bg">
-                            <div class="state-demo">
-                                <button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-lg"
-                                    data-state="default"><span class="label">Default</span></button>
-                                <button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-lg"
-                                    data-state="hover"><span class="label">Hover</span></button>
-                                <button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-lg"
-                                    data-state="active"><span class="label">Active</span></button>
-                                <button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-lg selected"
-                                    data-state="selected"><span class="label">Selected</span></button>
-                                <button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-lg focus"
-                                    data-state="focused"><span class="label">Focused</span></button>
-                                <button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-lg" disabled><span
-                                        class="label">Disabled</span></button>
-                            </div>
-                        </div>
-                        <div class="code-example">
-                            <div class="usage-header">
-                                <span>Usage</span>
-                                <button class="copy-btn">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                </button>
-                            </div>
-                            <code>&lt;button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-lg"&gt;
-  &lt;span class="label"&gt;Subtle Button&lt;/span&gt;
-&lt;/button&gt;</code>
-                        </div>
-                    </div>
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Transparent Button On-Color</div>
-                            <div class="demo-action">
-                                
-                                <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                    data-toggler='["black-bg", ".demo-container", "containerBg"]'>
-                                    <span class="label">Black</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container dark-bg">
-                            <div class="state-demo">
-                                <button class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-lg"
-                                    data-state="default"><span class="label">Default</span></button>
-                                <button class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-lg"
-                                    data-state="hover"><span class="label">Hover</span></button>
-                                <button class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-lg"
-                                    data-state="active"><span class="label">Active</span></button>
-                                <button class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-lg selected"
-                                    data-state="selected"><span class="label">Selected</span></button>
-                                <button class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-lg focus"
-                                    data-state="focused"><span class="label">Focused</span></button>
-                                <button class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-lg" disabled><span
-                                        class="label">Disabled</span></button>
-                            </div>
-                        </div>
-                        <div class="code-example">
-                            <div class="usage-header">
-                                <span>Usage</span>
-                                <button class="copy-btn">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                </button>
-                            </div>
-                            <code>&lt;button class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-lg"&gt;
+                        <code>&lt;button class="nds-btn nds-btn-transparent nds-btn-lg"&gt;
   &lt;span class="label"&gt;Transparent Button&lt;/span&gt;
 &lt;/button&gt;</code>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-showcase oncolor-buttons">
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Primary Button On-Color</div>
+                        <div class="demo-action">
+
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                                data-toggler='["black-bg", ".demo-container", "containerBg"]'>
+                                <span class="label">Black</span>
+                            </button>
                         </div>
+                    </div>
+                    <div class="demo-container dark-bg">
+                        <div class="state-demo">
+                            <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-lg"
+                                data-state="default"><span class="label">Default</span></button>
+                            <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-lg" data-state="hover"><span
+                                    class="label">Hover</span></button>
+                            <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-lg" data-state="active"><span
+                                    class="label">Active</span></button>
+                            <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-lg selected"
+                                data-state="selected"><span class="label">Selected</span></button>
+                            <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-lg focus"
+                                data-state="focused"><span class="label">Focused</span></button>
+                            <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-lg" disabled><span
+                                    class="label">Disabled</span></button>
+                        </div>
+                    </div>
+                    <div class="code-example">
+                        <div class="usage-header">
+                            <span>Usage</span>
+                            <button class="copy-btn">
+                                <i class="hgi hgi-stroke hgi-copy-01"></i>
+                            </button>
+                        </div>
+                        <code>&lt;button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-lg"&gt;
+  &lt;span class="label"&gt;Primary Button&lt;/span&gt;
+&lt;/button&gt;</code>
+                    </div>
+                </div>
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Neutral Button On-Color</div>
+                        <div class="demo-action">
+
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                                data-toggler='["black-bg", ".demo-container", "containerBg"]'>
+                                <span class="label">Black</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="demo-container dark-bg">
+                        <div class="state-demo">
+                            <button class="nds-btn nds-btn-neutral nds-btn-oncolor nds-btn-lg"
+                                data-state="default"><span class="label">Default</span></button>
+                            <button class="nds-btn nds-btn-neutral nds-btn-oncolor nds-btn-lg" data-state="hover"><span
+                                    class="label">Hover</span></button>
+                            <button class="nds-btn nds-btn-neutral nds-btn-oncolor nds-btn-lg" data-state="active"><span
+                                    class="label">Active</span></button>
+                            <button class="nds-btn nds-btn-neutral nds-btn-oncolor nds-btn-lg selected"
+                                data-state="selected"><span class="label">Selected</span></button>
+                            <button class="nds-btn nds-btn-neutral nds-btn-oncolor nds-btn-lg focus"
+                                data-state="focused"><span class="label">Focused</span></button>
+                            <button class="nds-btn nds-btn-neutral nds-btn-oncolor nds-btn-lg" disabled><span
+                                    class="label">Disabled</span></button>
+                        </div>
+                    </div>
+                    <div class="code-example">
+                        <div class="usage-header">
+                            <span>Usage</span>
+                            <button class="copy-btn">
+                                <i class="hgi hgi-stroke hgi-copy-01"></i>
+                            </button>
+                        </div>
+                        <code>&lt;button class="nds-btn nds-btn-neutral nds-btn-oncolor nds-btn-lg"&gt;
+  &lt;span class="label"&gt;Neutral Button&lt;/span&gt;
+&lt;/button&gt;</code>
+                    </div>
+                </div>
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Secondary Solid On-Color</div>
+                        <div class="demo-action">
+
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                                data-toggler='["black-bg", ".demo-container", "containerBg"]'>
+                                <span class="label">Black</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="demo-container dark-bg">
+                        <div class="state-demo">
+                            <button class="nds-btn nds-btn-secondary-solid nds-btn-oncolor nds-btn-lg"
+                                data-state="default"><span class="label">Default</span></button>
+                            <button class="nds-btn nds-btn-secondary-solid nds-btn-oncolor nds-btn-lg"
+                                data-state="hover"><span class="label">Hover</span></button>
+                            <button class="nds-btn nds-btn-secondary-solid nds-btn-oncolor nds-btn-lg"
+                                data-state="active"><span class="label">Active</span></button>
+                            <button class="nds-btn nds-btn-secondary-solid nds-btn-oncolor nds-btn-lg selected"
+                                data-state="selected"><span class="label">Selected</span></button>
+                            <button class="nds-btn nds-btn-secondary-solid nds-btn-oncolor nds-btn-lg focus"
+                                data-state="focused"><span class="label">Focused</span></button>
+                            <button class="nds-btn nds-btn-secondary-solid nds-btn-oncolor nds-btn-lg" disabled><span
+                                    class="label">Disabled</span></button>
+                        </div>
+                    </div>
+                    <div class="code-example">
+                        <div class="usage-header">
+                            <span>Usage</span>
+                            <button class="copy-btn">
+                                <i class="hgi hgi-stroke hgi-copy-01"></i>
+                            </button>
+                        </div>
+                        <code>&lt;button class="nds-btn nds-btn-secondary-solid nds-btn-oncolor nds-btn-lg"&gt;
+  &lt;span class="label"&gt;Secondary Solid Button&lt;/span&gt;
+&lt;/button&gt;</code>
+                    </div>
+                </div>
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Secondary Outline On-Color</div>
+                        <div class="demo-action">
+
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                                data-toggler='["black-bg", ".demo-container", "containerBg"]'>
+                                <span class="label">Black</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="demo-container dark-bg">
+                        <div class="state-demo">
+                            <button class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-lg"
+                                data-state="default"><span class="label">Default</span></button>
+                            <button class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-lg"
+                                data-state="hover"><span class="label">Hover</span></button>
+                            <button class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-lg"
+                                data-state="active"><span class="label">Active</span></button>
+                            <button class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-lg selected"
+                                data-state="selected"><span class="label">Selected</span></button>
+                            <button class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-lg focus"
+                                data-state="focused"><span class="label">Focused</span></button>
+                            <button class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-lg" disabled><span
+                                    class="label">Disabled</span></button>
+                        </div>
+                    </div>
+                    <div class="code-example">
+                        <div class="usage-header">
+                            <span>Usage</span>
+                            <button class="copy-btn">
+                                <i class="hgi hgi-stroke hgi-copy-01"></i>
+                            </button>
+                        </div>
+                        <code>&lt;button class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-lg"&gt;
+  &lt;span class="label"&gt;Secondary Outline Button&lt;/span&gt;
+&lt;/button&gt;</code>
+                    </div>
+                </div>
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Subtle Button On-Color</div>
+                        <div class="demo-action">
+
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                                data-toggler='["black-bg", ".demo-container", "containerBg"]'>
+                                <span class="label">Black</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="demo-container dark-bg">
+                        <div class="state-demo">
+                            <button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-lg" data-state="default"><span
+                                    class="label">Default</span></button>
+                            <button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-lg" data-state="hover"><span
+                                    class="label">Hover</span></button>
+                            <button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-lg" data-state="active"><span
+                                    class="label">Active</span></button>
+                            <button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-lg selected"
+                                data-state="selected"><span class="label">Selected</span></button>
+                            <button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-lg focus"
+                                data-state="focused"><span class="label">Focused</span></button>
+                            <button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-lg" disabled><span
+                                    class="label">Disabled</span></button>
+                        </div>
+                    </div>
+                    <div class="code-example">
+                        <div class="usage-header">
+                            <span>Usage</span>
+                            <button class="copy-btn">
+                                <i class="hgi hgi-stroke hgi-copy-01"></i>
+                            </button>
+                        </div>
+                        <code>&lt;button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-lg"&gt;
+  &lt;span class="label"&gt;Subtle Button&lt;/span&gt;
+&lt;/button&gt;</code>
+                    </div>
+                </div>
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Transparent Button On-Color</div>
+                        <div class="demo-action">
+
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                                data-toggler='["black-bg", ".demo-container", "containerBg"]'>
+                                <span class="label">Black</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="demo-container dark-bg">
+                        <div class="state-demo">
+                            <button class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-lg"
+                                data-state="default"><span class="label">Default</span></button>
+                            <button class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-lg"
+                                data-state="hover"><span class="label">Hover</span></button>
+                            <button class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-lg"
+                                data-state="active"><span class="label">Active</span></button>
+                            <button class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-lg selected"
+                                data-state="selected"><span class="label">Selected</span></button>
+                            <button class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-lg focus"
+                                data-state="focused"><span class="label">Focused</span></button>
+                            <button class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-lg" disabled><span
+                                    class="label">Disabled</span></button>
+                        </div>
+                    </div>
+                    <div class="code-example">
+                        <div class="usage-header">
+                            <span>Usage</span>
+                            <button class="copy-btn">
+                                <i class="hgi hgi-stroke hgi-copy-01"></i>
+                            </button>
+                        </div>
+                        <code>&lt;button class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-lg"&gt;
+  &lt;span class="label"&gt;Transparent Button&lt;/span&gt;
+&lt;/button&gt;</code>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 </section>
 
 <!-- Destructive Buttons with States -->
@@ -570,308 +570,303 @@ direction: ltr
                     <div class="demo-header">
                         <div class="demo-label">Destructive Outline</div>
                         <div class="demo-action">
-                                <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                    data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                                    <span class="label">Remove bg</span>
-                                </button>
-                            </div>
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                                <span class="label">Remove bg</span>
+                            </button>
                         </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <button class="nds-btn nds-btn-secondary-outline nds-btn-destructive nds-btn-lg"
-                                    data-state="default"><span class="label">Default</span></button>
-                                <button class="nds-btn nds-btn-secondary-outline nds-btn-destructive nds-btn-lg"
-                                    data-state="hover"><span class="label">Hover</span></button>
-                                <button class="nds-btn nds-btn-secondary-outline nds-btn-destructive nds-btn-lg"
-                                    data-state="active"><span class="label">Active</span></button>
-                                <button class="nds-btn nds-btn-secondary-outline nds-btn-destructive nds-btn-lg focus"
-                                    data-state="focused"><span class="label">Focused</span></button>
-                            </div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <button class="nds-btn nds-btn-secondary-outline nds-btn-destructive nds-btn-lg"
+                                data-state="default"><span class="label">Default</span></button>
+                            <button class="nds-btn nds-btn-secondary-outline nds-btn-destructive nds-btn-lg"
+                                data-state="hover"><span class="label">Hover</span></button>
+                            <button class="nds-btn nds-btn-secondary-outline nds-btn-destructive nds-btn-lg"
+                                data-state="active"><span class="label">Active</span></button>
+                            <button class="nds-btn nds-btn-secondary-outline nds-btn-destructive nds-btn-lg focus"
+                                data-state="focused"><span class="label">Focused</span></button>
                         </div>
-                        <div class="code-example">
-                            <div class="usage-header">
-                                <span>Usage</span>
-                                <button class="copy-btn">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                </button>
-                            </div>
-                            <code>&lt;button class="nds-btn nds-btn-secondary-outline nds-btn-destructive nds-btn-lg"&gt;
+                    </div>
+                    <div class="code-example">
+                        <div class="usage-header">
+                            <span>Usage</span>
+                            <button class="copy-btn">
+                                <i class="hgi hgi-stroke hgi-copy-01"></i>
+                            </button>
+                        </div>
+                        <code>&lt;button class="nds-btn nds-btn-secondary-outline nds-btn-destructive nds-btn-lg"&gt;
   &lt;span class="label"&gt;Remove Button&lt;/span&gt;
 &lt;/button&gt;</code>
-                        </div>
-                    </div>
-
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Destructive Subtle</div>
-                            <div class="demo-action">
-                                <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                    data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                                    <span class="label">Remove bg</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <button class="nds-btn nds-btn-subtle nds-btn-destructive nds-btn-lg"
-                                    data-state="default"><span class="label">Default</span></button>
-                                <button class="nds-btn nds-btn-subtle nds-btn-destructive nds-btn-lg"
-                                    data-state="hover"><span class="label">Hover</span></button>
-                                <button class="nds-btn nds-btn-subtle nds-btn-destructive nds-btn-lg"
-                                    data-state="active"><span class="label">Active</span></button>
-                                <button class="nds-btn nds-btn-subtle nds-btn-destructive nds-btn-lg focus"
-                                    data-state="focused"><span class="label">Focused</span></button>
-                            </div>
-                        </div>
-                        <div class="code-example">
-                            <div class="usage-header">
-                                <span>Usage</span>
-                                <button class="copy-btn">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                </button>
-                            </div>
-                            <code>&lt;button class="nds-btn nds-btn-subtle nds-btn-destructive nds-btn-lg"&gt;
-  &lt;span class="label"&gt;Clear Data&lt;/span&gt;
-&lt;/button&gt;</code>
-                        </div>
-                    </div>
-
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Destructive Transparent</div>
-                            <div class="demo-action">
-                                <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                    data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                                    <span class="label">Remove bg</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <button class="nds-btn nds-btn-transparent nds-btn-destructive nds-btn-lg"
-                                    data-state="default"><span class="label">Default</span></button>
-                                <button class="nds-btn nds-btn-transparent nds-btn-destructive nds-btn-lg"
-                                    data-state="hover"><span class="label">Hover</span></button>
-                                <button class="nds-btn nds-btn-transparent nds-btn-destructive nds-btn-lg"
-                                    data-state="active"><span class="label">Active</span></button>
-                                <button class="nds-btn nds-btn-transparent nds-btn-destructive nds-btn-lg focus"
-                                    data-state="focused"><span class="label">Focused</span></button>
-                            </div>
-                        </div>
-                        <div class="code-example">
-                            <div class="usage-header">
-                                <span>Usage</span>
-                                <button class="copy-btn">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                </button>
-                            </div>
-                            <code>&lt;button class="nds-btn nds-btn-transparent nds-btn-destructive nds-btn-lg"&gt;
-  &lt;span class="label"&gt;Cancel Button&lt;/span&gt;
-&lt;/button&gt;</code>
-                        </div>
                     </div>
                 </div>
 
-                <!-- Background Switcher for On-Color Destructive Buttons -->
-
-                <!-- On-Color Destructive Buttons with States -->
-                <div class="button-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Destructive Primary On-Color</div>
-                            <div class="demo-action">
-                                
-                                <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                    data-toggler='["black-bg", ".demo-container", "containerBg"]'>
-                                    <span class="label">Black</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container dark-bg">
-                            <div class="state-demo">
-                                <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-destructive nds-btn-lg"
-                                    data-state="default"><span class="label">Default</span></button>
-                                <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-destructive nds-btn-lg"
-                                    data-state="hover"><span class="label">Hover</span></button>
-                                <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-destructive nds-btn-lg"
-                                    data-state="active"><span class="label">Active</span></button>
-                                <button
-                                    class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-destructive nds-btn-lg focus"
-                                    data-state="focused"><span class="label">Focused</span></button>
-                            </div>
-                        </div>
-                        <div class="code-example">
-                            <div class="usage-header">
-                                <span>Usage</span>
-                                <button class="copy-btn">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                </button>
-                            </div>
-                            <code>&lt;button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-destructive nds-btn-lg"&gt;
-  &lt;span class="label"&gt;Delete Button&lt;/span&gt;
-&lt;/button&gt;</code>
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Destructive Subtle</div>
+                        <div class="demo-action">
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                                <span class="label">Remove bg</span>
+                            </button>
                         </div>
                     </div>
-
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Destructive Secondary Solid On-Color</div>
-                            <div class="demo-action">
-                                
-                                <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                    data-toggler='["black-bg", ".demo-container", "containerBg"]'>
-                                    <span class="label">Black</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container dark-bg">
-                            <div class="state-demo">
-                                <button
-                                    class="nds-btn nds-btn-secondary-solid nds-btn-oncolor nds-btn-destructive nds-btn-lg"
-                                    data-state="default"><span class="label">Default</span></button>
-                                <button
-                                    class="nds-btn nds-btn-secondary-solid nds-btn-oncolor nds-btn-destructive nds-btn-lg"
-                                    data-state="hover"><span class="label">Hover</span></button>
-                                <button
-                                    class="nds-btn nds-btn-secondary-solid nds-btn-oncolor nds-btn-destructive nds-btn-lg"
-                                    data-state="active"><span class="label">Active</span></button>
-                                <button
-                                    class="nds-btn nds-btn-secondary-solid nds-btn-oncolor nds-btn-destructive nds-btn-lg focus"
-                                    data-state="focused"><span class="label">Focused</span></button>
-                            </div>
-                        </div>
-                        <div class="code-example">
-                            <div class="usage-header">
-                                <span>Usage</span>
-                                <button class="copy-btn">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                </button>
-                            </div>
-                            <code>&lt;button class="nds-btn nds-btn-secondary-solid nds-btn-oncolor nds-btn-destructive nds-btn-lg"&gt;
-  &lt;span class="label"&gt;Delete Account&lt;/span&gt;
-&lt;/button&gt;</code>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <button class="nds-btn nds-btn-subtle nds-btn-destructive nds-btn-lg"
+                                data-state="default"><span class="label">Default</span></button>
+                            <button class="nds-btn nds-btn-subtle nds-btn-destructive nds-btn-lg"
+                                data-state="hover"><span class="label">Hover</span></button>
+                            <button class="nds-btn nds-btn-subtle nds-btn-destructive nds-btn-lg"
+                                data-state="active"><span class="label">Active</span></button>
+                            <button class="nds-btn nds-btn-subtle nds-btn-destructive nds-btn-lg focus"
+                                data-state="focused"><span class="label">Focused</span></button>
                         </div>
                     </div>
-
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Destructive Outline On-Color</div>
-                            <div class="demo-action">
-                                
-                                <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                    data-toggler='["black-bg", ".demo-container", "containerBg"]'>
-                                    <span class="label">Black</span>
-                                </button>
-                            </div>
+                    <div class="code-example">
+                        <div class="usage-header">
+                            <span>Usage</span>
+                            <button class="copy-btn">
+                                <i class="hgi hgi-stroke hgi-copy-01"></i>
+                            </button>
                         </div>
-                        <div class="demo-container dark-bg">
-                            <div class="state-demo">
-                                <button
-                                    class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-destructive nds-btn-lg"
-                                    data-state="default"><span class="label">Default</span></button>
-                                <button
-                                    class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-destructive nds-btn-lg"
-                                    data-state="hover"><span class="label">Hover</span></button>
-                                <button
-                                    class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-destructive nds-btn-lg"
-                                    data-state="active"><span class="label">Active</span></button>
-                                <button
-                                    class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-destructive nds-btn-lg focus"
-                                    data-state="focused"><span class="label">Focused</span></button>
-                            </div>
-                        </div>
-                        <div class="code-example">
-                            <div class="usage-header">
-                                <span>Usage</span>
-                                <button class="copy-btn">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                </button>
-                            </div>
-                            <code>&lt;button class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-destructive nds-btn-lg"&gt;
-  &lt;span class="label"&gt;Remove Button&lt;/span&gt;
-&lt;/button&gt;</code>
-                        </div>
-                    </div>
-
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Destructive Subtle On-Color</div>
-                            <div class="demo-action">
-                                
-                                <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                    data-toggler='["black-bg", ".demo-container", "containerBg"]'>
-                                    <span class="label">Black</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container dark-bg">
-                            <div class="state-demo">
-                                <button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-destructive nds-btn-lg"
-                                    data-state="default"><span class="label">Default</span></button>
-                                <button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-destructive nds-btn-lg"
-                                    data-state="hover"><span class="label">Hover</span></button>
-                                <button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-destructive nds-btn-lg"
-                                    data-state="active"><span class="label">Active</span></button>
-                                <button
-                                    class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-destructive nds-btn-lg focus"
-                                    data-state="focused"><span class="label">Focused</span></button>
-                            </div>
-                        </div>
-                        <div class="code-example">
-                            <div class="usage-header">
-                                <span>Usage</span>
-                                <button class="copy-btn">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                </button>
-                            </div>
-                            <code>&lt;button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-destructive nds-btn-lg"&gt;
+                        <code>&lt;button class="nds-btn nds-btn-subtle nds-btn-destructive nds-btn-lg"&gt;
   &lt;span class="label"&gt;Clear Data&lt;/span&gt;
 &lt;/button&gt;</code>
+                    </div>
+                </div>
+
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Destructive Transparent</div>
+                        <div class="demo-action">
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                                <span class="label">Remove bg</span>
+                            </button>
                         </div>
                     </div>
-
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Destructive Transparent On-Color</div>
-                            <div class="demo-action">
-                                
-                                <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                    data-toggler='["black-bg", ".demo-container", "containerBg"]'>
-                                    <span class="label">Black</span>
-                                </button>
-                            </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <button class="nds-btn nds-btn-transparent nds-btn-destructive nds-btn-lg"
+                                data-state="default"><span class="label">Default</span></button>
+                            <button class="nds-btn nds-btn-transparent nds-btn-destructive nds-btn-lg"
+                                data-state="hover"><span class="label">Hover</span></button>
+                            <button class="nds-btn nds-btn-transparent nds-btn-destructive nds-btn-lg"
+                                data-state="active"><span class="label">Active</span></button>
+                            <button class="nds-btn nds-btn-transparent nds-btn-destructive nds-btn-lg focus"
+                                data-state="focused"><span class="label">Focused</span></button>
                         </div>
-                        <div class="demo-container dark-bg">
-                            <div class="state-demo">
-                                <button
-                                    class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-destructive nds-btn-lg"
-                                    data-state="default"><span class="label">Default</span></button>
-                                <button
-                                    class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-destructive nds-btn-lg"
-                                    data-state="hover"><span class="label">Hover</span></button>
-                                <button
-                                    class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-destructive nds-btn-lg"
-                                    data-state="active"><span class="label">Active</span></button>
-                                <button
-                                    class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-destructive nds-btn-lg focus"
-                                    data-state="focused"><span class="label">Focused</span></button>
-                            </div>
+                    </div>
+                    <div class="code-example">
+                        <div class="usage-header">
+                            <span>Usage</span>
+                            <button class="copy-btn">
+                                <i class="hgi hgi-stroke hgi-copy-01"></i>
+                            </button>
                         </div>
-                        <div class="code-example">
-                            <div class="usage-header">
-                                <span>Usage</span>
-                                <button class="copy-btn">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                </button>
-                            </div>
-                            <code>&lt;button class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-destructive nds-btn-lg"&gt;
+                        <code>&lt;button class="nds-btn nds-btn-transparent nds-btn-destructive nds-btn-lg"&gt;
   &lt;span class="label"&gt;Cancel Button&lt;/span&gt;
 &lt;/button&gt;</code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Background Switcher for On-Color Destructive Buttons -->
+
+            <!-- On-Color Destructive Buttons with States -->
+            <div class="button-showcase">
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Destructive Primary On-Color</div>
+                        <div class="demo-action">
+
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                                data-toggler='["black-bg", ".demo-container", "containerBg"]'>
+                                <span class="label">Black</span>
+                            </button>
                         </div>
+                    </div>
+                    <div class="demo-container dark-bg">
+                        <div class="state-demo">
+                            <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-destructive nds-btn-lg"
+                                data-state="default"><span class="label">Default</span></button>
+                            <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-destructive nds-btn-lg"
+                                data-state="hover"><span class="label">Hover</span></button>
+                            <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-destructive nds-btn-lg"
+                                data-state="active"><span class="label">Active</span></button>
+                            <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-destructive nds-btn-lg focus"
+                                data-state="focused"><span class="label">Focused</span></button>
+                        </div>
+                    </div>
+                    <div class="code-example">
+                        <div class="usage-header">
+                            <span>Usage</span>
+                            <button class="copy-btn">
+                                <i class="hgi hgi-stroke hgi-copy-01"></i>
+                            </button>
+                        </div>
+                        <code>&lt;button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-destructive nds-btn-lg"&gt;
+  &lt;span class="label"&gt;Delete Button&lt;/span&gt;
+&lt;/button&gt;</code>
+                    </div>
+                </div>
+
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Destructive Secondary Solid On-Color</div>
+                        <div class="demo-action">
+
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                                data-toggler='["black-bg", ".demo-container", "containerBg"]'>
+                                <span class="label">Black</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="demo-container dark-bg">
+                        <div class="state-demo">
+                            <button
+                                class="nds-btn nds-btn-secondary-solid nds-btn-oncolor nds-btn-destructive nds-btn-lg"
+                                data-state="default"><span class="label">Default</span></button>
+                            <button
+                                class="nds-btn nds-btn-secondary-solid nds-btn-oncolor nds-btn-destructive nds-btn-lg"
+                                data-state="hover"><span class="label">Hover</span></button>
+                            <button
+                                class="nds-btn nds-btn-secondary-solid nds-btn-oncolor nds-btn-destructive nds-btn-lg"
+                                data-state="active"><span class="label">Active</span></button>
+                            <button
+                                class="nds-btn nds-btn-secondary-solid nds-btn-oncolor nds-btn-destructive nds-btn-lg focus"
+                                data-state="focused"><span class="label">Focused</span></button>
+                        </div>
+                    </div>
+                    <div class="code-example">
+                        <div class="usage-header">
+                            <span>Usage</span>
+                            <button class="copy-btn">
+                                <i class="hgi hgi-stroke hgi-copy-01"></i>
+                            </button>
+                        </div>
+                        <code>&lt;button class="nds-btn nds-btn-secondary-solid nds-btn-oncolor nds-btn-destructive nds-btn-lg"&gt;
+  &lt;span class="label"&gt;Delete Account&lt;/span&gt;
+&lt;/button&gt;</code>
+                    </div>
+                </div>
+
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Destructive Outline On-Color</div>
+                        <div class="demo-action">
+
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                                data-toggler='["black-bg", ".demo-container", "containerBg"]'>
+                                <span class="label">Black</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="demo-container dark-bg">
+                        <div class="state-demo">
+                            <button
+                                class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-destructive nds-btn-lg"
+                                data-state="default"><span class="label">Default</span></button>
+                            <button
+                                class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-destructive nds-btn-lg"
+                                data-state="hover"><span class="label">Hover</span></button>
+                            <button
+                                class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-destructive nds-btn-lg"
+                                data-state="active"><span class="label">Active</span></button>
+                            <button
+                                class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-destructive nds-btn-lg focus"
+                                data-state="focused"><span class="label">Focused</span></button>
+                        </div>
+                    </div>
+                    <div class="code-example">
+                        <div class="usage-header">
+                            <span>Usage</span>
+                            <button class="copy-btn">
+                                <i class="hgi hgi-stroke hgi-copy-01"></i>
+                            </button>
+                        </div>
+                        <code>&lt;button class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-destructive nds-btn-lg"&gt;
+  &lt;span class="label"&gt;Remove Button&lt;/span&gt;
+&lt;/button&gt;</code>
+                    </div>
+                </div>
+
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Destructive Subtle On-Color</div>
+                        <div class="demo-action">
+
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                                data-toggler='["black-bg", ".demo-container", "containerBg"]'>
+                                <span class="label">Black</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="demo-container dark-bg">
+                        <div class="state-demo">
+                            <button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-destructive nds-btn-lg"
+                                data-state="default"><span class="label">Default</span></button>
+                            <button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-destructive nds-btn-lg"
+                                data-state="hover"><span class="label">Hover</span></button>
+                            <button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-destructive nds-btn-lg"
+                                data-state="active"><span class="label">Active</span></button>
+                            <button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-destructive nds-btn-lg focus"
+                                data-state="focused"><span class="label">Focused</span></button>
+                        </div>
+                    </div>
+                    <div class="code-example">
+                        <div class="usage-header">
+                            <span>Usage</span>
+                            <button class="copy-btn">
+                                <i class="hgi hgi-stroke hgi-copy-01"></i>
+                            </button>
+                        </div>
+                        <code>&lt;button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-destructive nds-btn-lg"&gt;
+  &lt;span class="label"&gt;Clear Data&lt;/span&gt;
+&lt;/button&gt;</code>
+                    </div>
+                </div>
+
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Destructive Transparent On-Color</div>
+                        <div class="demo-action">
+
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                                data-toggler='["black-bg", ".demo-container", "containerBg"]'>
+                                <span class="label">Black</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="demo-container dark-bg">
+                        <div class="state-demo">
+                            <button class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-destructive nds-btn-lg"
+                                data-state="default"><span class="label">Default</span></button>
+                            <button class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-destructive nds-btn-lg"
+                                data-state="hover"><span class="label">Hover</span></button>
+                            <button class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-destructive nds-btn-lg"
+                                data-state="active"><span class="label">Active</span></button>
+                            <button
+                                class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-destructive nds-btn-lg focus"
+                                data-state="focused"><span class="label">Focused</span></button>
+                        </div>
+                    </div>
+                    <div class="code-example">
+                        <div class="usage-header">
+                            <span>Usage</span>
+                            <button class="copy-btn">
+                                <i class="hgi hgi-stroke hgi-copy-01"></i>
+                            </button>
+                        </div>
+                        <code>&lt;button class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-destructive nds-btn-lg"&gt;
+  &lt;span class="label"&gt;Cancel Button&lt;/span&gt;
+&lt;/button&gt;</code>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 </section>
 
 <!-- Icon Buttons -->
@@ -886,16 +881,16 @@ direction: ltr
                 <!-- Lead Icon -->
                 <div class="nds-demo-card">
                     <div class="demo-header">
-                        <div class="demo-label">Lead Icon (Icon + Text)</div>
+                        <div class="demo-label">Lead/Trail Icon (Icon + Text)</div>
                         <div class="demo-action">
                             <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                data-toggler='["nds-btn-trail-icon", ".nds-btn-demo", "trailIcon"]'>
+                                <span class="label">Trail icon</span>
                             </button>
                         </div>
                     </div>
                     <div class="demo-container">
-                        <button class="nds-btn nds-btn-primary nds-btn-lg">
+                        <button class="nds-btn nds-btn-primary nds-btn-demo nds-btn-lg">
                             <i class="hgi hgi-stroke hgi-plus-sign"></i>
                             <span class="label">Add Item</span>
                         </button>
@@ -914,10 +909,10 @@ direction: ltr
                     </div>
                 </div>
 
-                <!-- Trail Icon -->
+                <!-- Icon Only -->
                 <div class="nds-demo-card">
                     <div class="demo-header">
-                        <div class="demo-label">Trail Icon (Text + Icon)</div>
+                        <div class="demo-label">Icon Only Buttons</div>
                         <div class="demo-action">
                             <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
                                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
@@ -926,9 +921,8 @@ direction: ltr
                         </div>
                     </div>
                     <div class="demo-container">
-                        <button class="nds-btn nds-btn-secondary-solid nds-btn-lg nds-btn-trail-icon">
-                            <i class="hgi hgi-stroke hgi-download-02"></i>
-                            <span class="label">Download</span>
+                        <button class="nds-btn nds-btn-primary nds-btn-icon-only nds-btn-lg" aria-label="Settings">
+                            <i class="hgi hgi-stroke hgi-settings-02"></i>
                         </button>
                     </div>
                     <div class="code-example">
@@ -938,104 +932,79 @@ direction: ltr
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
-                        <code>&lt;button class="nds-btn nds-btn-secondary-solid nds-btn-lg nds-btn-trail-icon"&gt;
-  &lt;i class="hgi hgi-stroke hgi-download-01"&gt;&lt;/i&gt;
-  &lt;span class="label"&gt;Download&lt;/span&gt;
+                        <code>&lt;button class="nds-btn nds-btn-primary nds-btn-icon-only nds-btn-lg" aria-label="Settings"&gt;
+  &lt;i class="hgi hgi-stroke hgi-settings-02"&gt;&lt;/i&gt;
 &lt;/button&gt;</code>
                     </div>
                 </div>
 
-                <!-- Icon Only -->
+                <!-- menu -->
                 <div class="nds-demo-card">
                     <div class="demo-header">
-                        <div class="demo-label">Icon Only Buttons</div>
+                        <div class="demo-label">Menu Buttons</div>
                         <div class="demo-action">
-                                <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                    data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                                    <span class="label">Remove bg</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <button class="nds-btn nds-btn-primary nds-btn-icon-only nds-btn-lg" aria-label="Settings">
-                                <i class="hgi hgi-stroke hgi-settings-02"></i>
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                                data-toggler='["nds-btn-icon-only", ".nds-btn-demo", "labelIconToggle"]'>
+                                <span class="label">icon only</span>
                             </button>
-                        </div>
-                        <div class="code-example">
-                            <div class="usage-header">
-                                <span>Usage</span>
-                                <button class="copy-btn">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                </button>
-                            </div>
-                            <code>&lt;button class="nds-btn nds-btn-primary nds-btn-icon-only nds-btn-lg" aria-label="Settings"&gt;
-  &lt;i class="hgi hgi-stroke hgi-settings-02"&gt;&lt;/i&gt;
-&lt;/button&gt;</code>
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                                data-toggler='["nds-btn-label-only", ".nds-btn-demo", "labelIconToggle"]'>
+                                <span class="label">label only</span>
+                            </button>
                         </div>
                     </div>
-
-                    <!-- menu -->
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Menu Buttons</div>
-                            <div class="demo-action">
-                                <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                    data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                                    <span class="label">Remove bg</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <button class="nds-btn nds-btn-menu nds-btn-primary nds-btn-icon-only nds-btn-lg"
-                                aria-label="Settings">
-                                <i class="hgi hgi-stroke hgi-folder-library"></i>
-                            </button>
-                        </div>
-                        <div class="code-example">
-                            <div class="usage-header">
-                                <span>Usage</span>
-                                <button class="copy-btn">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                </button>
-                            </div>
-                            <code>&lt;button class="nds-btn nds-btn-primary nds-btn-icon-only nds-btn-lg" aria-label="Menu"&gt;
-  &lt;i class="hgi hgi-stroke hgi-folder-library"&gt;&lt;/i&gt;
-&lt;/button&gt;</code>
-                        </div>
+                    <div class="demo-container">
+                        <button class="nds-btn nds-btn-menu nds-btn-primary nds-btn-demo nds-btn-lg" aria-label="Menu">
+                            <i class="hgi hgi-stroke hgi-folder-library"></i>
+                            <span class="label">Menu</span>
+                        </button>
                     </div>
-                    <!-- menu with Label -->
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Menu Buttons</div>
-                            <div class="demo-action">
-                                <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                    data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                                    <span class="label">Remove bg</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <button class="nds-btn nds-btn-menu nds-btn-primary nds-btn-lg" aria-label="Settings">
-                                <i class="hgi hgi-stroke hgi-folder-library"></i>
-                                <span class="label">Menu</span>
+                    <div class="code-example">
+                        <div class="usage-header">
+                            <span>Usage</span>
+                            <button class="copy-btn">
+                                <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
-                        <div class="code-example">
-                            <div class="usage-header">
-                                <span>Usage</span>
-                                <button class="copy-btn">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                </button>
-                            </div>
-                            <code>&lt;button class="nds-btn nds-btn-primary nds-btn-lg" aria-label="Menu"&gt;
+                        <code>&lt;button class="nds-btn nds-btn-primary nds-btn-lg" aria-label="Menu"&gt;
   &lt;i class="hgi hgi-stroke hgi-folder-library"&gt;&lt;/i&gt;
   &lt;span class="label"&gt;Menu&lt;/span&gt;
 &lt;/button&gt;</code>
+                    </div>
+                </div>
+                <!-- menu with Label -->
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Menu Buttons</div>
+                        <div class="demo-action">
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                                <span class="label">Remove bg</span>
+                            </button>
                         </div>
+                    </div>
+                    <div class="demo-container">
+                        <button class="nds-btn nds-btn-menu nds-btn-primary nds-btn-lg" aria-label="Menu">
+                            <i class="hgi hgi-stroke hgi-folder-library"></i>
+                            <span class="label">Menu</span>
+                        </button>
+                    </div>
+                    <div class="code-example">
+                        <div class="usage-header">
+                            <span>Usage</span>
+                            <button class="copy-btn">
+                                <i class="hgi hgi-stroke hgi-copy-01"></i>
+                            </button>
+                        </div>
+                        <code>&lt;button class="nds-btn nds-btn-primary nds-btn-lg" aria-label="Menu"&gt;
+  &lt;i class="hgi hgi-stroke hgi-folder-library"&gt;&lt;/i&gt;
+  &lt;span class="label"&gt;Menu&lt;/span&gt;
+&lt;/button&gt;</code>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 </section>
 
 <!-- Button Sizes -->
@@ -1049,16 +1018,24 @@ direction: ltr
             <div class="button-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
-                        <div class="demo-label">Small (24px)</div>
+                        <div class="demo-label">Default Large (40px)</div>
                         <div class="demo-action">
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn selected"
+                                data-toggler='["nds-btn-lg", ".nds-btn-demo", "sizeToggle"]'>
+                                <span class="label">LG</span>
+                            </button>
                             <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                data-toggler='["nds-btn-md", ".nds-btn-demo", "sizeToggle"]'>
+                                <span class="label">MD</span>
+                            </button>
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                                data-toggler='["nds-btn-sm", ".nds-btn-demo", "sizeToggle"]'>
+                                <span class="label">SM</span>
                             </button>
                         </div>
                     </div>
                     <div class="demo-container">
-                        <button class="nds-btn nds-btn-primary nds-btn-sm"><span class="label">Small
+                        <button class="nds-btn nds-btn-primary nds-btn-demo nds-btn-lg"><span class="label">Primary
                                 Button</span></button>
                     </div>
                     <div class="code-example">
@@ -1075,7 +1052,7 @@ direction: ltr
                 </div>
                 <div class="nds-demo-card">
                     <div class="demo-header">
-                        <div class="demo-label">Medium (32px)</div>
+                        <div class="demo-label">Full Width Primary</div>
                         <div class="demo-action">
                             <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
                                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
@@ -1084,8 +1061,8 @@ direction: ltr
                         </div>
                     </div>
                     <div class="demo-container">
-                        <button class="nds-btn nds-btn-primary nds-btn-md"><span class="label">Medium
-                                Button</span></button>
+                        <button class="nds-btn nds-btn-primary nds-btn-lg nds-btn-full"><span class="label">Full
+                                Width Primary Button</span></button>
                     </div>
                     <div class="code-example">
                         <div class="usage-header">
@@ -1094,66 +1071,14 @@ direction: ltr
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
-                        <code>&lt;button class="nds-btn nds-btn-primary nds-btn-md"&gt;
-  &lt;span class="label"&gt;Medium Button&lt;/span&gt;
-&lt;/button&gt;</code>
-                    </div>
-                </div>
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Large (40px)</div>
-                        <div class="demo-action">
-                                <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                    data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                                    <span class="label">Remove bg</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <button class="nds-btn nds-btn-primary nds-btn-lg"><span class="label">Large
-                                    Button</span></button>
-                        </div>
-                        <div class="code-example">
-                            <div class="usage-header">
-                                <span>Usage</span>
-                                <button class="copy-btn">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                </button>
-                            </div>
-                            <code>&lt;button class="nds-btn nds-btn-primary nds-btn-lg"&gt;
-  &lt;span class="label"&gt;Large Button&lt;/span&gt;
-&lt;/button&gt;</code>
-                        </div>
-                    </div>
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Full Width Primary</div>
-                            <div class="demo-action">
-                                <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                    data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                                    <span class="label">Remove bg</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <button class="nds-btn nds-btn-primary nds-btn-lg nds-btn-full"><span class="label">Full
-                                    Width Primary Button</span></button>
-                        </div>
-                        <div class="code-example">
-                            <div class="usage-header">
-                                <span>Usage</span>
-                                <button class="copy-btn">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                </button>
-                            </div>
-                            <code>&lt;button class="nds-btn nds-btn-primary nds-btn-lg nds-btn-full"&gt;
+                        <code>&lt;button class="nds-btn nds-btn-primary nds-btn-lg nds-btn-full"&gt;
   &lt;span class="label"&gt;Full Width Primary Button&lt;/span&gt;
 &lt;/button&gt;</code>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 </section>
 
 <!-- Loading State -->
@@ -1169,6 +1094,18 @@ direction: ltr
                     <div class="demo-header">
                         <div class="demo-label">Loading States</div>
                         <div class="demo-action">
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn selected"
+                                data-toggler='["nds-btn-lg", ".nds-btn-demo", "sizeToggle"]'>
+                                <span class="label">LG</span>
+                            </button>
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                                data-toggler='["nds-btn-md", ".nds-btn-demo", "sizeToggle"]'>
+                                <span class="label">MD</span>
+                            </button>
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                                data-toggler='["nds-btn-sm", ".nds-btn-demo", "sizeToggle"]'>
+                                <span class="label">SM</span>
+                            </button>
                             <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
                                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                                 <span class="label">Remove bg</span>
@@ -1177,11 +1114,11 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="button-row">
-                            <button class="nds-btn nds-btn-primary nds-btn-loading nds-btn-lg"><span
+                            <button class="nds-btn nds-btn-primary nds-btn-demo nds-btn-loading nds-btn-lg"><span
                                     class="label">Loading Button</span></button>
-                            <button class="nds-btn nds-btn-secondary-solid nds-btn-loading nds-btn-lg"><span
+                            <button class="nds-btn nds-btn-secondary-solid nds-btn-demo nds-btn-loading nds-btn-lg"><span
                                     class="label">Processing Button</span></button>
-                            <button class="nds-btn nds-btn-transparent nds-btn-loading nds-btn-lg"><span
+                            <button class="nds-btn nds-btn-transparent nds-btn-demo nds-btn-loading nds-btn-lg"><span
                                     class="label">Saving Button</span></button>
                         </div>
                     </div>

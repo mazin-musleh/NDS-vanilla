@@ -7,7 +7,7 @@
   flex-direction: column;
 }
 
-.nds-tabs.vertical-tabs {
+.nds-tabs.nds-vertical-tabs {
   display: flex;
   flex-direction: row;
 }
@@ -28,7 +28,7 @@
   position: relative;
 }
 
-.nds-tabs.vertical-tabs .nds-tab-list {
+.nds-tabs.nds-vertical-tabs .nds-tab-list {
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -39,12 +39,12 @@
   top: var(--nds-nav-height);
 }
 
-html[dir="ltr"] .nds-tabs.vertical-tabs .nds-tab-list {
+html[dir="ltr"] .nds-tabs.nds-vertical-tabs .nds-tab-list {
   padding-right: 3px;
   padding-left: unset;
 }
 
-.nds-tab-list-container::after {
+.nds-tabs.withDivider .nds-tab-list-container::after {
   content: '';
   position: absolute;
   bottom: 0;
@@ -56,15 +56,33 @@ html[dir="ltr"] .nds-tabs.vertical-tabs .nds-tab-list {
   border-radius: 999px;
 }
 
-.nds-tabs.vertical-tabs .nds-tab-list-container::after {
+.nds-tabs.nds-vertical-tabs.withDivider .nds-tab-list-container::after {
   left: 0;
   height: 100%;
   width: 3px;
 }
 
-html[dir="ltr"] .nds-tabs.vertical-tabs .nds-tab-list-container::after {
+html[dir="ltr"] .nds-tabs.nds-vertical-tabs.withDivider .nds-tab-list-container::after {
   right: 0;
   left: unset;
+}
+
+.nds-tabs.withDivider .nds-tab {
+  margin-bottom: 3px;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+}
+
+.nds-tabs.nds-vertical-tabs.withDivider .nds-tab {
+  margin-bottom: unset;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+html[dir="ltr"] .nds-tabs.nds-vertical-tabs.withDivider .nds-tab {
+  border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+}
+
+.nds-tabs.noDivider .nds-tab-list {
+  padding: unset;
 }
 
 nav.nds-tab-list.center {
@@ -94,7 +112,7 @@ nav.nds-tab-list.center {
   gap: var(--tab-button-gap, 4px);
   padding: var(--tab-horizontal-tab-md-button-v-padding, 12px) var(--tab-horizontal-tab-md-button-h-padding, 16px);
   border: none;
-  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  border-radius: var(--radius-sm);
   background: transparent;
   color: var(--text-primary-paragraph, #384250);
   font-size: var(--nds-text-clamp-md-FS, 16px);
@@ -104,18 +122,16 @@ nav.nds-tab-list.center {
   white-space: nowrap;
   min-width: fit-content;
   position: relative;
-  margin-bottom: 3px;
   z-index: 2;
 }
 
-.nds-tabs.vertical-tabs .nds-tab {
-  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+.nds-tabs.nds-vertical-tabs .nds-tab {
+  border-radius: var(--radius-sm);
   width: 100%;
-  margin-bottom: unset;
 }
 
-html[dir="ltr"] .nds-tabs.vertical-tabs .nds-tab {
-  border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+html[dir="ltr"] .nds-tabs.nds-vertical-tabs .nds-tab {
+  border-radius: var(--radius-sm);
 }
 
 .nds-tab:hover {
@@ -136,7 +152,6 @@ html[dir="ltr"] .nds-tabs.vertical-tabs .nds-tab {
   height: 3px;
   border-radius: 999px;
   width: calc(100% - var(--spacing-md) * 2);
-  margin-bottom: -3px;
   right: var(--spacing-md);
 }
 
@@ -145,23 +160,44 @@ html[dir="ltr"] .nds-tab:after {
   left: var(--spacing-md);
 }
 
-.nds-tabs.vertical-tabs .nds-tab:after {
-  left: 0;
-  right: unset;
+.nds-tabs.withDivider .nds-tab:after {
+  margin-bottom: -3px;
+}
+
+.nds-tabs.nds-vertical-tabs.withDivider .nds-tab:after {
+  margin-left: -3px;
+  margin-bottom: unset;
+}
+
+html[dir="ltr"] .nds-tabs.nds-vertical-tabs.withDivider .nds-tab:after {
+  margin-left: unset;
+  margin-right: -3px;
+}
+
+.nds-tabs.nds-vertical-tabs .nds-tab:after {
+  right: 0;
   bottom: unset;
   width: 3px !important;
   height: calc(100% - var(--spacing-md) * 2);
   margin-bottom: unset;
-  margin-left: 3px;
   top: var(--spacing-md);
 }
 
-html[dir="ltr"] .nds-tabs.vertical-tabs .nds-tab:after {
+html[dir="ltr"] .nds-tabs.nds-vertical-tabs .nds-tab:after {
+  left: 0;
+  right: unset;
+}
+
+.nds-tabs.nds-vertical-tabs.withDivider .nds-tab:after {
+  left: 0;
+  right: unset;
+}
+
+html[dir="ltr"] .nds-tabs.nds-vertical-tabs.withDivider .nds-tab:after {
   left: unset;
   right: 0;
-  margin-left: unset;
-  margin-right: -3px;
 }
+
 
 .nds-tab:hover:after {
   background-color: var(--border-black);
@@ -210,14 +246,14 @@ html[dir="ltr"] .nds-tabs.vertical-tabs .nds-tab:after {
   margin-top: var(--tab-horizontal-tab-md-button-h-padding);
 }
 
-.nds-tabs.vertical-tabs.cardView .nds-tab-content {
+.nds-tabs.nds-vertical-tabs.cardView .nds-tab-content {
   border-radius: var(--radius-md);
   box-shadow: var(--nds-shadow);
   margin-top: unset;
   margin-right: var(--tab-horizontal-tab-md-button-h-padding);
 }
 
-html[dir="ltr"] .nds-tabs.vertical-tabs.cardView .nds-tab-content {
+html[dir="ltr"] .nds-tabs.nds-vertical-tabs.cardView .nds-tab-content {
   border-radius: var(--radius-md);
   box-shadow: var(--nds-shadow);
   margin-top: unset;
