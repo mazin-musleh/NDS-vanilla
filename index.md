@@ -21,24 +21,24 @@ hero_image_pos: 50% 10%
         <div class="nds-section-content">
             <div class="nds-statistics">
                 <div class="nds-statistic-card">
-                    <i class="hgi hgi-stroke hgi-square-lock-01 nds-statistic-icon"></i>
-                    <span class="nds-statistic-number nds-number-format nds-counter-value">+49160</span>
-                    <span class="nds-statistic-text" data-i18n="stats.students">{% include localize.html key="stats.students" %}</span>
+                    <i class="hgi hgi-stroke hgi-component nds-statistic-icon"></i>
+                    <span class="nds-statistic-number nds-number-format nds-counter-value">45</span>
+                    <span class="nds-statistic-text" data-i18n="stats.components">{% include localize.html key="stats.components" %}</span>
                 </div>
                 <div class="nds-statistic-card">
-                    <i class="hgi hgi-stroke hgi-square-lock-01 nds-statistic-icon"></i>
-                    <span class="nds-statistic-number nds-number-format nds-counter-value">+1024</span>
-                    <span class="nds-statistic-text" data-i18n="stats.faculty">{% include localize.html key="stats.faculty" %}</span>
+                    <i class="hgi hgi-stroke hgi-color-picker nds-statistic-icon"></i>
+                    <span class="nds-statistic-number nds-number-format nds-counter-value">120</span>
+                    <span class="nds-statistic-text" data-i18n="stats.design_tokens">{% include localize.html key="stats.design_tokens" %}</span>
                 </div>
                 <div class="nds-statistic-card">
-                    <i class="hgi hgi-stroke hgi-square-lock-01 nds-statistic-icon"></i>
-                    <span class="nds-statistic-number nds-number-format nds-counter-value">+18506</span>
-                    <span class="nds-statistic-text" data-i18n="stats.graduates">{% include localize.html key="stats.graduates" %}</span>
+                    <i class="hgi hgi-stroke hgi-book-03 nds-statistic-icon"></i>
+                    <span class="nds-statistic-number nds-number-format nds-counter-value">25</span>
+                    <span class="nds-statistic-text" data-i18n="stats.guidelines">{% include localize.html key="stats.guidelines" %}</span>
                 </div>
                 <div class="nds-statistic-card">
-                    <i class="hgi hgi-stroke hgi-square-lock-01 nds-statistic-icon"></i>
-                    <span class="nds-statistic-number nds-number-format nds-counter-value">15</span>
-                    <span class="nds-statistic-text" data-i18n="stats.branches">{% include localize.html key="stats.branches" %}</span>
+                    <i class="hgi hgi-stroke hgi-government nds-statistic-icon"></i>
+                    <span class="nds-statistic-number nds-number-format nds-counter-value">50+</span>
+                    <span class="nds-statistic-text" data-i18n="stats.agencies">{% include localize.html key="stats.agencies" %}</span>
                 </div>
             </div>
         </div>

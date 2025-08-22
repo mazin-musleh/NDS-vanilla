@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is the **National Design System for Saudi Arabia** - a Jekyll-based static site that documents and showcases a comprehensive design system for government digital services. The site serves as both documentation and a living component library for the Saudi Digital Government Authority.
+This is the **National Design System for Saudi Arabia** - a Jekyll-based static site that documents and showcases a comprehensive design system for government digital services. The site serves as both documentation and a living component library for creating consistent digital experiences.
 
 ## Common Commands
 

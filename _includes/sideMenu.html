@@ -12,9 +12,10 @@
                 </ul>
             </li>
             <li{% if page.url == "/about.html" or page.url == "/about/" %} class="active"{% endif %}><a href="{{ '/about/' | relative_url }}">About</a></li>
-            <li class="has-sub{% if page.url contains '/button' or page.url contains '/tabs' %} open{% endif %}">
-                <a href="#" aria-haspopup="true" aria-expanded="{% if page.url contains '/button' or page.url contains '/tabs' %}true{% else %}false{% endif %}">Components</a>
+            <li class="has-sub{% if page.url contains '/button' or page.url contains '/tabs' or page.url contains '/accordion' %} open{% endif %}">
+                <a href="#" aria-haspopup="true" aria-expanded="{% if page.url contains '/button' or page.url contains '/tabs' or page.url contains '/accordion' %}true{% else %}false{% endif %}">Components</a>
                 <ul>
+                    <li{% if page.url contains '/accordion' %} class="active"{% endif %}><a href="{{ '/accordion.html' | relative_url }}">Accordion</a></li>
                     <li{% if page.url contains '/button' %} class="active"{% endif %}><a href="{{ '/button.html' | relative_url }}">Buttons</a></li>
                     <li{% if page.url contains '/tabs' %} class="active"{% endif %}><a href="{{ '/tabs.html' | relative_url }}">Tabs</a></li>
                 </ul>

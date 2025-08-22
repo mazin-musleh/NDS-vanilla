@@ -7,13 +7,13 @@ site:
 
 sections:
   who_we_are: "Who We Are"
-  who_we_are_desc: "A government educational institution providing higher education and lifelong learning"
+  who_we_are_desc: "The National Design System provides a unified set of design principles, components, and guidelines to create consistent and accessible digital experiences across all government services in Saudi Arabia."
 
 stats:
-  students: "Students"
-  faculty: "Faculty Members"
-  graduates: "Graduates"
-  branches: "Branches"
+  components: "Components"
+  design_tokens: "Design Tokens"
+  guidelines: "Guidelines"
+  agencies: "Government Agencies"
 
 buttons:
   read_more: "Read More"
