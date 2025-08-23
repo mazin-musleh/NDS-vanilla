@@ -1,0 +1,229 @@
+/* ========================================
+   DGA DROPDOWN STYLES
+   ======================================== */
+#dgaDigitalStamp {
+    display: block;
+    background-color: var(--background-white);
+    position: relative;
+    height: 0;
+    box-shadow: var(--shadow-md);
+    z-index: 1051;
+    overflow: hidden;
+    transition: height var(--nds-transition);
+}
+
+.nds-topbar .dga-tab {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    bottom: 5px;
+    z-index: 10;
+    cursor: pointer;
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+}
+
+.nds-topbar .dga-tab.textIcon {
+    gap: 10px;
+    height: 35px;
+    background-color: #fff;
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+    display: flex;
+    justify-content: center;
+    box-shadow: var(--shadow-md);
+    padding: 0 20px;
+    white-space: nowrap;
+}
+
+.nds-topbar .dga-tab .toggleArrow {
+    transition: transform 0.1s ease;
+    transition-delay: calc(var(--nds-transition-speed) * 1s);
+}
+
+#dgaDigitalStamp.dga-expanded .dga-tab .toggleArrow {
+    transform: rotate(180deg);
+}
+
+@media (min-width: 769px) {
+    .nds-topbar .dga-tab.textIcon>.bigScreenText {
+        display: inline-block;
+    }
+
+    .nds-topbar .dga-tab.textIcon>.smallScreenText {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .nds-topbar .dga-tab.textIcon>.bigScreenText {
+        display: none;
+    }
+
+    .nds-topbar .dga-tab.textIcon>.smallScreenText {
+        display: inline-block;
+    }
+
+}
+
+.nds-topbar .dga-content {
+    width: 100%;
+    height: 100%;
+    padding: var(--spacing-2xl) 0;
+    background-color: #fff;
+    display: none;
+    position: absolute;
+    z-index: 5;
+    top: -40px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    overflow: clip;
+}
+
+#dgaDigitalStamp.dga-expanded .dga-content,
+#dgaDigitalStamp.dga-expanding .dga-content {
+    display: block;
+    height: fit-content;
+}
+
+#dgaDigitalStamp.dga-expanding:not(.dga-expanded) .dga-content {
+    height: 100%;
+}
+
+.saudi-security-notices-container {
+    margin: var(--spacing-4xl) auto;
+    display: flex;
+    gap: var(--spacing-xl);
+    flex-wrap: wrap;
+}
+
+.saudi-gov-security-card {
+    background-color: var(--background-neutral-100);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-2xl);
+    flex: 1;
+    min-width: 300px;
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-xl);
+    border: 1px solid var(--border-background-neutral);
+    transition: transform var(--nds-transition), box-shadow var(--nds-transition);
+}
+
+.saudi-gov-security-register {
+    width: 100%;
+    margin: 0 auto;
+    background-color: var(--background-neutral-100);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-xl) var(--spacing-2xl);
+    border: 1px solid var(--border-background-neutral);
+    line-height: 24px;
+    text-align: center;
+    display: flex;
+    gap: var(--spacing-sm);
+    flex: 0 0 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.saudi-gov-security-register>img {
+    height: 25px;
+}
+
+.saudi-security-icon-wrapper {
+    position: relative;
+    background: linear-gradient(135deg, var(--background-primary), var(--background-primary-400));
+    border-radius: 50%;
+    width: var(--spacing-7xl);
+    height: var(--spacing-7xl);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.saudi-security-icon-wrapper>.icon {
+    color: var(--text-oncolor-primary);
+}
+
+.saudi-notice-content-block {
+    flex: 1;
+}
+
+.saudi-notice-primary-heading {
+    font-size: var(--nds-text-clamp-lg-FS);
+    line-height: var(--nds-text-clamp-lg-LH);
+    font-weight: 600;
+    color: var(--text-default);
+    margin-bottom: var(--spacing-md);
+}
+
+.saudi-notice-description-text {
+    color: var(--text-default);
+    line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+    .saudi-security-notices-container {
+        margin: var(--spacing-xl) auto;
+        flex-direction: column;
+        gap: var(--spacing-lg);
+    }
+
+    .saudi-gov-security-card {
+        text-align: center;
+        padding: var(--spacing-xl);
+        gap: var(--spacing-lg);
+    }
+
+    .saudi-notice-primary-heading {
+        font-size: 16px;
+        line-height: normal;
+    }
+
+    .saudi-notice-description-text {
+        font-size: 13px;
+    }
+
+}
+
+.saudi-domain-highlight-text {
+    color: var(--background-primary);
+    font-weight: bold;
+}
+
+.saudi-security-verification-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background-color: var(--colors-green-400);
+    color: var(--text-oncolor-primary);
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--nds-text-clamp-sm-FS);
+    line-height: var(--nds-text-clamp-sm-LH);
+    font-weight: bold;
+}
+
+@media (min-width: 960px) {
+    .saudi-security-icon-wrapper>.icon {
+        font-size: 2rem;
+    }
+
+}
+
+.registration-number {
+    color: var(--text-primary);
+    text-decoration: none;
+}
+
+.registration-number:hover {
+    text-decoration: underline;
+}
+
+/*Hero Section*/
+
+.nds-hero-section img {
+    pointer-events: none
+}

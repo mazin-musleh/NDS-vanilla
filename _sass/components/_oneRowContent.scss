@@ -1,0 +1,77 @@
+/* ========================================
+   ONE ROW CONTENT COMPONENT
+   ======================================== */
+
+@use '../mixins' as *;
+/* ========================================
+   ONE ROW CONTENT BASE STYLES
+   ======================================== */
+
+.showMore {
+    display: none !important;
+}
+
+.hasMore > .showMore {
+    display: flex !important;
+}
+
+.oneRowContent {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto;
+    max-width: 100%;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+    position: relative;
+}
+
+.oneRowContent > * {
+    white-space: nowrap;
+    width: fit-content;
+}
+
+/* ========================================
+   SHOW MORE BUTTON STYLES
+   ======================================== */
+
+.oneRowContent.hasMore > *.showMore {
+    position: sticky;
+    background-color: var(--nds-nav-background-color);
+    z-index: 2;
+    transition: opacity var(--nds-transition);
+    transform: translateX(0);
+}
+
+.oneRowContent.hasMore > *.showMore {
+    left: 0;
+    margin-right: var(--spacing-md);
+    /* box-shadow: 2px 0px 8px 2px rgba(0, 0, 0, 0.08); */
+}
+
+.oneRowContent.hasMore > *.showMore i {
+    transition: transform 0.1s ease;
+}
+
+.oneRowContent.hasMore.atEnd > *.showMore i {
+    transform: rotate(180deg);
+}
+
+/* ========================================
+   LTR SUPPORT FOR ONE ROW CONTENT
+   ======================================== */
+
+html[dir="ltr"] .oneRowContent.hasMore > *.showMore {
+    left: unset;
+    right: 0;
+    margin-right: unset;
+    margin-left: var(--spacing-md);
+}
+
+html[dir="ltr"] .oneRowContent.hasMore > *.showMore i {
+    transform: rotate(180deg);
+}
+
+html[dir="ltr"] .oneRowContent.hasMore.atEnd > *.showMore i {
+    transform: rotate(0deg) !important;
+}

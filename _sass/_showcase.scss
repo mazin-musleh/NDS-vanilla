@@ -1,0 +1,228 @@
+/* ===== NDS SHOWCASE COMPONENT ===== */
+/* Demo Card and Showcase related styles */
+
+/* Demo Card Container */
+.nds-demo-card {
+  background: var(--background-white, #ffffff);
+  border: 1px solid var(--border-neutral-secondary, #e5e7eb);
+  border-radius: var(--radius-md, 8px);
+  margin-bottom: var(--spacing-xl, 24px);
+  box-shadow: var(--shadow-md);
+  flex: 1 1 var(--nds-demo-card-width, 100%);
+  min-width: 200px;
+}
+
+/* Demo Header */
+.demo-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-lg, 12px);
+  background: var(--background-neutral-50, #f9fafb);
+  border-bottom: 1px solid var(--border-neutral-secondary, #e5e7eb);
+  font-weight: 600;
+  color: var(--text-default, #161616);
+  border-radius: var(--radius-md, 8px) var(--radius-md, 8px) 0 0;
+  font-size: var(--nds-text-md-FS, 14px);
+  overflow: hidden;
+}
+
+/* Demo Label */
+.demo-label {
+  /* Styles inherited from .demo-header */
+}
+
+/* Demo Action */
+.demo-action {
+  display: flex;
+  gap: var(--spacing-xs, 4px);
+}
+
+/* Demo Background Switcher Buttons */
+.demo-bg-btn {
+  font-size: 12px;
+  padding: 2px 8px;
+  min-height: 20px;
+}
+
+/* Demo Container */
+.demo-container {
+  padding: var(--spacing-4xl, 16px);
+}
+
+/* State Demo */
+.state-demo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md, 12px);
+  align-items: center;
+}
+
+/* Button Row */
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md, 12px);
+  align-items: center;
+}
+
+/* Button Showcase */
+.button-showcase {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xl, 16px);
+  margin-bottom: var(--spacing-xl, 16px);
+}
+
+.demo-container.black-bg,
+.demo-container.dark-bg {
+  background-color: var(--background-neutral-900, #1f2937);
+}
+
+.demo-container.green-bg,
+.oncolor-buttons .demo-container {
+  background-color: var(--background-sa-flag, #074c30);
+}
+
+.demo-container.green-bg,
+.demo-container.dark-bg {
+  background-color: var(--background-sa-flag, #074c30);
+}
+
+.demo-container.black-bg {
+  background-color: var(--background-neutral-900, #1f2937);
+}
+
+
+
+.demo-container.noBg {
+  background-color: var(--background-body, #f9fafb);
+}
+
+/* Code Example */
+.code-example {
+  background: var(--background-neutral-900, #1f2937);
+  padding: var(--spacing-lg, 16px);
+  margin: 0;
+}
+
+.usage-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-md, 12px);
+}
+
+.usage-header span {
+  color: var(--text-oncolor-primary, #ffffff);
+  font-weight: 600;
+  font-size: var(--nds-text-sm-FS, 12px);
+}
+
+.copy-btn {
+  background: transparent;
+  border: 1px solid var(--border-neutral-600, #4b5563);
+  color: var(--text-oncolor-secondary, #d1d5db);
+  padding: var(--spacing-xs, 8px);
+  border-radius: var(--radius-sm, 4px);
+  cursor: pointer;
+  transition: all var(--nds-transition, 0.25s ease);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.copy-btn:hover {
+  background: var(--background-neutral-800, #374151);
+  border-color: var(--border-neutral-500, #6b7280);
+}
+
+.copy-btn.copied {
+  background: var(--button-background-primary-default, #1b8354);
+  border-color: var(--button-background-primary-default, #1b8354);
+  color: white;
+}
+
+.copy-btn .hgi {
+  font-size: 14px;
+}
+
+.code-example pre {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+  overflow-x: auto;
+}
+
+.code-example code {
+  color: var(--text-oncolor-secondary, #d1d5db);
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: var(--nds-text-sm-FS, 12px);
+  line-height: 1.6;
+  direction: ltr;
+  text-align: left;
+  display: block;
+  white-space: pre;
+  overflow-x: auto;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .demo-container {
+    padding: var(--spacing-2xl, 20px);
+  }
+
+  .demo-header {
+    padding: var(--spacing-sm, 8px) var(--spacing-md, 12px);
+    font-size: var(--nds-text-sm-FS, 12px);
+  }
+
+  .state-demo,
+  .button-row {
+    gap: var(--spacing-sm, 8px);
+  }
+
+  .button-showcase {
+    gap: var(--spacing-lg, 16px);
+  }
+
+  .button-showcase.green-bg,
+  .button-showcase.black-bg,
+  .button-showcase.dark-bg {
+    padding: var(--spacing-lg, 16px);
+  }
+}
+
+/* RTL Support */
+html[dir="rtl"] .demo-header {
+  direction: rtl;
+}
+
+html[dir="rtl"] .demo-action {
+  direction: rtl;
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .nds-demo-card {
+    border: 2px solid var(--border-neutral-400, #9ca3af);
+  }
+
+  .demo-header {
+    border-bottom: 2px solid var(--border-neutral-400, #9ca3af);
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .copy-btn {
+    transition: none;
+  }
+}

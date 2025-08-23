@@ -1,0 +1,431 @@
+/* ========================================
+   SIDE MENU COMPONENT
+   ======================================== */
+
+@use '../mixins' as *;
+/* ========================================
+   SIDE MENU BASE STYLES
+   ======================================== */
+
+.nds-sideMenu {
+    width: var(--nds-sideMenu-width);
+    min-width: var(--nds-sideMenu-width);
+    background-color: var(--background-white);
+    box-shadow: var(--shadow-md);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    min-height: fit-content;
+    z-index: 2;
+}
+
+.contentLayout.toEdge .nds-sideMenu,
+.contentLayout.toEdge .nds-content-section {
+    border-radius: 0 !important;
+}
+
+#sideMenuToggle {
+    display: none;
+}
+
+/* ========================================
+   NAVIGATION CONTAINER
+   ======================================== */
+
+/* Navigation Container */
+.nds-sideMenu > nav {
+    position: sticky;
+    top: calc(var(--nds-nav-height) + var(--spacing-xl));
+    width: 100%;
+    max-height: calc(100svh - 100px);
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+}
+
+/* ========================================
+   LIST BASE STYLES
+   ======================================== */
+
+.nds-sideMenu ul,
+.nds-sideMenu ul li,
+.nds-sideMenu ul li a {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    list-style: none;
+    line-height: 1;
+    display: block;
+    position: relative;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: var(--text-default);
+}
+
+/* ========================================
+   PRIMARY MENU ITEMS
+   ======================================== */
+
+.nds-sideMenu > nav > ul > li {
+    border-bottom: 1px solid var(--border-background-white);
+}
+
+.nds-sideMenu > nav > ul > li:last-child {
+    border-bottom: unset;
+}
+
+.nds-sideMenu > nav > ul > li,
+.nds-sideMenu > nav > ul > li > a {
+    position: relative;
+}
+
+.nds-sideMenu > nav > ul > li > a {
+    padding: var(--spacing-lg) var(--spacing-2xl);
+    cursor: pointer;
+    z-index: 2;
+    font-size: 1rem;
+    text-decoration: none;
+    color: var(--text-default) !important;
+}
+
+.nds-sideMenu > nav > ul > li:last-child > a {
+    border-bottom: none;
+}
+
+/* ========================================
+   SUBMENU STYLES
+   ======================================== */
+
+.nds-sideMenu ul ul {
+    margin: 0 var(--spacing-md);
+    overflow: hidden;
+    height: 0;
+    transition: height var(--nds-transition);
+    padding-right: var(--spacing-3xl);
+}
+
+html[dir="ltr"] .nds-sideMenu ul ul {
+    padding-left: var(--spacing-3xl);
+    padding-right: unset;
+}
+
+.nds-sideMenu ul .has-sub.open ul {
+    height: auto;
+}
+
+.nds-sideMenu ul .has-sub:not(.open) ul {
+    display: none;
+}
+
+.nds-sideMenu > nav > ul > li.active > ul {
+    display: block;
+}
+
+/* Submenu Items */
+.nds-sideMenu .has-sub ul li {
+    display: list-item !important;
+    list-style: outside;
+    color: var(--colors-neutral-400, #9DA4AE);
+}
+
+.nds-sideMenu .has-sub ul li:first-child {
+    margin-top: var(--spacing-md);
+}
+
+.nds-sideMenu .has-sub ul li:last-child {
+    margin-bottom: var(--spacing-md);
+}
+
+.nds-sideMenu ul > li.has-sub li a {
+    padding: var(--spacing-md) var(--spacing-sm);
+    margin-right: calc(var(--spacing-xs) * -1);
+}
+
+html[dir="ltr"] .nds-sideMenu ul > li.has-sub li a {
+    margin-left: calc(var(--spacing-xs) * -1);
+    margin-right: unset;
+}
+
+.nds-sideMenu ul ul li a {
+    padding: var(--spacing-md) 0;
+    cursor: pointer;
+    z-index: 2;
+    font-size: 1rem;
+    text-decoration: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Nested Submenus */
+.nds-sideMenu ul ul li.has-sub ul {
+    margin: var(--spacing-md) var(--spacing-lg) 0 0;
+    border-bottom: 0;
+}
+
+html[dir="ltr"] .nds-sideMenu ul ul li.has-sub ul {
+    margin: var(--spacing-md) 0 0 var(--spacing-lg);
+}
+
+.nds-sideMenu ul ul li.has-sub {
+    border-bottom: 1px solid #eaeaea;
+    padding-bottom: var(--spacing-md);
+}
+
+/* ========================================
+   MENU ITEM STATES
+   ======================================== */
+
+/* Hover States */
+.nds-sideMenu > nav > ul > li > a:hover {
+    background-color: #F3F4F6;
+    border-radius: var(--radius-sm);
+}
+
+.nds-sideMenu ul > li.has-sub li a:hover {
+    background-color: #f3f4f6;
+    color: var(--text-default);
+    text-decoration: none;
+    border-radius: var(--radius-md);
+}
+
+.nds-sideMenu ul ul li a:hover {
+    color: #292c2f;
+}
+
+/* Open States */
+.nds-sideMenu > nav > ul > li.open > a {
+    background-color: var(--button-background-neutral-pressed);
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+}
+
+/* Active States */
+.nds-sideMenu > nav > ul > li.active > a {
+    background-color: var(--button-background-neutral-pressed);
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+}
+
+.nds-sideMenu li.active > a,
+.nds-sideMenu li.active > a::after {
+    color: var(--text-primary) !important;
+}
+
+.nds-sideMenu ul > li.has-sub li.active a {
+    color: #1b8354 !important;
+}
+
+.nds-sideMenu ul > li.has-sub > a:hover:after,
+.nds-sideMenu ul > li.has-sub.open > a:after {
+    color: #384250;
+}
+
+/* ========================================
+   MENU ITEM INDICATORS (::before)
+   ======================================== */
+
+.nds-sideMenu > nav > ul > li > a:before {
+    position: absolute;
+    content: '';
+    display: none;
+    width: 6px;
+    height: calc(100% - var(--spacing-lg));
+    z-index: 2;
+    border-radius: 9999px;
+    bottom: unset;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+html[dir="ltr"] .nds-sideMenu > nav > ul > li > a:before {
+    right: unset;
+    left: 0;
+}
+
+.nds-sideMenu > nav > ul > li > a:hover:before {
+    display: block;
+    background-color: var(--background-neutral-400);
+}
+
+.nds-sideMenu > nav > ul > li.open > a:before {
+    display: block;
+    background-color: var(--background-neutral-800);
+}
+
+.nds-sideMenu > nav > ul > li.active > a:before {
+    display: block;
+    background-color: var(--background-primary);
+}
+
+/* ========================================
+   MENU ITEM ICONS (::after)
+   ======================================== */
+
+.hgi-loaded .nds-sideMenu ul > li.has-sub > a:after {
+    font-family: "hgi-stroke-rounded" !important;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    position: absolute;
+    left: 14px;
+    top: 14px;
+    font-size: 1rem;
+    color: #384250;
+    content: "㭚";
+    transition: all 0.05s ease;
+    font-weight: bold;
+}
+
+html[dir="ltr"] .hgi-loaded .nds-sideMenu ul > li.has-sub > a:after {
+    right: 14px;
+    left: unset;
+}
+
+.hgi-loaded .nds-sideMenu nav li.gridView > a:after,
+.hgi-loaded .nds-sideMenu nav li.redirect.external > a:after {
+    content: '㭫';
+}
+
+.hgi-loaded .nds-sideMenu nav li.redirect.external > a:after {
+    content: "䊔";
+}
+
+.hgi-loaded .nds-sideMenu nav li.gridView > a:after {
+    content: "䃺";
+}
+
+.hgi-loaded .nds-sideMenu ul > li.gridView > a::after,
+.hgi-loaded .nds-sideMenu ul > li.redirect.external > a::after {
+    content: '㭫';
+}
+
+.hgi-loaded .nds-sideMenu ul > li.redirect.external > a::after {
+    content: "䊔";
+}
+
+.hgi-loaded .nds-sideMenu ul > li.gridView > a::after {
+    content: "䃺";
+}
+
+/* Dropdown Arrow Rotation */
+.nds-sideMenu nav > ul > li.has-sub.open > a:after {
+    transform: rotate(-180deg);
+}
+
+/* ========================================
+   TABLET AND MOBILE STYLES (959.98px and below)
+   ======================================== */
+
+@media (max-width: 959.98px) {
+    .nds-sideMenu {
+        position: absolute;
+        z-index: 10;
+        height: 100%;
+        border-radius: 0;
+        border-top: 0;
+        border-bottom: 0;
+        transform: translateX(calc(100%));
+        transition: transform var(--nds-transition);
+    }
+
+    .nds-sideMenu.open {
+        transform: translateX(0px) !important;
+    }
+
+    .nds-sideMenu > nav {
+        margin-top: -40px !important;
+    }
+
+    /* Side Menu Toggle Button */
+    #sideMenuToggle {
+        width: 40px;
+        height: 40px;
+        background-color: var(--button-background-primary-default);
+        border: unset;
+        outline: none;
+        border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+        position: sticky;
+        right: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        top: 40vh;
+        transform: translateX(calc((var(--nds-sideMenu-width) - var(--spacing-md)) * -1));
+        box-shadow: var(--shadow-md);
+    }
+
+    #sideMenuToggle.draggable {
+        background-color: var(--button-background-black-default);
+    }
+
+    .hgi-loaded #sideMenuToggle::after {
+        content: "䍛";
+        font-family: "hgi-stroke-rounded" !important;
+        font-style: normal;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-size: 1.5rem;
+        color: var(--text-oncolor-primary);
+        transition: all 0.05s ease;
+        transform: scale(-1);
+        font-weight: 600;
+    }
+
+    @include ltr {
+        .hgi-loaded #sideMenuToggle::after {
+            transform: scale(1);
+        }
+    }
+
+    .hgi-loaded #sideMenuToggle.draggable::after {
+        content: "㮌";
+    }
+
+    /* LTR Support */
+    html[dir="ltr"] .nds-sideMenu {
+        transform: translateX(-100%);
+    }
+
+    html[dir="ltr"] #sideMenuToggle {
+        right: unset;
+        left: 0;
+        transform: translateX(calc(var(--nds-sideMenu-width) - var(--spacing-md)));
+        border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    }
+
+    html[dir="ltr"] .hgi-loaded #sideMenuToggle::after {
+        content: "䍛";
+        transform: scale(1);
+    }
+
+    html[dir="ltr"] .nds-sideMenu .has-sub ul {
+        margin: var(--spacing-md) 0px 0 28px;
+        padding-right: 0;
+        padding-left: 24px;
+    }
+
+    html[dir="ltr"] .nds-sideMenu > nav > ul > li > a:before {
+        right: unset;
+        left: 0;
+    }
+
+    html[dir="ltr"] .nds-sideMenu nav li.has-sub > a:after {
+        right: 7px;
+        left: unset;
+    }
+
+    html[dir="ltr"] .nds-sideMenu nav > ul > li.has-sub.open > a:after {
+        transform: rotate(180deg);
+    }
+
+    html[dir="ltr"] .nds-sideMenu ul > li.has-sub li a {
+        margin-left: 0;
+        margin-left: -4px;
+    }
+
+    html[dir="ltr"] .nds-sideMenu ul > li.redirect.external > a::after {
+        transform: scale(-1);
+    }
+}
