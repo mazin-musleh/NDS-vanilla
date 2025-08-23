@@ -12,6 +12,7 @@
             this.accordionContainer = accordionContainer;
             this.buttons = Array.from(accordionContainer.querySelectorAll('.nds-btn-accordion'));
             this.collapses = Array.from(accordionContainer.querySelectorAll('.nds-accordion-collapse'));
+            this.isAnimating = false; // Simple flag to prevent clicks during animation
             
             if (this.buttons.length === 0) {
                 console.warn('NDS Accordion: No accordion buttons found');
@@ -31,6 +32,12 @@
             return this.accordionContainer.classList.contains('always-open');
         }
 
+        getTransitionDuration() {
+            return parseFloat(
+                getComputedStyle(document.documentElement).getPropertyValue('--nds-transition-speed')
+            ) * 1000 || 300;
+        }
+
         setupInitialState() {
             // Ensure proper initial state for all accordion items
             this.buttons.forEach((button, index) => {
@@ -42,9 +49,11 @@
                 if (isExpanded) {
                     collapse.classList.add('show');
                     button.classList.remove('collapsed');
+                    button.classList.add('selected');
                 } else {
                     collapse.classList.remove('show');
                     button.classList.add('collapsed');
+                    button.classList.remove('selected');
                     button.setAttribute('aria-expanded', 'false');
                 }
             });
@@ -117,6 +126,9 @@
             const collapse = this.collapses[index];
             
             if (!button || !collapse) return;
+            
+            // Prevent toggling while animation is in progress
+            if (this.isAnimating) return;
 
             const isCurrentlyExpanded = button.getAttribute('aria-expanded') === 'true';
             
@@ -138,10 +150,19 @@
                 this.hideAll(index);
             }
 
+            // Set animation flag with timeout
+            this.isAnimating = true;
+            setTimeout(() => {
+                this.isAnimating = false;
+            }, this.getTransitionDuration() + 50); // CSS transition duration + 50ms buffer
+
+            // Update button state immediately
+            button.setAttribute('aria-expanded', 'true');
+            button.classList.remove('collapsed');
+            button.classList.add('selected');
+
             // Show the target panel
             this.animateShow(collapse, () => {
-                button.setAttribute('aria-expanded', 'true');
-                button.classList.remove('collapsed');
                 collapse.classList.add('show');
                 
                 // Dispatch custom event
@@ -155,9 +176,18 @@
             
             if (!button || !collapse) return;
 
+            // Set animation flag with timeout
+            this.isAnimating = true;
+            setTimeout(() => {
+                this.isAnimating = false;
+            }, this.getTransitionDuration() + 50); // CSS transition duration + 50ms buffer
+
+            // Update button state immediately
+            button.setAttribute('aria-expanded', 'false');
+            button.classList.add('collapsed');
+            button.classList.remove('selected');
+
             this.animateHide(collapse, () => {
-                button.setAttribute('aria-expanded', 'false');
-                button.classList.add('collapsed');
                 collapse.classList.remove('show');
                 
                 // Dispatch custom event
@@ -209,7 +239,7 @@
                 if (collapse.classList.contains('collapsing')) {
                     handleTransitionEnd();
                 }
-            }, 400);
+            }, this.getTransitionDuration());
         }
 
         animateHide(collapse, callback) {
@@ -244,7 +274,7 @@
                 if (collapse.classList.contains('collapsing')) {
                     handleTransitionEnd();
                 }
-            }, 400);
+            }, this.getTransitionDuration());
         }
 
         dispatchToggleEvent(index, button, collapse, isShown) {

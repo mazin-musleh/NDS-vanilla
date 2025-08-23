@@ -45,47 +45,47 @@ direction: ltr
                     <div class="nds-tabs" id="basicTabs">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Basic tab navigation">
-                                <button class="nds-tab" role="tab" aria-selected="true" aria-controls="panel-home"
+                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-home"
                                     id="tab-home" tabindex="0" data-label="Home">
                                     <span class="nds-tab-label">Home</span>
                                 </button>
-                                <button class="nds-tab" role="tab" aria-selected="false" aria-controls="panel-services"
+                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="false" aria-controls="panel-services"
                                     id="tab-services" tabindex="-1" data-label="Services">
                                     <span class="nds-tab-label">Services</span>
                                 </button>
-                                <button class="nds-tab" role="tab" aria-selected="false" aria-controls="panel-about"
+                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="false" aria-controls="panel-about"
                                     id="tab-about" tabindex="-1">
                                     <span class="nds-tab-label">About</span>
                                 </button>
-                                <button class="nds-tab" role="tab" aria-selected="false" aria-controls="panel-contact"
+                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="false" aria-controls="panel-contact"
                                     id="tab-contact" tabindex="-1">
                                     <span class="nds-tab-label">Contact</span>
                                 </button>
-                                <button class="nds-tab" role="tab" aria-selected="false" aria-controls="panel-support"
+                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="false" aria-controls="panel-support"
                                     id="tab-support" tabindex="-1">
                                     <span class="nds-tab-label">Support</span>
                                 </button>
-                                <button class="nds-tab" role="tab" aria-selected="false" aria-controls="panel-resources"
+                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="false" aria-controls="panel-resources"
                                     id="tab-resources" tabindex="-1">
                                     <span class="nds-tab-label">Resources</span>
                                 </button>
-                                <button class="nds-tab" role="tab" aria-selected="false"
+                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="false"
                                     aria-controls="panel-documentation" id="tab-documentation" tabindex="-1">
                                     <span class="nds-tab-label">Documentation</span>
                                 </button>
-                                <button class="nds-tab" role="tab" aria-selected="false" aria-controls="panel-news"
+                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="false" aria-controls="panel-news"
                                     id="tab-news" tabindex="-1">
                                     <span class="nds-tab-label">News</span>
                                 </button>
-                                <button class="nds-tab" role="tab" aria-selected="false" aria-controls="panel-feedback"
+                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="false" aria-controls="panel-feedback"
                                     id="tab-feedback" tabindex="-1">
                                     <span class="nds-tab-label">Feedback</span>
                                 </button>
-                                <button class="nds-tab" role="tab" aria-selected="false" aria-controls="panel-settings"
+                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="false" aria-controls="panel-settings"
                                     id="tab-settings" tabindex="-1">
                                     <span class="nds-tab-label">Settings</span>
                                 </button>
-                                <button class="nds-tab showMore"><i
+                                <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
                             </nav>
@@ -188,13 +188,13 @@ direction: ltr
                     <code>&lt;div class="nds-tabs"&gt;
   &lt;div class="nds-tab-list-container"&gt;
     &lt;nav class="nds-tab-list" role="tablist" aria-label="Tab navigation"&gt;
-      &lt;button class="nds-tab" role="tab" aria-selected="true" aria-controls="panel-1" id="tab-1"&gt;
+      &lt;button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-1" id="tab-1"&gt;
         &lt;span class="nds-tab-label"&gt;Tab 1&lt;/span&gt;
       &lt;/button&gt;
-      &lt;button class="nds-tab" role="tab" aria-selected="false" aria-controls="panel-2" id="tab-2"&gt;
+      &lt;button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="false" aria-controls="panel-2" id="tab-2"&gt;
         &lt;span class="nds-tab-label"&gt;Tab 2&lt;/span&gt;
       &lt;/button&gt;
-      &lt;button class="nds-tab showMore"&gt;&lt;i
+      &lt;button class="nds-btn nds-btn-subtle nds-tab showMore"&gt;&lt;i
         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"&gt;&lt;/i&gt;
       &lt;/button&gt;
     &lt;/nav&gt;
@@ -238,22 +238,22 @@ direction: ltr
                     <div class="nds-tabs" id="iconTabs">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Icon tab navigation">
-                                <button class="nds-tab nds-tab-with-icon" role="tab" aria-selected="true"
+                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
                                     aria-controls="panel-dashboard" id="tab-dashboard" tabindex="0">
                                     <i class="hgi hgi-stroke hgi-home-05"></i>
                                     <span class="nds-tab-label">Dashboard</span>
                                 </button>
-                                <button class="nds-tab nds-tab-with-icon" role="tab" aria-selected="false"
+                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="false"
                                     aria-controls="panel-analytics" id="tab-analytics" tabindex="-1">
                                     <i class="hgi hgi-stroke hgi-analytics-01"></i>
                                     <span class="nds-tab-label">Analytics</span>
                                 </button>
-                                <button class="nds-tab nds-tab-with-icon" role="tab" aria-selected="false"
+                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="false"
                                     aria-controls="panel-settings" id="tab-settings" tabindex="-1">
                                     <i class="hgi hgi-stroke hgi-settings-01"></i>
                                     <span class="nds-tab-label">Settings</span>
                                 </button>
-                                <button class="nds-tab showMore"><i
+                                <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
                             </nav>
@@ -317,19 +317,19 @@ direction: ltr
                     <code>&lt;div class="nds-tabs"&gt;
   &lt;div class="nds-tab-list-container"&gt;
     &lt;nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Icon tab navigation"&gt;
-      &lt;button class="nds-tab nds-tab-with-icon" role="tab" aria-selected="true" aria-controls="panel-1" id="tab-1"&gt;
+      &lt;button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-1" id="tab-1"&gt;
         &lt;i class="hgi hgi-stroke hgi-home-05"&gt;&lt;/i&gt;
         &lt;span class="nds-tab-label"&gt;Dashboard&lt;/span&gt;
       &lt;/button&gt;
-      &lt;button class="nds-tab nds-tab-with-icon" role="tab" aria-selected="false" aria-controls="panel-2" id="tab-2"&gt;
+      &lt;button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="false" aria-controls="panel-2" id="tab-2"&gt;
         &lt;i class="hgi hgi-stroke hgi-analytics-01"&gt;&lt;/i&gt;
         &lt;span class="nds-tab-label"&gt;Analytics&lt;/span&gt;
       &lt;/button&gt;
-      &lt;button class="nds-tab nds-tab-with-icon" role="tab" aria-selected="false" aria-controls="panel-3" id="tab-3"&gt;
+      &lt;button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="false" aria-controls="panel-3" id="tab-3"&gt;
         &lt;i class="hgi hgi-stroke hgi-settings-01"&gt;&lt;/i&gt;
         &lt;span class="nds-tab-label"&gt;Settings&lt;/span&gt;
       &lt;/button&gt;
-      &lt;button class="nds-tab showMore"&gt;&lt;i
+      &lt;button class="nds-btn nds-btn-subtle nds-tab showMore"&gt;&lt;i
         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"&gt;&lt;/i&gt;
       &lt;/button&gt;
     &lt;/nav&gt;

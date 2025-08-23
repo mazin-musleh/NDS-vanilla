@@ -25,8 +25,8 @@ css_files:
                     <div class="demo-label">Basic Accordion</div>
                     <div class="demo-action">
                         <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                            data-toggler='["nds-accordion-flush", ".nds-accordion", "accordionStyle"]'>
-                            <span class="label">Flush</span>
+                            data-toggler='["cardView", ".nds-accordion", "accordionStyle"]'>
+                            <span class="label">Card View</span>
                         </button>
                         <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
                             data-toggler='["always-open", ".nds-accordion", "accordionBehavior"]'>
@@ -141,8 +141,8 @@ css_files:
                     <div class="demo-label">Accordion with Leading Icons</div>
                     <div class="demo-action">
                         <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                            data-toggler='["nds-accordion-flush", ".nds-accordion", "accordionStyle"]'>
-                            <span class="label">Flush</span>
+                            data-toggler='["cardView", ".nds-accordion", "accordionStyle"]'>
+                            <span class="label">Card View</span>
                         </button>
                         <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
                             data-toggler='["always-open", ".nds-accordion", "accordionBehavior"]'>
@@ -279,9 +279,9 @@ css_files:
 
                 <h3>Behavior Modes</h3>
                 <ul>
-                    <li><strong>Default:</strong> Only one panel open at a time (accordion behavior)</li>
+                    <li><strong>Default:</strong> Only one panel open at a time with flush styling (no borders/shadows)</li>
                     <li><strong>Always Open:</strong> Multiple panels can be open simultaneously</li>
-                    <li><strong>Flush:</strong> Remove borders and rounded corners for seamless integration</li>
+                    <li><strong>Card View:</strong> Add borders, shadows, and rounded corners for card-like appearance</li>
                 </ul>
 
                 <h3>Best Practices</h3>
