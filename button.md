@@ -1012,7 +1012,7 @@ direction: ltr
     <div class="nds-section-content-container">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Button Sizes</h2>
-            <p class="nds-section-description">Four sizes: Small (24px), Medium (32px), Large (40px)</p>
+            <p class="nds-section-description">Four sizes: Small (24px), Medium (32px), Large (40px), Extra Large (48px)</p>
         </div>
         <div class="nds-section-content">
             <div class="button-showcase">
@@ -1020,6 +1020,10 @@ direction: ltr
                     <div class="demo-header">
                         <div class="demo-label">Default Large (40px)</div>
                         <div class="demo-action">
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                                data-toggler='["nds-btn-xl", ".nds-btn-demo", "sizeToggle"]'>
+                                <span class="label">XL</span>
+                            </button>
                             <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn selected"
                                 data-toggler='["nds-btn-lg", ".nds-btn-demo", "sizeToggle"]'>
                                 <span class="label">LG</span>
@@ -1094,6 +1098,10 @@ direction: ltr
                     <div class="demo-header">
                         <div class="demo-label">Loading States</div>
                         <div class="demo-action">
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                                data-toggler='["nds-btn-xl", ".nds-btn-demo", "sizeToggle"]'>
+                                <span class="label">XL</span>
+                            </button>
                             <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn selected"
                                 data-toggler='["nds-btn-lg", ".nds-btn-demo", "sizeToggle"]'>
                                 <span class="label">LG</span>

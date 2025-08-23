@@ -1,6 +1,13 @@
 /**
  * NDS Accordion Component
  * Collapsible accordion component with NDS design tokens
+ * 
+ * Structure:
+ * - Base accordion container (.nds-accordion)
+ * - Card view variant (.nds-accordion.cardView) 
+ * - Accordion items (.nds-accordion-item)
+ * - Interactive buttons (.nds-btn-accordion)
+ * - Collapsible content (.nds-accordion-collapse)
  */
 
 /* Accordion Container */
@@ -8,20 +15,36 @@
     display: flex;
     flex-direction: column;
     gap: 0;
-    border: 1px solid var(--border-neutral-secondary);
+}
+
+/* Card View Variant */
+.nds-accordion.cardView {
+    border: 1px solid var(--border-neutral-primary);
     border-radius: var(--radius-md);
     background-color: var(--background-white);
     box-shadow: var(--shadow-md);
+    overflow: hidden;
 }
 
-/* Accordion Item */
+/* Accordion Item - Default (Flush Style) */
 .nds-accordion-item {
     position: relative;
-    border-bottom: 1px solid var(--border-neutral-secondary);
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    border-radius: 0;
+    border-top: 1px solid var(--border-neutral-primary);
+    transition: var(--nds-transition);
 }
 
-.nds-accordion-item:last-child {
-    border-bottom: none;
+
+/* Card View Item Overrides */
+.nds-accordion.cardView .nds-accordion-item {
+    border-top: 1px solid var(--border-neutral-primary);
+}
+
+.nds-accordion.cardView .nds-accordion-item:first-child {
+    border-top: none;
 }
 
 /* Accordion Header */
@@ -52,7 +75,7 @@
     width: 20px;
     height: 20px;
     font-size: 20px;
-    color: var(--text-secondary);
+    color: var(--text-default);
 }
 
 /* Accordion Title */
@@ -69,7 +92,7 @@
     font-size: 20px;
     margin-left: auto;
     color: var(--text-secondary);
-    transition: var(--transition-base);
+    transition: var(--nds-transition);
     transform: rotate(0deg);
 }
 
@@ -77,18 +100,8 @@
     transform: rotate(180deg);
 }
 
-/* RTL Support */
-[dir="rtl"] .nds-btn-accordion {
-    text-align: right;
-}
-
-[dir="rtl"] .nds-accordion-title {
-    text-align: right;
-}
-
-[dir="rtl"] .nds-accordion-icon {
-    margin-left: 0;
-    margin-right: auto;
+.nds-btn-accordion{
+border-radius: 0;
 }
 
 /* Accordion Collapse */
@@ -106,7 +119,7 @@
     display: block;
     height: 0;
     overflow: hidden;
-    transition: height 0.3s ease;
+    transition: height var(--nds-transition);
 }
 
 /* Accordion Body */
@@ -115,36 +128,18 @@
     color: var(--text-default);
 }
 
-/* Flush Variant */
-.nds-accordion-flush {
-    border: none;
-    border-radius: 0;
-}
+/* ==============================================
+   ACCORDION VARIANTS
+   ============================================== */
 
-.nds-accordion-flush .nds-accordion-item {
-    border-left: none;
-    border-right: none;
-    border-radius: 0;
-}
-
-.nds-accordion-flush .nds-accordion-item:first-child {
-    border-top: none;
-}
-
-.nds-accordion-flush .nds-accordion-item:last-child {
-    border-bottom: 1px solid var(--border-neutral-secondary);
-}
-
-.nds-accordion-flush .nds-btn-accordion {
-    border-radius: 0;
-}
-
-/* Always Open Variant */
+/* Always Open Variant - Allows multiple panels to be open */
 .nds-accordion.always-open .nds-accordion-item {
     /* No special styling needed - behavior handled by JavaScript */
 }
 
-/* Demo Page Specific Styles */
+/* ==============================================
+   DEMO PAGE SPECIFIC STYLES
+   ============================================== */
 .support-options {
     display: flex;
     flex-direction: column;
@@ -182,7 +177,11 @@
     color: var(--button-background-primary-default);
 }
 
-/* Responsive Design */
+/* ==============================================
+   RESPONSIVE DESIGN & ACCESSIBILITY
+   ============================================== */
+
+/* Mobile Responsive Adjustments */
 @media (max-width: 768px) {
     .nds-btn-accordion {
         padding: var(--spacing-md);
@@ -198,16 +197,16 @@
     }
 }
 
-/* Animation States */
-.nds-accordion-item {
-    transition: var(--transition-base);
-}
 
 /* High Contrast Mode Support */
 @media (prefers-contrast: high) {
-    .nds-accordion {
+    .nds-accordion.cardView {
         border-color: var(--text-primary);
         border-width: 2px;
+    }
+    
+    .nds-accordion-item {
+        border-color: var(--text-primary);
     }
     
     .nds-btn-accordion:focus {
@@ -215,15 +214,16 @@
     }
 }
 
-/* Reduced Motion Support */
+/* Reduced Motion Accessibility */
 @media (prefers-reduced-motion: reduce) {
     .nds-accordion-icon,
-    .nds-accordion-collapse.collapsing {
+    .nds-accordion-collapse.collapsing,
+    .nds-accordion-item {
         transition: none;
     }
 }
 
-/* Print Styles */
+/* Print Media Styles */
 @media print {
     .nds-accordion-collapse {
         display: block !important;

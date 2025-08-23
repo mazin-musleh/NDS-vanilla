@@ -1,6 +1,23 @@
-/* ===== NDS BUTTON COMPONENT - FIGMA SPECIFICATIONS ===== */
+/**
+ * NDS Button Component - Figma Specifications
+ * Comprehensive button system with multiple variants, sizes, and states
+ * 
+ * Variants:
+ * - Primary (Green), Neutral (Dark Gray), Secondary (Light Gray)
+ * - Secondary Outline, Subtle, Transparent
+ * - Destructive variants for all types
+ * - On-color variants for dark backgrounds
+ * 
+ * Sizes: Small (24px), Medium (32px), Large (40px)
+ * States: Default, Hover, Active, Selected, Disabled, Loading
+ * Features: Icons, Full-width, Icon-only, Button groups
+ */
 
-/* Base Button Styles */
+/* ==============================================
+   BASE BUTTON STYLES
+   ============================================== */
+
+/* Core Button Foundation */
 .nds-btn {
     width: fit-content;
     display: inline-flex;
@@ -40,10 +57,10 @@
     cursor: not-allowed;
     opacity: 0.6;
     pointer-events: none;
+    transition: var(--nds-transition);
 }
 
-
-
+/* Menu Button Dropdown Icon */
 body.hgi-loaded .nds-btn.nds-btn-menu::after {
     opacity: 1;
 }
@@ -60,12 +77,26 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
     display: inline-flex;
     width: 20px;
     height: 20px;
-    justify-content: flex-start;
+    justify-content: center;
     align-content: center;
     align-items: center;
+    transition: opacity var(--nds-transition), transform 0.1s ease;
 }
 
-/* ===== BUTTON SIZES ===== */
+.nds-btn.nds-btn-menu.selected::after {
+    transform: rotate(180deg);
+}
+
+/* ==============================================
+   BUTTON SIZES
+   ============================================== 
+   
+   Available sizes:
+   - Small (SM): 24px height
+   - Medium (MD): 32px height  
+   - Large (LG): 40px height - Default size
+   - Extra Large (XL): 48px height
+   */
 
 .nds-btn,
 .nds-btn-lg {
@@ -95,8 +126,20 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
     line-height: var(--nds-text-xs-LH);
 }
 
+.nds-btn-xl {
+    --nds-btn-height: 48px;
+    --nds-btn-space: calc(var(--nds-btn-height) - var(--spacing-xl) - 4px);
+    height: 48px;
+    padding: 0 var(--spacing-xl);
+    font-size: var(--nds-text-xl-FS);
+    line-height: var(--nds-text-xl-LH);
+}
 
-/* ===== PRIMARY BUTTON (Green) ===== */
+/* ==============================================
+   BUTTON VARIANTS - STANDARD BACKGROUND
+   ============================================== */
+
+/* Primary Button (Green) */
 .nds-btn-primary,
 .nds-btn-primary[data-state="default"] {
     background-color: var(--button-background-primary-default);
@@ -128,7 +171,7 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
     color: var(--text-default-disabled);
 }
 
-/* ===== NEUTRAL BUTTON (Dark Gray) ===== */
+/* Neutral Button (Dark Gray) */
 .nds-btn-neutral,
 .nds-btn-neutral[data-state="default"] {
     background-color: var(--button-background-black-default);
@@ -160,7 +203,7 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
     color: var(--text-default-disabled);
 }
 
-/* ===== SECONDARY SOLID BUTTON (Light Gray) ===== */
+/* Secondary Solid Button (Light Gray) */
 .nds-btn-secondary,
 .nds-btn-secondary[data-state="default"] {
     background-color: var(--button-background-neutral-default);
@@ -192,7 +235,7 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
     color: var(--text-default-disabled);
 }
 
-/* ===== SECONDARY OUTLINE BUTTON ===== */
+/* Secondary Outline Button */
 .nds-btn-secondary-outline,
 .nds-btn-secondary-outline[data-state="default"] {
     background-color: var(--button-background-transparent-hovered);
@@ -229,7 +272,7 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
     color: var(--text-default-disabled);
 }
 
-/* ===== SUBTLE BUTTON ===== */
+/* Subtle Button */
 .nds-btn-subtle,
 .nds-btn-subtle[data-state="default"] {
     color: var(--text-default);
@@ -259,7 +302,7 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
     color: var(--text-default-disabled);
 }
 
-/* ===== TRANSPARENT BUTTON ===== */
+/* Transparent Button */
 .nds-btn-transparent,
 .nds-btn-transparent[data-state="default"] {
     color: var(--text-default);
@@ -286,7 +329,11 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
     color: var(--text-default-disabled);
 }
 
-/* ===== ON-COLOR VARIANTS (For Dark Backgrounds) ===== */
+/* ==============================================
+   ON-COLOR VARIANTS - DARK BACKGROUNDS
+   ============================================== */
+
+/* On-Color Primary & Neutral Variants */
 .nds-btn-oncolor.nds-btn-primary,
 .nds-btn-oncolor.nds-btn-neutral,
 .nds-btn-oncolor.nds-btn-primary[data-state="default"],
@@ -348,11 +395,6 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
 
 .nds-btn-oncolor.nds-btn-secondary:active,
 .nds-btn-oncolor.nds-btn-secondary[data-state="active"] {
-    background-color: var(--button-background-transparent-pressed);
-    border-color: var(--button-background-transparent-default);
-}
-
-.nds-btn-oncolor.nds-btn-secondary:active {
     background-color: var(--button-background-oncolor-pressed);
     border-color: var(--button-background-transparent-default);
 }
@@ -445,7 +487,11 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
     color: var(--text-default-oncolor-disabled);
 }
 
-/* ===== DESTRUCTIVE VARIANTS (Red) ===== */
+/* ==============================================
+   DESTRUCTIVE VARIANTS - RED THEME
+   ============================================== */
+
+/* Destructive Primary Button */
 .nds-btn-destructive.nds-btn-primary,
 .nds-btn-destructive.nds-btn-primary[data-state="default"] {
     background-color: var(--button-background-danger-primary-default);
@@ -532,7 +578,7 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
     color: var(--text-default-disabled);
 }
 
-/* ===== DESTRUCTIVE SECONDARY SOLID BUTTON ===== */
+/* Destructive Secondary Solid Button */
 .nds-btn-destructive.nds-btn-secondary,
 .nds-btn-destructive.nds-btn-secondary[data-state="default"] {
     background-color: var(--button-background-danger-secondary-default);
@@ -564,7 +610,7 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
     color: var(--text-default-disabled);
 }
 
-/* ===== DESTRUCTIVE SUBTLE BUTTON ===== */
+/* Destructive Subtle Button */
 .nds-btn-destructive.nds-btn-subtle,
 .nds-btn-destructive.nds-btn-subtle[data-state="default"] {
     color: var(--button-background-danger-primary-default);
@@ -594,7 +640,11 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
     color: var(--text-default-disabled);
 }
 
-/* ===== ON-COLOR DESTRUCTIVE VARIANTS (For Dark Backgrounds) ===== */
+/* ==============================================
+   ON-COLOR DESTRUCTIVE VARIANTS
+   ============================================== */
+
+/* On-Color Destructive Primary */
 .nds-btn-oncolor.nds-btn-destructive.nds-btn-primary,
 .nds-btn-oncolor.nds-btn-destructive.nds-btn-primary[data-state="default"] {
     background-color: var(--button-background-danger-primary-default);
@@ -741,25 +791,32 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
     color: var(--text-default-disabled);
 }
 
-/* ===== ICON-ONLY BUTTONS ===== */
+/* ==============================================
+   BUTTON FEATURES & MODIFIERS
+   ============================================== */
+
+/* Icon-Only Button Base */
 .nds-btn-icon-only {
     aspect-ratio: 1;
     padding: 0;
 }
+
 .nds-btn-icon-only .label {
     display: none;
 }
+
 .nds-btn-label-only i {
     display: none;
 }
 
+/* Icon-Only Button Sizes */
 .nds-btn-icon-only.nds-btn-sm {
     width: 24px;
     padding: 0;
 }
 
 .nds-btn-icon-only.nds-btn-md {
-    width: 23px;
+    width: 32px;
     padding: 0;
 }
 
@@ -768,7 +825,11 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
     padding: 0;
 }
 
-/* Menu Button with icon only */
+/* Icon-Only Menu Button Exceptions */
+.nds-btn-icon-only.nds-btn-menu {
+    width: fit-content;
+}
+
 .nds-btn-icon-only.nds-btn-menu.nds-btn-sm {
     padding: 0 var(--spacing-sm);
 }
@@ -781,11 +842,7 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
     padding: 0 var(--spacing-lg);
 }
 
-.nds-btn-icon-only.nds-btn-menu {
-    width: fit-content;
-}
-
-/* ===== ICON POSITIONING ===== */
+/* Icon Positioning & Layout */
 .nds-btn-lead-icon {
     flex-direction: row;
 }
@@ -794,7 +851,7 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
     flex-direction: row-reverse;
 }
 
-/* ===== BUTTON ICONS ===== */
+/* Icon Sizing by Button Size */
 .nds-btn i.hgi {
     font-size: 1.2em;
     flex-shrink: 0;
@@ -808,12 +865,12 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
     font-size: 1.3em;
 }
 
-/* ===== FULL WIDTH BUTTON ===== */
+/* Full Width Button */
 .nds-btn-full {
     width: 100%;
 }
 
-/* ===== BUTTON GROUPS ===== */
+/* Button Groups */
 .nds-btn-group {
     display: inline-flex;
     border-radius: var(--radius-md);
@@ -845,7 +902,11 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
     border-right-width: 1px;
 }
 
-/* ===== LOADING STATE ===== */
+/* ==============================================
+   LOADING STATES & ANIMATIONS
+   ============================================== */
+
+/* Base Loading State */
 .nds-btn-loading {
     position: relative;
     pointer-events: none;
@@ -893,14 +954,8 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
     border-top-color: var(--text-default);
 }
 
-.nds-btn-loading.nds-btn-destructive.nds-btn-secondary-outline::after {
-    border-top-color: var(--button-background-danger-primary-default);
-}
-
-.nds-btn-loading.nds-btn-destructive.nds-btn-subtle::after {
-    border-top-color: var(--button-background-danger-primary-default);
-}
-
+.nds-btn-loading.nds-btn-destructive.nds-btn-secondary-outline::after,
+.nds-btn-loading.nds-btn-destructive.nds-btn-subtle::after,
 .nds-btn-loading.nds-btn-destructive.nds-btn-transparent::after {
     border-top-color: var(--button-background-danger-primary-default);
 }
@@ -911,7 +966,9 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
     border-top-color: var(--text-default);
 }
 
-.nds-btn-loading.nds-btn-oncolor.nds-btn-secondary::after {
+.nds-btn-loading.nds-btn-oncolor.nds-btn-secondary::after,
+.nds-btn-loading.nds-btn-oncolor.nds-btn-subtle::after,
+.nds-btn-loading.nds-btn-oncolor.nds-btn-transparent::after {
     border-top-color: var(--text-oncolor-primary);
 }
 
@@ -919,33 +976,16 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
     border-top-color: var(--colors-base-white);
 }
 
-.nds-btn-loading.nds-btn-oncolor.nds-btn-subtle::after {
-    border-top-color: var(--text-oncolor-primary);
-}
-
-.nds-btn-loading.nds-btn-oncolor.nds-btn-transparent::after {
-    border-top-color: var(--text-oncolor-primary);
-}
-
 /* Destructive On-Color Button Loading States */
-.nds-btn-loading.nds-btn-oncolor.nds-btn-destructive.nds-btn-primary::after {
-    border-top-color: var(--text-oncolor-primary);
-}
-
-.nds-btn-loading.nds-btn-oncolor.nds-btn-destructive.nds-btn-secondary::after {
+.nds-btn-loading.nds-btn-oncolor.nds-btn-destructive.nds-btn-primary::after,
+.nds-btn-loading.nds-btn-oncolor.nds-btn-destructive.nds-btn-secondary::after,
+.nds-btn-loading.nds-btn-oncolor.nds-btn-destructive.nds-btn-subtle::after,
+.nds-btn-loading.nds-btn-oncolor.nds-btn-destructive.nds-btn-transparent::after {
     border-top-color: var(--text-oncolor-primary);
 }
 
 .nds-btn-loading.nds-btn-oncolor.nds-btn-destructive.nds-btn-secondary-outline::after {
     border-top-color: var(--colors-base-white);
-}
-
-.nds-btn-loading.nds-btn-oncolor.nds-btn-destructive.nds-btn-subtle::after {
-    border-top-color: var(--text-oncolor-primary);
-}
-
-.nds-btn-loading.nds-btn-oncolor.nds-btn-destructive.nds-btn-transparent::after {
-    border-top-color: var(--text-oncolor-primary);
 }
 
 @keyframes nds-btn-spin {
@@ -958,6 +998,10 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
     }
 }
 
+/* ==============================================
+   ACCESSIBILITY & MEDIA QUERIES
+   ============================================== */
+
 /* High Contrast Mode Support */
 @media (prefers-contrast: high) {
     .nds-btn {
@@ -969,7 +1013,16 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
     }
 }
 
-/* Print Styles */
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    .nds-btn,
+    .nds-btn::after {
+        transition: none;
+        animation: none;
+    }
+}
+
+/* Print Media Styles */
 @media print {
     .nds-btn {
         background: transparent !important;
@@ -979,7 +1032,9 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
 }
 
 
-/* ===== SHOWCASE STYLES ===== */
+/* ==============================================
+   DEMO & SHOWCASE STYLES
+   ============================================== */
 .button-showcase {
     display: flex;
     flex-wrap: wrap;
