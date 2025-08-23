@@ -72,12 +72,16 @@
         }
 
         &:after {
-          margin-left: calc(var(--default-indicator-size) * -1);
+          margin-right: calc(var(--default-indicator-size) * -1);
+          right: unset;
+          left: 0;
           margin-bottom: unset;
 
           @include ltr {
-            margin-left: unset;
-            margin-right: calc(var(--default-indicator-size) * -1);
+            margin-right: unset;
+            margin-left: calc(var(--default-indicator-size) * -1);
+            left: unset;
+            right: 0;
           }
         }
       }
