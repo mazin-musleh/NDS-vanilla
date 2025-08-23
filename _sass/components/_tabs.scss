@@ -72,14 +72,14 @@
         }
 
         &:after {
-          margin-right: calc(var(--default-indicator-size) * -1);
+          margin-left: calc(var(--default-indicator-size) * -1);
           right: unset;
           left: 0;
           margin-bottom: unset;
 
           @include ltr {
-            margin-right: unset;
-            margin-left: calc(var(--default-indicator-size) * -1);
+            margin-left: unset;
+            margin-right: calc(var(--default-indicator-size) * -1);
             left: unset;
             right: 0;
           }
