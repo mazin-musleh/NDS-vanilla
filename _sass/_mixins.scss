@@ -164,11 +164,12 @@
 
 // Tab indicator mixin
 @mixin tab-indicator($position: 'bottom', $size: var(--default-indicator-size)) {
-  &::after {
+  &::before {
     content: '';
     position: absolute !important;
     height: $size;
     border-radius: var(--radius-full);
+    display: block;
 
     @if $position =='bottom' {
       bottom: 0;
@@ -195,11 +196,5 @@
     }
   }
 
-  &:hover::after {
-    background-color: var(--border-black);
-  }
-
-  &[aria-selected="true"]::after {
-    background-color: var(--border-primary);
-  }
 }
+

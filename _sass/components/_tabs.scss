@@ -46,7 +46,8 @@
     .nds-tab {
       border-radius: var(--radius-sm);
       width: 100%;
-      
+      justify-content: start;
+
       /* Override horizontal indicator with vertical */
       @include tab-indicator('vertical');
     }
@@ -71,7 +72,7 @@
           border-radius: var(--radius-sm) 0 0 var(--radius-sm);
         }
 
-        &:after {
+        &:before {
           margin-left: calc(var(--default-indicator-size) * -1);
           right: unset;
           left: 0;
@@ -118,7 +119,7 @@
       margin-bottom: var(--default-indicator-size);
       border-radius: var(--radius-sm) var(--radius-sm) 0 0;
 
-      &:after {
+      &:before {
         margin-bottom: calc(var(--default-indicator-size) * -1);
       }
     }
@@ -193,7 +194,7 @@
   min-width: fit-content;
   position: relative;
   z-index: 2;
-  
+
   /* Tab indicator using mixin */
   @include tab-indicator('bottom');
 
@@ -201,6 +202,15 @@
   &[aria-selected="true"] .nds-tab-label {
     color: var(--text-default);
     filter: drop-shadow(0 0 .02em currentColor);
+  }
+
+  &:hover::before,
+  &:active::before {
+    background-color: var(--border-black);
+  }
+
+  &[aria-selected="true"]::before {
+    background-color: var(--border-primary);
   }
 
   /* Show more button styling */
@@ -407,6 +417,7 @@
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -434,14 +445,6 @@
 
 /* Right-to-Left Language Support */
 html[dir="rtl"] {
-  .nds-tab-list {
-    direction: rtl;
-  }
-
-  .nds-tab {
-    direction: rtl;
-  }
-
   .nds-tab-panel ul {
     padding-right: var(--spacing-lg);
     padding-left: 0;
@@ -466,6 +469,7 @@ html[dir="rtl"] {
 
 /* Reduced Motion Accessibility */
 @include reduced-motion {
+
   .nds-tab,
   .nds-tab-panel {
     transition: none;

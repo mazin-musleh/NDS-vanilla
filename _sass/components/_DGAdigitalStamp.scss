@@ -20,17 +20,19 @@
     z-index: 10;
     cursor: pointer;
     font-family: 'IBM Plex Sans Arabic', sans-serif;
+    font-size: var(--nds-text-sm-FS);
+    line-height: var(--nds-text-sm-LH);
 }
 
 .nds-topbar .dga-tab.textIcon {
-    gap: 10px;
+    gap: var(--spacing-md);
     height: 35px;
     background-color: #fff;
     border-radius: 0 0 var(--radius-lg) var(--radius-lg);
     display: flex;
     justify-content: center;
     box-shadow: var(--shadow-md);
-    padding: 0 20px;
+    padding: 0 var(--spacing-xl);
     white-space: nowrap;
 }
 
