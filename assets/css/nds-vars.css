@@ -352,6 +352,7 @@
     --radius-lg: var(--radius-16);
     --radius-xl: var(--radius-24);
     --radius-full: var(--radius-9999);
+    --tab-indicator-size: 3px;
 }
 
 :root {

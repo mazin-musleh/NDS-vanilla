@@ -55,7 +55,7 @@
       .nds-tab-list-container::after {
         left: 0;
         height: 100%;
-        width: 3px;
+        width: var(--tab-indicator-size);
 
         @include ltr {
           right: 0;
@@ -72,12 +72,12 @@
         }
 
         &:after {
-          margin-left: -3px;
+          margin-left: calc(var(--tab-indicator-size) * -1);
           margin-bottom: unset;
 
           @include ltr {
             margin-left: unset;
-            margin-right: -3px;
+            margin-right: calc(var(--tab-indicator-size) * -1);
           }
         }
       }
@@ -87,11 +87,11 @@
       border-radius: var(--radius-md);
       box-shadow: var(--shadow-md);
       margin-top: unset;
-      margin-right: var(--tab-horizontal-tab-md-button-h-padding);
+      margin-right: var(--spacing-lg);
 
       @include ltr {
         margin-right: unset;
-        margin-left: var(--tab-horizontal-tab-md-button-h-padding);
+        margin-left: var(--spacing-lg);
       }
     }
   }
@@ -105,17 +105,17 @@
       width: 100%;
       background-color: var(--border-neutral-primary);
       display: block;
-      height: 3px;
+      height: var(--tab-indicator-size);
       z-index: 1;
       border-radius: var(--radius-full);
     }
 
     .nds-tab {
-      margin-bottom: 3px;
+      margin-bottom: var(--tab-indicator-size);
       border-radius: var(--radius-sm) var(--radius-sm) 0 0;
 
       &:after {
-        margin-bottom: -3px;
+        margin-bottom: calc(var(--tab-indicator-size) * -1);
       }
     }
   }
@@ -129,7 +129,7 @@
   &.cardView .nds-tab-content {
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-md);
-    margin-top: var(--tab-horizontal-tab-md-button-h-padding);
+    margin-top: var(--spacing-lg);
   }
 }
 
