@@ -32,13 +32,13 @@
       flex-direction: column;
       flex-wrap: nowrap;
       min-width: fit-content;
-      padding-left: 3px;
+      padding-left: var(--default-indicator-size);
       position: sticky;
       z-index: 2;
       top: var(--nds-nav-height);
 
       @include ltr {
-        padding-right: 3px;
+        padding-right: var(--default-indicator-size);
         padding-left: unset;
       }
     }
@@ -195,6 +195,7 @@
 
   /* Selected tab label enhancement */
   &[aria-selected="true"] .nds-tab-label {
+    color: var(--text-default);
     filter: drop-shadow(0 0 .02em currentColor);
   }
 
