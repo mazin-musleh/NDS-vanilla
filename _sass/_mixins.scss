@@ -151,7 +151,7 @@
   }
 }
 
-// LTR Support
+// RTL Style default with LTR overwrite Support
 @mixin ltr {
   @at-root html[dir="ltr"] #{&} {
     @content;
@@ -189,8 +189,8 @@
       top: var(--spacing-md);
 
       @include ltr {
-        left: 0;
         right: unset;
+        left: 0;
       }
     }
   }
