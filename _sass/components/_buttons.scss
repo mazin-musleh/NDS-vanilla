@@ -431,41 +431,70 @@ Available sizes:
 
 /* Destructive Transparent Button */
 .nds-btn-destructive.nds-btn-transparent {
-  @include btn-variant(
-    transparent,
-    var(--button-background-danger-primary-default),
-    transparent,
-    transparent,
-    transparent,
-    transparent,
-    var(--text-default-disabled)
-  );
+  &,
+  &[data-state="default"] {
+    background-color: var(--button-background-transparent-default);
+    color: var(--button-background-danger-primary-default);
+  }
 
-  &:hover {
+  &:hover,
+  &[data-state="hover"] {
+    background-color: var(--button-background-transparent-hovered);
     color: var(--button-background-danger-primary-hovered);
   }
 
   &.active,
-  &.selected {
+  &.selected,
+  &[data-state="selected"] {
+    background-color: var(--button-background-transparent-selected);
     color: var(--button-background-danger-primary-selected);
   }
 
-  &:active {
+  &:active,
+  &[data-state="active"] {
+    background-color: var(--button-background-transparent-pressed);
     color: var(--button-background-danger-primary-pressed);
+  }
+
+  &:disabled,
+  &[data-state="disabled"] {
+    background-color: var(--button-background-transparent-default);
+    color: var(--text-default-disabled);
   }
 }
 
 /* Destructive Secondary Solid Button */
 .nds-btn-destructive.nds-btn-secondary {
-  @include btn-variant(
-    var(--button-background-danger-secondary-default),
-    var(--button-background-danger-primary-default),
-    var(--button-background-danger-secondary-hovered),
-    var(--button-background-danger-secondary-pressed),
-    var(--button-background-danger-secondary-selected),
-    var(--background-disabled),
-    var(--text-default-disabled)
-  );
+  &,
+  &[data-state="default"] {
+    background-color: var(--button-background-danger-secondary-default);
+    color: var(--button-background-danger-primary-default);
+  }
+
+  &:hover,
+  &[data-state="hover"] {
+    background-color: var(--button-background-danger-secondary-hovered);
+    color: var(--button-background-danger-primary-hovered);
+  }
+
+  &.active,
+  &.selected,
+  &[data-state="selected"] {
+    background-color: var(--button-background-danger-secondary-selected);
+    color: var(--button-background-danger-primary-selected);
+  }
+
+  &:active,
+  &[data-state="active"] {
+    background-color: var(--button-background-danger-secondary-pressed);
+    color: var(--button-background-danger-primary-pressed);
+  }
+
+  &:disabled,
+  &[data-state="disabled"] {
+    background-color: var(--background-disabled);
+    color: var(--text-default-disabled);
+  }
 }
 
 /* Destructive Subtle Button */
