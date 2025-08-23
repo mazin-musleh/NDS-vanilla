@@ -46,20 +46,9 @@
     .nds-tab {
       border-radius: var(--radius-sm);
       width: 100%;
-
-      &:after {
-        right: 0;
-        bottom: unset;
-        width: 3px !important;
-        height: calc(100% - var(--spacing-md) * 2);
-        margin-bottom: unset;
-        top: var(--spacing-md);
-
-        @include ltr {
-          left: 0;
-          right: unset;
-        }
-      }
+      
+      /* Override horizontal indicator with vertical */
+      @include tab-indicator('vertical');
     }
 
     &.withDivider {
@@ -200,33 +189,9 @@
   min-width: fit-content;
   position: relative;
   z-index: 2;
-
-  /* Tab indicator line */
-  &:after {
-    content: '';
-    position: absolute !important;
-    bottom: 0;
-    width: 100%;
-    background-color: transparent;
-    height: 3px;
-    border-radius: var(--radius-full);
-    width: calc(100% - var(--spacing-md) * 2);
-    right: var(--spacing-md);
-
-    @include ltr {
-      right: unset;
-      left: var(--spacing-md);
-    }
-  }
-
-  /* Tab state indicators */
-  &:hover:after {
-    background-color: var(--border-black);
-  }
-
-  &[aria-selected="true"]:after {
-    background-color: var(--border-primary);
-  }
+  
+  /* Tab indicator using mixin */
+  @include tab-indicator('bottom');
 
   /* Selected tab label enhancement */
   &[aria-selected="true"] .nds-tab-label {
