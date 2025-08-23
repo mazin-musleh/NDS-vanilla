@@ -163,7 +163,7 @@
 // ==============================================
 
 // Tab indicator mixin
-@mixin tab-indicator($position: 'bottom', $size: var(--tab-indicator-size)) {
+@mixin tab-indicator($position: 'bottom', $size: var(--default-indicator-size)) {
   &::after {
     content: '';
     position: absolute !important;

@@ -55,7 +55,7 @@
       .nds-tab-list-container::after {
         left: 0;
         height: 100%;
-        width: var(--tab-indicator-size);
+        width: var(--default-indicator-size);
 
         @include ltr {
           right: 0;
@@ -72,12 +72,12 @@
         }
 
         &:after {
-          margin-left: calc(var(--tab-indicator-size) * -1);
+          margin-left: calc(var(--default-indicator-size) * -1);
           margin-bottom: unset;
 
           @include ltr {
             margin-left: unset;
-            margin-right: calc(var(--tab-indicator-size) * -1);
+            margin-right: calc(var(--default-indicator-size) * -1);
           }
         }
       }
@@ -105,17 +105,17 @@
       width: 100%;
       background-color: var(--border-neutral-primary);
       display: block;
-      height: var(--tab-indicator-size);
+      height: var(--default-indicator-size);
       z-index: 1;
       border-radius: var(--radius-full);
     }
 
     .nds-tab {
-      margin-bottom: var(--tab-indicator-size);
+      margin-bottom: var(--default-indicator-size);
       border-radius: var(--radius-sm) var(--radius-sm) 0 0;
 
       &:after {
-        margin-bottom: calc(var(--tab-indicator-size) * -1);
+        margin-bottom: calc(var(--default-indicator-size) * -1);
       }
     }
   }
