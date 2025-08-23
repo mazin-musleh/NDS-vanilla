@@ -60,12 +60,14 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
     display: inline-flex;
     width: 20px;
     height: 20px;
+    font-size: 20px;
     justify-content: center;
     align-content: center;
     align-items: center;
   }
   
-  &.selected::after {
+  &.selected::after,
+  .show > &::after {
     transform: rotate(180deg);
   }
 }
@@ -114,6 +116,24 @@ Available sizes:
     var(--background-disabled),
     var(--text-default-disabled)
   );
+  
+  &.nds-btn-indicator {
+    @include tab-indicator('bottom', 3px);
+    
+    &:hover::before,
+    &[data-state="hover"]::before {
+      background-color: var(--background-primary-400);
+    }
+    
+    &:active::before,
+    &.selected::before,
+    &[aria-selected="true"]::before,
+    &[data-state="selected"]::before,
+    &[data-state="active"]::before,
+    &[data-state="focus"]::before {
+      background-color: var(--background-primary-400);
+    }
+  }
 }
 
 /* Neutral Button (Dark Gray) */
@@ -127,6 +147,24 @@ Available sizes:
     var(--background-disabled),
     var(--text-default-disabled)
   );
+  
+  &.nds-btn-indicator {
+    @include tab-indicator('bottom', 3px);
+    
+    &:hover::before,
+    &[data-state="hover"]::before {
+      background-color: var(--background-primary-400);
+    }
+    
+    &:active::before,
+    &.selected::before,
+    &[aria-selected="true"]::before,
+    &[data-state="selected"]::before,
+    &[data-state="active"]::before,
+    &[data-state="focus"]::before {
+      background-color: var(--background-primary-400);
+    }
+  }
 }
 
 /* Secondary Solid Button (Light Gray) */
@@ -140,6 +178,24 @@ Available sizes:
     var(--background-disabled),
     var(--text-default-disabled)
   );
+  
+  &.nds-btn-indicator {
+    @include tab-indicator('bottom', 3px);
+    
+    &:hover::before,
+    &[data-state="hover"]::before {
+      background-color: var(--background-neutral-400);
+    }
+    
+    &:active::before,
+    &.selected::before,
+    &[aria-selected="true"]::before,
+    &[data-state="selected"]::before,
+    &[data-state="active"]::before,
+    &[data-state="focus"]::before {
+      background-color: var(--background-neutral-800);
+    }
+  }
 }
 
 /* Secondary Outline Button */
@@ -176,6 +232,24 @@ Available sizes:
     border-color: var(--border-neutral-secondary);
     color: var(--text-default-disabled);
   }
+  
+  &.nds-btn-indicator {
+    @include tab-indicator('bottom', 3px);
+    
+    &:hover::before,
+    &[data-state="hover"]::before {
+      background-color: var(--background-neutral-400);
+    }
+    
+    &:active::before,
+    &.selected::before,
+    &[aria-selected="true"]::before,
+    &[data-state="selected"]::before,
+    &[data-state="active"]::before,
+    &[data-state="focus"]::before {
+      background-color: var(--background-neutral-800);
+    }
+  }
 }
 
 /* Subtle Button */
@@ -205,6 +279,24 @@ Available sizes:
   &[data-state="disabled"] {
     color: var(--text-default-disabled);
   }
+  
+  &.nds-btn-indicator {
+    @include tab-indicator('bottom', 3px);
+    
+    &:hover::before,
+    &[data-state="hover"]::before {
+      background-color: var(--background-neutral-400);
+    }
+    
+    &:active::before,
+    &.selected::before,
+    &[aria-selected="true"]::before,
+    &[data-state="selected"]::before,
+    &[data-state="active"]::before,
+    &[data-state="focus"]::before {
+      background-color: var(--background-neutral-800);
+    }
+  }
 }
 
 /* Transparent Button */
@@ -233,6 +325,24 @@ Available sizes:
   &:disabled,
   &[data-state="disabled"] {
     color: var(--text-default-disabled);
+  }
+  
+  &.nds-btn-indicator {
+    @include tab-indicator('bottom', 3px);
+    
+    &:hover::before,
+    &[data-state="hover"]::before {
+      background-color: var(--background-neutral-400);
+    }
+    
+    &:active::before,
+    &.selected::before,
+    &[aria-selected="true"]::before,
+    &[data-state="selected"]::before,
+    &[data-state="active"]::before,
+    &[data-state="focus"]::before {
+      background-color: var(--background-neutral-800);
+    }
   }
 }
 
@@ -788,7 +898,7 @@ Available sizes:
   pointer-events: none;
   color: transparent !important;
 
-  &::after {
+  &::before {
     content: '';
     position: absolute;
     top: 50%;
@@ -895,11 +1005,12 @@ Available sizes:
 /* Reduced Motion Support */
 @include reduced-motion {
   .nds-btn,
-  .nds-btn::after {
+  .nds-btn::before {
     transition: none;
     animation: none;
   }
 }
+
 
 /* Print Media Styles */
 @include print-media {
