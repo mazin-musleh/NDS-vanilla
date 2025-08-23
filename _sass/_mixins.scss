@@ -163,11 +163,11 @@
 // ==============================================
 
 // Tab indicator mixin
-@mixin tab-indicator($position: 'bottom') {
+@mixin tab-indicator($position: 'bottom', $size: var(--tab-indicator-size)) {
   &::after {
     content: '';
     position: absolute !important;
-    height: 3px;
+    height: $size;
     border-radius: var(--radius-full);
 
     @if $position =='bottom' {
@@ -179,14 +179,12 @@
         right: unset;
         left: var(--spacing-md);
       }
-
-
     }
 
     @else if $position =='vertical' {
       right: 0;
       bottom: unset;
-      width: 3px !important;
+      width: $size !important;
       height: calc(100% - var(--spacing-md) * 2);
       top: var(--spacing-md);
 
@@ -194,7 +192,6 @@
         left: 0;
         right: unset;
       }
-
     }
   }
 
