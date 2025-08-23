@@ -1,0 +1,82 @@
+/* ========================================
+   BREADCRUMB COMPONENT
+   ======================================== */
+
+@use '../mixins' as *;
+/* ========================================
+   BREADCRUMB BASE STYLES
+   ======================================== */
+
+.nds-hero-section.sub .nds-breadcrumb-nav {
+    display: unset;
+}
+
+.nds-breadcrumb-nav {
+    margin-bottom: 10px;
+}
+
+.nds-breadcrumb {
+    list-style: none;
+    display: flex;
+    padding: 0;
+    margin: 0;
+    flex-wrap: wrap;
+}
+
+.nds-breadcrumb li {
+    display: flex;
+    align-items: center;
+    color: var(--colors-neutral-400, #9DA4AE);
+}
+
+/* ========================================
+   BREADCRUMB ARROW SEPARATORS
+   ======================================== */
+
+/* Arrow separator */
+.hgi-loaded .nds-breadcrumb li:not(:last-child)::after {
+    content: "㭪";
+    margin: 0 0.5em;
+    color: var(--colors-neutral-400, #9DA4AE);
+    font-family: "hgi-stroke-rounded" !important;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    position: relative;
+    font-weight: bold;
+    opacity: 0;
+    transition: opacity 0.1s ease;
+    line-height: 1;
+    margin-bottom: -3px;
+}
+
+body.hgi-loaded .nds-breadcrumb li:not(:last-child)::after {
+    opacity: 1;
+}
+
+/* LTR Support - flip arrow direction */
+html[dir="ltr"] .nds-breadcrumb li:not(:last-child)::after {
+    transform: scaleX(-1);
+}
+
+/* ========================================
+   BREADCRUMB LINK STYLES
+   ======================================== */
+
+.breadcrumb li[aria-current="page"] {
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    text-overflow: ellipsis;
+    display: -webkit-inline-box;
+    overflow: hidden;
+}
+
+.nds-breadcrumb a {
+    text-decoration: none;
+    color: var(--text-default);
+}
+
+.nds-breadcrumb a:hover {
+    color: var(--colors-neutral-400, #9DA4AE);
+}

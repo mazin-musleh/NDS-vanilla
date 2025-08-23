@@ -1,0 +1,40 @@
+/**
+ * NDS Font Definitions
+ * IBM Plex Sans Arabic font family declarations
+ */
+
+/* arabic */
+@font-face {
+  font-family: 'IBM Plex Sans Arabic';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(../fonts/IBMPlexSansArabic-Regular.woff2) format('woff2');
+}
+
+/* arabic */
+@font-face {
+  font-family: 'IBM Plex Sans Arabic';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(../fonts/IBMPlexSansArabic-Medium.woff2) format('woff2');
+}
+
+/* arabic */
+@font-face {
+  font-family: 'IBM Plex Sans Arabic';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(../fonts/IBMPlexSansArabic-SemiBold.woff2) format('woff2');
+}
+
+/* arabic */
+@font-face {
+  font-family: 'IBM Plex Sans Arabic';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(../fonts/IBMPlexSansArabic-Bold.woff2) format('woff2');
+}

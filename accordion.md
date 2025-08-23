@@ -40,7 +40,6 @@ css_files:
                             <h3 class="nds-accordion-header" id="heading-services">
                                 <button class="nds-btn nds-btn-subtle nds-btn-menu nds-btn-accordion" type="button" aria-expanded="true" aria-controls="collapse-services">
                                     <span class="nds-accordion-title">Digital Government Services</span>
-                                    <i class="nds-accordion-icon hgi hgi-stroke hgi-chevron-down"></i>
                                 </button>
                             </h3>
                             <div class="nds-accordion-collapse show" id="collapse-services" aria-labelledby="heading-services">
@@ -60,7 +59,6 @@ css_files:
                             <h3 class="nds-accordion-header" id="heading-support">
                                 <button class="nds-btn nds-btn-subtle nds-btn-menu nds-btn-accordion collapsed" type="button" aria-expanded="false" aria-controls="collapse-support">
                                     <span class="nds-accordion-title">Support and Documentation</span>
-                                    <i class="nds-accordion-icon hgi hgi-stroke hgi-chevron-down"></i>
                                 </button>
                             </h3>
                             <div class="nds-accordion-collapse" id="collapse-support" aria-labelledby="heading-support">
@@ -85,7 +83,6 @@ css_files:
                             <h3 class="nds-accordion-header" id="heading-resources">
                                 <button class="nds-btn nds-btn-subtle nds-btn-menu nds-btn-accordion collapsed" type="button" aria-expanded="false" aria-controls="collapse-resources">
                                     <span class="nds-accordion-title">Developer Resources</span>
-                                    <i class="nds-accordion-icon hgi hgi-stroke hgi-chevron-down"></i>
                                 </button>
                             </h3>
                             <div class="nds-accordion-collapse" id="collapse-resources" aria-labelledby="heading-resources">
@@ -109,7 +106,6 @@ css_files:
     &lt;h3 class="nds-accordion-header" id="heading-1"&gt;
       &lt;button class="nds-btn nds-btn-subtle nds-btn-menu nds-btn-accordion" type="button" aria-expanded="true" aria-controls="collapse-1"&gt;
         &lt;span class="nds-accordion-title"&gt;Accordion Item #1&lt;/span&gt;
-        &lt;i class="nds-accordion-icon hgi hgi-stroke hgi-chevron-down"&gt;&lt;/i&gt;
       &lt;/button&gt;
     &lt;/h3&gt;
     &lt;div class="nds-accordion-collapse show" id="collapse-1" aria-labelledby="heading-1"&gt;
@@ -122,7 +118,6 @@ css_files:
     &lt;h3 class="nds-accordion-header" id="heading-2"&gt;
       &lt;button class="nds-btn nds-btn-subtle nds-btn-menu nds-btn-accordion collapsed" type="button" aria-expanded="false" aria-controls="collapse-2"&gt;
         &lt;span class="nds-accordion-title"&gt;Accordion Item #2&lt;/span&gt;
-        &lt;i class="nds-accordion-icon hgi hgi-stroke hgi-chevron-down"&gt;&lt;/i&gt;
       &lt;/button&gt;
     &lt;/h3&gt;
     &lt;div class="nds-accordion-collapse" id="collapse-2" aria-labelledby="heading-2"&gt;
@@ -157,7 +152,6 @@ css_files:
                                 <button class="nds-btn nds-btn-subtle nds-btn-menu nds-btn-accordion" type="button" aria-expanded="true" aria-controls="collapse-account">
                                     <i class="nds-accordion-leading-icon hgi hgi-stroke hgi-user-circle"></i>
                                     <span class="nds-accordion-title">Account Management</span>
-                                    <i class="nds-accordion-icon hgi hgi-stroke hgi-chevron-down"></i>
                                 </button>
                             </h3>
                             <div class="nds-accordion-collapse show" id="collapse-account" aria-labelledby="heading-account">
@@ -186,7 +180,6 @@ css_files:
                                 <button class="nds-btn nds-btn-subtle nds-btn-menu nds-btn-accordion collapsed" type="button" aria-expanded="false" aria-controls="collapse-documents">
                                     <i class="nds-accordion-leading-icon hgi hgi-stroke hgi-file-02"></i>
                                     <span class="nds-accordion-title">Document Services</span>
-                                    <i class="nds-accordion-icon hgi hgi-stroke hgi-chevron-down"></i>
                                 </button>
                             </h3>
                             <div class="nds-accordion-collapse" id="collapse-documents" aria-labelledby="heading-documents">
@@ -207,7 +200,6 @@ css_files:
                                 <button class="nds-btn nds-btn-subtle nds-btn-menu nds-btn-accordion collapsed" type="button" aria-expanded="false" aria-controls="collapse-payments">
                                     <i class="nds-accordion-leading-icon hgi hgi-stroke hgi-credit-card-01"></i>
                                     <span class="nds-accordion-title">Payment Services</span>
-                                    <i class="nds-accordion-icon hgi hgi-stroke hgi-chevron-down"></i>
                                 </button>
                             </h3>
                             <div class="nds-accordion-collapse" id="collapse-payments" aria-labelledby="heading-payments">
@@ -232,7 +224,6 @@ css_files:
       &lt;button class="nds-btn nds-btn-subtle nds-btn-menu nds-btn-accordion" type="button" aria-expanded="true" aria-controls="collapse-1"&gt;
         &lt;i class="nds-accordion-leading-icon hgi hgi-stroke hgi-user-circle"&gt;&lt;/i&gt;
         &lt;span class="nds-accordion-title"&gt;Accordion with Icon&lt;/span&gt;
-        &lt;i class="nds-accordion-icon hgi hgi-stroke hgi-chevron-down"&gt;&lt;/i&gt;
       &lt;/button&gt;
     &lt;/h3&gt;
     &lt;div class="nds-accordion-collapse show" id="collapse-1" aria-labelledby="heading-1"&gt;

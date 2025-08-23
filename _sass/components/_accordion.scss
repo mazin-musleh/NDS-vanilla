@@ -1,0 +1,210 @@
+/**
+ * NDS Accordion Component
+ * Collapsible accordion component with NDS design tokens
+ * 
+ * Structure:
+ * - Base accordion container (.nds-accordion)
+ * - Card view variant (.nds-accordion.cardView) 
+ * - Accordion items (.nds-accordion-item)
+ * - Interactive buttons (.nds-btn-accordion)
+ * - Collapsible content (.nds-accordion-collapse)
+ */
+
+@use '../mixins' as *;
+
+/* Accordion Container */
+.nds-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+
+    /* Card View Variant */
+    &.cardView {
+        border: 1px solid var(--border-neutral-primary);
+        border-radius: var(--radius-md);
+        background-color: var(--background-white);
+        box-shadow: var(--shadow-md);
+        overflow: hidden;
+
+        .nds-accordion-item {
+            border-top: 1px solid var(--border-neutral-primary);
+
+            &:first-child {
+                border-top: none;
+            }
+        }
+    }
+
+    /* Always Open Variant - Allows multiple panels to be open */
+    &.always-open .nds-accordion-item {
+        /* No special styling needed - behavior handled by JavaScript */
+    }
+
+
+    /* Accordion Item - Default (Flush Style) */
+    .nds-accordion-item {
+        position: relative;
+        border-left: none;
+        border-right: none;
+        border-bottom: none;
+        border-radius: 0;
+        border-top: 1px solid var(--border-neutral-primary);
+        transition: var(--nds-transition);
+    }
+
+    /* Accordion Header */
+    .nds-accordion-header {
+        margin: 0;
+        padding: 0;
+        font-size: inherit;
+        font-weight: inherit;
+    }
+
+    /* Accordion Button - Uses NDS Button Classes */
+    .nds-btn-accordion {
+        /* Override button default styles for accordion-specific behavior */
+        justify-content: space-between;
+        width: 100%;
+        border-radius: 0 !important;
+        padding: var(--accordion-lg-header-padding) !important;
+
+        /* Accordion Button with Leading Icon */
+        &.nds-btn-menu {
+            gap: var(--accordion-lg-header-gap);
+        }
+
+        .nds-accordion-title {
+            display: block;
+            width: 100%;
+            text-align: start;
+        }
+    }
+
+    /* Accordion Body */
+    .nds-accordion-body {
+        padding: var(--spacing-lg);
+        color: var(--text-default);
+    }
+}
+
+/* Accordion Collapse */
+.nds-accordion-collapse {
+    display: none;
+    background-color: var(--background-white);
+    overflow: hidden;
+
+    &.show {
+        display: block;
+    }
+
+    &.collapsing {
+        display: block;
+        height: 0;
+        overflow: hidden;
+        transition: height var(--nds-transition);
+    }
+}
+
+
+
+/* ==============================================
+   DEMO PAGE SPECIFIC STYLES
+   ============================================== */
+.support-options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
+}
+
+.support-item {
+    padding: var(--spacing-sm);
+    background-color: var(--background-neutral-50);
+    border-radius: var(--radius-sm);
+}
+
+.account-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background-color: var(--background-neutral-50);
+    border-radius: var(--radius-sm);
+
+    i {
+        flex-shrink: 0;
+        width: 20px;
+        height: 20px;
+        font-size: 20px;
+        color: var(--button-background-primary-default);
+    }
+}
+
+/* ==============================================
+   RESPONSIVE DESIGN & ACCESSIBILITY
+   ============================================== */
+
+/* Mobile Responsive Adjustments */
+@include mobile {
+    .nds-btn-accordion {
+        padding: var(--spacing-md);
+        font-size: var(--nds-text-sm-FS);
+    }
+
+    .nds-accordion-body {
+        padding: var(--spacing-md);
+    }
+
+    .account-features {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* High Contrast Mode Support */
+@include high-contrast {
+    .nds-accordion.cardView {
+        border-color: var(--text-primary);
+        border-width: 2px;
+    }
+
+    .nds-accordion-item {
+        border-color: var(--text-primary);
+    }
+
+    .nds-btn-accordion:focus {
+        outline-width: 3px;
+    }
+}
+
+/* Reduced Motion Accessibility */
+@include reduced-motion {
+
+    .nds-accordion-icon,
+    .nds-accordion-collapse.collapsing,
+    .nds-accordion-item {
+        transition: none;
+    }
+}
+
+/* Print Media Styles */
+@include print-media {
+    .nds-accordion-collapse {
+        display: block !important;
+        height: auto !important;
+    }
+
+    .nds-btn-accordion {
+        background-color: transparent;
+    }
+
+    .nds-accordion-icon {
+        display: none;
+    }
+}

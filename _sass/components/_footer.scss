@@ -1,0 +1,275 @@
+/* ========================================
+   FOOTER COMPONENT
+   ======================================== */
+
+@use '../mixins' as *;
+/* ========================================
+   FOOTER BASE STYLES
+   ======================================== */
+
+.nds-footer {
+    display: block;
+    background-color: var(--background-sa-flag);
+    color: var(--text-oncolor-primary, #fff);
+    padding: 3rem 0 1rem;
+    margin-top: auto;
+}
+
+.nds-footer .nds-footer-content {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.nds-footer .nds-footer-column {
+    margin-bottom: 1rem;
+}
+
+/* ========================================
+   FOOTER HEADINGS AND LINKS
+   ======================================== */
+
+.nds-footer .nds-footer-heading {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    color: var(--text-oncolor-primary, #fff);
+}
+
+.nds-footer .nds-footer-links-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 16px;
+}
+
+.nds-footer .nds-footer-links-list * {
+    color: var(--text-oncolor-primary, #fff);
+    text-decoration: none;
+}
+
+.nds-footer .nds-footer-links-list > li {
+    padding: 4px 0;
+}
+
+.nds-footer .nds-footer-links-list a {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.nds-footer .nds-footer-links-list a:hover {
+    text-decoration: underline;
+    color: var(--text-oncolor-primary, #fff);
+}
+
+.nds-footer .nds-footer-links-list a i {
+    font-size: 1rem;
+    opacity: 0.8;
+}
+
+/* ========================================
+   FOOTER SOCIAL ICONS
+   ======================================== */
+
+/* Social Icons */
+.nds-footer .nds-footer-social-icons {
+    display: flex;
+    gap: var(--spacing-md, 16px);
+    margin: 8px 16px 32px 16px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.nds-footer .nds-footer-social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: 1px solid #fff;
+    border-radius: 4px;
+    padding: 4px;
+    color: var(--text-oncolor-primary, #fff);
+    text-decoration: none;
+}
+
+.nds-footer .nds-footer-social-icon:hover {
+    background-color: var(--background-white, #fff);
+    color: var(--text-primary);
+}
+
+.nds-footer .nds-footer-social-icon i {
+    font-size: 16px;
+}
+
+/* ========================================
+   FOOTER MOBILE APP ICONS
+   ======================================== */
+
+/* Mobile App Icons */
+.nds-footer .nds-footer-mobile-app-icons {
+    display: flex;
+    gap: var(--spacing-md, 16px);
+    margin: 8px 16px 32px 16px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.nds-footer .nds-footer-app-icon {
+    transition: all 0.3s ease;
+}
+
+.nds-footer .nds-footer-app-icon svg {
+    color: var(--text-oncolor-primary, #fff);
+}
+
+.nds-footer .nds-footer-app-icon:hover svg {
+    fill: var(--background-white, #fff);
+    color: #161616;
+}
+
+/* ========================================
+   FOOTER BOTTOM SECTION
+   ======================================== */
+
+/* Footer Bottom */
+.nds-footer .nds-footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2rem 0;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.nds-footer .nds-footer-copyright {
+    flex: 1;
+}
+
+.nds-footer .nds-footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.nds-footer .nds-footer-links a {
+    color: var(--text-oncolor-primary, #fff);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.nds-footer .nds-footer-links a:hover {
+    text-decoration: underline;
+}
+
+.nds-footer .nds-footer-separator {
+    color: var(--text-oncolor-primary, #fff);
+    margin: 0 0.5rem;
+    opacity: 0.7;
+}
+
+.nds-footer .nds-footer-copy-right {
+    font-size: 0.85rem;
+    line-height: 1.4;
+    opacity: 0.9;
+}
+
+/* ========================================
+   FOOTER LOGOS
+   ======================================== */
+
+.nds-footer .nds-footer-logos {
+    width: 25%;
+    min-width: 200px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    align-items: center;
+}
+
+.nds-footer .nds-footer-logos img {
+    height: 40px;
+    width: auto;
+    transition: opacity 0.3s ease;
+    filter: brightness(0) invert(1);
+}
+
+.nds-footer .nds-footer-logos img:hover {
+    opacity: 0.8;
+}
+
+/* ========================================
+   RESPONSIVE FOOTER STYLES
+   ======================================== */
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .nds-footer .nds-footer-content {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .nds-footer {
+        padding: 2rem 0 1rem;
+    }
+
+    .nds-footer .nds-footer-content {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        text-align: center;
+    }
+
+    .nds-footer .nds-footer-bottom {
+        display: flex;
+        justify-content: center;
+        margin: auto;
+        flex-direction: column;
+        gap: 1.5rem;
+        text-align: center;
+    }
+
+    .nds-footer .nds-footer-copyright .nds-footer-links {
+        justify-content: center;
+    }
+
+    .nds-footer .nds-footer-logos {
+        width: 100%;
+        min-width: auto;
+        justify-content: center;
+    }
+
+    .nds-footer .nds-footer-social-icons,
+    .nds-footer .nds-footer-mobile-app-icons {
+        justify-content: center;
+        margin: 8px 0 32px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .nds-footer .nds-footer-links {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: center;
+    }
+
+    .nds-footer .nds-footer-separator {
+        display: none;
+    }
+
+    .nds-footer .nds-footer-logos {
+        gap: 12px;
+    }
+
+    .nds-footer .nds-footer-logos img {
+        height: 35px;
+    }
+}

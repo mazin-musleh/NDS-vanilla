@@ -1,0 +1,159 @@
+/* ========================================
+   COOKIE POPUP COMPONENT
+   ======================================== */
+
+@use '../mixins' as *;
+/* ========================================
+   COOKIE POPUP BASE STYLES
+   ======================================== */
+
+.cookie-popup {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--background-white, #fff);
+    border-radius: 12px 12px 0 0;
+    box-shadow: 0px -3.288px 6.575px -1.644px rgba(16, 24, 40, 0.10), 0px -1.644px 3.288px -1.644px rgba(16, 24, 40, 0.06);
+    width: 100%;
+    padding: 24px;
+    z-index: 1000;
+    display: none;
+}
+
+.cookie-popup-show {
+    display: block;
+    animation: slideUp var(--nds-transition);
+}
+
+/* ========================================
+   COOKIE POPUP ANIMATIONS
+   ======================================== */
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* ========================================
+   COOKIE POPUP MESSAGE STYLES
+   ======================================== */
+
+.cookie-popup-message {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--background-primary);
+    color: white;
+    padding: 12px 24px;
+    border-radius: var(--radius-md);
+    z-index: 1001;
+    animation: fadeIn var(--nds-transition);
+}
+
+/* ========================================
+   COOKIE POPUP HEADER STYLES
+   ======================================== */
+
+.cookie-popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+}
+
+.cookie-popup-title {
+    font-size: var(--nds-text-clamp-xl-FS);
+    line-height: var(--nds-text-clamp-xl-LH);
+    font-weight: 600;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.cookie-popup-icon {
+    width: 40px;
+    height: 40px;
+    color: #666;
+}
+
+.cookie-popup-close {
+    background: none;
+    border: none;
+    font-size: var(--nds-display-clamp-md-FS);
+    line-height: var(--nds-display-clamp-md-LH);
+    letter-spacing: -0.02rem;
+    color: #666;
+    cursor: pointer;
+    padding: var(--spacing-sm);
+    transition: color 0.2s;
+}
+
+.cookie-popup-close:hover {
+    color: #333;
+}
+
+/* ========================================
+   COOKIE POPUP CONTENT STYLES
+   ======================================== */
+
+.cookie-popup-content {
+    margin-bottom: 20px;
+}
+
+.cookie-popup-links {
+    display: flex;
+    gap: var(--spacing-lg);
+    margin-bottom: 20px;
+}
+
+.cookie-popup-links a {
+    color: var(--text-primary);
+    text-decoration: none;
+}
+
+.cookie-popup-links a:hover {
+    color: var(--text-default);
+    text-decoration: underline;
+}
+
+.cookie-popup-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.cookie-popup-hidden {
+    animation: slideDown var(--nds-transition) forwards;
+}

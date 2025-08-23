@@ -1,0 +1,425 @@
+/**
+ * NDS Tabs Component
+ * Interactive tab navigation with horizontal and vertical layouts
+ * 
+ * Structure:
+ * - Tab container (.nds-tabs)
+ * - Tab list (.nds-tab-list)
+ * - Individual tabs (.nds-tab)
+ * - Tab content (.nds-tab-content)
+ * - Tab panels (.nds-tab-panel)
+ */
+
+@use '../mixins' as *;
+
+/* ==============================================
+   TAB CONTAINERS & LAYOUT
+   ============================================== */
+
+/* Base Tab Container */
+.nds-tabs {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    /* Vertical Tab Layout */
+    &.nds-vertical-tabs {
+        display: flex;
+        flex-direction: row;
+
+        .nds-tab-list {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            min-width: fit-content;
+            padding-left: 3px;
+            position: sticky;
+            z-index: 2;
+            top: var(--nds-nav-height);
+
+            @include ltr {
+                padding-right: 3px;
+                padding-left: unset;
+            }
+        }
+
+        .nds-tab {
+            @include tab-indicator('vertical');
+            border-radius: var(--radius-sm);
+            width: 100%;
+        }
+
+        &.withDivider {
+            .nds-tab-list-container::after {
+                left: 0;
+                height: 100%;
+                width: 3px;
+
+                @include ltr {
+                    right: 0;
+                    left: unset;
+                }
+            }
+
+            .nds-tab {
+                margin-bottom: unset;
+                border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+
+                @include ltr {
+                    border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+                }
+
+                &:after {
+                    margin-left: -3px;
+                    margin-bottom: unset;
+                    left: 0;
+                    right: unset;
+
+                    @include ltr {
+                        margin-left: unset;
+                        margin-right: -3px;
+                        left: unset;
+                        right: 0;
+                    }
+                }
+            }
+        }
+
+        &.cardView .nds-tab-content {
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-md);
+            margin-top: unset;
+            margin-right: var(--tab-horizontal-tab-md-button-h-padding);
+
+            @include ltr {
+                margin-right: unset;
+                margin-left: var(--tab-horizontal-tab-md-button-h-padding);
+            }
+        }
+    }
+
+    /* Tabs with divider styling */
+    &.withDivider {
+        .nds-tab-list-container::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background-color: var(--border-neutral-primary);
+            display: block;
+            height: 3px;
+            z-index: 1;
+            border-radius: var(--radius-full);
+        }
+
+        .nds-tab {
+            margin-bottom: 3px;
+            border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+
+            &:after {
+                margin-bottom: -3px;
+            }
+        }
+    }
+
+    /* Tabs without divider */
+    &.noDivider .nds-tab-list {
+        padding: unset;
+    }
+
+    /* Card view styling */
+    &.cardView .nds-tab-content {
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-md);
+        margin-top: var(--tab-horizontal-tab-md-button-h-padding);
+    }
+}
+
+/* Tab List Container */
+.nds-tab-list-container {
+    position: relative;
+}
+
+/* Base Tab List */
+.nds-tab-list {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    position: relative;
+
+    /* Centered Tab List */
+    &.center {
+        justify-content: flex-start;
+        width: fit-content;
+        margin: 0 auto;
+    }
+
+    /* Scrollbar Styling */
+    &::-webkit-scrollbar {
+        height: 2px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: var(--background-neutral-100);
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: var(--colors-neutral-300);
+        border-radius: 1px;
+    }
+}
+
+/* ==============================================
+   INDIVIDUAL TAB STYLES
+   ============================================== */
+
+/* Base Tab Button - Tab-specific styling only */
+.nds-tab {
+    @include tab-indicator('bottom');
+    gap: var(--tab-button-gap);
+    padding: var(--tab-horizontal-tab-md-button-v-padding) var(--tab-horizontal-tab-md-button-h-padding);
+    color: var(--text-default);
+    border: 0;
+    white-space: nowrap;
+    min-width: fit-content;
+    position: relative;
+    z-index: 2;
+
+    &.showMore {
+        border-radius: 0;
+        box-shadow: 4px 0px 0px 4px var(--nds-nav-background-color);
+    }
+
+    /* Tab Disabled State - Override button disabled styling */
+    &:disabled {
+        color: var(--text-default-disabled);
+    }
+
+    /* Selected Tab Label Enhancement */
+    &[aria-selected="true"] .nds-tab-label {
+        filter: drop-shadow(0 0 .02em currentColor);
+    }
+}
+
+/* ==============================================
+   TAB CONTENT & PANELS
+   ============================================== */
+
+/* Tab Content Container */
+.nds-tab-content {
+    background-color: var(--background-white);
+    min-height: 200px;
+    width: 100%;
+}
+
+/* Tab Panel */
+.nds-tab-panel {
+    padding: var(--spacing-xl);
+    animation: fadeIn 0.2s ease-in-out;
+
+    &.hidden {
+        display: none;
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+    h3 {
+        color: var(--text-default);
+        font-size: var(--nds-text-lg-FS);
+        font-weight: 600;
+        margin: 0 0 var(--spacing-md) 0;
+    }
+
+    p {
+        color: var(--text-default);
+        font-size: var(--nds-text-md-FS);
+        line-height: var(--nds-text-md-LH);
+        margin: 0 0 var(--spacing-md) 0;
+    }
+
+    ul {
+        margin: 0 0 var(--spacing-md) 0;
+        padding-left: var(--spacing-lg);
+    }
+
+    li {
+        color: var(--text-default);
+        font-size: var(--nds-text-md-FS);
+        line-height: var(--nds-text-md-LH);
+        margin-bottom: var(--spacing-xs);
+    }
+}
+
+/* ==============================================
+   DEMO & EXAMPLE CONTENT STYLES
+   ============================================== */
+
+/* Dashboard Stats */
+.dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
+}
+
+.stat-card {
+    padding: var(--spacing-lg);
+    background: var(--background-neutral-50);
+    border: 1px solid var(--border-neutral-secondary);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.stat-number {
+    font-size: var(--nds-text-2xl-FS);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.stat-label {
+    font-size: var(--nds-text-sm-FS);
+    color: var(--text-default);
+    font-weight: 500;
+}
+
+/* Contact Info */
+.contact-info {
+    margin-top: var(--spacing-lg);
+
+    p {
+        margin-bottom: var(--spacing-sm);
+    }
+}
+
+/* Settings */
+.settings-options {
+    margin-top: var(--spacing-lg);
+}
+
+.setting-item {
+    margin-bottom: var(--spacing-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+
+    label {
+        font-weight: 500;
+        color: var(--text-default);
+        font-size: var(--nds-text-sm-FS);
+    }
+
+    select,
+    input[type="checkbox"] {
+        padding: var(--spacing-sm);
+        border: 1px solid var(--colors-neutral-300);
+        border-radius: var(--radius-sm);
+        font-family: var(--font-family-primary);
+    }
+
+    select {
+        width: 200px;
+    }
+}
+
+/* Accessibility Info */
+.accessibility-info {
+    background: var(--background-neutral-50);
+    border: 1px solid var(--border-neutral-secondary);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+
+    h3 {
+        color: var(--text-default);
+        font-size: var(--nds-text-lg-FS);
+        font-weight: 600;
+        margin: 0 0 var(--spacing-md) 0;
+
+        &:not(:first-child) {
+            margin-top: var(--spacing-lg);
+        }
+    }
+
+    ul {
+        margin: 0 0 var(--spacing-md) 0;
+        padding-left: var(--spacing-lg);
+    }
+
+    li {
+        color: var(--text-default);
+        font-size: var(--nds-text-md-FS);
+        line-height: var(--nds-text-md-LH);
+        margin-bottom: var(--spacing-xs);
+    }
+
+    code {
+        background: var(--background-neutral-100);
+        padding: 2px 6px;
+        border-radius: var(--radius-xs);
+        font-size: var(--nds-text-sm-FS);
+        color: var(--text-primary);
+        font-family: var(--font-family-mono);
+    }
+
+    kbd {
+        background: var(--background-neutral-200);
+        border: 1px solid var(--colors-neutral-300);
+        border-radius: var(--radius-xs);
+        padding: 2px 6px;
+        font-size: var(--nds-text-sm-FS);
+        color: var(--text-default);
+        font-family: var(--font-family-mono);
+    }
+}
+
+/* ==============================================
+   ANIMATIONS & TRANSITIONS
+   ============================================== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==============================================
+   ACCESSIBILITY
+   ============================================== */
+
+
+/* High Contrast Accessibility */
+@include high-contrast {
+    .nds-tab {
+        border: 1px solid transparent;
+
+        &:focus {
+            border-color: currentColor;
+        }
+
+        &[aria-selected="true"] {
+            border: 1px solid var(--border-primary);
+            border-bottom: 2px solid var(--border-primary);
+        }
+    }
+}
+
+/* Reduced Motion Accessibility */
+@include reduced-motion {
+
+    .nds-tab,
+    .nds-tab-panel {
+        transition: none;
+        animation: none;
+    }
+}

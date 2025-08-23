@@ -1,0 +1,208 @@
+/**
+ * NDS Design System Mixins
+ * Reusable Sass mixins for common patterns
+ */
+
+// ==============================================
+// BUTTON MIXINS
+// ==============================================
+
+// Base button structure
+@mixin btn-base {
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  position: relative;
+  box-sizing: border-box;
+  vertical-align: middle;
+}
+
+// Button focus styles
+@mixin btn-focus {
+  outline: 2px solid var(--colors-base-black) !important;
+  outline-offset: -2px !important;
+  box-shadow: inset 0 0 0 3px var(--colors-base-white) !important;
+}
+
+@mixin btn-focus-oncolor {
+  outline: 2px solid var(--colors-base-white) !important;
+  outline-offset: -2px !important;
+  box-shadow: inset 0 0 0 3px var(--colors-base-black) !important;
+}
+
+// Button disabled state
+@mixin btn-disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+// Button size mixins
+@mixin btn-size($height, $padding, $font-size, $line-height) {
+  --nds-btn-height: #{$height};
+  --nds-btn-space: calc(var(--nds-btn-height) - #{$padding} - 4px);
+  height: $height;
+  padding: 0 $padding;
+  font-size: $font-size;
+  line-height: $line-height;
+}
+
+// Button variant mixins
+@mixin btn-variant($default-bg, $default-color, $hover-bg, $active-bg, $selected-bg, $disabled-bg, $disabled-color) {
+
+  &,
+  &[data-state="default"] {
+    background-color: $default-bg;
+    color: $default-color;
+  }
+
+  &:hover,
+  &[data-state="hover"] {
+    background-color: $hover-bg;
+    color: $default-color;
+  }
+
+  &.active,
+  &.selected,
+  &[data-state="selected"] {
+    background-color: $selected-bg;
+    color: $default-color;
+  }
+
+  &:active,
+  &[data-state="active"] {
+    background-color: $active-bg;
+    color: $default-color;
+  }
+
+  &:disabled,
+  &[data-state="disabled"] {
+    background-color: $disabled-bg;
+    color: $disabled-color;
+  }
+}
+
+// Loading spinner mixin
+@mixin btn-loading-spinner($border-color, $track-color) {
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: var(--nds-btn-space);
+    height: var(--nds-btn-space);
+    margin: calc(var(--nds-btn-space)*-1/2) 0 0 calc(var(--nds-btn-space)*-1/2);
+    border: 3px solid $track-color;
+    border-top: 3px solid $border-color;
+    border-radius: 50%;
+    animation: nds-btn-spin 1s linear infinite;
+  }
+}
+
+// ==============================================
+// UTILITY MIXINS
+// ==============================================
+
+// Responsive breakpoints
+@mixin mobile {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: 769px) and (max-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: 1025px) {
+    @content;
+  }
+}
+
+// Accessibility mixins
+@mixin high-contrast {
+  @media (prefers-contrast: high) {
+    @content;
+  }
+}
+
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}
+
+@mixin print-media {
+  @media print {
+    @content;
+  }
+}
+
+// LTR Support
+@mixin ltr {
+  @at-root html[dir="ltr"] #{&} {
+    @content;
+  }
+}
+
+// ==============================================
+// COMPONENT MIXINS
+// ==============================================
+
+// Tab indicator mixin
+@mixin tab-indicator($position: 'bottom') {
+  &::after {
+    content: '';
+    position: absolute !important;
+    height: 3px;
+    border-radius: var(--radius-full);
+
+    @if $position =='bottom' {
+      bottom: 0;
+      width: calc(100% - var(--spacing-md) * 2);
+      right: var(--spacing-md);
+
+      @include ltr {
+        right: unset;
+        left: var(--spacing-md);
+      }
+
+
+    }
+
+    @else if $position =='vertical' {
+      right: 0;
+      bottom: unset;
+      width: 3px !important;
+      height: calc(100% - var(--spacing-md) * 2);
+      top: var(--spacing-md);
+
+      @include ltr {
+        left: 0;
+        right: unset;
+      }
+
+    }
+  }
+
+  &:hover::after {
+    background-color: var(--border-black);
+  }
+
+  &[aria-selected="true"]::after {
+    background-color: var(--border-primary);
+  }
+}

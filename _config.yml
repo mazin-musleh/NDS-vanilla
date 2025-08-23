@@ -17,6 +17,11 @@ markdown: kramdown
 highlighter: rouge
 #theme: minima
 
+# Sass configuration
+sass:
+  style: compressed
+  sass_dir: _sass
+
 # Custom settings
 author: Mazin Musleh
 author_profile: https://www.linkedin.com/in/mazin-musleh/
