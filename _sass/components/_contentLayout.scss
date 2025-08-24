@@ -28,7 +28,7 @@ main {
    CONTENT LAYOUT WITH SIDE MENU
    ======================================== */
 
-@media (min-width: 959.98px) {
+@include desktop(min) {
     .contentLayout.wSideMenu {
         display: flex;
         justify-content: space-between;
@@ -90,7 +90,7 @@ main {
    MOBILE CONTENT LAYOUT
    ======================================== */
 
-@media (max-width: 959.98px) {
+@include tablet(max) {
     .contentLayout .mainContent .content-section > .container {
         padding-left: var(--nds-viewport-padding);
         padding-right: var(--nds-viewport-padding);

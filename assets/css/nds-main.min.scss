@@ -16,6 +16,9 @@ sass:
 
 // Import base styles
 @use 'base';
+@use 'components/buttons';
+@use 'components/accordion';
+@use 'components/tabs';
 @use 'components/nav';
 @use 'components/DGAdigitalStamp';
 @use 'components/breadcrumb';
@@ -27,10 +30,7 @@ sass:
 @use 'components/statistics';
 @use 'components/footer';
 @use 'components/cookie';
-// Import component styles
-@use 'components/buttons';
-@use 'components/accordion';
-@use 'components/tabs';
+
 
 
 // Import showcase styles

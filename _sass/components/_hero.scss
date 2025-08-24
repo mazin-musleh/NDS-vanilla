@@ -117,7 +117,7 @@ html[dir="ltr"] #nds-sharePage-dropdown {
    RESPONSIVE SHARE PAGE STYLES
    ======================================== */
 
-@media (max-width: 959.98px) {
+@include tablet(max) {
     #nds-sharePageBtn {
         padding: var(--spacing-xxs);
     }

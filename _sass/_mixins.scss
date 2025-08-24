@@ -4,190 +4,67 @@
  */
 
 // ==============================================
-// BUTTON MIXINS
-// ==============================================
-
-// Base button structure
-@mixin btn-base {
-  width: fit-content;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--spacing-xs);
-  border: 1px solid transparent;
-  border-radius: var(--radius-sm);
-  font-family: 'IBM Plex Sans Arabic', sans-serif;
-  font-weight: 500;
-  text-decoration: none;
-  cursor: pointer;
-  user-select: none;
-  white-space: nowrap;
-  position: relative;
-  box-sizing: border-box;
-  vertical-align: middle;
-}
-
-// Button focus styles
-@mixin btn-focus {
-  outline: 2px solid var(--colors-base-black) !important;
-  outline-offset: -2px !important;
-  box-shadow: inset 0 0 0 3px var(--colors-base-white) !important;
-}
-
-@mixin btn-focus-oncolor {
-  outline: 2px solid var(--colors-base-white) !important;
-  outline-offset: -2px !important;
-  box-shadow: inset 0 0 0 3px var(--colors-base-black) !important;
-}
-
-// Button disabled state
-@mixin btn-disabled {
-  cursor: not-allowed;
-  opacity: 0.6;
-  pointer-events: none;
-}
-
-// Button size mixins
-@mixin btn-size($height, $padding, $font-size, $line-height) {
-  --nds-btn-height: #{$height};
-  --nds-btn-space: calc(var(--nds-btn-height) - #{$padding} - 4px);
-  height: $height;
-  padding: 0 $padding;
-  font-size: $font-size;
-  line-height: $line-height;
-}
-
-// Button variant mixins
-@mixin btn-variant($default-bg, $default-color, $hover-bg, $active-bg, $selected-bg, $disabled-bg, $disabled-color) {
-
-  &,
-  &[data-state="default"] {
-    background-color: $default-bg;
-    color: $default-color;
-  }
-
-  &:hover,
-  &[data-state="hover"] {
-    background-color: $hover-bg;
-    color: $default-color;
-  }
-
-  &.active,
-  &.selected,
-  &[data-state="selected"] {
-    background-color: $selected-bg;
-    color: $default-color;
-  }
-
-  &:active,
-  &[data-state="active"] {
-    background-color: $active-bg;
-    color: $default-color;
-  }
-
-  &:disabled,
-  &[data-state="disabled"] {
-    background-color: $disabled-bg;
-    color: $disabled-color;
-  }
-}
-
-// Loading spinner mixin with responsive sizing
-@mixin btn-loading-spinner($border-color, $track-color) {
-  &::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: var(--nds-btn-space);
-    height: var(--nds-btn-space);
-    margin: calc(var(--nds-btn-space)*-1/2) 0 0 calc(var(--nds-btn-space)*-1/2);
-    border: 3px solid $track-color;
-    border-top: 3px solid $border-color;
-    border-radius: 50%;
-    animation: nds-btn-spin 1s linear infinite;
-  }
-  
-  // Smaller border for small buttons
-  &.nds-btn-sm::after {
-    border-width: 2px;
-  }
-}
-
-// Button state pattern mixin for outline/subtle/transparent variants
-@mixin btn-state-pattern($default-bg, $default-color, $default-border, $hover-bg, $hover-border, $selected-bg, $selected-border, $pressed-bg, $pressed-border, $disabled-bg, $disabled-color, $disabled-border) {
-  &,
-  &[data-state="default"] {
-    background-color: $default-bg;
-    color: $default-color;
-    border-color: $default-border;
-  }
-
-  &:hover,
-  &[data-state="hover"] {
-    background-color: $hover-bg;
-    border-color: $hover-border;
-  }
-
-  &.active,
-  &.selected,
-  &[data-state="selected"] {
-    background-color: $selected-bg;
-    border-color: $selected-border;
-  }
-
-  &:active,
-  &[data-state="active"] {
-    background-color: $pressed-bg;
-    border-color: $pressed-border;
-  }
-
-  &:disabled,
-  &[data-state="disabled"] {
-    background-color: $disabled-bg;
-    color: $disabled-color;
-    border-color: $disabled-border;
-  }
-}
-
-// Button indicator shared styles mixin
-@mixin btn-indicator-styles($hover-color, $selected-color,$position : 'bottom') {
-  @include btn-indicator($position);
-  
-  &:hover::before,
-  &[data-state="hover"]::before {
-    background-color: $hover-color;
-  }
-  
-  &:active::before,
-  &.selected::before,
-  &[aria-selected="true"]::before,
-  &[data-state="selected"]::before,
-  &[data-state="active"]::before,
-  &[data-state="focused"]::before {
-    background-color: $selected-color;
-  }
-}
-
-// ==============================================
 // UTILITY MIXINS
 // ==============================================
 
-// Responsive breakpoints
+// Responsive breakpoints - accepts 'min', 'max', or no parameter for range
 @mixin mobile {
-  @media (max-width: 768px) {
+  @media (max-width: 599px) {
     @content;
   }
 }
 
-@mixin tablet {
-  @media (min-width: 769px) and (max-width: 1024px) {
-    @content;
+@mixin tablet($break: null) {
+  @if $break == 'min' {
+    @media (min-width: 600px) {
+      @content;
+    }
+  } @else if $break == 'max' {
+    @media (max-width: 959px) {
+      @content;
+    }
+  } @else {
+    @media (min-width: 600px) and (max-width: 959px) {
+      @content;
+    }
   }
 }
 
-@mixin desktop {
-  @media (min-width: 1025px) {
+@mixin desktop($break: null) {
+  @if $break == 'min' {
+    @media (min-width: 960px) {
+      @content;
+    }
+  } @else if $break == 'max' {
+    @media (max-width: 1279px) {
+      @content;
+    }
+  } @else {
+    @media (min-width: 960px) and (max-width: 1279px) {
+      @content;
+    }
+  }
+}
+
+@mixin large-desktop($break: null) {
+  @if $break == 'min' {
+    @media (min-width: 1280px) {
+      @content;
+    }
+  } @else if $break == 'max' {
+    @media (max-width: 1920px) {
+      @content;
+    }
+  } @else {
+    @media (min-width: 1280px) {
+      @content;
+    }
+  }
+}
+
+// RTL/LTR Support
+@mixin ltr {
+  @at-root html[dir="ltr"] #{&} {
     @content;
   }
 }
@@ -211,19 +88,148 @@
   }
 }
 
-// RTL Style default with LTR overwrite Support
-@mixin ltr {
-  @at-root html[dir="ltr"] #{&} {
-    @content;
+// ==============================================
+// BUTTON BASE MIXINS
+// ==============================================
+
+// Base button structure
+@mixin btn-base {
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  position: relative;
+  box-sizing: border-box;
+  vertical-align: middle;
+}
+
+// Button size mixins
+@mixin btn-size($height, $padding, $font-size, $line-height) {
+  --nds-btn-height: #{$height};
+  --nds-btn-space: calc(var(--nds-btn-height) - #{$padding} - 4px);
+  height: $height;
+  padding: 0 $padding;
+  font-size: $font-size;
+  line-height: $line-height;
+}
+
+// Button disabled state
+@mixin btn-disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+// ==============================================
+// BUTTON STATE MIXINS
+// ==============================================
+
+// Button focus styles
+@mixin btn-focus {
+  outline: 2px solid var(--colors-base-black) !important;
+  outline-offset: -2px !important;
+  box-shadow: inset 0 0 0 3px var(--colors-base-white) !important;
+}
+
+@mixin btn-focus-oncolor {
+  outline: 2px solid var(--colors-base-white) !important;
+  outline-offset: -2px !important;
+  box-shadow: inset 0 0 0 3px var(--colors-base-black) !important;
+}
+
+// Button variant mixins (solid buttons)
+@mixin btn-variant($default-bg, $default-color, $hover-bg, $active-bg, $selected-bg, $disabled-bg, $disabled-color) {
+
+  &,
+  &[data-state="default"] {
+    background-color: $default-bg;
+    color: $default-color;
+  }
+
+  &:hover,
+  &[data-state="hover"] {
+    background-color: $hover-bg;
+    color: $default-color;
+  }
+
+  &.active,
+  &.selected,
+  .show > &,
+  .open > &,
+  .active > &,
+  &[data-state="selected"] {
+    background-color: $selected-bg;
+    color: $default-color;
+  }
+
+  &:active,
+  &[data-state="active"] {
+    background-color: $active-bg;
+    color: $default-color;
+  }
+
+  &:disabled,
+  &[data-state="disabled"] {
+    background-color: $disabled-bg;
+    color: $disabled-color;
+  }
+}
+
+// Button state pattern mixin (outline/subtle/transparent variants)
+@mixin btn-state-pattern($default-bg, $default-color, $default-border, $hover-bg, $hover-border, $selected-bg, $selected-border, $pressed-bg, $pressed-border, $disabled-bg, $disabled-color, $disabled-border) {
+
+  &,
+  &[data-state="default"] {
+    background-color: $default-bg;
+    color: $default-color;
+    border-color: $default-border;
+  }
+
+  &:hover,
+  &[data-state="hover"] {
+    background-color: $hover-bg;
+    border-color: $hover-border;
+  }
+
+  &.active,
+  &.selected,
+  .show > &,
+  .open > &,
+  .active > &,
+  &[data-state="selected"] {
+    background-color: $selected-bg;
+    border-color: $selected-border;
+  }
+
+  &:active,
+  &[data-state="active"] {
+    background-color: $pressed-bg;
+    border-color: $pressed-border;
+  }
+
+  &:disabled,
+  &[data-state="disabled"] {
+    background-color: $disabled-bg;
+    color: $disabled-color;
+    border-color: $disabled-border;
   }
 }
 
 // ==============================================
-// COMPONENT MIXINS
+// COMPONENT-SPECIFIC MIXINS
 // ==============================================
 
-// Tab indicator mixin
-@mixin btn-indicator($position: 'bottom', $size: var(--button-indicator-size)) {
+// Button indicator mixin (tabs, navigation)
+@mixin btn-indicator($position: 'b', $size: var(--button-indicator-size)) {
   &::before {
     content: '';
     position: absolute !important;
@@ -231,7 +237,7 @@
     border-radius: var(--radius-full);
     display: block;
 
-    @if $position =='bottom' {
+    @if $position =='b' {
       bottom: 0;
       width: calc(100% - var(--spacing-md) * 2);
       right: var(--spacing-md);
@@ -242,7 +248,7 @@
       }
     }
 
-    @else if $position =='vertical' {
+    @else if $position =='v' {
       right: 0;
       bottom: unset;
       width: $size !important;
@@ -255,6 +261,49 @@
       }
     }
   }
-
 }
 
+// Button indicator shared styles mixin
+@mixin btn-indicator-styles($hover-color: var(--background-neutral-400), $selected-color: var(--background-neutral-800), $position : 'b') {
+  @include btn-indicator($position);
+
+  &:hover::before,
+  &[data-state="hover"]::before {
+    background-color: $hover-color;
+  }
+
+  &:active::before,
+  &.selected::before,
+  &:focus-visible::before,
+  .show > &::before,
+  .open > &::before,
+  .active > &::before,
+  &[aria-selected="true"]::before,
+  &[data-state="selected"]::before,
+  &[data-state="active"]::before,
+  &[data-state="focused"]::before {
+    background-color: $selected-color;
+  }
+}
+
+// Loading spinner mixin with responsive sizing
+@mixin btn-loading-spinner($border-color, $track-color) {
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: var(--nds-btn-space);
+    height: var(--nds-btn-space);
+    margin: calc(var(--nds-btn-space)*-1/2) 0 0 calc(var(--nds-btn-space)*-1/2);
+    border: 3px solid $track-color;
+    border-top: 3px solid $border-color;
+    border-radius: 50%;
+    animation: nds-btn-spin 1s linear infinite;
+  }
+
+  // Smaller border for small buttons
+  &.nds-btn-sm::after {
+    border-width: 2px;
+  }
+}

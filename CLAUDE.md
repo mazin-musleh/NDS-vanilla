@@ -47,10 +47,10 @@ Updates gems to latest compatible versions
 
 ### Design System Components
 
-#### CSS Architecture
-- `nds-vars.css`: Design tokens and CSS custom properties (spacing, colors, typography)
-- `nds-base.css`: Base styles and global design system foundations  
-- `nds-button.css`: Comprehensive button component library with 6 variants:
+#### SCSS Architecture
+- `_sass/_variables.scss`: Design tokens and CSS custom properties (spacing, colors, typography)
+- `_sass/_base.scss`: Base styles and global design system foundations  
+- `_sass/components/_buttons.scss`: Comprehensive button component library with 6 variants:
   - Primary, Neutral, Secondary Solid, Secondary Outline, Subtle, Transparent
   - Multiple states: default, hover, active, disabled, loading
   - Size variations: small (24px), medium (32px), large (40px)
@@ -91,17 +91,24 @@ The NDS button system follows strict Figma specifications:
 ## Development Workflow
 
 ### Adding New Components
-1. Create component styles in `assets/css/nds-[component].css`
+1. Create component styles in `_sass/components/_[component].scss`
 2. Add component documentation page (e.g., `component.md`)
 3. Include component in `_includes/` if reusable across pages
 4. Update navigation and component showcase sections
 5. Follow existing naming conventions (`nds-` prefix)
+6. Import new component SCSS file in main stylesheet
 
-### CSS Custom Properties
-All design tokens are defined in `nds-vars.css`:
+### SCSS Variables and Mixins
+All design tokens are defined in `_sass/_variables.scss`:
 - Spacing: `--spacing-xs`, `--spacing-sm`, `--spacing-md`, `--spacing-lg`
 - Colors: `--button-background-primary-default`, `--text-oncolor-primary`
 - Transitions: `--nds-transition`
+
+Responsive mixins are available in `_sass/_mixins.scss`:
+- `@include mobile` - max-width: 599px
+- `@include tablet(min|max)` - 600px-959px range or min/max only
+- `@include desktop(min|max)` - 960px-1279px range or min/max only
+- `@include large-desktop(min|max)` - min-width: 1280px or max control
 
 ### Multi-language Support
 Pages support both Arabic (RTL) and English (LTR):

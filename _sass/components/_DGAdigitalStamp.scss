@@ -1,3 +1,4 @@
+@use '../mixins' as *;
 /* ========================================
    DGA DROPDOWN STYLES
    ======================================== */
@@ -45,7 +46,7 @@
     transform: rotate(180deg);
 }
 
-@media (min-width: 769px) {
+@include tablet(min) {
     .nds-topbar .dga-tab.textIcon>.bigScreenText {
         display: inline-block;
     }
@@ -55,7 +56,7 @@
     }
 }
 
-@media (max-width: 768px) {
+@include mobile {
     .nds-topbar .dga-tab.textIcon>.bigScreenText {
         display: none;
     }
@@ -162,7 +163,7 @@
     line-height: 1.5;
 }
 
-@media (max-width: 768px) {
+@include mobile {
     .saudi-security-notices-container {
         margin: var(--spacing-xl) auto;
         flex-direction: column;
@@ -208,7 +209,7 @@
     font-weight: bold;
 }
 
-@media (min-width: 960px) {
+@include desktop(min) {
     .saudi-security-icon-wrapper>.icon {
         font-size: 2rem;
     }

@@ -1,7 +1,3 @@
-/* ========================================
-   FOOTER COMPONENT
-   ======================================== */
-
 @use '../mixins' as *;
 /* ========================================
    FOOTER BASE STYLES
@@ -210,14 +206,14 @@
    ======================================== */
 
 /* Responsive Design */
-@media (max-width: 1024px) {
+@include desktop(max) {
     .nds-footer .nds-footer-content {
         grid-template-columns: repeat(2, 1fr);
         gap: 2rem;
     }
 }
 
-@media (max-width: 768px) {
+@include mobile {
     .nds-footer {
         padding: 2rem 0 1rem;
     }
@@ -251,25 +247,5 @@
     .nds-footer .nds-footer-mobile-app-icons {
         justify-content: center;
         margin: 8px 0 32px 0;
-    }
-}
-
-@media (max-width: 480px) {
-    .nds-footer .nds-footer-links {
-        flex-direction: column;
-        gap: 0.5rem;
-        align-items: center;
-    }
-
-    .nds-footer .nds-footer-separator {
-        display: none;
-    }
-
-    .nds-footer .nds-footer-logos {
-        gap: 12px;
-    }
-
-    .nds-footer .nds-footer-logos img {
-        height: 35px;
     }
 }
