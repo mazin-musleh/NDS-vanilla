@@ -98,10 +98,11 @@ nav.nds-main-nav .nds-nav-item>*:first-child {
 
 /* Navigation Links */
 nav.nds-main-nav .nds-nav-link {
+    --button-indicator-size: 5px;
     height: var(--nds-nav-height);
     font-size: var(--nds-text-clamp-lg-FS);
     line-height: var(--nds-text-clamp-lg-LH);
-    @include button-indicator('bottom', 5px);
+    @include btn-indicator('bottom');
 }
 
 nav.nds-main-nav .nds-nav-item.CTA>* {
@@ -584,7 +585,7 @@ body.minimal nav.nds-main-nav .nds-nav-primary .nds-nav-link {
     width: 100%;
     align-items: center;
     justify-content: start;
-    @include button-indicator('vertical', 5px);
+    @include btn-indicator('vertical');
 }
 
 body.minimal nav.nds-main-nav .nds-nav-primary .nds-nav-item.showMore .nds-nav-link {

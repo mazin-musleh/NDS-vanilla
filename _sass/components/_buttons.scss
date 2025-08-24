@@ -120,6 +120,7 @@ Available sizes:
   &.nds-btn-indicator {
     @include btn-indicator-styles(var(--background-primary-400), var(--background-primary-400));
   }
+  
 }
 
 /* Neutral Button (Dark Gray) */
@@ -137,6 +138,7 @@ Available sizes:
   &.nds-btn-indicator {
     @include btn-indicator-styles(var(--background-primary-400), var(--background-primary-400));
   }
+  
 }
 
 /* Secondary Solid Button (Light Gray) */
@@ -154,6 +156,7 @@ Available sizes:
   &.nds-btn-indicator {
     @include btn-indicator-styles(var(--background-neutral-400), var(--background-neutral-800));
   }
+  
 }
 
 /* Secondary Outline Button */
@@ -176,6 +179,7 @@ Available sizes:
   &.nds-btn-indicator {
     @include btn-indicator-styles(var(--background-neutral-400), var(--background-neutral-800));
   }
+  
 }
 
 /* Subtle Button */
@@ -198,6 +202,7 @@ Available sizes:
   &.nds-btn-indicator {
     @include btn-indicator-styles(var(--background-neutral-400), var(--background-neutral-800));
   }
+  
 }
 
 /* Transparent Button */
@@ -231,6 +236,7 @@ Available sizes:
   &.nds-btn-indicator {
     @include btn-indicator-styles(var(--background-neutral-400), var(--background-neutral-800));
   }
+  
 }
 
 // ==============================================
