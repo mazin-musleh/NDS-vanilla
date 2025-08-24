@@ -5,20 +5,14 @@
    CSS RESET & NORMALIZATION
    ======================================== */
 
-/* Box sizing reset */
 *,
 *::before,
 *::after {
     box-sizing: border-box;
-}
-
-/* Remove default margins and padding */
-* {
     margin: 0;
     padding: 0;
 }
 
-/* HTML and body reset */
 html {
     line-height: 1.15;
     -webkit-text-size-adjust: 100%;
@@ -26,7 +20,6 @@ html {
 }
 
 body {
-    margin: 0;
     font-family: 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     line-height: 1.6;
     color: var(--text-default);
@@ -36,34 +29,25 @@ body {
     text-rendering: optimizeLegibility;
 }
 
-/* Heading reset */
 h1, h2, h3, h4, h5, h6 {
-    margin: 0;
     font-weight: inherit;
     font-size: inherit;
     line-height: inherit;
 }
 
-/* List reset */
 ul, ol {
     list-style: none;
-    margin: 0;
-    padding: 0;
 }
 
-/* Link reset */
 a {
     color: inherit;
     text-decoration: inherit;
 }
 
-/* Button reset */
 button, input, optgroup, select, textarea {
     font-family: inherit;
     font-size: 100%;
     line-height: 1.15;
-    margin: 0;
-    padding: 0;
     border: none;
     background: none;
     color: inherit;
@@ -72,36 +56,31 @@ button, input, optgroup, select, textarea {
 button {
     cursor: pointer;
     background-color: transparent;
-    border: 0;
-    outline: none;
 }
 
-/* Form element reset */
 input, textarea, select {
     outline: none;
-    border: none;
     background: transparent;
 }
 
-
-/* Table reset */
 table {
     border-collapse: collapse;
     border-spacing: 0;
 }
 
-/* Remove outline for non-keyboard focus */
 *:focus:not(:focus-visible) {
     outline: none;
 }
 
-/* Focus visible styles */
 *:focus-visible {
     outline: 2px solid var(--colors-base-black);
     outline-offset: 2px;
 }
 
-/* Prevent text selection on interactive elements */
+/* ========================================
+   INTERACTIVE ELEMENTS
+   ======================================== */
+
 button,
 .button,
 .btn,
@@ -115,23 +94,23 @@ button,
     -webkit-touch-callout: none;
 }
 
-/* ========================================
-   BASE COMPONENT STYLES
-   ======================================== */
-
 button,
 .button,
 .btn,
 .nds-btn {
-    background-color: unset;
-    border: unset;
+    background-color: transparent;
+    border: none;
     cursor: pointer;
 }
 
+/* ========================================
+   COMPONENT STYLES
+   ======================================== */
+
 .nds-tags {
-    gap: var(--spacing-md);
     display: flex;
     flex-wrap: wrap;
+    gap: var(--spacing-md);
 }
 
 .nds-tag {
@@ -140,25 +119,27 @@ button,
     padding: var(--spacing-none) var(--spacing-lg);
     justify-content: center;
     align-items: center;
-    gap: var(--spacing-xs) var(--spacing-xs);
+    gap: var(--spacing-xs);
     border-radius: var(--radius-sm);
     color: var(--tag-text-neutral);
     background-color: var(--tag-background-neutral-light);
     border: 1px solid var(--border-neutral-primary);
     font-size: var(--nds-text-sm-FS);
     line-height: var(--nds-text-sm-LH);
+    
+    &.green {
+        color: var(--tag-text-success);
+        background-color: var(--tag-background-success-light);
+        border-color: var(--tag-border-success-light);
+    }
 }
 
-button.nds-tag:hover {
-    filter: brightness(0.9) contrast(1.15) saturate(1.3);
-}
-
-button.nds-tag:active {
-    filter: brightness(0.85) contrast(1.2) saturate(1.4);
-}
-
-.nds-tag.green {
-    color: var(--tag-text-success);
-    background-color: var(--tag-background-success-light);
-    border: 1px solid var(--tag-border-success-light);
+button.nds-tag {
+    &:hover {
+        filter: brightness(0.9) contrast(1.15) saturate(1.3);
+    }
+    
+    &:active {
+        filter: brightness(0.85) contrast(1.2) saturate(1.4);
+    }
 }
