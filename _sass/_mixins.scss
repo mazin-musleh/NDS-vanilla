@@ -92,7 +92,7 @@
   }
 }
 
-// Loading spinner mixin
+// Loading spinner mixin with responsive sizing
 @mixin btn-loading-spinner($border-color, $track-color) {
   &::after {
     content: '';
@@ -106,6 +106,66 @@
     border-top: 3px solid $border-color;
     border-radius: 50%;
     animation: nds-btn-spin 1s linear infinite;
+  }
+  
+  // Smaller border for small buttons
+  &.nds-btn-sm::after {
+    border-width: 2px;
+  }
+}
+
+// Button state pattern mixin for outline/subtle/transparent variants
+@mixin btn-state-pattern($default-bg, $default-color, $default-border, $hover-bg, $hover-border, $selected-bg, $selected-border, $pressed-bg, $pressed-border, $disabled-bg, $disabled-color, $disabled-border) {
+  &,
+  &[data-state="default"] {
+    background-color: $default-bg;
+    color: $default-color;
+    border-color: $default-border;
+  }
+
+  &:hover,
+  &[data-state="hover"] {
+    background-color: $hover-bg;
+    border-color: $hover-border;
+  }
+
+  &.active,
+  &.selected,
+  &[data-state="selected"] {
+    background-color: $selected-bg;
+    border-color: $selected-border;
+  }
+
+  &:active,
+  &[data-state="active"] {
+    background-color: $pressed-bg;
+    border-color: $pressed-border;
+  }
+
+  &:disabled,
+  &[data-state="disabled"] {
+    background-color: $disabled-bg;
+    color: $disabled-color;
+    border-color: $disabled-border;
+  }
+}
+
+// Button indicator shared styles mixin
+@mixin btn-indicator-styles($hover-color, $selected-color) {
+  @include button-indicator('bottom', 3px);
+  
+  &:hover::before,
+  &[data-state="hover"]::before {
+    background-color: $hover-color;
+  }
+  
+  &:active::before,
+  &.selected::before,
+  &[aria-selected="true"]::before,
+  &[data-state="selected"]::before,
+  &[data-state="active"]::before,
+  &[data-state="focus"]::before {
+    background-color: $selected-color;
   }
 }
 
@@ -163,7 +223,7 @@
 // ==============================================
 
 // Tab indicator mixin
-@mixin tab-indicator($position: 'bottom', $size: var(--default-indicator-size)) {
+@mixin button-indicator($position: 'bottom', $size: var(--default-indicator-size)) {
   &::before {
     content: '';
     position: absolute !important;

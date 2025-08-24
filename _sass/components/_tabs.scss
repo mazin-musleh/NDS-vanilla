@@ -49,7 +49,7 @@
       justify-content: start;
 
       /* Override horizontal indicator with vertical */
-      @include tab-indicator('vertical');
+      @include button-indicator('vertical');
     }
 
     &.withDivider {
@@ -67,6 +67,7 @@
       .nds-tab {
         margin-bottom: unset;
         border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+        justify-content: end;
 
         @include ltr {
           border-radius: var(--radius-sm) 0 0 var(--radius-sm);
@@ -196,7 +197,7 @@
   z-index: 2;
 
   /* Tab indicator using mixin */
-  @include tab-indicator('bottom');
+  @include button-indicator('bottom');
 
   /* Selected tab label enhancement */
   &[aria-selected="true"] .nds-tab-label {

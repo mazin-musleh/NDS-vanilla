@@ -1,12 +1,20 @@
-/* ===== NDS SHOWCASE COMPONENT ===== */
-/* Demo Card and Showcase related styles */
+/**
+ * NDS Showcase Component
+ * Demo cards, code examples, and component demonstrations
+ */
+
+@use './mixins' as *;
+
+// ==============================================
+// DEMO CARD COMPONENTS
+// ==============================================
 
 /* Demo Card Container */
 .nds-demo-card {
-  background: var(--background-white, #ffffff);
-  border: 1px solid var(--border-neutral-secondary, #e5e7eb);
-  border-radius: var(--radius-md, 8px);
-  margin-bottom: var(--spacing-xl, 24px);
+  background: var(--background-white);
+  border: 1px solid var(--border-neutral-secondary);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-xl);
   box-shadow: var(--shadow-md);
   flex: 1 1 var(--nds-demo-card-width, 100%);
   min-width: 200px;
@@ -15,32 +23,25 @@
 /* Demo Header */
 .demo-header {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   align-items: center;
   gap: var(--spacing-lg);
-  padding: var(--spacing-lg, 12px);
-  background: var(--background-neutral-50, #f9fafb);
-  border-bottom: 1px solid var(--border-neutral-secondary, #e5e7eb);
+  padding: var(--spacing-lg);
+  background: var(--background-neutral-50);
+  border-bottom: 1px solid var(--border-neutral-secondary);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
   font-weight: 600;
-  color: var(--text-default, #161616);
-  border-radius: var(--radius-md, 8px) var(--radius-md, 8px) 0 0;
-  font-size: var(--nds-text-md-FS, 14px);
+  font-size: var(--nds-text-md-FS);
+  color: var(--text-default);
   overflow: hidden;
 }
 
-/* Demo Label */
-.demo-label {
-  /* Styles inherited from .demo-header */
-}
-
-/* Demo Action */
+/* Demo Actions */
 .demo-action {
   display: flex;
-  gap: var(--spacing-xs, 4px);
+  gap: var(--spacing-xs);
 }
 
-/* Demo Background Switcher Buttons */
 .demo-bg-btn {
   font-size: 12px;
   padding: 2px 8px;
@@ -49,179 +50,222 @@
 
 /* Demo Container */
 .demo-container {
-  padding: var(--spacing-4xl, 16px);
+  padding: var(--spacing-4xl);
 }
 
-/* State Demo */
-.state-demo {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-md, 12px);
-  align-items: center;
-}
+// ==============================================
+// COMPONENT SHOWCASE LAYOUTS
+// ==============================================
 
-/* Button Row */
+/* Showcase Containers */
+.state-demo,
 .button-row {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--spacing-md, 12px);
+  gap: var(--spacing-md);
   align-items: center;
 }
 
-/* Button Showcase */
 .button-showcase {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--spacing-xl, 16px);
-  margin-bottom: var(--spacing-xl, 16px);
+  gap: var(--spacing-xl);
+  margin-bottom: var(--spacing-xl);
 }
 
-.demo-container.black-bg,
-.demo-container.dark-bg {
-  background-color: var(--background-neutral-900, #1f2937);
+/* Demo Container Backgrounds */
+.demo-container {
+
+  &.green-bg,
+  &.dark-bg {
+    background-color: var(--background-sa-flag);
+  }
+
+  &.black-bg {
+    background-color: var(--background-neutral-800) !important;
+  }
+
+  &.noBg {
+    background-color: var(--background-body);
+  }
 }
 
-.demo-container.green-bg,
 .oncolor-buttons .demo-container {
-  background-color: var(--background-sa-flag, #074c30);
+  background-color: var(--background-sa-flag);
 }
 
-.demo-container.green-bg,
-.demo-container.dark-bg {
-  background-color: var(--background-sa-flag, #074c30);
-}
+// ==============================================
+// CODE EXAMPLE COMPONENT
+// ==============================================
 
-.demo-container.black-bg {
-  background-color: var(--background-neutral-900, #1f2937);
-}
-
-
-
-.demo-container.noBg {
-  background-color: var(--background-body, #f9fafb);
-}
-
-/* Code Example */
 .code-example {
-  background: var(--background-neutral-900, #1f2937);
-  padding: var(--spacing-lg, 16px);
+  background: var(--background-neutral-800);
+  padding: var(--spacing-lg);
   margin: 0;
+
+  pre {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: none;
+    overflow-x: auto;
+  }
+
+  code {
+    color: var(--text-oncolor-secondary);
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: var(--nds-text-sm-FS);
+    line-height: 1.6;
+    direction: ltr;
+    text-align: left;
+    display: block;
+    white-space: pre;
+    overflow-x: auto;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: none;
+  }
 }
 
 .usage-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: var(--spacing-md, 12px);
-}
+  margin-bottom: var(--spacing-md);
 
-.usage-header span {
-  color: var(--text-oncolor-primary, #ffffff);
-  font-weight: 600;
-  font-size: var(--nds-text-sm-FS, 12px);
+  span {
+    color: var(--text-oncolor-primary);
+    font-weight: 600;
+    font-size: var(--nds-text-sm-FS);
+  }
 }
 
 .copy-btn {
   background: transparent;
-  border: 1px solid var(--border-neutral-600, #4b5563);
-  color: var(--text-oncolor-secondary, #d1d5db);
-  padding: var(--spacing-xs, 8px);
-  border-radius: var(--radius-sm, 4px);
+  border: 1px solid var(--border-neutral-600);
+  color: var(--text-oncolor-secondary);
+  padding: var(--spacing-xs);
+  border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: all var(--nds-transition, 0.25s ease);
+  transition: all var(--nds-transition);
   display: flex;
   align-items: center;
   justify-content: center;
+
+  .hgi {
+    font-size: 14px;
+  }
+
+  &:hover {
+    background: var(--background-neutral-800);
+    border-color: var(--border-neutral-500);
+  }
+
+  &.copied {
+    background: var(--button-background-primary-default);
+    border-color: var(--button-background-primary-default);
+    color: white;
+  }
 }
 
-.copy-btn:hover {
-  background: var(--background-neutral-800, #374151);
-  border-color: var(--border-neutral-500, #6b7280);
+// ==============================================
+// ACCORDION DEMO SPECIFIC STYLES
+// ==============================================
+
+.support-options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-md);
 }
 
-.copy-btn.copied {
-  background: var(--button-background-primary-default, #1b8354);
-  border-color: var(--button-background-primary-default, #1b8354);
-  color: white;
+.support-item {
+  padding: var(--spacing-sm);
+  background-color: var(--background-neutral-50);
+  border-radius: var(--radius-sm);
 }
 
-.copy-btn .hgi {
-  font-size: 14px;
+.account-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-md);
 }
 
-.code-example pre {
-  margin: 0;
-  padding: 0;
-  background: transparent;
-  border: none;
-  overflow-x: auto;
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  background-color: var(--background-neutral-50);
+  border-radius: var(--radius-sm);
+
+  i {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+    color: var(--button-background-primary-default);
+  }
 }
 
-.code-example code {
-  color: var(--text-oncolor-secondary, #d1d5db);
-  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-  font-size: var(--nds-text-sm-FS, 12px);
-  line-height: 1.6;
-  direction: ltr;
-  text-align: left;
-  display: block;
-  white-space: pre;
-  overflow-x: auto;
-  margin: 0;
-  padding: 0;
-  background: transparent;
-  border: none;
-}
+// ==============================================
+// RESPONSIVE DESIGN & ACCESSIBILITY
+// ==============================================
 
-/* Responsive Design */
-@media (max-width: 768px) {
+/* Mobile Responsive */
+@include mobile {
   .demo-container {
-    padding: var(--spacing-2xl, 20px);
+    padding: var(--spacing-2xl);
   }
 
   .demo-header {
-    padding: var(--spacing-sm, 8px) var(--spacing-md, 12px);
-    font-size: var(--nds-text-sm-FS, 12px);
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--nds-text-sm-FS);
   }
 
   .state-demo,
   .button-row {
-    gap: var(--spacing-sm, 8px);
+    gap: var(--spacing-sm);
   }
 
   .button-showcase {
-    gap: var(--spacing-lg, 16px);
+    gap: var(--spacing-lg);
+
+    &.green-bg,
+    &.black-bg,
+    &.dark-bg {
+      padding: var(--spacing-lg);
+    }
   }
 
-  .button-showcase.green-bg,
-  .button-showcase.black-bg,
-  .button-showcase.dark-bg {
-    padding: var(--spacing-lg, 16px);
+  .account-features {
+    grid-template-columns: 1fr;
   }
 }
 
 /* RTL Support */
-html[dir="rtl"] .demo-header {
-  direction: rtl;
+html[dir="rtl"] {
+
+  .demo-header,
+  .demo-action {
+    direction: rtl;
+  }
 }
 
-html[dir="rtl"] .demo-action {
-  direction: rtl;
-}
-
-/* High Contrast Mode */
-@media (prefers-contrast: high) {
+/* Accessibility Support */
+@include high-contrast {
   .nds-demo-card {
-    border: 2px solid var(--border-neutral-400, #9ca3af);
+    border: 2px solid var(--border-neutral-400);
   }
 
   .demo-header {
-    border-bottom: 2px solid var(--border-neutral-400, #9ca3af);
+    border-bottom: 2px solid var(--border-neutral-400);
   }
 }
 
-/* Reduced Motion */
-@media (prefers-reduced-motion: reduce) {
+@include reduced-motion {
   .copy-btn {
     transition: none;
   }

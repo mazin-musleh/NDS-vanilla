@@ -118,21 +118,7 @@ Available sizes:
   );
   
   &.nds-btn-indicator {
-    @include tab-indicator('bottom', 3px);
-    
-    &:hover::before,
-    &[data-state="hover"]::before {
-      background-color: var(--background-primary-400);
-    }
-    
-    &:active::before,
-    &.selected::before,
-    &[aria-selected="true"]::before,
-    &[data-state="selected"]::before,
-    &[data-state="active"]::before,
-    &[data-state="focus"]::before {
-      background-color: var(--background-primary-400);
-    }
+    @include btn-indicator-styles(var(--background-primary-400), var(--background-primary-400));
   }
 }
 
@@ -149,21 +135,7 @@ Available sizes:
   );
   
   &.nds-btn-indicator {
-    @include tab-indicator('bottom', 3px);
-    
-    &:hover::before,
-    &[data-state="hover"]::before {
-      background-color: var(--background-primary-400);
-    }
-    
-    &:active::before,
-    &.selected::before,
-    &[aria-selected="true"]::before,
-    &[data-state="selected"]::before,
-    &[data-state="active"]::before,
-    &[data-state="focus"]::before {
-      background-color: var(--background-primary-400);
-    }
+    @include btn-indicator-styles(var(--background-primary-400), var(--background-primary-400));
   }
 }
 
@@ -180,122 +152,51 @@ Available sizes:
   );
   
   &.nds-btn-indicator {
-    @include tab-indicator('bottom', 3px);
-    
-    &:hover::before,
-    &[data-state="hover"]::before {
-      background-color: var(--background-neutral-400);
-    }
-    
-    &:active::before,
-    &.selected::before,
-    &[aria-selected="true"]::before,
-    &[data-state="selected"]::before,
-    &[data-state="active"]::before,
-    &[data-state="focus"]::before {
-      background-color: var(--background-neutral-800);
-    }
+    @include btn-indicator-styles(var(--background-neutral-400), var(--background-neutral-800));
   }
 }
 
 /* Secondary Outline Button */
 .nds-btn-secondary-outline {
-  &,
-  &[data-state="default"] {
-    background-color: var(--button-background-transparent-hovered);
-    border-color: var(--border-neutral-secondary);
-    color: var(--text-default);
-  }
-
-  &:hover,
-  &[data-state="hover"] {
-    background-color: var(--button-background-neutral-default);
-    border-color: var(--border-neutral-secondary);
-  }
-
-  &.active,
-  &.selected,
-  &[data-state="selected"] {
-    background-color: var(--button-background-neutral-selected);
-    border-color: var(--border-neutral-primary);
-  }
-
-  &:active,
-  &[data-state="active"] {
-    background-color: var(--button-background-neutral-pressed);
-    border-color: var(--border-neutral-primary);
-  }
-
-  &:disabled,
-  &[data-state="disabled"] {
-    background-color: var(--button-background-transparent-default);
-    border-color: var(--border-neutral-secondary);
-    color: var(--text-default-disabled);
-  }
+  @include btn-state-pattern(
+    var(--button-background-transparent-hovered),
+    var(--text-default),
+    var(--border-neutral-secondary),
+    var(--button-background-neutral-default),
+    var(--border-neutral-secondary),
+    var(--button-background-neutral-selected),
+    var(--border-neutral-primary),
+    var(--button-background-neutral-pressed),
+    var(--border-neutral-primary),
+    var(--button-background-transparent-default),
+    var(--text-default-disabled),
+    var(--border-neutral-secondary)
+  );
   
   &.nds-btn-indicator {
-    @include tab-indicator('bottom', 3px);
-    
-    &:hover::before,
-    &[data-state="hover"]::before {
-      background-color: var(--background-neutral-400);
-    }
-    
-    &:active::before,
-    &.selected::before,
-    &[aria-selected="true"]::before,
-    &[data-state="selected"]::before,
-    &[data-state="active"]::before,
-    &[data-state="focus"]::before {
-      background-color: var(--background-neutral-800);
-    }
+    @include btn-indicator-styles(var(--background-neutral-400), var(--background-neutral-800));
   }
 }
 
 /* Subtle Button */
 .nds-btn-subtle {
-  &,
-  &[data-state="default"] {
-    color: var(--text-default);
-  }
-
-  &:hover,
-  &[data-state="hover"] {
-    background-color: var(--button-background-neutral-default);
-  }
-
-  &.active,
-  &.selected,
-  &[data-state="selected"] {
-    background-color: var(--button-background-neutral-selected);
-  }
-
-  &:active,
-  &[data-state="active"] {
-    background-color: var(--button-background-neutral-pressed);
-  }
-
-  &:disabled,
-  &[data-state="disabled"] {
-    color: var(--text-default-disabled);
-  }
+  @include btn-state-pattern(
+    transparent,
+    var(--text-default),
+    transparent,
+    var(--button-background-neutral-default),
+    transparent,
+    var(--button-background-neutral-selected),
+    transparent,
+    var(--button-background-neutral-pressed),
+    transparent,
+    transparent,
+    var(--text-default-disabled),
+    transparent
+  );
   
   &.nds-btn-indicator {
-    @include tab-indicator('bottom', 3px);
-    
-    &:hover::before,
-    &[data-state="hover"]::before {
-      background-color: var(--background-neutral-400);
-    }
-    
-    &:active::before,
-    &.selected::before,
-    &[aria-selected="true"]::before,
-    &[data-state="selected"]::before,
-    &[data-state="active"]::before,
-    &[data-state="focus"]::before {
-      background-color: var(--background-neutral-800);
-    }
+    @include btn-indicator-styles(var(--background-neutral-400), var(--background-neutral-800));
   }
 }
 
@@ -328,21 +229,7 @@ Available sizes:
   }
   
   &.nds-btn-indicator {
-    @include tab-indicator('bottom', 3px);
-    
-    &:hover::before,
-    &[data-state="hover"]::before {
-      background-color: var(--background-neutral-400);
-    }
-    
-    &:active::before,
-    &.selected::before,
-    &[aria-selected="true"]::before,
-    &[data-state="selected"]::before,
-    &[data-state="active"]::before,
-    &[data-state="focus"]::before {
-      background-color: var(--background-neutral-800);
-    }
+    @include btn-indicator-styles(var(--background-neutral-400), var(--background-neutral-800));
   }
 }
 
@@ -766,65 +653,7 @@ Available sizes:
 // BUTTON FEATURES & MODIFIERS
 // ==============================================
 
-/* Icon-Only Button Base */
-.nds-btn-icon-only {
-  aspect-ratio: 1;
-  padding: 0;
-
-  .label {
-    display: none;
-  }
-}
-
-.nds-btn-label-only i {
-  display: none;
-}
-
-/* Icon-Only Button Sizes */
-.nds-btn-icon-only {
-  &.nds-btn-sm {
-    width: 24px;
-    padding: 0;
-  }
-
-  &.nds-btn-md {
-    width: 32px;
-    padding: 0;
-  }
-
-  &.nds-btn-lg {
-    width: 40px;
-    padding: 0;
-  }
-
-  &.nds-btn-xl {
-    width: 48px;
-    padding: 0;
-  }
-}
-
-/* Icon-Only Menu Button Exceptions */
-.nds-btn-icon-only.nds-btn-menu {
-  width: fit-content;
-
-  &.nds-btn-sm {
-    padding: 0 var(--spacing-sm);
-  }
-
-  &.nds-btn-md {
-    padding: 0 var(--spacing-md);
-  }
-
-  &.nds-btn-lg {
-    padding: 0 var(--spacing-lg);
-  }
-
-  &.nds-btn-xl {
-    padding: 0 var(--spacing-xl);
-  }
-}
-
-/* Icon Positioning & Layout */
+/* Button Layout Modifiers */
 .nds-btn-lead-icon {
   flex-direction: row;
 }
@@ -833,27 +662,48 @@ Available sizes:
   flex-direction: row-reverse;
 }
 
-/* Icon Sizing by Button Size */
-.nds-btn i.hgi {
-  font-size: 1.2em;
-  flex-shrink: 0;
-}
-
-.nds-btn-sm i.hgi {
-  font-size: 1.1em;
-}
-
-.nds-btn-lg i.hgi {
-  font-size: 1.3em;
-}
-
-.nds-btn-xl i.hgi {
-  font-size: 1.4em;
-}
-
-/* Full Width Button */
 .nds-btn-full {
   width: 100%;
+}
+
+/* Icon Visibility Controls */
+.nds-btn-icon-only .label {
+  display: none;
+}
+
+.nds-btn-label-only i {
+  display: none;
+}
+
+/* Icon-Only Button Configurations */
+.nds-btn-icon-only {
+  aspect-ratio: 1;
+  padding: 0;
+  
+  &.nds-btn-sm { width: 24px; }
+  &.nds-btn-md { width: 32px; }
+  &.nds-btn-lg { width: 40px; }
+  &.nds-btn-xl { width: 48px; }
+  
+  // Menu button exceptions
+  &.nds-btn-menu {
+    width: fit-content;
+    
+    &.nds-btn-sm { padding: 0 var(--spacing-sm); }
+    &.nds-btn-md { padding: 0 var(--spacing-md); }
+    &.nds-btn-lg { padding: 0 var(--spacing-lg); }
+    &.nds-btn-xl { padding: 0 var(--spacing-xl); }
+  }
+}
+
+/* Icon Sizing */
+.nds-btn i.hgi {
+  flex-shrink: 0;
+  font-size: 1.2em;
+  
+  .nds-btn-sm & { font-size: 1.1em; }
+  .nds-btn-lg & { font-size: 1.3em; }
+  .nds-btn-xl & { font-size: 1.4em; }
 }
 
 /* Button Groups */
@@ -898,21 +748,7 @@ Available sizes:
   pointer-events: none;
   color: transparent !important;
 
-  &::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: var(--nds-btn-space);
-    height: var(--nds-btn-space);
-    margin: calc(var(--nds-btn-space)*-1/2) 0 0 calc(var(--nds-btn-space)*-1/2);
-    border: 3px solid var(--nds-spinner-track-color);
-    border-top: 3px solid currentColor;
-    border-radius: 50%;
-    animation: nds-btn-spin 1s linear infinite;
-  }
-
-  // Loading states for different button types
+  // Standard button loading states
   &.nds-btn-primary,
   &.nds-btn-neutral {
     @include btn-loading-spinner(var(--text-oncolor-primary), var(--alpha-white-20));
@@ -934,10 +770,7 @@ Available sizes:
       @include btn-loading-spinner(var(--text-oncolor-primary), var(--alpha-white-20));
     }
 
-    &.nds-btn-secondary {
-      @include btn-loading-spinner(var(--text-default), var(--alpha-black-10));
-    }
-
+    &.nds-btn-secondary,
     &.nds-btn-secondary-outline,
     &.nds-btn-subtle,
     &.nds-btn-transparent {
@@ -967,10 +800,7 @@ Available sizes:
       &.nds-btn-primary,
       &.nds-btn-secondary,
       &.nds-btn-subtle,
-      &.nds-btn-transparent {
-        @include btn-loading-spinner(var(--text-oncolor-primary), var(--alpha-white-20));
-      }
-
+      &.nds-btn-transparent,
       &.nds-btn-secondary-outline {
         @include btn-loading-spinner(var(--colors-base-white), var(--alpha-white-20));
       }
@@ -1005,7 +835,7 @@ Available sizes:
 /* Reduced Motion Support */
 @include reduced-motion {
   .nds-btn,
-  .nds-btn::before {
+  .nds-btn::after {
     transition: none;
     animation: none;
   }
