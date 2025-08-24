@@ -32,13 +32,13 @@
       flex-direction: column;
       flex-wrap: nowrap;
       min-width: fit-content;
-      padding-left: var(--default-indicator-size);
+      padding-left: var(--button-indicator-size);
       position: sticky;
       z-index: 2;
       top: var(--nds-nav-height);
 
       @include ltr {
-        padding-right: var(--default-indicator-size);
+        padding-right: var(--button-indicator-size);
         padding-left: unset;
       }
     }
@@ -49,14 +49,14 @@
       justify-content: start;
 
       /* Override horizontal indicator with vertical */
-      @include button-indicator('vertical');
+      @include btn-indicator('vertical');
     }
 
     &.withDivider {
       .nds-tab-list-container::after {
         left: 0;
         height: 100%;
-        width: var(--default-indicator-size);
+        width: var(--button-indicator-size);
 
         @include ltr {
           right: 0;
@@ -74,14 +74,14 @@
         }
 
         &:before {
-          margin-left: calc(var(--default-indicator-size) * -1);
+          margin-left: calc(var(--button-indicator-size) * -1);
           right: unset;
           left: 0;
           margin-bottom: unset;
 
           @include ltr {
             margin-left: unset;
-            margin-right: calc(var(--default-indicator-size) * -1);
+            margin-right: calc(var(--button-indicator-size) * -1);
             left: unset;
             right: 0;
           }
@@ -111,17 +111,17 @@
       width: 100%;
       background-color: var(--border-neutral-primary);
       display: block;
-      height: var(--default-indicator-size);
+      height: var(--button-indicator-size);
       z-index: 1;
       border-radius: var(--radius-full);
     }
 
     .nds-tab {
-      margin-bottom: var(--default-indicator-size);
+      margin-bottom: var(--button-indicator-size);
       border-radius: var(--radius-sm) var(--radius-sm) 0 0;
 
       &:before {
-        margin-bottom: calc(var(--default-indicator-size) * -1);
+        margin-bottom: calc(var(--button-indicator-size) * -1);
       }
     }
   }
@@ -197,7 +197,7 @@
   z-index: 2;
 
   /* Tab indicator using mixin */
-  @include button-indicator('bottom');
+  @include btn-indicator('bottom');
 
   /* Selected tab label enhancement */
   &[aria-selected="true"] .nds-tab-label {

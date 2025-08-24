@@ -151,8 +151,8 @@
 }
 
 // Button indicator shared styles mixin
-@mixin btn-indicator-styles($hover-color, $selected-color) {
-  @include button-indicator('bottom', 3px);
+@mixin btn-indicator-styles($hover-color, $selected-color,$position : 'bottom') {
+  @include btn-indicator($position);
   
   &:hover::before,
   &[data-state="hover"]::before {
@@ -164,7 +164,7 @@
   &[aria-selected="true"]::before,
   &[data-state="selected"]::before,
   &[data-state="active"]::before,
-  &[data-state="focus"]::before {
+  &[data-state="focused"]::before {
     background-color: $selected-color;
   }
 }
@@ -223,7 +223,7 @@
 // ==============================================
 
 // Tab indicator mixin
-@mixin button-indicator($position: 'bottom', $size: var(--default-indicator-size)) {
+@mixin btn-indicator($position: 'bottom', $size: var(--button-indicator-size)) {
   &::before {
     content: '';
     position: absolute !important;
