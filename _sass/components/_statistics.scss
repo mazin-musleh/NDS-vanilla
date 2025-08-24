@@ -80,7 +80,7 @@
    ======================================== */
 
 /* Responsive adjustments */
-@media (max-width: 768px) {
+@include tablet(max) {
     .nds-statistics {
         grid-template-columns: repeat(2, 1fr);
         gap: var(--spacing-lg, 16px);
@@ -91,7 +91,7 @@
     }
 }
 
-@media (max-width: 480px) {
+@include mobile {
     .nds-statistics {
         grid-template-columns: 1fr;
     }

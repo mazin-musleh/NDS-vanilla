@@ -49,7 +49,7 @@
       justify-content: start;
 
       /* Override horizontal indicator with vertical */
-      @include btn-indicator('vertical');
+      @include btn-indicator('v');
     }
 
     &.withDivider {
@@ -197,7 +197,7 @@
   z-index: 2;
 
   /* Tab indicator using mixin */
-  @include btn-indicator('bottom');
+  @include btn-indicator('b');
 
   /* Selected tab label enhancement */
   &[aria-selected="true"] .nds-tab-label {

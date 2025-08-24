@@ -61,13 +61,16 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
     width: 20px;
     height: 20px;
     font-size: 20px;
+    line-height: 20px;
     justify-content: center;
     align-content: center;
     align-items: center;
   }
   
   &.selected::after,
-  .show > &::after {
+  .show > &::after,
+  .open > &::after,
+  .active > &::after {
     transform: rotate(180deg);
   }
 }
