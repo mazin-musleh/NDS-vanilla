@@ -59,8 +59,37 @@
         return visible;
     }
 
+    // Wait for element to be ready (visible) with 500ms polling
+    function waitForElementReady(element, timeout = 10000) {
+        return new Promise((resolve) => {
+            // If element is already visible, resolve immediately
+            if (isVisible(element)) {
+                resolve(true);
+                return;
+            }
+            
+            const startTime = Date.now();
+            
+            function check() {
+                if (isVisible(element)) {
+                    resolve(true);
+                    return;
+                }
+                
+                if (Date.now() - startTime > timeout) {
+                    resolve(false);
+                    return;
+                }
+                
+                setTimeout(check, 500);
+            }
+            
+            check();
+        });
+    }
+
     // Font loading detection function
-    function waitForFontFile(fontName, callback, timeout = 10000) {
+    function waitForFontFile(fontName, callback, timeout = 20000) {
         // If font is already loaded, call callback immediately
         if (fontLoadingState.isLoaded) {
             callback(true);
@@ -77,17 +106,20 @@
         const startTime = Date.now();
 
         function check() {
+            // Check Performance API for actual font file loading
             const resources = performance.getEntriesByType('resource');
-            const fontLoaded = resources.some(resource =>
-                resource.name.includes(fontName) &&
-                (resource.name.includes('.woff2') || resource.name.includes('.woff'))
-            );
+            const fontLoaded = resources.some(resource => {
+                const url = resource.name.toLowerCase();
+                return url.includes(fontName.toLowerCase()) && 
+                       (url.includes('.woff2') || url.includes('.woff') || url.includes('.ttf') || url.includes('.otf')) &&
+                       resource.responseEnd > 0;
+            });
 
             if (fontLoaded) {
                 fontLoadingState.isLoaded = true;
                 fontLoadingState.isChecking = false;
 
-                // Add class to body
+                // Add class to body only after font file is confirmed loaded
                 document.body.classList.add('hgi-loaded');
 
                 // Execute all queued callbacks
@@ -106,8 +138,8 @@
                 return;
             }
 
-            // Check again in 100ms
-            setTimeout(check, 100);
+            // Check again in 500ms for slow connections
+            setTimeout(check, 500);
         }
 
         check();
@@ -314,7 +346,11 @@
     // Enhanced date with accurate Hijri API integration
     async function updateDate() {
         const el = DOM.dateEl;
-        if (!el || !isVisible(el) || isUpdating.date) return;
+        if (!el) return;
+        
+        // Wait for element to be visible with 500ms polling for up to 10s
+        const elementReady = await waitForElementReady(el, 10000);
+        if (!elementReady || isUpdating.date) return;
 
         const { isArabic, dateLocale } = getLanguageInfo();
         const type = el.dataset.calendar || (isArabic ? 'hijri' : 'gregorian');
@@ -378,7 +414,11 @@
     async function updateCityName() {
         const cityEl = DOM.cityEl;
         const weatherEl = DOM.weatherEl;
-        if (!cityEl || !weatherEl || !isVisible(cityEl) || isUpdating.city) return;
+        if (!cityEl || !weatherEl) return;
+        
+        // Wait for element to be visible with 500ms polling for up to 10s
+        const elementReady = await waitForElementReady(cityEl, 10000);
+        if (!elementReady || isUpdating.city) return;
 
         const lat = +(weatherEl.dataset.latitude || 24.7136);
         const lng = +(weatherEl.dataset.longitude || 46.6753);
@@ -490,7 +530,11 @@
     // Weather with smart cache and staleness tolerance - NOW WITH ICON + TEXT
     async function fetchWeather() {
         const el = DOM.weatherEl;
-        if (!el || !isVisible(el)) return;
+        if (!el) return;
+        
+        // Wait for element to be visible with 500ms polling for up to 10s
+        const elementReady = await waitForElementReady(el, 10000);
+        if (!elementReady) return;
 
         const lat = +(el.dataset.latitude || 24.7136);
         const lng = +(el.dataset.longitude || 46.6753);
@@ -595,9 +639,13 @@
     }
 
     // Clock with unified HTML generator
-    function updateClock() {
+    async function updateClock() {
         const el = DOM.clockEl;
-        if (!el || !isVisible(el)) return;
+        if (!el) return;
+        
+        // Wait for element to be visible with 500ms polling for up to 10s
+        const elementReady = await waitForElementReady(el, 10000);
+        if (!elementReady) return;
 
         const now = new Date();
         const h = now.getHours();
@@ -616,10 +664,14 @@
         }
 
         batchUpdateTimeout = setTimeout(async () => {
-            if (options.date && DOM.dateEl && isVisible(DOM.dateEl)) await updateDate();
-            if (options.clock && DOM.clockEl && isVisible(DOM.clockEl)) updateClock();
-            if (options.city && DOM.cityEl && isVisible(DOM.cityEl)) updateCityName();
-            if (options.weather && DOM.weatherEl && isVisible(DOM.weatherEl)) fetchWeather();
+            try {
+                if (options.date && DOM.dateEl) await updateDate();
+                if (options.clock && DOM.clockEl) await updateClock();
+                if (options.city && DOM.cityEl) updateCityName();
+                if (options.weather && DOM.weatherEl) fetchWeather();
+            } catch (error) {
+                console.error('Batch update error:', error);
+            }
             batchUpdateTimeout = null;
         }, 100);
     }
@@ -667,11 +719,11 @@
             const dateEl = DOM.dateEl;
             const cityEl = DOM.cityEl;
 
-            if (dateEl && isVisible(dateEl) && !dateEl.innerHTML.trim()) {
+            if (dateEl && !dateEl.innerHTML.trim()) {
                 updateDate();
             }
 
-            if (cityEl && isVisible(cityEl) && !cityEl.innerHTML.trim()) {
+            if (cityEl && !cityEl.innerHTML.trim()) {
                 updateCityName();
             }
 
@@ -687,36 +739,60 @@
 
         batchUpdate();
 
-        intervalIds.clock = setInterval(updateClock, 1000);
+        intervalIds.clock = setInterval(() => {
+            try {
+                updateClock();
+            } catch (error) {
+                console.error('Clock update error:', error);
+            }
+        }, 1000);
 
         intervalIds.weather = setInterval(() => {
-            if (DOM.weatherEl && isVisible(DOM.weatherEl)) {
-                const lat = +(DOM.weatherEl.dataset.latitude || 24.7136);
-                const lng = +(DOM.weatherEl.dataset.longitude || 46.6753);
-                const { isArabic } = getLanguageInfo();
-                const cacheKey = `weather_${lat}_${lng}_${isArabic}`;
-                if (!cache.get(cacheKey)) fetchWeather();
+            try {
+                if (DOM.weatherEl) {
+                    const lat = +(DOM.weatherEl.dataset.latitude || 24.7136);
+                    const lng = +(DOM.weatherEl.dataset.longitude || 46.6753);
+                    const { isArabic } = getLanguageInfo();
+                    const cacheKey = `weather_${lat}_${lng}_${isArabic}`;
+                    if (!cache.get(cacheKey)) fetchWeather();
+                }
+            } catch (error) {
+                console.error('Weather update error:', error);
             }
         }, 15 * 60 * 1000);
 
         intervalIds.city = setInterval(() => {
-            if (DOM.cityEl && isVisible(DOM.cityEl) && DOM.weatherEl) {
-                const lat = +(DOM.weatherEl.dataset.latitude || 24.7136);
-                const lng = +(DOM.weatherEl.dataset.longitude || 46.6753);
-                const { isArabic } = getLanguageInfo();
-                const cacheKey = `city_${lat}_${lng}_${isArabic ? 'ar' : 'en'}`;
-                if (!cache.get(cacheKey)) updateCityName();
+            try {
+                if (DOM.cityEl && DOM.weatherEl) {
+                    const lat = +(DOM.weatherEl.dataset.latitude || 24.7136);
+                    const lng = +(DOM.weatherEl.dataset.longitude || 46.6753);
+                    const { isArabic } = getLanguageInfo();
+                    const cacheKey = `city_${lat}_${lng}_${isArabic ? 'ar' : 'en'}`;
+                    if (!cache.get(cacheKey)) updateCityName();
+                }
+            } catch (error) {
+                console.error('City update error:', error);
             }
         }, 7 * 24 * 60 * 60 * 1000);
 
         intervalIds.date = setInterval(async () => {
-            if (DOM.dateEl && isVisible(DOM.dateEl)) await updateDate();
+            try {
+                if (DOM.dateEl) await updateDate();
+            } catch (error) {
+                console.error('Date update error:', error);
+            }
         }, 24 * 60 * 60 * 1000);
 
         let resizeTimeout;
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(handleResize, 100);
+            resizeTimeout = setTimeout(() => {
+                try {
+                    handleResize();
+                } catch (error) {
+                    console.error('Resize handler error:', error);
+                }
+            }, 100);
         }, { passive: true });
 
         document.addEventListener('visibilitychange', () => {
