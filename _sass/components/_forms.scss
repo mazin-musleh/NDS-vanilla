@@ -1,0 +1,197 @@
+@use '../mixins' as *;
+
+.nds-form-control {
+    display: flex;
+    height: 40px;
+    width: 100%;
+    min-width: 200px;
+    justify-content: flex-start;
+    align-items: center;
+    padding: var(--spacing-none) var(--spacing-2);
+    border-radius: var(--radius-sm);
+    gap: var(--spacing-md);
+    border: 1px solid var(--form-field-border-default);
+    background: var(--form-field-background-default);
+    position: relative;
+
+    * {
+        font-size: 1rem;
+    }
+
+    &:hover {
+        border-color: var(--form-field-border-hovered);
+        color: var(--form-field-text-hovered);
+
+        ::-webkit-input-placeholder {
+            color: var(--form-field-text-hovered);
+        }
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        bottom: 0px;
+        left: 50%;
+        width: 0%;
+        height: 2px;
+        transform: translateX(-50%);
+        background-color: var(--form-field-border-pressed);
+        transition: width var(--nds-transition);
+    }
+
+    &.focus {
+        &::after {
+            width: 100%;
+        }
+
+        box-shadow: var(--shadow-md);
+
+        ::-webkit-input-placeholder {
+            color: var(--form-field-text-hovered);
+        }
+    }
+
+    &.active {
+        &::after {
+            width: 50%;
+        }
+
+        box-shadow: var(--shadow-md);
+
+        ::-webkit-input-placeholder {
+            color: var(--form-field-text-hovered);
+        }
+    }
+
+    input {
+        background-color: transparent;
+        border: 0px;
+        outline: 0px;
+        height: 100%;
+        width: 100%;
+        color: var(--form-field-text-hovered);
+        outline: unset !important;
+        outline-offset: unset !important;
+        box-shadow: unset !important;
+
+        &:focus {
+            color: var(--form-field-text-focused);
+        }
+    }
+
+    ::-webkit-input-placeholder {
+        color: var(--form-field-text-placeholder);
+    }
+
+    .nds-form-action {
+        display: flex;
+        gap: var(--spacing-sm);
+        flex-direction: row-reverse;
+        margin-left: calc(var(--spacing-md) * -1);
+
+        html[dir="ltr"] & {
+            margin-left: unset;
+            margin-right: calc(var(--spacing-md) * -1);
+        }
+
+        > * {
+            position: relative;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-default, #161616);
+
+            &:not(:first-child, .hidden)::before {
+                content: '';
+                width: 1px;
+                background-color: var(--border-neutral-primary);
+                height: calc(100% - var(--spacing-lg));
+                position: absolute;
+                left: calc(var(--spacing-xs) * -1);
+                top: 50%;
+                transform: translateY(-50%);
+
+                html[dir="ltr"] & {
+                    left: unset;
+                    right: calc(var(--spacing-xs) * -1);
+                }
+            }
+        }
+    }
+}
+
+.voiceInput.listening > i {
+    animation: colorCycle 1s linear infinite alternate;
+}
+
+.toggle-password.show i::before {
+    content: "㿦";
+}
+
+@keyframes colorCycle {
+    100% {
+        color: var(--text-default);
+    }
+
+    0% {
+        color: var(--colors-primary-sa-flag-400);
+    }
+}
+
+.nds-search-box {
+    display: flex;
+    gap: var(--spacing-lg);
+    max-width: 800px;
+    margin: 0 auto;
+    justify-content: center;
+    padding: var(--spacing-lg);
+    align-items: flex-start;
+    flex-direction: column;
+
+    .nds-search-content {
+        display: flex;
+        gap: var(--spacing-lg);
+        width: 100%;
+    }
+
+    .nds-dropdown-title {
+        font-size: var(--nds-text-clamp-lg-FS);
+        line-height: var(--nds-text-clamp-lg-LH);
+        color: var(--text-primary);
+        font-weight: 500;
+    }
+}
+
+// Additional form control styles for text inputs, textareas, and selects
+.nds-form-control input,
+.nds-form-control textarea,
+.nds-form-control select {
+    background-color: transparent;
+    border: 0px;
+    outline: 0px;
+    height: 100%;
+    width: 100%;
+    outline: unset !important;
+    outline-offset: unset !important;
+    box-shadow: unset !important;
+}
+
+// Duplicate input color for backward compatibility
+.nds-form-control input {
+    color: var(--form-field-text-hovered);
+}
+
+// Form state classes for filled, error, success states
+.nds-form-control.filled {
+    // Add any filled state styling if needed
+}
+
+.nds-form-control.error {
+    border-color: var(--form-field-border-error);
+}
+
+.nds-form-control.success {
+    // Add success state styling if needed
+}
