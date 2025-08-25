@@ -139,6 +139,10 @@ direction: ltr
 - `nds-extras.js`: Component-specific behaviors (button interactions, copy functionality)
 - Inline scripts for component demonstrations (background switching, state management)
 
+## Files to Ignore
+
+- **NEVER read** `assets/css/hgi-stroke-rounded.css` - this is a large icon font file that should not be analyzed
+
 ## Important Notes
 
 - This is a **documentation site** for a design system, not a web application
