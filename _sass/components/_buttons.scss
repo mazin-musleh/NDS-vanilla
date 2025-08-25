@@ -68,6 +68,7 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
   }
   
   &.selected::after,
+  &.expanded::after,
   .show > &::after,
   .open > &::after,
   .active > &::after {

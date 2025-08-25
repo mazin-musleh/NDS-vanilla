@@ -19,12 +19,13 @@
     height: var(--nds-nav-height);
     box-shadow: var(--shadow-md);
     z-index: 1000;
+    transform: translateY(0);
 
     >.nds-nav-container {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: var(--spacing-2xl);
+        gap: var(--spacing-lg);
     }
 
     /* Navigation Brand */
@@ -309,6 +310,16 @@
 
     .textIcon {
         height: 40px;
+        min-width: 40px;
+
+        & > .text{
+            font-size: var(--nds-text-clamp-md-FS);
+            line-height: var(--nds-text-clamp-md-LH);
+        }
+        & > i{
+            font-size: var(--nds-text-lg-FS);
+            line-height: var(--nds-text-lg-LH);
+        }
     }
 
     .generalInfo .textIcon svg {
@@ -658,7 +669,7 @@ body.minimal .nds-main-nav {
 
 /* Small Mobile Screens */
 @include mobile {
-    .nds-topbar .infoContainer {
+    .nds-topbar .infoContainer:not(.dga-tab) {
         display: none;
     }
 

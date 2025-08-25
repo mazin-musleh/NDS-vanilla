@@ -24,7 +24,7 @@
 
     // Performance optimized variables
     let intervalIds = { clock: null, weather: null, city: null, date: null };
-    let isUpdating = { weather: false, city: false, date: false };
+    let isUpdating = { weather: false, city: false, date: false, clock: false };
     let batchUpdateTimeout = null;
 
     // Font loading state
@@ -40,8 +40,14 @@
     }
 
     const visibilityCache = new Map();
+    let activePollingCount = 0;
+    const activeElements = new Set();
+    const cooldownElements = new Map();
+    
     function isVisible(element) {
-        if (!element) return false;
+        if (!element) {
+            return false;
+        }
 
         // Use element reference as key for better performance
         if (visibilityCache.has(element)) {
@@ -49,8 +55,12 @@
             if (Date.now() - cached.time < 200) return cached.visible;
         }
 
-        // Simple check - element exists and is connected to DOM
+        // Simple check - element exists and is connected to DOM and truly visible
         const visible = element.offsetParent !== null;
+        const elementInfo = element.id || element.className || 'unknown';
+        
+        // Remove debug logging for production
+        
         visibilityCache.set(element, { visible, time: Date.now() });
 
         // Clean cache periodically to prevent memory leaks
@@ -74,15 +84,72 @@
                 return;
             }
             
+            // Element might start with display:none but become visible after CSS loads
+            
+            // Check if element already has content - no need to poll if it's already populated
+            const hasContent = element.textContent?.trim() || element.innerHTML?.trim();
+            if (hasContent) {
+                resolve(true);
+                return;
+            }
+            
+            const elementId = element.id || element.className || 'unknown';
+            
+            // Check if this element is already being polled
+            if (activeElements.has(element)) {
+                console.warn(`⚠️ DUPLICATE POLLING DETECTED for ${elementId}! Preventing infinite loop.`);
+                resolve(false);
+                return;
+            }
+            
+            // Check cooldown period to prevent immediate re-polling
+            const now = Date.now();
+            const lastAttempt = cooldownElements.get(element);
+            if (lastAttempt && (now - lastAttempt < 2000)) { // 2 second cooldown
+                resolve(false);
+                return;
+            }
+            
+            activeElements.add(element);
+            activePollingCount++;
             const startTime = Date.now();
+            let pollCount = 0;
             
             function check() {
-                if (isVisible(element)) {
+                pollCount++;
+                const visible = isVisible(element);
+                const elapsed = Date.now() - startTime;
+                
+                
+                if (visible) {
+                    activeElements.delete(element);
+                    activePollingCount--;
                     resolve(true);
                     return;
                 }
                 
-                if (Date.now() - startTime > timeout) {
+                // Check if element became hidden during polling (e.g., mode change)
+                const currentStyles = getComputedStyle(element);
+                if (currentStyles.display === 'none') {
+                    activeElements.delete(element);
+                    activePollingCount--;
+                    cooldownElements.set(element, Date.now());
+                    resolve(false);
+                    return;
+                }
+                
+                if (elapsed > timeout) {
+                    activeElements.delete(element);
+                    activePollingCount--;
+                    cooldownElements.set(element, Date.now());
+                    resolve(false);
+                    return;
+                }
+                
+                if (pollCount > 100) { // Safety check to prevent infinite loops
+                    activeElements.delete(element);
+                    activePollingCount--;
+                    cooldownElements.set(element, Date.now());
                     resolve(false);
                     return;
                 }
@@ -349,18 +416,14 @@
         return getFallbackHijriDate(isArabic);
     }
 
-    // Enhanced date with accurate Hijri API integration
+    // Date with Hijri/Gregorian support
     async function updateDate() {
         const el = DOM.dateEl;
-        if (!el) return;
-        
-        // Wait for element to be visible with 500ms polling for up to 10s
-        const elementReady = await waitForElementReady(el, 10000);
-        if (!elementReady || isUpdating.date) return;
+        if (!el || isUpdating.date) return;
 
         const { isArabic, dateLocale } = getLanguageInfo();
-        const type = el.dataset.calendar || (isArabic ? 'hijri' : 'gregorian');
-        const today = new Date().toISOString().slice(0, 10); // e.g., '2025-07-13'
+        const today = new Date().toISOString().slice(0, 10);
+        const type = el.dataset?.calendar || (isArabic ? 'hijri' : 'gregorian');
         const cacheKey = `date_${type}_${isArabic}_${today}`;
 
         // Check cache first
@@ -371,31 +434,24 @@
             return;
         }
 
+        // Check if element already has content
+        const hasContent = el.textContent?.trim() || el.innerHTML?.trim();
+        if (hasContent) return;
+
+        // Wait for element visibility
+        const elementReady = await waitForElementReady(el, 10000);
+        if (!elementReady) return;
+
         let content;
 
         if (type === 'hijri') {
             isUpdating.date = true;
-
-            // Show loading state
-            const loadingText = isArabic ? 'جاري التحميل...' : 'Loading...';
-            el.innerHTML = generateExtraHTML('hgi-calendar-03', loadingText);
-            el.style.display = '';
-
+            
             try {
-                // Get accurate Hijri date from API (respects page language)
                 content = await getAccurateHijriWithFallbacks(isArabic);
-
-                if (!content) {
-                    // Hide element if no valid date available
-                    el.style.display = 'none';
-                    return;
-                }
+                if (!content) content = getFallbackHijriDate(isArabic);
             } catch (error) {
                 content = getFallbackHijriDate(isArabic);
-                if (!content) {
-                    el.style.display = 'none';
-                    return;
-                }
             } finally {
                 isUpdating.date = false;
             }
@@ -406,25 +462,21 @@
             }).format(new Date());
         }
 
-        // Update element with final content
-        if (isVisible(el) && content) {
+        // Update element
+        if (content && isVisible(el)) {
             el.innerHTML = generateExtraHTML('hgi-calendar-03', content);
             el.style.display = '';
-            cache.set(cacheKey, content, 24 * 60); // Cache for 24 hours
+            cache.set(cacheKey, content, 24 * 60);
         } else {
             el.style.display = 'none';
         }
     }
 
-    // City name with long-term persistent cache - NOW WITH ICON + TEXT
+    // City name with geocoding API
     async function updateCityName() {
         const cityEl = DOM.cityEl;
         const weatherEl = DOM.weatherEl;
         if (!cityEl || !weatherEl) return;
-        
-        // Wait for element to be visible with 500ms polling for up to 10s
-        const elementReady = await waitForElementReady(cityEl, 10000);
-        if (!elementReady || isUpdating.city) return;
 
         const lat = +(weatherEl.dataset.latitude || 24.7136);
         const lng = +(weatherEl.dataset.longitude || 46.6753);
@@ -432,19 +484,26 @@
         const lang = isArabic ? 'ar' : 'en';
         const cacheKey = `city_${lat}_${lng}_${lang}`;
 
-        // Always check cache first - city names rarely change
+        // Check cache first
         const cached = cache.get(cacheKey);
         if (cached) {
             cityEl.innerHTML = generateExtraHTML('hgi-location-01', cached);
             cityEl.style.display = '';
-            return; // Don't make API call if we have cached data
+            return;
         }
 
-        // Only make API call if no cache exists
+        // Check if element already has content
+        const hasContent = cityEl.textContent?.trim() || cityEl.innerHTML?.trim();
+        if (hasContent) return;
+        
+        // Wait for element visibility
+        const elementReady = await waitForElementReady(cityEl, 10000);
+        if (!elementReady || isUpdating.city) return;
+
         isUpdating.city = true;
         try {
             const controller = new AbortController();
-            setTimeout(() => controller.abort(), 8000); // 8s timeout
+            setTimeout(() => controller.abort(), 8000);
 
             const response = await fetch(
                 `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&accept-language=${lang}&addressdetails=1`,
@@ -458,18 +517,14 @@
                 data.address?.state || data.display_name?.split(',')[0];
 
             if (city && isVisible(cityEl)) {
-                // Use generateExtraHTML to create proper structure
                 cityEl.innerHTML = generateExtraHTML('hgi-location-01', city);
                 cityEl.style.display = '';
-                // Cache city names for a very long time (30 days) since they rarely change
                 cache.set(cacheKey, city, 30 * 24 * 60);
             } else {
-                // Hide element if no valid city name found
                 cityEl.style.display = 'none';
             }
         } catch (error) {
             if (error.name !== 'AbortError') {
-                // Hide element on error instead of showing coordinates
                 cityEl.style.display = 'none';
             }
         } finally {
@@ -533,47 +588,41 @@
         return hour >= 18 || hour <= 6; // Night time: 6 PM to 6 AM
     }
 
-    // Weather with smart cache and staleness tolerance - NOW WITH ICON + TEXT
+    // Weather with API integration
     async function fetchWeather() {
         const el = DOM.weatherEl;
         if (!el) return;
-        
-        // Wait for element to be visible with 500ms polling for up to 10s
-        const elementReady = await waitForElementReady(el, 10000);
-        if (!elementReady) return;
 
         const lat = +(el.dataset.latitude || 24.7136);
         const lng = +(el.dataset.longitude || 46.6753);
         const { isArabic } = getLanguageInfo();
         const cacheKey = `weather_${lat}_${lng}_${isArabic}`;
 
-        // Check for fresh cache first
+        // Check cache first
         const cached = cache.get(cacheKey);
         if (cached && cached.text && cached.icon) {
             el.innerHTML = generateExtraHTML(cached.icon, cached.text);
             el.style.display = '';
-            return; // Use cached data, don't make API call
-        }
-
-        // Check for stale cache (up to 2 hours old) to avoid API calls
-        const staleCacheKey = `weather_stale_${lat}_${lng}_${isArabic}`;
-        const staleData = cache.get(staleCacheKey);
-        if (staleData && staleData.text && staleData.icon && !isUpdating.weather) {
-            // Use stale data immediately
-            el.innerHTML = generateExtraHTML(staleData.icon, staleData.text);
-            el.style.display = '';
-
-            // Update in background without blocking UI
-            setTimeout(() => fetchWeatherInBackground(lat, lng, isArabic, cacheKey, staleCacheKey), 100);
             return;
         }
 
-        // No cache at all - show loading and fetch immediately
-        const { isArabic: arabicLang } = getLanguageInfo();
-        const loadingText = arabicLang ? "جاري التحميل..." : "Loading...";
-        const loadingIcon = isNightTime() ? "hgi-moon-02" : "hgi-sun-03";
-        el.innerHTML = generateExtraHTML(loadingIcon, loadingText);
-        el.style.display = '';
+        // Check if element already has content
+        const hasContent = el.textContent?.trim() || el.innerHTML?.trim();
+        if (hasContent) return;
+        
+        // Wait for element visibility
+        const elementReady = await waitForElementReady(el, 10000);
+        if (!elementReady) return;
+
+        // Check for stale cache (up to 2 hours old) to avoid excessive API calls
+        const staleCacheKey = `weather_stale_${lat}_${lng}_${isArabic}`;
+        const staleData = cache.get(staleCacheKey);
+        if (staleData && staleData.text && staleData.icon && !isUpdating.weather) {
+            el.innerHTML = generateExtraHTML(staleData.icon, staleData.text);
+            el.style.display = '';
+            setTimeout(() => fetchWeatherInBackground(lat, lng, isArabic, cacheKey, staleCacheKey), 100);
+            return;
+        }
 
         await fetchWeatherInBackground(lat, lng, isArabic, cacheKey, staleCacheKey);
     }
@@ -644,14 +693,10 @@
         }
     }
 
-    // Clock with unified HTML generator
-    async function updateClock() {
+    // Clock with 12-hour format
+    function updateClock() {
         const el = DOM.clockEl;
         if (!el) return;
-        
-        // Wait for element to be visible with 500ms polling for up to 10s
-        const elementReady = await waitForElementReady(el, 10000);
-        if (!elementReady) return;
 
         const now = new Date();
         const h = now.getHours();
@@ -721,15 +766,12 @@
                 weather: true   // Update weather - might change visibility
             });
 
-            // Check if date/city became visible but are empty - populate them
-            const dateEl = DOM.dateEl;
-            const cityEl = DOM.cityEl;
-
-            if (dateEl && !dateEl.innerHTML.trim()) {
+            // Check if date/city became visible - populate them
+            if (DOM.dateEl) {
                 updateDate();
             }
 
-            if (cityEl && !cityEl.innerHTML.trim()) {
+            if (DOM.cityEl) {
                 updateCityName();
             }
 
@@ -756,11 +798,7 @@
         intervalIds.weather = setInterval(() => {
             try {
                 if (DOM.weatherEl) {
-                    const lat = +(DOM.weatherEl.dataset.latitude || 24.7136);
-                    const lng = +(DOM.weatherEl.dataset.longitude || 46.6753);
-                    const { isArabic } = getLanguageInfo();
-                    const cacheKey = `weather_${lat}_${lng}_${isArabic}`;
-                    if (!cache.get(cacheKey)) fetchWeather();
+                    fetchWeather();
                 }
             } catch (error) {
                 console.error('Weather update error:', error);
@@ -770,11 +808,7 @@
         intervalIds.city = setInterval(() => {
             try {
                 if (DOM.cityEl && DOM.weatherEl) {
-                    const lat = +(DOM.weatherEl.dataset.latitude || 24.7136);
-                    const lng = +(DOM.weatherEl.dataset.longitude || 46.6753);
-                    const { isArabic } = getLanguageInfo();
-                    const cacheKey = `city_${lat}_${lng}_${isArabic ? 'ar' : 'en'}`;
-                    if (!cache.get(cacheKey)) updateCityName();
+                    updateCityName();
                 }
             } catch (error) {
                 console.error('City update error:', error);
@@ -1105,6 +1139,7 @@
 
             this.init();
             this.updateLanguage();
+            this.setupLanguageObserver();
         }
 
         init() {
@@ -1120,11 +1155,11 @@
             });
 
             // Menu item click events
-            const menuItems = this.dropdown.querySelectorAll('li');
-            menuItems.forEach((item, index) => {
+            const menuItems = this.dropdown.querySelectorAll('button[role="menuitem"]');
+            menuItems.forEach((item) => {
                 item.addEventListener('click', (e) => {
                     e.preventDefault();
-                    this.handleShare(index);
+                    this.handleShare(item);
                 });
             });
 
@@ -1156,11 +1191,9 @@
             this.button.setAttribute('aria-expanded', 'false');
         }
 
-        handleShare(index) {
+        handleShare(clickedItem) {
             const url = window.location.href;
             const title = document.title;
-            const menuItems = this.dropdown.querySelectorAll('li');
-            const clickedItem = menuItems[index];
 
             // Check if the menu item exists
             if (!clickedItem) {
@@ -1208,19 +1241,20 @@
 
             const currentLang = document.documentElement.getAttribute('lang') || 'ar';
             const texts = translations[currentLang] || translations.ar;
-            const originalText = copyLinkItem.querySelector('.text').textContent;
+            const labelElement = copyLinkItem.querySelector('.label');
+            const originalText = labelElement.textContent;
 
             try {
                 await navigator.clipboard.writeText(text);
                 copyLinkItem.classList.add('copied');
 
                 // Update text to show copied state
-                copyLinkItem.querySelector('.text').textContent = texts.linkCopied;
+                labelElement.textContent = texts.linkCopied;
 
                 // Remove copied class, restore original text, and close dropdown after 2 seconds
                 setTimeout(() => {
                     copyLinkItem.classList.remove('copied');
-                    copyLinkItem.querySelector('.text').textContent = originalText;
+                    labelElement.textContent = originalText;
                 }, 1500);
                 /* setTimeout(() => {
                     this.close();
@@ -1229,12 +1263,12 @@
                 copyLinkItem.classList.add('copied');
 
                 // Update text to show copied state
-                copyLinkItem.querySelector('.text').textContent = texts.linkCopied;
+                labelElement.textContent = texts.linkCopied;
 
                 // Remove copied class, restore original text, and close dropdown after 2 seconds
                 setTimeout(() => {
                     copyLinkItem.classList.remove('copied');
-                    copyLinkItem.querySelector('.text').textContent = originalText;
+                    labelElement.textContent = originalText;
                     this.close();
                 }, 2000);
             }
@@ -1245,20 +1279,39 @@
             const texts = translations[currentLang] || translations.ar;
 
             // Update button text
-            const buttonText = this.button.querySelector('.text');
-            if (buttonText) {
-                buttonText.textContent = texts.shareButton;
+            const buttonLabel = this.button.querySelector('.label');
+            if (buttonLabel) {
+                buttonLabel.textContent = texts.shareButton;
             }
 
             // Update menu items text
-            const platforms = ['x', 'linkedin', 'whatsapp', 'copyLink'];
-            const menuItems = this.dropdown.querySelectorAll('li');
-            menuItems.forEach((item, index) => {
-                const textSpan = item.querySelector('.text');
-                if (textSpan && platforms[index]) {
-                    textSpan.textContent = texts[platforms[index]];
-                }
-            });
+            const xButton = this.dropdown.querySelector('.share-x .label');
+            const linkedinButton = this.dropdown.querySelector('.share-linkedin .label');
+            const whatsappButton = this.dropdown.querySelector('.share-whatsapp .label');
+            const copyButton = this.dropdown.querySelector('.share-copy .label');
+
+            if (xButton) xButton.textContent = texts.x;
+            if (linkedinButton) linkedinButton.textContent = texts.linkedin;
+            if (whatsappButton) whatsappButton.textContent = texts.whatsapp;
+            if (copyButton) copyButton.textContent = texts.copyLink;
+        }
+
+        setupLanguageObserver() {
+            // Watch for Jekyll language changes (en → ar based on browser cache)
+            if (typeof MutationObserver !== 'undefined') {
+                const observer = new MutationObserver((mutations) => {
+                    mutations.forEach((mutation) => {
+                        if (mutation.type === 'attributes' && mutation.attributeName === 'lang') {
+                            this.updateLanguage();
+                        }
+                    });
+                });
+                
+                observer.observe(document.documentElement, {
+                    attributes: true,
+                    attributeFilter: ['lang']
+                });
+            }
         }
     }
 

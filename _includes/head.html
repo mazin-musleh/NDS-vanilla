@@ -5,9 +5,10 @@
         content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}">
     <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
 
-    <!-- Preload critical resources -->
-    <link rel="preload" href="{{ page.hero_image | default: site.hero_image | relative_url }}" as="image"
-        fetchpriority="high">
+    <!-- Preload critical resources for home page only -->
+    {% if page.layout == 'home' or page.url == '/' %}
+    <link rel="preload" href="{{ page.hero_image | default: site.hero_image | relative_url }}" as="image" fetchpriority="high">
+    {% endif %}
 
     <!-- Critical CSS inline -->
     <style>
