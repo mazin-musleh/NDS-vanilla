@@ -226,6 +226,52 @@
 
                 // Initialize state
                 updateFormState(input, formControl);
+
+                // Select dropdown open state handling
+                if (input.tagName.toLowerCase() === 'select') {
+                    var isOpen = false;
+                    
+                    // Track mousedown to detect dropdown opening
+                    input.addEventListener('mousedown', function (e) {
+                        // Toggle state on click
+                        isOpen = !isOpen;
+                        updateOpenState();
+                    });
+                    
+                    // Handle keyboard navigation
+                    input.addEventListener('keydown', function (e) {
+                        if (e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === 'Enter' || e.key === ' ') {
+                            if (!isOpen) {
+                                isOpen = true;
+                                updateOpenState();
+                            }
+                        } else if (e.key === 'Escape' || e.key === 'Tab') {
+                            isOpen = false;
+                            updateOpenState();
+                        }
+                    });
+                    
+                    // Handle blur (lost focus) - always close
+                    input.addEventListener('blur', function () {
+                        isOpen = false;
+                        updateOpenState();
+                    });
+                    
+                    // Handle selection change - close dropdown
+                    input.addEventListener('change', function () {
+                        isOpen = false;
+                        updateOpenState();
+                    });
+                    
+                    // Update the visual state
+                    function updateOpenState() {
+                        if (isOpen) {
+                            formControl.classList.add('open');
+                        } else {
+                            formControl.classList.remove('open');
+                        }
+                    }
+                }
             });
 
             // Voice input button
@@ -347,6 +393,7 @@
                 });
             }
         });
+
     }
 
     // Initialize
