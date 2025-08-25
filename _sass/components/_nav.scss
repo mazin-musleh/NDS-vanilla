@@ -76,9 +76,13 @@
 
     /* Navigation Items */
     .nds-nav-item {
-        position: relative;
-        font-size: var(--nds-text-clamp-lg-FS);
-        line-height: var(--nds-text-clamp-lg-LH);
+
+        & * {
+            position: relative;
+            font-size: var(--nds-text-clamp-lg-FS);
+            line-height: var(--nds-text-clamp-lg-LH);
+            font-weight: 400;
+        }
 
         &.CTA {
             display: flex;
