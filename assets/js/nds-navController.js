@@ -28,30 +28,60 @@
         _pendingUpdate: null,
         _pendingOverflowCheck: null,
 
-        get isMinimal() { return this.windowWidth <= this.getBreakpoint(); },
+        get isMinimal() { 
+            // Use cached breakpoint or fallback for synchronous access
+            const bp = this._cache.breakpoint || 960;
+            return this.windowWidth <= bp;
+        },
+
+        async initProperties() {
+            await this.waitForCSS();
+            // Pre-populate all cached properties
+            this.getBreakpoint();
+            this.getNavHeight();
+            this.getItemHeight();
+            this.getTransitionSpeed();
+        },
+
+        waitForCSS() {
+            return new Promise(resolve => {
+                const check = () => {
+                    const value = getComputedStyle(document.documentElement)
+                        .getPropertyValue('--nds-minimal-nav-bp');
+                    if (value && value.trim() !== '') {
+                        resolve();
+                    } else {
+                        requestAnimationFrame(check);
+                    }
+                };
+                check();
+            });
+        },
+
+        getCSSProperty(propertyName, fallback, parseAsNumber = true) {
+            const value = getComputedStyle(document.documentElement)
+                .getPropertyValue(propertyName).trim();
+            
+            if (!value) return fallback;
+            
+            return parseAsNumber ? (parseFloat(value) || fallback) : value;
+        },
 
         getBreakpoint() {
-            return this._cache.breakpoint ??= parseFloat(
-                getComputedStyle(document.documentElement).getPropertyValue('--nds-minimal-nav-bp')
-            ) || 768;
+            return this._cache.breakpoint ??= this.getCSSProperty('--nds-minimal-nav-bp', 768);
         },
 
         getNavHeight() {
-            return this._cache.navHeight ??= parseFloat(
-                getComputedStyle(document.documentElement).getPropertyValue('--nds-nav-height')
-            ) || 72;
+            return this._cache.navHeight ??= this.getCSSProperty('--nds-nav-height', 72);
         },
 
         getItemHeight() {
-            return this._cache.itemHeight ??= parseFloat(
-                getComputedStyle(document.documentElement).getPropertyValue('--nds-minimal-nav-item-height')
-            ) || Math.max(40, this.getNavHeight() / 2);
+            return this._cache.itemHeight ??= this.getCSSProperty('--nds-minimal-nav-item-height', 
+                Math.max(40, this.getNavHeight() / 2));
         },
 
         getTransitionSpeed() {
-            return this._cache.speed ??= parseFloat(
-                getComputedStyle(document.documentElement).getPropertyValue('--nds-transition-speed')
-            ) * 1000 || 300;
+            return this._cache.speed ??= (this.getCSSProperty('--nds-transition-speed', 0.3) * 1000);
         },
 
         reset() { this._cache = {}; DOM._cache = {}; }
@@ -450,8 +480,7 @@
             }
 
             const navWidth = this.getElementWidth(DOM.nav);
-            const maxWidth = parseFloat(getComputedStyle(document.documentElement)
-                .getPropertyValue('--nds-content-MaxWidth')) || navWidth;
+            const maxWidth = state.getCSSProperty('--nds-content-MaxWidth', navWidth);
             const constraint = Math.min(navWidth, maxWidth);
 
             const visibleChildren = container ? Array.from(container.children).filter(child =>
@@ -746,8 +775,7 @@
 
     function applyDropdownTransition(menu, speed, isMinimal, isInSecondary) {
         if (isMinimal && !isInSecondary && !menu.closest('.nds-nav-minimal')) {
-            const transitionEffect = getComputedStyle(document.documentElement)
-                .getPropertyValue('--nds-transition-effect').trim() || 'ease-in-out';
+            const transitionEffect = state.getCSSProperty('--nds-transition-effect', 'ease-in-out', false);
             menu.style.transition = `height ${speed}ms ${transitionEffect}`;
         } else {
             menu.style.transition = '';
@@ -1258,8 +1286,11 @@
         }
     };
 
-    function init() {
+    async function init() {
         if (!DOM.collapse) return;
+
+        // Initialize all CSS properties
+        await state.initProperties();
 
         utils.updateBodyClass();
         utils.manageCTAPlacement();
