@@ -1,4 +1,5 @@
 @use '../mixins' as *;
+
 /* ========================================
    DGA DROPDOWN STYLES
    ======================================== */
@@ -20,48 +21,46 @@
     bottom: 5px;
     z-index: 10;
     cursor: pointer;
-    font-family: 'IBM Plex Sans Arabic', sans-serif;
     font-size: var(--nds-text-sm-FS);
     line-height: var(--nds-text-sm-LH);
 }
 
-.nds-topbar .dga-tab.textIcon {
+.nds-topbar .dga-tab {
     gap: var(--spacing-md);
     height: 35px;
-    background-color: #fff;
+    background-color: var(--background-white);
     border-radius: 0 0 var(--radius-lg) var(--radius-lg);
-    display: flex;
-    justify-content: center;
     box-shadow: var(--shadow-md);
-    padding: 0 var(--spacing-xl);
-    white-space: nowrap;
+
 }
 
-.nds-topbar .dga-tab .toggleArrow {
-    transition: transform 0.1s ease;
-    transition-delay: calc(var(--nds-transition-speed) * 1s);
+
+.nds-topbar .dga-tab {
+    &>.bigScreenText {
+        display: none;
+    }
+
+    &>.smallScreenText {
+        display: none;
+    }
 }
 
-#dgaDigitalStamp.dga-expanded .dga-tab .toggleArrow {
-    transform: rotate(180deg);
-}
-
-@include tablet(min) {
-    .nds-topbar .dga-tab.textIcon>.bigScreenText {
+@include large-desktop(min) {
+    .nds-topbar .dga-tab>.bigScreenText {
         display: inline-block;
     }
 
-    .nds-topbar .dga-tab.textIcon>.smallScreenText {
+    .nds-topbar .dga-tab>.smallScreenText {
         display: none;
     }
 }
 
-@include mobile {
-    .nds-topbar .dga-tab.textIcon>.bigScreenText {
+@include desktop(max) {
+    .nds-topbar .dga-tab>.bigScreenText {
         display: none;
     }
 
-    .nds-topbar .dga-tab.textIcon>.smallScreenText {
+    .nds-topbar .dga-tab>.smallScreenText {
         display: inline-block;
     }
 

@@ -33,25 +33,14 @@
     display: block;
 }
 
-#nds-sharePage .text {
-    white-space: nowrap;
-}
 
 #nds-sharePageBtn {
-    padding: var(--spacing-xs) var(--spacing-md);
-    cursor: pointer;
     background-color: var(--background-white, #fff);
     border: 1px solid var(--colors-neutral-300, #d2d6db);
     border-radius: var(--radius-md, 8px);
-    font-size: 1rem;
-    align-items: center;
-    justify-content: center;
     box-shadow: var(--shadow-md);
 }
 
-#nds-sharePageBtn:hover {
-    background-color: var(--button-background-neutral-hovered, #fff);
-}
 
 /* ========================================
    SHARE PAGE DROPDOWN
@@ -118,15 +107,8 @@ html[dir="ltr"] #nds-sharePage-dropdown {
    ======================================== */
 
 @include tablet(max) {
-    #nds-sharePageBtn {
-        padding: var(--spacing-xxs);
-    }
 
-    #nds-sharePage {
-        font-size: 1.5rem;
-    }
-
-    #nds-sharePageBtn .text {
+    #nds-sharePageBtn .label {
         display: none;
     }
 }

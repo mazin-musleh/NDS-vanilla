@@ -115,7 +115,6 @@
             state._pendingOverflowCheck = setTimeout(() => {
                 state._pendingOverflowCheck = null;
                 this.performCheck();
-                console.debug(`Overflow check completed: ${reason} (delay: ${delay}ms)`);
             }, delay);
         },
 
@@ -184,22 +183,6 @@
         debounce: (fn, ms) => { let t; return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); }; },
         throttle: (fn, ms) => { let wait; return (...args) => { if (!wait) { fn(...args); wait = true; setTimeout(() => wait = false, ms); } }; },
 
-        calculateTopbarTransform(measurements = null, forceRefresh = false) {
-            if (!DOM.topbar) return 0;
-
-            const topbarRect = (measurements?.topbarRect && !forceRefresh) ?
-                measurements.topbarRect : DOM.topbar.getBoundingClientRect();
-            const topbarHeight = DOM.topbar.offsetHeight;
-            const topbarPos = Math.max(0, topbarRect.bottom);
-
-            if (topbarPos <= 0) {
-                return -topbarHeight;
-            } else if (topbarPos >= topbarHeight) {
-                return 0;
-            } else {
-                return -(topbarHeight - topbarPos);
-            }
-        },
 
         // COMPACT DROPDOWN CLOSER
         dropdownCloser: {
@@ -380,53 +363,8 @@
             return rect.width + parseFloat(styles.marginLeft || 0) + parseFloat(styles.marginRight || 0);
         },
 
-        updateDropdownPositions() {
-            if (state.isMinimal) return;
 
-            const topbarTransform = this.calculateTopbarTransform(null, true);
 
-            // Update primary and secondary dropdown positions
-            document.querySelectorAll('.nds-nav-primary .nds-dropdown-menu:not(.widthFit), .nds-nav-secondary .nds-dropdown-menu:not(.widthFit)').forEach(menu => {
-                if (menu.closest('.nds-nav-minimal')) return;
-
-                const dropdown = menu.closest('.nds-dropdown');
-                if (dropdown?.classList.contains('show') && getComputedStyle(menu).display !== 'none') {
-                    menu.style.transform = Math.abs(topbarTransform) > 0.5 ? `translateY(${topbarTransform}px)` : '';
-                }
-            });
-
-            this.updateMinimalNavDropdowns();
-        },
-
-        updateMinimalNavDropdowns() {
-            const topbarTransform = this.calculateTopbarTransform(null, true);
-
-            // Update minimal nav dropdowns
-            document.querySelectorAll('.nds-nav-minimal .nds-dropdown-menu:not(.widthFit)').forEach(menu => {
-                const dropdown = menu.closest('.nds-dropdown');
-                if (dropdown?.classList.contains('show') && getComputedStyle(menu).display !== 'none') {
-                    menu.style.transform = `translateY(${topbarTransform}px)`;
-                }
-            });
-
-            // Update secondary dropdowns when not in minimal mode
-            document.querySelectorAll('.nds-nav-secondary .nds-dropdown.show .nds-dropdown-menu:not(.widthFit)').forEach(menu => {
-                if (menu.closest('.nds-nav-minimal')) return;
-
-                if (getComputedStyle(menu).display !== 'none') {
-                    menu.style.transform = Math.abs(topbarTransform) > 0.5 ? `translateY(${topbarTransform}px)` : '';
-                }
-            });
-        },
-
-        resetStyles(selector = '.nds-dropdown-menu') {
-            const targetSelector = selector.includes('#ndsNavCollapse') ? selector : `#ndsNavCollapse ${selector}`;
-            document.querySelectorAll(targetSelector).forEach(menu => {
-                if (state.isMinimal || menu.closest('.nds-dropdown')?.classList.contains('show')) {
-                    menu.style.top = menu.style.transform = '';
-                }
-            });
-        },
 
         toggleAnimations(enable, duration = 100) {
             const transition = enable ? '' : 'none';
@@ -530,21 +468,16 @@
                 this.updateNavMaxWidth();
 
                 if (DOM.collapse?.classList.contains('show') && !DOM.collapse?.classList.contains('closing')) {
-                    updatePositions(measurements);
+                    updatePositions();
                 } else {
                     if (DOM.collapse) {
                         DOM.collapse.style.height = state.isMinimal ? '0px' : 'var(--nds-nav-height)';
                     }
                 }
 
-                if (!state.isMinimal) {
-                    this.updateDropdownPositions();
-                }
-                this.updateMinimalNavDropdowns();
-
+    
                 this.checkTogglerVisibility();
 
-                console.debug(`NDS Navigation updated: ${reason} at ${measurements.timestamp}`);
             });
         },
 
@@ -586,7 +519,7 @@
             let isScrolling = false;
 
             DOM.primary.addEventListener('wheel', (e) => {
-                if (state.isMouseOverDropdown || state.isMinimal || Math.abs(e.deltaX) >= Math.abs(e.deltaY)) return;
+                if (state.isMouseOverDropdown || state.isMinimal || Math.abs(e.deltaX) >= Math.abs(e.deltaY) || !DOM.primary.classList.contains('hasMore')) return;
 
                 e.preventDefault();
                 if (isScrolling) return;
@@ -621,7 +554,7 @@
             let dragState = { active: false, startX: 0, scrollLeft: 0 };
 
             DOM.primary.addEventListener('mousedown', (e) => {
-                if (state.isMinimal) return;
+                if (state.isMinimal || !DOM.primary.classList.contains('hasMore')) return;
 
                 dragState = { active: true, startX: e.pageX, scrollLeft: DOM.primary.scrollLeft };
                 Object.assign(DOM.primary.style, { cursor: 'grabbing', userSelect: 'none', scrollBehavior: 'auto' });
@@ -730,12 +663,6 @@
             });
         }
 
-        document.addEventListener('transitionend', (e) => {
-            if (e.target.classList.contains('nds-dropdown-menu') &&
-                (e.propertyName === 'height' || e.propertyName === 'transform')) {
-                overflowManager.scheduleCheck('dropdown-animation');
-            }
-        });
 
         if (typeof MutationObserver !== 'undefined') {
             const observer = new MutationObserver(utils.debounce((mutations) => {
@@ -788,7 +715,7 @@
         }
     }
 
-    function updatePositions(measurements = null) {
+    function updatePositions() {
         const isOpen = DOM.collapse?.classList.contains('show');
         const isClosing = DOM.collapse?.classList.contains('closing');
 
@@ -796,15 +723,10 @@
             if (!state.isMinimal && DOM.secondary) {
                 DOM.secondary.style.cssText = '';
                 DOM.secondary.classList.remove('closing');
-                document.querySelectorAll('.nds-nav-primary .nds-dropdown-menu, .nds-nav-secondary .nds-dropdown-menu').forEach(menu => {
-                    if (menu.closest('.nds-nav-minimal')) return;
-                    menu.style.top = menu.style.transform = '';
-                });
             }
             if ((!isOpen || isClosing) && DOM.collapse) {
                 DOM.collapse.style.height = state.isMinimal ? '0px' : 'var(--nds-nav-height)';
             }
-            utils.updateMinimalNavDropdowns();
             return;
         }
 
@@ -835,14 +757,7 @@
             }, state.getTransitionSpeed() + 50);
         }
 
-        DOM.collapse?.querySelectorAll('.nds-nav-secondary .nds-dropdown.show .nds-dropdown-menu').forEach(menu => {
-            if (menu.closest('.nds-nav-minimal')) return;
 
-            const topbarTransform = utils.calculateTopbarTransform(measurements);
-            menu.style.transform = Math.abs(topbarTransform) > 0.5 ? `translateY(${topbarTransform}px)` : '';
-        });
-
-        utils.updateMinimalNavDropdowns();
     }
 
     function animateDropdown(dropdown, open) {
@@ -862,24 +777,12 @@
 
             menu.style.height = `${menu.scrollHeight}px`;
 
-            if (isInMinimal && !menu.classList.contains('widthFit')) {
-                const topbarTransform = utils.calculateTopbarTransform();
-                menu.style.transform = `translateY(${topbarTransform}px)`;
-            } else if (!state.isMinimal && !menu.classList.contains('widthFit')) {
-                const topbarTransform = utils.calculateTopbarTransform();
-                menu.style.transform = Math.abs(topbarTransform) > 0.5 ? `translateY(${topbarTransform}px)` : '';
-            } else if (state.isMinimal && isInSecondary && !menu.closest('.nds-nav-minimal') && !menu.classList.contains('widthFit')) {
-                const topbarTransform = utils.calculateTopbarTransform();
-                menu.style.transform = Math.abs(topbarTransform) > 0.5 ? `translateY(${topbarTransform}px)` : '';
-            }
 
             setTimeout(() => {
                 if (!isInMinimal) {
                     updatePositions();
-                    if (!state.isMinimal) utils.updateDropdownPositions();
-                }
-                utils.updateMinimalNavDropdowns();
-
+                    }
+    
                 overflowManager.scheduleCheck('dropdown-open-animation');
             }, speed * 0.04);
         } else {
@@ -893,18 +796,10 @@
 
             if (!isInMinimal) {
                 updatePositions();
-                if (!state.isMinimal) utils.updateDropdownPositions();
             }
-            utils.updateMinimalNavDropdowns();
 
             setTimeout(() => {
                 dropdown.classList.remove('show');
-
-                if (isInMinimal) {
-                    // Keep positioning for minimal nav dropdowns
-                } else if (state.isMinimal || !menu.classList.contains('widthFit')) {
-                    menu.style.top = menu.style.transform = '';
-                }
 
                 if (!isInMinimal && state.isMinimal && !isInSecondary) {
                     menu.style.transition = '';
@@ -950,14 +845,11 @@
                 }, DURATION + 50);
 
                 overflowManager.scheduleCheck('navbar-open-minimal', true);
-                utils.resetStyles('#ndsNavCollapse .nds-dropdown-menu:not(.widthFit)');
             }
 
             setTimeout(() => {
                 updatePositions();
-                if (!state.isMinimal) utils.updateDropdownPositions();
-                utils.updateMinimalNavDropdowns();
-            }, DURATION * 0.04);
+                }, DURATION * 0.04);
         } else {
             DOM.toggler?.classList.remove('active');
             
@@ -977,9 +869,7 @@
 
             setTimeout(() => {
                 DOM.collapse.style.height = '0px';
-                if (!state.isMinimal) utils.updateDropdownPositions();
-                utils.updateMinimalNavDropdowns();
-
+    
                 setTimeout(() => {
                     DOM.collapse?.classList.remove('show');
                     DOM.collapse?.classList.remove('closing');
@@ -1004,13 +894,12 @@
 
         const isExpanded = DOM.dgaContent.classList.contains('dga-expanded');
         DOM.dgaTab?.setAttribute('aria-expanded', isExpanded);
+        DOM.dgaTab?.classList.toggle('expanded', isExpanded);
         DOM.dgaContent.style.height = DOM.dgaContent.classList.contains('dga-expanded') ?
             `${DOM.dgaContent.scrollHeight}px` : '0px';
 
         setTimeout(() => {
             updatePositions();
-            if (!state.isMinimal) utils.updateDropdownPositions();
-            utils.updateMinimalNavDropdowns();
             overflowManager.scheduleCheck('dga-toggle');
         }, DURATION);
     }
@@ -1235,15 +1124,8 @@
                 requestAnimationFrame(() => {
                     utils.toggleAnimations(false, 50);
 
-                    const scrollMeasurements = {
-                        topbarRect: DOM.topbar?.getBoundingClientRect(),
-                        timestamp: performance.now()
-                    };
-
-                    updatePositions(scrollMeasurements);
-                    if (!state.isMinimal) utils.updateDropdownPositions();
-                    utils.updateMinimalNavDropdowns();
-                });
+                    updatePositions();
+                            });
             });
         }, throttleMs);
     };
@@ -1320,14 +1202,11 @@
         utils.updateNavMaxWidth();
         utils.setupInteractions();
 
-        if (!state.isMinimal) utils.updateDropdownPositions();
-        utils.updateMinimalNavDropdowns();
 
         utils.checkTogglerVisibility();
 
         Object.assign(window, { toggleNavbar, toggleDropdown, toggleDGA });
 
-        console.debug('NDS Navigation initialized - centralized overflow management');
     }
 
     if (document.readyState === 'loading') {
