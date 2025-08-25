@@ -2,6 +2,12 @@
 (() => {
     'use strict';
 
+    // Global constants - CSS custom property reader with fallback
+    const getSafeZonePixels = () => {
+        const cssValue = getComputedStyle(document.documentElement).getPropertyValue('--nds-dropdown-safeZone').trim();
+        return cssValue ? parseInt(cssValue, 10) : 40;
+    };
+
     // Cached DOM elements
     const DOM = {
         nav: document.getElementById('ndsMainNav'),
@@ -657,7 +663,7 @@
             }
         },
 
-        createSafeZone(elements, buffer = 50) {
+        createSafeZone(elements, buffer = 40) {
             if (!elements.length) return null;
 
             const rects = elements.map(el => el.getBoundingClientRect()).filter(rect =>
@@ -1142,7 +1148,7 @@
     const handleDocumentClick = (event) => {
         const clickX = event.clientX;
         const clickY = event.clientY;
-        const safeRange = 50;
+        const safeRange = getSafeZonePixels();
 
         if (DOM.dgaContent?.classList.contains('dga-expanded') && DOM.dgaContent &&
             !DOM.dgaTab?.contains(event.target) && !DOM.dgaContent.contains(event.target)) {

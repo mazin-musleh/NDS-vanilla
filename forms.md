@@ -539,66 +539,6 @@ direction: ltr
                     </div>
                 </div>
 
-                <!-- File Upload -->
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">File Upload</div>
-                        <div class="demo-action">
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-form-container">
-                                <div class="nds-form-header">
-                                    <label class="label" for="fileUpload">File Upload</label>
-                                </div>
-                                <div class="nds-form-control file-upload">
-                                    <input type="file" id="fileUpload" class="nds-file-input" multiple>
-                                    <label for="fileUpload" class="nds-file-label">
-                                        <i class="hgi hgi-stroke hgi-upload-01 icon"></i>
-                                        <span class="upload-text">Choose files or drag and drop</span>
-                                    </label>
-                                    <div class="nds-form-action">
-                                        <button class="nds-btn nds-btn-subtle clear hidden" type="button"
-                                            aria-label="Clear files">
-                                            <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="nds-form-footer"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="code-example">
-                        <button class="copy-btn" data-copy-target=".file-upload-code">
-                            <i class="hgi hgi-stroke hgi-copy-01"></i>
-                            Copy
-                        </button>
-                        <pre class="file-upload-code"><code>&lt;div class="nds-form-container"&gt;
-    &lt;div class="nds-form-header"&gt;
-        &lt;label class="label" for="fileUpload"&gt;File Upload&lt;/label&gt;
-    &lt;/div&gt;
-    &lt;div class="nds-form-control file-upload"&gt;
-        &lt;input type="file" id="fileUpload" class="nds-file-input" multiple&gt;
-        &lt;label for="fileUpload" class="nds-file-label"&gt;
-            &lt;i class="hgi hgi-stroke hgi-upload-01 icon"&gt;&lt;/i&gt;
-            &lt;span class="upload-text"&gt;Choose files or drag and drop&lt;/span&gt;
-        &lt;/label&gt;
-        &lt;div class="nds-form-action"&gt;
-            &lt;button class="clear hidden" type="button" aria-label="Clear files"&gt;
-                &lt;i class="hgi hgi-stroke hgi-cancel-01 icon"&gt;&lt;/i&gt;
-            &lt;/button&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class="nds-form-footer"&gt;&lt;/div&gt;
-&lt;/div&gt;</code></pre>
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>
