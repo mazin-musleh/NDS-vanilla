@@ -197,6 +197,10 @@
             var inputElements = formControl.querySelectorAll('input, textarea, select');
 
             inputElements.forEach(function (input) {
+                // Prevent duplicate event listeners
+                if (input._ndsInitialized) return;
+                input._ndsInitialized = true;
+
                 // Mouse interaction
                 input.addEventListener('mousedown', function () {
                     formControl.classList.add('active');
@@ -217,11 +221,14 @@
                     formControl.classList.remove('focus');
                 });
 
-                // Value changes
-                ['input', 'change'].forEach(function (event) {
-                    input.addEventListener(event, function () {
-                        updateFormState(input, formControl);
-                    });
+                // Value changes - use input for immediate feedback
+                input.addEventListener('input', function () {
+                    updateFormState(input, formControl);
+                });
+
+                // Also listen for change for form validation compatibility
+                input.addEventListener('change', function () {
+                    updateFormState(input, formControl);
                 });
 
                 // Initialize state
@@ -229,187 +236,177 @@
 
                 // Select dropdown open state handling
                 if (input.tagName.toLowerCase() === 'select') {
-                    var isOpen = false;
-                    
-                    // Track mousedown to detect dropdown opening
-                    input.addEventListener('mousedown', function (e) {
-                        // Toggle state on click
-                        isOpen = !isOpen;
-                        updateOpenState();
-                    });
-                    
-                    // Handle keyboard navigation
-                    input.addEventListener('keydown', function (e) {
-                        if (e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === 'Enter' || e.key === ' ') {
-                            if (!isOpen) {
-                                isOpen = true;
-                                updateOpenState();
-                            }
-                        } else if (e.key === 'Escape' || e.key === 'Tab') {
-                            isOpen = false;
-                            updateOpenState();
-                        }
-                    });
-                    
-                    // Handle blur (lost focus) - always close
-                    input.addEventListener('blur', function () {
-                        isOpen = false;
-                        updateOpenState();
-                    });
-                    
-                    // Handle selection change - close dropdown
-                    input.addEventListener('change', function () {
-                        isOpen = false;
-                        updateOpenState();
-                    });
-                    
-                    // Update the visual state
-                    function updateOpenState() {
-                        if (isOpen) {
-                            formControl.classList.add('open');
-                        } else {
-                            formControl.classList.remove('open');
-                        }
-                    }
+                    initSelectDropdown(input, formControl);
                 }
             });
 
-            // Voice input button
-            var voiceButton = formControl.querySelector('.nds-form-action .voiceInput');
-            if (voiceButton && VoiceRecognition.isSupported()) {
-                var isListening = false;
-                var currentRecognition = null;
+            // Initialize form controls
+            initVoiceInput(formControl);
+            initPasswordToggle(formControl);
+            initClearButton(formControl, inputElements);
+        });
+    }
 
-                voiceButton.addEventListener('click', function () {
-                    if (isListening) {
-                        VoiceRecognition.stopListening(currentRecognition);
-                        return;
-                    }
-
-                    var primaryInput = findPrimaryInput(formControl);
-                    if (!primaryInput) return;
-
-                    currentRecognition = VoiceRecognition.create();
-                    if (!currentRecognition) return;
-
-                    primaryInput.focus();
-
-                    VoiceRecognition.startListening(currentRecognition, {
-                        onStart: function () {
-                            isListening = true;
-                            voiceButton.classList.add('listening');
-                            formControl.classList.add('voice-active');
-                        },
-
-                        onResult: function (result) {
-                            primaryInput.value = result.isFinal ? result.final.trim() : result.interim;
-                            if (result.isFinal) {
-                                triggerEvents(primaryInput);
-                            }
-                        },
-
-                        onError: function () {
-                            isListening = false;
-                            voiceButton.classList.remove('listening');
-                            formControl.classList.remove('voice-active');
-                        },
-
-                        onEnd: function () {
-                            isListening = false;
-                            voiceButton.classList.remove('listening');
-                            formControl.classList.remove('voice-active');
-                        }
-                    });
-                });
-            } else if (voiceButton) {
-                voiceButton.style.display = 'none';
-            }
-
-            // Password toggle button
-            var passwordToggle = formControl.querySelector('.nds-form-action .toggle-password');
-            if (passwordToggle) {
-                passwordToggle.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    var passwordInput = formControl.querySelector('input[type="password"], input[type="text"]');
-                    
-                    if (passwordInput.type === 'password') {
-                        passwordInput.type = 'text';
-                        passwordToggle.classList.add('show');
-                        passwordToggle.setAttribute('aria-label', 'Hide password');
-                    } else {
-                        passwordInput.type = 'password';
-                        passwordToggle.classList.remove('show');
-                        passwordToggle.setAttribute('aria-label', 'Show password');
-                    }
-                });
-            }
-
-            // File upload handling
-            var fileInput = formControl.querySelector('.nds-file-input');
-            if (fileInput) {
-                var fileLabel = formControl.querySelector('.nds-file-label');
-                var uploadText = fileLabel ? fileLabel.querySelector('.upload-text') : null;
-                var fileClearBtn = formControl.querySelector('.nds-form-action .clear');
-                
-                fileInput.addEventListener('change', function () {
-                    if (fileInput.files.length > 0) {
-                        var fileCount = fileInput.files.length;
-                        if (uploadText) {
-                            uploadText.textContent = fileCount + ' file' + (fileCount > 1 ? 's' : '') + ' selected';
-                        }
-                        if (fileClearBtn) fileClearBtn.classList.remove('hidden');
-                        formControl.classList.add('filled');
-                    } else {
-                        if (uploadText) uploadText.textContent = 'Choose files or drag and drop';
-                        if (fileClearBtn) fileClearBtn.classList.add('hidden');
-                        formControl.classList.remove('filled');
-                    }
-                });
-                
-                if (fileClearBtn) {
-                    fileClearBtn.addEventListener('click', function (e) {
-                        e.preventDefault();
-                        fileInput.value = '';
-                        if (uploadText) uploadText.textContent = 'Choose files or drag and drop';
-                        fileClearBtn.classList.add('hidden');
-                        formControl.classList.remove('filled');
-                    });
-                }
-            }
-
-            // Clear button
-            var clearButton = formControl.querySelector('.nds-form-action .clear');
-            if (clearButton) {
-                clearButton.addEventListener('click', function () {
-                    inputElements.forEach(function (input) {
-                        if (input.type === 'checkbox' || input.type === 'radio') {
-                            input.checked = false;
-                        } else {
-                            input.value = '';
-                        }
-                        triggerEvents(input);
-                    });
-                    formControl.classList.remove('filled');
-                });
+    // Select dropdown functionality
+    function initSelectDropdown(selectElement, formControl) {
+        var isOpen = false;
+        
+        function updateOpenState() {
+            formControl.classList.toggle('open', isOpen);
+        }
+        
+        // Mouse interaction
+        selectElement.addEventListener('mousedown', function (e) {
+            isOpen = !isOpen;
+            updateOpenState();
+        });
+        
+        // Keyboard navigation
+        selectElement.addEventListener('keydown', function (e) {
+            var openKeys = ['ArrowDown', 'ArrowUp', 'Enter', ' '];
+            var closeKeys = ['Escape', 'Tab'];
+            
+            if (openKeys.includes(e.key) && !isOpen) {
+                isOpen = true;
+                updateOpenState();
+            } else if (closeKeys.includes(e.key)) {
+                isOpen = false;
+                updateOpenState();
             }
         });
-
+        
+        // Auto-close events
+        ['blur', 'change'].forEach(function(event) {
+            selectElement.addEventListener(event, function () {
+                isOpen = false;
+                updateOpenState();
+            });
+        });
     }
 
-    // Initialize
+    // Voice input functionality
+    function initVoiceInput(formControl) {
+        var voiceButton = formControl.querySelector('.nds-form-action .voiceInput');
+        if (!voiceButton) return;
+
+        if (VoiceRecognition.isSupported()) {
+            var isListening = false;
+            var currentRecognition = null;
+
+            voiceButton.addEventListener('click', function () {
+                if (isListening) {
+                    VoiceRecognition.stopListening(currentRecognition);
+                    return;
+                }
+
+                var primaryInput = findPrimaryInput(formControl);
+                if (!primaryInput) return;
+
+                currentRecognition = VoiceRecognition.create();
+                if (!currentRecognition) return;
+
+                primaryInput.focus();
+
+                VoiceRecognition.startListening(currentRecognition, {
+                    onStart: function () {
+                        isListening = true;
+                        voiceButton.classList.add('listening');
+                        formControl.classList.add('voice-active');
+                    },
+
+                    onResult: function (result) {
+                        primaryInput.value = result.isFinal ? result.final.trim() : result.interim;
+                        if (result.isFinal) {
+                            triggerEvents(primaryInput);
+                            updateFormState(primaryInput, formControl);
+                        }
+                    },
+
+                    onError: function (error) {
+                        console.warn('Voice recognition error:', error);
+                        isListening = false;
+                        voiceButton.classList.remove('listening');
+                        formControl.classList.remove('voice-active');
+                    },
+
+                    onEnd: function () {
+                        isListening = false;
+                        voiceButton.classList.remove('listening');
+                        formControl.classList.remove('voice-active');
+                    }
+                });
+            });
+        } else {
+            voiceButton.style.display = 'none';
+        }
+    }
+
+    // Password toggle functionality
+    function initPasswordToggle(formControl) {
+        var passwordToggle = formControl.querySelector('.nds-form-action .toggle-password');
+        if (!passwordToggle) return;
+
+        passwordToggle.addEventListener('click', function (e) {
+            e.preventDefault();
+            
+            var passwordInput = formControl.querySelector('input[type="password"], input[type="text"]');
+            if (!passwordInput) return;
+            
+            var isPassword = passwordInput.type === 'password';
+            passwordInput.type = isPassword ? 'text' : 'password';
+            passwordToggle.classList.toggle('show', isPassword);
+            passwordToggle.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
+        });
+    }
+
+
+    // Clear button functionality
+    function initClearButton(formControl, inputElements) {
+        var clearButton = formControl.querySelector('.nds-form-action .clear');
+        if (!clearButton) return;
+
+        clearButton.addEventListener('click', function (e) {
+            e.preventDefault();
+            
+            inputElements.forEach(function (input) {
+                if (input.type === 'checkbox' || input.type === 'radio') {
+                    input.checked = false;
+                } else {
+                    input.value = '';
+                }
+                triggerEvents(input);
+                updateFormState(input, formControl);
+            });
+        });
+    }
+
+    // Initialize all form functionality
     function init() {
-        VoiceRecognition.audioFeedback.init();
-        initFormControlClasses();
-        initAutoFillTags();
+        try {
+            VoiceRecognition.audioFeedback.init();
+            initFormControlClasses();
+            initAutoFillTags();
+        } catch (error) {
+            console.error('NDS Forms initialization error:', error);
+        }
     }
 
+    // Initialize when DOM is ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
     } else {
         init();
     }
 
-    // Global exports
+    // Global exports for external access
+    window.NDS = window.NDS || {};
+    window.NDS.Forms = {
+        VoiceRecognition: VoiceRecognition,
+        reinit: init,
+        updateFormState: updateFormState
+    };
+    
+    // Backward compatibility
     window.VoiceRecognition = VoiceRecognition;
     window.reinitFormControlClasses = init;
 

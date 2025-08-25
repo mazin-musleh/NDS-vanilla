@@ -4,6 +4,12 @@
 (() => {
     'use strict';
 
+    // Global constants - CSS custom property reader with fallback
+    const getSafeZonePixels = () => {
+        const cssValue = getComputedStyle(document.documentElement).getPropertyValue('--nds-dropdown-safeZone').trim();
+        return cssValue ? parseInt(cssValue, 10) : 40;
+    };
+
     // Cache DOM elements to avoid repeated queries
     const DOM = {
         date: null,
@@ -939,6 +945,13 @@
 // Side Menu
 (function () {
     'use strict';
+    
+    // CSS custom property reader with fallback for side menu scope
+    const getSafeZonePixels = () => {
+        const cssValue = getComputedStyle(document.documentElement).getPropertyValue('--nds-dropdown-safeZone').trim();
+        return cssValue ? parseInt(cssValue, 10) : 40;
+    };
+    
     // Accordion Menu - Vanilla JS version
     document.addEventListener("DOMContentLoaded", function () {
         const accMenu = document.querySelector(".nds-sideMenu");
@@ -1031,7 +1044,7 @@
 
             // Get menu boundaries
             const menuRect = accMenu.getBoundingClientRect();
-            const safeZone = 50;
+            const safeZone = getSafeZonePixels();
 
             // Check if click is within the safe zone around the menu
             const clickX = e.clientX;
