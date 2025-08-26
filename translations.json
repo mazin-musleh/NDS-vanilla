@@ -1,7 +1,0 @@
----
-layout: null
----
-{
-  "en": {{ site.data.locales.en | jsonify }},
-  "ar": {{ site.data.locales.ar | jsonify }}
-}

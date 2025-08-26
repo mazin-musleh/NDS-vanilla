@@ -240,7 +240,7 @@
 /* Tab Panel */
 .nds-tab-panel {
   padding: var(--spacing-xl);
-  animation: fadeIn 0.2s ease-in-out;
+  animation: fadeInUp 0.2s ease-in-out;
 
   &.hidden {
     display: none;
@@ -413,17 +413,6 @@
 // ANIMATIONS & TRANSITIONS
 // ==============================================
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
 // ==============================================
 // RESPONSIVE & ACCESSIBILITY

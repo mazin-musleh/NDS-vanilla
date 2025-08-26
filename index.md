@@ -1,20 +1,19 @@
 ---
 layout: home
-title_key: site.title
-hero_title_key: site.hero_title
-hero_description_key: site.hero_description
+title: "National Design System for Saudi Arabia"
+hero_title: "National Design System for Saudi Arabia"
+hero_description: "Enabling the digital government experience with a unified design language."
 hero_image_pos: 50% 10%
-# Remove hardcoded lang - will be set dynamically
 ---
 
 <!-- Single content file with translation keys -->
 <section id="whoWeAre" class="nds-content-section">
     <div class="nds-section-content-container">
         <div class="nds-section-head">
-            <h2 id="whoWeAreHeading" class="nds-section-title" data-i18n="sections.who_we_are">{% include localize.html key="sections.who_we_are" %}</h2>
-            <p class="nds-section-description" data-i18n="sections.who_we_are_desc">{% include localize.html key="sections.who_we_are_desc" %}</p>
+            <h2 id="whoWeAreHeading" class="nds-section-title">Who We Are</h2>
+            <p class="nds-section-description">The National Design System provides a unified set of design principles, components, and guidelines to create consistent and accessible digital experiences across all government services in Saudi Arabia.</p>
             <button type="button" class="nds-btn nds-btn-primary nds-btn-readMore" aria-label="Read More">
-                <span class="label" data-i18n="buttons.read_more">{% include localize.html key="buttons.read_more" %}</span>
+                <span class="label">Read More</span>
                 <i class="hgi hgi-stroke hgi-arrow-right" aria-hidden="true"></i>
             </button>
         </div>
@@ -23,22 +22,22 @@ hero_image_pos: 50% 10%
                 <div class="nds-statistic-card">
                     <i class="hgi hgi-stroke hgi-component nds-statistic-icon"></i>
                     <span class="nds-statistic-number nds-number-format nds-counter-value">45</span>
-                    <span class="nds-statistic-text" data-i18n="stats.components">{% include localize.html key="stats.components" %}</span>
+                    <span class="nds-statistic-text">Components</span>
                 </div>
                 <div class="nds-statistic-card">
                     <i class="hgi hgi-stroke hgi-color-picker nds-statistic-icon"></i>
                     <span class="nds-statistic-number nds-number-format nds-counter-value">120</span>
-                    <span class="nds-statistic-text" data-i18n="stats.design_tokens">{% include localize.html key="stats.design_tokens" %}</span>
+                    <span class="nds-statistic-text">Design Tokens</span>
                 </div>
                 <div class="nds-statistic-card">
                     <i class="hgi hgi-stroke hgi-book-03 nds-statistic-icon"></i>
                     <span class="nds-statistic-number nds-number-format nds-counter-value">25</span>
-                    <span class="nds-statistic-text" data-i18n="stats.guidelines">{% include localize.html key="stats.guidelines" %}</span>
+                    <span class="nds-statistic-text">Guidelines</span>
                 </div>
                 <div class="nds-statistic-card">
                     <i class="hgi hgi-stroke hgi-government nds-statistic-icon"></i>
                     <span class="nds-statistic-number nds-number-format nds-counter-value">50+</span>
-                    <span class="nds-statistic-text" data-i18n="stats.agencies">{% include localize.html key="stats.agencies" %}</span>
+                    <span class="nds-statistic-text">Government Agencies</span>
                 </div>
             </div>
         </div>

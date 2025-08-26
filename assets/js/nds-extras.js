@@ -1,73 +1,50 @@
-// NDS Extras - Performance Optimized with Font Loading and Accurate Hijri Date - UPDATED
-// File: nds-extras.js
+/**
+ * NDS Extras - Core functionality for National Design System
+ * Handles weather, date, city info, side menu, share functionality, and cookies
+ */
 
 (() => {
     'use strict';
 
-    // Global constants - CSS custom property reader with fallback
-    const getSafeZonePixels = () => {
-        const cssValue = getComputedStyle(document.documentElement).getPropertyValue('--nds-dropdown-safeZone').trim();
-        return cssValue ? parseInt(cssValue, 10) : 40;
-    };
 
-    // Cache DOM elements to avoid repeated queries
+    // DOM elements cache and state management
     const DOM = {
-        date: null,
-        cityName: null,
-        weatherInfo: null,
-        clock: null,
+        date: null, cityName: null, weatherInfo: null, clock: null,
         get dateEl() { return this.date ??= document.getElementById('nds-date'); },
         get cityEl() { return this.cityName ??= document.getElementById('nds-cityName'); },
         get weatherEl() { return this.weatherInfo ??= document.getElementById('nds-weatherInfo'); },
         get clockEl() { return this.clock ??= document.getElementById('nds-realTimeClock'); }
     };
 
-    // Performance optimized variables
     let intervalIds = { clock: null, weather: null, city: null, date: null };
     let isUpdating = { weather: false, city: false, date: false, clock: false };
     let batchUpdateTimeout = null;
+    let fontLoadingState = { isLoaded: false, isChecking: false, callbacks: [] };
 
-    // Font loading state
-    let fontLoadingState = {
-        isLoaded: false,
-        isChecking: false,
-        callbacks: []
-    };
-
-    // Unified HTML generator for topbar icons
-    function generateExtraHTML(iconClass, text) {
-        return `<i class="hgi hgi-stroke ${iconClass} icon"></i><span class="text">${text}</span>`;
-    }
-
+    // Utility functions
+    const generateExtraHTML = (iconClass, text) => `<i class="hgi hgi-stroke ${iconClass} icon"></i><span class="text">${text}</span>`;
+    
     const visibilityCache = new Map();
     let activePollingCount = 0;
     const activeElements = new Set();
     const cooldownElements = new Map();
     
     function isVisible(element) {
-        if (!element) {
-            return false;
-        }
+        if (!element) return false;
 
-        // Use element reference as key for better performance
+        // Check cache first
         if (visibilityCache.has(element)) {
             const cached = visibilityCache.get(element);
             if (Date.now() - cached.time < 200) return cached.visible;
         }
 
-        // Simple check - element exists and is connected to DOM and truly visible
         const visible = element.offsetParent !== null;
-        const elementInfo = element.id || element.className || 'unknown';
-        
-        // Remove debug logging for production
-        
         visibilityCache.set(element, { visible, time: Date.now() });
 
-        // Clean cache periodically to prevent memory leaks
+        // Clean cache periodically
         if (visibilityCache.size > 10) {
-            const entries = Array.from(visibilityCache.entries());
             const cutoff = Date.now() - 1000;
-            entries.forEach(([key, value]) => {
+            Array.from(visibilityCache.entries()).forEach(([key, value]) => {
                 if (value.time < cutoff) visibilityCache.delete(key);
             });
         }
@@ -347,37 +324,6 @@
         }
     }
 
-    // Alternative API option - HijriDate API
-    async function getHijriFromAlternativeAPI(isArabic = true) {
-        const controller = new AbortController();
-        setTimeout(() => controller.abort(), 5000);
-
-        try {
-            const response = await fetch('https://api.hijridate.com/v1/today', {
-                signal: controller.signal
-            });
-
-            if (!response.ok) throw new Error(`HTTP ${response.status}`);
-
-            const data = await response.json();
-
-            if (data.status === 'success') {
-                const hijri = data.hijri;
-
-                if (isArabic) {
-                    return `${hijri.day} ${hijri.month_name} ${hijri.year} هـ`;
-                } else {
-                    // Use English month if available
-                    const monthEn = hijri.month_name_en || hijri.month_name;
-                    return `${hijri.day} ${monthEn} ${hijri.year} AH`;
-                }
-            }
-
-            throw new Error('Invalid API response');
-        } catch (error) {
-            return null;
-        }
-    }
 
     // Fallback Hijri date using Intl.DateTimeFormat
     function getFallbackHijriDate(isArabic = true) {
@@ -402,17 +348,13 @@
         }
     }
 
-    // Enhanced version with multiple API fallbacks
+    // Enhanced version with fallback
     async function getAccurateHijriWithFallbacks(isArabic = true) {
         // Try primary API first
         let hijriDate = await getAccurateHijriDate(isArabic);
         if (hijriDate) return hijriDate;
 
-        // Try alternative API
-        hijriDate = await getHijriFromAlternativeAPI(isArabic);
-        if (hijriDate) return hijriDate;
-
-        // Final fallback to browser's built-in formatter
+        // Fallback to browser's built-in formatter
         return getFallbackHijriDate(isArabic);
     }
 
@@ -894,7 +836,6 @@
 
         // Hijri date functions
         getAccurateHijriDate,
-        getHijriFromAlternativeAPI,
         getFallbackHijriDate,
         getAccurateHijriWithFallbacks,
 
@@ -973,26 +914,21 @@
 
 })();
 
-//NDSExtras.cache.clear();
-
-
-// Side Menu
-(function () {
+// Side Menu Navigation
+(() => {
     'use strict';
     
-    // CSS custom property reader with fallback for side menu scope
     const getSafeZonePixels = () => {
         const cssValue = getComputedStyle(document.documentElement).getPropertyValue('--nds-dropdown-safeZone').trim();
         return cssValue ? parseInt(cssValue, 10) : 40;
     };
     
-    // Accordion Menu - Vanilla JS version
     document.addEventListener("DOMContentLoaded", function () {
         const accMenu = document.querySelector(".nds-sideMenu");
 
-        if (!accMenu) return; // ✅ Exit safely if .nds-sideMenu doesn't exist
+        if (!accMenu) return;
 
-        // Initialize .open for active path
+        // Initialize open state for active menu items
         accMenu.querySelectorAll("li.active").forEach(activeItem => {
             let current = activeItem;
             while (current && current !== accMenu) {
@@ -1057,16 +993,16 @@
             }
         });
 
-        // ✅ Toggle .open on .nds-sideMenu when #sideMenuToggle is clicked
+        // Toggle side menu when button is clicked
         const toggleBtn = document.getElementById("sideMenuToggle");
         if (toggleBtn) {
             toggleBtn.addEventListener("click", (e) => {
-                e.stopPropagation(); // Prevent immediate closure from document click
+                e.stopPropagation();
                 accMenu.classList.toggle("open");
             });
         }
 
-        // ✅ Close side menu when clicking outside with 50px safe zone
+        // Close menu when clicking outside safe zone
         document.addEventListener("click", function (e) {
             // Only proceed if menu is open
             if (!accMenu.classList.contains("open")) return;
@@ -1097,7 +1033,7 @@
             }
         });
 
-        // ✅ Close menu on Escape key
+        // Close menu on Escape key
         document.addEventListener("keydown", function (e) {
             if (e.key === "Escape" && accMenu.classList.contains("open")) {
                 accMenu.classList.remove("open");
@@ -1106,29 +1042,9 @@
     });
 })();
 
-// Share page
-(function () {
+// Share Page Dropdown
+(() => {
     'use strict';
-
-    // Language translations
-    const translations = {
-        ar: {
-            shareButton: 'مشاركة الصفحة',
-            x: 'إكس',
-            linkedin: 'لينكدإن',
-            whatsapp: 'واتساب',
-            copyLink: 'نسخ الرابط',
-            linkCopied: 'تم نسخ الرابط!'
-        },
-        en: {
-            shareButton: 'Share Page',
-            x: 'X',
-            linkedin: 'LinkedIn',
-            whatsapp: 'WhatsApp',
-            copyLink: 'Copy Link',
-            linkCopied: 'Link Copied!'
-        }
-    };
 
     class SharePageDropdown {
         constructor() {
@@ -1138,8 +1054,6 @@
             this.isOpen = false;
 
             this.init();
-            this.updateLanguage();
-            this.setupLanguageObserver();
         }
 
         init() {
@@ -1192,13 +1106,10 @@
         }
 
         handleShare(clickedItem) {
+            if (!clickedItem) return;
+            
             const url = window.location.href;
             const title = document.title;
-
-            // Check if the menu item exists
-            if (!clickedItem) {
-                return;
-            }
 
             // Determine share type by class
             if (clickedItem.classList.contains('share-x')) {
@@ -1233,86 +1144,31 @@
 
         async copyToClipboard(text) {
             const copyLinkItem = this.dropdown.querySelector('.share-copy');
+            if (!copyLinkItem) return;
 
-            // Check if copy link element exists
-            if (!copyLinkItem) {
-                return;
-            }
-
-            const currentLang = document.documentElement.getAttribute('lang') || 'ar';
-            const texts = translations[currentLang] || translations.ar;
             const labelElement = copyLinkItem.querySelector('.label');
             const originalText = labelElement.textContent;
+            const copiedText = copyLinkItem.dataset.copiedText || 'Link Copied!';
 
             try {
                 await navigator.clipboard.writeText(text);
-                copyLinkItem.classList.add('copied');
-
-                // Update text to show copied state
-                labelElement.textContent = texts.linkCopied;
-
-                // Remove copied class, restore original text, and close dropdown after 2 seconds
-                setTimeout(() => {
-                    copyLinkItem.classList.remove('copied');
-                    labelElement.textContent = originalText;
-                }, 1500);
-                /* setTimeout(() => {
-                    this.close();
-                }, 2000); */
+                this.showCopiedState(copyLinkItem, labelElement, copiedText, originalText, 1500);
             } catch (err) {
-                copyLinkItem.classList.add('copied');
-
-                // Update text to show copied state
-                labelElement.textContent = texts.linkCopied;
-
-                // Remove copied class, restore original text, and close dropdown after 2 seconds
-                setTimeout(() => {
-                    copyLinkItem.classList.remove('copied');
-                    labelElement.textContent = originalText;
-                    this.close();
-                }, 2000);
+                this.showCopiedState(copyLinkItem, labelElement, copiedText, originalText, 2000, true);
             }
         }
 
-        updateLanguage() {
-            const currentLang = document.documentElement.getAttribute('lang') || 'ar';
-            const texts = translations[currentLang] || translations.ar;
+        showCopiedState(item, label, copiedText, originalText, duration, shouldClose = false) {
+            item.classList.add('copied');
+            label.textContent = copiedText;
 
-            // Update button text
-            const buttonLabel = this.button.querySelector('.label');
-            if (buttonLabel) {
-                buttonLabel.textContent = texts.shareButton;
-            }
-
-            // Update menu items text
-            const xButton = this.dropdown.querySelector('.share-x .label');
-            const linkedinButton = this.dropdown.querySelector('.share-linkedin .label');
-            const whatsappButton = this.dropdown.querySelector('.share-whatsapp .label');
-            const copyButton = this.dropdown.querySelector('.share-copy .label');
-
-            if (xButton) xButton.textContent = texts.x;
-            if (linkedinButton) linkedinButton.textContent = texts.linkedin;
-            if (whatsappButton) whatsappButton.textContent = texts.whatsapp;
-            if (copyButton) copyButton.textContent = texts.copyLink;
+            setTimeout(() => {
+                item.classList.remove('copied');
+                label.textContent = originalText;
+                if (shouldClose) this.close();
+            }, duration);
         }
 
-        setupLanguageObserver() {
-            // Watch for Jekyll language changes (en → ar based on browser cache)
-            if (typeof MutationObserver !== 'undefined') {
-                const observer = new MutationObserver((mutations) => {
-                    mutations.forEach((mutation) => {
-                        if (mutation.type === 'attributes' && mutation.attributeName === 'lang') {
-                            this.updateLanguage();
-                        }
-                    });
-                });
-                
-                observer.observe(document.documentElement, {
-                    attributes: true,
-                    attributeFilter: ['lang']
-                });
-            }
-        }
     }
 
     // Initialize when DOM is ready
@@ -1328,57 +1184,17 @@
 
 })();
 
-// Cookies
-(function () {
+// Cookie Management
+(() => {
     'use strict';
-    let arabicSite = false;
 
-    function ndsDetectLanguageFromHtml() {
-        const htmlLang = document.documentElement.lang || document.documentElement.getAttribute('lang');
-        if (htmlLang) {
-            arabicSite = htmlLang.toLowerCase().startsWith('ar');
-        }
-    }
-
-    const translations = {
-        en: {
-            title: 'Cookies',
-            content: 'This website uses cookies to ensure ease of use and guarantee an improved browsing experience. By continuing to browse this site, you acknowledge acceptance of the use of cookies.',
-            terms: 'Terms and Conditions',
-            privacy: 'Privacy Policy',
-            accept: 'Accept',
-            decline: 'Decline',
-            acceptMessage: 'Cookies have been accepted',
-            declineMessage: 'Optional cookies have been declined',
-            termsUrl: 'https://seu.edu.sa/en/terms-and-conditions/',
-            privacyUrl: 'https://seu.edu.sa/en/policy-and-privacy/'
-        },
-        ar: {
-            title: 'ملفات تعريف الارتباط',
-            content: 'هذا الموقع يستخدم ملفات تعريف الارتباط الخاصة للتأكد من سهولة الاستخدام وضمان تحسين تجربتك أثناء التصفح. من خلال الاستمرار في تصفح هذا الموقع، فإنك تقر بقبول استخدام ملفات تعريف الارتباط.',
-            terms: 'الشروط والأحكام',
-            privacy: 'سياسة الخصوصية',
-            accept: 'قبول',
-            decline: 'رفض',
-            acceptMessage: 'تم قبول ملفات تعريف الارتباط',
-            declineMessage: 'تم رفض ملفات تعريف الارتباط الاختيارية',
-            termsUrl: 'https://seu.edu.sa/ar/terms-and-conditions/',
-            privacyUrl: 'https://seu.edu.sa/ar/policy-and-privacy/'
-        }
-    };
-
-    function ndsGetCookieConsent() {
-        return ndsGetCookie('cookieConsent');
-    }
-
-    function ndsSetCookieConsent(value) {
-        ndsSetCookie('cookieConsent', value, 365);
-    }
+    const ndsGetCookieConsent = () => ndsGetCookie('cookieConsent');
+    const ndsSetCookieConsent = (value) => ndsSetCookie('cookieConsent', value, 365);
 
     function ndsSetCookie(name, value, days) {
         const expires = new Date();
         expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
-        document.cookie = name + '=' + value + ';expires=' + expires.toUTCString() + ';path=/';
+        document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
     }
 
     function ndsGetCookie(name) {
@@ -1386,61 +1202,34 @@
         const ca = document.cookie.split(';');
         for (let i = 0; i < ca.length; i++) {
             let c = ca[i];
-            while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
         }
         return null;
     }
 
-    function ndsUpdateContent() {
-        const lang = arabicSite ? 'ar' : 'en';
-        const t = translations[lang];
 
-        const titleEl = document.getElementById('ndsCookiesTitle');
-        if (titleEl) titleEl.textContent = t.title;
-
-        const contentEl = document.getElementById('ndsCookiesContent');
-        if (contentEl) contentEl.textContent = t.content;
-
-        const termsLinkEl = document.getElementById('ndsCookiesTermsLink');
-        if (termsLinkEl) {
-            termsLinkEl.textContent = t.terms;
-            termsLinkEl.href = t.termsUrl;
-        }
-
-        const privacyLinkEl = document.getElementById('ndsCookiesPrivacyLink');
-        if (privacyLinkEl) {
-            privacyLinkEl.textContent = t.privacy;
-            privacyLinkEl.href = t.privacyUrl;
-        }
-
-        const acceptBtnEl = document.getElementById('ndsCookiesAcceptBtn');
-        if (acceptBtnEl) acceptBtnEl.textContent = t.accept;
-
-        const declineBtnEl = document.getElementById('ndsCookiesDeclineBtn');
-        if (declineBtnEl) declineBtnEl.textContent = t.decline;
-
-        // Update close button if it exists
-        const closeBtnEl = document.getElementById('ndsCookiesCloseBtn');
-        if (closeBtnEl) {
-            closeBtnEl.textContent = '×'; // or any close symbol you prefer
-        }
-    }
 
     function ndsAcceptCookies() {
         ndsSetCookieConsent('accepted');
         ndsEnableAllCookies();
         ndsCookiesClosePopup();
-        const lang = arabicSite ? 'ar' : 'en';
-        ndsShowMessage(translations[lang].acceptMessage);
+        
+        // Get message from data attribute or use default
+        const acceptBtn = document.getElementById('ndsCookiesAcceptBtn');
+        const message = acceptBtn?.dataset.acceptMessage || 'Cookies have been accepted';
+        ndsShowMessage(message);
     }
 
     function ndsDeclineCookies() {
         ndsSetCookieConsent('declined');
         ndsDisableNonEssentialCookies();
         ndsCookiesClosePopup();
-        const lang = arabicSite ? 'ar' : 'en';
-        ndsShowMessage(translations[lang].declineMessage);
+        
+        // Get message from data attribute or use default
+        const declineBtn = document.getElementById('ndsCookiesDeclineBtn');
+        const message = declineBtn?.dataset.declineMessage || 'Optional cookies have been declined';
+        ndsShowMessage(message);
     }
 
     function ndsEnableAllCookies() {
@@ -1498,15 +1287,8 @@
         }, 3000);
     }
 
-    // Remove the global scope exposure since we're using event listeners
-    // window.ndsAcceptCookies = ndsAcceptCookies;
-    // window.ndsDeclineCookies = ndsDeclineCookies;
-    // window.ndsCookiesClosePopup = ndsCookiesClosePopup;
 
     window.addEventListener('load', () => {
-        ndsDetectLanguageFromHtml();
-        ndsUpdateContent();
-
         // Add event listeners
         const acceptBtn = document.getElementById('ndsCookiesAcceptBtn');
         if (acceptBtn) {

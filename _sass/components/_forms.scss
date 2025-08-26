@@ -152,7 +152,7 @@
         flex-direction: row-reverse;
         margin-left: calc(var(--spacing-md) * -1);
 
-        html[dir="ltr"] & {
+        @include ltr {
             margin-left: unset;
             margin-right: calc(var(--spacing-md) * -1);
         }
@@ -176,7 +176,7 @@
                 top: 50%;
                 transform: translateY(-50%);
 
-                html[dir="ltr"] & {
+                @include ltr {
                     left: unset;
                     right: calc(var(--spacing-xs) * -1);
                 }
@@ -193,15 +193,6 @@
     content: "㿦";
 }
 
-@keyframes colorCycle {
-    100% {
-        color: var(--text-default);
-    }
-
-    0% {
-        color: var(--colors-primary-sa-flag-400);
-    }
-}
 
 .nds-search-box {
     display: flex;

@@ -4,42 +4,42 @@
         <div class="nds-footer-content">
             <!-- Column 1: Main Links -->
             <div class="nds-footer-column">
-                <h2 class="nds-footer-heading">{% include localize.html key="footer.main_links" %}</h2>
+                <h2 class="nds-footer-heading">Main Links</h2>
                 <ul class="nds-footer-links-list">
-                    <li><a href="{{ '/' | relative_url }}">{% include localize.html key="navigation.home" %}</a></li>
-                    <li><a href="{{ '/about' | relative_url }}">{% include localize.html key="navigation.about" %}</a></li>
-                    <li><a href="{{ '/button' | relative_url }}">{% include localize.html key="navigation.components" %}</a></li>
-                    <li><a href="#">{% include localize.html key="navigation.guidelines" %}</a></li>
-                    <li><a href="#">{% include localize.html key="navigation.design_tokens" %}</a></li>
-                    <li><a href="#">{% include localize.html key="navigation.resources" %}</a></li>
-                    <li><a href="#">{% include localize.html key="navigation.documentation" %}</a></li>
+                    <li><a href="{{ '/' | relative_url }}">Home</a></li>
+                    <li><a href="{{ '/about' | relative_url }}">About Us</a></li>
+                    <li><a href="{{ '/components/button' | relative_url }}">Components</a></li>
+                    <li><a href="#">Guidelines</a></li>
+                    <li><a href="#">Design Tokens</a></li>
+                    <li><a href="#">Resources</a></li>
+                    <li><a href="#">Documentation</a></li>
                 </ul>
             </div>
             
             <!-- Column 2: Components -->
             <div class="nds-footer-column">
-                <h2 class="nds-footer-heading">{% include localize.html key="footer.components" %}</h2>
+                <h2 class="nds-footer-heading">Components</h2>
                 <ul class="nds-footer-links-list">
-                    <li><a href="{{ '/button' | relative_url }}">{% include localize.html key="components.buttons" %}</a></li>
-                    <li><a href="#">{% include localize.html key="components.forms" %}</a></li>
-                    <li><a href="#">{% include localize.html key="components.navigation" %}</a></li>
-                    <li><a href="#">{% include localize.html key="components.cards" %}</a></li>
-                    <li><a href="#">{% include localize.html key="components.typography" %}</a></li>
+                    <li><a href="{{ '/components/button' | relative_url }}">Buttons</a></li>
+                    <li><a href="{{ '/components/forms' | relative_url }}">Forms</a></li>
+                    <li><a href="#">Navigation</a></li>
+                    <li><a href="#">Cards</a></li>
+                    <li><a href="#">Typography</a></li>
                 </ul>
             </div>
             
             <!-- Column 3: Contact & Support -->
             <div class="nds-footer-column">
-                <h2 class="nds-footer-heading">{% include localize.html key="footer.contact_support" %}</h2>
+                <h2 class="nds-footer-heading">Contact & Support</h2>
                 <ul class="nds-footer-links-list">
                     <li>
                         <a href="#">
-                            <i class="hgi hgi-stroke hgi-location-01 icon"></i> {% include localize.html key="footer.location" %}
+                            <i class="hgi hgi-stroke hgi-location-01 icon"></i> Location
                         </a>
                     </li>
                     <li>
                         <a href="#" target="_blank">
-                            <i class="hgi hgi-stroke hgi-headphones icon"></i> {% include localize.html key="footer.contact_us" %}
+                            <i class="hgi hgi-stroke hgi-headphones icon"></i> Contact Us
                         </a>
                     </li>
                     <li>
@@ -52,7 +52,7 @@
             
             <!-- Column 4: Follow Us -->
             <div class="nds-footer-column">
-                <h2 class="nds-footer-heading">{% include localize.html key="footer.follow_us" %}</h2>
+                <h2 class="nds-footer-heading">Follow Us</h2>
                 <div class="nds-footer-social-icons">
                     <a href="#" class="nds-footer-social-icon" aria-label="Follow National Design System on Twitter">
                         <i class="hgi hgi-stroke hgi-new-twitter"></i>
@@ -68,7 +68,7 @@
                     </a>
                 </div>
                 
-                <h2 class="nds-footer-heading">{% include localize.html key="footer.mobile_app" %}</h2>
+                <h2 class="nds-footer-heading">Mobile App</h2>
                 <div class="nds-footer-mobile-app-icons">
                     <a href="#" class="nds-footer-app-icon" target="_blank" aria-label="Apple App Store">
                         <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -97,17 +97,17 @@
         <div class="nds-footer-bottom">
             <div class="nds-footer-copyright">
                 <div class="nds-footer-links">
-                    <a href="{{ '/site-map' | relative_url }}">{% include localize.html key="footer.site_map" %}</a>
+                    <a href="{{ '/site-map' | relative_url }}">Site Map</a>
                     <span class="nds-footer-separator">|</span>
-                    <a href="{{ '/terms-and-conditions' | relative_url }}">{% include localize.html key="footer.terms_conditions" %}</a>
+                    <a href="{{ '/terms-and-conditions' | relative_url }}">Terms & Conditions</a>
                     <span class="nds-footer-separator">|</span>
-                    <a href="{{ '/privacy-policy' | relative_url }}">{% include localize.html key="footer.privacy_policy" %}</a>
+                    <a href="{{ '/privacy-policy' | relative_url }}">Privacy Policy</a>
                     <span class="nds-footer-separator">|</span>
-                    <a href="{{ '/accessibility' | relative_url }}">{% include localize.html key="footer.accessibility" %}</a>
+                    <a href="{{ '/accessibility' | relative_url }}">Accessibility</a>
                 </div>
                 <div class="nds-footer-copy-right">
-                    <span>{% include localize.html key="footer.all_rights_reserved" %} {{ site.title }} © {{ site.time | date: '%Y' }}</span><br>
-                    <a id="authorCopyright" href="{{ site.author_profile | relative_url }}"><span>{% include localize.html key="footer.template_developed" %} {{ site.author }}</span><i class="hgi hgi-stroke hgi-link-square-02"></i></a>
+                    <span>All Rights Reserved {{ site.title }} © {{ site.time | date: '%Y' }}</span><br>
+                    <a id="authorCopyright" href="{{ site.author_profile | relative_url }}"><span>Template developed by {{ site.author }}</span><i class="hgi hgi-stroke hgi-link-square-02"></i></a>
                 </div>
             </div>
             <div class="nds-footer-logos">
@@ -136,17 +136,17 @@
     </div>
 
     <div class="cookie-popup-content">
-        <span id="ndsCookiesContent">{% include localize.html key="cookies.content" %}</span>
+        <span id="ndsCookiesContent">This website uses cookies to ensure ease of use and provide an enhanced browsing experience. By continuing to browse this site, you acknowledge and accept the use of cookies.</span>
     </div>
 
     <div class="cookie-popup-links">
-        <a href="{{ '/terms-and-conditions' | relative_url }}" id="ndsCookiesTermsLink">{% include localize.html key="footer.terms_conditions" %}</a>
+        <a href="{{ '/terms-and-conditions' | relative_url }}" id="ndsCookiesTermsLink">Terms & Conditions</a>
         <span>|</span>
-        <a href="{{ '/privacy-policy' | relative_url }}" id="ndsCookiesPrivacyLink">{% include localize.html key="footer.privacy_policy" %}</a>
+        <a href="{{ '/privacy-policy' | relative_url }}" id="ndsCookiesPrivacyLink">Privacy Policy</a>
     </div>
 
     <div class="cookie-popup-actions">
-        <button class="nds-btn nds-btn-primary" id="ndsCookiesAcceptBtn">{% include localize.html key="cookies.accept" %}</button>
-        <button class="nds-btn nds-btn-secondary" id="ndsCookiesDeclineBtn">{% include localize.html key="cookies.decline" %}</button>
+        <button class="nds-btn nds-btn-primary" id="ndsCookiesAcceptBtn" data-accept-message="Cookies have been accepted"><span class="label">Accept</span></button>
+        <button class="nds-btn nds-btn-secondary" id="ndsCookiesDeclineBtn" data-decline-message="Optional cookies have been declined"><span class="label">Decline</span></button>
     </div>
 </div>

@@ -181,7 +181,7 @@ direction: ltr
                 <div class="code-example">
                     <div class="usage-header">
                         <span>Usage</span>
-                        <button class="copy-btn">
+                        <button class="copy-btn" aria-label="Copy code example">
                             <i class="hgi hgi-stroke hgi-copy-01"></i>
                         </button>
                     </div>
@@ -310,7 +310,7 @@ direction: ltr
                 <div class="code-example">
                     <div class="usage-header">
                         <span>Usage</span>
-                        <button class="copy-btn">
+                        <button class="copy-btn" aria-label="Copy code example">
                             <i class="hgi hgi-stroke hgi-copy-01"></i>
                         </button>
                     </div>

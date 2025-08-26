@@ -3,36 +3,41 @@
    ======================================== */
 
 @use '../mixins' as *;
+
 /* ========================================
    HERO SECTION BASE STYLES
    ======================================== */
 
-/* Hero Section */
-.nds-hero-section img {
-    pointer-events: none
+.nds-hero-section {
+    img {
+        pointer-events: none;
+    }
 }
 
 /* ========================================
    SHARE PAGE FUNCTIONALITY
    ======================================== */
 
-.nds-hero-section .nds-heroContent .nds-shareablePage {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    align-items: flex-start;
-    gap: var(--spacing-lg, 12px);
+.nds-hero-section {
+    .nds-heroContent {
+        .nds-shareablePage {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            align-items: flex-start;
+            gap: var(--spacing-lg, 12px);
+            
+            #nds-sharePage {
+                display: block;
+            }
+        }
+    }
 }
 
 #nds-sharePage {
     position: relative;
     color: var(--text-default, #161616);
 }
-
-.nds-shareablePage #nds-sharePage {
-    display: block;
-}
-
 
 #nds-sharePageBtn {
     background-color: var(--background-white, #fff);
@@ -47,58 +52,52 @@
    ======================================== */
 
 #nds-sharePage-dropdown {
-    display: none
-}
-
-#nds-sharePage-dropdown {
-    z-index: 1001;
-    position: absolute;
-    flex-direction: column;
-    left: 0;
-    margin: 0;
-    list-style: none;
-    gap: var(--spacing-lg);
-    padding: var(--spacing-md);
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--colors-neutral-300);
     display: none;
-    box-shadow: var(--shadow-md);
-    background-color: #fff;
-    border-radius: var(--radius-md);
-    font-size: 1rem;
+    position: absolute;
+    z-index: 1001;
+    left: 0;
     width: 150px;
+    margin: 0;
+    padding: var(--spacing-md);
+    list-style: none;
+    font-size: 1rem;
     color: var(--text-default);
+    background-color: var(--background-white, #fff);
+    border: 1px solid var(--colors-neutral-300);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    flex-direction: column;
+    gap: var(--spacing-lg);
+    
+    @include ltr {
+        left: unset;
+        right: 0;
+    }
 }
 
-html[dir="ltr"] #nds-sharePage-dropdown {
-    left: unset;
-    right: 0;
+#nds-sharePage {
+    &.open {
+        #nds-sharePage-dropdown {
+            display: flex;
+
+           & > *{
+                width: 100%;
+                justify-content: flex-start;
+            }
+            
+            .copied {
+                background-color: var(--background-success-light);
+                color: var(--text-success);
+                
+                .label {
+                    white-space: nowrap;
+                }
+            }
+        }
+    }
 }
 
-#nds-sharePage.open #nds-sharePage-dropdown {
-    display: flex;
-}
-
-#nds-sharePage.open #nds-sharePage-dropdown li {
-    padding: var(--spacing-sm) var(--spacing-md);
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-}
-
-#nds-sharePage.open #nds-sharePage-dropdown li:hover {
-    background-color: var(--button-background-neutral-hovered);
-}
-
-#nds-sharePage.open #nds-sharePage-dropdown li.copied {
-    background-color: var(--background-success-light);
-    color: var(--text-success);
-}
-
-#nds-sharePage.open #nds-sharePage-dropdown li.copied .text {
-    white-space: nowrap;
-}
-
-.hgi-loaded #nds-sharePage.open #nds-sharePage-dropdown li.copied i::before {
+.hgi-loaded #nds-sharePage.open #nds-sharePage-dropdown .copied i::before {
     content: "㶧";
 }
 
@@ -107,8 +106,9 @@ html[dir="ltr"] #nds-sharePage-dropdown {
    ======================================== */
 
 @include tablet(max) {
-
-    #nds-sharePageBtn .label {
-        display: none;
+    #nds-sharePageBtn {
+        .label {
+            display: none;
+        }
     }
 }
