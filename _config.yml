@@ -26,9 +26,7 @@ sass:
 author: Mazin Musleh
 author_profile: https://www.linkedin.com/in/mazin-musleh/
 
-# Localization settings
-default_lang: en
-languages: [en, ar]
+# Language settings (RTL/LTR switching only)
 lang: en
 dir: ltr
 

@@ -122,7 +122,7 @@ css_files:
                 <div class="code-example">
                     <div class="usage-header">
                         <span>Usage</span>
-                        <button class="copy-btn">
+                        <button class="copy-btn" aria-label="Copy code example">
                             <i class="hgi hgi-stroke hgi-copy-01"></i>
                         </button>
                     </div>
@@ -263,7 +263,7 @@ css_files:
                 <div class="code-example">
                     <div class="usage-header">
                         <span>Usage</span>
-                        <button class="copy-btn">
+                        <button class="copy-btn" aria-label="Copy code example">
                             <i class="hgi hgi-stroke hgi-copy-01"></i>
                         </button>
                     </div>
@@ -355,7 +355,7 @@ css_files:
                     <div class="code-example">
                         <div class="usage-header">
                             <span>Auto-initialization</span>
-                            <button class="copy-btn" data-copy-target="auto-init-code">
+                            <button class="copy-btn" data-copy-target="auto-init-code" aria-label="Copy code example">
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
@@ -389,7 +389,7 @@ css_files:
                     <div class="code-example">
                         <div class="usage-header">
                             <span>Reinitialize after adding dynamic content</span>
-                            <button class="copy-btn" data-copy-target="dynamic-init-code">
+                            <button class="copy-btn" data-copy-target="dynamic-init-code" aria-label="Copy code example">
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
@@ -414,7 +414,7 @@ const instance = NDSAccordion.create(newAccordion);</code></pre>
                     <div class="code-example">
                         <div class="usage-header">
                             <span>Control accordion programmatically</span>
-                            <button class="copy-btn" data-copy-target="programmatic-code">
+                            <button class="copy-btn" data-copy-target="programmatic-code" aria-label="Copy code example">
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
@@ -443,7 +443,7 @@ console.log(`${openItems.length} items are currently open`);</code></pre>
                     <div class="code-example">
                         <div class="usage-header">
                             <span>Listen for accordion events</span>
-                            <button class="copy-btn" data-copy-target="events-code">
+                            <button class="copy-btn" data-copy-target="events-code" aria-label="Copy code example">
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>

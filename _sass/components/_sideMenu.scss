@@ -92,9 +92,11 @@
     padding-right: var(--spacing-3xl);
 }
 
-html[dir="ltr"] .nds-sideMenu ul ul {
-    padding-left: var(--spacing-3xl);
-    padding-right: unset;
+.nds-sideMenu ul ul {
+    @include ltr {
+        padding-left: var(--spacing-3xl);
+        padding-right: unset;
+    }
 }
 
 .nds-sideMenu ul .has-sub.open ul {
@@ -129,9 +131,11 @@ html[dir="ltr"] .nds-sideMenu ul ul {
     margin-right: calc(var(--spacing-xs) * -1);
 }
 
-html[dir="ltr"] .nds-sideMenu .topLevel > li.has-sub li a {
-    margin-left: calc(var(--spacing-xs) * -1);
-    margin-right: unset;
+.nds-sideMenu .topLevel > li.has-sub li a {
+    @include ltr {
+        margin-left: calc(var(--spacing-xs) * -1);
+        margin-right: unset;
+    }
 }
 
 
@@ -141,8 +145,10 @@ html[dir="ltr"] .nds-sideMenu .topLevel > li.has-sub li a {
     border-bottom: 0;
 }
 
-html[dir="ltr"] .nds-sideMenu ul ul li.has-sub ul {
-    margin: var(--spacing-md) 0 0 var(--spacing-lg);
+.nds-sideMenu ul ul li.has-sub ul {
+    @include ltr {
+        margin: var(--spacing-md) 0 0 var(--spacing-lg);
+    }
 }
 
 .nds-sideMenu ul ul li.has-sub {
@@ -263,48 +269,54 @@ html[dir="ltr"] .nds-sideMenu ul ul li.has-sub ul {
     }
 
     /* LTR Support */
-    html[dir="ltr"] .nds-sideMenu {
-        transform: translateX(-100%);
+    @include ltr {
+        .nds-sideMenu {
+            transform: translateX(-100%);
+        }
+
+        #sideMenuToggle {
+            right: unset;
+            left: 0;
+            transform: translateX(calc(var(--nds-sideMenu-width) - var(--spacing-md)));
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+        }
+
+        .hgi-loaded #sideMenuToggle::after {
+            content: "䍛";
+            transform: scale(1);
+        }
     }
 
-    html[dir="ltr"] #sideMenuToggle {
-        right: unset;
-        left: 0;
-        transform: translateX(calc(var(--nds-sideMenu-width) - var(--spacing-md)));
-        border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    @include ltr {
+        .nds-sideMenu .has-sub ul {
+            margin: var(--spacing-md) 0px 0 28px;
+            padding-right: 0;
+            padding-left: 24px;
+        }
+
+        .nds-sideMenu > nav > .topLevel > li > a:before {
+            right: unset;
+            left: 0;
+        }
+
+        .nds-sideMenu nav li.has-sub > a:after {
+            right: 7px;
+            left: unset;
+        }
+
+        .nds-sideMenu nav > .topLevel > li.has-sub.open > a:after {
+            transform: rotate(180deg);
+        }
+
+        .nds-sideMenu .topLevel > li.has-sub li a {
+            margin-left: 0;
+            margin-left: -4px;
+        }
     }
 
-    html[dir="ltr"] .hgi-loaded #sideMenuToggle::after {
-        content: "䍛";
-        transform: scale(1);
-    }
-
-    html[dir="ltr"] .nds-sideMenu .has-sub ul {
-        margin: var(--spacing-md) 0px 0 28px;
-        padding-right: 0;
-        padding-left: 24px;
-    }
-
-    html[dir="ltr"] .nds-sideMenu > nav > .topLevel > li > a:before {
-        right: unset;
-        left: 0;
-    }
-
-    html[dir="ltr"] .nds-sideMenu nav li.has-sub > a:after {
-        right: 7px;
-        left: unset;
-    }
-
-    html[dir="ltr"] .nds-sideMenu nav > .topLevel > li.has-sub.open > a:after {
-        transform: rotate(180deg);
-    }
-
-    html[dir="ltr"] .nds-sideMenu .topLevel > li.has-sub li a {
-        margin-left: 0;
-        margin-left: -4px;
-    }
-
-    html[dir="ltr"] .nds-sideMenu .topLevel > li.redirect.external > a::after {
-        transform: scale(-1);
+    @include ltr {
+        .nds-sideMenu .topLevel > li.redirect.external > a::after {
+            transform: scale(-1);
+        }
     }
 }

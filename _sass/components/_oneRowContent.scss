@@ -61,17 +61,23 @@
    LTR SUPPORT FOR ONE ROW CONTENT
    ======================================== */
 
-html[dir="ltr"] .oneRowContent.hasMore > *.showMore {
-    left: unset;
-    right: 0;
-    margin-right: unset;
-    margin-left: var(--spacing-md);
+.oneRowContent.hasMore > *.showMore {
+    @include ltr {
+        left: unset;
+        right: 0;
+        margin-right: unset;
+        margin-left: var(--spacing-md);
+    }
+    
+    i {
+        @include ltr {
+            transform: rotate(180deg);
+        }
+    }
 }
 
-html[dir="ltr"] .oneRowContent.hasMore > *.showMore i {
-    transform: rotate(180deg);
-}
-
-html[dir="ltr"] .oneRowContent.hasMore.atEnd > *.showMore i {
-    transform: rotate(0deg) !important;
+.oneRowContent.hasMore.atEnd > *.showMore i {
+    @include ltr {
+        transform: rotate(0deg) !important;
+    }
 }

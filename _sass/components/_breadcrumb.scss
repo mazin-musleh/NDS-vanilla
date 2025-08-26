@@ -55,8 +55,10 @@ body.hgi-loaded .nds-breadcrumb li:not(:last-child)::after {
 }
 
 /* LTR Support - flip arrow direction */
-html[dir="ltr"] .nds-breadcrumb li:not(:last-child)::after {
-    transform: scaleX(-1);
+.nds-breadcrumb li:not(:last-child)::after {
+    @include ltr {
+        transform: scaleX(-1);
+    }
 }
 
 /* ========================================

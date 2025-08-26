@@ -1,0 +1,80 @@
+/* ========================================
+   ANIMATIONS - KEYFRAMES DEFINITIONS
+   ======================================== */
+
+/* ========================================
+   BUTTON ANIMATIONS
+   ======================================== */
+
+@keyframes nds-btn-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* ========================================
+   FADE ANIMATIONS
+   ======================================== */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* ========================================
+   SLIDE ANIMATIONS
+   ======================================== */
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}
+
+/* ========================================
+   COLOR ANIMATIONS
+   ======================================== */
+
+@keyframes colorCycle {
+  0% {
+    color: var(--colors-primary-sa-flag-400);
+  }
+  100% {
+    color: var(--text-default);
+  }
+}

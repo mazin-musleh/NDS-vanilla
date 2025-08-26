@@ -2,16 +2,18 @@
 <html lang="en" dir="ltr">
 
 {% include head.html %}
+
 <body class="toEdgex">
-    {% include topbar.html %}
-    {% include header.html %}
-    
+    <header>
+        {% include topbar.html %}
+        {% include mainNav.html %}
+    </header>
     <main>
         {{ content }}
     </main>
-    
+
     {% include footer.html %}
-    
+
     <!-- Scripts -->
     <script>
         window.ndsBasePath = '{{ "" | relative_url }}';
@@ -22,6 +24,6 @@
     <script defer src="{{ '/assets/js/nds-tabs.js' | relative_url }}?ver=1.000"></script>
     <script defer src="{{ '/assets/js/nds-accordion.js' | relative_url }}?ver=1.000"></script>
     <script defer src="{{ '/assets/js/nds-showcase.js' | relative_url }}?ver=1.000"></script>
-    <script defer src="{{ '/assets/js/simple-language-switcher.js' | relative_url }}?ver=1.000"></script>
 </body>
+
 </html>

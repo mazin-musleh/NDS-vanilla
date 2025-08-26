@@ -9,24 +9,24 @@
     color: var(--text-oncolor-primary, #fff);
     padding: 3rem 0 1rem;
     margin-top: auto;
-}
 
-.nds-footer .nds-footer-content {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
-    margin-bottom: 2rem;
-}
+    .nds-footer-content {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
+        margin-bottom: 2rem;
+    }
 
-.nds-footer .nds-footer-column {
-    margin-bottom: 1rem;
+    .nds-footer-column {
+        margin-bottom: 1rem;
+    }
 }
 
 /* ========================================
    FOOTER HEADINGS AND LINKS
    ======================================== */
 
-.nds-footer .nds-footer-heading {
+.nds-footer-heading {
     font-size: 1rem;
     font-weight: 600;
     margin-bottom: 1rem;
@@ -35,72 +35,71 @@
     color: var(--text-oncolor-primary, #fff);
 }
 
-.nds-footer .nds-footer-links-list {
+.nds-footer-links-list {
     list-style: none;
     padding: 0;
     margin: 0 16px;
-}
 
-.nds-footer .nds-footer-links-list * {
-    color: var(--text-oncolor-primary, #fff);
-    text-decoration: none;
-}
+    * {
+        color: var(--text-oncolor-primary, #fff);
+        text-decoration: none;
+    }
 
-.nds-footer .nds-footer-links-list > li {
-    padding: 4px 0;
-}
+    >li {
+        padding: 4px 0;
+    }
 
-.nds-footer .nds-footer-links-list a {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-}
+    a {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
 
-.nds-footer .nds-footer-links-list a:hover {
-    text-decoration: underline;
-    color: var(--text-oncolor-primary, #fff);
-}
+        &:hover {
+            text-decoration: underline;
+            color: var(--text-oncolor-primary, #fff);
+        }
 
-.nds-footer .nds-footer-links-list a i {
-    font-size: 1rem;
-    opacity: 0.8;
+        i {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+    }
 }
 
 /* ========================================
    FOOTER SOCIAL ICONS
    ======================================== */
 
-/* Social Icons */
-.nds-footer .nds-footer-social-icons {
+.nds-footer-social-icons {
     display: flex;
     gap: var(--spacing-md, 16px);
     margin: 8px 16px 32px 16px;
     flex-wrap: wrap;
     justify-content: flex-start;
-}
 
-.nds-footer .nds-footer-social-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    border: 1px solid #fff;
-    border-radius: 4px;
-    padding: 4px;
-    color: var(--text-oncolor-primary, #fff);
-    text-decoration: none;
-}
+    .nds-footer-social-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border: 1px solid #fff;
+        border-radius: 4px;
+        padding: 4px;
+        color: var(--text-oncolor-primary, #fff);
+        text-decoration: none;
 
-.nds-footer .nds-footer-social-icon:hover {
-    background-color: var(--background-white, #fff);
-    color: var(--text-primary);
-}
+        &:hover {
+            background-color: var(--background-white, #fff);
+            color: var(--text-primary);
+        }
 
-.nds-footer .nds-footer-social-icon i {
-    font-size: 16px;
+        i {
+            font-size: 16px;
+        }
+    }
 }
 
 /* ========================================
@@ -108,7 +107,7 @@
    ======================================== */
 
 /* Mobile App Icons */
-.nds-footer .nds-footer-mobile-app-icons {
+.nds-footer-mobile-app-icons {
     display: flex;
     gap: var(--spacing-md, 16px);
     margin: 8px 16px 32px 16px;
@@ -116,17 +115,17 @@
     justify-content: flex-start;
 }
 
-.nds-footer .nds-footer-app-icon {
+.nds-footer-app-icon {
     transition: all 0.3s ease;
-}
 
-.nds-footer .nds-footer-app-icon svg {
-    color: var(--text-oncolor-primary, #fff);
-}
+    svg {
+        color: var(--text-oncolor-primary, #fff);
+    }
 
-.nds-footer .nds-footer-app-icon:hover svg {
-    fill: var(--background-white, #fff);
-    color: #161616;
+    &:hover svg {
+        fill: var(--background-white, #fff);
+        color: #161616;
+    }
 }
 
 /* ========================================
@@ -134,7 +133,7 @@
    ======================================== */
 
 /* Footer Bottom */
-.nds-footer .nds-footer-bottom {
+.nds-footer-bottom {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -143,34 +142,34 @@
     border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.nds-footer .nds-footer-copyright {
+.nds-footer-copyright {
     flex: 1;
 }
 
-.nds-footer .nds-footer-links {
+.nds-footer-links {
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 1rem;
+
+    a {
+        color: var(--text-oncolor-primary, #fff);
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: color 0.3s ease;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
 }
 
-.nds-footer .nds-footer-links a {
-    color: var(--text-oncolor-primary, #fff);
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: color 0.3s ease;
-}
-
-.nds-footer .nds-footer-links a:hover {
-    text-decoration: underline;
-}
-
-.nds-footer .nds-footer-separator {
+.nds-footer-separator {
     color: var(--text-oncolor-primary, #fff);
     margin: 0 0.5rem;
     opacity: 0.7;
 }
 
-.nds-footer .nds-footer-copy-right {
+.nds-footer-copy-right {
     font-size: 0.85rem;
     line-height: 1.4;
     opacity: 0.9;
@@ -180,7 +179,7 @@
    FOOTER LOGOS
    ======================================== */
 
-.nds-footer .nds-footer-logos {
+.nds-footer-logos {
     width: 25%;
     min-width: 200px;
     display: flex;
@@ -188,17 +187,17 @@
     justify-content: center;
     gap: 16px;
     align-items: center;
-}
 
-.nds-footer .nds-footer-logos img {
-    height: 40px;
-    width: auto;
-    transition: opacity 0.3s ease;
-    filter: brightness(0) invert(1);
-}
+    img {
+        height: 40px;
+        width: auto;
+        transition: opacity 0.3s ease;
+        filter: brightness(0) invert(1);
 
-.nds-footer .nds-footer-logos img:hover {
-    opacity: 0.8;
+        &:hover {
+            opacity: 0.8;
+        }
+    }
 }
 
 /* ========================================
@@ -207,45 +206,46 @@
 
 /* Responsive Design */
 @include desktop(max) {
-    .nds-footer .nds-footer-content {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 2rem;
+    .nds-footer {
+        .nds-footer-content {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
     }
 }
 
 @include mobile {
     .nds-footer {
         padding: 2rem 0 1rem;
-    }
 
-    .nds-footer .nds-footer-content {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-        text-align: center;
-    }
+        .nds-footer-content {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            text-align: center;
+        }
 
-    .nds-footer .nds-footer-bottom {
-        display: flex;
-        justify-content: center;
-        margin: auto;
-        flex-direction: column;
-        gap: 1.5rem;
-        text-align: center;
-    }
+        .nds-footer-bottom {
+            justify-content: center;
+            margin: auto;
+            flex-direction: column;
+            gap: 1.5rem;
+            text-align: center;
+        }
 
-    .nds-footer .nds-footer-copyright .nds-footer-links {
-        justify-content: center;
-    }
+        .nds-footer-copyright .nds-footer-links {
+            justify-content: center;
+        }
 
-    .nds-footer .nds-footer-logos {
-        width: 100%;
-        min-width: auto;
-        justify-content: center;
-    }
+        .nds-footer-logos {
+            width: 100%;
+            min-width: auto;
+            justify-content: center;
+        }
 
-    .nds-footer .nds-footer-social-icons,
-    .nds-footer .nds-footer-mobile-app-icons {
-        justify-content: center;
-        margin: 8px 0 32px 0;
+        .nds-footer-social-icons,
+        .nds-footer-mobile-app-icons {
+            justify-content: center;
+            margin: 8px 0 32px 0;
+        }
     }
 }

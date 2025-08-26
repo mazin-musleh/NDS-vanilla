@@ -10,6 +10,7 @@
     document.addEventListener('DOMContentLoaded', function() {
         initializeCopyButtons();
         initializeDemoToggleButtons();
+        initializeDirectionSwitcher();
     });
 
     // Copy functionality for code examples
@@ -415,35 +416,6 @@
         }
     }
 
-    // Update code example to reflect actual element classes
-    function updateCodeExample(demoCard, changedElement) {
-        const codeElement = demoCard.querySelector('.code-example code');
-        if (!codeElement) return;
-        
-        if (!changedElement) return;
-        
-        let updatedCode = codeElement.textContent;
-        
-        // Get the base class name (first class) of the changed element to identify it in the code
-        const baseClassName = Array.from(changedElement.classList)[0];
-        if (!baseClassName) return;
-        
-        const actualClasses = Array.from(changedElement.classList).join(' ');
-        
-        // Find and replace the class attribute for this exact element in the code
-        // Use word boundary to ensure exact class match and avoid partial matches
-        const classRegex = new RegExp(`class="((?:[\\w-]+\\s+)*)?${baseClassName.replace(/[-[\]/{}()*+?.\\^$|]/g, "\\$&")}(\\s[\\w-\\s]*)?"`, 'g');
-        updatedCode = updatedCode.replace(classRegex, (match, before, after) => {
-            // Only replace if the baseClassName appears as a complete word, not as part of another class
-            const classesInMatch = match.match(/class="([^"]*)"/)[1].split(/\s+/);
-            if (classesInMatch.includes(baseClassName)) {
-                return `class="${actualClasses}"`;
-            }
-            return match;
-        });
-        
-        codeElement.textContent = updatedCode;
-    }
 
     // Update code example for specific class changes only
     function updateCodeExampleForClasses(demoCard, changedElement, changedClasses) {
@@ -490,12 +462,77 @@
         codeElement.textContent = updatedCode;
     }
 
+    // RTL/LTR Direction Switcher - Cookie-based System
+    function initializeDirectionSwitcher() {
+        // Get current language: URL parameter takes priority, then cookie, then default to 'en'
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlLang = urlParams.get('lang');
+        const cookieLang = getCookie('preferred-language');
+        const currentLang = urlLang || cookieLang || 'en';
+        
+        // If URL parameter exists, update cookie and remove URL parameter
+        if (urlLang) {
+            setCookie('preferred-language', urlLang, 365); // Store for 1 year
+            // Clean URL by removing language parameter
+            const cleanUrl = new URL(window.location);
+            cleanUrl.searchParams.delete('lang');
+            window.history.replaceState({}, document.title, cleanUrl.pathname + cleanUrl.search);
+        } else if (!cookieLang) {
+            // Set default cookie if none exists
+            setCookie('preferred-language', currentLang, 365);
+        }
+        
+        // Update the language display in header
+        const currentLangLabel = document.getElementById('currentLangLabel');
+        if (currentLangLabel) {
+            currentLangLabel.textContent = currentLang === 'ar' ? 'العربية' : 'English';
+        }
+        
+        // Set HTML attributes for current language
+        document.documentElement.setAttribute('lang', currentLang);
+        document.documentElement.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
+        
+        // Handle language toggle button click
+        const langToggleBtn = document.getElementById('langToggleBtn');
+        if (langToggleBtn) {
+            langToggleBtn.addEventListener('click', function() {
+                // Toggle to opposite language
+                const targetLang = currentLang === 'ar' ? 'en' : 'ar';
+                
+                // Update cookie directly
+                setCookie('preferred-language', targetLang, 365);
+                
+                // Reload page to apply new language
+                window.location.reload();
+            });
+        }
+    }
+
+    // Cookie utility functions for RTL/LTR switcher
+    function setCookie(name, value, days) {
+        const expires = new Date();
+        expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+        document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
+    }
+
+    function getCookie(name) {
+        const nameEQ = name + "=";
+        const ca = document.cookie.split(';');
+        for(let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+    }
+
     // Expose global functions for backward compatibility if needed
     window.NDSShowcase = {
         handleCopyClick: handleCopyClick,
         showCopyFeedback: showCopyFeedback,
         initializeDemoToggleButtons: initializeDemoToggleButtons,
-        updateButtonsForBackground: updateButtonsForBackground
+        updateButtonsForBackground: updateButtonsForBackground,
+        initializeDirectionSwitcher: initializeDirectionSwitcher
     };
 
 })();
