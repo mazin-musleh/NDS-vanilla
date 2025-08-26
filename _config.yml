@@ -4,7 +4,7 @@ baseurl: "/_site"
 url: ""
 
 # Brand Logo
-brandLogo: /assets/img/DGA-logo.svg
+brandLogo: assets/img/Palm&Swords.svg
 headerBrandW: 132
 headerBrandH: 42
 

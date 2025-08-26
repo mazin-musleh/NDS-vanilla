@@ -214,6 +214,7 @@ Available sizes:
   &,
   &[data-state="default"] {
     color: var(--text-default);
+    background: unset;
   }
 
   &:hover,

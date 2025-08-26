@@ -31,16 +31,19 @@
     /* Navigation Brand */
     .nds-brand {
         height: var(--nds-nav-height);
+        padding: var(--spacing-lg, 12px) 0;
         display: flex;
         align-items: center;
         font-weight: bold;
-        color: var(--text-primary, #1B8354);
+        color: var(--colors-neutral-400, #9da4ae);
         text-decoration: none;
         white-space: nowrap;
+        gap: var(--spacing-lg, 12px);
+        align-content: center;
+        flex-wrap: nowrap;
 
         img,
         svg {
-            padding: var(--spacing-lg, 12px) 0;
             height: 100%;
             width: auto;
         }
@@ -312,11 +315,12 @@
         height: 40px;
         min-width: 40px;
 
-        & > .text{
+        &>.text {
             font-size: var(--nds-text-clamp-md-FS);
             line-height: var(--nds-text-clamp-md-LH);
         }
-        & > i{
+
+        &>i {
             font-size: var(--nds-text-lg-FS);
             line-height: var(--nds-text-lg-LH);
         }

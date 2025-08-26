@@ -51,10 +51,12 @@ direction: ltr
                         </div>
                     </div>
                     <div class="code-example">
-                        <button class="copy-btn" data-copy-target=".text-input-code">
-                            <i class="hgi hgi-stroke hgi-copy-01"></i>
-                            Copy
-                        </button>
+                        <div class="usage-header">
+                            <span>Usage</span>
+                            <button class="copy-btn">
+                                <i class="hgi hgi-stroke hgi-copy-01"></i>
+                            </button>
+                        </div>
                         <pre class="text-input-code"><code>&lt;div class="nds-form-container"&gt;
     &lt;div class="nds-form-header"&gt;
         &lt;label class="label" for="textInput"&gt;Text Input&lt;/label&gt;
@@ -109,10 +111,12 @@ direction: ltr
                         </div>
                     </div>
                     <div class="code-example">
-                        <button class="copy-btn" data-copy-target=".search-input-code">
-                            <i class="hgi hgi-stroke hgi-copy-01"></i>
-                            Copy
-                        </button>
+                        <div class="usage-header">
+                            <span>Usage</span>
+                            <button class="copy-btn">
+                                <i class="hgi hgi-stroke hgi-copy-01"></i>
+                            </button>
+                        </div>
                         <pre class="search-input-code"><code>&lt;div class="nds-form-container"&gt;
     &lt;div class="nds-form-header"&gt;
         &lt;label class="label" for="searchInput"&gt;Search Input&lt;/label&gt;
@@ -167,10 +171,12 @@ direction: ltr
                         </div>
                     </div>
                     <div class="code-example">
-                        <button class="copy-btn" data-copy-target=".email-input-code">
-                            <i class="hgi hgi-stroke hgi-copy-01"></i>
-                            Copy
-                        </button>
+                        <div class="usage-header">
+                            <span>Usage</span>
+                            <button class="copy-btn">
+                                <i class="hgi hgi-stroke hgi-copy-01"></i>
+                            </button>
+                        </div>
                         <pre class="email-input-code"><code>&lt;div class="nds-form-container"&gt;
     &lt;div class="nds-form-header"&gt;
         &lt;label class="label" for="emailInput"&gt;Email Input&lt;/label&gt;
@@ -226,10 +232,12 @@ direction: ltr
                         </div>
                     </div>
                     <div class="code-example">
-                        <button class="copy-btn" data-copy-target=".password-input-code">
-                            <i class="hgi hgi-stroke hgi-copy-01"></i>
-                            Copy
-                        </button>
+                        <div class="usage-header">
+                            <span>Usage</span>
+                            <button class="copy-btn">
+                                <i class="hgi hgi-stroke hgi-copy-01"></i>
+                            </button>
+                        </div>
                         <pre class="password-input-code"><code>&lt;div class="nds-form-container"&gt;
     &lt;div class="nds-form-header"&gt;
         &lt;label class="label" for="passwordInput"&gt;Password Input&lt;/label&gt;
@@ -283,10 +291,12 @@ direction: ltr
                         </div>
                     </div>
                     <div class="code-example">
-                        <button class="copy-btn" data-copy-target=".textarea-code">
-                            <i class="hgi hgi-stroke hgi-copy-01"></i>
-                            Copy
-                        </button>
+                        <div class="usage-header">
+                            <span>Usage</span>
+                            <button class="copy-btn">
+                                <i class="hgi hgi-stroke hgi-copy-01"></i>
+                            </button>
+                        </div>
                         <pre class="textarea-code"><code>&lt;div class="nds-form-container"&gt;
     &lt;div class="nds-form-header"&gt;
         &lt;label class="label" for="textareaInput"&gt;Textarea&lt;/label&gt;
@@ -321,31 +331,31 @@ direction: ltr
                                 <div class="nds-form-header">
                                     <label class="label" for="selectInput">Select Dropdown</label>
                                 </div>
-                                <div class="nds-form-control">
-                                    <div class="nds-select">
+                                <div class="nds-form-control nds-select">
                                     <select id="selectInput">
                                         <option value="">Choose an option...</option>
                                         <option value="option1">Option 1</option>
                                         <option value="option2">Option 2</option>
                                         <option value="option3">Option 3</option>
                                     </select>
-                                    </div>
                                 </div>
                                 <div class="nds-form-footer"></div>
                             </div>
                         </div>
                     </div>
                     <div class="code-example">
-                        <button class="copy-btn" data-copy-target=".select-code">
-                            <i class="hgi hgi-stroke hgi-copy-01"></i>
-                            Copy
-                        </button>
+                        <div class="usage-header">
+                            <span>Usage</span>
+                            <button class="copy-btn">
+                                <i class="hgi hgi-stroke hgi-copy-01"></i>
+                            </button>
+                        </div>
                         <pre class="select-code"><code>&lt;div class="nds-form-container"&gt;
     &lt;div class="nds-form-header"&gt;
         &lt;label class="label" for="selectInput"&gt;Select Dropdown&lt;/label&gt;
     &lt;/div&gt;
-    &lt;div class="nds-form-control"&gt;
-        &lt;select id="selectInput" class="nds-select"&gt;
+    &lt;div class="nds-form-control nds-select"&gt;
+        &lt;select id="selectInput"&gt;
             &lt;option value=""&gt;Choose an option...&lt;/option&gt;
             &lt;option value="option1"&gt;Option 1&lt;/option&gt;
             &lt;option value="option2"&gt;Option 2&lt;/option&gt;
@@ -411,10 +421,12 @@ direction: ltr
                         </div>
                     </div>
                     <div class="code-example">
-                        <button class="copy-btn" data-copy-target=".radio-code">
-                            <i class="hgi hgi-stroke hgi-copy-01"></i>
-                            Copy
-                        </button>
+                        <div class="usage-header">
+                            <span>Usage</span>
+                            <button class="copy-btn">
+                                <i class="hgi hgi-stroke hgi-copy-01"></i>
+                            </button>
+                        </div>
                         <pre class="radio-code"><code>&lt;div class="nds-radio-group"&gt;
     &lt;div class="nds-form-container"&gt;
         &lt;div class="nds-form-header"&gt;
@@ -500,10 +512,12 @@ direction: ltr
                         </div>
                     </div>
                     <div class="code-example">
-                        <button class="copy-btn" data-copy-target=".checkbox-code">
-                            <i class="hgi hgi-stroke hgi-copy-01"></i>
-                            Copy
-                        </button>
+                        <div class="usage-header">
+                            <span>Usage</span>
+                            <button class="copy-btn">
+                                <i class="hgi hgi-stroke hgi-copy-01"></i>
+                            </button>
+                        </div>
                         <pre class="checkbox-code"><code>&lt;div class="nds-checkbox-group"&gt;
     &lt;div class="nds-form-container"&gt;
         &lt;div class="nds-form-header"&gt;
