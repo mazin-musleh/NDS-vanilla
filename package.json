@@ -4,7 +4,9 @@
   "description": "National Design System Jekyll Site",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "bundle exec jekyll build && cp _site/assets/css/nds-main.min.css* assets/css/",
+    "serve": "bundle exec jekyll serve"
   },
   "keywords": ["jekyll", "design-system", "arabic"],
   "author": "Mazin Musleh",
