@@ -1,8 +1,6 @@
 ---
 # Main SCSS file for NDS (National Design System)
 # This file compiles all Sass components into CSS for Jekyll
-sass:
-  style: compressed
 ---
 
 // Import fonts first
@@ -33,8 +31,6 @@ sass:
 @use 'components/statistics';
 @use 'components/footer';
 @use 'components/cookie';
-
-
 
 // Import showcase styles
 @use 'showcase';

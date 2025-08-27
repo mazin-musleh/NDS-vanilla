@@ -24,6 +24,7 @@ highlighter: rouge
 sass:
   style: compressed
   sass_dir: _sass
+  sourcemap: always
 
 # Custom settings
 author: Mazin Musleh
@@ -40,6 +41,8 @@ dir: ltr
   #- jekyll-sitemap
 plugins: []
 
+
+
 # Exclude from processing
 exclude:
   - Gemfile
@@ -49,3 +52,5 @@ exclude:
   - .sass-cache
   - .jekyll-cache
   - CLAUDE.md
+  - assets/css/nds-main.min.css
+  - assets/css/nds-main.min.css.map
