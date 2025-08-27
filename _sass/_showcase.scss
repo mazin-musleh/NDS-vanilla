@@ -195,18 +195,8 @@
 }
 
 .feature-item {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
-  padding: var(--spacing-md);
-  background-color: var(--background-neutral-50);
-  border-radius: var(--radius-sm);
 
   i {
-    flex-shrink: 0;
-    width: 20px;
-    height: 20px;
-    font-size: 20px;
     color: var(--button-background-primary-default);
   }
 }
