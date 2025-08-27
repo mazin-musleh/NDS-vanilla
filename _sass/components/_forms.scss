@@ -53,6 +53,7 @@
         transform: translateX(-50%);
         background-color: var(--form-field-border-pressed);
         transition: width var(--nds-transition);
+        z-index: 2;
     }
 
     &.focus {

@@ -12,7 +12,7 @@ group :jekyll_plugins do
 end
 
 # Windows support
-platforms :mingw, :x64_mingw, :mswin do
+platforms :windows do
   gem "wdm", "~> 0.1"      # faster file watching on Windows
   gem "tzinfo-data"
 end

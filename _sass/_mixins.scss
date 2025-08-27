@@ -88,6 +88,46 @@
   }
 }
 
+// Reset WebKit/Firefox autofill visuals + typography
+@mixin autofill-reset(
+  $bg: var(--form-field-background-default),
+  $text: var(--form-field-text-focused),
+  $border: var(--form-field-border-default)
+) {
+  // Chrome/Edge/Safari
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:autofill,
+  &:autofill:hover,
+  &:autofill:focus {
+
+    -webkit-box-shadow: 0 0 0 1000px #{$bg} inset !important;
+            box-shadow: 0 0 0 1000px #{$bg} inset !important;
+    background-clip: padding-box;
+
+    /* avoid “flash” on load in some WebKit builds */
+    transition: background-color 9999s ease-out, color 9999s ease-out;
+  }
+
+  // Firefox
+  &:-moz-autofill {
+    box-shadow: 0 0 0 1000px #{$bg} inset !important;
+    background-clip: padding-box;
+  }
+
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="tel"],
+input[type="url"],
+textarea {
+  @include autofill-reset(); 
+}
+
 // ==============================================
 // BUTTON BASE MIXINS
 // ==============================================
