@@ -199,15 +199,15 @@ css_files:
                                         your privacy preferences. Your account is the central hub for all your
                                         government service interactions.</p>
                                     <div class="account-features">
-                                        <div class="feature-item">
+                                        <div class="nds-btn nds-btn-secondary-outline feature-item">
                                             <i class="hgi hgi-stroke hgi-settings-01"></i>
                                             <span>Profile Settings</span>
                                         </div>
-                                        <div class="feature-item">
+                                        <div class="nds-btn nds-btn-secondary-outline feature-item">
                                             <i class="hgi hgi-stroke hgi-shield-01"></i>
                                             <span>Security Settings</span>
                                         </div>
-                                        <div class="feature-item">
+                                        <div class="nds-btn nds-btn-secondary-outline feature-item">
                                             <i class="hgi hgi-stroke hgi-notification-01"></i>
                                             <span>Notification Preferences</span>
                                         </div>

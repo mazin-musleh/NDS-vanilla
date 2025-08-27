@@ -272,19 +272,13 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-form-container">
+                            <div class="nds-form-container nds-textarea">
                                 <div class="nds-form-header">
                                     <label class="label" for="textareaInput">Textarea</label>
                                 </div>
                                 <div class="nds-form-control">
                                     <textarea id="textareaInput" class="nds-textarea"
                                         placeholder="Enter your message..." rows="4"></textarea>
-                                    <div class="nds-form-action">
-                                        <button class="nds-btn nds-btn-subtle clear hidden" type="button"
-                                            aria-label="Clear textarea">
-                                            <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
-                                        </button>
-                                    </div>
                                 </div>
                                 <div class="nds-form-footer"></div>
                             </div>
@@ -297,7 +291,7 @@ direction: ltr
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
-                        <pre class="textarea-code"><code>&lt;div class="nds-form-container"&gt;
+                        <pre class="textarea-code"><code>&lt;div class="nds-form-container nds-textarea"&gt;
     &lt;div class="nds-form-header"&gt;
         &lt;label class="label" for="textareaInput"&gt;Textarea&lt;/label&gt;
     &lt;/div&gt;
@@ -327,11 +321,11 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-form-container">
+                            <div class="nds-form-container nds-select">
                                 <div class="nds-form-header">
                                     <label class="label" for="selectInput">Select Dropdown</label>
                                 </div>
-                                <div class="nds-form-control nds-select">
+                                <div class="nds-form-control">
                                     <select id="selectInput">
                                         <option value="">Choose an option...</option>
                                         <option value="option1">Option 1</option>
