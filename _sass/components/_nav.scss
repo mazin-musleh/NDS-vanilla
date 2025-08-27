@@ -35,17 +35,21 @@
         display: flex;
         align-items: center;
         font-weight: bold;
-        color: var(--colors-neutral-500, #6c727e);
         text-decoration: none;
-        white-space: nowrap;
         gap: var(--spacing-lg, 12px);
         align-content: center;
         flex-wrap: nowrap;
+        max-width: var(--spacing-48, 192px);
 
         img,
         svg {
             height: 100%;
             width: auto;
+        }
+
+        .nds-brand-name {
+            line-height: var(--nds-text-clamp-md-LH);
+            font-size: var(--nds-text-clamp-md-FS);
         }
     }
 

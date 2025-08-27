@@ -13,6 +13,7 @@ headerBrandH: 42
 
 # Brand Name
 brandName: "National Design System"
+brandNameColor: var(--colors-neutral-500)
 
 # Hero Settings
 hero_image: assets/img/riyadhcenter.webp

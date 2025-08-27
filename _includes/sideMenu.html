@@ -2,16 +2,29 @@
     <button id="sideMenuToggle" class="sideMenuToggle" aria-label="Sidebar Menu"></button>
     <nav>
         <ul class="topLevel">
-            <li {% if page.url == "/" %} class="active"{% endif %}><a class="nds-btn nds-btn-subtle nds-btn-indicator" href="{{ '/' | relative_url }}"><span class="label">Home</span></a></li>
-            <li class="has-sub{% if page.url contains '/components/button' or page.url contains '/components/tabs' or page.url contains '/components/accordion' or page.url contains '/components/forms' %} open{% endif %}">
-                <a  class="nds-btn nds-btn-subtle nds-btn-menu nds-btn-indicator" href="#" aria-haspopup="true" aria-expanded="{% if page.url contains '/components/button' or page.url contains '/components/tabs' or page.url contains '/components/accordion' or page.url contains '/components/forms' %}true{% else %}false{% endif %}"><span class="label">Components</span></a>
-                <ul>
-                    <li{% if page.url contains '/components/accordion' %} class="active"{% endif %}><a class="nds-btn {% if page.url contains '/components/accordion' %}nds-btn-transparent{% else %}nds-btn-subtle{% endif %}" href="{{ '/components/accordion.html' | relative_url }}"><span class="label">Accordion</span></a></li>
-                    <li{% if page.url contains '/components/button' %} class="active"{% endif %}><a class="nds-btn {% if page.url contains '/components/button' %}nds-btn-transparent{% else %}nds-btn-subtle{% endif %}" href="{{ '/components/button.html' | relative_url }}"><span class="label">Buttons</span></a></li>
-                    <li{% if page.url contains '/components/forms' %} class="active"{% endif %}><a class="nds-btn {% if page.url contains '/components/forms' %}nds-btn-transparent{% else %}nds-btn-subtle{% endif %}" href="{{ '/components/forms.html' | relative_url }}"><span class="label">Forms</span></a></li>
-                    <li{% if page.url contains '/components/tabs' %} class="active"{% endif %}><a class="nds-btn {% if page.url contains '/components/tabs' %}nds-btn-transparent{% else %}nds-btn-subtle{% endif %}" href="{{ '/components/tabs.html' | relative_url }}"><span class="label">Tabs</span></a></li>
-                </ul>
-            </li>
+            {% for item in site.data.sidemenu %}
+                {% if item.has_sub %}
+                    <!-- Check if any child is active -->
+                    {% assign has_active_child = false %}
+                    {% for child in item.children %}
+                        {% if page.url == child.href %}
+                            {% assign has_active_child = true %}
+                            {% break %}
+                        {% endif %}
+                    {% endfor %}
+                    
+                    <li class="has-sub{% if has_active_child %} open{% endif %}">
+                        <a class="nds-btn nds-btn-subtle nds-btn-menu nds-btn-indicator" href="#" aria-haspopup="true" aria-expanded="{{ has_active_child }}"><span class="label">{{ item.label }}</span></a>
+                        <ul>
+                            {% for child in item.children %}
+                                <li{% if page.url == child.href %} class="active"{% endif %}><a class="nds-btn {% if page.url == child.href %}nds-btn-transparent{% else %}nds-btn-subtle{% endif %}" href="{{ child.href | relative_url }}"><span class="label">{{ child.label }}</span></a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% else %}
+                    <li{% if page.url == item.href %} class="active"{% endif %}><a class="nds-btn {% if page.url == item.href %}nds-btn-transparent{% else %}nds-btn-subtle{% endif %} nds-btn-indicator" href="{{ item.href | relative_url }}"><span class="label">{{ item.label }}</span></a></li>
+                {% endif %}
+            {% endfor %}
         </ul>
     </nav>
 </aside>
