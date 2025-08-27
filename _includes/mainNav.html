@@ -2,7 +2,7 @@
     <div class="nds-nav-container nds-content-container">
         <a href="{{ '/' | relative_url }}" class="nds-brand">
             <img class="nds-brand-logo" src="{{ site.brandLogo | relative_url }}" width="{{ site.headerBrandW }}" height="{{ site.headerBrandH }}" alt="{{ site.title }}">
-            {% if site.brandName %}<span class="nds-brand-name">{{ site.brandName }}</span>{% endif %}
+            {% if site.brandName %}<span class="nds-brand-name" style="color: {{ site.brandNameColor }};">{{ site.brandName }}</span>{% endif %}
         </a>
         <ul class="nds-nav-minimal">
             <li class="nds-mainNav-toggler nds-nav-item" data-toggle="navbar">
@@ -82,7 +82,7 @@
             </ul>
 
             <ul class="nds-nav-secondary">
-                <li class="nds-nav-item CTA">
+                <li class="nds-nav-item CTA PAB">
                     <a href="#" class="nds-nav-link nds-btn nds-btn-primary nds-btn-indicator" title="Guidelines">
                         <span class="label">Call to Action</span>
                     </a>
@@ -116,7 +116,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="nds-nav-item iconOnly lang PABx">
+                <li class="nds-nav-item iconOnly lang PAB">
                     <button class="nds-nav-link nds-btn nds-btn-subtle nds-btn-indicator" id="langToggleBtn" title="Toggle Language">
                         <i class="hgi hgi-stroke hgi-translation icon"></i>
                         <span class="label nds-lang-current" id="currentLangLabel">

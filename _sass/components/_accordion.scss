@@ -36,7 +36,6 @@
     .nds-btn-accordion {
         justify-content: space-between;
         width: 100%;
-        height: var(--spacing-7xl);
         border-radius: 0 !important;
         padding: var(--accordion-lg-header-padding, var(--spacing-lg)) !important;
         font-size: var(--nds-text-md-FS);
@@ -46,12 +45,17 @@
             gap: var(--accordion-lg-header-gap, var(--spacing-md));
         }
 
+        &,
+        &.nds-btn-md {
+            height: var(--spacing-6xl);
+        }
+
         &.nds-btn-sm {
             height: var(--spacing-5xl);
         }
 
         &.nds-btn-lg {
-            height: var(--spacing-9xl);
+            height: var(--spacing-7xl);
         }
 
         .nds-accordion-title {

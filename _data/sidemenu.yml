@@ -1,0 +1,26 @@
+- label: "Home"
+  url: "/"
+  href: "/"
+  
+- label: "Pages"
+  has_sub: true
+  children:
+    - label: "Page 1"
+      url: "/components/page1"
+      href: "/components/page1.html"
+
+- label: "Components"
+  has_sub: true
+  children:
+    - label: "Accordion"
+      url: "/components/accordion"
+      href: "/components/accordion.html"
+    - label: "Buttons"
+      url: "/components/button"
+      href: "/components/button.html"
+    - label: "Forms"
+      url: "/components/forms"
+      href: "/components/forms.html"
+    - label: "Tabs"
+      url: "/components/tabs"
+      href: "/components/tabs.html"

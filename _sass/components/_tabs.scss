@@ -48,11 +48,17 @@
       width: 100%;
       justify-content: start;
 
+
       /* Override horizontal indicator with vertical */
       @include btn-indicator('v');
     }
 
     &.withDivider {
+
+      .nds-tab {
+        flex-direction: row-reverse;
+      }
+
       .nds-tab-list-container::after {
         left: 0;
         height: 100%;
