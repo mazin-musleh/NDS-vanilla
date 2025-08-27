@@ -10,7 +10,7 @@ hero_image_pos: 50% 10%
 <section id="whoWeAre" class="nds-content-section">
     <div class="nds-section-content-container">
         <div class="nds-section-head">
-            <h2 id="whoWeAreHeading" class="nds-section-title">Who We Are</h2>
+            <h2 id="whoWeAreHeading" class="nds-section-title">xWho We Are</h2>
             <p class="nds-section-description">The National Design System provides a unified set of design principles, components, and guidelines to create consistent and accessible digital experiences across all government services in Saudi Arabia.</p>
             <button type="button" class="nds-btn nds-btn-primary nds-btn-readMore" aria-label="Read More">
                 <span class="label">Read More</span>
