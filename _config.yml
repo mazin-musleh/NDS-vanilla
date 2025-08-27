@@ -55,5 +55,3 @@ exclude:
   - .sass-cache
   - .jekyll-cache
   - CLAUDE.md
-  - assets/css/nds-main.min.css
-  - assets/css/nds-main.min.css.map
