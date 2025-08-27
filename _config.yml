@@ -11,6 +11,9 @@ brandLogo: assets/img/Palm&Swords.svg
 headerBrandW: 132
 headerBrandH: 42
 
+# Brand Name
+brandName: "National Design System"
+
 # Hero Settings
 hero_image: assets/img/riyadhcenter.webp
 #hero_image_sub: /assets/img/sliderShapeGray.svg
