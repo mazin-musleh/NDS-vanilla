@@ -1,0 +1,172 @@
+// Time & Date - Simplified with Core Functions
+(() => {
+    'use strict';
+
+    // Simple cache helper
+    function getCache(key) {
+        try {
+            const data = localStorage.getItem(`nds_${key}`);
+            if (data) {
+                const parsed = JSON.parse(data);
+                if (Date.now() < parsed.expires) return parsed.value;
+                localStorage.removeItem(`nds_${key}`);
+            }
+        } catch {}
+        return null;
+    }
+
+    function setCache(key, value, minutes) {
+        try {
+            localStorage.setItem(`nds_${key}`, JSON.stringify({
+                value,
+                expires: Date.now() + (minutes * 60 * 1000)
+            }));
+        } catch {}
+    }
+
+    // Hijri date with efficient dual-language caching
+    async function getHijriDate(isArabic) {
+        const today = new Date().toISOString().slice(0, 10);
+        const arabicKey = `hijri_ar_${today}`;
+        const englishKey = `hijri_en_${today}`;
+
+        // Check if we already have both languages cached
+        const arabicCached = getCache(arabicKey);
+        const englishCached = getCache(englishKey);
+
+        if (arabicCached && englishCached) {
+            return isArabic ? arabicCached : englishCached;
+        }
+
+        try {
+            const now = new Date();
+            const dateStr = `${now.getDate().toString().padStart(2, '0')}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getFullYear()}`;
+            
+            const response = await fetch(
+                `https://api.aladhan.com/v1/gToH/${dateStr}`,
+                { signal: AbortSignal.timeout(5000) }
+            );
+
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const data = await response.json();
+
+            if (data.code === 200) {
+                const hijri = data.data.hijri;
+                
+                // Create both language versions from single API response
+                const arabicDate = `${hijri.day} ${hijri.month.ar} ${hijri.year} هـ`;
+                const englishDate = `${hijri.day} ${hijri.month.en} ${hijri.year} AH`;
+                
+                // Cache both languages for 24 hours
+                setCache(arabicKey, arabicDate, 24 * 60);
+                setCache(englishKey, englishDate, 24 * 60);
+                
+                return isArabic ? arabicDate : englishDate;
+            }
+            throw new Error('Invalid API response');
+        } catch (error) {
+            // Fallback to browser calculation
+            const date = new Date();
+            if (isArabic) {
+                const hijri = new Intl.DateTimeFormat('ar-TN-u-ca-islamic', {
+                    day: 'numeric', month: 'long', year: 'numeric'
+                }).format(date);
+                return hijri.includes('هـ') ? hijri : `${hijri} هـ`;
+            } else {
+                const hijri = new Intl.DateTimeFormat('en-US-u-ca-islamic', {
+                    day: 'numeric', month: 'long', year: 'numeric'
+                }).format(date);
+                return hijri.includes('AH') ? hijri : `${hijri} AH`;
+            }
+        }
+    }
+
+    // Date function with caching
+    async function updateDate() {
+        const el = document.getElementById('nds-date');
+        if (!el) return;
+
+        const isArabic = document.documentElement.lang?.startsWith('ar');
+        const today = new Date().toISOString().slice(0, 10);
+        const type = el.dataset?.calendar || (isArabic ? 'hijri' : 'gregorian');
+        const cacheKey = `date_${type}_${isArabic}_${today}`;
+
+        // Check cache first (24 hours)
+        const cached = getCache(cacheKey);
+        if (cached) {
+            el.innerHTML = cached;
+            el.style.display = '';
+            return;
+        }
+
+        let content;
+        
+        if (type === 'hijri') {
+            content = await getHijriDate(isArabic);
+        } else {
+            // Gregorian date
+            const locale = isArabic ? 'ar-SA' : 'en-US';
+            content = new Intl.DateTimeFormat(locale, {
+                weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+            }).format(new Date());
+        }
+
+        if (content) {
+            const html = `<i class="hgi hgi-stroke hgi-calendar-03 icon"></i><span class="text">${content}</span>`;
+            el.innerHTML = html;
+            el.style.display = '';
+            
+            // Cache for 24 hours
+            setCache(cacheKey, html, 24 * 60);
+        } else {
+            el.style.display = 'none';
+        }
+    }
+
+    // Clock function (no caching needed)
+    function updateClock() {
+        const el = document.getElementById('nds-realTimeClock');
+        if (!el) return;
+
+        const now = new Date();
+        const h = now.getHours();
+        const m = now.getMinutes();
+        const s = now.getSeconds();
+        const time = `${h % 12 || 12}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')} ${h >= 12 ? 'PM' : 'AM'}`;
+        
+        el.innerHTML = `<i class="hgi hgi-stroke hgi-clock-01 icon"></i><span class="text">${time}</span>`;
+    }
+
+    // Global exposure
+    if (typeof window !== 'undefined') {
+        window.updateDate = updateDate;
+        window.updateClock = updateClock;
+        window.getHijriDate = getHijriDate;
+    }
+
+    // Auto-initialize
+    function init() {
+        // Only run functions if their elements exist
+        const dateEl = document.getElementById('nds-date');
+        const clockEl = document.getElementById('nds-realTimeClock');
+        
+        if (dateEl) {
+            updateDate();
+            // Update date every 24 hours
+            setInterval(updateDate, 24 * 60 * 60 * 1000);
+        }
+        
+        if (clockEl) {
+            updateClock();
+            // Update clock every second
+            setInterval(updateClock, 1000);
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        setTimeout(init, 50);
+    }
+
+})();

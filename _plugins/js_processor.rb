@@ -37,7 +37,7 @@ class JSProcessor
     @source_dir = '_js'
     @output_dir = 'assets/js'
     @bundles = {
-      'nds-components.min.js' => ['nds-accordion.js', 'nds-tabs.js', 'nds-forms.js']
+      'nds-main.min.js' => ['nds-fontLoading.js', 'nds-cityWeather.js', 'nds-timeDate.js', 'nds-sidemenu.js', 'nds-share.js', 'nds-cookies.js', 'nds-numbers.js', 'nds-oneRowContent.js', 'nds-accordion.js', 'nds-tabs.js', 'nds-forms.js', 'nds-navController.js']
     }
   end
 
@@ -123,14 +123,19 @@ class JSProcessor
         puts "Updated bundle: #{bundle_name} (#{bundle_size} → #{final_content.length} bytes from #{processed_files.length} files)"
         
         # Remove processed files from changed_files so they don't get processed individually
-        processed_files.each do |file|
-          changed_files.delete(File.basename(file))
+        source_files.each do |bundled_file|
+          changed_files.delete(bundled_file)
         end
       end
     end
     
     # Process remaining individual changed files that aren't part of bundles
+    # Get list of all files that are part of bundles
+    bundled_files = @bundles.values.flatten
+    
     changed_files.each do |changed_file|
+      # Skip if file is part of any bundle
+      next if bundled_files.include?(changed_file)
       file_path = js_files.find { |f| File.basename(f) == changed_file }
       next unless file_path
       
