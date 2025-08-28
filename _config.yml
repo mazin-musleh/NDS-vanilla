@@ -40,9 +40,6 @@ dir: ltr
 
 
 # Plugins
-#plugins:
-  #- jekyll-feed
-  #- jekyll-sitemap
 plugins: []
 
 

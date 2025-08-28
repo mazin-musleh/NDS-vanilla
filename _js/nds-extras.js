@@ -2,7 +2,7 @@
  * NDS Extras - Core functionality for National Design System
  * Handles weather, date, city info, side menu, share functionality, and cookies
  */
-
+ 
 (() => {
     'use strict';
 

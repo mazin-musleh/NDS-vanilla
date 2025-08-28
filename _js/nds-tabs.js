@@ -6,7 +6,7 @@
 
 (function() {
     'use strict';
-
+ 
     class NDSTabs {
         constructor(tabsContainer) {
             this.tabsContainer = tabsContainer;
