@@ -30,8 +30,9 @@
     border-radius: var(--radius-sm);
     gap: var(--spacing-md);
     border: 1px solid var(--form-field-border-default);
-    background: var(--form-field-background-default);
+    background-color: var(--form-field-background-default);
     position: relative;
+    
 
     * {
         font-size: 1rem;
@@ -69,15 +70,17 @@
         ::-webkit-input-placeholder {
             color: var(--form-field-text-hovered);
         }
+        
+        
     }
 
     &.active {
+
         &::before {
             width: 50%;
         }
-
+        background-color: var(--form-field-background-darker);
         box-shadow: var(--shadow-md);
-
         ::-webkit-input-placeholder {
             color: var(--form-field-text-hovered);
         }
