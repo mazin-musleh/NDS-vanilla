@@ -11,6 +11,9 @@ group :jekyll_plugins do
   # gem "jekyll-feed", "~> 0.12"   # only if you need RSS
 end
 
+# Additional gems for minification
+gem "execjs"
+
 # Windows support
 platforms :windows do
   gem "wdm", "~> 0.1"      # faster file watching on Windows

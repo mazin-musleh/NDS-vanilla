@@ -32,16 +32,19 @@
     border: 1px solid var(--form-field-border-default);
     background-color: var(--form-field-background-default);
     position: relative;
-    
+
 
     * {
         font-size: 1rem;
+        outline: unset !important;
+        outline-offset: unset !important;
+        box-shadow: unset !important;
     }
 
     &:hover {
         border-color: var(--form-field-border-hovered);
-        color: var(--form-field-text-hovered);
 
+        &,
         ::-webkit-input-placeholder {
             color: var(--form-field-text-hovered);
         }
@@ -67,11 +70,12 @@
 
         box-shadow: var(--shadow-md);
 
+        &,
         ::-webkit-input-placeholder {
-            color: var(--form-field-text-hovered);
+            color: var(--form-field-text-focused);
         }
-        
-        
+
+
     }
 
     &.active {
@@ -79,10 +83,13 @@
         &::before {
             width: 50%;
         }
+
         background-color: var(--form-field-background-darker);
         box-shadow: var(--shadow-md);
+
+        &,
         ::-webkit-input-placeholder {
-            color: var(--form-field-text-hovered);
+            color: var(--form-field-text-pressed);
         }
     }
 
@@ -92,7 +99,6 @@
         outline: 0px;
         height: 100%;
         width: 100%;
-        color: var(--form-field-text-hovered);
         outline: unset !important;
         outline-offset: unset !important;
         box-shadow: unset !important;
@@ -102,7 +108,7 @@
         }
     }
 
-    .nds-textarea > & {
+    .nds-textarea>& {
         padding: var(--form-textarea-padding);
         height: fit-content;
         width: 100%;
@@ -114,9 +120,9 @@
         }
     }
 
-    .nds-select > & {
+    .nds-select>& {
 
-         select {
+        select {
             -webkit-appearance: none;
             -moz-appearance: none;
             appearance: none;
@@ -158,7 +164,7 @@
 
     }
 
-    .nds-select > &.open::after {
+    .nds-select>&.open::after {
         transform: rotate(180deg);
     }
 
@@ -236,36 +242,4 @@
         color: var(--text-primary);
         font-weight: 500;
     }
-}
-
-// Additional form control styles for text inputs, textareas, and selects
-.nds-form-control input,
-.nds-form-control textarea,
-.nds-form-control select {
-    background-color: transparent;
-    border: 0px;
-    outline: 0px;
-    height: 100%;
-    width: 100%;
-    outline: unset !important;
-    outline-offset: unset !important;
-    box-shadow: unset !important;
-}
-
-// Duplicate input color for backward compatibility
-.nds-form-control input {
-    color: var(--form-field-text-hovered);
-}
-
-// Form state classes for filled, error, success states
-.nds-form-control.filled {
-    // Add any filled state styling if needed
-}
-
-.nds-form-control.error {
-    border-color: var(--form-field-border-error);
-}
-
-.nds-form-control.success {
-    // Add success state styling if needed
 }
