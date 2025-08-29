@@ -85,10 +85,10 @@
     /* Navigation Items */
     .nds-nav-item {
 
-        & * {
+        &:not(.CTA) * {
             position: relative;
-            font-size: var(--nds-text-clamp-lg-FS);
-            line-height: var(--nds-text-clamp-lg-LH);
+            font-size: var(--nds-text-lg-FS);
+            line-height: var(--nds-text-lg-LH);
             font-weight: 400;
         }
 
@@ -96,14 +96,8 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-
-            >* {
-                --button-indicator-size: 3px;
-                white-space: nowrap;
-                margin: 0 var(--spacing-md);
-                height: 40px;
-                min-height: 40px;
-            }
+            margin: 0 var(--spacing-md);
+            
         }
 
         >*:first-child {

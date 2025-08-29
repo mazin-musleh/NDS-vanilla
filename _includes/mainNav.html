@@ -1,7 +1,7 @@
 <nav class="nds-main-nav" id="ndsMainNav" aria-label="Primary navigation">
     <div class="nds-nav-container nds-content-container">
         <a href="{{ '/' | relative_url }}" class="nds-brand">
-            <img class="nds-brand-logo" src="{{ site.brandLogo | relative_url }}" width="{{ site.headerBrandW }}" height="{{ site.headerBrandH }}" alt="{{ site.title }}">
+            <img class="nds-brand-logo" src="{{ site.brandLogo | relative_url }}" width="{{ site.headerBrandW }}" height="{{ site.headerBrandH }}" alt="{{ site.title }} Logo">
             {% if site.brandName %}<span class="nds-brand-name" style="color: {{ site.brandNameColor }};">{{ site.brandName }}</span>{% endif %}
         </a>
         <ul class="nds-nav-minimal">
@@ -13,7 +13,7 @@
         </ul>
 
         <div class="nds-collapse" id="ndsNavCollapse">
-            <ul class="nds-nav-primary scrollH">
+            <ul class="nds-nav-primary">
                 <li class="nds-nav-item">
                     <a href="{{ '/' | relative_url }}" class="nds-nav-link nds-btn nds-btn-subtle nds-btn-indicator"><span class="label">Item 1</span></a>
                 </li>
@@ -82,8 +82,8 @@
             </ul>
 
             <ul class="nds-nav-secondary">
-                <li class="nds-nav-item CTA PAB">
-                    <a href="#" class="nds-nav-link nds-btn nds-btn-primary nds-btn-indicator" title="Guidelines">
+                <li class="nds-nav-item CTA">
+                    <a href="#" class="nds-btn nds-btn-primary nds-btn-md nds-btn-indicator" title="Guidelines">
                         <span class="label">Call to Action</span>
                     </a>
                 </li>
