@@ -5,6 +5,61 @@
  */
 
 @use '../mixins' as *;
+
+/* ========================================
+   TOPBAR STYLES
+   ======================================== */
+
+#verify-text {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.nds-topbar {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    overflow: clip;
+    transition: height var(--nds-transition);
+}
+
+.nds-topbar {
+    .nds-content-container {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .infoContainer {
+        display: flex;
+        gap: var(--spacing-xl);
+    }
+
+    .textIcon {
+        height: 40px;
+        min-width: 40px;
+
+        &>.text {
+            font-size: var(--nds-text-clamp-md-FS);
+            line-height: var(--nds-text-clamp-md-LH);
+        }
+
+        &>i {
+            font-size: var(--nds-text-lg-FS);
+            line-height: var(--nds-text-lg-LH);
+        }
+    }
+
+    .generalInfo .textIcon svg {
+        color: #384250;
+    }
+
+    button.textIcon:hover {
+        background-color: var(--background-neutral-200);
+    }
+}
+
 /* ========================================
    BASE NAVIGATION STYLES
    ======================================== */
@@ -98,7 +153,7 @@
             flex-direction: column;
             justify-content: center;
             margin: 0 var(--spacing-md);
-            
+
         }
 
         >*:first-child {
@@ -169,10 +224,12 @@
     position: relative;
 
     .nds-dropdown-menu {
+        display: none;
         background: var(--nds-nav-background-color);
         transform: translateY(-100%);
         transition: transform var(--nds-transition);
-         z-index: -1;
+        border-radius: 0;
+        z-index: -1;
 
         >.nds-content-container {
             padding-top: var(--spacing-2xl);
@@ -181,12 +238,21 @@
         }
     }
 
+
+
     &.show .nds-dropdown-menu {
         display: flex;
         flex-direction: column;
         border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+        box-shadow: var(--shadow-md);
+    }
+
+    &.opened.show .nds-dropdown-menu,
+    &.opening .nds-dropdown-menu {
+        display: flex;
         transform: translateY(0);
     }
+
     &.closing .nds-dropdown-menu {
         transform: translateY(-100%);
     }
@@ -277,60 +343,6 @@
 }
 
 /* ========================================
-   TOPBAR STYLES
-   ======================================== */
-
-#verify-text {
-    color: var(--text-primary);
-    font-weight: 600;
-}
-
-.nds-topbar {
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    overflow: clip;
-    transition: height var(--nds-transition);
-}
-
-.nds-topbar {
-    .nds-content-container {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-    }
-
-    .infoContainer {
-        display: flex;
-        gap: var(--spacing-xl);
-    }
-
-    .textIcon {
-        height: 40px;
-        min-width: 40px;
-
-        &>.text {
-            font-size: var(--nds-text-clamp-md-FS);
-            line-height: var(--nds-text-clamp-md-LH);
-        }
-
-        &>i {
-            font-size: var(--nds-text-lg-FS);
-            line-height: var(--nds-text-lg-LH);
-        }
-    }
-
-    .generalInfo .textIcon svg {
-        color: #384250;
-    }
-
-    button.textIcon:hover {
-        background-color: var(--background-neutral-200);
-    }
-}
-
-/* ========================================
    DESKTOP/TABLET LAYOUT (non-minimal)
    ======================================== */
 
@@ -396,12 +408,11 @@ body:not(.minimal) .nds-main-nav {
         position: fixed;
         left: 0;
         right: 0;
-        box-shadow: var(--shadow-md);
         max-height: 60vh;
         min-height: 1px;
         /* fix graphics bug at 0 */
         overflow-y: auto;
-        height: unset!important;
+        height: unset !important;
     }
 
 
@@ -528,17 +539,25 @@ body.minimal .nds-main-nav {
         right: 0;
         background-color: var(--background-white);
         box-shadow: var(--shadow-md);
-        height: unset!important;
+        height: unset !important;
         max-height: 60svh;
-        overflow-y: hidden;
-        transition: height var(--nds-transition);
+        transition: transform var(--nds-transition);
+        z-index: -1;
         display: none;
-        z-index: 1000;
+        transform: translateY(-100%);
         /* Ensure proper stacking */
 
+        &.opened,&.opening {
+
+            display: flex;
+            transform: translateY(0);
+        }
         &.show {
             display: flex;
             flex-direction: column;
+        }
+        &.closing {
+            transform: translateY(-100%);
         }
     }
 
@@ -572,6 +591,14 @@ body.minimal .nds-main-nav {
             align-items: center;
             justify-content: start;
             @include btn-indicator('v');
+        }
+
+        .nds-dropdown-menu{
+            box-shadow: unset!important;
+            border-radius: unset!important;
+            z-index: 1;
+            transform: translateY(0);
+            overflow: hidden;
         }
     }
 
@@ -625,18 +652,24 @@ body.minimal .nds-main-nav {
                 border-top: none;
             }
         }
-    }
 
-    /* Mobile Dropdown Styles */
+        /* Mobile Dropdown Styles */
     .nds-dropdown-menu {
         position: static;
-        background: var(--nds-bg-color);
         width: 100%;
-        height: 0;
         overflow: hidden;
-        transition: height var(--nds-transition);
         z-index: -1;
+        
         /* Base level within mobile nav */
+    }
+
+    }
+
+    
+
+    .nds-nav-primary .nds-dropdown-menu {
+        height: 0;
+        transition: height var(--nds-transition);
     }
 
     .nds-nav-secondary .nds-dropdown-menu {
@@ -649,6 +682,9 @@ body.minimal .nds-main-nav {
         /* Above all navigation */
         max-height: 40vh;
         overflow-y: hidden;
+        height: 0;
+        transform: translateY(0px);
+        transition: height var(--nds-transition);
     }
 }
 
@@ -659,8 +695,9 @@ body.minimal .nds-main-nav {
     right: 0;
     background-color: var(--background-white);
     box-shadow: var(--shadow-md);
-    z-index: 1002;
+    z-index: -1;
     /* Above all navigation */
+    height: unset !important;
     max-height: 40vh;
     overflow-y: hidden;
 }

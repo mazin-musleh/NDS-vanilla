@@ -41,22 +41,37 @@
         }
     };
 
-    // Simple overflow checking
-    function scheduleOverflowCheck() {
+    // Refined overflow checking with priority and debouncing
+    function scheduleOverflowCheck(priority = 'normal', delay = 50) {
         if (state.pendingOverflowCheck) {
             clearTimeout(state.pendingOverflowCheck);
         }
         
+        // Immediate check for high priority calls
+        if (priority === 'immediate') {
+            state.pendingOverflowCheck = null;
+            checkOverflow();
+            return;
+        }
+        
+        // Use different delays based on priority
+        const actualDelay = priority === 'high' ? 10 : 
+                          priority === 'low' ? 100 : delay;
+        
         state.pendingOverflowCheck = setTimeout(() => {
             state.pendingOverflowCheck = null;
             checkOverflow();
-        }, 50);
+        }, actualDelay);
     }
 
     function checkOverflow() {
         if (!DOM.primary) return;
 
-        if (state.isMinimal && !DOM.collapse?.classList.contains('show')) return;
+        if (state.isMinimal && !DOM.collapse?.classList.contains('show')) {
+            // Clean up overflow state when minimal nav is closed
+            DOM.primary.classList.remove('hasMore', 'atEnd');
+            return;
+        }
 
         let hasOverflow = false;
 
@@ -73,11 +88,18 @@
             hasOverflow = DOM.primary.scrollWidth > DOM.primary.clientWidth;
         }
 
-        DOM.primary.classList.toggle('hasMore', hasOverflow);
-        if (!hasOverflow) {
-            DOM.primary.classList.remove('atEnd');
-        } else {
-            setTimeout(() => utils.checkScrollEnd(), 10);
+        // Cache the previous state to avoid unnecessary DOM updates
+        const wasOverflowing = DOM.primary.classList.contains('hasMore');
+        
+        if (hasOverflow !== wasOverflowing) {
+            DOM.primary.classList.toggle('hasMore', hasOverflow);
+            
+            if (!hasOverflow) {
+                DOM.primary.classList.remove('atEnd');
+            } else {
+                // Schedule scroll end check with a small delay to ensure proper state
+                setTimeout(() => utils.checkScrollEnd(), 10);
+            }
         }
     }
 
@@ -101,9 +123,6 @@
             if (shouldBeMinimal !== isCurrentlyMinimal) {
                 document.body.classList.toggle('minimal', shouldBeMinimal);
 
-                if (!shouldBeMinimal && isCurrentlyMinimal && DOM.collapse) {
-                    DOM.collapse.style.height = `${state.getNavHeight()}px`;
-                }
 
                 this.managePABPlacement();
                 return true;
@@ -191,7 +210,7 @@
 
             if (state.isMinimal) {
                 DOM.primary.style.maxWidth = '';
-                scheduleOverflowCheck();
+                scheduleOverflowCheck('immediate');
                 return;
             }
 
@@ -223,7 +242,7 @@
 
             const available = constraint - used;
             DOM.primary.style.maxWidth = available > 0 ? `${available}px` : '';
-            scheduleOverflowCheck();
+            scheduleOverflowCheck('immediate');
         },
 
         scheduleUpdate() {
@@ -241,23 +260,14 @@
 
                 if (measurements.windowWidth !== state.windowWidth) {
                     state.windowWidth = measurements.windowWidth;
-
-                    if (!state.isMinimal && DOM.collapse) {
-                        DOM.collapse.style.height = `${state.getNavHeight()}px`;
-                    }
                 }
 
                 this.updateNavMaxWidth();
 
                 if (DOM.collapse?.classList.contains('show') && !DOM.collapse?.classList.contains('closing')) {
                     updatePositions();
-                } else {
-                    if (DOM.collapse) {
-                        DOM.collapse.style.height = state.isMinimal ? '0px' : `${state.getNavHeight()}px`;
-                    }
                 }
 
-    
                 this.checkTogglerVisibility();
 
             });
@@ -479,28 +489,12 @@
                 DOM.secondary.classList.remove('closing');
             }
             if ((!isOpen || isClosing) && DOM.collapse) {
-                DOM.collapse.style.height = state.isMinimal ? '0px' : `${state.getNavHeight()}px`;
+                // DOM.collapse.style.height = state.isMinimal ? '0px' : `${state.getNavHeight()}px`;
             }
             return;
         }
 
-        const isPrimaryVisible = DOM.primary && getComputedStyle(DOM.primary).display !== 'none';
-        const items = isPrimaryVisible ? DOM.navItems : [];
-        const itemHeight = state.isMinimal ? parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nds-minimal-nav-item-height')) || Math.max(40, state.getNavHeight() / 2) : state.getNavHeight();
-        let totalHeight = items.length * itemHeight + Math.max(0, items.length - 2);
-
-        const isSecondaryVisible = DOM.secondary && getComputedStyle(DOM.secondary).display !== 'none';
-        if (isSecondaryVisible) {
-            totalHeight += DOM.secondary.offsetHeight + 1;
-        }
-
-        if (isPrimaryVisible) {
-            DOM.primary?.querySelectorAll('.nds-dropdown.show .nds-dropdown-menu').forEach(menu => {
-                totalHeight += parseInt(menu.style.height || menu.scrollHeight || 0);
-            });
-        }
-
-        DOM.collapse.style.height = `${totalHeight}px`;
+        // Note: Height calculations only used for overflow checking now
 
         if (state.isMinimal) {
             setTimeout(() => {
@@ -515,24 +509,51 @@
     }
 
     function animateDropdown(dropdown, open) {
+        
         const menu = dropdown.querySelector('.nds-dropdown-menu');
-        const speed = state.getTransitionSpeed();
+        const DURATION = state.getTransitionSpeed();
         const isInMinimal = dropdown.closest('.nds-nav-minimal');
 
         if (open) {
             dropdown.classList.add('show');
             dropdown.classList.remove('closing');
-            menu.style.height = `${menu.scrollHeight}px`;
+            dropdown.classList.remove('opened');
+            
+            // Only set height for primary/secondary nav dropdowns in minimal mode
+            if (state.isMinimal && (dropdown.closest('.nds-nav-primary') || dropdown.closest('.nds-nav-secondary'))) {
+                menu.style.height = `${menu.scrollHeight}px`;
+            }
+
+            // Check overflow at animation start - high priority for immediate feedback
+            scheduleOverflowCheck('high');
+
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    dropdown.classList.add('opening');
+                });
+            });
 
             setTimeout(() => {
+                dropdown.classList.remove('opening');
+                dropdown.classList.add('opened');
                 if (!isInMinimal) {
                     updatePositions();
                 }
-                scheduleOverflowCheck();
-            }, 50);
+            }, DURATION);
         } else {
             dropdown.classList.add('closing');
-            menu.style.height = '0px';
+            dropdown.classList.remove('opened');
+            
+            // Only set height for primary/secondary nav dropdowns in minimal mode
+            if (state.isMinimal && (dropdown.closest('.nds-nav-primary') || dropdown.closest('.nds-nav-secondary'))) {
+                menu.style.height = '0px';
+            }
+
+            // Check overflow at animation start - high priority for immediate feedback
+            scheduleOverflowCheck('high');
+            
+            // Additional overflow check after DOM changes settle - low priority
+            setTimeout(() => scheduleOverflowCheck('low'), 50);
 
             if (!isInMinimal) {
                 updatePositions();
@@ -541,8 +562,7 @@
             setTimeout(() => {
                 dropdown.classList.remove('show');
                 dropdown.classList.remove('closing');
-                scheduleOverflowCheck();
-            }, speed);
+            }, DURATION);
         }
     }
 
@@ -552,25 +572,19 @@
         if (open) {
             DOM.collapse?.classList.add('show');
             DOM.collapse?.classList.remove('closing');
+            DOM.collapse?.classList.remove('opened');
             DOM.toggler?.classList.add('active');
+
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    DOM.collapse?.classList.add('opening');
+                });
+            });
 
             // Set opacity for secondary nav when opening in minimal mode
             if (DOM.secondary && state.isMinimal) {
                 DOM.secondary.style.opacity = '1';
             }
-
-            const isPrimaryVisible = DOM.primary && getComputedStyle(DOM.primary).display !== 'none';
-            const isSecondaryVisible = DOM.secondary && getComputedStyle(DOM.secondary).display !== 'none';
-
-            const items = isPrimaryVisible ? DOM.navItems : [];
-            const itemHeight = state.isMinimal ? parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nds-minimal-nav-item-height')) || Math.max(40, state.getNavHeight() / 2) : state.getNavHeight();
-            let totalHeight = items.length * itemHeight + Math.max(0, items.length - 2);
-
-            if (isSecondaryVisible) {
-                totalHeight += (DOM.secondary?.offsetHeight || 0) + 1;
-            }
-
-            DOM.collapse.style.height = `${totalHeight}px`;
 
             if (state.isMinimal) {
                 setTimeout(() => {
@@ -584,8 +598,10 @@
             }
 
             setTimeout(() => {
+                DOM.collapse?.classList.remove('opening');
+                DOM.collapse?.classList.add('opened');
                 updatePositions();
-                }, DURATION * 0.04);
+                }, DURATION);
         } else {
             DOM.toggler?.classList.remove('active');
             
@@ -601,21 +617,18 @@
             // Only add closing class after dropdowns start closing
             setTimeout(() => {
                 DOM.collapse?.classList.add('closing');
+                DOM.collapse?.classList.remove('opened');
             }, totalDelay > 0 ? 50 : 0);
 
             setTimeout(() => {
-                DOM.collapse.style.height = '0px';
-    
-                setTimeout(() => {
-                    DOM.collapse?.classList.remove('show');
-                    DOM.collapse?.classList.remove('closing');
-                    scheduleOverflowCheck();
-                    
-                    if (DOM.secondary) {
-                        DOM.secondary.style.cssText = '';
-                    }
-                }, DURATION);
-            }, totalDelay);
+                DOM.collapse?.classList.remove('show');
+                DOM.collapse?.classList.remove('closing');
+                scheduleOverflowCheck();
+                
+                if (DOM.secondary) {
+                    DOM.secondary.style.cssText = '';
+                }
+            }, totalDelay + DURATION);
         }
     }
 
@@ -681,6 +694,11 @@
         const dropdown = event.target.closest('.nds-dropdown');
         if (!dropdown) return;
 
+        // Return if any dropdown is still animating
+        if (document.querySelector('#ndsMainNav .nds-dropdown.opening, #ndsMainNav .nds-dropdown.closing')) {
+            return;
+        }
+
         const isOpen = dropdown.classList.contains('show');
         const openDropdowns = document.querySelectorAll('.nds-dropdown.show');
         const DURATION = state.getTransitionSpeed();
@@ -701,6 +719,10 @@
                         maxCloseDelay = Math.max(maxCloseDelay, DURATION);
                     }
                 });
+                // Ensure overflow check happens when closing other dropdowns - high priority
+                if (maxCloseDelay > 0) {
+                    scheduleOverflowCheck('high');
+                }
                 return maxCloseDelay;
             };
 
@@ -877,8 +899,6 @@
 
         if (DOM.collapse?.classList.contains('show')) {
             updatePositions();
-        } else {
-            DOM.collapse.style.height = state.isMinimal ? '0px' : `${state.getNavHeight()}px`;
         }
         
         utils.updateNavMaxWidth();
