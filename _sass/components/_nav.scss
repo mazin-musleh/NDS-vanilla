@@ -26,6 +26,7 @@
         align-items: center;
         justify-content: space-between;
         gap: var(--spacing-lg);
+        background-color: var(--nds-nav-background-color);
     }
 
     /* Navigation Brand */
@@ -168,7 +169,10 @@
     position: relative;
 
     .nds-dropdown-menu {
-        display: none;
+        background: var(--nds-nav-background-color);
+        transform: translateY(-100%);
+        transition: transform var(--nds-transition);
+         z-index: -1;
 
         >.nds-content-container {
             padding-top: var(--spacing-2xl);
@@ -179,9 +183,12 @@
 
     &.show .nds-dropdown-menu {
         display: flex;
-        background: var(--nds-nav-background-color);
         flex-direction: column;
         border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+        transform: translateY(0);
+    }
+    &.closing .nds-dropdown-menu {
+        transform: translateY(-100%);
     }
 
     .nds-dropdown-item {
@@ -390,14 +397,13 @@ body:not(.minimal) .nds-main-nav {
         left: 0;
         right: 0;
         box-shadow: var(--shadow-md);
-        z-index: 1001;
-        height: 0;
         max-height: 60vh;
         min-height: 1px;
         /* fix graphics bug at 0 */
         overflow-y: auto;
-        transition: height var(--nds-transition);
+        height: unset!important;
     }
+
 
     .nds-dropdown.show .nds-dropdown-menu.widthFit,
     .nds-nav-minimal .nds-dropdown.show .nds-dropdown-menu.widthFit {
@@ -522,7 +528,7 @@ body.minimal .nds-main-nav {
         right: 0;
         background-color: var(--background-white);
         box-shadow: var(--shadow-md);
-        height: 0;
+        height: unset!important;
         max-height: 60svh;
         overflow-y: hidden;
         transition: height var(--nds-transition);
@@ -629,7 +635,7 @@ body.minimal .nds-main-nav {
         height: 0;
         overflow: hidden;
         transition: height var(--nds-transition);
-        z-index: 1;
+        z-index: -1;
         /* Base level within mobile nav */
     }
 
