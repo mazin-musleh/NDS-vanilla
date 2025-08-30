@@ -133,6 +133,7 @@
     }
 
     .nds-nav-minimal {
+        gap: var(--spacing-md);
         .nds-nav-item {
             border-bottom: unset !important;
         }
@@ -141,10 +142,10 @@
     /* Navigation Items */
     .nds-nav-item {
 
-        &:not(.CTA) * {
+        & .label {
             position: relative;
-            font-size: var(--nds-text-lg-FS);
-            line-height: var(--nds-text-lg-LH);
+            font-size: var(--nds-text-md-FS);
+            line-height: var(--nds-text-md-LH);
             font-weight: 400;
         }
 
@@ -641,9 +642,6 @@ body.minimal .nds-main-nav {
         justify-content: center;
         background-color: var(--background-white);
         z-index: 1001;
-        /* Above main content */
-        opacity: 0;
-        transition: opacity var(--nds-transition);
 
         .nds-nav-item {
             border-bottom: none;
@@ -669,7 +667,7 @@ body.minimal .nds-main-nav {
 
     .nds-nav-primary .nds-dropdown-menu {
         height: 0;
-        transition: height var(--nds-transition);
+        transition: unset;
     }
 
     .nds-nav-secondary .nds-dropdown-menu {
@@ -683,8 +681,8 @@ body.minimal .nds-main-nav {
         max-height: 40vh;
         overflow-y: hidden;
         height: 0;
-        transform: translateY(0px);
-        transition: height var(--nds-transition);
+        
+        transition: unset;
     }
 }
 

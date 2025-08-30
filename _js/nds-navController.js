@@ -25,6 +25,9 @@
         isMouseOverDropdown: false,
         pendingUpdate: null,
         pendingOverflowCheck: null,
+        pendingDropdownAction: null,
+        pendingNavbarAction: null,
+        isAnimatingMenu: false,
 
         get isMinimal() {
             const breakpoint = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nds-minimal-nav-bp')) || 768;
@@ -509,6 +512,15 @@
     }
 
     function animateDropdown(dropdown, open) {
+        // If flag is already set and this is an opening animation, block it
+        if (state.isAnimatingMenu && open) {
+            return;
+        }
+        
+        // Set global animation flag to prevent any other menu actions
+        if (!state.isAnimatingMenu) {
+            state.isAnimatingMenu = true;
+        }
         
         const menu = dropdown.querySelector('.nds-dropdown-menu');
         const DURATION = state.getTransitionSpeed();
@@ -539,6 +551,8 @@
                 if (!isInMinimal) {
                     updatePositions();
                 }
+                state.isAnimatingMenu = false;
+                processAllPendingActions();
             }, DURATION);
         } else {
             dropdown.classList.add('closing');
@@ -562,11 +576,16 @@
             setTimeout(() => {
                 dropdown.classList.remove('show');
                 dropdown.classList.remove('closing');
+                state.isAnimatingMenu = false;
+                processAllPendingActions();
             }, DURATION);
         }
     }
 
     function animateNavbar(open) {
+        // Set global animation flag to prevent any other menu actions
+        state.isAnimatingMenu = true;
+        
         const DURATION = state.getTransitionSpeed();
 
         if (open) {
@@ -581,10 +600,6 @@
                 });
             });
 
-            // Set opacity for secondary nav when opening in minimal mode
-            if (DOM.secondary && state.isMinimal) {
-                DOM.secondary.style.opacity = '1';
-            }
 
             if (state.isMinimal) {
                 setTimeout(() => {
@@ -601,18 +616,14 @@
                 DOM.collapse?.classList.remove('opening');
                 DOM.collapse?.classList.add('opened');
                 updatePositions();
+                state.isAnimatingMenu = false;
+                processAllPendingActions();
                 }, DURATION);
         } else {
             DOM.toggler?.classList.remove('active');
             
             const totalDelay = utils.closeAllDropdowns();
 
-            // Set opacity for secondary nav after secondary dropdown animations finish
-            if (DOM.secondary && state.isMinimal) {
-                setTimeout(() => {
-                    DOM.secondary.style.opacity = '0';
-                }, totalDelay);
-            }
 
             // Only add closing class after dropdowns start closing
             setTimeout(() => {
@@ -625,9 +636,8 @@
                 DOM.collapse?.classList.remove('closing');
                 scheduleOverflowCheck();
                 
-                if (DOM.secondary) {
-                    DOM.secondary.style.cssText = '';
-                }
+                state.isAnimatingMenu = false;
+                processAllPendingActions();
             }, totalDelay + DURATION);
         }
     }
@@ -654,6 +664,15 @@
     }
 
     function toggleNavbar() {
+        // Block any action if any menu is currently animating
+        if (state.isAnimatingMenu) {
+            // Only queue if no action is already pending
+            if (!state.pendingNavbarAction) {
+                state.pendingNavbarAction = true;
+            }
+            return;
+        }
+
         const isOpen = DOM.collapse?.classList.contains('show');
         const DURATION = state.getTransitionSpeed();
 
@@ -689,13 +708,37 @@
         }
     }
 
+    function processPendingDropdownAction() {
+        if (state.pendingDropdownAction) {
+            const { event } = state.pendingDropdownAction;
+            state.pendingDropdownAction = null;
+            toggleDropdown(event);
+        }
+    }
+
+    function processPendingNavbarAction() {
+        if (state.pendingNavbarAction) {
+            state.pendingNavbarAction = null;
+            toggleNavbar();
+        }
+    }
+
+    function processAllPendingActions() {
+        processPendingDropdownAction();
+        processPendingNavbarAction();
+    }
+
     function toggleDropdown(event) {
         event.preventDefault();
         const dropdown = event.target.closest('.nds-dropdown');
         if (!dropdown) return;
 
-        // Return if any dropdown is still animating
-        if (document.querySelector('#ndsMainNav .nds-dropdown.opening, #ndsMainNav .nds-dropdown.closing')) {
+        // Block any action if any menu is currently animating
+        if (state.isAnimatingMenu) {
+            // Only queue if no action is already pending - prevents multiple fast clicks
+            if (!state.pendingDropdownAction) {
+                state.pendingDropdownAction = { event, dropdown };
+            }
             return;
         }
 
@@ -704,6 +747,7 @@
         const DURATION = state.getTransitionSpeed();
         const isInMinimal = dropdown.closest('.nds-nav-minimal');
         const isInPrimary = dropdown.closest('.nds-nav-primary');
+        
 
         if (isOpen) {
             animateDropdown(dropdown, false);

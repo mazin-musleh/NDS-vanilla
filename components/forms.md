@@ -10,54 +10,63 @@ direction: ltr
 
 <!-- Form Types Overview -->
 <section id="formTypesOverview" class="nds-content-section">
-    <div class="nds-section-content-container">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Form Input Types</h2>
-            <p class="nds-section-description">All form input types available in the National Design System with clear
+  <div class="nds-section-content-container">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Form Input Types</h2>
+      <p class="nds-section-description">All form input types available in the National Design System with clear
+ 
+ 
+ 
+ 
                 actions</p>
-        </div>
-        <div class="nds-section-content">
-            <div class="form-showcase">
+    </div>
+    <div class="nds-section-content">
+      <div class="form-showcase">
 
-                <!-- Text Input -->
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Text Input</div>
-                        <div class="demo-action">
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-form-container">
-                                <div class="nds-form-header">
-                                    <label class="label" for="textInput">Text Input</label>
-                                </div>
-                                <div class="nds-form-control">
-                                    <input type="text" id="textInput" class="nds-input" placeholder="Enter text..."
-                                        value="">
-                                    <div class="nds-form-action">
-                                        <button class="nds-btn nds-btn-subtle clear hidden" type="button"
-                                            aria-label="Clear input">
-                                            <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="nds-form-footer"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="code-example">
-                        <div class="usage-header">
-                            <span>Usage</span>
-                            <button class="copy-btn" aria-label="Copy code example">
-                                <i class="hgi hgi-stroke hgi-copy-01"></i>
-                            </button>
-                        </div>
-                        <pre class="text-input-code"><code>&lt;div class="nds-form-container"&gt;
+        <!-- Text Input -->
+        <div class="nds-demo-card">
+          <div class="demo-header">
+            <div class="demo-label">Text Input</div>
+            <div class="demo-action">
+              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                <span class="label">Remove bg</span>
+              </button>
+            </div>
+          </div>
+          <div class="demo-container">
+            <div class="state-demo">
+              <div class="nds-form-container">
+                <div class="nds-form-header">
+                  <label class="label" for="textInput">Text Input</label>
+                </div>
+                <div class="nds-form-control">
+                  <input
+                    type="text"
+                    id="textInput"
+                    class="nds-input"
+                    placeholder="Enter text..."
+                    value="">
+                  <div class="nds-form-action">
+                    <button
+                      class="nds-btn nds-btn-subtle clear hidden"
+                      type="button"
+                      aria-label="Clear input">
+                      <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="nds-form-footer"></div>
+              </div>
+            </div>
+          </div>
+          <div class="code-example">
+            <div class="usage-header">
+              <span>Usage</span>
+              <button class="copy-btn" aria-label="Copy code example">
+                <i class="hgi hgi-stroke hgi-copy-01"></i>
+              </button>
+            </div>
+<pre class="text-input-code"><code>&lt;div class="nds-form-container"&gt;
     &lt;div class="nds-form-header"&gt;
         &lt;label class="label" for="textInput"&gt;Text Input&lt;/label&gt;
     &lt;/div&gt;
@@ -71,53 +80,60 @@ direction: ltr
     &lt;/div&gt;
     &lt;div class="nds-form-footer"&gt;&lt;/div&gt;
 &lt;/div&gt;</code></pre>
-                    </div>
-                </div>
+          </div>
+        </div>
 
-                <!-- Search Input -->
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Search Input</div>
-                        <div class="demo-action">
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-form-container">
-                                <div class="nds-form-header">
-                                    <label class="label" for="searchInput">Search Input</label>
-                                </div>
-                                <div class="nds-form-control">
-                                    <i class="hgi hgi-stroke hgi-search-01 icon"></i>
-                                    <input type="text" id="searchInput" class="nds-search-input" name="search"
-                                        placeholder="Search...">
-                                    <div class="nds-form-action">
-                                        <button class="nds-btn nds-btn-subtle voiceInput" type="button"
-                                            aria-label="Voice input">
-                                            <i class="hgi hgi-stroke hgi-mic-01 icon"></i>
-                                        </button>
-                                        <button class="nds-btn nds-btn-subtle clear hidden" type="button"
-                                            aria-label="Clear search">
-                                            <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="nds-form-footer"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="code-example">
-                        <div class="usage-header">
-                            <span>Usage</span>
-                            <button class="copy-btn" aria-label="Copy code example">
-                                <i class="hgi hgi-stroke hgi-copy-01"></i>
-                            </button>
-                        </div>
-                        <pre class="search-input-code"><code>&lt;div class="nds-form-container"&gt;
+        <!-- Search Input -->
+        <div class="nds-demo-card">
+          <div class="demo-header">
+            <div class="demo-label">Search Input</div>
+            <div class="demo-action">
+              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                <span class="label">Remove bg</span>
+              </button>
+            </div>
+          </div>
+          <div class="demo-container">
+            <div class="state-demo">
+              <div class="nds-form-container">
+                <div class="nds-form-header">
+                  <label class="label" for="searchInput">Search Input</label>
+                </div>
+                <div class="nds-form-control">
+                  <i class="hgi hgi-stroke hgi-search-01 icon"></i>
+                  <input
+                    type="text"
+                    id="searchInput"
+                    class="nds-search-input"
+                    name="search"
+                    placeholder="Search...">
+                  <div class="nds-form-action">
+                    <button
+                      class="nds-btn nds-btn-subtle voiceInput"
+                      type="button"
+                      aria-label="Voice input">
+                      <i class="hgi hgi-stroke hgi-mic-01 icon"></i>
+                    </button>
+                    <button
+                      class="nds-btn nds-btn-subtle clear hidden"
+                      type="button"
+                      aria-label="Clear search">
+                      <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="nds-form-footer"></div>
+              </div>
+            </div>
+          </div>
+          <div class="code-example">
+            <div class="usage-header">
+              <span>Usage</span>
+              <button class="copy-btn" aria-label="Copy code example">
+                <i class="hgi hgi-stroke hgi-copy-01"></i>
+              </button>
+            </div>
+<pre class="search-input-code"><code>&lt;div class="nds-form-container"&gt;
     &lt;div class="nds-form-header"&gt;
         &lt;label class="label" for="searchInput"&gt;Search Input&lt;/label&gt;
     &lt;/div&gt;
@@ -135,49 +151,53 @@ direction: ltr
     &lt;/div&gt;
     &lt;div class="nds-form-footer"&gt;&lt;/div&gt;
 &lt;/div&gt;</code></pre>
-                    </div>
-                </div>
+          </div>
+        </div>
 
-                <!-- Email Input -->
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Email Input</div>
-                        <div class="demo-action">
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-form-container">
-                                <div class="nds-form-header">
-                                    <label class="label" for="emailInput">Email Input</label>
-                                </div>
-                                <div class="nds-form-control">
-                                    <i class="hgi hgi-stroke hgi-mail-01 icon"></i>
-                                    <input type="email" id="emailInput" class="nds-input"
-                                        placeholder="Enter email address...">
-                                    <div class="nds-form-action">
-                                        <button class="nds-btn nds-btn-subtle clear hidden" type="button"
-                                            aria-label="Clear email">
-                                            <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="nds-form-footer"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="code-example">
-                        <div class="usage-header">
-                            <span>Usage</span>
-                            <button class="copy-btn" aria-label="Copy code example">
-                                <i class="hgi hgi-stroke hgi-copy-01"></i>
-                            </button>
-                        </div>
-                        <pre class="email-input-code"><code>&lt;div class="nds-form-container"&gt;
+        <!-- Email Input -->
+        <div class="nds-demo-card">
+          <div class="demo-header">
+            <div class="demo-label">Email Input</div>
+            <div class="demo-action">
+              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                <span class="label">Remove bg</span>
+              </button>
+            </div>
+          </div>
+          <div class="demo-container">
+            <div class="state-demo">
+              <div class="nds-form-container">
+                <div class="nds-form-header">
+                  <label class="label" for="emailInput">Email Input</label>
+                </div>
+                <div class="nds-form-control">
+                  <i class="hgi hgi-stroke hgi-mail-01 icon"></i>
+                  <input
+                    type="email"
+                    id="emailInput"
+                    class="nds-input"
+                    placeholder="Enter email address...">
+                  <div class="nds-form-action">
+                    <button
+                      class="nds-btn nds-btn-subtle clear hidden"
+                      type="button"
+                      aria-label="Clear email">
+                      <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="nds-form-footer"></div>
+              </div>
+            </div>
+          </div>
+          <div class="code-example">
+            <div class="usage-header">
+              <span>Usage</span>
+              <button class="copy-btn" aria-label="Copy code example">
+                <i class="hgi hgi-stroke hgi-copy-01"></i>
+              </button>
+            </div>
+<pre class="email-input-code"><code>&lt;div class="nds-form-container"&gt;
     &lt;div class="nds-form-header"&gt;
         &lt;label class="label" for="emailInput"&gt;Email Input&lt;/label&gt;
     &lt;/div&gt;
@@ -192,53 +212,59 @@ direction: ltr
     &lt;/div&gt;
     &lt;div class="nds-form-footer"&gt;&lt;/div&gt;
 &lt;/div&gt;</code></pre>
-                    </div>
-                </div>
+          </div>
+        </div>
 
-                <!-- Password Input -->
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Password Input</div>
-                        <div class="demo-action">
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-form-container">
-                                <div class="nds-form-header">
-                                    <label class="label" for="passwordInput">Password Input</label>
-                                </div>
-                                <div class="nds-form-control">
-                                    <i class="hgi hgi-stroke hgi-lock-01 icon"></i>
-                                    <input type="password" id="passwordInput" class="nds-input"
-                                        placeholder="Enter password...">
-                                    <div class="nds-form-action">
-                                        <button class="nds-btn nds-btn-subtle toggle-password" type="button"
-                                            aria-label="Show password">
-                                            <i class="hgi hgi-stroke hgi-view-off icon"></i>
-                                        </button>
-                                        <button class="nds-btn nds-btn-subtle clear hidden" type="button"
-                                            aria-label="Clear password">
-                                            <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="nds-form-footer"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="code-example">
-                        <div class="usage-header">
-                            <span>Usage</span>
-                            <button class="copy-btn" aria-label="Copy code example">
-                                <i class="hgi hgi-stroke hgi-copy-01"></i>
-                            </button>
-                        </div>
-                        <pre class="password-input-code"><code>&lt;div class="nds-form-container"&gt;
+        <!-- Password Input -->
+        <div class="nds-demo-card">
+          <div class="demo-header">
+            <div class="demo-label">Password Input</div>
+            <div class="demo-action">
+              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                <span class="label">Remove bg</span>
+              </button>
+            </div>
+          </div>
+          <div class="demo-container">
+            <div class="state-demo">
+              <div class="nds-form-container">
+                <div class="nds-form-header">
+                  <label class="label" for="passwordInput">Password Input</label>
+                </div>
+                <div class="nds-form-control">
+                  <i class="hgi hgi-stroke hgi-lock-01 icon"></i>
+                  <input
+                    type="password"
+                    id="passwordInput"
+                    class="nds-input"
+                    placeholder="Enter password...">
+                  <div class="nds-form-action">
+                    <button
+                      class="nds-btn nds-btn-subtle toggle-password"
+                      type="button"
+                      aria-label="Show password">
+                      <i class="hgi hgi-stroke hgi-view-off icon"></i>
+                    </button>
+                    <button
+                      class="nds-btn nds-btn-subtle clear hidden"
+                      type="button"
+                      aria-label="Clear password">
+                      <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="nds-form-footer"></div>
+              </div>
+            </div>
+          </div>
+          <div class="code-example">
+            <div class="usage-header">
+              <span>Usage</span>
+              <button class="copy-btn" aria-label="Copy code example">
+                <i class="hgi hgi-stroke hgi-copy-01"></i>
+              </button>
+            </div>
+<pre class="password-input-code"><code>&lt;div class="nds-form-container"&gt;
     &lt;div class="nds-form-header"&gt;
         &lt;label class="label" for="passwordInput"&gt;Password Input&lt;/label&gt;
     &lt;/div&gt;
@@ -256,42 +282,44 @@ direction: ltr
     &lt;/div&gt;
     &lt;div class="nds-form-footer"&gt;&lt;/div&gt;
 &lt;/div&gt;</code></pre>
-                    </div>
-                </div>
+          </div>
+        </div>
 
-                <!-- Textarea -->
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Textarea</div>
-                        <div class="demo-action">
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-form-container nds-textarea">
-                                <div class="nds-form-header">
-                                    <label class="label" for="textareaInput">Textarea</label>
-                                </div>
-                                <div class="nds-form-control">
-                                    <textarea id="textareaInput" class="nds-textarea"
-                                        placeholder="Enter your message..." rows="4"></textarea>
-                                </div>
-                                <div class="nds-form-footer"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="code-example">
-                        <div class="usage-header">
-                            <span>Usage</span>
-                            <button class="copy-btn" aria-label="Copy code example">
-                                <i class="hgi hgi-stroke hgi-copy-01"></i>
-                            </button>
-                        </div>
-                        <pre class="textarea-code"><code>&lt;div class="nds-form-container nds-textarea"&gt;
+        <!-- Textarea -->
+        <div class="nds-demo-card">
+          <div class="demo-header">
+            <div class="demo-label">Textarea</div>
+            <div class="demo-action">
+              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                <span class="label">Remove bg</span>
+              </button>
+            </div>
+          </div>
+          <div class="demo-container">
+            <div class="state-demo">
+              <div class="nds-form-container nds-textarea">
+                <div class="nds-form-header">
+                  <label class="label" for="textareaInput">Textarea</label>
+                </div>
+                <div class="nds-form-control">
+                  <textarea
+                    id="textareaInput"
+                    class="nds-textarea"
+                    placeholder="Enter your message..."
+                    rows="4"></textarea>
+                </div>
+                <div class="nds-form-footer"></div>
+              </div>
+            </div>
+          </div>
+          <div class="code-example">
+            <div class="usage-header">
+              <span>Usage</span>
+              <button class="copy-btn" aria-label="Copy code example">
+                <i class="hgi hgi-stroke hgi-copy-01"></i>
+              </button>
+            </div>
+<pre class="textarea-code"><code>&lt;div class="nds-form-container nds-textarea"&gt;
     &lt;div class="nds-form-header"&gt;
         &lt;label class="label" for="textareaInput"&gt;Textarea&lt;/label&gt;
     &lt;/div&gt;
@@ -305,46 +333,45 @@ direction: ltr
     &lt;/div&gt;
     &lt;div class="nds-form-footer"&gt;&lt;/div&gt;
 &lt;/div&gt;</code></pre>
-                    </div>
-                </div>
+          </div>
+        </div>
 
-                <!-- Select Dropdown -->
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Select Dropdown</div>
-                        <div class="demo-action">
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-form-container nds-select">
-                                <div class="nds-form-header">
-                                    <label class="label" for="selectInput">Select Dropdown</label>
-                                </div>
-                                <div class="nds-form-control">
-                                    <select id="selectInput">
-                                        <option value="">Choose an option...</option>
-                                        <option value="option1">Option 1</option>
-                                        <option value="option2">Option 2</option>
-                                        <option value="option3">Option 3</option>
-                                    </select>
-                                </div>
-                                <div class="nds-form-footer"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="code-example">
-                        <div class="usage-header">
-                            <span>Usage</span>
-                            <button class="copy-btn" aria-label="Copy code example">
-                                <i class="hgi hgi-stroke hgi-copy-01"></i>
-                            </button>
-                        </div>
-                        <pre class="select-code"><code>&lt;div class="nds-form-container"&gt;
+        <!-- Select Dropdown -->
+        <div class="nds-demo-card">
+          <div class="demo-header">
+            <div class="demo-label">Select Dropdown</div>
+            <div class="demo-action">
+              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                <span class="label">Remove bg</span>
+              </button>
+            </div>
+          </div>
+          <div class="demo-container">
+            <div class="state-demo">
+              <div class="nds-form-container nds-select">
+                <div class="nds-form-header">
+                  <label class="label" for="selectInput">Select Dropdown</label>
+                </div>
+                <div class="nds-form-control">
+                  <select id="selectInput">
+                    <option value="">Choose an option...</option>
+                    <option value="option1">Option 1</option>
+                    <option value="option2">Option 2</option>
+                    <option value="option3">Option 3</option>
+                  </select>
+                </div>
+                <div class="nds-form-footer"></div>
+              </div>
+            </div>
+          </div>
+          <div class="code-example">
+            <div class="usage-header">
+              <span>Usage</span>
+              <button class="copy-btn" aria-label="Copy code example">
+                <i class="hgi hgi-stroke hgi-copy-01"></i>
+              </button>
+            </div>
+<pre class="select-code"><code>&lt;div class="nds-form-container"&gt;
     &lt;div class="nds-form-header"&gt;
         &lt;label class="label" for="selectInput"&gt;Select Dropdown&lt;/label&gt;
     &lt;/div&gt;
@@ -361,67 +388,62 @@ direction: ltr
     &lt;/div&gt;
     &lt;div class="nds-form-footer"&gt;&lt;/div&gt;
 &lt;/div&gt;</code></pre>
-                    </div>
-                </div>
+          </div>
+        </div>
 
-                <!-- Radio Button Group -->
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Radio Button Group</div>
-                        <div class="demo-action">
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-radio-group">
-                                <div class="nds-form-container">
-                                    <div class="nds-form-header">
-                                        <span class="label">Radio Button Group</span>
-                                    </div>
-                                    <div class="nds-form-control">
-                                        <input type="radio" id="radio1" name="radioGroup" value="option1"
-                                            class="nds-radio">
-                                        <label for="radio1" class="nds-radio-label">Option 1</label>
-                                    </div>
-                                    <div class="nds-form-footer"></div>
-                                </div>
-                                <div class="nds-form-container">
-                                    <div class="nds-form-header">
-                                        <span class="label"></span>
-                                    </div>
-                                    <div class="nds-form-control">
-                                        <input type="radio" id="radio2" name="radioGroup" value="option2"
-                                            class="nds-radio">
-                                        <label for="radio2" class="nds-radio-label">Option 2</label>
-                                    </div>
-                                    <div class="nds-form-footer"></div>
-                                </div>
-                                <div class="nds-form-container">
-                                    <div class="nds-form-header">
-                                        <span class="label"></span>
-                                    </div>
-                                    <div class="nds-form-control">
-                                        <input type="radio" id="radio3" name="radioGroup" value="option3"
-                                            class="nds-radio">
-                                        <label for="radio3" class="nds-radio-label">Option 3</label>
-                                    </div>
-                                    <div class="nds-form-footer"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="code-example">
-                        <div class="usage-header">
-                            <span>Usage</span>
-                            <button class="copy-btn" aria-label="Copy code example">
-                                <i class="hgi hgi-stroke hgi-copy-01"></i>
-                            </button>
-                        </div>
-                        <pre class="radio-code"><code>&lt;div class="nds-radio-group"&gt;
+        <!-- Radio Button Group -->
+        <div class="nds-demo-card">
+          <div class="demo-header">
+            <div class="demo-label">Radio Button Group</div>
+            <div class="demo-action">
+              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                <span class="label">Remove bg</span>
+              </button>
+            </div>
+          </div>
+          <div class="demo-container">
+            <div class="state-demo">
+              <fieldset class="nds-radio-group">
+                <legend class="label">Radio Button Group</legend>
+                <div class="nds-form-container nds-radio">
+                  <div class="nds-form-header">
+                    <label class="label" for="radio1">Option 1</label>
+                  </div>
+                  <div class="nds-form-control">
+                    <input
+                      type="radio"
+                      id="radio1"
+                      name="radioGroup"
+                      value="option1"
+                      class="nds-radio">
+                  </div>
+                  <div class="nds-form-footer"></div>
+                </div>
+                <div class="nds-form-container nds-radio">
+                  <div class="nds-form-header">
+                    <label class="label" for="radio2">Option 2</label>
+                  </div>
+                  <div class="nds-form-control">
+                    <input
+                      type="radio"
+                      id="radio2"
+                      name="radioGroup"
+                      value="option2"
+                      class="nds-radio primary">
+                  </div>
+                  <div class="nds-form-footer"></div>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+          <div class="code-example">
+            <div class="usage-header">
+              <span>Usage</span>
+              <button class="copy-btn" aria-label="Copy code example">
+                <i class="hgi hgi-stroke hgi-copy-01"></i>
+              </button>
+            </div>
+<pre class="radio-code"><code>&lt;div class="nds-radio-group"&gt;
     &lt;div class="nds-form-container"&gt;
         &lt;div class="nds-form-header"&gt;
             &lt;span class="label"&gt;Radio Button Group&lt;/span&gt;
@@ -453,66 +475,81 @@ direction: ltr
         &lt;div class="nds-form-footer"&gt;&lt;/div&gt;
     &lt;/div&gt;
 &lt;/div&gt;</code></pre>
-                    </div>
-                </div>
+          </div>
+        </div>
 
-                <!-- Checkbox -->
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Checkbox</div>
-                        <div class="demo-action">
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-checkbox-group">
-                                <div class="nds-form-container">
-                                    <div class="nds-form-header">
-                                        <span class="label">Checkbox</span>
-                                    </div>
-                                    <div class="nds-form-control">
-                                        <input type="checkbox" id="checkbox1" value="option1" class="nds-checkbox">
-                                        <label for="checkbox1" class="nds-checkbox-label">Checkbox Option 1</label>
-                                    </div>
-                                    <div class="nds-form-footer"></div>
-                                </div>
-                                <div class="nds-form-container">
-                                    <div class="nds-form-header">
-                                        <span class="label"></span>
-                                    </div>
-                                    <div class="nds-form-control">
-                                        <input type="checkbox" id="checkbox2" value="option2" class="nds-checkbox">
-                                        <label for="checkbox2" class="nds-checkbox-label">Checkbox Option 2</label>
-                                    </div>
-                                    <div class="nds-form-footer"></div>
-                                </div>
-                                <div class="nds-form-container">
-                                    <div class="nds-form-header">
-                                        <span class="label"></span>
-                                    </div>
-                                    <div class="nds-form-control">
-                                        <input type="checkbox" id="checkbox3" value="option3" class="nds-checkbox"
-                                            checked>
-                                        <label for="checkbox3" class="nds-checkbox-label">Checkbox Option 3
+        <!-- Checkbox -->
+        <div class="nds-demo-card">
+          <div class="demo-header">
+            <div class="demo-label">Checkbox</div>
+            <div class="demo-action">
+              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                <span class="label">Remove bg</span>
+              </button>
+            </div>
+          </div>
+          <div class="demo-container">
+            <div class="state-demo">
+              <div class="nds-checkbox-group">
+                <div class="nds-form-container">
+                  <div class="nds-form-header">
+                    <span class="label">Checkbox</span>
+                  </div>
+                  <div class="nds-form-control">
+                    <input
+                      type="checkbox"
+                      id="checkbox1"
+                      value="option1"
+                      class="nds-checkbox">
+                    <label for="checkbox1" class="nds-checkbox-label">Checkbox Option 1</label>
+                  </div>
+                  <div class="nds-form-footer"></div>
+                </div>
+                <div class="nds-form-container">
+                  <div class="nds-form-header">
+                    <span class="label"></span>
+                  </div>
+                  <div class="nds-form-control">
+                    <input
+                      type="checkbox"
+                      id="checkbox2"
+                      value="option2"
+                      class="nds-checkbox">
+                    <label for="checkbox2" class="nds-checkbox-label">Checkbox Option 2</label>
+                  </div>
+                  <div class="nds-form-footer"></div>
+                </div>
+                <div class="nds-form-container">
+                  <div class="nds-form-header">
+                    <span class="label"></span>
+                  </div>
+                  <div class="nds-form-control">
+                    <input
+                      type="checkbox"
+                      id="checkbox3"
+                      value="option3"
+                      class="nds-checkbox"
+                      checked>
+                    <label for="checkbox3" class="nds-checkbox-label">Checkbox Option 3
+ 
+ 
+ 
+ 
                                             (Checked)</label>
-                                    </div>
-                                    <div class="nds-form-footer"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="code-example">
-                        <div class="usage-header">
-                            <span>Usage</span>
-                            <button class="copy-btn" aria-label="Copy code example">
-                                <i class="hgi hgi-stroke hgi-copy-01"></i>
-                            </button>
-                        </div>
-                        <pre class="checkbox-code"><code>&lt;div class="nds-checkbox-group"&gt;
+                  </div>
+                  <div class="nds-form-footer"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="code-example">
+            <div class="usage-header">
+              <span>Usage</span>
+              <button class="copy-btn" aria-label="Copy code example">
+                <i class="hgi hgi-stroke hgi-copy-01"></i>
+              </button>
+            </div>
+<pre class="checkbox-code"><code>&lt;div class="nds-checkbox-group"&gt;
     &lt;div class="nds-form-container"&gt;
         &lt;div class="nds-form-header"&gt;
             &lt;span class="label"&gt;Checkbox&lt;/span&gt;
@@ -544,10 +581,10 @@ direction: ltr
         &lt;div class="nds-form-footer"&gt;&lt;/div&gt;
     &lt;/div&gt;
 &lt;/div&gt;</code></pre>
-                    </div>
-                </div>
-
-            </div>
+          </div>
         </div>
+
+      </div>
     </div>
+  </div>
 </section>
