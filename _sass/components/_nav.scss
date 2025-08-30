@@ -134,6 +134,7 @@
 
     .nds-nav-minimal {
         gap: var(--spacing-md);
+
         .nds-nav-item {
             border-bottom: unset !important;
         }
@@ -548,15 +549,18 @@ body.minimal .nds-main-nav {
         transform: translateY(-100%);
         /* Ensure proper stacking */
 
-        &.opened,&.opening {
+        &.opened,
+        &.opening {
 
             display: flex;
             transform: translateY(0);
         }
+
         &.show {
             display: flex;
             flex-direction: column;
         }
+
         &.closing {
             transform: translateY(-100%);
         }
@@ -570,6 +574,7 @@ body.minimal .nds-main-nav {
         align-items: stretch;
         gap: 0;
         width: 100%;
+        transition: margin-bottom 0.1s;
 
         .nds-nav-item {
             &:not(.showMore) {
@@ -579,6 +584,19 @@ body.minimal .nds-main-nav {
             &:last-child,
             &:nth-last-child(2) {
                 border-bottom: none;
+            }
+
+            &.showMore {
+                bottom: var(--nds-nav-height);
+                box-shadow: 0px -4px 8px 0px rgba(0, 0, 0, 0.08);
+                position: fixed;
+                left: 0;
+                right: 0;
+                z-index: 2;
+                display: flex !important;
+                opacity: 0;
+                visibility: hidden;
+                transition: opacity 0.1s, visibility 0.1s;
             }
 
             &.showMore .nds-nav-link {
@@ -594,9 +612,9 @@ body.minimal .nds-main-nav {
             @include btn-indicator('v');
         }
 
-        .nds-dropdown-menu{
-            box-shadow: unset!important;
-            border-radius: unset!important;
+        .nds-dropdown-menu {
+            box-shadow: unset !important;
+            border-radius: unset !important;
             z-index: 1;
             transform: translateY(0);
             overflow: hidden;
@@ -610,13 +628,12 @@ body.minimal .nds-main-nav {
 
     /* Show More Button */
     .nds-nav-primary.hasMore {
+        margin-bottom: calc(var(--nds-minimal-nav-item-height) + var(--spacing-md));
+
         .showMore {
-            bottom: 0;
-            box-shadow: 0px -4px 8px 0px rgba(0, 0, 0, 0.08);
-            position: sticky;
-            left: 0;
-            right: 0;
-            z-index: 2;
+            opacity: 1;
+            visibility: visible;
+
             /* Above nav items */
 
             i {
@@ -652,22 +669,22 @@ body.minimal .nds-main-nav {
         }
 
         /* Mobile Dropdown Styles */
-    .nds-dropdown-menu {
-        position: static;
-        width: 100%;
-        overflow: hidden;
-        z-index: -1;
-        
-        /* Base level within mobile nav */
-    }
+        .nds-dropdown-menu {
+            position: static;
+            width: 100%;
+            overflow: hidden;
+            z-index: -1;
+
+            /* Base level within mobile nav */
+        }
 
     }
 
-    
+
 
     .nds-nav-primary .nds-dropdown-menu {
         height: 0;
-        transition: unset;
+        transition: height var(--nds-transition);
     }
 
     .nds-nav-secondary .nds-dropdown-menu {
@@ -681,8 +698,8 @@ body.minimal .nds-main-nav {
         max-height: 40vh;
         overflow-y: hidden;
         height: 0;
-        
-        transition: unset;
+        transform: translateY(0px);
+        transition: height var(--nds-transition);
     }
 }
 

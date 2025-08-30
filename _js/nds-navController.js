@@ -276,11 +276,31 @@
                     timestamp: performance.now()
                 };
 
-                if (measurements.windowWidth !== state.windowWidth) {
+                const widthChanged = measurements.windowWidth !== state.windowWidth;
+                if (widthChanged) {
                     state.windowWidth = measurements.windowWidth;
                 }
 
                 this.updateNavMaxWidth();
+
+                // Handle mode transitions and cleanup
+                if (measurements.bodyClassChanged || widthChanged) {
+                    // Close open dropdowns when switching modes
+                    document.querySelectorAll('.nds-dropdown.show').forEach(dropdown => {
+                        animateDropdown(dropdown, false);
+                    });
+
+                    // Close DGA if expanded
+                    if (DOM.dgaContent?.classList.contains('dga-expanded')) {
+                        performDGAToggle();
+                    }
+
+                    // In minimal mode with open nav during resize, close it
+                    if (state.minimalMode && DOM.collapse?.classList.contains('show') && widthChanged) {
+                        animateNavbar(false);
+                        return; // Skip updatePositions since we're closing
+                    }
+                }
 
                 if (DOM.collapse?.classList.contains('show') && !DOM.collapse?.classList.contains('closing')) {
                     updatePositions();
@@ -516,19 +536,12 @@
 
         if (state.minimalMode) {
             const duration = state.getElementDuration(DOM.collapse);
-            if (duration > 0) {
-                setTimeout(() => {
-                    const actualHeight = DOM.collapse.offsetHeight;
-                    const maxHeight = parseFloat(getComputedStyle(DOM.collapse).maxHeight) || Infinity;
-                    DOM.collapse._effectiveMaxHeight = Math.min(actualHeight, maxHeight);
-                    scheduleOverflowCheck();
-                }, duration + 50);
-            } else {
+            setTimeout(() => {
                 const actualHeight = DOM.collapse.offsetHeight;
                 const maxHeight = parseFloat(getComputedStyle(DOM.collapse).maxHeight) || Infinity;
                 DOM.collapse._effectiveMaxHeight = Math.min(actualHeight, maxHeight);
                 scheduleOverflowCheck();
-            }
+            }, duration + 50);
         }
 
 
@@ -625,37 +638,23 @@
 
 
             if (state.minimalMode) {
-                if (duration > 0) {
-                    setTimeout(() => {
-                        const actualHeight = DOM.collapse.offsetHeight;
-                        const maxHeight = parseFloat(getComputedStyle(DOM.collapse).maxHeight) || Infinity;
-                        DOM.collapse._effectiveMaxHeight = Math.min(actualHeight, maxHeight);
-                        scheduleOverflowCheck();
-                    }, duration + 50);
-                } else {
+                setTimeout(() => {
                     const actualHeight = DOM.collapse.offsetHeight;
                     const maxHeight = parseFloat(getComputedStyle(DOM.collapse).maxHeight) || Infinity;
                     DOM.collapse._effectiveMaxHeight = Math.min(actualHeight, maxHeight);
-                }
+                    scheduleOverflowCheck();
+                }, duration + 50);
 
                 scheduleOverflowCheck();
             }
 
-            if (duration > 0) {
-                setTimeout(() => {
-                    DOM.collapse?.classList.remove('opening');
-                    DOM.collapse?.classList.add('opened');
-                    updatePositions();
-                    state.isAnimatingMenu = false;
-                    processAllPendingActions();
-                }, duration);
-            } else {
+            setTimeout(() => {
                 DOM.collapse?.classList.remove('opening');
                 DOM.collapse?.classList.add('opened');
                 updatePositions();
                 state.isAnimatingMenu = false;
                 processAllPendingActions();
-            }
+            }, duration);
         } else {
             DOM.toggler?.classList.remove('active');
             
@@ -663,33 +662,19 @@
 
 
             // Only add closing class after dropdowns start closing
-            if (totalDelay > 0) {
-                setTimeout(() => {
-                    DOM.collapse?.classList.add('closing');
-                    DOM.collapse?.classList.remove('opened');
-                }, 50);
-            } else {
+            setTimeout(() => {
                 DOM.collapse?.classList.add('closing');
                 DOM.collapse?.classList.remove('opened');
-            }
+            }, totalDelay > 0 ? 50 : 0);
 
-            if (totalDelay + duration > 0) {
-                setTimeout(() => {
-                    DOM.collapse?.classList.remove('show');
-                    DOM.collapse?.classList.remove('closing');
-                    scheduleOverflowCheck();
-                    
-                    state.isAnimatingMenu = false;
-                    processAllPendingActions();
-                }, totalDelay + duration);
-            } else {
+            setTimeout(() => {
                 DOM.collapse?.classList.remove('show');
                 DOM.collapse?.classList.remove('closing');
                 scheduleOverflowCheck();
                 
                 state.isAnimatingMenu = false;
                 processAllPendingActions();
-            }
+            }, totalDelay + duration);
         }
     }
 
@@ -699,11 +684,7 @@
         const duration = state.getElementDuration(DOM.dgaContent);
         DOM.dgaContent.classList.add('dga-expanding');
         
-        if (duration > 0) {
-            setTimeout(() => DOM.dgaContent.classList.remove('dga-expanding'), duration);
-        } else {
-            DOM.dgaContent.classList.remove('dga-expanding');
-        }
+        setTimeout(() => DOM.dgaContent.classList.remove('dga-expanding'), duration);
 
         DOM.dgaContent.classList.toggle('dga-expanded');
 
@@ -713,15 +694,10 @@
         DOM.dgaContent.style.height = DOM.dgaContent.classList.contains('dga-expanded') ?
             `${DOM.dgaContent.scrollHeight}px` : '0px';
 
-        if (duration > 0) {
-            setTimeout(() => {
-                updatePositions();
-                scheduleOverflowCheck();
-            }, duration);
-        } else {
+        setTimeout(() => {
             updatePositions();
             scheduleOverflowCheck();
-        }
+        }, duration);
     }
 
     function toggleNavbar() {
@@ -966,11 +942,7 @@
                 animateDropdown(dropdown, false);
                 if (needsRecalc) {
                     const duration = state.getDropdownDuration(dropdown);
-                    if (duration > 0) {
-                        setTimeout(() => updatePositions(), duration);
-                    } else {
-                        updatePositions();
-                    }
+                    setTimeout(() => updatePositions(), duration);
                 }
             }
         });
@@ -983,32 +955,6 @@
         updatePositions();
     }, 16);
 
-    const handleResizeImmediate = () => {
-        const currentWidth = window.innerWidth;
-        if (currentWidth === state.windowWidth) return;
-
-        state.windowWidth = currentWidth;
-
-        if (state.minimalMode) {
-            if (DOM.collapse?.classList.contains('show')) {
-                toggleNavbar();
-            }
-        } else {
-            document.querySelectorAll('.nds-dropdown.show').forEach(dropdown => {
-                if (!dropdown.closest('.nds-nav-minimal')) {
-                    animateDropdown(dropdown, false);
-                }
-            });
-        }
-
-        document.querySelectorAll('.nds-nav-minimal .nds-dropdown.show').forEach(dropdown => {
-            animateDropdown(dropdown, false);
-        });
-
-        if (DOM.dgaContent?.classList.contains('dga-expanded')) {
-            performDGAToggle();
-        }
-    };
 
     function init() {
         if (!DOM.collapse) return;
@@ -1019,7 +965,6 @@
         setupEventListeners();
 
         document.addEventListener('click', handleDocumentClick);
-        window.addEventListener('resize', handleResizeImmediate);
         window.addEventListener('scroll', handleScroll, { passive: true });
         DOM.dgaTab?.addEventListener('click', toggleDGA);
 

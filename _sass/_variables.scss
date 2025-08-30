@@ -15,7 +15,7 @@
     --nds-viewport-padding: var(--nds-viewport-base-padding);
 
     // Transitions (critical for all interactions)
-    --nds-transition-speed: .25;
+    --nds-transition-speed: .2;
     --nds-transition-effect: ease;
     --nds-transition: calc(var(--nds-transition-speed) * 1s) var(--nds-transition-effect);
 
@@ -864,15 +864,15 @@
     --table-background-row: var(--colors-neutral-50);
     --controls-control-primary-checked: var(--colors-primary-sa-flag-600-primary);
     --controls-control-primary-hovered: var(--colors-primary-sa-flag-800);
-    --controls-control-primary-pressed: var(--colors-primary-sa-flag-800);
+    --controls-control-primary-pressed: var(--colors-primary-sa-flag-900);
     --controls-control-primary-focused: var(--colors-primary-sa-flag-600-primary);
     --controls-control-neutral-checked: var(--colors-neutral-950);
     --controls-control-neutral-hovered: var(--colors-neutral-600);
-    --controls-control-neutral-pressed: var(--colors-neutral-600);
+    --controls-control-neutral-pressed: var(--colors-neutral-700);
     --controls-control-neutral-focused: var(--colors-neutral-950);
     --controls-control-primary--readonly: var(--alpha-white-0);
     --controls-control-pressed: var(--colors-neutral-300);
-    --controls-control-ripple-effect: var(--colors-neutral-200);
+    --controls-control-ripple-effect: var(--colors-neutral-100);
     --controls-control-border: var(--colors-neutral-500);
     --form-text-form-paragraph: var(--text-secondary-paragraph);
     --form-field-text-label: var(--text-default);
