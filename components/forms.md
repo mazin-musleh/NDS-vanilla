@@ -18,6 +18,12 @@ direction: ltr
  
  
  
+ 
+ 
+ 
+ 
+ 
+ 
                 actions</p>
     </div>
     <div class="nds-section-content">
@@ -407,7 +413,7 @@ direction: ltr
                 <legend class="label">Radio Button Group</legend>
                 <div class="nds-form-container nds-radio">
                   <div class="nds-form-header">
-                    <label class="label" for="radio1">Option 1</label>
+                    <label class="label" for="radio1">Neutral</label>
                   </div>
                   <div class="nds-form-control">
                     <input
@@ -417,11 +423,11 @@ direction: ltr
                       value="option1"
                       class="nds-radio">
                   </div>
-                  <div class="nds-form-footer"></div>
                 </div>
                 <div class="nds-form-container nds-radio">
                   <div class="nds-form-header">
-                    <label class="label" for="radio2">Option 2</label>
+                    <label class="label" for="radio2">Primary</label>
+                    <span class="info">When a selection needs a further detailed explanation, it goes here.</span>
                   </div>
                   <div class="nds-form-control">
                     <input
@@ -431,8 +437,23 @@ direction: ltr
                       value="option2"
                       class="nds-radio primary">
                   </div>
-                  <div class="nds-form-footer"></div>
                 </div>
+                <div class="nds-form-container nds-radio">
+                  <div class="nds-form-header">
+                    <label class="label" for="Disabled">Disabled</label>
+                  </div>
+                  <div class="nds-form-control">
+                    <input
+                      type="radio"
+                      id="Disabled"
+                      name="radioGroup"
+                      value="Disabled"
+                      class="nds-radio"
+                      checked
+                      disabled>
+                  </div>
+                </div>
+                <div class="nds-form-footer"></div>
               </fieldset>
             </div>
           </div>
@@ -490,56 +511,52 @@ direction: ltr
           </div>
           <div class="demo-container">
             <div class="state-demo">
-              <div class="nds-checkbox-group">
-                <div class="nds-form-container">
+              <fieldset class="nds-radio-group">
+                <legend class="label">Checkbox Group</legend>
+                <div class="nds-form-container nds-check">
                   <div class="nds-form-header">
-                    <span class="label">Checkbox</span>
+                    <label class="label" for="checkbox1">Neutral</label>
                   </div>
                   <div class="nds-form-control">
                     <input
                       type="checkbox"
                       id="checkbox1"
+                      name="checkboxGroup"
                       value="option1"
-                      class="nds-checkbox">
-                    <label for="checkbox1" class="nds-checkbox-label">Checkbox Option 1</label>
+                      class="nds-check">
                   </div>
-                  <div class="nds-form-footer"></div>
                 </div>
-                <div class="nds-form-container">
+                <div class="nds-form-container nds-check">
                   <div class="nds-form-header">
-                    <span class="label"></span>
+                    <label class="label" for="checkbox2">Primary</label>
+                    <span class="info">When a selection needs a further detailed explanation, it goes here.</span>
                   </div>
                   <div class="nds-form-control">
                     <input
                       type="checkbox"
                       id="checkbox2"
+                      name="checkboxGroup"
                       value="option2"
-                      class="nds-checkbox">
-                    <label for="checkbox2" class="nds-checkbox-label">Checkbox Option 2</label>
+                      class="nds-check primary">
                   </div>
-                  <div class="nds-form-footer"></div>
                 </div>
-                <div class="nds-form-container">
+                <div class="nds-form-container nds-check">
                   <div class="nds-form-header">
-                    <span class="label"></span>
+                    <label class="label" for="checkbox3">Disabled</label>
                   </div>
                   <div class="nds-form-control">
                     <input
                       type="checkbox"
                       id="checkbox3"
-                      value="option3"
-                      class="nds-checkbox"
-                      checked>
-                    <label for="checkbox3" class="nds-checkbox-label">Checkbox Option 3
- 
- 
- 
- 
-                                            (Checked)</label>
+                      name="checkboxGroup"
+                      value="disabled"
+                      class="nds-check"
+                      checked
+                      disabled>
                   </div>
-                  <div class="nds-form-footer"></div>
                 </div>
-              </div>
+                <div class="nds-form-footer"></div>
+              </fieldset>
             </div>
           </div>
           <div class="code-example">
@@ -549,38 +566,34 @@ direction: ltr
                 <i class="hgi hgi-stroke hgi-copy-01"></i>
               </button>
             </div>
-<pre class="checkbox-code"><code>&lt;div class="nds-checkbox-group"&gt;
-    &lt;div class="nds-form-container"&gt;
+<pre class="checkbox-code"><code>&lt;fieldset class="nds-radio-group"&gt;
+    &lt;legend class="label"&gt;Checkbox Group&lt;/legend&gt;
+    &lt;div class="nds-form-container nds-check"&gt;
         &lt;div class="nds-form-header"&gt;
-            &lt;span class="label"&gt;Checkbox&lt;/span&gt;
+            &lt;label class="label" for="checkbox1"&gt;Neutral&lt;/label&gt;
         &lt;/div&gt;
         &lt;div class="nds-form-control"&gt;
-            &lt;input type="checkbox" id="checkbox1" value="option1" class="nds-checkbox"&gt;
-            &lt;label for="checkbox1" class="nds-checkbox-label"&gt;Checkbox Option 1&lt;/label&gt;
+            &lt;input type="checkbox" id="checkbox1" name="checkboxGroup" value="option1" class="nds-check"&gt;
         &lt;/div&gt;
-        &lt;div class="nds-form-footer"&gt;&lt;/div&gt;
     &lt;/div&gt;
-    &lt;div class="nds-form-container"&gt;
+    &lt;div class="nds-form-container nds-check"&gt;
         &lt;div class="nds-form-header"&gt;
-            &lt;span class="label"&gt;&lt;/span&gt;
+            &lt;label class="label" for="checkbox2"&gt;Primary&lt;/label&gt;
+            &lt;span class="info"&gt;When a selection needs a further detailed explanation, it goes here.&lt;/span&gt;
         &lt;/div&gt;
         &lt;div class="nds-form-control"&gt;
-            &lt;input type="checkbox" id="checkbox2" value="option2" class="nds-checkbox"&gt;
-            &lt;label for="checkbox2" class="nds-checkbox-label"&gt;Checkbox Option 2&lt;/label&gt;
+            &lt;input type="checkbox" id="checkbox2" name="checkboxGroup" value="option2" class="nds-check primary"&gt;
         &lt;/div&gt;
-        &lt;div class="nds-form-footer"&gt;&lt;/div&gt;
     &lt;/div&gt;
-    &lt;div class="nds-form-container"&gt;
+    &lt;div class="nds-form-container nds-check"&gt;
         &lt;div class="nds-form-header"&gt;
-            &lt;span class="label"&gt;&lt;/span&gt;
+            &lt;label class="label" for="checkbox3"&gt;Disabled&lt;/label&gt;
         &lt;/div&gt;
         &lt;div class="nds-form-control"&gt;
-            &lt;input type="checkbox" id="checkbox3" value="option3" class="nds-checkbox" checked&gt;
-            &lt;label for="checkbox3" class="nds-checkbox-label"&gt;Checkbox Option 3&lt;/label&gt;
+            &lt;input type="checkbox" id="checkbox3" name="checkboxGroup" value="disabled" class="nds-check" checked disabled&gt;
         &lt;/div&gt;
-        &lt;div class="nds-form-footer"&gt;&lt;/div&gt;
     &lt;/div&gt;
-&lt;/div&gt;</code></pre>
+&lt;/fieldset&gt;</code></pre>
           </div>
         </div>
 
