@@ -29,7 +29,7 @@
         pendingNavbarAction: null,
         isAnimatingMenu: false,
 
-        get isMinimal() {
+        get minimalMode() {
             const breakpoint = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nds-minimal-nav-bp')) || 768;
             return this.windowWidth <= breakpoint;
         },
@@ -41,6 +41,18 @@
         getTransitionSpeed() {
             const speed = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nds-transition-speed')) || 0.3;
             return speed * 1000;
+        },
+
+        getElementDuration(element) {
+            if (!element) return 0;
+            const transition = parseFloat(getComputedStyle(element).transitionDuration) || 0;
+            return transition > 0 ? this.getTransitionSpeed() : 0;
+        },
+
+        getDropdownDuration(dropdown) {
+            if (!dropdown) return 0;
+            const menu = dropdown.querySelector('.nds-dropdown-menu');
+            return this.getElementDuration(menu);
         }
     };
 
@@ -70,7 +82,7 @@
     function checkOverflow() {
         if (!DOM.primary) return;
 
-        if (state.isMinimal && !DOM.collapse?.classList.contains('show')) {
+        if (state.minimalMode && !DOM.collapse?.classList.contains('show')) {
             // Clean up overflow state when minimal nav is closed
             DOM.primary.classList.remove('hasMore', 'atEnd');
             return;
@@ -78,7 +90,7 @@
 
         let hasOverflow = false;
 
-        if (state.isMinimal) {
+        if (state.minimalMode) {
             if (DOM.collapse) {
                 const maxHeight = parseFloat(getComputedStyle(DOM.collapse).maxHeight);
                 if (isFinite(maxHeight) && maxHeight > 0) {
@@ -115,12 +127,15 @@
             const openDropdowns = document.querySelectorAll('#ndsMainNav .nds-dropdown.show');
             if (openDropdowns.length === 0) return 0;
             
+            const firstDropdown = openDropdowns[0];
+            const duration = state.getDropdownDuration(firstDropdown);
+            
             openDropdowns.forEach(dropdown => animateDropdown(dropdown, false));
-            return state.getTransitionSpeed();
+            return duration;
         },
 
         updateBodyClass() {
-            const shouldBeMinimal = state.isMinimal;
+            const shouldBeMinimal = state.minimalMode;
             const isCurrentlyMinimal = document.body.classList.contains('minimal');
 
             if (shouldBeMinimal !== isCurrentlyMinimal) {
@@ -137,7 +152,7 @@
             const pabItems = document.querySelectorAll('.nds-nav-item.PAB');
             if (!pabItems.length) return;
 
-            if (state.isMinimal) {
+            if (state.minimalMode) {
                 // Store original positions before moving
                 pabItems.forEach((item, index) => {
                     if (!item.dataset.originalPosition) {
@@ -196,7 +211,7 @@
             if (!DOM.primary?.classList.contains('hasMore')) return;
 
             let atEnd = false;
-            if (state.isMinimal) {
+            if (state.minimalMode) {
                 const { scrollTop, scrollHeight, clientHeight } = DOM.primary;
                 atEnd = scrollTop + clientHeight >= scrollHeight - 1;
             } else {
@@ -211,7 +226,7 @@
         updateNavMaxWidth() {
             if (!DOM.primary || !DOM.nav) return;
 
-            if (state.isMinimal) {
+            if (state.minimalMode) {
                 DOM.primary.style.maxWidth = '';
                 scheduleOverflowCheck('immediate');
                 return;
@@ -290,9 +305,9 @@
                 e.stopPropagation();
 
                 const isAtEnd = DOM.primary.classList.contains('atEnd');
-                const scrollAmount = (state.isMinimal ? DOM.primary.clientHeight : DOM.primary.clientWidth) * 0.8;
+                const scrollAmount = (state.minimalMode ? DOM.primary.clientHeight : DOM.primary.clientWidth) * 0.8;
 
-                if (state.isMinimal) {
+                if (state.minimalMode) {
                     DOM.primary.scrollTo({ top: isAtEnd ? 0 : DOM.primary.scrollTop + scrollAmount, behavior: 'smooth' });
                 } else {
                     const isRTL = getComputedStyle(document.documentElement).direction === 'rtl';
@@ -314,7 +329,7 @@
             let isScrolling = false;
 
             DOM.primary.addEventListener('wheel', (e) => {
-                if (state.isMouseOverDropdown || state.isMinimal || Math.abs(e.deltaX) >= Math.abs(e.deltaY) || !DOM.primary.classList.contains('hasMore')) return;
+                if (state.isMouseOverDropdown || state.minimalMode || Math.abs(e.deltaX) >= Math.abs(e.deltaY) || !DOM.primary.classList.contains('hasMore')) return;
 
                 e.preventDefault();
                 if (isScrolling) return;
@@ -349,7 +364,7 @@
             let dragState = { active: false, startX: 0, scrollLeft: 0 };
 
             DOM.primary.addEventListener('mousedown', (e) => {
-                if (state.isMinimal || !DOM.primary.classList.contains('hasMore')) return;
+                if (state.minimalMode || !DOM.primary.classList.contains('hasMore')) return;
 
                 dragState = { active: true, startX: e.pageX, scrollLeft: DOM.primary.scrollLeft };
                 Object.assign(DOM.primary.style, { cursor: 'grabbing', userSelect: 'none', scrollBehavior: 'auto' });
@@ -364,7 +379,7 @@
             };
 
             const handleMouseMove = (e) => {
-                if (!dragState.active || state.isMinimal) return;
+                if (!dragState.active || state.minimalMode) return;
                 e.preventDefault();
                 DOM.primary.scrollLeft = dragState.scrollLeft - (e.pageX - dragState.startX);
             };
@@ -486,26 +501,34 @@
         const isOpen = DOM.collapse?.classList.contains('show');
         const isClosing = DOM.collapse?.classList.contains('closing');
 
-        if (!state.isMinimal || !isOpen || isClosing) {
-            if (!state.isMinimal && DOM.secondary) {
+        if (!state.minimalMode || !isOpen || isClosing) {
+            if (!state.minimalMode && DOM.secondary) {
                 DOM.secondary.style.cssText = '';
                 DOM.secondary.classList.remove('closing');
             }
             if ((!isOpen || isClosing) && DOM.collapse) {
-                // DOM.collapse.style.height = state.isMinimal ? '0px' : `${state.getNavHeight()}px`;
+                // DOM.collapse.style.height = state.minimalMode ? '0px' : `${state.getNavHeight()}px`;
             }
             return;
         }
 
         // Note: Height calculations only used for overflow checking now
 
-        if (state.isMinimal) {
-            setTimeout(() => {
+        if (state.minimalMode) {
+            const duration = state.getElementDuration(DOM.collapse);
+            if (duration > 0) {
+                setTimeout(() => {
+                    const actualHeight = DOM.collapse.offsetHeight;
+                    const maxHeight = parseFloat(getComputedStyle(DOM.collapse).maxHeight) || Infinity;
+                    DOM.collapse._effectiveMaxHeight = Math.min(actualHeight, maxHeight);
+                    scheduleOverflowCheck();
+                }, duration + 50);
+            } else {
                 const actualHeight = DOM.collapse.offsetHeight;
                 const maxHeight = parseFloat(getComputedStyle(DOM.collapse).maxHeight) || Infinity;
                 DOM.collapse._effectiveMaxHeight = Math.min(actualHeight, maxHeight);
                 scheduleOverflowCheck();
-            }, state.getTransitionSpeed() + 50);
+            }
         }
 
 
@@ -523,7 +546,7 @@
         }
         
         const menu = dropdown.querySelector('.nds-dropdown-menu');
-        const DURATION = state.getTransitionSpeed();
+        const duration = state.getDropdownDuration(dropdown);
         const isInMinimal = dropdown.closest('.nds-nav-minimal');
 
         if (open) {
@@ -532,8 +555,8 @@
             dropdown.classList.remove('opened');
             
             // Only set height for primary/secondary nav dropdowns in minimal mode
-            if (state.isMinimal && (dropdown.closest('.nds-nav-primary') || dropdown.closest('.nds-nav-secondary'))) {
-                menu.style.height = `${menu.scrollHeight}px`;
+            if (state.minimalMode && (dropdown.closest('.nds-nav-primary') || dropdown.closest('.nds-nav-secondary'))) {
+                if (menu) menu.style.height = `${menu.scrollHeight}px`;
             }
 
             // Check overflow at animation start - high priority for immediate feedback
@@ -553,13 +576,13 @@
                 }
                 state.isAnimatingMenu = false;
                 processAllPendingActions();
-            }, DURATION);
+            }, duration);
         } else {
             dropdown.classList.add('closing');
             dropdown.classList.remove('opened');
             
             // Only set height for primary/secondary nav dropdowns in minimal mode
-            if (state.isMinimal && (dropdown.closest('.nds-nav-primary') || dropdown.closest('.nds-nav-secondary'))) {
+            if (state.minimalMode && (dropdown.closest('.nds-nav-primary') || dropdown.closest('.nds-nav-secondary'))) {
                 menu.style.height = '0px';
             }
 
@@ -578,7 +601,7 @@
                 dropdown.classList.remove('closing');
                 state.isAnimatingMenu = false;
                 processAllPendingActions();
-            }, DURATION);
+            }, duration);
         }
     }
 
@@ -586,7 +609,7 @@
         // Set global animation flag to prevent any other menu actions
         state.isAnimatingMenu = true;
         
-        const DURATION = state.getTransitionSpeed();
+        const duration = state.getElementDuration(DOM.collapse);
 
         if (open) {
             DOM.collapse?.classList.add('show');
@@ -601,24 +624,38 @@
             });
 
 
-            if (state.isMinimal) {
-                setTimeout(() => {
+            if (state.minimalMode) {
+                if (duration > 0) {
+                    setTimeout(() => {
+                        const actualHeight = DOM.collapse.offsetHeight;
+                        const maxHeight = parseFloat(getComputedStyle(DOM.collapse).maxHeight) || Infinity;
+                        DOM.collapse._effectiveMaxHeight = Math.min(actualHeight, maxHeight);
+                        scheduleOverflowCheck();
+                    }, duration + 50);
+                } else {
                     const actualHeight = DOM.collapse.offsetHeight;
                     const maxHeight = parseFloat(getComputedStyle(DOM.collapse).maxHeight) || Infinity;
                     DOM.collapse._effectiveMaxHeight = Math.min(actualHeight, maxHeight);
-                    scheduleOverflowCheck();
-                }, DURATION + 50);
+                }
 
                 scheduleOverflowCheck();
             }
 
-            setTimeout(() => {
+            if (duration > 0) {
+                setTimeout(() => {
+                    DOM.collapse?.classList.remove('opening');
+                    DOM.collapse?.classList.add('opened');
+                    updatePositions();
+                    state.isAnimatingMenu = false;
+                    processAllPendingActions();
+                }, duration);
+            } else {
                 DOM.collapse?.classList.remove('opening');
                 DOM.collapse?.classList.add('opened');
                 updatePositions();
                 state.isAnimatingMenu = false;
                 processAllPendingActions();
-                }, DURATION);
+            }
         } else {
             DOM.toggler?.classList.remove('active');
             
@@ -626,28 +663,47 @@
 
 
             // Only add closing class after dropdowns start closing
-            setTimeout(() => {
+            if (totalDelay > 0) {
+                setTimeout(() => {
+                    DOM.collapse?.classList.add('closing');
+                    DOM.collapse?.classList.remove('opened');
+                }, 50);
+            } else {
                 DOM.collapse?.classList.add('closing');
                 DOM.collapse?.classList.remove('opened');
-            }, totalDelay > 0 ? 50 : 0);
+            }
 
-            setTimeout(() => {
+            if (totalDelay + duration > 0) {
+                setTimeout(() => {
+                    DOM.collapse?.classList.remove('show');
+                    DOM.collapse?.classList.remove('closing');
+                    scheduleOverflowCheck();
+                    
+                    state.isAnimatingMenu = false;
+                    processAllPendingActions();
+                }, totalDelay + duration);
+            } else {
                 DOM.collapse?.classList.remove('show');
                 DOM.collapse?.classList.remove('closing');
                 scheduleOverflowCheck();
                 
                 state.isAnimatingMenu = false;
                 processAllPendingActions();
-            }, totalDelay + DURATION);
+            }
         }
     }
 
     function performDGAToggle() {
         if (!DOM.topbar || !DOM.dgaContent) return;
 
-        const DURATION = state.getTransitionSpeed();
+        const duration = state.getElementDuration(DOM.dgaContent);
         DOM.dgaContent.classList.add('dga-expanding');
-        setTimeout(() => DOM.dgaContent.classList.remove('dga-expanding'), DURATION);
+        
+        if (duration > 0) {
+            setTimeout(() => DOM.dgaContent.classList.remove('dga-expanding'), duration);
+        } else {
+            DOM.dgaContent.classList.remove('dga-expanding');
+        }
 
         DOM.dgaContent.classList.toggle('dga-expanded');
 
@@ -657,10 +713,15 @@
         DOM.dgaContent.style.height = DOM.dgaContent.classList.contains('dga-expanded') ?
             `${DOM.dgaContent.scrollHeight}px` : '0px';
 
-        setTimeout(() => {
+        if (duration > 0) {
+            setTimeout(() => {
+                updatePositions();
+                scheduleOverflowCheck();
+            }, duration);
+        } else {
             updatePositions();
             scheduleOverflowCheck();
-        }, DURATION);
+        }
     }
 
     function toggleNavbar() {
@@ -674,7 +735,7 @@
         }
 
         const isOpen = DOM.collapse?.classList.contains('show');
-        const DURATION = state.getTransitionSpeed();
+        const duration = state.getElementDuration(DOM.collapse);
 
         if (!isOpen) {
             const minimal = document.querySelectorAll('.nds-nav-minimal .nds-dropdown.show');
@@ -687,11 +748,11 @@
                         toggleDGA();
                         setTimeout(() => {
                             animateNavbar(true, false);
-                        }, DURATION);
+                        }, duration);
                     } else {
                         animateNavbar(true, false);
                     }
-                }, DURATION);
+                }, duration);
                 return;
             }
         }
@@ -701,7 +762,7 @@
             setTimeout(() => {
                 const hasAnyOpenDropdowns = document.querySelectorAll('#ndsMainNav .nds-dropdown.show').length > 0;
                 animateNavbar(!isOpen, isOpen && hasAnyOpenDropdowns);
-            }, DURATION);
+            }, duration);
         } else {
             const hasAnyOpenDropdowns = document.querySelectorAll('#ndsMainNav .nds-dropdown.show').length > 0;
             animateNavbar(!isOpen, isOpen && hasAnyOpenDropdowns);
@@ -744,7 +805,7 @@
 
         const isOpen = dropdown.classList.contains('show');
         const openDropdowns = document.querySelectorAll('.nds-dropdown.show');
-        const DURATION = state.getTransitionSpeed();
+        const duration = state.getDropdownDuration(dropdown);
         const isInMinimal = dropdown.closest('.nds-nav-minimal');
         const isInPrimary = dropdown.closest('.nds-nav-primary');
         
@@ -752,7 +813,7 @@
         if (isOpen) {
             animateDropdown(dropdown, false);
             if (isInPrimary && DOM.collapse?.classList.contains('show')) {
-                setTimeout(() => updatePositions(), state.getTransitionSpeed());
+                setTimeout(() => updatePositions(), duration);
             }
         } else {
             const closeOthers = () => {
@@ -760,7 +821,7 @@
                 openDropdowns.forEach(dd => {
                     if (dd !== dropdown) {
                         animateDropdown(dd, false);
-                        maxCloseDelay = Math.max(maxCloseDelay, DURATION);
+                        maxCloseDelay = Math.max(maxCloseDelay, duration);
                     }
                 });
                 // Ensure overflow check happens when closing other dropdowns - high priority
@@ -770,18 +831,18 @@
                 return maxCloseDelay;
             };
 
-            if (isInMinimal && state.isMinimal) {
+            if (isInMinimal && state.minimalMode) {
                 let totalDelay = 0;
                 
                 if (DOM.collapse?.classList.contains('show')) {
                     const hasOpenSecondary = document.querySelectorAll('.nds-nav-secondary .nds-dropdown.show').length > 0;
                     animateNavbar(false, hasOpenSecondary);
-                    totalDelay = Math.max(totalDelay, hasOpenSecondary ? DURATION * 2.2 : DURATION * 1.2);
+                    totalDelay = Math.max(totalDelay, hasOpenSecondary ? duration * 2.2 : duration * 1.2);
                 }
                 
                 if (DOM.dgaContent?.classList.contains('dga-expanded')) {
                     performDGAToggle();
-                    totalDelay = Math.max(totalDelay, DURATION);
+                    totalDelay = Math.max(totalDelay, duration);
                 }
                 
                 const closeDelay = closeOthers();
@@ -789,7 +850,7 @@
                 
                 setTimeout(() => animateDropdown(dropdown, true), totalDelay);
             }
-            else if (!state.isMinimal && DOM.dgaContent?.classList.contains('dga-expanded')) {
+            else if (!state.minimalMode && DOM.dgaContent?.classList.contains('dga-expanded')) {
                 toggleDGA();
                 setTimeout(() => {
                     const closeDelay = closeOthers();
@@ -797,17 +858,17 @@
                         animateDropdown(dropdown, true);
                         
                         if (isInPrimary && DOM.collapse?.classList.contains('show')) {
-                            setTimeout(() => updatePositions(), DURATION * 0.1);
+                            setTimeout(() => updatePositions(), duration * 0.1);
                         }
                     }, closeDelay > 0 ? closeDelay : 0);
-                }, DURATION);
+                }, duration);
             } else {
                 const closeDelay = closeOthers();
                 setTimeout(() => {
                     animateDropdown(dropdown, true);
                     
                     if (isInPrimary && DOM.collapse?.classList.contains('show')) {
-                        setTimeout(() => updatePositions(), DURATION * 0.1);
+                        setTimeout(() => updatePositions(), duration * 0.1);
                     }
                 }, closeDelay > 0 ? closeDelay : 0);
             }
@@ -816,30 +877,48 @@
 
     function toggleDGA() {
         const openDropdowns = document.querySelectorAll('.nds-dropdown.show');
-        const DURATION = state.getTransitionSpeed();
+        const navbarDuration = state.getElementDuration(DOM.collapse);
 
         if (DOM.collapse?.classList.contains('show')) {
             const hasOpenSecondary = document.querySelectorAll('.nds-nav-secondary .nds-dropdown.show').length > 0;
 
             let navbarCloseDelay;
             if (hasOpenSecondary) {
-                navbarCloseDelay = DURATION + (DURATION * 0.2) + DURATION;
+                navbarCloseDelay = navbarDuration + (navbarDuration * 0.2) + navbarDuration;
             } else {
-                navbarCloseDelay = (DURATION * 0.2) + DURATION;
+                navbarCloseDelay = (navbarDuration * 0.2) + navbarDuration;
             }
 
             animateNavbar(false, hasOpenSecondary);
-            setTimeout(performDGAToggle, navbarCloseDelay + 50);
+            
+            if (navbarCloseDelay > 0) {
+                setTimeout(performDGAToggle, navbarCloseDelay + 50);
+            } else {
+                performDGAToggle();
+            }
 
         } else if (openDropdowns.length > 0) {
+            const firstDropdown = openDropdowns[0];
+            const dropdownDuration = state.getDropdownDuration(firstDropdown);
+            
             openDropdowns.forEach(dropdown => animateDropdown(dropdown, false));
-            setTimeout(performDGAToggle, DURATION);
+            
+            if (dropdownDuration > 0) {
+                setTimeout(performDGAToggle, dropdownDuration);
+            } else {
+                performDGAToggle();
+            }
         } else {
             performDGAToggle();
         }
     }
 
     const handleDocumentClick = (event) => {
+        // Prevent click outside detection during animations
+        if (state.isAnimatingMenu) {
+            return;
+        }
+
         const clickX = event.clientX;
         const clickY = event.clientY;
         const safeZoneBuffer = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nds-dropdown-safeZone')) || 40;
@@ -851,10 +930,9 @@
 
         if (DOM.toggler && DOM.collapse?.classList.contains('show')) {
             const navElements = [DOM.collapse, DOM.toggler];
-            let extendedBuffer = safeZoneBuffer;
             
             // In minimal mode, extend safe zone to include opened secondary dropdown menus
-            if (state.isMinimal) {
+            if (state.minimalMode) {
                 const openSecondaryMenus = DOM.collapse?.querySelectorAll('.nds-nav-secondary .nds-dropdown.show .nds-dropdown-menu');
                 openSecondaryMenus?.forEach(menu => {
                     if (!menu.closest('.nds-nav-minimal')) {
@@ -863,15 +941,18 @@
                 });
             }
             
-            if (utils.isClickOutsideWithBuffer(clickX, clickY, navElements, extendedBuffer)) {
-                const hasOpenSecondary = document.querySelectorAll('.nds-nav-secondary .nds-dropdown.show').length > 0;
-                animateNavbar(false, hasOpenSecondary);
+            if (utils.isClickOutsideWithBuffer(clickX, clickY, navElements, safeZoneBuffer)) {
+                toggleNavbar();
             }
         }
 
         // Close dropdowns if click is outside their safe zones
         const openDropdowns = document.querySelectorAll('#ndsMainNav .nds-dropdown.show');
         openDropdowns.forEach(dropdown => {
+            // Skip closing dropdowns to avoid boundary conflicts during animations
+            if (dropdown.classList.contains('closing')) {
+                return;
+            }
             const menu = dropdown.querySelector('.nds-dropdown-menu');
             const dropdownElements = [dropdown];
             if (menu) dropdownElements.push(menu);
@@ -880,15 +961,16 @@
                 const isSecondaryDropdown = dropdown.closest('.nds-nav-secondary');
                 const isPrimaryDropdown = dropdown.closest('.nds-nav-primary');
 
-                if ((isPrimaryDropdown || isSecondaryDropdown) && DOM.collapse?.classList.contains('show')) {
-                    return;
-                }
-
                 const needsRecalc = (isPrimaryDropdown || isSecondaryDropdown) 
                     && DOM.collapse?.classList.contains('show');
                 animateDropdown(dropdown, false);
                 if (needsRecalc) {
-                    setTimeout(() => updatePositions(), state.getTransitionSpeed());
+                    const duration = state.getDropdownDuration(dropdown);
+                    if (duration > 0) {
+                        setTimeout(() => updatePositions(), duration);
+                    } else {
+                        updatePositions();
+                    }
                 }
             }
         });
@@ -907,7 +989,7 @@
 
         state.windowWidth = currentWidth;
 
-        if (state.isMinimal) {
+        if (state.minimalMode) {
             if (DOM.collapse?.classList.contains('show')) {
                 toggleNavbar();
             }
