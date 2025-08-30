@@ -149,18 +149,8 @@
 .nds-footer-links {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     margin-bottom: 1rem;
-
-    a {
-        color: var(--text-oncolor-primary, #fff);
-        text-decoration: none;
-        font-size: 0.9rem;
-        transition: color 0.3s ease;
-
-        &:hover {
-            text-decoration: underline;
-        }
-    }
 }
 
 .nds-footer-separator {
@@ -187,6 +177,10 @@
     justify-content: center;
     gap: 16px;
     align-items: center;
+
+    &>* {
+        display: inline-flex;
+    }
 
     img {
         height: 40px;
