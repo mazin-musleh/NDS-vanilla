@@ -129,17 +129,39 @@
 
     // Utility functions
     function updateFormState(input, formControl) {
-        var hasValue = (input.type === 'checkbox' || input.type === 'radio')
-            ? input.checked
-            : input.value.trim() !== '';
+        var hasValue;
+        
+        if (input.type === 'checkbox' || input.type === 'radio') {
+            hasValue = input.checked;
+        } else {
+            hasValue = input.value.trim() !== '';
+        }
 
         formControl.classList.toggle('filled', hasValue);
+        formControl.classList.toggle('disabled', input.disabled);
 
-        // Show/hide clear button based on input value
+        // Show/hide clear button for text-based inputs only
         var clearButton = formControl.querySelector('.clear');
-        if (clearButton) {
+        if (clearButton && input.type !== 'radio' && input.type !== 'checkbox') {
             clearButton.classList.toggle('hidden', !hasValue);
         }
+    }
+    
+    function updateRadioGroup(changedRadio, formControl) {
+        if (changedRadio.type !== 'radio' || !changedRadio.name) return;
+        
+        var radioGroupContainer = changedRadio.closest('.nds-radio-group');
+        if (!radioGroupContainer) return;
+        
+        var radioGroup = radioGroupContainer.querySelectorAll('input[type="radio"][name="' + changedRadio.name + '"]');
+        radioGroup.forEach(function(radio) {
+            if (radio !== changedRadio) {
+                var radioFormControl = radio.closest('.nds-form-control');
+                if (radioFormControl) {
+                    updateFormState(radio, radioFormControl);
+                }
+            }
+        });
     }
 
     function findPrimaryInput(container) {
@@ -191,6 +213,7 @@
         });
     }
 
+
     // Form control functionality
     function initFormControlClasses() {
         document.querySelectorAll('.nds-form-control').forEach(function (formControl) {
@@ -226,13 +249,73 @@
                     updateFormState(input, formControl);
                 });
 
-                // Also listen for change for form validation compatibility
+                // Also listen for change for form validation compatibility 
                 input.addEventListener('change', function () {
                     updateFormState(input, formControl);
+                    updateRadioGroup(input, formControl);
                 });
 
                 // Initialize state
                 updateFormState(input, formControl);
+                
+                // Watch for all field status changes
+                if (window.MutationObserver) {
+                    var observer = new MutationObserver(function(mutations) {
+                        mutations.forEach(function(mutation) {
+                            if (mutation.type === 'attributes') {
+                                var attr = mutation.attributeName;
+                                if (attr === 'disabled' || attr === 'checked' || attr === 'value') {
+                                    updateFormState(input, formControl);
+                                    
+                                    // Handle radio group updates for checked changes
+                                    if (attr === 'checked') {
+                                        updateRadioGroup(input, formControl);
+                                    }
+                                }
+                            }
+                        });
+                    });
+                    observer.observe(input, { 
+                        attributes: true, 
+                        attributeFilter: ['disabled', 'checked', 'value']
+                    });
+                }
+                
+                // Enhanced property change detection for programmatic updates
+                try {
+                    var originalValueDescriptor = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(input), 'value');
+                    var originalCheckedDescriptor = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(input), 'checked');
+                    
+                    if (originalValueDescriptor && originalValueDescriptor.set) {
+                        Object.defineProperty(input, 'value', {
+                            get: originalValueDescriptor.get,
+                            set: function(val) {
+                                originalValueDescriptor.set.call(this, val);
+                                updateFormState(this, formControl);
+                            },
+                            configurable: true
+                        });
+                    }
+                    
+                    if (originalCheckedDescriptor && originalCheckedDescriptor.set && (input.type === 'radio' || input.type === 'checkbox')) {
+                        Object.defineProperty(input, 'checked', {
+                            get: originalCheckedDescriptor.get,
+                            set: function(val) {
+                                var wasChecked = this.checked;
+                                originalCheckedDescriptor.set.call(this, val);
+                                updateFormState(this, formControl);
+                                
+                                // Handle radio group updates for programmatic changes
+                                if (val && !wasChecked) {
+                                    updateRadioGroup(this, formControl);
+                                }
+                            },
+                            configurable: true
+                        });
+                    }
+                } catch (e) {
+                    console.warn('Property descriptor enhancement not supported:', e);
+                }
 
                 // Select dropdown open state handling
                 if (input.tagName.toLowerCase() === 'select') {

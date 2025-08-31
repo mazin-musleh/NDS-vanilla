@@ -16,7 +16,6 @@
             color: var(--field-text-label);
             font-size: var(--nds-text-md-FS);
             line-height: var(--nds-text-md-LH);
-            margin-top: var(--spacing-xs);
             cursor: pointer;
         }
 
@@ -25,23 +24,81 @@
             font-size: var(--nds-text-sm-FS);
             line-height: var(--nds-text-sm-LH);
         }
+
+        .error {
+            display: flex;
+            align-items: center;
+            font-size: var(--nds-text-sm-FS);
+            line-height: var(--nds-text-sm-LH);
+            font-weight: 500;
+            gap: var(--icon-text-gap);
+            color: var(--controls-control-text-error);
+
+            i {
+                color: var(--icon-error);
+                width: var(--spacing-4);
+                height: var(--spacing-4);
+                font-size: var(--spacing-4);
+                line-height: var(--spacing-4);
+            }
+        }
     }
 
-    &.nds-radio,
-    &.nds-check {
+    &.nds-radio-container,
+    &.nds-check-container {
         display: flex;
         gap: var(--spacing-lg);
         flex-direction: row-reverse;
         width: fit-content;
         flex-wrap: nowrap;
         align-items: flex-start;
+
+        &>.nds-form-header>.label {
+            display: inline-flex;
+            align-items: center;
+            color: var(--text-display);
+            font-size: var(--nds-text-md-FS);
+            line-height: normal;
+            font-weight: 500;
+            height: 20px;
+
+        }
+
+        &.size-lg {
+            gap: var(--spacing-xl);
+
+            .nds-form-header>.label {
+                font-size: var(--nds-text-lg-FS);
+                height: 24px;
+
+            }
+        }
+
+        &.size-sm {
+            gap: var(--spacing-md);
+
+            .nds-form-header>.label {
+                font-size: var(--nds-text-sm-FS);
+                height: 16px;
+
+            }
+        }
     }
 
 }
 
-.nds-radio-group {
+fieldset {
     border: 0;
-    gap: var(--spacing-md);
+
+    &>.label {
+        margin-bottom: var(--spacing-lg);
+    }
+}
+
+.nds-radio-group,
+.nds-check-group {
+    row-gap: var(--spacing-xl);
+    column-gap: var(--spacing-6xl);
     display: flex;
     flex-direction: column;
 
@@ -49,9 +106,7 @@
         flex-direction: row;
     }
 
-    &>.label {
-        margin-bottom: var(--spacing-lg);
-    }
+
 }
 
 .nds-form-control {
@@ -126,6 +181,24 @@
         &,
         ::-webkit-input-placeholder {
             color: var(--form-field-text-pressed);
+        }
+    }
+
+
+
+    &.disabled {
+        background-color: var(--background-disabled) !important;
+        color: var(--text-default-disabled) !important;
+        border-color: var(--control-disabled) !important;
+        pointer-events: none;
+        user-select: none;
+
+        ::-webkit-input-placeholder {
+            color: var(--text-default-disabled) !important;
+        }
+
+        .nds-form-action {
+            display: none;
         }
     }
 
@@ -249,18 +322,18 @@
         }
     }
 
-    .nds-radio &,
-    .nds-check & {
+    .nds-radio-container &,
+    .nds-check-container & {
 
         min-width: unset;
         min-height: unset;
         width: fit-content;
         height: fit-content;
-        padding: var(--spacing-xs);
+        padding: 0;
         border: 0;
-        border-radius: 50%;
+        border-radius: var(--radius-sm);
         box-shadow: unset;
-        background-color: unset;
+        background-color: unset !important;
 
         &.focused:focus-visible {
             outline: 2px solid var(--colors-base-black) !important;
@@ -269,56 +342,34 @@
         }
     }
 
-    .nds-check & {
+    .nds-check-container & {
         border-radius: var(--radius-xs);
     }
 
-    .nds-radio &::before,
-    .nds-check &::before {
-        width: 24px;
-        height: 24px;
-        bottom: 50%;
-        left: 50%;
-        border-radius: 50%;
-        transform: translate(-50%, 50%);
-        background-color: var(--controls-control-ripple-effect);
-        transition: width var(--nds-transition), height var(--nds-transition);
-        z-index: 1;
-        pointer-events: none;
-        user-select: none;
+    .nds-radio-container &::before,
+    .nds-check-container &::before {
         display: none;
     }
 
-    .nds-check &::before {
-        border-radius: var(--radius-xs);
-    }
-
-    .nds-radio &:hover::before,
-    .nds-check &:hover::before {
-
-        width: 48px;
-        height: 48px;
-
-
-    }
 
     & input[type="radio"],
     & input[type="checkbox"] {
-        width: 24px;
-        height: 24px;
+        width: 20px;
+        height: 20px;
         z-index: 2;
-        cursor: pointer;
         appearance: none;
         border-radius: 50%;
+        position: relative;
 
-        position: relative;
-        position: relative;
+        &:not(:disabled) {
+            cursor: pointer;
+        }
 
         &:not(:disabled)::before {
             content: '';
             position: absolute;
-            width: 24px;
-            height: 24px;
+            width: 20px;
+            height: 20px;
             bottom: 50%;
             left: 50%;
             border-radius: 50%;
@@ -330,13 +381,39 @@
             user-select: none;
         }
 
-
         &:not(:disabled):hover::before {
+            width: 40px;
+            height: 40px;
+        }
 
-            width: 48px;
-            height: 48px;
+        .size-sm & {
+            width: 16px;
+            height: 16px;
 
+            &:not(:disabled)::before {
+                width: 16px;
+                height: 16px;
+            }
 
+            &:not(:disabled):hover::before {
+                width: 32px;
+                height: 32px;
+            }
+        }
+
+        .size-lg & {
+            width: 24px;
+            height: 24px;
+
+            &:not(:disabled)::before {
+                width: 24px;
+                height: 24px;
+            }
+
+            &:not(:disabled):hover::before {
+                width: 48px;
+                height: 48px;
+            }
         }
 
         &::after {
@@ -346,13 +423,21 @@
             height: 100%;
             display: block;
             background-color: var(--colors-base-white);
-            color: var(--colors-base-white)!important;
+            color: var(--colors-base-white) !important;
             border: 1px solid transparent;
             box-shadow: 0 0 0 1px var(--controls-control-border, #6C737F);
             z-index: 1;
         }
 
         &:checked::after {
+            border: 3px solid var(--colors-base-white);
+        }
+
+        .size-sm &:checked::after {
+            border: 2px solid var(--colors-base-white);
+        }
+
+        .size-lg &:checked::after {
             border: 4px solid var(--colors-base-white);
         }
 
@@ -414,14 +499,14 @@
         }
 
         &:checked:disabled::after {
-            background-color: var(--control-disabled) !important;
-            color: var(--control-disabled);
-            box-shadow: 0 0 0 1px var(--control-disabled);
+            background-color: var(--background-disabled) !important;
+            color: var(--control-disabled) !important;
+            box-shadow: 0 0 0 1px var(--background-disabled) !important;
         }
 
         &:not(:checked):disabled::after {
             background-color: var(--colors-base-white) !important;
-            box-shadow: 0 0 0 1px var(--control-disabled);
+            box-shadow: 0 0 0 1px var(--background-disabled) !important;
         }
     }
 
@@ -436,7 +521,7 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            border: unset!important;
+            border: unset !important;
             background-color: var(--colors-base-white);
             color: var(--colors-base-white);
             transform: translate(-50%, -50%);
@@ -457,11 +542,29 @@
             opacity: 0;
             transition: opacity var(--nds-transition);
             display: inline-flex;
+            width: 20px;
+            height: 20px;
+            font-size: 16px;
+            line-height: 16px;
+            font-weight: 600;
+        }
+
+        &.indeterminate:checked::after {
+            content: "䗵" !important;
+        }
+
+        .size-sm &:checked::after {
+            width: 16px;
+            height: 16px;
+            font-size: 12px;
+            line-height: 12px;
+        }
+
+        .size-lg &:checked::after {
             width: 24px;
             height: 24px;
             font-size: 20px;
             line-height: 20px;
-            font-weight: bold;
         }
 
         /* &:checked:read-only::after{
