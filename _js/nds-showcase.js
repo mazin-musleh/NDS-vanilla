@@ -23,6 +23,7 @@
         initializeCopyButtons();
         initializeDemoToggleButtons();
         initializeDirectionSwitcher();
+        initializeFakeFileUpload();
     });
 
     // Copy functionality for code examples
@@ -203,8 +204,11 @@
                     targetElement = elementById;
                 }
             } else {
-                // For class selectors, ensure exact match to avoid matching classes that contain the target class
-                if (targetSelector.startsWith('.')) {
+                // For complex selectors (like '.class element' or '.class[attr]'), use querySelector directly
+                if (targetSelector.includes(' ') || targetSelector.includes('[') || targetSelector.includes(':')) {
+                    targetElement = demoCard.querySelector(targetSelector);
+                } else if (targetSelector.startsWith('.')) {
+                    // For simple single class selectors, ensure exact match to avoid matching classes that contain the target class
                     const className = targetSelector.substring(1);
                     const allElements = demoCard.querySelectorAll('*');
                     targetElement = Array.from(allElements).find(el => 
@@ -233,8 +237,11 @@
                     targetElements = [elementById];
                 }
             } else {
-                // For class selectors, find all matching elements
-                if (targetSelector.startsWith('.')) {
+                // For complex selectors (like '.class element' or '.class[attr]'), use querySelectorAll directly
+                if (targetSelector.includes(' ') || targetSelector.includes('[') || targetSelector.includes(':')) {
+                    targetElements = Array.from(demoCard.querySelectorAll(targetSelector));
+                } else if (targetSelector.startsWith('.')) {
+                    // For simple single class selectors, use the exact match logic
                     const className = targetSelector.substring(1);
                     const allElements = demoCard.querySelectorAll('*');
                     targetElements = Array.from(allElements).filter(el => 
@@ -351,7 +358,11 @@
                                                 targetElement = elementById;
                                             }
                                         } else {
-                                            if (targetSelector.startsWith('.')) {
+                                            // For complex selectors (like '.class element' or '.class[attr]'), use querySelector directly
+                                            if (targetSelector.includes(' ') || targetSelector.includes('[') || targetSelector.includes(':')) {
+                                                targetElement = demoCard.querySelector(targetSelector);
+                                            } else if (targetSelector.startsWith('.')) {
+                                                // For simple single class selectors, ensure exact match to avoid matching classes that contain the target class
                                                 const className = targetSelector.substring(1);
                                                 const allElements = demoCard.querySelectorAll('*');
                                                 targetElement = Array.from(allElements).find(el => 
@@ -379,7 +390,11 @@
                                                 deselectionTargetElements = [elementById];
                                             }
                                         } else {
-                                            if (targetSelector.startsWith('.')) {
+                                            // For complex selectors (like '.class element' or '.class[attr]'), use querySelectorAll directly
+                                            if (targetSelector.includes(' ') || targetSelector.includes('[') || targetSelector.includes(':')) {
+                                                deselectionTargetElements = Array.from(demoCard.querySelectorAll(targetSelector));
+                                            } else if (targetSelector.startsWith('.')) {
+                                                // For simple single class selectors, use the exact match logic
                                                 const className = targetSelector.substring(1);
                                                 const allElements = demoCard.querySelectorAll('*');
                                                 deselectionTargetElements = Array.from(allElements).filter(el => 
@@ -637,13 +652,182 @@
         return null;
     }
 
+    // Fake file upload for demonstration purposes
+    function initializeFakeFileUpload() {
+        // Set up fake upload URLs for demo containers
+        document.querySelectorAll('.nds-file-upload').forEach(container => {
+            if (!container.dataset.uploadUrl) {
+                container.dataset.uploadUrl = '/demo/upload';
+                container.dataset.autoUpload = 'true';
+            }
+        });
+
+        // Listen for beforeUpload events to intercept and simulate uploads
+        document.addEventListener('beforeUpload', function(e) {
+            const fileData = e.detail.fileData;
+            const formData = e.detail.formData;
+            const uploadContainer = e.target;
+            
+            console.log('Before upload (demo):', fileData.file.name);
+            
+            // Cancel the real upload and start fake upload instead
+            e.detail.cancel = true;
+            
+            // Add demo metadata to form data
+            formData.append('demo', 'true');
+            formData.append('timestamp', Date.now().toString());
+            
+            // Start fake upload simulation
+            simulateFileUpload(uploadContainer, fileData);
+        });
+    }
+
+    function simulateFileUpload(uploadContainer, fileData) {
+        const file = fileData.file;
+        let progress = 0;
+        const uploadDuration = 2000 + Math.random() * 3000; // 2-5 seconds
+        const progressInterval = 50; // Update every 50ms
+        const totalSteps = uploadDuration / progressInterval;
+        const progressStep = 100 / totalSteps;
+
+        console.log(`Starting fake upload for: ${file.name}`);
+
+        console.log('🎭 Simulation starting for file:', file.name, 'with ID:', fileData.id);
+        
+        // Find the file in the upload container's file list and update its status
+        if (window.NDS && window.NDS.Forms && window.NDS.Forms.FileUpload) {
+            const fileUploadInstance = window.NDS.Forms.FileUpload.getInstance(uploadContainer);
+            if (fileUploadInstance && fileUploadInstance.uploadedFiles) {
+                console.log('📋 Found', fileUploadInstance.uploadedFiles.length, 'files in upload instance');
+                const fileIndex = fileUploadInstance.uploadedFiles.findIndex(f => f.id === fileData.id);
+                console.log('🔍 File index found:', fileIndex);
+                if (fileIndex !== -1) {
+                    fileUploadInstance.uploadedFiles[fileIndex].status = 'uploading';
+                    fileUploadInstance.updateFileList();
+                    console.log('✅ File status updated to uploading');
+                } else {
+                    console.warn('❌ Could not find file with ID:', fileData.id);
+                }
+            } else {
+                console.warn('❌ No file upload instance found');
+            }
+        }
+
+        // Simulate upload progress
+        const progressTimer = setInterval(() => {
+            progress += progressStep + (Math.random() * 5); // Add some randomness
+            progress = Math.min(progress, 100);
+
+            // Update progress bar directly
+            const fileList = uploadContainer.querySelector('.file-list');
+            if (fileList) {
+                const fileItems = fileList.querySelectorAll('.file-item');
+                fileItems.forEach(item => {
+                    const fileName = item.querySelector('.file-name')?.textContent;
+                    if (fileName === file.name) {
+                        const progressElement = item.querySelector('.upload-progress');
+                        if (progressElement) {
+                            const circle = progressElement.querySelector('.progress-fill');
+                            const text = progressElement.querySelector('.progress-text');
+                            if (circle && text) {
+                                const circumference = 62.83; // 2 * Math.PI * 10
+                                const offset = circumference - (progress / 100) * circumference;
+                                circle.style.strokeDashoffset = offset;
+                                text.textContent = Math.round(progress) + '%';
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Dispatch progress event for external listeners
+            uploadContainer.dispatchEvent(new CustomEvent('uploadProgress', {
+                detail: {
+                    fileData: fileData,
+                    progress: progress
+                }
+            }));
+
+            if (progress >= 100) {
+                clearInterval(progressTimer);
+                
+                // Simulate upload completion with random success/failure
+                const shouldSucceed = Math.random() > 0.1; // 90% success rate
+                
+                setTimeout(() => {
+                    if (shouldSucceed) {
+                        // Update file status to complete
+                        if (window.NDS && window.NDS.Forms && window.NDS.Forms.FileUpload) {
+                            const fileUploadInstance = window.NDS.Forms.FileUpload.getInstance(uploadContainer);
+                            if (fileUploadInstance && fileUploadInstance.uploadedFiles) {
+                                const fileIndex = fileUploadInstance.uploadedFiles.findIndex(f => f.id === fileData.id);
+                                if (fileIndex !== -1) {
+                                    fileUploadInstance.uploadedFiles[fileIndex].status = 'complete';
+                                    fileUploadInstance.uploadedFiles[fileIndex].response = JSON.stringify({
+                                        success: true,
+                                        fileId: 'demo_' + Date.now(),
+                                        fileName: file.name,
+                                        fileSize: file.size,
+                                        uploadTime: new Date().toISOString(),
+                                        message: 'Demo file uploaded successfully'
+                                    });
+                                    fileUploadInstance.updateFileList();
+                                }
+                            }
+                        }
+
+                        // Dispatch success event
+                        uploadContainer.dispatchEvent(new CustomEvent('uploadSuccess', {
+                            detail: {
+                                fileData: fileData,
+                                response: JSON.stringify({
+                                    success: true,
+                                    fileId: 'demo_' + Date.now(),
+                                    fileName: file.name,
+                                    fileSize: file.size,
+                                    uploadTime: new Date().toISOString(),
+                                    message: 'Demo file uploaded successfully'
+                                })
+                            }
+                        }));
+                        console.log(`Demo upload completed successfully: ${file.name}`);
+                    } else {
+                        // Update file status to error
+                        if (window.NDS && window.NDS.Forms && window.NDS.Forms.FileUpload) {
+                            const fileUploadInstance = window.NDS.Forms.FileUpload.getInstance(uploadContainer);
+                            if (fileUploadInstance && fileUploadInstance.uploadedFiles) {
+                                const fileIndex = fileUploadInstance.uploadedFiles.findIndex(f => f.id === fileData.id);
+                                if (fileIndex !== -1) {
+                                    fileUploadInstance.uploadedFiles[fileIndex].status = 'error';
+                                    fileUploadInstance.uploadedFiles[fileIndex].error = 'Demo upload failed';
+                                    fileUploadInstance.updateFileList();
+                                }
+                            }
+                        }
+
+                        // Dispatch error event (10% chance)
+                        uploadContainer.dispatchEvent(new CustomEvent('uploadError', {
+                            detail: {
+                                fileData: fileData,
+                                error: 'Demo upload failed',
+                                statusCode: 500
+                            }
+                        }));
+                        console.log(`Demo upload failed: ${file.name}`);
+                    }
+                }, 100); // Small delay before completion
+            }
+        }, progressInterval);
+    }
+
     // Expose global functions for backward compatibility if needed
     window.NDSShowcase = {
         handleCopyClick: handleCopyClick,
         showCopyFeedback: showCopyFeedback,
         initializeDemoToggleButtons: initializeDemoToggleButtons,
         updateButtonsForBackground: updateButtonsForBackground,
-        initializeDirectionSwitcher: initializeDirectionSwitcher
+        initializeDirectionSwitcher: initializeDirectionSwitcher,
+        simulateFileUpload: simulateFileUpload
     };
 
 })();
