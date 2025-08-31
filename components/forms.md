@@ -39,6 +39,20 @@ direction: ltr
  
  
  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
                 actions</p>
     </div>
     <div class="nds-section-content">
@@ -628,7 +642,178 @@ direction: ltr
           </div>
         </div>
 
+        <!-- Single File Upload -->
+        <div class="nds-demo-card">
+          <div class="demo-header">
+            <div class="demo-label">Single File Upload</div>
+            <div class="demo-action">
+              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='[["disabled", ".single-file-upload .file-input", "stateToggle", "attr"], ["disabled", ".browse-btn", "stateToggle", "attr"]]'>
+                <span class="label">Disabled</span>
+              </button>
+              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='[["dropBox", ".nds-form-container", "dropboxToggle"], ["nds-btn-neutral nds-btn-secondary", ".browse-btn", "buttonStyle"]]'>
+                <span class="label">Dropbox</span>
+              </button>
+              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                <span class="label">Remove bg</span>
+              </button>
+            </div>
+          </div>
+          <div class="demo-container">
+            <div class="state-demo">
+              <div class="nds-form-container nds-file-upload single-file single-file-upload">
+                <div class="nds-form-header">
+                  <label class="label" for="singleFileUpload">Single File Upload</label>
+                  <span class="info">Upload a single file. Click browse<span class="dropFileHint">
+                      or drag and drop</span>. Accepted formats: PDF, DOC, DOCX, TXT</span>
+                </div>
+                <div class="nds-form-control" id="singleDropZone">
+                  <input
+                    type="file"
+                    id="singleFileUpload"
+                    accept=".pdf,.doc,.docx,.txt"
+                    class="file-input">
+                  <div class="upload-zone">
+                    <i class="hgi hgi-stroke hgi-file-upload upload-icon icon"></i>
+                    <div class="upload-text">
+                      <span class="upload-action">Click to upload</span>
+                      <span class="dropFileHint">
+                        or drag and drop</span>
+                    </div>
+                    <div class="upload-hint">PDF, DOC, DOCX, TXT up to 10MB</div>
+                  </div>
+                  <div class="upload-actions">
+                    <button type="button" class="nds-btn nds-btn-neutral nds-btn-md browse-btn">
+                      <i class="hgi hgi-stroke hgi-folder-01"></i>
+                      <span class="label">Browse Files</span>
+                    </button>
+                  </div>
+                </div>
+                <div class="file-list" id="singleFileList"></div>
+                <div class="nds-form-footer"></div>
+              </div>
+            </div>
+          </div>
+          <div class="code-example">
+            <div class="usage-header">
+              <span>Usage</span>
+              <button class="copy-btn" aria-label="Copy code example">
+                <i class="hgi hgi-stroke hgi-copy-01"></i>
+              </button>
+            </div>
+<pre class="single-file-upload-code"><code>&lt;div class="nds-form-container nds-file-upload single-file"&gt;
+    &lt;div class="nds-form-header"&gt;
+        &lt;label class="label" for="singleFileUpload"&gt;Single File Upload&lt;/label&gt;
+        &lt;span class="info"&gt;Upload a single file. Click browse or drag and drop. Accepted formats: PDF, DOC, DOCX, TXT&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-form-control"&gt;
+        &lt;input type="file" id="singleFileUpload" accept=".pdf,.doc,.docx,.txt" class="file-input"&gt;
+        &lt;div class="upload-zone"&gt;
+            &lt;i class="hgi hgi-stroke hgi-upload-04 upload-icon"&gt;&lt;/i&gt;
+            &lt;div class="upload-text"&gt;
+                &lt;span class="upload-action"&gt;Click to upload&lt;/span&gt; or drag and drop
+            &lt;/div&gt;
+            &lt;div class="upload-hint"&gt;PDF, DOC, DOCX, TXT up to 10MB&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="upload-actions"&gt;
+            &lt;button type="button" class="nds-btn nds-btn-neutral nds-btn-md browse-btn"&gt;
+                &lt;i class="hgi hgi-stroke hgi-folder-01"&gt;&lt;/i&gt;
+                &lt;span class="label"&gt;Browse Files&lt;/span&gt;
+            &lt;/button&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="file-list"&gt;&lt;/div&gt;
+    &lt;div class="nds-form-footer"&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+
+        <!-- Multi-File Upload -->
+        <div class="nds-demo-card">
+          <div class="demo-header">
+            <div class="demo-label">Multi-File Upload</div>
+            <div class="demo-action">
+              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='[["disabled", ".multi-file-upload .file-input", "stateToggle", "attr"], ["disabled", ".browse-btn", "stateToggle", "attr"]]'>
+                <span class="label">Disabled</span>
+              </button>
+              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='[["dropBox", ".nds-form-container", "dropboxToggle"], ["nds-btn-neutral nds-btn-secondary", ".browse-btn", "buttonStyle"]]'>
+                <span class="label">Dropbox</span>
+              </button>
+              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                <span class="label">Remove bg</span>
+              </button>
+            </div>
+          </div>
+          <div class="demo-container">
+            <div class="state-demo">
+              <div class="nds-form-container nds-file-upload multi-file-upload dropBox">
+                <div class="nds-form-header">
+                  <label class="label" for="multiFileUpload">Upload files</label>
+                  <span class="info">Maximum file size allowed is 2MB, supported file formats include .jpg, .png, and .pdf.</span>
+                </div>
+                <div class="nds-form-control" id="multiDropZone">
+                  <input
+                    type="file"
+                    id="multiFileUpload"
+                    multiple
+                    accept=".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx,.txt"
+                    class="file-input">
+                  <div class="upload-zone">
+                    <i class="hgi hgi-stroke hgi-file-upload upload-icon icon"></i>
+                    <div class="upload-text">
+                      <span class="dropFileHint">
+                        Drag and drop files here to upload
+                      </span>
+                    </div>
+                    <div class="upload-hint">Images, PDFs, Documents up to 10MB each</div>
+                  </div>
+                  <div class="upload-actions">
+                    <button type="button" class="nds-btn nds-btn-secondary nds-btn-md browse-btn">
+                      <i class="hgi hgi-stroke hgi-folder-01"></i>
+                      <span class="label">Browse Files</span>
+                    </button>
+                  </div>
+                </div>
+                <div class="file-list" id="multiFileList"></div>
+                <div class="nds-form-footer"></div>
+              </div>
+            </div>
+          </div>
+          <div class="code-example">
+            <div class="usage-header">
+              <span>Usage</span>
+              <button class="copy-btn" aria-label="Copy code example">
+                <i class="hgi hgi-stroke hgi-copy-01"></i>
+              </button>
+            </div>
+<pre class="multi-file-upload-code"><code>&lt;div class="nds-form-container nds-file-upload"&gt;
+    &lt;div class="nds-form-header"&gt;
+        &lt;label class="label" for="multiFileUpload"&gt;Multi-File Upload&lt;/label&gt;
+        &lt;span class="info"&gt;Upload multiple files. Click browse or drag and drop files to add to the list.&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-form-control"&gt;
+        &lt;input type="file" id="multiFileUpload" multiple accept=".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx,.txt" class="file-input"&gt;
+        &lt;div class="upload-zone"&gt;
+            &lt;i class="hgi hgi-stroke hgi-upload-04 upload-icon"&gt;&lt;/i&gt;
+            &lt;div class="upload-text"&gt;
+                &lt;span class="upload-action"&gt;Click to upload&lt;/span&gt; or drag and drop files here
+            &lt;/div&gt;
+            &lt;div class="upload-hint"&gt;Images, PDFs, Documents up to 10MB each&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="upload-actions"&gt;
+            &lt;button type="button" class="nds-btn nds-btn-neutral nds-btn-md browse-btn"&gt;
+                &lt;i class="hgi hgi-stroke hgi-folder-01"&gt;&lt;/i&gt;
+                &lt;span class="label"&gt;Browse Files&lt;/span&gt;
+            &lt;/button&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="file-list"&gt;&lt;/div&gt;
+    &lt;div class="nds-form-footer"&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
 </section>
+

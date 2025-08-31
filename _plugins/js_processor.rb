@@ -52,7 +52,7 @@ class JSProcessor
       input_file.close
       
       # Run Terser command
-      result = `npx terser "#{input_file.path}" --compress drop_console=true,drop_debugger=true --mangle --format beautify=false,comments=false 2>&1`
+      result = `npx terser "#{input_file.path}" --compress drop_console=false,drop_debugger=false --mangle --format beautify=false,comments=false 2>&1`
       
       # Check if command was successful
       if $?.success?
