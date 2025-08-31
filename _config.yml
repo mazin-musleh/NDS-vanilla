@@ -28,7 +28,7 @@ highlighter: rouge
 sass:
   style: compressed
   sass_dir: _sass
-  sourcemap: always
+  sourcemap: never
 
 # Custom settings
 author: Mazin Musleh
@@ -53,3 +53,5 @@ exclude:
   - .sass-cache
   - .jekyll-cache
   - CLAUDE.md
+  - package.json
+  - package-lock.json
