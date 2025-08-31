@@ -52,7 +52,7 @@ class JSProcessor
       input_file.close
       
       # Run Terser command
-      result = `npx terser "#{input_file.path}" --compress --mangle --format beautify=false,comments=false 2>&1`
+      result = `npx terser "#{input_file.path}" --compress drop_console=true,drop_debugger=true --mangle --format beautify=false,comments=false 2>&1`
       
       # Check if command was successful
       if $?.success?
@@ -120,7 +120,8 @@ class JSProcessor
         # Write bundle file to assets/js
         bundle_path = File.join(@output_dir, bundle_name)
         File.write(bundle_path, final_content)
-        puts "Updated bundle: #{bundle_name} (#{bundle_size} → #{final_content.length} bytes from #{processed_files.length} files)"
+        compression_percentage = ((bundle_size - final_content.length).to_f / bundle_size * 100).round(1)
+        puts "Updated bundle: #{bundle_name} (#{bundle_size} → #{final_content.length} bytes, #{compression_percentage}% reduction from #{processed_files.length} files)"
         
         # Remove processed files from changed_files so they don't get processed individually
         source_files.each do |bundled_file|
@@ -149,7 +150,8 @@ class JSProcessor
         filename = File.basename(file_path, '.js')
         min_file = File.join(@output_dir, "#{filename}.min.js")
         File.write(min_file, compressed_content)
-        puts "Updated: #{File.basename(min_file)} (#{original_content.length} → #{compressed_content.length} bytes)"
+        compression_percentage = ((original_content.length - compressed_content.length).to_f / original_content.length * 100).round(1)
+        puts "Updated: #{File.basename(min_file)} (#{original_content.length} → #{compressed_content.length} bytes, #{compression_percentage}% reduction)"
       rescue => compression_error
         puts "Failed to compress #{File.basename(file_path)}: #{compression_error.message}"
       end

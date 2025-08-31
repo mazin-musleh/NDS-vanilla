@@ -24,6 +24,21 @@ direction: ltr
  
  
  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
                 actions</p>
     </div>
     <div class="nds-section-content">
@@ -34,6 +49,9 @@ direction: ltr
           <div class="demo-header">
             <div class="demo-label">Text Input</div>
             <div class="demo-action">
+              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='["disabled", "input[type=text]", "stateToggle", "attr"]'>
+                <span class="label">Disabled</span>
+              </button>
               <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='["noBg", ".demo-container", "containerBg"]'>
                 <span class="label">Remove bg</span>
               </button>
@@ -94,6 +112,9 @@ direction: ltr
           <div class="demo-header">
             <div class="demo-label">Search Input</div>
             <div class="demo-action">
+              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='["disabled", "#searchInput", "stateToggle", "attr"]'>
+                <span class="label">Disabled</span>
+              </button>
               <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='["noBg", ".demo-container", "containerBg"]'>
                 <span class="label">Remove bg</span>
               </button>
@@ -165,6 +186,9 @@ direction: ltr
           <div class="demo-header">
             <div class="demo-label">Email Input</div>
             <div class="demo-action">
+              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='["disabled", "#emailInput", "stateToggle", "attr"]'>
+                <span class="label">Disabled</span>
+              </button>
               <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='["noBg", ".demo-container", "containerBg"]'>
                 <span class="label">Remove bg</span>
               </button>
@@ -226,6 +250,9 @@ direction: ltr
           <div class="demo-header">
             <div class="demo-label">Password Input</div>
             <div class="demo-action">
+              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='["disabled", "#passwordInput", "stateToggle", "attr"]'>
+                <span class="label">Disabled</span>
+              </button>
               <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='["noBg", ".demo-container", "containerBg"]'>
                 <span class="label">Remove bg</span>
               </button>
@@ -296,6 +323,9 @@ direction: ltr
           <div class="demo-header">
             <div class="demo-label">Textarea</div>
             <div class="demo-action">
+              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='["disabled", "#textareaInput", "stateToggle", "attr"]'>
+                <span class="label">Disabled</span>
+              </button>
               <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='["noBg", ".demo-container", "containerBg"]'>
                 <span class="label">Remove bg</span>
               </button>
@@ -347,6 +377,9 @@ direction: ltr
           <div class="demo-header">
             <div class="demo-label">Select Dropdown</div>
             <div class="demo-action">
+              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='["disabled", "#selectInput", "stateToggle", "attr"]'>
+                <span class="label">Disabled</span>
+              </button>
               <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='["noBg", ".demo-container", "containerBg"]'>
                 <span class="label">Remove bg</span>
               </button>
@@ -402,6 +435,21 @@ direction: ltr
           <div class="demo-header">
             <div class="demo-label">Radio Button Group</div>
             <div class="demo-action">
+              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='["size-lg", ".nds-radio-container", "sizeToggle"]'>
+                <span class="label">LG</span>
+              </button>
+              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn selected" data-toggler='["", ".nds-radio-container", "sizeToggle"]'>
+                <span class="label">MD</span>
+              </button>
+              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='["size-sm", ".nds-radio-container", "sizeToggle"]'>
+                <span class="label">SM</span>
+              </button>
+              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='["disabled", "input[type=radio]", "stateToggle", "attr"]'>
+                <span class="label">Disabled</span>
+              </button>
+              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='["rowView", ".nds-radio-group", "layoutToggle"]'>
+                <span class="label">RowView</span>
+              </button>
               <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='["noBg", ".demo-container", "containerBg"]'>
                 <span class="label">Remove bg</span>
               </button>
@@ -409,51 +457,38 @@ direction: ltr
           </div>
           <div class="demo-container">
             <div class="state-demo">
-              <fieldset class="nds-radio-group">
+              <fieldset>
                 <legend class="label">Radio Button Group</legend>
-                <div class="nds-form-container nds-radio">
-                  <div class="nds-form-header">
-                    <label class="label" for="radio1">Neutral</label>
+                <div class="nds-radio-group">
+                  <div class="nds-form-container nds-radio-container">
+                    <div class="nds-form-header">
+                      <label class="label" for="radio1">Neutral</label>
+                    </div>
+                    <div class="nds-form-control">
+                      <input
+                        type="radio"
+                        id="radio1"
+                        name="radioGroup"
+                        value="option1"
+                        class="nds-radio">
+                    </div>
                   </div>
-                  <div class="nds-form-control">
-                    <input
-                      type="radio"
-                      id="radio1"
-                      name="radioGroup"
-                      value="option1"
-                      class="nds-radio">
-                  </div>
-                </div>
-                <div class="nds-form-container nds-radio">
-                  <div class="nds-form-header">
-                    <label class="label" for="radio2">Primary</label>
-                    <span class="info">When a selection needs a further detailed explanation, it goes here.</span>
-                  </div>
-                  <div class="nds-form-control">
-                    <input
-                      type="radio"
-                      id="radio2"
-                      name="radioGroup"
-                      value="option2"
-                      class="nds-radio primary">
-                  </div>
-                </div>
-                <div class="nds-form-container nds-radio">
-                  <div class="nds-form-header">
-                    <label class="label" for="Disabled">Disabled</label>
-                  </div>
-                  <div class="nds-form-control">
-                    <input
-                      type="radio"
-                      id="Disabled"
-                      name="radioGroup"
-                      value="Disabled"
-                      class="nds-radio"
-                      checked
-                      disabled>
+                  <div class="nds-form-container nds-radio-container">
+                    <div class="nds-form-header">
+                      <label class="label" for="radio2">Primary</label>
+                      <span class="info">When a selection needs a further detailed explanation, it goes here.</span>
+                    </div>
+                    <div class="nds-form-control">
+                      <input
+                        type="radio"
+                        id="radio2"
+                        name="radioGroup"
+                        value="option2"
+                        checked
+                        class="nds-radio primary">
+                    </div>
                   </div>
                 </div>
-                <div class="nds-form-footer"></div>
               </fieldset>
             </div>
           </div>
@@ -464,38 +499,26 @@ direction: ltr
                 <i class="hgi hgi-stroke hgi-copy-01"></i>
               </button>
             </div>
-<pre class="radio-code"><code>&lt;div class="nds-radio-group"&gt;
-    &lt;div class="nds-form-container"&gt;
+<pre class="radio-code"><code>&lt;fieldset class="nds-radio-group"&gt;
+    &lt;legend class="label"&gt;Radio Button Group&lt;/legend&gt;
+    &lt;div class="nds-form-container nds-radio-container"&gt;
         &lt;div class="nds-form-header"&gt;
-            &lt;span class="label"&gt;Radio Button Group&lt;/span&gt;
+            &lt;label class="label" for="radio1"&gt;Neutral&lt;/label&gt;
         &lt;/div&gt;
         &lt;div class="nds-form-control"&gt;
             &lt;input type="radio" id="radio1" name="radioGroup" value="option1" class="nds-radio"&gt;
-            &lt;label for="radio1" class="nds-radio-label"&gt;Option 1&lt;/label&gt;
         &lt;/div&gt;
-        &lt;div class="nds-form-footer"&gt;&lt;/div&gt;
     &lt;/div&gt;
-    &lt;div class="nds-form-container"&gt;
+    &lt;div class="nds-form-container nds-radio-container"&gt;
         &lt;div class="nds-form-header"&gt;
-            &lt;span class="label"&gt;&lt;/span&gt;
+            &lt;label class="label" for="radio2"&gt;Primary&lt;/label&gt;
+            &lt;span class="info"&gt;When a selection needs a further detailed explanation, it goes here.&lt;/span&gt;
         &lt;/div&gt;
         &lt;div class="nds-form-control"&gt;
-            &lt;input type="radio" id="radio2" name="radioGroup" value="option2" class="nds-radio"&gt;
-            &lt;label for="radio2" class="nds-radio-label"&gt;Option 2&lt;/label&gt;
+            &lt;input type="radio" id="radio2" name="radioGroup" value="option2" class="nds-radio primary"&gt;
         &lt;/div&gt;
-        &lt;div class="nds-form-footer"&gt;&lt;/div&gt;
     &lt;/div&gt;
-    &lt;div class="nds-form-container"&gt;
-        &lt;div class="nds-form-header"&gt;
-            &lt;span class="label"&gt;&lt;/span&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-form-control"&gt;
-            &lt;input type="radio" id="radio3" name="radioGroup" value="option3" class="nds-radio"&gt;
-            &lt;label for="radio3" class="nds-radio-label"&gt;Option 3&lt;/label&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-form-footer"&gt;&lt;/div&gt;
-    &lt;/div&gt;
-&lt;/div&gt;</code></pre>
+&lt;/fieldset&gt;</code></pre>
           </div>
         </div>
 
@@ -504,6 +527,21 @@ direction: ltr
           <div class="demo-header">
             <div class="demo-label">Checkbox</div>
             <div class="demo-action">
+              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='["size-lg", ".nds-check-container", "sizeToggle"]'>
+                <span class="label">LG</span>
+              </button>
+              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn selected" data-toggler='["", ".nds-check-container", "sizeToggle"]'>
+                <span class="label">MD</span>
+              </button>
+              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='["size-sm", ".nds-check-container", "sizeToggle"]'>
+                <span class="label">SM</span>
+              </button>
+              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='["disabled", "input[type=checkbox]", "stateToggle", "attr"]'>
+                <span class="label">Disabled</span>
+              </button>
+              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='["rowView", ".nds-check-group", "layoutToggle"]'>
+                <span class="label">RowView</span>
+              </button>
               <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn" data-toggler='["noBg", ".demo-container", "containerBg"]'>
                 <span class="label">Remove bg</span>
               </button>
@@ -511,51 +549,52 @@ direction: ltr
           </div>
           <div class="demo-container">
             <div class="state-demo">
-              <fieldset class="nds-radio-group">
+              <fieldset>
                 <legend class="label">Checkbox Group</legend>
-                <div class="nds-form-container nds-check">
-                  <div class="nds-form-header">
-                    <label class="label" for="checkbox1">Neutral</label>
+                <div class="nds-check-group">
+                  <div class="nds-form-container nds-check-container">
+                    <div class="nds-form-header">
+                      <label class="label" for="checkbox1">Neutral</label>
+                    </div>
+                    <div class="nds-form-control">
+                      <input
+                        type="checkbox"
+                        id="checkbox1"
+                        name="checkboxGroup"
+                        value="option1"
+                        class="nds-check">
+                    </div>
                   </div>
-                  <div class="nds-form-control">
-                    <input
-                      type="checkbox"
-                      id="checkbox1"
-                      name="checkboxGroup"
-                      value="option1"
-                      class="nds-check">
+                  <div class="nds-form-container nds-check-container">
+                    <div class="nds-form-header">
+                      <label class="label" for="checkbox2">Primary</label>
+                      <span class="info">When a selection needs a further detailed explanation, it goes here.</span>
+                      <span class="error">
+                        <i class="hgi hgi-stroke hgi-alert-circle icon"></i>Error/Warning message.</span>
+                    </div>
+                    <div class="nds-form-control">
+                      <input
+                        type="checkbox"
+                        id="checkbox2"
+                        name="checkboxGroup"
+                        value="option2"
+                        class="nds-check primary">
+                    </div>
+                  </div>
+                  <div class="nds-form-container nds-check-container">
+                    <div class="nds-form-header">
+                      <label class="label" for="checkbox3">Indeterminate</label>
+                    </div>
+                    <div class="nds-form-control">
+                      <input
+                        type="checkbox"
+                        id="checkbox3"
+                        name="checkboxGroup"
+                        value="option3"
+                        class="nds-check indeterminate">
+                    </div>
                   </div>
                 </div>
-                <div class="nds-form-container nds-check">
-                  <div class="nds-form-header">
-                    <label class="label" for="checkbox2">Primary</label>
-                    <span class="info">When a selection needs a further detailed explanation, it goes here.</span>
-                  </div>
-                  <div class="nds-form-control">
-                    <input
-                      type="checkbox"
-                      id="checkbox2"
-                      name="checkboxGroup"
-                      value="option2"
-                      class="nds-check primary">
-                  </div>
-                </div>
-                <div class="nds-form-container nds-check">
-                  <div class="nds-form-header">
-                    <label class="label" for="checkbox3">Disabled</label>
-                  </div>
-                  <div class="nds-form-control">
-                    <input
-                      type="checkbox"
-                      id="checkbox3"
-                      name="checkboxGroup"
-                      value="disabled"
-                      class="nds-check"
-                      checked
-                      disabled>
-                  </div>
-                </div>
-                <div class="nds-form-footer"></div>
               </fieldset>
             </div>
           </div>
@@ -566,9 +605,9 @@ direction: ltr
                 <i class="hgi hgi-stroke hgi-copy-01"></i>
               </button>
             </div>
-<pre class="checkbox-code"><code>&lt;fieldset class="nds-radio-group"&gt;
+<pre class="checkbox-code"><code>&lt;fieldset class="nds-check-group"&gt;
     &lt;legend class="label"&gt;Checkbox Group&lt;/legend&gt;
-    &lt;div class="nds-form-container nds-check"&gt;
+    &lt;div class="nds-form-container nds-check-container"&gt;
         &lt;div class="nds-form-header"&gt;
             &lt;label class="label" for="checkbox1"&gt;Neutral&lt;/label&gt;
         &lt;/div&gt;
@@ -576,21 +615,13 @@ direction: ltr
             &lt;input type="checkbox" id="checkbox1" name="checkboxGroup" value="option1" class="nds-check"&gt;
         &lt;/div&gt;
     &lt;/div&gt;
-    &lt;div class="nds-form-container nds-check"&gt;
+    &lt;div class="nds-form-container nds-check-container"&gt;
         &lt;div class="nds-form-header"&gt;
             &lt;label class="label" for="checkbox2"&gt;Primary&lt;/label&gt;
             &lt;span class="info"&gt;When a selection needs a further detailed explanation, it goes here.&lt;/span&gt;
         &lt;/div&gt;
         &lt;div class="nds-form-control"&gt;
             &lt;input type="checkbox" id="checkbox2" name="checkboxGroup" value="option2" class="nds-check primary"&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class="nds-form-container nds-check"&gt;
-        &lt;div class="nds-form-header"&gt;
-            &lt;label class="label" for="checkbox3"&gt;Disabled&lt;/label&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-form-control"&gt;
-            &lt;input type="checkbox" id="checkbox3" name="checkboxGroup" value="disabled" class="nds-check" checked disabled&gt;
         &lt;/div&gt;
     &lt;/div&gt;
 &lt;/fieldset&gt;</code></pre>

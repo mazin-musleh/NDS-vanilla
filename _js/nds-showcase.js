@@ -1,6 +1,18 @@
 /**
  * National Design System - Showcase JavaScript
  * Common functionality for component demonstration pages
+ * 
+ * Toggle Button Formats:
+ * 
+ * Class toggling (default):
+ * data-toggler='["class1 class2", ".target", "type"]'
+ * 
+ * Attribute toggling:
+ * data-toggler='["attr1=value1 attr2", ".target", "type", "attr"]'
+ * data-toggler='["disabled checked", ".target", "type", "attr"]'  // for boolean attributes
+ * 
+ * Multiple operations:
+ * data-toggler='[["class1", ".target1", "type1"], ["attr1=val1", ".target2", "type2", "attr"]]'
  */
 
 (function() {
@@ -132,14 +144,14 @@
                 if (Array.isArray(parsed) && parsed.length >= 2) {
                     // Check if it's a single operation or multiple operations
                     if (typeof parsed[0] === 'string') {
-                        // Single operation: ["class1 class2 class3", "target", "type"]
-                        togglePairs = [[parsed[0], parsed[1], parsed[2]]];
+                        // Single operation: ["class1 class2" or "attr1=val1 attr2", "target", "type", "operation"]
+                        togglePairs = [[parsed[0], parsed[1], parsed[2], parsed[3]]];
                     } else {
-                        // Multiple operations: [["class1 class2", "target1", "type1"], ["class3", "target2", "type2"]]
+                        // Multiple operations: [["class1 class2", "target1", "type1", "operation1"], ["attr1=val1", "target2", "type2", "attr"]]
                         togglePairs = parsed;
                     }
                 } else {
-                    console.error('data-toggler must be ["class1 class2", "target", "type?"] or multiple arrays');
+                    console.error('data-toggler must be ["classes/attributes", "target", "type?", "operation?"] or multiple arrays');
                     return;
                 }
             } catch (e) {
@@ -166,11 +178,14 @@
         }
 
         // Process each toggle operation
-        togglePairs.forEach(([classNames, targetSelector, type]) => {
-            if (!classNames || !targetSelector) {
-                console.error('Each toggle operation must have ["class1 class2", "target", "type?"]');
+        togglePairs.forEach(([classNamesOrAttrs, targetSelector, type, operation]) => {
+            if (!classNamesOrAttrs || !targetSelector) {
+                console.error('Each toggle operation must have ["classes/attributes", "target", "type?", "operation?"]');
                 return;
             }
+            
+            // Determine operation type: "class" (default) or "attr"
+            const operationType = operation || 'class';
             
             let targetElement;
             
@@ -236,28 +251,33 @@
                 return;
             }
             
-            // Apply class changes to ALL matching elements
+            // Apply changes to ALL matching elements
             targetElements.forEach(targetElement => {
-                // Split class names and toggle each one
-                const classArray = classNames.trim().split(/\s+/);
-                
-                classArray.forEach(className => {
-                    if (className) {
-                        targetElement.classList.toggle(className);
-                    }
-                });
-                
-                // Special handling for VerticalTabs: trigger scroll logic after any oneRowContent change
-                if (type === 'VerticalTabs' && classArray.includes('oneRowContent')) {
-                    setTimeout(() => {
-                        if (window.initializeRowScroll) {
-                            window.initializeRowScroll(true); // Force update for already initialized elements
+                if (operationType === 'attr') {
+                    // Handle attribute toggling
+                    handleAttributeToggling(targetElement, classNamesOrAttrs, demoCard);
+                } else {
+                    // Handle class toggling (default behavior)
+                    const classArray = classNamesOrAttrs.trim().split(/\s+/);
+                    
+                    classArray.forEach(className => {
+                        if (className) {
+                            targetElement.classList.toggle(className);
                         }
-                    }, 100);
+                    });
+                    
+                    // Special handling for VerticalTabs: trigger scroll logic after any oneRowContent change
+                    if (type === 'VerticalTabs' && classArray.includes('oneRowContent')) {
+                        setTimeout(() => {
+                            if (window.initializeRowScroll) {
+                                window.initializeRowScroll(true); // Force update for already initialized elements
+                            }
+                        }, 100);
+                    }
+                    
+                    // Handle code updates for specific class changes
+                    updateCodeExampleForClasses(demoCard, targetElement, classArray);
                 }
-                
-                // Handle code updates for specific class changes
-                updateCodeExampleForClasses(demoCard, targetElement, classArray);
             });
         });
         
@@ -308,9 +328,12 @@
                                 if (otherTypes.length === 1 && otherTypes[0] === buttonType && otherButton.classList.contains('selected')) {
                                     otherButton.classList.remove('selected');
                                     
-                                    // Also reverse the class changes for the deselected button
-                                    otherOperations.forEach(([classNames, targetSelector]) => {
-                                        if (!classNames || !targetSelector) return;
+                                    // Also reverse the changes for the deselected button
+                                    otherOperations.forEach(([classNamesOrAttrs, targetSelector, , otherOperation]) => {
+                                        if (!classNamesOrAttrs || !targetSelector) return;
+                                        
+                                        // Determine operation type for deselection
+                                        const deselectionOperationType = otherOperation || 'class';
                                         
                                         let targetElement;
                                         
@@ -370,28 +393,33 @@
                                         
                                         if (deselectionTargetElements.length) {
                                             deselectionTargetElements.forEach(targetElement => {
-                                                // Remove classes that were added by the deselected button
-                                                const classArray = classNames.trim().split(/\s+/);
                                                 const otherButtonType = otherTypes[0]; // We know it's single type
                                                 
-                                                
-                                                classArray.forEach(className => {
-                                                    if (className && targetElement.classList.contains(className)) {
-                                                        targetElement.classList.remove(className);
-                                                    }
-                                                });
-                                                
-                                                // Special handling for VerticalTabs deselection: trigger scroll logic after any oneRowContent change
-                                                if (otherButtonType === 'VerticalTabs' && classArray.includes('oneRowContent')) {
-                                                    setTimeout(() => {
-                                                        if (window.initializeRowScroll) {
-                                                            window.initializeRowScroll(true); // Force update for already initialized elements
+                                                if (deselectionOperationType === 'attr') {
+                                                    // Handle attribute deselection - toggle attributes back to original state
+                                                    handleAttributeToggling(targetElement, classNamesOrAttrs, demoCard);
+                                                } else {
+                                                    // Handle class deselection (default behavior)
+                                                    const classArray = classNamesOrAttrs.trim().split(/\s+/);
+                                                    
+                                                    classArray.forEach(className => {
+                                                        if (className && targetElement.classList.contains(className)) {
+                                                            targetElement.classList.remove(className);
                                                         }
-                                                    }, 100);
+                                                    });
+                                                    
+                                                    // Special handling for VerticalTabs deselection: trigger scroll logic after any oneRowContent change
+                                                    if (otherButtonType === 'VerticalTabs' && classArray.includes('oneRowContent')) {
+                                                        setTimeout(() => {
+                                                            if (window.initializeRowScroll) {
+                                                                window.initializeRowScroll(true); // Force update for already initialized elements
+                                                            }
+                                                        }, 100);
+                                                    }
+                                                    
+                                                    // Update code example after removing classes
+                                                    updateCodeExampleForClasses(demoCard, targetElement, classArray);
                                                 }
-                                                
-                                                // Update code example after removing classes
-                                                updateCodeExampleForClasses(demoCard, targetElement, classArray);
                                             });
                                         }
                                     });
@@ -414,6 +442,89 @@
             // Fallback: just toggle the button
             button.classList.toggle('selected');
         }
+    }
+
+    // Handle attribute toggling for target element
+    function handleAttributeToggling(targetElement, attributeString, demoCard) {
+        // Parse attribute string format: "attr1=value1 attr2=value2" or "attr1 attr2" (for boolean attributes)
+        const attributePairs = attributeString.trim().split(/\s+/);
+        
+        attributePairs.forEach(attrPair => {
+            if (!attrPair) return;
+            
+            const [attrName, attrValue] = attrPair.split('=');
+            
+            if (attrValue !== undefined) {
+                // Attribute with value: toggle between value and empty/null
+                if (targetElement.getAttribute(attrName) === attrValue) {
+                    targetElement.removeAttribute(attrName);
+                } else {
+                    targetElement.setAttribute(attrName, attrValue);
+                }
+            } else {
+                // Boolean attribute: toggle presence
+                if (targetElement.hasAttribute(attrName)) {
+                    targetElement.removeAttribute(attrName);
+                } else {
+                    targetElement.setAttribute(attrName, '');
+                }
+            }
+            
+        });
+        
+        // Update code example for attribute changes
+        updateCodeExampleForAttributes(demoCard, targetElement, attributePairs);
+    }
+
+    // Update code example for attribute changes
+    function updateCodeExampleForAttributes(demoCard, changedElement, changedAttributes) {
+        const codeElement = demoCard.querySelector('.code-example code');
+        if (!codeElement) return;
+        
+        if (!changedElement || !changedAttributes) return;
+        
+        let updatedCode = codeElement.textContent;
+        
+        // Get the tag name and first class to identify the element in the code
+        const tagName = changedElement.tagName.toLowerCase();
+        const firstClass = Array.from(changedElement.classList)[0];
+        
+        if (!firstClass) return;
+        
+        // Find the element in the code by tag and first class
+        const elementRegex = new RegExp(
+            `<${tagName}([^>]*class="[^"]*\\b${firstClass.replace(/[-[\]/{}()*+?.\\^$|]/g, "\\$&")}\\b[^"]*"[^>]*)>`,
+            'gi'
+        );
+        
+        updatedCode = updatedCode.replace(elementRegex, (match, attributes) => {
+            let elementAttributes = attributes;
+            
+            // For each changed attribute, update it in the code
+            changedAttributes.forEach(attrPair => {
+                const [attrName, attrValue] = attrPair.split('=');
+                const currentValue = changedElement.getAttribute(attrName);
+                
+                // Remove existing attribute from the match
+                const attrRegex = new RegExp(`\\s+${attrName.replace(/[-[\]/{}()*+?.\\^$|]/g, "\\$&")}(?:="[^"]*")?`, 'gi');
+                elementAttributes = elementAttributes.replace(attrRegex, '');
+                
+                // Add attribute if it exists on the element
+                if (currentValue !== null) {
+                    if (currentValue === '') {
+                        // Boolean attribute
+                        elementAttributes += ` ${attrName}`;
+                    } else {
+                        // Attribute with value
+                        elementAttributes += ` ${attrName}="${currentValue}"`;
+                    }
+                }
+            });
+            
+            return `<${tagName}${elementAttributes}>`;
+        });
+        
+        codeElement.textContent = updatedCode;
     }
 
 
