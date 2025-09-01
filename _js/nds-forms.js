@@ -551,17 +551,19 @@
             console.error('❌ No file list found in upload container');
             return;
         }
-        const isSingleFile = uploadContainer.classList.contains('single-file');
+        // Note: isSingleFile is now checked dynamically in functions
         const isMultiple = fileInput.hasAttribute('multiple');
         let uploadedFiles = [];
 
-        // Configuration from data attributes
-        const config = {
-            uploadUrl: uploadContainer.dataset.uploadUrl || null,
-            autoUpload: uploadContainer.dataset.autoUpload === 'true',
-            maxFileSize: parseInt(uploadContainer.dataset.maxFileSize) || 10 * 1024 * 1024, // 10MB default
-            allowedTypes: uploadContainer.dataset.allowedTypes?.split(',') || null
-        };
+        // Function to get current configuration (dynamic reading)
+        function getConfig() {
+            return {
+                uploadUrl: uploadContainer.dataset.uploadUrl || null,
+                autoUpload: uploadContainer.dataset.autoUpload === 'true',
+                maxFileSize: parseInt(uploadContainer.dataset.maxFileSize) || 10 * 1024 * 1024, // 10MB default
+                allowedTypes: uploadContainer.dataset.allowedTypes?.split(',') || null
+            };
+        }
 
         // Utility functions
         function formatFileSize(bytes) {
@@ -572,102 +574,127 @@
             return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
         }
 
-        function getFileIcon(fileName) {
-            const extension = fileName.split('.').pop().toLowerCase();
-            const icons = {
-                'pdf': 'hgi-file-pdf',
-                'doc': 'hgi-file-text',
-                'docx': 'hgi-file-text',
-                'txt': 'hgi-file-text',
-                'jpg': 'hgi-image-01',
-                'jpeg': 'hgi-image-01',
-                'png': 'hgi-image-01',
-                'gif': 'hgi-image-01'
-            };
-            return icons[extension] || 'hgi-file-unknown-01';
-        }
+        // Icon generation removed - using template icons instead
 
-        function createProgressBar() {
-            const progressBar = document.createElement('div');
-            progressBar.className = 'upload-progress';
-            progressBar.innerHTML = `
-                <svg class="progress-circle" width="24" height="24" viewBox="0 0 24 24">
-                    <circle cx="12" cy="12" r="10" fill="none" stroke="var(--border-neutral-primary)" stroke-width="2"/>
-                    <circle class="progress-fill" cx="12" cy="12" r="10" fill="none" stroke="var(--button-background-primary-default)" 
-                            stroke-width="2" stroke-dasharray="62.83" stroke-dashoffset="62.83" 
-                            transform="rotate(-90 12 12)" stroke-linecap="round"/>
-                </svg>
-                <span class="progress-text">0%</span>
-            `;
-            return progressBar;
-        }
 
         function updateProgress(progressElement, percentage) {
-            const circle = progressElement.querySelector('.progress-fill');
-            const text = progressElement.querySelector('.progress-text');
+            const circle = progressElement.querySelector('.progress-bar');
+            const text = progressElement.querySelector('.progress-number');
             const circumference = 62.83; // 2 * Math.PI * 10
             const offset = circumference - (percentage / 100) * circumference;
             
-            circle.style.strokeDashoffset = offset;
-            text.textContent = Math.round(percentage) + '%';
+            if (circle) circle.style.strokeDashoffset = offset;
+            if (text) text.textContent = Math.round(percentage);
         }
 
-        function createFileItem(file, index, uploadStatus = 'ready') {
-            const fileItem = document.createElement('div');
-            fileItem.className = `file-item ${uploadStatus}`;
-            fileItem.dataset.index = index;
+        function createFileItem(fileData, index) {
+            const file = fileData.file;
+            const status = fileData.status || 'ready';
             
-            const iconHtml = uploadStatus === 'uploading' 
-                ? createProgressBar().outerHTML
-                : `<i class="hgi hgi-stroke ${getFileIcon(file.name)} file-icon"></i>`;
-
-            fileItem.innerHTML = `
-                ${iconHtml}
-                <div class="file-info">
-                    <div class="file-name">${file.name}</div>
-                    <div class="file-details">
-                        <span class="file-size">${formatFileSize(file.size)}</span>
-                        <span class="file-type">${file.type || 'Unknown'}</span>
-                        <span class="file-status"></span>
-                    </div>
-                </div>
-                <div class="file-actions">
-                    <button type="button" class="remove-file" aria-label="Remove file" data-index="${index}">
-                        <i class="hgi hgi-stroke hgi-trash-01"></i>
-                    </button>
-                </div>
-            `;
+            // Find template within the current container
+            const template = uploadContainer.querySelector('template');
+            if (!template) {
+                console.error('❌ File item template not found in container!');
+                return document.createElement('div');
+            }
+            
+            const fileItem = template.content.cloneNode(true).querySelector('.file-item');
+            
+            // Set appropriate classes and attributes
+            if (status === 'uploading') {
+                fileItem.className = 'file-item uploading';
+            } else {
+                fileItem.className = `file-item ${status}`;
+            }
+            
+            fileItem.dataset.index = index;
+            fileItem.dataset.fileId = fileData.id;
+            
+            // Update content
+            const fileName = fileItem.querySelector('.file-name');
+            const fileSize = fileItem.querySelector('.file-size');
+            const fileType = fileItem.querySelector('.file-type');
+            const fileStatus = fileItem.querySelector('.file-status');
+            const fileIcon = fileItem.querySelector('.file-icon');
+            const progressCircle = fileItem.querySelector('.upload-progress-circle');
+            const removeButton = fileItem.querySelector('.remove-file');
+            const fileError = fileItem.querySelector('.file-error');
+            const errorMessage = fileItem.querySelector('.error-message');
+            
+            if (fileName) fileName.textContent = file.name;
+            if (fileSize) fileSize.textContent = formatFileSize(file.size);
+            if (fileType) fileType.textContent = file.type || 'Unknown';
+            if (fileStatus) fileStatus.textContent = getStatusText(status);
+            if (removeButton) removeButton.setAttribute('data-file-id', fileData.id);
+            
+            // Handle icon vs progress bar vs error display
+            if (status === 'uploading') {
+                if (fileIcon) fileIcon.style.display = 'none';
+                if (progressCircle) progressCircle.style.display = 'flex';
+                if (fileError) fileError.style.display = 'none';
+            } else if (status === 'error') {
+                if (fileIcon) fileIcon.style.display = '';
+                if (progressCircle) progressCircle.style.display = 'none';
+                if (fileError && errorMessage) {
+                    fileError.style.display = 'flex';
+                    errorMessage.textContent = fileData.error || 'Upload failed';
+                }
+                fileItem.classList.add('error');
+            } else {
+                if (fileIcon) fileIcon.style.display = '';
+                if (progressCircle) progressCircle.style.display = 'none';
+                if (fileError) fileError.style.display = 'none';
+                fileItem.classList.remove('error');
+            }
+            
+            // Update progress if uploading
+            if (status === 'uploading' && fileData.progress > 0) {
+                updateProgressInItem(fileItem, fileData.progress);
+            }
+            
             return fileItem;
+        }
+        
+        function getStatusText(status) {
+            const statusMap = {
+                'ready': '',
+                'uploading': 'Uploading...',
+                'complete': 'Complete',
+                'error': 'Failed'
+            };
+            return statusMap[status] || '';
+        }
+        
+        function updateProgressInItem(fileItem, progress) {
+            const progressElement = fileItem.querySelector('.upload-progress-circle');
+            if (progressElement) {
+                const circle = progressElement.querySelector('.progress-bar');
+                const text = progressElement.querySelector('.progress-number');
+                if (circle && text) {
+                    const circumference = 62.83;
+                    const offset = circumference - (progress / 100) * circumference;
+                    circle.style.strokeDashoffset = offset;
+                    text.textContent = Math.round(progress);
+                }
+            }
         }
 
         function updateFileList() {
+            console.log('📋 updateFileList called, uploadedFiles.length:', uploadedFiles.length);
             fileList.innerHTML = '';
             
             if (uploadedFiles.length > 0) {
                 uploadedFiles.forEach((fileData, index) => {
-                    const fileItem = createFileItem(fileData.file, index, fileData.status);
+                    console.log('📋 Creating file item for:', fileData.file.name, 'with ID:', fileData.id);
+                    const fileItem = createFileItem(fileData, index);
                     fileList.appendChild(fileItem);
                 });
-
-                // Add event listeners for remove buttons
-                fileList.querySelectorAll('.remove-file').forEach(button => {
-                    button.addEventListener('click', function() {
-                        const index = parseInt(this.getAttribute('data-index'));
-                        const removedFile = uploadedFiles[index];
-                        
-                        // Dispatch event before removing
-                        uploadContainer.dispatchEvent(new CustomEvent('fileRemoved', {
-                            detail: { file: removedFile, index: index }
-                        }));
-                        
-                        uploadedFiles.splice(index, 1);
-                        updateFileList();
-                    });
-                });
             }
+            console.log('📋 updateFileList completed');
         }
 
         function validateFile(file) {
+            const config = getConfig();
             const errors = [];
 
             // Check file size
@@ -701,7 +728,7 @@
                         file: file,
                         status: 'ready',
                         progress: 0,
-                        id: Date.now() + Math.random()
+                        id: Date.now() + '_' + Math.random().toString().substr(2, 6)
                     });
                 } else {
                     errors.push({ file: file, errors: fileErrors });
@@ -710,15 +737,27 @@
 
             console.log('✅ Valid files:', validFiles.length, '❌ Invalid files:', errors.length);
 
-            // Handle file storage based on upload type
+            // Handle file storage based on upload type (check dynamically)
+            const isSingleFile = uploadContainer.classList.contains('single-file');
+            console.log('📁 Before file handling - uploadedFiles.length:', uploadedFiles.length);
+            console.log('📁 isSingleFile (dynamic check):', isSingleFile);
+            console.log('📁 validFiles.length:', validFiles.length);
             if (isSingleFile) {
-                uploadedFiles = validFiles.slice(0, 1); // Take only first valid file
+                console.log('📁 Single file mode: replacing existing files');
+                uploadedFiles = validFiles.slice(0, 1); // Replace with only first valid file
+                console.log('📁 After replacement - uploadedFiles.length:', uploadedFiles.length);
             } else {
+                console.log('📁 Multi file mode: adding to existing files');
                 uploadedFiles = uploadedFiles.concat(validFiles);
+                console.log('📁 After adding - uploadedFiles.length:', uploadedFiles.length);
             }
 
+            // Get current config (dynamic)
+            const config = getConfig();
+            console.log('🔧 Current config at file handling:', config);
+
             // Don't immediately show files in list if auto-upload is enabled
-            // Let the upload simulation handle the display
+            // Let the upload process handle the display
             if (!(config.autoUpload && config.uploadUrl)) {
                 updateFileList();
             }
@@ -755,29 +794,32 @@
 
             console.log('📤 Starting upload for:', fileData.file.name, 'with ID:', fileData.id);
 
-            // Update status to uploading and show in list
-            uploadedFiles[index].status = 'uploading';
-            updateFileList();
-
             const formData = new FormData();
             formData.append('file', fileData.file);
 
             // Allow modification of form data before upload
             const beforeUploadEvent = new CustomEvent('beforeUpload', {
+                bubbles: true,
+                cancelable: true,
                 detail: { 
                     fileData: fileData, 
                     formData: formData,
                     cancel: false
                 }
             });
+            console.log('📤 Dispatching beforeUpload event for:', fileData.file.name);
             uploadContainer.dispatchEvent(beforeUploadEvent);
+            console.log('📤 beforeUpload event dispatched, cancel status:', beforeUploadEvent.detail.cancel);
 
             // Check if upload was cancelled
             if (beforeUploadEvent.detail.cancel) {
-                uploadedFiles[index].status = 'ready';
-                updateFileList();
+                console.log('📤 Upload cancelled by external handler');
                 return;
             }
+
+            // Update status to uploading and show in list (only if not cancelled)
+            uploadedFiles[index].status = 'uploading';
+            updateFileList();
 
             const xhr = new XMLHttpRequest();
 
@@ -788,7 +830,7 @@
                     
                     // Update progress bar
                     const fileItem = fileList.querySelector(`[data-index="${index}"]`);
-                    const progressElement = fileItem?.querySelector('.upload-progress');
+                    const progressElement = fileItem?.querySelector('.upload-progress-circle');
                     if (progressElement) {
                         updateProgress(progressElement, percentComplete);
                     }
@@ -841,6 +883,7 @@
                 updateFileList();
             });
 
+            const config = getConfig();
             xhr.open('POST', config.uploadUrl);
             xhr.send(formData);
         }
@@ -851,28 +894,172 @@
             filesToUpload.forEach(fileData => uploadFile(fileData));
         };
 
-        // Store instance data on the container for external access
-        uploadContainer._fileUploadInstance = {
-            uploadedFiles: uploadedFiles,
-            updateFileList: updateFileList,
-            uploadFiles: function(files = null) {
-                const filesToUpload = files || uploadedFiles.filter(f => f.status === 'ready');
-                filesToUpload.forEach(fileData => uploadFile(fileData));
+        // Public API for external file upload control
+        const fileUploadAPI = {
+            // File Management
+            addFile: function(file, options = {}) {
+                const fileData = {
+                    file: file,
+                    id: Date.now() + '_' + Math.random().toString().substr(2, 6),
+                    status: options.status || 'ready',
+                    progress: options.progress || 0,
+                    error: options.error || null
+                };
+                
+                const isSingleFile = uploadContainer.classList.contains('single-file');
+                if (isSingleFile) {
+                    uploadedFiles = [fileData];
+                } else {
+                    uploadedFiles.push(fileData);
+                }
+                
+                updateFileList();
+                return fileData.id;
+            },
+            
+            removeFile: function(fileId) {
+                console.log('🗑️ removeFile called with fileId:', fileId, 'type:', typeof fileId);
+                console.log('🗑️ Current uploadedFiles:', uploadedFiles);
+                const index = uploadedFiles.findIndex(f => f.id === fileId);
+                console.log('🗑️ File index found:', index);
+                if (index !== -1) {
+                    uploadedFiles.splice(index, 1);
+                    console.log('🗑️ File removed, calling updateFileList');
+                    updateFileList();
+                    console.log('🗑️ updateFileList completed');
+                    return true;
+                } else {
+                    console.warn('🗑️ File not found in array for removal');
+                }
+                return false;
+            },
+            
+            clearAllFiles: function() {
+                uploadedFiles = [];
+                updateFileList();
+            },
+            
+            // Status Management
+            setFileStatus: function(fileId, status, options = {}) {
+                const file = uploadedFiles.find(f => f.id === fileId);
+                if (file) {
+                    file.status = status;
+                    if (options.progress !== undefined) file.progress = options.progress;
+                    if (options.error) file.error = options.error;
+                    updateFileList();
+                    return true;
+                }
+                return false;
+            },
+            
+            setFileProgress: function(fileId, progress) {
+                const file = uploadedFiles.find(f => f.id === fileId);
+                if (file) {
+                    file.progress = progress;
+                    if (progress >= 100) {
+                        file.status = 'complete';
+                    } else if (file.status !== 'uploading') {
+                        file.status = 'uploading';
+                    }
+                    
+                    // Update UI efficiently - just update this file's progress
+                    const fileItem = fileList.querySelector(`[data-file-id="${fileId}"]`);
+                    if (fileItem) {
+                        updateProgressInItem(fileItem, progress);
+                        
+                        // Update status if complete
+                        if (progress >= 100) {
+                            // Trigger full UI refresh for completion
+                            updateFileList();
+                        }
+                    }
+                    return true;
+                }
+                return false;
+            },
+            
+            // File Information
+            getFile: function(fileId) {
+                return uploadedFiles.find(f => f.id === fileId) || null;
+            },
+            
+            getAllFiles: function() {
+                return [...uploadedFiles];
+            },
+            
+            getFilesByStatus: function(status) {
+                return uploadedFiles.filter(f => f.status === status);
+            },
+            
+            // UI Control
+            refreshUI: function() {
+                updateFileList();
+            },
+            
+            // Upload Control
+            startUpload: function(fileId = null) {
+                if (fileId) {
+                    const fileData = uploadedFiles.find(f => f.id === fileId);
+                    if (fileData) uploadFile(fileData);
+                } else {
+                    const readyFiles = uploadedFiles.filter(f => f.status === 'ready');
+                    readyFiles.forEach(fileData => uploadFile(fileData));
+                }
+            },
+            
+            // Event Dispatching
+            dispatchEvent: function(eventName, detail) {
+                uploadContainer.dispatchEvent(new CustomEvent(eventName, { 
+                    bubbles: true, 
+                    detail: detail 
+                }));
             }
         };
+
+        // Store API instance on the container for external access
+        uploadContainer._fileUploadInstance = fileUploadAPI;
 
         // Event listeners
         fileInput.addEventListener('change', function(e) {
             console.log('📂 File input change detected:', e.target.files.length, 'files');
             console.log('📂 Event target:', e.target);
             console.log('📂 Upload container:', uploadContainer);
-            console.log('📂 Auto upload setting:', config.autoUpload);
-            console.log('📂 Upload URL:', config.uploadUrl);
+            const currentConfig = getConfig();
+            console.log('📂 Auto upload setting:', currentConfig.autoUpload);
+            console.log('📂 Upload URL:', currentConfig.uploadUrl);
             if (e.target.files.length > 0) {
                 console.log('📁 Processing files:', Array.from(e.target.files).map(f => f.name));
                 handleFiles(e.target.files);
             } else {
                 console.log('❌ No files selected');
+            }
+        });
+
+        // Event delegation for remove buttons
+        fileList.addEventListener('click', function(e) {
+            console.log('🗑️ File list clicked:', e.target);
+            const removeButton = e.target.closest('.remove-file');
+            console.log('🗑️ Remove button found:', removeButton);
+            if (removeButton) {
+                e.preventDefault();
+                e.stopPropagation();
+                const fileId = removeButton.getAttribute('data-file-id');
+                console.log('🗑️ File ID to remove:', fileId);
+                const removedFile = uploadedFiles.find(f => f.id == fileId);
+                console.log('🗑️ File to remove:', removedFile);
+                
+                if (removedFile) {
+                    console.log('🗑️ Dispatching fileRemoved event');
+                    // Dispatch event before removing
+                    uploadContainer.dispatchEvent(new CustomEvent('fileRemoved', {
+                        detail: { fileData: removedFile, fileId: fileId }
+                    }));
+                    
+                    console.log('🗑️ Calling fileUploadAPI.removeFile');
+                    fileUploadAPI.removeFile(fileId);
+                } else {
+                    console.warn('🗑️ File not found in uploadedFiles array');
+                }
             }
         });
 
