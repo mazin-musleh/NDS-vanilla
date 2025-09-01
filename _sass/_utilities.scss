@@ -1,0 +1,167 @@
+// ==============================================
+// NDS UTILITIES - Bootstrap 5 Inspired
+// ==============================================
+
+@use 'sass:map';
+
+// Generate spacing utilities using NDS spacing tokens
+// Pattern: {property}{sides?}-{breakpoint?}-{size}
+// Following Bootstrap 5 exact naming conventions
+
+// Spacing map - direct NDS values
+$spacers: (
+  0: var(--spacing-0),
+  1: var(--spacing-1),
+  2: var(--spacing-2),
+  3: var(--spacing-3),
+  4: var(--spacing-4),
+  5: var(--spacing-5),
+  auto: auto
+);
+
+// Extended NDS spacing options
+$nds-extended-spacers: (
+  0-5: var(--spacing-0-5),
+  1-5: var(--spacing-1-5),
+  6: var(--spacing-6),
+  8: var(--spacing-8),
+  10: var(--spacing-10),
+  12: var(--spacing-12),
+  16: var(--spacing-16),
+  20: var(--spacing-20),
+  24: var(--spacing-24),
+  32: var(--spacing-32),
+  40: var(--spacing-40),
+  48: var(--spacing-48),
+  56: var(--spacing-56),
+  64: var(--spacing-64),
+  96: var(--spacing-96)
+);
+
+// Semantic spacing shortcuts (NDS specific)
+$semantic-spacers: (
+  none: var(--spacing-none),
+  xxs: var(--spacing-xxs),
+  xs: var(--spacing-xs),
+  sm: var(--spacing-sm),
+  md: var(--spacing-md),
+  lg: var(--spacing-lg),
+  xl: var(--spacing-xl),
+  2xl: var(--spacing-2xl),
+  3xl: var(--spacing-3xl),
+  4xl: var(--spacing-4xl),
+  5xl: var(--spacing-5xl),
+  6xl: var(--spacing-6xl),
+  7xl: var(--spacing-7xl),
+  8xl: var(--spacing-8xl),
+  9xl: var(--spacing-9xl),
+  10xl: var(--spacing-10xl),
+  11xl: var(--spacing-11xl)
+);
+
+// Merge all spacer maps
+$all-spacers: map.merge($spacers, map.merge($nds-extended-spacers, $semantic-spacers));
+
+// Bootstrap 5 breakpoints + NDS breakpoints (both available)
+$breakpoints: (
+  sm: 'min-width: 576px',
+  md: 'min-width: 768px', 
+  lg: 'min-width: 992px',
+  xl: 'min-width: 1200px',
+  xxl: 'min-width: 1400px',
+  tablet: 'min-width: 600px',     // NDS tablet(min)
+  desktop: 'min-width: 960px',    // NDS desktop(min) 
+  large: 'min-width: 1280px'      // NDS large-desktop(min)
+);
+
+// Generate margin utilities - Bootstrap 5 naming
+@each $key, $value in $all-spacers {
+  @if $key != auto {
+    // Positive margins
+    .m-#{$key} { margin: #{$value} !important; }
+    .mt-#{$key} { margin-top: #{$value} !important; }
+    .mb-#{$key} { margin-bottom: #{$value} !important; }
+    .ms-#{$key} { margin-left: #{$value} !important; }    // start (left in LTR)
+    .me-#{$key} { margin-right: #{$value} !important; }   // end (right in LTR)
+    .ml-#{$key} { margin-left: #{$value} !important; }    // legacy
+    .mr-#{$key} { margin-right: #{$value} !important; }   // legacy
+    .mx-#{$key} { 
+      margin-left: #{$value} !important; 
+      margin-right: #{$value} !important; 
+    }
+    .my-#{$key} { 
+      margin-top: #{$value} !important; 
+      margin-bottom: #{$value} !important; 
+    }
+
+    // Negative margins (Bootstrap 5 style with 'n' prefix)
+    @if $key != 0 {
+      .m-n#{$key} { margin: calc(#{$value} * -1) !important; }
+      .mt-n#{$key} { margin-top: calc(#{$value} * -1) !important; }
+      .mb-n#{$key} { margin-bottom: calc(#{$value} * -1) !important; }
+      .ms-n#{$key} { margin-left: calc(#{$value} * -1) !important; }
+      .me-n#{$key} { margin-right: calc(#{$value} * -1) !important; }
+      .ml-n#{$key} { margin-left: calc(#{$value} * -1) !important; }
+      .mr-n#{$key} { margin-right: calc(#{$value} * -1) !important; }
+      .mx-n#{$key} { 
+        margin-left: calc(#{$value} * -1) !important; 
+        margin-right: calc(#{$value} * -1) !important; 
+      }
+      .my-n#{$key} { 
+        margin-top: calc(#{$value} * -1) !important; 
+        margin-bottom: calc(#{$value} * -1) !important; 
+      }
+    }
+  } @else {
+    // Handle auto separately (no negative auto)
+    .m-#{$key} { margin: #{$value} !important; }
+    .mt-#{$key} { margin-top: #{$value} !important; }
+    .mb-#{$key} { margin-bottom: #{$value} !important; }
+    .ms-#{$key} { margin-left: #{$value} !important; }
+    .me-#{$key} { margin-right: #{$value} !important; }
+    .ml-#{$key} { margin-left: #{$value} !important; }
+    .mr-#{$key} { margin-right: #{$value} !important; }
+    .mx-#{$key} { 
+      margin-left: #{$value} !important; 
+      margin-right: #{$value} !important; 
+    }
+    .my-#{$key} { 
+      margin-top: #{$value} !important; 
+      margin-bottom: #{$value} !important; 
+    }
+  }
+}
+
+// Generate padding utilities - Bootstrap 5 naming
+@each $key, $value in $all-spacers {
+  // All sides
+  .p-#{$key} { padding: #{$value} !important; }
+  
+  // Individual sides - Bootstrap 5 uses t, b, s, e  
+  .pt-#{$key} { padding-top: #{$value} !important; }
+  .pb-#{$key} { padding-bottom: #{$value} !important; }
+  .ps-#{$key} { padding-left: #{$value} !important; }   // start (left in LTR)
+  .pe-#{$key} { padding-right: #{$value} !important; }  // end (right in LTR)
+  
+  // Legacy left/right for compatibility
+  .pl-#{$key} { padding-left: #{$value} !important; }
+  .pr-#{$key} { padding-right: #{$value} !important; }
+  
+  // Horizontal & Vertical
+  .px-#{$key} { 
+    padding-left: #{$value} !important; 
+    padding-right: #{$value} !important; 
+  }
+  .py-#{$key} { 
+    padding-top: #{$value} !important; 
+    padding-bottom: #{$value} !important; 
+  }
+}
+
+// Generate gap utilities
+@each $key, $value in $all-spacers {
+  .gap-#{$key} { gap: #{$value} !important; }
+  .gap-x-#{$key} { column-gap: #{$value} !important; }
+  .gap-y-#{$key} { row-gap: #{$value} !important; }
+}
+
