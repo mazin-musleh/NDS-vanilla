@@ -17,6 +17,10 @@
 
 // Import base styles
 @use 'base';
+
+// Import utilities
+/* @use 'utilities'; */
+
 @use 'components/buttons';
 @use 'components/accordion';
 @use 'components/tabs';

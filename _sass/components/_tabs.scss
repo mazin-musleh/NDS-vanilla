@@ -18,9 +18,9 @@
 
 /* Base Tab Container */
 .nds-tabs {
-  width: 100%;
   display: flex;
   flex-direction: column;
+  margin: 0 var(--spacing-xl);
 
   /* Vertical Tab Layout */
   &.nds-vertical-tabs {
@@ -247,6 +247,13 @@
 .nds-tab-panel {
   padding: var(--spacing-xl);
   animation: fadeInUp 0.2s ease-in-out;
+
+  &.hug{
+    padding: 0;
+    & > *{
+      padding: var(--spacing-xl);
+    }
+  }
 
   &.hidden {
     display: none;

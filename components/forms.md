@@ -427,7 +427,7 @@ direction: ltr
                 <span class="label">LG</span>
               </button>
               <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn selected"
-                data-toggler='["", ".nds-radio-container", "sizeToggle"]'>
+                data-toggler='["size-md", ".nds-radio-container", "sizeToggle"]'>
                 <span class="label">MD</span>
               </button>
               <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
@@ -515,7 +515,7 @@ direction: ltr
                 <span class="label">LG</span>
               </button>
               <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn selected"
-                data-toggler='["", ".nds-check-container", "sizeToggle"]'>
+                data-toggler='["size-md", ".nds-check-container", "sizeToggle"]'>
                 <span class="label">MD</span>
               </button>
               <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
@@ -619,8 +619,7 @@ direction: ltr
                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                 <span class="label">Remove bg</span>
               </button>
-              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-action-btn" 
-                data-action="populate-demo-files">
+              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-action-btn" data-action="populate-demo-files">
                 <span class="label">Demo Files</span>
               </button>
             </div>
@@ -661,18 +660,20 @@ direction: ltr
                 <!-- Hidden template for file items -->
                 <template>
                   <div class="file-item">
-                    <i class="hgi hgi-stroke hgi-file-02 file-icon"></i>
-
-                    <div class="upload-progress-circle" style="display: none;">
+                    <i class="hgi hgi-stroke hgi-tick-02 file-icon"></i>
+                    <div class="progress-circle" style="display: none;">
                       <svg width="24" height="24" viewBox="0 0 24 24">
                         <circle class="progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="3" />
                         <circle class="progress-bar" cx="12" cy="12" r="10" fill="none" stroke-width="3"
                           stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" />
                       </svg>
-                      <span class="progress-percentage">
-                        <span class="progress-number">0</span>
-                        <span class="progress-symbol">%</span>
-                      </span>
+                      <div class="progress-info">
+                        <span class="progress-percentage">
+                          <span class="progress-number">0</span>
+                          <span class="progress-symbol">%</span>
+                        </span>
+                        <span class="progress-text"></span>
+                      </div>
                     </div>
 
                     <div class="file-info">
@@ -683,13 +684,13 @@ direction: ltr
                         <span class="file-status"></span>
                       </div>
                       <div class="file-error" style="display: none;">
-                        <i class="hgi hgi-stroke hgi-alert-circle"></i>
                         <span class="error-message"></span>
                       </div>
                     </div>
 
                     <div class="file-actions">
-                      <button type="button" class="nds-btn nds-btn-subtle remove-file" aria-label="Remove file">
+                      <button type="button" class="nds-btn nds-btn-subtle nds-btn-md remove-file"
+                        aria-label="Remove file">
                         <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
                       </button>
                     </div>
@@ -699,14 +700,39 @@ direction: ltr
             </div> <!-- /.state-demo -->
           </div> <!-- /.demo-container -->
 
-          <div class="code-example">
-            <div class="usage-header">
-              <span>Usage</span>
-              <button class="copy-btn" aria-label="Copy code example">
-                <i class="hgi hgi-stroke hgi-copy-01"></i>
-              </button>
+          <div class="nds-tabs withDivider">
+            <div class="nds-tab-list-container">
+              <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-1"
+                  id="tab-1">
+                  <span class="nds-tab-label">Code Example</span>
+                </button>
+                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="false" aria-controls="panel-2"
+                  id="tab-2">
+                  <span class="nds-tab-label">Documentation</span>
+                </button>
+                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="false" aria-controls="panel-3"
+                  id="tab-3">
+                  <span class="nds-tab-label">api</span>
+                </button>
+                <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                    class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                </button>
+              </nav>
             </div>
-            <code class="multi-file-upload-code">
+            <div class="nds-tab-content">
+              <div class="nds-tab-panel hug" role="tabpanel" id="panel-1" aria-labelledby="tab-1">
+
+                <div class="code-example">
+                  <div class="usage-header">
+                    <span>Usage</span>
+                    <button class="copy-btn" aria-label="Copy code example">
+                      <i class="hgi hgi-stroke hgi-copy-01"></i>
+                    </button>
+                  </div>
+
+
+                  <code class="multi-file-upload-code">
 &lt;div class="nds-form-container nds-file-upload multi-file-upload dropBox"&gt;
     &lt;div class="nds-form-header hidden"&gt;
         &lt;label class="label" for="multiFileUpload"&gt;Upload files&lt;/label&gt;
@@ -743,7 +769,7 @@ direction: ltr
         &lt;div class="file-item"&gt;
             &lt;i class="hgi hgi-stroke hgi-file-02 file-icon"&gt;&lt;/i&gt;
 
-            &lt;div class="upload-progress-circle" style="display: none;"&gt;
+            &lt;div class="progress-circle" style="display: none;"&gt;
                 &lt;svg width="24" height="24" viewBox="0 0 24 24"&gt;
                     &lt;circle class="progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="3"/&gt;
                     &lt;circle class="progress-bar" cx="12" cy="12" r="10" fill="none" stroke-width="3" 
@@ -774,7 +800,224 @@ direction: ltr
     &lt;/template&gt;
 &lt;/div&gt;
   </code>
-          </div> <!-- /.code-example -->
+
+
+                </div> <!-- /.code-example -->
+
+
+              </div>
+              <div class="nds-tab-panel hidden" role="tabpanel" id="panel-2" aria-labelledby="tab-2">
+                
+                <h2>File Upload Controller Documentation</h2>
+
+                <p>The NDS File Upload component provides a comprehensive JavaScript controller for programmatic control of file uploads.</p>
+
+                <h3>Configuration</h3>
+
+                <p>Configure the upload component using data attributes:</p>
+
+                <div class="code-example">
+                  <code class="language-html">
+&lt;div class="nds-file-upload" 
+     data-upload-url="/api/upload"
+     data-auto-upload="true"
+     data-max-files="5"
+     data-max-file-size="10485760"
+     data-accepted-types="image/*,application/pdf"&gt;
+&lt;/div&gt;
+                  </code>
+                </div>
+
+                <p><strong>Configuration Options:</strong></p>
+                <ul>
+                  <li><code>data-upload-url</code>: Server endpoint for file uploads</li>
+                  <li><code>data-auto-upload</code>: Enable automatic upload on file selection (<code>true</code>/<code>false</code>)</li>
+                  <li><code>data-max-files</code>: Maximum number of files allowed</li>
+                  <li><code>data-max-file-size</code>: Maximum file size in bytes</li>
+                  <li><code>data-accepted-types</code>: Comma-separated list of accepted MIME types</li>
+                </ul>
+
+                <h3>Controller Access</h3>
+
+                <p>Access the controller through the upload container element:</p>
+
+                <div class="code-example">
+                  <code class="language-javascript">
+const uploadElement = document.querySelector('.nds-file-upload');
+const ndsFileUpload = uploadElement.ndsFileUpload;
+                  </code>
+                </div>
+
+                <h3>File Management Methods</h3>
+
+                <h4><code>addFile(file, options)</code></h4>
+                <p>Add a file programmatically:</p>
+                <div class="code-example">
+                  <code class="language-javascript">
+const fileId = ndsFileUpload.addFile(file, {
+    status: 'ready',     // 'ready', 'uploading', 'complete', 'error'
+    progress: 0,         // Upload progress (0-100)
+    error: null          // Error message if status is 'error'
+});
+                  </code>
+                </div>
+
+                <h4><code>removeFile(fileId)</code></h4>
+                <p>Remove a specific file:</p>
+                <div class="code-example">
+                  <code class="language-javascript">
+const success = ndsFileUpload.removeFile(fileId);
+                  </code>
+                </div>
+
+                <h4><code>clearAllFiles()</code></h4>
+                <p>Remove all files:</p>
+                <div class="code-example">
+                  <code class="language-javascript">
+ndsFileUpload.clearAllFiles();
+                  </code>
+                </div>
+
+                <h3>File Information Methods</h3>
+
+                <h4><code>getFile(fileId)</code></h4>
+                <p>Get file data by ID:</p>
+                <div class="code-example">
+                  <code class="language-javascript">
+const fileData = ndsFileUpload.getFile(fileId);
+// Returns: { file, id, status, progress, error, response }
+                  </code>
+                </div>
+
+                <h4><code>getAllFiles()</code></h4>
+                <p>Get all files:</p>
+                <div class="code-example">
+                  <code class="language-javascript">
+const allFiles = ndsFileUpload.getAllFiles();
+                  </code>
+                </div>
+
+                <h4><code>getFilesByStatus(status)</code></h4>
+                <p>Get files by status:</p>
+                <div class="code-example">
+                  <code class="language-javascript">
+const uploadingFiles = ndsFileUpload.getFilesByStatus('uploading');
+const completedFiles = ndsFileUpload.getFilesByStatus('complete');
+                  </code>
+                </div>
+
+                <h3>Status Management Methods</h3>
+
+                <h4><code>setFileStatus(fileId, status, options)</code></h4>
+                <p>Update file status:</p>
+                <div class="code-example">
+                  <code class="language-javascript">
+ndsFileUpload.setFileStatus(fileId, 'error', {
+    error: 'Upload failed',
+    progress: 0
+});
+                  </code>
+                </div>
+
+                <h4><code>setFileProgress(fileId, progress)</code></h4>
+                <p>Update upload progress:</p>
+                <div class="code-example">
+                  <code class="language-javascript">
+ndsFileUpload.setFileProgress(fileId, 75); // 75% complete
+                  </code>
+                </div>
+
+                <h3>Upload Control Methods</h3>
+
+                <h4><code>startUpload(fileId)</code></h4>
+                <p>Start upload for specific file or all ready files:</p>
+                <div class="code-example">
+                  <code class="language-javascript">
+ndsFileUpload.startUpload(fileId);  // Upload specific file
+ndsFileUpload.startUpload();        // Upload all ready files
+                  </code>
+                </div>
+
+                <h3>Events</h3>
+
+                <p>Listen for upload events:</p>
+
+                <div class="code-example">
+                  <code class="language-javascript">
+uploadElement.addEventListener('filesSelected', (e) => {
+    console.log('Files selected:', e.detail.files);
+});
+
+uploadElement.addEventListener('uploadProgress', (e) => {
+    console.log(`Progress: ${e.detail.progress}%`);
+});
+
+uploadElement.addEventListener('uploadSuccess', (e) => {
+    console.log('Upload complete:', e.detail.response);
+});
+
+uploadElement.addEventListener('uploadError', (e) => {
+    console.log('Upload failed:', e.detail.error);
+});
+
+uploadElement.addEventListener('beforeUpload', (e) => {
+    // Modify form data or cancel upload
+    e.detail.formData.append('customField', 'value');
+    // e.detail.cancel = true; // Cancel upload
+});
+                  </code>
+                </div>
+
+                <h3>File Status Values</h3>
+
+                <ul>
+                  <li><strong><code>ready</code></strong>: File selected, ready for upload</li>
+                  <li><strong><code>uploading</code></strong>: Upload in progress</li>
+                  <li><strong><code>complete</code></strong>: Upload successful</li>
+                  <li><strong><code>error</code></strong>: Upload failed</li>
+                </ul>
+
+                <h3>Example Usage</h3>
+
+                <div class="code-example">
+                  <code class="language-javascript">
+// Get controller reference
+const uploadElement = document.querySelector('.nds-file-upload');
+const ndsFileUpload = uploadElement.ndsFileUpload;
+
+// Add custom event handlers
+uploadElement.addEventListener('uploadProgress', (e) => {
+    updateCustomProgressBar(e.detail.progress);
+});
+
+// Programmatically add files
+const fileInput = document.createElement('input');
+fileInput.type = 'file';
+fileInput.onchange = (e) => {
+    Array.from(e.target.files).forEach(file => {
+        const fileId = ndsFileUpload.addFile(file);
+        console.log('Added file with ID:', fileId);
+    });
+};
+
+// Manual upload control
+document.getElementById('uploadButton').onclick = () => {
+    ndsFileUpload.startUpload(); // Upload all ready files
+};
+
+// Check upload status
+const allFiles = ndsFileUpload.getAllFiles();
+const pendingUploads = allFiles.filter(f => f.status === 'uploading');
+console.log(`${pendingUploads.length} uploads in progress`);
+                  </code>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+
+
         </div>
 
 

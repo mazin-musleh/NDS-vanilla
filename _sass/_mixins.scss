@@ -3,6 +3,8 @@
  * Reusable Sass mixins for common patterns
  */
 
+@use "sass:math";
+
 // ==============================================
 // UTILITY MIXINS
 // ==============================================
@@ -15,15 +17,19 @@
 }
 
 @mixin tablet($break: null) {
-  @if $break == 'min' {
+  @if $break =='min' {
     @media (min-width: 600px) {
       @content;
     }
-  } @else if $break == 'max' {
+  }
+
+  @else if $break =='max' {
     @media (max-width: 959px) {
       @content;
     }
-  } @else {
+  }
+
+  @else {
     @media (min-width: 600px) and (max-width: 959px) {
       @content;
     }
@@ -31,15 +37,19 @@
 }
 
 @mixin desktop($break: null) {
-  @if $break == 'min' {
+  @if $break =='min' {
     @media (min-width: 960px) {
       @content;
     }
-  } @else if $break == 'max' {
+  }
+
+  @else if $break =='max' {
     @media (max-width: 1279px) {
       @content;
     }
-  } @else {
+  }
+
+  @else {
     @media (min-width: 960px) and (max-width: 1279px) {
       @content;
     }
@@ -47,15 +57,19 @@
 }
 
 @mixin large-desktop($break: null) {
-  @if $break == 'min' {
+  @if $break =='min' {
     @media (min-width: 1280px) {
       @content;
     }
-  } @else if $break == 'max' {
+  }
+
+  @else if $break =='max' {
     @media (max-width: 1920px) {
       @content;
     }
-  } @else {
+  }
+
+  @else {
     @media (min-width: 1280px) {
       @content;
     }
@@ -89,11 +103,10 @@
 }
 
 // Reset WebKit/Firefox autofill visuals + typography
-@mixin autofill-reset(
-  $bg: var(--form-field-background-default),
+@mixin autofill-reset($bg: var(--form-field-background-default),
   $text: var(--form-field-text-focused),
-  $border: var(--form-field-border-default)
-) {
+  $border: var(--form-field-border-default)) {
+
   // Chrome/Edge/Safari
   &:-webkit-autofill,
   &:-webkit-autofill:hover,
@@ -103,7 +116,7 @@
   &:autofill:focus {
 
     -webkit-box-shadow: 0 0 0 1000px #{$bg} inset !important;
-            box-shadow: 0 0 0 1000px #{$bg} inset !important;
+    box-shadow: 0 0 0 1000px #{$bg} inset !important;
     background-clip: padding-box;
 
     /* avoid “flash” on load in some WebKit builds */
@@ -125,7 +138,7 @@ input[type="search"],
 input[type="tel"],
 input[type="url"],
 textarea {
-  @include autofill-reset(); 
+  @include autofill-reset();
 }
 
 // ==============================================
@@ -155,8 +168,10 @@ textarea {
 // Button size mixins
 @mixin btn-size($height, $padding, $font-size, $line-height) {
   --nds-btn-height: #{$height};
+  --nds-btn-width: unset;
   --nds-btn-space: calc(var(--nds-btn-height) - #{$padding} - 4px);
-  height: $height;
+  height: var(--nds-btn-height);
+  width: var(--nds-btn-width);
   padding: 0 $padding;
   font-size: $font-size;
   line-height: $line-height;
@@ -203,9 +218,9 @@ textarea {
 
   &.active,
   &.selected,
-  .show > &,
-  .open > &,
-  .active > &,
+  .show>&,
+  .open>&,
+  .active>&,
   &[data-state="selected"] {
     background-color: $selected-bg;
     color: $default-color;
@@ -242,9 +257,9 @@ textarea {
 
   &.active,
   &.selected,
-  .show > &,
-  .open > &,
-  .active > &,
+  .show>&,
+  .open>&,
+  .active>&,
   &[data-state="selected"] {
     background-color: $selected-bg;
     border-color: $selected-border;
@@ -315,9 +330,9 @@ textarea {
   &:active::before,
   &.selected::before,
   &:focus-visible::before,
-  .show > &::before,
-  .open > &::before,
-  .active > &::before,
+  .show>&::before,
+  .open>&::before,
+  .active>&::before,
   &[aria-selected="true"]::before,
   &[data-state="selected"]::before,
   &[data-state="active"]::before,
@@ -346,4 +361,210 @@ textarea {
   &.nds-btn-sm::after {
     border-width: 2px;
   }
+}
+
+// ==============================================
+// PROGRESS CIRCLE MIXINS
+// ==============================================
+
+// Base progress circle structure
+@mixin progress-circle-base($size: 24px, $rotate: -90deg) {
+  position: relative;
+  width: $size;
+  height: $size;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    width: $size;
+    height: $size;
+    transform: rotate($rotate);
+
+    circle {
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      transform: scale(1.08);
+      transform-origin: center center;
+    }
+  }
+}
+
+// Progress circle style variants
+@mixin progress-circle-style($style: 'primary') {
+  svg circle {
+    @if $style =='primary' {
+      &.progress-bg {
+        stroke: var(--background-neutral-100);
+      }
+
+      &.progress-bar {
+        stroke: var(--button-background-primary-default);
+      }
+    }
+
+    @else if $style =='neutral' {
+      &.progress-bg {
+        stroke: var(--background-neutral-100);
+      }
+
+      &.progress-bar {
+        stroke: var(--button-background-black-selected);
+      }
+    }
+
+    @else if $style =='success' {
+      &.progress-bg {
+        stroke: var(--background-success-100);
+      }
+
+      &.progress-bar {
+        stroke: var(--background-success-600);
+      }
+    }
+
+    @else if $style =='error' {
+      &.progress-bg {
+        stroke: var(--background-error-100);
+      }
+
+      &.progress-bar {
+        stroke: var(--background-error-600);
+      }
+    }
+  }
+}
+
+// Progress circle text/info styling with dynamic font scaling
+@mixin progress-circle-text($show-text: true, $show-symbol: false, $size: 24px) {
+  // Calculate font size based on circle size: 24px -> 10px, 200px -> 36px
+  $min-size: 24px;
+  $max-size: 200px;
+  $min-font: 10px;
+  $max-font: 36px;
+
+  // Calculate progress text size: 14px -> 20px (hide below 14px threshold)
+  $min-text-size: 10px;
+  $max-text-size: 20px;
+  $text-threshold: 50px; // Hide text below this circle size
+  $symbol-threshold: 40px; // Hide symbol below this circle size (smaller than text threshold)
+
+  // Linear interpolation for number font size
+  $size-range: (
+    $max-size - $min-size
+  );
+$font-range: (
+  $max-font - $min-font
+);
+$size-ratio: math.div(($size - $min-size), $size-range);
+$calculated-font: $min-font + ($font-range * $size-ratio);
+
+// Linear interpolation for progress text size
+$text-range: (
+  $max-text-size - $min-text-size
+);
+$calculated-text: $min-text-size + ($text-range * $size-ratio);
+
+// Clamp the results between min and max
+$font-size: clamp(#{$min-font}, #{$calculated-font}, #{$max-font});
+$text-size: clamp(#{$min-text-size}, #{$calculated-text}, #{$max-text-size});
+
+// Determine if text should be hidden based on size thresholds
+$hide-text-due-to-size: $size < $text-threshold;
+$hide-symbol-due-to-size: $size < $symbol-threshold;
+
+// Calculate gap based on size: 8px max -> 0px min
+$max-gap: 8px;
+$min-gap: 0px;
+$gap-range: (
+  $max-gap - $min-gap
+);
+$calculated-gap: $min-gap + ($gap-range * $size-ratio);
+$info-gap: clamp(#{$min-gap}, #{$calculated-gap}, #{$max-gap});
+
+// Calculate padding based on size: 8px at 24px -> 40px at 200px
+$min-padding: 8px;
+$max-padding: 40px;
+$padding-range: (
+  $max-padding - $min-padding
+);
+$calculated-padding: $min-padding + ($padding-range * $size-ratio);
+$info-padding: clamp(#{$min-padding}, #{$calculated-padding}, #{$max-padding});
+
+// Calculate letter-spacing based on size
+$letter-spacing: if($size < 40px, 0rem, if($size >=120px, -0.072rem, -0.024rem));
+
+.progress-info {
+  position: absolute;
+  color: var(--text-primary-paragraph);
+  line-height: 1;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: $info-gap;
+  padding: 0 $info-padding;
+
+  .progress-percentage {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: center;
+    letter-spacing: $letter-spacing;
+  }
+
+  .progress-number,
+  .progress-symbol {
+    font-size: $font-size;
+    font-weight: 700;
+  }
+
+  .progress-symbol {
+    font-size: $font-size; // Same size as progress-number
+
+    @if $show-symbol and not $hide-symbol-due-to-size {
+      display: block;
+    }
+
+    @else {
+      display: none;
+    }
+  }
+
+  .progress-text {
+    font-size: $text-size;
+
+    @if not $show-text or $hide-text-due-to-size {
+      display: none;
+    }
+  }
+}
+}
+
+// Progress circle animation mixin
+@mixin progress-circle-progress($percent: 0) {
+  $circumference: 62.83; // 2πr where r=10
+  $offset: calc(#{$circumference} - (#{$circumference} * #{$percent} / 100));
+
+  svg circle.progress-bar {
+    stroke-dasharray: $circumference;
+    stroke-dashoffset: $offset;
+    transition: stroke-dashoffset 0.3s ease;
+  }
+}
+
+// Complete progress circle mixin - combines all features
+@mixin progress-circle($size: 24px,
+  $style: 'primary',
+  $rotate: -90deg,
+  $show-text: true,
+  $show-symbol: false,
+  $percent: 0) {
+  @include progress-circle-base($size, $rotate);
+  @include progress-circle-style($style);
+  @include progress-circle-text($show-text, $show-symbol, $size);
+  @include progress-circle-progress($percent);
 }

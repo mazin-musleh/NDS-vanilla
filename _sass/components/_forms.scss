@@ -618,11 +618,11 @@ fieldset {
             flex-direction: column;
             min-height: 120px;
             height: auto;
-            padding: var(--spacing-lg);
+            padding: var(--spacing-3xl);
             border: 2px dashed var(--border-neutral-primary) !important;
             border-radius: var(--radius-sm);
             background-color: var(--background-neutral-100);
-            
+
 
             .upload-zone {
                 display: flex;
@@ -715,7 +715,8 @@ fieldset {
 
         .upload-icon {
             color: var(--text-default);
-            font-size: 24px;
+            font-size: 40px;
+            line-height: 40px;
         }
 
         .upload-text {
@@ -753,7 +754,7 @@ fieldset {
     }
 
     .file-list {
-        margin-top: var(--spacing-lg);
+        margin-top: var(--spacing-xl);
         display: flex;
         flex-direction: column;
         gap: var(--spacing-sm);
@@ -765,30 +766,53 @@ fieldset {
 
     .file-item {
         display: flex;
-        align-items: center;
-        padding: var(--spacing-sm) var(--spacing-md);
-        border: 1px solid var(--form-field-border-default);
+        align-items: flex-start;
+        padding: var(--spacing-md);
+        border: 1px solid var(--border-neutral-primary);
         border-radius: var(--radius-sm);
-        background-color: var(--colors-base-white);
-        gap: var(--spacing-sm);
+        background-color: var(--background-neutral-100);
+        gap: var(--spacing-md);
+        min-height: 36px;
 
         .file-icon {
-            color: var(--text-default);
-            font-size: 20px;
-            opacity: 0.7;
+            font-size: 16px;
+            width: 24px;
+            height: 24px;
+            line-height: 24px;
+            background-color: var(--background-primary);
+            border-radius: 50%;
+            color: var(--background-white);
+            text-align: center;
+            font-weight: 700;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+
+        }
+
+        &.error .file-icon {
+            background-color: var(--icon-error);
+
+            &::before {
+                content: "!";
+                font-family: sans-serif;
+            }
         }
 
         .file-info {
             flex: 1;
             display: flex;
             flex-direction: column;
-            gap: var(--spacing-xs);
 
             .file-name {
                 color: var(--text-default);
                 font-size: var(--nds-text-sm-FS);
                 line-height: var(--nds-text-sm-LH);
                 font-weight: 500;
+                min-height: 24px;
+                display: flex;
+                align-items: center;
             }
 
             .file-details {
@@ -798,6 +822,7 @@ fieldset {
                 font-size: var(--nds-text-xs-FS);
                 line-height: var(--nds-text-xs-LH);
                 color: var(--text-default-disabled);
+                display: none;
 
                 .file-size {
                     &::after {
@@ -812,63 +837,31 @@ fieldset {
             display: flex;
             gap: var(--spacing-xs);
 
+            .nds-btn {
+                --nds-btn-height: 24px;
+                --nds-btn-width: 24px;
+            }
+
         }
 
         &.uploading {
 
             // Circular progress bar replaces file icon during upload
-            .upload-progress-circle {
-                position: relative;
-                width: 24px;
-                height: 24px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-
-                svg {
-                    width: 24px;
-                    height: 24px;
-                    transform: rotate(-90deg);
-
-                    circle {
-                        fill: none;
-                        stroke-width: 2;
-                        stroke-linecap: round;
-
-                        &.progress-bg {
-                            stroke: var(--background-neutral-100);
-                        }
-
-                        &.progress-bar {
-                            stroke: var(--button-background-primary-default);
-                            stroke-dasharray: 62.83;
-                            /* 2πr where r=10 */
-                            stroke-dashoffset: 62.83;
-                            transition: stroke-dashoffset 0.3s ease;
-
-                        }
-
-                    }
-                }
-
-                .progress-percentage {
-                    position: absolute;
-                    font-size: var(--nds-text-xs-FS);
-                    font-weight: 500;
-                    color: var(--text-primary-paragraph);
-                    line-height: 1;
-
-                    & .progress-symbol {
-                        display: none;
-                    }
-                }
+            .progress-circle {
+                @include progress-circle($size: 24px,
+                    $style: 'primary',
+                    $rotate: -90deg,
+                    $show-text: false,
+                    $show-symbol: false,
+                    $percent: 0);
             }
         }
 
         // Error state styling
         &.error {
+
             border-color: var(--border-error);
-            background-color: var(--background-error-25);
+            /* background-color: var(--background-error-25); */
 
             .file-icon.error {
                 color: var(--icon-error);
@@ -879,12 +872,8 @@ fieldset {
                 align-items: center;
                 gap: var(--spacing-xs);
                 color: var(--text-error);
-                font-size: var(--nds-text-xs-FS);
-                margin-top: var(--spacing-xs);
-
-                i {
-                    font-size: 16px;
-                }
+                font-size: var(--nds-text-sm-FS);
+                font-weight: 500;
             }
         }
     }

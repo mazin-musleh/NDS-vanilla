@@ -616,7 +616,7 @@
             const fileType = fileItem.querySelector('.file-type');
             const fileStatus = fileItem.querySelector('.file-status');
             const fileIcon = fileItem.querySelector('.file-icon');
-            const progressCircle = fileItem.querySelector('.upload-progress-circle');
+            const progressCircle = fileItem.querySelector('.progress-circle');
             const removeButton = fileItem.querySelector('.remove-file');
             const fileError = fileItem.querySelector('.file-error');
             const errorMessage = fileItem.querySelector('.error-message');
@@ -666,7 +666,7 @@
         }
         
         function updateProgressInItem(fileItem, progress) {
-            const progressElement = fileItem.querySelector('.upload-progress-circle');
+            const progressElement = fileItem.querySelector('.progress-circle');
             if (progressElement) {
                 const circle = progressElement.querySelector('.progress-bar');
                 const text = progressElement.querySelector('.progress-number');
@@ -830,7 +830,7 @@
                     
                     // Update progress bar
                     const fileItem = fileList.querySelector(`[data-index="${index}"]`);
-                    const progressElement = fileItem?.querySelector('.upload-progress-circle');
+                    const progressElement = fileItem?.querySelector('.progress-circle');
                     if (progressElement) {
                         updateProgress(progressElement, percentComplete);
                     }
@@ -894,8 +894,8 @@
             filesToUpload.forEach(fileData => uploadFile(fileData));
         };
 
-        // Public API for external file upload control
-        const fileUploadAPI = {
+        // Public controller for external file upload control
+        const ndsFileUpload = {
             // File Management
             addFile: function(file, options = {}) {
                 const fileData = {
@@ -1016,8 +1016,8 @@
             }
         };
 
-        // Store API instance on the container for external access
-        uploadContainer._fileUploadInstance = fileUploadAPI;
+        // Store controller instance on the container for external access
+        uploadContainer.ndsFileUpload = ndsFileUpload;
 
         // Event listeners
         fileInput.addEventListener('change', function(e) {
@@ -1055,8 +1055,8 @@
                         detail: { fileData: removedFile, fileId: fileId }
                     }));
                     
-                    console.log('🗑️ Calling fileUploadAPI.removeFile');
-                    fileUploadAPI.removeFile(fileId);
+                    console.log('🗑️ Calling ndsFileUpload.removeFile');
+                    ndsFileUpload.removeFile(fileId);
                 } else {
                     console.warn('🗑️ File not found in uploadedFiles array');
                 }
@@ -1172,8 +1172,8 @@
         initializeFileUploads: initializeFileUploads,
         getInstance: function(element) {
             const uploadContainer = element.closest('.nds-file-upload');
-            if (uploadContainer && uploadContainer._fileUploadInstance) {
-                return uploadContainer._fileUploadInstance;
+            if (uploadContainer && uploadContainer.ndsFileUpload) {
+                return uploadContainer.ndsFileUpload;
             }
             return null;
         },
