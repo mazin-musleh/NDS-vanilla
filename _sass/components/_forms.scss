@@ -619,9 +619,10 @@ fieldset {
             min-height: 120px;
             height: auto;
             padding: var(--spacing-lg);
-            border: 2px dashed var(--border-neutral-primary)!important;
+            border: 2px dashed var(--border-neutral-primary) !important;
             border-radius: var(--radius-sm);
             background-color: var(--background-neutral-100);
+            
 
             .upload-zone {
                 display: flex;
@@ -635,7 +636,7 @@ fieldset {
             }
 
             &.drag-over {
-                border-color: var(--border-success)!important;
+                border-color: var(--border-success) !important;
                 background-color: var(--background-success-25);
                 color: var(--text-success);
 
@@ -691,7 +692,7 @@ fieldset {
         }
 
 
-         &.disabled {
+        &.disabled {
 
             background-color: unset !important;
 
@@ -709,7 +710,7 @@ fieldset {
         align-items: center;
         justify-content: center;
         text-align: center;
-        gap: var(--text-content-gap);
+        gap: var(--spacing-3xl);
         min-height: 80px;
 
         .upload-icon {
@@ -792,7 +793,7 @@ fieldset {
 
             .file-details {
                 display: flex;
-                align-items: center;
+                align-items: flex-start;
                 gap: var(--spacing-sm);
                 font-size: var(--nds-text-xs-FS);
                 line-height: var(--nds-text-xs-LH);
@@ -811,68 +812,22 @@ fieldset {
             display: flex;
             gap: var(--spacing-xs);
 
-            button {
-                width: 32px;
-                height: 32px;
-                border: none;
-                background: transparent;
-                border-radius: var(--radius-sm);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                cursor: pointer;
-                transition: background-color var(--nds-transition);
-
-                &:hover {
-                    background-color: var(--form-field-background-darker);
-                }
-
-                &.remove-file {
-                    color: var(--icon-error);
-
-                    &:hover {
-                        background-color: var(--colors-base-red-50, #FEF2F2);
-                    }
-                }
-            }
         }
 
-        &.upload-progress {
-            .file-details::after {
-                content: "";
-                display: block;
-                width: 100%;
-                height: 4px;
-                background-color: var(--form-field-border-default);
-                border-radius: 2px;
-                position: relative;
-                margin-top: var(--spacing-xs);
-                overflow: hidden;
-
-                &::before {
-                    content: "";
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    height: 100%;
-                    width: var(--upload-progress, 0%);
-                    background-color: var(--button-background-primary-default);
-                    transition: width 0.3s ease;
-                }
-            }
+        &.uploading {
 
             // Circular progress bar replaces file icon during upload
             .upload-progress-circle {
                 position: relative;
-                width: 20px;
-                height: 20px;
+                width: 24px;
+                height: 24px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
 
                 svg {
-                    width: 20px;
-                    height: 20px;
+                    width: 24px;
+                    height: 24px;
                     transform: rotate(-90deg);
 
                     circle {
@@ -881,24 +836,54 @@ fieldset {
                         stroke-linecap: round;
 
                         &.progress-bg {
-                            stroke: var(--form-field-border-default);
+                            stroke: var(--background-neutral-100);
                         }
 
                         &.progress-bar {
                             stroke: var(--button-background-primary-default);
-                            stroke-dasharray: 62.83; /* 2πr where r=10 */
+                            stroke-dasharray: 62.83;
+                            /* 2πr where r=10 */
                             stroke-dashoffset: 62.83;
                             transition: stroke-dashoffset 0.3s ease;
+
                         }
+
                     }
                 }
 
                 .progress-percentage {
                     position: absolute;
-                    font-size: 8px;
+                    font-size: var(--nds-text-xs-FS);
                     font-weight: 500;
-                    color: var(--button-background-primary-default);
+                    color: var(--text-primary-paragraph);
                     line-height: 1;
+
+                    & .progress-symbol {
+                        display: none;
+                    }
+                }
+            }
+        }
+
+        // Error state styling
+        &.error {
+            border-color: var(--border-error);
+            background-color: var(--background-error-25);
+
+            .file-icon.error {
+                color: var(--icon-error);
+            }
+
+            .file-error {
+                display: flex;
+                align-items: center;
+                gap: var(--spacing-xs);
+                color: var(--text-error);
+                font-size: var(--nds-text-xs-FS);
+                margin-top: var(--spacing-xs);
+
+                i {
+                    font-size: 16px;
                 }
             }
         }

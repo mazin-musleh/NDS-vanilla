@@ -24,6 +24,7 @@
         initializeDemoToggleButtons();
         initializeDirectionSwitcher();
         initializeFakeFileUpload();
+        initializeDemoActionButtons();
     });
 
     // Copy functionality for code examples
@@ -654,170 +655,247 @@
 
     // Fake file upload for demonstration purposes
     function initializeFakeFileUpload() {
+        console.log('🎭 initializeFakeFileUpload() called');
         // Set up fake upload URLs for demo containers
         document.querySelectorAll('.nds-file-upload').forEach(container => {
+            console.log('🎭 Setting up fake upload for container:', container);
             if (!container.dataset.uploadUrl) {
                 container.dataset.uploadUrl = '/demo/upload';
                 container.dataset.autoUpload = 'true';
+                console.log('🎭 Added data attributes to container');
+            } else {
+                console.log('🎭 Container already has upload URL:', container.dataset.uploadUrl);
             }
         });
 
         // Listen for beforeUpload events to intercept and simulate uploads
+        console.log('🎭 Adding beforeUpload event listener to document');
         document.addEventListener('beforeUpload', function(e) {
+            console.log('🎭 beforeUpload event caught!', e);
             const fileData = e.detail.fileData;
-            const formData = e.detail.formData;
             const uploadContainer = e.target;
             
-            console.log('Before upload (demo):', fileData.file.name);
-            
-            // Cancel the real upload and start fake upload instead
+            // Cancel the real upload and start simulation
             e.detail.cancel = true;
+            console.log('🎭 Upload cancelled, starting simulation for:', fileData.file.name);
             
-            // Add demo metadata to form data
-            formData.append('demo', 'true');
-            formData.append('timestamp', Date.now().toString());
-            
-            // Start fake upload simulation
-            simulateFileUpload(uploadContainer, fileData);
+            // Start simulation using UI API
+            startUploadSimulation(uploadContainer, fileData);
         });
     }
 
-    function simulateFileUpload(uploadContainer, fileData) {
-        const file = fileData.file;
-        let progress = 0;
-        const uploadDuration = 2000 + Math.random() * 3000; // 2-5 seconds
-        const progressInterval = 50; // Update every 50ms
-        const totalSteps = uploadDuration / progressInterval;
-        const progressStep = 100 / totalSteps;
-
-        console.log(`Starting fake upload for: ${file.name}`);
-
-        console.log('🎭 Simulation starting for file:', file.name, 'with ID:', fileData.id);
-        
-        // Find the file in the upload container's file list and update its status
-        if (window.NDS && window.NDS.Forms && window.NDS.Forms.FileUpload) {
-            const fileUploadInstance = window.NDS.Forms.FileUpload.getInstance(uploadContainer);
-            if (fileUploadInstance && fileUploadInstance.uploadedFiles) {
-                console.log('📋 Found', fileUploadInstance.uploadedFiles.length, 'files in upload instance');
-                const fileIndex = fileUploadInstance.uploadedFiles.findIndex(f => f.id === fileData.id);
-                console.log('🔍 File index found:', fileIndex);
-                if (fileIndex !== -1) {
-                    fileUploadInstance.uploadedFiles[fileIndex].status = 'uploading';
-                    fileUploadInstance.updateFileList();
-                    console.log('✅ File status updated to uploading');
-                } else {
-                    console.warn('❌ Could not find file with ID:', fileData.id);
-                }
-            } else {
-                console.warn('❌ No file upload instance found');
-            }
+    // Simple upload simulation using UI API
+    function startUploadSimulation(uploadContainer, fileData) {
+        // Get the file upload API instance
+        const api = window.NDS.Forms.FileUpload.getInstance(uploadContainer);
+        if (!api) {
+            console.warn('❌ No file upload API found');
+            return;
         }
-
-        // Simulate upload progress
+        
+        // Calculate upload duration based on file size
+        const file = fileData.file;
+        const fileSizeKB = file.size / 1024;
+        const baseSpeedKBps = 100; // 100 KB/s for slow connection
+        const baseDuration = (fileSizeKB / baseSpeedKBps) * 1000;
+        const randomFactor = 0.5 + Math.random(); // ±50% variation
+        const uploadDuration = Math.max(3000, Math.min(60000, baseDuration * randomFactor));
+        
+        console.log(`📊 File: ${file.name} (${(fileSizeKB/1024).toFixed(2)}MB) - Duration: ${(uploadDuration/1000).toFixed(1)}s`);
+        
+        // Update existing file status to uploading and start progress simulation
+        api.setFileStatus(fileData.id, 'uploading', { progress: 0 });
+        simulateProgress(api, fileData.id, uploadDuration);
+    }
+    
+    // Clean progress simulation using UI API
+    function simulateProgress(api, fileId, duration) {
+        let progress = 0;
+        const interval = 150; // Update every 150ms
+        const progressStep = 100 / (duration / interval);
+        
         const progressTimer = setInterval(() => {
-            progress += progressStep + (Math.random() * 5); // Add some randomness
+            // Simulate network variations
+            const networkCondition = Math.random();
+            let speedMultiplier = 1;
+            
+            if (networkCondition < 0.2) speedMultiplier = 0.05; // 20% chance of stall
+            else if (networkCondition < 0.5) speedMultiplier = 0.2; // 30% chance of slow
+            else if (networkCondition < 0.8) speedMultiplier = 0.6; // 30% chance of medium
+            // else normal speed (20% chance)
+            
+            progress += (progressStep * speedMultiplier) + (Math.random() * 1);
             progress = Math.min(progress, 100);
-
-            // Update progress bar directly
-            const fileList = uploadContainer.querySelector('.file-list');
-            if (fileList) {
-                const fileItems = fileList.querySelectorAll('.file-item');
-                fileItems.forEach(item => {
-                    const fileName = item.querySelector('.file-name')?.textContent;
-                    if (fileName === file.name) {
-                        const progressElement = item.querySelector('.upload-progress');
-                        if (progressElement) {
-                            const circle = progressElement.querySelector('.progress-fill');
-                            const text = progressElement.querySelector('.progress-text');
-                            if (circle && text) {
-                                const circumference = 62.83; // 2 * Math.PI * 10
-                                const offset = circumference - (progress / 100) * circumference;
-                                circle.style.strokeDashoffset = offset;
-                                text.textContent = Math.round(progress) + '%';
-                            }
-                        }
-                    }
-                });
-            }
-
-            // Dispatch progress event for external listeners
-            uploadContainer.dispatchEvent(new CustomEvent('uploadProgress', {
-                detail: {
-                    fileData: fileData,
-                    progress: progress
-                }
-            }));
-
+            
+            // Update progress using API
+            api.setFileProgress(fileId, progress);
+            
+            // Complete when 100%
             if (progress >= 100) {
                 clearInterval(progressTimer);
                 
-                // Simulate upload completion with random success/failure
-                const shouldSucceed = Math.random() > 0.1; // 90% success rate
-                
+                // 90% success rate
                 setTimeout(() => {
+                    const shouldSucceed = Math.random() > 0.1;
                     if (shouldSucceed) {
-                        // Update file status to complete
-                        if (window.NDS && window.NDS.Forms && window.NDS.Forms.FileUpload) {
-                            const fileUploadInstance = window.NDS.Forms.FileUpload.getInstance(uploadContainer);
-                            if (fileUploadInstance && fileUploadInstance.uploadedFiles) {
-                                const fileIndex = fileUploadInstance.uploadedFiles.findIndex(f => f.id === fileData.id);
-                                if (fileIndex !== -1) {
-                                    fileUploadInstance.uploadedFiles[fileIndex].status = 'complete';
-                                    fileUploadInstance.uploadedFiles[fileIndex].response = JSON.stringify({
-                                        success: true,
-                                        fileId: 'demo_' + Date.now(),
-                                        fileName: file.name,
-                                        fileSize: file.size,
-                                        uploadTime: new Date().toISOString(),
-                                        message: 'Demo file uploaded successfully'
-                                    });
-                                    fileUploadInstance.updateFileList();
-                                }
-                            }
-                        }
-
+                        api.setFileStatus(fileId, 'complete');
+                        console.log(`✅ Upload completed: ${api.getFile(fileId)?.file.name}`);
+                        
                         // Dispatch success event
-                        uploadContainer.dispatchEvent(new CustomEvent('uploadSuccess', {
-                            detail: {
-                                fileData: fileData,
-                                response: JSON.stringify({
-                                    success: true,
-                                    fileId: 'demo_' + Date.now(),
-                                    fileName: file.name,
-                                    fileSize: file.size,
-                                    uploadTime: new Date().toISOString(),
-                                    message: 'Demo file uploaded successfully'
-                                })
-                            }
-                        }));
-                        console.log(`Demo upload completed successfully: ${file.name}`);
+                        const container = document.querySelector('.nds-file-upload');
+                        api.dispatchEvent('uploadSuccess', {
+                            fileId: fileId,
+                            file: api.getFile(fileId)?.file
+                        });
                     } else {
-                        // Update file status to error
-                        if (window.NDS && window.NDS.Forms && window.NDS.Forms.FileUpload) {
-                            const fileUploadInstance = window.NDS.Forms.FileUpload.getInstance(uploadContainer);
-                            if (fileUploadInstance && fileUploadInstance.uploadedFiles) {
-                                const fileIndex = fileUploadInstance.uploadedFiles.findIndex(f => f.id === fileData.id);
-                                if (fileIndex !== -1) {
-                                    fileUploadInstance.uploadedFiles[fileIndex].status = 'error';
-                                    fileUploadInstance.uploadedFiles[fileIndex].error = 'Demo upload failed';
-                                    fileUploadInstance.updateFileList();
-                                }
-                            }
-                        }
-
-                        // Dispatch error event (10% chance)
-                        uploadContainer.dispatchEvent(new CustomEvent('uploadError', {
-                            detail: {
-                                fileData: fileData,
-                                error: 'Demo upload failed',
-                                statusCode: 500
-                            }
-                        }));
-                        console.log(`Demo upload failed: ${file.name}`);
+                        api.setFileStatus(fileId, 'error', { error: 'Demo upload failed' });
+                        console.log(`❌ Upload failed: ${api.getFile(fileId)?.file.name}`);
+                        
+                        // Dispatch error event
+                        const container = document.querySelector('.nds-file-upload');
+                        api.dispatchEvent('uploadError', {
+                            fileId: fileId,
+                            error: 'Demo upload failed'
+                        });
                     }
-                }, 100); // Small delay before completion
+                }, 100);
             }
-        }, progressInterval);
+        }, interval);
+    }
+
+    // Demo action buttons functionality
+    function initializeDemoActionButtons() {
+        console.log('🎬 initializeDemoActionButtons() called');
+        
+        // Event delegation for demo action buttons
+        document.addEventListener('click', function(e) {
+            const actionBtn = e.target.closest('.demo-action-btn');
+            if (actionBtn) {
+                e.preventDefault();
+                const action = actionBtn.getAttribute('data-action');
+                console.log('🎬 Demo action triggered:', action);
+                
+                if (action === 'populate-demo-files') {
+                    populateDemoFiles(actionBtn);
+                }
+            }
+        });
+    }
+    
+    function populateDemoFiles(button) {
+        console.log('📁 populateDemoFiles called');
+        
+        // Find the file upload container in the same demo card
+        const demoCard = button.closest('.nds-demo-card');
+        if (!demoCard) {
+            console.error('❌ Demo card not found');
+            return;
+        }
+        
+        const uploadContainer = demoCard.querySelector('.nds-file-upload');
+        if (!uploadContainer) {
+            console.error('❌ File upload container not found');
+            return;
+        }
+        
+        // Get the file upload API instance
+        const api = window.NDS.Forms.FileUpload.getInstance(uploadContainer);
+        if (!api) {
+            console.error('❌ File upload API not found');
+            return;
+        }
+        
+        // Clear existing files first
+        api.clearAllFiles();
+        
+        // Check if single file mode is active
+        const isSingleFile = uploadContainer.classList.contains('single-file');
+        console.log('📁 Single file mode:', isSingleFile);
+        
+        // Create mock files with different statuses
+        const allDemoFiles = [
+            {
+                name: 'progress-report.pdf',
+                size: 1024 * 512, // 512KB
+                type: 'application/pdf',
+                status: 'uploading',
+                progress: 45
+            },
+            {
+                name: 'completed-document.docx',
+                size: 1024 * 256, // 256KB  
+                type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                status: 'complete',
+                progress: 100
+            },
+            {
+                name: 'failed-upload.jpg',
+                size: 1024 * 1024 * 2.5, // 2.5MB
+                type: 'image/jpeg',
+                status: 'error',
+                progress: 0,
+                error: 'File size exceeds limit'
+            }
+        ];
+        
+        // Select files based on mode
+        let demoFiles;
+        if (isSingleFile) {
+            // Single file mode: pick one random file
+            const randomIndex = Math.floor(Math.random() * allDemoFiles.length);
+            demoFiles = [allDemoFiles[randomIndex]];
+            console.log(`📁 Single file mode: selected ${demoFiles[0].name} (${demoFiles[0].status})`);
+        } else {
+            // Multi file mode: use all files
+            demoFiles = allDemoFiles;
+            console.log('📁 Multi file mode: adding all 3 demo files');
+        }
+        
+        // Add each demo file using the API
+        demoFiles.forEach(fileData => {
+            // Create a mock File object
+            const mockFile = new File([''], fileData.name, { 
+                type: fileData.type,
+                lastModified: Date.now()
+            });
+            
+            // Override the size property (File objects are read-only, but we can try)
+            Object.defineProperty(mockFile, 'size', { 
+                value: fileData.size,
+                writable: false 
+            });
+            
+            // Add the file using the API
+            const fileId = api.addFile(mockFile, {
+                status: fileData.status,
+                progress: fileData.progress,
+                error: fileData.error
+            });
+            
+            console.log(`📁 Added demo file: ${fileData.name} with status: ${fileData.status}`);
+            
+            // If it's uploading status, simulate progress
+            if (fileData.status === 'uploading') {
+                simulateProgressForDemo(api, fileId, fileData.progress);
+            }
+        });
+        
+        console.log('✅ Demo files populated successfully');
+    }
+    
+    function simulateProgressForDemo(api, fileId, startProgress) {
+        let progress = startProgress;
+        const targetProgress = Math.min(startProgress + 30, 85); // Don't complete, just show progress
+        
+        const interval = setInterval(() => {
+            progress += Math.random() * 3;
+            if (progress >= targetProgress) {
+                progress = targetProgress;
+                clearInterval(interval);
+            }
+            
+            api.setFileProgress(fileId, progress);
+        }, 200);
     }
 
     // Expose global functions for backward compatibility if needed
@@ -827,7 +905,8 @@
         initializeDemoToggleButtons: initializeDemoToggleButtons,
         updateButtonsForBackground: updateButtonsForBackground,
         initializeDirectionSwitcher: initializeDirectionSwitcher,
-        simulateFileUpload: simulateFileUpload
+        startUploadSimulation: startUploadSimulation,
+        populateDemoFiles: populateDemoFiles
     };
 
 })();

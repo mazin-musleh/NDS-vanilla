@@ -139,9 +139,33 @@ direction: ltr
 - `nds-extras.js`: Component-specific behaviors (button interactions, copy functionality)
 - Inline scripts for component demonstrations (background switching, state management)
 
+### JavaScript Build Process
+After updating files in `_js/` directory, run the build process to compress and minify:
+```bash
+ruby _plugins/js_processor.rb
+```
+
+**JavaScript Architecture:**
+- **Source files**: `_js/` directory contains individual component JavaScript files
+- **Processing**: `_plugins/js_processor.rb` bundles and minifies files using Terser
+- **Output**: Compressed files saved to `assets/js/` as `.min.js` versions
+- **Manual processing**: Always run the processor manually when JavaScript changes are made
+
+**Available Components:**
+- `nds-accordion.js`, `nds-tabs.js`, `nds-forms.js` - UI component interactions
+- `nds-navController.js`, `nds-sideMenu.js` - Navigation functionality  
+- `nds-showcase.js` - Component demonstration features
+- `nds-cookies.js`, `nds-share.js` - Utility functions
+- `nds-cityWeather.js`, `nds-timeDate.js`, `nds-numbers.js` - Data display components
+
+**Bundle Output:**
+- `nds-main.min.js` - Core site functionality (bundled from multiple components)
+- `nds-showcase.min.js` - Component showcase demonstrations
+
 ## Files to Ignore
 
 - **NEVER read** `assets/css/hgi-stroke-rounded.css` - this is a large icon font file that should not be analyzed
+- **NEVER read** any `.min.js` or `.min.css` files - these are minified/compressed files that should not be analyzed
 
 ## Important Notes
 
