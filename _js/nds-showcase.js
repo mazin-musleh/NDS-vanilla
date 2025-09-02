@@ -734,7 +734,11 @@
             if (progress >= 100) {
                 clearInterval(progressTimer);
                 
-                // 90% success rate
+                // Set processing status first
+                api.setFileStatus(fileId, 'processing');
+                console.log(`⚙️ Processing file: ${api.getFile(fileId)?.file.name}`);
+                
+                // 90% success rate after processing delay
                 setTimeout(() => {
                     const shouldSucceed = Math.random() > 0.1;
                     if (shouldSucceed) {
@@ -758,7 +762,7 @@
                             error: 'Demo upload failed'
                         });
                     }
-                }, 100);
+                }, 2000); // 2 second processing delay
             }
         }, interval);
     }
@@ -822,6 +826,13 @@
                 progress: 45
             },
             {
+                name: 'processing-file.xlsx',
+                size: 1024 * 384, // 384KB
+                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                status: 'processing',
+                progress: 100
+            },
+            {
                 name: 'completed-document.docx',
                 size: 1024 * 256, // 256KB  
                 type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -848,7 +859,7 @@
         } else {
             // Multi file mode: use all files
             demoFiles = allDemoFiles;
-            console.log('📁 Multi file mode: adding all 3 demo files');
+            console.log('📁 Multi file mode: adding all 4 demo files');
         }
         
         // Add each demo file using the API

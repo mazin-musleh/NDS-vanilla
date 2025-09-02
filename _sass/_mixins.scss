@@ -370,16 +370,16 @@ textarea {
 // Base progress circle structure
 @mixin progress-circle-base($size: 24px, $rotate: -90deg) {
   position: relative;
-  width: $size;
-  height: $size;
+  width: $size !important;
+  height: $size !important;
   display: flex;
   align-items: center;
   justify-content: center;
 
   svg {
-    width: $size;
-    height: $size;
-    transform: rotate($rotate);
+    width: $size !important;
+    height: $size !important;
+    transform: rotate($rotate) !important;
 
     circle {
       fill: none;
@@ -505,25 +505,25 @@ $letter-spacing: if($size < 40px, 0rem, if($size >=120px, -0.072rem, -0.024rem))
   text-align: center;
   justify-content: center;
   flex-direction: column;
-  gap: $info-gap;
-  padding: 0 $info-padding;
+  gap: $info-gap !important;
+  padding: 0 $info-padding !important;
 
   .progress-percentage {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;
     align-items: center;
-    letter-spacing: $letter-spacing;
+    letter-spacing: $letter-spacing !important;
   }
 
   .progress-number,
   .progress-symbol {
-    font-size: $font-size;
-    font-weight: 700;
+    font-size: $font-size !important;
+    font-weight: 700 !important;
   }
 
   .progress-symbol {
-    font-size: $font-size; // Same size as progress-number
+    font-size: $font-size !important; // Same size as progress-number
 
     @if $show-symbol and not $hide-symbol-due-to-size {
       display: block;
@@ -535,7 +535,7 @@ $letter-spacing: if($size < 40px, 0rem, if($size >=120px, -0.072rem, -0.024rem))
   }
 
   .progress-text {
-    font-size: $text-size;
+    font-size: $text-size !important;
 
     @if not $show-text or $hide-text-due-to-size {
       display: none;
@@ -550,9 +550,9 @@ $letter-spacing: if($size < 40px, 0rem, if($size >=120px, -0.072rem, -0.024rem))
   $offset: calc(#{$circumference} - (#{$circumference} * #{$percent} / 100));
 
   svg circle.progress-bar {
-    stroke-dasharray: $circumference;
-    stroke-dashoffset: $offset;
-    transition: stroke-dashoffset 0.3s ease;
+    stroke-dasharray: $circumference !important;
+    stroke-dashoffset: $offset ;
+    transition: stroke-dashoffset 0.3s ease !important;
   }
 }
 

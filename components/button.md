@@ -22,12 +22,12 @@ direction: ltr
                         <div class="demo-label">Primary Button</div>
                         <div class="demo-action">
                             <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
-                            </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
                                 data-toggler='["nds-btn-indicator", ".nds-btn-demo", "indicator"]'>
                                 <span class="label">Toggle Indicator</span>
+                            </button>
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                                <span class="label">Remove bg</span>
                             </button>
                         </div>
                     </div>
@@ -64,12 +64,12 @@ direction: ltr
                         <div class="demo-label">Neutral Button</div>
                         <div class="demo-action">
                             <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
-                            </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
                                 data-toggler='["nds-btn-indicator", ".nds-btn-demo", "indicator"]'>
                                 <span class="label">Toggle Indicator</span>
+                            </button>
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                                <span class="label">Remove bg</span>
                             </button>
                         </div>
                     </div>
@@ -106,12 +106,12 @@ direction: ltr
                         <div class="demo-label">Secondary Button</div>
                         <div class="demo-action">
                             <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
-                            </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
                                 data-toggler='["nds-btn-indicator", ".nds-btn-demo", "indicator"]'>
                                 <span class="label">Toggle Indicator</span>
+                            </button>
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                                <span class="label">Remove bg</span>
                             </button>
                         </div>
                     </div>
@@ -148,12 +148,12 @@ direction: ltr
                         <div class="demo-label">Secondary Outline</div>
                         <div class="demo-action">
                             <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
-                            </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
                                 data-toggler='["nds-btn-indicator", ".nds-btn-demo", "indicator"]'>
                                 <span class="label">Toggle Indicator</span>
+                            </button>
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                                <span class="label">Remove bg</span>
                             </button>
                         </div>
                     </div>
@@ -190,12 +190,12 @@ direction: ltr
                         <div class="demo-label">Subtle Button</div>
                         <div class="demo-action">
                             <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
-                            </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
                                 data-toggler='["nds-btn-indicator", ".nds-btn-demo", "indicator"]'>
                                 <span class="label">Toggle Indicator</span>
+                            </button>
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                                <span class="label">Remove bg</span>
                             </button>
                         </div>
                     </div>
@@ -232,12 +232,12 @@ direction: ltr
                         <div class="demo-label">Transparent Button</div>
                         <div class="demo-action">
                             <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
-                            </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
                                 data-toggler='["nds-btn-indicator", ".nds-btn-demo", "indicator"]'>
                                 <span class="label">Toggle Indicator</span>
+                            </button>
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                                <span class="label">Remove bg</span>
                             </button>
                         </div>
                     </div>

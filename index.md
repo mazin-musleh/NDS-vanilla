@@ -2,7 +2,8 @@
 layout: home
 title: "National Design System for Saudi Arabia"
 hero_title: "National Design System for Saudi Arabia"
-hero_description: "A comprehensive design system empowering consistent, accessible, and high-performance digital government experiences across the Kingdom."
+hero_description: "A comprehensive design system empowering consistent, accessible, and high-performance digital
+government experiences across the Kingdom."
 hero_image_pos: 50% 10%
 ---
 
@@ -11,11 +12,15 @@ hero_image_pos: 50% 10%
     <div class="nds-section-content-container">
         <div class="nds-section-head">
             <h2 class="nds-section-title">About the Design System</h2>
-            <p class="nds-section-description">The National Design System for Saudi Arabia is a living documentation and component library built to standardize digital government services. It provides reusable components, design tokens, accessibility guidelines, and interaction patterns that ensure consistency across all government digital touchpoints.</p>
-            <button type="button" class="nds-btn nds-btn-primary nds-btn-readMore" aria-label="Explore Components">
+            <p class="nds-section-description">The National Design System for Saudi Arabia
+                is a living documentation and component library built to standardize digital government services. It
+                provides reusable components, design tokens, accessibility guidelines, and interaction patterns that
+                ensure consistency across all government digital touchpoints.</p>
+            <a href="{{ '/components/button' | relative_url }}" class="nds-btn nds-btn-primary"
+                aria-label="Explore Components">
                 <span class="label">Explore Components</span>
                 <i class="hgi hgi-stroke hgi-arrow-right" aria-hidden="true"></i>
-            </button>
+            </a>
         </div>
         <div class="nds-section-content">
             <div class="nds-statistics">
@@ -49,34 +54,40 @@ hero_image_pos: 50% 10%
     <div class="nds-section-content-container">
         <div class="nds-section-head">
             <h2 class="nds-section-title">System Capabilities</h2>
-            <p class="nds-section-description">Built with modern web standards and optimized for performance, accessibility, and developer experience.</p>
+            <p class="nds-section-description">Built with modern web standards and optimized for performance,
+                accessibility, and developer experience.</p>
         </div>
         <div class="nds-section-content">
             <div class="nds-capabilities-grid">
                 <div class="nds-capability-card">
                     <i class="hgi hgi-stroke hgi-responsive nds-capability-icon"></i>
                     <h3>Responsive Design</h3>
-                    <p>Mobile-first components that adapt seamlessly across all devices and screen sizes with optimized breakpoints.</p>
+                    <p>Mobile-first components that adapt seamlessly across all devices and screen sizes with optimized
+                        breakpoints.</p>
                 </div>
                 <div class="nds-capability-card">
                     <i class="hgi hgi-stroke hgi-language nds-capability-icon"></i>
                     <h3>RTL/LTR Support</h3>
-                    <p>Native support for Arabic (RTL) and English (LTR) with automatic text direction and layout mirroring.</p>
+                    <p>Native support for Arabic (RTL) and English (LTR) with automatic text direction and layout
+                        mirroring.</p>
                 </div>
                 <div class="nds-capability-card">
                     <i class="hgi hgi-stroke hgi-accessibility nds-capability-icon"></i>
                     <h3>Accessibility First</h3>
-                    <p>WCAG 2.1 AA compliant components with keyboard navigation, screen reader support, and semantic markup.</p>
+                    <p>WCAG 2.1 AA compliant components with keyboard navigation, screen reader support, and semantic
+                        markup.</p>
                 </div>
                 <div class="nds-capability-card">
                     <i class="hgi hgi-stroke hgi-performance nds-capability-icon"></i>
                     <h3>Performance Optimized</h3>
-                    <p>Lightweight, tree-shakeable components with CSS custom properties and hardware-accelerated animations.</p>
+                    <p>Lightweight, tree-shakeable components with CSS custom properties and hardware-accelerated
+                        animations.</p>
                 </div>
                 <div class="nds-capability-card">
                     <i class="hgi hgi-stroke hgi-theme nds-capability-icon"></i>
                     <h3>Theming System</h3>
-                    <p>Comprehensive design token system supporting light/dark modes and custom government agency branding.</p>
+                    <p>Comprehensive design token system supporting light/dark modes and custom government agency
+                        branding.</p>
                 </div>
                 <div class="nds-capability-card">
                     <i class="hgi hgi-stroke hgi-development nds-capability-icon"></i>
@@ -93,7 +104,8 @@ hero_image_pos: 50% 10%
     <div class="nds-section-content-container">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built with Modern Technology</h2>
-            <p class="nds-section-description">Leveraging cutting-edge web technologies to deliver a robust and maintainable design system.</p>
+            <p class="nds-section-description">Leveraging cutting-edge web technologies to deliver a robust and
+                maintainable design system.</p>
         </div>
         <div class="nds-section-content">
             <div class="nds-tech-stack">

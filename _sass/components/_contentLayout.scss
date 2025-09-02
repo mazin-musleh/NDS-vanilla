@@ -66,6 +66,7 @@ main {
     width: 100%;
     min-width: 300px;
     height: fit-content;
+    padding: var(--spacing-4xl) 0;
 }
 
 .contentLayout.wSideMenu .mainContent {
@@ -113,47 +114,6 @@ main {
 }
 
 /* ========================================
-   CONTENT SECTIONS - LEGACY SUPPORT
-   ======================================== */
-
-/* Content Sections - Legacy Support */
-.content-section > .container {
-    padding: var(--spacing-5xl) var(--spacing-2xl);
-    max-width: var(--nds-content-MaxWidth);
-    margin: auto;
-}
-
-.content-section.noBg > .container {
-    padding: 0 var(--spacing-lg);
-}
-
-.content-section.noBg:first-of-type > .container {
-    padding-top: var(--spacing-5xl);
-}
-
-.content-section.noBg:last-of-type > .container {
-    padding-bottom: var(--spacing-5xl);
-}
-
-.content-section ul:not(.nav, .pagination),
-.content-section ol:not(.nav, .pagination) {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-md);
-}
-
-.content-section:not(.noBg),
-.content-section.white {
-    background-color: var(--background-body);
-}
-
-.content-section.noBg {
-    background-color: unset !important;
-    box-shadow: unset !important;
-    border: unset !important;
-}
-
-/* ========================================
    NDS CONTENT SECTIONS - NEW NAMING CONVENTION
    ======================================== */
 
@@ -162,7 +122,8 @@ main {
     background-color: var(--background-white);
 }
 
-.nds-content-section.noBg {
+.nds-content-section.noBg,
+.contentLayout:not(.wSideMenu) .nds-content-section:nth-of-type(even) {
     background-color: unset !important;
     box-shadow: unset !important;
     border: unset !important;

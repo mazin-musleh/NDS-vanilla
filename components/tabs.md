@@ -282,28 +282,147 @@ direction: ltr
                             <div class="nds-tab-panel hidden" role="tabpanel" id="panel-analytics"
                                 aria-labelledby="tab-analytics" tabindex="0">
                                 <h3>Analytics</h3>
-                                <p>Detailed analytics and reports to help you understand usage patterns and performance
-                                    metrics.</p>
-                                <p>View comprehensive data about user interactions, system performance, and service
-                                    utilization.</p>
+                                <p>Configure your analytics preferences and data visualization options.</p>
+                                
+                                <!-- Analytics Period Selection -->
+                                <div class="nds-form-container nds-select">
+                                    <div class="nds-form-header">
+                                        <label class="label" for="analyticsPeriod">Analytics Period</label>
+                                    </div>
+                                    <div class="nds-form-control">
+                                        <select id="analyticsPeriod">
+                                            <option value="">Select time period...</option>
+                                            <option value="7days">Last 7 Days</option>
+                                            <option value="30days" selected>Last 30 Days</option>
+                                            <option value="90days">Last 90 Days</option>
+                                            <option value="1year">Last Year</option>
+                                        </select>
+                                    </div>
+                                    <div class="nds-form-footer"></div>
+                                </div>
+
+                                <!-- Analytics Data Types -->
+                                <fieldset>
+                                    <legend class="label">Data to Include</legend>
+                                    <div class="nds-check-group">
+                                        <div class="nds-form-container nds-check-container">
+                                            <div class="nds-form-header">
+                                                <label class="label" for="includeUsers">User Activity</label>
+                                            </div>
+                                            <div class="nds-form-control">
+                                                <input type="checkbox" id="includeUsers" name="analyticsData" value="users" checked class="nds-check primary">
+                                            </div>
+                                        </div>
+                                        <div class="nds-form-container nds-check-container">
+                                            <div class="nds-form-header">
+                                                <label class="label" for="includePerformance">System Performance</label>
+                                                <span class="info">Response times, error rates, and system health metrics</span>
+                                            </div>
+                                            <div class="nds-form-control">
+                                                <input type="checkbox" id="includePerformance" name="analyticsData" value="performance" checked class="nds-check primary">
+                                            </div>
+                                        </div>
+                                        <div class="nds-form-container nds-check-container">
+                                            <div class="nds-form-header">
+                                                <label class="label" for="includeServices">Service Usage</label>
+                                            </div>
+                                            <div class="nds-form-control">
+                                                <input type="checkbox" id="includeServices" name="analyticsData" value="services" class="nds-check primary">
+                                            </div>
+                                        </div>
+                                        <div class="nds-form-container nds-check-container">
+                                            <div class="nds-form-header">
+                                                <label class="label" for="includeErrors">Error Reports</label>
+                                            </div>
+                                            <div class="nds-form-control">
+                                                <input type="checkbox" id="includeErrors" name="analyticsData" value="errors" class="nds-check primary">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
                             </div>
                             <div class="nds-tab-panel hidden" role="tabpanel" id="panel-settings"
                                 aria-labelledby="tab-settings" tabindex="0">
                                 <h3>Settings</h3>
                                 <p>Configure your preferences and manage your account settings.</p>
-                                <div class="settings-options">
-                                    <div class="setting-item">
-                                        <label>Language Preference</label>
-                                        <select>
-                                            <option>العربية</option>
-                                            <option>English</option>
+                                
+                                <!-- Language Preference -->
+                                <div class="nds-form-container nds-select">
+                                    <div class="nds-form-header">
+                                        <label class="label" for="languageSelect">Language Preference</label>
+                                    </div>
+                                    <div class="nds-form-control">
+                                        <select id="languageSelect">
+                                            <option value="ar">العربية</option>
+                                            <option value="en" selected>English</option>
                                         </select>
                                     </div>
-                                    <div class="setting-item">
-                                        <label>Notifications</label>
-                                        <input type="checkbox" checked> Enable email notifications
-                                    </div>
+                                    <div class="nds-form-footer"></div>
                                 </div>
+
+                                <!-- Theme Preference -->
+                                <fieldset>
+                                    <legend class="label">Theme Preference</legend>
+                                    <div class="nds-radio-group">
+                                        <div class="nds-form-container nds-radio-container">
+                                            <div class="nds-form-header">
+                                                <label class="label" for="themeLight">Light Theme</label>
+                                            </div>
+                                            <div class="nds-form-control">
+                                                <input type="radio" id="themeLight" name="themeGroup" value="light" checked class="nds-radio primary">
+                                            </div>
+                                        </div>
+                                        <div class="nds-form-container nds-radio-container">
+                                            <div class="nds-form-header">
+                                                <label class="label" for="themeDark">Dark Theme</label>
+                                            </div>
+                                            <div class="nds-form-control">
+                                                <input type="radio" id="themeDark" name="themeGroup" value="dark" class="nds-radio primary">
+                                            </div>
+                                        </div>
+                                        <div class="nds-form-container nds-radio-container">
+                                            <div class="nds-form-header">
+                                                <label class="label" for="themeAuto">Auto (System)</label>
+                                                <span class="info">Automatically adjusts based on your system preferences</span>
+                                            </div>
+                                            <div class="nds-form-control">
+                                                <input type="radio" id="themeAuto" name="themeGroup" value="auto" class="nds-radio primary">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                <!-- Notification Settings -->
+                                <fieldset>
+                                    <legend class="label">Notification Settings</legend>
+                                    <div class="nds-check-group">
+                                        <div class="nds-form-container nds-check-container">
+                                            <div class="nds-form-header">
+                                                <label class="label" for="emailNotifications">Email Notifications</label>
+                                            </div>
+                                            <div class="nds-form-control">
+                                                <input type="checkbox" id="emailNotifications" name="notificationSettings" value="email" checked class="nds-check primary">
+                                            </div>
+                                        </div>
+                                        <div class="nds-form-container nds-check-container">
+                                            <div class="nds-form-header">
+                                                <label class="label" for="smsNotifications">SMS Notifications</label>
+                                            </div>
+                                            <div class="nds-form-control">
+                                                <input type="checkbox" id="smsNotifications" name="notificationSettings" value="sms" class="nds-check primary">
+                                            </div>
+                                        </div>
+                                        <div class="nds-form-container nds-check-container">
+                                            <div class="nds-form-header">
+                                                <label class="label" for="pushNotifications">Push Notifications</label>
+                                                <span class="info">Receive instant notifications in your browser</span>
+                                            </div>
+                                            <div class="nds-form-control">
+                                                <input type="checkbox" id="pushNotifications" name="notificationSettings" value="push" checked class="nds-check primary">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
                             </div>
                         </div>
                     </div>
