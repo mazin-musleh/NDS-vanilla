@@ -78,3 +78,25 @@
     color: var(--text-default);
   }
 }
+
+/* ========================================
+   PROCESSING ANIMATIONS
+   ======================================== */
+
+@keyframes processing {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes processing-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

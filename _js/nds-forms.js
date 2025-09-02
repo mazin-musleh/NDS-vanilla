@@ -628,10 +628,17 @@
             if (removeButton) removeButton.setAttribute('data-file-id', fileData.id);
             
             // Handle icon vs progress bar vs error display
-            if (status === 'uploading') {
+            if (status === 'uploading' || status === 'processing') {
                 if (fileIcon) fileIcon.style.display = 'none';
                 if (progressCircle) progressCircle.style.display = 'flex';
                 if (fileError) fileError.style.display = 'none';
+                
+                // Add processing class to file item for processing status
+                if (status === 'processing') {
+                    fileItem.classList.add('processing');
+                } else {
+                    fileItem.classList.remove('processing');
+                }
             } else if (status === 'error') {
                 if (fileIcon) fileIcon.style.display = '';
                 if (progressCircle) progressCircle.style.display = 'none';
@@ -644,11 +651,11 @@
                 if (fileIcon) fileIcon.style.display = '';
                 if (progressCircle) progressCircle.style.display = 'none';
                 if (fileError) fileError.style.display = 'none';
-                fileItem.classList.remove('error');
+                fileItem.classList.remove('error', 'processing');
             }
             
-            // Update progress if uploading
-            if (status === 'uploading' && fileData.progress > 0) {
+            // Update progress if uploading or processing
+            if ((status === 'uploading' || status === 'processing') && fileData.progress > 0) {
                 updateProgressInItem(fileItem, fileData.progress);
             }
             
@@ -659,6 +666,7 @@
             const statusMap = {
                 'ready': '',
                 'uploading': 'Uploading...',
+                'processing': 'Processing...',
                 'complete': 'Complete',
                 'error': 'Failed'
             };
@@ -956,9 +964,9 @@
                 const file = uploadedFiles.find(f => f.id === fileId);
                 if (file) {
                     file.progress = progress;
-                    if (progress >= 100) {
-                        file.status = 'complete';
-                    } else if (file.status !== 'uploading') {
+                    if (progress >= 100 && file.status === 'uploading') {
+                        file.status = 'processing';
+                    } else if (file.status !== 'uploading' && file.status !== 'processing') {
                         file.status = 'uploading';
                     }
                     

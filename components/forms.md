@@ -615,12 +615,12 @@ direction: ltr
                 data-toggler='[["disabled", ".multi-file-upload .file-input", "stateToggle", "attr"], ["disabled", ".browse-btn", "stateToggle", "attr"]]'>
                 <span class="label">Disabled</span>
               </button>
+              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-action-btn" data-action="populate-demo-files">
+                <span class="label">Demo Files</span>
+              </button>
               <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                 <span class="label">Remove bg</span>
-              </button>
-              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-action-btn" data-action="populate-demo-files">
-                <span class="label">Demo Files</span>
               </button>
             </div>
           </div>
@@ -1021,6 +1021,586 @@ console.log(`${pendingUploads.length} uploads in progress`);
         </div>
 
 
+
+        <!-- Custom Date Picker -->
+        <div class="nds-demo-card">
+          <div class="demo-header">
+            <div class="demo-label">Custom Date Picker</div>
+            <div class="demo-action">
+              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                data-toggler='["disabled", "#datePickerInput", "stateToggle", "attr"]'>
+                <span class="label">Disabled</span>
+              </button>
+              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                data-toggler='["dateRange", ".nds-date-picker", "rangeToggle"]'>
+                <span class="label">Date Range</span>
+              </button>
+              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                <span class="label">Remove bg</span>
+              </button>
+            </div>
+          </div>
+          <div class="demo-container">
+            <div class="state-demo">
+              <div class="nds-form-container nds-date-picker">
+                <div class="nds-form-header">
+                  <label class="label" for="datePickerInput">Select Date</label>
+                </div>
+                <div class="nds-form-control">
+                  <i class="hgi hgi-stroke hgi-calendar-03 icon"></i>
+                  <input type="text" id="datePickerInput" class="nds-input nds-date-input" placeholder="DD/MM/YYYY" readonly>
+                  <div class="nds-form-action">
+                    <button class="nds-btn nds-btn-subtle date-picker-toggle" type="button" aria-label="Open calendar">
+                      <i class="hgi hgi-stroke hgi-chevron-down icon"></i>
+                    </button>
+                  </div>
+                  
+                  <!-- Custom Calendar Dropdown -->
+                  <div class="nds-date-picker-dropdown hidden">
+                    <div class="calendar-header">
+                      <button class="nds-btn nds-btn-subtle prev-month" type="button" aria-label="Previous month">
+                        <i class="hgi hgi-stroke hgi-arrow-left-01 icon"></i>
+                      </button>
+                      <div class="calendar-title">
+                        <div class="month-year-selectors">
+                          <div class="month-select-wrapper">
+                            <select class="month-select" aria-label="Select month">
+                              <option value="0">January</option>
+                              <option value="1">February</option>
+                              <option value="2">March</option>
+                              <option value="3">April</option>
+                              <option value="4">May</option>
+                              <option value="5">June</option>
+                              <option value="6">July</option>
+                              <option value="7">August</option>
+                              <option value="8">September</option>
+                              <option value="9">October</option>
+                              <option value="10">November</option>
+                              <option value="11">December</option>
+                            </select>
+                          </div>
+                          <div class="year-select-wrapper">
+                            <select class="year-select" aria-label="Select year">
+                              <option value="2020">2020</option>
+                              <option value="2021">2021</option>
+                              <option value="2022">2022</option>
+                              <option value="2023">2023</option>
+                              <option value="2024" selected>2024</option>
+                              <option value="2025">2025</option>
+                              <option value="2026">2026</option>
+                              <option value="2027">2027</option>
+                              <option value="2028">2028</option>
+                              <option value="2029">2029</option>
+                              <option value="2030">2030</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <button class="nds-btn nds-btn-subtle next-month" type="button" aria-label="Next month">
+                        <i class="hgi hgi-stroke hgi-arrow-right-01 icon"></i>
+                      </button>
+                    </div>
+                    
+                    <div class="calendar-body">
+                      <div class="calendar-weekdays">
+                        <div class="weekday">Su</div>
+                        <div class="weekday">Mo</div>
+                        <div class="weekday">Tu</div>
+                        <div class="weekday">We</div>
+                        <div class="weekday">Th</div>
+                        <div class="weekday">Fr</div>
+                        <div class="weekday">Sa</div>
+                      </div>
+                      <div class="calendar-dates">
+                        <button class="date-cell other-month" type="button">31</button>
+                        <button class="date-cell" type="button">1</button>
+                        <button class="date-cell" type="button">2</button>
+                        <button class="date-cell" type="button">3</button>
+                        <button class="date-cell" type="button">4</button>
+                        <button class="date-cell" type="button">5</button>
+                        <button class="date-cell" type="button">6</button>
+                        <button class="date-cell" type="button">7</button>
+                        <button class="date-cell" type="button">8</button>
+                        <button class="date-cell" type="button">9</button>
+                        <button class="date-cell" type="button">10</button>
+                        <button class="date-cell" type="button">11</button>
+                        <button class="date-cell" type="button">12</button>
+                        <button class="date-cell" type="button">13</button>
+                        <button class="date-cell" type="button">14</button>
+                        <button class="date-cell selected" type="button">15</button>
+                        <button class="date-cell" type="button">16</button>
+                        <button class="date-cell" type="button">17</button>
+                        <button class="date-cell" type="button">18</button>
+                        <button class="date-cell" type="button">19</button>
+                        <button class="date-cell" type="button">20</button>
+                        <button class="date-cell" type="button">21</button>
+                        <button class="date-cell" type="button">22</button>
+                        <button class="date-cell" type="button">23</button>
+                        <button class="date-cell" type="button">24</button>
+                        <button class="date-cell" type="button">25</button>
+                        <button class="date-cell" type="button">26</button>
+                        <button class="date-cell" type="button">27</button>
+                        <button class="date-cell" type="button">28</button>
+                        <button class="date-cell today" type="button">29</button>
+                        <button class="date-cell" type="button">30</button>
+                        <button class="date-cell" type="button">31</button>
+                        <button class="date-cell other-month" type="button">1</button>
+                        <button class="date-cell other-month" type="button">2</button>
+                        <button class="date-cell other-month" type="button">3</button>
+                      </div>
+                    </div>
+                    
+                    <div class="calendar-footer">
+                      <button class="nds-btn nds-btn-subtle today-btn" type="button">
+                        <span class="label">Today</span>
+                      </button>
+                      <button class="nds-btn nds-btn-primary clear-btn" type="button">
+                        <span class="label">Clear</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="nds-form-footer"></div>
+              </div>
+            </div>
+          </div>
+          <div class="code-example">
+            <div class="usage-header">
+              <span>Usage</span>
+              <button class="copy-btn" aria-label="Copy code example">
+                <i class="hgi hgi-stroke hgi-copy-01"></i>
+              </button>
+            </div>
+            <pre class="date-picker-code"><code>&lt;div class="nds-form-container nds-date-picker"&gt;
+    &lt;div class="nds-form-header"&gt;
+        &lt;label class="label" for="datePickerInput"&gt;Select Date&lt;/label&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-form-control"&gt;
+        &lt;i class="hgi hgi-stroke hgi-calendar-03 icon"&gt;&lt;/i&gt;
+        &lt;input type="text" id="datePickerInput" class="nds-input nds-date-input" placeholder="DD/MM/YYYY" readonly&gt;
+        &lt;div class="nds-form-action"&gt;
+            &lt;button class="nds-btn nds-btn-subtle date-picker-toggle" type="button" aria-label="Open calendar"&gt;
+                &lt;i class="hgi hgi-stroke hgi-chevron-down icon"&gt;&lt;/i&gt;
+            &lt;/button&gt;
+        &lt;/div&gt;
+        
+        &lt;!-- Custom Calendar Dropdown --&gt;
+        &lt;div class="nds-date-picker-dropdown hidden"&gt;
+            &lt;div class="calendar-header"&gt;
+                &lt;button class="nds-btn nds-btn-subtle prev-month" type="button" aria-label="Previous month"&gt;
+                    &lt;i class="hgi hgi-stroke hgi-arrow-left-01 icon"&gt;&lt;/i&gt;
+                &lt;/button&gt;
+                &lt;div class="calendar-title"&gt;
+                    &lt;div class="month-year-selectors"&gt;
+                        &lt;div class="month-select-wrapper"&gt;
+                            &lt;select class="month-select" aria-label="Select month"&gt;
+                                &lt;option value="0"&gt;January&lt;/option&gt;
+                                &lt;option value="1"&gt;February&lt;/option&gt;
+                                &lt;option value="2"&gt;March&lt;/option&gt;
+                                &lt;option value="3"&gt;April&lt;/option&gt;
+                                &lt;option value="4"&gt;May&lt;/option&gt;
+                                &lt;option value="5"&gt;June&lt;/option&gt;
+                                &lt;option value="6"&gt;July&lt;/option&gt;
+                                &lt;option value="7"&gt;August&lt;/option&gt;
+                                &lt;option value="8"&gt;September&lt;/option&gt;
+                                &lt;option value="9"&gt;October&lt;/option&gt;
+                                &lt;option value="10"&gt;November&lt;/option&gt;
+                                &lt;option value="11"&gt;December&lt;/option&gt;
+                            &lt;/select&gt;
+                        &lt;/div&gt;
+                        &lt;div class="year-select-wrapper"&gt;
+                            &lt;select class="year-select" aria-label="Select year"&gt;
+                                &lt;option value="2020"&gt;2020&lt;/option&gt;
+                                &lt;option value="2021"&gt;2021&lt;/option&gt;
+                                &lt;option value="2022"&gt;2022&lt;/option&gt;
+                                &lt;option value="2023"&gt;2023&lt;/option&gt;
+                                &lt;option value="2024" selected&gt;2024&lt;/option&gt;
+                                &lt;option value="2025"&gt;2025&lt;/option&gt;
+                                &lt;option value="2026"&gt;2026&lt;/option&gt;
+                                &lt;option value="2027"&gt;2027&lt;/option&gt;
+                                &lt;option value="2028"&gt;2028&lt;/option&gt;
+                                &lt;option value="2029"&gt;2029&lt;/option&gt;
+                                &lt;option value="2030"&gt;2030&lt;/option&gt;
+                            &lt;/select&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;button class="nds-btn nds-btn-subtle next-month" type="button" aria-label="Next month"&gt;
+                    &lt;i class="hgi hgi-stroke hgi-arrow-right-01 icon"&gt;&lt;/i&gt;
+                &lt;/button&gt;
+            &lt;/div&gt;
+            
+            &lt;div class="calendar-body"&gt;
+                &lt;div class="calendar-weekdays"&gt;
+                    &lt;div class="weekday"&gt;Su&lt;/div&gt;
+                    &lt;div class="weekday"&gt;Mo&lt;/div&gt;
+                    &lt;div class="weekday"&gt;Tu&lt;/div&gt;
+                    &lt;div class="weekday"&gt;We&lt;/div&gt;
+                    &lt;div class="weekday"&gt;Th&lt;/div&gt;
+                    &lt;div class="weekday"&gt;Fr&lt;/div&gt;
+                    &lt;div class="weekday"&gt;Sa&lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class="calendar-dates"&gt;
+                    &lt;!-- Date cells dynamically generated --&gt;
+                    &lt;button class="date-cell" type="button"&gt;1&lt;/button&gt;
+                    &lt;button class="date-cell selected" type="button"&gt;15&lt;/button&gt;
+                    &lt;button class="date-cell today" type="button"&gt;29&lt;/button&gt;
+                    &lt;!-- ... more date cells ... --&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            
+            &lt;div class="calendar-footer"&gt;
+                &lt;button class="nds-btn nds-btn-subtle today-btn" type="button"&gt;
+                    &lt;span class="label"&gt;Today&lt;/span&gt;
+                &lt;/button&gt;
+                &lt;button class="nds-btn nds-btn-primary clear-btn" type="button"&gt;
+                    &lt;span class="label"&gt;Clear&lt;/span&gt;
+                &lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-form-footer"&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+
+        <style>
+        /* Date Picker Styles */
+        .nds-date-picker {
+          position: relative;
+        }
+
+        .nds-date-picker-dropdown {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          z-index: 999;
+          margin-top: 4px;
+          padding: 0;
+          background-color: var(--background-white, #fff);
+          border: 1px solid var(--colors-neutral-300, #d2d6db);
+          border-radius: var(--radius-md, 8px);
+          box-shadow: var(--shadow-md);
+        }
+
+        .nds-date-picker-dropdown.hidden {
+          display: none;
+        }
+
+        .calendar-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: var(--spacing-md);
+          border-bottom: 1px solid var(--colors-neutral-300, #d2d6db);
+        }
+
+        .calendar-title {
+          flex: 1;
+          display: flex;
+          justify-content: center;
+        }
+
+        .month-year-selectors {
+          display: flex;
+          gap: 8px;
+        }
+
+        .month-select-wrapper, .year-select-wrapper {
+          position: relative;
+          display: inline-block;
+        }
+
+        .month-select, .year-select {
+          padding: 4px 24px 4px 8px;
+          border: 1px solid var(--colors-neutral-300, #d2d6db);
+          border-radius: var(--radius-sm, 4px);
+          background: var(--background-white, #fff);
+          color: var(--text-default, #161616);
+          font-size: 14px;
+          appearance: none;
+          -webkit-appearance: none;
+          -moz-appearance: none;
+          cursor: pointer;
+          min-width: 80px;
+        }
+
+        .month-select-wrapper::after, .year-select-wrapper::after {
+          content: "㭚";
+          pointer-events: none;
+          font-family: "hgi-stroke-rounded" !important;
+          font-style: normal;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+          position: absolute;
+          right: 8px;
+          top: 50%;
+          transform: translateY(-50%);
+          opacity: 1;
+          display: inline-flex;
+          width: 16px;
+          height: 16px;
+          font-size: 16px;
+          line-height: 16px;
+          justify-content: center;
+          align-content: center;
+          align-items: center;
+        }
+
+        .calendar-body {
+          padding: var(--spacing-md);
+        }
+
+        .calendar-weekdays {
+          display: grid;
+          grid-template-columns: repeat(7, 1fr);
+          gap: 4px;
+          margin-bottom: 8px;
+        }
+
+        .weekday {
+          text-align: center;
+          font-size: 12px;
+          font-weight: 600;
+          color: var(--text-primary-paragraph, #6C737F);
+          padding: 8px 4px;
+        }
+
+        .calendar-dates {
+          display: grid;
+          grid-template-columns: repeat(7, 1fr);
+          gap: 4px;
+        }
+
+        .date-cell {
+          background: none;
+          border: none;
+          padding: 8px;
+          text-align: center;
+          cursor: pointer;
+          border-radius: var(--radius-sm, 4px);
+          font-size: 14px;
+          color: var(--text-default, #161616);
+          transition: background-color 0.2s;
+        }
+
+        .date-cell:hover {
+          background-color: var(--background-neutral-100, #F5F6F7);
+        }
+
+        .date-cell.other-month {
+          color: var(--text-primary-paragraph, #6C737F);
+        }
+
+        .date-cell.today {
+          background-color: var(--background-primary-light, #E3F2FD);
+          color: var(--text-primary, #1976D2);
+          font-weight: 600;
+        }
+
+        .date-cell.selected {
+          background-color: var(--background-primary, #1976D2);
+          color: var(--text-oncolor-primary, #fff);
+          font-weight: 600;
+        }
+
+        .date-cell.selected:hover {
+          background-color: var(--background-primary-dark, #1565C0);
+        }
+
+        .calendar-footer {
+          display: flex;
+          justify-content: space-between;
+          padding: var(--spacing-md);
+          border-top: 1px solid var(--colors-neutral-300, #d2d6db);
+        }
+        </style>
+
+        <script>
+        // Date Picker JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+          // Find all date picker containers
+          const datePickerContainers = document.querySelectorAll('.nds-date-picker');
+          
+          datePickerContainers.forEach(function(datePickerContainer) {
+            const input = datePickerContainer.querySelector('.nds-date-input');
+            const dropdown = datePickerContainer.querySelector('.nds-date-picker-dropdown');
+            const toggleBtn = datePickerContainer.querySelector('.date-picker-toggle');
+            const monthSelect = datePickerContainer.querySelector('.month-select');
+            const yearSelect = datePickerContainer.querySelector('.year-select');
+            const prevBtn = datePickerContainer.querySelector('.prev-month');
+            const nextBtn = datePickerContainer.querySelector('.next-month');
+            const todayBtn = datePickerContainer.querySelector('.today-btn');
+            const clearBtn = datePickerContainer.querySelector('.clear-btn');
+            const datesContainer = datePickerContainer.querySelector('.calendar-dates');
+
+            if (!input || !dropdown || !toggleBtn) return;
+
+            let currentDate = new Date();
+            let selectedDate = null;
+
+            // Toggle dropdown - also allow clicking on input
+            function toggleDropdown() {
+              dropdown.classList.toggle('hidden');
+              if (!dropdown.classList.contains('hidden')) {
+                updateCalendar();
+              }
+            }
+
+            toggleBtn.addEventListener('click', toggleDropdown);
+            input.addEventListener('click', toggleDropdown);
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+              if (!datePickerContainer.contains(e.target)) {
+                dropdown.classList.add('hidden');
+              }
+            });
+
+            // Month/Year dropdown changes
+            if (monthSelect) {
+              monthSelect.addEventListener('change', function() {
+                currentDate.setMonth(parseInt(this.value));
+                updateCalendar();
+              });
+            }
+
+            if (yearSelect) {
+              yearSelect.addEventListener('change', function() {
+                currentDate.setFullYear(parseInt(this.value));
+                updateCalendar();
+              });
+            }
+
+            // Navigation buttons
+            if (prevBtn) {
+              prevBtn.addEventListener('click', function() {
+                currentDate.setMonth(currentDate.getMonth() - 1);
+                updateDropdowns();
+                updateCalendar();
+              });
+            }
+
+            if (nextBtn) {
+              nextBtn.addEventListener('click', function() {
+                currentDate.setMonth(currentDate.getMonth() + 1);
+                updateDropdowns();
+                updateCalendar();
+              });
+            }
+
+            // Today button
+            if (todayBtn) {
+              todayBtn.addEventListener('click', function() {
+                const today = new Date();
+                selectedDate = new Date(today);
+                currentDate = new Date(today);
+                updateDropdowns();
+                updateCalendar();
+                updateInput();
+              });
+            }
+
+            // Clear button
+            if (clearBtn) {
+              clearBtn.addEventListener('click', function() {
+                selectedDate = null;
+                input.value = '';
+                updateCalendar();
+              });
+            }
+
+            // Update month/year dropdowns
+            function updateDropdowns() {
+              if (monthSelect) monthSelect.value = currentDate.getMonth();
+              if (yearSelect) yearSelect.value = currentDate.getFullYear();
+            }
+
+            // Update calendar display
+            function updateCalendar() {
+              if (!datesContainer) return;
+              
+              const year = currentDate.getFullYear();
+              const month = currentDate.getMonth();
+              
+              // Clear existing dates
+              datesContainer.innerHTML = '';
+              
+              // First day of month and number of days
+              const firstDay = new Date(year, month, 1).getDay();
+              const daysInMonth = new Date(year, month + 1, 0).getDate();
+              const daysInPrevMonth = new Date(year, month, 0).getDate();
+              
+              // Add previous month's trailing days
+              for (let i = firstDay - 1; i >= 0; i--) {
+                const day = daysInPrevMonth - i;
+                const btn = createDateButton(day, 'other-month');
+                datesContainer.appendChild(btn);
+              }
+              
+              // Add current month's days
+              for (let day = 1; day <= daysInMonth; day++) {
+                const btn = createDateButton(day, 'current-month');
+                const cellDate = new Date(year, month, day);
+                
+                // Check if today
+                const today = new Date();
+                if (cellDate.toDateString() === today.toDateString()) {
+                  btn.classList.add('today');
+                }
+                
+                // Check if selected
+                if (selectedDate && cellDate.toDateString() === selectedDate.toDateString()) {
+                  btn.classList.add('selected');
+                }
+                
+                // Add click handler
+                btn.addEventListener('click', function() {
+                  selectedDate = new Date(cellDate);
+                  updateInput();
+                  updateCalendar();
+                  dropdown.classList.add('hidden');
+                });
+                
+                datesContainer.appendChild(btn);
+              }
+              
+              // Add next month's leading days
+              const totalCells = datesContainer.children.length;
+              const remainingCells = 42 - totalCells; // 6 rows × 7 days
+              for (let day = 1; day <= remainingCells && day <= 14; day++) {
+                const btn = createDateButton(day, 'other-month');
+                datesContainer.appendChild(btn);
+              }
+            }
+
+            // Create date button
+            function createDateButton(day, type) {
+              const btn = document.createElement('button');
+              btn.className = `date-cell ${type === 'other-month' ? 'other-month' : ''}`;
+              btn.type = 'button';
+              btn.textContent = day;
+              return btn;
+            }
+
+            // Update input field
+            function updateInput() {
+              if (selectedDate) {
+                const day = selectedDate.getDate().toString().padStart(2, '0');
+                const month = (selectedDate.getMonth() + 1).toString().padStart(2, '0');
+                const year = selectedDate.getFullYear();
+                input.value = `${day}/${month}/${year}`;
+              }
+            }
+
+            // Initialize
+            updateDropdowns();
+            updateCalendar();
+          });
+        });
+        </script>
 
         <!-- add new demo card here -->
       </div>

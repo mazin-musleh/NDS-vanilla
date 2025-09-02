@@ -191,10 +191,10 @@ fieldset {
     &.disabled {
         background-color: var(--background-disabled) !important;
         color: var(--text-default-disabled) !important;
-        border-color: var(--control-disabled) !important;
+        border-color: var(--border-disabled) !important;
         pointer-events: none;
         user-select: none;
-
+        
         ::-webkit-input-placeholder {
             color: var(--text-default-disabled) !important;
         }
@@ -622,6 +622,7 @@ fieldset {
             border: 2px dashed var(--border-neutral-primary) !important;
             border-radius: var(--radius-sm);
             background-color: var(--background-neutral-100);
+            box-shadow: unset;
 
 
             .upload-zone {
@@ -846,7 +847,6 @@ fieldset {
 
         &.uploading {
 
-            // Circular progress bar replaces file icon during upload
             .progress-circle {
                 @include progress-circle($size: 24px,
                     $style: 'primary',
@@ -855,6 +855,25 @@ fieldset {
                     $show-symbol: false,
                     $percent: 0);
             }
+        }
+
+        &.processing {
+
+            animation: processing 1.5s ease-in-out infinite;
+
+            .progress-circle {
+                @include progress-circle($size: 24px,
+                    $style: 'primary',
+                    $rotate: -90deg,
+                    $show-text: false,
+                    $show-symbol: false,
+                    $percent: 100);
+                /* animation: processing-spin 1s linear infinite; */
+                .progress-info {
+                    /* display: none; */
+                }
+            }
+
         }
 
         // Error state styling
