@@ -332,9 +332,10 @@ fieldset {
         }
 
         >* {
+            --nds-btn-height: 38px;
             position: relative;
-            width: 38px;
-            height: 38px;
+            width: var(--nds-btn-height);
+            height: var(--nds-btn-height);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1002,7 +1003,7 @@ fieldset {
         margin-top: 4px;
         padding: 0;
         max-width: 500px;
-        min-width: 320px;
+        min-width: 350px;
         width: 100%;
         background-color: var(--background-white, #fff);
         border: 1px solid var(--colors-neutral-300, #d2d6db);
@@ -1074,6 +1075,8 @@ fieldset {
         gap: var(--spacing-xs);
         max-height: 200px;
         overflow-y: auto;
+        scroll-behavior: auto;
+        overscroll-behavior: contain;
 
         @include ltr {
             left: 0;
@@ -1098,11 +1101,15 @@ fieldset {
 
         .weekday {
             text-align: center;
-            font-size: var(--nds-text-xs-FS);
-            font-weight: 600;
+            font-size: var(--nds-text-md-FS);
+            font-weight: 400;
             color: var(--text-primary-paragraph);
             padding: var(--spacing-md) var(--spacing-xs);
             min-width: 40px;
+
+            @include mobile{
+                font-size: var(--nds-text-sm-FS);
+            }
         }
     }
 
@@ -1117,6 +1124,7 @@ fieldset {
             border-radius: 50% !important;
             width: 40px;
             height: 40px;
+            font-weight: 400;
 
             &::before {
                 display: none;
@@ -1136,7 +1144,7 @@ fieldset {
                 background-color: unset;
                 border: 2px solid var(--button-background-primary-default);
                 color: var(--text-primary);
-                font-weight: 600;
+                font-weight: 700;
 
                 &.selected {
                     outline: 2px solid var(--button-background-primary-selected);
@@ -1152,7 +1160,7 @@ fieldset {
             &.selected {
                 background-color: var(--button-background-primary-selected);
                 color: var(--text-oncolor-primary);
-                font-weight: 600;
+                
 
                 &:hover {
                     background-color: var(--form-datecell-background-hovered);
@@ -1164,7 +1172,7 @@ fieldset {
             &.range-end {
                 background-color: var(--form-datecell-background-default);
                 color: var(--text-oncolor-primary);
-                font-weight: 600;
+                
 
                 &.today {
                     outline: 2px solid var(--form-datecell-background-default);
@@ -1204,7 +1212,7 @@ fieldset {
                 }
             }
 
-            &.in-range {
+            &.in-range:not(.range-start,.range-end) {
                 background-color: var(--form-datecell-background-100);
 
                 &::before {
@@ -1222,19 +1230,7 @@ fieldset {
                 }
             }
 
-            &.range-start.in-range {
-                border-radius: 50% 0 0 50% !important;
 
-
-            }
-
-            &.range-end.in-range {
-                border-radius: 0 50% 50% 0 !important;
-            }
-
-            &.range-start.range-end {
-                border-radius: 50% !important;
-            }
         }
     }
 

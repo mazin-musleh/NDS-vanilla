@@ -20,6 +20,9 @@ capybara-*.html
 /test/version_tmp/
 /tmp/
 
+#custom files
+notes.txt
+
 # Windows
 Thumbs.db
 ehthumbs.db

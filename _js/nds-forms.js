@@ -572,6 +572,11 @@
         var isRangeMode = datePickerContainer.classList.contains('dateRange');
         var rangeStart = null;
         var rangeEnd = null;
+        var isInitialized = false;
+        
+        // Store event handlers for cleanup
+        var monthDropdownHandler = null;
+        var yearDropdownHandler = null;
 
         // Simple Gregorian calendar data
         var monthNames = {
@@ -583,6 +588,17 @@
             ar: ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'],
             en: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
         };
+        
+        var buttonLabels = {
+            ar: {
+                today: 'اليوم',
+                clear: 'مسح'
+            },
+            en: {
+                today: 'Today',
+                clear: 'Clear'
+            }
+        };
 
         function toggleDropdown() {
             var isNowOpen = dropdown.classList.contains('hidden');
@@ -590,11 +606,22 @@
             formControl.classList.toggle('open', isNowOpen);
             
             if (isNowOpen) {
-                updateCalendar();
+                // Initialize calendar on first open
+                if (!isInitialized) {
+                    initializeCalendar();
+                } else {
+                    updateCalendar();
+                }
+            } else {
+                // De-initialize when closing
+                deinitializeCalendar();
             }
         }
 
         function updateDropdowns() {
+            // Only update if calendar is initialized
+            if (!isInitialized) return;
+            
             // Simple Gregorian calendar
             if (monthDropdownBtn) {
                 var isArabic = document.documentElement.lang === 'ar';
@@ -692,9 +719,30 @@
         function updateWeekdayHeaders() {
             generateWeekdayHeaders();
         }
+        
+        function updateButtonLabels() {
+            var isArabic = document.documentElement.lang === 'ar';
+            var labels = isArabic ? buttonLabels.ar : buttonLabels.en;
+            
+            // Update Today button
+            if (todayBtn) {
+                var todayLabelElement = todayBtn.querySelector('.label');
+                if (todayLabelElement) {
+                    todayLabelElement.textContent = labels.today;
+                }
+            }
+            
+            // Update Clear button
+            if (clearBtn) {
+                var clearLabelElement = clearBtn.querySelector('.label');
+                if (clearLabelElement) {
+                    clearLabelElement.textContent = labels.clear;
+                }
+            }
+        }
 
         function updateCalendar() {
-            if (!datesContainer) return;
+            if (!isInitialized || !datesContainer) return;
             
             // Check range mode dynamically
             isRangeMode = datePickerContainer.classList.contains('dateRange');
@@ -704,6 +752,9 @@
         }
         
         function generateCalendarContent() {
+            // Only generate if calendar is initialized
+            if (!isInitialized || !datesContainer) return;
+            
             // Clear existing dates
             datesContainer.innerHTML = '';
             
@@ -804,21 +855,115 @@
 
         // Close dropdown when clicking outside
         document.addEventListener('click', function(e) {
-            if (!datePickerContainer.contains(e.target)) {
-                dropdown.classList.add('hidden');
-                formControl.classList.remove('open');
-            }
+            // Use setTimeout to ensure this runs after other click handlers
+            setTimeout(function() {
+                // Only handle dropdowns if calendar is initialized and open
+                if (isInitialized && !dropdown.classList.contains('hidden')) {
+                    var clickedElement = e.target;
+                    
+                    // Check if month dropdown should be closed
+                    var monthDropdownOpen = monthDropdownMenu && !monthDropdownMenu.classList.contains('hidden');
+                    if (monthDropdownOpen) {
+                        var clickedInMonthArea = monthDropdownBtn && (
+                            monthDropdownBtn.contains(clickedElement) || 
+                            monthDropdownBtn === clickedElement
+                        );
+                        var clickedInMonthMenu = monthDropdownMenu && (
+                            monthDropdownMenu.contains(clickedElement) || 
+                            monthDropdownMenu === clickedElement
+                        );
+                        
+                        // Close if clicked outside both button and menu
+                        if (!clickedInMonthArea && !clickedInMonthMenu) {
+                            monthDropdownMenu.classList.add('hidden');
+                            monthDropdownBtn.setAttribute('aria-expanded', 'false');
+                            monthDropdownBtn.classList.remove('open');
+                        }
+                    }
+                    
+                    // Check if year dropdown should be closed
+                    var yearDropdownOpen = yearDropdownMenu && !yearDropdownMenu.classList.contains('hidden');
+                    if (yearDropdownOpen) {
+                        var clickedInYearArea = yearDropdownBtn && (
+                            yearDropdownBtn.contains(clickedElement) || 
+                            yearDropdownBtn === clickedElement
+                        );
+                        var clickedInYearMenu = yearDropdownMenu && (
+                            yearDropdownMenu.contains(clickedElement) || 
+                            yearDropdownMenu === clickedElement
+                        );
+                        
+                        // Close if clicked outside both button and menu
+                        if (!clickedInYearArea && !clickedInYearMenu) {
+                            yearDropdownMenu.classList.add('hidden');
+                            yearDropdownBtn.setAttribute('aria-expanded', 'false');
+                            yearDropdownBtn.classList.remove('open');
+                        }
+                    }
+                }
+                
+                // Then check if we should close the entire calendar
+                if (!datePickerContainer.contains(e.target)) {
+                    dropdown.classList.add('hidden');
+                    formControl.classList.remove('open');
+                    // De-initialize when closing
+                    deinitializeCalendar();
+                }
+            }, 0);
         });
         
-        // Prevent calendar dropdown from closing when clicking inside it
+        // Prevent calendar dropdown from closing when clicking inside it, but close month/year dropdowns
         if (dropdown) {
             dropdown.addEventListener('click', function(e) {
                 e.stopPropagation();
+                
+                // Close dropdowns when clicking on calendar content (but not on the dropdowns themselves)
+                if (isInitialized) {
+                    var clickedElement = e.target;
+                    
+                    // Check if clicked outside month dropdown
+                    var clickedInMonthArea = monthDropdownBtn && (
+                        monthDropdownBtn.contains(clickedElement) || 
+                        monthDropdownBtn === clickedElement
+                    );
+                    var clickedInMonthMenu = monthDropdownMenu && (
+                        monthDropdownMenu.contains(clickedElement) || 
+                        monthDropdownMenu === clickedElement
+                    );
+                    
+                    // Close month dropdown if not clicking in its area
+                    if (monthDropdownMenu && !monthDropdownMenu.classList.contains('hidden') && 
+                        !clickedInMonthArea && !clickedInMonthMenu) {
+                        monthDropdownMenu.classList.add('hidden');
+                        monthDropdownBtn.setAttribute('aria-expanded', 'false');
+                        monthDropdownBtn.classList.remove('open');
+                    }
+                    
+                    // Check if clicked outside year dropdown
+                    var clickedInYearArea = yearDropdownBtn && (
+                        yearDropdownBtn.contains(clickedElement) || 
+                        yearDropdownBtn === clickedElement
+                    );
+                    var clickedInYearMenu = yearDropdownMenu && (
+                        yearDropdownMenu.contains(clickedElement) || 
+                        yearDropdownMenu === clickedElement
+                    );
+                    
+                    // Close year dropdown if not clicking in its area
+                    if (yearDropdownMenu && !yearDropdownMenu.classList.contains('hidden') && 
+                        !clickedInYearArea && !clickedInYearMenu) {
+                        yearDropdownMenu.classList.add('hidden');
+                        yearDropdownBtn.setAttribute('aria-expanded', 'false');
+                        yearDropdownBtn.classList.remove('open');
+                    }
+                }
             });
         }
 
         // Generate dropdown options dynamically
         function regenerateDropdownOptions() {
+            // Only regenerate if calendar is initialized
+            if (!isInitialized) return;
             
             // Regenerate month options
             if (monthDropdownMenu) {
@@ -833,6 +978,11 @@
                         btn.setAttribute('role', 'menuitem');
                         btn.setAttribute('data-value', index);
                         btn.innerHTML = '<span class="label">' + monthName + '</span>';
+                        
+                        // Mark current month as selected
+                        if (index === currentDate.getMonth()) {
+                            btn.classList.add('selected');
+                        }
                         
                         btn.addEventListener('click', function(e) {
                             e.preventDefault();
@@ -869,10 +1019,13 @@
                 var yearRangeBefore = parseInt(yearDropdownMenu.dataset.yearBefore) || 5;
                 var yearRangeAfter = parseInt(yearDropdownMenu.dataset.yearAfter) || 5;
                 
-                // Simple Gregorian year range
+                // Simple Gregorian year range - always use current year (today) for range calculation
+                var todayYear = new Date().getFullYear();
+                startYear = todayYear - yearRangeBefore;
+                endYear = todayYear + yearRangeAfter;
+                
+                // But keep the currently viewed year for selection highlighting
                 currentYear = currentDate.getFullYear();
-                startYear = currentYear - yearRangeBefore;
-                endYear = currentYear + yearRangeAfter;
                 
                 generateYearOptions(startYear, endYear, currentYear);
             }
@@ -927,58 +1080,88 @@
 
         // Month/Year dropdown functionality
         function initCalendarDropdowns() {
+            // Remove existing listeners first
+            if (monthDropdownHandler && monthDropdownBtn) {
+                monthDropdownBtn.removeEventListener('click', monthDropdownHandler);
+            }
+            if (yearDropdownHandler && yearDropdownBtn) {
+                yearDropdownBtn.removeEventListener('click', yearDropdownHandler);
+            }
+            
             // Month dropdown
             if (monthDropdownBtn && monthDropdownMenu) {
-                
-                monthDropdownBtn.addEventListener('click', function(e) {
+                monthDropdownHandler = function(e) {
                     e.preventDefault();
                     e.stopPropagation();
                     var isCurrentlyOpen = !monthDropdownMenu.classList.contains('hidden');
                     monthDropdownMenu.classList.toggle('hidden', isCurrentlyOpen);
                     monthDropdownBtn.setAttribute('aria-expanded', !isCurrentlyOpen);
+                    monthDropdownBtn.classList.toggle('open', !isCurrentlyOpen);
                     
                     // Close year dropdown if opening month dropdown
                     if (!isCurrentlyOpen && !yearDropdownMenu.classList.contains('hidden')) {
                         yearDropdownMenu.classList.add('hidden');
                         yearDropdownBtn.setAttribute('aria-expanded', false);
+                        yearDropdownBtn.classList.remove('open');
                     }
-                });
+                    
+                    // Scroll to selected month when opening
+                    if (!isCurrentlyOpen) {
+                        setTimeout(function() {
+                            var selectedOption = monthDropdownMenu.querySelector('.month-option.selected');
+                            if (selectedOption) {
+                                // Calculate scroll position relative to dropdown menu
+                                var dropdownRect = monthDropdownMenu.getBoundingClientRect();
+                                var optionRect = selectedOption.getBoundingClientRect();
+                                var scrollTop = optionRect.top - dropdownRect.top + monthDropdownMenu.scrollTop - (dropdownRect.height / 2) + (optionRect.height / 2);
+                                monthDropdownMenu.scrollTop = Math.max(0, scrollTop);
+                            }
+                        }, 10);
+                    }
+                };
+                
+                monthDropdownBtn.addEventListener('click', monthDropdownHandler);
                 
                 // Month options are now generated dynamically
             }
             
             // Year dropdown
             if (yearDropdownBtn && yearDropdownMenu) {
-                
-                yearDropdownBtn.addEventListener('click', function(e) {
+                yearDropdownHandler = function(e) {
                     e.preventDefault();
                     e.stopPropagation();
                     var isCurrentlyOpen = !yearDropdownMenu.classList.contains('hidden');
                     yearDropdownMenu.classList.toggle('hidden', isCurrentlyOpen);
                     yearDropdownBtn.setAttribute('aria-expanded', !isCurrentlyOpen);
+                    yearDropdownBtn.classList.toggle('open', !isCurrentlyOpen);
                     
                     // Close month dropdown if opening year dropdown
                     if (!isCurrentlyOpen && !monthDropdownMenu.classList.contains('hidden')) {
                         monthDropdownMenu.classList.add('hidden');
                         monthDropdownBtn.setAttribute('aria-expanded', false);
+                        monthDropdownBtn.classList.remove('open');
                     }
-                });
+                    
+                    // Scroll to selected year when opening
+                    if (!isCurrentlyOpen) {
+                        setTimeout(function() {
+                            var selectedOption = yearDropdownMenu.querySelector('.year-option.selected');
+                            if (selectedOption) {
+                                // Calculate scroll position relative to dropdown menu
+                                var dropdownRect = yearDropdownMenu.getBoundingClientRect();
+                                var optionRect = selectedOption.getBoundingClientRect();
+                                var scrollTop = optionRect.top - dropdownRect.top + yearDropdownMenu.scrollTop - (dropdownRect.height / 2) + (optionRect.height / 2);
+                                yearDropdownMenu.scrollTop = Math.max(0, scrollTop);
+                            }
+                        }, 10);
+                    }
+                };
+                
+                yearDropdownBtn.addEventListener('click', yearDropdownHandler);
                 
                 // Year options are now generated dynamically
             }
             
-            // Close dropdowns when clicking outside
-            document.addEventListener('click', function(e) {
-                if (monthDropdownBtn && monthDropdownMenu && !monthDropdownBtn.contains(e.target) && !monthDropdownMenu.contains(e.target)) {
-                    monthDropdownMenu.classList.add('hidden');
-                    monthDropdownBtn.setAttribute('aria-expanded', false);
-                }
-                
-                if (yearDropdownBtn && yearDropdownMenu && !yearDropdownBtn.contains(e.target) && !yearDropdownMenu.contains(e.target)) {
-                    yearDropdownMenu.classList.add('hidden');
-                    yearDropdownBtn.setAttribute('aria-expanded', false);
-                }
-            });
         }
 
         // Navigation buttons
@@ -1000,26 +1183,27 @@
 
         // Today button
         if (todayBtn) {
-            todayBtn.addEventListener('click', async function() {
-                try {
-                    var today = new Date();
+            todayBtn.addEventListener('click', function() {
+                var today = new Date();
+                
+                // Check if in range mode dynamically
+                isRangeMode = datePickerContainer.classList.contains('dateRange');
+                
+                if (isRangeMode) {
+                    // Use range selection logic
+                    handleRangeSelection(today);
+                } else {
+                    // Single date selection
                     selectedDate = new Date(today);
-                    currentDate = new Date(today);
-                    
-                    // Update display properly for both calendar types
-                    updateDropdowns();
-                    updateCalendar();
-                    updateInput();
-                } catch (error) {
-                    // Fallback to simple today functionality
-                    var today = new Date();
-                    selectedDate = new Date(today);
-                    currentDate = new Date(today);
-                    
-                    updateDropdowns();
-                    updateCalendar();
-                    updateInput();
                 }
+                
+                // Navigate to today's month
+                currentDate = new Date(today);
+                
+                // Update display
+                updateDropdowns();
+                updateCalendar();
+                updateInput();
             });
         }
 
@@ -1048,8 +1232,8 @@
                         // Check current range mode
                         isRangeMode = datePickerContainer.classList.contains('dateRange');
                         
-                        // If range mode changed, update calendar
-                        if (wasRange !== isRangeMode) {
+                        // If range mode changed, update calendar (only if initialized)
+                        if (wasRange !== isRangeMode && isInitialized) {
                             updateCalendar();
                         }
                     }
@@ -1072,10 +1256,12 @@
                 isRangeMode = currentRangeState;
                 lastRangeState = currentRangeState;
                 
-                // Clear range selection when switching modes
-                rangeStart = null;
-                rangeEnd = null;
-                updateCalendar();
+                // Clear range selection when switching modes (only if initialized)
+                if (isInitialized) {
+                    rangeStart = null;
+                    rangeEnd = null;
+                    updateCalendar();
+                }
             }
         }, 100); // Check every 100ms
         
@@ -1083,9 +1269,13 @@
         var languageObserver = new MutationObserver(function(mutations) {
             mutations.forEach(function(mutation) {
                 if (mutation.type === 'attributes' && mutation.attributeName === 'lang') {
-                    regenerateDropdownOptions();
-                    updateDropdowns();
-                    updateWeekdayHeaders();
+                    // Only update if calendar is initialized
+                    if (isInitialized) {
+                        regenerateDropdownOptions();
+                        updateDropdowns();
+                        updateWeekdayHeaders();
+                        updateButtonLabels();
+                    }
                 }
             });
         });
@@ -1108,19 +1298,135 @@
             }
         };
 
-        // Initialize
+        // Initialize calendar (called lazily on first use)
         function initializeCalendar() {
-            // Set currentDate to today
-            currentDate = new Date();
+            // Mark as initialized first to allow functions to run
+            isInitialized = true;
+            
+            // Check if input has a valid date value and use it
+            var inputValue = dateInput.value.trim();
+            var parsedDate = null;
+            
+            if (inputValue) {
+                // Check if it's a date range (contains " - ")
+                if (inputValue.includes(' - ')) {
+                    var rangeParts = inputValue.split(' - ');
+                    if (rangeParts.length === 2) {
+                        // Parse start date
+                        var startParts = rangeParts[0].trim().match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+                        var endParts = rangeParts[1].trim().match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+                        
+                        if (startParts && endParts) {
+                            // Parse and validate start date
+                            var startDay = parseInt(startParts[1], 10);
+                            var startMonth = parseInt(startParts[2], 10) - 1;
+                            var startYear = parseInt(startParts[3], 10);
+                            var startDate = new Date(startYear, startMonth, startDay);
+                            
+                            // Parse and validate end date
+                            var endDay = parseInt(endParts[1], 10);
+                            var endMonth = parseInt(endParts[2], 10) - 1;
+                            var endYear = parseInt(endParts[3], 10);
+                            var endDate = new Date(endYear, endMonth, endDay);
+                            
+                            if (startDate.getDate() === startDay && 
+                                startDate.getMonth() === startMonth && 
+                                startDate.getFullYear() === startYear &&
+                                endDate.getDate() === endDay && 
+                                endDate.getMonth() === endMonth && 
+                                endDate.getFullYear() === endYear) {
+                                
+                                parsedDate = startDate;
+                                rangeStart = new Date(startDate);
+                                rangeEnd = new Date(endDate);
+                            }
+                        }
+                    }
+                } else {
+                    // Try to parse single date in DD/MM/YYYY format
+                    var dateParts = inputValue.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+                    if (dateParts) {
+                        var day = parseInt(dateParts[1], 10);
+                        var month = parseInt(dateParts[2], 10) - 1; // Month is 0-indexed
+                        var year = parseInt(dateParts[3], 10);
+                        
+                        // Validate the date
+                        var testDate = new Date(year, month, day);
+                        if (testDate.getDate() === day && 
+                            testDate.getMonth() === month && 
+                            testDate.getFullYear() === year) {
+                            parsedDate = testDate;
+                        }
+                    }
+                }
+            }
+            
+            // Set currentDate to parsed date or today
+            if (parsedDate) {
+                currentDate = new Date(parsedDate);
+                selectedDate = new Date(parsedDate);
+            } else {
+                currentDate = new Date();
+            }
             
             regenerateDropdownOptions();
             initCalendarDropdowns();
             updateDropdowns();
             generateWeekdayHeaders();
+            updateButtonLabels();
             generateCalendarContent();
         }
         
-        initializeCalendar();
+        // De-initialize calendar and clean up all rendered data
+        function deinitializeCalendar() {
+            if (!isInitialized) return;
+            
+            // Remove event listeners
+            if (monthDropdownHandler && monthDropdownBtn) {
+                monthDropdownBtn.removeEventListener('click', monthDropdownHandler);
+                monthDropdownHandler = null;
+            }
+            if (yearDropdownHandler && yearDropdownBtn) {
+                yearDropdownBtn.removeEventListener('click', yearDropdownHandler);
+                yearDropdownHandler = null;
+            }
+            
+            // Clear all rendered content
+            if (monthDropdownMenu) {
+                monthDropdownMenu.innerHTML = '';
+            }
+            if (yearDropdownMenu) {
+                yearDropdownMenu.innerHTML = '';
+            }
+            
+            // Remove open classes from buttons
+            if (monthDropdownBtn) {
+                monthDropdownBtn.classList.remove('open');
+                monthDropdownBtn.setAttribute('aria-expanded', 'false');
+            }
+            if (yearDropdownBtn) {
+                yearDropdownBtn.classList.remove('open');
+                yearDropdownBtn.setAttribute('aria-expanded', 'false');
+            }
+            if (datesContainer) {
+                datesContainer.innerHTML = '';
+            }
+            
+            // Clear weekday headers
+            var weekdaysContainer = dropdown.querySelector('.calendar-weekdays');
+            if (weekdaysContainer) {
+                weekdaysContainer.innerHTML = '';
+            }
+            
+            // Reset state variables
+            selectedDate = null;
+            rangeStart = null;
+            rangeEnd = null;
+            isRangeMode = datePickerContainer.classList.contains('dateRange');
+            
+            // Mark as not initialized
+            isInitialized = false;
+        }
     }
 
     // Voice input functionality
