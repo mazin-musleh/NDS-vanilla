@@ -1082,12 +1082,7 @@ console.log(`${pendingUploads.length} uploads in progress`);
                 <div class="nds-form-control">
                   <i class="hgi hgi-stroke hgi-calendar-03 icon"></i>
                   <input type="text" id="datePickerInput" class="nds-input nds-date-input" placeholder="DD/MM/YYYY"
-                    readonly>
-                  <div class="nds-form-action">
-                    <button class="nds-btn nds-btn-subtle date-picker-toggle" type="button" aria-label="Open calendar">
-                      <i class="hgi hgi-stroke hgi-chevron-down icon"></i>
-                    </button>
-                  </div>
+                    readonly value="01/01/2005">
 
                   <!-- Custom Calendar Dropdown -->
                   <div class="nds-date-picker-dropdown hidden">
@@ -1105,7 +1100,7 @@ console.log(`${pendingUploads.length} uploads in progress`);
                           <div class="month-dropdown-wrapper">
                             <button class="nds-btn nds-btn-subtle nds-btn-menu month-dropdown-btn" aria-expanded="false"
                               aria-label="Select month">
-                              <span class="label">January</span>
+                              <span class="label"></span>
                             </button>
                             <div class="month-dropdown-menu hidden" role="menu">
                             </div>
@@ -1113,7 +1108,7 @@ console.log(`${pendingUploads.length} uploads in progress`);
                           <div class="year-dropdown-wrapper">
                             <button class="nds-btn nds-btn-subtle nds-btn-menu year-dropdown-btn" aria-expanded="false"
                               aria-label="Select year">
-                              <span class="label">2024</span>
+                              <span class="label"></span>
                             </button>
                             <div class="year-dropdown-menu hidden" role="menu" data-year-before="110"
                               data-year-after="5">
@@ -1142,6 +1137,74 @@ console.log(`${pendingUploads.length} uploads in progress`);
                 </div>
                 <div class="nds-form-footer"></div>
               </div>
+
+
+
+              <div class="nds-form-container nds-date-picker">
+                <div class="nds-form-header">
+                  <label class="label" for="datePickerInput2">Select Date</label>
+                </div>
+                <div class="nds-form-control">
+                  <i class="hgi hgi-stroke hgi-calendar-03 icon"></i>
+                  <input type="text" id="datePickerInput2" class="nds-input nds-date-input" placeholder="DD/MM/YYYY"
+                    readonly>
+
+                  <!-- Custom Calendar Dropdown -->
+                  <div class="nds-date-picker-dropdown hidden">
+                    <div class="calendar-header">
+                      <div class="calendar-title">
+                        <div class="calendar-month-switch">
+                          <button class="nds-btn nds-btn-subtle next-month" type="button" aria-label="Next month">
+                            <i class="hgi hgi-stroke hgi-arrow-right-01 icon"></i>
+                          </button>
+                          <button class="nds-btn nds-btn-subtle prev-month" type="button" aria-label="Previous month">
+                            <i class="hgi hgi-stroke hgi-arrow-left-01 icon"></i>
+                          </button>
+                        </div>
+                        <div class="month-year-selectors">
+                          <div class="month-dropdown-wrapper">
+                            <button class="nds-btn nds-btn-subtle nds-btn-menu month-dropdown-btn" aria-expanded="false"
+                              aria-label="Select month">
+                              <span class="label"></span>
+                            </button>
+                            <div class="month-dropdown-menu hidden" role="menu">
+                            </div>
+                          </div>
+                          <div class="year-dropdown-wrapper">
+                            <button class="nds-btn nds-btn-subtle nds-btn-menu year-dropdown-btn" aria-expanded="false"
+                              aria-label="Select year">
+                              <span class="label"></span>
+                            </button>
+                            <div class="year-dropdown-menu hidden" role="menu" data-year-before="110"
+                              data-year-after="5">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="calendar-body">
+                      <div class="calendar-weekdays">
+                      </div>
+                      <div class="calendar-dates">
+                      </div>
+                    </div>
+
+                    <div class="calendar-footer">
+                      <button class="nds-btn nds-btn-subtle today-btn" type="button">
+                        <span class="label">Today</span>
+                      </button>
+                      <button class="nds-btn nds-btn-primary clear-btn" type="button">
+                        <span class="label">Clear</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="nds-form-footer"></div>
+              </div>
+
+
+
             </div>
           </div>
           <div class="code-example">
