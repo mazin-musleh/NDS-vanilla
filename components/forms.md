@@ -379,22 +379,23 @@ direction: ltr
                   <label class="label" for="selectInput">Select Dropdown</label>
                 </div>
                 <div class="nds-form-control">
-                  <input type="text" id="selectInput" class="nds-input nds-select-input" placeholder="Choose an option..." readonly>
+                  <input type="text" id="selectInput" class="nds-input nds-select-input"
+                    placeholder="Choose an option..." readonly>
                   <input type="hidden" name="selectValue" class="nds-select-value">
-                  
+
                   <!-- Custom Dropdown Menu -->
                   <div class="nds-select-dropdown hidden">
                     <div class="select-options">
-                      <button type="button" class="select-option" data-value="">
+                      <button type="button" class="nds-btn nds-btn-subtle select-option" data-value="">
                         <span class="option-text">Choose an option...</span>
                       </button>
-                      <button type="button" class="select-option" data-value="option1">
+                      <button type="button" class="nds-btn nds-btn-subtle select-option" data-value="option1">
                         <span class="option-text">Option 1</span>
                       </button>
-                      <button type="button" class="select-option" data-value="option2">
+                      <button type="button" class="nds-btn nds-btn-subtle select-option" data-value="option2">
                         <span class="option-text">Option 2</span>
                       </button>
-                      <button type="button" class="select-option" data-value="option3">
+                      <button type="button" class="nds-btn nds-btn-subtle select-option" data-value="option3">
                         <span class="option-text">Option 3</span>
                       </button>
                     </div>
@@ -422,16 +423,16 @@ direction: ltr
         &lt;!-- Custom Dropdown Menu --&gt;
         &lt;div class="nds-select-dropdown hidden"&gt;
             &lt;div class="select-options"&gt;
-                &lt;button type="button" class="select-option" data-value=""&gt;
+                &lt;button type="button" class="nds-btn nds-btn-subtle select-option" data-value=""&gt;
                     &lt;span class="option-text"&gt;Choose an option...&lt;/span&gt;
                 &lt;/button&gt;
-                &lt;button type="button" class="select-option" data-value="option1"&gt;
+                &lt;button type="button" class="nds-btn nds-btn-subtle select-option" data-value="option1"&gt;
                     &lt;span class="option-text"&gt;Option 1&lt;/span&gt;
                 &lt;/button&gt;
-                &lt;button type="button" class="select-option" data-value="option2"&gt;
+                &lt;button type="button" class="nds-btn nds-btn-subtle select-option" data-value="option2"&gt;
                     &lt;span class="option-text"&gt;Option 2&lt;/span&gt;
                 &lt;/button&gt;
-                &lt;button type="button" class="select-option" data-value="option3"&gt;
+                &lt;button type="button" class="nds-btn nds-btn-subtle select-option" data-value="option3"&gt;
                     &lt;span class="option-text"&gt;Option 3&lt;/span&gt;
                 &lt;/button&gt;
             &lt;/div&gt;
@@ -832,10 +833,11 @@ direction: ltr
 
               </div>
               <div class="nds-tab-panel hidden" role="tabpanel" id="panel-2" aria-labelledby="tab-2">
-                
+
                 <h2>File Upload Controller Documentation</h2>
 
-                <p>The NDS File Upload component provides a comprehensive JavaScript controller for programmatic control of file uploads.</p>
+                <p>The NDS File Upload component provides a comprehensive JavaScript controller for programmatic control
+                  of file uploads.</p>
 
                 <h3>Configuration</h3>
 
@@ -856,7 +858,8 @@ direction: ltr
                 <p><strong>Configuration Options:</strong></p>
                 <ul>
                   <li><code>data-upload-url</code>: Server endpoint for file uploads</li>
-                  <li><code>data-auto-upload</code>: Enable automatic upload on file selection (<code>true</code>/<code>false</code>)</li>
+                  <li><code>data-auto-upload</code>: Enable automatic upload on file selection
+                    (<code>true</code>/<code>false</code>)</li>
                   <li><code>data-max-files</code>: Maximum number of files allowed</li>
                   <li><code>data-max-file-size</code>: Maximum file size in bytes</li>
                   <li><code>data-accepted-types</code>: Comma-separated list of accepted MIME types</li>
@@ -1061,6 +1064,10 @@ console.log(`${pendingUploads.length} uploads in progress`);
                 <span class="label">Date Range</span>
               </button>
               <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                data-toggler='["hijri", ".nds-date-picker", "hijriToggle"]'>
+                <span class="label">Hijri Calendar</span>
+              </button>
+              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                 <span class="label">Remove bg</span>
               </button>
@@ -1074,108 +1081,55 @@ console.log(`${pendingUploads.length} uploads in progress`);
                 </div>
                 <div class="nds-form-control">
                   <i class="hgi hgi-stroke hgi-calendar-03 icon"></i>
-                  <input type="text" id="datePickerInput" class="nds-input nds-date-input" placeholder="DD/MM/YYYY" readonly>
+                  <input type="text" id="datePickerInput" class="nds-input nds-date-input" placeholder="DD/MM/YYYY"
+                    readonly>
                   <div class="nds-form-action">
                     <button class="nds-btn nds-btn-subtle date-picker-toggle" type="button" aria-label="Open calendar">
                       <i class="hgi hgi-stroke hgi-chevron-down icon"></i>
                     </button>
                   </div>
-                  
+
                   <!-- Custom Calendar Dropdown -->
                   <div class="nds-date-picker-dropdown hidden">
                     <div class="calendar-header">
-                      <button class="nds-btn nds-btn-subtle prev-month" type="button" aria-label="Previous month">
-                        <i class="hgi hgi-stroke hgi-arrow-left-01 icon"></i>
-                      </button>
                       <div class="calendar-title">
+                        <div class="calendar-month-switch">
+                          <button class="nds-btn nds-btn-subtle next-month" type="button" aria-label="Next month">
+                            <i class="hgi hgi-stroke hgi-arrow-right-01 icon"></i>
+                          </button>
+                          <button class="nds-btn nds-btn-subtle prev-month" type="button" aria-label="Previous month">
+                            <i class="hgi hgi-stroke hgi-arrow-left-01 icon"></i>
+                          </button>
+                        </div>
                         <div class="month-year-selectors">
-                          <div class="month-select-wrapper">
-                            <select class="month-select" aria-label="Select month">
-                              <option value="0">January</option>
-                              <option value="1">February</option>
-                              <option value="2">March</option>
-                              <option value="3">April</option>
-                              <option value="4">May</option>
-                              <option value="5">June</option>
-                              <option value="6">July</option>
-                              <option value="7">August</option>
-                              <option value="8">September</option>
-                              <option value="9">October</option>
-                              <option value="10">November</option>
-                              <option value="11">December</option>
-                            </select>
+                          <div class="month-dropdown-wrapper">
+                            <button class="nds-btn nds-btn-subtle nds-btn-menu month-dropdown-btn" aria-expanded="false"
+                              aria-label="Select month">
+                              <span class="label">January</span>
+                            </button>
+                            <div class="month-dropdown-menu hidden" role="menu">
+                            </div>
                           </div>
-                          <div class="year-select-wrapper">
-                            <select class="year-select" aria-label="Select year">
-                              <option value="2020">2020</option>
-                              <option value="2021">2021</option>
-                              <option value="2022">2022</option>
-                              <option value="2023">2023</option>
-                              <option value="2024" selected>2024</option>
-                              <option value="2025">2025</option>
-                              <option value="2026">2026</option>
-                              <option value="2027">2027</option>
-                              <option value="2028">2028</option>
-                              <option value="2029">2029</option>
-                              <option value="2030">2030</option>
-                            </select>
+                          <div class="year-dropdown-wrapper">
+                            <button class="nds-btn nds-btn-subtle nds-btn-menu year-dropdown-btn" aria-expanded="false"
+                              aria-label="Select year">
+                              <span class="label">2024</span>
+                            </button>
+                            <div class="year-dropdown-menu hidden" role="menu" data-year-before="110"
+                              data-year-after="5">
+                            </div>
                           </div>
                         </div>
                       </div>
-                      <button class="nds-btn nds-btn-subtle next-month" type="button" aria-label="Next month">
-                        <i class="hgi hgi-stroke hgi-arrow-right-01 icon"></i>
-                      </button>
                     </div>
-                    
+
                     <div class="calendar-body">
                       <div class="calendar-weekdays">
-                        <div class="weekday">Su</div>
-                        <div class="weekday">Mo</div>
-                        <div class="weekday">Tu</div>
-                        <div class="weekday">We</div>
-                        <div class="weekday">Th</div>
-                        <div class="weekday">Fr</div>
-                        <div class="weekday">Sa</div>
                       </div>
                       <div class="calendar-dates">
-                        <button class="date-cell other-month" type="button">31</button>
-                        <button class="date-cell" type="button">1</button>
-                        <button class="date-cell" type="button">2</button>
-                        <button class="date-cell" type="button">3</button>
-                        <button class="date-cell" type="button">4</button>
-                        <button class="date-cell" type="button">5</button>
-                        <button class="date-cell" type="button">6</button>
-                        <button class="date-cell" type="button">7</button>
-                        <button class="date-cell" type="button">8</button>
-                        <button class="date-cell" type="button">9</button>
-                        <button class="date-cell" type="button">10</button>
-                        <button class="date-cell" type="button">11</button>
-                        <button class="date-cell" type="button">12</button>
-                        <button class="date-cell" type="button">13</button>
-                        <button class="date-cell" type="button">14</button>
-                        <button class="date-cell selected" type="button">15</button>
-                        <button class="date-cell" type="button">16</button>
-                        <button class="date-cell" type="button">17</button>
-                        <button class="date-cell" type="button">18</button>
-                        <button class="date-cell" type="button">19</button>
-                        <button class="date-cell" type="button">20</button>
-                        <button class="date-cell" type="button">21</button>
-                        <button class="date-cell" type="button">22</button>
-                        <button class="date-cell" type="button">23</button>
-                        <button class="date-cell" type="button">24</button>
-                        <button class="date-cell" type="button">25</button>
-                        <button class="date-cell" type="button">26</button>
-                        <button class="date-cell" type="button">27</button>
-                        <button class="date-cell" type="button">28</button>
-                        <button class="date-cell today" type="button">29</button>
-                        <button class="date-cell" type="button">30</button>
-                        <button class="date-cell" type="button">31</button>
-                        <button class="date-cell other-month" type="button">1</button>
-                        <button class="date-cell other-month" type="button">2</button>
-                        <button class="date-cell other-month" type="button">3</button>
                       </div>
                     </div>
-                    
+
                     <div class="calendar-footer">
                       <button class="nds-btn nds-btn-subtle today-btn" type="button">
                         <span class="label">Today</span>
@@ -1218,36 +1172,27 @@ console.log(`${pendingUploads.length} uploads in progress`);
                 &lt;/button&gt;
                 &lt;div class="calendar-title"&gt;
                     &lt;div class="month-year-selectors"&gt;
-                        &lt;div class="month-select-wrapper"&gt;
-                            &lt;select class="month-select" aria-label="Select month"&gt;
-                                &lt;option value="0"&gt;January&lt;/option&gt;
-                                &lt;option value="1"&gt;February&lt;/option&gt;
-                                &lt;option value="2"&gt;March&lt;/option&gt;
-                                &lt;option value="3"&gt;April&lt;/option&gt;
-                                &lt;option value="4"&gt;May&lt;/option&gt;
-                                &lt;option value="5"&gt;June&lt;/option&gt;
-                                &lt;option value="6"&gt;July&lt;/option&gt;
-                                &lt;option value="7"&gt;August&lt;/option&gt;
-                                &lt;option value="8"&gt;September&lt;/option&gt;
-                                &lt;option value="9"&gt;October&lt;/option&gt;
-                                &lt;option value="10"&gt;November&lt;/option&gt;
-                                &lt;option value="11"&gt;December&lt;/option&gt;
-                            &lt;/select&gt;
+                        &lt;div class="month-dropdown-wrapper"&gt;
+                            &lt;button class="nds-btn nds-btn-subtle nds-btn-menu month-dropdown-btn" aria-expanded="false" aria-label="Select month"&gt;
+                                &lt;span class="label"&gt;January&lt;/span&gt;
+                                &lt;i class="hgi hgi-stroke hgi-chevron-down icon"&gt;&lt;/i&gt;
+                            &lt;/button&gt;
+                            &lt;div class="month-dropdown-menu hidden" role="menu"&gt;
+                                &lt;!-- Month options are dynamically generated by JavaScript based on calendar mode --&gt;
+                                &lt;!-- Gregorian: January, February, March... --&gt;
+                                &lt;!-- Hijri: محرم، صفر، ربيع الأول... or Muharram, Safar, Rabi' al-awwal... --&gt;
+                            &lt;/div&gt;
                         &lt;/div&gt;
-                        &lt;div class="year-select-wrapper"&gt;
-                            &lt;select class="year-select" aria-label="Select year"&gt;
-                                &lt;option value="2020"&gt;2020&lt;/option&gt;
-                                &lt;option value="2021"&gt;2021&lt;/option&gt;
-                                &lt;option value="2022"&gt;2022&lt;/option&gt;
-                                &lt;option value="2023"&gt;2023&lt;/option&gt;
-                                &lt;option value="2024" selected&gt;2024&lt;/option&gt;
-                                &lt;option value="2025"&gt;2025&lt;/option&gt;
-                                &lt;option value="2026"&gt;2026&lt;/option&gt;
-                                &lt;option value="2027"&gt;2027&lt;/option&gt;
-                                &lt;option value="2028"&gt;2028&lt;/option&gt;
-                                &lt;option value="2029"&gt;2029&lt;/option&gt;
-                                &lt;option value="2030"&gt;2030&lt;/option&gt;
-                            &lt;/select&gt;
+                        &lt;div class="year-dropdown-wrapper"&gt;
+                            &lt;button class="nds-btn nds-btn-subtle nds-btn-menu year-dropdown-btn" aria-expanded="false" aria-label="Select year"&gt;
+                                &lt;span class="label"&gt;2024&lt;/span&gt;
+                                &lt;i class="hgi hgi-stroke hgi-chevron-down icon"&gt;&lt;/i&gt;
+                            &lt;/button&gt;
+                            &lt;div class="year-dropdown-menu hidden" role="menu"&gt;
+                                &lt;!-- Year options are dynamically generated by JavaScript based on calendar mode --&gt;
+                                &lt;!-- Gregorian: 2019, 2020, 2021, 2022, 2023, 2024, 2025... --&gt;
+                                &lt;!-- Hijri: 1440 هـ, 1441 هـ, 1442 هـ, 1443 هـ, 1444 هـ, 1445 هـ, 1446 هـ... --&gt;
+                            &lt;/div&gt;
                         &lt;/div&gt;
                     &lt;/div&gt;
                 &lt;/div&gt;
@@ -1268,9 +1213,9 @@ console.log(`${pendingUploads.length} uploads in progress`);
                 &lt;/div&gt;
                 &lt;div class="calendar-dates"&gt;
                     &lt;!-- Date cells dynamically generated --&gt;
-                    &lt;button class="date-cell" type="button"&gt;1&lt;/button&gt;
-                    &lt;button class="date-cell selected" type="button"&gt;15&lt;/button&gt;
-                    &lt;button class="date-cell today" type="button"&gt;29&lt;/button&gt;
+                    &lt;button class="nds-btn nds-btn-subtle date-cell" type="button"&gt;1&lt;/button&gt;
+                    &lt;button class="nds-btn nds-btn-subtle date-cell selected" type="button"&gt;15&lt;/button&gt;
+                    &lt;button class="nds-btn nds-btn-subtle date-cell today" type="button"&gt;29&lt;/button&gt;
                     &lt;!-- ... more date cells ... --&gt;
                 &lt;/div&gt;
             &lt;/div&gt;
