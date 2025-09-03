@@ -1147,7 +1147,7 @@ fieldset {
                 font-weight: 700;
 
                 &.selected {
-                    outline: 2px solid var(--button-background-primary-selected);
+                    outline: 2px solid var(--button-background-primary-default);
                     outline-offset: -2px !important;
                     box-shadow: inset 0 0 0 2px var(--colors-base-white);
                 }
@@ -1158,7 +1158,7 @@ fieldset {
             }
 
             &.selected {
-                background-color: var(--button-background-primary-selected);
+                background-color: var(--button-background-primary-default);
                 color: var(--text-oncolor-primary);
                 
 
@@ -1239,5 +1239,11 @@ fieldset {
         justify-content: space-between;
         padding: var(--spacing-md);
         border-top: 1px solid var(--colors-neutral-300, #d2d6db);
+        gap:var(--spacing-2xl);
+        & .calendar-action-start,
+        & .calendar-action-end{
+            display: flex;
+            gap:var(--spacing-md);
+        }
     }
 }

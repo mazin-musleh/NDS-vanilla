@@ -23,6 +23,10 @@
 .nds-btn {
   @include btn-base;
 
+  .label{
+    width: 100%;
+  }
+
   &.focus,
   &:focus-visible {
     @include btn-focus;
@@ -678,6 +682,7 @@ Available sizes:
 
 .nds-btn-full {
   width: 100%;
+  justify-content: center;
 }
 
 /* Icon Visibility Controls */
@@ -693,6 +698,7 @@ Available sizes:
 .nds-btn-icon-only {
   aspect-ratio: 1;
   padding: 0;
+  justify-content: center;
 
   &.nds-btn-sm {
     width: 24px;
