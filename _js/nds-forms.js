@@ -168,8 +168,8 @@
     }
 
     function findPrimaryInput(container) {
-        return container.querySelector('input[type="text"], input[type="email"], input[type="search"], textarea') ||
-            container.querySelector('input, textarea');
+        return container.querySelector(':scope > input[type="text"], :scope > input[type="email"], :scope > input[type="search"], :scope > textarea') ||
+            container.querySelector(':scope > input, :scope > textarea');
     }
 
     function triggerEvents(element) {
@@ -220,7 +220,7 @@
     // Form control functionality
     function initFormControlClasses() {
         document.querySelectorAll('.nds-form-control').forEach(function (formControl) {
-            var inputElements = formControl.querySelectorAll('input, textarea, select');
+            var inputElements = formControl.querySelectorAll(':scope > input, :scope > textarea, :scope > select');
 
             inputElements.forEach(function (input) {
                 // Prevent duplicate event listeners
@@ -324,6 +324,16 @@
                 if (input.tagName.toLowerCase() === 'select') {
                     initSelectDropdown(input, formControl);
                 }
+
+                // Custom select dropdown handling
+                if (input.classList.contains('nds-select-input')) {
+                    initCustomSelectDropdown(input, formControl);
+                }
+
+                // Date picker handling
+                if (input.classList.contains('nds-date-input')) {
+                    initDatePicker(input, formControl);
+                }
             });
 
             // Initialize form controls
@@ -368,6 +378,369 @@
                 updateOpenState();
             });
         });
+    }
+
+    // Custom Select dropdown functionality
+    function initCustomSelectDropdown(selectInput, formControl) {
+        var dropdown = formControl.querySelector('.nds-select-dropdown');
+        var hiddenInput = formControl.querySelector('.nds-select-value');
+        var options = formControl.querySelectorAll('.select-option');
+        
+        if (!dropdown || !options.length) return;
+
+        var isOpen = false;
+        var selectedValue = '';
+        
+        function updateOpenState() {
+            formControl.classList.toggle('open', isOpen);
+            dropdown.classList.toggle('hidden', !isOpen);
+            
+            if (isOpen) {
+                updateSelectedOptions();
+                // Focus first option for keyboard navigation
+                if (options[0]) options[0].focus();
+            }
+        }
+        
+        function updateSelectedOptions() {
+            options.forEach(function(option) {
+                var isSelected = option.dataset.value === selectedValue;
+                option.classList.toggle('selected', isSelected);
+            });
+        }
+        
+        function selectValue(value, text) {
+            selectedValue = value;
+            selectInput.value = text;
+            if (hiddenInput) {
+                hiddenInput.value = value;
+            }
+            updateSelectedOptions();
+            closeDropdown();
+            
+            // Trigger change events
+            triggerEvents(selectInput);
+            if (hiddenInput) {
+                triggerEvents(hiddenInput);
+            }
+            
+            // Update form state
+            updateFormState(selectInput, formControl);
+            
+            // Dispatch custom change event
+            formControl.dispatchEvent(new CustomEvent('selectChange', {
+                detail: { value: value, text: text }
+            }));
+        }
+        
+        function openDropdown() {
+            if (formControl.classList.contains('disabled') || selectInput.disabled) return;
+            isOpen = true;
+            updateOpenState();
+        }
+        
+        function closeDropdown() {
+            isOpen = false;
+            updateOpenState();
+        }
+        
+        function toggleDropdown() {
+            if (isOpen) {
+                closeDropdown();
+            } else {
+                openDropdown();
+            }
+        }
+
+        // Click events
+        selectInput.addEventListener('click', function(e) {
+            e.preventDefault();
+            toggleDropdown();
+        });
+
+        // Option selection
+        options.forEach(function(option) {
+            option.addEventListener('click', function(e) {
+                e.preventDefault();
+                var value = this.dataset.value || '';
+                var optionText = this.querySelector('.option-text');
+                var text = optionText ? optionText.textContent : value;
+                selectValue(value, text);
+                selectInput.focus();
+            });
+
+            // Keyboard navigation for options
+            option.addEventListener('keydown', function(e) {
+                var currentIndex = Array.from(options).indexOf(this);
+                
+                switch(e.key) {
+                    case 'Enter':
+                    case ' ':
+                        e.preventDefault();
+                        var value = this.dataset.value || '';
+                        var optionText = this.querySelector('.option-text');
+                var text = optionText ? optionText.textContent : value;
+                        selectValue(value, text);
+                        selectInput.focus();
+                        break;
+                        
+                    case 'ArrowDown':
+                        e.preventDefault();
+                        var nextIndex = Math.min(currentIndex + 1, options.length - 1);
+                        options[nextIndex].focus();
+                        break;
+                        
+                    case 'ArrowUp':
+                        e.preventDefault();
+                        var prevIndex = Math.max(currentIndex - 1, 0);
+                        options[prevIndex].focus();
+                        break;
+                        
+                    case 'Escape':
+                        closeDropdown();
+                        selectInput.focus();
+                        break;
+                }
+            });
+        });
+
+        // Keyboard navigation for main input
+        selectInput.addEventListener('keydown', function(e) {
+            if (selectInput.disabled) return;
+            
+            switch(e.key) {
+                case 'Enter':
+                case ' ':
+                case 'ArrowDown':
+                    e.preventDefault();
+                    if (!isOpen) {
+                        openDropdown();
+                    } else if (options[0]) {
+                        options[0].focus();
+                    }
+                    break;
+                    
+                case 'ArrowUp':
+                    e.preventDefault();
+                    if (isOpen && options.length > 0) {
+                        options[options.length - 1].focus();
+                    }
+                    break;
+                    
+                case 'Escape':
+                    if (isOpen) {
+                        closeDropdown();
+                    }
+                    break;
+            }
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!formControl.contains(e.target)) {
+                closeDropdown();
+            }
+        });
+
+        // Initialize selected option if there's a value
+        var initialValue = selectInput.value || (hiddenInput ? hiddenInput.value : '');
+        if (initialValue) {
+            var matchingOption = Array.from(options).find(opt => opt.dataset.value === initialValue);
+            if (matchingOption) {
+                selectedValue = initialValue;
+                updateSelectedOptions();
+            }
+        }
+    }
+
+    // Date Picker functionality
+    function initDatePicker(dateInput, formControl) {
+        var datePickerContainer = formControl.closest('.nds-date-picker');
+        if (!datePickerContainer) return;
+
+        var dropdown = datePickerContainer.querySelector('.nds-date-picker-dropdown');
+        var toggleBtn = datePickerContainer.querySelector('.date-picker-toggle');
+        var monthSelect = datePickerContainer.querySelector('.month-select');
+        var yearSelect = datePickerContainer.querySelector('.year-select');
+        var prevBtn = datePickerContainer.querySelector('.prev-month');
+        var nextBtn = datePickerContainer.querySelector('.next-month');
+        var todayBtn = datePickerContainer.querySelector('.today-btn');
+        var clearBtn = datePickerContainer.querySelector('.clear-btn');
+        var datesContainer = datePickerContainer.querySelector('.calendar-dates');
+
+        if (!dropdown) return;
+
+        var currentDate = new Date();
+        var selectedDate = null;
+
+        function toggleDropdown() {
+            var isNowOpen = dropdown.classList.contains('hidden');
+            dropdown.classList.toggle('hidden');
+            formControl.classList.toggle('open', isNowOpen);
+            
+            if (isNowOpen) {
+                updateCalendar();
+            }
+        }
+
+        function updateDropdowns() {
+            if (monthSelect) monthSelect.value = currentDate.getMonth();
+            if (yearSelect) yearSelect.value = currentDate.getFullYear();
+        }
+
+        function updateInput() {
+            if (selectedDate) {
+                var day = selectedDate.getDate().toString().padStart(2, '0');
+                var month = (selectedDate.getMonth() + 1).toString().padStart(2, '0');
+                var year = selectedDate.getFullYear();
+                dateInput.value = day + '/' + month + '/' + year;
+                
+                // Trigger events and update form state
+                triggerEvents(dateInput);
+                updateFormState(dateInput, formControl);
+            }
+        }
+
+        function createDateButton(day, type) {
+            var btn = document.createElement('button');
+            btn.className = 'date-cell' + (type === 'other-month' ? ' other-month' : '');
+            btn.type = 'button';
+            btn.textContent = day;
+            return btn;
+        }
+
+        function updateCalendar() {
+            if (!datesContainer) return;
+            
+            var year = currentDate.getFullYear();
+            var month = currentDate.getMonth();
+            
+            // Clear existing dates
+            datesContainer.innerHTML = '';
+            
+            // First day of month and number of days
+            var firstDay = new Date(year, month, 1).getDay();
+            var daysInMonth = new Date(year, month + 1, 0).getDate();
+            var daysInPrevMonth = new Date(year, month, 0).getDate();
+            
+            // Add previous month's trailing days
+            for (var i = firstDay - 1; i >= 0; i--) {
+                var day = daysInPrevMonth - i;
+                var btn = createDateButton(day, 'other-month');
+                datesContainer.appendChild(btn);
+            }
+            
+            // Add current month's days
+            for (var day = 1; day <= daysInMonth; day++) {
+                var btn = createDateButton(day, 'current-month');
+                var cellDate = new Date(year, month, day);
+                
+                // Check if today
+                var today = new Date();
+                if (cellDate.toDateString() === today.toDateString()) {
+                    btn.classList.add('today');
+                }
+                
+                // Check if selected
+                if (selectedDate && cellDate.toDateString() === selectedDate.toDateString()) {
+                    btn.classList.add('selected');
+                }
+                
+                // Add click handler (use closure to capture cellDate)
+                (function(date) {
+                    btn.addEventListener('click', function() {
+                        selectedDate = new Date(date);
+                        updateInput();
+                        updateCalendar();
+                        dropdown.classList.add('hidden');
+                        formControl.classList.remove('open');
+                    });
+                })(cellDate);
+                
+                datesContainer.appendChild(btn);
+            }
+            
+            // Add next month's leading days
+            var totalCells = datesContainer.children.length;
+            var remainingCells = 42 - totalCells; // 6 rows × 7 days
+            for (var day = 1; day <= remainingCells && day <= 14; day++) {
+                var btn = createDateButton(day, 'other-month');
+                datesContainer.appendChild(btn);
+            }
+        }
+
+        // Event listeners
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', toggleDropdown);
+        }
+        
+        dateInput.addEventListener('click', toggleDropdown);
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!datePickerContainer.contains(e.target)) {
+                dropdown.classList.add('hidden');
+                formControl.classList.remove('open');
+            }
+        });
+
+        // Month/Year dropdown changes
+        if (monthSelect) {
+            monthSelect.addEventListener('change', function() {
+                currentDate.setMonth(parseInt(this.value));
+                updateCalendar();
+            });
+        }
+
+        if (yearSelect) {
+            yearSelect.addEventListener('change', function() {
+                currentDate.setFullYear(parseInt(this.value));
+                updateCalendar();
+            });
+        }
+
+        // Navigation buttons
+        if (prevBtn) {
+            prevBtn.addEventListener('click', function() {
+                currentDate.setMonth(currentDate.getMonth() - 1);
+                updateDropdowns();
+                updateCalendar();
+            });
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', function() {
+                currentDate.setMonth(currentDate.getMonth() + 1);
+                updateDropdowns();
+                updateCalendar();
+            });
+        }
+
+        // Today button
+        if (todayBtn) {
+            todayBtn.addEventListener('click', function() {
+                var today = new Date();
+                selectedDate = new Date(today);
+                currentDate = new Date(today);
+                updateDropdowns();
+                updateCalendar();
+                updateInput();
+            });
+        }
+
+        // Clear button
+        if (clearBtn) {
+            clearBtn.addEventListener('click', function() {
+                selectedDate = null;
+                dateInput.value = '';
+                updateCalendar();
+                updateFormState(dateInput, formControl);
+            });
+        }
+
+        // Initialize
+        updateDropdowns();
+        updateCalendar();
     }
 
     // Voice input functionality
@@ -435,7 +808,7 @@
         passwordToggle.addEventListener('click', function (e) {
             e.preventDefault();
             
-            var passwordInput = formControl.querySelector('input[type="password"], input[type="text"]');
+            var passwordInput = formControl.querySelector(':scope > input[type="password"], :scope > input[type="text"]');
             if (!passwordInput) return;
             
             var isPassword = passwordInput.type === 'password';
