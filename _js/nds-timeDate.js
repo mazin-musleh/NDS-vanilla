@@ -24,6 +24,14 @@
         } catch {}
     }
 
+    // Add this function to clear specific cache
+  function clearHijriCache(date = null) {
+      const targetDate = date || new Date().toISOString().slice(0, 10);
+      localStorage.removeItem(`nds_hijri_ar_${targetDate}`);
+      localStorage.removeItem(`nds_hijri_en_${targetDate}`);
+      localStorage.removeItem(`nds_hijri_data_${targetDate}`);
+  }
+
     // Hijri date with efficient dual-language caching
     async function getHijriDate(isArabic, returnStructured = false) {
         const today = new Date().toISOString().slice(0, 10);
@@ -67,11 +75,7 @@
                 // Create structured data
                 const hijriData = {
                     day: parseInt(hijri.day),
-                    month: {
-                        number: parseInt(hijri.month.number),
-                        ar: hijri.month.ar,
-                        en: hijri.month.en
-                    },
+                    month: parseInt(hijri.month.number),
                     year: parseInt(hijri.year)
                 };
                 
@@ -181,6 +185,8 @@
             // Update clock every second
             setInterval(updateClock, 1000);
         }
+
+        //clearHijriCache();
     }
 
     if (document.readyState === 'loading') {

@@ -758,7 +758,7 @@ direction: ltr
                   </div>
 
 
-                  <code class="multi-file-upload-code">
+                  <pre class="line-numbers"><code class="language-html multi-file-upload-code">
 &lt;div class="nds-form-container nds-file-upload multi-file-upload dropBox"&gt;
     &lt;div class="nds-form-header hidden"&gt;
         &lt;label class="label" for="multiFileUpload"&gt;Upload files&lt;/label&gt;
@@ -825,7 +825,7 @@ direction: ltr
         &lt;/div&gt;
     &lt;/template&gt;
 &lt;/div&gt;
-  </code>
+  </code></pre>
 
 
                 </div> <!-- /.code-example -->
@@ -1075,14 +1075,14 @@ console.log(`${pendingUploads.length} uploads in progress`);
           </div>
           <div class="demo-container">
             <div class="state-demo">
-              <div class="nds-form-container nds-date-picker">
+              <div class="nds-form-container nds-date-picker hijri">
                 <div class="nds-form-header">
                   <label class="label" for="datePickerInput">Select Date</label>
                 </div>
                 <div class="nds-form-control">
                   <i class="hgi hgi-stroke hgi-calendar-03 icon"></i>
                   <input type="text" id="datePickerInput" class="nds-input nds-date-input" placeholder="DD/MM/YYYY"
-                    readonly value="01/01/2005">
+                    readonly>
 
                   <!-- Custom Calendar Dropdown -->
                   <div class="nds-date-picker-dropdown hidden">
@@ -1154,7 +1154,7 @@ console.log(`${pendingUploads.length} uploads in progress`);
                 <i class="hgi hgi-stroke hgi-copy-01"></i>
               </button>
             </div>
-            <pre class="date-picker-code"><code>&lt;div class="nds-form-container nds-date-picker"&gt;
+            <pre class="line-numbers date-picker-code"><code class="language-html">&lt;div class="nds-form-container nds-date-picker"&gt;
     &lt;div class="nds-form-header"&gt;
         &lt;label class="label" for="datePickerInput"&gt;Select Date&lt;/label&gt;
     &lt;/div&gt;
@@ -1238,6 +1238,127 @@ console.log(`${pendingUploads.length} uploads in progress`);
           </div>
         </div>
 
+        <!-- Switch -->
+        <div class="nds-demo-card">
+          <div class="demo-header">
+            <div class="demo-label">Switch</div>
+            <div class="demo-action">
+              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                data-toggler='["size-lg", ".nds-switch-container", "sizeToggle"]'>
+                <span class="label">LG</span>
+              </button>
+              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn selected"
+                data-toggler='["size-md", ".nds-switch-container", "sizeToggle"]'>
+                <span class="label">MD</span>
+              </button>
+              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                data-toggler='["size-sm", ".nds-switch-container", "sizeToggle"]'>
+                <span class="label">SM</span>
+              </button>
+              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                data-toggler='["disabled", "input.nds-switch-input", "stateToggle", "attr"]'>
+                <span class="label">Disabled</span>
+              </button>
+              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                data-toggler='["rowView", ".nds-switch-group", "layoutToggle"]'>
+                <span class="label">RowView</span>
+              </button>
+              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                <span class="label">Remove bg</span>
+              </button>
+            </div>
+          </div>
+          <div class="demo-container">
+            <div class="state-demo">
+              <fieldset>
+                <legend class="label">Switch Group</legend>
+                <div class="nds-switch-group">
+                  <div class="nds-form-container nds-switch-container">
+                    <div class="nds-form-header">
+                      <label class="label" for="switch1">Neutral Switch</label>
+                    </div>
+                    <div class="nds-form-control">
+                      <div class="nds-switch">
+                        <input type="checkbox" id="switch1" name="switchGroup" value="option1" class="nds-switch-input">
+                        <div class="nds-switch-track">
+                          <div class="nds-switch-thumb"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="nds-form-container nds-switch-container">
+                    <div class="nds-form-header">
+                      <label class="label" for="switch2">Primary Switch</label>
+                      <span class="info">When a selection needs a further detailed explanation, it goes here.</span>
+                    </div>
+                    <div class="nds-form-control">
+                      <div class="nds-switch primary">
+                        <input type="checkbox" id="switch2" name="switchGroup" value="option2" checked
+                          class="nds-switch-input">
+                        <div class="nds-switch-track">
+                          <div class="nds-switch-thumb"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="nds-form-container nds-switch-container">
+                    <div class="nds-form-header">
+                      <label class="label" for="switch3">Disabled Switch</label>
+                    </div>
+                    <div class="nds-form-control">
+                      <div class="nds-switch disabled">
+                        <input type="checkbox" id="switch3" name="switchGroup" value="option3" disabled
+                          class="nds-switch-input">
+                        <div class="nds-switch-track">
+                          <div class="nds-switch-thumb"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+          <div class="code-example">
+            <div class="usage-header">
+              <span>Usage</span>
+              <button class="copy-btn" aria-label="Copy code example">
+                <i class="hgi hgi-stroke hgi-copy-01"></i>
+              </button>
+            </div>
+            <pre class="switch-code"><code>&lt;fieldset class="nds-switch-group"&gt;
+    &lt;legend class="label"&gt;Switch Group&lt;/legend&gt;
+    &lt;div class="nds-form-container nds-switch-container"&gt;
+        &lt;div class="nds-form-header"&gt;
+            &lt;label class="label" for="switch1"&gt;Neutral Switch&lt;/label&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-form-control"&gt;
+            &lt;div class="nds-switch"&gt;
+                &lt;input type="checkbox" id="switch1" name="switchGroup" value="option1" class="nds-switch-input"&gt;
+                &lt;div class="nds-switch-track"&gt;
+                    &lt;div class="nds-switch-thumb"&gt;&lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-form-container nds-switch-container"&gt;
+        &lt;div class="nds-form-header"&gt;
+            &lt;label class="label" for="switch2"&gt;Primary Switch&lt;/label&gt;
+            &lt;span class="info"&gt;When a selection needs a further detailed explanation, it goes here.&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-form-control"&gt;
+            &lt;div class="nds-switch primary"&gt;
+                &lt;input type="checkbox" id="switch2" name="switchGroup" value="option2" checked class="nds-switch-input"&gt;
+                &lt;div class="nds-switch-track"&gt;
+                    &lt;div class="nds-switch-thumb"&gt;&lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/fieldset&gt;</code></pre>
+          </div>
+        </div>
 
         <!-- add new demo card here -->
       </div>
