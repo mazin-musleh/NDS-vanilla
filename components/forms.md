@@ -1075,7 +1075,7 @@ console.log(`${pendingUploads.length} uploads in progress`);
           </div>
           <div class="demo-container">
             <div class="state-demo">
-              <div class="nds-form-container nds-date-picker hijri">
+              <div class="nds-form-container nds-date-picker hijrix">
                 <div class="nds-form-header">
                   <label class="label" for="datePickerInput">Select Date</label>
                 </div>
