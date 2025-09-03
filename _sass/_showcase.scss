@@ -100,7 +100,6 @@
 // ==============================================
 
 .code-example {
-  background: var(--background-neutral-800);
   padding: var(--spacing-lg);
   margin: 0;
 
@@ -112,11 +111,29 @@
     overflow-x: auto;
   }
 
+  .line-numbers code {
+  display: block;
+}
+
+.line-numbers code span {
+  display: block;
+  padding-left: 2em;
+  position: relative;
+}
+
+  .line-numbers code span::before {
+  counter-increment: line;
+  content: counter(line);
+  position: absolute;
+  left: 0;
+  color: #888;
+}
+
   code {
-    color: var(--text-oncolor-secondary);
     font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
     font-size: var(--nds-text-sm-FS);
-    line-height: 1.6;
+    line-height: var(--nds-text-sm-LH);
+    font-weight: 600;
     direction: ltr;
     text-align: left;
     display: block;

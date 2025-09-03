@@ -611,6 +611,143 @@ fieldset {
 
 
     }
+
+    // Switch Component Styles
+    &.nds-switch-container {
+        display: flex;
+        gap: var(--spacing-lg);
+        flex-direction: row-reverse;
+        width: fit-content;
+        flex-wrap: nowrap;
+        align-items: flex-start;
+
+        >.nds-form-header>.label {
+            display: inline-flex;
+            align-items: center;
+        }
+    }
+
+    .nds-switch {
+        --switch-width: 48px;
+        --switch-height: 24px;
+        --thumb-size: 20px;
+        --thumb-left: 2px;
+        --thumb-left-checked: 26px;
+
+        .size-sm & {
+            --switch-width: 36px;
+            --switch-height: 18px;
+            --thumb-size: 14px;
+            --thumb-left: 2px;
+            --thumb-left-checked: 20px;
+        }
+
+        .size-lg & {
+            --switch-width: 56px;
+            --switch-height: 28px;
+            --thumb-size: 24px;
+            --thumb-left: 2px;
+            --thumb-left-checked: 30px;
+        }
+
+        position: relative;
+        display: inline-block;
+        width: var(--switch-width);
+        height: var(--switch-height);
+        user-select: none;
+
+        .nds-switch-input {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+            margin: 0;
+
+            &:not(:disabled) {
+                cursor: pointer;
+            }
+
+            &:focus+.nds-switch-track {
+                outline: 2px solid var(--colors-base-black);
+                outline-offset: 2px;
+            }
+        }
+
+        .nds-switch-track {
+            position: absolute;
+            inset: 0;
+            cursor: pointer;
+            background-color: var(--controls-control-border, #6C737F);
+            border-radius: 9999px;
+            border: 1px solid var(--controls-control-border, #6C737F);
+
+            &:hover:not([disabled]) {
+                background-color: var(--controls-control-hovered, #5A6169);
+                border-color: var(--controls-control-hovered, #5A6169);
+            }
+
+            .nds-switch-thumb {
+                position: absolute;
+                top: 2px;
+                left: var(--thumb-left);
+                width: var(--thumb-size);
+                height: var(--thumb-size);
+                background-color: var(--colors-base-white);
+                border-radius: 9999px;
+                border: 1px solid var(--controls-control-border, #6C737F);
+            }
+        }
+
+        .nds-switch-input:checked+.nds-switch-track {
+            background-color: var(--controls-control-neutral-checked, #0D121C);
+            border-color: var(--controls-control-neutral-checked, #0D121C);
+
+            &:hover:not([disabled]) {
+                background-color: var(--controls-control-neutral-hovered);
+                border-color: var(--controls-control-neutral-hovered);
+            }
+
+            .nds-switch-thumb {
+                left: var(--thumb-left-checked);
+                border-color: var(--controls-control-neutral-checked, #0D121C);
+            }
+        }
+
+        &.primary .nds-switch-input:checked+.nds-switch-track {
+            background-color: var(--controls-control-primary-checked);
+            border-color: var(--controls-control-primary-checked);
+
+            &:hover:not([disabled]) {
+                background-color: var(--controls-control-primary-hovered);
+                border-color: var(--controls-control-primary-hovered);
+            }
+
+            .nds-switch-thumb {
+                border-color: var(--controls-control-primary-checked);
+            }
+        }
+
+        .nds-switch-input:disabled+.nds-switch-track,
+        &.disabled .nds-switch-track {
+            opacity: 0.5;
+            cursor: not-allowed;
+
+            .nds-switch-thumb {
+                cursor: not-allowed;
+            }
+        }
+    }
+}
+
+.nds-switch-group {
+    row-gap: var(--spacing-xl);
+    column-gap: var(--spacing-6xl);
+    display: flex;
+    flex-direction: column;
+
+    &.rowView {
+        flex-direction: row;
+    }
 }
 
 .voiceInput.listening>i {
@@ -1056,6 +1193,17 @@ fieldset {
     .year-dropdown-wrapper {
         position: relative;
         display: inline-block;
+
+        & .month-dropdown-btn {
+            .label {
+                @include mobile {
+                    max-width: 100px;
+                    overflow: clip;
+                    text-overflow: ellipsis;
+                }
+            }
+        }
+
     }
 
     .month-dropdown-menu,
@@ -1064,9 +1212,8 @@ fieldset {
         position: absolute;
         z-index: 999;
         left: 0;
-        width: 150px;
         margin-top: 4px;
-        padding: var(--spacing-xs, 4px);
+        padding: var(--spacing-md);
         background-color: var(--background-white, #fff);
         border: 1px solid var(--colors-neutral-300);
         border-radius: var(--radius-md);
@@ -1086,6 +1233,8 @@ fieldset {
         &:not(.hidden) {
             display: flex;
         }
+
+
     }
 
     .calendar-body {
@@ -1107,7 +1256,7 @@ fieldset {
             padding: var(--spacing-md) var(--spacing-xs);
             min-width: 40px;
 
-            @include mobile{
+            @include mobile {
                 font-size: var(--nds-text-sm-FS);
             }
         }
@@ -1125,6 +1274,7 @@ fieldset {
             width: 40px;
             height: 40px;
             font-weight: 400;
+            padding: 0;
 
             &::before {
                 display: none;
@@ -1160,7 +1310,7 @@ fieldset {
             &.selected {
                 background-color: var(--button-background-primary-default);
                 color: var(--text-oncolor-primary);
-                
+
 
                 &:hover {
                     background-color: var(--form-datecell-background-hovered);
@@ -1172,7 +1322,7 @@ fieldset {
             &.range-end {
                 background-color: var(--form-datecell-background-default);
                 color: var(--text-oncolor-primary);
-                
+
 
                 &.today {
                     outline: 2px solid var(--form-datecell-background-default);
@@ -1212,7 +1362,7 @@ fieldset {
                 }
             }
 
-            &.in-range:not(.range-start,.range-end) {
+            &.in-range:not(.range-start, .range-end) {
                 background-color: var(--form-datecell-background-100);
 
                 &::before {
@@ -1239,11 +1389,12 @@ fieldset {
         justify-content: space-between;
         padding: var(--spacing-md);
         border-top: 1px solid var(--colors-neutral-300, #d2d6db);
-        gap:var(--spacing-2xl);
+        gap: var(--spacing-2xl);
+
         & .calendar-action-start,
-        & .calendar-action-end{
+        & .calendar-action-end {
             display: flex;
-            gap:var(--spacing-md);
+            gap: var(--spacing-md);
         }
     }
 }

@@ -335,6 +335,7 @@
             initVoiceInput(formControl);
             initPasswordToggle(formControl);
             initClearButton(formControl, inputElements);
+            initSwitchControls(formControl);
         });
     }
 
@@ -636,6 +637,116 @@
         });
     }
 
+
+    // Switch controls functionality
+    function initSwitchControls(formControl) {
+        var switchElements = formControl.querySelectorAll('.nds-switch');
+        if (!switchElements.length) return;
+
+        switchElements.forEach(function(switchElement) {
+            var switchInput = switchElement.querySelector('.nds-switch-input');
+            var switchTrack = switchElement.querySelector('.nds-switch-track');
+            
+            if (!switchInput || !switchTrack) return;
+
+            // Prevent duplicate initialization
+            if (switchTrack._switchInitialized) return;
+            switchTrack._switchInitialized = true;
+
+            // Add mouse interaction for active state
+            switchTrack.addEventListener('mousedown', function(e) {
+                if (!switchInput.disabled && !switchElement.classList.contains('disabled')) {
+                    formControl.classList.add('active');
+                }
+            });
+
+            // Remove active state on mouse events
+            ['mouseup', 'mouseleave'].forEach(function(event) {
+                switchTrack.addEventListener(event, function() {
+                    formControl.classList.remove('active');
+                });
+            });
+
+            // Make track clickable to toggle switch
+            switchTrack.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                // Don't toggle if disabled
+                if (switchInput.disabled || switchElement.classList.contains('disabled')) {
+                    return;
+                }
+
+                // Toggle the checked state
+                switchInput.checked = !switchInput.checked;
+                
+                // Trigger events to update form state
+                triggerEvents(switchInput);
+                updateFormState(switchInput, formControl);
+                
+                // Dispatch custom switch change event
+                switchElement.dispatchEvent(new CustomEvent('switchChange', {
+                    detail: { 
+                        checked: switchInput.checked,
+                        value: switchInput.value,
+                        input: switchInput
+                    },
+                    bubbles: true
+                }));
+            });
+
+            // Handle keyboard interaction on the input
+            switchInput.addEventListener('keydown', function(e) {
+                // Space or Enter should toggle the switch
+                if (e.key === ' ' || e.key === 'Enter') {
+                    e.preventDefault();
+                    
+                    if (!this.disabled && !switchElement.classList.contains('disabled')) {
+                        this.checked = !this.checked;
+                        triggerEvents(this);
+                        updateFormState(this, formControl);
+                        
+                        // Dispatch custom switch change event
+                        switchElement.dispatchEvent(new CustomEvent('switchChange', {
+                            detail: { 
+                                checked: this.checked,
+                                value: this.value,
+                                input: this
+                            },
+                            bubbles: true
+                        }));
+                    }
+                }
+            });
+
+            // Handle label clicks (if label is outside the switch)
+            var label = formControl.querySelector('label[for="' + switchInput.id + '"]');
+            if (label && !switchElement.contains(label)) {
+                label.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    if (!switchInput.disabled && !switchElement.classList.contains('disabled')) {
+                        switchInput.checked = !switchInput.checked;
+                        triggerEvents(switchInput);
+                        updateFormState(switchInput, formControl);
+                        
+                        // Dispatch custom switch change event
+                        switchElement.dispatchEvent(new CustomEvent('switchChange', {
+                            detail: { 
+                                checked: switchInput.checked,
+                                value: switchInput.value,
+                                input: switchInput
+                            },
+                            bubbles: true
+                        }));
+                    }
+                });
+            }
+
+            // Initialize state
+            updateFormState(switchInput, formControl);
+        });
+    }
 
     // Clear button functionality
     function initClearButton(formControl, inputElements) {
