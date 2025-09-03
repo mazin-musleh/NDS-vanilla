@@ -127,7 +127,9 @@ fieldset {
     position: relative;
 
 
-    * {
+    &>input,
+    textarea,
+    select {
         font-size: 1rem;
         outline: unset !important;
         outline-offset: unset !important;
@@ -194,7 +196,7 @@ fieldset {
         border-color: var(--border-disabled) !important;
         pointer-events: none;
         user-select: none;
-        
+
         ::-webkit-input-placeholder {
             color: var(--text-default-disabled) !important;
         }
@@ -205,7 +207,7 @@ fieldset {
     }
 
 
-    > input {
+    >input {
         background-color: transparent;
         border: 0px;
         outline: 0px;
@@ -225,7 +227,7 @@ fieldset {
         height: fit-content;
         width: 100%;
 
-        > textarea {
+        >textarea {
             padding: var(--spacing-md);
             min-height: 40px;
             min-width: 100%;
@@ -234,7 +236,7 @@ fieldset {
 
     .nds-select>& {
 
-        > select {
+        >select {
             -webkit-appearance: none;
             -moz-appearance: none;
             appearance: none;
@@ -282,80 +284,36 @@ fieldset {
         transform: rotate(180deg);
     }
 
-        // Custom dropdown styles for nds-select when using input instead of select element
-        .nds-select-input {
-            cursor: pointer;
+    // Custom dropdown styles for nds-select when using input instead of select element
+    .nds-select-input {
+        cursor: pointer;
+    }
+
+    .nds-select-dropdown {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        z-index: 999;
+        margin-top: 4px;
+        padding: var(--spacing-xs, 4px);
+        background-color: var(--background-white, #fff);
+        border: 1px solid var(--colors-neutral-300, #d2d6db);
+        border-radius: var(--radius-md, 8px);
+        box-shadow: var(--shadow-md);
+        max-height: 200px;
+        overflow-y: auto;
+
+        &.hidden {
+            display: none;
         }
 
-        .nds-select-dropdown {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            z-index: 999;
-            margin-top: 4px;
-            padding: 0;
-            background-color: var(--background-white, #fff);
-            border: 1px solid var(--colors-neutral-300, #d2d6db);
-            border-radius: var(--radius-md, 8px);
-            box-shadow: var(--shadow-md);
-            max-height: 200px;
-            overflow-y: auto;
-
-            &.hidden {
-                display: none;
-            }
-
-            .select-options {
-                padding: var(--spacing-xs, 4px) 0;
-            }
-
-            .select-option {
-                width: 100%;
-                display: flex;
-                align-items: center;
-                padding: var(--spacing-sm, 8px) var(--spacing-md, 12px);
-                border: none;
-                background: none;
-                color: var(--text-default, #161616);
-                text-align: left;
-                cursor: pointer;
-                transition: background-color var(--nds-transition);
-                font-size: 14px;
-                line-height: 1.4;
-
-                &:hover {
-                    background-color: var(--background-neutral-100, #F5F6F7);
-                }
-
-                &:focus {
-                    outline: 2px solid var(--background-primary, #1976D2);
-                    outline-offset: -2px;
-                    background-color: var(--background-neutral-100, #F5F6F7);
-                }
-
-                &.selected {
-                    background-color: var(--background-primary-light, #E3F2FD);
-                    color: var(--text-primary, #1976D2);
-                    font-weight: 600;
-
-                    &:hover {
-                        background-color: var(--background-primary-light, #E3F2FD);
-                    }
-                }
-
-                .option-text {
-                    flex: 1;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                }
-
-                @include ltr {
-                    text-align: left;
-                }
-            }
+        .select-options {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-xs);
         }
+    }
 
 
     ::-webkit-input-placeholder {
@@ -944,6 +902,7 @@ fieldset {
                     $show-text: false,
                     $show-symbol: false,
                     $percent: 100);
+
                 /* animation: processing-spin 1s linear infinite; */
                 .progress-info {
                     /* display: none; */
@@ -991,6 +950,12 @@ fieldset {
 
     // Arrow styling for date picker input (same as select)
     .nds-form-control {
+
+        &>input,
+        &>i {
+            cursor: pointer;
+        }
+
         body.hgi-loaded &::after {
             opacity: 1;
         }
@@ -1036,6 +1001,9 @@ fieldset {
         z-index: 999;
         margin-top: 4px;
         padding: 0;
+        max-width: 500px;
+        min-width: 320px;
+        width: 100%;
         background-color: var(--background-white, #fff);
         border: 1px solid var(--colors-neutral-300, #d2d6db);
         border-radius: var(--radius-md, 8px);
@@ -1043,6 +1011,17 @@ fieldset {
 
         &.hidden {
             display: none;
+        }
+
+        @include mobile {
+            right: 50%;
+            transform: translateX(50%);
+
+            @include ltr {
+                right: 0;
+                left: 50%;
+                transform: translateX(-50%);
+            }
         }
     }
 
@@ -1057,59 +1036,58 @@ fieldset {
     .calendar-title {
         flex: 1;
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
     }
 
     .month-year-selectors {
         display: flex;
-        gap: 8px;
     }
 
-    .month-select-wrapper, 
-    .year-select-wrapper {
-        position: relative;
-        display: inline-block;
+    .calendar-month-switch {
+        display: flex;
 
-        &::after {
-            content: "㭚";
-            pointer-events: none;
-            font-family: "hgi-stroke-rounded" !important;
-            font-style: normal;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            position: absolute;
-            right: 8px;
-            top: 50%;
-            transform: translateY(-50%);
-            opacity: 1;
-            display: inline-flex;
-            width: 16px;
-            height: 16px;
-            font-size: 16px;
-            line-height: 16px;
-            justify-content: center;
-            align-content: center;
-            align-items: center;
+        @include ltr {
+            flex-direction: row-reverse;
         }
     }
 
-    .month-select, 
-    .year-select {
-        padding: 4px 24px 4px 8px;
-        border: 1px solid var(--colors-neutral-300, #d2d6db);
-        border-radius: var(--radius-sm, 4px);
-        background: var(--background-white, #fff);
-        color: var(--text-default, #161616);
-        font-size: 14px;
-        appearance: none;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        cursor: pointer;
-        min-width: 80px;
+    .month-dropdown-wrapper,
+    .year-dropdown-wrapper {
+        position: relative;
+        display: inline-block;
+    }
+
+    .month-dropdown-menu,
+    .year-dropdown-menu {
+        display: none;
+        position: absolute;
+        z-index: 999;
+        left: 0;
+        width: 150px;
+        margin-top: 4px;
+        padding: var(--spacing-xs, 4px);
+        background-color: var(--background-white, #fff);
+        border: 1px solid var(--colors-neutral-300);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-md);
+        flex-direction: column;
+        gap: var(--spacing-xs);
+        max-height: 200px;
+        overflow-y: auto;
+
+        @include ltr {
+            left: 0;
+            right: unset;
+        }
+
+        &:not(.hidden) {
+            display: flex;
+        }
     }
 
     .calendar-body {
         padding: var(--spacing-md);
+
     }
 
     .calendar-weekdays {
@@ -1120,10 +1098,11 @@ fieldset {
 
         .weekday {
             text-align: center;
-            font-size: 12px;
+            font-size: var(--nds-text-xs-FS);
             font-weight: 600;
-            color: var(--text-primary-paragraph, #6C737F);
-            padding: 8px 4px;
+            color: var(--text-primary-paragraph);
+            padding: var(--spacing-md) var(--spacing-xs);
+            min-width: 40px;
         }
     }
 
@@ -1131,40 +1110,130 @@ fieldset {
         display: grid;
         grid-template-columns: repeat(7, 1fr);
         gap: 4px;
+        justify-items: center;
+        overflow: hidden;
 
         .date-cell {
-            background: none;
-            border: none;
-            padding: 8px;
-            text-align: center;
-            cursor: pointer;
-            border-radius: var(--radius-sm, 4px);
-            font-size: 14px;
-            color: var(--text-default, #161616);
-            transition: background-color 0.2s;
+            border-radius: 50% !important;
+            width: 40px;
+            height: 40px;
 
-            &:hover {
-                background-color: var(--background-neutral-100, #F5F6F7);
+            &::before {
+                display: none;
+                content: "";
+                position: absolute;
+                background-color: var(--form-datecell-background-100);
+                width: 40px;
+                height: 40px;
+                z-index: -1;
             }
 
             &.other-month {
-                color: var(--text-primary-paragraph, #6C737F);
+                color: var(--text-default-disabled);
             }
 
             &.today {
-                background-color: var(--background-primary-light, #E3F2FD);
-                color: var(--text-primary, #1976D2);
+                background-color: unset;
+                border: 2px solid var(--button-background-primary-default);
+                color: var(--text-primary);
                 font-weight: 600;
+
+                &.selected {
+                    outline: 2px solid var(--button-background-primary-selected);
+                    outline-offset: -2px !important;
+                    box-shadow: inset 0 0 0 2px var(--colors-base-white);
+                }
+
+                &.selected:hover {
+                    outline: 2px solid var(--button-background-primary-hover);
+                }
             }
 
             &.selected {
-                background-color: var(--background-primary, #1976D2);
-                color: var(--text-oncolor-primary, #fff);
+                background-color: var(--button-background-primary-selected);
+                color: var(--text-oncolor-primary);
                 font-weight: 600;
 
                 &:hover {
-                    background-color: var(--background-primary-dark, #1565C0);
+                    background-color: var(--form-datecell-background-hovered);
                 }
+            }
+
+            // Date range styles
+            &.range-start,
+            &.range-end {
+                background-color: var(--form-datecell-background-default);
+                color: var(--text-oncolor-primary);
+                font-weight: 600;
+
+                &.today {
+                    outline: 2px solid var(--form-datecell-background-default);
+                    outline-offset: -2px !important;
+
+                    &:hover {
+                        background-color: var(--form-datecell-background-hovered);
+                        outline: 2px solid var(--form-datecell-background-hovered);
+                    }
+                }
+
+                &:hover {
+                    background-color: var(--form-datecell-background-hovered);
+                }
+            }
+
+            &.range-start:not(.range-end).has-range-end {
+                &::before {
+                    display: block;
+                    transform: scaleX(1) translateX(-50%);
+
+                    @include ltr {
+                        transform: scaleX(1) translateX(50%);
+                    }
+                }
+            }
+
+            &.range-end:not(.range-start).has-range-start {
+                &::before {
+                    content: "";
+                    display: block;
+                    transform: scaleX(1) translateX(50%);
+
+                    @include ltr {
+                        transform: scaleX(1) translateX(-50%);
+                    }
+                }
+            }
+
+            &.in-range {
+                background-color: var(--form-datecell-background-100);
+
+                &::before {
+                    content: "";
+                    display: block;
+                    transform: scaleX(2);
+                }
+
+                &:hover {
+                    background-color: var(--form-datecell-background-200);
+                }
+
+                &:active {
+                    background-color: var(--form-datecell-background-300);
+                }
+            }
+
+            &.range-start.in-range {
+                border-radius: 50% 0 0 50% !important;
+
+
+            }
+
+            &.range-end.in-range {
+                border-radius: 0 50% 50% 0 !important;
+            }
+
+            &.range-start.range-end {
+                border-radius: 50% !important;
             }
         }
     }

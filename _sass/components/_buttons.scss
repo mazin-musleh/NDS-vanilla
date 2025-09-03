@@ -22,12 +22,12 @@
 /* Core Button Foundation */
 .nds-btn {
   @include btn-base;
-  
+
   &.focus,
   &:focus-visible {
     @include btn-focus;
   }
-  
+
   &:disabled {
     @include btn-disabled;
   }
@@ -36,6 +36,7 @@
 // On-color focus styles
 .nds-btn.nds-btn-oncolor.nds-btn-primary:not(.nds-btn-destructive),
 .nds-btn.nds-btn-oncolor.nds-btn-neutral {
+
   &.focus,
   &:focus-visible {
     @include btn-focus-oncolor;
@@ -48,6 +49,7 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
 }
 
 .nds-btn.nds-btn-menu {
+  
   &::after {
     content: "㭚";
     font-family: "hgi-stroke-rounded" !important;
@@ -58,20 +60,20 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
     opacity: 0;
     transition: opacity var(--nds-transition), transform 0.1s ease;
     display: inline-flex;
-    width: 20px;
-    height: 20px;
-    font-size: 20px;
-    line-height: 20px;
+    width: var(--nds-button-icon-size);
+    height: var(--nds-button-icon-size);
+    font-size: var(--nds-button-icon-size);
+    line-height: var(--nds-button-icon-size);
     justify-content: center;
     align-content: center;
     align-items: center;
   }
-  
+
   &.selected::after,
   &.expanded::after,
-  .show > &::after,
-  .open > &::after,
-  .active > &::after {
+  .show>&::after,
+  .open>&::after,
+  .active>&::after {
     transform: rotate(180deg);
   }
 }
@@ -90,18 +92,22 @@ Available sizes:
 
 .nds-btn,
 .nds-btn-lg {
+  --nds-button-icon-size: 20px;
   @include btn-size(40px, var(--spacing-lg), var(--nds-text-md-FS), var(--nds-text-md-LH));
 }
 
 .nds-btn-md {
+  --nds-button-icon-size: 16px;
   @include btn-size(32px, var(--spacing-md), var(--nds-text-sm-FS), var(--nds-text-sm-LH));
 }
 
 .nds-btn-sm {
+  --nds-button-icon-size: 12px;
   @include btn-size(24px, var(--spacing-sm), var(--nds-text-xs-FS), var(--nds-text-xs-LH));
 }
 
 .nds-btn-xl {
+  --nds-button-icon-size: 24px;
   @include btn-size(48px, var(--spacing-xl), var(--nds-text-xl-FS), var(--nds-text-xl-LH));
 }
 
@@ -111,62 +117,55 @@ Available sizes:
 
 /* Primary Button (Green) */
 .nds-btn-primary {
-  @include btn-variant(
-    var(--button-background-primary-default),
+  @include btn-variant(var(--button-background-primary-default),
     var(--text-oncolor-primary),
     var(--button-background-primary-hovered),
     var(--button-background-primary-pressed),
     var(--button-background-primary-selected),
     var(--background-disabled),
-    var(--text-default-disabled)
-  );
-  
+    var(--text-default-disabled));
+
   &.nds-btn-indicator {
     @include btn-indicator-styles(var(--background-primary-400), var(--background-primary-400));
   }
-  
+
 }
 
 /* Neutral Button (Dark Gray) */
 .nds-btn-neutral {
-  @include btn-variant(
-    var(--button-background-black-default),
+  @include btn-variant(var(--button-background-black-default),
     var(--text-oncolor-primary),
     var(--button-background-black-hovered),
     var(--button-background-black-pressed),
     var(--button-background-black-selected),
     var(--background-disabled),
-    var(--text-default-disabled)
-  );
-  
+    var(--text-default-disabled));
+
   &.nds-btn-indicator {
     @include btn-indicator-styles(var(--background-primary-400), var(--background-primary-400));
   }
-  
+
 }
 
 /* Secondary Solid Button (Light Gray) */
 .nds-btn-secondary {
-  @include btn-variant(
-    var(--button-background-neutral-default),
+  @include btn-variant(var(--button-background-neutral-default),
     var(--text-default),
     var(--button-background-neutral-hovered),
     var(--button-background-neutral-pressed),
     var(--button-background-neutral-selected),
     var(--background-disabled),
-    var(--text-default-disabled)
-  );
-  
+    var(--text-default-disabled));
+
   &.nds-btn-indicator {
     @include btn-indicator-styles(var(--background-neutral-400), var(--background-neutral-800));
   }
-  
+
 }
 
 /* Secondary Outline Button */
 .nds-btn-secondary-outline {
-  @include btn-state-pattern(
-    var(--button-background-transparent-hovered),
+  @include btn-state-pattern(var(--button-background-transparent-hovered),
     var(--text-default),
     var(--border-neutral-secondary),
     var(--button-background-neutral-default),
@@ -177,19 +176,17 @@ Available sizes:
     var(--border-neutral-primary),
     var(--button-background-transparent-default),
     var(--text-default-disabled),
-    var(--border-neutral-secondary)
-  );
-  
+    var(--border-neutral-secondary));
+
   &.nds-btn-indicator {
     @include btn-indicator-styles(var(--background-neutral-400), var(--background-neutral-800));
   }
-  
+
 }
 
 /* Subtle Button */
 .nds-btn-subtle {
-  @include btn-state-pattern(
-    transparent,
+  @include btn-state-pattern(transparent,
     var(--text-default),
     transparent,
     var(--button-background-neutral-default),
@@ -200,17 +197,17 @@ Available sizes:
     transparent,
     transparent,
     var(--text-default-disabled),
-    transparent
-  );
-  
+    transparent);
+
   &.nds-btn-indicator {
     @include btn-indicator-styles(var(--background-neutral-400), var(--background-neutral-800));
   }
-  
+
 }
 
 /* Transparent Button */
 .nds-btn-transparent {
+
   &,
   &[data-state="default"] {
     color: var(--text-default);
@@ -237,11 +234,11 @@ Available sizes:
   &[data-state="disabled"] {
     color: var(--text-default-disabled);
   }
-  
+
   &.nds-btn-indicator {
     @include btn-indicator-styles(var(--background-neutral-400), var(--background-neutral-800));
   }
-  
+
 }
 
 // ==============================================
@@ -250,20 +247,20 @@ Available sizes:
 
 /* On-Color Primary & Neutral Variants */
 .nds-btn-oncolor {
+
   &.nds-btn-primary,
   &.nds-btn-neutral {
-    @include btn-variant(
-      var(--button-background-oncolor-default),
+    @include btn-variant(var(--button-background-oncolor-default),
       var(--text-default),
       var(--button-background-oncolor-hovered),
       var(--button-background-oncolor-pressed),
       var(--button-background-oncolor-selected),
       var(--button-background-disabled-on-color),
-      var(--text-default-oncolor-disabled)
-    );
+      var(--text-default-oncolor-disabled));
   }
 
   &.nds-btn-secondary {
+
     &,
     &[data-state="default"] {
       background-color: var(--button-background-transparent-hovered);
@@ -298,6 +295,7 @@ Available sizes:
   }
 
   &.nds-btn-secondary-outline {
+
     &,
     &[data-state="default"] {
       background-color: var(--button-background-transparent-default);
@@ -329,6 +327,7 @@ Available sizes:
   }
 
   &.nds-btn-subtle {
+
     &,
     &[data-state="default"] {
       color: var(--text-oncolor-primary);
@@ -357,6 +356,7 @@ Available sizes:
   }
 
   &.nds-btn-transparent {
+
     &,
     &[data-state="default"] {
       color: var(--text-oncolor-primary);
@@ -391,19 +391,18 @@ Available sizes:
 
 /* Destructive Primary Button */
 .nds-btn-destructive.nds-btn-primary {
-  @include btn-variant(
-    var(--button-background-danger-primary-default),
+  @include btn-variant(var(--button-background-danger-primary-default),
     var(--text-oncolor-primary),
     var(--button-background-danger-primary-hovered),
     var(--button-background-danger-primary-pressed),
     var(--button-background-danger-primary-selected),
     var(--background-disabled),
-    var(--text-default-disabled)
-  );
+    var(--text-default-disabled));
 }
 
 /* Destructive Secondary Outline Button */
 .nds-btn-destructive.nds-btn-secondary-outline {
+
   &,
   &[data-state="default"] {
     color: var(--button-background-danger-primary-default);
@@ -439,6 +438,7 @@ Available sizes:
 
 /* Destructive Transparent Button */
 .nds-btn-destructive.nds-btn-transparent {
+
   &,
   &[data-state="default"] {
     background-color: var(--button-background-transparent-default);
@@ -473,6 +473,7 @@ Available sizes:
 
 /* Destructive Secondary Solid Button */
 .nds-btn-destructive.nds-btn-secondary {
+
   &,
   &[data-state="default"] {
     background-color: var(--button-background-danger-secondary-default);
@@ -507,6 +508,7 @@ Available sizes:
 
 /* Destructive Subtle Button */
 .nds-btn-destructive.nds-btn-subtle {
+
   &,
   &[data-state="default"] {
     color: var(--button-background-danger-primary-default);
@@ -543,18 +545,17 @@ Available sizes:
 
 .nds-btn-oncolor.nds-btn-destructive {
   &.nds-btn-primary {
-    @include btn-variant(
-      var(--button-background-danger-primary-default),
+    @include btn-variant(var(--button-background-danger-primary-default),
       var(--text-oncolor-primary),
       var(--button-background-danger-primary-hovered),
       var(--button-background-danger-primary-pressed),
       var(--button-background-danger-primary-selected),
       var(--background-disabled),
-      var(--text-default-disabled)
-    );
+      var(--text-default-disabled));
   }
 
   &.nds-btn-secondary-outline {
+
     &,
     &[data-state="default"] {
       border-color: var(--border-error-light);
@@ -589,6 +590,7 @@ Available sizes:
   }
 
   &.nds-btn-transparent {
+
     &,
     &[data-state="default"] {
       color: var(--button-label-danger-primary-default-oncolor);
@@ -617,18 +619,17 @@ Available sizes:
   }
 
   &.nds-btn-secondary {
-    @include btn-variant(
-      var(--button-background-danger-secondary-default),
+    @include btn-variant(var(--button-background-danger-secondary-default),
       var(--button-background-danger-primary-default),
       var(--button-background-danger-secondary-hovered),
       var(--button-background-danger-secondary-pressed),
       var(--button-background-danger-secondary-selected),
       var(--background-disabled),
-      var(--text-default-disabled)
-    );
+      var(--text-default-disabled));
   }
 
   &.nds-btn-subtle {
+
     &,
     &[data-state="default"] {
       color: var(--button-label-danger-primary-default-oncolor);
@@ -690,20 +691,42 @@ Available sizes:
 .nds-btn-icon-only {
   aspect-ratio: 1;
   padding: 0;
-  
-  &.nds-btn-sm { width: 24px; }
-  &.nds-btn-md { width: 32px; }
-  &.nds-btn-lg { width: 40px; }
-  &.nds-btn-xl { width: 48px; }
-  
+
+  &.nds-btn-sm {
+    width: 24px;
+  }
+
+  &.nds-btn-md {
+    width: 32px;
+  }
+
+  &.nds-btn-lg {
+    width: 40px;
+  }
+
+  &.nds-btn-xl {
+    width: 48px;
+  }
+
   // Menu button exceptions
   &.nds-btn-menu {
     width: fit-content;
-    
-    &.nds-btn-sm { padding: 0 var(--spacing-sm); }
-    &.nds-btn-md { padding: 0 var(--spacing-md); }
-    &.nds-btn-lg { padding: 0 var(--spacing-lg); }
-    &.nds-btn-xl { padding: 0 var(--spacing-xl); }
+
+    &.nds-btn-sm {
+      padding: 0 var(--spacing-sm);
+    }
+
+    &.nds-btn-md {
+      padding: 0 var(--spacing-md);
+    }
+
+    &.nds-btn-lg {
+      padding: 0 var(--spacing-lg);
+    }
+
+    &.nds-btn-xl {
+      padding: 0 var(--spacing-xl);
+    }
   }
 }
 
@@ -711,10 +734,18 @@ Available sizes:
 .nds-btn i.hgi {
   flex-shrink: 0;
   font-size: 1.2em;
-  
-  .nds-btn-sm & { font-size: 1.1em; }
-  .nds-btn-lg & { font-size: 1.3em; }
-  .nds-btn-xl & { font-size: 1.4em; }
+
+  .nds-btn-sm & {
+    font-size: 1.1em;
+  }
+
+  .nds-btn-lg & {
+    font-size: 1.3em;
+  }
+
+  .nds-btn-xl & {
+    font-size: 1.4em;
+  }
 }
 
 /* Button Groups */
@@ -791,6 +822,7 @@ Available sizes:
 
   // On-color button loading states
   &.nds-btn-oncolor {
+
     &.nds-btn-primary,
     &.nds-btn-neutral {
       @include btn-loading-spinner(var(--text-default), var(--alpha-white-20));
@@ -808,6 +840,7 @@ Available sizes:
 
     // Destructive on-color loading states
     &.nds-btn-destructive {
+
       &.nds-btn-primary,
       &.nds-btn-secondary,
       &.nds-btn-subtle,
@@ -837,6 +870,7 @@ Available sizes:
 
 /* Reduced Motion Support */
 @include reduced-motion {
+
   .nds-btn,
   .nds-btn::after {
     transition: none;

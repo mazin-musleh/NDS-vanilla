@@ -171,6 +171,7 @@ textarea {
   --nds-btn-width: unset;
   --nds-btn-space: calc(var(--nds-btn-height) - #{$padding} - 4px);
   height: var(--nds-btn-height);
+  min-height: var(--nds-btn-height);
   width: var(--nds-btn-width);
   padding: 0 $padding;
   font-size: $font-size;
@@ -520,6 +521,7 @@ $letter-spacing: if($size < 40px, 0rem, if($size >=120px, -0.072rem, -0.024rem))
   .progress-symbol {
     font-size: $font-size !important;
     font-weight: 700 !important;
+    line-height: normal;
   }
 
   .progress-symbol {

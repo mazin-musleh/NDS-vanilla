@@ -42,6 +42,7 @@
         line-height: var(--nds-text-md-LH);
 
         &.nds-btn-menu {
+            --nds-button-icon-size: 20px;
             gap: var(--accordion-lg-header-gap, var(--spacing-md));
         }
 

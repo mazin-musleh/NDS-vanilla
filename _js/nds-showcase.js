@@ -41,7 +41,6 @@
     function handleCopyClick(button) {
         const codeBlock = button.closest('.code-example').querySelector('code');
         if (!codeBlock) {
-            console.error('Could not find code element for copy button');
             return;
         }
 
@@ -51,7 +50,6 @@
             navigator.clipboard.writeText(textToCopy).then(() => {
                 showCopyFeedback(button);
             }).catch(err => {
-                console.error('Failed to copy to clipboard:', err);
                 fallbackCopy(textToCopy, button);
             });
         } else {
@@ -74,7 +72,6 @@
             document.execCommand('copy');
             showCopyFeedback(button);
         } catch (err) {
-            console.error('Fallback copy failed:', err);
         }
         
         document.body.removeChild(textArea);
@@ -153,11 +150,9 @@
                         togglePairs = parsed;
                     }
                 } else {
-                    console.error('data-toggler must be ["classes/attributes", "target", "type?", "operation?"] or multiple arrays');
                     return;
                 }
             } catch (e) {
-                console.error('Invalid JSON in data-toggler attribute:', e);
                 return;
             }
         } else {
@@ -166,7 +161,6 @@
             const targetSelector = button.getAttribute('data-target') || button.getAttribute('data-default-target');
             
             if (!toggleClass) {
-                console.error('Toggle button missing data-toggle or data-toggler attribute');
                 return;
             }
             
@@ -175,14 +169,12 @@
 
         const demoCard = button.closest('.nds-demo-card');
         if (!demoCard) {
-            console.error('Toggle button must be inside a demo card');
             return;
         }
 
         // Process each toggle operation
         togglePairs.forEach(([classNamesOrAttrs, targetSelector, type, operation]) => {
             if (!classNamesOrAttrs || !targetSelector) {
-                console.error('Each toggle operation must have ["classes/attributes", "target", "type?", "operation?"]');
                 return;
             }
             
@@ -255,7 +247,6 @@
             }
 
             if (!targetElements.length) {
-                console.error('Target elements not found:', targetSelector, 'in demo card');
                 return;
             }
             
@@ -655,29 +646,22 @@
 
     // Fake file upload for demonstration purposes
     function initializeFakeFileUpload() {
-        console.log('🎭 initializeFakeFileUpload() called');
         // Set up fake upload URLs for demo containers
         document.querySelectorAll('.nds-file-upload').forEach(container => {
-            console.log('🎭 Setting up fake upload for container:', container);
             if (!container.dataset.uploadUrl) {
                 container.dataset.uploadUrl = '/demo/upload';
                 container.dataset.autoUpload = 'true';
-                console.log('🎭 Added data attributes to container');
             } else {
-                console.log('🎭 Container already has upload URL:', container.dataset.uploadUrl);
             }
         });
 
         // Listen for beforeUpload events to intercept and simulate uploads
-        console.log('🎭 Adding beforeUpload event listener to document');
         document.addEventListener('beforeUpload', function(e) {
-            console.log('🎭 beforeUpload event caught!', e);
             const fileData = e.detail.fileData;
             const uploadContainer = e.target;
             
             // Cancel the real upload and start simulation
             e.detail.cancel = true;
-            console.log('🎭 Upload cancelled, starting simulation for:', fileData.file.name);
             
             // Start simulation using UI API
             startUploadSimulation(uploadContainer, fileData);
@@ -689,7 +673,6 @@
         // Get the file upload API instance
         const api = window.NDS.Forms.FileUpload.getInstance(uploadContainer);
         if (!api) {
-            console.warn('❌ No file upload API found');
             return;
         }
         
@@ -701,7 +684,6 @@
         const randomFactor = 0.5 + Math.random(); // ±50% variation
         const uploadDuration = Math.max(3000, Math.min(60000, baseDuration * randomFactor));
         
-        console.log(`📊 File: ${file.name} (${(fileSizeKB/1024).toFixed(2)}MB) - Duration: ${(uploadDuration/1000).toFixed(1)}s`);
         
         // Update existing file status to uploading and start progress simulation
         api.setFileStatus(fileData.id, 'uploading', { progress: 0 });
@@ -736,14 +718,12 @@
                 
                 // Set processing status first
                 api.setFileStatus(fileId, 'processing');
-                console.log(`⚙️ Processing file: ${api.getFile(fileId)?.file.name}`);
                 
                 // 90% success rate after processing delay
                 setTimeout(() => {
                     const shouldSucceed = Math.random() > 0.1;
                     if (shouldSucceed) {
                         api.setFileStatus(fileId, 'complete');
-                        console.log(`✅ Upload completed: ${api.getFile(fileId)?.file.name}`);
                         
                         // Dispatch success event
                         const container = document.querySelector('.nds-file-upload');
@@ -753,7 +733,6 @@
                         });
                     } else {
                         api.setFileStatus(fileId, 'error', { error: 'Demo upload failed' });
-                        console.log(`❌ Upload failed: ${api.getFile(fileId)?.file.name}`);
                         
                         // Dispatch error event
                         const container = document.querySelector('.nds-file-upload');
@@ -769,7 +748,6 @@
 
     // Demo action buttons functionality
     function initializeDemoActionButtons() {
-        console.log('🎬 initializeDemoActionButtons() called');
         
         // Event delegation for demo action buttons
         document.addEventListener('click', function(e) {
@@ -777,7 +755,6 @@
             if (actionBtn) {
                 e.preventDefault();
                 const action = actionBtn.getAttribute('data-action');
-                console.log('🎬 Demo action triggered:', action);
                 
                 if (action === 'populate-demo-files') {
                     populateDemoFiles(actionBtn);
@@ -787,25 +764,21 @@
     }
     
     function populateDemoFiles(button) {
-        console.log('📁 populateDemoFiles called');
         
         // Find the file upload container in the same demo card
         const demoCard = button.closest('.nds-demo-card');
         if (!demoCard) {
-            console.error('❌ Demo card not found');
             return;
         }
         
         const uploadContainer = demoCard.querySelector('.nds-file-upload');
         if (!uploadContainer) {
-            console.error('❌ File upload container not found');
             return;
         }
         
         // Get the file upload API instance
         const api = window.NDS.Forms.FileUpload.getInstance(uploadContainer);
         if (!api) {
-            console.error('❌ File upload API not found');
             return;
         }
         
@@ -814,7 +787,6 @@
         
         // Check if single file mode is active
         const isSingleFile = uploadContainer.classList.contains('single-file');
-        console.log('📁 Single file mode:', isSingleFile);
         
         // Create mock files with different statuses
         const allDemoFiles = [
@@ -855,11 +827,9 @@
             // Single file mode: pick one random file
             const randomIndex = Math.floor(Math.random() * allDemoFiles.length);
             demoFiles = [allDemoFiles[randomIndex]];
-            console.log(`📁 Single file mode: selected ${demoFiles[0].name} (${demoFiles[0].status})`);
         } else {
             // Multi file mode: use all files
             demoFiles = allDemoFiles;
-            console.log('📁 Multi file mode: adding all 4 demo files');
         }
         
         // Add each demo file using the API
@@ -883,7 +853,6 @@
                 error: fileData.error
             });
             
-            console.log(`📁 Added demo file: ${fileData.name} with status: ${fileData.status}`);
             
             // If it's uploading status, simulate progress
             if (fileData.status === 'uploading') {
@@ -891,7 +860,6 @@
             }
         });
         
-        console.log('✅ Demo files populated successfully');
     }
     
     function simulateProgressForDemo(api, fileId, startProgress) {
