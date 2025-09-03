@@ -55,3 +55,4 @@ exclude:
   - CLAUDE.md
   - package.json
   - package-lock.json
+  - notes.txt
