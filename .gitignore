@@ -21,7 +21,7 @@ capybara-*.html
 /tmp/
 
 #custom files
-notes.txt
+#notes.txt
 
 # Windows
 Thumbs.db
