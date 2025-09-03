@@ -290,13 +290,29 @@ direction: ltr
                                         <label class="label" for="analyticsPeriod">Analytics Period</label>
                                     </div>
                                     <div class="nds-form-control">
-                                        <select id="analyticsPeriod">
-                                            <option value="">Select time period...</option>
-                                            <option value="7days">Last 7 Days</option>
-                                            <option value="30days" selected>Last 30 Days</option>
-                                            <option value="90days">Last 90 Days</option>
-                                            <option value="1year">Last Year</option>
-                                        </select>
+                                        <input type="text" id="analyticsPeriod" class="nds-input nds-select-input" placeholder="Select time period..." value="Last 30 Days" readonly>
+                                        <input type="hidden" name="analyticsPeriodValue" class="nds-select-value" value="30days">
+                                        
+                                        <!-- Custom Dropdown Menu -->
+                                        <div class="nds-select-dropdown hidden">
+                                            <div class="select-options">
+                                                <button type="button" class="select-option" data-value="">
+                                                    <span class="option-text">Select time period...</span>
+                                                </button>
+                                                <button type="button" class="select-option" data-value="7days">
+                                                    <span class="option-text">Last 7 Days</span>
+                                                </button>
+                                                <button type="button" class="select-option selected" data-value="30days">
+                                                    <span class="option-text">Last 30 Days</span>
+                                                </button>
+                                                <button type="button" class="select-option" data-value="90days">
+                                                    <span class="option-text">Last 90 Days</span>
+                                                </button>
+                                                <button type="button" class="select-option" data-value="1year">
+                                                    <span class="option-text">Last Year</span>
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="nds-form-footer"></div>
                                 </div>
@@ -352,10 +368,20 @@ direction: ltr
                                         <label class="label" for="languageSelect">Language Preference</label>
                                     </div>
                                     <div class="nds-form-control">
-                                        <select id="languageSelect">
-                                            <option value="ar">العربية</option>
-                                            <option value="en" selected>English</option>
-                                        </select>
+                                        <input type="text" id="languageSelect" class="nds-input nds-select-input" placeholder="Select language..." value="English" readonly>
+                                        <input type="hidden" name="languageSelectValue" class="nds-select-value" value="en">
+                                        
+                                        <!-- Custom Dropdown Menu -->
+                                        <div class="nds-select-dropdown hidden">
+                                            <div class="select-options">
+                                                <button type="button" class="select-option" data-value="ar">
+                                                    <span class="option-text">العربية</span>
+                                                </button>
+                                                <button type="button" class="select-option selected" data-value="en">
+                                                    <span class="option-text">English</span>
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="nds-form-footer"></div>
                                 </div>
