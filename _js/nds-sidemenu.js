@@ -34,11 +34,11 @@
             if (!submenu) return;
 
             const isOpen = li.classList.contains("open");
-
+            anchor.setAttribute('aria-expanded', !isOpen);
             if (!isOpen) {
                 // Close all sibling items
                 const siblings = [...li.parentElement.children].filter(el => el !== li && el.classList.contains("has-sub"));
-
+                
                 siblings.forEach(sibling => {
                     const siblingSub = sibling.querySelector(":scope > ul");
                     if (sibling.classList.contains("open") && siblingSub) {

@@ -25,17 +25,24 @@
     }
 
     // Hijri date with efficient dual-language caching
-    async function getHijriDate(isArabic) {
+    async function getHijriDate(isArabic, returnStructured = false) {
         const today = new Date().toISOString().slice(0, 10);
         const arabicKey = `hijri_ar_${today}`;
         const englishKey = `hijri_en_${today}`;
+        const dataKey = `hijri_data_${today}`;
 
-        // Check if we already have both languages cached
+        // Check if we already have all three cached
         const arabicCached = getCache(arabicKey);
         const englishCached = getCache(englishKey);
+        const dataCached = getCache(dataKey);
 
-        if (arabicCached && englishCached) {
-            return isArabic ? arabicCached : englishCached;
+        console.log('Cache check:', { arabicCached: !!arabicCached, englishCached: !!englishCached, dataCached: !!dataCached });
+
+        if (arabicCached && englishCached && dataCached) {
+            console.log('All cached - arabicCached:', arabicCached);
+            console.log('All cached - englishCached:', englishCached);
+            console.log('All cached - dataCached:', dataCached);
+            return returnStructured ? dataCached : (isArabic ? arabicCached : englishCached);
         }
 
         try {
@@ -57,11 +64,23 @@
                 const arabicDate = `${hijri.day} ${hijri.month.ar} ${hijri.year} هـ`;
                 const englishDate = `${hijri.day} ${hijri.month.en} ${hijri.year} AH`;
                 
-                // Cache both languages for 24 hours
+                // Create structured data
+                const hijriData = {
+                    day: parseInt(hijri.day),
+                    month: {
+                        number: parseInt(hijri.month.number),
+                        ar: hijri.month.ar,
+                        en: hijri.month.en
+                    },
+                    year: parseInt(hijri.year)
+                };
+                
+                // Cache all three for 24 hours
                 setCache(arabicKey, arabicDate, 24 * 60);
                 setCache(englishKey, englishDate, 24 * 60);
+                setCache(dataKey, hijriData, 24 * 60);
                 
-                return isArabic ? arabicDate : englishDate;
+                return returnStructured ? hijriData : (isArabic ? arabicDate : englishDate);
             }
             throw new Error('Invalid API response');
         } catch (error) {
@@ -137,74 +156,12 @@
         el.innerHTML = `<i class="hgi hgi-stroke hgi-clock-01 icon"></i><span class="text">${time}</span>`;
     }
 
-    // Get Hijri date as structured data instead of formatted string
-    async function getHijriDateData() {
-        const today = new Date().toISOString().slice(0, 10);
-        const cacheKey = `hijri_data_${today}`;
-
-        // Check cache first
-        const cached = getCache(cacheKey);
-        if (cached) return cached;
-
-        try {
-            const now = new Date();
-            const dateStr = `${now.getDate().toString().padStart(2, '0')}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getFullYear()}`;
-            
-            const response = await fetch(
-                `https://api.aladhan.com/v1/gToH/${dateStr}`,
-                { signal: AbortSignal.timeout(5000) }
-            );
-
-            if (!response.ok) throw new Error(`HTTP ${response.status}`);
-            const data = await response.json();
-
-            if (data.code === 200) {
-                const hijri = data.data.hijri;
-                
-                // Return structured data
-                const hijriData = {
-                    day: parseInt(hijri.day),
-                    month: {
-                        index: parseInt(hijri.month.number) - 1, // Convert to 0-based index
-                        ar: hijri.month.ar,
-                        en: hijri.month.en
-                    },
-                    year: parseInt(hijri.year)
-                };
-                
-                // Cache for 24 hours
-                setCache(cacheKey, hijriData, 24 * 60);
-                
-                return hijriData;
-            }
-            throw new Error('Invalid API response');
-        } catch (error) {
-            // Fallback to browser calculation - return approximate data
-            const date = new Date();
-            const hijriArabic = new Intl.DateTimeFormat('ar-TN-u-ca-islamic', {
-                day: 'numeric', month: 'long', year: 'numeric'
-            }).format(date);
-            
-            // Parse the fallback (this is approximate)
-            const parts = hijriArabic.replace(' هـ', '').split(' ');
-            return {
-                day: parseInt(parts[0]) || date.getDate(),
-                month: {
-                    index: date.getMonth(), // Approximate
-                    ar: parts[1] || 'محرم',
-                    en: 'Muharram' // Approximate
-                },
-                year: parseInt(parts[2]) || (date.getFullYear() - 622)
-            };
-        }
-    }
 
     // Global exposure
     if (typeof window !== 'undefined') {
         window.updateDate = updateDate;
         window.updateClock = updateClock;
         window.getHijriDate = getHijriDate;
-        window.getHijriDateData = getHijriDateData;
     }
 
     // Auto-initialize
