@@ -1082,7 +1082,7 @@ console.log(`${pendingUploads.length} uploads in progress`);
                 <div class="nds-form-control">
                   <i class="hgi hgi-stroke hgi-calendar-03 icon"></i>
                   <input type="text" id="datePickerInput" class="nds-input nds-date-input" placeholder="DD/MM/YYYY"
-                    readonly value="30/04/1447">
+                    readonly data-hijri-offset="1">
 
                   <!-- Custom Calendar Dropdown -->
                   <div class="nds-date-picker-dropdown hidden">
