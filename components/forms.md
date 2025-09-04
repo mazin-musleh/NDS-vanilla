@@ -1075,14 +1075,14 @@ console.log(`${pendingUploads.length} uploads in progress`);
           </div>
           <div class="demo-container">
             <div class="state-demo">
-              <div class="nds-form-container nds-date-picker hijrix">
+              <div class="nds-form-container nds-date-picker hijri">
                 <div class="nds-form-header">
                   <label class="label" for="datePickerInput">Select Date</label>
                 </div>
                 <div class="nds-form-control">
                   <i class="hgi hgi-stroke hgi-calendar-03 icon"></i>
                   <input type="text" id="datePickerInput" class="nds-input nds-date-input" placeholder="DD/MM/YYYY"
-                    readonly>
+                    readonly value="30/04/1447">
 
                   <!-- Custom Calendar Dropdown -->
                   <div class="nds-date-picker-dropdown hidden">
