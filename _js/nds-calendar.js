@@ -297,17 +297,10 @@
                 var month = parseInt(parts[2], 10);
                 var year = parseInt(parts[3], 10);
 
-                // Remove offset correction from user input
-                var hijriDate = createHijriDate(day, month, year);
-                var offsetDays = this.getOffsetCorrection();
-                if (offsetDays !== 0) {
-                    hijriDate = this.addDaysToHijriDate(hijriDate, -offsetDays);
-                }
-
-                // Convert pure Hijri date to Gregorian
-                var gregorianDate = this.hijriToGregorian(hijriDate.year, hijriDate.month, hijriDate.day);
+                // Pure conversion - no offset involved
+                var gregorianDate = this.hijriToGregorian(year, month, day);
                 
-                // Attach original user input as Hijri metadata
+                // Attach original input as Hijri metadata
                 gregorianDate._hijriDay = day;
                 gregorianDate._hijriMonth = month;
                 gregorianDate._hijriYear = year;
