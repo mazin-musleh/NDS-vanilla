@@ -22,30 +22,6 @@ hero_image_pos: 50% 10%
                 <i class="hgi hgi-stroke hgi-arrow-right" aria-hidden="true"></i>
             </a>
         </div>
-        <div class="nds-section-content">
-            <div class="nds-statistics">
-                <div class="nds-statistic-card">
-                    <i class="hgi hgi-stroke hgi-component nds-statistic-icon"></i>
-                    <span class="nds-statistic-number nds-number-format nds-counter-value">60+</span>
-                    <span class="nds-statistic-text">UI Components</span>
-                </div>
-                <div class="nds-statistic-card">
-                    <i class="hgi hgi-stroke hgi-color-picker nds-statistic-icon"></i>
-                    <span class="nds-statistic-number nds-number-format nds-counter-value">200+</span>
-                    <span class="nds-statistic-text">Design Tokens</span>
-                </div>
-                <div class="nds-statistic-card">
-                    <i class="hgi hgi-stroke hgi-accessibility nds-statistic-icon"></i>
-                    <span class="nds-statistic-number nds-number-format nds-counter-value">WCAG</span>
-                    <span class="nds-statistic-text">AA Compliant</span>
-                </div>
-                <div class="nds-statistic-card">
-                    <i class="hgi hgi-stroke hgi-global nds-statistic-icon"></i>
-                    <span class="nds-statistic-number nds-number-format nds-counter-value">2</span>
-                    <span class="nds-statistic-text">Languages</span>
-                </div>
-            </div>
-        </div>
     </div>
 </section>
 

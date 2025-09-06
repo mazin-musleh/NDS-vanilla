@@ -17,6 +17,14 @@
   position: relative;
   overflow: clip;
 
+  .nds-tab-list {
+    justify-content: flex-end;
+
+    @include ltr {
+      justify-content: flex-start;
+    }
+  }
+
   &.nds-tabs .nds-tab {
     /* border-radius: var(--radius-md) var(--radius-md) 0 0; */
     font-size: var(--nds-text-sm-FS);
@@ -353,7 +361,7 @@ code.dark {
 @include mobile {
 
   .nds-code {
-    
+
     code {
       font-size: var(--nds-text-xs-FS);
     }

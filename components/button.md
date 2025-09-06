@@ -39,10 +39,10 @@ direction: ltr
                                     class="label">Hover</span></button>
                             <button class="nds-btn nds-btn-primary nds-btn-lg nds-btn-demo" data-state="active"><span
                                     class="label">Active</span></button>
-                            <button class="nds-btn nds-btn-primary nds-btn-lg nds-btn-demo selected" data-state="selected"><span
-                                    class="label">Selected</span></button>
-                            <button class="nds-btn nds-btn-primary nds-btn-lg nds-btn-demo focus" data-state="focused"><span
-                                    class="label">Focused</span></button>
+                            <button class="nds-btn nds-btn-primary nds-btn-lg nds-btn-demo selected"
+                                data-state="selected"><span class="label">Selected</span></button>
+                            <button class="nds-btn nds-btn-primary nds-btn-lg nds-btn-demo focus"
+                                data-state="focused"><span class="label">Focused</span></button>
                             <button class="nds-btn nds-btn-primary nds-btn-lg nds-btn-demo" disabled><span
                                     class="label">Disabled</span></button>
                         </div>
@@ -50,15 +50,18 @@ direction: ltr
                     <div class="nds-tabs nds-code withDivider">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-primary-1" id="tab-primary-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                            <button class="nds-btn nds-btn-subtle nds-tab showMore"><i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
-                            </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-primary-1" id="tab-primary-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                                        class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                                </button>
                             </nav>
                         </div>
                         <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-primary-1" aria-labelledby="tab-primary-1">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-primary-1"
+                                aria-labelledby="tab-primary-1">
                                 <div class="nds-code-action">
                                     <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
@@ -95,10 +98,10 @@ direction: ltr
                                     class="label">Hover</span></button>
                             <button class="nds-btn nds-btn-neutral nds-btn-lg nds-btn-demo" data-state="active"><span
                                     class="label">Active</span></button>
-                            <button class="nds-btn nds-btn-neutral nds-btn-lg nds-btn-demo selected" data-state="selected"><span
-                                    class="label">Selected</span></button>
-                            <button class="nds-btn nds-btn-neutral nds-btn-lg nds-btn-demo focus" data-state="focused"><span
-                                    class="label">Focused</span></button>
+                            <button class="nds-btn nds-btn-neutral nds-btn-lg nds-btn-demo selected"
+                                data-state="selected"><span class="label">Selected</span></button>
+                            <button class="nds-btn nds-btn-neutral nds-btn-lg nds-btn-demo focus"
+                                data-state="focused"><span class="label">Focused</span></button>
                             <button class="nds-btn nds-btn-neutral nds-btn-lg nds-btn-demo" disabled><span
                                     class="label">Disabled</span></button>
                         </div>
@@ -106,15 +109,18 @@ direction: ltr
                     <div class="nds-tabs nds-code withDivider">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-neutral-1" id="tab-neutral-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                            <button class="nds-btn nds-btn-subtle nds-tab showMore"><i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
-                            </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-neutral-1" id="tab-neutral-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                                        class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                                </button>
                             </nav>
                         </div>
                         <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-neutral-1" aria-labelledby="tab-neutral-1">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-neutral-1"
+                                aria-labelledby="tab-neutral-1">
                                 <div class="nds-code-action">
                                     <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
@@ -153,8 +159,8 @@ direction: ltr
                                     class="label">Active</span></button>
                             <button class="nds-btn nds-btn-secondary nds-btn-lg nds-btn-demo selected"
                                 data-state="selected"><span class="label">Selected</span></button>
-                            <button class="nds-btn nds-btn-secondary nds-btn-lg nds-btn-demo focus" data-state="focused"><span
-                                    class="label">Focused</span></button>
+                            <button class="nds-btn nds-btn-secondary nds-btn-lg nds-btn-demo focus"
+                                data-state="focused"><span class="label">Focused</span></button>
                             <button class="nds-btn nds-btn-secondary nds-btn-lg nds-btn-demo" disabled><span
                                     class="label">Disabled</span></button>
                         </div>
@@ -162,15 +168,18 @@ direction: ltr
                     <div class="nds-tabs nds-code withDivider">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-secondary-1" id="tab-secondary-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                            <button class="nds-btn nds-btn-subtle nds-tab showMore"><i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
-                            </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-secondary-1" id="tab-secondary-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                                        class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                                </button>
                             </nav>
                         </div>
                         <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-secondary-1" aria-labelledby="tab-secondary-1">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-secondary-1"
+                                aria-labelledby="tab-secondary-1">
                                 <div class="nds-code-action">
                                     <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
@@ -201,12 +210,12 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <button class="nds-btn nds-btn-secondary-outline nds-btn-lg nds-btn-demo" data-state="default"><span
-                                    class="label">Default</span></button>
-                            <button class="nds-btn nds-btn-secondary-outline nds-btn-lg nds-btn-demo" data-state="hover"><span
-                                    class="label">Hover</span></button>
-                            <button class="nds-btn nds-btn-secondary-outline nds-btn-lg nds-btn-demo" data-state="active"><span
-                                    class="label">Active</span></button>
+                            <button class="nds-btn nds-btn-secondary-outline nds-btn-lg nds-btn-demo"
+                                data-state="default"><span class="label">Default</span></button>
+                            <button class="nds-btn nds-btn-secondary-outline nds-btn-lg nds-btn-demo"
+                                data-state="hover"><span class="label">Hover</span></button>
+                            <button class="nds-btn nds-btn-secondary-outline nds-btn-lg nds-btn-demo"
+                                data-state="active"><span class="label">Active</span></button>
                             <button class="nds-btn nds-btn-secondary-outline nds-btn-lg nds-btn-demo selected"
                                 data-state="selected"><span class="label">Selected</span></button>
                             <button class="nds-btn nds-btn-secondary-outline nds-btn-lg nds-btn-demo focus"
@@ -218,15 +227,18 @@ direction: ltr
                     <div class="nds-tabs nds-code withDivider">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-secondary-outline-1" id="tab-secondary-outline-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                            <button class="nds-btn nds-btn-subtle nds-tab showMore"><i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
-                            </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-secondary-outline-1" id="tab-secondary-outline-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                                        class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                                </button>
                             </nav>
                         </div>
                         <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-secondary-outline-1" aria-labelledby="tab-secondary-outline-1">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-secondary-outline-1"
+                                aria-labelledby="tab-secondary-outline-1">
                                 <div class="nds-code-action">
                                     <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
@@ -263,10 +275,10 @@ direction: ltr
                                     class="label">Hover</span></button>
                             <button class="nds-btn nds-btn-subtle nds-btn-lg nds-btn-demo" data-state="active"><span
                                     class="label">Active</span></button>
-                            <button class="nds-btn nds-btn-subtle nds-btn-lg nds-btn-demo selected" data-state="selected"><span
-                                    class="label">Selected</span></button>
-                            <button class="nds-btn nds-btn-subtle nds-btn-lg nds-btn-demo focus" data-state="focused"><span
-                                    class="label">Focused</span></button>
+                            <button class="nds-btn nds-btn-subtle nds-btn-lg nds-btn-demo selected"
+                                data-state="selected"><span class="label">Selected</span></button>
+                            <button class="nds-btn nds-btn-subtle nds-btn-lg nds-btn-demo focus"
+                                data-state="focused"><span class="label">Focused</span></button>
                             <button class="nds-btn nds-btn-subtle nds-btn-lg nds-btn-demo" disabled><span
                                     class="label">Disabled</span></button>
                         </div>
@@ -274,15 +286,18 @@ direction: ltr
                     <div class="nds-tabs nds-code withDivider">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-subtle-1" id="tab-subtle-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                            <button class="nds-btn nds-btn-subtle nds-tab showMore"><i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
-                            </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-subtle-1" id="tab-subtle-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                                        class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                                </button>
                             </nav>
                         </div>
                         <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-subtle-1" aria-labelledby="tab-subtle-1">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-subtle-1"
+                                aria-labelledby="tab-subtle-1">
                                 <div class="nds-code-action">
                                     <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
@@ -313,16 +328,16 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <button class="nds-btn nds-btn-transparent nds-btn-lg nds-btn-demo" data-state="default"><span
-                                    class="label">Default</span></button>
+                            <button class="nds-btn nds-btn-transparent nds-btn-lg nds-btn-demo"
+                                data-state="default"><span class="label">Default</span></button>
                             <button class="nds-btn nds-btn-transparent nds-btn-lg nds-btn-demo" data-state="hover"><span
                                     class="label">Hover</span></button>
-                            <button class="nds-btn nds-btn-transparent nds-btn-lg nds-btn-demo" data-state="active"><span
-                                    class="label">Active</span></button>
-                            <button class="nds-btn nds-btn-transparent nds-btn-lg nds-btn-demo selected" data-state="selected"><span
-                                    class="label">Selected</span></button>
-                            <button class="nds-btn nds-btn-transparent nds-btn-lg nds-btn-demo focus" data-state="focused"><span
-                                    class="label">Focused</span></button>
+                            <button class="nds-btn nds-btn-transparent nds-btn-lg nds-btn-demo"
+                                data-state="active"><span class="label">Active</span></button>
+                            <button class="nds-btn nds-btn-transparent nds-btn-lg nds-btn-demo selected"
+                                data-state="selected"><span class="label">Selected</span></button>
+                            <button class="nds-btn nds-btn-transparent nds-btn-lg nds-btn-demo focus"
+                                data-state="focused"><span class="label">Focused</span></button>
                             <button class="nds-btn nds-btn-transparent nds-btn-lg nds-btn-demo" disabled><span
                                     class="label">Disabled</span></button>
                         </div>
@@ -330,15 +345,18 @@ direction: ltr
                     <div class="nds-tabs nds-code withDivider">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-transparent-1" id="tab-transparent-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                            <button class="nds-btn nds-btn-subtle nds-tab showMore"><i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
-                            </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-transparent-1" id="tab-transparent-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                                        class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                                </button>
                             </nav>
                         </div>
                         <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-transparent-1" aria-labelledby="tab-transparent-1">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-transparent-1"
+                                aria-labelledby="tab-transparent-1">
                                 <div class="nds-code-action">
                                     <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
@@ -371,30 +389,33 @@ direction: ltr
                         <div class="state-demo">
                             <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-lg nds-btn-demo"
                                 data-state="default"><span class="label">Default</span></button>
-                            <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-lg nds-btn-demo" data-state="hover"><span
-                                    class="label">Hover</span></button>
-                            <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-lg nds-btn-demo" data-state="active"><span
-                                    class="label">Active</span></button>
+                            <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-lg nds-btn-demo"
+                                data-state="hover"><span class="label">Hover</span></button>
+                            <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-lg nds-btn-demo"
+                                data-state="active"><span class="label">Active</span></button>
                             <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-lg nds-btn-demo selected"
                                 data-state="selected"><span class="label">Selected</span></button>
                             <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-lg nds-btn-demo focus"
                                 data-state="focused"><span class="label">Focused</span></button>
-                            <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-lg nds-btn-demo" disabled><span
-                                    class="label">Disabled</span></button>
+                            <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-lg nds-btn-demo"
+                                disabled><span class="label">Disabled</span></button>
                         </div>
                     </div>
                     <div class="nds-tabs nds-code withDivider">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-primary-oncolor-1" id="tab-primary-oncolor-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                            <button class="nds-btn nds-btn-subtle nds-tab showMore"><i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
-                            </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-primary-oncolor-1" id="tab-primary-oncolor-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                                        class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                                </button>
                             </nav>
                         </div>
                         <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-primary-oncolor-1" aria-labelledby="tab-primary-oncolor-1">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-primary-oncolor-1"
+                                aria-labelledby="tab-primary-oncolor-1">
                                 <div class="nds-code-action">
                                     <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
@@ -424,30 +445,33 @@ direction: ltr
                         <div class="state-demo">
                             <button class="nds-btn nds-btn-neutral nds-btn-oncolor nds-btn-lg nds-btn-demo"
                                 data-state="default"><span class="label">Default</span></button>
-                            <button class="nds-btn nds-btn-neutral nds-btn-oncolor nds-btn-lg nds-btn-demo" data-state="hover"><span
-                                    class="label">Hover</span></button>
-                            <button class="nds-btn nds-btn-neutral nds-btn-oncolor nds-btn-lg nds-btn-demo" data-state="active"><span
-                                    class="label">Active</span></button>
+                            <button class="nds-btn nds-btn-neutral nds-btn-oncolor nds-btn-lg nds-btn-demo"
+                                data-state="hover"><span class="label">Hover</span></button>
+                            <button class="nds-btn nds-btn-neutral nds-btn-oncolor nds-btn-lg nds-btn-demo"
+                                data-state="active"><span class="label">Active</span></button>
                             <button class="nds-btn nds-btn-neutral nds-btn-oncolor nds-btn-lg nds-btn-demo selected"
                                 data-state="selected"><span class="label">Selected</span></button>
                             <button class="nds-btn nds-btn-neutral nds-btn-oncolor nds-btn-lg nds-btn-demo focus"
                                 data-state="focused"><span class="label">Focused</span></button>
-                            <button class="nds-btn nds-btn-neutral nds-btn-oncolor nds-btn-lg nds-btn-demo" disabled><span
-                                    class="label">Disabled</span></button>
+                            <button class="nds-btn nds-btn-neutral nds-btn-oncolor nds-btn-lg nds-btn-demo"
+                                disabled><span class="label">Disabled</span></button>
                         </div>
                     </div>
                     <div class="nds-tabs nds-code withDivider">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-neutral-oncolor-1" id="tab-neutral-oncolor-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                            <button class="nds-btn nds-btn-subtle nds-tab showMore"><i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
-                            </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-neutral-oncolor-1" id="tab-neutral-oncolor-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                                        class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                                </button>
                             </nav>
                         </div>
                         <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-neutral-oncolor-1" aria-labelledby="tab-neutral-oncolor-1">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-neutral-oncolor-1"
+                                aria-labelledby="tab-neutral-oncolor-1">
                                 <div class="nds-code-action">
                                     <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
@@ -485,22 +509,25 @@ direction: ltr
                                 data-state="selected"><span class="label">Selected</span></button>
                             <button class="nds-btn nds-btn-secondary nds-btn-oncolor nds-btn-lg nds-btn-demo focus"
                                 data-state="focused"><span class="label">Focused</span></button>
-                            <button class="nds-btn nds-btn-secondary nds-btn-oncolor nds-btn-lg nds-btn-demo" disabled><span
-                                    class="label">Disabled</span></button>
+                            <button class="nds-btn nds-btn-secondary nds-btn-oncolor nds-btn-lg nds-btn-demo"
+                                disabled><span class="label">Disabled</span></button>
                         </div>
                     </div>
                     <div class="nds-tabs nds-code withDivider">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-secondary-oncolor-1" id="tab-secondary-oncolor-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                            <button class="nds-btn nds-btn-subtle nds-tab showMore"><i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
-                            </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-secondary-oncolor-1" id="tab-secondary-oncolor-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                                        class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                                </button>
                             </nav>
                         </div>
                         <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-secondary-oncolor-1" aria-labelledby="tab-secondary-oncolor-1">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-secondary-oncolor-1"
+                                aria-labelledby="tab-secondary-oncolor-1">
                                 <div class="nds-code-action">
                                     <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
@@ -534,26 +561,33 @@ direction: ltr
                                 data-state="hover"><span class="label">Hover</span></button>
                             <button class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-lg nds-btn-demo"
                                 data-state="active"><span class="label">Active</span></button>
-                            <button class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-lg nds-btn-demo selected"
+                            <button
+                                class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-lg nds-btn-demo selected"
                                 data-state="selected"><span class="label">Selected</span></button>
-                            <button class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-lg nds-btn-demo focus"
+                            <button
+                                class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-lg nds-btn-demo focus"
                                 data-state="focused"><span class="label">Focused</span></button>
-                            <button class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-lg nds-btn-demo" disabled><span
-                                    class="label">Disabled</span></button>
+                            <button class="nds-btn nds-btn-secondary-outline nds-btn-oncolor nds-btn-lg nds-btn-demo"
+                                disabled><span class="label">Disabled</span></button>
                         </div>
                     </div>
                     <div class="nds-tabs nds-code withDivider">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-secondary-outline-oncolor-1" id="tab-secondary-outline-oncolor-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                            <button class="nds-btn nds-btn-subtle nds-tab showMore"><i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
-                            </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-secondary-outline-oncolor-1"
+                                    id="tab-secondary-outline-oncolor-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                                        class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                                </button>
                             </nav>
                         </div>
                         <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-secondary-outline-oncolor-1" aria-labelledby="tab-secondary-outline-oncolor-1">
+                            <div class="nds-tab-panel code-example" role="tabpanel"
+                                id="panel-secondary-outline-oncolor-1"
+                                aria-labelledby="tab-secondary-outline-oncolor-1">
                                 <div class="nds-code-action">
                                     <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
@@ -581,32 +615,35 @@ direction: ltr
                     </div>
                     <div class="demo-container dark-bg">
                         <div class="state-demo">
-                            <button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-lg nds-btn-demo" data-state="default"><span
-                                    class="label">Default</span></button>
-                            <button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-lg nds-btn-demo" data-state="hover"><span
-                                    class="label">Hover</span></button>
-                            <button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-lg nds-btn-demo" data-state="active"><span
-                                    class="label">Active</span></button>
+                            <button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-lg nds-btn-demo"
+                                data-state="default"><span class="label">Default</span></button>
+                            <button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-lg nds-btn-demo"
+                                data-state="hover"><span class="label">Hover</span></button>
+                            <button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-lg nds-btn-demo"
+                                data-state="active"><span class="label">Active</span></button>
                             <button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-lg nds-btn-demo selected"
                                 data-state="selected"><span class="label">Selected</span></button>
                             <button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-lg nds-btn-demo focus"
                                 data-state="focused"><span class="label">Focused</span></button>
-                            <button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-lg nds-btn-demo" disabled><span
-                                    class="label">Disabled</span></button>
+                            <button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-lg nds-btn-demo"
+                                disabled><span class="label">Disabled</span></button>
                         </div>
                     </div>
                     <div class="nds-tabs nds-code withDivider">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-subtle-oncolor-1" id="tab-subtle-oncolor-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                            <button class="nds-btn nds-btn-subtle nds-tab showMore"><i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
-                            </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-subtle-oncolor-1" id="tab-subtle-oncolor-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                                        class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                                </button>
                             </nav>
                         </div>
                         <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-subtle-oncolor-1" aria-labelledby="tab-subtle-oncolor-1">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-subtle-oncolor-1"
+                                aria-labelledby="tab-subtle-oncolor-1">
                                 <div class="nds-code-action">
                                     <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
@@ -644,22 +681,25 @@ direction: ltr
                                 data-state="selected"><span class="label">Selected</span></button>
                             <button class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-lg nds-btn-demo focus"
                                 data-state="focused"><span class="label">Focused</span></button>
-                            <button class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-lg nds-btn-demo" disabled><span
-                                    class="label">Disabled</span></button>
+                            <button class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-lg nds-btn-demo"
+                                disabled><span class="label">Disabled</span></button>
                         </div>
                     </div>
                     <div class="nds-tabs nds-code withDivider">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-transparent-oncolor-1" id="tab-transparent-oncolor-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                            <button class="nds-btn nds-btn-subtle nds-tab showMore"><i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
-                            </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-transparent-oncolor-1" id="tab-transparent-oncolor-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                                        class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                                </button>
                             </nav>
                         </div>
                         <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-transparent-oncolor-1" aria-labelledby="tab-transparent-oncolor-1">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-transparent-oncolor-1"
+                                aria-labelledby="tab-transparent-oncolor-1">
                                 <div class="nds-code-action">
                                     <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
@@ -713,15 +753,18 @@ direction: ltr
                     <div class="nds-tabs nds-code withDivider">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-destructive-primary-1" id="tab-destructive-primary-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                            <button class="nds-btn nds-btn-subtle nds-tab showMore"><i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
-                            </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-destructive-primary-1" id="tab-destructive-primary-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                                        class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                                </button>
                             </nav>
                         </div>
                         <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-destructive-primary-1" aria-labelledby="tab-destructive-primary-1">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-destructive-primary-1"
+                                aria-labelledby="tab-destructive-primary-1">
                                 <div class="nds-code-action">
                                     <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
@@ -762,15 +805,18 @@ direction: ltr
                     <div class="nds-tabs nds-code withDivider">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-destructive-secondary-1" id="tab-destructive-secondary-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                            <button class="nds-btn nds-btn-subtle nds-tab showMore"><i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
-                            </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-destructive-secondary-1" id="tab-destructive-secondary-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                                        class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                                </button>
                             </nav>
                         </div>
                         <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-destructive-secondary-1" aria-labelledby="tab-destructive-secondary-1">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-destructive-secondary-1"
+                                aria-labelledby="tab-destructive-secondary-1">
                                 <div class="nds-code-action">
                                     <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
@@ -798,28 +844,35 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <button class="nds-btn nds-btn-secondary-outline nds-btn-destructive nds-btn-lg nds-btn-demo"
+                            <button
+                                class="nds-btn nds-btn-secondary-outline nds-btn-destructive nds-btn-lg nds-btn-demo"
                                 data-state="default"><span class="label">Default</span></button>
-                            <button class="nds-btn nds-btn-secondary-outline nds-btn-destructive nds-btn-lg nds-btn-demo"
+                            <button
+                                class="nds-btn nds-btn-secondary-outline nds-btn-destructive nds-btn-lg nds-btn-demo"
                                 data-state="hover"><span class="label">Hover</span></button>
-                            <button class="nds-btn nds-btn-secondary-outline nds-btn-destructive nds-btn-lg nds-btn-demo"
+                            <button
+                                class="nds-btn nds-btn-secondary-outline nds-btn-destructive nds-btn-lg nds-btn-demo"
                                 data-state="active"><span class="label">Active</span></button>
-                            <button class="nds-btn nds-btn-secondary-outline nds-btn-destructive nds-btn-lg nds-btn-demo focus"
+                            <button
+                                class="nds-btn nds-btn-secondary-outline nds-btn-destructive nds-btn-lg nds-btn-demo focus"
                                 data-state="focused"><span class="label">Focused</span></button>
                         </div>
                     </div>
                     <div class="nds-tabs nds-code withDivider">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-destructive-outline-1" id="tab-destructive-outline-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                            <button class="nds-btn nds-btn-subtle nds-tab showMore"><i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
-                            </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-destructive-outline-1" id="tab-destructive-outline-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                                        class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                                </button>
                             </nav>
                         </div>
                         <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-destructive-outline-1" aria-labelledby="tab-destructive-outline-1">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-destructive-outline-1"
+                                aria-labelledby="tab-destructive-outline-1">
                                 <div class="nds-code-action">
                                     <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
@@ -860,15 +913,18 @@ direction: ltr
                     <div class="nds-tabs nds-code withDivider">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-destructive-subtle-1" id="tab-destructive-subtle-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                            <button class="nds-btn nds-btn-subtle nds-tab showMore"><i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
-                            </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-destructive-subtle-1" id="tab-destructive-subtle-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                                        class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                                </button>
                             </nav>
                         </div>
                         <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-destructive-subtle-1" aria-labelledby="tab-destructive-subtle-1">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-destructive-subtle-1"
+                                aria-labelledby="tab-destructive-subtle-1">
                                 <div class="nds-code-action">
                                     <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
@@ -902,22 +958,26 @@ direction: ltr
                                 data-state="hover"><span class="label">Hover</span></button>
                             <button class="nds-btn nds-btn-transparent nds-btn-destructive nds-btn-lg nds-btn-demo"
                                 data-state="active"><span class="label">Active</span></button>
-                            <button class="nds-btn nds-btn-transparent nds-btn-destructive nds-btn-lg nds-btn-demo focus"
+                            <button
+                                class="nds-btn nds-btn-transparent nds-btn-destructive nds-btn-lg nds-btn-demo focus"
                                 data-state="focused"><span class="label">Focused</span></button>
                         </div>
                     </div>
                     <div class="nds-tabs nds-code withDivider">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-destructive-transparent-1" id="tab-destructive-transparent-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                            <button class="nds-btn nds-btn-subtle nds-tab showMore"><i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
-                            </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-destructive-transparent-1" id="tab-destructive-transparent-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                                        class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                                </button>
                             </nav>
                         </div>
                         <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-destructive-transparent-1" aria-labelledby="tab-destructive-transparent-1">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-destructive-transparent-1"
+                                aria-labelledby="tab-destructive-transparent-1">
                                 <div class="nds-code-action">
                                     <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
@@ -951,28 +1011,37 @@ direction: ltr
                     </div>
                     <div class="demo-container dark-bg">
                         <div class="state-demo">
-                            <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-destructive nds-btn-lg nds-btn-demo"
+                            <button
+                                class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-destructive nds-btn-lg nds-btn-demo"
                                 data-state="default"><span class="label">Default</span></button>
-                            <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-destructive nds-btn-lg nds-btn-demo"
+                            <button
+                                class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-destructive nds-btn-lg nds-btn-demo"
                                 data-state="hover"><span class="label">Hover</span></button>
-                            <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-destructive nds-btn-lg nds-btn-demo"
+                            <button
+                                class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-destructive nds-btn-lg nds-btn-demo"
                                 data-state="active"><span class="label">Active</span></button>
-                            <button class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-destructive nds-btn-lg nds-btn-demo focus"
+                            <button
+                                class="nds-btn nds-btn-primary nds-btn-oncolor nds-btn-destructive nds-btn-lg nds-btn-demo focus"
                                 data-state="focused"><span class="label">Focused</span></button>
                         </div>
                     </div>
                     <div class="nds-tabs nds-code withDivider">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-destructive-primary-oncolor-1" id="tab-destructive-primary-oncolor-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                            <button class="nds-btn nds-btn-subtle nds-tab showMore"><i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
-                            </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-destructive-primary-oncolor-1"
+                                    id="tab-destructive-primary-oncolor-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                                        class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                                </button>
                             </nav>
                         </div>
                         <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-destructive-primary-oncolor-1" aria-labelledby="tab-destructive-primary-oncolor-1">
+                            <div class="nds-tab-panel code-example" role="tabpanel"
+                                id="panel-destructive-primary-oncolor-1"
+                                aria-labelledby="tab-destructive-primary-oncolor-1">
                                 <div class="nds-code-action">
                                     <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
@@ -1018,15 +1087,20 @@ direction: ltr
                     <div class="nds-tabs nds-code withDivider">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-destructive-secondary-oncolor-1" id="tab-destructive-secondary-oncolor-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                            <button class="nds-btn nds-btn-subtle nds-tab showMore"><i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
-                            </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-destructive-secondary-oncolor-1"
+                                    id="tab-destructive-secondary-oncolor-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                                        class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                                </button>
                             </nav>
                         </div>
                         <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-destructive-secondary-oncolor-1" aria-labelledby="tab-destructive-secondary-oncolor-1">
+                            <div class="nds-tab-panel code-example" role="tabpanel"
+                                id="panel-destructive-secondary-oncolor-1"
+                                aria-labelledby="tab-destructive-secondary-oncolor-1">
                                 <div class="nds-code-action">
                                     <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
@@ -1072,15 +1146,20 @@ direction: ltr
                     <div class="nds-tabs nds-code withDivider">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-destructive-outline-oncolor-1" id="tab-destructive-outline-oncolor-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                            <button class="nds-btn nds-btn-subtle nds-tab showMore"><i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
-                            </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-destructive-outline-oncolor-1"
+                                    id="tab-destructive-outline-oncolor-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                                        class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                                </button>
                             </nav>
                         </div>
                         <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-destructive-outline-oncolor-1" aria-labelledby="tab-destructive-outline-oncolor-1">
+                            <div class="nds-tab-panel code-example" role="tabpanel"
+                                id="panel-destructive-outline-oncolor-1"
+                                aria-labelledby="tab-destructive-outline-oncolor-1">
                                 <div class="nds-code-action">
                                     <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
@@ -1109,28 +1188,37 @@ direction: ltr
                     </div>
                     <div class="demo-container dark-bg">
                         <div class="state-demo">
-                            <button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-destructive nds-btn-lg nds-btn-demo"
+                            <button
+                                class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-destructive nds-btn-lg nds-btn-demo"
                                 data-state="default"><span class="label">Default</span></button>
-                            <button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-destructive nds-btn-lg nds-btn-demo"
+                            <button
+                                class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-destructive nds-btn-lg nds-btn-demo"
                                 data-state="hover"><span class="label">Hover</span></button>
-                            <button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-destructive nds-btn-lg nds-btn-demo"
+                            <button
+                                class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-destructive nds-btn-lg nds-btn-demo"
                                 data-state="active"><span class="label">Active</span></button>
-                            <button class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-destructive nds-btn-lg nds-btn-demo focus"
+                            <button
+                                class="nds-btn nds-btn-subtle nds-btn-oncolor nds-btn-destructive nds-btn-lg nds-btn-demo focus"
                                 data-state="focused"><span class="label">Focused</span></button>
                         </div>
                     </div>
                     <div class="nds-tabs nds-code withDivider">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-destructive-subtle-oncolor-1" id="tab-destructive-subtle-oncolor-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                            <button class="nds-btn nds-btn-subtle nds-tab showMore"><i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
-                            </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-destructive-subtle-oncolor-1"
+                                    id="tab-destructive-subtle-oncolor-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                                        class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                                </button>
                             </nav>
                         </div>
                         <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-destructive-subtle-oncolor-1" aria-labelledby="tab-destructive-subtle-oncolor-1">
+                            <div class="nds-tab-panel code-example" role="tabpanel"
+                                id="panel-destructive-subtle-oncolor-1"
+                                aria-labelledby="tab-destructive-subtle-oncolor-1">
                                 <div class="nds-code-action">
                                     <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
@@ -1159,11 +1247,14 @@ direction: ltr
                     </div>
                     <div class="demo-container dark-bg">
                         <div class="state-demo">
-                            <button class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-destructive nds-btn-lg nds-btn-demo"
+                            <button
+                                class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-destructive nds-btn-lg nds-btn-demo"
                                 data-state="default"><span class="label">Default</span></button>
-                            <button class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-destructive nds-btn-lg nds-btn-demo"
+                            <button
+                                class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-destructive nds-btn-lg nds-btn-demo"
                                 data-state="hover"><span class="label">Hover</span></button>
-                            <button class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-destructive nds-btn-lg nds-btn-demo"
+                            <button
+                                class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-destructive nds-btn-lg nds-btn-demo"
                                 data-state="active"><span class="label">Active</span></button>
                             <button
                                 class="nds-btn nds-btn-transparent nds-btn-oncolor nds-btn-destructive nds-btn-lg nds-btn-demo focus"
@@ -1173,15 +1264,20 @@ direction: ltr
                     <div class="nds-tabs nds-code withDivider">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-destructive-transparent-oncolor-1" id="tab-destructive-transparent-oncolor-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                            <button class="nds-btn nds-btn-subtle nds-tab showMore"><i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
-                            </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-destructive-transparent-oncolor-1"
+                                    id="tab-destructive-transparent-oncolor-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                                        class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                                </button>
                             </nav>
                         </div>
                         <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-destructive-transparent-oncolor-1" aria-labelledby="tab-destructive-transparent-oncolor-1">
+                            <div class="nds-tab-panel code-example" role="tabpanel"
+                                id="panel-destructive-transparent-oncolor-1"
+                                aria-labelledby="tab-destructive-transparent-oncolor-1">
                                 <div class="nds-code-action">
                                     <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
@@ -1230,15 +1326,18 @@ direction: ltr
                     <div class="nds-tabs nds-code withDivider">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-icon-text-1" id="tab-icon-text-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                            <button class="nds-btn nds-btn-subtle nds-tab showMore"><i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
-                            </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-icon-text-1" id="tab-icon-text-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                                        class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                                </button>
                             </nav>
                         </div>
                         <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-icon-text-1" aria-labelledby="tab-icon-text-1">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-icon-text-1"
+                                aria-labelledby="tab-icon-text-1">
                                 <div class="nds-code-action">
                                     <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
@@ -1267,22 +1366,26 @@ direction: ltr
                         </div>
                     </div>
                     <div class="demo-container">
-                        <button class="nds-btn nds-btn-primary nds-btn-icon-only nds-btn-lg nds-btn-demo" aria-label="Settings">
+                        <button class="nds-btn nds-btn-primary nds-btn-icon-only nds-btn-lg nds-btn-demo"
+                            aria-label="Settings">
                             <i class="hgi hgi-stroke hgi-settings-02"></i>
                         </button>
                     </div>
                     <div class="nds-tabs nds-code withDivider">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-icon-only-1" id="tab-icon-only-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                            <button class="nds-btn nds-btn-subtle nds-tab showMore"><i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
-                            </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-icon-only-1" id="tab-icon-only-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                                        class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                                </button>
                             </nav>
                         </div>
                         <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-icon-only-1" aria-labelledby="tab-icon-only-1">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-icon-only-1"
+                                aria-labelledby="tab-icon-only-1">
                                 <div class="nds-code-action">
                                     <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
@@ -1322,59 +1425,18 @@ direction: ltr
                     <div class="nds-tabs nds-code withDivider">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-menu-primary-1" id="tab-menu-primary-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                            <button class="nds-btn nds-btn-subtle nds-tab showMore"><i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
-                            </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-menu-primary-1" id="tab-menu-primary-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                                        class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                                </button>
                             </nav>
                         </div>
                         <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-menu-primary-1" aria-labelledby="tab-menu-primary-1">
-                                <div class="nds-code-action">
-                                    <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
-                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                    </button>
-                                </div>
-                                <code class="lang-html code">
-                                    <button class="nds-btn nds-btn-primary nds-btn-lg" aria-label="Menu">
-                                      <i class="hgi hgi-stroke hgi-folder-library"></i>
-                                      <span class="label">Menu</span>
-                                    </button>
-                                </code>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- menu with Label -->
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Menu Buttons</div>
-                        <div class="demo-action">
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <button class="nds-btn nds-btn-menu nds-btn-primary nds-btn-lg nds-btn-demo" aria-label="Menu">
-                            <i class="hgi hgi-stroke hgi-folder-library"></i>
-                            <span class="label">Menu</span>
-                        </button>
-                    </div>
-                    <div class="nds-tabs nds-code withDivider">
-                        <div class="nds-tab-list-container">
-                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-menu-primary-1" id="tab-menu-primary-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                            <button class="nds-btn nds-btn-subtle nds-tab showMore"><i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
-                            </button>
-                            </nav>
-                        </div>
-                        <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-menu-primary-1" aria-labelledby="tab-menu-primary-1">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-menu-primary-1"
+                                aria-labelledby="tab-menu-primary-1">
                                 <div class="nds-code-action">
                                     <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
@@ -1400,7 +1462,8 @@ direction: ltr
     <div class="nds-section-content-container">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Button Sizes</h2>
-            <p class="nds-section-description">Four sizes: Small (24px), Medium (32px), Large (40px), Extra Large (48px)</p>
+            <p class="nds-section-description">Four sizes: Small (24px), Medium (32px), Large (40px), Extra Large (48px)
+            </p>
         </div>
         <div class="nds-section-content">
             <div class="button-showcase">
@@ -1433,15 +1496,18 @@ direction: ltr
                     <div class="nds-tabs nds-code withDivider">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-size-1" id="tab-size-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                            <button class="nds-btn nds-btn-subtle nds-tab showMore"><i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
-                            </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-size-1" id="tab-size-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                                        class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                                </button>
                             </nav>
                         </div>
                         <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-size-1" aria-labelledby="tab-size-1">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-size-1"
+                                aria-labelledby="tab-size-1">
                                 <div class="nds-code-action">
                                     <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
@@ -1473,15 +1539,18 @@ direction: ltr
                     <div class="nds-tabs nds-code withDivider">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-full-width-1" id="tab-full-width-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                            <button class="nds-btn nds-btn-subtle nds-tab showMore"><i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
-                            </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-full-width-1" id="tab-full-width-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                                        class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                                </button>
                             </nav>
                         </div>
                         <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-full-width-1" aria-labelledby="tab-full-width-1">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-full-width-1"
+                                aria-labelledby="tab-full-width-1">
                                 <div class="nds-code-action">
                                     <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
@@ -1549,15 +1618,18 @@ direction: ltr
                     <div class="nds-tabs nds-code withDivider">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-loading-1" id="tab-loading-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                            <button class="nds-btn nds-btn-subtle nds-tab showMore"><i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
-                            </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-loading-1" id="tab-loading-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                                <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                                        class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                                </button>
                             </nav>
                         </div>
                         <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-loading-1" aria-labelledby="tab-loading-1">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-loading-1"
+                                aria-labelledby="tab-loading-1">
                                 <div class="nds-code-action">
                                     <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
