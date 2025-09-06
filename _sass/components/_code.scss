@@ -24,6 +24,7 @@
 
   .nds-tab-content {
     position: relative;
+    min-height: unset;
     /* border-radius: 0 0 var(--radius-md) var(--radius-md); */
   }
 
@@ -33,8 +34,9 @@
 
   .nds-code-action {
     position: absolute;
-    top: var(--spacing-md);
-    right: var(--spacing-md);
+    top: 0;
+    right: 0;
+    background-color: var(--background-white);
     z-index: 2;
 
     .copy-btn.copied {
@@ -150,43 +152,89 @@
 // SYNTAX HIGHLIGHTING
 // ==============================================
 
-// HTML/XML Syntax
+// HTML/XML Syntax (default light theme colors)
 .syntax-tag {
-  color: #e06c75; // Red for HTML tags
+  color: #d73a49; // Darker red for HTML tags
   font-weight: 600;
 }
 
 .syntax-attr {
-  color: #d19a66; // Orange for attributes
+  color: #e36209; // Darker orange for attributes
 }
 
 .syntax-value {
-  color: #98c379; // Green for attribute values
+  color: #22863a; // Darker green for attribute values
 }
 
 .syntax-comment {
-  color: #5c6370; // Gray for comments
+  color: #6a737d; // Medium gray for comments
   font-style: italic;
 }
 
-// CSS Syntax
+// CSS Syntax (default light theme colors)
 .syntax-selector {
-  color: #e06c75; // Red for CSS selectors
+  color: #d73a49; // Darker red for CSS selectors
   font-weight: 600;
 }
 
 .syntax-property {
-  color: #61afef; // Blue for CSS properties
+  color: #005cc5; // Darker blue for CSS properties
 }
 
-// JavaScript Syntax
+// JavaScript Syntax (default light theme colors)
 .syntax-keyword {
-  color: #c678dd; // Purple for keywords
+  color: #6f42c1; // Darker purple for keywords
   font-weight: 600;
 }
 
 .syntax-string {
-  color: #98c379; // Green for strings
+  color: #22863a; // Darker green for strings
+}
+
+.syntax-number {
+  color: #e36209; // Darker orange for numbers
+}
+
+.syntax-literal {
+  color: #0086b3; // Darker cyan for literals (true, false, null, undefined)
+}
+
+.syntax-builtin {
+  color: #795da3; // Darker yellow/purple for built-in objects (console, window, etc.)
+  font-weight: 600;
+}
+
+.syntax-function {
+  color: #005cc5; // Darker blue for function names
+}
+
+.syntax-method {
+  color: #005cc5; // Darker blue for method calls
+}
+
+.syntax-property {
+  color: #d73a49; // Darker red for properties
+}
+
+.syntax-parameter {
+  color: #586069; // Darker gray for parameters
+}
+
+.syntax-class {
+  color: #795da3; // Darker yellow/purple for class names
+  font-weight: 600;
+}
+
+.syntax-operator {
+  color: #0086b3; // Darker cyan for operators
+}
+
+.syntax-template {
+  color: #22863a; // Darker green for template literals
+}
+
+.syntax-regex {
+  color: #6f42c1; // Darker purple for regular expressions
 }
 
 // General syntax highlighting
@@ -199,7 +247,17 @@ code.highlighted {
   .syntax-selector,
   .syntax-property,
   .syntax-keyword,
-  .syntax-string {
+  .syntax-string,
+  .syntax-number,
+  .syntax-literal,
+  .syntax-builtin,
+  .syntax-function,
+  .syntax-method,
+  .syntax-parameter,
+  .syntax-class,
+  .syntax-operator,
+  .syntax-template,
+  .syntax-regex {
     transition: none; // Disable transitions for syntax elements
   }
 }
@@ -241,47 +299,50 @@ code.dark {
   .syntax-string {
     color: #98c379; // Green for strings (current)
   }
+
+  .syntax-number {
+    color: #d19a66; // Orange for numbers
+  }
+
+  .syntax-literal {
+    color: #56b6c2; // Cyan for literals
+  }
+
+  .syntax-builtin {
+    color: #e5c07b; // Yellow for built-in objects
+    font-weight: 600;
+  }
+
+  .syntax-function {
+    color: #61afef; // Blue for function names
+  }
+
+  .syntax-method {
+    color: #61afef; // Blue for method calls
+  }
+
+  .syntax-parameter {
+    color: #abb2bf; // Light gray for parameters
+  }
+
+  .syntax-class {
+    color: #e5c07b; // Yellow for class names
+    font-weight: 600;
+  }
+
+  .syntax-operator {
+    color: #56b6c2; // Cyan for operators
+  }
+
+  .syntax-template {
+    color: #98c379; // Green for template literals
+  }
+
+  .syntax-regex {
+    color: #c678dd; // Purple for regular expressions
+  }
 }
 
-// Light/white background syntax highlighting (better contrast)
-code:not(.dark) {
-  .syntax-tag {
-    color: #d73a49; // Darker red for better contrast on white
-    font-weight: 600;
-  }
-
-  .syntax-attr {
-    color: #e36209; // Darker orange for better contrast
-  }
-
-  .syntax-value {
-    color: #22863a; // Darker green for better contrast
-  }
-
-  .syntax-comment {
-    color: #6a737d; // Medium gray for better readability
-    font-style: italic;
-  }
-
-  .syntax-selector {
-    color: #d73a49; // Darker red for CSS selectors
-    font-weight: 600;
-  }
-
-  .syntax-property {
-    color: #005cc5; // Darker blue for CSS properties
-  }
-
-  .syntax-keyword {
-    color: #6f42c1; // Darker purple for keywords
-    font-weight: 600;
-  }
-
-  .syntax-string {
-    color: #22863a; // Darker green for strings
-  }
-
-}
 
 
 // ==============================================
@@ -292,8 +353,7 @@ code:not(.dark) {
 @include mobile {
 
   .nds-code {
-    padding: var(--spacing-md);
-
+    
     code {
       font-size: var(--nds-text-xs-FS);
     }

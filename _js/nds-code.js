@@ -19,6 +19,7 @@
     // Main initialization function
     function initializeCodeProcessing() {
         convertHtmlToTextInCode(); // This now includes syntax highlighting
+        processCode(); // Process all registered language types
         addLineNumbers();
         initializeCopyButtons();
     }
@@ -47,10 +48,13 @@
         'html': {
             selector: 'code.lang-html',
             processor: convertHtmlToEntities
-        }
+        },
+        'javascript': { 
+            selector: 'code.lang-javascript, code.lang-js', 
+            processor: processJavaScript 
+        },
         // Future processors can be added here:
-        // 'css': { selector: 'code.lang-css', processor: processCss },
-        // 'javascript': { selector: 'code.lang-javascript', processor: processJavaScript }
+        // 'css': { selector: 'code.lang-css', processor: processCss }
     };
 
     // Main function to process all code elements
@@ -90,6 +94,16 @@
         codeElement.dataset.copyText = cleanText;
         // Display clean version for viewing
         codeElement.textContent = cleanText;
+    }
+
+    // JavaScript-specific processor
+    function processJavaScript(codeElement) {
+        // Store original text for copying
+        const originalText = codeElement.textContent;
+        codeElement.dataset.copyText = originalText;
+        
+        // Apply JavaScript syntax highlighting
+        highlightJavaScript(codeElement);
     }
 
     // Main HTML to text conversion function for lang-html code elements
@@ -516,16 +530,101 @@
     // JavaScript syntax highlighting
     function highlightJavaScript(codeElement) {
         const text = codeElement.textContent;
-        const keywords = ['function', 'var', 'let', 'const', 'if', 'else', 'for', 'while', 'return', 'true', 'false', 'null', 'undefined'];
         
-        let highlighted = text
-            .replace(/(\/\/.*$)/gm, '<span class="syntax-comment">$1</span>')
-            .replace(/(\/\*.*?\*\/)/g, '<span class="syntax-comment">$1</span>')
-            .replace(/(['"`])((?:\\.|(?!\1)[^\\])*?)\1/g, '<span class="syntax-string">$1$2$1</span>');
+        // Enhanced keyword lists
+        const keywords = [
+            'abstract', 'await', 'boolean', 'break', 'byte', 'case', 'catch', 'char', 'class',
+            'const', 'continue', 'debugger', 'default', 'delete', 'do', 'double', 'else',
+            'enum', 'export', 'extends', 'final', 'finally', 'float', 'for', 'function',
+            'goto', 'if', 'implements', 'import', 'in', 'instanceof', 'int', 'interface',
+            'let', 'long', 'native', 'new', 'package', 'private', 'protected', 'public',
+            'return', 'short', 'static', 'super', 'switch', 'synchronized', 'this',
+            'throw', 'throws', 'transient', 'try', 'typeof', 'var', 'void', 'volatile',
+            'while', 'with', 'yield'
+        ];
         
+        const literals = ['true', 'false', 'null', 'undefined', 'Infinity', 'NaN'];
+        const builtins = [
+            'Array', 'Object', 'String', 'Number', 'Boolean', 'Date', 'RegExp', 'Math',
+            'JSON', 'console', 'window', 'document', 'Promise', 'Set', 'Map', 'Symbol',
+            'Error', 'TypeError', 'ReferenceError', 'SyntaxError'
+        ];
+        
+        // Use a safer token-based approach to avoid nested spans
+        const tokens = [];
+        let currentIndex = 0;
+        
+        // Function to add a token and return placeholder
+        function addToken(content, type) {
+            const placeholder = '__TOKEN_' + tokens.length + '__';
+            tokens.push({ content: content, type: type, placeholder: placeholder });
+            return placeholder;
+        }
+        
+        let highlighted = text;
+        
+        // 1. Comments (highest priority - protect content from other processing)
+        highlighted = highlighted.replace(/(\/\/.*$)/gm, function(match) {
+            return addToken(match, 'comment');
+        });
+        highlighted = highlighted.replace(/(\/\*[\s\S]*?\*\/)/g, function(match) {
+            return addToken(match, 'comment');
+        });
+        
+        // 2. Template literals
+        highlighted = highlighted.replace(/(`)((?:[^`\\]|\\.)*)(`)/g, function(match) {
+            return addToken(match, 'template');
+        });
+        
+        // 3. Regular expressions
+        highlighted = highlighted.replace(/(\/(?![*\/])(?:[^\r\n\[\/\\]|\\.|\[(?:[^\r\n\]\\]|\\.)*\])+\/[gimuy]*)/g, function(match) {
+            return addToken(match, 'regex');
+        });
+        
+        // 4. Strings
+        highlighted = highlighted.replace(/(['"])((?:\\.|(?!\1)[^\\])*?)\1/g, function(match) {
+            return addToken(match, 'string');
+        });
+        
+        // 5. Numbers (comprehensive patterns)
+        // First catch special formats
+        highlighted = highlighted.replace(/\b(0x[a-fA-F0-9]+|0b[01]+|0o[0-7]+)\b/g, function(match) {
+            return addToken(match, 'number');
+        });
+        // Then catch regular numbers including floats and scientific notation
+        highlighted = highlighted.replace(/\b(\d+\.?\d*([eE][+-]?\d+)?)\b/g, function(match) {
+            return addToken(match, 'number');
+        });
+        
+        // 6. Keywords
         keywords.forEach(function(keyword) {
             const regex = new RegExp('\\b(' + keyword + ')\\b', 'g');
-            highlighted = highlighted.replace(regex, '<span class="syntax-keyword">$1</span>');
+            highlighted = highlighted.replace(regex, function(match) {
+                return addToken(match, 'keyword');
+            });
+        });
+        
+        // 7. Literals
+        literals.forEach(function(literal) {
+            const regex = new RegExp('\\b(' + literal + ')\\b', 'g');
+            highlighted = highlighted.replace(regex, function(match) {
+                return addToken(match, 'literal');
+            });
+        });
+        
+        // 8. Built-in objects
+        builtins.forEach(function(builtin) {
+            const regex = new RegExp('\\b(' + builtin + ')\\b', 'g');
+            highlighted = highlighted.replace(regex, function(match) {
+                return addToken(match, 'builtin');
+            });
+        });
+        
+        // Now replace all tokens with their highlighted versions
+        tokens.forEach(function(token) {
+            const className = 'syntax-' + token.type;
+            const replacement = '<span class="' + className + '">' + escapeHtml(token.content) + '</span>';
+            highlighted = highlighted.replace(token.placeholder, replacement);
         });
         
         codeElement.innerHTML = highlighted;

@@ -1766,6 +1766,7 @@
             }
         },
 
+
         // Reset state
         resetState: function () {
             this.state.selectedDate = null;
