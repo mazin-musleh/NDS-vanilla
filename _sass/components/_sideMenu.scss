@@ -209,7 +209,7 @@
 @include tablet(max) {
     .nds-sideMenu {
         position: absolute;
-        z-index: 10;
+        z-index: 999;
         height: 100%;
         border-radius: 0;
         border-top: 0;

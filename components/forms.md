@@ -1278,7 +1278,7 @@ document.getElementById('resetButton').addEventListener('click', () => {
           <div class="demo-container">
             <div class="state-demo">
 
-              <div class="nds-form-container nds-date-picker">
+              <div class="nds-form-container nds-date-picker ">
                 <div class="nds-form-header">
                   <label class="label" for="datePickerInput">Select Date</label>
                 </div>
