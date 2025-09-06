@@ -35,6 +35,9 @@
   font-size: var(--nds-text-md-FS);
   color: var(--text-default);
   overflow: hidden;
+  position: sticky;
+  top: var( --nds-nav-height);
+  z-index: 10;
 }
 
 /* Demo Actions */
@@ -95,97 +98,6 @@
   background-color: var(--background-sa-flag);
 }
 
-// ==============================================
-// CODE EXAMPLE COMPONENT
-// ==============================================
-
-.code-example {
-  padding: var(--spacing-lg);
-  margin: 0;
-
-  pre {
-    margin: 0;
-    padding: 0;
-    background: transparent;
-    border: none;
-    overflow-x: auto;
-  }
-
-  .line-numbers code {
-  display: block;
-}
-
-.line-numbers code span {
-  display: block;
-  padding-left: 2em;
-  position: relative;
-}
-
-  .line-numbers code span::before {
-  counter-increment: line;
-  content: counter(line);
-  position: absolute;
-  left: 0;
-  color: #888;
-}
-
-  code {
-    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-    font-size: var(--nds-text-sm-FS);
-    line-height: var(--nds-text-sm-LH);
-    font-weight: 600;
-    direction: ltr;
-    text-align: left;
-    display: block;
-    white-space: pre;
-    overflow-x: auto;
-    margin: 0;
-    padding: 0;
-    background: transparent;
-    border: none;
-  }
-}
-
-.usage-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: var(--spacing-md);
-
-  span {
-    color: var(--text-oncolor-primary);
-    font-weight: 600;
-    font-size: var(--nds-text-sm-FS);
-  }
-}
-
-.copy-btn {
-  background: transparent;
-  border: 1px solid var(--border-neutral-600);
-  color: var(--text-oncolor-secondary);
-  padding: var(--spacing-xs);
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  transition: all var(--nds-transition);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  .hgi {
-    font-size: 14px;
-  }
-
-  &:hover {
-    background: var(--background-neutral-800);
-    border-color: var(--border-neutral-500);
-  }
-
-  &.copied {
-    background: var(--button-background-primary-default);
-    border-color: var(--button-background-primary-default);
-    color: white;
-  }
-}
 
 // ==============================================
 // ACCORDION DEMO SPECIFIC STYLES
@@ -273,8 +185,3 @@ html[dir="rtl"] {
   }
 }
 
-@include reduced-motion {
-  .copy-btn {
-    transition: none;
-  }
-}

@@ -1,3 +1,5 @@
+@use './mixins' as *;
+
 :root {
     // ==============================================
     // CRITICAL VARIABLES - PRIORITY ORDER
@@ -20,7 +22,7 @@
     --nds-transition: calc(var(--nds-transition-speed) * 1s) var(--nds-transition-effect);
 
     // Critical shadows (used in navigation and modals)
-   /*  --shadow-md: 0px 3.288px 6.575px -1.644px rgba(16, 24, 40, 0.10), 0px 1.644px 3.288px -1.644px rgba(16, 24, 40, 0.06); */
+    /*  --shadow-md: 0px 3.288px 6.575px -1.644px rgba(16, 24, 40, 0.10), 0px 1.644px 3.288px -1.644px rgba(16, 24, 40, 0.06); */
     --shadow-md-top: 0px -3.288px 6.575px -1.644px rgba(16, 24, 40, 0.10), 0px -1.644px 3.288px -1.644px rgba(16, 24, 40, 0.06);
 
 
@@ -1048,7 +1050,7 @@
 // RESPONSIVE VARIABLES - MOBILE OVERRIDES
 // ==============================================
 
-@media (max-width: 960px) {
+@include tablet(max) {
     :root {
         --nds-viewport-padding: calc(var(--nds-viewport-base-padding)/2);
     }

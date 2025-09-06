@@ -179,36 +179,49 @@ direction: ltr
                         </div>
                     </div>
                 </div>
-                <div class="code-example">
-                    <div class="usage-header">
-                        <span>Usage</span>
-                        <button class="copy-btn" aria-label="Copy code example">
-                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                <div class="nds-tabs nds-code withDivider">
+                    <div class="nds-tab-list-container">
+                        <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                        <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-1" id="tab-1">
+                            <span class="nds-tab-label">HTML</span>
                         </button>
+                        <button class="nds-btn nds-btn-subtle nds-tab showMore"><i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                        </button>
+                        </nav>
                     </div>
-                    <code>&lt;div class="nds-tabs"&gt;
-  &lt;div class="nds-tab-list-container"&gt;
-    &lt;nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation"&gt;
-      &lt;button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-1" id="tab-1"&gt;
-        &lt;span class="nds-tab-label"&gt;Tab 1&lt;/span&gt;
-      &lt;/button&gt;
-      &lt;button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="false" aria-controls="panel-2" id="tab-2"&gt;
-        &lt;span class="nds-tab-label"&gt;Tab 2&lt;/span&gt;
-      &lt;/button&gt;
-      &lt;button class="nds-btn nds-btn-subtle nds-tab showMore"&gt;&lt;i
-        class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"&gt;&lt;/i&gt;
-      &lt;/button&gt;
-    &lt;/nav&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-tab-content"&gt;
-    &lt;div class="nds-tab-panel" role="tabpanel" id="panel-1" aria-labelledby="tab-1"&gt;
-      Content for tab 1
-    &lt;/div&gt;
-    &lt;div class="nds-tab-panel hidden" role="tabpanel" id="panel-2" aria-labelledby="tab-2"&gt;
-      Content for tab 2
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;</code>
+                    <div class="nds-tab-content">
+                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-1" aria-labelledby="tab-1">
+                            <div class="nds-code-action">
+                                <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                </button>
+                            </div>
+                            <code class="lang-html code">
+                                <div class="nds-tabs">
+                                    <div class="nds-tab-list-container">
+                                        <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-1" id="tab-1">
+                                            <span class="nds-tab-label">Tab 1</span>
+                                        </button>
+                                        <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="false" aria-controls="panel-2" id="tab-2">
+                                            <span class="nds-tab-label">Tab 2</span>
+                                        </button>
+                                        <button class="nds-btn nds-btn-subtle nds-tab showMore"><i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                                        </button>
+                                        </nav>
+                                    </div>
+                                    <div class="nds-tab-content">
+                                        <div class="nds-tab-panel" role="tabpanel" id="panel-1" aria-labelledby="tab-1">
+                                        Content for tab 1
+                                        </div>
+                                        <div class="nds-tab-panel hidden" role="tabpanel" id="panel-2" aria-labelledby="tab-2">
+                                        Content for tab 2
+                                        </div>
+                                    </div>
+                                </div>
+                            </code>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -283,16 +296,18 @@ direction: ltr
                                 aria-labelledby="tab-analytics" tabindex="0">
                                 <h3>Analytics</h3>
                                 <p>Configure your analytics preferences and data visualization options.</p>
-                                
+
                                 <!-- Analytics Period Selection -->
                                 <div class="nds-form-container nds-select">
                                     <div class="nds-form-header">
                                         <label class="label" for="analyticsPeriod">Analytics Period</label>
                                     </div>
                                     <div class="nds-form-control">
-                                        <input type="text" id="analyticsPeriod" class="nds-input nds-select-input" placeholder="Select time period..." value="Last 30 Days" readonly>
-                                        <input type="hidden" name="analyticsPeriodValue" class="nds-select-value" value="30days">
-                                        
+                                        <input type="text" id="analyticsPeriod" class="nds-input nds-select-input"
+                                            placeholder="Select time period..." value="Last 30 Days" readonly>
+                                        <input type="hidden" name="analyticsPeriodValue" class="nds-select-value"
+                                            value="30days">
+
                                         <!-- Custom Dropdown Menu -->
                                         <div class="nds-select-dropdown hidden">
                                             <div class="select-options">
@@ -302,7 +317,8 @@ direction: ltr
                                                 <button type="button" class="select-option" data-value="7days">
                                                     <span class="option-text">Last 7 Days</span>
                                                 </button>
-                                                <button type="button" class="select-option selected" data-value="30days">
+                                                <button type="button" class="select-option selected"
+                                                    data-value="30days">
                                                     <span class="option-text">Last 30 Days</span>
                                                 </button>
                                                 <button type="button" class="select-option" data-value="90days">
@@ -326,16 +342,19 @@ direction: ltr
                                                 <label class="label" for="includeUsers">User Activity</label>
                                             </div>
                                             <div class="nds-form-control">
-                                                <input type="checkbox" id="includeUsers" name="analyticsData" value="users" checked class="nds-check primary">
+                                                <input type="checkbox" id="includeUsers" name="analyticsData"
+                                                    value="users" checked class="nds-check primary">
                                             </div>
                                         </div>
                                         <div class="nds-form-container nds-check-container">
                                             <div class="nds-form-header">
                                                 <label class="label" for="includePerformance">System Performance</label>
-                                                <span class="info">Response times, error rates, and system health metrics</span>
+                                                <span class="info">Response times, error rates, and system health
+                                                    metrics</span>
                                             </div>
                                             <div class="nds-form-control">
-                                                <input type="checkbox" id="includePerformance" name="analyticsData" value="performance" checked class="nds-check primary">
+                                                <input type="checkbox" id="includePerformance" name="analyticsData"
+                                                    value="performance" checked class="nds-check primary">
                                             </div>
                                         </div>
                                         <div class="nds-form-container nds-check-container">
@@ -343,7 +362,8 @@ direction: ltr
                                                 <label class="label" for="includeServices">Service Usage</label>
                                             </div>
                                             <div class="nds-form-control">
-                                                <input type="checkbox" id="includeServices" name="analyticsData" value="services" class="nds-check primary">
+                                                <input type="checkbox" id="includeServices" name="analyticsData"
+                                                    value="services" class="nds-check primary">
                                             </div>
                                         </div>
                                         <div class="nds-form-container nds-check-container">
@@ -351,7 +371,8 @@ direction: ltr
                                                 <label class="label" for="includeErrors">Error Reports</label>
                                             </div>
                                             <div class="nds-form-control">
-                                                <input type="checkbox" id="includeErrors" name="analyticsData" value="errors" class="nds-check primary">
+                                                <input type="checkbox" id="includeErrors" name="analyticsData"
+                                                    value="errors" class="nds-check primary">
                                             </div>
                                         </div>
                                     </div>
@@ -361,16 +382,18 @@ direction: ltr
                                 aria-labelledby="tab-settings" tabindex="0">
                                 <h3>Settings</h3>
                                 <p>Configure your preferences and manage your account settings.</p>
-                                
+
                                 <!-- Language Preference -->
                                 <div class="nds-form-container nds-select">
                                     <div class="nds-form-header">
                                         <label class="label" for="languageSelect">Language Preference</label>
                                     </div>
                                     <div class="nds-form-control">
-                                        <input type="text" id="languageSelect" class="nds-input nds-select-input" placeholder="Select language..." value="English" readonly>
-                                        <input type="hidden" name="languageSelectValue" class="nds-select-value" value="en">
-                                        
+                                        <input type="text" id="languageSelect" class="nds-input nds-select-input"
+                                            placeholder="Select language..." value="English" readonly>
+                                        <input type="hidden" name="languageSelectValue" class="nds-select-value"
+                                            value="en">
+
                                         <!-- Custom Dropdown Menu -->
                                         <div class="nds-select-dropdown hidden">
                                             <div class="select-options">
@@ -395,7 +418,8 @@ direction: ltr
                                                 <label class="label" for="themeLight">Light Theme</label>
                                             </div>
                                             <div class="nds-form-control">
-                                                <input type="radio" id="themeLight" name="themeGroup" value="light" checked class="nds-radio primary">
+                                                <input type="radio" id="themeLight" name="themeGroup" value="light"
+                                                    checked class="nds-radio primary">
                                             </div>
                                         </div>
                                         <div class="nds-form-container nds-radio-container">
@@ -403,16 +427,19 @@ direction: ltr
                                                 <label class="label" for="themeDark">Dark Theme</label>
                                             </div>
                                             <div class="nds-form-control">
-                                                <input type="radio" id="themeDark" name="themeGroup" value="dark" class="nds-radio primary">
+                                                <input type="radio" id="themeDark" name="themeGroup" value="dark"
+                                                    class="nds-radio primary">
                                             </div>
                                         </div>
                                         <div class="nds-form-container nds-radio-container">
                                             <div class="nds-form-header">
                                                 <label class="label" for="themeAuto">Auto (System)</label>
-                                                <span class="info">Automatically adjusts based on your system preferences</span>
+                                                <span class="info">Automatically adjusts based on your system
+                                                    preferences</span>
                                             </div>
                                             <div class="nds-form-control">
-                                                <input type="radio" id="themeAuto" name="themeGroup" value="auto" class="nds-radio primary">
+                                                <input type="radio" id="themeAuto" name="themeGroup" value="auto"
+                                                    class="nds-radio primary">
                                             </div>
                                         </div>
                                     </div>
@@ -424,10 +451,13 @@ direction: ltr
                                     <div class="nds-check-group">
                                         <div class="nds-form-container nds-check-container">
                                             <div class="nds-form-header">
-                                                <label class="label" for="emailNotifications">Email Notifications</label>
+                                                <label class="label" for="emailNotifications">Email
+                                                    Notifications</label>
                                             </div>
                                             <div class="nds-form-control">
-                                                <input type="checkbox" id="emailNotifications" name="notificationSettings" value="email" checked class="nds-check primary">
+                                                <input type="checkbox" id="emailNotifications"
+                                                    name="notificationSettings" value="email" checked
+                                                    class="nds-check primary">
                                             </div>
                                         </div>
                                         <div class="nds-form-container nds-check-container">
@@ -435,7 +465,8 @@ direction: ltr
                                                 <label class="label" for="smsNotifications">SMS Notifications</label>
                                             </div>
                                             <div class="nds-form-control">
-                                                <input type="checkbox" id="smsNotifications" name="notificationSettings" value="sms" class="nds-check primary">
+                                                <input type="checkbox" id="smsNotifications" name="notificationSettings"
+                                                    value="sms" class="nds-check primary">
                                             </div>
                                         </div>
                                         <div class="nds-form-container nds-check-container">
@@ -444,7 +475,9 @@ direction: ltr
                                                 <span class="info">Receive instant notifications in your browser</span>
                                             </div>
                                             <div class="nds-form-control">
-                                                <input type="checkbox" id="pushNotifications" name="notificationSettings" value="push" checked class="nds-check primary">
+                                                <input type="checkbox" id="pushNotifications"
+                                                    name="notificationSettings" value="push" checked
+                                                    class="nds-check primary">
                                             </div>
                                         </div>
                                     </div>
@@ -453,45 +486,58 @@ direction: ltr
                         </div>
                     </div>
                 </div>
-                <div class="code-example">
-                    <div class="usage-header">
-                        <span>Usage</span>
-                        <button class="copy-btn" aria-label="Copy code example">
-                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                <div class="nds-tabs nds-code withDivider">
+                    <div class="nds-tab-list-container">
+                        <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                        <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-icons-1" id="tab-icons-1">
+                            <span class="nds-tab-label">HTML</span>
                         </button>
+                        <button class="nds-btn nds-btn-subtle nds-tab showMore"><i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                        </button>
+                        </nav>
                     </div>
-                    <code>&lt;div class="nds-tabs"&gt;
-  &lt;div class="nds-tab-list-container"&gt;
-    &lt;nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Icon tab navigation"&gt;
-      &lt;button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-1" id="tab-1"&gt;
-        &lt;i class="hgi hgi-stroke hgi-home-05"&gt;&lt;/i&gt;
-        &lt;span class="nds-tab-label"&gt;Dashboard&lt;/span&gt;
-      &lt;/button&gt;
-      &lt;button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="false" aria-controls="panel-2" id="tab-2"&gt;
-        &lt;i class="hgi hgi-stroke hgi-analytics-01"&gt;&lt;/i&gt;
-        &lt;span class="nds-tab-label"&gt;Analytics&lt;/span&gt;
-      &lt;/button&gt;
-      &lt;button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="false" aria-controls="panel-3" id="tab-3"&gt;
-        &lt;i class="hgi hgi-stroke hgi-settings-01"&gt;&lt;/i&gt;
-        &lt;span class="nds-tab-label"&gt;Settings&lt;/span&gt;
-      &lt;/button&gt;
-      &lt;button class="nds-btn nds-btn-subtle nds-tab showMore"&gt;&lt;i
-        class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"&gt;&lt;/i&gt;
-      &lt;/button&gt;
-    &lt;/nav&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-tab-content"&gt;
-    &lt;div class="nds-tab-panel" role="tabpanel" id="panel-1" aria-labelledby="tab-1"&gt;
-      Content for dashboard tab
-    &lt;/div&gt;
-    &lt;div class="nds-tab-panel hidden" role="tabpanel" id="panel-2" aria-labelledby="tab-2"&gt;
-      Content for analytics tab
-    &lt;/div&gt;
-    &lt;div class="nds-tab-panel hidden" role="tabpanel" id="panel-3" aria-labelledby="tab-3"&gt;
-      Content for settings tab
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;</code>
+                    <div class="nds-tab-content">
+                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-icons-1" aria-labelledby="tab-icons-1">
+                            <div class="nds-code-action">
+                                <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                </button>
+                            </div>
+                            <code class="lang-html code">
+                                <div class="nds-tabs">
+                                    <div class="nds-tab-list-container">
+                                        <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Icon tab navigation">
+                                        <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-1" id="tab-1">
+                                            <i class="hgi hgi-stroke hgi-home-05"></i>
+                                            <span class="nds-tab-label">Dashboard</span>
+                                        </button>
+                                        <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="false" aria-controls="panel-2" id="tab-2">
+                                            <i class="hgi hgi-stroke hgi-analytics-01"></i>
+                                            <span class="nds-tab-label">Analytics</span>
+                                        </button>
+                                        <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="false" aria-controls="panel-3" id="tab-3">
+                                            <i class="hgi hgi-stroke hgi-settings-01"></i>
+                                            <span class="nds-tab-label">Settings</span>
+                                        </button>
+                                        <button class="nds-btn nds-btn-subtle nds-tab showMore"><i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                                        </button>
+                                        </nav>
+                                    </div>
+                                    <div class="nds-tab-content">
+                                        <div class="nds-tab-panel" role="tabpanel" id="panel-1" aria-labelledby="tab-1">
+                                        Content for dashboard tab
+                                        </div>
+                                        <div class="nds-tab-panel hidden" role="tabpanel" id="panel-2" aria-labelledby="tab-2">
+                                        Content for analytics tab
+                                        </div>
+                                        <div class="nds-tab-panel hidden" role="tabpanel" id="panel-3" aria-labelledby="tab-3">
+                                        Content for settings tab
+                                        </div>
+                                    </div>
+                                </div>
+                            </code>
+                        </div>
+                    </div>
                 </div>
             </div>
 

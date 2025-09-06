@@ -20,73 +20,12 @@
 
     // Initialize when DOM is ready
     document.addEventListener('DOMContentLoaded', function() {
-        initializeCopyButtons();
         initializeDemoToggleButtons();
         initializeDirectionSwitcher();
         initializeFakeFileUpload();
         initializeDemoActionButtons();
     });
 
-    // Copy functionality for code examples
-    function initializeCopyButtons() {
-        // Event delegation for all copy buttons
-        document.addEventListener('click', function(e) {
-            const copyBtn = e.target.closest('.copy-btn');
-            if (copyBtn) {
-                handleCopyClick(copyBtn);
-            }
-        });
-    }
-
-    function handleCopyClick(button) {
-        const codeBlock = button.closest('.code-example').querySelector('code');
-        if (!codeBlock) {
-            return;
-        }
-
-        const textToCopy = codeBlock.textContent;
-        
-        if (navigator.clipboard && window.isSecureContext) {
-            navigator.clipboard.writeText(textToCopy).then(() => {
-                showCopyFeedback(button);
-            }).catch(err => {
-                fallbackCopy(textToCopy, button);
-            });
-        } else {
-            fallbackCopy(textToCopy, button);
-        }
-    }
-
-    function fallbackCopy(text, button) {
-        // Fallback for older browsers
-        const textArea = document.createElement('textarea');
-        textArea.value = text;
-        textArea.style.position = 'fixed';
-        textArea.style.left = '-999999px';
-        textArea.style.top = '-999999px';
-        document.body.appendChild(textArea);
-        textArea.focus();
-        textArea.select();
-        
-        try {
-            document.execCommand('copy');
-            showCopyFeedback(button);
-        } catch (err) {
-        }
-        
-        document.body.removeChild(textArea);
-    }
-
-    function showCopyFeedback(button) {
-        const originalIcon = button.innerHTML;
-        button.innerHTML = '<i class="hgi hgi-stroke hgi-checkmark-circle-01"></i>';
-        button.classList.add('copied');
-
-        setTimeout(() => {
-            button.innerHTML = originalIcon;
-            button.classList.remove('copied');
-        }, 2000);
-    }
 
 
     function updateButtonsForBackground(container, bgType) {
@@ -183,66 +122,105 @@
             
             let targetElement;
             
-            // Always find the target relative to the demo card
+            // Find target elements within .demo-container, .code-example, or target the containers themselves
+            const searchContainers = [
+                ...demoCard.querySelectorAll('.demo-container'),
+                ...demoCard.querySelectorAll('.code-example')
+            ];
+            
             if (targetSelector.startsWith('#')) {
                 const idSelector = targetSelector.substring(1);
                 const idParts = idSelector.split(' ');
                 const elementId = idParts[0];
                 const subSelector = idParts.slice(1).join(' ');
                 
-                const elementById = demoCard.querySelector(`#${elementId}`);
-                if (elementById && subSelector) {
-                    targetElement = elementById.querySelector(subSelector);
-                } else {
-                    targetElement = elementById;
+                // Search in each allowed container
+                for (const container of searchContainers) {
+                    const elementById = container.querySelector(`#${elementId}`);
+                    if (elementById) {
+                        if (subSelector) {
+                            targetElement = elementById.querySelector(subSelector);
+                        } else {
+                            targetElement = elementById;
+                        }
+                        break;
+                    }
                 }
             } else {
-                // For complex selectors (like '.class element' or '.class[attr]'), use querySelector directly
-                if (targetSelector.includes(' ') || targetSelector.includes('[') || targetSelector.includes(':')) {
-                    targetElement = demoCard.querySelector(targetSelector);
-                } else if (targetSelector.startsWith('.')) {
-                    // For simple single class selectors, ensure exact match to avoid matching classes that contain the target class
-                    const className = targetSelector.substring(1);
-                    const allElements = demoCard.querySelectorAll('*');
-                    targetElement = Array.from(allElements).find(el => 
-                        el.classList.contains(className) && 
-                        Array.from(el.classList).includes(className)
-                    );
+                // Check if targeting the containers themselves first
+                if (targetSelector === '.demo-container') {
+                    targetElement = demoCard.querySelector('.demo-container');
+                } else if (targetSelector === '.code-example') {
+                    targetElement = demoCard.querySelector('.code-example');
                 } else {
-                    targetElement = demoCard.querySelector(targetSelector);
+                    // Search in each allowed container
+                    for (const container of searchContainers) {
+                        if (targetSelector.includes(' ') || targetSelector.includes('[') || targetSelector.includes(':')) {
+                            targetElement = container.querySelector(targetSelector);
+                        } else if (targetSelector.startsWith('.')) {
+                            // For simple single class selectors, ensure exact match
+                            const className = targetSelector.substring(1);
+                            const allElements = container.querySelectorAll('*');
+                            targetElement = Array.from(allElements).find(el => 
+                                el.classList.contains(className) && 
+                                Array.from(el.classList).includes(className)
+                            );
+                        } else {
+                            targetElement = container.querySelector(targetSelector);
+                        }
+                        
+                        if (targetElement) break;
+                    }
                 }
             }
 
             // Find ALL matching elements, not just the first one
             let targetElements = [];
             
-            // Always find the target relative to the demo card
+            // Find target elements within .demo-container, .code-example, or target the containers themselves
             if (targetSelector.startsWith('#')) {
                 const idSelector = targetSelector.substring(1);
                 const idParts = idSelector.split(' ');
                 const elementId = idParts[0];
                 const subSelector = idParts.slice(1).join(' ');
                 
-                const elementById = demoCard.querySelector(`#${elementId}`);
-                if (elementById && subSelector) {
-                    targetElements = Array.from(elementById.querySelectorAll(subSelector));
-                } else if (elementById) {
-                    targetElements = [elementById];
+                // Search in each allowed container
+                for (const container of searchContainers) {
+                    const elementById = container.querySelector(`#${elementId}`);
+                    if (elementById) {
+                        if (subSelector) {
+                            targetElements.push(...elementById.querySelectorAll(subSelector));
+                        } else {
+                            targetElements.push(elementById);
+                        }
+                    }
                 }
             } else {
-                // For complex selectors (like '.class element' or '.class[attr]'), use querySelectorAll directly
-                if (targetSelector.includes(' ') || targetSelector.includes('[') || targetSelector.includes(':')) {
-                    targetElements = Array.from(demoCard.querySelectorAll(targetSelector));
-                } else if (targetSelector.startsWith('.')) {
-                    // For simple single class selectors, use the exact match logic
-                    const className = targetSelector.substring(1);
-                    const allElements = demoCard.querySelectorAll('*');
-                    targetElements = Array.from(allElements).filter(el => 
-                        el.classList.contains(className) && 
-                        Array.from(el.classList).includes(className)
-                    );
+                // Check if targeting the containers themselves first
+                if (targetSelector === '.demo-container') {
+                    const containers = demoCard.querySelectorAll('.demo-container');
+                    targetElements.push(...containers);
+                } else if (targetSelector === '.code-example') {
+                    const codeExamples = demoCard.querySelectorAll('.code-example');
+                    targetElements.push(...codeExamples);
                 } else {
-                    targetElements = Array.from(demoCard.querySelectorAll(targetSelector));
+                    // Search in each allowed container
+                    for (const container of searchContainers) {
+                        if (targetSelector.includes(' ') || targetSelector.includes('[') || targetSelector.includes(':')) {
+                            targetElements.push(...container.querySelectorAll(targetSelector));
+                        } else if (targetSelector.startsWith('.')) {
+                            // For simple single class selectors, use the exact match logic
+                            const className = targetSelector.substring(1);
+                            const allElements = container.querySelectorAll('*');
+                            const exactMatches = Array.from(allElements).filter(el => 
+                                el.classList.contains(className) && 
+                                Array.from(el.classList).includes(className)
+                            );
+                            targetElements.push(...exactMatches);
+                        } else {
+                            targetElements.push(...container.querySelectorAll(targetSelector));
+                        }
+                    }
                 }
             }
 
@@ -336,37 +314,59 @@
                                         
                                         let targetElement;
                                         
-                                        // Find target element same way as main logic
+                                        // Find target element same way as main logic - only in .demo-container and .code-example
+                                        const deselectionSearchContainers = [
+                                            ...demoCard.querySelectorAll('.demo-container'),
+                                            ...demoCard.querySelectorAll('.code-example')
+                                        ];
+                                        
                                         if (targetSelector.startsWith('#')) {
                                             const idSelector = targetSelector.substring(1);
                                             const idParts = idSelector.split(' ');
                                             const elementId = idParts[0];
                                             const subSelector = idParts.slice(1).join(' ');
                                             
-                                            const elementById = demoCard.querySelector(`#${elementId}`);
-                                            if (elementById && subSelector) {
-                                                targetElement = elementById.querySelector(subSelector);
-                                            } else {
-                                                targetElement = elementById;
+                                            // Search in each allowed container
+                                            for (const container of deselectionSearchContainers) {
+                                                const elementById = container.querySelector(`#${elementId}`);
+                                                if (elementById) {
+                                                    if (subSelector) {
+                                                        targetElement = elementById.querySelector(subSelector);
+                                                    } else {
+                                                        targetElement = elementById;
+                                                    }
+                                                    break;
+                                                }
                                             }
                                         } else {
-                                            // For complex selectors (like '.class element' or '.class[attr]'), use querySelector directly
-                                            if (targetSelector.includes(' ') || targetSelector.includes('[') || targetSelector.includes(':')) {
-                                                targetElement = demoCard.querySelector(targetSelector);
-                                            } else if (targetSelector.startsWith('.')) {
-                                                // For simple single class selectors, ensure exact match to avoid matching classes that contain the target class
-                                                const className = targetSelector.substring(1);
-                                                const allElements = demoCard.querySelectorAll('*');
-                                                targetElement = Array.from(allElements).find(el => 
-                                                    el.classList.contains(className) && 
-                                                    Array.from(el.classList).includes(className)
-                                                );
+                                            // Check if targeting the containers themselves first
+                                            if (targetSelector === '.demo-container') {
+                                                targetElement = demoCard.querySelector('.demo-container');
+                                            } else if (targetSelector === '.code-example') {
+                                                targetElement = demoCard.querySelector('.code-example');
                                             } else {
-                                                targetElement = demoCard.querySelector(targetSelector);
+                                                // Search in each allowed container
+                                                for (const container of deselectionSearchContainers) {
+                                                    if (targetSelector.includes(' ') || targetSelector.includes('[') || targetSelector.includes(':')) {
+                                                        targetElement = container.querySelector(targetSelector);
+                                                    } else if (targetSelector.startsWith('.')) {
+                                                        // For simple single class selectors, ensure exact match
+                                                        const className = targetSelector.substring(1);
+                                                        const allElements = container.querySelectorAll('*');
+                                                        targetElement = Array.from(allElements).find(el => 
+                                                            el.classList.contains(className) && 
+                                                            Array.from(el.classList).includes(className)
+                                                        );
+                                                    } else {
+                                                        targetElement = container.querySelector(targetSelector);
+                                                    }
+                                                    
+                                                    if (targetElement) break;
+                                                }
                                             }
                                         }
                                         
-                                        // Find ALL matching elements for deselection too
+                                        // Find ALL matching elements for deselection too - only in .demo-container and .code-example
                                         let deselectionTargetElements = [];
                                         
                                         if (targetSelector.startsWith('#')) {
@@ -375,26 +375,43 @@
                                             const elementId = idParts[0];
                                             const subSelector = idParts.slice(1).join(' ');
                                             
-                                            const elementById = demoCard.querySelector(`#${elementId}`);
-                                            if (elementById && subSelector) {
-                                                deselectionTargetElements = Array.from(elementById.querySelectorAll(subSelector));
-                                            } else if (elementById) {
-                                                deselectionTargetElements = [elementById];
+                                            // Search in each allowed container
+                                            for (const container of deselectionSearchContainers) {
+                                                const elementById = container.querySelector(`#${elementId}`);
+                                                if (elementById) {
+                                                    if (subSelector) {
+                                                        deselectionTargetElements.push(...elementById.querySelectorAll(subSelector));
+                                                    } else {
+                                                        deselectionTargetElements.push(elementById);
+                                                    }
+                                                }
                                             }
                                         } else {
-                                            // For complex selectors (like '.class element' or '.class[attr]'), use querySelectorAll directly
-                                            if (targetSelector.includes(' ') || targetSelector.includes('[') || targetSelector.includes(':')) {
-                                                deselectionTargetElements = Array.from(demoCard.querySelectorAll(targetSelector));
-                                            } else if (targetSelector.startsWith('.')) {
-                                                // For simple single class selectors, use the exact match logic
-                                                const className = targetSelector.substring(1);
-                                                const allElements = demoCard.querySelectorAll('*');
-                                                deselectionTargetElements = Array.from(allElements).filter(el => 
-                                                    el.classList.contains(className) && 
-                                                    Array.from(el.classList).includes(className)
-                                                );
+                                            // Check if targeting the containers themselves first
+                                            if (targetSelector === '.demo-container') {
+                                                const containers = demoCard.querySelectorAll('.demo-container');
+                                                deselectionTargetElements.push(...containers);
+                                            } else if (targetSelector === '.code-example') {
+                                                const codeExamples = demoCard.querySelectorAll('.code-example');
+                                                deselectionTargetElements.push(...codeExamples);
                                             } else {
-                                                deselectionTargetElements = Array.from(demoCard.querySelectorAll(targetSelector));
+                                                // Search in each allowed container
+                                                for (const container of deselectionSearchContainers) {
+                                                    if (targetSelector.includes(' ') || targetSelector.includes('[') || targetSelector.includes(':')) {
+                                                        deselectionTargetElements.push(...container.querySelectorAll(targetSelector));
+                                                    } else if (targetSelector.startsWith('.')) {
+                                                        // For simple single class selectors, use the exact match logic
+                                                        const className = targetSelector.substring(1);
+                                                        const allElements = container.querySelectorAll('*');
+                                                        const exactMatches = Array.from(allElements).filter(el => 
+                                                            el.classList.contains(className) && 
+                                                            Array.from(el.classList).includes(className)
+                                                        );
+                                                        deselectionTargetElements.push(...exactMatches);
+                                                    } else {
+                                                        deselectionTargetElements.push(...container.querySelectorAll(targetSelector));
+                                                    }
+                                                }
                                             }
                                         }
                                         
@@ -532,6 +549,24 @@
         });
         
         codeElement.textContent = updatedCode;
+        
+        // Re-apply syntax highlighting and line numbers after updating code
+        if (window.NDSCode && codeElement.classList.contains('lang-html')) {
+            codeElement.dataset.processed = 'false'; // Reset processing flag
+            codeElement.dataset.lineNumbers = 'false'; // Reset line numbers flag
+            
+            if (window.NDSCode.highlightHTMLSafe) {
+                window.NDSCode.highlightHTMLSafe(codeElement);
+            }
+            
+            // Re-apply line numbers if the code block should have them (multi-line)
+            if (window.NDSCode.addLineNumbers) {
+                const lines = codeElement.textContent.split('\n');
+                if (lines.length > 1 && !(lines.length === 2 && lines[1].trim() === '')) {
+                    window.NDSCode.addLineNumbers();
+                }
+            }
+        }
     }
 
 
@@ -578,6 +613,24 @@
         });
         
         codeElement.textContent = updatedCode;
+        
+        // Re-apply syntax highlighting and line numbers after updating code
+        if (window.NDSCode && codeElement.classList.contains('lang-html')) {
+            codeElement.dataset.processed = 'false'; // Reset processing flag
+            codeElement.dataset.lineNumbers = 'false'; // Reset line numbers flag
+            
+            if (window.NDSCode.highlightHTMLSafe) {
+                window.NDSCode.highlightHTMLSafe(codeElement);
+            }
+            
+            // Re-apply line numbers if the code block should have them (multi-line)
+            if (window.NDSCode.addLineNumbers) {
+                const lines = codeElement.textContent.split('\n');
+                if (lines.length > 1 && !(lines.length === 2 && lines[1].trim() === '')) {
+                    window.NDSCode.addLineNumbers();
+                }
+            }
+        }
     }
 
     // RTL/LTR Direction Switcher - Cookie-based System
@@ -879,8 +932,6 @@
 
     // Expose global functions for backward compatibility if needed
     window.NDSShowcase = {
-        handleCopyClick: handleCopyClick,
-        showCopyFeedback: showCopyFeedback,
         initializeDemoToggleButtons: initializeDemoToggleButtons,
         updateButtonsForBackground: updateButtonsForBackground,
         initializeDirectionSwitcher: initializeDirectionSwitcher,

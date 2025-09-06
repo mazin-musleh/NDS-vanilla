@@ -44,12 +44,12 @@
         const englishCached = getCache(englishKey);
         const dataCached = getCache(dataKey);
 
-        console.log('Cache check:', { arabicCached: !!arabicCached, englishCached: !!englishCached, dataCached: !!dataCached });
+        //console.log('Cache check:', { arabicCached: !!arabicCached, englishCached: !!englishCached, dataCached: !!dataCached });
 
         if (arabicCached && englishCached && dataCached) {
-            console.log('All cached - arabicCached:', arabicCached);
+           /*  console.log('All cached - arabicCached:', arabicCached);
             console.log('All cached - englishCached:', englishCached);
-            console.log('All cached - dataCached:', dataCached);
+            console.log('All cached - dataCached:', dataCached); */
             return returnStructured ? dataCached : (isArabic ? arabicCached : englishCached);
         }
 
