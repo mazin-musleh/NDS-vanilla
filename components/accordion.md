@@ -119,39 +119,53 @@ css_files:
                         </div>
                     </div>
                 </div>
-                <div class="code-example">
-                    <div class="usage-header">
-                        <span>Usage</span>
-                        <button class="copy-btn" aria-label="Copy code example">
-                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                <div class="nds-tabs nds-code withDivider">
+                    <div class="nds-tab-list-container">
+                        <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                        <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-basic-1" id="tab-basic-1">
+                            <span class="nds-tab-label">HTML</span>
                         </button>
+                        <button class="nds-btn nds-btn-subtle nds-tab showMore"><i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                        </button>
+                        </nav>
                     </div>
-                    <code>&lt;div class="nds-accordion" id="basicAccordion"&gt;
-  &lt;div class="nds-accordion-item"&gt;
-    &lt;h3 class="nds-accordion-header" id="heading-1"&gt;
-      &lt;button class="nds-btn nds-btn-subtle nds-btn-menu nds-btn-accordion" type="button" aria-expanded="true" aria-controls="collapse-1"&gt;
-        &lt;span class="nds-accordion-title"&gt;Accordion Item #1&lt;/span&gt;
-      &lt;/button&gt;
-    &lt;/h3&gt;
-    &lt;div class="nds-accordion-collapse show" id="collapse-1" aria-labelledby="heading-1"&gt;
-      &lt;div class="nds-accordion-body"&gt;
-        Content for the first accordion item goes here.
-      &lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-accordion-item"&gt;
-    &lt;h3 class="nds-accordion-header" id="heading-2"&gt;
-      &lt;button class="nds-btn nds-btn-subtle nds-btn-menu nds-btn-accordion collapsed" type="button" aria-expanded="false" aria-controls="collapse-2"&gt;
-        &lt;span class="nds-accordion-title"&gt;Accordion Item #2&lt;/span&gt;
-      &lt;/button&gt;
-    &lt;/h3&gt;
-    &lt;div class="nds-accordion-collapse" id="collapse-2" aria-labelledby="heading-2"&gt;
-      &lt;div class="nds-accordion-body"&gt;
-        Content for the second accordion item goes here.
-      &lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;</code>
+                    <div class="nds-tab-content">
+                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-basic-1" aria-labelledby="tab-basic-1">
+                            <div class="nds-code-action">
+                                <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                </button>
+                            </div>
+                            <code class="lang-html code">
+                                <div class="nds-accordion" id="basicAccordion">
+                                  <div class="nds-accordion-item">
+                                    <h3 class="nds-accordion-header" id="heading-1">
+                                      <button class="nds-btn nds-btn-subtle nds-btn-menu nds-btn-accordion" type="button" aria-expanded="true" aria-controls="collapse-1">
+                                        <span class="nds-accordion-title">Accordion Item #1</span>
+                                      </button>
+                                    </h3>
+                                    <div class="nds-accordion-collapse show" id="collapse-1" aria-labelledby="heading-1">
+                                      <div class="nds-accordion-body">
+                                        Content for the first accordion item goes here.
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="nds-accordion-item">
+                                    <h3 class="nds-accordion-header" id="heading-2">
+                                      <button class="nds-btn nds-btn-subtle nds-btn-menu nds-btn-accordion collapsed" type="button" aria-expanded="false" aria-controls="collapse-2">
+                                        <span class="nds-accordion-title">Accordion Item #2</span>
+                                      </button>
+                                    </h3>
+                                    <div class="nds-accordion-collapse" id="collapse-2" aria-labelledby="heading-2">
+                                      <div class="nds-accordion-body">
+                                        Content for the second accordion item goes here.
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                            </code>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -260,28 +274,42 @@ css_files:
                         </div>
                     </div>
                 </div>
-                <div class="code-example">
-                    <div class="usage-header">
-                        <span>Usage</span>
-                        <button class="copy-btn" aria-label="Copy code example">
-                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                <div class="nds-tabs nds-code withDivider">
+                    <div class="nds-tab-list-container">
+                        <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                        <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-icons-1" id="tab-icons-1">
+                            <span class="nds-tab-label">HTML</span>
                         </button>
+                        <button class="nds-btn nds-btn-subtle nds-tab showMore"><i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                        </button>
+                        </nav>
                     </div>
-                    <code>&lt;div class="nds-accordion" id="iconAccordion"&gt;
-  &lt;div class="nds-accordion-item"&gt;
-    &lt;h3 class="nds-accordion-header" id="heading-1"&gt;
-      &lt;button class="nds-btn nds-btn-subtle nds-btn-menu nds-btn-accordion" type="button" aria-expanded="true" aria-controls="collapse-1"&gt;
-        &lt;i class="nds-accordion-leading-icon hgi hgi-stroke hgi-user-circle"&gt;&lt;/i&gt;
-        &lt;span class="nds-accordion-title"&gt;Accordion with Icon&lt;/span&gt;
-      &lt;/button&gt;
-    &lt;/h3&gt;
-    &lt;div class="nds-accordion-collapse show" id="collapse-1" aria-labelledby="heading-1"&gt;
-      &lt;div class="nds-accordion-body"&gt;
-        Content with leading icon accordion item.
-      &lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;</code>
+                    <div class="nds-tab-content">
+                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-icons-1" aria-labelledby="tab-icons-1">
+                            <div class="nds-code-action">
+                                <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                </button>
+                            </div>
+                            <code class="lang-html code">
+                                <div class="nds-accordion" id="iconAccordion">
+                                  <div class="nds-accordion-item">
+                                    <h3 class="nds-accordion-header" id="heading-1">
+                                      <button class="nds-btn nds-btn-subtle nds-btn-menu nds-btn-accordion" type="button" aria-expanded="true" aria-controls="collapse-1">
+                                        <i class="nds-accordion-leading-icon hgi hgi-stroke hgi-user-circle"></i>
+                                        <span class="nds-accordion-title">Accordion with Icon</span>
+                                      </button>
+                                    </h3>
+                                    <div class="nds-accordion-collapse show" id="collapse-1" aria-labelledby="heading-1">
+                                      <div class="nds-accordion-body">
+                                        Content with leading icon accordion item.
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                            </code>
+                        </div>
+                    </div>
                 </div>
             </div>
 

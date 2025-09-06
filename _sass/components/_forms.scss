@@ -152,6 +152,7 @@ fieldset {
         left: 50%;
         width: 0%;
         height: 2px;
+        border-radius: 0 0 3px 3px;
         transform: translateX(-50%);
         background-color: var(--form-field-border-pressed);
         transition: width var(--nds-transition);
@@ -318,6 +319,55 @@ fieldset {
 
     ::-webkit-input-placeholder {
         color: var(--form-field-text-placeholder);
+    }
+
+    .nds-form-action {
+        display: flex;
+        gap: var(--spacing-sm);
+        flex-direction: row-reverse;
+        margin-left: calc(var(--spacing-md) * -1);
+
+        &.before {
+            margin-left: unset;
+            margin-right: calc(var(--spacing-md) * -1);
+        }
+
+        @include ltr {
+            margin-left: unset;
+            margin-right: calc(var(--spacing-md) * -1);
+
+            &.before {
+                margin-right: unset;
+                margin-left: calc(var(--spacing-md) * -1);
+            }
+        }
+
+        >* {
+            --nds-btn-height: 38px;
+            position: relative;
+            width: var(--nds-btn-height);
+            height: var(--nds-btn-height);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-default, #161616);
+
+            &:not(:first-child, .hidden)::before {
+                content: '';
+                width: 1px;
+                background-color: var(--border-neutral-primary);
+                height: calc(100% - var(--spacing-lg));
+                position: absolute;
+                left: calc(var(--spacing-xs) * -1);
+                top: 50%;
+                transform: translateY(-50%);
+
+                @include ltr {
+                    left: unset;
+                    right: calc(var(--spacing-xs) * -1);
+                }
+            }
+        }
     }
 
     .nds-form-action {

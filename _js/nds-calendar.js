@@ -1,7 +1,13 @@
 (function () {
     'use strict';
 
-    // Unified Hijri date object structure
+    /**
+     * Creates a unified Hijri date object structure
+     * @param {number} day - Day of the month (1-30)
+     * @param {number} month - Month of the year (1-12)
+     * @param {number} year - Hijri year
+     * @returns {Object} Hijri date object with day, month, year properties
+     */
     function createHijriDate(day, month, year) {
         return {
             day: parseInt(day, 10) || null,
@@ -10,7 +16,11 @@
         };
     }
 
-    // Normalize Hijri date from any source (getHijriDate, Intl, etc.)
+    /**
+     * Normalizes Hijri date from various sources (getHijriDate, Intl, etc.)
+     * @param {Object} hijriObj - Hijri date object from any source
+     * @returns {Object|null} Normalized Hijri date object or null if invalid
+     */
     function normalizeHijriDate(hijriObj) {
         if (!hijriObj) return null;
         
@@ -20,6 +30,8 @@
         
         return createHijriDate(day, month, year);
     }
+
+
 
     // Calendar System Configuration
     var CalendarConfig = {
@@ -129,8 +141,18 @@
                 };
             },
 
-            // Hijri conversion functions
+            /**
+             * Converts Gregorian date to Hijri using browser Intl API with mathematical fallback
+             * @param {Date} gDate - Gregorian date to convert
+             * @returns {Object} Hijri date object with day, month, year properties
+             * @throws {Error} If date is invalid or conversion fails
+             */
             gregorianToHijri: function (gDate) {
+                // Simple validation
+                if (!gDate || !(gDate instanceof Date) || isNaN(gDate.getTime())) {
+                    throw new Error('Invalid date provided to gregorianToHijri');
+                }
+                
                 // Don't call getHijriDate here, use browser's Intl or math conversion
                 try {
                     var hijriString = new Intl.DateTimeFormat('en-US-u-ca-islamic', {
@@ -141,18 +163,29 @@
                     
                     var parts = hijriString.split('/');
                     if (parts.length === 3) {
-                        return createHijriDate(
-                            parseInt(parts[1], 10), // day
-                            parseInt(parts[0], 10), // month 
-                            parseInt(parts[2], 10)  // year
-                        );
+                        var day = parseInt(parts[1], 10);
+                        var month = parseInt(parts[0], 10);
+                        var year = parseInt(parts[2], 10);
+                        
+                        // Validate parsed values
+                        if (isNaN(day) || isNaN(month) || isNaN(year) || 
+                            day < 1 || day > 30 || month < 1 || month > 12 || year < 1) {
+                            throw new Error('Invalid Hijri date components');
+                        }
+                        
+                        return createHijriDate(day, month, year);
                     }
                 } catch (e) {
-                    // Fallback to mathematical conversion
+                    console.warn('Hijri conversion via Intl failed, using mathematical fallback:', e.message);
                 }
                 
                 // Mathematical fallback using Julian Day method
-                return this.gregorianToHijriMath(gDate);
+                try {
+                    return this.gregorianToHijriMath(gDate);
+                } catch (e) {
+                    console.error('All Hijri conversion methods failed:', e.message);
+                    throw new Error('Unable to convert Gregorian date to Hijri');
+                }
             },
 
             gregorianToHijriMath: function (gDate) {
@@ -161,11 +194,63 @@
                 return this.julianToHijri(jd);
             },
 
+            /**
+             * Converts Hijri date to Gregorian with LRU caching and reverse lookup validation
+             * @param {number} hYear - Hijri year
+             * @param {number} hMonth - Hijri month (1-12)
+             * @param {number} hDay - Hijri day (1-30)
+             * @returns {Date} Gregorian Date object
+             * @throws {Error} If Hijri date components are invalid
+             */
             hijriToGregorian: function (hYear, hMonth, hDay) {
-                // Use mathematical conversion via Julian Day
-                var jd = this.hijriToJulian(hYear, hMonth, hDay);
-                return this.julianToGregorian(jd);
+                // Simple validation
+                if (hYear < 1 || hMonth < 1 || hMonth > 12 || hDay < 1 || hDay > 30) {
+                    throw new Error('Invalid Hijri date: ' + hDay + '/' + hMonth + '/' + hYear);
+                }
+                
+                // Simple cache without LRU complexity
+                if (!this._hijriCache) this._hijriCache = {};
+                var key = hYear + '-' + hMonth + '-' + hDay;
+                if (this._hijriCache[key]) return new Date(this._hijriCache[key]);
+                
+                var result = null;
+                
+                // Only do expensive lookup for day 1 or uncached months
+                try {
+                    // Start with mathematical conversion as approximation
+                    var jd = this.hijriToJulian(hYear, hMonth, hDay);
+                    var approxDate = this.julianToGregorian(jd);
+                    
+                    // Search around the approximate date to find the exact match
+                    for (var offset = -3; offset <= 3; offset++) {
+                        var testDate = new Date(approxDate);
+                        testDate.setDate(approxDate.getDate() + offset);
+                        
+                        var convertedBack = this.gregorianToHijri(testDate);
+                        if (convertedBack && 
+                            convertedBack.day === hDay && 
+                            convertedBack.month === hMonth && 
+                            convertedBack.year === hYear) {
+                            result = testDate;
+                            break;
+                        }
+                    }
+                } catch (e) {
+                    // Continue to fallback
+                }
+                
+                // Fallback to original mathematical conversion
+                if (!result) {
+                    var jd = this.hijriToJulian(hYear, hMonth, hDay);
+                    result = this.julianToGregorian(jd);
+                }
+                
+                // Simple cache storage
+                this._hijriCache[key] = new Date(result);
+                
+                return result;
             },
+
 
             getOffsetCorrection: function() {
                 // Get offset from DOM context - will be called from calendar instance
@@ -254,7 +339,7 @@
             },
 
             julianToHijri: function (jd) {
-                // Approximate conversion - Hijri epoch is July 16, 622 CE (Julian Day 1948439.5)
+                // Approximate conversion - Hijri epoch (July 16, 622 CE)
                 var hijriEpoch = 1948439.5;
                 var daysSinceEpoch = jd - hijriEpoch;
                 
@@ -357,25 +442,59 @@
         // Cache DOM elements
         cacheElements: function (dateInput, formControl) {
             var container = formControl.closest(UIConfig.selectors.container);
-            if (!container) return {};
+            if (!container) {
+                console.warn('Calendar container not found');
+                return {};
+            }
 
-            return {
+            // Cache elements with validation and fallback handling
+            var elements = {
                 container: container,
-                dropdown: container.querySelector(UIConfig.selectors.dropdown),
-                toggleBtn: container.querySelector(UIConfig.selectors.toggleBtn),
-                monthDropdownBtn: container.querySelector(UIConfig.selectors.monthDropdownBtn),
-                yearDropdownBtn: container.querySelector(UIConfig.selectors.yearDropdownBtn),
-                monthDropdownMenu: container.querySelector(UIConfig.selectors.monthDropdownMenu),
-                yearDropdownMenu: container.querySelector(UIConfig.selectors.yearDropdownMenu),
-                prevBtn: container.querySelector(UIConfig.selectors.prevBtn),
-                nextBtn: container.querySelector(UIConfig.selectors.nextBtn),
-                todayBtn: container.querySelector(UIConfig.selectors.todayBtn),
-                clearBtn: container.querySelector(UIConfig.selectors.clearBtn),
-                saveBtn: container.querySelector(UIConfig.selectors.saveBtn),
-                datesContainer: container.querySelector(UIConfig.selectors.datesContainer),
                 input: dateInput,
                 formControl: formControl
             };
+
+            // Required elements
+            var requiredSelectors = {
+                dropdown: UIConfig.selectors.dropdown,
+                datesContainer: UIConfig.selectors.datesContainer
+            };
+
+            // Optional elements
+            var optionalSelectors = {
+                toggleBtn: UIConfig.selectors.toggleBtn,
+                monthDropdownBtn: UIConfig.selectors.monthDropdownBtn,
+                yearDropdownBtn: UIConfig.selectors.yearDropdownBtn,
+                monthDropdownMenu: UIConfig.selectors.monthDropdownMenu,
+                yearDropdownMenu: UIConfig.selectors.yearDropdownMenu,
+                prevBtn: UIConfig.selectors.prevBtn,
+                nextBtn: UIConfig.selectors.nextBtn,
+                todayBtn: UIConfig.selectors.todayBtn,
+                clearBtn: UIConfig.selectors.clearBtn,
+                saveBtn: UIConfig.selectors.saveBtn
+            };
+
+            // Query required elements
+            for (var key in requiredSelectors) {
+                var element = container.querySelector(requiredSelectors[key]);
+                if (!element) {
+                    console.error('Required calendar element not found:', key, requiredSelectors[key]);
+                    return {};
+                }
+                elements[key] = element;
+            }
+
+            // Query optional elements
+            for (var key in optionalSelectors) {
+                var element = container.querySelector(optionalSelectors[key]);
+                if (element) {
+                    elements[key] = element;
+                } else {
+                    console.warn('Optional calendar element not found:', key, optionalSelectors[key]);
+                }
+            }
+
+            return elements;
         },
 
         // Initialize calendar state
@@ -400,12 +519,13 @@
                 }
             }
             
-            // Fallback to CSS class detection
+            // Check hijri class dynamically each time
             if (this.elements.container && this.elements.container.classList.contains('hijri')) {
                 return 'hijri';
             }
             return 'gregorian';
         },
+
 
         detectCalendarTypeFromValue: function (inputValue) {
             // Handle range format
@@ -555,9 +675,8 @@
                 }
                 
                 // Fallback to mathematical conversion
-                var calendar = this.getCurrentCalendar();
                 var today = new Date();
-                this._cachedTodaysHijriDate = calendar.gregorianToHijri(today);
+                this._cachedTodaysHijriDate = CalendarConfig.hijri.gregorianToHijri(today);
             }
             
             return this._cachedTodaysHijriDate;
@@ -593,7 +712,7 @@
                 }
                 
                 // Fallback to mathematical conversion
-                var hijriDate = calendar.gregorianToHijri(date);
+                var hijriDate = CalendarConfig.hijri.gregorianToHijri(date);
                 date._hijriDay = hijriDate.day;
                 date._hijriMonth = hijriDate.month;
                 date._hijriYear = hijriDate.year;
@@ -637,18 +756,17 @@
             this.elements.formControl.classList.toggle('open', isNowOpen);
 
             if (isNowOpen) {
-                if (!this.state.isInitialized) {
-                    this.initializeCalendar();
-                } else {
-                    this.updateCalendar();
-                }
+                this.initializeCalendar();
             } else {
-                this.deinitializeCalendar();
+                this.cleanup();
             }
         },
 
         initializeCalendar: function () {
+            // Re-detect calendar type each time
+            this.state.calendarType = this.detectCalendarType();
             this.state.isInitialized = true;
+            
             // Clear cached Hijri date when initializing
             this._cachedTodaysHijriDate = null;
             this.parseInitialValue();
@@ -658,12 +776,6 @@
             this.render();
         },
 
-        deinitializeCalendar: function () {
-            if (!this.state.isInitialized) return;
-
-            this.cleanup();
-            this.state.isInitialized = false;
-        },
 
         // Main render method
         render: function () {
@@ -675,24 +787,39 @@
 
         // Cleanup on close
         cleanup: function () {
-            // Remove calendar-specific event listeners
-            if (this.handlers.monthDropdown) {
-                this.elements.monthDropdownBtn.removeEventListener('click', this.handlers.monthDropdown);
+            // Remove event listeners
+            var handlers = ['monthDropdown', 'yearDropdown', 'todayBtn', 'clearBtn', 'prevBtn', 'nextBtn'];
+            var elements = ['monthDropdownBtn', 'yearDropdownBtn', 'todayBtn', 'clearBtn', 'prevBtn', 'nextBtn'];
+            
+            for (var i = 0; i < handlers.length; i++) {
+                if (this.handlers[handlers[i]] && this.elements[elements[i]]) {
+                    this.elements[elements[i]].removeEventListener('click', this.handlers[handlers[i]]);
+                }
             }
-            if (this.handlers.yearDropdown) {
-                this.elements.yearDropdownBtn.removeEventListener('click', this.handlers.yearDropdown);
-            }
+            this.handlers = {};
 
             // Clear rendered content
             if (this.elements.monthDropdownMenu) this.elements.monthDropdownMenu.innerHTML = '';
             if (this.elements.yearDropdownMenu) this.elements.yearDropdownMenu.innerHTML = '';
             if (this.elements.datesContainer) this.elements.datesContainer.innerHTML = '';
 
-            // Reset button states
-            this.resetButtonStates();
+            // Clear caches
+            var calendar = this.getCurrentCalendar();
+            if (calendar && calendar._hijriCache) calendar._hijriCache = {};
+            this._cachedTodaysHijriDate = null;
 
-            // Clear state
+            // Disconnect observers
+            if (this.observers) {
+                this.observers.forEach(function(observer) {
+                    if (observer && observer.disconnect) observer.disconnect();
+                });
+                this.observers = [];
+            }
+
+            // Reset states
+            this.resetButtonStates();
             this.resetState();
+            this.state.isInitialized = false;
         },
 
         // Parse initial input value
@@ -713,6 +840,13 @@
                         this.state.currentDate = new Date(startDate);
                         this.state.rangeStart = startDate;
                         this.state.rangeEnd = endDate;
+                        
+                        // Set converted date in dataset for initial range value
+                        var convertedStart = this.getConvertedDate(startDate);
+                        var convertedEnd = this.getConvertedDate(endDate);
+                        if (convertedStart && convertedEnd) {
+                            this.elements.input.dataset.convertedDate = convertedStart + ' - ' + convertedEnd;
+                        }
                         return;
                     }
                 }
@@ -729,6 +863,12 @@
                     this.state.currentDate._hijriYear = parsedDate._hijriYear;
                 }
                 this.state.selectedDate = parsedDate;
+                
+                // Set converted date in dataset for initial value
+                var convertedValue = this.getConvertedDate(parsedDate);
+                if (convertedValue) {
+                    this.elements.input.dataset.convertedDate = convertedValue;
+                }
             }
         },
 
@@ -831,8 +971,7 @@
             }
             
             // Convert current Gregorian date to Hijri
-            var calendar = this.getCurrentCalendar();
-            return calendar.gregorianToHijri(this.state.currentDate);
+            return CalendarConfig.hijri.gregorianToHijri(this.state.currentDate);
         },
 
         // Bind dropdown events
@@ -896,7 +1035,7 @@
         saveAndClose: function () {
             this.elements.dropdown.classList.add('hidden');
             this.elements.formControl.classList.remove('open');
-            this.deinitializeCalendar();
+            this.cleanup();
         },
 
         // Toggle month dropdown
@@ -1174,12 +1313,31 @@
             }
         },
 
+        // Check if date is in range considering calendar type
+        isDateInRange: function (date, rangeStart, rangeEnd) {
+            if (this.state.calendarType === 'hijri') {
+                // For Hijri calendar, compare using Hijri metadata
+                if (!date._hijriDay || !rangeStart._hijriDay || !rangeEnd._hijriDay) {
+                    return false;
+                }
+                
+                var dateValue = date._hijriYear * 10000 + date._hijriMonth * 100 + date._hijriDay;
+                var startValue = rangeStart._hijriYear * 10000 + rangeStart._hijriMonth * 100 + rangeStart._hijriDay;
+                var endValue = rangeEnd._hijriYear * 10000 + rangeEnd._hijriMonth * 100 + rangeEnd._hijriDay;
+                
+                return dateValue > startValue && dateValue < endValue;
+            } else {
+                // For Gregorian calendar, use regular date comparison
+                return date > rangeStart && date < rangeEnd;
+            }
+        },
+
         // Apply range selection states
         applyRangeStates: function (btn, date) {
             var isRangeStart = this.state.rangeStart && this.isSameCalendarDate(date, this.state.rangeStart);
             var isRangeEnd = this.state.rangeEnd && this.isSameCalendarDate(date, this.state.rangeEnd);
-            var isInRange = this.state.rangeStart && this.state.rangeEnd &&
-                date > this.state.rangeStart && date < this.state.rangeEnd;
+            var isInRange = this.state.rangeStart && this.state.rangeEnd && 
+                this.isDateInRange(date, this.state.rangeStart, this.state.rangeEnd);
 
             if (isRangeStart) {
                 btn.classList.add('range-start');
@@ -1226,8 +1384,7 @@
 
             // For Hijri calendar, use the same conversion method as calendar generation
             if (this.state.calendarType === 'hijri') {
-                var calendar = this.getCurrentCalendar();
-                var todaysHijriDate = calendar.gregorianToHijri(today);
+                var todaysHijriDate = CalendarConfig.hijri.gregorianToHijri(today);
                 today._hijriDay = todaysHijriDate.day;
                 today._hijriMonth = todaysHijriDate.month;
                 today._hijriYear = todaysHijriDate.year;
@@ -1305,17 +1462,50 @@
         updateInput: function () {
             var calendar = this.getCurrentCalendar();
             var value = '';
+            var convertedValue = '';
 
             if (this.isRangeMode() && this.state.rangeStart) {
                 value = calendar.formatDate(this.state.rangeStart);
+                convertedValue = this.getConvertedDate(this.state.rangeStart);
                 if (this.state.rangeEnd) {
                     value += ' - ' + calendar.formatDate(this.state.rangeEnd);
+                    convertedValue += ' - ' + this.getConvertedDate(this.state.rangeEnd);
                 }
             } else if (this.state.selectedDate) {
                 value = calendar.formatDate(this.state.selectedDate);
+                convertedValue = this.getConvertedDate(this.state.selectedDate);
             }
 
             this.elements.input.value = value;
+            
+            // Store converted date in dataset
+            if (convertedValue) {
+                this.elements.input.dataset.convertedDate = convertedValue;
+            } else {
+                delete this.elements.input.dataset.convertedDate;
+            }
+        },
+
+
+        // Get converted date for input dataset
+        getConvertedDate: function (date) {
+            if (!date) return '';
+
+            if (this.state.calendarType === 'hijri') {
+                // Currently showing Hijri, convert to Gregorian
+                return CalendarConfig.gregorian.formatDate(date);
+            } else {
+                // Currently showing Gregorian, convert to Hijri
+                var hijriData = CalendarConfig.hijri.gregorianToHijri(date);
+                
+                // Create a date with Hijri metadata for formatting
+                var tempDate = new Date(date);
+                tempDate._hijriDay = hijriData.day;
+                tempDate._hijriMonth = hijriData.month;
+                tempDate._hijriYear = hijriData.year;
+                
+                return CalendarConfig.hijri.formatDate(tempDate);
+            }
         },
 
         // Utility methods
@@ -1325,9 +1515,6 @@
                 date1.getFullYear() === date2.getFullYear();
         },
 
-        updateCalendar: function () {
-            this.renderCalendarDates();
-        },
 
         // Handle outside clicks
         handleOutsideClick: function (e) {
@@ -1342,7 +1529,7 @@
                 if (!self.elements.container.contains(e.target)) {
                     self.elements.dropdown.classList.add('hidden');
                     self.elements.formControl.classList.remove('open');
-                    self.deinitializeCalendar();
+                    self.cleanup();
                 }
             }, 0);
         },
@@ -1435,8 +1622,9 @@
 
             this.elements.yearDropdownMenu.innerHTML = '';
 
-            var yearRangeBefore = parseInt(this.elements.yearDropdownMenu.dataset.yearBefore) || 5;
-            var yearRangeAfter = parseInt(this.elements.yearDropdownMenu.dataset.yearAfter) || 5;
+            // Read year range from input element instead of dropdown menu
+            var yearRangeBefore = parseInt(this.elements.input.dataset.yearBefore) || 5;
+            var yearRangeAfter = parseInt(this.elements.input.dataset.yearAfter) || 5;
 
             var currentYear = this.getCurrentYear();
             var startYear, endYear;
@@ -1564,6 +1752,7 @@
 
             this.observers.push(languageObserver);
         },
+
 
         // Reset button states
         resetButtonStates: function () {

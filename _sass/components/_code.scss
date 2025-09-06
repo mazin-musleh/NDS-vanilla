@@ -1,0 +1,312 @@
+/**
+ * NDS Code Component
+ * Code examples, syntax highlighting, and copy functionality
+ */
+
+@use './mixins' as *;
+
+// ==============================================
+// CODE EXAMPLES AND SYNTAX
+// ==============================================
+
+.nds-code {
+  margin: var(--spacing-xl);
+  border: 1px solid var(--border-neutral-secondary, #E5E7EB);
+  border-radius: var(--radius-md);
+  padding: 0;
+  position: relative;
+  overflow: clip;
+
+  &.nds-tabs .nds-tab {
+    /* border-radius: var(--radius-md) var(--radius-md) 0 0; */
+    font-size: var(--nds-text-sm-FS);
+  }
+
+  .nds-tab-content {
+    position: relative;
+    /* border-radius: 0 0 var(--radius-md) var(--radius-md); */
+  }
+
+  .nds-tab-panel.code-example {
+    padding: 0;
+  }
+
+  .nds-code-action {
+    position: absolute;
+    top: var(--spacing-md);
+    right: var(--spacing-md);
+    z-index: 2;
+
+    .copy-btn.copied {
+      background-color: var(--background-success-light);
+      color: var(--text-success);
+
+      .label {
+        white-space: nowrap;
+      }
+    }
+  }
+
+  pre {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: none;
+    overflow-x: auto;
+  }
+
+  .line-numbers code {
+    display: block;
+  }
+
+  .line-numbers code span {
+    display: block;
+    padding-left: 2em;
+    position: relative;
+  }
+
+  .line-numbers code span::before {
+    counter-increment: line;
+    content: counter(line);
+    position: absolute;
+    left: 0;
+    color: #888;
+  }
+
+  code {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: var(--nds-text-sm-FS);
+    line-height: var(--nds-text-sm-LH);
+    font-weight: 600;
+    direction: ltr;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    white-space: pre;
+    overflow-x: auto;
+    margin: 0;
+    padding: var(--spacing-xl) 0;
+    background: transparent;
+    border: none;
+
+    // Line numbering styles
+    &.line-numbers {
+      counter-reset: line;
+
+      .code-line {
+        display: block;
+        position: relative;
+
+        &::before {
+          counter-increment: line;
+          content: counter(line);
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 3em;
+          margin-right: 1rem;
+          color: var(--colors-neutral-500);
+          font-size: var(--nds-text-xs-FS);
+          user-select: none;
+          pointer-events: none;
+          position: relative;
+          z-index: 2;
+
+        }
+
+        &::after {
+          content: "";
+          display: block;
+          position: absolute;
+          top: calc(var(--spacing-xl) * -1);
+          left: 0;
+          width: 3em;
+          height: calc(100% + var(--spacing-4xl));
+          font-size: var(--nds-text-xs-FS);
+          background-color: var(--background-neutral-100);
+          border: 1px solid var(--background-neutral-100);
+          border-right: 1px solid var(--border-neutral-secondary, #E5E7EB);
+          user-select: none;
+          pointer-events: none;
+          z-index: 1;
+
+        }
+
+        /*  &:first-child::after {
+           border-radius: var(--radius-md) 0 0 0;
+        }
+
+        &:last-child::after {
+          border-radius: 0 0 0 var(--radius-md);
+        } */
+
+      }
+    }
+  }
+}
+
+// ==============================================
+// SYNTAX HIGHLIGHTING
+// ==============================================
+
+// HTML/XML Syntax
+.syntax-tag {
+  color: #e06c75; // Red for HTML tags
+  font-weight: 600;
+}
+
+.syntax-attr {
+  color: #d19a66; // Orange for attributes
+}
+
+.syntax-value {
+  color: #98c379; // Green for attribute values
+}
+
+.syntax-comment {
+  color: #5c6370; // Gray for comments
+  font-style: italic;
+}
+
+// CSS Syntax
+.syntax-selector {
+  color: #e06c75; // Red for CSS selectors
+  font-weight: 600;
+}
+
+.syntax-property {
+  color: #61afef; // Blue for CSS properties
+}
+
+// JavaScript Syntax
+.syntax-keyword {
+  color: #c678dd; // Purple for keywords
+  font-weight: 600;
+}
+
+.syntax-string {
+  color: #98c379; // Green for strings
+}
+
+// General syntax highlighting
+code.highlighted {
+
+  .syntax-tag,
+  .syntax-attr,
+  .syntax-value,
+  .syntax-comment,
+  .syntax-selector,
+  .syntax-property,
+  .syntax-keyword,
+  .syntax-string {
+    transition: none; // Disable transitions for syntax elements
+  }
+}
+
+// Dark theme syntax highlighting (keep current colors)
+code.dark {
+  .syntax-tag {
+    color: #e06c75; // Red for HTML tags (current)
+    font-weight: 600;
+  }
+
+  .syntax-attr {
+    color: #d19a66; // Orange for attributes (current)
+  }
+
+  .syntax-value {
+    color: #98c379; // Green for attribute values (current)
+  }
+
+  .syntax-comment {
+    color: #5c6370; // Gray for comments (current)
+    font-style: italic;
+  }
+
+  .syntax-selector {
+    color: #e06c75; // Red for CSS selectors (current)
+    font-weight: 600;
+  }
+
+  .syntax-property {
+    color: #61afef; // Blue for CSS properties (current)
+  }
+
+  .syntax-keyword {
+    color: #c678dd; // Purple for keywords (current)
+    font-weight: 600;
+  }
+
+  .syntax-string {
+    color: #98c379; // Green for strings (current)
+  }
+}
+
+// Light/white background syntax highlighting (better contrast)
+code:not(.dark) {
+  .syntax-tag {
+    color: #d73a49; // Darker red for better contrast on white
+    font-weight: 600;
+  }
+
+  .syntax-attr {
+    color: #e36209; // Darker orange for better contrast
+  }
+
+  .syntax-value {
+    color: #22863a; // Darker green for better contrast
+  }
+
+  .syntax-comment {
+    color: #6a737d; // Medium gray for better readability
+    font-style: italic;
+  }
+
+  .syntax-selector {
+    color: #d73a49; // Darker red for CSS selectors
+    font-weight: 600;
+  }
+
+  .syntax-property {
+    color: #005cc5; // Darker blue for CSS properties
+  }
+
+  .syntax-keyword {
+    color: #6f42c1; // Darker purple for keywords
+    font-weight: 600;
+  }
+
+  .syntax-string {
+    color: #22863a; // Darker green for strings
+  }
+
+}
+
+
+// ==============================================
+// RESPONSIVE DESIGN
+// ==============================================
+
+// Mobile optimizations
+@include mobile {
+
+  .nds-code {
+    padding: var(--spacing-md);
+
+    code {
+      font-size: var(--nds-text-xs-FS);
+    }
+  }
+
+}
+
+// Tablet optimizations  
+@include tablet {
+
+  .nds-code {
+    code {
+      font-size: var(--nds-text-sm-FS);
+    }
+  }
+}
