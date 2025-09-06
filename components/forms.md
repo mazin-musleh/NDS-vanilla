@@ -1278,7 +1278,7 @@ document.getElementById('resetButton').addEventListener('click', () => {
           <div class="demo-container">
             <div class="state-demo">
 
-              <div class="nds-form-container nds-date-picker ">
+              <div class="nds-form-container nds-date-picker">
                 <div class="nds-form-header">
                   <label class="label" for="datePickerInput">Select Date</label>
                 </div>
@@ -1296,14 +1296,6 @@ document.getElementById('resetButton').addEventListener('click', () => {
                   <div class="nds-date-picker-dropdown hidden">
                     <div class="calendar-header">
                       <div class="calendar-title">
-                        <div class="calendar-month-switch">
-                          <button class="nds-btn nds-btn-subtle next-month" type="button" aria-label="Next month">
-                            <i class="hgi hgi-stroke hgi-arrow-right-02 icon"></i>
-                          </button>
-                          <button class="nds-btn nds-btn-subtle prev-month" type="button" aria-label="Previous month">
-                            <i class="hgi hgi-stroke hgi-arrow-left-02 icon"></i>
-                          </button>
-                        </div>
                         <div class="month-year-selectors">
                           <div class="month-dropdown-wrapper">
                             <button class="nds-btn nds-btn-subtle nds-btn-menu month-dropdown-btn" aria-expanded="false"
@@ -1321,6 +1313,14 @@ document.getElementById('resetButton').addEventListener('click', () => {
                             <div class="year-dropdown-menu hidden" role="menu">
                             </div>
                           </div>
+                        </div>
+                        <div class="calendar-month-switch">
+                          <button class="nds-btn nds-btn-subtle next-month" type="button" aria-label="Next month">
+                            <i class="hgi hgi-stroke hgi-arrow-right-02 icon"></i>
+                          </button>
+                          <button class="nds-btn nds-btn-subtle prev-month" type="button" aria-label="Previous month">
+                            <i class="hgi hgi-stroke hgi-arrow-left-02 icon"></i>
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -1392,14 +1392,6 @@ document.getElementById('resetButton').addEventListener('click', () => {
                       <div class="nds-date-picker-dropdown hidden">
                         <div class="calendar-header">
                           <div class="calendar-title">
-                            <div class="calendar-month-switch">
-                              <button class="nds-btn nds-btn-subtle next-month" type="button" aria-label="Next month">
-                                <i class="hgi hgi-stroke hgi-arrow-right-02 icon"></i>
-                              </button>
-                              <button class="nds-btn nds-btn-subtle prev-month" type="button" aria-label="Previous month">
-                                <i class="hgi hgi-stroke hgi-arrow-left-02 icon"></i>
-                              </button>
-                            </div>
                             <div class="month-year-selectors">
                               <div class="month-dropdown-wrapper">
                                 <button class="nds-btn nds-btn-subtle nds-btn-menu month-dropdown-btn" aria-expanded="false"
@@ -1417,6 +1409,14 @@ document.getElementById('resetButton').addEventListener('click', () => {
                                 <div class="year-dropdown-menu hidden" role="menu">
                                 </div>
                               </div>
+                            </div>
+                            <div class="calendar-month-switch">
+                              <button class="nds-btn nds-btn-subtle next-month" type="button" aria-label="Next month">
+                                <i class="hgi hgi-stroke hgi-arrow-right-02 icon"></i>
+                              </button>
+                              <button class="nds-btn nds-btn-subtle prev-month" type="button" aria-label="Previous month">
+                                <i class="hgi hgi-stroke hgi-arrow-left-02 icon"></i>
+                              </button>
                             </div>
                           </div>
                         </div>

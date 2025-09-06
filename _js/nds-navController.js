@@ -88,33 +88,48 @@
             return;
         }
 
+        // Cache the previous state to avoid unnecessary DOM updates
+        const wasOverflowing = DOM.primary.classList.contains('hasMore');
         let hasOverflow = false;
 
         if (state.minimalMode) {
             if (DOM.collapse) {
-                const maxHeight = parseFloat(getComputedStyle(DOM.collapse).maxHeight);
+                // Use cached maxHeight if available, otherwise compute and cache
+                let maxHeight = DOM.collapse._cachedMaxHeight;
+                if (maxHeight === undefined) {
+                    maxHeight = parseFloat(getComputedStyle(DOM.collapse).maxHeight);
+                    DOM.collapse._cachedMaxHeight = maxHeight;
+                }
+                
                 if (isFinite(maxHeight) && maxHeight > 0) {
+                    // Batch DOM reads for better performance
                     const primaryHeight = DOM.primary.scrollHeight;
                     const secondaryHeight = DOM.secondary?.offsetHeight || 0;
                     hasOverflow = (primaryHeight + secondaryHeight) > maxHeight;
                 }
             }
         } else {
-            hasOverflow = DOM.primary.scrollWidth > DOM.primary.clientWidth;
+            // Cache dimensions for better performance
+            const scrollWidth = DOM.primary._cachedScrollWidth ?? DOM.primary.scrollWidth;
+            const clientWidth = DOM.primary._cachedClientWidth ?? DOM.primary.clientWidth;
+            
+            // Cache values briefly to avoid repeated measurements
+            DOM.primary._cachedScrollWidth = scrollWidth;
+            DOM.primary._cachedClientWidth = clientWidth;
+            
+            hasOverflow = scrollWidth > clientWidth;
         }
 
-        // Cache the previous state to avoid unnecessary DOM updates
-        const wasOverflowing = DOM.primary.classList.contains('hasMore');
+        // Early return if state hasn't changed
+        if (hasOverflow === wasOverflowing) return;
         
-        if (hasOverflow !== wasOverflowing) {
-            DOM.primary.classList.toggle('hasMore', hasOverflow);
-            
-            if (!hasOverflow) {
-                DOM.primary.classList.remove('atEnd');
-            } else {
-                // Schedule scroll end check with a small delay to ensure proper state
-                setTimeout(() => utils.checkScrollEnd(), 10);
-            }
+        DOM.primary.classList.toggle('hasMore', hasOverflow);
+        
+        if (!hasOverflow) {
+            DOM.primary.classList.remove('atEnd');
+        } else {
+            // Schedule scroll end check with a small delay to ensure proper state
+            setTimeout(() => utils.checkScrollEnd(), 10);
         }
     }
 
@@ -141,6 +156,14 @@
             if (shouldBeMinimal !== isCurrentlyMinimal) {
                 document.body.classList.toggle('minimal', shouldBeMinimal);
 
+                // Clear all cached dimensions when switching modes
+                if (DOM.collapse) {
+                    delete DOM.collapse._cachedMaxHeight;
+                }
+                if (DOM.primary) {
+                    delete DOM.primary._cachedScrollWidth;
+                    delete DOM.primary._cachedClientWidth;
+                }
 
                 this.managePABPlacement();
                 return true;
@@ -260,6 +283,13 @@
 
             const available = constraint - used;
             DOM.primary.style.maxWidth = available > 0 ? `${available}px` : '';
+            
+            // Clear cached dimensions when width changes
+            if (DOM.primary) {
+                delete DOM.primary._cachedScrollWidth;
+                delete DOM.primary._cachedClientWidth;
+            }
+            
             scheduleOverflowCheck('immediate');
         },
 
@@ -271,7 +301,6 @@
 
                 const measurements = {
                     windowWidth: window.innerWidth,
-                    bodyClassChanged: this.updateBodyClass(),
                     topbarRect: DOM.topbar?.getBoundingClientRect(),
                     timestamp: performance.now()
                 };
@@ -280,6 +309,8 @@
                 if (widthChanged) {
                     state.windowWidth = measurements.windowWidth;
                 }
+
+                measurements.bodyClassChanged = this.updateBodyClass();
 
                 this.updateNavMaxWidth();
 

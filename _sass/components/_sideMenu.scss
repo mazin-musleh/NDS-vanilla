@@ -32,7 +32,7 @@
    ======================================== */
 
 /* Navigation Container */
-.nds-sideMenu > nav {
+.nds-sideMenu>nav {
     position: sticky;
     top: calc(var(--nds-nav-height) + var(--spacing-xl));
     width: 100%;
@@ -51,35 +51,38 @@
     width: 100%;
     justify-content: start;
     color: var(--text-primary-paragraph);
-    & > .label {
+
+    &>.label {
         width: 100%;
     }
 }
 
 .nds-sideMenu ul {
-    & .open > a > .label{
+    & .open>a>.label {
         color: var(--text-default);
         filter: drop-shadow(0 0 0.02em currentColor);
     }
-    
+
 }
 
 .nds-sideMenu .nds-btn-indicator {
     --button-indicator-size: 5px;
     @include btn-indicator('v');
 }
+
 /* ========================================
    PRIMARY MENU ITEMS
    ======================================== */
 
-.nds-sideMenu > nav > .topLevel > li {
+.nds-sideMenu>nav>.topLevel>li {
     border-bottom: 1px solid var(--border-background-white);
-    &:last-child{
+
+    &:last-child {
         border-bottom: unset;
     }
 }
 
-.nds-sideMenu > nav > .topLevel > li:last-child > a {
+.nds-sideMenu>nav>.topLevel>li:last-child>a {
     border-bottom: none;
 }
 
@@ -110,7 +113,7 @@
     display: none;
 }
 
-.nds-sideMenu > nav > .topLevel > li.active > ul {
+.nds-sideMenu>nav>.topLevel>li.active>ul {
     display: block;
 }
 
@@ -129,12 +132,12 @@
     margin-bottom: var(--spacing-md);
 }
 
-.nds-sideMenu .topLevel > li.has-sub li a {
+.nds-sideMenu .topLevel>li.has-sub li a {
     padding: var(--spacing-md) var(--spacing-sm);
     margin-right: calc(var(--spacing-xs) * -1);
 }
 
-.nds-sideMenu .topLevel > li.has-sub li a {
+.nds-sideMenu .topLevel>li.has-sub li a {
     @include ltr {
         margin-left: calc(var(--spacing-xs) * -1);
         margin-right: unset;
@@ -165,8 +168,9 @@
 
 .nds-sideMenu ul li.active a {
     color: var(--text-primary) !important;
-    &::before{
-        background-color: var(--background-primary)!important;
+
+    &::before {
+        background-color: var(--background-primary) !important;
     }
 }
 
@@ -175,29 +179,29 @@
    MENU ITEM ICONS (::after)
    ======================================== */
 
-.hgi-loaded .nds-sideMenu nav li.gridView > a:after,
-.hgi-loaded .nds-sideMenu nav li.redirect.external > a:after {
+.hgi-loaded .nds-sideMenu nav li.gridView>a:after,
+.hgi-loaded .nds-sideMenu nav li.redirect.external>a:after {
     content: '㭫';
 }
 
-.hgi-loaded .nds-sideMenu nav li.redirect.external > a:after {
+.hgi-loaded .nds-sideMenu nav li.redirect.external>a:after {
     content: "䊔";
 }
 
-.hgi-loaded .nds-sideMenu nav li.gridView > a:after {
+.hgi-loaded .nds-sideMenu nav li.gridView>a:after {
     content: "䃺";
 }
 
-.hgi-loaded .nds-sideMenu .topLevel > li.gridView > a::after,
-.hgi-loaded .nds-sideMenu .topLevel > li.redirect.external > a::after {
+.hgi-loaded .nds-sideMenu .topLevel>li.gridView>a::after,
+.hgi-loaded .nds-sideMenu .topLevel>li.redirect.external>a::after {
     content: '㭫';
 }
 
-.hgi-loaded .nds-sideMenu .topLevel > li.redirect.external > a::after {
+.hgi-loaded .nds-sideMenu .topLevel>li.redirect.external>a::after {
     content: "䊔";
 }
 
-.hgi-loaded .nds-sideMenu .topLevel > li.gridView > a::after {
+.hgi-loaded .nds-sideMenu .topLevel>li.gridView>a::after {
     content: "䃺";
 }
 
@@ -222,7 +226,7 @@
         transform: translateX(0px) !important;
     }
 
-    .nds-sideMenu > nav {
+    .nds-sideMenu>nav {
         margin-top: -40px !important;
     }
 
@@ -239,7 +243,7 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        top: 50vh; /* calc(var(--nds-nav-height) + 160px);*/
+        top: calc(var(--nds-nav-height) * 2);
         transform: translateX(calc((var(--nds-sideMenu-width) - var(--spacing-md)) * -1));
         box-shadow: var(--shadow-md);
     }
@@ -297,28 +301,28 @@
             padding-left: 24px;
         }
 
-        .nds-sideMenu > nav > .topLevel > li > a:before {
+        .nds-sideMenu>nav>.topLevel>li>a:before {
             right: unset;
             left: 0;
         }
 
-        .nds-sideMenu nav li.has-sub > a:after {
+        .nds-sideMenu nav li.has-sub>a:after {
             right: 7px;
             left: unset;
         }
 
-        .nds-sideMenu nav > .topLevel > li.has-sub.open > a:after {
+        .nds-sideMenu nav>.topLevel>li.has-sub.open>a:after {
             transform: rotate(180deg);
         }
 
-        .nds-sideMenu .topLevel > li.has-sub li a {
+        .nds-sideMenu .topLevel>li.has-sub li a {
             margin-left: 0;
             margin-left: -4px;
         }
     }
 
     @include ltr {
-        .nds-sideMenu .topLevel > li.redirect.external > a::after {
+        .nds-sideMenu .topLevel>li.redirect.external>a::after {
             transform: scale(-1);
         }
     }

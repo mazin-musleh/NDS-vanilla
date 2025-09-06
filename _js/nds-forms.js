@@ -55,21 +55,37 @@
 
         getLanguage: function () {
             var lang = document.documentElement.lang || 'ar';
-            return { ar: 'ar-SA', en: 'en-US' }[lang.split('-')[0]] || 'ar-SA';
+            var baseLang = lang.split('-')[0].toLowerCase();
+            
+            return baseLang === 'en' ? 'en-US' : 'ar-SA';
+        },
+
+        getLanguageInfo: function(lang) {
+            return lang === 'en-US' ? 
+                { name: 'English', dir: 'ltr' } : 
+                { name: 'العربية', dir: 'rtl' };
         },
 
         create: function (options) {
             if (!this.isSupported()) return null;
 
             var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            var detectedLang = this.getLanguage();
+            var langInfo = this.getLanguageInfo(detectedLang);
+            
             var settings = Object.assign({
                 continuous: false,
                 interimResults: true,
-                lang: this.getLanguage(),
+                lang: detectedLang,
                 maxAlternatives: 1
             }, options);
 
             Object.assign(recognition, settings);
+            
+            // Store language info for reference
+            recognition._ndsLangInfo = langInfo;
+            recognition._ndsDetectedLang = detectedLang;
+            
             return recognition;
         },
 
@@ -563,60 +579,154 @@
     // Date picker initialization now uses the new modular calendar system
     // All functionality moved to nds-calendar.js for better maintainability
 
-    // Voice input functionality
+    // Voice input functionality - Simple approach
     function initVoiceInput(formControl) {
         var voiceButton = formControl.querySelector('.nds-form-action .voiceInput');
-        if (!voiceButton) return;
-
-        if (VoiceRecognition.isSupported()) {
-            var isListening = false;
-            var currentRecognition = null;
-
-            voiceButton.addEventListener('click', function () {
-                if (isListening) {
-                    VoiceRecognition.stopListening(currentRecognition);
-                    return;
-                }
-
-                var primaryInput = findPrimaryInput(formControl);
-                if (!primaryInput) return;
-
-                currentRecognition = VoiceRecognition.create();
-                if (!currentRecognition) return;
-
-                primaryInput.focus();
-
-                VoiceRecognition.startListening(currentRecognition, {
-                    onStart: function () {
-                        isListening = true;
-                        voiceButton.classList.add('listening');
-                        formControl.classList.add('voice-active');
-                    },
-
-                    onResult: function (result) {
-                        primaryInput.value = result.isFinal ? result.final.trim() : result.interim;
-                        if (result.isFinal) {
-                            triggerEvents(primaryInput);
-                            updateFormState(primaryInput, formControl);
-                        }
-                    },
-
-                    onError: function (error) {
-                        isListening = false;
-                        voiceButton.classList.remove('listening');
-                        formControl.classList.remove('voice-active');
-                    },
-
-                    onEnd: function () {
-                        isListening = false;
-                        voiceButton.classList.remove('listening');
-                        formControl.classList.remove('voice-active');
-                    }
-                });
-            });
-        } else {
-            voiceButton.style.display = 'none';
+        if (!voiceButton || !VoiceRecognition.isSupported()) {
+            if (voiceButton) voiceButton.style.display = 'none';
+            return;
         }
+
+        var isListening = false;
+        var recognition = null;
+        var timeout = null;
+        var input = findPrimaryInput(formControl);
+        var originalPlaceholder = input ? input.placeholder : '';
+        
+        // Language detection based on HTML lang attribute
+        function getCurrentLanguage() {
+            var htmlLang = document.documentElement.lang || 'ar';
+            return htmlLang.split('-')[0].toLowerCase();
+        }
+        
+        function isCurrentlyArabic() {
+            return getCurrentLanguage() === 'ar';
+        }
+        
+        var isArabic = isCurrentlyArabic();
+        var voiceLang = isArabic ? 'ar-SA' : 'en-US';
+        var langName = isArabic ? 'العربية' : 'English';
+
+        // Setup button with language-aware labels
+        var startLabel = isArabic ? 'بدء إدخال الصوت (' + langName + ')' : 'Start voice input (' + langName + ')';
+        var stopLabel = isArabic ? 'إيقاف إدخال الصوت' : 'Stop voice input';
+        
+        voiceButton.setAttribute('aria-label', startLabel);
+        voiceButton.setAttribute('aria-pressed', 'false');
+        voiceButton.title = startLabel;
+
+        function showMessage(message, duration) {
+            if (!input) return;
+            input.placeholder = message;
+            input.style.fontStyle = 'italic';
+            input.style.opacity = '0.7';
+            
+            setTimeout(function() {
+                input.placeholder = originalPlaceholder;
+                input.style.fontStyle = '';
+                input.style.opacity = '';
+            }, duration || 3000);
+        }
+
+        function stop() {
+            isListening = false;
+            if (recognition) {
+                try { recognition.abort(); } catch (e) {}
+                recognition = null;
+            }
+            if (timeout) {
+                clearTimeout(timeout);
+                timeout = null;
+            }
+            
+            voiceButton.classList.remove('listening');
+            voiceButton.setAttribute('aria-pressed', 'false');
+            voiceButton.setAttribute('aria-label', startLabel);
+            formControl.classList.remove('voice-active');
+            
+            if (input) {
+                input.style.fontStyle = '';
+                input.style.opacity = '';
+            }
+        }
+
+        function start() {
+            if (!input) return;
+            
+            recognition = VoiceRecognition.create();
+            if (!recognition) return;
+
+            isListening = true;
+            voiceButton.classList.add('listening');
+            voiceButton.setAttribute('aria-pressed', 'true');
+            voiceButton.setAttribute('aria-label', stopLabel);
+            formControl.classList.add('voice-active');
+            input.focus();
+
+            // 30-second timeout
+            timeout = setTimeout(function() {
+                stop();
+                var msg = isCurrentlyArabic() ? 'انتهت مهلة إدخال الصوت' : 'Voice input timed out';
+                showMessage(msg, 4000);
+            }, 30000);
+
+            VoiceRecognition.startListening(recognition, {
+                language: voiceLang,
+                
+                onStart: function() {
+                    // Already handled in start()
+                },
+
+                onResult: function(result) {
+                    var value = result.isFinal ? result.final.trim() : result.interim;
+                    
+                    input.style.fontStyle = result.isFinal ? '' : 'italic';
+                    input.style.opacity = result.isFinal ? '' : '0.7';
+                    input.value = value;
+                    
+                    if (result.isFinal) {
+                        stop();
+                        triggerEvents(input);
+                        updateFormState(input, formControl);
+                    }
+                },
+
+                onError: function(error) {
+                    stop();
+                    
+                    var currentlyArabic = isCurrentlyArabic();
+                    var errorMsg = currentlyArabic ? 'خطأ في إدخال الصوت' : 'Voice input error';
+                    var errorType = typeof error === 'string' ? error : (error && error.error);
+                    
+                    if (errorType === 'no-speech') {
+                        errorMsg = currentlyArabic ? 'لم يتم اكتشاف صوت' : 'No speech detected';
+                    } else if (errorType === 'not-allowed') {
+                        errorMsg = currentlyArabic ? 'مطلوب إذن الميكروفون' : 'Microphone permission required';
+                    } else if (errorType === 'audio-capture') {
+                        errorMsg = currentlyArabic ? 'تم رفض الوصول للميكروفون' : 'Microphone access denied';
+                    } else if (errorType === 'network') {
+                        errorMsg = currentlyArabic ? 'خطأ في الشبكة' : 'Network error';
+                    } else if (errorType === 'aborted') {
+                        errorMsg = currentlyArabic ? 'تم إلغاء إدخال الصوت' : 'Voice input cancelled';
+                    } else if (errorType === 'language-not-supported') {
+                        errorMsg = currentlyArabic ? 'اللغة غير مدعومة' : 'Language not supported';
+                    }
+                    
+                    showMessage(errorMsg);
+                },
+
+                onEnd: stop
+            });
+        }
+
+        voiceButton.addEventListener('click', function() {
+            if (isListening) {
+                stop();
+                VoiceRecognition.stopListening(recognition);
+            } else {
+                start();
+            }
+        });
     }
 
     // Password toggle functionality

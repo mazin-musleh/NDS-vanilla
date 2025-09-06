@@ -891,15 +891,17 @@
             var self = this;
 
             if (this.elements.prevBtn) {
-                this.elements.prevBtn.addEventListener('click', function () {
+                this.handlers.prevBtn = function () {
                     self.navigateMonth(-1);
-                });
+                };
+                this.elements.prevBtn.addEventListener('click', this.handlers.prevBtn);
             }
 
             if (this.elements.nextBtn) {
-                this.elements.nextBtn.addEventListener('click', function () {
+                this.handlers.nextBtn = function () {
                     self.navigateMonth(1);
-                });
+                };
+                this.elements.nextBtn.addEventListener('click', this.handlers.nextBtn);
             }
         },
 
