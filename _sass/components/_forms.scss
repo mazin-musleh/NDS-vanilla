@@ -682,20 +682,20 @@ fieldset {
     .nds-switch {
         --switch-width: 48px;
         --switch-height: 24px;
-        --thumb-size: 20px;
+        --thumb-size: 18px;
         --thumb-left: 2px;
 
         .size-sm & {
             --switch-width: 36px;
             --switch-height: 18px;
-            --thumb-size: 14px;
+            --thumb-size: 12px;
             --thumb-left: 2px;
         }
 
         .size-lg & {
             --switch-width: 56px;
             --switch-height: 28px;
-            --thumb-size: 24px;
+            --thumb-size: 22px;
             --thumb-left: 2px;
         }
 
@@ -704,6 +704,27 @@ fieldset {
         width: var(--switch-width);
         height: var(--switch-height);
         user-select: none;
+
+        &:not(:disabled)::before {
+            content: '';
+            position: absolute;
+            width: calc(var(--switch-width));
+            height: calc(var(--switch-height));
+            bottom: 50%;
+            left: 50%;
+            border-radius: 9999px;
+            transform: translate(-50%, 50%);
+            background-color: var(--controls-control-ripple-effect);
+            transition: width var(--nds-transition), height var(--nds-transition);
+            z-index: 1;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        &:not(:disabled):hover::before {
+            width: calc(var(--switch-width) + var(--spacing-md));
+            height: calc(var(--switch-height) + var(--spacing-md));
+        }
 
         .nds-switch-input {
             position: absolute;
@@ -726,14 +747,11 @@ fieldset {
             position: absolute;
             inset: 0;
             cursor: pointer;
-            background-color: var(--controls-control-border, #6C737F);
+            background-color: var(--background-white);
             border-radius: 9999px;
-            border: 1px solid var(--controls-control-border, #6C737F);
-
-            &:hover:not([disabled]) {
-                background-color: var(--controls-control-hovered, #5A6169);
-                border-color: var(--controls-control-hovered, #5A6169);
-            }
+            border: 1px solid var(--controls-control-neutral-checked);
+            z-index: 2;
+            
 
             .nds-switch-thumb {
                 position: absolute;
@@ -741,14 +759,18 @@ fieldset {
                 left: var(--thumb-left);
                 width: var(--thumb-size);
                 height: var(--thumb-size);
-                background-color: var(--colors-base-white);
+                background-color: var(--controls-control-neutral-checked);
                 border-radius: 9999px;
                 transform: translate(0px, -50%);
                 box-shadow: var(--shadow-sm);
-
             }
 
-
+            &:hover:not([disabled]) {
+                border-color: var(--controls-control-hovered, #5A6169);
+                .nds-switch-thumb {
+                    background-color: var(--controls-control-hovered, #5A6169);
+                }
+            }
 
         }
 
@@ -762,6 +784,7 @@ fieldset {
             }
 
             .nds-switch-thumb {
+                background-color: var(--colors-base-white);
                 left: unset;
                 right: var(--thumb-left);
             }
@@ -1265,7 +1288,7 @@ fieldset {
         display: none;
         position: absolute;
         z-index: 999;
-        left: 0;
+        right: 0;
         margin-top: 4px;
         padding: var(--spacing-md);
         background-color: var(--background-white, #fff);
@@ -1279,16 +1302,17 @@ fieldset {
         scroll-behavior: auto;
         overscroll-behavior: contain;
 
+        &:not(.hidden) {
+            display: flex;
+        }
+    }
+
+    .month-dropdown-menu,
+    .year-dropdown-menu {
         @include ltr {
             left: 0;
             right: unset;
         }
-
-        &:not(.hidden) {
-            display: flex;
-        }
-
-
     }
 
     .calendar-body {

@@ -353,19 +353,15 @@
     </style>
 
     <!-- Load CSS files -->
-    <link rel="stylesheet" href="{{ '/assets/css/nds-main.min.css' | relative_url }}?ver=1.013" media="print" onload="this.media='all'">
+    <link rel="preload" href="{{ '/assets/css/nds-main.min.css' | relative_url }}?ver=1.013" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
         <link rel="stylesheet" href="{{ '/assets/css/nds-main.min.css' | relative_url }}">
     </noscript>
     
-    <link rel="stylesheet" href="{{ '/assets/css/hgi-stroke-rounded.css' | relative_url }}" media="print" onload="this.media='all'">
+    <link rel="preload" href="{{ '/assets/css/hgi-stroke-rounded.css' | relative_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
         <link rel="stylesheet" href="{{ '/assets/css/hgi-stroke-rounded.css' | relative_url }}">
     </noscript>
 
-    <link rel="icon" type="image/svg+xml" href="{{ '/assets/img/favicon.svg' | relative_url }}"
-        onload="this.media='all'">
-    <noscript>
-        <link rel="icon" type="image/svg+xml" href="{{ '/assets/img/favicon.svg' | relative_url }}">
-    </noscript>
+    <link rel="icon" type="image/svg+xml" href="{{ '/assets/img/favicon.svg' | relative_url }}">
 </head>

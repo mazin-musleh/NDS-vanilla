@@ -78,8 +78,12 @@
 
 // RTL/LTR Support
 @mixin ltr {
-  @at-root html[dir="ltr"] #{&} {
-    @content;
+  @at-root {
+    @each $selector in & {
+      html[dir="ltr"] #{$selector} {
+        @content;
+      }
+    }
   }
 }
 
