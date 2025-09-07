@@ -122,15 +122,18 @@ css_files:
                 <div class="nds-tabs nds-code withDivider">
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                        <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-basic-1" id="tab-basic-1">
-                            <span class="nds-tab-label">HTML</span>
-                        </button>
-                        <button class="nds-btn nds-btn-subtle nds-tab showMore"><i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
-                        </button>
+                            <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                aria-controls="panel-basic-1" id="tab-basic-1">
+                                <span class="nds-tab-label">HTML</span>
+                            </button>
+                            <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                                    class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                            </button>
                         </nav>
                     </div>
                     <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-basic-1" aria-labelledby="tab-basic-1">
+                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-basic-1"
+                            aria-labelledby="tab-basic-1">
                             <div class="nds-code-action">
                                 <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
                                     <i class="hgi hgi-stroke hgi-copy-01"></i>
@@ -257,7 +260,7 @@ css_files:
                             <h3 class="nds-accordion-header" id="heading-payments">
                                 <button class="nds-btn nds-btn-subtle nds-btn-menu nds-btn-accordion collapsed"
                                     type="button" aria-expanded="false" aria-controls="collapse-payments">
-                                    <i class="nds-accordion-leading-icon hgi hgi-stroke hgi-credit-card-01"></i>
+                                    <i class="nds-accordion-leading-icon hgi hgi-stroke hgi-credit-card-pos"></i>
                                     <span class="nds-accordion-title">Payment Services</span>
                                 </button>
                             </h3>
@@ -277,15 +280,18 @@ css_files:
                 <div class="nds-tabs nds-code withDivider">
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                        <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-icons-1" id="tab-icons-1">
-                            <span class="nds-tab-label">HTML</span>
-                        </button>
-                        <button class="nds-btn nds-btn-subtle nds-tab showMore"><i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
-                        </button>
+                            <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                aria-controls="panel-icons-1" id="tab-icons-1">
+                                <span class="nds-tab-label">HTML</span>
+                            </button>
+                            <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                                    class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                            </button>
                         </nav>
                     </div>
                     <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-icons-1" aria-labelledby="tab-icons-1">
+                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-icons-1"
+                            aria-labelledby="tab-icons-1">
                             <div class="nds-code-action">
                                 <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
                                     <i class="hgi hgi-stroke hgi-copy-01"></i>
@@ -371,13 +377,15 @@ css_files:
     <div class="nds-section-content-container">
         <div class="nds-section-head">
             <h2 class="nds-section-title">JavaScript Integration</h2>
-            <p class="nds-section-description">Complete accordion functionality with automatic initialization and programmatic control</p>
+            <p class="nds-section-description">Complete accordion functionality with automatic initialization and
+                programmatic control</p>
         </div>
-        
+
         <div class="nds-section-content">
             <h3>Automatic Initialization</h3>
-            <p>Accordions initialize automatically on page load. Just add the HTML structure with the .nds-accordion class.</p>
-            
+            <p>Accordions initialize automatically on page load. Just add the HTML structure with the .nds-accordion
+                class.</p>
+
             <div class="nds-code">
                 <div class="nds-code-action">
                     <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
@@ -406,7 +414,7 @@ css_files:
 
             <h3>Dynamic Content Handling</h3>
             <p>After adding accordion HTML dynamically, reinitialize to activate new accordions.</p>
-            
+
             <div class="nds-code">
                 <div class="nds-code-action">
                     <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
@@ -426,7 +434,7 @@ const instance = NDSAccordion.create(newAccordion);</code>
 
             <h3>Programmatic Control</h3>
             <p>Control accordion programmatically using the public API methods.</p>
-            
+
             <div class="nds-code">
                 <div class="nds-code-action">
                     <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
@@ -450,7 +458,7 @@ console.log(`${openItems.length} items are currently open`);</code>
 
             <h3>Event Handling</h3>
             <p>Listen for accordion events to track user interactions and implement custom behaviors.</p>
-            
+
             <div class="nds-code">
                 <div class="nds-code-action">
                     <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
@@ -482,11 +490,15 @@ document.addEventListener('nds:accordion:hidden', (e) => {
             <div class="accessibility-info">
                 <h3>JavaScript Features</h3>
                 <ul>
-                    <li><strong>Automatic Initialization:</strong> All accordions initialize on page load automatically</li>
-                    <li><strong>Dynamic Content Support:</strong> Call <code>NDSAccordion.reinit()</code> after adding new accordions</li>
+                    <li><strong>Automatic Initialization:</strong> All accordions initialize on page load automatically
+                    </li>
+                    <li><strong>Dynamic Content Support:</strong> Call <code>NDSAccordion.reinit()</code> after adding
+                        new accordions</li>
                     <li><strong>Keyboard Navigation:</strong> Full ARIA-compliant keyboard support built-in</li>
-                    <li><strong>Animation Control:</strong> Respects <code>prefers-reduced-motion</code> user preferences</li>
-                    <li><strong>Event System:</strong> Custom events for <code>shown</code> and <code>hidden</code> states</li>
+                    <li><strong>Animation Control:</strong> Respects <code>prefers-reduced-motion</code> user
+                        preferences</li>
+                    <li><strong>Event System:</strong> Custom events for <code>shown</code> and <code>hidden</code>
+                        states</li>
                     <li><strong>Public API:</strong> Programmatic control methods for all accordion operations</li>
                 </ul>
 
