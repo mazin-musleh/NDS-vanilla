@@ -23,7 +23,7 @@
 .nds-btn {
   @include btn-base;
 
-  .label{
+  .label {
     width: 100%;
     text-align: start;
   }
@@ -54,7 +54,7 @@ body.hgi-loaded .nds-btn.nds-btn-menu::after {
 }
 
 .nds-btn.nds-btn-menu {
-  
+
   &::after {
     content: "㭚";
     font-family: "hgi-stroke-rounded" !important;
@@ -683,7 +683,11 @@ Available sizes:
 
 .nds-btn-full {
   width: 100%;
-  justify-content: center;
+  justify-content: center !important;
+
+  .label {
+    text-align: center !important;
+  }
 }
 
 /* Icon Visibility Controls */
