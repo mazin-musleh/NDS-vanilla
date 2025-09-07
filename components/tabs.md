@@ -182,11 +182,13 @@ direction: ltr
                 <div class="nds-tabs nds-code withDivider">
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                        <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-1" id="tab-1">
-                            <span class="nds-tab-label">HTML</span>
-                        </button>
-                        <button class="nds-btn nds-btn-subtle nds-tab showMore"><i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
-                        </button>
+                            <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                aria-controls="panel-1" id="tab-1">
+                                <span class="nds-tab-label">HTML</span>
+                            </button>
+                            <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                                    class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                            </button>
                         </nav>
                     </div>
                     <div class="nds-tab-content">
@@ -311,20 +313,25 @@ direction: ltr
                                         <!-- Custom Dropdown Menu -->
                                         <div class="nds-select-dropdown hidden">
                                             <div class="select-options">
-                                                <button type="button" class="select-option" data-value="">
+                                                <button type="button" class="nds-btn nds-btn-subtle select-option"
+                                                    data-value="">
                                                     <span class="option-text">Select time period...</span>
                                                 </button>
-                                                <button type="button" class="select-option" data-value="7days">
+                                                <button type="button" class="nds-btn nds-btn-subtle select-option"
+                                                    data-value="7days">
                                                     <span class="option-text">Last 7 Days</span>
                                                 </button>
-                                                <button type="button" class="select-option selected"
+                                                <button type="button"
+                                                    class="nds-btn nds-btn-subtle select-option selected"
                                                     data-value="30days">
                                                     <span class="option-text">Last 30 Days</span>
                                                 </button>
-                                                <button type="button" class="select-option" data-value="90days">
+                                                <button type="button" class="nds-btn nds-btn-subtle select-option"
+                                                    data-value="90days">
                                                     <span class="option-text">Last 90 Days</span>
                                                 </button>
-                                                <button type="button" class="select-option" data-value="1year">
+                                                <button type="button" class="nds-btn nds-btn-subtle select-option"
+                                                    data-value="1year">
                                                     <span class="option-text">Last Year</span>
                                                 </button>
                                             </div>
@@ -397,10 +404,13 @@ direction: ltr
                                         <!-- Custom Dropdown Menu -->
                                         <div class="nds-select-dropdown hidden">
                                             <div class="select-options">
-                                                <button type="button" class="select-option" data-value="ar">
+                                                <button type="button" class="nds-btn nds-btn-subtle select-option"
+                                                    data-value="ar">
                                                     <span class="option-text">العربية</span>
                                                 </button>
-                                                <button type="button" class="select-option selected" data-value="en">
+                                                <button type="button"
+                                                    class="nds-btn nds-btn-subtle select-option selected"
+                                                    data-value="en">
                                                     <span class="option-text">English</span>
                                                 </button>
                                             </div>
@@ -489,15 +499,18 @@ direction: ltr
                 <div class="nds-tabs nds-code withDivider">
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                        <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-icons-1" id="tab-icons-1">
-                            <span class="nds-tab-label">HTML</span>
-                        </button>
-                        <button class="nds-btn nds-btn-subtle nds-tab showMore"><i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
-                        </button>
+                            <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                aria-controls="panel-icons-1" id="tab-icons-1">
+                                <span class="nds-tab-label">HTML</span>
+                            </button>
+                            <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                                    class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                            </button>
                         </nav>
                     </div>
                     <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-icons-1" aria-labelledby="tab-icons-1">
+                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-icons-1"
+                            aria-labelledby="tab-icons-1">
                             <div class="nds-code-action">
                                 <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
                                     <i class="hgi hgi-stroke hgi-copy-01"></i>
