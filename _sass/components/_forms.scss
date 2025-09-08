@@ -11,7 +11,12 @@
         display: flex;
         flex-direction: column;
 
-
+        label {
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        
         .label {
             color: var(--field-text-label);
             font-size: var(--nds-text-md-FS);
@@ -46,17 +51,17 @@
     }
 
     &.nds-radio-container,
-    &.nds-check-container {
+    &.nds-check-container,
+    &.nds-switch-container {
         display: flex;
         gap: var(--spacing-lg);
         flex-direction: row-reverse;
         width: fit-content;
         flex-wrap: nowrap;
-        align-items: flex-start;
+        min-width: 200px;
+        justify-content: flex-end;
 
         &>.nds-form-header>.label {
-            display: inline-flex;
-            align-items: center;
             color: var(--text-display);
             font-size: var(--nds-text-md-FS);
             line-height: normal;
@@ -664,20 +669,7 @@ fieldset {
 
     }
 
-    // Switch Component Styles
-    &.nds-switch-container {
-        display: flex;
-        gap: var(--spacing-lg);
-        flex-direction: row-reverse;
-        width: fit-content;
-        flex-wrap: nowrap;
-        align-items: flex-start;
 
-        >.nds-form-header>.label {
-            display: inline-flex;
-            align-items: center;
-        }
-    }
 
     .nds-switch {
         --switch-width: 48px;
@@ -722,8 +714,8 @@ fieldset {
         }
 
         &:not(:disabled):hover::before {
-            width: calc(var(--switch-width) + var(--spacing-md));
-            height: calc(var(--switch-height) + var(--spacing-md));
+            width: calc(var(--switch-width) + var(--spacing-lg));
+            height: calc(var(--switch-height) + var(--spacing-lg));
         }
 
         .nds-switch-input {
@@ -751,7 +743,7 @@ fieldset {
             border-radius: 9999px;
             border: 1px solid var(--controls-control-neutral-checked);
             z-index: 2;
-            
+
 
             .nds-switch-thumb {
                 position: absolute;
@@ -763,10 +755,12 @@ fieldset {
                 border-radius: 9999px;
                 transform: translate(0px, -50%);
                 box-shadow: var(--shadow-sm);
+                transition: all 0.1s ease;
             }
 
             &:hover:not([disabled]) {
                 border-color: var(--controls-control-hovered, #5A6169);
+
                 .nds-switch-thumb {
                     background-color: var(--controls-control-hovered, #5A6169);
                 }
@@ -1213,7 +1207,7 @@ fieldset {
         top: 100%;
         left: 0;
         right: 0;
-        z-index: 999;
+        z-index: 3;
         margin-top: 4px;
         padding: 0;
         max-width: 500px;

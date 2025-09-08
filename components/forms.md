@@ -77,7 +77,9 @@ direction: ltr
             <div class="state-demo">
               <div class="nds-form-container">
                 <div class="nds-form-header">
-                  <label class="label" for="textInput">Text Input</label>
+                  <label for="textInput">
+                    <span class="label">Text Input</span>
+                  </label>
                 </div>
                 <div class="nds-form-control">
                   <input type="text" id="textInput" class="nds-input" placeholder="Enter text..." value="">
@@ -114,7 +116,9 @@ direction: ltr
                 <code class="lang-html code">
                   <div class="nds-form-container">
                     <div class="nds-form-header">
-                      <label class="label" for="textInput">Text Input</label>
+                      <label for="textInput">
+                        <span class="label">Text Input</span>
+                      </label>
                     </div>
                     <div class="nds-form-control">
                       <input type="text" id="textInput" class="nds-input" placeholder="Enter text..." value="">
@@ -151,7 +155,9 @@ direction: ltr
             <div class="state-demo">
               <div class="nds-form-container">
                 <div class="nds-form-header">
-                  <label class="label" for="searchInput">Search Input</label>
+                  <label for="searchInput">
+                    <span class="label">Search Input</span>
+                  </label>
                 </div>
                 <div class="nds-form-control">
                   <i class="hgi hgi-stroke hgi-search-01 icon"></i>
@@ -192,7 +198,9 @@ direction: ltr
                 <code class="lang-html code">
                   <div class="nds-form-container">
                     <div class="nds-form-header">
-                      <label class="label" for="searchInput">Search Input</label>
+                      <label for="searchInput">
+                        <span class="label">Search Input</span>
+                      </label>
                     </div>
                     <div class="nds-form-control">
                       <i class="hgi hgi-stroke hgi-search-01 icon"></i>
@@ -233,7 +241,9 @@ direction: ltr
             <div class="state-demo">
               <div class="nds-form-container">
                 <div class="nds-form-header">
-                  <label class="label" for="emailInput">Email Input</label>
+                  <label for="emailInput">
+                    <span class="label">Email Input</span>
+                  </label>
                 </div>
                 <div class="nds-form-control">
                   <i class="hgi hgi-stroke hgi-mail-01 icon"></i>
@@ -271,7 +281,9 @@ direction: ltr
                 <code class="lang-html code">
                   <div class="nds-form-container">
                     <div class="nds-form-header">
-                      <label class="label" for="emailInput">Email Input</label>
+                      <label for="emailInput">
+                        <span class="label">Email Input</span>
+                      </label>
                     </div>
                     <div class="nds-form-control">
                       <i class="hgi hgi-stroke hgi-mail-01 icon"></i>
@@ -309,7 +321,9 @@ direction: ltr
             <div class="state-demo">
               <div class="nds-form-container">
                 <div class="nds-form-header">
-                  <label class="label" for="passwordInput">Password Input</label>
+                  <label for="passwordInput">
+                    <span class="label">Password Input</span>
+                  </label>
                 </div>
                 <div class="nds-form-control">
                   <div class="nds-form-action before">
@@ -351,7 +365,9 @@ direction: ltr
                 <code class="lang-html code">
                   <div class="nds-form-container">
                     <div class="nds-form-header">
-                      <label class="label" for="passwordInput">Password Input</label>
+                      <label for="passwordInput">
+                        <span class="label">Password Input</span>
+                      </label>
                     </div>
                     <div class="nds-form-control">
                       <div class="nds-form-action before">
@@ -393,7 +409,9 @@ direction: ltr
             <div class="state-demo">
               <div class="nds-form-container nds-textarea">
                 <div class="nds-form-header">
-                  <label class="label" for="textareaInput">Textarea</label>
+                  <label for="textareaInput">
+                    <span class="label">Textarea</span>
+                  </label>
                 </div>
                 <div class="nds-form-control">
                   <textarea id="textareaInput" class="nds-textarea" placeholder="Enter your message..."
@@ -426,7 +444,9 @@ direction: ltr
                 <code class="lang-html code">
                   <div class="nds-form-container nds-textarea">
                     <div class="nds-form-header">
-                      <label class="label" for="textareaInput">Textarea</label>
+                      <label for="textareaInput">
+                        <span class="label">Textarea</span>
+                      </label>
                     </div>
                     <div class="nds-form-control">
                       <textarea id="textareaInput" class="nds-textarea" placeholder="Enter your message..." rows="4"></textarea>
@@ -458,7 +478,9 @@ direction: ltr
             <div class="state-demo">
               <div class="nds-form-container nds-select">
                 <div class="nds-form-header">
-                  <label class="label" for="selectInput">Select Dropdown</label>
+                  <label for="selectInput">
+                    <span class="label">Select Dropdown</span>
+                  </label>
                 </div>
                 <div class="nds-form-control">
                   <input type="text" id="selectInput" class="nds-input nds-select-input"
@@ -510,7 +532,9 @@ direction: ltr
                 <code class="lang-html code">
                   <div class="nds-form-container">
                     <div class="nds-form-header">
-                      <label class="label" for="selectInput">Select Dropdown</label>
+                      <label for="selectInput">
+                        <span class="label">Select Dropdown</span>
+                      </label>
                     </div>
                     <div class="nds-form-control">
                       <input type="text" id="selectInput" class="nds-input nds-select-input" placeholder="Choose an option..." readonly>
@@ -580,7 +604,9 @@ direction: ltr
                 <div class="nds-radio-group">
                   <div class="nds-form-container nds-radio-container">
                     <div class="nds-form-header">
-                      <label class="label" for="radio1">Neutral</label>
+                      <label for="radio1">
+                        <span class="label">Neutral</span>
+                      </label>
                     </div>
                     <div class="nds-form-control">
                       <input type="radio" id="radio1" name="radioGroup" value="option1" class="nds-radio">
@@ -588,8 +614,10 @@ direction: ltr
                   </div>
                   <div class="nds-form-container nds-radio-container">
                     <div class="nds-form-header">
-                      <label class="label" for="radio2">Primary</label>
-                      <span class="info">When a selection needs a further detailed explanation, it goes here.</span>
+                      <label for="radio2">
+                        <span class="label">Primary</span>
+                        <span class="info">When a selection needs a further detailed explanation, it goes here.</span>
+                      </label>
                     </div>
                     <div class="nds-form-control">
                       <input type="radio" id="radio2" name="radioGroup" value="option2" checked
@@ -624,7 +652,9 @@ direction: ltr
                     <legend class="label">Radio Button Group</legend>
                     <div class="nds-form-container nds-radio-container">
                       <div class="nds-form-header">
-                        <label class="label" for="radio1">Neutral</label>
+                        <label for="radio1">
+                          <span class="label">Neutral</span>
+                        </label>
                       </div>
                       <div class="nds-form-control">
                         <input type="radio" id="radio1" name="radioGroup" value="option1" class="nds-radio">
@@ -632,8 +662,10 @@ direction: ltr
                     </div>
                     <div class="nds-form-container nds-radio-container">
                       <div class="nds-form-header">
-                        <label class="label" for="radio2">Primary</label>
-                        <span class="info">When a selection needs a further detailed explanation, it goes here.</span>
+                        <label for="radio2">
+                          <span class="label">Primary</span>
+                          <span class="info">When a selection needs a further detailed explanation, it goes here.</span>
+                        </label>
                       </div>
                       <div class="nds-form-control">
                         <input type="radio" id="radio2" name="radioGroup" value="option2" class="nds-radio primary">
@@ -684,7 +716,9 @@ direction: ltr
                 <div class="nds-check-group">
                   <div class="nds-form-container nds-check-container">
                     <div class="nds-form-header">
-                      <label class="label" for="checkbox1">Neutral</label>
+                      <label for="checkbox1">
+                        <span class="label">Neutral</span>
+                      </label>
                     </div>
                     <div class="nds-form-control">
                       <input type="checkbox" id="checkbox1" name="checkboxGroup" value="option1" class="nds-check">
@@ -692,10 +726,12 @@ direction: ltr
                   </div>
                   <div class="nds-form-container nds-check-container">
                     <div class="nds-form-header">
-                      <label class="label" for="checkbox2">Primary</label>
-                      <span class="info">When a selection needs a further detailed explanation, it goes here.</span>
-                      <span class="error">
-                        <i class="hgi hgi-stroke hgi-alert-circle icon"></i>Error/Warning message.</span>
+                      <label for="checkbox2">
+                        <span class="label">Primary</span>
+                        <span class="info">When a selection needs a further detailed explanation, it goes here.</span>
+                        <span class="error">
+                          <i class="hgi hgi-stroke hgi-alert-circle icon"></i>Error/Warning message.</span>
+                      </label>
                     </div>
                     <div class="nds-form-control">
                       <input type="checkbox" id="checkbox2" name="checkboxGroup" value="option2"
@@ -704,7 +740,9 @@ direction: ltr
                   </div>
                   <div class="nds-form-container nds-check-container">
                     <div class="nds-form-header">
-                      <label class="label" for="checkbox3">Indeterminate</label>
+                      <label for="checkbox3">
+                        <span class="label">Indeterminate</span>
+                      </label>
                     </div>
                     <div class="nds-form-control">
                       <input type="checkbox" id="checkbox3" name="checkboxGroup" value="option3"
@@ -740,7 +778,9 @@ direction: ltr
                     <legend class="label">Checkbox Group</legend>
                     <div class="nds-form-container nds-check-container">
                       <div class="nds-form-header">
-                        <label class="label" for="checkbox1">Neutral</label>
+                        <label for="checkbox1">
+                          <span class="label">Neutral</span>
+                        </label>
                       </div>
                       <div class="nds-form-control">
                         <input type="checkbox" id="checkbox1" name="checkboxGroup" value="option1" class="nds-check">
@@ -748,8 +788,10 @@ direction: ltr
                     </div>
                     <div class="nds-form-container nds-check-container">
                       <div class="nds-form-header">
-                        <label class="label" for="checkbox2">Primary</label>
-                        <span class="info">When a selection needs a further detailed explanation, it goes here.</span>
+                        <label for="checkbox2">
+                          <span class="label">Primary</span>
+                          <span class="info">When a selection needs a further detailed explanation, it goes here.</span>
+                        </label>
                       </div>
                       <div class="nds-form-control">
                         <input type="checkbox" id="checkbox2" name="checkboxGroup" value="option2" class="nds-check primary">
@@ -786,10 +828,12 @@ direction: ltr
             <div class="state-demo">
               <div class="nds-form-container nds-file-upload multi-file-upload dropBox">
                 <div class="nds-form-header hidden">
-                  <label class="label" for="multiFileUpload">Upload files</label>
-                  <span class="info">
-                    Maximum file size allowed is 2MB, supported file formats include .jpg, .png, and .pdf.
-                  </span>
+                  <label for="multiFileUpload">
+                    <span class="label">Upload files</span>
+                    <span class="info">
+                      Maximum file size allowed is 2MB, supported file formats include .jpg, .png, and .pdf.
+                    </span>
+                  </label>
                 </div>
 
                 <div class="nds-form-control" id="multiDropZone">
@@ -885,10 +929,12 @@ direction: ltr
                 <code class="lang-html code">
 <div class="nds-form-container nds-file-upload multi-file-upload dropBox">
     <div class="nds-form-header hidden">
-        <label class="label" for="multiFileUpload">Upload files</label>
-        <span class="info">
+        <label for="multiFileUpload">
+          <span class="label">Upload files</span>
+          <span class="info">
             Maximum file size allowed is 2MB, supported file formats include .jpg, .png, and .pdf.
-        </span>
+          </span>
+        </label>
     </div>
 
     <div class="nds-form-control" id="multiDropZone">
@@ -1280,7 +1326,9 @@ document.getElementById('resetButton').addEventListener('click', () => {
 
               <div class="nds-form-container nds-date-picker">
                 <div class="nds-form-header">
-                  <label class="label" for="datePickerInput">Select Date</label>
+                  <label for="datePickerInput">
+                    <span class="label">Select Date</span>
+                  </label>
                 </div>
                 <div class="nds-form-control">
                   <div class="nds-form-action before">
@@ -1377,7 +1425,9 @@ document.getElementById('resetButton').addEventListener('click', () => {
                 <code class="lang-html code">
                   <div class="nds-form-container nds-date-picker">
                     <div class="nds-form-header">
-                      <label class="label" for="datePickerInput">Select Date</label>
+                      <label for="datePickerInput">
+                        <span class="label">Select Date</span>
+                      </label>
                     </div>
                     <div class="nds-form-control">
                       <div class="nds-form-action before">
@@ -1491,7 +1541,9 @@ document.getElementById('resetButton').addEventListener('click', () => {
                 <div class="nds-switch-group">
                   <div class="nds-form-container nds-switch-container">
                     <div class="nds-form-header">
-                      <label class="label" for="switch1">Neutral Switch</label>
+                      <label for="switch1">
+                        <span class="label">Neutral Switch</span>
+                      </label>
                     </div>
                     <div class="nds-form-control">
                       <div class="nds-switch">
@@ -1504,8 +1556,10 @@ document.getElementById('resetButton').addEventListener('click', () => {
                   </div>
                   <div class="nds-form-container nds-switch-container">
                     <div class="nds-form-header">
-                      <label class="label" for="switch2">Primary Switch</label>
-                      <span class="info">When a selection needs a further detailed explanation, it goes here.</span>
+                      <label for="switch2">
+                        <span class="label">Primary Switch</span>
+                        <span class="info">When a selection needs a further detailed explanation, it goes here.</span>
+                      </label>
                     </div>
                     <div class="nds-form-control">
                       <div class="nds-switch primary">
@@ -1519,7 +1573,9 @@ document.getElementById('resetButton').addEventListener('click', () => {
                   </div>
                   <div class="nds-form-container nds-switch-container">
                     <div class="nds-form-header">
-                      <label class="label" for="switch3">Disabled Switch</label>
+                      <label for="switch3">
+                        <span class="label">Disabled Switch</span>
+                      </label>
                     </div>
                     <div class="nds-form-control">
                       <div class="nds-switch disabled">
@@ -1560,7 +1616,9 @@ document.getElementById('resetButton').addEventListener('click', () => {
                     <legend class="label">Switch Group</legend>
                     <div class="nds-form-container nds-switch-container">
                       <div class="nds-form-header">
-                        <label class="label" for="switch1">Neutral Switch</label>
+                        <label for="switch1">
+                          <span class="label">Neutral Switch</span>
+                        </label>
                       </div>
                       <div class="nds-form-control">
                         <div class="nds-switch">
@@ -1573,8 +1631,10 @@ document.getElementById('resetButton').addEventListener('click', () => {
                     </div>
                     <div class="nds-form-container nds-switch-container">
                       <div class="nds-form-header">
-                        <label class="label" for="switch2">Primary Switch</label>
-                        <span class="info">When a selection needs a further detailed explanation, it goes here.</span>
+                        <label for="switch2">
+                          <span class="label">Primary Switch</span>
+                          <span class="info">When a selection needs a further detailed explanation, it goes here.</span>
+                        </label>
                       </div>
                       <div class="nds-form-control">
                         <div class="nds-switch primary">
