@@ -99,6 +99,7 @@
     padding: var(--spacing-xl) 0;
     background: transparent;
     border: none;
+    max-height: 400px;
 
     // Line numbering styles
     &.line-numbers {

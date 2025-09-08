@@ -515,13 +515,13 @@
         
         if (!firstClass) return;
         
-        // Find the element in the code by tag and first class
+        // Find the element in the code by tag and first class, handling both regular and self-closing tags
         const elementRegex = new RegExp(
-            `<${tagName}([^>]*class="[^"]*\\b${firstClass.replace(/[-[\]/{}()*+?.\\^$|]/g, "\\$&")}\\b[^"]*"[^>]*)>`,
+            `<${tagName}([^>]*class="[^"]*\\b${firstClass.replace(/[-[\]/{}()*+?.\\^$|]/g, "\\$&")}\\b[^"]*"[^>]*?)(\\s*\\/?)>`,
             'gi'
         );
         
-        updatedCode = updatedCode.replace(elementRegex, (match, attributes) => {
+        updatedCode = updatedCode.replace(elementRegex, (match, attributes, selfClosing) => {
             let elementAttributes = attributes;
             
             // For each changed attribute, update it in the code
@@ -545,7 +545,7 @@
                 }
             });
             
-            return `<${tagName}${elementAttributes}>`;
+            return `<${tagName}${elementAttributes}${selfClosing}>`;
         });
         
         codeElement.textContent = updatedCode;
