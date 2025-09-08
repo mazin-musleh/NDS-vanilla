@@ -691,12 +691,14 @@
             
             const totalDelay = utils.closeAllDropdowns();
 
+            // Wait for dropdown animations to complete before starting main nav close
+            const navCloseDelay = totalDelay > 0 ? totalDelay : 0;
 
-            // Only add closing class after dropdowns start closing
+            // Only add closing class after dropdowns finish closing
             setTimeout(() => {
                 DOM.collapse?.classList.add('closing');
                 DOM.collapse?.classList.remove('opened');
-            }, totalDelay > 0 ? 50 : 0);
+            }, navCloseDelay);
 
             setTimeout(() => {
                 DOM.collapse?.classList.remove('show');
@@ -705,7 +707,7 @@
                 
                 state.isAnimatingMenu = false;
                 processAllPendingActions();
-            }, totalDelay + duration);
+            }, navCloseDelay + duration);
         }
     }
 
