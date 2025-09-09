@@ -47,44 +47,44 @@ direction: ltr
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Basic tab navigation">
                                 <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
                                     aria-controls="panel-home" id="tab-home" tabindex="0" data-label="Home">
-                                    <span class="nds-tab-label">Home</span>
+                                    <span class="label">Home</span>
                                 </button>
                                 <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="false"
                                     aria-controls="panel-services" id="tab-services" tabindex="-1"
                                     data-label="Services">
-                                    <span class="nds-tab-label">Services</span>
+                                    <span class="label">Services</span>
                                 </button>
                                 <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="false"
                                     aria-controls="panel-about" id="tab-about" tabindex="-1">
-                                    <span class="nds-tab-label">About</span>
+                                    <span class="label">About</span>
                                 </button>
                                 <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="false"
                                     aria-controls="panel-contact" id="tab-contact" tabindex="-1">
-                                    <span class="nds-tab-label">Contact</span>
+                                    <span class="label">Contact</span>
                                 </button>
                                 <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="false"
                                     aria-controls="panel-support" id="tab-support" tabindex="-1">
-                                    <span class="nds-tab-label">Support</span>
+                                    <span class="label">Support</span>
                                 </button>
                                 <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="false"
                                     aria-controls="panel-resources" id="tab-resources" tabindex="-1">
-                                    <span class="nds-tab-label">Resources</span>
+                                    <span class="label">Resources</span>
                                 </button>
                                 <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="false"
                                     aria-controls="panel-documentation" id="tab-documentation" tabindex="-1">
-                                    <span class="nds-tab-label">Documentation</span>
+                                    <span class="label">Documentation</span>
                                 </button>
                                 <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="false"
                                     aria-controls="panel-news" id="tab-news" tabindex="-1">
-                                    <span class="nds-tab-label">News</span>
+                                    <span class="label">News</span>
                                 </button>
                                 <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="false"
                                     aria-controls="panel-feedback" id="tab-feedback" tabindex="-1">
-                                    <span class="nds-tab-label">Feedback</span>
+                                    <span class="label">Feedback</span>
                                 </button>
                                 <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="false"
                                     aria-controls="panel-settings" id="tab-settings" tabindex="-1">
-                                    <span class="nds-tab-label">Settings</span>
+                                    <span class="label">Settings</span>
                                 </button>
                                 <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
@@ -184,7 +184,7 @@ direction: ltr
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
                                 aria-controls="panel-1" id="tab-1">
-                                <span class="nds-tab-label">HTML</span>
+                                <span class="label">HTML</span>
                             </button>
                             <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
                                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
@@ -203,10 +203,10 @@ direction: ltr
                                     <div class="nds-tab-list-container">
                                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                                         <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-1" id="tab-1">
-                                            <span class="nds-tab-label">Tab 1</span>
+                                            <span class="label">Tab 1</span>
                                         </button>
                                         <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="false" aria-controls="panel-2" id="tab-2">
-                                            <span class="nds-tab-label">Tab 2</span>
+                                            <span class="label">Tab 2</span>
                                         </button>
                                         <button class="nds-btn nds-btn-subtle nds-tab showMore"><i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                         </button>
@@ -257,17 +257,17 @@ direction: ltr
                                 <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
                                     aria-controls="panel-dashboard" id="tab-dashboard" tabindex="0">
                                     <i class="hgi hgi-stroke hgi-home-05"></i>
-                                    <span class="nds-tab-label">Dashboard</span>
+                                    <span class="label">Dashboard</span>
                                 </button>
                                 <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="false"
                                     aria-controls="panel-analytics" id="tab-analytics" tabindex="-1">
                                     <i class="hgi hgi-stroke hgi-analytics-01"></i>
-                                    <span class="nds-tab-label">Analytics</span>
+                                    <span class="label">Analytics</span>
                                 </button>
                                 <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="false"
                                     aria-controls="panel-settings" id="tab-settings" tabindex="-1">
                                     <i class="hgi hgi-stroke hgi-settings-01"></i>
-                                    <span class="nds-tab-label">Settings</span>
+                                    <span class="label">Settings</span>
                                 </button>
                                 <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
@@ -501,7 +501,7 @@ direction: ltr
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
                                 aria-controls="panel-icons-1" id="tab-icons-1">
-                                <span class="nds-tab-label">HTML</span>
+                                <span class="label">HTML</span>
                             </button>
                             <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
                                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
@@ -522,15 +522,15 @@ direction: ltr
                                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Icon tab navigation">
                                         <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-1" id="tab-1">
                                             <i class="hgi hgi-stroke hgi-home-05"></i>
-                                            <span class="nds-tab-label">Dashboard</span>
+                                            <span class="label">Dashboard</span>
                                         </button>
                                         <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="false" aria-controls="panel-2" id="tab-2">
                                             <i class="hgi hgi-stroke hgi-analytics-01"></i>
-                                            <span class="nds-tab-label">Analytics</span>
+                                            <span class="label">Analytics</span>
                                         </button>
                                         <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="false" aria-controls="panel-3" id="tab-3">
                                             <i class="hgi hgi-stroke hgi-settings-01"></i>
-                                            <span class="nds-tab-label">Settings</span>
+                                            <span class="label">Settings</span>
                                         </button>
                                         <button class="nds-btn nds-btn-subtle nds-tab showMore"><i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                         </button>

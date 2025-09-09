@@ -854,6 +854,30 @@
     --tag-border-error: var(--colors-red-700);
     --tag-border-error-light: var(--colors-red-200);
     --tag-dot: var(--colors-alpha-alpha-white-60);
+    
+    // Chip tokens - Added Manualy 
+    --chip-background-neutral-default: var(--colors-neutral-100);
+    --chip-background-neutral-hovered: var(--colors-neutral-200);
+    --chip-background-neutral-selected: var(--colors-neutral-700);
+    --chip-background-neutral-focused: var(--colors-neutral-100);
+    --chip-background-on-color-default: var(--colors-base-white);
+    --chip-background-on-color-hovered: var(--colors-alpha-alpha-white-80);
+    --chip-background-on-color-pressed: var(--colors-alpha-alpha-white-60);
+    --chip-background-on-color-selected: var(--colors-alpha-alpha-white-70);
+    --chip-background-on-color-focused: var(--colors-base-white);
+    --chip-background-on-color-disabled: var(--colors-alpha-alpha-white-20);
+    --chip-background-primary-default: var(--colors-primary-sa-flag-50);
+    --chip-background-primary-hovered: var(--colors-primary-sa-flag-200);
+    --chip-background-primary-pressed: var(--colors-primary-sa-flag-900);
+    --chip-background-primary-selected: var(--colors-primary-sa-flag-600-primary);
+    --chip-background-primary-focused: var(--colors-primary-sa-flag-50);
+    --chip-text-neutral-default: var(--colors-base-black);
+    --chip-text-neutral-selected: var(--colors-base-white);
+    --chip-text-primary-default: var(--colors-primary-sa-flag-800);
+    --chip-text-oncolor-primary: var(--colors-base-white);
+    --chip-text-disabled: var(--colors-neutral-400);
+    --chip-text-oncolor-disabled: var(--colors-alpha-alpha-white-40);
+    
     --form-text-form-title: var(--text-default);
     --controls-control-primary: var(--alpha-white-0);
     --table-cell-border: var(--colors-neutral-300);

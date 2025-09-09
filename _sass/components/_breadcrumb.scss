@@ -36,7 +36,6 @@
 /* Arrow separator */
 .hgi-loaded .nds-breadcrumb li:not(:last-child)::after {
     content: "㭪";
-    margin: 0 0.5em;
     color: var(--colors-neutral-400, #9DA4AE);
     font-family: "hgi-stroke-rounded" !important;
     font-style: normal;
@@ -47,7 +46,8 @@
     opacity: 0;
     transition: opacity 0.1s ease;
     line-height: 1;
-    margin-bottom: -3px;
+    min-width: 24px;
+    text-align: center;
 }
 
 body.hgi-loaded .nds-breadcrumb li:not(:last-child)::after {
