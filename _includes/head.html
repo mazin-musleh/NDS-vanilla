@@ -5,14 +5,8 @@
         content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}">
     <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
 
-    <!-- Preload critical resources for home page only -->
-    {% if page.layout == 'home' or page.url == '/' %}
-    <link rel="preload" href="{{ page.hero_image | default: site.hero_image | relative_url }}" as="image" fetchpriority="high">
-    {% endif %}
-
     <!-- Critical CSS inline -->
     <style>
-
         /* ===== RESET & BASE ===== */
         *,
         *::before,
@@ -162,6 +156,11 @@
         .nds-hero-section.sub .nds-hero-image-wrapper,
         .nds-hero-section.sub .nds-hero-shape {
             display: none;
+        }
+
+        .nds-breadcrumb li::after {
+            content: '';
+            min-width: 24px;
         }
 
         /* Hero Image Wrapper */
@@ -353,12 +352,25 @@
     </style>
 
     <!-- Load CSS files -->
-    <link rel="preload" href="{{ '/assets/css/nds-main.min.css' | relative_url }}?ver=1.013" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="{{ '/assets/css/nds-main.min.css' | relative_url }}?ver=1.013" as="style"
+        onload="this.onload=null;this.rel='stylesheet'" fetchpriority="high">
     <noscript>
         <link rel="stylesheet" href="{{ '/assets/css/nds-main.min.css' | relative_url }}">
     </noscript>
+
+    <!-- Preload critical resources -->
+    {% if page.layout == 'home' or page.url == '/' %}
+    <link rel="preload" href="{{ page.hero_image | default: site.hero_image | relative_url }}" as="image"
+        fetchpriority="high">
+    {% endif %}
+
+    <!-- Preload IBM Plex Sans Arabic fonts -->
     
-    <link rel="preload" href="{{ '/assets/css/hgi-stroke-rounded.css' | relative_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="{{ '/assets/fonts/IBMPlexSansArabic-Regular.woff2' | relative_url }}" as="font"
+        type="font/woff2" crossorigin>
+
+    <link rel="stylesheet" href="{{ '/assets/css/hgi-stroke-rounded.css' | relative_url }}" media="print"
+        onload="this.media='all'">
     <noscript>
         <link rel="stylesheet" href="{{ '/assets/css/hgi-stroke-rounded.css' | relative_url }}">
     </noscript>

@@ -24,3 +24,6 @@
     - label: "Tabs"
       url: "/components/tabs"
       href: "/components/tabs.html"
+    - label: "Tags"
+      url: "/components/tags"
+      href: "/components/tags.html"

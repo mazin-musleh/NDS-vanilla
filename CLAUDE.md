@@ -92,11 +92,28 @@ The NDS button system follows strict Figma specifications:
 
 ### Adding New Components
 1. Create component styles in `_sass/components/_[component].scss`
-2. Add component documentation page (e.g., `component.md`)
-3. Include component in `_includes/` if reusable across pages
-4. Update navigation and component showcase sections
-5. Follow existing naming conventions (`nds-` prefix)
-6. Import new component SCSS file in main stylesheet
+2. Add component documentation page (e.g., `components/[component].md`)
+3. Add component to side navigation in `_data/sidemenu.yml`
+4. Set proper breadcrumb in component page front matter
+5. Include component in `_includes/` if reusable across pages
+6. Follow existing naming conventions (`nds-` prefix)
+7. Import new component SCSS file in main stylesheet
+
+#### Navigation Setup
+**Side Menu (`_data/sidemenu.yml`):**
+```yaml
+- label: "Components"
+  has_sub: true
+  children:
+    - label: "Component Name"
+      url: "/components/component-name"
+      href: "/components/component-name.html"
+```
+
+**Breadcrumb (component page front matter):**
+```yaml
+breadcrumb: ["Components", "Component Name"]
+```
 
 ### SCSS Variables and Mixins
 All design tokens are defined in `_sass/_variables.scss`:
@@ -134,6 +151,61 @@ direction: ltr
 - Use `nds-btn-destructive` for destructive actions
 - Include proper ARIA labels for icon-only buttons
 
+### Demo Card Structure
+Use this HTML structure for component documentation pages:
+
+```html
+<div class="nds-demo-card">
+    <div class="demo-header">
+        <div class="demo-label">Component Name</div>
+        <div class="demo-action">
+            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                <span class="label">Remove bg</span>
+            </button>
+        </div>
+    </div>
+    <div class="demo-container">
+        <div class="state-demo">
+            <!-- Component variations go here -->
+        </div>
+    </div>
+    <div class="nds-tabs nds-code withDivider">
+        <div class="nds-tab-list-container">
+            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                    aria-controls="panel-example-1" id="tab-example-1">
+                    <span class="nds-tab-label">HTML</span>
+                </button>
+            </nav>
+        </div>
+        <div class="nds-tab-content">
+            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-example-1"
+                aria-labelledby="tab-example-1">
+                <div class="nds-code-action">
+                    <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                    </button>
+                </div>
+                <code class="lang-html code">
+                    <!-- HTML code example here -->
+                </code>
+            </div>
+        </div>
+    </div>
+</div>
+```
+
+**Demo Toggle Options:**
+- `'["noBg", ".demo-container", "containerBg"]'` - Toggle background removal
+- `'["darkBg", ".demo-container", "containerBg"]'` - Toggle dark background
+- `'["nds-btn-indicator", ".nds-btn-demo", "indicator"]'` - Toggle button indicators
+
+**Demo Container Classes:**
+- `.demo-container` - Main demo area
+- `.state-demo` - Contains component state variations
+- `.nds-demo-card` - Wrapper for each demo section
+
 ### JavaScript Functionality
 - `nds-navController.js`: Navigation and menu interactions
 - `nds-extras.js`: Component-specific behaviors (button interactions, copy functionality)
@@ -167,6 +239,45 @@ ruby _plugins/js_processor.rb
 - **NEVER read** `assets/css/hgi-stroke-rounded.css` - this is a large icon font file that should not be analyzed
 - **NEVER read** any `.min.js` or `.min.css` files - these are minified/compressed files that should not be analyzed
 
+## Figma MCP Integration
+
+This project has Figma MCP integration available. Use these tools to extract design components from Figma:
+
+### Available Figma Tools
+- `mcp__figma__get_metadata`: Get basic node information (name, dimensions, position)
+- `mcp__figma__get_code`: Get complete implementation code for a selected component
+- `mcp__figma__get_image`: Get visual preview of the selected component
+- `mcp__figma__get_variable_defs`: Get design tokens/variables for the component
+- `mcp__figma__get_code_connect_map`: Get mapping between Figma components and codebase
+
+### Figma Workflow
+1. **Always start with metadata** to understand what's selected:
+   ```
+   mcp__figma__get_metadata (no parameters for currently selected)
+   ```
+
+2. **Get implementation details** for any component:
+   ```
+   mcp__figma__get_code with nodeId from metadata
+   ```
+
+3. **Get visual context** to understand the design:
+   ```
+   mcp__figma__get_image with nodeId from metadata
+   ```
+
+### Framework Context
+Always provide these parameters when using Figma tools:
+- `clientFrameworks`: "jekyll"
+- `clientLanguages`: "html,css,scss,javascript"
+
+### Implementation Notes
+- Figma generates React/Tailwind code by default
+- Convert to NDS Jekyll patterns using existing component conventions
+- Follow NDS naming: `nds-[component]` with modifiers like `nds-[component]-[variant]`
+- Use existing SCSS variables from `_sass/_variables.scss`
+- Maintain RTL/LTR support with proper Arabic typography
+
 ## Important Notes
 
 - This is a **documentation site** for a design system, not a web application
@@ -174,3 +285,4 @@ ruby _plugins/js_processor.rb
 - The site showcases component variations, states, and usage examples
 - Copy-to-clipboard functionality allows developers to copy component HTML
 - Interactive demos show different button states and background scenarios
+- this project RTL by dafault,  add LTR styling when needed with @include ltr in mixins

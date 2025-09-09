@@ -205,7 +205,7 @@
   @include btn-indicator('b');
 
   /* Selected tab label enhancement */
-  &[aria-selected="true"] .nds-tab-label {
+  &[aria-selected="true"] .label {
     color: var(--text-default);
     filter: drop-shadow(0 0 .02em currentColor);
   }

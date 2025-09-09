@@ -1,0 +1,185 @@
+// Tags Component
+// Based on Figma specifications with RTL-first approach
+
+@use '../mixins' as *;
+
+.nds-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  font-weight: 500;
+  font-size: 16px;
+  height: 32px;
+  white-space: nowrap;
+  text-align: center;
+  border-radius: var(--radius-sm);
+  transition: var(--nds-transition);
+  position: relative;
+  box-sizing: border-box;
+
+  // Size variations
+  &.nds-tag-sm {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: 14px;
+    height: 24px;
+
+    .nds-tag-icon {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  &.nds-tag-xs {
+    padding: 2px var(--spacing-sm);
+    font-size: 12px;
+    height: 20px;
+
+    .nds-tag-icon {
+      width: 14px;
+      height: 14px;
+    }
+  }
+
+  // Icon support
+  .nds-tag-icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  // Icon-only variant
+  &.nds-tag-icon-only {
+    padding: var(--spacing-xs);
+    
+    &.nds-tag-sm {
+      padding: 2px;
+      width: 20px;
+      height: 20px;
+    }
+    
+    &.nds-tag-md {
+      padding: var(--spacing-xs);
+      width: 26px;
+      height: 26px;
+    }
+    
+    &.nds-tag-xs {
+      padding: 1px;
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  // Style variations - Filled (default)
+  &.nds-tag-neutral {
+    background-color: var(--tag-background-neutral-light);
+    color: var(--tag-text-neutral);
+    border: 1px solid var(--border-neutral-secondary);
+  }
+
+  &.nds-tag-success {
+    background-color: var(--tag-background-success-light);
+    color: var(--tag-text-success);
+    border: 1px solid var(--tag-border-success-light);
+  }
+
+  &.nds-tag-info {
+    background-color: var(--tag-background-info-light);
+    color: var(--tag-text-info);
+    border: 1px solid var(--tag-border-info-light);
+  }
+
+  &.nds-tag-warning {
+    background-color: var(--tag-background-warning-light);
+    color: var(--tag-text-warning);
+    border: 1px solid var(--tag-border-warning-light);
+  }
+
+  &.nds-tag-error {
+    background-color: var(--tag-background-error-light);
+    color: var(--tag-text-error);
+    border: 1px solid var(--tag-border-error-light);
+  }
+
+  &.nds-tag-oncolor {
+    background-color: var(--tag-background-on-color);
+    color: white;
+    border: 1px solid var(--tag-border-on-color);
+  }
+
+  // Outline variants
+  &.nds-tag-outline {
+    background-color: transparent;
+
+    &.nds-tag-neutral {
+      border: 1px solid var(--tag-border-neutral);
+      color: var(--tag-text-neutral);
+    }
+
+    &.nds-tag-success {
+      border: 1px solid var(--tag-border-success);
+      color: var(--tag-text-success);
+    }
+
+    &.nds-tag-info {
+      border: 1px solid var(--tag-border-info);
+      color: var(--tag-text-info);
+    }
+
+    &.nds-tag-warning {
+      border: 1px solid var(--tag-border-warning);
+      color: var(--tag-text-warning);
+    }
+
+    &.nds-tag-error {
+      border: 1px solid var(--tag-border-error);
+      color: var(--tag-text-error);
+    }
+
+    &.nds-tag-oncolor {
+      border: 1px solid var(--tag-border-on-color);
+      color: white;
+    }
+  }
+
+  // Rounded variant
+  &.nds-tag-rounded {
+    border-radius: 12px;
+
+    &.nds-tag-sm {
+      border-radius: 10px;
+    }
+
+    &.nds-tag-xs {
+      border-radius: 8px;
+    }
+  }
+
+  // RTL adjustments with LTR override
+  .nds-tag-icon + .nds-tag-label {
+    margin-inline-start: var(--spacing-xs);
+  }
+
+  .nds-tag-label + .nds-tag-icon {
+    margin-inline-start: var(--spacing-xs);
+  }
+
+  @include ltr {
+    // LTR-specific adjustments if needed
+    // Most styling is handled by logical properties above
+  }
+}
+
+// Tag group/list styling
+.nds-tag-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  align-items: flex-start;
+
+  @include ltr {
+    // LTR-specific group styling if needed
+  }
+}
