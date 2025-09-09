@@ -9,22 +9,23 @@
   justify-content: center;
   gap: var(--spacing-xs);
   font-weight: 500;
-  font-size: 16px;
+  font-size: var(--nds-text-md-FS);
+  line-height: normal;
   height: 32px;
+  min-width: 32px;
   white-space: nowrap;
-  text-align: center;
   border-radius: var(--radius-sm);
-  transition: var(--nds-transition);
   position: relative;
-  box-sizing: border-box;
+  padding: var(--spacing-none) var(--spacing-lg);
 
   // Size variations
   &.nds-tag-sm {
     padding: var(--spacing-xs) var(--spacing-sm);
     font-size: 14px;
     height: 24px;
+    min-width: 24px;
 
-    .nds-tag-icon {
+    .icon {
       width: 16px;
       height: 16px;
     }
@@ -34,15 +35,16 @@
     padding: 2px var(--spacing-sm);
     font-size: 12px;
     height: 20px;
+    min-width: 20px;
 
-    .nds-tag-icon {
+    .icon {
       width: 14px;
       height: 14px;
     }
   }
 
   // Icon support
-  .nds-tag-icon {
+  .icon {
     flex-shrink: 0;
     display: flex;
     align-items: center;
@@ -51,26 +53,23 @@
 
   // Icon-only variant
   &.nds-tag-icon-only {
-    padding: var(--spacing-xs);
-    
-    &.nds-tag-sm {
-      padding: 2px;
+    aspect-ratio: 1;
+    padding: 0;
+    justify-content: center;
+
+    .label {
+      display: none;
+    }
+
+    &.nds-btn-sm {
+      width: 24px;
+    }
+
+    &.nds-btn-xs {
       width: 20px;
-      height: 20px;
-    }
-    
-    &.nds-tag-md {
-      padding: var(--spacing-xs);
-      width: 26px;
-      height: 26px;
-    }
-    
-    &.nds-tag-xs {
-      padding: 1px;
-      width: 16px;
-      height: 16px;
     }
   }
+
 
   // Style variations - Filled (default)
   &.nds-tag-neutral {
@@ -105,8 +104,8 @@
 
   &.nds-tag-oncolor {
     background-color: var(--tag-background-on-color);
-    color: white;
-    border: 1px solid var(--tag-border-on-color);
+    color: var(--text-oncolor-primary);
+    border: unset;
   }
 
   // Outline variants
@@ -140,30 +139,13 @@
 
     &.nds-tag-oncolor {
       border: 1px solid var(--tag-border-on-color);
-      color: white;
+      color: var(--text-oncolor-primary);
     }
   }
 
   // Rounded variant
   &.nds-tag-rounded {
-    border-radius: 12px;
-
-    &.nds-tag-sm {
-      border-radius: 10px;
-    }
-
-    &.nds-tag-xs {
-      border-radius: 8px;
-    }
-  }
-
-  // RTL adjustments with LTR override
-  .nds-tag-icon + .nds-tag-label {
-    margin-inline-start: var(--spacing-xs);
-  }
-
-  .nds-tag-label + .nds-tag-icon {
-    margin-inline-start: var(--spacing-xs);
+    border-radius: 999px;
   }
 
   @include ltr {

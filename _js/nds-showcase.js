@@ -20,11 +20,60 @@
 
     // Initialize when DOM is ready
     document.addEventListener('DOMContentLoaded', function() {
+        storeOriginalCodeContent();
         initializeDemoToggleButtons();
         initializeDirectionSwitcher();
         initializeFakeFileUpload();
         initializeDemoActionButtons();
     });
+
+    // Store original code content in hidden copies before highlighting is applied
+    function storeOriginalCodeContent() {
+        document.querySelectorAll('.code-example code').forEach(codeElement => {
+            // Create a hidden copy to store original content
+            const hiddenCopy = document.createElement('div');
+            hiddenCopy.style.display = 'none';
+            hiddenCopy.className = 'original-code-content';
+            hiddenCopy.textContent = codeElement.textContent;
+            
+            // Insert hidden copy right after the code element
+            codeElement.parentNode.insertBefore(hiddenCopy, codeElement.nextSibling);
+        });
+    }
+
+    // Get the hidden copy for a code element
+    function getHiddenCodeCopy(codeElement) {
+        return codeElement.parentNode.querySelector('.original-code-content');
+    }
+
+    // Update the hidden copy and apply to visible code element
+    function updateCodeFromHiddenCopy(codeElement, updatedContent) {
+        const hiddenCopy = getHiddenCodeCopy(codeElement);
+        if (!hiddenCopy) return;
+
+        // Update the hidden copy
+        hiddenCopy.textContent = updatedContent;
+
+        // Copy to visible code element
+        codeElement.textContent = updatedContent;
+
+        // Reapply syntax highlighting
+        if (window.NDSCode && codeElement.classList.contains('lang-html')) {
+            codeElement.dataset.processed = 'false';
+            codeElement.dataset.lineNumbers = 'false';
+
+            if (window.NDSCode.highlightHTMLSafe) {
+                window.NDSCode.highlightHTMLSafe(codeElement);
+            }
+
+            if (window.NDSCode.addLineNumbers) {
+                const lines = codeElement.textContent.split('\n');
+                if (lines.length > 1 && !(lines.length === 2 && lines[1].trim() === '')) {
+                    window.NDSCode.addLineNumbers();
+                }
+            }
+        }
+    }
 
 
 
@@ -117,7 +166,7 @@
                 return;
             }
             
-            // Determine operation type: "class" (default) or "attr"
+            // Determine operation type: "class" (default), "attr", "content-prepend", or "content-append"
             const operationType = operation || 'class';
             
             let targetElement;
@@ -233,6 +282,11 @@
                 if (operationType === 'attr') {
                     // Handle attribute toggling
                     handleAttributeToggling(targetElement, classNamesOrAttrs, demoCard);
+                } else if (operationType === 'content-prepend' || operationType === 'content-append') {
+                    // Handle content toggling (append/prepend)
+                    handleContentToggling(targetElement, classNamesOrAttrs, operationType);
+                    // Update code example for content changes
+                    updateCodeExampleForContent(demoCard, targetElement, classNamesOrAttrs, operationType);
                 } else {
                     // Handle class toggling (default behavior)
                     const classArray = classNamesOrAttrs.trim().split(/\s+/);
@@ -422,6 +476,11 @@
                                                 if (deselectionOperationType === 'attr') {
                                                     // Handle attribute deselection - toggle attributes back to original state
                                                     handleAttributeToggling(targetElement, classNamesOrAttrs, demoCard);
+                                                } else if (deselectionOperationType === 'content-prepend' || deselectionOperationType === 'content-append') {
+                                                    // Handle content deselection - toggle content back to original state
+                                                    handleContentToggling(targetElement, classNamesOrAttrs, deselectionOperationType);
+                                                    // Update code example for content changes
+                                                    updateCodeExampleForContent(demoCard, targetElement, classNamesOrAttrs, deselectionOperationType);
                                                 } else {
                                                     // Handle class deselection (default behavior)
                                                     const classArray = classNamesOrAttrs.trim().split(/\s+/);
@@ -500,6 +559,44 @@
         updateCodeExampleForAttributes(demoCard, targetElement, attributePairs);
     }
 
+    // Handle content toggling (append/prepend) for target element
+    function handleContentToggling(targetElement, contentHTML, operationType) {
+        // Parse the HTML content
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = contentHTML;
+        const contentToToggle = tempDiv.firstElementChild || tempDiv.firstChild;
+        
+        if (!contentToToggle) {
+            return;
+        }
+        
+        // Check if content already exists in the target element
+        let existingContent = null;
+        
+        // Simple content detection - look for elements with the same tag and classes
+        if (contentToToggle.tagName && contentToToggle.className) {
+            const selector = `${contentToToggle.tagName.toLowerCase()}.${contentToToggle.className.split(' ').join('.')}`;
+            existingContent = targetElement.querySelector(selector);
+        } else if (contentToToggle.tagName) {
+            existingContent = targetElement.querySelector(contentToToggle.tagName.toLowerCase());
+        }
+        
+        if (existingContent) {
+            // Remove the content
+            existingContent.remove();
+        } else {
+            // Add the content
+            const newElement = contentToToggle.cloneNode(true);
+            
+            if (operationType === 'content-prepend') {
+                targetElement.insertBefore(newElement, targetElement.firstChild);
+            } else {
+                // Default to append
+                targetElement.appendChild(newElement);
+            }
+        }
+    }
+
     // Update code example for attribute changes
     function updateCodeExampleForAttributes(demoCard, changedElement, changedAttributes) {
         const codeElement = demoCard.querySelector('.code-example code');
@@ -507,7 +604,10 @@
         
         if (!changedElement || !changedAttributes) return;
         
-        let updatedCode = codeElement.textContent;
+        // Get content from hidden copy
+        const hiddenCopy = getHiddenCodeCopy(codeElement);
+        if (!hiddenCopy) return;
+        let updatedCode = hiddenCopy.textContent;
         
         // Get the tag name and first class to identify the element in the code
         const tagName = changedElement.tagName.toLowerCase();
@@ -548,25 +648,8 @@
             return `<${tagName}${elementAttributes}${selfClosing}>`;
         });
         
-        codeElement.textContent = updatedCode;
-        
-        // Re-apply syntax highlighting and line numbers after updating code
-        if (window.NDSCode && codeElement.classList.contains('lang-html')) {
-            codeElement.dataset.processed = 'false'; // Reset processing flag
-            codeElement.dataset.lineNumbers = 'false'; // Reset line numbers flag
-            
-            if (window.NDSCode.highlightHTMLSafe) {
-                window.NDSCode.highlightHTMLSafe(codeElement);
-            }
-            
-            // Re-apply line numbers if the code block should have them (multi-line)
-            if (window.NDSCode.addLineNumbers) {
-                const lines = codeElement.textContent.split('\n');
-                if (lines.length > 1 && !(lines.length === 2 && lines[1].trim() === '')) {
-                    window.NDSCode.addLineNumbers();
-                }
-            }
-        }
+        // Update using the hidden copy system
+        updateCodeFromHiddenCopy(codeElement, updatedCode);
     }
 
 
@@ -577,7 +660,10 @@
         
         if (!changedElement || !changedClasses) return;
         
-        let updatedCode = codeElement.textContent;
+        // Get content from hidden copy
+        const hiddenCopy = getHiddenCodeCopy(codeElement);
+        if (!hiddenCopy) return;
+        let updatedCode = hiddenCopy.textContent;
         
         // Get the base class name (first class) of the changed element to identify it in the code
         const baseClassName = Array.from(changedElement.classList)[0];
@@ -612,25 +698,96 @@
             return `class="${existingClasses.join(' ')}"`;
         });
         
-        codeElement.textContent = updatedCode;
+        // Update using the hidden copy system
+        updateCodeFromHiddenCopy(codeElement, updatedCode);
+    }
+
+    // Update code example for content changes - simple approach
+    function updateCodeExampleForContent(demoCard, targetElement, contentHTML, operationType) {
+        const codeElement = demoCard.querySelector('.code-example code');
+        if (!codeElement) return;
         
-        // Re-apply syntax highlighting and line numbers after updating code
-        if (window.NDSCode && codeElement.classList.contains('lang-html')) {
-            codeElement.dataset.processed = 'false'; // Reset processing flag
-            codeElement.dataset.lineNumbers = 'false'; // Reset line numbers flag
+        // Get content from hidden copy
+        const hiddenCopy = getHiddenCodeCopy(codeElement);
+        if (!hiddenCopy) return;
+        let updatedCode = hiddenCopy.textContent;
+        
+        // Get the target element info to find it in the code
+        const tagName = targetElement.tagName.toLowerCase();
+        const firstClass = Array.from(targetElement.classList)[0];
+        if (!firstClass) return;
+        
+        // Parse the content to add/remove
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = contentHTML;
+        const contentToToggle = tempDiv.firstElementChild || tempDiv.firstChild;
+        if (!contentToToggle) return;
+        
+        // Check if content exists in target element BEFORE the DOM change to determine the action
+        // We need to check the code content, not the current DOM state
+        let hasContent = false;
+        if (contentToToggle.tagName && contentToToggle.className) {
+            // Check for any class from the content to toggle
+            const contentClasses = contentToToggle.className.split(' ');
+            hasContent = contentClasses.some(cls => updatedCode.includes(cls));
+        } else if (contentToToggle.tagName) {
+            // If no classes, check for the tag name
+            hasContent = updatedCode.includes(`<${contentToToggle.tagName.toLowerCase()}`);
+        }
+        
+        // Find the element in the raw HTML and update it
+        const escapedFirstClass = firstClass.replace(/[-[\]/{}()*+?.\\^$|]/g, "\\$&");
+        const elementRegex = new RegExp(`(<${tagName}[^>]*class="[^"]*\\b${escapedFirstClass}\\b[^"]*"[^>]*>)([\\s\\S]*?)(<\\/${tagName}>)`, 'gi');
+        
+        updatedCode = updatedCode.replace(elementRegex, (match, openTag, content, closeTag) => {
+            let updatedContent = content;
             
-            if (window.NDSCode.highlightHTMLSafe) {
-                window.NDSCode.highlightHTMLSafe(codeElement);
-            }
-            
-            // Re-apply line numbers if the code block should have them (multi-line)
-            if (window.NDSCode.addLineNumbers) {
-                const lines = codeElement.textContent.split('\n');
-                if (lines.length > 1 && !(lines.length === 2 && lines[1].trim() === '')) {
-                    window.NDSCode.addLineNumbers();
+            if (hasContent) {
+                // Remove the content from the code
+                if (contentToToggle.tagName && contentToToggle.className) {
+                    // Remove by any of the classes
+                    const contentClasses = contentToToggle.className.split(' ');
+                    for (const cls of contentClasses) {
+                        if (cls) {
+                            const contentRegex = new RegExp(`\\s*<${contentToToggle.tagName.toLowerCase()}[^>]*class="[^"]*${cls}[^"]*"[^>]*>[\\s\\S]*?<\\/${contentToToggle.tagName.toLowerCase()}>`, 'gi');
+                            updatedContent = updatedContent.replace(contentRegex, '');
+                        }
+                    }
+                } else if (contentToToggle.tagName) {
+                    // Remove by tag name if no classes
+                    const contentRegex = new RegExp(`\\s*<${contentToToggle.tagName.toLowerCase()}[^>]*>[\\s\\S]*?<\\/${contentToToggle.tagName.toLowerCase()}>`, 'gi');
+                    updatedContent = updatedContent.replace(contentRegex, '');
+                }
+            } else {
+                // Add the content to the code
+                const contentHTML = contentToToggle.outerHTML;
+                
+                // Detect the existing indentation from the content
+                const lines = updatedContent.split('\n');
+                let indent = '';
+                for (let line of lines) {
+                    if (line.trim()) {
+                        const match = line.match(/^(\s*)/);
+                        if (match) {
+                            indent = match[1];
+                            break;
+                        }
+                    }
+                }
+                
+                if (operationType === 'content-prepend') {
+                    // For prepend, add newline first, then indented content
+                    updatedContent = '\n' + indent + contentHTML + updatedContent;
+                } else {
+                    updatedContent = updatedContent + '\n' + indent + contentHTML;
                 }
             }
-        }
+            
+            return openTag + updatedContent + closeTag;
+        });
+        
+        // Update using the hidden copy system
+        updateCodeFromHiddenCopy(codeElement, updatedCode);
     }
 
     // RTL/LTR Direction Switcher - Cookie-based System
