@@ -22,7 +22,7 @@ direction: ltr
                         <div class="demo-label">Primary Button</div>
                         <div class="demo-action">
                             <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-btn-indicator", ".nds-btn-demo", "indicator"]'>
+                                data-toggler='["nds-btn-indicator", ".nds-btn", "indicator"]'>
                                 <span class="label">Toggle Indicator</span>
                             </button>
                             <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
@@ -33,17 +33,17 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <button class="nds-btn nds-btn-primary nds-btn-lg nds-btn-demo" data-state="default"><span
+                            <button class="nds-btn nds-btn-primary nds-btn-lg" data-state="default"><span
                                     class="label">Default</span></button>
-                            <button class="nds-btn nds-btn-primary nds-btn-lg nds-btn-demo" data-state="hover"><span
+                            <button class="nds-btn nds-btn-primary nds-btn-lg" data-state="hover"><span
                                     class="label">Hover</span></button>
-                            <button class="nds-btn nds-btn-primary nds-btn-lg nds-btn-demo" data-state="active"><span
+                            <button class="nds-btn nds-btn-primary nds-btn-lg" data-state="active"><span
                                     class="label">Active</span></button>
-                            <button class="nds-btn nds-btn-primary nds-btn-lg nds-btn-demo selected"
-                                data-state="selected"><span class="label">Selected</span></button>
-                            <button class="nds-btn nds-btn-primary nds-btn-lg nds-btn-demo focus"
-                                data-state="focused"><span class="label">Focused</span></button>
-                            <button class="nds-btn nds-btn-primary nds-btn-lg nds-btn-demo" disabled><span
+                            <button class="nds-btn nds-btn-primary nds-btn-lg selected" data-state="selected"><span
+                                    class="label">Selected</span></button>
+                            <button class="nds-btn nds-btn-primary nds-btn-lg focus" data-state="focused"><span
+                                    class="label">Focused</span></button>
+                            <button class="nds-btn nds-btn-primary nds-btn-lg" disabled><span
                                     class="label">Disabled</span></button>
                         </div>
                     </div>

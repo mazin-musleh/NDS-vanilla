@@ -90,17 +90,14 @@
         const textWithEntities = htmlToText(htmlContent);
         const cleanText = decodeHtmlEntities(textWithEntities);
         
-        // Store clean text for copying (users want readable HTML, not entities)
-        codeElement.dataset.copyText = cleanText;
+        // Note: Text for copying is now stored in hidden copy system
         // Display clean version for viewing
         codeElement.textContent = cleanText;
     }
 
     // JavaScript-specific processor
     function processJavaScript(codeElement) {
-        // Store original text for copying
-        const originalText = codeElement.textContent;
-        codeElement.dataset.copyText = originalText;
+        // Note: Text for copying is now stored in hidden copy system
         
         // Apply JavaScript syntax highlighting
         highlightJavaScript(codeElement);
@@ -129,21 +126,19 @@
                 const textWithEntities = htmlToText(htmlContent);
                 cleanText = decodeHtmlEntities(textWithEntities);
                 
-                // Store clean text for copying and display
-                codeElement.dataset.copyText = cleanText;
+                // Note: Text for copying is now stored in hidden copy system
                 codeElement.textContent = cleanText;
             } else if (containsEntities) {
                 // Entity-encoded case - extract and decode for copying, keep entities for display
                 const textContent = codeElement.textContent;
                 cleanText = decodeHtmlEntities(textContent);
                 
-                // Store clean text for copying, but keep entities for highlighting
-                codeElement.dataset.copyText = cleanText;
+                // Note: Text for copying is now stored in hidden copy system
                 // Don't change textContent - it's already entities
             } else {
                 // Plain text case - no processing needed
                 cleanText = codeElement.textContent;
-                codeElement.dataset.copyText = cleanText;
+                // Note: Text for copying is now stored in hidden copy system
             }
             
             // Apply safe DOM-based syntax highlighting
@@ -278,8 +273,7 @@
                 return;
             }
             
-            // Store clean text for copying (without line numbers and highlighting)
-            codeElement.dataset.copyText = lines.join('\n');
+            // Note: Text for copying is now stored in hidden copy system
             
             // If content has syntax highlighting, preserve it
             if (htmlContent !== textContent) {
@@ -638,8 +632,9 @@
             return;
         }
 
-        // Use stored copy text if available (for line-numbered code), otherwise use displayed text
-        const textToCopy = codeBlock.dataset.copyText || codeBlock.textContent;
+        // Get text from hidden copy if available, otherwise fallback to stored copy text or displayed text
+        const hiddenCopy = codeBlock.parentNode.querySelector('.original-code-content');
+        const textToCopy = hiddenCopy ? hiddenCopy.textContent : (codeBlock.dataset.copyText || codeBlock.textContent);
         
         if (navigator.clipboard && window.isSecureContext) {
             navigator.clipboard.writeText(textToCopy).then(() => {

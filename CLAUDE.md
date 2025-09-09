@@ -4,7 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is the **National Design System for Saudi Arabia** - a Jekyll-based static site that documents and showcases a comprehensive design system for government digital services. The site serves as both documentation and a living component library for creating consistent digital experiences.
+This is the **National Design System for Saudi Arabia** - a Jekyll-based static site that documents and showcases a
+comprehensive design system for government digital services. The site serves as both documentation and a living
+component library for creating consistent digital experiences.
 
 ## Common Commands
 
@@ -49,14 +51,14 @@ Updates gems to latest compatible versions
 
 #### SCSS Architecture
 - `_sass/_variables.scss`: Design tokens and CSS custom properties (spacing, colors, typography)
-- `_sass/_base.scss`: Base styles and global design system foundations  
+- `_sass/_base.scss`: Base styles and global design system foundations
 - `_sass/components/_buttons.scss`: Comprehensive button component library with 6 variants:
-  - Primary, Neutral, Secondary Solid, Secondary Outline, Subtle, Transparent
-  - Multiple states: default, hover, active, disabled, loading
-  - Size variations: small (24px), medium (32px), large (40px)
-  - Icon support: leading icons, trailing icons, icon-only buttons
-  - On-color variants for dark backgrounds
-  - Destructive button styles for delete/cancel actions
+- Primary, Neutral, Secondary Solid, Secondary Outline, Subtle, Transparent
+- Multiple states: default, hover, active, disabled, loading
+- Size variations: small (24px), medium (32px), large (40px)
+- Icon support: leading icons, trailing icons, icon-only buttons
+- On-color variants for dark backgrounds
+- Destructive button styles for delete/cancel actions
 
 #### Typography & Icons
 - **IBM Plex Sans Arabic** as primary font family
@@ -103,11 +105,11 @@ The NDS button system follows strict Figma specifications:
 **Side Menu (`_data/sidemenu.yml`):**
 ```yaml
 - label: "Components"
-  has_sub: true
-  children:
-    - label: "Component Name"
-      url: "/components/component-name"
-      href: "/components/component-name.html"
+has_sub: true
+children:
+- label: "Component Name"
+url: "/components/component-name"
+href: "/components/component-name.html"
 ```
 
 **Breadcrumb (component page front matter):**
@@ -147,142 +149,143 @@ direction: ltr
 ### Component Implementation
 - Use class pattern: `nds-btn nds-btn-{type} nds-btn-{size}`
 - Always include `<span class="label">` for button text
-- Add `nds-btn-oncolor` for colored backgrounds
-- Use `nds-btn-destructive` for destructive actions
-- Include proper ARIA labels for icon-only buttons
+    - Add `nds-btn-oncolor` for colored backgrounds
+    - Use `nds-btn-destructive` for destructive actions
+    - Include proper ARIA labels for icon-only buttons
 
-### Demo Card Structure
-Use this HTML structure for component documentation pages:
+    ### Demo Card Structure
+    Use this HTML structure for component documentation pages:
 
-```html
-<div class="nds-demo-card">
-    <div class="demo-header">
-        <div class="demo-label">Component Name</div>
-        <div class="demo-action">
-            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                <span class="label">Remove bg</span>
-            </button>
-        </div>
-    </div>
-    <div class="demo-container">
-        <div class="state-demo">
-            <!-- Component variations go here -->
-        </div>
-    </div>
-    <div class="nds-tabs nds-code withDivider">
-        <div class="nds-tab-list-container">
-            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
-                    aria-controls="panel-example-1" id="tab-example-1">
-                    <span class="nds-tab-label">HTML</span>
+    ```html
+    <div class="nds-demo-card">
+        <div class="demo-header">
+            <div class="demo-label">Component Name</div>
+            <div class="demo-action">
+                <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                    data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                    <span class="label">Remove bg</span>
                 </button>
-            </nav>
+            </div>
         </div>
-        <div class="nds-tab-content">
-            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-example-1"
-                aria-labelledby="tab-example-1">
-                <div class="nds-code-action">
-                    <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
-                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+        <div class="demo-container">
+            <div class="state-demo">
+                <!-- Component variations go here -->
+            </div>
+        </div>
+        <div class="nds-tabs nds-code withDivider">
+            <div class="nds-tab-list-container">
+                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                    <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                        aria-controls="panel-example-1" id="tab-example-1">
+                        <span class="nds-tab-label">HTML</span>
                     </button>
-                </div>
-                <code class="lang-html code">
+                </nav>
+            </div>
+            <div class="nds-tab-content">
+                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-example-1"
+                    aria-labelledby="tab-example-1">
+                    <div class="nds-code-action">
+                        <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                        </button>
+                    </div>
+                    <code class="lang-html code">
                     <!-- HTML code example here -->
                 </code>
+                </div>
             </div>
         </div>
     </div>
-</div>
-```
+    ```
 
-**Demo Toggle Options:**
-- `'["noBg", ".demo-container", "containerBg"]'` - Toggle background removal
-- `'["darkBg", ".demo-container", "containerBg"]'` - Toggle dark background
-- `'["nds-btn-indicator", ".nds-btn-demo", "indicator"]'` - Toggle button indicators
+    **Demo Toggle Options:**
+    - `'["noBg", ".demo-container", "containerBg"]'` - Toggle background removal
+    - `'["darkBg", ".demo-container", "containerBg"]'` - Toggle dark background
+    - `'["nds-btn-indicator", ".nds-btn-demo", "indicator"]'` - Toggle button indicators
 
-**Demo Container Classes:**
-- `.demo-container` - Main demo area
-- `.state-demo` - Contains component state variations
-- `.nds-demo-card` - Wrapper for each demo section
+    **Demo Container Classes:**
+    - `.demo-container` - Main demo area
+    - `.state-demo` - Contains component state variations
+    - `.nds-demo-card` - Wrapper for each demo section
 
-### JavaScript Functionality
-- `nds-navController.js`: Navigation and menu interactions
-- `nds-extras.js`: Component-specific behaviors (button interactions, copy functionality)
-- Inline scripts for component demonstrations (background switching, state management)
+    ### JavaScript Functionality
+    - `nds-navController.js`: Navigation and menu interactions
+    - `nds-extras.js`: Component-specific behaviors (button interactions, copy functionality)
+    - Inline scripts for component demonstrations (background switching, state management)
 
-### JavaScript Build Process
-After updating files in `_js/` directory, run the build process to compress and minify:
-```bash
-ruby _plugins/js_processor.rb
-```
+    ### JavaScript Build Process
+    After updating files in `_js/` directory, run the build process to compress and minify:
+    ```bash
+    ruby _plugins/js_processor.rb
+    ```
 
-**JavaScript Architecture:**
-- **Source files**: `_js/` directory contains individual component JavaScript files
-- **Processing**: `_plugins/js_processor.rb` bundles and minifies files using Terser
-- **Output**: Compressed files saved to `assets/js/` as `.min.js` versions
-- **Manual processing**: Always run the processor manually when JavaScript changes are made
+    **JavaScript Architecture:**
+    - **Source files**: `_js/` directory contains individual component JavaScript files
+    - **Processing**: `_plugins/js_processor.rb` bundles and minifies files using Terser
+    - **Output**: Compressed files saved to `assets/js/` as `.min.js` versions
+    - **Manual processing**: Always run the processor manually when JavaScript changes are made
 
-**Available Components:**
-- `nds-accordion.js`, `nds-tabs.js`, `nds-forms.js` - UI component interactions
-- `nds-navController.js`, `nds-sideMenu.js` - Navigation functionality  
-- `nds-showcase.js` - Component demonstration features
-- `nds-cookies.js`, `nds-share.js` - Utility functions
-- `nds-cityWeather.js`, `nds-timeDate.js`, `nds-numbers.js` - Data display components
+    **Available Components:**
+    - `nds-accordion.js`, `nds-tabs.js`, `nds-forms.js` - UI component interactions
+    - `nds-navController.js`, `nds-sideMenu.js` - Navigation functionality
+    - `nds-showcase.js` - Component demonstration features
+    - `nds-cookies.js`, `nds-share.js` - Utility functions
+    - `nds-cityWeather.js`, `nds-timeDate.js`, `nds-numbers.js` - Data display components
 
-**Bundle Output:**
-- `nds-main.min.js` - Core site functionality (bundled from multiple components)
-- `nds-showcase.min.js` - Component showcase demonstrations
+    **Bundle Output:**
+    - `nds-main.min.js` - Core site functionality (bundled from multiple components)
+    - `nds-showcase.min.js` - Component showcase demonstrations
 
-## Files to Ignore
+    ## Files to Ignore
 
-- **NEVER read** `assets/css/hgi-stroke-rounded.css` - this is a large icon font file that should not be analyzed
-- **NEVER read** any `.min.js` or `.min.css` files - these are minified/compressed files that should not be analyzed
+    - **NEVER read** `assets/css/hgi-stroke-rounded.css` - this is a large icon font file that should not be analyzed
+    - **NEVER read** any `.min.js` or `.min.css` files - these are minified/compressed files that should not be analyzed
 
-## Figma MCP Integration
+    ## Figma MCP Integration
 
-This project has Figma MCP integration available. Use these tools to extract design components from Figma:
+    This project has Figma MCP integration available. Use these tools to extract design components from Figma:
 
-### Available Figma Tools
-- `mcp__figma__get_metadata`: Get basic node information (name, dimensions, position)
-- `mcp__figma__get_code`: Get complete implementation code for a selected component
-- `mcp__figma__get_image`: Get visual preview of the selected component
-- `mcp__figma__get_variable_defs`: Get design tokens/variables for the component
-- `mcp__figma__get_code_connect_map`: Get mapping between Figma components and codebase
+    ### Available Figma Tools
+    - `mcp__figma__get_metadata`: Get basic node information (name, dimensions, position)
+    - `mcp__figma__get_code`: Get complete implementation code for a selected component
+    - `mcp__figma__get_image`: Get visual preview of the selected component
+    - `mcp__figma__get_variable_defs`: Get design tokens/variables for the component
+    - `mcp__figma__get_code_connect_map`: Get mapping between Figma components and codebase
 
-### Figma Workflow
-1. **Always start with metadata** to understand what's selected:
-   ```
-   mcp__figma__get_metadata (no parameters for currently selected)
-   ```
+    ### Figma Workflow
+    1. **Always start with metadata** to understand what's selected:
+    ```
+    mcp__figma__get_metadata (no parameters for currently selected)
+    ```
 
-2. **Get implementation details** for any component:
-   ```
-   mcp__figma__get_code with nodeId from metadata
-   ```
+    2. **Get implementation details** for any component:
+    ```
+    mcp__figma__get_code with nodeId from metadata
+    ```
 
-3. **Get visual context** to understand the design:
-   ```
-   mcp__figma__get_image with nodeId from metadata
-   ```
+    3. **Get visual context** to understand the design:
+    ```
+    mcp__figma__get_image with nodeId from metadata
+    ```
 
-### Framework Context
-Always provide these parameters when using Figma tools:
-- `clientFrameworks`: "jekyll"
-- `clientLanguages`: "html,css,scss,javascript"
+    ### Framework Context
+    Always provide these parameters when using Figma tools:
+    - `clientFrameworks`: "jekyll"
+    - `clientLanguages`: "html,css,scss,javascript"
 
-### Implementation Notes
-- Figma generates React/Tailwind code by default
-- Convert to NDS Jekyll patterns using existing component conventions
-- Follow NDS naming: `nds-[component]` with modifiers like `nds-[component]-[variant]`
-- Use existing SCSS variables from `_sass/_variables.scss`
-- Maintain RTL/LTR support with proper Arabic typography
+    ### Implementation Notes
+    - Figma generates React/Tailwind code by default
+    - Convert to NDS Jekyll patterns using existing component conventions
+    - Follow NDS naming: `nds-[component]` with modifiers like `nds-[component]-[variant]`
+    - Use existing SCSS variables from `_sass/_variables.scss`
+    - Maintain RTL/LTR support with proper Arabic typography
 
-## Important Notes
+    ## Important Notes
 
-- This is a **documentation site** for a design system, not a web application
-- All button implementations must follow Figma specifications exactly
-- The site showcases component variations, states, and usage examples
-- Copy-to-clipboard functionality allows developers to copy component HTML
-- Interactive demos show different button states and background scenarios
-- this project RTL by dafault,  add LTR styling when needed with @include ltr in mixins
+    - This is a **documentation site** for a design system, not a web application
+    - All button implementations must follow Figma specifications exactly
+    - The site showcases component variations, states, and usage examples
+    - Copy-to-clipboard functionality allows developers to copy component HTML
+    - Interactive demos show different button states and background scenarios
+    - this project RTL by dafault, add LTR styling when needed with @include ltr in mixins
+    - add this mcp server when needed "claude mcp add --transport sse figma http://127.0.0.1:3845/sse"
