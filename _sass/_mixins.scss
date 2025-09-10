@@ -170,12 +170,12 @@ textarea {
 
 // Button size mixins
 @mixin btn-size($height, $padding, $font-size, $line-height) {
-  --nds-btn-height: #{$height};
-  --nds-btn-width: unset;
-  --nds-btn-space: calc(var(--nds-btn-height) - #{$padding} - 4px);
-  height: var(--nds-btn-height);
-  min-height: var(--nds-btn-height);
-  width: var(--nds-btn-width);
+  --nds-height: #{$height};
+  --nds-width: unset;
+  --nds-space: calc(var(--nds-height) - #{$padding} - 4px);
+  height: var(--nds-height);
+  min-height: var(--nds-height);
+  width: var(--nds-width);
   padding: 0 $padding;
   font-size: $font-size;
   line-height: $line-height;
@@ -352,9 +352,9 @@ textarea {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: var(--nds-btn-space);
-    height: var(--nds-btn-space);
-    margin: calc(var(--nds-btn-space)*-1/2) 0 0 calc(var(--nds-btn-space)*-1/2);
+    width: var(--nds-space);
+    height: var(--nds-space);
+    margin: calc(var(--nds-space)*-1/2) 0 0 calc(var(--nds-space)*-1/2);
     border: 3px solid $track-color;
     border-top: 3px solid $border-color;
     border-radius: 50%;
@@ -362,7 +362,7 @@ textarea {
   }
 
   // Smaller border for small buttons
-  &.nds-btn-sm::after {
+  &.nds-sm::after {
     border-width: 2px;
   }
 }

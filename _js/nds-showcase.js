@@ -83,12 +83,12 @@
         buttons.forEach(button => {
             if (bgType === 'colored') {
                 // Add oncolor class for colored backgrounds
-                if (!button.classList.contains('nds-btn-oncolor')) {
-                    button.classList.add('nds-btn-oncolor');
+                if (!button.classList.contains('nds-oncolor')) {
+                    button.classList.add('nds-oncolor');
                 }
             } else {
                 // Remove oncolor class for default/none background
-                button.classList.remove('nds-btn-oncolor');
+                button.classList.remove('nds-oncolor');
             }
         });
     }
@@ -99,7 +99,7 @@
         // Initialize cards with default backgrounds based on data attributes
         document.querySelectorAll('.nds-demo-card').forEach(card => {
             const demoContainer = card.querySelector('.demo-container');
-            const hasOncolorButtons = demoContainer && demoContainer.querySelector('.nds-btn-oncolor');
+            const hasOncolorButtons = demoContainer && demoContainer.querySelector('.nds-oncolor');
             
             // Find first background toggle button for initialization by looking for any background-related toggles
             const firstBgButton = card.querySelector('.demo-toggle-btn[data-toggler*="Bg"], .demo-toggle-btn[data-toggler*="bg"]');

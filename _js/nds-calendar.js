@@ -1250,7 +1250,7 @@
         createDateCell: function (date, type) {
             var self = this;
             var btn = document.createElement('button');
-            btn.className = 'nds-btn nds-btn-subtle date-cell';
+            btn.className = 'nds-btn nds-subtle date-cell';
             btn.type = 'button';
 
             // Hijri data should already be attached by the calendar generation method
@@ -1583,7 +1583,7 @@
 
             monthNames.forEach(function (monthName, index) {
                 var btn = document.createElement('button');
-                btn.className = 'nds-btn nds-btn-subtle month-option';
+                btn.className = 'nds-btn nds-subtle month-option';
                 btn.setAttribute('role', 'menuitem');
                 btn.setAttribute('data-value', index);
                 btn.innerHTML = '<span class="label">' + monthName + '</span>';
@@ -1646,7 +1646,7 @@
 
             for (var year = startYear; year <= endYear; year++) {
                 var btn = document.createElement('button');
-                btn.className = 'nds-btn nds-btn-subtle year-option';
+                btn.className = 'nds-btn nds-subtle year-option';
                 btn.setAttribute('role', 'menuitem');
                 btn.setAttribute('data-value', year);
                 btn.innerHTML = '<span class="label">' + year + '</span>';

@@ -1,0 +1,130 @@
+/**
+ * NDS Featured Icon - SCSS Version
+ * Circular background containers with centered icons for highlighting content
+ * Follows Figma specifications with 6 color variants: brand, success, info, warning, error, neutral
+ */
+
+@use '../mixins' as *;
+
+// ==============================================
+// BASE FEATURED ICON STYLES
+// ==============================================
+
+.nds-featured-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: calc((var(--nds-icon-size) / 4) - 2px);
+  position: relative;
+  width: var(--nds-icon-size);
+  height: var(--nds-icon-size);
+  font-size: calc(var(--nds-icon-size) / 2);
+  padding: calc(var(--nds-icon-size) / 4);
+  line-height: calc(var(--nds-icon-size) / 2);
+  border: unset;
+
+
+  // ==============================================
+  // FEATURED ICON SIZES
+  // ==============================================
+
+  &.nds-md,
+  & {
+    --nds-icon-size: 40px;
+  }
+
+  &.nds-sm {
+    --nds-icon-size: 32px;
+  }
+
+  &.nds-lg {
+    --nds-icon-size: 48px;
+
+  }
+
+  &.nds-xl {
+    --nds-icon-size: 56px;
+  }
+
+  // ==============================================
+  // FEATURED ICON VARIANTS
+  // ==============================================
+
+  &.nds-brand {
+    background-color: var(--featuredicons-background-brand-light);
+    color: var(--featuredicons-icon-primary);
+
+    &.nds-dark {
+      background-color: var(--featuredicons-icon-primary);
+    }
+
+  }
+
+  &.nds-success {
+    background-color: var(--featuredicons-background-success-light);
+    color: var(--featuredicons-icon-success);
+
+    &.nds-dark {
+      background-color: var(--featuredicons-icon-success);
+    }
+
+  }
+
+  &.nds-info {
+    background-color: var(--featuredicons-background-info-light);
+    color: var(--featuredicons-icon-info);
+
+    &.nds-dark {
+      background-color: var(--featuredicons-icon-info);
+    }
+  }
+
+  &.nds-warning {
+    background-color: var(--featuredicons-background-warning-light);
+    color: var(--featuredicons-icon-warning);
+
+    &.nds-dark {
+      background-color: var(--featuredicons-icon-warning);
+    }
+  }
+
+  &.nds-error {
+    background-color: var(--featuredicons-background-error-light);
+    color: var(--featuredicons-icon-error);
+
+    &.nds-dark {
+      background-color: var(--featuredicons-icon-error);
+    }
+  }
+
+  &.nds-neutral {
+    background-color: var(--featuredicons-background-default-light);
+    color: var(--featuredicons-icon-neutral);
+
+    &.nds-dark {
+      background-color: var(--featuredicons-icon-default-500);
+    }
+  }
+
+  // ==============================================
+  // STYLE VARIANTS
+  // ==============================================
+
+  &.nds-circle {
+    border-radius: 50%;
+  }
+
+  &.nds-outline {
+    background-color: transparent;
+    border: 1px solid currentColor;
+  }
+
+  &.nds-dark {
+    border: 1px solid transparent;
+
+    .icon {
+      color: var(--icon-oncolor);
+    }
+
+  }
+}

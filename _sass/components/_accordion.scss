@@ -6,7 +6,7 @@
  * - Base accordion container (.nds-accordion)
  * - Card view variant (.nds-accordion.cardView) 
  * - Accordion items (.nds-accordion-item)
- * - Interactive buttons (.nds-btn-accordion)
+ * - Interactive buttons (.nds-accordion-btn)
  * - Collapsible content (.nds-accordion-collapse)
  */
 
@@ -33,7 +33,7 @@
     }
 
     /* Accordion Buttons */
-    .nds-btn-accordion {
+    .nds-accordion-btn {
         justify-content: space-between;
         width: 100%;
         border-radius: 0 !important;
@@ -41,21 +41,21 @@
         font-size: var(--nds-text-md-FS);
         line-height: var(--nds-text-md-LH);
 
-        &.nds-btn-menu {
+        &.nds-menu {
             --nds-button-icon-size: 20px;
             gap: var(--accordion-lg-header-gap, var(--spacing-md));
         }
 
         &,
-        &.nds-btn-md {
+        &.nds-md {
             height: var(--spacing-6xl);
         }
 
-        &.nds-btn-sm {
+        &.nds-sm {
             height: var(--spacing-5xl);
         }
 
-        &.nds-btn-lg {
+        &.nds-lg {
             height: var(--spacing-7xl);
         }
 
@@ -112,7 +112,7 @@
 /* Mobile Responsive */
 @include mobile {
     .nds-accordion {
-        .nds-btn-accordion {
+        .nds-accordion-btn {
             padding: var(--spacing-md) !important;
             font-size: var(--nds-text-sm-FS);
         }
@@ -134,7 +134,7 @@
             border-color: var(--text-primary);
         }
 
-        .nds-btn-accordion:focus {
+        .nds-accordion-btn:focus {
             outline-width: 3px;
         }
     }
@@ -155,7 +155,7 @@
             height: auto !important;
         }
 
-        .nds-btn-accordion {
+        .nds-accordion-btn {
             background-color: transparent !important;
         }
     }

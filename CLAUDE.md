@@ -70,7 +70,7 @@ The NDS button system follows strict Figma specifications:
 
 **Basic Structure:**
 ```html
-<button class="nds-btn nds-btn-primary nds-btn-lg">
+<button class="nds-btn nds-primary nds-lg">
     <span class="label">Button Text</span>
 </button>
 ```
@@ -78,13 +78,13 @@ The NDS button system follows strict Figma specifications:
 **With Icons:**
 ```html
 <!-- Leading Icon -->
-<button class="nds-btn nds-btn-primary nds-btn-lg">
+<button class="nds-btn nds-primary nds-lg">
     <i class="hgi hgi-stroke hgi-plus-sign"></i>
     <span class="label">Add Item</span>
 </button>
 
 <!-- Trailing Icon -->
-<button class="nds-btn nds-btn-secondary-solid nds-btn-lg nds-btn-trail-icon">
+<button class="nds-btn nds-secondary-solid nds-lg nds-trail-icon">
     <i class="hgi hgi-stroke hgi-download-02"></i>
     <span class="label">Download</span>
 </button>
@@ -92,7 +92,9 @@ The NDS button system follows strict Figma specifications:
 
 ### Component Demo Standards - Tags Pattern
 
-**IMPORTANT**: Use the Tags component (`components/tags.md`) as the BASE STANDARD for creating component documentation with interactive demos. This pattern uses demo action toggles instead of creating separate demo cards for each variation.
+**IMPORTANT**: Use the Tags component (`components/tags.md`) as the BASE STANDARD for creating component documentation
+with interactive demos. This pattern uses demo action toggles instead of creating separate demo cards for each
+variation.
 
 **Standard Demo Structure with Toggles:**
 ```html
@@ -101,35 +103,35 @@ The NDS button system follows strict Figma specifications:
         <div class="demo-label">Primary Component</div>
         <div class="demo-action">
             <!-- State Toggles -->
-            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["selected", ".nds-component","componentState"]'>
                 <span class="label">Selected</span>
             </button>
-            
+
             <!-- Style Toggles -->
-            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                data-toggler='["nds-component-neutral", ".nds-component", "componentStyle"]'>
+            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='["nds-neutral", ".nds-component", "componentStyle"]'>
                 <span class="label">Neutral</span>
             </button>
-            
+
             <!-- Icon Toggles -->
-            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["<i class=\"hgi hgi-stroke hgi-icon icon\"></i>", ".nds-component", "components", "content-prepend"]'>
                 <span class="label">Toggle Icon</span>
             </button>
-            
+
             <!-- Size Toggles -->
-            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                data-toggler='["nds-component-sm", ".nds-component", "componentSize"]'>
+            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='["nds-sm", ".nds-component", "componentSize"]'>
                 <span class="label">SM</span>
             </button>
-            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                data-toggler='["nds-component-lg", ".nds-component", "componentSize"]'>
+            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='["nds-lg", ".nds-component", "componentSize"]'>
                 <span class="label">LG</span>
             </button>
-            
+
             <!-- Background Toggles -->
-            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                 <span class="label">Remove bg</span>
             </button>
@@ -137,7 +139,7 @@ The NDS button system follows strict Figma specifications:
     </div>
     <div class="demo-container">
         <div class="state-demo">
-            <span class="nds-component nds-component-primary">
+            <span class="nds-component nds-primary">
                 <span class="label">Component</span>
             </span>
         </div>
@@ -148,8 +150,8 @@ The NDS button system follows strict Figma specifications:
 
 **Demo Toggle Types:**
 - **State Toggles**: `"selected"`, `"pressed"`, `"focused"`, `"disabled"`
-- **Style Toggles**: `"nds-component-neutral"`, `"nds-component-primary"`, component style variations
-- **Size Toggles**: `"nds-component-sm"`, `"nds-component-md"`, `"nds-component-lg"`
+- **Style Toggles**: `"nds-neutral"`, `"nds-primary"`, component style variations
+- **Size Toggles**: `"nds-sm"`, `"nds-md"`, `"nds-lg"`
 - **Icon Toggles**: Add/remove icons with HTML content injection
 - **Background Toggles**: `"noBg"`, `"darkBg"`, `"containerBg"` for testing on different backgrounds
 
@@ -163,9 +165,9 @@ The NDS button system follows strict Figma specifications:
 **ALWAYS include mixins import** at the top of new SCSS component files:
 ```scss
 /**
- * NDS Component Name - SCSS Version
- * Component description and usage notes
- */
+* NDS Component Name - SCSS Version
+* Component description and usage notes
+*/
 
 @use '../mixins' as *;
 
@@ -175,7 +177,7 @@ The NDS button system follows strict Figma specifications:
 **Required Mixins Usage:**
 - `@include mobile` - Mobile-first responsive design (max-width: 599px)
 - `@include tablet(min|max)` - Tablet breakpoints (600px-959px)
-- `@include desktop(min|max)` - Desktop breakpoints (960px-1279px) 
+- `@include desktop(min|max)` - Desktop breakpoints (960px-1279px)
 - `@include large-desktop(min|max)` - Large desktop (1280px+)
 - `@include rtl` - RTL (Arabic) language support
 - `@include ltr` - LTR (English) language override when needed
@@ -189,50 +191,51 @@ The NDS button system follows strict Figma specifications:
 // ==============================================
 
 .nds-component {
-  // Base styles using CSS custom properties
-  font-family: 'IBM Plex Sans Arabic', sans-serif;
-  transition: var(--nds-transition);
-  
-  // RTL/LTR support
-  @include rtl {
-    // RTL-specific styles
-  }
-  
-  @include ltr {
-    // LTR override styles when needed
-  }
+// Base styles using CSS custom properties
+font-family: 'IBM Plex Sans Arabic', sans-serif;
+transition: var(--nds-transition);
+
+// RTL/LTR support
+@include rtl {
+// RTL-specific styles
+}
+
+@include ltr {
+// LTR override styles when needed
+}
 }
 
 // ==============================================
 // COMPONENT SIZES
 // ==============================================
 
-.nds-component-sm { /* Small variant */ }
-.nds-component-md,
+.nds-sm { /* Small variant */ }
+.nds-md,
 .nds-component { /* Default/Medium variant */ }
-.nds-component-lg { /* Large variant */ }
+.nds-lg { /* Large variant */ }
 
 // ==============================================
 // COMPONENT VARIANTS
 // ==============================================
 
-.nds-component-primary { /* Primary style */ }
-.nds-component-neutral { /* Neutral style */ }
+.nds-primary { /* Primary style */ }
+.nds-neutral { /* Neutral style */ }
 
 // ==============================================
 // RESPONSIVE BEHAVIOR
 // ==============================================
 
 @include mobile {
-  .nds-component {
-    // Mobile-specific adjustments
-  }
+.nds-component {
+// Mobile-specific adjustments
+}
 }
 ```
 
 ### Design Token Usage Standards
 
-**CRITICAL**: Always use component-specific design tokens instead of direct color references. The design system follows a structured token hierarchy.
+**CRITICAL**: Always use component-specific design tokens instead of direct color references. The design system follows
+a structured token hierarchy.
 
 **Token Hierarchy:**
 1. **Component Tokens** (Preferred) - Use these first
@@ -241,26 +244,26 @@ The NDS button system follows strict Figma specifications:
 
 **✅ CORRECT Token Usage:**
 ```scss
-.nds-component-primary {
-  // Use component-specific tokens
-  background-color: var(--component-background-primary-default);
-  color: var(--component-text-primary-default);
-  
-  &:hover {
-    background-color: var(--component-background-primary-hovered);
-  }
+.nds-primary {
+// Use component-specific tokens
+background-color: var(--component-background-primary-default);
+color: var(--component-text-primary-default);
+
+&:hover {
+background-color: var(--component-background-primary-hovered);
+}
 }
 ```
 
 **❌ AVOID Direct Color Usage:**
 ```scss
-.nds-component-primary {
-  // DON'T use direct colors
-  background-color: #f3fcf6;
-  color: #14573a;
-  
-  // DON'T use color tokens directly
-  background-color: var(--colors-primary-sa-flag-50);
+.nds-primary {
+// DON'T use direct colors
+background-color: #f3fcf6;
+color: #14573a;
+
+// DON'T use color tokens directly
+background-color: var(--colors-primary-sa-flag-50);
 }
 ```
 
@@ -299,10 +302,10 @@ If component-specific tokens don't exist, use these general semantic tokens:
 
 ```scss
 .nds-new-component {
-  // Use general semantic tokens as fallback
-  background-color: var(--background-primary-50);
-  border: 1px solid var(--border-primary-default);
-  color: var(--text-primary-default);
+// Use general semantic tokens as fallback
+background-color: var(--background-primary-50);
+border: 1px solid var(--border-primary-default);
+color: var(--text-primary-default);
 }
 ```
 
@@ -316,36 +319,36 @@ If component-specific tokens don't exist, use these general semantic tokens:
 **Font Weight - Use Direct Numbers:**
 ```scss
 .nds-component {
-  // ✅ ALWAYS use direct font-weight numbers
-  font-weight: 400; // Regular
-  font-weight: 500; // Medium
-  font-weight: 600; // Semi-bold
-  font-weight: 700; // Bold
-  
-  // ❌ DON'T use font-weight tokens or keywords
-  font-weight: var(--font-weight-medium); // NO
-  font-weight: medium; // NO
+// ✅ ALWAYS use direct font-weight numbers
+font-weight: 400; // Regular
+font-weight: 500; // Medium
+font-weight: 600; // Semi-bold
+font-weight: 700; // Bold
+
+// ❌ DON'T use font-weight tokens or keywords
+font-weight: var(--font-weight-medium); // NO
+font-weight: medium; // NO
 }
 ```
 
 **Font Size - Use NDS Text Tokens:**
 ```scss
 .nds-component {
-  // ✅ Use NDS text size tokens
-  font-size: var(--nds-text-sm-FS);
-  line-height: var(--nds-text-sm-LH);
-  
-  font-size: var(--nds-text-md-FS);
-  line-height: var(--nds-text-md-LH);
-  
-  font-size: var(--nds-text-lg-FS);
-  line-height: var(--nds-text-lg-LH);
+// ✅ Use NDS text size tokens
+font-size: var(--nds-text-sm-FS);
+line-height: var(--nds-text-sm-LH);
+
+font-size: var(--nds-text-md-FS);
+line-height: var(--nds-text-md-LH);
+
+font-size: var(--nds-text-lg-FS);
+line-height: var(--nds-text-lg-LH);
 }
 ```
 
 **Available NDS Text Tokens:**
 - `--nds-text-xs-FS` / `--nds-text-xs-LH` - Extra small text
-- `--nds-text-sm-FS` / `--nds-text-sm-LH` - Small text  
+- `--nds-text-sm-FS` / `--nds-text-sm-LH` - Small text
 - `--nds-text-md-FS` / `--nds-text-md-LH` - Medium text (default)
 - `--nds-text-lg-FS` / `--nds-text-lg-LH` - Large text
 - `--nds-text-xl-FS` / `--nds-text-xl-LH` - Extra large text
@@ -407,10 +410,10 @@ direction: ltr
 - Modular content sections with `.content-section` wrapper class
 
 ### Component Implementation
-- Use class pattern: `nds-btn nds-btn-{type} nds-btn-{size}`
+- Use class pattern: `nds-btn nds-{type} nds-{size}`
 - Always include `<span class="label">` for button text
-    - Add `nds-btn-oncolor` for colored backgrounds
-    - Use `nds-btn-destructive` for destructive actions
+    - Add `nds-oncolor` for colored backgrounds
+    - Use `nds-destructive` for destructive actions
     - Include proper ARIA labels for icon-only buttons
 
     ### Demo Card Structure
@@ -421,7 +424,7 @@ direction: ltr
         <div class="demo-header">
             <div class="demo-label">Component Name</div>
             <div class="demo-action">
-                <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                     data-toggler='["noBg", ".demo-container", "containerBg"]'>
                     <span class="label">Remove bg</span>
                 </button>
@@ -435,7 +438,7 @@ direction: ltr
         <div class="nds-tabs nds-code withDivider">
             <div class="nds-tab-list-container">
                 <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                    <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                         aria-controls="panel-example-1" id="tab-example-1">
                         <span class="nds-tab-label">HTML</span>
                     </button>
@@ -445,7 +448,7 @@ direction: ltr
                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-example-1"
                     aria-labelledby="tab-example-1">
                     <div class="nds-code-action">
-                        <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                             <i class="hgi hgi-stroke hgi-copy-01"></i>
                         </button>
                     </div>
@@ -461,7 +464,7 @@ direction: ltr
     **Demo Toggle Options:**
     - `'["noBg", ".demo-container", "containerBg"]'` - Toggle background removal
     - `'["darkBg", ".demo-container", "containerBg"]'` - Toggle dark background
-    - `'["nds-btn-indicator", ".nds-btn-demo", "indicator"]'` - Toggle button indicators
+    - `'["nds-indicator", ".nds-demo", "indicator"]'` - Toggle button indicators
 
     **Demo Container Classes:**
     - `.demo-container` - Main demo area
@@ -547,5 +550,7 @@ direction: ltr
     - The site showcases component variations, states, and usage examples
     - Copy-to-clipboard functionality allows developers to copy component HTML
     - Interactive demos show different button states and background scenarios
-    - this project RTL by dafault, add LTR styling when needed with @include ltr in mixins
+    - **CRITICAL**: This project is **RTL (Arabic) by default**. Use `@include ltr` mixin when LTR-specific styling is
+    needed for English/Latin text. Never use `@include rtl` - that mixin doesn't exist because RTL is the default
+    behavior.
     - add this mcp server when needed "claude mcp add --transport sse figma http://127.0.0.1:3845/sse"

@@ -19,7 +19,7 @@
   padding: var(--spacing-none) var(--spacing-lg);
 
   // Size variations
-  &.nds-tag-sm {
+  &.nds-sm {
     padding: var(--spacing-none) var(--spacing-md);
     font-size: var(--nds-text-sm-FS);
     height: 24px;
@@ -27,7 +27,7 @@
     line-height: 24px;
   }
 
-  &.nds-tag-xs {
+  &.nds-xs {
     padding: var(--spacing-none) var(--spacing-md);
     font-size: var(--nds-text-xs-FS);
     height: 20px;
@@ -44,7 +44,7 @@
   }
 
   // Icon-only variant
-  &.nds-tag-icon-only {
+  &.nds-icon-only {
     aspect-ratio: 1;
     padding: var(--spacing-none) var(--spacing-xxs);
     justify-content: center;
@@ -64,7 +64,7 @@
 
 
   // Style variations - Filled (default)
-  &.nds-tag-neutral {
+  &.nds-neutral {
     background-color: var(--tag-background-neutral-light);
     color: var(--tag-text-neutral);
     border: 1px solid var(--border-neutral-secondary);
@@ -77,7 +77,7 @@
       background-color: var(--tag-icon-neutral);
     }
 
-    &.nds-tag-inverted {
+    &.nds-inverted {
       background-color: var(--tag-background-neutral);
       border-color: transparent;
       color: var(--text-oncolor-primary);
@@ -89,7 +89,7 @@
 
   }
 
-  &.nds-tag-success {
+  &.nds-success {
     background-color: var(--tag-background-success-light);
     color: var(--tag-text-success);
     border: 1px solid var(--tag-border-success-light);
@@ -102,7 +102,7 @@
       background-color: var(--tag-icon-success);
     }
 
-    &.nds-tag-inverted {
+    &.nds-inverted {
       background-color: var(--tag-background-success);
       border-color: transparent;
       color: var(--text-oncolor-primary);
@@ -114,7 +114,7 @@
 
   }
 
-  &.nds-tag-info {
+  &.nds-info {
     background-color: var(--tag-background-info-light);
     color: var(--tag-text-info);
     border: 1px solid var(--tag-border-info-light);
@@ -127,7 +127,7 @@
       background-color: var(--tag-icon-info);
     }
 
-    &.nds-tag-inverted {
+    &.nds-inverted {
       background-color: var(--tag-background-info);
       border-color: transparent;
       color: var(--text-oncolor-primary);
@@ -138,7 +138,7 @@
     }
   }
 
-  &.nds-tag-warning {
+  &.nds-warning {
     background-color: var(--tag-background-warning-light);
     color: var(--tag-text-warning);
     border: 1px solid var(--tag-border-warning-light);
@@ -151,7 +151,7 @@
       background-color: var(--tag-icon-warning);
     }
 
-    &.nds-tag-inverted {
+    &.nds-inverted {
       background-color: var(--tag-background-warning);
       border-color: transparent;
       color: var(--text-oncolor-primary);
@@ -162,7 +162,7 @@
     }
   }
 
-  &.nds-tag-error {
+  &.nds-error {
     background-color: var(--tag-background-error-light);
     color: var(--tag-text-error);
     border: 1px solid var(--tag-border-error-light);
@@ -175,7 +175,7 @@
       background-color: var(--tag-icon-error);
     }
 
-    &.nds-tag-inverted {
+    &.nds-inverted {
       background-color: var(--tag-background-error);
       border-color: transparent;
       color: var(--text-oncolor-primary);
@@ -186,54 +186,54 @@
     }
   }
 
-  &.nds-tag-oncolor {
+  &.nds-oncolor {
     background-color: var(--tag-background-on-color);
     color: var(--text-oncolor-primary);
     border: unset;
   }
 
   // Outline variants
-  &.nds-tag-outline {
+  &.nds-outline {
     background-color: transparent;
 
-    &.nds-tag-neutral {
+    &.nds-neutral {
       border: 1px solid var(--tag-border-neutral);
       color: var(--tag-text-neutral);
     }
 
-    &.nds-tag-success {
+    &.nds-success {
       border: 1px solid var(--tag-border-success);
       color: var(--tag-text-success);
     }
 
-    &.nds-tag-info {
+    &.nds-info {
       border: 1px solid var(--tag-border-info);
       color: var(--tag-text-info);
     }
 
-    &.nds-tag-warning {
+    &.nds-warning {
       border: 1px solid var(--tag-border-warning);
       color: var(--tag-text-warning);
     }
 
-    &.nds-tag-error {
+    &.nds-error {
       border: 1px solid var(--tag-border-error);
       color: var(--tag-text-error);
     }
 
-    &.nds-tag-oncolor {
+    &.nds-oncolor {
       border: 1px solid var(--tag-border-on-color);
       color: var(--text-oncolor-primary);
     }
   }
 
-  &.nds-tag-ghost {
+  &.nds-ghost {
     background-color: transparent;
     border-color: transparent;
     color: var(--tag-text-neutral);
   }
 
-  &.nds-tag-status {
+  &.nds-status {
     border-radius: 999px;
 
     .label {
@@ -253,7 +253,7 @@
   }
 
   // Rounded variant
-  &.nds-tag-rounded {
+  &.nds-rounded {
     border-radius: 999px;
   }
 
@@ -264,7 +264,7 @@
 }
 
 // Tag group/list styling
-.nds-tag-group {
+.nds-group {
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-sm);

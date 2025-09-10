@@ -21,31 +21,31 @@ direction: ltr
                     <div class="demo-header">
                         <div class="demo-label">Neutral Tag</div>
                         <div class="demo-action">
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-outline", ".nds-tag","outlineToggle"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-outline", ".nds-tag","outlineToggle"]'>
                                 <span class="label">Outline</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-rounded", ".nds-tag","roundedToggle"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-rounded", ".nds-tag","roundedToggle"]'>
                                 <span class="label">Rounded</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["<i class=\"hgi hgi-stroke hgi-help-circle icon\"></i>", ".nds-tag", "tags", "content-prepend"]'>
                                 <span class="label">Toggle Icon</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-md", ".nds-tag", "tagSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-md", ".nds-tag", "tagSize"]'>
                                 <span class="label">MD</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-sm", ".nds-tag", "tagSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-sm", ".nds-tag", "tagSize"]'>
                                 <span class="label">SM</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-xs", ".nds-tag", "tagSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-xs", ".nds-tag", "tagSize"]'>
                                 <span class="label">XS</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                                 <span class="label">Remove bg</span>
                             </button>
@@ -53,7 +53,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <span class="nds-tag nds-tag-neutral">
+                            <span class="nds-tag nds-neutral">
                                 <span class="label">Label</span>
                             </span>
                         </div>
@@ -61,7 +61,7 @@ direction: ltr
                     <div class="nds-tabs nds-code withDivider">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                     aria-controls="panel-neutral-1" id="tab-neutral-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
@@ -71,12 +71,12 @@ direction: ltr
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-neutral-1"
                                 aria-labelledby="tab-neutral-1">
                                 <div class="nds-code-action">
-                                    <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-                                    <span class="nds-tag nds-tag-neutral">
+                                    <span class="nds-tag nds-neutral">
                                       <span class="label">Label</span>
                                     </span>
                                 </code>
@@ -88,31 +88,31 @@ direction: ltr
                     <div class="demo-header">
                         <div class="demo-label">Success Tag</div>
                         <div class="demo-action">
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-outline", ".nds-tag","outlineToggle"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-outline", ".nds-tag","outlineToggle"]'>
                                 <span class="label">Outline</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-rounded", ".nds-tag","roundedToggle"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-rounded", ".nds-tag","roundedToggle"]'>
                                 <span class="label">Rounded</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["<i class=\"hgi hgi-stroke hgi-checkmark-circle-02 icon\"></i>", ".nds-tag", "tags", "content-prepend"]'>
                                 <span class="label">Toggle Icon</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-md", ".nds-tag", "tagSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-md", ".nds-tag", "tagSize"]'>
                                 <span class="label">MD</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-sm", ".nds-tag", "tagSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-sm", ".nds-tag", "tagSize"]'>
                                 <span class="label">SM</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-xs", ".nds-tag", "tagSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-xs", ".nds-tag", "tagSize"]'>
                                 <span class="label">XS</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                                 <span class="label">Remove bg</span>
                             </button>
@@ -120,7 +120,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <span class="nds-tag nds-tag-success">
+                            <span class="nds-tag nds-success">
                                 <span class="label">Success</span>
                             </span>
                         </div>
@@ -128,7 +128,7 @@ direction: ltr
                     <div class="nds-tabs nds-code withDivider">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                     aria-controls="panel-success-1" id="tab-success-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
@@ -138,12 +138,12 @@ direction: ltr
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-success-1"
                                 aria-labelledby="tab-success-1">
                                 <div class="nds-code-action">
-                                    <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-                                    <span class="nds-tag nds-tag-success">
+                                    <span class="nds-tag nds-success">
                                       <span class="label">Success</span>
                                     </span>
                                 </code>
@@ -156,31 +156,31 @@ direction: ltr
                     <div class="demo-header">
                         <div class="demo-label">Info Tag</div>
                         <div class="demo-action">
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-outline", ".nds-tag","outlineToggle"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-outline", ".nds-tag","outlineToggle"]'>
                                 <span class="label">Outline</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-rounded", ".nds-tag","roundedToggle"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-rounded", ".nds-tag","roundedToggle"]'>
                                 <span class="label">Rounded</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["<i class=\"hgi hgi-stroke hgi-information-circle icon\"></i>", ".nds-tag", "tags", "content-prepend"]'>
                                 <span class="label">Toggle Icon</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-md", ".nds-tag", "tagSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-md", ".nds-tag", "tagSize"]'>
                                 <span class="label">MD</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-sm", ".nds-tag", "tagSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-sm", ".nds-tag", "tagSize"]'>
                                 <span class="label">SM</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-xs", ".nds-tag", "tagSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-xs", ".nds-tag", "tagSize"]'>
                                 <span class="label">XS</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                                 <span class="label">Remove bg</span>
                             </button>
@@ -188,7 +188,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <span class="nds-tag nds-tag-info">
+                            <span class="nds-tag nds-info">
                                 <span class="label">Info</span>
                             </span>
                         </div>
@@ -196,7 +196,7 @@ direction: ltr
                     <div class="nds-tabs nds-code withDivider">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                     aria-controls="panel-info-1" id="tab-info-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
@@ -206,12 +206,12 @@ direction: ltr
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-info-1"
                                 aria-labelledby="tab-info-1">
                                 <div class="nds-code-action">
-                                    <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-                                    <span class="nds-tag nds-tag-info">
+                                    <span class="nds-tag nds-info">
                                       <span class="label">Info</span>
                                     </span>
                                 </code>
@@ -224,31 +224,31 @@ direction: ltr
                     <div class="demo-header">
                         <div class="demo-label">Warning Tag</div>
                         <div class="demo-action">
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-outline", ".nds-tag","outlineToggle"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-outline", ".nds-tag","outlineToggle"]'>
                                 <span class="label">Outline</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-rounded", ".nds-tag","roundedToggle"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-rounded", ".nds-tag","roundedToggle"]'>
                                 <span class="label">Rounded</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["<i class=\"hgi hgi-stroke hgi-alert-02 icon\"></i>", ".nds-tag", "tags", "content-prepend"]'>
                                 <span class="label">Toggle Icon</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-md", ".nds-tag", "tagSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-md", ".nds-tag", "tagSize"]'>
                                 <span class="label">MD</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-sm", ".nds-tag", "tagSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-sm", ".nds-tag", "tagSize"]'>
                                 <span class="label">SM</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-xs", ".nds-tag", "tagSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-xs", ".nds-tag", "tagSize"]'>
                                 <span class="label">XS</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                                 <span class="label">Remove bg</span>
                             </button>
@@ -256,7 +256,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <span class="nds-tag nds-tag-warning">
+                            <span class="nds-tag nds-warning">
                                 <span class="label">Warning</span>
                             </span>
                         </div>
@@ -264,7 +264,7 @@ direction: ltr
                     <div class="nds-tabs nds-code withDivider">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                     aria-controls="panel-warning-1" id="tab-warning-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
@@ -274,12 +274,12 @@ direction: ltr
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-warning-1"
                                 aria-labelledby="tab-warning-1">
                                 <div class="nds-code-action">
-                                    <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-                                    <span class="nds-tag nds-tag-warning">
+                                    <span class="nds-tag nds-warning">
                                       <span class="label">Warning</span>
                                     </span>
                                 </code>
@@ -292,31 +292,31 @@ direction: ltr
                     <div class="demo-header">
                         <div class="demo-label">Error Tag</div>
                         <div class="demo-action">
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-outline", ".nds-tag","outlineToggle"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-outline", ".nds-tag","outlineToggle"]'>
                                 <span class="label">Outline</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-rounded", ".nds-tag","roundedToggle"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-rounded", ".nds-tag","roundedToggle"]'>
                                 <span class="label">Rounded</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["<i class=\"hgi hgi-stroke hgi-alert-circle icon\"></i>", ".nds-tag", "tags", "content-prepend"]'>
                                 <span class="label">Toggle Icon</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-md", ".nds-tag", "tagSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-md", ".nds-tag", "tagSize"]'>
                                 <span class="label">MD</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-sm", ".nds-tag", "tagSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-sm", ".nds-tag", "tagSize"]'>
                                 <span class="label">SM</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-xs", ".nds-tag", "tagSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-xs", ".nds-tag", "tagSize"]'>
                                 <span class="label">XS</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                                 <span class="label">Remove bg</span>
                             </button>
@@ -324,7 +324,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <span class="nds-tag nds-tag-error">
+                            <span class="nds-tag nds-error">
                                 <span class="label">Error</span>
                             </span>
                         </div>
@@ -332,7 +332,7 @@ direction: ltr
                     <div class="nds-tabs nds-code withDivider">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                     aria-controls="panel-error-1" id="tab-error-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
@@ -342,12 +342,12 @@ direction: ltr
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-error-1"
                                 aria-labelledby="tab-error-1">
                                 <div class="nds-code-action">
-                                    <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-                                    <span class="nds-tag nds-tag-error">
+                                    <span class="nds-tag nds-error">
                                       <span class="label">Error</span>
                                     </span>
                                 </code>
@@ -360,31 +360,31 @@ direction: ltr
                     <div class="demo-header">
                         <div class="demo-label">On-Color Tag</div>
                         <div class="demo-action">
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-outline", ".nds-tag","outlineToggle"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-outline", ".nds-tag","outlineToggle"]'>
                                 <span class="label">Outline</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-rounded", ".nds-tag","roundedToggle"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-rounded", ".nds-tag","roundedToggle"]'>
                                 <span class="label">Rounded</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["<i class=\"hgi hgi-stroke hgi-star icon\"></i>", ".nds-tag", "tags", "content-prepend"]'>
                                 <span class="label">Toggle Icon</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-md", ".nds-tag", "tagSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-md", ".nds-tag", "tagSize"]'>
                                 <span class="label">MD</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-sm", ".nds-tag", "tagSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-sm", ".nds-tag", "tagSize"]'>
                                 <span class="label">SM</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-xs", ".nds-tag", "tagSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-xs", ".nds-tag", "tagSize"]'>
                                 <span class="label">XS</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["black-bg", ".demo-container", "containerBg"]'>
                                 <span class="label">Black</span>
                             </button>
@@ -392,7 +392,7 @@ direction: ltr
                     </div>
                     <div class="demo-container dark-bg">
                         <div class="state-demo">
-                            <span class="nds-tag nds-tag-oncolor">
+                            <span class="nds-tag nds-oncolor">
                                 <span class="label">On Color</span>
                             </span>
                         </div>
@@ -400,7 +400,7 @@ direction: ltr
                     <div class="nds-tabs nds-code withDivider">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                     aria-controls="panel-oncolor-1" id="tab-oncolor-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
@@ -410,12 +410,12 @@ direction: ltr
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-oncolor-1"
                                 aria-labelledby="tab-oncolor-1">
                                 <div class="nds-code-action">
-                                    <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-                                    <span class="nds-tag nds-tag-oncolor">
+                                    <span class="nds-tag nds-oncolor">
                                       <span class="label">On Color</span>
                                     </span>
                                 </code>
@@ -427,27 +427,27 @@ direction: ltr
                     <div class="demo-header">
                         <div class="demo-label">Only Icon</div>
                         <div class="demo-action">
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-outline", ".nds-tag","outlineToggle"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-outline", ".nds-tag","outlineToggle"]'>
                                 <span class="label">Outline</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-rounded", ".nds-tag","roundedToggle"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-rounded", ".nds-tag","roundedToggle"]'>
                                 <span class="label">Rounded</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-md", ".nds-tag", "tagSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-md", ".nds-tag", "tagSize"]'>
                                 <span class="label">MD</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-sm", ".nds-tag", "tagSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-sm", ".nds-tag", "tagSize"]'>
                                 <span class="label">SM</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-xs", ".nds-tag", "tagSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-xs", ".nds-tag", "tagSize"]'>
                                 <span class="label">XS</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                                 <span class="label">Remove bg</span>
                             </button>
@@ -455,7 +455,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <span class="nds-tag nds-tag-neutral nds-tag-icon-only">
+                            <span class="nds-tag nds-neutral nds-icon-only">
                                 <i class="hgi hgi-stroke hgi-help-circle icon"></i>
                             </span>
                         </div>
@@ -463,7 +463,7 @@ direction: ltr
                     <div class="nds-tabs nds-code withDivider">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                     aria-controls="panel-neutral-1" id="tab-neutral-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
@@ -473,12 +473,12 @@ direction: ltr
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-neutral-1"
                                 aria-labelledby="tab-neutral-1">
                                 <div class="nds-code-action">
-                                    <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-                                    <span class="nds-tag nds-tag-neutral nds-tag-icon-only">
+                                    <span class="nds-tag nds-neutral nds-icon-only">
                                         <i class="hgi hgi-stroke hgi-alert-02 icon"></i>
                                     </span>
                                 </code>
@@ -504,27 +504,27 @@ direction: ltr
                     <div class="demo-header">
                         <div class="demo-label">Neutral Status Tag</div>
                         <div class="demo-action">
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-inverted", ".nds-tag","tagStatus"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-inverted", ".nds-tag","tagStatus"]'>
                                 <span class="label">Inverted</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-ghost", ".nds-tag","tagStatus"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-ghost", ".nds-tag","tagStatus"]'>
                                 <span class="label">Ghost</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-md", ".nds-tag", "tagSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-md", ".nds-tag", "tagSize"]'>
                                 <span class="label">MD</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-sm", ".nds-tag", "tagSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-sm", ".nds-tag", "tagSize"]'>
                                 <span class="label">SM</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-xs", ".nds-tag", "tagSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-xs", ".nds-tag", "tagSize"]'>
                                 <span class="label">XS</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                                 <span class="label">Remove bg</span>
                             </button>
@@ -532,7 +532,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <span class="nds-tag nds-tag-neutral nds-tag-status">
+                            <span class="nds-tag nds-neutral nds-status">
                                 <span class="label">Status</span>
                             </span>
                         </div>
@@ -540,7 +540,7 @@ direction: ltr
                     <div class="nds-tabs nds-code withDivider">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                     aria-controls="panel-neutral-status-1" id="tab-neutral-status-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
@@ -550,12 +550,12 @@ direction: ltr
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-neutral-status-1"
                                 aria-labelledby="tab-neutral-status-1">
                                 <div class="nds-code-action">
-                                    <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-                                    <span class="nds-tag nds-tag-neutral nds-tag-status">
+                                    <span class="nds-tag nds-neutral nds-status">
                                       <span class="label">Status</span>
                                     </span>
                                 </code>
@@ -567,27 +567,27 @@ direction: ltr
                     <div class="demo-header">
                         <div class="demo-label">Success Status Tag</div>
                         <div class="demo-action">
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-inverted", ".nds-tag","tagStatus"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-inverted", ".nds-tag","tagStatus"]'>
                                 <span class="label">Inverted</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-ghost", ".nds-tag","tagStatus"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-ghost", ".nds-tag","tagStatus"]'>
                                 <span class="label">Ghost</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-md", ".nds-tag", "tagSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-md", ".nds-tag", "tagSize"]'>
                                 <span class="label">MD</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-sm", ".nds-tag", "tagSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-sm", ".nds-tag", "tagSize"]'>
                                 <span class="label">SM</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-xs", ".nds-tag", "tagSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-xs", ".nds-tag", "tagSize"]'>
                                 <span class="label">XS</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                                 <span class="label">Remove bg</span>
                             </button>
@@ -595,7 +595,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <span class="nds-tag nds-tag-success nds-tag-status">
+                            <span class="nds-tag nds-success nds-status">
                                 <span class="label">Success</span>
                             </span>
                         </div>
@@ -603,7 +603,7 @@ direction: ltr
                     <div class="nds-tabs nds-code withDivider">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                     aria-controls="panel-success-status-1" id="tab-success-status-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
@@ -613,12 +613,12 @@ direction: ltr
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-success-status-1"
                                 aria-labelledby="tab-success-status-1">
                                 <div class="nds-code-action">
-                                    <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-                                    <span class="nds-tag nds-tag-success nds-tag-status">
+                                    <span class="nds-tag nds-success nds-status">
                                       <span class="label">Success</span>
                                     </span>
                                 </code>
@@ -631,27 +631,27 @@ direction: ltr
                     <div class="demo-header">
                         <div class="demo-label">Info Status Tag</div>
                         <div class="demo-action">
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-inverted", ".nds-tag","tagStatus"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-inverted", ".nds-tag","tagStatus"]'>
                                 <span class="label">Inverted</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-ghost", ".nds-tag","tagStatus"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-ghost", ".nds-tag","tagStatus"]'>
                                 <span class="label">Ghost</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-md", ".nds-tag", "tagSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-md", ".nds-tag", "tagSize"]'>
                                 <span class="label">MD</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-sm", ".nds-tag", "tagSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-sm", ".nds-tag", "tagSize"]'>
                                 <span class="label">SM</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-xs", ".nds-tag", "tagSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-xs", ".nds-tag", "tagSize"]'>
                                 <span class="label">XS</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                                 <span class="label">Remove bg</span>
                             </button>
@@ -659,7 +659,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <span class="nds-tag nds-tag-info nds-tag-status">
+                            <span class="nds-tag nds-info nds-status">
                                 <span class="label">Info</span>
                             </span>
                         </div>
@@ -667,7 +667,7 @@ direction: ltr
                     <div class="nds-tabs nds-code withDivider">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                     aria-controls="panel-info-status-1" id="tab-info-status-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
@@ -677,12 +677,12 @@ direction: ltr
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-info-status-1"
                                 aria-labelledby="tab-info-status-1">
                                 <div class="nds-code-action">
-                                    <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-                                    <span class="nds-tag nds-tag-info nds-tag-status">
+                                    <span class="nds-tag nds-info nds-status">
                                       <span class="label">Info</span>
                                     </span>
                                 </code>
@@ -695,27 +695,27 @@ direction: ltr
                     <div class="demo-header">
                         <div class="demo-label">Warning Status Tag</div>
                         <div class="demo-action">
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-inverted", ".nds-tag","tagStatus"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-inverted", ".nds-tag","tagStatus"]'>
                                 <span class="label">Inverted</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-ghost", ".nds-tag","tagStatus"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-ghost", ".nds-tag","tagStatus"]'>
                                 <span class="label">Ghost</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-md", ".nds-tag", "tagSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-md", ".nds-tag", "tagSize"]'>
                                 <span class="label">MD</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-sm", ".nds-tag", "tagSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-sm", ".nds-tag", "tagSize"]'>
                                 <span class="label">SM</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-xs", ".nds-tag", "tagSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-xs", ".nds-tag", "tagSize"]'>
                                 <span class="label">XS</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                                 <span class="label">Remove bg</span>
                             </button>
@@ -723,7 +723,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <span class="nds-tag nds-tag-warning nds-tag-status">
+                            <span class="nds-tag nds-warning nds-status">
                                 <span class="label">Warning</span>
                             </span>
                         </div>
@@ -731,7 +731,7 @@ direction: ltr
                     <div class="nds-tabs nds-code withDivider">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                     aria-controls="panel-warning-status-1" id="tab-warning-status-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
@@ -741,12 +741,12 @@ direction: ltr
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-warning-status-1"
                                 aria-labelledby="tab-warning-status-1">
                                 <div class="nds-code-action">
-                                    <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-                                    <span class="nds-tag nds-tag-warning nds-tag-status">
+                                    <span class="nds-tag nds-warning nds-status">
                                       <span class="label">Warning</span>
                                     </span>
                                 </code>
@@ -759,27 +759,27 @@ direction: ltr
                     <div class="demo-header">
                         <div class="demo-label">Error Status Tag</div>
                         <div class="demo-action">
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-inverted", ".nds-tag","tagStatus"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-inverted", ".nds-tag","tagStatus"]'>
                                 <span class="label">Inverted</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-ghost", ".nds-tag","tagStatus"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-ghost", ".nds-tag","tagStatus"]'>
                                 <span class="label">Ghost</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-md", ".nds-tag", "tagSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-md", ".nds-tag", "tagSize"]'>
                                 <span class="label">MD</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-sm", ".nds-tag", "tagSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-sm", ".nds-tag", "tagSize"]'>
                                 <span class="label">SM</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-tag-xs", ".nds-tag", "tagSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-xs", ".nds-tag", "tagSize"]'>
                                 <span class="label">XS</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                                 <span class="label">Remove bg</span>
                             </button>
@@ -787,7 +787,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <span class="nds-tag nds-tag-error nds-tag-status">
+                            <span class="nds-tag nds-error nds-status">
                                 <span class="label">Error</span>
                             </span>
                         </div>
@@ -795,7 +795,7 @@ direction: ltr
                     <div class="nds-tabs nds-code withDivider">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                     aria-controls="panel-error-status-1" id="tab-error-status-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
@@ -805,12 +805,12 @@ direction: ltr
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-error-status-1"
                                 aria-labelledby="tab-error-status-1">
                                 <div class="nds-code-action">
-                                    <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-                                    <span class="nds-tag nds-tag-error nds-tag-status">
+                                    <span class="nds-tag nds-error nds-status">
                                       <span class="label">Error</span>
                                     </span>
                                 </code>

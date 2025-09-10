@@ -53,6 +53,7 @@
     &.nds-radio-container,
     &.nds-check-container,
     &.nds-switch-container {
+        --nds-input-size: 20px;
         display: flex;
         gap: var(--spacing-lg);
         flex-direction: row-reverse;
@@ -61,34 +62,38 @@
         min-width: 200px;
         justify-content: flex-end;
 
-        &>.nds-form-header>.label {
+        &>.nds-form-header .label {
             color: var(--text-display);
             font-size: var(--nds-text-md-FS);
-            line-height: normal;
+            line-height: var(--nds-input-size);
             font-weight: 500;
-            height: 20px;
+            height: var(--nds-input-size);
 
         }
 
-        &.size-lg {
+
+
+        &.nds-lg * {
+            --nds-input-size: 24px;
+        }
+
+        &.nds-sm * {
+            --nds-input-size: 16px;
+        }
+
+        &.nds-lg {
+
             gap: var(--spacing-xl);
 
-            .nds-form-header>.label {
-                font-size: var(--nds-text-lg-FS);
-                height: 24px;
-
-            }
         }
 
-        &.size-sm {
+        &.nds-sm {
             gap: var(--spacing-md);
 
-            .nds-form-header>.label {
-                font-size: var(--nds-text-sm-FS);
-                height: 16px;
-
-            }
         }
+
+
+
     }
 
 }
@@ -348,10 +353,10 @@ fieldset {
         }
 
         >* {
-            --nds-btn-height: 38px;
+            --nds-height: 38px;
             position: relative;
-            width: var(--nds-btn-height);
-            height: var(--nds-btn-height);
+            width: var(--nds-height);
+            height: var(--nds-height);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -387,10 +392,10 @@ fieldset {
         }
 
         >* {
-            --nds-btn-height: 38px;
+            --nds-height: 38px;
             position: relative;
-            width: var(--nds-btn-height);
-            height: var(--nds-btn-height);
+            width: var(--nds-height);
+            height: var(--nds-height);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -448,8 +453,8 @@ fieldset {
 
     & input[type="radio"],
     & input[type="checkbox"] {
-        width: 20px;
-        height: 20px;
+        width: var(--nds-input-size);
+        height: var(--nds-input-size);
         z-index: 2;
         appearance: none;
         border-radius: 50%;
@@ -462,8 +467,8 @@ fieldset {
         &:not(:disabled)::before {
             content: '';
             position: absolute;
-            width: 20px;
-            height: 20px;
+            width: var(--nds-input-size);
+            height: var(--nds-input-size);
             bottom: 50%;
             left: 50%;
             border-radius: 50%;
@@ -476,39 +481,10 @@ fieldset {
         }
 
         &:not(:disabled):hover::before {
-            width: 40px;
-            height: 40px;
+            width: calc(var(--nds-input-size)*2);
+            height: calc(var(--nds-input-size)*2);
         }
 
-        .size-sm & {
-            width: 16px;
-            height: 16px;
-
-            &:not(:disabled)::before {
-                width: 16px;
-                height: 16px;
-            }
-
-            &:not(:disabled):hover::before {
-                width: 32px;
-                height: 32px;
-            }
-        }
-
-        .size-lg & {
-            width: 24px;
-            height: 24px;
-
-            &:not(:disabled)::before {
-                width: 24px;
-                height: 24px;
-            }
-
-            &:not(:disabled):hover::before {
-                width: 48px;
-                height: 48px;
-            }
-        }
 
         &::after {
             content: "";
@@ -527,11 +503,11 @@ fieldset {
             border: 4px solid var(--colors-base-white);
         }
 
-        .size-sm &:checked::after {
+        .nds-sm &:checked::after {
             border: 3px solid var(--colors-base-white);
         }
 
-        .size-lg &:checked::after {
+        .nds-lg &:checked::after {
             border: 5px solid var(--colors-base-white);
         }
 
@@ -636,10 +612,10 @@ fieldset {
             opacity: 0;
             transition: opacity var(--nds-transition);
             display: inline-flex;
-            width: 20px;
-            height: 20px;
+            width: var(--nds-input-size);
+            height: var(--nds-input-size);
             font-size: 16px;
-            line-height: 16px;
+            line-height: var(--nds-input-size);
             font-weight: 600;
         }
 
@@ -647,19 +623,19 @@ fieldset {
             content: "䗵" !important;
         }
 
-        .size-sm &:checked::after {
+        /* .nds-sm &:checked::after {
             width: 16px;
             height: 16px;
             font-size: 12px;
             line-height: 12px;
         }
 
-        .size-lg &:checked::after {
+        .nds-lg &:checked::after {
             width: 24px;
             height: 24px;
             font-size: 20px;
             line-height: 20px;
-        }
+        } */
 
         /* &:checked:read-only::after{
             background-color: var(--colors-base-white)!important;
@@ -677,14 +653,14 @@ fieldset {
         --thumb-size: 18px;
         --thumb-left: 2px;
 
-        .size-sm & {
+        .nds-sm & {
             --switch-width: 36px;
             --switch-height: 18px;
             --thumb-size: 12px;
             --thumb-left: 2px;
         }
 
-        .size-lg & {
+        .nds-lg & {
             --switch-width: 56px;
             --switch-height: 28px;
             --thumb-size: 22px;
@@ -1082,8 +1058,8 @@ fieldset {
             gap: var(--spacing-xs);
 
             .nds-btn {
-                --nds-btn-height: 24px;
-                --nds-btn-width: 24px;
+                --nds-height: 24px;
+                --nds-width: 24px;
             }
 
         }

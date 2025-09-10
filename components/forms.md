@@ -63,11 +63,11 @@ direction: ltr
           <div class="demo-header">
             <div class="demo-label">Text Input</div>
             <div class="demo-action">
-              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["disabled", "input[type=text]", "stateToggle", "attr"]'>
                 <span class="label">Disabled</span>
               </button>
-              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                 <span class="label">Remove bg</span>
               </button>
@@ -84,7 +84,7 @@ direction: ltr
                 <div class="nds-form-control">
                   <input type="text" id="textInput" class="nds-input" placeholder="Enter text..." value="">
                   <div class="nds-form-action">
-                    <button class="nds-btn nds-btn-subtle clear hidden" type="button" aria-label="Clear input">
+                    <button class="nds-btn nds-subtle clear hidden" type="button" aria-label="Clear input">
                       <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
                     </button>
                   </div>
@@ -96,11 +96,11 @@ direction: ltr
           <div class="nds-tabs nds-code withDivider">
             <div class="nds-tab-list-container">
               <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                   aria-controls="panel-text-input-1" id="tab-text-input-1">
                   <span class="nds-tab-label">HTML</span>
                 </button>
-                <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                <button class="nds-btn nds-subtle nds-tab showMore"><i
                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                 </button>
               </nav>
@@ -109,7 +109,7 @@ direction: ltr
               <div class="nds-tab-panel code-example" role="tabpanel" id="panel-text-input-1"
                 aria-labelledby="tab-text-input-1">
                 <div class="nds-code-action">
-                  <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                  <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                   </button>
                 </div>
@@ -123,7 +123,7 @@ direction: ltr
                     <div class="nds-form-control">
                       <input type="text" id="textInput" class="nds-input" placeholder="Enter text..." value="">
                       <div class="nds-form-action">
-                        <button class="nds-btn nds-btn-subtle clear hidden" type="button" aria-label="Clear input">
+                        <button class="nds-btn nds-subtle clear hidden" type="button" aria-label="Clear input">
                           <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
                         </button>
                       </div>
@@ -141,11 +141,11 @@ direction: ltr
           <div class="demo-header">
             <div class="demo-label">Search Input</div>
             <div class="demo-action">
-              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["disabled", "#searchInput", "stateToggle", "attr"]'>
                 <span class="label">Disabled</span>
               </button>
-              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                 <span class="label">Remove bg</span>
               </button>
@@ -163,10 +163,10 @@ direction: ltr
                   <i class="hgi hgi-stroke hgi-search-01 icon"></i>
                   <input type="text" id="searchInput" class="nds-search-input" name="search" placeholder="Search...">
                   <div class="nds-form-action">
-                    <button class="nds-btn nds-btn-subtle voiceInput" type="button" aria-label="Voice input">
+                    <button class="nds-btn nds-subtle voiceInput" type="button" aria-label="Voice input">
                       <i class="hgi hgi-stroke hgi-mic-01 icon"></i>
                     </button>
-                    <button class="nds-btn nds-btn-subtle clear hidden" type="button" aria-label="Clear search">
+                    <button class="nds-btn nds-subtle clear hidden" type="button" aria-label="Clear search">
                       <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
                     </button>
                   </div>
@@ -178,11 +178,11 @@ direction: ltr
           <div class="nds-tabs nds-code withDivider">
             <div class="nds-tab-list-container">
               <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                   aria-controls="panel-search-input-1" id="tab-search-input-1">
                   <span class="nds-tab-label">HTML</span>
                 </button>
-                <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                <button class="nds-btn nds-subtle nds-tab showMore"><i
                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                 </button>
               </nav>
@@ -191,7 +191,7 @@ direction: ltr
               <div class="nds-tab-panel code-example" role="tabpanel" id="panel-search-input-1"
                 aria-labelledby="tab-search-input-1">
                 <div class="nds-code-action">
-                  <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                  <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                   </button>
                 </div>
@@ -206,10 +206,10 @@ direction: ltr
                       <i class="hgi hgi-stroke hgi-search-01 icon"></i>
                       <input type="text" id="searchInput" class="nds-search-input" name="search" placeholder="Search...">
                       <div class="nds-form-action">
-                        <button class="nds-btn nds-btn-subtle voiceInput" type="button" aria-label="Voice input">
+                        <button class="nds-btn nds-subtle voiceInput" type="button" aria-label="Voice input">
                           <i class="hgi hgi-stroke hgi-mic-01 icon"></i>
                         </button>
-                        <button class="nds-btn nds-btn-subtle clear hidden" type="button" aria-label="Clear search">
+                        <button class="nds-btn nds-subtle clear hidden" type="button" aria-label="Clear search">
                           <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
                         </button>
                       </div>
@@ -227,11 +227,11 @@ direction: ltr
           <div class="demo-header">
             <div class="demo-label">Email Input</div>
             <div class="demo-action">
-              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["disabled", "#emailInput", "stateToggle", "attr"]'>
                 <span class="label">Disabled</span>
               </button>
-              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                 <span class="label">Remove bg</span>
               </button>
@@ -249,7 +249,7 @@ direction: ltr
                   <i class="hgi hgi-stroke hgi-mail-01 icon"></i>
                   <input type="email" id="emailInput" class="nds-input" placeholder="Enter email address...">
                   <div class="nds-form-action">
-                    <button class="nds-btn nds-btn-subtle clear hidden" type="button" aria-label="Clear email">
+                    <button class="nds-btn nds-subtle clear hidden" type="button" aria-label="Clear email">
                       <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
                     </button>
                   </div>
@@ -261,11 +261,11 @@ direction: ltr
           <div class="nds-tabs nds-code withDivider">
             <div class="nds-tab-list-container">
               <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                   aria-controls="panel-email-input-1" id="tab-email-input-1">
                   <span class="nds-tab-label">HTML</span>
                 </button>
-                <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                <button class="nds-btn nds-subtle nds-tab showMore"><i
                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                 </button>
               </nav>
@@ -274,7 +274,7 @@ direction: ltr
               <div class="nds-tab-panel code-example" role="tabpanel" id="panel-email-input-1"
                 aria-labelledby="tab-email-input-1">
                 <div class="nds-code-action">
-                  <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                  <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                   </button>
                 </div>
@@ -289,7 +289,7 @@ direction: ltr
                       <i class="hgi hgi-stroke hgi-mail-01 icon"></i>
                       <input type="email" id="emailInput" class="nds-input" placeholder="Enter email address...">
                       <div class="nds-form-action">
-                        <button class="nds-btn nds-btn-subtle clear hidden" type="button" aria-label="Clear email">
+                        <button class="nds-btn nds-subtle clear hidden" type="button" aria-label="Clear email">
                           <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
                         </button>
                       </div>
@@ -307,11 +307,11 @@ direction: ltr
           <div class="demo-header">
             <div class="demo-label">Password Input</div>
             <div class="demo-action">
-              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["disabled", "#passwordInput", "stateToggle", "attr"]'>
                 <span class="label">Disabled</span>
               </button>
-              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                 <span class="label">Remove bg</span>
               </button>
@@ -327,13 +327,13 @@ direction: ltr
                 </div>
                 <div class="nds-form-control">
                   <div class="nds-form-action before">
-                    <button class="nds-btn nds-btn-subtle toggle-password" type="button" aria-label="Show password">
+                    <button class="nds-btn nds-subtle toggle-password" type="button" aria-label="Show password">
                       <i class="hgi hgi-stroke hgi-view-off icon"></i>
                     </button>
                   </div>
                   <input type="password" id="passwordInput" class="nds-input" placeholder="Enter password...">
                   <div class="nds-form-action">
-                    <button class="nds-btn nds-btn-subtle clear hidden" type="button" aria-label="Clear password">
+                    <button class="nds-btn nds-subtle clear hidden" type="button" aria-label="Clear password">
                       <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
                     </button>
                   </div>
@@ -345,11 +345,11 @@ direction: ltr
           <div class="nds-tabs nds-code withDivider">
             <div class="nds-tab-list-container">
               <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                   aria-controls="panel-password-input-1" id="tab-password-input-1">
                   <span class="nds-tab-label">HTML</span>
                 </button>
-                <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                <button class="nds-btn nds-subtle nds-tab showMore"><i
                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                 </button>
               </nav>
@@ -358,7 +358,7 @@ direction: ltr
               <div class="nds-tab-panel code-example" role="tabpanel" id="panel-password-input-1"
                 aria-labelledby="tab-password-input-1">
                 <div class="nds-code-action">
-                  <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                  <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                   </button>
                 </div>
@@ -371,13 +371,13 @@ direction: ltr
                     </div>
                     <div class="nds-form-control">
                       <div class="nds-form-action before">
-                        <button class="nds-btn nds-btn-subtle toggle-password" type="button" aria-label="Show password">
+                        <button class="nds-btn nds-subtle toggle-password" type="button" aria-label="Show password">
                           <i class="hgi hgi-stroke hgi-view-off icon"></i>
                         </button>
                       </div>
                       <input type="password" id="passwordInput" class="nds-input" placeholder="Enter password...">
                       <div class="nds-form-action">
-                        <button class="nds-btn nds-btn-subtle clear hidden" type="button" aria-label="Clear password">
+                        <button class="nds-btn nds-subtle clear hidden" type="button" aria-label="Clear password">
                           <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
                         </button>
                       </div>
@@ -395,11 +395,11 @@ direction: ltr
           <div class="demo-header">
             <div class="demo-label">Textarea</div>
             <div class="demo-action">
-              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["disabled", "#textareaInput", "stateToggle", "attr"]'>
                 <span class="label">Disabled</span>
               </button>
-              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                 <span class="label">Remove bg</span>
               </button>
@@ -424,11 +424,11 @@ direction: ltr
           <div class="nds-tabs nds-code withDivider">
             <div class="nds-tab-list-container">
               <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                   aria-controls="panel-textarea-1" id="tab-textarea-1">
                   <span class="nds-tab-label">HTML</span>
                 </button>
-                <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                <button class="nds-btn nds-subtle nds-tab showMore"><i
                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                 </button>
               </nav>
@@ -437,7 +437,7 @@ direction: ltr
               <div class="nds-tab-panel code-example" role="tabpanel" id="panel-textarea-1"
                 aria-labelledby="tab-textarea-1">
                 <div class="nds-code-action">
-                  <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                  <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                   </button>
                 </div>
@@ -464,11 +464,11 @@ direction: ltr
           <div class="demo-header">
             <div class="demo-label">Select Dropdown</div>
             <div class="demo-action">
-              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["disabled", "#selectInput", "stateToggle", "attr"]'>
                 <span class="label">Disabled</span>
               </button>
-              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                 <span class="label">Remove bg</span>
               </button>
@@ -490,16 +490,16 @@ direction: ltr
                   <!-- Custom Dropdown Menu -->
                   <div class="nds-select-dropdown hidden">
                     <div class="select-options">
-                      <button type="button" class="nds-btn nds-btn-subtle select-option" data-value="">
+                      <button type="button" class="nds-btn nds-subtle select-option" data-value="">
                         <span class="option-text">Choose an option...</span>
                       </button>
-                      <button type="button" class="nds-btn nds-btn-subtle select-option" data-value="option1">
+                      <button type="button" class="nds-btn nds-subtle select-option" data-value="option1">
                         <span class="option-text">Option 1</span>
                       </button>
-                      <button type="button" class="nds-btn nds-btn-subtle select-option" data-value="option2">
+                      <button type="button" class="nds-btn nds-subtle select-option" data-value="option2">
                         <span class="option-text">Option 2</span>
                       </button>
-                      <button type="button" class="nds-btn nds-btn-subtle select-option" data-value="option3">
+                      <button type="button" class="nds-btn nds-subtle select-option" data-value="option3">
                         <span class="option-text">Option 3</span>
                       </button>
                     </div>
@@ -512,11 +512,11 @@ direction: ltr
           <div class="nds-tabs nds-code withDivider">
             <div class="nds-tab-list-container">
               <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                   aria-controls="panel-select-1" id="tab-select-1">
                   <span class="nds-tab-label">HTML</span>
                 </button>
-                <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                <button class="nds-btn nds-subtle nds-tab showMore"><i
                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                 </button>
               </nav>
@@ -525,7 +525,7 @@ direction: ltr
               <div class="nds-tab-panel code-example" role="tabpanel" id="panel-select-1"
                 aria-labelledby="tab-select-1">
                 <div class="nds-code-action">
-                  <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                  <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                   </button>
                 </div>
@@ -543,16 +543,16 @@ direction: ltr
                       <!-- Custom Dropdown Menu -->
                       <div class="nds-select-dropdown hidden">
                         <div class="select-options">
-                          <button type="button" class="nds-btn nds-btn-subtle select-option" data-value="">
+                          <button type="button" class="nds-btn nds-subtle select-option" data-value="">
                             <span class="option-text">Choose an option...</span>
                           </button>
-                          <button type="button" class="nds-btn nds-btn-subtle select-option" data-value="option1">
+                          <button type="button" class="nds-btn nds-subtle select-option" data-value="option1">
                             <span class="option-text">Option 1</span>
                           </button>
-                          <button type="button" class="nds-btn nds-btn-subtle select-option" data-value="option2">
+                          <button type="button" class="nds-btn nds-subtle select-option" data-value="option2">
                             <span class="option-text">Option 2</span>
                           </button>
-                          <button type="button" class="nds-btn nds-btn-subtle select-option" data-value="option3">
+                          <button type="button" class="nds-btn nds-subtle select-option" data-value="option3">
                             <span class="option-text">Option 3</span>
                           </button>
                         </div>
@@ -571,27 +571,27 @@ direction: ltr
           <div class="demo-header">
             <div class="demo-label">Radio Button Group</div>
             <div class="demo-action">
-              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                data-toggler='["size-lg", ".nds-radio-container", "sizeToggle"]'>
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='["nds-lg", ".nds-radio-container", "sizeToggle"]'>
                 <span class="label">LG</span>
               </button>
-              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn selected"
-                data-toggler='["size-md", ".nds-radio-container", "sizeToggle"]'>
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
+                data-toggler='["nds-md", ".nds-radio-container", "sizeToggle"]'>
                 <span class="label">MD</span>
               </button>
-              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                data-toggler='["size-sm", ".nds-radio-container", "sizeToggle"]'>
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='["nds-sm", ".nds-radio-container", "sizeToggle"]'>
                 <span class="label">SM</span>
               </button>
-              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["disabled", "input[type=radio]", "stateToggle", "attr"]'>
                 <span class="label">Disabled</span>
               </button>
-              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["rowView", ".nds-radio-group", "layoutToggle"]'>
                 <span class="label">RowView</span>
               </button>
-              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                 <span class="label">Remove bg</span>
               </button>
@@ -631,11 +631,11 @@ direction: ltr
           <div class="nds-tabs nds-code withDivider">
             <div class="nds-tab-list-container">
               <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
-                  aria-controls="panel-radio-1" id="tab-radio-1">
+                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-radio-1"
+                  id="tab-radio-1">
                   <span class="nds-tab-label">HTML</span>
                 </button>
-                <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                <button class="nds-btn nds-subtle nds-tab showMore"><i
                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                 </button>
               </nav>
@@ -643,7 +643,7 @@ direction: ltr
             <div class="nds-tab-content">
               <div class="nds-tab-panel code-example" role="tabpanel" id="panel-radio-1" aria-labelledby="tab-radio-1">
                 <div class="nds-code-action">
-                  <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                  <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                   </button>
                 </div>
@@ -683,27 +683,27 @@ direction: ltr
           <div class="demo-header">
             <div class="demo-label">Checkbox</div>
             <div class="demo-action">
-              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                data-toggler='["size-lg", ".nds-check-container", "sizeToggle"]'>
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='["nds-lg", ".nds-check-container", "sizeToggle"]'>
                 <span class="label">LG</span>
               </button>
-              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn selected"
-                data-toggler='["size-md", ".nds-check-container", "sizeToggle"]'>
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
+                data-toggler='["nds-md", ".nds-check-container", "sizeToggle"]'>
                 <span class="label">MD</span>
               </button>
-              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                data-toggler='["size-sm", ".nds-check-container", "sizeToggle"]'>
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='["nds-sm", ".nds-check-container", "sizeToggle"]'>
                 <span class="label">SM</span>
               </button>
-              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["disabled", "input[type=checkbox]", "stateToggle", "attr"]'>
                 <span class="label">Disabled</span>
               </button>
-              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["rowView", ".nds-check-group", "layoutToggle"]'>
                 <span class="label">RowView</span>
               </button>
-              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                 <span class="label">Remove bg</span>
               </button>
@@ -756,11 +756,11 @@ direction: ltr
           <div class="nds-tabs nds-code withDivider">
             <div class="nds-tab-list-container">
               <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                   aria-controls="panel-checkbox-1" id="tab-checkbox-1">
                   <span class="nds-tab-label">HTML</span>
                 </button>
-                <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                <button class="nds-btn nds-subtle nds-tab showMore"><i
                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                 </button>
               </nav>
@@ -769,7 +769,7 @@ direction: ltr
               <div class="nds-tab-panel code-example" role="tabpanel" id="panel-checkbox-1"
                 aria-labelledby="tab-checkbox-1">
                 <div class="nds-code-action">
-                  <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                  <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                   </button>
                 </div>
@@ -807,18 +807,18 @@ direction: ltr
           <div class="demo-header">
             <div class="demo-label">File Upload</div>
             <div class="demo-action">
-              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                data-toggler='[["single-file", ".nds-form-container", "singleFileToggle"], ["multiple", ".file-input", "multipleToggle", "attr"], ["dropBox", ".nds-form-container", "dropBoxToggle"],["nds-btn-primary nds-btn-secondary", ".browse-btn", "buttonStyle"],["hidden", ".nds-form-header", "hideHeader"]]'>
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='[["single-file", ".nds-form-container", "singleFileToggle"], ["multiple", ".file-input", "multipleToggle", "attr"], ["dropBox", ".nds-form-container", "dropBoxToggle"],["nds-primary nds-secondary", ".browse-btn", "buttonStyle"],["hidden", ".nds-form-header", "hideHeader"]]'>
                 <span class="label">Single File</span>
               </button>
-              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='[["disabled", ".multi-file-upload .file-input", "stateToggle", "attr"], ["disabled", ".browse-btn", "stateToggle", "attr"]]'>
                 <span class="label">Disabled</span>
               </button>
-              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-action-btn" data-action="populate-demo-files">
+              <button class="nds-btn nds-sm nds-subtle demo-action-btn" data-action="populate-demo-files">
                 <span class="label">Demo Files</span>
               </button>
-              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                 <span class="label">Remove bg</span>
               </button>
@@ -849,7 +849,7 @@ direction: ltr
                   </div>
 
                   <div class="upload-actions">
-                    <button type="button" class="nds-btn nds-btn-secondary nds-btn-md browse-btn">
+                    <button type="button" class="nds-btn nds-secondary nds-md browse-btn">
                       <i class="hgi hgi-stroke hgi-folder-01"></i>
                       <span class="label">Browse Files</span>
                     </button>
@@ -891,8 +891,7 @@ direction: ltr
                     </div>
 
                     <div class="file-actions">
-                      <button type="button" class="nds-btn nds-btn-subtle nds-btn-md remove-file"
-                        aria-label="Remove file">
+                      <button type="button" class="nds-btn nds-subtle nds-md remove-file" aria-label="Remove file">
                         <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
                       </button>
                     </div>
@@ -905,15 +904,15 @@ direction: ltr
           <div class="nds-tabs nds-code withDivider">
             <div class="nds-tab-list-container">
               <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                   aria-controls="panel-file-upload-1" id="tab-file-upload-1">
                   <span class="nds-tab-label">HTML</span>
                 </button>
-                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="false"
+                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
                   aria-controls="panel-file-upload-2" id="tab-file-upload-2">
                   <span class="nds-tab-label">Documentation</span>
                 </button>
-                <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                <button class="nds-btn nds-subtle nds-tab showMore"><i
                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                 </button>
               </nav>
@@ -922,7 +921,7 @@ direction: ltr
               <div class="nds-tab-panel code-example" role="tabpanel" id="panel-file-upload-1"
                 aria-labelledby="tab-file-upload-1">
                 <div class="nds-code-action">
-                  <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                  <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                   </button>
                 </div>
@@ -950,7 +949,7 @@ direction: ltr
         </div>
 
         <div class="upload-actions">
-            <button type="button" class="nds-btn nds-btn-secondary nds-btn-md browse-btn">
+            <button type="button" class="nds-btn nds-secondary nds-md browse-btn">
                 <i class="hgi hgi-stroke hgi-folder-01"></i>
                 <span class="label">Browse Files</span>
             </button>
@@ -988,7 +987,7 @@ direction: ltr
                 </div>
             </div>
             <div class="file-actions">
-                <button type="button" class="nds-btn nds-btn-subtle remove-file" aria-label="Remove file">
+                <button type="button" class="nds-btn nds-subtle remove-file" aria-label="Remove file">
                     <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
                 </button>
             </div>
@@ -1009,7 +1008,7 @@ direction: ltr
 
                 <div class="nds-code">
                   <div class="nds-code-action">
-                    <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                       <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                   </div>
@@ -1030,7 +1029,7 @@ fileUpload.startUpload(fileId);
 
                 <div class="nds-code">
                   <div class="nds-code-action">
-                    <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                       <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                   </div>
@@ -1062,7 +1061,7 @@ fileUpload.startUpload(fileId);
                 <p>Adds a file to the upload queue.</p>
                 <div class="nds-code">
                   <div class="nds-code-action">
-                    <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                       <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                   </div>
@@ -1080,7 +1079,7 @@ const fileId = fileUpload.addFile(file, {
                 <p>Removes a file from the upload queue.</p>
                 <div class="nds-code">
                   <div class="nds-code-action">
-                    <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                       <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                   </div>
@@ -1094,7 +1093,7 @@ const success = fileUpload.removeFile(fileId);
                 <p>Removes all files from the upload queue.</p>
                 <div class="nds-code">
                   <div class="nds-code-action">
-                    <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                       <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                   </div>
@@ -1109,7 +1108,7 @@ fileUpload.clearAllFiles();
                 <p>Get file data by ID.</p>
                 <div class="nds-code">
                   <div class="nds-code-action">
-                    <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                       <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                   </div>
@@ -1123,7 +1122,7 @@ const fileData = fileUpload.getFile(fileId);
                 <p>Get all files in the upload queue.</p>
                 <div class="nds-code">
                   <div class="nds-code-action">
-                    <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                       <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                   </div>
@@ -1137,7 +1136,7 @@ const allFiles = fileUpload.getAllFiles();
                 <p>Filter files by status.</p>
                 <div class="nds-code">
                   <div class="nds-code-action">
-                    <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                       <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                   </div>
@@ -1154,7 +1153,7 @@ const completedFiles = fileUpload.getFilesByStatus('complete');
                 <p>Update file status.</p>
                 <div class="nds-code">
                   <div class="nds-code-action">
-                    <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                       <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                   </div>
@@ -1170,7 +1169,7 @@ fileUpload.setFileStatus(fileId, 'error', {
                 <p>Update upload progress (0-100).</p>
                 <div class="nds-code">
                   <div class="nds-code-action">
-                    <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                       <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                   </div>
@@ -1185,7 +1184,7 @@ fileUpload.setFileProgress(fileId, 75); // 75% complete
                 <p>Start upload for specific file or all ready files.</p>
                 <div class="nds-code">
                   <div class="nds-code-action">
-                    <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                       <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                   </div>
@@ -1201,7 +1200,7 @@ fileUpload.startUpload();        // Upload all ready files
 
                 <div class="nds-code">
                   <div class="nds-code-action">
-                    <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                       <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                   </div>
@@ -1247,7 +1246,7 @@ uploadElement.addEventListener('uploadError', (e) => {
 
                 <div class="nds-code">
                   <div class="nds-code-action">
-                    <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                       <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                   </div>
@@ -1302,19 +1301,19 @@ document.getElementById('resetButton').addEventListener('click', () => {
           <div class="demo-header">
             <div class="demo-label">Custom Date Picker</div>
             <div class="demo-action">
-              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["disabled", "#datePickerInput", "stateToggle", "attr"]'>
                 <span class="label">Disabled</span>
               </button>
-              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["dateRange", ".nds-date-picker", "rangeToggle"]'>
                 <span class="label">Date Range</span>
               </button>
-              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["hijri", ".nds-date-picker", "hijriToggle"]'>
                 <span class="label">Hijri Calendar</span>
               </button>
-              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                 <span class="label">Remove bg</span>
               </button>
@@ -1332,7 +1331,7 @@ document.getElementById('resetButton').addEventListener('click', () => {
                 </div>
                 <div class="nds-form-control">
                   <div class="nds-form-action before">
-                    <button type="button" class="nds-btn nds-btn-subtle nds-btn-md date-picker-toggle"
+                    <button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle"
                       aria-label="Calendar Toggler">
                       <i class="hgi hgi-stroke hgi-calendar-03 icon"></i>
                     </button>
@@ -1346,7 +1345,7 @@ document.getElementById('resetButton').addEventListener('click', () => {
                       <div class="calendar-title">
                         <div class="month-year-selectors">
                           <div class="month-dropdown-wrapper">
-                            <button class="nds-btn nds-btn-subtle nds-btn-menu month-dropdown-btn" aria-expanded="false"
+                            <button class="nds-btn nds-subtle nds-menu-btn month-dropdown-btn" aria-expanded="false"
                               aria-label="Select month">
                               <span class="label"></span>
                             </button>
@@ -1354,7 +1353,7 @@ document.getElementById('resetButton').addEventListener('click', () => {
                             </div>
                           </div>
                           <div class="year-dropdown-wrapper">
-                            <button class="nds-btn nds-btn-subtle nds-btn-menu year-dropdown-btn" aria-expanded="false"
+                            <button class="nds-btn nds-subtle nds-menu-btn year-dropdown-btn" aria-expanded="false"
                               aria-label="Select year">
                               <span class="label"></span>
                             </button>
@@ -1363,10 +1362,10 @@ document.getElementById('resetButton').addEventListener('click', () => {
                           </div>
                         </div>
                         <div class="calendar-month-switch">
-                          <button class="nds-btn nds-btn-subtle next-month" type="button" aria-label="Next month">
+                          <button class="nds-btn nds-subtle next-month" type="button" aria-label="Next month">
                             <i class="hgi hgi-stroke hgi-arrow-right-02 icon"></i>
                           </button>
-                          <button class="nds-btn nds-btn-subtle prev-month" type="button" aria-label="Previous month">
+                          <button class="nds-btn nds-subtle prev-month" type="button" aria-label="Previous month">
                             <i class="hgi hgi-stroke hgi-arrow-left-02 icon"></i>
                           </button>
                         </div>
@@ -1382,15 +1381,15 @@ document.getElementById('resetButton').addEventListener('click', () => {
 
                     <div class="calendar-footer">
                       <div class="calendar-action-start">
-                        <button class="nds-btn nds-btn-secondary-outline today-btn" type="button">
+                        <button class="nds-btn nds-secondary-outline today-btn" type="button">
                           <span class="label">Today</span>
                         </button>
                       </div>
                       <div class="calendar-action-end">
-                        <button class="nds-btn nds-btn-primary save-btn" type="button">
+                        <button class="nds-btn nds-primary save-btn" type="button">
                           <span class="label">Save</span>
                         </button>
-                        <button class="nds-btn nds-btn-secondary-outline clear-btn" type="button">
+                        <button class="nds-btn nds-secondary-outline clear-btn" type="button">
                           <span class="label">Clear</span>
                         </button>
                       </div>
@@ -1405,11 +1404,11 @@ document.getElementById('resetButton').addEventListener('click', () => {
           <div class="nds-tabs nds-code withDivider">
             <div class="nds-tab-list-container">
               <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                   aria-controls="panel-date-picker-1" id="tab-date-picker-1">
                   <span class="nds-tab-label">HTML</span>
                 </button>
-                <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                <button class="nds-btn nds-subtle nds-tab showMore"><i
                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                 </button>
               </nav>
@@ -1418,7 +1417,7 @@ document.getElementById('resetButton').addEventListener('click', () => {
               <div class="nds-tab-panel code-example" role="tabpanel" id="panel-date-picker-1"
                 aria-labelledby="tab-date-picker-1">
                 <div class="nds-code-action">
-                  <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                  <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                   </button>
                 </div>
@@ -1431,7 +1430,7 @@ document.getElementById('resetButton').addEventListener('click', () => {
                     </div>
                     <div class="nds-form-control">
                       <div class="nds-form-action before">
-                        <button type="button" class="nds-btn nds-btn-subtle nds-btn-md date-picker-toggle" aria-label="Calendar Toggler">
+                        <button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle" aria-label="Calendar Toggler">
                           <i class="hgi hgi-stroke hgi-calendar-03 icon"></i>
                         </button>
                       </div>
@@ -1444,7 +1443,7 @@ document.getElementById('resetButton').addEventListener('click', () => {
                           <div class="calendar-title">
                             <div class="month-year-selectors">
                               <div class="month-dropdown-wrapper">
-                                <button class="nds-btn nds-btn-subtle nds-btn-menu month-dropdown-btn" aria-expanded="false"
+                                <button class="nds-btn nds-subtle nds-menu-btn month-dropdown-btn" aria-expanded="false"
                                   aria-label="Select month">
                                   <span class="label"></span>
                                 </button>
@@ -1452,7 +1451,7 @@ document.getElementById('resetButton').addEventListener('click', () => {
                                 </div>
                               </div>
                               <div class="year-dropdown-wrapper">
-                                <button class="nds-btn nds-btn-subtle nds-btn-menu year-dropdown-btn" aria-expanded="false"
+                                <button class="nds-btn nds-subtle nds-menu-btn year-dropdown-btn" aria-expanded="false"
                                   aria-label="Select year">
                                   <span class="label"></span>
                                 </button>
@@ -1461,10 +1460,10 @@ document.getElementById('resetButton').addEventListener('click', () => {
                               </div>
                             </div>
                             <div class="calendar-month-switch">
-                              <button class="nds-btn nds-btn-subtle next-month" type="button" aria-label="Next month">
+                              <button class="nds-btn nds-subtle next-month" type="button" aria-label="Next month">
                                 <i class="hgi hgi-stroke hgi-arrow-right-02 icon"></i>
                               </button>
-                              <button class="nds-btn nds-btn-subtle prev-month" type="button" aria-label="Previous month">
+                              <button class="nds-btn nds-subtle prev-month" type="button" aria-label="Previous month">
                                 <i class="hgi hgi-stroke hgi-arrow-left-02 icon"></i>
                               </button>
                             </div>
@@ -1480,15 +1479,15 @@ document.getElementById('resetButton').addEventListener('click', () => {
                   
                         <div class="calendar-footer">
                           <div class="calendar-action-start">
-                            <button class="nds-btn nds-btn-secondary-outline today-btn" type="button">
+                            <button class="nds-btn nds-secondary-outline today-btn" type="button">
                               <span class="label">Today</span>
                             </button>
                           </div>
                           <div class="calendar-action-end">
-                            <button class="nds-btn nds-btn-primary save-btn" type="button">
+                            <button class="nds-btn nds-primary save-btn" type="button">
                               <span class="label">Save</span>
                             </button>
-                            <button class="nds-btn nds-btn-secondary-outline clear-btn" type="button">
+                            <button class="nds-btn nds-secondary-outline clear-btn" type="button">
                               <span class="label">Clear</span>
                             </button>
                           </div>
@@ -1508,27 +1507,27 @@ document.getElementById('resetButton').addEventListener('click', () => {
           <div class="demo-header">
             <div class="demo-label">Switch</div>
             <div class="demo-action">
-              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                data-toggler='["size-lg", ".nds-switch-container", "sizeToggle"]'>
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='["nds-lg", ".nds-switch-container", "sizeToggle"]'>
                 <span class="label">LG</span>
               </button>
-              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn selected"
-                data-toggler='["size-md", ".nds-switch-container", "sizeToggle"]'>
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
+                data-toggler='["nds-md", ".nds-switch-container", "sizeToggle"]'>
                 <span class="label">MD</span>
               </button>
-              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                data-toggler='["size-sm", ".nds-switch-container", "sizeToggle"]'>
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='["nds-sm", ".nds-switch-container", "sizeToggle"]'>
                 <span class="label">SM</span>
               </button>
-              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["disabled", "input.nds-switch-input", "stateToggle", "attr"]'>
                 <span class="label">Disabled</span>
               </button>
-              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["rowView", ".nds-switch-group", "layoutToggle"]'>
                 <span class="label">RowView</span>
               </button>
-              <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                 <span class="label">Remove bg</span>
               </button>
@@ -1594,11 +1593,11 @@ document.getElementById('resetButton').addEventListener('click', () => {
           <div class="nds-tabs nds-code withDivider">
             <div class="nds-tab-list-container">
               <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                   aria-controls="panel-switch-1" id="tab-switch-1">
                   <span class="nds-tab-label">HTML</span>
                 </button>
-                <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                <button class="nds-btn nds-subtle nds-tab showMore"><i
                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                 </button>
               </nav>
@@ -1607,7 +1606,7 @@ document.getElementById('resetButton').addEventListener('click', () => {
               <div class="nds-tab-panel code-example" role="tabpanel" id="panel-switch-1"
                 aria-labelledby="tab-switch-1">
                 <div class="nds-code-action">
-                  <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                  <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                   </button>
                 </div>

@@ -26,24 +26,24 @@ css_files:
                 <div class="demo-header">
                     <div class="demo-label">Basic Accordion</div>
                     <div class="demo-action">
-                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='[["cardView", ".nds-accordion", "accordionStyle"],["noBg", ".demo-container", "containerBg"]]'>
                             <span class="label">Card View</span>
                         </button>
-                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='["always-open", ".nds-accordion", "accordionBehavior"]'>
                             <span class="label">Always Open</span>
                         </button>
-                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                            data-toggler='["nds-btn-lg", ".nds-btn-accordion", "sizeToggle"]'>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-lg", ".nds-accordion-btn", "sizeToggle"]'>
                             <span class="label">LG</span>
                         </button>
-                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn selected"
-                            data-toggler='["nds-btn-md", ".nds-btn-accordion", "sizeToggle"]'>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
+                            data-toggler='["nds-md", ".nds-accordion-btn", "sizeToggle"]'>
                             <span class="label">MD</span>
                         </button>
-                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                            data-toggler='["nds-btn-sm", ".nds-btn-accordion", "sizeToggle"]'>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-sm", ".nds-accordion-btn", "sizeToggle"]'>
                             <span class="label">SM</span>
                         </button>
                     </div>
@@ -52,7 +52,7 @@ css_files:
                     <div class="nds-accordion" id="basicAccordion">
                         <div class="nds-accordion-item">
                             <h3 class="nds-accordion-header" id="heading-services">
-                                <button class="nds-btn nds-btn-subtle nds-btn-menu nds-btn-accordion" type="button"
+                                <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
                                     aria-expanded="true" aria-controls="collapse-services">
                                     <span class="nds-accordion-title">Digital Government Services</span>
                                 </button>
@@ -75,7 +75,7 @@ css_files:
 
                         <div class="nds-accordion-item">
                             <h3 class="nds-accordion-header" id="heading-support">
-                                <button class="nds-btn nds-btn-subtle nds-btn-menu nds-btn-accordion collapsed"
+                                <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn collapsed"
                                     type="button" aria-expanded="false" aria-controls="collapse-support">
                                     <span class="nds-accordion-title">Support and Documentation</span>
                                 </button>
@@ -102,7 +102,7 @@ css_files:
 
                         <div class="nds-accordion-item">
                             <h3 class="nds-accordion-header" id="heading-resources">
-                                <button class="nds-btn nds-btn-subtle nds-btn-menu nds-btn-accordion collapsed"
+                                <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn collapsed"
                                     type="button" aria-expanded="false" aria-controls="collapse-resources">
                                     <span class="nds-accordion-title">Developer Resources</span>
                                 </button>
@@ -122,11 +122,11 @@ css_files:
                 <div class="nds-tabs nds-code withDivider">
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                            <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                 aria-controls="panel-basic-1" id="tab-basic-1">
                                 <span class="nds-tab-label">HTML</span>
                             </button>
-                            <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                            <button class="nds-btn nds-subtle nds-tab showMore"><i
                                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                             </button>
                         </nav>
@@ -135,7 +135,7 @@ css_files:
                         <div class="nds-tab-panel code-example" role="tabpanel" id="panel-basic-1"
                             aria-labelledby="tab-basic-1">
                             <div class="nds-code-action">
-                                <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                                <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                                 </button>
                             </div>
@@ -143,7 +143,7 @@ css_files:
                                 <div class="nds-accordion" id="basicAccordion">
                                   <div class="nds-accordion-item">
                                     <h3 class="nds-accordion-header" id="heading-1">
-                                      <button class="nds-btn nds-btn-subtle nds-btn-menu nds-btn-accordion" type="button" aria-expanded="true" aria-controls="collapse-1">
+                                      <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button" aria-expanded="true" aria-controls="collapse-1">
                                         <span class="nds-accordion-title">Accordion Item #1</span>
                                       </button>
                                     </h3>
@@ -155,7 +155,7 @@ css_files:
                                   </div>
                                   <div class="nds-accordion-item">
                                     <h3 class="nds-accordion-header" id="heading-2">
-                                      <button class="nds-btn nds-btn-subtle nds-btn-menu nds-btn-accordion collapsed" type="button" aria-expanded="false" aria-controls="collapse-2">
+                                      <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn collapsed" type="button" aria-expanded="false" aria-controls="collapse-2">
                                         <span class="nds-accordion-title">Accordion Item #2</span>
                                       </button>
                                     </h3>
@@ -177,24 +177,24 @@ css_files:
                 <div class="demo-header">
                     <div class="demo-label">Accordion with Leading Icons</div>
                     <div class="demo-action">
-                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='[["cardView", ".nds-accordion", "accordionStyle"],["noBg", ".demo-container", "containerBg"]]'>
                             <span class="label">Card View</span>
                         </button>
-                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='["always-open", ".nds-accordion", "accordionBehavior"]'>
                             <span class="label">Always Open</span>
                         </button>
-                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                            data-toggler='["nds-btn-lg", ".nds-btn-accordion", "sizeToggle"]'>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-lg", ".nds-accordion-btn", "sizeToggle"]'>
                             <span class="label">LG</span>
                         </button>
-                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn selected"
-                            data-toggler='["nds-btn-md", ".nds-btn-accordion", "sizeToggle"]'>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
+                            data-toggler='["nds-md", ".nds-accordion-btn", "sizeToggle"]'>
                             <span class="label">MD</span>
                         </button>
-                        <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                            data-toggler='["nds-btn-sm", ".nds-btn-accordion", "sizeToggle"]'>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-sm", ".nds-accordion-btn", "sizeToggle"]'>
                             <span class="label">SM</span>
                         </button>
                     </div>
@@ -203,7 +203,7 @@ css_files:
                     <div class="nds-accordion" id="iconAccordion">
                         <div class="nds-accordion-item">
                             <h3 class="nds-accordion-header" id="heading-account">
-                                <button class="nds-btn nds-btn-subtle nds-btn-menu nds-btn-accordion" type="button"
+                                <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
                                     aria-expanded="true" aria-controls="collapse-account">
                                     <i class="nds-accordion-leading-icon hgi hgi-stroke hgi-user-circle"></i>
                                     <span class="nds-accordion-title">Account Management</span>
@@ -216,15 +216,15 @@ css_files:
                                         your privacy preferences. Your account is the central hub for all your
                                         government service interactions.</p>
                                     <div class="account-features">
-                                        <div class="nds-btn nds-btn-secondary-outline feature-item">
+                                        <div class="nds-btn nds-secondary-outline feature-item">
                                             <i class="hgi hgi-stroke hgi-settings-01"></i>
                                             <span>Profile Settings</span>
                                         </div>
-                                        <div class="nds-btn nds-btn-secondary-outline feature-item">
+                                        <div class="nds-btn nds-secondary-outline feature-item">
                                             <i class="hgi hgi-stroke hgi-shield-01"></i>
                                             <span>Security Settings</span>
                                         </div>
-                                        <div class="nds-btn nds-btn-secondary-outline feature-item">
+                                        <div class="nds-btn nds-secondary-outline feature-item">
                                             <i class="hgi hgi-stroke hgi-notification-01"></i>
                                             <span>Notification Preferences</span>
                                         </div>
@@ -235,7 +235,7 @@ css_files:
 
                         <div class="nds-accordion-item">
                             <h3 class="nds-accordion-header" id="heading-documents">
-                                <button class="nds-btn nds-btn-subtle nds-btn-menu nds-btn-accordion collapsed"
+                                <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn collapsed"
                                     type="button" aria-expanded="false" aria-controls="collapse-documents">
                                     <i class="nds-accordion-leading-icon hgi hgi-stroke hgi-file-02"></i>
                                     <span class="nds-accordion-title">Document Services</span>
@@ -258,7 +258,7 @@ css_files:
 
                         <div class="nds-accordion-item">
                             <h3 class="nds-accordion-header" id="heading-payments">
-                                <button class="nds-btn nds-btn-subtle nds-btn-menu nds-btn-accordion collapsed"
+                                <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn collapsed"
                                     type="button" aria-expanded="false" aria-controls="collapse-payments">
                                     <i class="nds-accordion-leading-icon hgi hgi-stroke hgi-credit-card-pos"></i>
                                     <span class="nds-accordion-title">Payment Services</span>
@@ -280,11 +280,11 @@ css_files:
                 <div class="nds-tabs nds-code withDivider">
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                            <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                 aria-controls="panel-icons-1" id="tab-icons-1">
                                 <span class="nds-tab-label">HTML</span>
                             </button>
-                            <button class="nds-btn nds-btn-subtle nds-tab showMore"><i
+                            <button class="nds-btn nds-subtle nds-tab showMore"><i
                                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                             </button>
                         </nav>
@@ -293,7 +293,7 @@ css_files:
                         <div class="nds-tab-panel code-example" role="tabpanel" id="panel-icons-1"
                             aria-labelledby="tab-icons-1">
                             <div class="nds-code-action">
-                                <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                                <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                                 </button>
                             </div>
@@ -301,7 +301,7 @@ css_files:
                                 <div class="nds-accordion" id="iconAccordion">
                                   <div class="nds-accordion-item">
                                     <h3 class="nds-accordion-header" id="heading-1">
-                                      <button class="nds-btn nds-btn-subtle nds-btn-menu nds-btn-accordion" type="button" aria-expanded="true" aria-controls="collapse-1">
+                                      <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button" aria-expanded="true" aria-controls="collapse-1">
                                         <i class="nds-accordion-leading-icon hgi hgi-stroke hgi-user-circle"></i>
                                         <span class="nds-accordion-title">Accordion with Icon</span>
                                       </button>
@@ -388,7 +388,7 @@ css_files:
 
             <div class="nds-code">
                 <div class="nds-code-action">
-                    <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>
@@ -398,7 +398,7 @@ css_files:
 <div class="nds-accordion">
   <div class="nds-accordion-item">
     <h3 class="nds-accordion-header">
-      <button class="nds-btn nds-btn-subtle nds-btn-menu nds-btn-accordion" 
+      <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" 
               aria-expanded="false" aria-controls="panel-1">
         <span class="nds-accordion-title">Panel Title</span>
       </button>
@@ -417,7 +417,7 @@ css_files:
 
             <div class="nds-code">
                 <div class="nds-code-action">
-                    <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>
@@ -437,7 +437,7 @@ const instance = NDSAccordion.create(newAccordion);</code>
 
             <div class="nds-code">
                 <div class="nds-code-action">
-                    <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>
@@ -461,7 +461,7 @@ console.log(`${openItems.length} items are currently open`);</code>
 
             <div class="nds-code">
                 <div class="nds-code-action">
-                    <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>

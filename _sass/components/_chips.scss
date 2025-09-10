@@ -29,14 +29,11 @@
   white-space: nowrap;
   cursor: pointer;
   box-sizing: border-box;
+  height: var(--nds-chip-size);
+  line-height: var(--nds-chip-size);
 
-  &.nds-chip-rounded{
+  &.nds-rounded {
     border-radius: 999px;
-  }
-
-  .label {
-    line-height: 1.5;
-    flex: 1;
   }
 
   &:focus-visible,
@@ -52,169 +49,164 @@
     background-color: var(--background-disabled);
     color: var(--text-default-disabled);
   }
-}
 
-// ==============================================
-// CHIP SIZES
-// ==============================================
 
-.nds-chip-md,
-.nds-chip {
-  --nds-chip-icon-size: 14px;
-  padding: var(--spacing-sm) var(--spacing-lg);
-  font-size: var(--nds-text-xs-FS);
-  line-height: var(--nds-text-xs-LH);
-  min-height: 24px;
-}
+  // ==============================================
+  // CHIP SIZES
+  // ==============================================
 
-.nds-chip-sm {
-  --nds-chip-icon-size: 12px;
-  padding: var(--spacing-xs) var(--spacing-md);
-  font-size: var(--nds-text-xxs-FS);
-  line-height: var(--nds-text-xxs-LH);
-  min-height: 20px;
-}
-
-.nds-chip-lg {
-  --nds-chip-icon-size: 16px;
-  padding: var(--spacing-md) var(--spacing-lg);
-  font-size: var(--nds-text-md-FS);
-  line-height: var(--nds-text-md-LH);
-  min-height: 32px;
-}
-
-// ==============================================
-// CHIP STYLES - PRIMARY
-// ==============================================
-
-.nds-chip-primary {
-  background-color: var(--chip-background-primary-default);
-  color: var(--chip-text-primary-default);
-
-  &:hover,
-  &[data-state="hover"] {
-    background-color: var(--chip-background-primary-hovered);
+  &.nds-md,
+  & {
+    --nds-chip-size: 24px;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    font-size: var(--nds-text-xs-FS);
   }
 
-  &:active,
-  &.pressed,
-  &[data-state="active"] {
-    background-color: var(--chip-background-primary-pressed);
-    color: var(--chip-text-primary-selected);
+  &.nds-sm {
+    --nds-chip-size: 20px;
+    padding: var(--spacing-xs) var(--spacing-md);
+    font-size: var(--nds-text-xxs-FS);
   }
 
-  &.selected,
-  &[data-state="selected"] {
-    background-color: var(--chip-background-primary-selected);
-    color: var(--chip-text-oncolor-primary);
+  &.nds-lg {
+    --nds-chip-size: 32px;
+    padding: var(--spacing-md) var(--spacing-lg);
+    font-size: var(--nds-text-md-FS);
   }
 
-  &:focus-visible,
-  &[data-state="focused"] {
-    background-color: var(--chip-background-primary-focused);
+  // ==============================================
+  // CHIP STYLES - PRIMARY
+  // ==============================================
+
+  &.nds-primary {
+    background-color: var(--chip-background-primary-default);
     color: var(--chip-text-primary-default);
-  }
-}
-
-// ==============================================
-// CHIP STYLES - NEUTRAL
-// ==============================================
-
-.nds-chip-neutral {
-  background-color: var(--chip-background-neutral-default);
-  color: var(--chip-text-neutral-default);
-
-  &:hover,
-  &[data-state="hover"] {
-    background-color: var(--chip-background-neutral-hovered);
-  }
-
-  &:active,
-  &.pressed,
-  &[data-state="active"] {
-    background-color: var(--chip-background-neutral-pressed);
-  }
-
-  &.selected,
-  &[data-state="selected"] {
-    background-color: var(--chip-background-neutral-selected);
-    color: var(--chip-text-oncolor-primary);
-  }
-
-  &:focus-visible,
-  &[data-state="focused"] {
-    background-color: var(--chip-background-neutral-focused);
-    color: var(--chip-text-neutral-default);
-  }
-}
-
-// ==============================================
-// CHIP ON-COLOR VARIANTS
-// ==============================================
-
-.nds-chip-oncolor {
-
-  &.nds-chip-primary,
-  &.nds-chip-neutral {
-    background-color: var(--chip-background-on-color-default);
-    color: var(--chip-text-neutral-default);
 
     &:hover,
     &[data-state="hover"] {
-      background-color: var(--chip-background-on-color-hovered);
+      background-color: var(--chip-background-primary-hovered);
     }
 
     &:active,
     &.pressed,
     &[data-state="active"] {
-      background-color: var(--chip-background-on-color-pressed);
+      background-color: var(--chip-background-primary-pressed);
+      color: var(--chip-text-primary-selected);
     }
 
     &.selected,
     &[data-state="selected"] {
-      background-color: var(--chip-background-on-color-selected);
+      background-color: var(--chip-background-primary-selected);
+      color: var(--chip-text-oncolor-primary);
     }
 
     &:focus-visible,
     &[data-state="focused"] {
-      background-color: var(--chip-background-on-color-focused);
-      @include btn-focus-oncolor;
-    }
-
-    &:disabled,
-    &[data-state="disabled"] {
-      background-color: var(--chip-background-on-color-disabled);
-      color: var(--text-default-oncolor-disabled);
+      background-color: var(--chip-background-primary-focused);
+      color: var(--chip-text-primary-default);
     }
   }
-}
 
-// ==============================================
-// CHIP WITH ICONS
-// ==============================================
+  // ==============================================
+  // CHIP STYLES - NEUTRAL
+  // ==============================================
 
-.nds-chip-lead-icon {
-  .hgi:first-child {
-    margin-left: var(--spacing-xs);
+  &.nds-neutral {
+    background-color: var(--chip-background-neutral-default);
+    color: var(--chip-text-neutral-default);
+
+    &:hover,
+    &[data-state="hover"] {
+      background-color: var(--chip-background-neutral-hovered);
+    }
+
+    &:active,
+    &.pressed,
+    &[data-state="active"] {
+      background-color: var(--chip-background-neutral-pressed);
+    }
+
+    &.selected,
+    &[data-state="selected"] {
+      background-color: var(--chip-background-neutral-selected);
+      color: var(--chip-text-oncolor-primary);
+    }
+
+    &:focus-visible,
+    &[data-state="focused"] {
+      background-color: var(--chip-background-neutral-focused);
+      color: var(--chip-text-neutral-default);
+    }
   }
 
-  @include ltr {
+  // ==============================================
+  // CHIP ON-COLOR VARIANTS
+  // ==============================================
+
+  &.nds-oncolor {
+
+    &.nds-primary,
+    &.nds-neutral {
+      background-color: var(--chip-background-on-color-default);
+      color: var(--chip-text-neutral-default);
+
+      &:hover,
+      &[data-state="hover"] {
+        background-color: var(--chip-background-on-color-hovered);
+      }
+
+      &:active,
+      &.pressed,
+      &[data-state="active"] {
+        background-color: var(--chip-background-on-color-pressed);
+      }
+
+      &.selected,
+      &[data-state="selected"] {
+        background-color: var(--chip-background-on-color-selected);
+      }
+
+      &:focus-visible,
+      &[data-state="focused"] {
+        background-color: var(--chip-background-on-color-focused);
+        @include btn-focus-oncolor;
+      }
+
+      &:disabled,
+      &[data-state="disabled"] {
+        background-color: var(--chip-background-on-color-disabled);
+        color: var(--text-default-oncolor-disabled);
+      }
+    }
+  }
+
+  // ==============================================
+  // CHIP WITH ICONS
+  // ==============================================
+
+  &.nds-lead-icon {
     .hgi:first-child {
-      margin-left: 0;
+      margin-left: var(--spacing-xs);
+    }
+
+    @include ltr {
+      .hgi:first-child {
+        margin-left: 0;
+        margin-right: var(--spacing-xs);
+      }
+    }
+  }
+
+  &.nds-trail-icon {
+    .hgi:last-child {
       margin-right: var(--spacing-xs);
     }
-  }
-}
 
-.nds-chip-trail-icon {
-  .hgi:last-child {
-    margin-right: var(--spacing-xs);
-  }
-
-  @include ltr {
-    .hgi:last-child {
-      margin-right: 0;
-      margin-left: var(--spacing-xs);
+    @include ltr {
+      .hgi:last-child {
+        margin-right: 0;
+        margin-left: var(--spacing-xs);
+      }
     }
   }
 }
@@ -224,7 +216,7 @@
 // ==============================================
 
 @include mobile {
-  .nds-chip-group {
+  .nds-group {
     gap: var(--spacing-sm);
   }
 }

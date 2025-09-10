@@ -190,29 +190,29 @@
     }
 
     // Auto-fill functionality
-    function initAutoFillTags() {
+    function initInputAutoFill() {
         document.querySelectorAll('.nds-autoFill[data-target]').forEach(function (container) {
             var targetId = container.getAttribute('data-target');
 
-            container.querySelectorAll('.nds-tag').forEach(function (tag) {
-                if (tag._autoFillHandler) {
-                    tag.removeEventListener('click', tag._autoFillHandler);
+            container.querySelectorAll('.nds-item').forEach(function (item) {
+                if (item._autoFillHandler) {
+                    item.removeEventListener('click', item._autoFillHandler);
                 }
 
-                tag._autoFillHandler = function (e) {
+                item._autoFillHandler = function (e) {
                     e.preventDefault();
                     e.stopPropagation();
 
-                    var tagText = (tag.textContent || tag.innerText).trim();
+                    var itemText = (item.textContent || item.innerText).trim();
                     // Clean up excessive whitespace and normalize spaces
-                    tagText = tagText.replace(/\s+/g, ' ');
+                    itemText = itemText.replace(/\s+/g, ' ');
 
                     var targetInput = document.getElementById(targetId) ||
                         document.querySelector('[name="' + targetId + '"]') ||
                         document.querySelector('[data-name="' + targetId + '"]');
 
-                    if (targetInput && tagText) {
-                        targetInput.value = tagText;
+                    if (targetInput && itemText) {
+                        targetInput.value = itemText;
                         targetInput.focus();
                         triggerEvents(targetInput);
 
@@ -223,7 +223,7 @@
                     }
                 };
 
-                tag.addEventListener('click', tag._autoFillHandler);
+                item.addEventListener('click', item._autoFillHandler);
             });
         });
     }
@@ -883,7 +883,7 @@
         try {
             VoiceRecognition.audioFeedback.init();
             initFormControlClasses();
-            initAutoFillTags();
+            initInputAutoFill();
             initializeFileUploads();
         } catch (error) {
         }
