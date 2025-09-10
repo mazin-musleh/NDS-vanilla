@@ -66,6 +66,7 @@
 .button-row {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: var(--spacing-md);
   align-items: center;
 }

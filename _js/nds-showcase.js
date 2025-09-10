@@ -285,8 +285,6 @@
                 } else if (operationType === 'content-prepend' || operationType === 'content-append') {
                     // Handle content toggling (append/prepend)
                     handleContentToggling(targetElement, classNamesOrAttrs, operationType);
-                    // Update code example for content changes
-                    updateCodeExampleForContent(demoCard, targetElement, classNamesOrAttrs, operationType);
                 } else {
                     // Handle class toggling (default behavior)
                     const classArray = classNamesOrAttrs.trim().split(/\s+/);
@@ -310,6 +308,11 @@
                     updateCodeExampleForClasses(demoCard, targetElement, classArray);
                 }
             });
+            
+            // Update code example for content changes (only once per toggle action)
+            if ((operationType === 'content-prepend' || operationType === 'content-append') && targetElements.length > 0) {
+                updateCodeExampleForContent(demoCard, targetElements[0], classNamesOrAttrs, operationType);
+            }
         });
         
         // Simple button selection: just toggle the clicked button and handle type-based mutual exclusion

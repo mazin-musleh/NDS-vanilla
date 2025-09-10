@@ -10,7 +10,7 @@
   gap: var(--spacing-xs);
   font-weight: 500;
   font-size: var(--nds-text-md-FS);
-  line-height: normal;
+  line-height: 32px;
   height: 32px;
   min-width: 32px;
   white-space: nowrap;
@@ -20,27 +20,19 @@
 
   // Size variations
   &.nds-tag-sm {
-    padding: var(--spacing-xs) var(--spacing-sm);
-    font-size: 14px;
+    padding: var(--spacing-none) var(--spacing-md);
+    font-size: var(--nds-text-sm-FS);
     height: 24px;
     min-width: 24px;
-
-    .icon {
-      width: 16px;
-      height: 16px;
-    }
+    line-height: 24px;
   }
 
   &.nds-tag-xs {
-    padding: 2px var(--spacing-sm);
-    font-size: 12px;
+    padding: var(--spacing-none) var(--spacing-md);
+    font-size: var(--nds-text-xs-FS);
     height: 20px;
     min-width: 20px;
-
-    .icon {
-      width: 14px;
-      height: 14px;
-    }
+    line-height: 20px;
   }
 
   // Icon support
@@ -54,7 +46,7 @@
   // Icon-only variant
   &.nds-tag-icon-only {
     aspect-ratio: 1;
-    padding: 0;
+    padding: var(--spacing-none) var(--spacing-xxs);
     justify-content: center;
 
     .label {
@@ -76,30 +68,122 @@
     background-color: var(--tag-background-neutral-light);
     color: var(--tag-text-neutral);
     border: 1px solid var(--border-neutral-secondary);
+
+    .icon {
+      color: var(--tag-icon-neutral);
+    }
+
+    .label::before {
+      background-color: var(--tag-icon-neutral);
+    }
+
+    &.nds-tag-inverted {
+      background-color: var(--tag-background-neutral);
+      border-color: transparent;
+      color: var(--text-oncolor-primary);
+
+      .label::before {
+        background-color: var(--tag-dot);
+      }
+    }
+
   }
 
   &.nds-tag-success {
     background-color: var(--tag-background-success-light);
     color: var(--tag-text-success);
     border: 1px solid var(--tag-border-success-light);
+
+    .icon {
+      color: var(--tag-icon-success);
+    }
+
+    .label::before {
+      background-color: var(--tag-icon-success);
+    }
+
+    &.nds-tag-inverted {
+      background-color: var(--tag-background-success);
+      border-color: transparent;
+      color: var(--text-oncolor-primary);
+
+      .label::before {
+        background-color: var(--tag-dot);
+      }
+    }
+
   }
 
   &.nds-tag-info {
     background-color: var(--tag-background-info-light);
     color: var(--tag-text-info);
     border: 1px solid var(--tag-border-info-light);
+
+    .icon {
+      color: var(--tag-icon-info);
+    }
+
+    .label::before {
+      background-color: var(--tag-icon-info);
+    }
+
+    &.nds-tag-inverted {
+      background-color: var(--tag-background-info);
+      border-color: transparent;
+      color: var(--text-oncolor-primary);
+
+      .label::before {
+        background-color: var(--tag-dot);
+      }
+    }
   }
 
   &.nds-tag-warning {
     background-color: var(--tag-background-warning-light);
     color: var(--tag-text-warning);
     border: 1px solid var(--tag-border-warning-light);
+
+    .icon {
+      color: var(--tag-icon-warning);
+    }
+
+    .label::before {
+      background-color: var(--tag-icon-warning);
+    }
+
+    &.nds-tag-inverted {
+      background-color: var(--tag-background-warning);
+      border-color: transparent;
+      color: var(--text-oncolor-primary);
+
+      .label::before {
+        background-color: var(--tag-dot);
+      }
+    }
   }
 
   &.nds-tag-error {
     background-color: var(--tag-background-error-light);
     color: var(--tag-text-error);
     border: 1px solid var(--tag-border-error-light);
+
+    .icon {
+      color: var(--tag-icon-error);
+    }
+
+    .label::before {
+      background-color: var(--tag-icon-error);
+    }
+
+    &.nds-tag-inverted {
+      background-color: var(--tag-background-error);
+      border-color: transparent;
+      color: var(--text-oncolor-primary);
+
+      .label::before {
+        background-color: var(--tag-dot);
+      }
+    }
   }
 
   &.nds-tag-oncolor {
@@ -140,6 +224,31 @@
     &.nds-tag-oncolor {
       border: 1px solid var(--tag-border-on-color);
       color: var(--text-oncolor-primary);
+    }
+  }
+
+  &.nds-tag-ghost {
+    background-color: transparent;
+    border-color: transparent;
+    color: var(--tag-text-neutral);
+  }
+
+  &.nds-tag-status {
+    border-radius: 999px;
+
+    .label {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: var(--spacing-xs);
+    }
+
+    .label::before {
+      content: "";
+      display: block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
     }
   }
 
