@@ -90,6 +90,266 @@ The NDS button system follows strict Figma specifications:
 </button>
 ```
 
+### Component Demo Standards - Tags Pattern
+
+**IMPORTANT**: Use the Tags component (`components/tags.md`) as the BASE STANDARD for creating component documentation with interactive demos. This pattern uses demo action toggles instead of creating separate demo cards for each variation.
+
+**Standard Demo Structure with Toggles:**
+```html
+<div class="nds-demo-card">
+    <div class="demo-header">
+        <div class="demo-label">Primary Component</div>
+        <div class="demo-action">
+            <!-- State Toggles -->
+            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                data-toggler='["selected", ".nds-component","componentState"]'>
+                <span class="label">Selected</span>
+            </button>
+            
+            <!-- Style Toggles -->
+            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                data-toggler='["nds-component-neutral", ".nds-component", "componentStyle"]'>
+                <span class="label">Neutral</span>
+            </button>
+            
+            <!-- Icon Toggles -->
+            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                data-toggler='["<i class=\"hgi hgi-stroke hgi-icon icon\"></i>", ".nds-component", "components", "content-prepend"]'>
+                <span class="label">Toggle Icon</span>
+            </button>
+            
+            <!-- Size Toggles -->
+            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                data-toggler='["nds-component-sm", ".nds-component", "componentSize"]'>
+                <span class="label">SM</span>
+            </button>
+            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                data-toggler='["nds-component-lg", ".nds-component", "componentSize"]'>
+                <span class="label">LG</span>
+            </button>
+            
+            <!-- Background Toggles -->
+            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                <span class="label">Remove bg</span>
+            </button>
+        </div>
+    </div>
+    <div class="demo-container">
+        <div class="state-demo">
+            <span class="nds-component nds-component-primary">
+                <span class="label">Component</span>
+            </span>
+        </div>
+    </div>
+    <!-- Code tabs section... -->
+</div>
+```
+
+**Demo Toggle Types:**
+- **State Toggles**: `"selected"`, `"pressed"`, `"focused"`, `"disabled"`
+- **Style Toggles**: `"nds-component-neutral"`, `"nds-component-primary"`, component style variations
+- **Size Toggles**: `"nds-component-sm"`, `"nds-component-md"`, `"nds-component-lg"`
+- **Icon Toggles**: Add/remove icons with HTML content injection
+- **Background Toggles**: `"noBg"`, `"darkBg"`, `"containerBg"` for testing on different backgrounds
+
+**Toggle Data Syntax:**
+- `data-toggler='["className", "targetSelector", "toggleGroup"]'` - Class toggle
+- `data-toggler='["htmlContent", "targetSelector", "toggleGroup", "content-prepend"]'` - Content injection
+- Toggle groups prevent conflicts between similar toggles (e.g., size toggles)
+
+### SCSS Component Creation Standards
+
+**ALWAYS include mixins import** at the top of new SCSS component files:
+```scss
+/**
+ * NDS Component Name - SCSS Version
+ * Component description and usage notes
+ */
+
+@use '../mixins' as *;
+
+// Component styles here...
+```
+
+**Required Mixins Usage:**
+- `@include mobile` - Mobile-first responsive design (max-width: 599px)
+- `@include tablet(min|max)` - Tablet breakpoints (600px-959px)
+- `@include desktop(min|max)` - Desktop breakpoints (960px-1279px) 
+- `@include large-desktop(min|max)` - Large desktop (1280px+)
+- `@include rtl` - RTL (Arabic) language support
+- `@include ltr` - LTR (English) language override when needed
+
+**Standard SCSS Structure:**
+```scss
+@use '../mixins' as *;
+
+// ==============================================
+// BASE COMPONENT STYLES
+// ==============================================
+
+.nds-component {
+  // Base styles using CSS custom properties
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  transition: var(--nds-transition);
+  
+  // RTL/LTR support
+  @include rtl {
+    // RTL-specific styles
+  }
+  
+  @include ltr {
+    // LTR override styles when needed
+  }
+}
+
+// ==============================================
+// COMPONENT SIZES
+// ==============================================
+
+.nds-component-sm { /* Small variant */ }
+.nds-component-md,
+.nds-component { /* Default/Medium variant */ }
+.nds-component-lg { /* Large variant */ }
+
+// ==============================================
+// COMPONENT VARIANTS
+// ==============================================
+
+.nds-component-primary { /* Primary style */ }
+.nds-component-neutral { /* Neutral style */ }
+
+// ==============================================
+// RESPONSIVE BEHAVIOR
+// ==============================================
+
+@include mobile {
+  .nds-component {
+    // Mobile-specific adjustments
+  }
+}
+```
+
+### Design Token Usage Standards
+
+**CRITICAL**: Always use component-specific design tokens instead of direct color references. The design system follows a structured token hierarchy.
+
+**Token Hierarchy:**
+1. **Component Tokens** (Preferred) - Use these first
+2. **Semantic Tokens** - Fallback for general use
+3. **Color Tokens** - Only reference indirectly through component tokens
+
+**✅ CORRECT Token Usage:**
+```scss
+.nds-component-primary {
+  // Use component-specific tokens
+  background-color: var(--component-background-primary-default);
+  color: var(--component-text-primary-default);
+  
+  &:hover {
+    background-color: var(--component-background-primary-hovered);
+  }
+}
+```
+
+**❌ AVOID Direct Color Usage:**
+```scss
+.nds-component-primary {
+  // DON'T use direct colors
+  background-color: #f3fcf6;
+  color: #14573a;
+  
+  // DON'T use color tokens directly
+  background-color: var(--colors-primary-sa-flag-50);
+}
+```
+
+**Existing Component Token Patterns:**
+- **Buttons**: `--button-background-{variant}-{state}`, `--button-label-{variant}-{state}`
+- **Tags**: `--tag-background-{variant}`, `--tag-text-{variant}`, `--tag-border-{variant}`
+- **Chips**: `--chip-background-{variant}-{state}`, `--chip-text-{variant}-{state}`
+
+**Token Structure Pattern:**
+```scss
+// Component tokens reference semantic/color tokens
+--component-background-primary-default: var(--colors-primary-sa-flag-600-primary);
+--component-background-primary-hovered: var(--colors-primary-sa-flag-700);
+--component-text-primary-default: var(--colors-primary-sa-flag-800);
+```
+
+**When Creating New Component Tokens:**
+1. **Add to `_variables.scss`** following the existing pattern
+2. **Use semantic naming**: `--{component}-{property}-{variant}-{state}`
+3. **Reference existing color tokens**: Use `var(--colors-{color-name})` as values
+4. **Include all states**: default, hovered, pressed, selected, focused, disabled
+5. **Add on-color variants** for dark background usage
+
+**State-based Token Examples:**
+```scss
+// All interactive states should have tokens
+--chip-background-primary-default: var(--colors-primary-sa-flag-50);
+--chip-background-primary-hovered: var(--colors-primary-sa-flag-200);
+--chip-background-primary-pressed: var(--colors-primary-sa-flag-900);
+--chip-background-primary-selected: var(--colors-primary-sa-flag-600-primary);
+--chip-background-primary-focused: var(--colors-primary-sa-flag-50);
+```
+
+**Fallback Token Usage:**
+If component-specific tokens don't exist, use these general semantic tokens:
+
+```scss
+.nds-new-component {
+  // Use general semantic tokens as fallback
+  background-color: var(--background-primary-50);
+  border: 1px solid var(--border-primary-default);
+  color: var(--text-primary-default);
+}
+```
+
+**General Token Categories:**
+- **Backgrounds**: `--background-{variant}-{shade}` (e.g., `--background-primary-50`)
+- **Borders**: `--border-{variant}-{state}` (e.g., `--border-primary-default`)
+- **Text Colors**: `--text-{variant}-{state}` (e.g., `--text-primary-default`)
+
+**Typography Standards:**
+
+**Font Weight - Use Direct Numbers:**
+```scss
+.nds-component {
+  // ✅ ALWAYS use direct font-weight numbers
+  font-weight: 400; // Regular
+  font-weight: 500; // Medium
+  font-weight: 600; // Semi-bold
+  font-weight: 700; // Bold
+  
+  // ❌ DON'T use font-weight tokens or keywords
+  font-weight: var(--font-weight-medium); // NO
+  font-weight: medium; // NO
+}
+```
+
+**Font Size - Use NDS Text Tokens:**
+```scss
+.nds-component {
+  // ✅ Use NDS text size tokens
+  font-size: var(--nds-text-sm-FS);
+  line-height: var(--nds-text-sm-LH);
+  
+  font-size: var(--nds-text-md-FS);
+  line-height: var(--nds-text-md-LH);
+  
+  font-size: var(--nds-text-lg-FS);
+  line-height: var(--nds-text-lg-LH);
+}
+```
+
+**Available NDS Text Tokens:**
+- `--nds-text-xs-FS` / `--nds-text-xs-LH` - Extra small text
+- `--nds-text-sm-FS` / `--nds-text-sm-LH` - Small text  
+- `--nds-text-md-FS` / `--nds-text-md-LH` - Medium text (default)
+- `--nds-text-lg-FS` / `--nds-text-lg-LH` - Large text
+- `--nds-text-xl-FS` / `--nds-text-xl-LH` - Extra large text
+
 ## Development Workflow
 
 ### Adding New Components

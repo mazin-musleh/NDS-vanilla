@@ -30,8 +30,12 @@ direction: ltr
                                 <span class="label">Rounded</span>
                             </button>
                             <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["<i class=\"hgi hgi-stroke hgi-alert-02 icon\"></i>", ".nds-tag", "tags", "content-prepend"]'>
+                                data-toggler='["<i class=\"hgi hgi-stroke hgi-help-circle icon\"></i>", ".nds-tag", "tags", "content-prepend"]'>
                                 <span class="label">Toggle Icon</span>
+                            </button>
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                                data-toggler='["nds-tag-md", ".nds-tag", "tagSize"]'>
+                                <span class="label">MD</span>
                             </button>
                             <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
                                 data-toggler='["nds-tag-sm", ".nds-tag", "tagSize"]'>
@@ -93,8 +97,12 @@ direction: ltr
                                 <span class="label">Rounded</span>
                             </button>
                             <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["<i class=\"hgi hgi-stroke hgi-checkmark-circle-01 icon\"></i>", ".nds-tag", "tags", "content-prepend"]'>
+                                data-toggler='["<i class=\"hgi hgi-stroke hgi-checkmark-circle-02 icon\"></i>", ".nds-tag", "tags", "content-prepend"]'>
                                 <span class="label">Toggle Icon</span>
+                            </button>
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                                data-toggler='["nds-tag-md", ".nds-tag", "tagSize"]'>
+                                <span class="label">MD</span>
                             </button>
                             <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
                                 data-toggler='["nds-tag-sm", ".nds-tag", "tagSize"]'>
@@ -157,8 +165,12 @@ direction: ltr
                                 <span class="label">Rounded</span>
                             </button>
                             <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["<i class=\"hgi hgi-stroke hgi-info-circle icon\"></i>", ".nds-tag", "tags", "content-prepend"]'>
+                                data-toggler='["<i class=\"hgi hgi-stroke hgi-information-circle icon\"></i>", ".nds-tag", "tags", "content-prepend"]'>
                                 <span class="label">Toggle Icon</span>
+                            </button>
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                                data-toggler='["nds-tag-md", ".nds-tag", "tagSize"]'>
+                                <span class="label">MD</span>
                             </button>
                             <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
                                 data-toggler='["nds-tag-sm", ".nds-tag", "tagSize"]'>
@@ -221,8 +233,12 @@ direction: ltr
                                 <span class="label">Rounded</span>
                             </button>
                             <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["<i class=\"hgi hgi-stroke hgi-alert-triangle icon\"></i>", ".nds-tag", "tags", "content-prepend"]'>
+                                data-toggler='["<i class=\"hgi hgi-stroke hgi-alert-02 icon\"></i>", ".nds-tag", "tags", "content-prepend"]'>
                                 <span class="label">Toggle Icon</span>
+                            </button>
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                                data-toggler='["nds-tag-md", ".nds-tag", "tagSize"]'>
+                                <span class="label">MD</span>
                             </button>
                             <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
                                 data-toggler='["nds-tag-sm", ".nds-tag", "tagSize"]'>
@@ -285,8 +301,12 @@ direction: ltr
                                 <span class="label">Rounded</span>
                             </button>
                             <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["<i class=\"hgi hgi-stroke hgi-x-circle icon\"></i>", ".nds-tag", "tags", "content-prepend"]'>
+                                data-toggler='["<i class=\"hgi hgi-stroke hgi-alert-circle icon\"></i>", ".nds-tag", "tags", "content-prepend"]'>
                                 <span class="label">Toggle Icon</span>
+                            </button>
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                                data-toggler='["nds-tag-md", ".nds-tag", "tagSize"]'>
+                                <span class="label">MD</span>
                             </button>
                             <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
                                 data-toggler='["nds-tag-sm", ".nds-tag", "tagSize"]'>
@@ -353,6 +373,10 @@ direction: ltr
                                 <span class="label">Toggle Icon</span>
                             </button>
                             <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                                data-toggler='["nds-tag-md", ".nds-tag", "tagSize"]'>
+                                <span class="label">MD</span>
+                            </button>
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
                                 data-toggler='["nds-tag-sm", ".nds-tag", "tagSize"]'>
                                 <span class="label">SM</span>
                             </button>
@@ -412,6 +436,10 @@ direction: ltr
                                 <span class="label">Rounded</span>
                             </button>
                             <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                                data-toggler='["nds-tag-md", ".nds-tag", "tagSize"]'>
+                                <span class="label">MD</span>
+                            </button>
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
                                 data-toggler='["nds-tag-sm", ".nds-tag", "tagSize"]'>
                                 <span class="label">SM</span>
                             </button>
@@ -428,7 +456,7 @@ direction: ltr
                     <div class="demo-container">
                         <div class="state-demo">
                             <span class="nds-tag nds-tag-neutral nds-tag-icon-only">
-                                <i class="hgi hgi-stroke hgi-alert-02 icon"></i>
+                                <i class="hgi hgi-stroke hgi-help-circle icon"></i>
                             </span>
                         </div>
                     </div>
@@ -483,6 +511,10 @@ direction: ltr
                             <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
                                 data-toggler='["nds-tag-ghost", ".nds-tag","tagStatus"]'>
                                 <span class="label">Ghost</span>
+                            </button>
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                                data-toggler='["nds-tag-md", ".nds-tag", "tagSize"]'>
+                                <span class="label">MD</span>
                             </button>
                             <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
                                 data-toggler='["nds-tag-sm", ".nds-tag", "tagSize"]'>
@@ -542,6 +574,10 @@ direction: ltr
                             <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
                                 data-toggler='["nds-tag-ghost", ".nds-tag","tagStatus"]'>
                                 <span class="label">Ghost</span>
+                            </button>
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                                data-toggler='["nds-tag-md", ".nds-tag", "tagSize"]'>
+                                <span class="label">MD</span>
                             </button>
                             <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
                                 data-toggler='["nds-tag-sm", ".nds-tag", "tagSize"]'>
@@ -604,6 +640,10 @@ direction: ltr
                                 <span class="label">Ghost</span>
                             </button>
                             <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                                data-toggler='["nds-tag-md", ".nds-tag", "tagSize"]'>
+                                <span class="label">MD</span>
+                            </button>
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
                                 data-toggler='["nds-tag-sm", ".nds-tag", "tagSize"]'>
                                 <span class="label">SM</span>
                             </button>
@@ -664,6 +704,10 @@ direction: ltr
                                 <span class="label">Ghost</span>
                             </button>
                             <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                                data-toggler='["nds-tag-md", ".nds-tag", "tagSize"]'>
+                                <span class="label">MD</span>
+                            </button>
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
                                 data-toggler='["nds-tag-sm", ".nds-tag", "tagSize"]'>
                                 <span class="label">SM</span>
                             </button>
@@ -722,6 +766,10 @@ direction: ltr
                             <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
                                 data-toggler='["nds-tag-ghost", ".nds-tag","tagStatus"]'>
                                 <span class="label">Ghost</span>
+                            </button>
+                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                                data-toggler='["nds-tag-md", ".nds-tag", "tagSize"]'>
+                                <span class="label">MD</span>
                             </button>
                             <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
                                 data-toggler='["nds-tag-sm", ".nds-tag", "tagSize"]'>
