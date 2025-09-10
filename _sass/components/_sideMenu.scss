@@ -65,7 +65,7 @@
 
 }
 
-.nds-sideMenu .nds-btn-indicator {
+.nds-sideMenu .nds-indicator {
     --button-indicator-size: 5px;
     @include btn-indicator('v');
 }

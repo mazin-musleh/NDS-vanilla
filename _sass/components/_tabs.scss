@@ -48,6 +48,7 @@
       justify-content: start;
 
 
+
       /* Override horizontal indicator with vertical */
       @include btn-indicator('v');
     }
@@ -56,6 +57,10 @@
 
       .nds-tab {
         flex-direction: row-reverse;
+
+        .label {
+          text-align: end;
+        }
       }
 
       .nds-tab-list-container::after {
@@ -247,9 +252,10 @@
   padding: var(--spacing-xl);
   animation: fadeInUp 0.2s ease-in-out;
 
-  &.hug{
+  &.hug {
     padding: 0;
-    & > *{
+
+    &>* {
       padding: var(--spacing-xl);
     }
   }

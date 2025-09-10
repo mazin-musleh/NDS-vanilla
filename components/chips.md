@@ -21,27 +21,27 @@ direction: ltr
                     <div class="demo-header">
                         <div class="demo-label">Primary Chip</div>
                         <div class="demo-action">
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn selected"
-                                data-toggler='["nds-chip-rounded", ".nds-chip", "chips", "roundedToggle"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
+                                data-toggler='["nds-rounded", ".nds-chip", "chips", "roundedToggle"]'>
                                 <span class="label">Rounded</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["<i class=\"hgi hgi-stroke hgi-add-01 icon\"></i>", ".nds-chip", "chipIcon", "content-prepend"]'>
                                 <span class="label">Toggle Icon</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-chip-sm", ".nds-chip", "chipSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-sm", ".nds-chip", "chipSize"]'>
                                 <span class="label">SM</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-chip-md", ".nds-chip", "chipSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-md", ".nds-chip", "chipSize"]'>
                                 <span class="label">MD</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-chip-lg", ".nds-chip", "chipSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-lg", ".nds-chip", "chipSize"]'>
                                 <span class="label">LG</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                                 <span class="label">Remove bg</span>
                             </button>
@@ -49,22 +49,22 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <button class="nds-chip nds-chip-primary nds-chip-rounded">
+                            <button class="nds-chip nds-primary nds-rounded">
                                 <span class="label">Default</span>
                             </button>
-                            <button class="nds-chip nds-chip-primary nds-chip-rounded" data-state="hover">
+                            <button class="nds-chip nds-primary nds-rounded" data-state="hover">
                                 <span class="label">Hovered</span>
                             </button>
-                            <button class="nds-chip nds-chip-primary nds-chip-rounded pressed">
+                            <button class="nds-chip nds-primary nds-rounded pressed">
                                 <span class="label">Pressed</span>
                             </button>
-                            <button class="nds-chip nds-chip-primary nds-chip-rounded selected">
+                            <button class="nds-chip nds-primary nds-rounded selected">
                                 <span class="label">Selected</span>
                             </button>
-                            <button class="nds-chip nds-chip-primary nds-chip-rounded" data-state="focused">
+                            <button class="nds-chip nds-primary nds-rounded" data-state="focused">
                                 <span class="label">Focused</span>
                             </button>
-                            <button class="nds-chip nds-chip-primary nds-chip-rounded" disabled>
+                            <button class="nds-chip nds-primary nds-rounded" disabled>
                                 <span class="label">Disabled</span>
                             </button>
                         </div>
@@ -72,7 +72,7 @@ direction: ltr
                     <div class="nds-tabs nds-code withDivider">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                     aria-controls="panel-primary-1" id="tab-primary-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
@@ -82,12 +82,12 @@ direction: ltr
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-primary-1"
                                 aria-labelledby="tab-primary-1">
                                 <div class="nds-code-action">
-                                    <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-                                    <button class="nds-chip nds-chip-primary">
+                                    <button class="nds-chip nds-primary">
                                       <span class="label">Item</span>
                                     </button>
                                 </code>
@@ -100,27 +100,27 @@ direction: ltr
                     <div class="demo-header">
                         <div class="demo-label">Neutral Chip</div>
                         <div class="demo-action">
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn selected"
-                                data-toggler='["nds-chip-rounded", ".nds-chip", "chips", "roundedToggle"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
+                                data-toggler='["nds-rounded", ".nds-chip", "chips", "roundedToggle"]'>
                                 <span class="label">Rounded</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["<i class=\"hgi hgi-stroke hgi-add-01 icon\"></i>", ".nds-chip", "chipIcon", "content-prepend"]'>
                                 <span class="label">Toggle Icon</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-chip-sm", ".nds-chip", "chipSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-sm", ".nds-chip", "chipSize"]'>
                                 <span class="label">SM</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-chip-md", ".nds-chip", "chipSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-md", ".nds-chip", "chipSize"]'>
                                 <span class="label">MD</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-chip-lg", ".nds-chip", "chipSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-lg", ".nds-chip", "chipSize"]'>
                                 <span class="label">LG</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                                 <span class="label">Remove bg</span>
                             </button>
@@ -128,22 +128,22 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <button class="nds-chip nds-chip-neutral nds-chip-rounded">
+                            <button class="nds-chip nds-neutral nds-rounded">
                                 <span class="label">Default</span>
                             </button>
-                            <button class="nds-chip nds-chip-neutral nds-chip-rounded" data-state="hover">
+                            <button class="nds-chip nds-neutral nds-rounded" data-state="hover">
                                 <span class="label">Hovered</span>
                             </button>
-                            <button class="nds-chip nds-chip-neutral nds-chip-rounded pressed">
+                            <button class="nds-chip nds-neutral nds-rounded pressed">
                                 <span class="label">Pressed</span>
                             </button>
-                            <button class="nds-chip nds-chip-neutral nds-chip-rounded selected">
+                            <button class="nds-chip nds-neutral nds-rounded selected">
                                 <span class="label">Selected</span>
                             </button>
-                            <button class="nds-chip nds-chip-neutral nds-chip-rounded" data-state="focused">
+                            <button class="nds-chip nds-neutral nds-rounded" data-state="focused">
                                 <span class="label">Focused</span>
                             </button>
-                            <button class="nds-chip nds-chip-neutral nds-chip-rounded" disabled>
+                            <button class="nds-chip nds-neutral nds-rounded" disabled>
                                 <span class="label">Disabled</span>
                             </button>
                         </div>
@@ -151,7 +151,7 @@ direction: ltr
                     <div class="nds-tabs nds-code withDivider">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                     aria-controls="panel-neutral-1" id="tab-neutral-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
@@ -161,12 +161,12 @@ direction: ltr
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-neutral-1"
                                 aria-labelledby="tab-neutral-1">
                                 <div class="nds-code-action">
-                                    <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-                                    <button class="nds-chip nds-chip-neutral nds-chip-rounded">
+                                    <button class="nds-chip nds-neutral nds-rounded">
                                       <span class="label">Category</span>
                                     </button>
                                 </code>
@@ -179,27 +179,27 @@ direction: ltr
                     <div class="demo-header">
                         <div class="demo-label">On-Color Chip</div>
                         <div class="demo-action">
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn selected"
-                                data-toggler='["nds-chip-rounded", ".nds-chip", "chips", "roundedToggle"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
+                                data-toggler='["nds-rounded", ".nds-chip", "chips", "roundedToggle"]'>
                                 <span class="label">Rounded</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["<i class=\"hgi hgi-stroke hgi-add-01 icon\"></i>", ".nds-chip", "chipIcon", "content-prepend"]'>
                                 <span class="label">Toggle Icon</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-chip-sm", ".nds-chip", "chipSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-sm", ".nds-chip", "chipSize"]'>
                                 <span class="label">SM</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-chip-md", ".nds-chip", "chipSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-md", ".nds-chip", "chipSize"]'>
                                 <span class="label">MD</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
-                                data-toggler='["nds-chip-lg", ".nds-chip", "chipSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-lg", ".nds-chip", "chipSize"]'>
                                 <span class="label">LG</span>
                             </button>
-                            <button class="nds-btn nds-btn-sm nds-btn-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["black-bg", ".demo-container", "containerBg"]'>
                                 <span class="label">Black bg</span>
                             </button>
@@ -207,24 +207,22 @@ direction: ltr
                     </div>
                     <div class="demo-container dark-bg">
                         <div class="state-demo">
-                            <button class="nds-chip nds-chip-primary nds-chip-oncolor nds-chip-rounded">
+                            <button class="nds-chip nds-primary nds-oncolor nds-rounded">
                                 <span class="label">Default</span>
                             </button>
-                            <button class="nds-chip nds-chip-primary nds-chip-oncolor nds-chip-rounded"
-                                data-state="hover">
+                            <button class="nds-chip nds-primary nds-oncolor nds-rounded" data-state="hover">
                                 <span class="label">Hovered</span>
                             </button>
-                            <button class="nds-chip nds-chip-primary nds-chip-oncolor nds-chip-rounded pressed">
+                            <button class="nds-chip nds-primary nds-oncolor nds-rounded pressed">
                                 <span class="label">Pressed</span>
                             </button>
-                            <button class="nds-chip nds-chip-primary nds-chip-oncolor nds-chip-rounded selected">
+                            <button class="nds-chip nds-primary nds-oncolor nds-rounded selected">
                                 <span class="label">Selected</span>
                             </button>
-                            <button class="nds-chip nds-chip-primary nds-chip-oncolor nds-chip-rounded"
-                                data-state="focused">
+                            <button class="nds-chip nds-primary nds-oncolor nds-rounded" data-state="focused">
                                 <span class="label">Focused</span>
                             </button>
-                            <button class="nds-chip nds-chip-primary nds-chip-oncolor nds-chip-rounded" disabled>
+                            <button class="nds-chip nds-primary nds-oncolor nds-rounded" disabled>
                                 <span class="label">Disabled</span>
                             </button>
                         </div>
@@ -232,7 +230,7 @@ direction: ltr
                     <div class="nds-tabs nds-code withDivider">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-btn-subtle nds-tab" role="tab" aria-selected="true"
+                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                     aria-controls="panel-oncolor-1" id="tab-oncolor-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
@@ -242,12 +240,12 @@ direction: ltr
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-oncolor-1"
                                 aria-labelledby="tab-oncolor-1">
                                 <div class="nds-code-action">
-                                    <button class="nds-btn nds-btn-subtle copy-btn" aria-label="Copy code example">
+                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-                                    <button class="nds-chip nds-chip-primary nds-chip-oncolor nds-chip-rounded">
+                                    <button class="nds-chip nds-primary nds-oncolor nds-rounded">
                                       <span class="label">On Color</span>
                                     </button>
                                 </code>

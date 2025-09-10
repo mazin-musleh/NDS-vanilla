@@ -10,7 +10,7 @@
     class NDSAccordion {
         constructor(accordionContainer) {
             this.accordionContainer = accordionContainer;
-            this.buttons = Array.from(accordionContainer.querySelectorAll('.nds-btn-accordion'));
+            this.buttons = Array.from(accordionContainer.querySelectorAll('.nds-accordion-btn'));
             this.collapses = Array.from(accordionContainer.querySelectorAll('.nds-accordion-collapse'));
             this.isAnimating = false; // Simple flag to prevent clicks during animation
             
@@ -76,7 +76,7 @@
 
         handleKeyDown(e) {
             const currentButton = e.target;
-            if (!currentButton.classList.contains('nds-btn-accordion')) return;
+            if (!currentButton.classList.contains('nds-accordion-btn')) return;
 
             const currentIndex = this.buttons.indexOf(currentButton);
             let targetIndex = currentIndex;

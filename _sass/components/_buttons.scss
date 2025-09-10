@@ -36,60 +36,61 @@
   &:disabled {
     @include btn-disabled;
   }
-}
 
-// On-color focus styles
-.nds-btn.nds-btn-oncolor.nds-btn-primary:not(.nds-btn-destructive),
-.nds-btn.nds-btn-oncolor.nds-btn-neutral {
 
-  &.focus,
-  &:focus-visible {
-    @include btn-focus-oncolor;
-  }
-}
+  // On-color focus styles
+  &.nds-oncolor.nds-primary:not(.nds-destructive),
+  &.nds-oncolor.nds-primary:not(.nds-destructive),
+  &.nds-oncolor.nds-neutral {
 
-// Menu Button Dropdown Icon
-body.hgi-loaded .nds-btn.nds-btn-menu::after {
-  opacity: 1;
-}
-
-.nds-btn.nds-btn-menu {
-
-  &::after {
-    content: "㭚";
-    font-family: "hgi-stroke-rounded" !important;
-    font-style: normal;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    position: relative;
-    opacity: 0;
-    transition: opacity var(--nds-transition), transform 0.1s ease;
-    display: inline-flex;
-    width: var(--nds-button-icon-size);
-    height: var(--nds-button-icon-size);
-    font-size: var(--nds-button-icon-size);
-    line-height: var(--nds-button-icon-size);
-    justify-content: center;
-    align-content: center;
-    align-items: center;
+    &.focus,
+    &:focus-visible {
+      @include btn-focus-oncolor;
+    }
   }
 
-  &.selected::after,
-  &.expanded::after,
-  &[aria-expanded="true"]::after,
-  &.open::after,
-  .show>&::after,
-  .open>&::after,
-  .active>&::after {
-    transform: rotate(180deg);
+  // Menu Button Dropdown Icon
+  body.hgi-loaded &.nds-menu-btn::after {
+    opacity: 1;
   }
-}
 
-// ==============================================
-// BUTTON SIZES
-// ==============================================
+  &.nds-menu-btn {
 
-/* 
+    &::after {
+      content: "㭚";
+      font-family: "hgi-stroke-rounded" !important;
+      font-style: normal;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      position: relative;
+      opacity: 0;
+      transition: opacity var(--nds-transition), transform 0.1s ease;
+      display: inline-flex;
+      width: var(--nds-button-icon-size);
+      height: var(--nds-button-icon-size);
+      font-size: var(--nds-button-icon-size);
+      line-height: var(--nds-button-icon-size);
+      justify-content: center;
+      align-content: center;
+      align-items: center;
+    }
+
+    &.selected::after,
+    &.expanded::after,
+    &[aria-expanded="true"]::after,
+    &.open::after,
+    .show>&::after,
+    .open>&::after,
+    .active>&::after {
+      transform: rotate(180deg);
+    }
+  }
+
+  // ==============================================
+  // BUTTON SIZES
+  // ==============================================
+
+  /* 
 Available sizes:
 - Small (SM): 24px height
 - Medium (MD): 32px height  
@@ -97,461 +98,307 @@ Available sizes:
 - Extra Large (XL): 48px height
 */
 
-.nds-btn,
-.nds-btn-lg {
-  --nds-button-icon-size: 20px;
-  @include btn-size(40px, var(--spacing-lg), var(--nds-text-md-FS), var(--nds-text-md-LH));
-}
-
-.nds-btn-md {
-  --nds-button-icon-size: 16px;
-  @include btn-size(32px, var(--spacing-md), var(--nds-text-sm-FS), var(--nds-text-sm-LH));
-}
-
-.nds-btn-sm {
-  --nds-button-icon-size: 12px;
-  @include btn-size(24px, var(--spacing-sm), var(--nds-text-xs-FS), var(--nds-text-xs-LH));
-}
-
-.nds-btn-xl {
-  --nds-button-icon-size: 24px;
-  @include btn-size(48px, var(--spacing-xl), var(--nds-text-xl-FS), var(--nds-text-xl-LH));
-}
-
-// ==============================================
-// BUTTON VARIANTS - STANDARD BACKGROUND
-// ==============================================
-
-/* Primary Button (Green) */
-.nds-btn-primary {
-  @include btn-variant(var(--button-background-primary-default),
-    var(--text-oncolor-primary),
-    var(--button-background-primary-hovered),
-    var(--button-background-primary-pressed),
-    var(--button-background-primary-selected),
-    var(--background-disabled),
-    var(--text-default-disabled));
-
-  &.nds-btn-indicator {
-    @include btn-indicator-styles(var(--background-primary-400), var(--background-primary-400));
-  }
-
-}
-
-/* Neutral Button (Dark Gray) */
-.nds-btn-neutral {
-  @include btn-variant(var(--button-background-black-default),
-    var(--text-oncolor-primary),
-    var(--button-background-black-hovered),
-    var(--button-background-black-pressed),
-    var(--button-background-black-selected),
-    var(--background-disabled),
-    var(--text-default-disabled));
-
-  &.nds-btn-indicator {
-    @include btn-indicator-styles(var(--background-primary-400), var(--background-primary-400));
-  }
-
-}
-
-/* Secondary Solid Button (Light Gray) */
-.nds-btn-secondary {
-  @include btn-variant(var(--button-background-neutral-default),
-    var(--text-default),
-    var(--button-background-neutral-hovered),
-    var(--button-background-neutral-pressed),
-    var(--button-background-neutral-selected),
-    var(--background-disabled),
-    var(--text-default-disabled));
-
-  &.nds-btn-indicator {
-    @include btn-indicator-styles(var(--background-neutral-400), var(--background-neutral-800));
-  }
-
-}
-
-/* Secondary Outline Button */
-.nds-btn-secondary-outline {
-  @include btn-state-pattern(var(--button-background-transparent-hovered),
-    var(--text-default),
-    var(--border-neutral-secondary),
-    var(--button-background-neutral-default),
-    var(--border-neutral-secondary),
-    var(--button-background-neutral-selected),
-    var(--border-neutral-primary),
-    var(--button-background-neutral-pressed),
-    var(--border-neutral-primary),
-    var(--button-background-transparent-default),
-    var(--text-default-disabled),
-    var(--border-neutral-secondary));
-
-  &.nds-btn-indicator {
-    @include btn-indicator-styles(var(--background-neutral-400), var(--background-neutral-800));
-  }
-
-}
-
-/* Subtle Button */
-.nds-btn-subtle {
-  @include btn-state-pattern(transparent,
-    var(--text-default),
-    transparent,
-    var(--button-background-neutral-default),
-    transparent,
-    var(--button-background-neutral-selected),
-    transparent,
-    var(--button-background-neutral-pressed),
-    transparent,
-    transparent,
-    var(--text-default-disabled),
-    transparent);
-
-  &.nds-btn-indicator {
-    @include btn-indicator-styles(var(--background-neutral-400), var(--background-neutral-800));
-  }
-
-}
-
-/* Transparent Button */
-.nds-btn-transparent {
-
   &,
-  &[data-state="default"] {
-    color: var(--text-default);
-    background: unset;
+  &.nds-lg {
+    --nds-button-icon-size: 20px;
+    @include btn-size(40px, var(--spacing-lg), var(--nds-text-md-FS), var(--nds-text-md-LH));
   }
 
-  &:hover,
-  &[data-state="hover"] {
-    color: var(--button-background-primary-hovered);
+  &.nds-md {
+    --nds-button-icon-size: 16px;
+    @include btn-size(32px, var(--spacing-md), var(--nds-text-sm-FS), var(--nds-text-sm-LH));
   }
 
-  &.active,
-  &.selected,
-  &[data-state="selected"] {
-    color: var(--button-background-primary-selected);
+  &.nds-sm {
+    --nds-button-icon-size: 12px;
+    @include btn-size(24px, var(--spacing-sm), var(--nds-text-xs-FS), var(--nds-text-xs-LH));
   }
 
-  &:active,
-  &[data-state="active"] {
-    color: var(--button-background-primary-pressed);
+  &.nds-xl {
+    --nds-button-icon-size: 24px;
+    @include btn-size(48px, var(--spacing-xl), var(--nds-text-xl-FS), var(--nds-text-xl-LH));
   }
 
-  &:disabled,
-  &[data-state="disabled"] {
-    color: var(--text-default-disabled);
+  // ==============================================
+  // BUTTON VARIANTS - STANDARD BACKGROUND
+  // ==============================================
+
+  /* Primary Button (Green) */
+  &.nds-primary {
+    @include btn-variant(var(--button-background-primary-default),
+      var(--text-oncolor-primary),
+      var(--button-background-primary-hovered),
+      var(--button-background-primary-pressed),
+      var(--button-background-primary-selected),
+      var(--background-disabled),
+      var(--text-default-disabled));
+
+    &.nds-indicator {
+      @include btn-indicator-styles(var(--background-primary-400), var(--background-primary-400));
+    }
+
   }
 
-  &.nds-btn-indicator {
-    @include btn-indicator-styles(var(--background-neutral-400), var(--background-neutral-800));
+  /* Neutral Button (Dark Gray) */
+  &.nds-neutral {
+    @include btn-variant(var(--button-background-black-default),
+      var(--text-oncolor-primary),
+      var(--button-background-black-hovered),
+      var(--button-background-black-pressed),
+      var(--button-background-black-selected),
+      var(--background-disabled),
+      var(--text-default-disabled));
+
+    &.nds-indicator {
+      @include btn-indicator-styles(var(--background-primary-400), var(--background-primary-400));
+    }
+
   }
 
-}
-
-// ==============================================
-// ON-COLOR VARIANTS - DARK BACKGROUNDS
-// ==============================================
-
-/* On-Color Primary & Neutral Variants */
-.nds-btn-oncolor {
-
-  &.nds-btn-primary,
-  &.nds-btn-neutral {
-    @include btn-variant(var(--button-background-oncolor-default),
+  /* Secondary Solid Button (Light Gray) */
+  &.nds-secondary {
+    @include btn-variant(var(--button-background-neutral-default),
       var(--text-default),
-      var(--button-background-oncolor-hovered),
-      var(--button-background-oncolor-pressed),
-      var(--button-background-oncolor-selected),
-      var(--button-background-disabled-on-color),
-      var(--text-default-oncolor-disabled));
+      var(--button-background-neutral-hovered),
+      var(--button-background-neutral-pressed),
+      var(--button-background-neutral-selected),
+      var(--background-disabled),
+      var(--text-default-disabled));
+
+    &.nds-indicator {
+      @include btn-indicator-styles(var(--background-neutral-400), var(--background-neutral-800));
+    }
+
   }
 
-  &.nds-btn-secondary {
+  /* Secondary Outline Button */
+  &.nds-secondary-outline {
+    @include btn-state-pattern(var(--button-background-transparent-hovered),
+      var(--text-default),
+      var(--border-neutral-secondary),
+      var(--button-background-neutral-default),
+      var(--border-neutral-secondary),
+      var(--button-background-neutral-selected),
+      var(--border-neutral-primary),
+      var(--button-background-neutral-pressed),
+      var(--border-neutral-primary),
+      var(--button-background-transparent-default),
+      var(--text-default-disabled),
+      var(--border-neutral-secondary));
+
+    &.nds-indicator {
+      @include btn-indicator-styles(var(--background-neutral-400), var(--background-neutral-800));
+    }
+
+  }
+
+  /* Subtle Button */
+  &.nds-subtle {
+    @include btn-state-pattern(transparent,
+      var(--text-default),
+      transparent,
+      var(--button-background-neutral-default),
+      transparent,
+      var(--button-background-neutral-selected),
+      transparent,
+      var(--button-background-neutral-pressed),
+      transparent,
+      transparent,
+      var(--text-default-disabled),
+      transparent);
+
+    &.nds-indicator {
+      @include btn-indicator-styles(var(--background-neutral-400), var(--background-neutral-800));
+    }
+
+  }
+
+  /* Transparent Button */
+  &.nds-transparent {
 
     &,
     &[data-state="default"] {
-      background-color: var(--button-background-transparent-hovered);
-      border-color: var(--button-background-transparent-default);
-      color: var(--text-oncolor-primary);
+      color: var(--text-default);
+      background: unset;
     }
 
     &:hover,
     &[data-state="hover"] {
-      background-color: var(--button-background-transparent-hovered);
-      border-color: var(--button-background-transparent-default);
+      color: var(--button-background-primary-hovered);
     }
 
     &.active,
     &.selected,
     &[data-state="selected"] {
-      background-color: var(--button-background-transparent-selected);
-      border-color: var(--button-background-transparent-default);
+      color: var(--button-background-primary-selected);
     }
 
     &:active,
     &[data-state="active"] {
-      background-color: var(--button-background-oncolor-pressed);
-      border-color: var(--button-background-transparent-default);
+      color: var(--button-background-primary-pressed);
     }
 
     &:disabled,
     &[data-state="disabled"] {
-      background-color: var(--button-background-disabled-on-color);
-      color: var(--text-default-oncolor-disabled);
+      color: var(--text-default-disabled);
+    }
+
+    &.nds-indicator {
+      @include btn-indicator-styles(var(--background-neutral-400), var(--background-neutral-800));
+    }
+
+  }
+
+  // ==============================================
+  // ON-COLOR VARIANTS - DARK BACKGROUNDS
+  // ==============================================
+
+  /* On-Color Primary & Neutral Variants */
+  &.nds-oncolor {
+
+    &.nds-primary,
+    &.nds-neutral {
+      @include btn-variant(var(--button-background-oncolor-default),
+        var(--text-default),
+        var(--button-background-oncolor-hovered),
+        var(--button-background-oncolor-pressed),
+        var(--button-background-oncolor-selected),
+        var(--button-background-disabled-on-color),
+        var(--text-default-oncolor-disabled));
+    }
+
+    &.nds-secondary {
+
+      &,
+      &[data-state="default"] {
+        background-color: var(--button-background-transparent-hovered);
+        border-color: var(--button-background-transparent-default);
+        color: var(--text-oncolor-primary);
+      }
+
+      &:hover,
+      &[data-state="hover"] {
+        background-color: var(--button-background-transparent-hovered);
+        border-color: var(--button-background-transparent-default);
+      }
+
+      &.active,
+      &.selected,
+      &[data-state="selected"] {
+        background-color: var(--button-background-transparent-selected);
+        border-color: var(--button-background-transparent-default);
+      }
+
+      &:active,
+      &[data-state="active"] {
+        background-color: var(--button-background-oncolor-pressed);
+        border-color: var(--button-background-transparent-default);
+      }
+
+      &:disabled,
+      &[data-state="disabled"] {
+        background-color: var(--button-background-disabled-on-color);
+        color: var(--text-default-oncolor-disabled);
+      }
+    }
+
+    &.nds-secondary-outline {
+
+      &,
+      &[data-state="default"] {
+        background-color: var(--button-background-transparent-default);
+        color: var(--colors-base-white);
+        border-color: var(--border-white-40);
+      }
+
+      &:hover,
+      &[data-state="hover"] {
+        background-color: var(--button-background-transparent-hovered);
+      }
+
+      &.active,
+      &.selected,
+      &[data-state="selected"] {
+        background-color: var(--button-background-transparent-selected);
+      }
+
+      &:active,
+      &[data-state="active"] {
+        background-color: var(--button-background-transparent-pressed);
+      }
+
+      &:disabled,
+      &[data-state="disabled"] {
+        background-color: var(--button-background-transparent-default);
+        color: var(--text-default-oncolor-disabled);
+      }
+    }
+
+    &.nds-subtle {
+
+      &,
+      &[data-state="default"] {
+        color: var(--text-oncolor-primary);
+      }
+
+      &:hover,
+      &[data-state="hover"] {
+        background-color: var(--button-background-transparent-hovered);
+      }
+
+      &.active,
+      &.selected,
+      &[data-state="selected"] {
+        background-color: var(--button-background-transparent-selected);
+      }
+
+      &:active,
+      &[data-state="active"] {
+        background-color: var(--button-background-transparent-pressed);
+      }
+
+      &:disabled,
+      &[data-state="disabled"] {
+        color: var(--text-default-oncolor-disabled);
+      }
+    }
+
+    &.nds-transparent {
+
+      &,
+      &[data-state="default"] {
+        color: var(--text-oncolor-primary);
+      }
+
+      &:hover,
+      &[data-state="hover"] {
+        color: var(--button-label-transparent-hovered-on-color);
+      }
+
+      &.active,
+      &.selected,
+      &[data-state="selected"] {
+        color: var(--button-label-transparent-pressed-on-color);
+      }
+
+      &:active,
+      &[data-state="active"] {
+        color: var(--button-label-transparent-pressed-on-color);
+      }
+
+      &:disabled,
+      &[data-state="disabled"] {
+        color: var(--text-default-oncolor-disabled);
+      }
     }
   }
 
-  &.nds-btn-secondary-outline {
+  // ==============================================
+  // DESTRUCTIVE VARIANTS - RED THEME
+  // ==============================================
 
-    &,
-    &[data-state="default"] {
-      background-color: var(--button-background-transparent-default);
-      color: var(--colors-base-white);
-      border-color: var(--border-white-40);
-    }
-
-    &:hover,
-    &[data-state="hover"] {
-      background-color: var(--button-background-transparent-hovered);
-    }
-
-    &.active,
-    &.selected,
-    &[data-state="selected"] {
-      background-color: var(--button-background-transparent-selected);
-    }
-
-    &:active,
-    &[data-state="active"] {
-      background-color: var(--button-background-transparent-pressed);
-    }
-
-    &:disabled,
-    &[data-state="disabled"] {
-      background-color: var(--button-background-transparent-default);
-      color: var(--text-default-oncolor-disabled);
-    }
-  }
-
-  &.nds-btn-subtle {
-
-    &,
-    &[data-state="default"] {
-      color: var(--text-oncolor-primary);
-    }
-
-    &:hover,
-    &[data-state="hover"] {
-      background-color: var(--button-background-transparent-hovered);
-    }
-
-    &.active,
-    &.selected,
-    &[data-state="selected"] {
-      background-color: var(--button-background-transparent-selected);
-    }
-
-    &:active,
-    &[data-state="active"] {
-      background-color: var(--button-background-transparent-pressed);
-    }
-
-    &:disabled,
-    &[data-state="disabled"] {
-      color: var(--text-default-oncolor-disabled);
-    }
-  }
-
-  &.nds-btn-transparent {
-
-    &,
-    &[data-state="default"] {
-      color: var(--text-oncolor-primary);
-    }
-
-    &:hover,
-    &[data-state="hover"] {
-      color: var(--button-label-transparent-hovered-on-color);
-    }
-
-    &.active,
-    &.selected,
-    &[data-state="selected"] {
-      color: var(--button-label-transparent-pressed-on-color);
-    }
-
-    &:active,
-    &[data-state="active"] {
-      color: var(--button-label-transparent-pressed-on-color);
-    }
-
-    &:disabled,
-    &[data-state="disabled"] {
-      color: var(--text-default-oncolor-disabled);
-    }
-  }
-}
-
-// ==============================================
-// DESTRUCTIVE VARIANTS - RED THEME
-// ==============================================
-
-/* Destructive Primary Button */
-.nds-btn-destructive.nds-btn-primary {
-  @include btn-variant(var(--button-background-danger-primary-default),
-    var(--text-oncolor-primary),
-    var(--button-background-danger-primary-hovered),
-    var(--button-background-danger-primary-pressed),
-    var(--button-background-danger-primary-selected),
-    var(--background-disabled),
-    var(--text-default-disabled));
-}
-
-/* Destructive Secondary Outline Button */
-.nds-btn-destructive.nds-btn-secondary-outline {
-
-  &,
-  &[data-state="default"] {
-    color: var(--button-background-danger-primary-default);
-    border-color: var(--border-error-light);
-  }
-
-  &:hover,
-  &[data-state="hover"] {
-    background-color: var(--button-background-danger-secondary-hovered);
-    color: var(--button-background-danger-primary-hovered);
-  }
-
-  &.active,
-  &.selected,
-  &[data-state="selected"] {
-    background-color: var(--button-background-danger-secondary-selected);
-    color: var(--button-background-danger-primary-selected);
-  }
-
-  &:active,
-  &[data-state="active"] {
-    background-color: var(--button-background-danger-secondary-pressed);
-    color: var(--button-background-danger-primary-pressed);
-  }
-
-  &:disabled,
-  &[data-state="disabled"] {
-    background-color: var(--button-background-transparent-default);
-    border-color: var(--border-neutral-secondary);
-    color: var(--text-default-disabled);
-  }
-}
-
-/* Destructive Transparent Button */
-.nds-btn-destructive.nds-btn-transparent {
-
-  &,
-  &[data-state="default"] {
-    background-color: var(--button-background-transparent-default);
-    color: var(--button-background-danger-primary-default);
-  }
-
-  &:hover,
-  &[data-state="hover"] {
-    background-color: var(--button-background-transparent-hovered);
-    color: var(--button-background-danger-primary-hovered);
-  }
-
-  &.active,
-  &.selected,
-  &[data-state="selected"] {
-    background-color: var(--button-background-transparent-selected);
-    color: var(--button-background-danger-primary-selected);
-  }
-
-  &:active,
-  &[data-state="active"] {
-    background-color: var(--button-background-transparent-pressed);
-    color: var(--button-background-danger-primary-pressed);
-  }
-
-  &:disabled,
-  &[data-state="disabled"] {
-    background-color: var(--button-background-transparent-default);
-    color: var(--text-default-disabled);
-  }
-}
-
-/* Destructive Secondary Solid Button */
-.nds-btn-destructive.nds-btn-secondary {
-
-  &,
-  &[data-state="default"] {
-    background-color: var(--button-background-danger-secondary-default);
-    color: var(--button-background-danger-primary-default);
-  }
-
-  &:hover,
-  &[data-state="hover"] {
-    background-color: var(--button-background-danger-secondary-hovered);
-    color: var(--button-background-danger-primary-hovered);
-  }
-
-  &.active,
-  &.selected,
-  &[data-state="selected"] {
-    background-color: var(--button-background-danger-secondary-selected);
-    color: var(--button-background-danger-primary-selected);
-  }
-
-  &:active,
-  &[data-state="active"] {
-    background-color: var(--button-background-danger-secondary-pressed);
-    color: var(--button-background-danger-primary-pressed);
-  }
-
-  &:disabled,
-  &[data-state="disabled"] {
-    background-color: var(--background-disabled);
-    color: var(--text-default-disabled);
-  }
-}
-
-/* Destructive Subtle Button */
-.nds-btn-destructive.nds-btn-subtle {
-
-  &,
-  &[data-state="default"] {
-    color: var(--button-background-danger-primary-default);
-  }
-
-  &:hover,
-  &[data-state="hover"] {
-    background-color: var(--button-background-danger-secondary-default);
-    color: var(--button-background-danger-primary-hovered);
-  }
-
-  &.active,
-  &.selected,
-  &[data-state="selected"] {
-    background-color: var(--button-background-danger-secondary-selected);
-    color: var(--button-background-danger-primary-selected);
-  }
-
-  &:active,
-  &[data-state="active"] {
-    background-color: var(--button-background-danger-secondary-hovered);
-    color: var(--button-background-danger-primary-pressed);
-  }
-
-  &:disabled,
-  &[data-state="disabled"] {
-    color: var(--text-default-disabled);
-  }
-}
-
-// ==============================================
-// ON-COLOR DESTRUCTIVE VARIANTS
-// ==============================================
-
-.nds-btn-oncolor.nds-btn-destructive {
-  &.nds-btn-primary {
+  /* Destructive Primary Button */
+  &.nds-destructive.nds-primary {
     @include btn-variant(var(--button-background-danger-primary-default),
       var(--text-oncolor-primary),
       var(--button-background-danger-primary-hovered),
@@ -561,12 +408,13 @@ Available sizes:
       var(--text-default-disabled));
   }
 
-  &.nds-btn-secondary-outline {
+  /* Destructive Secondary Outline Button */
+  &.nds-destructive.nds-secondary-outline {
 
     &,
     &[data-state="default"] {
+      color: var(--button-background-danger-primary-default);
       border-color: var(--border-error-light);
-      color: var(--button-label-danger-primary-default-oncolor);
     }
 
     &:hover,
@@ -596,50 +444,82 @@ Available sizes:
     }
   }
 
-  &.nds-btn-transparent {
+  /* Destructive Transparent Button */
+  &.nds-destructive.nds-transparent {
 
     &,
     &[data-state="default"] {
-      color: var(--button-label-danger-primary-default-oncolor);
+      background-color: var(--button-background-transparent-default);
+      color: var(--button-background-danger-primary-default);
     }
 
     &:hover,
     &[data-state="hover"] {
-      color: var(--button-label-danger-primary-hovered-oncolor);
+      background-color: var(--button-background-transparent-hovered);
+      color: var(--button-background-danger-primary-hovered);
     }
 
     &.active,
     &.selected,
     &[data-state="selected"] {
-      color: var(--button-label-danger-primary-selected-oncolor);
+      background-color: var(--button-background-transparent-selected);
+      color: var(--button-background-danger-primary-selected);
     }
 
     &:active,
     &[data-state="active"] {
-      color: var(--button-label-danger-primary-pressed-oncolor);
+      background-color: var(--button-background-transparent-pressed);
+      color: var(--button-background-danger-primary-pressed);
     }
 
     &:disabled,
     &[data-state="disabled"] {
+      background-color: var(--button-background-transparent-default);
       color: var(--text-default-disabled);
     }
   }
 
-  &.nds-btn-secondary {
-    @include btn-variant(var(--button-background-danger-secondary-default),
-      var(--button-background-danger-primary-default),
-      var(--button-background-danger-secondary-hovered),
-      var(--button-background-danger-secondary-pressed),
-      var(--button-background-danger-secondary-selected),
-      var(--background-disabled),
-      var(--text-default-disabled));
-  }
-
-  &.nds-btn-subtle {
+  /* Destructive Secondary Solid Button */
+  &.nds-destructive.nds-secondary {
 
     &,
     &[data-state="default"] {
-      color: var(--button-label-danger-primary-default-oncolor);
+      background-color: var(--button-background-danger-secondary-default);
+      color: var(--button-background-danger-primary-default);
+    }
+
+    &:hover,
+    &[data-state="hover"] {
+      background-color: var(--button-background-danger-secondary-hovered);
+      color: var(--button-background-danger-primary-hovered);
+    }
+
+    &.active,
+    &.selected,
+    &[data-state="selected"] {
+      background-color: var(--button-background-danger-secondary-selected);
+      color: var(--button-background-danger-primary-selected);
+    }
+
+    &:active,
+    &[data-state="active"] {
+      background-color: var(--button-background-danger-secondary-pressed);
+      color: var(--button-background-danger-primary-pressed);
+    }
+
+    &:disabled,
+    &[data-state="disabled"] {
+      background-color: var(--background-disabled);
+      color: var(--text-default-disabled);
+    }
+  }
+
+  /* Destructive Subtle Button */
+  &.nds-destructive.nds-subtle {
+
+    &,
+    &[data-state="default"] {
+      color: var(--button-background-danger-primary-default);
     }
 
     &:hover,
@@ -666,205 +546,326 @@ Available sizes:
       color: var(--text-default-disabled);
     }
   }
-}
 
-// ==============================================
-// BUTTON FEATURES & MODIFIERS
-// ==============================================
+  // ==============================================
+  // ON-COLOR DESTRUCTIVE VARIANTS
+  // ==============================================
 
-/* Button Layout Modifiers */
-.nds-btn-lead-icon {
-  flex-direction: row;
-}
-
-.nds-btn-trail-icon {
-  flex-direction: row-reverse;
-}
-
-.nds-btn-full {
-  width: 100%;
-  justify-content: center !important;
-
-  .label {
-    text-align: center !important;
-  }
-}
-
-/* Icon Visibility Controls */
-.nds-btn-icon-only .label {
-  display: none;
-}
-
-.nds-btn-label-only i {
-  display: none;
-}
-
-/* Icon-Only Button Configurations */
-.nds-btn-icon-only {
-  aspect-ratio: 1;
-  padding: 0;
-  justify-content: center;
-
-  &.nds-btn-sm {
-    width: 24px;
-  }
-
-  &.nds-btn-md {
-    width: 32px;
-  }
-
-  &.nds-btn-lg {
-    width: 40px;
-  }
-
-  &.nds-btn-xl {
-    width: 48px;
-  }
-
-  // Menu button exceptions
-  &.nds-btn-menu {
-    width: fit-content;
-
-    &.nds-btn-sm {
-      padding: 0 var(--spacing-sm);
+  &.nds-oncolor.nds-destructive {
+    &.nds-primary {
+      @include btn-variant(var(--button-background-danger-primary-default),
+        var(--text-oncolor-primary),
+        var(--button-background-danger-primary-hovered),
+        var(--button-background-danger-primary-pressed),
+        var(--button-background-danger-primary-selected),
+        var(--background-disabled),
+        var(--text-default-disabled));
     }
 
-    &.nds-btn-md {
-      padding: 0 var(--spacing-md);
+    &.nds-secondary-outline {
+
+      &,
+      &[data-state="default"] {
+        border-color: var(--border-error-light);
+        color: var(--button-label-danger-primary-default-oncolor);
+      }
+
+      &:hover,
+      &[data-state="hover"] {
+        background-color: var(--button-background-danger-secondary-hovered);
+        color: var(--button-background-danger-primary-hovered);
+      }
+
+      &.active,
+      &.selected,
+      &[data-state="selected"] {
+        background-color: var(--button-background-danger-secondary-selected);
+        color: var(--button-background-danger-primary-selected);
+      }
+
+      &:active,
+      &[data-state="active"] {
+        background-color: var(--button-background-danger-secondary-pressed);
+        color: var(--button-background-danger-primary-pressed);
+      }
+
+      &:disabled,
+      &[data-state="disabled"] {
+        background-color: var(--button-background-transparent-default);
+        border-color: var(--border-neutral-secondary);
+        color: var(--text-default-disabled);
+      }
     }
 
-    &.nds-btn-lg {
-      padding: 0 var(--spacing-lg);
+    &.nds-transparent {
+
+      &,
+      &[data-state="default"] {
+        color: var(--button-label-danger-primary-default-oncolor);
+      }
+
+      &:hover,
+      &[data-state="hover"] {
+        color: var(--button-label-danger-primary-hovered-oncolor);
+      }
+
+      &.active,
+      &.selected,
+      &[data-state="selected"] {
+        color: var(--button-label-danger-primary-selected-oncolor);
+      }
+
+      &:active,
+      &[data-state="active"] {
+        color: var(--button-label-danger-primary-pressed-oncolor);
+      }
+
+      &:disabled,
+      &[data-state="disabled"] {
+        color: var(--text-default-disabled);
+      }
     }
 
-    &.nds-btn-xl {
-      padding: 0 var(--spacing-xl);
+    &.nds-secondary {
+      @include btn-variant(var(--button-background-danger-secondary-default),
+        var(--button-background-danger-primary-default),
+        var(--button-background-danger-secondary-hovered),
+        var(--button-background-danger-secondary-pressed),
+        var(--button-background-danger-secondary-selected),
+        var(--background-disabled),
+        var(--text-default-disabled));
+    }
+
+    &.nds-subtle {
+
+      &,
+      &[data-state="default"] {
+        color: var(--button-label-danger-primary-default-oncolor);
+      }
+
+      &:hover,
+      &[data-state="hover"] {
+        background-color: var(--button-background-danger-secondary-default);
+        color: var(--button-background-danger-primary-hovered);
+      }
+
+      &.active,
+      &.selected,
+      &[data-state="selected"] {
+        background-color: var(--button-background-danger-secondary-selected);
+        color: var(--button-background-danger-primary-selected);
+      }
+
+      &:active,
+      &[data-state="active"] {
+        background-color: var(--button-background-danger-secondary-hovered);
+        color: var(--button-background-danger-primary-pressed);
+      }
+
+      &:disabled,
+      &[data-state="disabled"] {
+        color: var(--text-default-disabled);
+      }
     }
   }
-}
 
-/* Icon Sizing */
-.nds-btn i.hgi {
-  flex-shrink: 0;
-  font-size: 1.2em;
+  // ==============================================
+  // BUTTON FEATURES & MODIFIERS
+  // ==============================================
 
-  .nds-btn-sm & {
-    font-size: 1.1em;
+  /* Button Layout Modifiers */
+  &.nds-lead-icon {
+    flex-direction: row;
   }
 
-  .nds-btn-lg & {
-    font-size: 1.3em;
+  &.nds-trail-icon {
+    flex-direction: row-reverse;
   }
 
-  .nds-btn-xl & {
-    font-size: 1.4em;
+  &.nds-full {
+    width: 100%;
+    justify-content: center !important;
+
+    .label {
+      text-align: center !important;
+    }
   }
-}
 
-/* Button Groups */
-.nds-btn-group {
-  display: inline-flex;
-  border-radius: var(--radius-md);
-  overflow: hidden;
+  /* Icon Visibility Controls */
+  &.nds-icon-only .label {
+    display: none;
+  }
 
-  .nds-btn {
-    border-radius: 0;
-    border-right-width: 0;
+  &.nds-label-only i {
+    display: none;
+  }
+
+  /* Icon-Only Button Configurations */
+  &.nds-icon-only {
+    aspect-ratio: 1;
+    padding: 0;
+    justify-content: center;
+
+    &.nds-sm {
+      width: 24px;
+    }
+
+    &.nds-md {
+      width: 32px;
+    }
+
+    &.nds-lg {
+      width: 40px;
+    }
+
+    &.nds-xl {
+      width: 48px;
+    }
+
+    // Menu button exceptions
+    &.nds-menu-btn {
+      width: fit-content;
+
+      &.nds-sm {
+        padding: 0 var(--spacing-sm);
+      }
+
+      &.nds-md {
+        padding: 0 var(--spacing-md);
+      }
+
+      &.nds-lg {
+        padding: 0 var(--spacing-lg);
+      }
+
+      &.nds-xl {
+        padding: 0 var(--spacing-xl);
+      }
+    }
+  }
+
+  /* Icon Sizing */
+  &.nds-btn i.hgi {
+    flex-shrink: 0;
+    font-size: 1.2em;
+
+    .nds-sm & {
+      font-size: 1.1em;
+    }
+
+    .nds-lg & {
+      font-size: 1.3em;
+    }
+
+    .nds-xl & {
+      font-size: 1.4em;
+    }
+  }
+
+  /* Button Groups */
+  .nds-group {
+    display: inline-flex;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+
+    .nds-btn {
+      border-radius: 0;
+      border-right-width: 0;
+      position: relative;
+      z-index: 1;
+
+      &:first-child {
+        border-top-right-radius: var(--radius-md);
+        border-bottom-right-radius: var(--radius-md);
+      }
+
+      &:last-child {
+        border-top-left-radius: var(--radius-md);
+        border-bottom-left-radius: var(--radius-md);
+        border-right-width: 1px;
+      }
+
+      &:hover,
+      &:focus,
+      &.nds-active {
+        z-index: 2;
+        border-right-width: 1px;
+      }
+    }
+  }
+
+  // ==============================================
+  // LOADING STATES & ANIMATIONS
+  // ==============================================
+
+  /* Base Loading State */
+  &.nds-loading {
     position: relative;
-    z-index: 1;
+    pointer-events: none;
+    color: transparent !important;
 
-    &:first-child {
-      border-top-right-radius: var(--radius-md);
-      border-bottom-right-radius: var(--radius-md);
-    }
-
-    &:last-child {
-      border-top-left-radius: var(--radius-md);
-      border-bottom-left-radius: var(--radius-md);
-      border-right-width: 1px;
-    }
-
-    &:hover,
-    &:focus,
-    &.nds-btn-active {
-      z-index: 2;
-      border-right-width: 1px;
-    }
-  }
-}
-
-// ==============================================
-// LOADING STATES & ANIMATIONS
-// ==============================================
-
-/* Base Loading State */
-.nds-btn-loading {
-  position: relative;
-  pointer-events: none;
-  color: transparent !important;
-
-  // Standard button loading states
-  &.nds-btn-primary,
-  &.nds-btn-neutral {
-    @include btn-loading-spinner(var(--text-oncolor-primary), var(--alpha-white-20));
-  }
-
-  &.nds-btn-secondary,
-  &.nds-btn-secondary-outline,
-  &.nds-btn-subtle {
-    @include btn-loading-spinner(var(--text-default), var(--alpha-black-10));
-  }
-
-  &.nds-btn-transparent {
-    @include btn-loading-spinner(var(--colors-primary-sa-flag-600-primary), var(--alpha-black-10));
-  }
-
-  // Destructive button loading states
-  &.nds-btn-destructive {
-    &.nds-btn-primary {
+    // Standard button loading states
+    &.nds-primary,
+    &.nds-neutral {
       @include btn-loading-spinner(var(--text-oncolor-primary), var(--alpha-white-20));
     }
 
-    &.nds-btn-secondary,
-    &.nds-btn-secondary-outline,
-    &.nds-btn-subtle,
-    &.nds-btn-transparent {
-      @include btn-loading-spinner(var(--button-background-danger-primary-default), var(--alpha-black-10));
-    }
-  }
-
-  // On-color button loading states
-  &.nds-btn-oncolor {
-
-    &.nds-btn-primary,
-    &.nds-btn-neutral {
-      @include btn-loading-spinner(var(--text-default), var(--alpha-white-20));
+    &.nds-secondary,
+    &.nds-secondary-outline,
+    &.nds-subtle {
+      @include btn-loading-spinner(var(--text-default), var(--alpha-black-10));
     }
 
-    &.nds-btn-secondary,
-    &.nds-btn-subtle,
-    &.nds-btn-transparent {
-      @include btn-loading-spinner(var(--text-oncolor-primary), var(--alpha-white-20));
+    &.nds-transparent {
+      @include btn-loading-spinner(var(--colors-primary-sa-flag-600-primary), var(--alpha-black-10));
     }
 
-    &.nds-btn-secondary-outline {
-      @include btn-loading-spinner(var(--colors-base-white), var(--alpha-white-20));
+    // Destructive button loading states
+    &.nds-destructive {
+      &.nds-primary {
+        @include btn-loading-spinner(var(--text-oncolor-primary), var(--alpha-white-20));
+      }
+
+      &.nds-secondary,
+      &.nds-secondary-outline,
+      &.nds-subtle,
+      &.nds-transparent {
+        @include btn-loading-spinner(var(--button-background-danger-primary-default), var(--alpha-black-10));
+      }
     }
 
-    // Destructive on-color loading states
-    &.nds-btn-destructive {
+    // On-color button loading states
+    &.nds-oncolor {
 
-      &.nds-btn-primary,
-      &.nds-btn-secondary,
-      &.nds-btn-subtle,
-      &.nds-btn-transparent,
-      &.nds-btn-secondary-outline {
+      &.nds-primary,
+      &.nds-neutral {
+        @include btn-loading-spinner(var(--text-default), var(--alpha-white-20));
+      }
+
+      &.nds-secondary,
+      &.nds-subtle,
+      &.nds-transparent {
+        @include btn-loading-spinner(var(--text-oncolor-primary), var(--alpha-white-20));
+      }
+
+      &.nds-secondary-outline {
         @include btn-loading-spinner(var(--colors-base-white), var(--alpha-white-20));
+      }
+
+      // Destructive on-color loading states
+      &.nds-destructive {
+
+        &.nds-primary,
+        &.nds-secondary,
+        &.nds-subtle,
+        &.nds-transparent,
+        &.nds-secondary-outline {
+          @include btn-loading-spinner(var(--colors-base-white), var(--alpha-white-20));
+        }
       }
     }
   }
 }
-
 
 // ==============================================
 // ACCESSIBILITY & MEDIA QUERIES
