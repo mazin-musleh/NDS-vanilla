@@ -803,6 +803,156 @@ direction: ltr
             </div>
           </div>
         </div>
+
+        <!-- Switch -->
+        <div class="nds-demo-card">
+          <div class="demo-header">
+            <div class="demo-label">Switch</div>
+            <div class="demo-action">
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='["nds-lg", ".nds-switch-container", "sizeToggle"]'>
+                <span class="label">LG</span>
+              </button>
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
+                data-toggler='["nds-md", ".nds-switch-container", "sizeToggle"]'>
+                <span class="label">MD</span>
+              </button>
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='["nds-sm", ".nds-switch-container", "sizeToggle"]'>
+                <span class="label">SM</span>
+              </button>
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='["disabled", "input.nds-switch-input", "stateToggle", "attr"]'>
+                <span class="label">Disabled</span>
+              </button>
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='["rowView", ".nds-switch-group", "layoutToggle"]'>
+                <span class="label">RowView</span>
+              </button>
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                <span class="label">Remove bg</span>
+              </button>
+            </div>
+          </div>
+          <div class="demo-container">
+            <div class="state-demo">
+              <fieldset>
+                <legend class="label">Switch Group</legend>
+                <div class="nds-switch-group">
+                  <div class="nds-form-container nds-switch-container">
+                    <div class="nds-form-header">
+                      <label for="switch1">
+                        <span class="label">Neutral Switch</span>
+                      </label>
+                    </div>
+                    <div class="nds-form-control">
+                      <div class="nds-switch">
+                        <input type="checkbox" id="switch1" name="switchGroup" value="option1" class="nds-switch-input">
+                        <div class="nds-switch-track">
+                          <div class="nds-switch-thumb"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="nds-form-container nds-switch-container">
+                    <div class="nds-form-header">
+                      <label for="switch2">
+                        <span class="label">Primary Switch</span>
+                        <span class="info">When a selection needs a further detailed explanation, it goes here.</span>
+                      </label>
+                    </div>
+                    <div class="nds-form-control">
+                      <div class="nds-switch primary">
+                        <input type="checkbox" id="switch2" name="switchGroup" value="option2" checked
+                          class="nds-switch-input">
+                        <div class="nds-switch-track">
+                          <div class="nds-switch-thumb"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="nds-form-container nds-switch-container">
+                    <div class="nds-form-header">
+                      <label for="switch3">
+                        <span class="label">Disabled Switch</span>
+                      </label>
+                    </div>
+                    <div class="nds-form-control">
+                      <div class="nds-switch disabled">
+                        <input type="checkbox" id="switch3" name="switchGroup" value="option3" disabled
+                          class="nds-switch-input">
+                        <div class="nds-switch-track">
+                          <div class="nds-switch-thumb"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+          <div class="nds-tabs nds-code withDivider">
+            <div class="nds-tab-list-container">
+              <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                  aria-controls="panel-switch-1" id="tab-switch-1">
+                  <span class="nds-tab-label">HTML</span>
+                </button>
+                <button class="nds-btn nds-subtle nds-tab showMore"><i
+                    class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                </button>
+              </nav>
+            </div>
+            <div class="nds-tab-content">
+              <div class="nds-tab-panel code-example" role="tabpanel" id="panel-switch-1"
+                aria-labelledby="tab-switch-1">
+                <div class="nds-code-action">
+                  <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                    <i class="hgi hgi-stroke hgi-copy-01"></i>
+                  </button>
+                </div>
+                <code class="lang-html code">
+                  <fieldset class="nds-switch-group">
+                    <legend class="label">Switch Group</legend>
+                    <div class="nds-form-container nds-switch-container">
+                      <div class="nds-form-header">
+                        <label for="switch1">
+                          <span class="label">Neutral Switch</span>
+                        </label>
+                      </div>
+                      <div class="nds-form-control">
+                        <div class="nds-switch">
+                          <input type="checkbox" id="switch1" name="switchGroup" value="option1" class="nds-switch-input">
+                          <div class="nds-switch-track">
+                            <div class="nds-switch-thumb"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="nds-form-container nds-switch-container">
+                      <div class="nds-form-header">
+                        <label for="switch2">
+                          <span class="label">Primary Switch</span>
+                          <span class="info">When a selection needs a further detailed explanation, it goes here.</span>
+                        </label>
+                      </div>
+                      <div class="nds-form-control">
+                        <div class="nds-switch primary">
+                          <input type="checkbox" id="switch2" name="switchGroup" value="option2" checked class="nds-switch-input">
+                          <div class="nds-switch-track">
+                            <div class="nds-switch-thumb"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </fieldset>
+                </code>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="nds-demo-card">
           <div class="demo-header">
             <div class="demo-label">File Upload</div>
@@ -1502,154 +1652,7 @@ document.getElementById('resetButton').addEventListener('click', () => {
           </div>
         </div>
 
-        <!-- Switch -->
-        <div class="nds-demo-card">
-          <div class="demo-header">
-            <div class="demo-label">Switch</div>
-            <div class="demo-action">
-              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["nds-lg", ".nds-switch-container", "sizeToggle"]'>
-                <span class="label">LG</span>
-              </button>
-              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
-                data-toggler='["nds-md", ".nds-switch-container", "sizeToggle"]'>
-                <span class="label">MD</span>
-              </button>
-              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["nds-sm", ".nds-switch-container", "sizeToggle"]'>
-                <span class="label">SM</span>
-              </button>
-              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["disabled", "input.nds-switch-input", "stateToggle", "attr"]'>
-                <span class="label">Disabled</span>
-              </button>
-              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["rowView", ".nds-switch-group", "layoutToggle"]'>
-                <span class="label">RowView</span>
-              </button>
-              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                <span class="label">Remove bg</span>
-              </button>
-            </div>
-          </div>
-          <div class="demo-container">
-            <div class="state-demo">
-              <fieldset>
-                <legend class="label">Switch Group</legend>
-                <div class="nds-switch-group">
-                  <div class="nds-form-container nds-switch-container">
-                    <div class="nds-form-header">
-                      <label for="switch1">
-                        <span class="label">Neutral Switch</span>
-                      </label>
-                    </div>
-                    <div class="nds-form-control">
-                      <div class="nds-switch">
-                        <input type="checkbox" id="switch1" name="switchGroup" value="option1" class="nds-switch-input">
-                        <div class="nds-switch-track">
-                          <div class="nds-switch-thumb"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="nds-form-container nds-switch-container">
-                    <div class="nds-form-header">
-                      <label for="switch2">
-                        <span class="label">Primary Switch</span>
-                        <span class="info">When a selection needs a further detailed explanation, it goes here.</span>
-                      </label>
-                    </div>
-                    <div class="nds-form-control">
-                      <div class="nds-switch primary">
-                        <input type="checkbox" id="switch2" name="switchGroup" value="option2" checked
-                          class="nds-switch-input">
-                        <div class="nds-switch-track">
-                          <div class="nds-switch-thumb"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="nds-form-container nds-switch-container">
-                    <div class="nds-form-header">
-                      <label for="switch3">
-                        <span class="label">Disabled Switch</span>
-                      </label>
-                    </div>
-                    <div class="nds-form-control">
-                      <div class="nds-switch disabled">
-                        <input type="checkbox" id="switch3" name="switchGroup" value="option3" disabled
-                          class="nds-switch-input">
-                        <div class="nds-switch-track">
-                          <div class="nds-switch-thumb"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </fieldset>
-            </div>
-          </div>
-          <div class="nds-tabs nds-code withDivider">
-            <div class="nds-tab-list-container">
-              <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                  aria-controls="panel-switch-1" id="tab-switch-1">
-                  <span class="nds-tab-label">HTML</span>
-                </button>
-                <button class="nds-btn nds-subtle nds-tab showMore"><i
-                    class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
-                </button>
-              </nav>
-            </div>
-            <div class="nds-tab-content">
-              <div class="nds-tab-panel code-example" role="tabpanel" id="panel-switch-1"
-                aria-labelledby="tab-switch-1">
-                <div class="nds-code-action">
-                  <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                  </button>
-                </div>
-                <code class="lang-html code">
-                  <fieldset class="nds-switch-group">
-                    <legend class="label">Switch Group</legend>
-                    <div class="nds-form-container nds-switch-container">
-                      <div class="nds-form-header">
-                        <label for="switch1">
-                          <span class="label">Neutral Switch</span>
-                        </label>
-                      </div>
-                      <div class="nds-form-control">
-                        <div class="nds-switch">
-                          <input type="checkbox" id="switch1" name="switchGroup" value="option1" class="nds-switch-input">
-                          <div class="nds-switch-track">
-                            <div class="nds-switch-thumb"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="nds-form-container nds-switch-container">
-                      <div class="nds-form-header">
-                        <label for="switch2">
-                          <span class="label">Primary Switch</span>
-                          <span class="info">When a selection needs a further detailed explanation, it goes here.</span>
-                        </label>
-                      </div>
-                      <div class="nds-form-control">
-                        <div class="nds-switch primary">
-                          <input type="checkbox" id="switch2" name="switchGroup" value="option2" checked class="nds-switch-input">
-                          <div class="nds-switch-track">
-                            <div class="nds-switch-thumb"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </fieldset>
-                </code>
-              </div>
-            </div>
-          </div>
-        </div>
+
 
         <!-- add new demo card here -->
       </div>

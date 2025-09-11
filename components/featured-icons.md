@@ -12,7 +12,7 @@ direction: ltr
 <section id="featuredIconsOverview" class="nds-content-section">
     <div class="nds-section-content-container">
         <div class="nds-section-head">
-            <h2 class="nds-section-title">Six Featured Icon Styles</h2>
+            <h2 class="nds-section-title">Featured Icon Styles</h2>
             <p class="nds-section-description">All featured icon styles available in the National Design System</p>
         </div>
         <div class="nds-section-content">
@@ -409,6 +409,345 @@ direction: ltr
                                 data-toggler='["nds-xl", ".nds-featured-icon", "iconSize"]'>
                                 <span class="label">XL</span>
                             </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                                <span class="label">Remove bg</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <span class="nds-featured-icon nds-neutral">
+                                <i class="hgi hgi-stroke hgi-help-circle icon"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="nds-tabs nds-code withDivider">
+                        <div class="nds-tab-list-container">
+                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-neutral-1" id="tab-neutral-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                            </nav>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-neutral-1"
+                                aria-labelledby="tab-neutral-1">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <code class="lang-html code">
+                                    <span class="nds-featured-icon nds-neutral">
+                                      <i class="hgi hgi-stroke hgi-help-circle icon"></i>
+                                    </span>
+                                </code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Icons Overview -->
+<section id="feedbackIconsOverview" class="nds-content-section">
+    <div class="nds-section-content-container">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Feedback Icon Styles</h2>
+            <p class="nds-section-description">All Feedback icon styles available in the National Design System</p>
+        </div>
+        <div class="nds-section-content">
+            <div class="featured-icons-showcase">
+
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Success Feedback Icon</div>
+                        <div class="demo-action">
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-ring", ".nds-feedback-icon", "ring"]'>
+                                <span class="label">Ring</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-iconOnly", ".nds-feedback-icon", "iconVariant"]'>
+                                <span class="label">Icon Only</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-dark", ".nds-featured-icon", "iconVariant"]'>
+                                <span class="label">Dark</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-sm", ".nds-featured-icon", "iconSize"]'>
+                                <span class="label">SM</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-md", ".nds-featured-icon", "iconSize"]'>
+                                <span class="label">MD</span>
+                            </button>
+
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                                <span class="label">Remove bg</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <span class="nds-featured-icon nds-success">
+                                <i class="hgi hgi-stroke hgi-checkmark-circle-02 icon"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="nds-tabs nds-code withDivider">
+                        <div class="nds-tab-list-container">
+                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-success-1" id="tab-success-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                            </nav>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-success-1"
+                                aria-labelledby="tab-success-1">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <code class="lang-html code">
+                                    <span class="nds-featured-icon nds-success">
+                                      <i class="hgi hgi-stroke hgi-checkmark-circle-02 icon"></i>
+                                    </span>
+                                </code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Info Feedback Icon</div>
+                        <div class="demo-action">
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-ring", ".nds-feedback-icon", "ring"]'>
+                                <span class="label">Ring</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-outline", ".nds-featured-icon", "iconVariant"]'>
+                                <span class="label">Outline</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-dark", ".nds-featured-icon", "iconVariant"]'>
+                                <span class="label">Dark</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-sm", ".nds-featured-icon", "iconSize"]'>
+                                <span class="label">SM</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-md", ".nds-featured-icon", "iconSize"]'>
+                                <span class="label">MD</span>
+                            </button>
+
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                                <span class="label">Remove bg</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <span class="nds-featured-icon nds-info">
+                                <i class="hgi hgi-stroke hgi-information-circle icon"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="nds-tabs nds-code withDivider">
+                        <div class="nds-tab-list-container">
+                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-info-1" id="tab-info-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                            </nav>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-info-1"
+                                aria-labelledby="tab-info-1">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <code class="lang-html code">
+                                    <span class="nds-featured-icon nds-info">
+                                      <i class="hgi hgi-stroke hgi-information-circle icon"></i>
+                                    </span>
+                                </code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Warning Feedback Icon</div>
+                        <div class="demo-action">
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-ring", ".nds-feedback-icon", "ring"]'>
+                                <span class="label">Ring</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-outline", ".nds-featured-icon", "iconVariant"]'>
+                                <span class="label">Outline</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-dark", ".nds-featured-icon", "iconVariant"]'>
+                                <span class="label">Dark</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-sm", ".nds-featured-icon", "iconSize"]'>
+                                <span class="label">SM</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-md", ".nds-featured-icon", "iconSize"]'>
+                                <span class="label">MD</span>
+                            </button>
+
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                                <span class="label">Remove bg</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <span class="nds-featured-icon nds-warning">
+                                <i class="hgi hgi-stroke hgi-alert-02 icon"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="nds-tabs nds-code withDivider">
+                        <div class="nds-tab-list-container">
+                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-warning-1" id="tab-warning-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                            </nav>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-warning-1"
+                                aria-labelledby="tab-warning-1">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <code class="lang-html code">
+                                    <span class="nds-featured-icon nds-warning">
+                                      <i class="hgi hgi-stroke hgi-alert-02 icon"></i>
+                                    </span>
+                                </code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Error Feedback Icon</div>
+                        <div class="demo-action">
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-ring", ".nds-feedback-icon", "ring"]'>
+                                <span class="label">Ring</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-outline", ".nds-featured-icon", "iconVariant"]'>
+                                <span class="label">Outline</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-dark", ".nds-featured-icon", "iconVariant"]'>
+                                <span class="label">Dark</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-sm", ".nds-featured-icon", "iconSize"]'>
+                                <span class="label">SM</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-md", ".nds-featured-icon", "iconSize"]'>
+                                <span class="label">MD</span>
+                            </button>
+
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                                <span class="label">Remove bg</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <span class="nds-featured-icon nds-error">
+                                <i class="hgi hgi-stroke hgi-alert-circle icon"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="nds-tabs nds-code withDivider">
+                        <div class="nds-tab-list-container">
+                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-error-1" id="tab-error-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                            </nav>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-error-1"
+                                aria-labelledby="tab-error-1">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <code class="lang-html code">
+                                    <span class="nds-featured-icon nds-error">
+                                      <i class="hgi hgi-stroke hgi-alert-circle icon"></i>
+                                    </span>
+                                </code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Neutral Feedback Icon</div>
+                        <div class="demo-action">
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-ring", ".nds-feedback-icon", "ring"]'>
+                                <span class="label">Ring</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-outline", ".nds-featured-icon", "iconVariant"]'>
+                                <span class="label">Outline</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-dark", ".nds-featured-icon", "iconVariant"]'>
+                                <span class="label">Dark</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-sm", ".nds-featured-icon", "iconSize"]'>
+                                <span class="label">SM</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-md", ".nds-featured-icon", "iconSize"]'>
+                                <span class="label">MD</span>
+                            </button>
+
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                                 <span class="label">Remove bg</span>

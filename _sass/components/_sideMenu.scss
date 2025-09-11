@@ -65,7 +65,7 @@
 
 }
 
-.nds-sideMenu .nds-indicator {
+.nds-sideMenu .topLevel .nds-btn.nds-indicator {
     --button-indicator-size: 5px;
     @include btn-indicator('v');
 }
@@ -294,7 +294,7 @@
         }
     }
 
-    @include ltr {
+/*     @include ltr {
         .nds-sideMenu .has-sub ul {
             margin: var(--spacing-md) 0px 0 28px;
             padding-right: 0;
@@ -319,7 +319,7 @@
             margin-left: 0;
             margin-left: -4px;
         }
-    }
+    } */
 
     @include ltr {
         .nds-sideMenu .topLevel>li.redirect.external>a::after {

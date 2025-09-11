@@ -353,10 +353,11 @@ fieldset {
         }
 
         >* {
-            --nds-height: 38px;
+            --nds-input-size: 38px;
+            --nds-btn-height: var(--nds-input-size);
             position: relative;
-            width: var(--nds-height);
-            height: var(--nds-height);
+            width: var(--nds-input-size);
+            height: var(--nds-input-size);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -392,10 +393,10 @@ fieldset {
         }
 
         >* {
-            --nds-height: 38px;
+            --nds-input-size: 38px;
             position: relative;
-            width: var(--nds-height);
-            height: var(--nds-height);
+            width: var(--nds-input-size);
+            height: var(--nds-input-size);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1058,7 +1059,7 @@ fieldset {
             gap: var(--spacing-xs);
 
             .nds-btn {
-                --nds-height: 24px;
+                --nds-input-size: 24px;
                 --nds-width: 24px;
             }
 
