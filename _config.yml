@@ -1,22 +1,21 @@
 title: National Design System
 description: The National Design System provides comprehensive design guidelines, components, and resources for creating consistent and accessible digital experiences across government services in Saudi Arabia.
-baseurl: ""
-url: ""
+baseurl: "/_site"
 
 # Jekyll server settings
 port: 4002
 
 # Brand Logo
-brandLogo: assets/img/dga-logo.svg
-headerBrandW: 132
-headerBrandH: 42
+brandLogo: /assets/img/dga-logo.svg
+headerBrandW: 151
+headerBrandH: 48
 
 # Brand Name
 #brandName: "National Design System" #comment this to remove text from brand
 brandNameColor: var(--colors-neutral-500)
 
 # Hero Settings
-hero_image: assets/img/riyadhcenter.webp
+hero_image: /assets/img/riyadhcenter.webp
 
 
 # Build settings
@@ -53,6 +52,7 @@ exclude:
   - .sass-cache
   - .jekyll-cache
   - CLAUDE.md
+  - GPT.md
   - package.json
   - package-lock.json
   - notes.txt

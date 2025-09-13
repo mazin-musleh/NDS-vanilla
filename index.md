@@ -22,23 +22,6 @@ hero_image_pos: 50% 10%
                 <i class="hgi hgi-stroke hgi-arrow-right" aria-hidden="true"></i>
             </a>
 
-            <div class="nds-form-container nds-switch-container">
-                <div class="nds-form-header">
-                    <label for="switch1">
-                        <span class="label">Neutral Switch</span>
-                    </label>
-                </div>
-                <div class="nds-form-control">
-                    <div class="nds-switch">
-                        <input type="checkbox" id="switch1" name="switchGroup" value="option1" class="nds-switch-input">
-                        <div class="nds-switch-track">
-                            <div class="nds-switch-thumb">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
 </section>

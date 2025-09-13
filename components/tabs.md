@@ -281,15 +281,15 @@ direction: ltr
                                 <p>Your main dashboard with key metrics and quick access to important features.</p>
                                 <div class="dashboard-stats">
                                     <div class="stat-card">
-                                        <div class="stat-number">2,847</div>
+                                        <div class="stat-number nds-number-format nds-counter-value">2,847</div>
                                         <div class="stat-label">Total Applications</div>
                                     </div>
                                     <div class="stat-card">
-                                        <div class="stat-number">156</div>
+                                        <div class="stat-number nds-number-format nds-counter-value">156</div>
                                         <div class="stat-label">Pending Reviews</div>
                                     </div>
                                     <div class="stat-card">
-                                        <div class="stat-number">98.2%</div>
+                                        <div class="stat-number"><span class="nds-counter-value">98</span><span class="suffix">.2%</span></div>
                                         <div class="stat-label">Success Rate</div>
                                     </div>
                                 </div>

@@ -7,6 +7,18 @@
 
     <!-- Critical CSS inline -->
     <style>
+        :root {
+            /* Navigation and layout (critical for initial render) */
+            --nds-nav-height: 72px;
+            --nds-minimal-nav-item-height: 40px;
+            --nds-sideMenu-width: 260px;
+            --nds-minimal-nav-bp: 768px;
+            --nds-dropdown-safeZone: 40px;
+            --nds-content-MaxWidth: 1280px;
+            --nds-viewport-base-padding: 32px;
+            --nds-transition-speed: .2;
+        }
+
         /* ===== RESET & BASE ===== */
         *,
         *::before,
@@ -17,10 +29,6 @@
             outline: none;
             -webkit-tap-highlight-color: transparent;
 
-        }
-
-        body * {
-            font-family: 'IBM Plex Sans Arabic', sans-serif;
         }
 
         body {
@@ -45,7 +53,6 @@
 
         i.hgi {
             opacity: 0;
-            transition: opacity 0.1s ease;
         }
 
         body.hgi-loaded i.hgi {
@@ -89,14 +96,21 @@
             z-index: 1000;
         }
 
+        #dgaDigitalStamp {
+            display: none;
+        }
 
-        #dgaDigitalStamp,
         .nds-topbar>*,
         nav.nds-main-nav>*,
         .nds-breadcrumb-nav,
+        .nds-heroContent,
         .contentLayout,
         .nds-footer {
-            display: none;
+            visibility: hidden;
+        }
+
+        .nds-breadcrumb, .nds-breadcrumb li {
+            display: flex;
         }
 
         /* Hero Section Base Styles */
@@ -225,6 +239,7 @@
             max-width: var(--maxwidth-paragraph-max-width, 720px);
         }
 
+
         #nds-sharePage {
             display: none;
         }
@@ -352,7 +367,7 @@
     </style>
 
     <!-- Load CSS files -->
-    <link rel="preload" href="{{ '/assets/css/nds-main.min.css' | relative_url }}?ver=1.014" as="style"
+    <link rel="preload" href="{{ '/assets/css/nds-main.min.css' | relative_url }}?ver=1.023" as="style"
         onload="this.onload=null;this.rel='stylesheet'" fetchpriority="high">
     <noscript>
         <link rel="stylesheet" href="{{ '/assets/css/nds-main.min.css' | relative_url }}">
@@ -365,14 +380,14 @@
     {% endif %}
 
     <!-- Preload IBM Plex Sans Arabic fonts -->
-    
+
     <link rel="preload" href="{{ '/assets/fonts/IBMPlexSansArabic-Regular.woff2' | relative_url }}" as="font"
         type="font/woff2" crossorigin>
 
-    <link rel="stylesheet" href="{{ '/assets/css/hgi-stroke-rounded.css' | relative_url }}" media="print"
-        onload="this.media='all'">
+    <link rel="preload" href="{{ '/assets/css/hgi-rounded-stroke-solid-min.css?ver=1.001' | relative_url }}" as="style"
+        onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
-        <link rel="stylesheet" href="{{ '/assets/css/hgi-stroke-rounded.css' | relative_url }}">
+        <link rel="stylesheet" href="{{ '/assets/css/hgi-rounded-stroke-solid-min.css' | relative_url }}">
     </noscript>
 
     <link rel="icon" type="image/svg+xml" href="{{ '/assets/img/favicon.svg' | relative_url }}">

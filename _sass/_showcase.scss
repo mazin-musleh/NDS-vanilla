@@ -43,6 +43,7 @@
 /* Demo Actions */
 .demo-action {
   display: flex;
+  flex-wrap: wrap;
   gap: var(--spacing-xs);
 }
 

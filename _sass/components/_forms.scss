@@ -40,13 +40,6 @@
             gap: var(--icon-text-gap);
             color: var(--controls-control-text-error);
 
-            i {
-                color: var(--icon-error);
-                width: var(--spacing-4);
-                height: var(--spacing-4);
-                font-size: var(--spacing-4);
-                line-height: var(--spacing-4);
-            }
         }
     }
 
@@ -261,7 +254,7 @@ fieldset {
         }
 
         &::after {
-            content: "㭚";
+            content: "㯭";
             pointer-events: none;
             font-family: "hgi-stroke-rounded" !important;
             font-style: normal;
@@ -270,7 +263,7 @@ fieldset {
             position: absolute;
             left: var(--spacing-md);
             opacity: 0;
-            transition: opacity var(--nds-transition), transform 0.1s ease;
+            transition: transform 0.1s ease;
             display: inline-flex;
             width: 20px;
             height: 20px;
@@ -604,14 +597,13 @@ fieldset {
         }
 
         &:checked::after {
-            content: "䤈" !important;
+            content: "坉" !important;
             font-family: "hgi-stroke-rounded" !important;
             font-style: normal;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             position: relative;
             opacity: 0;
-            transition: opacity var(--nds-transition);
             display: inline-flex;
             width: var(--nds-input-size);
             height: var(--nds-input-size);
@@ -621,7 +613,7 @@ fieldset {
         }
 
         &.indeterminate:checked::after {
-            content: "䗵" !important;
+            content: "儣" !important;
         }
 
         /* .nds-sm &:checked::after {
@@ -803,7 +795,7 @@ fieldset {
 }
 
 .toggle-password.show i::before {
-    content: "㿦";
+    content: "䔅";
 }
 
 
@@ -995,7 +987,7 @@ fieldset {
         gap: var(--spacing-md);
         min-height: 36px;
 
-        .file-icon {
+        /* .nds-feedback-icon {
             font-size: 16px;
             width: 24px;
             height: 24px;
@@ -1012,14 +1004,14 @@ fieldset {
 
         }
 
-        &.error .file-icon {
+        &.error .nds-feedback-icon {
             background-color: var(--icon-error);
 
             &::before {
                 content: "!";
                 font-family: sans-serif;
             }
-        }
+        }*/
 
         .file-info {
             flex: 1;
@@ -1060,7 +1052,10 @@ fieldset {
 
             .nds-btn {
                 --nds-input-size: 24px;
-                --nds-width: 24px;
+                --nds-btn-width: 24px;
+                --nds-btn-height: 24px;
+                text-align: center;
+                justify-content: center;
             }
 
         }
@@ -1147,7 +1142,7 @@ fieldset {
         }
 
         &::after {
-            content: "㭚";
+            content: "㯭";
             pointer-events: none;
             font-family: "hgi-stroke-rounded" !important;
             font-style: normal;
@@ -1156,7 +1151,7 @@ fieldset {
             position: absolute;
             left: var(--spacing-md);
             opacity: 0;
-            transition: opacity var(--nds-transition), transform 0.1s ease;
+            transition: transform 0.1s ease;
             display: inline-flex;
             width: 20px;
             height: 20px;

@@ -35,7 +35,7 @@
 
 /* Arrow separator */
 .hgi-loaded .nds-breadcrumb li:not(:last-child)::after {
-    content: "㭪";
+    content: "㰍";
     color: var(--colors-neutral-400, #9DA4AE);
     font-family: "hgi-stroke-rounded" !important;
     font-style: normal;
@@ -44,7 +44,6 @@
     position: relative;
     font-weight: bold;
     opacity: 0;
-    transition: opacity 0.1s ease;
     line-height: 1;
     min-width: 24px;
     text-align: center;

@@ -1,4 +1,4 @@
-(function () {
+(() => {
     'use strict';
 
     /**
@@ -1792,7 +1792,24 @@
         }
     };
 
-    // Integration with existing form initialization
-    window.DatePickerCalendar = DatePickerCalendar;
+    function initializeCalendar() {
+        // Any global calendar setup that needs to be deferred
+        // Currently, calendar instances handle their own initialization
+    }
+
+    // CRITICAL: Expose global API immediately (called by unified init system)
+    if (typeof window !== 'undefined') {
+        window.DatePickerCalendar = DatePickerCalendar;
+        window.NDSCalendar = {
+            DatePickerCalendar,
+            CalendarConfig,
+            UIConfig,
+            createHijriDate,
+            normalizeHijriDate,
+            init: initializeCalendar
+        };
+    }
+
+    // Note: Initialization now handled by nds-init.js unified system
 
 })();

@@ -127,8 +127,7 @@
 
     }
 
-    // Initialize when DOM is ready
-    document.addEventListener('DOMContentLoaded', () => {
+    function initializeShareDropdown() {
         // Check if required elements exist before initializing
         const shareButton = document.getElementById('nds-sharePageBtn');
         const shareDropdown = document.getElementById('nds-sharePage-dropdown');
@@ -136,6 +135,16 @@
         if (shareButton && shareDropdown) {
             new SharePageDropdown();
         }
-    });
+    }
+
+    // CRITICAL: Expose global API immediately (called by unified init system)
+    if (typeof window !== 'undefined') {
+        window.NDSShare = {
+            SharePageDropdown,
+            init: initializeShareDropdown
+        };
+    }
+
+    // Note: Initialization now handled by nds-init.js unified system
 
 })();

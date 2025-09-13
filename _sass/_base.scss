@@ -4,6 +4,15 @@
    CSS RESET & NORMALIZATION
    ======================================== */
 
+.nds-topbar>*,
+nav.nds-main-nav>*,
+.nds-breadcrumb-nav,
+.nds-heroContent,
+.contentLayout,
+.nds-footer {
+    visibility: visible;
+}
+
 *,
 *::before,
 *::after {
@@ -60,12 +69,13 @@ textarea {
     border: none;
     background: none;
     color: inherit;
-    
+
 }
+
 input:-internal-autofill-selected {
     appearance: menulist-button;
     background-image: none !important;
-    background-color: rgba(0,0,0,0) !important;
+    background-color: rgba(0, 0, 0, 0) !important;
     color: fieldtext !important;
 }
 
@@ -106,28 +116,3 @@ header {
     }
 }
 
-/* ========================================
-   INTERACTIVE ELEMENTS
-   ======================================== */
-
-button,
-.button,
-.btn,
-.nds-btn,
-.nds-nav-link,
-[role="button"],
-[role="tab"] {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    user-select: none;
-    -webkit-touch-callout: none;
-}
-
-button,
-.button,
-.btn,
-.nds-btn {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-}

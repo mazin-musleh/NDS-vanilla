@@ -5,19 +5,10 @@
     // CRITICAL VARIABLES - PRIORITY ORDER
     // ==============================================
 
-    // Navigation and layout (critical for initial render)
-    --nds-nav-height: 72px;
-    --nds-minimal-nav-item-height: max(40px, calc(var(--nds-nav-height) / 2));
-    --nds-sideMenu-width: 260px;
     --nds-nav-background-color: #fff;
-    --nds-minimal-nav-bp: 768px;
-    --nds-dropdown-safeZone: 40px;
-    --nds-content-MaxWidth: var(--width-3xl, 1280px);
-    --nds-viewport-base-padding: var(--spacing-4xl, 32px);
     --nds-viewport-padding: var(--nds-viewport-base-padding);
 
     // Transitions (critical for all interactions)
-    --nds-transition-speed: .2;
     --nds-transition-effect: ease;
     --nds-transition: calc(var(--nds-transition-speed) * 1s) var(--nds-transition-effect);
 
@@ -999,20 +990,26 @@
     --alpha-success-20: #06945433;
     --icon-neutral: var(--colors-neutral-700);
     --icon-neutral-light: var(--colors-neutral-50);
+    --icon-neutral-ring: var(--colors-neutral-100);
     --icon-secondary: var(--colors-secondary-gold-600-primary);
     --icon-secondary-light: var(--colors-secondary-gold-50);
     --icon-tertiary: var(--colors-tertiary-lavendar-500-primary);
     --icon-tertiary-light: var(--colors-tertiary-lavendar-50);
     --icon-success: var(--colors-green-700);
     --icon-success-light: var(--colors-green-50);
+    --icon-success-ring: var(--colors-green-100);
     --icon-info: var(--colors-blue-700);
     --icon-info-light: var(--colors-blue-50);
+    --icon-info-ring: var(--colors-blue-100);
     --icon-warning: var(--colors-yellow-700);
     --icon-warning-light: var(--colors-yellow-50);
+    --icon-warning-ring: var(--colors-yellow-100);
     --icon-error: var(--colors-red-700);
     --icon-error-light: var(--colors-red-50);
+    --icon-error-ring: var(--colors-red-100);
     --icon-default-disabled: var(--colors-neutral-400);
     --icon-default-oncolor-disabled: var(--colors-alpha-alpha-white-40);
+
     --control-disabled: var(--colors-neutral-400);
     --featuredicons-icon-oncolor: var(--colors-base-white);
     --featuredicons-icon-success: var(--colors-green-700);

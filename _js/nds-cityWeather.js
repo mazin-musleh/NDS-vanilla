@@ -158,15 +158,7 @@
         }
     }
 
-    // Global exposure
-    if (typeof window !== 'undefined') {
-        window.updateWeather = updateWeather;
-        window.updateCity = updateCity;
-    }
-
-    // Auto-initialize
-    function init() {
-        // Weather and city are tied together - both need to exist
+    function initializeCityWeather() {
         const weatherEl = document.getElementById('nds-weatherInfo');
         const cityEl = document.getElementById('nds-cityName');
         
@@ -182,10 +174,15 @@
         }
     }
 
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-    } else {
-        setTimeout(init, 50);
+    // CRITICAL: Expose global functions immediately (called by unified init system)
+    if (typeof window !== 'undefined') {
+        window.updateWeather = updateWeather;
+        window.updateCity = updateCity;
+        window.NDSCityWeather = {
+            init: initializeCityWeather
+        };
     }
+
+    // Note: Initialization now handled by nds-init.js unified system
 
 })();

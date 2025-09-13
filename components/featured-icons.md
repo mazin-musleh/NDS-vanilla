@@ -453,7 +453,7 @@ direction: ltr
     </div>
 </section>
 
-<!-- Featured Icons Overview -->
+<!-- Feedback Icons Overview -->
 <section id="feedbackIconsOverview" class="nds-content-section">
     <div class="nds-section-content-container">
         <div class="nds-section-head">
@@ -461,33 +461,32 @@ direction: ltr
             <p class="nds-section-description">All Feedback icon styles available in the National Design System</p>
         </div>
         <div class="nds-section-content">
-            <div class="featured-icons-showcase">
+            <div class="feedback-icons-showcase">
 
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-label">Success Feedback Icon</div>
                         <div class="demo-action">
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-ring", ".nds-feedback-icon", "ring"]'>
+                                data-toggler='["nds-ring", ".nds-feedback-icon", "iconVariant"]'>
                                 <span class="label">Ring</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-iconOnly", ".nds-feedback-icon", "iconVariant"]'>
-                                <span class="label">Icon Only</span>
+                                data-toggler='["nds-outline", ".nds-feedback-icon", "iconVariant"]'>
+                                <span class="label">Outline</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-dark", ".nds-featured-icon", "iconVariant"]'>
-                                <span class="label">Dark</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-sm", ".nds-featured-icon", "iconSize"]'>
+                                data-toggler='["nds-sm", ".nds-feedback-icon", "iconSize"]'>
                                 <span class="label">SM</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-md", ".nds-featured-icon", "iconSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle selected demo-toggle-btn"
+                                data-toggler='["nds-md", ".nds-feedback-icon", "iconSize"]'>
                                 <span class="label">MD</span>
                             </button>
-
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-lg", ".nds-feedback-icon", "iconSize"]'>
+                                <span class="label">LG</span>
+                            </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                                 <span class="label">Remove bg</span>
@@ -496,8 +495,8 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <span class="nds-featured-icon nds-success">
-                                <i class="hgi hgi-stroke hgi-checkmark-circle-02 icon"></i>
+                            <span class="nds-feedback-icon nds-success">
+                                <i class="hgi hgi-solid icon"></i>
                             </span>
                         </div>
                     </div>
@@ -519,8 +518,8 @@ direction: ltr
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-                                    <span class="nds-featured-icon nds-success">
-                                      <i class="hgi hgi-stroke hgi-checkmark-circle-02 icon"></i>
+                                    <span class="nds-feedback-icon nds-success">
+                                      <i class="hgi hgi-solid icon"></i>
                                     </span>
                                 </code>
                             </div>
@@ -533,24 +532,24 @@ direction: ltr
                         <div class="demo-label">Info Feedback Icon</div>
                         <div class="demo-action">
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-ring", ".nds-feedback-icon", "ring"]'>
+                                data-toggler='["nds-ring", ".nds-feedback-icon", "iconVariant"]'>
                                 <span class="label">Ring</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-outline", ".nds-featured-icon", "iconVariant"]'>
+                                data-toggler='["nds-outline", ".nds-feedback-icon", "iconVariant"]'>
                                 <span class="label">Outline</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-dark", ".nds-featured-icon", "iconVariant"]'>
-                                <span class="label">Dark</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-sm", ".nds-featured-icon", "iconSize"]'>
+                                data-toggler='["nds-sm", ".nds-feedback-icon", "iconSize"]'>
                                 <span class="label">SM</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-md", ".nds-featured-icon", "iconSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle selected demo-toggle-btn"
+                                data-toggler='["nds-md", ".nds-feedback-icon", "iconSize"]'>
                                 <span class="label">MD</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-lg", ".nds-feedback-icon", "iconSize"]'>
+                                <span class="label">LG</span>
                             </button>
 
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
@@ -561,8 +560,8 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <span class="nds-featured-icon nds-info">
-                                <i class="hgi hgi-stroke hgi-information-circle icon"></i>
+                            <span class="nds-feedback-icon nds-info">
+                                <i class="hgi hgi-solid icon"></i>
                             </span>
                         </div>
                     </div>
@@ -584,8 +583,8 @@ direction: ltr
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-                                    <span class="nds-featured-icon nds-info">
-                                      <i class="hgi hgi-stroke hgi-information-circle icon"></i>
+                                    <span class="nds-feedback-icon nds-info">
+                                      <i class="hgi hgi-solid icon"></i>
                                     </span>
                                 </code>
                             </div>
@@ -598,24 +597,24 @@ direction: ltr
                         <div class="demo-label">Warning Feedback Icon</div>
                         <div class="demo-action">
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-ring", ".nds-feedback-icon", "ring"]'>
+                                data-toggler='["nds-ring", ".nds-feedback-icon", "iconVariant"]'>
                                 <span class="label">Ring</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-outline", ".nds-featured-icon", "iconVariant"]'>
+                                data-toggler='["nds-outline", ".nds-feedback-icon", "iconVariant"]'>
                                 <span class="label">Outline</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-dark", ".nds-featured-icon", "iconVariant"]'>
-                                <span class="label">Dark</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-sm", ".nds-featured-icon", "iconSize"]'>
+                                data-toggler='["nds-sm", ".nds-feedback-icon", "iconSize"]'>
                                 <span class="label">SM</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-md", ".nds-featured-icon", "iconSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle selected demo-toggle-btn"
+                                data-toggler='["nds-md", ".nds-feedback-icon", "iconSize"]'>
                                 <span class="label">MD</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-lg", ".nds-feedback-icon", "iconSize"]'>
+                                <span class="label">LG</span>
                             </button>
 
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
@@ -626,8 +625,8 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <span class="nds-featured-icon nds-warning">
-                                <i class="hgi hgi-stroke hgi-alert-02 icon"></i>
+                            <span class="nds-feedback-icon nds-warning">
+                                <i class="hgi hgi-solid hgi-alert-circle icon"></i>
                             </span>
                         </div>
                     </div>
@@ -649,8 +648,8 @@ direction: ltr
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-                                    <span class="nds-featured-icon nds-warning">
-                                      <i class="hgi hgi-stroke hgi-alert-02 icon"></i>
+                                    <span class="nds-feedback-icon nds-warning">
+                                      <i class="hgi hgi-solid icon"></i>
                                     </span>
                                 </code>
                             </div>
@@ -663,24 +662,28 @@ direction: ltr
                         <div class="demo-label">Error Feedback Icon</div>
                         <div class="demo-action">
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-ring", ".nds-feedback-icon", "ring"]'>
+                                data-toggler='["nds-alert", ".nds-feedback-icon", "iconSwitch"]'>
+                                <span class="label">Alert</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-ring", ".nds-feedback-icon", "iconVariant"]'>
                                 <span class="label">Ring</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-outline", ".nds-featured-icon", "iconVariant"]'>
+                                data-toggler='["nds-outline", ".nds-feedback-icon", "iconVariant"]'>
                                 <span class="label">Outline</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-dark", ".nds-featured-icon", "iconVariant"]'>
-                                <span class="label">Dark</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-sm", ".nds-featured-icon", "iconSize"]'>
+                                data-toggler='["nds-sm", ".nds-feedback-icon", "iconSize"]'>
                                 <span class="label">SM</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-md", ".nds-featured-icon", "iconSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle selected demo-toggle-btn"
+                                data-toggler='["nds-md", ".nds-feedback-icon", "iconSize"]'>
                                 <span class="label">MD</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-lg", ".nds-feedback-icon", "iconSize"]'>
+                                <span class="label">LG</span>
                             </button>
 
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
@@ -691,8 +694,8 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <span class="nds-featured-icon nds-error">
-                                <i class="hgi hgi-stroke hgi-alert-circle icon"></i>
+                            <span class="nds-feedback-icon nds-error">
+                                <i class="hgi hgi-solid icon"></i>
                             </span>
                         </div>
                     </div>
@@ -714,8 +717,8 @@ direction: ltr
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-                                    <span class="nds-featured-icon nds-error">
-                                      <i class="hgi hgi-stroke hgi-alert-circle icon"></i>
+                                    <span class="nds-feedback-icon nds-error">
+                                      <i class="hgi hgi-solid icon"></i>
                                     </span>
                                 </code>
                             </div>
@@ -728,24 +731,24 @@ direction: ltr
                         <div class="demo-label">Neutral Feedback Icon</div>
                         <div class="demo-action">
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-ring", ".nds-feedback-icon", "ring"]'>
+                                data-toggler='["nds-ring", ".nds-feedback-icon", "iconVariant"]'>
                                 <span class="label">Ring</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-outline", ".nds-featured-icon", "iconVariant"]'>
+                                data-toggler='["nds-outline", ".nds-feedback-icon", "iconVariant"]'>
                                 <span class="label">Outline</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-dark", ".nds-featured-icon", "iconVariant"]'>
-                                <span class="label">Dark</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-sm", ".nds-featured-icon", "iconSize"]'>
+                                data-toggler='["nds-sm", ".nds-feedback-icon", "iconSize"]'>
                                 <span class="label">SM</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-md", ".nds-featured-icon", "iconSize"]'>
+                            <button class="nds-btn nds-sm nds-subtle selected demo-toggle-btn"
+                                data-toggler='["nds-md", ".nds-feedback-icon", "iconSize"]'>
                                 <span class="label">MD</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-lg", ".nds-feedback-icon", "iconSize"]'>
+                                <span class="label">LG</span>
                             </button>
 
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
@@ -756,8 +759,8 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <span class="nds-featured-icon nds-neutral">
-                                <i class="hgi hgi-stroke hgi-help-circle icon"></i>
+                            <span class="nds-feedback-icon nds-neutral">
+                                <i class="hgi hgi-solid icon"></i>
                             </span>
                         </div>
                     </div>
@@ -779,8 +782,8 @@ direction: ltr
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-                                    <span class="nds-featured-icon nds-neutral">
-                                      <i class="hgi hgi-stroke hgi-help-circle icon"></i>
+                                    <span class="nds-feedback-icon nds-neutral">
+                                      <i class="hgi hgi-solid icon"></i>
                                     </span>
                                 </code>
                             </div>

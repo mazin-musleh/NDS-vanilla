@@ -18,14 +18,28 @@
 (function() {
     'use strict';
 
-    // Initialize when DOM is ready
-    document.addEventListener('DOMContentLoaded', function() {
+    // Main initialization function
+    function initializeShowcase() {
         storeOriginalCodeContent();
         initializeDemoToggleButtons();
         initializeDirectionSwitcher();
         initializeFakeFileUpload();
         initializeDemoActionButtons();
-    });
+    }
+
+    // CRITICAL: Expose global API immediately (called by unified init system)
+    if (typeof window !== 'undefined') {
+        window.NDSShowcase = {
+            initializeDemoToggleButtons: initializeDemoToggleButtons,
+            updateButtonsForBackground: updateButtonsForBackground,
+            initializeDirectionSwitcher: initializeDirectionSwitcher,
+            startUploadSimulation: startUploadSimulation,
+            populateDemoFiles: populateDemoFiles,
+            init: initializeShowcase
+        };
+    }
+
+    // Note: Initialization now handled by nds-init.js unified system
 
     // Store original code content in hidden copies before highlighting is applied
     function storeOriginalCodeContent() {
@@ -1090,13 +1104,5 @@
         }, 200);
     }
 
-    // Expose global functions for backward compatibility if needed
-    window.NDSShowcase = {
-        initializeDemoToggleButtons: initializeDemoToggleButtons,
-        updateButtonsForBackground: updateButtonsForBackground,
-        initializeDirectionSwitcher: initializeDirectionSwitcher,
-        startUploadSimulation: startUploadSimulation,
-        populateDemoFiles: populateDemoFiles
-    };
 
 })();

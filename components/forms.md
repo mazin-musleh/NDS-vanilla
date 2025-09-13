@@ -64,7 +64,7 @@ direction: ltr
             <div class="demo-label">Text Input</div>
             <div class="demo-action">
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["disabled", "input[type=text]", "stateToggle", "attr"]'>
+                data-toggler='["disabled", "#demo-textInput", "stateToggle", "attr"]'>
                 <span class="label">Disabled</span>
               </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
@@ -77,12 +77,12 @@ direction: ltr
             <div class="state-demo">
               <div class="nds-form-container">
                 <div class="nds-form-header">
-                  <label for="textInput">
+                  <label for="demo-textInput">
                     <span class="label">Text Input</span>
                   </label>
                 </div>
                 <div class="nds-form-control">
-                  <input type="text" id="textInput" class="nds-input" placeholder="Enter text..." value="">
+                  <input type="text" id="demo-textInput" class="nds-input" placeholder="Enter text..." value="">
                   <div class="nds-form-action">
                     <button class="nds-btn nds-subtle clear hidden" type="button" aria-label="Clear input">
                       <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
@@ -142,7 +142,7 @@ direction: ltr
             <div class="demo-label">Search Input</div>
             <div class="demo-action">
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["disabled", "#searchInput", "stateToggle", "attr"]'>
+                data-toggler='["disabled", "#demo-searchInput", "stateToggle", "attr"]'>
                 <span class="label">Disabled</span>
               </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
@@ -155,13 +155,13 @@ direction: ltr
             <div class="state-demo">
               <div class="nds-form-container">
                 <div class="nds-form-header">
-                  <label for="searchInput">
+                  <label for="demo-searchInput">
                     <span class="label">Search Input</span>
                   </label>
                 </div>
                 <div class="nds-form-control">
                   <i class="hgi hgi-stroke hgi-search-01 icon"></i>
-                  <input type="text" id="searchInput" class="nds-search-input" name="search" placeholder="Search...">
+                  <input type="text" id="demo-searchInput" class="nds-search-input" name="search" placeholder="Search...">
                   <div class="nds-form-action">
                     <button class="nds-btn nds-subtle voiceInput" type="button" aria-label="Voice input">
                       <i class="hgi hgi-stroke hgi-mic-01 icon"></i>
@@ -228,7 +228,7 @@ direction: ltr
             <div class="demo-label">Email Input</div>
             <div class="demo-action">
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["disabled", "#emailInput", "stateToggle", "attr"]'>
+                data-toggler='["disabled", "#demo-emailInput", "stateToggle", "attr"]'>
                 <span class="label">Disabled</span>
               </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
@@ -241,13 +241,13 @@ direction: ltr
             <div class="state-demo">
               <div class="nds-form-container">
                 <div class="nds-form-header">
-                  <label for="emailInput">
+                  <label for="demo-emailInput">
                     <span class="label">Email Input</span>
                   </label>
                 </div>
                 <div class="nds-form-control">
                   <i class="hgi hgi-stroke hgi-mail-01 icon"></i>
-                  <input type="email" id="emailInput" class="nds-input" placeholder="Enter email address...">
+                  <input type="email" id="demo-emailInput" class="nds-input" placeholder="Enter email address...">
                   <div class="nds-form-action">
                     <button class="nds-btn nds-subtle clear hidden" type="button" aria-label="Clear email">
                       <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
@@ -308,7 +308,7 @@ direction: ltr
             <div class="demo-label">Password Input</div>
             <div class="demo-action">
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["disabled", "#passwordInput", "stateToggle", "attr"]'>
+                data-toggler='["disabled", "#demo-passwordInput", "stateToggle", "attr"]'>
                 <span class="label">Disabled</span>
               </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
@@ -321,7 +321,7 @@ direction: ltr
             <div class="state-demo">
               <div class="nds-form-container">
                 <div class="nds-form-header">
-                  <label for="passwordInput">
+                  <label for="demo-passwordInput">
                     <span class="label">Password Input</span>
                   </label>
                 </div>
@@ -331,7 +331,7 @@ direction: ltr
                       <i class="hgi hgi-stroke hgi-view-off icon"></i>
                     </button>
                   </div>
-                  <input type="password" id="passwordInput" class="nds-input" placeholder="Enter password...">
+                  <input type="password" id="demo-passwordInput" class="nds-input" placeholder="Enter password...">
                   <div class="nds-form-action">
                     <button class="nds-btn nds-subtle clear hidden" type="button" aria-label="Clear password">
                       <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
@@ -465,7 +465,7 @@ direction: ltr
             <div class="demo-label">Select Dropdown</div>
             <div class="demo-action">
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["disabled", "#selectInput", "stateToggle", "attr"]'>
+                data-toggler='["disabled", "#demo-selectInput", "stateToggle", "attr"]'>
                 <span class="label">Disabled</span>
               </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
@@ -478,12 +478,12 @@ direction: ltr
             <div class="state-demo">
               <div class="nds-form-container nds-select">
                 <div class="nds-form-header">
-                  <label for="selectInput">
+                  <label for="demo-selectInput">
                     <span class="label">Select Dropdown</span>
                   </label>
                 </div>
                 <div class="nds-form-control">
-                  <input type="text" id="selectInput" class="nds-input nds-select-input"
+                  <input type="text" id="demo-selectInput" class="nds-input nds-select-input"
                     placeholder="Choose an option..." readonly>
                   <input type="hidden" name="selectValue" class="nds-select-value">
 
@@ -730,7 +730,11 @@ direction: ltr
                         <span class="label">Primary</span>
                         <span class="info">When a selection needs a further detailed explanation, it goes here.</span>
                         <span class="error">
-                          <i class="hgi hgi-stroke hgi-alert-circle icon"></i>Error/Warning message.</span>
+                          <span class="nds-feedback-icon nds-error nds-outline nds-sm">
+                            <i class="hgi hgi-solid icon"></i>
+                          </span>
+                          <span class="msg">Error/Warning message.</span>
+                        </span>
                       </label>
                     </div>
                     <div class="nds-form-control">
@@ -1010,9 +1014,12 @@ direction: ltr
                 <div class="nds-form-footer"></div>
 
                 <!-- Hidden template for file items -->
-                <template>
+                <div class="file-item-template" style="display: none;">
                   <div class="file-item">
-                    <i class="hgi hgi-stroke hgi-tick-02 file-icon"></i>
+                    <span class="nds-feedback-icon nds-success">
+                      <i class="hgi hgi-solid icon"></i>
+                    </span>
+
                     <div class="progress-circle" style="display: none;">
                       <svg width="24" height="24" viewBox="0 0 24 24">
                         <circle class="progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="3" />
@@ -1046,7 +1053,7 @@ direction: ltr
                       </button>
                     </div>
                   </div>
-                </template>
+                </div>
               </div> <!-- /.nds-form-container -->
             </div> <!-- /.state-demo -->
           </div> <!-- /.demo-container -->
@@ -1076,74 +1083,81 @@ direction: ltr
                   </button>
                 </div>
                 <code class="lang-html code">
-<div class="nds-form-container nds-file-upload multi-file-upload dropBox">
-    <div class="nds-form-header hidden">
-        <label for="multiFileUpload">
-          <span class="label">Upload files</span>
-          <span class="info">
-            Maximum file size allowed is 2MB, supported file formats include .jpg, .png, and .pdf.
-          </span>
-        </label>
-    </div>
-
-    <div class="nds-form-control" id="multiDropZone">
-        <input type="file" id="multiFileUpload" multiple accept=".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx,.txt"
-            class="file-input" />
-        <div class="upload-zone">
-            <i class="hgi hgi-stroke hgi-file-upload upload-icon icon"></i>
-            <div class="upload-text">
-                <span class="dropFileHint">Drag and drop files here to upload</span>
-            </div>
-            <div class="upload-hint">Maximum file size allowed is 2MB, supported file formats include .jpg,
-                .png, and .pdf.</div>
-        </div>
-
-        <div class="upload-actions">
-            <button type="button" class="nds-btn nds-secondary nds-md browse-btn">
-                <i class="hgi hgi-stroke hgi-folder-01"></i>
-                <span class="label">Browse Files</span>
-            </button>
-        </div>
-    </div>
-
-    <div class="file-list" id="multiFileList"></div>
-    <div class="nds-form-footer"></div>
-
-    <!-- Hidden template for file items -->
-    <template>
-        <div class="file-item">
-            <i class="hgi hgi-stroke hgi-file-02 file-icon"></i>
-
-            <div class="progress-circle" style="display: none;">
-                <svg width="24" height="24" viewBox="0 0 24 24">
-                    <circle class="progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="3"/>
-                    <circle class="progress-bar" cx="12" cy="12" r="10" fill="none" stroke-width="3" 
-                            stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round"/>
-                </svg>
-                <span class="progress-percentage"><span class="progress-number">0</span><span class="progress-symbol">%</span></span>
-            </div>
-
-            <div class="file-info">
-                <div class="file-name"></div>
-                <div class="file-details">
-                    <span class="file-size"></span>
-                    <span class="file-type"></span>
-                    <span class="file-status"></span>
-                </div>
-                
-                <div class="file-error" style="display: none;">
-                    <i class="hgi hgi-stroke hgi-alert-circle"></i>
-                    <span class="error-message"></span>
-                </div>
-            </div>
-            <div class="file-actions">
-                <button type="button" class="nds-btn nds-subtle remove-file" aria-label="Remove file">
-                    <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
-                </button>
-            </div>
-        </div>
-    </template>
-</div>
+                  <div class="nds-form-container nds-file-upload multi-file-upload dropBox">
+                    <div class="nds-form-header hidden">
+                      <label for="multiFileUpload">
+                        <span class="label">Upload files</span>
+                        <span class="info">
+                          Maximum file size allowed is 2MB, supported file formats include .jpg, .png, and .pdf.
+                        </span>
+                      </label>
+                    </div>
+                  
+                    <div class="nds-form-control" id="multiDropZone">
+                      <input type="file" id="multiFileUpload" multiple accept=".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx,.txt"
+                        class="file-input" />
+                      <div class="upload-zone">
+                        <i class="hgi hgi-stroke hgi-file-upload upload-icon icon"></i>
+                        <div class="upload-text">
+                          <span class="dropFileHint">Drag and drop files here to upload</span>
+                        </div>
+                        <div class="upload-hint">Maximum file size allowed is 2MB, supported file formats include .jpg,
+                          .png, and .pdf.</div>
+                      </div>
+                  
+                      <div class="upload-actions">
+                        <button type="button" class="nds-btn nds-secondary nds-md browse-btn">
+                          <i class="hgi hgi-stroke hgi-folder-01"></i>
+                          <span class="label">Browse Files</span>
+                        </button>
+                      </div>
+                    </div>
+                  
+                    <div class="file-list" id="multiFileList"></div>
+                    <div class="nds-form-footer"></div>
+                  
+                    <!-- Hidden template for file items -->
+                    <div class="file-item-template" style="display: none;">
+                      <div class="file-item">
+                        <span class="nds-feedback-icon nds-success">
+                          <i class="hgi hgi-solid icon"></i>
+                        </span>
+                  
+                        <div class="progress-circle" style="display: none;">
+                          <svg width="24" height="24" viewBox="0 0 24 24">
+                            <circle class="progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="3" />
+                            <circle class="progress-bar" cx="12" cy="12" r="10" fill="none" stroke-width="3" stroke-dasharray="62.83"
+                              stroke-dashoffset="62.83" stroke-linecap="round" />
+                          </svg>
+                          <div class="progress-info">
+                            <span class="progress-percentage">
+                              <span class="progress-number">0</span>
+                              <span class="progress-symbol">%</span>
+                            </span>
+                            <span class="progress-text"></span>
+                          </div>
+                        </div>
+                  
+                        <div class="file-info">
+                          <div class="file-name"></div>
+                          <div class="file-details">
+                            <span class="file-size"></span>
+                            <span class="file-type"></span>
+                            <span class="file-status"></span>
+                          </div>
+                          <div class="file-error" style="display: none;">
+                            <span class="error-message"></span>
+                          </div>
+                        </div>
+                  
+                        <div class="file-actions">
+                          <button type="button" class="nds-btn nds-subtle nds-md remove-file" aria-label="Remove file">
+                            <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </code>
               </div>
               <div class="nds-tab-panel hidden" role="tabpanel" id="panel-file-upload-2"
@@ -1452,7 +1466,7 @@ document.getElementById('resetButton').addEventListener('click', () => {
             <div class="demo-label">Custom Date Picker</div>
             <div class="demo-action">
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["disabled", "#datePickerInput", "stateToggle", "attr"]'>
+                data-toggler='["disabled", "#demo-datePickerInput", "stateToggle", "attr"]'>
                 <span class="label">Disabled</span>
               </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
@@ -1475,7 +1489,7 @@ document.getElementById('resetButton').addEventListener('click', () => {
 
               <div class="nds-form-container nds-date-picker">
                 <div class="nds-form-header">
-                  <label for="datePickerInput">
+                  <label for="demo-datePickerInput">
                     <span class="label">Select Date</span>
                   </label>
                 </div>
@@ -1486,7 +1500,7 @@ document.getElementById('resetButton').addEventListener('click', () => {
                       <i class="hgi hgi-stroke hgi-calendar-03 icon"></i>
                     </button>
                   </div>
-                  <input type="text" id="datePickerInput" class="nds-input nds-date-input" placeholder="DD/MM/YYYY"
+                  <input type="text" id="demo-datePickerInput" class="nds-input nds-date-input" placeholder="DD/MM/YYYY"
                     data-year-before="40" data-year-after="5" data-hijri-offset="0">
 
                   <!-- Custom Calendar Dropdown -->

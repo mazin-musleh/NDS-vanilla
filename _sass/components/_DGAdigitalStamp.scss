@@ -3,6 +3,12 @@
 /* ========================================
    DGA DROPDOWN STYLES
    ======================================== */
+#dgaVerify-text {
+    color: var(--text-primary);
+    font-weight: 600;
+    line-height: normal;
+}
+
 #dgaDigitalStamp {
     display: block;
     background-color: var(--background-white);
@@ -18,7 +24,6 @@
     position: absolute;
     left: 50%;
     transform: translate(-50%, 0);
-    bottom: 5px;
     z-index: 10;
     cursor: pointer;
     font-size: var(--nds-text-sm-FS);
@@ -27,7 +32,7 @@
 
 .nds-topbar .dga-tab {
     gap: var(--spacing-md);
-    height: 35px;
+    --nds-btn-height: 35px;
     background-color: var(--background-white);
     border-radius: 0 0 var(--radius-lg) var(--radius-lg);
     box-shadow: var(--shadow-md);
@@ -142,9 +147,9 @@
     flex-shrink: 0;
 
     @include tablet(max) {
-            width: var(--spacing-6xl);
-            height: var(--spacing-6xl);
-            font-size: 1.5rem;
+        width: var(--spacing-6xl);
+        height: var(--spacing-6xl);
+        font-size: 1.5rem;
     }
 
 }

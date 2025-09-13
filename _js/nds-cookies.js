@@ -102,8 +102,16 @@
     }
 
 
-    window.addEventListener('load', () => {
-        // Add event listeners
+    function initializeCookies() {
+        // CRITICAL: Check consent immediately for privacy compliance
+        const consent = ndsGetCookieConsent();
+        if (consent === 'accepted') {
+            ndsEnableAllCookies();
+        } else if (consent === 'declined') {
+            ndsDisableNonEssentialCookies();
+        }
+
+        // UI setup and popup display
         const acceptBtn = document.getElementById('ndsCookiesAcceptBtn');
         if (acceptBtn) {
             acceptBtn.addEventListener('click', ndsAcceptCookies);
@@ -119,15 +127,26 @@
             closeBtn.addEventListener('click', ndsCookiesClosePopup);
         }
 
-        const consent = ndsGetCookieConsent();
+        // Show popup after delay if no consent
         if (!consent) {
             setTimeout(() => {
                 ndsShowPopup();
             }, 2000);
-        } else if (consent === 'accepted') {
-            ndsEnableAllCookies();
-        } else if (consent === 'declined') {
-            ndsDisableNonEssentialCookies();
         }
-    });
+    }
+
+    // CRITICAL: Check consent immediately for privacy compliance (called by unified init system)
+    const consent = ndsGetCookieConsent();
+    if (consent === 'accepted') {
+        ndsEnableAllCookies();
+    } else if (consent === 'declined') {
+        ndsDisableNonEssentialCookies();
+    }
+
+    // Expose initialization function for unified system
+    window.NDSCookies = {
+        init: initializeCookies
+    };
+
+    // Note: Full initialization now handled by nds-init.js unified system
 })();

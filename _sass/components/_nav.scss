@@ -10,16 +10,13 @@
    TOPBAR STYLES
    ======================================== */
 
-#verify-text {
-    color: var(--text-primary);
-    font-weight: 600;
-}
-
 .nds-topbar {
     position: relative;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
+    /* Fallback for older browsers */
+    overflow: hidden;
     overflow: clip;
     transition: height var(--nds-transition);
 }
@@ -52,7 +49,7 @@
     }
 
     .generalInfo .textIcon svg {
-        color: #384250;
+        color: var(--icon-default, #384250);
     }
 
     button.textIcon:hover {
@@ -177,6 +174,13 @@
         line-height: var(--nds-text-clamp-lg-LH);
     }
 
+    /* Accessible focus styles */
+    .nds-nav-link:focus-visible,
+    .nds-nav-link[aria-expanded="true"] {
+        outline: 2px solid var(--colors-base-black);
+        outline-offset: 2px;
+    }
+
     /* Scrollbar Hiding */
     ::-webkit-scrollbar {
         display: none;
@@ -197,12 +201,16 @@
             position: sticky;
             background-color: var(--nds-nav-background-color);
             z-index: 999999;
-            color: black;
+            color: var(--text-default);
             right: auto;
-            font-family: "hgi-stroke-rounded" !important;
-            font-style: normal;
-            -webkit-font-smoothing: antialiased;
             transition: opacity var(--nds-transition);
+
+            /* Scope icon font to the icon only */
+            i {
+                font-family: "hgi-stroke-rounded" !important;
+                font-style: normal;
+                -webkit-font-smoothing: antialiased;
+            }
         }
 
         &.hasMore {
@@ -730,4 +738,13 @@ body.minimal .nds-main-nav {
     .nds-multi-column-list {
         column-count: 1;
     }
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .nds-main-nav .nds-dropdown-menu,
+  .nds-main-nav .nds-collapse,
+  .nds-main-nav .nds-nav-primary .showMore i {
+    transition: none !important;
+  }
 }
