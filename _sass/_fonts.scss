@@ -9,7 +9,10 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(../fonts/IBMPlexSansArabic-Regular.woff2) format('woff2');
+  src:
+    local('IBM Plex Sans Arabic'),
+    local('IBMPlexSansArabic-Regular'),
+    url(../fonts/IBMPlexSansArabic-Regular.woff2) format('woff2');
 }
 
 /* arabic */
@@ -18,7 +21,10 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url(../fonts/IBMPlexSansArabic-Medium.woff2) format('woff2');
+  src:
+    local('IBM Plex Sans Arabic Medium'),
+    local('IBMPlexSansArabic-Medium'),
+    url(../fonts/IBMPlexSansArabic-Medium.woff2) format('woff2');
 }
 
 /* arabic */
@@ -27,7 +33,10 @@
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url(../fonts/IBMPlexSansArabic-SemiBold.woff2) format('woff2');
+  src:
+    local('IBM Plex Sans Arabic SemiBold'),
+    local('IBMPlexSansArabic-SemiBold'),
+    url(../fonts/IBMPlexSansArabic-SemiBold.woff2) format('woff2');
 }
 
 /* arabic */
@@ -36,5 +45,8 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url(../fonts/IBMPlexSansArabic-Bold.woff2) format('woff2');
+  src:
+    local('IBM Plex Sans Arabic Bold'),
+    local('IBMPlexSansArabic-Bold'),
+    url(../fonts/IBMPlexSansArabic-Bold.woff2) format('woff2');
 }

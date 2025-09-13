@@ -28,6 +28,8 @@
         pendingDropdownAction: null,
         pendingNavbarAction: null,
         isAnimatingMenu: false,
+        prefersReducedMotion: typeof window !== 'undefined' &&
+            window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches,
         
         // Static CSS values - computed once
         _staticCSS: null,
@@ -49,11 +51,12 @@
         },
 
         getTransitionSpeed() {
-            return this.getStaticCSS().transitionSpeed * 1000;
+            return this.prefersReducedMotion ? 0 : (this.getStaticCSS().transitionSpeed * 1000);
         },
 
         getElementDuration(element) {
             if (!element) return 0;
+            if (this.prefersReducedMotion) return 0;
             const transition = parseFloat(getComputedStyle(element).transitionDuration) || 0;
             return transition > 0 ? this.getTransitionSpeed() : 0;
         },
@@ -92,8 +95,8 @@
         }
         
         // Use different delays based on priority
-        const actualDelay = priority === 'high' ? 10 : 
-                          priority === 'low' ? 100 : delay;
+        const baseDelay = priority === 'high' ? 10 : priority === 'low' ? 100 : delay;
+        const actualDelay = state.prefersReducedMotion ? 0 : baseDelay;
         
         state.pendingOverflowCheck = setTimeout(() => {
             state.pendingOverflowCheck = null;
@@ -174,6 +177,10 @@
     const utils = {
         debounce: (fn, ms) => { let t; return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); }; },
         throttle: (fn, ms) => { let wait; return (...args) => { if (!wait) { fn(...args); wait = true; setTimeout(() => wait = false, ms); } }; },
+        isRTL: () => {
+            const d = document.documentElement;
+            return (d && (d.dir === 'rtl' || getComputedStyle(d).direction === 'rtl')) || false;
+        },
 
         closeAllDropdowns() {
             const openDropdowns = document.querySelectorAll('#ndsMainNav .nds-dropdown.show');
@@ -393,8 +400,7 @@
                 if (state.minimalMode) {
                     DOM.primary.scrollTo({ top: isAtEnd ? 0 : DOM.primary.scrollTop + scrollAmount, behavior: 'smooth' });
                 } else {
-                    const isRTL = getComputedStyle(document.documentElement).direction === 'rtl';
-                    const left = isAtEnd ? 0 : (isRTL ? DOM.primary.scrollLeft - scrollAmount : DOM.primary.scrollLeft + scrollAmount);
+                    const left = isAtEnd ? 0 : (this.isRTL() ? DOM.primary.scrollLeft - scrollAmount : DOM.primary.scrollLeft + scrollAmount);
                     DOM.primary.scrollTo({ left, behavior: 'smooth' });
                 }
 
@@ -430,8 +436,7 @@
 
                 const startScroll = DOM.primary.scrollLeft;
                 // Check RTL direction for proper scroll direction
-                const isRTL = document.documentElement.dir === 'rtl';
-                const scrollMultiplier = isRTL ? -0.8 : 0.8;
+                const scrollMultiplier = this.isRTL() ? -0.8 : 0.8;
                 const scrollAmount = e.deltaY * scrollMultiplier;
                 let frame = 0;
 
@@ -657,15 +662,24 @@
         }
 
         // Note: Height calculations only used for overflow checking now
-
         if (state.minimalMode) {
+            const measure = () => {
+                // Measure only if not cached or after width changes
+                if (!DOM.collapse) return;
+                if (DOM.collapse._effectiveMaxHeight == null || state._lastMeasuredWidth !== state.windowWidth) {
+                    const actualHeight = DOM.collapse.offsetHeight;
+                    const maxHeight = parseFloat(getComputedStyle(DOM.collapse).maxHeight) || Infinity;
+                    DOM.collapse._effectiveMaxHeight = Math.min(actualHeight, maxHeight);
+                    state._lastMeasuredWidth = state.windowWidth;
+                    scheduleOverflowCheck();
+                }
+            };
             const duration = state.getElementDuration(DOM.collapse);
-            setTimeout(() => {
-                const actualHeight = DOM.collapse.offsetHeight;
-                const maxHeight = parseFloat(getComputedStyle(DOM.collapse).maxHeight) || Infinity;
-                DOM.collapse._effectiveMaxHeight = Math.min(actualHeight, maxHeight);
-                scheduleOverflowCheck();
-            }, duration + 50);
+            if (duration === 0) {
+                requestAnimationFrame(measure);
+            } else {
+                setTimeout(measure, duration + 50);
+            }
         }
 
 
@@ -705,11 +719,17 @@
                 dropdown.classList.add('opening');
             }));
 
-            setTimeout(() => {
+            if (duration === 0) {
                 dropdown.classList.remove('opening');
                 dropdown.classList.add('opened');
                 completeAnimation();
-            }, duration);
+            } else {
+                setTimeout(() => {
+                    dropdown.classList.remove('opening');
+                    dropdown.classList.add('opened');
+                    completeAnimation();
+                }, duration);
+            }
         } else {
             dropdown.classList.add('closing');
             dropdown.classList.remove('opened');
@@ -721,10 +741,15 @@
             scheduleOverflowCheck('high', 10);
             if (!isInMinimal) updatePositions();
 
-            setTimeout(() => {
+            if (duration === 0) {
                 dropdown.classList.remove('show', 'closing');
                 completeAnimation();
-            }, duration);
+            } else {
+                setTimeout(() => {
+                    dropdown.classList.remove('show', 'closing');
+                    completeAnimation();
+                }, duration);
+            }
         }
     }
 
@@ -763,25 +788,38 @@
                 }, duration + 50);
             }
 
-            setTimeout(() => {
+            if (duration === 0) {
                 DOM.collapse?.classList.remove('opening');
                 DOM.collapse?.classList.add('opened');
                 completeAnimation();
-            }, duration);
+            } else {
+                setTimeout(() => {
+                    DOM.collapse?.classList.remove('opening');
+                    DOM.collapse?.classList.add('opened');
+                    completeAnimation();
+                }, duration);
+            }
         } else {
             DOM.toggler?.classList.remove('active');
             
             const dropdownCloseDelay = utils.closeAllDropdowns();
 
+            const closeDelay = state.prefersReducedMotion ? 0 : dropdownCloseDelay;
             setTimeout(() => {
                 DOM.collapse?.classList.add('closing');
                 DOM.collapse?.classList.remove('opened');
-            }, dropdownCloseDelay);
+            }, closeDelay);
 
-            setTimeout(() => {
+            const total = (state.prefersReducedMotion ? 0 : dropdownCloseDelay) + duration;
+            if (total === 0) {
                 DOM.collapse?.classList.remove('show', 'closing');
                 completeAnimation();
-            }, dropdownCloseDelay + duration);
+            } else {
+                setTimeout(() => {
+                    DOM.collapse?.classList.remove('show', 'closing');
+                    completeAnimation();
+                }, total);
+            }
         }
     }
 
@@ -1083,6 +1121,16 @@
         toggleDropdown, 
         toggleDGA
     });
+
+    // Keep reduced-motion preference in sync
+    try {
+        if (window.matchMedia) {
+            const mql = window.matchMedia('(prefers-reduced-motion: reduce)');
+            mql.addEventListener?.('change', (e) => { state.prefersReducedMotion = !!e.matches; });
+            // Safari fallback
+            mql.addListener?.((e) => { state.prefersReducedMotion = !!e.matches; });
+        }
+    } catch {}
 
     // Expose navigation initialization function
     window.NDSNavController = {

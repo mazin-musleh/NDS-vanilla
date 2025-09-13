@@ -5,6 +5,20 @@
         content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}">
     <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
 
+    <!-- Persist fonts-loaded state across navigations -->
+    <script>
+      try {
+        if (localStorage.getItem('nds-fonts-loaded') === '1') {
+          document.documentElement.classList.add('fonts-loaded');
+        }
+        
+      } catch (e) {}
+    </script>
+
+    <!-- Preload primary text fonts (limit to above-the-fold weights) -->
+    <link rel="preload" as="font" type="font/woff2" href="{{ '/assets/fonts/IBMPlexSansArabic-Regular.woff2' | relative_url }}" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="{{ '/assets/fonts/IBMPlexSansArabic-Bold.woff2' | relative_url }}" crossorigin>
+
     <!-- Critical CSS inline -->
     <style>
         :root {
@@ -36,6 +50,7 @@
             color: var(--text-default, #161616);
             font-size: var(--nds-text-md-FS, 16px);
             line-height: var(--nds-text-md-LH, 24px);
+            font-size-adjust: from-font;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -55,6 +70,7 @@
             opacity: 0;
         }
 
+        /* Only apply when body confirms icon font is loaded */
         body.hgi-loaded i.hgi {
             opacity: 1;
         }
@@ -100,13 +116,14 @@
             display: none;
         }
 
+
         .nds-topbar>*,
         nav.nds-main-nav>*,
         .nds-breadcrumb-nav,
         .nds-heroContent,
         .contentLayout,
         .nds-footer {
-            visibility: hidden;
+            display: none;
         }
 
         .nds-breadcrumb, .nds-breadcrumb li {
@@ -199,47 +216,7 @@
             pointer-events: none;
         }
 
-        /* Hero Content */
-        .nds-hero-section .nds-heroContent {
-            height: 100%;
-            display: flex;
-            align-items: flex-start;
-            flex-direction: column;
-            justify-content: center;
-            color: var(--text-oncolor-primary, #fff);
-        }
-
-        .nds-hero-section.sub .nds-heroContent {
-            color: var(--text-default, #161616);
-        }
-
-        .nds-hero-section .nds-heroContent .nds-heroTitle {
-            font-size: var(--nds-display-clamp-lg-FS, 48px);
-            line-height: var(--nds-display-clamp-lg-LH, 60px);
-            margin-bottom: var(--nds-display-clamp-lg-MB, 15px);
-            letter-spacing: -0.02rem;
-            font-weight: bold;
-            position: relative;
-            margin: 0;
-        }
-
-        .nds-hero-section.sub .nds-heroContent .nds-heroTitle {
-            font-size: var(--nds-display-clamp-sm-FS, 30px);
-            line-height: var(--nds-display-clamp-sm-LH, 38px);
-            margin-bottom: var(--nds-display-clamp-sm-MB, 9.5px);
-        }
-
-        .nds-hero-section.sub .nds-heroContent .nds-heroDesc {
-            display: none;
-        }
-
-        .nds-hero-section .nds-heroContent .nds-heroDesc {
-            font-size: var(--nds-text-clamp-xl-FS, 20px);
-            line-height: var(--nds-text-clamp-xl-LH, 28px);
-            max-width: var(--maxwidth-paragraph-max-width, 720px);
-        }
-
-
+        
         #nds-sharePage {
             display: none;
         }
@@ -367,7 +344,7 @@
     </style>
 
     <!-- Load CSS files -->
-    <link rel="preload" href="{{ '/assets/css/nds-main.min.css' | relative_url }}?ver=1.023" as="style"
+    <link rel="preload" href="{{ '/assets/css/nds-main.min.css' | relative_url }}?ver=1.028" as="style"
         onload="this.onload=null;this.rel='stylesheet'" fetchpriority="high">
     <noscript>
         <link rel="stylesheet" href="{{ '/assets/css/nds-main.min.css' | relative_url }}">
@@ -379,10 +356,7 @@
         fetchpriority="high">
     {% endif %}
 
-    <!-- Preload IBM Plex Sans Arabic fonts -->
-
-    <link rel="preload" href="{{ '/assets/fonts/IBMPlexSansArabic-Regular.woff2' | relative_url }}" as="font"
-        type="font/woff2" crossorigin>
+    <!-- Preload icon CSS (loads icon font via CSS) -->
 
     <link rel="preload" href="{{ '/assets/css/hgi-rounded-stroke-solid-min.css?ver=1.001' | relative_url }}" as="style"
         onload="this.onload=null;this.rel='stylesheet'">

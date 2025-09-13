@@ -1,57 +1,117 @@
-/* ========================================
-   HERO SECTION COMPONENT
-   ======================================== */
+/**
+ * NDS Hero Section - SCSS Version
+ * Hero banner component with content, share functionality, and responsive design
+ */
 
 @use '../mixins' as *;
 
-/* ========================================
-   HERO SECTION BASE STYLES
-   ======================================== */
+// ==============================================
+// BASE HERO SECTION STYLES
+// ==============================================
 
 .nds-hero-section {
-    img {
-        pointer-events: none;
+  img {
+    pointer-events: none;
+  }
+
+  // ==============================================
+  // HERO CONTENT CONTAINER
+  // ==============================================
+
+  .nds-heroContent {
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+    color: var(--text-oncolor-primary, #fff);
+
+    // ==============================================
+    // HERO TITLE
+    // ==============================================
+
+    .nds-heroTitle {
+      font-size: var(--nds-display-clamp-lg-FS, 48px);
+      line-height: var(--nds-display-clamp-lg-LH, 60px);
+      margin-bottom: var(--nds-display-clamp-lg-MB, 15px);
+      letter-spacing: -0.02rem;
+      font-weight: 700;
+      position: relative;
+      margin: 0;
     }
-}
 
-/* ========================================
-   SHARE PAGE FUNCTIONALITY
-   ======================================== */
+    // ==============================================
+    // HERO DESCRIPTION
+    // ==============================================
 
-.nds-hero-section {
+    .nds-heroDesc {
+      font-size: var(--nds-text-clamp-xl-FS, 20px);
+      line-height: var(--nds-text-clamp-xl-LH, 28px);
+      max-width: var(--maxwidth-paragraph-max-width, 720px);
+    }
+
+    // ==============================================
+    // SHAREABLE PAGE FUNCTIONALITY
+    // ==============================================
+
+    .nds-shareablePage {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      align-items: flex-start;
+      gap: var(--spacing-lg, 12px);
+
+      #nds-sharePage {
+        display: block;
+      }
+    }
+  }
+
+  // ==============================================
+  // SUB VARIANT STYLES
+  // ==============================================
+
+  &.sub {
     .nds-heroContent {
-        .nds-shareablePage {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            align-items: flex-start;
-            gap: var(--spacing-lg, 12px);
-            
-            #nds-sharePage {
-                display: block;
-            }
-        }
+      color: var(--text-default, #161616);
+
+      .nds-heroTitle {
+        font-size: var(--nds-display-clamp-sm-FS, 30px);
+        line-height: var(--nds-display-clamp-sm-LH, 38px);
+        margin-bottom: var(--nds-display-clamp-sm-MB, 9.5px);
+      }
+
+      .nds-heroDesc {
+        display: none;
+      }
     }
+  }
 }
+
+// ==============================================
+// SHARE PAGE COMPONENT
+// ==============================================
 
 #nds-sharePage {
-    position: relative;
-    color: var(--text-default, #161616);
-}
+  position: relative;
+  color: var(--text-default, #161616);
 
-#nds-sharePageBtn {
+  // ==============================================
+  // SHARE PAGE BUTTON
+  // ==============================================
+
+  &Btn {
     background-color: var(--background-white, #fff);
     border: 1px solid var(--colors-neutral-300, #d2d6db);
     border-radius: var(--radius-md, 8px);
     box-shadow: var(--shadow-md);
-}
+  }
 
+  // ==============================================
+  // SHARE DROPDOWN
+  // ==============================================
 
-/* ========================================
-   SHARE PAGE DROPDOWN
-   ======================================== */
-
-#nds-sharePage-dropdown {
+  &-dropdown {
     display: none;
     position: absolute;
     z-index: 999;
@@ -60,7 +120,7 @@
     margin: 0;
     padding: var(--spacing-md);
     list-style: none;
-    font-size: 1rem;
+    font-size: var(--nds-text-md-FS, 16px);
     color: var(--text-default);
     background-color: var(--background-white, #fff);
     border: 1px solid var(--colors-neutral-300);
@@ -68,47 +128,54 @@
     box-shadow: var(--shadow-md);
     flex-direction: column;
     gap: var(--spacing-lg);
-    
+
     @include ltr {
-        left: unset;
-        right: 0;
+      left: unset;
+      right: 0;
     }
-}
+  }
 
-#nds-sharePage {
-    &.open {
-        #nds-sharePage-dropdown {
-            display: flex;
+  // ==============================================
+  // OPEN STATE
+  // ==============================================
 
-           & > *{
-                width: 100%;
-                justify-content: flex-start;
-            }
-            
-            .copied {
-                background-color: var(--background-success-light);
-                color: var(--text-success);
-                
-                .label {
-                    white-space: nowrap;
-                }
-            }
+  &.open {
+    #nds-sharePage-dropdown {
+      display: flex;
+
+      & > * {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .copied {
+        background-color: var(--background-success-light);
+        color: var(--text-success);
+
+        .label {
+          white-space: nowrap;
         }
+      }
     }
+  }
 }
+
+// ==============================================
+// ICON STATES
+// ==============================================
 
 .hgi-loaded #nds-sharePage.open #nds-sharePage-dropdown .copied i::before {
-    content: "㶧";
+  content: "㶧";
 }
 
-/* ========================================
-   RESPONSIVE SHARE PAGE STYLES
-   ======================================== */
+// ==============================================
+// RESPONSIVE BEHAVIOR
+// ==============================================
 
 @include tablet(max) {
-    #nds-sharePageBtn {
-        .label {
-            display: none;
-        }
+  #nds-sharePageBtn {
+    .label {
+      display: none;
     }
+  }
 }
