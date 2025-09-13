@@ -110,6 +110,12 @@
     ];
 
     function initializeNDS() {
+        if (CONFIG.disableAll === true) {
+            if (CONFIG.enableLogging) {
+                console.warn('[NDS] Initialization disabled (config.disableAll = true)');
+            }
+            return;
+        }
         const startTime = performance.now();
 
         // PERFORMANCE: Single DOM query sweep with batched existence checks
@@ -204,10 +210,20 @@
     }
 
     // Configuration options
+    // Merge defaults with optional global/window overrides and HTML data-attributes
+    const rootEl = document.documentElement;
+    const attrAutoInit = rootEl?.getAttribute('data-nds-auto-init');
+    const attrDisableAll = rootEl?.getAttribute('data-nds-disable-all');
+    const GLOBAL = (typeof window !== 'undefined' && window.NDSInitConfig) ? window.NDSInitConfig : {};
+
     const CONFIG = {
         staggerDelay: 3, // ms between component initializations
         enableLogging: true,
         enableTiming: true,
+        // When false, prevents automatic initialization on DOM ready
+        autoInitialize: GLOBAL.autoInitialize ?? (attrAutoInit != null ? attrAutoInit !== 'false' : true),
+        // When true, disables initializing any component (manual calls still respected if caller overrides)
+        disableAll: GLOBAL.disableAll ?? (attrDisableAll != null ? attrDisableAll === 'true' : false),
     };
 
     // Expose global API immediately
@@ -260,11 +276,12 @@
         },
     };
 
-    // Initialize when ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initializeNDS);
-    } else {
-        initializeNDS();
+    // Initialize when ready (if enabled)
+    if (CONFIG.autoInitialize) {
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeNDS);
+        } else {
+            initializeNDS();
+        }
     }
 })();
-

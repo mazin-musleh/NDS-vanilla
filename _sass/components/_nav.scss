@@ -551,6 +551,8 @@ body.minimal .nds-main-nav {
         height: unset !important;
         max-height: 60svh;
         transition: transform var(--nds-transition);
+        /* Hint the browser we animate vertical size in minimal mode */
+        will-change: height;
         z-index: -1;
         display: none;
         transform: translateY(-100%);
@@ -625,6 +627,9 @@ body.minimal .nds-main-nav {
             z-index: 1;
             transform: translateY(0);
             overflow: hidden;
+            /* Height transitions here; isolate layout scope */
+            will-change: height;
+            contain: layout;
         }
     }
 
@@ -707,6 +712,8 @@ body.minimal .nds-main-nav {
         height: 0;
         transform: translateY(0px);
         transition: height var(--nds-transition);
+        will-change: height;
+        contain: layout;
     }
 }
 

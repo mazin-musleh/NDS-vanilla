@@ -116,3 +116,29 @@ header {
     }
 }
 
+/* ========================================
+   INTERACTIVE ELEMENTS
+   ======================================== */
+
+button,
+.button,
+.btn,
+.nds-btn,
+.nds-nav-link,
+[role="button"],
+[role="tab"] {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+}
+
+button,
+.button,
+.btn,
+.nds-btn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
