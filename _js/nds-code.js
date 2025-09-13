@@ -11,11 +11,6 @@
 (function() {
     'use strict';
 
-    // Initialize when DOM is ready
-    document.addEventListener('DOMContentLoaded', function() {
-        initializeCodeProcessing();
-    });
-
     // Main initialization function
     function initializeCodeProcessing() {
         convertHtmlToTextInCode(); // This now includes syntax highlighting
@@ -24,24 +19,25 @@
         initializeCopyButtons();
     }
 
-    // Make functions globally available for expansion
-    window.NDSCode = {
-        convertHtmlToTextInCode: convertHtmlToTextInCode,
-        htmlToText: htmlToText,
-        formatHtmlAsText: formatHtmlAsText,
-        encodeHtmlEntities: encodeHtmlEntities,
-        // Reserved for future expansion
-        processCode: processCode,
-        addLanguageProcessor: addLanguageProcessor,
-        // Copy functionality
-        initializeCopyButtons: initializeCopyButtons,
-        // Line numbering
-        addLineNumbers: addLineNumbers,
-        // Syntax highlighting
-        addSyntaxHighlighting: addSyntaxHighlighting,
-        highlightHTMLSafe: highlightHTMLSafe,
-        detectLanguage: detectLanguage
-    };
+    // CRITICAL: Expose global API immediately (called by unified init system)
+    if (typeof window !== 'undefined') {
+        window.NDSCode = {
+            convertHtmlToTextInCode: convertHtmlToTextInCode,
+            htmlToText: htmlToText,
+            formatHtmlAsText: formatHtmlAsText,
+            encodeHtmlEntities: encodeHtmlEntities,
+            processCode: processCode,
+            addLanguageProcessor: addLanguageProcessor,
+            initializeCopyButtons: initializeCopyButtons,
+            addLineNumbers: addLineNumbers,
+            addSyntaxHighlighting: addSyntaxHighlighting,
+            highlightHTMLSafe: highlightHTMLSafe,
+            detectLanguage: detectLanguage,
+            init: initializeCodeProcessing
+        };
+    }
+
+    // Note: Initialization now handled by nds-init.js unified system
 
     // Language processors registry for future expansion
     var languageProcessors = {

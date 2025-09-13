@@ -57,14 +57,14 @@
   &.nds-menu-btn {
 
     &::after {
-      content: "㭚";
+      content: "㯭";
       font-family: "hgi-stroke-rounded" !important;
       font-style: normal;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       position: relative;
       opacity: 0;
-      transition: opacity var(--nds-transition), transform 0.1s ease;
+      transition: transform 0.1s ease;
       display: inline-flex;
       width: var(--nds-button-icon-size);
       height: var(--nds-button-icon-size);
@@ -703,7 +703,6 @@ Available sizes:
   /* Icon-Only Button Configurations */
   &.nds-icon-only {
     aspect-ratio: 1;
-    padding: 0;
     justify-content: center;
 
     &.nds-sm {

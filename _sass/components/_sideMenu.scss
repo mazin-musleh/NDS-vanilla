@@ -248,16 +248,7 @@
         box-shadow: var(--shadow-md);
     }
 
-    #sideMenuToggle.draggable {
-        background-color: var(--button-background-black-default);
-    }
-
-    .hgi-loaded #sideMenuToggle::after {
-        content: "䍛";
-        font-family: "hgi-stroke-rounded" !important;
-        font-style: normal;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
+    #sideMenuToggle i {
         font-size: 1.5rem;
         color: var(--text-oncolor-primary);
         transition: all 0.05s ease;
@@ -266,13 +257,9 @@
     }
 
     @include ltr {
-        .hgi-loaded #sideMenuToggle::after {
+        #sideMenuToggle i {
             transform: scale(1);
         }
-    }
-
-    .hgi-loaded #sideMenuToggle.draggable::after {
-        content: "㮌";
     }
 
     /* LTR Support */
@@ -286,11 +273,6 @@
             left: 0;
             transform: translateX(calc(var(--nds-sideMenu-width) - var(--spacing-md)));
             border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-        }
-
-        .hgi-loaded #sideMenuToggle::after {
-            content: "䍛";
-            transform: scale(1);
         }
     }
 

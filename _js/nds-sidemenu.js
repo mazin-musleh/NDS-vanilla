@@ -6,13 +6,8 @@
         const cssValue = getComputedStyle(document.documentElement).getPropertyValue('--nds-dropdown-safeZone').trim();
         return cssValue ? parseInt(cssValue, 10) : 40;
     };
-    
-    document.addEventListener("DOMContentLoaded", function () {
-        const accMenu = document.querySelector(".nds-sideMenu");
 
-        if (!accMenu) return;
-
-        // Initialize open state for active menu items
+    function initializeActiveStates(accMenu) {
         accMenu.querySelectorAll("li.active").forEach(activeItem => {
             let current = activeItem;
             while (current && current !== accMenu) {
@@ -22,8 +17,9 @@
                 current = current.parentElement.closest("li");
             }
         });
+    }
 
-        // Accordion submenu toggle
+    function setupAccordionToggle(accMenu) {
         accMenu.addEventListener("click", function (e) {
             const anchor = e.target.closest("li.has-sub > a");
             if (!anchor) return;
@@ -35,6 +31,7 @@
 
             const isOpen = li.classList.contains("open");
             anchor.setAttribute('aria-expanded', !isOpen);
+            
             if (!isOpen) {
                 // Close all sibling items
                 const siblings = [...li.parentElement.children].filter(el => el !== li && el.classList.contains("has-sub"));
@@ -76,8 +73,9 @@
                 }, 250);
             }
         });
+    }
 
-        // Toggle side menu when button is clicked
+    function setupMenuToggle(accMenu) {
         const toggleBtn = document.getElementById("sideMenuToggle");
         if (toggleBtn) {
             toggleBtn.addEventListener("click", (e) => {
@@ -85,22 +83,19 @@
                 accMenu.classList.toggle("open");
             });
         }
+        return toggleBtn;
+    }
 
-        // Close menu when clicking outside safe zone
+    function setupClickOutside(accMenu, toggleBtn) {
         document.addEventListener("click", function (e) {
-            // Only proceed if menu is open
             if (!accMenu.classList.contains("open")) return;
 
-            // Don't close if clicking inside the menu or toggle button
             if (accMenu.contains(e.target) || (toggleBtn && toggleBtn.contains(e.target))) {
                 return;
             }
 
-            // Get menu boundaries
             const menuRect = accMenu.getBoundingClientRect();
             const safeZone = getSafeZonePixels();
-
-            // Check if click is within the safe zone around the menu
             const clickX = e.clientX;
             const clickY = e.clientY;
 
@@ -111,17 +106,43 @@
                 clickY <= menuRect.bottom + safeZone
             );
 
-            // Close menu if click is outside the safe zone
             if (!inSafeZone) {
                 accMenu.classList.remove("open");
             }
         });
+    }
 
-        // Close menu on Escape key
+    function setupKeyboardEvents(accMenu) {
         document.addEventListener("keydown", function (e) {
             if (e.key === "Escape" && accMenu.classList.contains("open")) {
                 accMenu.classList.remove("open");
             }
         });
-    });
+    }
+
+    function initializeSideMenu() {
+        const accMenu = document.querySelector(".nds-sideMenu");
+        if (!accMenu) return;
+        
+        // Skip elements inside code examples
+        if (accMenu.closest('code, .code-example')) {
+            return;
+        }
+
+        initializeActiveStates(accMenu);
+        setupAccordionToggle(accMenu);
+        const toggleBtn = setupMenuToggle(accMenu);
+        setupClickOutside(accMenu, toggleBtn);
+        setupKeyboardEvents(accMenu);
+    }
+
+    // CRITICAL: Expose global API immediately (called by unified init system)
+    if (typeof window !== 'undefined') {
+        window.NDSSideMenu = {
+            init: initializeSideMenu,
+            getSafeZonePixels
+        };
+    }
+
+    // Note: Initialization now handled by nds-init.js unified system
 })();

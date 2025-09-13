@@ -339,6 +339,11 @@
         const accordionContainers = document.querySelectorAll('.nds-accordion');
         
         accordionContainers.forEach(container => {
+            // Skip elements inside code examples
+            if (container.closest('code, .code-example')) {
+                return;
+            }
+            
             if (!container.hasAttribute('data-nds-accordion-initialized')) {
                 const accordionInstance = new NDSAccordion(container);
                 container.ndsAccordionInstance = accordionInstance;
@@ -347,29 +352,26 @@
         });
     }
 
-    // Initialize when DOM is ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initializeAccordions);
-    } else {
-        initializeAccordions();
-    }
-
     // Re-initialize when new content is added
     function reinitializeAccordions() {
         initializeAccordions();
     }
 
-    // Public API
-    window.NDSAccordion = {
-        init: initializeAccordions,
-        reinit: reinitializeAccordions,
-        create: (container) => new NDSAccordion(container)
-    };
+    // CRITICAL: Expose global API immediately (called by unified init system)
+    if (typeof window !== 'undefined') {
+        window.NDSAccordion = {
+            init: initializeAccordions,
+            reinit: reinitializeAccordions,
+            create: (container) => new NDSAccordion(container)
+        };
+    }
 
     // Export for modules
     if (typeof module !== 'undefined' && module.exports) {
         module.exports = NDSAccordion;
     }
+
+    // Note: Initialization now handled by nds-init.js unified system
 })();
 
 /**

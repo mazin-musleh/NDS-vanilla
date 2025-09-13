@@ -727,26 +727,36 @@
         });
     }
 
-    // Initialize all form functionality
-    function init() {
-        try {
-            VoiceRecognition.audioFeedback.init();
-            initFormControlClasses();
-            initInputAutoFill();
-            initDynamicContentObserver();
-            // File uploads are initialized by nds-fileUpload.js
-        } catch (error) {
+    // CRITICAL: Expose global API immediately (called by unified init system)
+    window.NDS = window.NDS || {};
+    window.NDS.Forms = {
+        init: initializeAllForms,
+        VoiceRecognition: VoiceRecognition,
+        reinit: initializeAllForms,
+        updateFormState: updateFormState,
+        initializeContainer: initializeContainer,
+        initializeDynamic: function(element) {
+            // Alias for initializeContainer for backward compatibility
+            initializeContainer(element);
         }
+    };
+
+    // Backward compatibility
+    window.VoiceRecognition = VoiceRecognition;
+    window.reinitFormControlClasses = initializeAllForms;
+
+    // Mark forms script as loaded
+    window.NDS.Forms._loaded = true;
+
+    function initializeAllForms() {
+        VoiceRecognition.audioFeedback.init();
+        initFormControlClasses();
+        initInputAutoFill();
+        initDynamicContentObserver();
+        // File uploads are initialized by nds-fileUpload.js
     }
 
-    // Initialize when DOM is ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function() {
-            init();
-        });
-    } else {
-        init();
-    }
+    // Note: Initialization now handled by nds-init.js unified system
 
     // Dynamic content observer to handle form controls added after page load
     function initDynamicContentObserver() {
@@ -824,6 +834,11 @@
             : Array.from(container.querySelectorAll('.nds-form-control'));
 
         formControls.forEach(function(formControl) {
+            // Skip elements inside code examples
+            if (formControl.closest('code, .code-example')) {
+                return;
+            }
+            
             var inputElements = formControl.querySelectorAll(':scope > input, :scope > textarea, :scope > select');
 
             inputElements.forEach(function (input) {
@@ -1014,24 +1029,5 @@
         });
     }
 
-    // Global exports for external access
-    window.NDS = window.NDS || {};
-    window.NDS.Forms = {
-        VoiceRecognition: VoiceRecognition,
-        reinit: init,
-        updateFormState: updateFormState,
-        initializeContainer: initializeContainer,
-        initializeDynamic: function(element) {
-            // Alias for initializeContainer for backward compatibility
-            initializeContainer(element);
-        }
-    };
-
-    // Backward compatibility
-    window.VoiceRecognition = VoiceRecognition;
-    window.reinitFormControlClasses = init;
-
-    // Mark forms script as loaded
-    window.NDS.Forms._loaded = true;
 
 })();

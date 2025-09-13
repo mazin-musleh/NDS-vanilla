@@ -11,6 +11,11 @@
             return;
         }
         fileUploadElements.forEach((element, index) => {
+            // Skip elements inside code examples
+            if (element.closest('code, .code-example')) {
+                return;
+            }
+            
             initFileUpload(element);
         });
     }
@@ -72,12 +77,12 @@
             const status = fileData.status || 'ready';
             
             // Find template within the current container
-            const template = uploadContainer.querySelector('template');
+            const template = uploadContainer.querySelector('.file-item-template');
             if (!template) {
                 return document.createElement('div');
             }
             
-            const fileItem = template.content.cloneNode(true).querySelector('.file-item');
+            const fileItem = template.querySelector('.file-item').cloneNode(true);
             
             // Set appropriate classes and attributes
             if (status === 'uploading') {
@@ -94,7 +99,7 @@
             const fileSize = fileItem.querySelector('.file-size');
             const fileType = fileItem.querySelector('.file-type');
             const fileStatus = fileItem.querySelector('.file-status');
-            const fileIcon = fileItem.querySelector('.file-icon');
+            const feedbackIcon = fileItem.querySelector('.nds-feedback-icon');
             const progressCircle = fileItem.querySelector('.progress-circle');
             const removeButton = fileItem.querySelector('.remove-file');
             const fileError = fileItem.querySelector('.file-error');
@@ -108,7 +113,7 @@
             
             // Handle icon vs progress bar vs error display
             if (status === 'uploading' || status === 'processing') {
-                if (fileIcon) fileIcon.style.display = 'none';
+                if (feedbackIcon) feedbackIcon.style.display = 'none';
                 if (progressCircle) progressCircle.style.display = 'flex';
                 if (fileError) fileError.style.display = 'none';
                 
@@ -119,7 +124,11 @@
                     fileItem.classList.remove('processing');
                 }
             } else if (status === 'error') {
-                if (fileIcon) fileIcon.style.display = '';
+                if (feedbackIcon) {
+                    feedbackIcon.style.display = '';
+                    feedbackIcon.classList.add('nds-error');
+                    feedbackIcon.classList.remove('nds-success');
+                }
                 if (progressCircle) progressCircle.style.display = 'none';
                 if (fileError && errorMessage) {
                     fileError.style.display = 'flex';
@@ -127,7 +136,15 @@
                 }
                 fileItem.classList.add('error');
             } else {
-                if (fileIcon) fileIcon.style.display = '';
+                if (feedbackIcon) {
+                    feedbackIcon.style.display = '';
+                    if (status === 'complete') {
+                        feedbackIcon.classList.add('nds-success');
+                        feedbackIcon.classList.remove('nds-error');
+                    } else {
+                        feedbackIcon.classList.remove('nds-success', 'nds-error');
+                    }
+                }
                 if (progressCircle) progressCircle.style.display = 'none';
                 if (fileError) fileError.style.display = 'none';
                 fileItem.classList.remove('error', 'processing');
@@ -594,25 +611,8 @@
         }
     }
 
-    // Initialize all file uploads when DOM is ready
-    function init() {
-        try {
-            initializeFileUploads();
-        } catch (error) {
-            console.warn('NDS File Upload initialization error:', error);
-        }
-    }
-
-    // Initialize when DOM is ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function() {
-            init();
-        });
-    } else {
-        init();
-    }
-
-    // Global exports for external access
+    // Initialize with deferred non-critical features
+    // CRITICAL: Expose global API immediately (called by unified init system)
     window.NDS = window.NDS || {};
     window.NDS.Forms = window.NDS.Forms || {};
     window.NDS.Forms.FileUpload = {
@@ -632,5 +632,7 @@
 
     // Mark file upload script as loaded
     window.NDS.Forms.FileUpload._loaded = true;
+
+    // Note: Initialization now handled by nds-init.js unified system
 
 })();

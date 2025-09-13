@@ -161,16 +161,8 @@
     }
 
 
-    // Global exposure
-    if (typeof window !== 'undefined') {
-        window.updateDate = updateDate;
-        window.updateClock = updateClock;
-        window.getHijriDate = getHijriDate;
-    }
 
-    // Auto-initialize
-    function init() {
-        // Only run functions if their elements exist
+    function initializeTimeDate() {
         const dateEl = document.getElementById('nds-date');
         const clockEl = document.getElementById('nds-realTimeClock');
         
@@ -185,14 +177,18 @@
             // Update clock every second
             setInterval(updateClock, 1000);
         }
-
-        //clearHijriCache();
     }
 
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-    } else {
-        setTimeout(init, 50);
+    // CRITICAL: Expose global functions immediately (called by unified init system)
+    if (typeof window !== 'undefined') {
+        window.updateDate = updateDate;
+        window.updateClock = updateClock;
+        window.getHijriDate = getHijriDate;
+        window.NDSTimeDate = {
+            init: initializeTimeDate
+        };
     }
+
+    // Note: Initialization now handled by nds-init.js unified system
 
 })();

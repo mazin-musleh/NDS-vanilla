@@ -61,31 +61,25 @@
         check();
     }
 
-    // Global exposure
+    function initializeFontLoading() {
+        waitForFontFile('hgi-stroke-rounded', (loaded) => {
+            // Font loading completed - no logging needed
+        });
+    }
+
+    // CRITICAL: Expose global API immediately (called by unified init system)
     if (typeof window !== 'undefined') {
         window.waitForFontFile = waitForFontFile;
         
         // Create global font loading API
         window.NDSFontLoading = {
             waitForFontFile,
-            getFontLoadingState: () => fontLoadingState
+            getFontLoadingState: () => fontLoadingState,
+            init: initializeFontLoading
         };
     }
 
-    // Auto-initialize font loading for HGI Stroke Rounded
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => {
-            waitForFontFile('hgi-stroke-rounded', (loaded) => {
-                // Font loading completed - no logging needed
-            });
-        });
-    } else {
-        setTimeout(() => {
-            waitForFontFile('hgi-stroke-rounded', (loaded) => {
-                // Font loading completed - no logging needed
-            });
-        }, 50);
-    }
+    // Note: Initialization now handled by nds-init.js unified system
 
     // Module export
     if (typeof module !== 'undefined' && module.exports) {

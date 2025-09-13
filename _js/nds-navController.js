@@ -19,7 +19,7 @@
         get navItems() { return this.primary?.querySelectorAll('.nds-nav-item:not(.showMore)') || []; }
     };
 
-    // Simple state
+    // Optimized state with aggressive caching
     const state = {
         windowWidth: window.innerWidth,
         isMouseOverDropdown: false,
@@ -28,19 +28,28 @@
         pendingDropdownAction: null,
         pendingNavbarAction: null,
         isAnimatingMenu: false,
-
-        get minimalMode() {
-            const breakpoint = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nds-minimal-nav-bp')) || 768;
-            return this.windowWidth <= breakpoint;
+        
+        // Static CSS values - computed once
+        _staticCSS: null,
+        
+        getStaticCSS() {
+            if (!this._staticCSS) {
+                const rootStyles = getComputedStyle(document.documentElement);
+                this._staticCSS = {
+                    minimalNavBp: parseInt(rootStyles.getPropertyValue('--nds-minimal-nav-bp')) || 768,
+                    transitionSpeed: parseFloat(rootStyles.getPropertyValue('--nds-transition-speed')) || 0.2,
+                    contentMaxWidth: parseFloat(rootStyles.getPropertyValue('--nds-content-MaxWidth')) || 1280
+                };
+            }
+            return this._staticCSS;
         },
 
-        getNavHeight() {
-            return parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nds-nav-height')) || 72;
+        get minimalMode() {
+            return this.windowWidth <= this.getStaticCSS().minimalNavBp;
         },
 
         getTransitionSpeed() {
-            const speed = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nds-transition-speed')) || 0.3;
-            return speed * 1000;
+            return this.getStaticCSS().transitionSpeed * 1000;
         },
 
         getElementDuration(element) {
@@ -53,6 +62,18 @@
             if (!dropdown) return 0;
             const menu = dropdown.querySelector('.nds-dropdown-menu');
             return this.getElementDuration(menu);
+        },
+        
+        // Centralized cache invalidation for dynamic measurements only
+        invalidateCache(reason = 'unknown') {
+            // Clear DOM element dimension caches
+            [DOM.collapse, DOM.primary].forEach(el => {
+                if (el) {
+                    delete el._cachedMaxHeight;
+                    delete el._dimensionCache;
+                    delete el._lastObservedSize;
+                }
+            });
         }
     };
 
@@ -62,10 +83,11 @@
             clearTimeout(state.pendingOverflowCheck);
         }
         
-        // Immediate check for high priority calls
+        // Immediate check for high priority calls - use RAF to avoid forced reflow
         if (priority === 'immediate') {
             state.pendingOverflowCheck = null;
-            checkOverflow();
+            // Use requestAnimationFrame to defer geometric property reads
+            requestAnimationFrame(() => checkOverflow());
             return;
         }
         
@@ -94,7 +116,7 @@
 
         if (state.minimalMode) {
             if (DOM.collapse) {
-                // Use cached maxHeight if available, otherwise compute and cache
+                // Use cached maxHeight computation for dynamic value
                 let maxHeight = DOM.collapse._cachedMaxHeight;
                 if (maxHeight === undefined) {
                     maxHeight = parseFloat(getComputedStyle(DOM.collapse).maxHeight);
@@ -102,21 +124,36 @@
                 }
                 
                 if (isFinite(maxHeight) && maxHeight > 0) {
-                    // Batch DOM reads for better performance
-                    const primaryHeight = DOM.primary.scrollHeight;
-                    const secondaryHeight = DOM.secondary?.offsetHeight || 0;
+                    // Cache measurements with timestamp for invalidation
+                    const now = performance.now();
+                    const cache = DOM.primary._dimensionCache;
+                    
+                    if (!cache || (now - cache.timestamp) > 50) {
+                        DOM.primary._dimensionCache = {
+                            primaryHeight: DOM.primary.scrollHeight,
+                            secondaryHeight: DOM.secondary?.offsetHeight || 0,
+                            timestamp: now
+                        };
+                    }
+                    
+                    const { primaryHeight, secondaryHeight } = DOM.primary._dimensionCache;
                     hasOverflow = (primaryHeight + secondaryHeight) > maxHeight;
                 }
             }
         } else {
-            // Cache dimensions for better performance
-            const scrollWidth = DOM.primary._cachedScrollWidth ?? DOM.primary.scrollWidth;
-            const clientWidth = DOM.primary._cachedClientWidth ?? DOM.primary.clientWidth;
+            // More aggressive dimension caching with timestamp
+            const now = performance.now();
+            const cache = DOM.primary._dimensionCache;
             
-            // Cache values briefly to avoid repeated measurements
-            DOM.primary._cachedScrollWidth = scrollWidth;
-            DOM.primary._cachedClientWidth = clientWidth;
+            if (!cache || (now - cache.timestamp) > 50) {
+                DOM.primary._dimensionCache = {
+                    scrollWidth: DOM.primary.scrollWidth,
+                    clientWidth: DOM.primary.clientWidth,
+                    timestamp: now
+                };
+            }
             
+            const { scrollWidth, clientWidth } = DOM.primary._dimensionCache;
             hasOverflow = scrollWidth > clientWidth;
         }
 
@@ -128,8 +165,8 @@
         if (!hasOverflow) {
             DOM.primary.classList.remove('atEnd');
         } else {
-            // Schedule scroll end check with a small delay to ensure proper state
-            setTimeout(() => utils.checkScrollEnd(), 10);
+            // Use requestAnimationFrame instead of setTimeout for better performance
+            requestAnimationFrame(() => utils.checkScrollEnd());
         }
     }
 
@@ -155,16 +192,10 @@
 
             if (shouldBeMinimal !== isCurrentlyMinimal) {
                 document.body.classList.toggle('minimal', shouldBeMinimal);
-
-                // Clear all cached dimensions when switching modes
-                if (DOM.collapse) {
-                    delete DOM.collapse._cachedMaxHeight;
-                }
-                if (DOM.primary) {
-                    delete DOM.primary._cachedScrollWidth;
-                    delete DOM.primary._cachedClientWidth;
-                }
-
+                
+                // Use centralized cache invalidation
+                state.invalidateCache('mode-switch');
+                
                 this.managePABPlacement();
                 return true;
             }
@@ -260,16 +291,18 @@
             let gap = 0;
 
             if (container) {
-                const styles = getComputedStyle(container);
-                padding = parseFloat(styles.paddingLeft || 0) + parseFloat(styles.paddingRight || 0);
-                gap = parseFloat(styles.gap || styles.columnGap || 0);
+                const containerStyles = getComputedStyle(container);
+                padding = parseFloat(containerStyles.paddingLeft || 0) + 
+                         parseFloat(containerStyles.paddingRight || 0);
+                gap = parseFloat(containerStyles.gap || containerStyles.columnGap || 0);
                 if (isNaN(gap)) gap = 0;
             }
 
             const navWidth = this.getElementWidth(DOM.nav);
-            const maxWidth = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nds-content-MaxWidth')) || navWidth;
+            const maxWidth = state.getStaticCSS().contentMaxWidth;
             const constraint = Math.min(navWidth, maxWidth);
 
+            // Simple visible children check
             const visibleChildren = container ? Array.from(container.children).filter(child =>
                 getComputedStyle(child).display !== 'none'
             ) : [];
@@ -282,15 +315,14 @@
                 (gap * gapCount);
 
             const available = constraint - used;
-            DOM.primary.style.maxWidth = available > 0 ? `${available}px` : '';
+            const newMaxWidth = available > 0 ? `${available}px` : '';
             
-            // Clear cached dimensions when width changes
-            if (DOM.primary) {
-                delete DOM.primary._cachedScrollWidth;
-                delete DOM.primary._cachedClientWidth;
+            // Only update if changed to avoid triggering unnecessary reflows
+            if (DOM.primary.style.maxWidth !== newMaxWidth) {
+                DOM.primary.style.maxWidth = newMaxWidth;
+                state.invalidateCache('width-change');
+                scheduleOverflowCheck('immediate');
             }
-            
-            scheduleOverflowCheck('immediate');
         },
 
         scheduleUpdate() {
@@ -369,11 +401,19 @@
                 setTimeout(() => this.checkScrollEnd(), 300);
             });
 
-            const scrollHandler = this.throttle(() => this.checkScrollEnd(), 16);
-            DOM.primary.addEventListener('scroll', scrollHandler);
+            const scrollHandler = this.throttle(() => {
+                // In minimal mode, only handle scroll when nav is open
+                if (state.minimalMode && !DOM.collapse?.classList.contains('show')) return;
+                this.checkScrollEnd();
+            }, 32);
+            DOM.primary.addEventListener('scroll', scrollHandler, { passive: true });
 
             if ('onscrollend' in DOM.primary) {
-                DOM.primary.addEventListener('scrollend', () => setTimeout(() => this.checkScrollEnd(), 10));
+                DOM.primary.addEventListener('scrollend', () => {
+                    // In minimal mode, only handle scroll end when nav is open
+                    if (state.minimalMode && !DOM.collapse?.classList.contains('show')) return;
+                    setTimeout(() => this.checkScrollEnd(), 10);
+                });
             }
 
             DOM.primary.style.scrollBehavior = 'smooth';
@@ -447,13 +487,30 @@
 
             setupDropdownTracking();
 
-            if (typeof MutationObserver !== 'undefined') {
-                new MutationObserver((mutations) => {
-                    if (mutations.some(m => [...m.addedNodes, ...m.removedNodes].some(n =>
-                        n.nodeType === 1 && (n.classList?.contains('nds-dropdown-menu') || n.querySelector?.('.nds-dropdown-menu'))))) {
+            if (typeof MutationObserver !== 'undefined' && DOM.nav) {
+                // Only observe nav area for dropdown menu changes, not entire body
+                const dropdownObserver = new MutationObserver(utils.debounce((mutations) => {
+                    let hasDropdownChanges = false;
+                    
+                    for (const mutation of mutations) {
+                        if (mutation.type === 'childList') {
+                            const nodes = [...mutation.addedNodes, ...mutation.removedNodes];
+                            if (nodes.some(n => 
+                                n.nodeType === 1 && 
+                                (n.classList?.contains('nds-dropdown-menu') || 
+                                 n.querySelector?.('.nds-dropdown-menu')))) {
+                                hasDropdownChanges = true;
+                                break;
+                            }
+                        }
+                    }
+                    
+                    if (hasDropdownChanges) {
                         setupDropdownTracking();
                     }
-                }).observe(document.body, { childList: true, subtree: true });
+                }, 150));
+                
+                dropdownObserver.observe(DOM.nav, { childList: true, subtree: true });
             }
         },
 
@@ -482,14 +539,17 @@
     };
 
     function setupEventListeners() {
+        // Optimize resize handling with longer debounce and passive listener
         const handleResize = utils.debounce(() => {
+            state.invalidateCache('resize');
             utils.scheduleUpdate('resize');
-        }, 100);
+        }, 150);
 
-        window.addEventListener('resize', handleResize);
+        window.addEventListener('resize', handleResize, { passive: true });
         window.addEventListener('orientationchange', () => {
-            setTimeout(() => utils.scheduleUpdate('orientation'), 100);
-        });
+            state.invalidateCache('orientation');
+            setTimeout(() => utils.scheduleUpdate('orientation'), 150);
+        }, { passive: true });
 
         document.addEventListener('click', (e) => {
             const dropdownToggle = e.target.closest('[data-toggle="dropdown"]');
@@ -516,32 +576,65 @@
 
         if (typeof MutationObserver !== 'undefined') {
             const observer = new MutationObserver(utils.debounce((mutations) => {
-                const relevantChanges = mutations.some(m =>
-                    [...m.addedNodes, ...m.removedNodes].some(n =>
-                        n.nodeType === 1 && (
-                            n.classList?.contains('nds-nav-item') ||
-                            n.classList?.contains('nds-dropdown') ||
-                            n.querySelector?.('.nds-nav-item, .nds-dropdown')
-                        )
-                    )
-                );
+                let hasRelevantChanges = false;
+                
+                // More efficient mutation filtering
+                for (const mutation of mutations) {
+                    if (mutation.type === 'childList') {
+                        const nodes = [...mutation.addedNodes, ...mutation.removedNodes];
+                        for (const node of nodes) {
+                            if (node.nodeType === 1) {
+                                const classList = node.classList;
+                                if (classList?.contains('nds-nav-item') || 
+                                    classList?.contains('nds-dropdown') ||
+                                    classList?.contains('nds-nav-primary') ||
+                                    classList?.contains('nds-nav-secondary')) {
+                                    hasRelevantChanges = true;
+                                    break;
+                                }
+                            }
+                        }
+                        if (hasRelevantChanges) break;
+                    }
+                }
 
-                if (relevantChanges) {
+                if (hasRelevantChanges) {
                     utils.scheduleUpdate('dom-mutation');
                 }
-            }, 50));
+            }, 100)); // Increased debounce delay
 
-            if (DOM.nav) {
-                observer.observe(DOM.nav, { childList: true, subtree: true });
-            }
+            // Only observe specific navigation containers, not entire nav
+            [DOM.primary, DOM.secondary].filter(Boolean).forEach(container => {
+                observer.observe(container, { childList: true, subtree: false });
+            });
         }
 
         if (typeof ResizeObserver !== 'undefined') {
-            const resizeObserver = new ResizeObserver(utils.debounce(() => {
-                utils.scheduleUpdate('element-resize');
-            }, 50));
+            const resizeObserver = new ResizeObserver(utils.debounce((entries) => {
+                // Only trigger update if meaningful resize occurred
+                let hasSignificantResize = false;
+                
+                for (const entry of entries) {
+                    const { width, height } = entry.contentRect;
+                    const element = entry.target;
+                    const lastSize = element._lastObservedSize;
+                    
+                    if (!lastSize || 
+                        Math.abs(width - lastSize.width) > 5 || 
+                        Math.abs(height - lastSize.height) > 5) {
+                        hasSignificantResize = true;
+                        element._lastObservedSize = { width, height };
+                    }
+                }
+                
+                if (hasSignificantResize) {
+                    state.invalidateCache('element-resize');
+                    utils.scheduleUpdate('element-resize');
+                }
+            }, 100));
 
-            [DOM.nav, DOM.brand, DOM.secondary, DOM.primary].filter(Boolean).forEach(el => {
+            // Only observe key elements that affect layout
+            [DOM.nav, DOM.primary].filter(Boolean).forEach(el => {
                 resizeObserver.observe(el);
             });
         }
@@ -579,135 +672,116 @@
     }
 
     function animateDropdown(dropdown, open) {
-        // If flag is already set and this is an opening animation, block it
-        if (state.isAnimatingMenu && open) {
-            return;
-        }
+        // Simplified animation state management
+        if (state.isAnimatingMenu && open) return;
         
-        // Set global animation flag to prevent any other menu actions
-        if (!state.isAnimatingMenu) {
-            state.isAnimatingMenu = true;
-        }
-        
+        state.isAnimatingMenu = true;
         const menu = dropdown.querySelector('.nds-dropdown-menu');
         const duration = state.getDropdownDuration(dropdown);
         const isInMinimal = dropdown.closest('.nds-nav-minimal');
+        const needsHeightAnimation = state.minimalMode && 
+            (dropdown.closest('.nds-nav-primary') || dropdown.closest('.nds-nav-secondary'));
+
+        // Unified animation completion handler
+        const completeAnimation = () => {
+            state.isAnimatingMenu = false;
+            if (!isInMinimal) updatePositions();
+            scheduleOverflowCheck('low', 100);
+            processAllPendingActions();
+        };
 
         if (open) {
             dropdown.classList.add('show');
-            dropdown.classList.remove('closing');
-            dropdown.classList.remove('opened');
+            dropdown.classList.remove('closing', 'opened');
             
-            // Only set height for primary/secondary nav dropdowns in minimal mode
-            if (state.minimalMode && (dropdown.closest('.nds-nav-primary') || dropdown.closest('.nds-nav-secondary'))) {
-                if (menu) menu.style.height = `${menu.scrollHeight}px`;
-            }
+            scheduleOverflowCheck('high', 10);
 
-            // Check overflow at animation start - high priority for immediate feedback
-            scheduleOverflowCheck('high');
-
-            requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                    dropdown.classList.add('opening');
-                });
-            });
+            // Simplified double RAF for opening animation
+            requestAnimationFrame(() => requestAnimationFrame(() => {
+                // Defer height calculation to avoid forced reflow
+                if (needsHeightAnimation && menu) {
+                    menu.style.height = `${menu.scrollHeight}px`;
+                }
+                dropdown.classList.add('opening');
+            }));
 
             setTimeout(() => {
                 dropdown.classList.remove('opening');
                 dropdown.classList.add('opened');
-                if (!isInMinimal) {
-                    updatePositions();
-                }
-                state.isAnimatingMenu = false;
-                processAllPendingActions();
+                completeAnimation();
             }, duration);
         } else {
             dropdown.classList.add('closing');
             dropdown.classList.remove('opened');
             
-            // Only set height for primary/secondary nav dropdowns in minimal mode
-            if (state.minimalMode && (dropdown.closest('.nds-nav-primary') || dropdown.closest('.nds-nav-secondary'))) {
+            if (needsHeightAnimation && menu) {
                 menu.style.height = '0px';
             }
 
-            // Check overflow at animation start - high priority for immediate feedback
-            scheduleOverflowCheck('high');
-            
-            // Additional overflow check after DOM changes settle - low priority
-            setTimeout(() => scheduleOverflowCheck('low'), 50);
-
-            if (!isInMinimal) {
-                updatePositions();
-            }
+            scheduleOverflowCheck('high', 10);
+            if (!isInMinimal) updatePositions();
 
             setTimeout(() => {
-                dropdown.classList.remove('show');
-                dropdown.classList.remove('closing');
-                state.isAnimatingMenu = false;
-                processAllPendingActions();
+                dropdown.classList.remove('show', 'closing');
+                completeAnimation();
             }, duration);
         }
     }
 
     function animateNavbar(open) {
-        // Set global animation flag to prevent any other menu actions
         state.isAnimatingMenu = true;
-        
         const duration = state.getElementDuration(DOM.collapse);
+
+        // Unified completion handler
+        const completeAnimation = () => {
+            state.isAnimatingMenu = false;
+            updatePositions();
+            scheduleOverflowCheck('low', 100);
+            processAllPendingActions();
+        };
 
         if (open) {
             DOM.collapse?.classList.add('show');
-            DOM.collapse?.classList.remove('closing');
-            DOM.collapse?.classList.remove('opened');
+            DOM.collapse?.classList.remove('closing', 'opened');
             DOM.toggler?.classList.add('active');
 
-            requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                    DOM.collapse?.classList.add('opening');
-                });
-            });
-
+            requestAnimationFrame(() => requestAnimationFrame(() => {
+                DOM.collapse?.classList.add('opening');
+            }));
 
             if (state.minimalMode) {
+                scheduleOverflowCheck('high', 10);
+                
+                // Simplified height calculation
                 setTimeout(() => {
-                    const actualHeight = DOM.collapse.offsetHeight;
-                    const maxHeight = parseFloat(getComputedStyle(DOM.collapse).maxHeight) || Infinity;
-                    DOM.collapse._effectiveMaxHeight = Math.min(actualHeight, maxHeight);
-                    scheduleOverflowCheck();
+                    if (DOM.collapse) {
+                        const actualHeight = DOM.collapse.offsetHeight;
+                        const maxHeight = parseFloat(getComputedStyle(DOM.collapse).maxHeight) || Infinity;
+                        DOM.collapse._effectiveMaxHeight = Math.min(actualHeight, maxHeight);
+                        scheduleOverflowCheck('low');
+                    }
                 }, duration + 50);
-
-                scheduleOverflowCheck();
             }
 
             setTimeout(() => {
                 DOM.collapse?.classList.remove('opening');
                 DOM.collapse?.classList.add('opened');
-                updatePositions();
-                state.isAnimatingMenu = false;
-                processAllPendingActions();
+                completeAnimation();
             }, duration);
         } else {
             DOM.toggler?.classList.remove('active');
             
-            const totalDelay = utils.closeAllDropdowns();
+            const dropdownCloseDelay = utils.closeAllDropdowns();
 
-            // Wait for dropdown animations to complete before starting main nav close
-            const navCloseDelay = totalDelay > 0 ? totalDelay : 0;
-
-            // Only add closing class after dropdowns finish closing
             setTimeout(() => {
                 DOM.collapse?.classList.add('closing');
                 DOM.collapse?.classList.remove('opened');
-            }, navCloseDelay);
+            }, dropdownCloseDelay);
 
             setTimeout(() => {
-                DOM.collapse?.classList.remove('show');
-                DOM.collapse?.classList.remove('closing');
-                scheduleOverflowCheck();
-                
-                state.isAnimatingMenu = false;
-                processAllPendingActions();
-            }, navCloseDelay + duration);
+                DOM.collapse?.classList.remove('show', 'closing');
+                completeAnimation();
+            }, dropdownCloseDelay + duration);
         }
     }
 
@@ -724,8 +798,12 @@
         const isExpanded = DOM.dgaContent.classList.contains('dga-expanded');
         DOM.dgaTab?.setAttribute('aria-expanded', isExpanded);
         DOM.dgaTab?.classList.toggle('expanded', isExpanded);
-        DOM.dgaContent.style.height = DOM.dgaContent.classList.contains('dga-expanded') ?
-            `${DOM.dgaContent.scrollHeight}px` : '0px';
+        
+        // Defer height calculation to avoid forced reflow
+        requestAnimationFrame(() => {
+            DOM.dgaContent.style.height = DOM.dgaContent.classList.contains('dga-expanded') ?
+                `${DOM.dgaContent.scrollHeight}px` : '0px';
+        });
 
         setTimeout(() => {
             updatePositions();
@@ -778,24 +856,19 @@
         }
     }
 
-    function processPendingDropdownAction() {
+    function processAllPendingActions() {
+        // Simplified consolidated pending action processor
         if (state.pendingDropdownAction) {
             const { event } = state.pendingDropdownAction;
             state.pendingDropdownAction = null;
             toggleDropdown(event);
+            return; // Process one at a time to avoid conflicts
         }
-    }
-
-    function processPendingNavbarAction() {
+        
         if (state.pendingNavbarAction) {
             state.pendingNavbarAction = null;
             toggleNavbar();
         }
-    }
-
-    function processAllPendingActions() {
-        processPendingDropdownAction();
-        processPendingNavbarAction();
     }
 
     function toggleDropdown(event) {
@@ -981,26 +1054,20 @@
         });
     };
 
-    const handleScroll = utils.throttle(() => {
-        const hasDropdowns = document.querySelector('#ndsMainNav .nds-dropdown.show');
-        if (!hasDropdowns) return;
-        
-        updatePositions();
-    }, 16);
 
 
-    function init() {
+    function initNavController() {
         if (!DOM.collapse) return;
 
+        // CRITICAL: Core navigation functionality
         utils.updateBodyClass();
-        utils.managePABPlacement();
-
         setupEventListeners();
-
         document.addEventListener('click', handleDocumentClick);
-        window.addEventListener('scroll', handleScroll, { passive: true });
+        
+        // Non-critical features
+        utils.managePABPlacement();
         DOM.dgaTab?.addEventListener('click', toggleDGA);
-
+        
         if (DOM.collapse?.classList.contains('show')) {
             updatePositions();
         }
@@ -1008,14 +1075,21 @@
         utils.updateNavMaxWidth();
         utils.setupInteractions();
         utils.checkTogglerVisibility();
-
-        Object.assign(window, { toggleNavbar, toggleDropdown, toggleDGA });
     }
 
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-    } else {
-        init();
-    }
+    // CRITICAL: Essential window functions for external access (called by unified init system)
+    Object.assign(window, { 
+        toggleNavbar, 
+        toggleDropdown, 
+        toggleDGA
+    });
+
+    // Expose navigation initialization function
+    window.NDSNavController = {
+        init: initNavController
+    };
+
+    // Note: Initialization now handled by nds-init.js unified system
+    
 
 })();

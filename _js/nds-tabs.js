@@ -249,6 +249,11 @@
         const tabContainers = document.querySelectorAll('.nds-tabs');
         
         tabContainers.forEach(container => {
+            // Skip elements inside code examples
+            if (container.closest('code, .code-example')) {
+                return;
+            }
+            
             if (!container.hasAttribute('data-nds-tabs-initialized')) {
                 const tabsInstance = new NDSTabs(container);
                 container.ndsTabsInstance = tabsInstance;
@@ -257,29 +262,26 @@
         });
     }
 
-    // Initialize when DOM is ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initializeTabs);
-    } else {
-        initializeTabs();
-    }
-
     // Re-initialize when new content is added
     function reinitializeTabs() {
         initializeTabs();
     }
 
-    // Public API
-    window.NDSTabs = {
-        init: initializeTabs,
-        reinit: reinitializeTabs,
-        create: (container) => new NDSTabs(container)
-    };
+    // CRITICAL: Expose global API immediately (called by unified init system)
+    if (typeof window !== 'undefined') {
+        window.NDSTabs = {
+            init: initializeTabs,
+            reinit: reinitializeTabs,
+            create: (container) => new NDSTabs(container)
+        };
+    }
 
     // Export for modules
     if (typeof module !== 'undefined' && module.exports) {
         module.exports = NDSTabs;
     }
+
+    // Note: Initialization now handled by nds-init.js unified system
 })();
 
 /**
