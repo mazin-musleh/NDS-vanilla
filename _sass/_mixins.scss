@@ -374,15 +374,15 @@ textarea {
 // Base progress circle structure
 @mixin progress-circle-base($size: 24px, $rotate: -90deg) {
   position: relative;
-  width: $size !important;
-  height: $size !important;
+  width: var(--pc-size, #{$size}) !important;
+  height: var(--pc-size, #{$size}) !important;
   display: flex;
   align-items: center;
   justify-content: center;
 
   svg {
-    width: $size !important;
-    height: $size !important;
+    width: var(--pc-size, #{$size}) !important;
+    height: var(--pc-size, #{$size}) !important;
     transform: rotate($rotate) !important;
 
     circle {
@@ -392,6 +392,18 @@ textarea {
       transform: scale(1.08);
       transform-origin: center center;
     }
+  }
+
+  .progress-info {
+    position: absolute;
+    color: var(--text-primary-paragraph);
+    line-height: 1;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    flex-direction: column;
   }
 }
 
@@ -442,111 +454,41 @@ textarea {
 
 // Progress circle text/info styling with dynamic font scaling
 @mixin progress-circle-text($show-text: true, $show-symbol: false, $size: 24px) {
-  // Calculate font size based on circle size: 24px -> 10px, 200px -> 36px
-  $min-size: 24px;
-  $max-size: 200px;
-  $min-font: 10px;
-  $max-font: 36px;
+  .progress-info {
+    gap: clamp(0px, calc(var(--pc-size, #{$size}) * 0.04), 8px) !important;
+    padding: 0 clamp(8px, calc(var(--pc-size, #{$size}) * 0.2), 40px) !important;
 
-  // Calculate progress text size: 14px -> 20px (hide below 14px threshold)
-  $min-text-size: 10px;
-  $max-text-size: 20px;
-  $text-threshold: 50px; // Hide text below this circle size
-  $symbol-threshold: 40px; // Hide symbol below this circle size (smaller than text threshold)
-
-  // Linear interpolation for number font size
-  $size-range: (
-    $max-size - $min-size
-  );
-$font-range: (
-  $max-font - $min-font
-);
-$size-ratio: math.div(($size - $min-size), $size-range);
-$calculated-font: $min-font + ($font-range * $size-ratio);
-
-// Linear interpolation for progress text size
-$text-range: (
-  $max-text-size - $min-text-size
-);
-$calculated-text: $min-text-size + ($text-range * $size-ratio);
-
-// Clamp the results between min and max
-$font-size: clamp(#{$min-font}, #{$calculated-font}, #{$max-font});
-$text-size: clamp(#{$min-text-size}, #{$calculated-text}, #{$max-text-size});
-
-// Determine if text should be hidden based on size thresholds
-$hide-text-due-to-size: $size < $text-threshold;
-$hide-symbol-due-to-size: $size < $symbol-threshold;
-
-// Calculate gap based on size: 8px max -> 0px min
-$max-gap: 8px;
-$min-gap: 0px;
-$gap-range: (
-  $max-gap - $min-gap
-);
-$calculated-gap: $min-gap + ($gap-range * $size-ratio);
-$info-gap: clamp(#{$min-gap}, #{$calculated-gap}, #{$max-gap});
-
-// Calculate padding based on size: 8px at 24px -> 40px at 200px
-$min-padding: 8px;
-$max-padding: 40px;
-$padding-range: (
-  $max-padding - $min-padding
-);
-$calculated-padding: $min-padding + ($padding-range * $size-ratio);
-$info-padding: clamp(#{$min-padding}, #{$calculated-padding}, #{$max-padding});
-
-// Calculate letter-spacing based on size
-$letter-spacing: if($size < 40px, 0rem, if($size >=120px, -0.072rem, -0.024rem));
-
-.progress-info {
-  position: absolute;
-  color: var(--text-primary-paragraph);
-  line-height: 1;
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: center;
-  text-align: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: $info-gap !important;
-  padding: 0 $info-padding !important;
-
-  .progress-percentage {
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: row;
-    align-items: center;
-    letter-spacing: $letter-spacing !important;
-  }
-
-  .progress-number,
-  .progress-symbol {
-    font-size: $font-size !important;
-    font-weight: 700 !important;
-    line-height: normal;
-  }
-
-  .progress-symbol {
-    font-size: $font-size !important; // Same size as progress-number
-
-    @if $show-symbol and not $hide-symbol-due-to-size {
-      display: block;
+    .progress-percentage {
+      display: flex;
+      flex-wrap: nowrap;
+      flex-direction: row;
+      align-items: center;
+      letter-spacing: clamp(0rem, calc(var(--pc-size, #{$size}) * -0.0006), -0.072rem) !important;
     }
 
-    @else {
-      display: none;
+    .progress-number,
+    .progress-symbol {
+      font-size: clamp(10px, calc(var(--pc-size, #{$size}) * 0.15), 36px) !important;
+      font-weight: 700 !important;
+      line-height: normal;
+    }
+
+    .progress-symbol {
+      @if $show-symbol {
+        display: block;
+      } @else {
+        display: none;
+      }
+    }
+
+    .progress-text {
+      font-size: clamp(10px, calc(var(--pc-size, #{$size}) * 0.1), 20px) !important;
+
+      @if not $show-text {
+        display: none;
+      }
     }
   }
-
-  .progress-text {
-    font-size: $text-size !important;
-
-    @if not $show-text or $hide-text-due-to-size {
-      display: none;
-    }
-  }
-}
 }
 
 // Progress circle animation mixin
@@ -584,14 +526,33 @@ $letter-spacing: if($size < 40px, 0rem, if($size >=120px, -0.072rem, -0.024rem))
   $total: 4) {
   @include progress-circle-base($size, $rotate);
   @include progress-circle-style($style);
-  @include progress-circle-text($show-text, $show-symbol, $size);
 
-  // Calculate percentage from current/total steps
-  $circumference: 62.83; // 2πr where r=10
-
-  svg circle.progress-bar {
-    stroke-dasharray: $circumference;
-    stroke-dashoffset: calc(#{$circumference} - (#{$circumference} * var(--current-step, #{$current}) / var(--total-steps, #{$total})));
-    transition: stroke-dashoffset 0.3s ease;
+  .progress-percentage {
+    display: none !important;
   }
+
+  .progress-text {
+    display: flex !important;
+    align-items: center;
+    flex-wrap: nowrap;
+    justify-content: center;
+    font-size: clamp(10px, calc(var(--pc-size, #{$size}) * 0.2), 24px) !important;
+    font-weight: 700;
+    white-space: nowrap;
+    gap: clamp(2px, calc(var(--pc-size, #{$size}) * 0.05), 4px);
+    line-height: 1;
+
+    .step-text {
+      font-size: clamp(9px, calc(var(--pc-size, #{$size}) * 0.2), 24px) !important;
+      line-height: 1;
+    }
+
+    .step-number {
+      font-size: clamp(10px, calc(var(--pc-size, #{$size}) * 0.2), 24px) !important;
+      line-height: 1;
+    }
+  }
+
+$percent: calc((#{$current} / #{$total}) * 100);
+@include progress-circle-progress($percent);
 }

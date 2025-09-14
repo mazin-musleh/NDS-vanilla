@@ -36,6 +36,20 @@ direction: ltr
                                 data-toggler='["error", ".nds-stepper-step.current", "stepState"]'>
                                 <span class="label">Toggle Error</span>
                             </button>
+                            <button class="nds-btn nds-sm nds-subtle" data-stepper-control="previous">
+                                <span class="label">← Previous</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle" data-stepper-control="next">
+                                <span class="label">Next →</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle" data-stepper-control="goto"
+                                data-stepper-value="1">
+                                <span class="label">Go to 1</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle" data-stepper-control="goto"
+                                data-stepper-value="3">
+                                <span class="label">Go to 3</span>
+                            </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                                 <span class="label">Remove bg</span>
@@ -44,7 +58,21 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-stepper">
+                            <div class="nds-stepper" data-current="2" data-total="4">
+                                <div class="progress-circle">
+                                    <svg width="64" height="64" viewBox="0 0 24 24">
+                                        <circle class="progress-bg" cx="12" cy="12" r="10" fill="none"
+                                            stroke-width="3" />
+                                        <circle class="progress-bar" cx="12" cy="12" r="10" fill="none" stroke-width="3"
+                                            stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" />
+                                    </svg>
+                                    <div class="progress-info">
+                                        <span class="progress-percentage">
+                                            <span class="progress-number">0</span>
+                                        </span>
+                                        <span class="progress-text"></span>
+                                    </div>
+                                </div>
                                 <div class="nds-stepper-step completed has-line">
                                     <div class="nds-stepper-base">
                                         <div class="nds-stepper-circle" data-step-text="1"></div>
@@ -55,14 +83,7 @@ direction: ltr
                                     </div>
                                 </div>
                                 <div class="nds-stepper-step current has-line">
-                                    <div class="progress-circle" data-current="2" data-total="4">
-                                        <svg width="64" height="64" viewBox="0 0 24 24">
-                                            <circle class="progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="3" />
-                                            <circle class="progress-bar" cx="12" cy="12" r="10" fill="none"
-                                                stroke-width="3" stroke-dasharray="62.83" stroke-dashoffset="62.83"
-                                                stroke-linecap="round" />
-                                        </svg>
-                                    </div>
+
                                     <div class="nds-stepper-base">
                                         <div class="nds-stepper-circle" data-step-text="2"></div>
                                     </div>
