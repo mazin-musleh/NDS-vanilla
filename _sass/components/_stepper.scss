@@ -27,7 +27,7 @@
         direction: ltr;
     }
 
-    .progress-circle{
+    .progress-circle {
         display: none;
     }
 
@@ -323,12 +323,17 @@
                     content: '';
                     position: absolute;
                     top: var(--stepper-size); // Below the circle
-                    left: calc((var(--stepper-size) / 2) - 1px); // Center of circle (32px / 2 - 1px)
+                    right: calc((var(--stepper-size) / 2) - 1px);
                     bottom: calc(var(--stepper-gap) * -1); // Connect to next step
                     width: 2px;
                     height: unset;
                     background-color: var(--stepper-line-current);
                     z-index: 0;
+
+                    @include ltr{
+                        right: unset;
+                        left: calc((var(--stepper-size) / 2) - 1px);
+                    }
                 }
             }
 
@@ -368,6 +373,8 @@
 // ==============================================
 
 .nds-stepper.nds-radial {
+    --pc-size: 64px;
+    align-items: center;
 
     .nds-stepper-step {
         flex-direction: row;
@@ -375,7 +382,7 @@
     }
 
     // Only show current step
-    .nds-stepper-step:not(.current){
+    .nds-stepper-step:not(.current) {
         display: none;
     }
 
@@ -385,29 +392,18 @@
     }
 
     .progress-circle {
-        @include progress-circle-steps($size: 64px,
+        @include progress-circle-steps($size: 120px,
             $style: 'primary',
             $rotate: -90deg,
-            $show-text: false,
+            $show-text: true,
             $show-symbol: false,
-            $current: 2,
-            $total: 4);
+            $current: var(--current-step),
+            $total: var(--total-steps));
 
         position: relative;
         flex-shrink: 0;
 
-        // Dynamic step counter overlay using data attributes
-        &::after {
-            content: attr(data-current) ' of ' attr(data-total);
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            font-size: var(--nds-text-xs-FS);
-            font-weight: 500;
-            color: var(--text-primary-default);
-            z-index: 2;
-        }
     }
+
 
 }
