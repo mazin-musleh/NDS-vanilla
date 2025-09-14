@@ -1,0 +1,413 @@
+/**
+ * NDS Stepper Component - SCSS Version
+ * Progress indicator component with numbered steps, connecting lines, and descriptive text
+ * Supports multiple states: completed, current, upcoming
+ */
+
+@use '../mixins' as *;
+
+// ==============================================
+// BASE STEPPER STYLES
+// ==============================================
+
+.nds-stepper {
+    --stepper-size: 32px;
+    --stepper-gap: var(--progressindicator-progress-indicator-gap);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: var(--stepper-gap);
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    width: 100%;
+    align-items: flex-start;
+    counter-reset: step-counter;
+
+    // RTL support is default - LTR overrides when needed
+    @include ltr {
+        direction: ltr;
+    }
+
+    .progress-circle{
+        display: none;
+    }
+
+    // Default horizontal stepper behavior
+    .nds-stepper-step {
+        flex: 1;
+
+        &:not(:last-child) {
+            .nds-stepper-base::after {
+                display: block;
+            }
+        }
+
+        &:last-child {
+            .nds-stepper-base::after {
+                display: none;
+            }
+        }
+    }
+
+    .nds-stepper-content {
+        text-align: start;
+        padding: 0;
+
+    }
+}
+
+// ==============================================
+// STEPPER STEP CONTAINER
+// ==============================================
+
+.nds-stepper-step {
+    display: flex;
+    flex-direction: column;
+    gap: var(--progressindicator-progress-text-content-side-padding);
+    position: relative;
+    counter-increment: step-counter;
+
+    // Default horizontal connecting line
+    &.has-line {
+        .nds-stepper-base {
+            &::after {
+                content: '';
+                position: absolute;
+                top: calc(var(--stepper-size) /2); // Half of circle height (32px)
+                right: var(--stepper-size); // Circle width
+                left: calc(var(--stepper-gap) * -1);
+                height: 2px;
+                background-color: var(--stepper-line-current);
+
+                @include ltr {
+                    right: calc(var(--stepper-gap) * -1);
+                    left: var(--stepper-size);
+                }
+            }
+        }
+
+        &.completed .nds-stepper-base::after {
+            background-color: var(--stepper-line-completed);
+        }
+
+        &.upcoming .nds-stepper-base::after {
+            background-color: var(--stepper-line-upcomming);
+        }
+    }
+}
+
+// ==============================================
+// STEPPER BASE (Circle + Line Container)
+// ==============================================
+
+.nds-stepper-base {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+}
+
+// ==============================================
+// STEPPER CIRCLE
+// ==============================================
+
+.nds-stepper-circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--stepper-size);
+    height: var(--stepper-size);
+    border-radius: 50%;
+    border: 2px solid var(--stepper-button-current);
+    background-color: var(--stepper-button-background);
+    color: var(--stepper-button-current);
+    font-size: var(--nds-text-md-FS);
+    line-height: var(--nds-text-md-LH);
+    font-weight: 500;
+    transition: var(--nds-transition);
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+
+    // Current state (default)
+    &:hover {
+        border-color: var(--stepper-button-current-hovered);
+        color: var(--stepper-button-current-hovered);
+    }
+
+    // CSS content support for dynamic text
+    &.css-content {
+        font-size: 0; // Hide HTML text content
+
+        &::before {
+            content: counter(step-counter);
+            font-size: var(--nds-text-md-FS);
+            line-height: var(--nds-text-md-LH);
+            font-weight: 500;
+        }
+    }
+
+    // Data attribute support for custom text
+    &[data-step-text] {
+        font-size: 0;
+
+        &::before {
+            content: attr(data-step-text);
+            font-size: var(--nds-text-md-FS);
+            line-height: var(--nds-text-md-LH);
+            font-weight: 500;
+        }
+    }
+
+}
+
+// ==============================================
+// STEPPER TEXT CONTENT
+// ==============================================
+
+.nds-stepper-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2xs);
+}
+
+.nds-stepper-title {
+    font-size: var(--nds-text-md-FS);
+    line-height: var(--nds-text-md-LH);
+    font-weight: 500;
+    color: var(--stepper-text-primary);
+    margin: 0;
+}
+
+.nds-stepper-description {
+    font-size: var(--nds-text-sm-FS);
+    line-height: var(--nds-text-sm-LH);
+    font-weight: 400;
+    color: var(--stepper-text-secondary);
+    margin: 0;
+}
+
+// ==============================================
+// STEPPER STATE VARIATIONS
+// ==============================================
+
+// Completed State
+.nds-stepper-step.completed {
+    .nds-stepper-circle {
+        border-color: var(--stepper-button-completed);
+        background-color: var(--stepper-button-completed);
+        color: var(--colors-base-white);
+
+        &:hover {
+            border-color: var(--stepper-button-completed-hovered);
+            background-color: var(--stepper-button-completed-hovered);
+        }
+
+        // CSS content override for completed state
+        &.css-content::before,
+        &[data-step-text]::before {
+            content: "坉" !important;
+            font-family: "hgi-stroke-rounded" !important;
+            font-style: normal;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            position: relative;
+            opacity: 0;
+            display: inline-flex;
+            justify-content: center;
+            width: var(--stepper-size);
+            height: var(--stepper-size);
+            font-size: 16px;
+            line-height: var(--stepper-size);
+            font-weight: 600;
+            color: var(--colors-base-white);
+        }
+
+        .hgi-loaded &::before {
+            opacity: 1;
+        }
+    }
+}
+
+// Current State (active/default)
+.nds-stepper-step.current {
+    .nds-stepper-circle {
+        border-color: var(--stepper-button-current);
+        color: var(--stepper-button-current);
+
+        &:hover {
+            border-color: var(--stepper-button-current-hovered);
+            color: var(--stepper-button-current-hovered);
+        }
+    }
+}
+
+// Upcoming State
+.nds-stepper-step.upcoming {
+    .nds-stepper-circle {
+        border-color: var(--stepper-button-upcomming);
+        color: var(--stepper-button-upcomming);
+
+        &:hover {
+            border-color: var(--stepper-button-upcomming-hovered);
+            color: var(--stepper-button-upcomming-hovered);
+        }
+    }
+
+    .nds-stepper-title {
+        color: var(--stepper-text-tertiary);
+    }
+
+    .nds-stepper-description {
+        color: var(--stepper-text-tertiary);
+    }
+}
+
+// Error State
+.nds-stepper-step.error {
+    .nds-stepper-circle {
+        border-color: var(--icon-error);
+        background-color: var(--colors-base-white);
+        color: var(--icon-error);
+
+        // CSS content override for error state
+        &.css-content::before,
+        &[data-step-text]::before {
+            content: '!';
+            color: var(--icon-error);
+        }
+    }
+
+    .nds-stepper-title {
+        color: var(--colors-error-primary);
+    }
+}
+
+// Warning State
+.nds-stepper-step.warning {
+    .nds-stepper-circle {
+        border-color: var(--colors-warning-primary);
+        background-color: var(--colors-warning-primary);
+        color: var(--colors-base-white);
+
+        // CSS content override for warning state
+        &.css-content::before,
+        &[data-step-text]::before {
+            content: '⚠';
+            color: var(--colors-base-white);
+        }
+    }
+
+    .nds-stepper-title {
+        color: var(--colors-warning-primary);
+    }
+}
+
+
+// ==============================================
+// VERTICAL STEPPER LAYOUT MODIFIER
+// ==============================================
+
+// Enhanced vertical stepper with vertical connecting lines
+.nds-stepper.nds-vertical {
+    flex-direction: column;
+    --stepper-gap: var(--spacing-4xl);
+
+    .nds-stepper-step {
+        position: relative;
+        flex-direction: row;
+
+        // Remove default horizontal line and add vertical line
+        &.has-line {
+            .nds-stepper-base {
+                &::after {
+                    content: '';
+                    position: absolute;
+                    top: var(--stepper-size); // Below the circle
+                    left: calc((var(--stepper-size) / 2) - 1px); // Center of circle (32px / 2 - 1px)
+                    bottom: calc(var(--stepper-gap) * -1); // Connect to next step
+                    width: 2px;
+                    height: unset;
+                    background-color: var(--stepper-line-current);
+                    z-index: 0;
+                }
+            }
+
+            &.completed .nds-stepper-base::after {
+                background-color: var(--stepper-line-completed);
+            }
+
+            &.upcoming .nds-stepper-base::before {
+                background-color: var(--stepper-line-upcomming);
+            }
+        }
+
+        &:last-child {
+            padding-bottom: 0;
+
+            .nds-stepper-base::after {
+                display: none;
+            }
+        }
+
+        .nds-stepper-base {
+            flex-direction: row;
+            align-items: flex-start;
+            gap: var(--spacing-md);
+        }
+
+        .nds-stepper-content {
+            flex: 1;
+            padding: var(--spacing-xs) 0 0 0;
+        }
+    }
+}
+
+
+// ==============================================
+// RADIAL STEPPER LAYOUT MODIFIER
+// ==============================================
+
+.nds-stepper.nds-radial {
+
+    .nds-stepper-step {
+        flex-direction: row;
+        position: relative;
+    }
+
+    // Only show current step
+    .nds-stepper-step:not(.current){
+        display: none;
+    }
+
+    // Hide regular stepper base
+    .nds-stepper-base {
+        display: none;
+    }
+
+    .progress-circle {
+        @include progress-circle-steps($size: 64px,
+            $style: 'primary',
+            $rotate: -90deg,
+            $show-text: false,
+            $show-symbol: false,
+            $current: 2,
+            $total: 4);
+
+        position: relative;
+        flex-shrink: 0;
+
+        // Dynamic step counter overlay using data attributes
+        &::after {
+            content: attr(data-current) ' of ' attr(data-total);
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            font-size: var(--nds-text-xs-FS);
+            font-weight: 500;
+            color: var(--text-primary-default);
+            z-index: 2;
+        }
+    }
+
+}

@@ -221,17 +221,23 @@
                         if (targetSelector.includes(' ') || targetSelector.includes('[') || targetSelector.includes(':')) {
                             targetElement = container.querySelector(targetSelector);
                         } else if (targetSelector.startsWith('.')) {
-                            // For simple single class selectors, ensure exact match
-                            const className = targetSelector.substring(1);
-                            const allElements = container.querySelectorAll('*');
-                            targetElement = Array.from(allElements).find(el => 
-                                el.classList.contains(className) && 
-                                Array.from(el.classList).includes(className)
-                            );
+                            // Handle both simple single class selectors and compound class selectors
+                            if (targetSelector.includes('.') && targetSelector.lastIndexOf('.') > 0) {
+                                // Compound class selector like .class1.class2
+                                targetElement = container.querySelector(targetSelector);
+                            } else {
+                                // Simple single class selector - ensure exact match
+                                const className = targetSelector.substring(1);
+                                const allElements = container.querySelectorAll('*');
+                                targetElement = Array.from(allElements).find(el =>
+                                    el.classList.contains(className) &&
+                                    Array.from(el.classList).includes(className)
+                                );
+                            }
                         } else {
                             targetElement = container.querySelector(targetSelector);
                         }
-                        
+
                         if (targetElement) break;
                     }
                 }
@@ -272,14 +278,20 @@
                         if (targetSelector.includes(' ') || targetSelector.includes('[') || targetSelector.includes(':')) {
                             targetElements.push(...container.querySelectorAll(targetSelector));
                         } else if (targetSelector.startsWith('.')) {
-                            // For simple single class selectors, use the exact match logic
-                            const className = targetSelector.substring(1);
-                            const allElements = container.querySelectorAll('*');
-                            const exactMatches = Array.from(allElements).filter(el => 
-                                el.classList.contains(className) && 
-                                Array.from(el.classList).includes(className)
-                            );
-                            targetElements.push(...exactMatches);
+                            // Handle both simple single class selectors and compound class selectors
+                            if (targetSelector.includes('.') && targetSelector.lastIndexOf('.') > 0) {
+                                // Compound class selector like .class1.class2
+                                targetElements.push(...container.querySelectorAll(targetSelector));
+                            } else {
+                                // Simple single class selector - use exact match logic
+                                const className = targetSelector.substring(1);
+                                const allElements = container.querySelectorAll('*');
+                                const exactMatches = Array.from(allElements).filter(el =>
+                                    el.classList.contains(className) &&
+                                    Array.from(el.classList).includes(className)
+                                );
+                                targetElements.push(...exactMatches);
+                            }
                         } else {
                             targetElements.push(...container.querySelectorAll(targetSelector));
                         }
@@ -421,17 +433,23 @@
                                                     if (targetSelector.includes(' ') || targetSelector.includes('[') || targetSelector.includes(':')) {
                                                         targetElement = container.querySelector(targetSelector);
                                                     } else if (targetSelector.startsWith('.')) {
-                                                        // For simple single class selectors, ensure exact match
-                                                        const className = targetSelector.substring(1);
-                                                        const allElements = container.querySelectorAll('*');
-                                                        targetElement = Array.from(allElements).find(el => 
-                                                            el.classList.contains(className) && 
-                                                            Array.from(el.classList).includes(className)
-                                                        );
+                                                        // Handle both simple single class selectors and compound class selectors
+                                                        if (targetSelector.includes('.') && targetSelector.lastIndexOf('.') > 0) {
+                                                            // Compound class selector like .class1.class2
+                                                            targetElement = container.querySelector(targetSelector);
+                                                        } else {
+                                                            // Simple single class selector - ensure exact match
+                                                            const className = targetSelector.substring(1);
+                                                            const allElements = container.querySelectorAll('*');
+                                                            targetElement = Array.from(allElements).find(el =>
+                                                                el.classList.contains(className) &&
+                                                                Array.from(el.classList).includes(className)
+                                                            );
+                                                        }
                                                     } else {
                                                         targetElement = container.querySelector(targetSelector);
                                                     }
-                                                    
+
                                                     if (targetElement) break;
                                                 }
                                             }
@@ -471,14 +489,20 @@
                                                     if (targetSelector.includes(' ') || targetSelector.includes('[') || targetSelector.includes(':')) {
                                                         deselectionTargetElements.push(...container.querySelectorAll(targetSelector));
                                                     } else if (targetSelector.startsWith('.')) {
-                                                        // For simple single class selectors, use the exact match logic
-                                                        const className = targetSelector.substring(1);
-                                                        const allElements = container.querySelectorAll('*');
-                                                        const exactMatches = Array.from(allElements).filter(el => 
-                                                            el.classList.contains(className) && 
-                                                            Array.from(el.classList).includes(className)
-                                                        );
-                                                        deselectionTargetElements.push(...exactMatches);
+                                                        // Handle both simple single class selectors and compound class selectors
+                                                        if (targetSelector.includes('.') && targetSelector.lastIndexOf('.') > 0) {
+                                                            // Compound class selector like .class1.class2
+                                                            deselectionTargetElements.push(...container.querySelectorAll(targetSelector));
+                                                        } else {
+                                                            // Simple single class selector - use exact match logic
+                                                            const className = targetSelector.substring(1);
+                                                            const allElements = container.querySelectorAll('*');
+                                                            const exactMatches = Array.from(allElements).filter(el =>
+                                                                el.classList.contains(className) &&
+                                                                Array.from(el.classList).includes(className)
+                                                            );
+                                                            deselectionTargetElements.push(...exactMatches);
+                                                        }
                                                     } else {
                                                         deselectionTargetElements.push(...container.querySelectorAll(targetSelector));
                                                     }
@@ -1103,6 +1127,7 @@
             api.setFileProgress(fileId, progress);
         }, 200);
     }
+
 
 
 })();

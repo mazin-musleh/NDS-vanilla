@@ -1113,6 +1113,19 @@
         utils.updateNavMaxWidth();
         utils.setupInteractions();
         utils.checkTogglerVisibility();
+        
+        // Recalculate nav width after icon font loads to prevent layout shift
+        if (typeof window.waitForFontFile === 'function') {
+            window.waitForFontFile('hgi-stroke-rounded', (loaded) => {
+                if (loaded) {
+                    // Slight delay to ensure font is fully applied
+                    setTimeout(() => {
+                        state.invalidateCache('font-loaded');
+                        utils.updateNavMaxWidth();
+                    }, 100);
+                }
+            });
+        }
     }
 
     // CRITICAL: Essential window functions for external access (called by unified init system)
