@@ -573,3 +573,25 @@ $letter-spacing: if($size < 40px, 0rem, if($size >=120px, -0.072rem, -0.024rem))
   @include progress-circle-text($show-text, $show-symbol, $size);
   @include progress-circle-progress($percent);
 }
+
+// Progress circle with step-based calculation
+@mixin progress-circle-steps($size: 24px,
+  $style: 'primary',
+  $rotate: -90deg,
+  $show-text: false,
+  $show-symbol: false,
+  $current: 1,
+  $total: 4) {
+  @include progress-circle-base($size, $rotate);
+  @include progress-circle-style($style);
+  @include progress-circle-text($show-text, $show-symbol, $size);
+
+  // Calculate percentage from current/total steps
+  $circumference: 62.83; // 2πr where r=10
+
+  svg circle.progress-bar {
+    stroke-dasharray: $circumference;
+    stroke-dashoffset: calc(#{$circumference} - (#{$circumference} * var(--current-step, #{$current}) / var(--total-steps, #{$total})));
+    transition: stroke-dashoffset 0.3s ease;
+  }
+}
