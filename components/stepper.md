@@ -58,7 +58,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-stepper" data-current="2" data-total="4">
+                            <div class="nds-stepper" id="demo-stepper-1" data-current="2" data-total="4">
                                 <div class="progress-circle">
                                     <svg width="64" height="64" viewBox="0 0 24 24">
                                         <circle class="progress-bg" cx="12" cy="12" r="10" fill="none"
@@ -132,7 +132,7 @@ direction: ltr
                                 </div>
                                 <code class="lang-html code">
                                     <!-- Government service application stepper -->
-                                    <div class="nds-stepper">
+                                    <div class="nds-stepper" id="stepper-1">
                                       <div class="nds-stepper-step completed has-line">
                                         <div class="nds-stepper-base">
                                           <div class="nds-stepper-circle" data-step-text="1"></div>
