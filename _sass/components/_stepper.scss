@@ -134,16 +134,14 @@
         color: var(--stepper-button-current-hovered);
     }
 
-    // CSS content support for dynamic text
-    &.css-content {
-        font-size: 0; // Hide HTML text content
+    // Default counter content behavior
+    font-size: 0; // Hide HTML text content
 
-        &::before {
-            content: counter(step-counter);
-            font-size: var(--nds-text-md-FS);
-            line-height: var(--nds-text-md-LH);
-            font-weight: 500;
-        }
+    &::before {
+        content: counter(step-counter);
+        font-size: var(--nds-text-md-FS);
+        line-height: var(--nds-text-md-LH);
+        font-weight: 500;
     }
 
     // Data attribute support for custom text
@@ -202,8 +200,8 @@
             background-color: var(--stepper-button-completed-hovered);
         }
 
-        // CSS content override for completed state
-        &.css-content::before,
+        // Default content override for completed state
+        &::before,
         &[data-step-text]::before {
             content: "坉" !important;
             font-family: "hgi-stroke-rounded" !important;
@@ -269,8 +267,8 @@
         background-color: var(--colors-base-white);
         color: var(--icon-error);
 
-        // CSS content override for error state
-        &.css-content::before,
+        // Default content override for error state
+        &::before,
         &[data-step-text]::before {
             content: '!';
             color: var(--icon-error);
@@ -289,8 +287,8 @@
         background-color: var(--colors-warning-primary);
         color: var(--colors-base-white);
 
-        // CSS content override for warning state
-        &.css-content::before,
+        // Default content override for warning state
+        &::before,
         &[data-step-text]::before {
             content: '⚠';
             color: var(--colors-base-white);

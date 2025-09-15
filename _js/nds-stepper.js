@@ -52,7 +52,6 @@
             // Update CSS custom properties for radial stepper
             this.stepperContainer.style.setProperty('--current-step', this.currentStep);
             this.stepperContainer.style.setProperty('--total-steps', this.totalSteps);
-            this.stepperContainer.style.setProperty('--progress-percentage', progressPercentage);
 
             // Update data attributes for compatibility
             this.stepperContainer.setAttribute('data-current', this.currentStep);
@@ -78,12 +77,6 @@
                 }
             }, 100);
 
-            // Update radial progress bar if present
-            if (this.progressBar) {
-                const circumference = 2 * Math.PI * 10; // radius is 10 from SVG
-                const strokeDashoffset = circumference - (progressPercentage / 100) * circumference;
-                this.progressBar.style.strokeDashoffset = strokeDashoffset;
-            }
         }
 
         syncStepStates() {
@@ -155,9 +148,18 @@
                     const action = controlButton.getAttribute('data-stepper-control');
                     const value = controlButton.getAttribute('data-stepper-value');
 
-                    // Find the associated stepper - check if button is in the same demo card
-                    const demoCard = controlButton.closest('.nds-demo-card');
-                    const associatedStepper = demoCard ? demoCard.querySelector('.nds-stepper') : null;
+                    // Find the associated stepper - look for closest stepper element
+                    let associatedStepper = controlButton.closest('.nds-stepper');
+
+                    // If control button is not inside a stepper, find the nearest one
+                    if (!associatedStepper) {
+                        // Look in parent containers for the closest stepper
+                        let parent = controlButton.parentElement;
+                        while (parent && !associatedStepper) {
+                            associatedStepper = parent.querySelector('.nds-stepper');
+                            parent = parent.parentElement;
+                        }
+                    }
 
                     // Only handle if this is the associated stepper for the clicked button
                     if (associatedStepper === this.stepperContainer) {
@@ -214,6 +216,9 @@
         }
     }
 
+    // Global stepper registry for ID-based access
+    const stepperRegistry = new Map();
+
     // Auto-initialize steppers on page load
     function initializeSteppers() {
         const stepperContainers = document.querySelectorAll('.nds-stepper');
@@ -228,13 +233,67 @@
                 const stepperInstance = new NDSStepper(container);
                 container.ndsStepperInstance = stepperInstance;
                 container.setAttribute('data-nds-stepper-initialized', 'true');
+
+                // Register stepper by ID if it has one
+                const stepperId = container.id;
+                if (stepperId) {
+                    stepperRegistry.set(stepperId, stepperInstance);
+                }
             }
         });
     }
 
     // Re-initialize when new content is added
     function reinitializeSteppers() {
+        stepperRegistry.clear(); // Clear registry before reinitializing
         initializeSteppers();
+    }
+
+    // Global control functions for ID-based access
+    function getStepperById(stepperId) {
+        return stepperRegistry.get(stepperId);
+    }
+
+    function controlStepper(stepperId, action, value = null) {
+        const stepper = getStepperById(stepperId);
+        if (!stepper) {
+            console.warn(`NDS Stepper: No stepper found with ID "${stepperId}"`);
+            return false;
+        }
+
+        switch (action) {
+            case 'next':
+                stepper.nextStep();
+                break;
+            case 'previous':
+                stepper.previousStep();
+                break;
+            case 'goto':
+                if (value !== null) {
+                    stepper.goToStep(parseInt(value, 10));
+                }
+                break;
+            case 'state':
+                if (value && typeof value === 'object' && value.stepIndex && value.state) {
+                    stepper.setStepState(parseInt(value.stepIndex, 10), value.state);
+                }
+                break;
+            default:
+                console.warn(`NDS Stepper: Unknown action "${action}"`);
+                return false;
+        }
+        return true;
+    }
+
+    // Get all registered steppers
+    function getAllSteppers() {
+        return Array.from(stepperRegistry.entries()).map(([id, instance]) => ({
+            id,
+            instance,
+            currentStep: instance.getCurrentStep(),
+            totalSteps: instance.getTotalSteps(),
+            progress: instance.getProgressPercentage()
+        }));
     }
 
     // CRITICAL: Expose global API immediately (called by unified init system)
@@ -242,7 +301,16 @@
         window.NDSStepper = {
             init: initializeSteppers,
             reinit: reinitializeSteppers,
-            create: (container) => new NDSStepper(container)
+            create: (container) => new NDSStepper(container),
+            // ID-based control methods
+            get: getStepperById,
+            control: controlStepper,
+            getAll: getAllSteppers,
+            // Direct control methods for convenience
+            next: (stepperId) => controlStepper(stepperId, 'next'),
+            previous: (stepperId) => controlStepper(stepperId, 'previous'),
+            goTo: (stepperId, step) => controlStepper(stepperId, 'goto', step),
+            setState: (stepperId, stepIndex, state) => controlStepper(stepperId, 'state', { stepIndex, state })
         };
     }
 
@@ -258,22 +326,57 @@
  * Usage Examples:
  *
  * // Auto-initialization (happens automatically)
- * // Just add the HTML structure with .nds-stepper class
+ * // Just add the HTML structure with .nds-stepper class and an id attribute
+ * // <div class="nds-stepper" id="my-stepper">...</div>
  *
  * // Manual initialization
  * const stepperElement = document.querySelector('#myStepper');
  * const stepperInstance = NDSStepper.create(stepperElement);
  *
- * // Navigation methods
+ * // ========================================
+ * // GLOBAL ID-BASED CONTROL (RECOMMENDED)
+ * // ========================================
+ *
+ * // Navigation methods using stepper ID
+ * NDSStepper.next('my-stepper');
+ * NDSStepper.previous('my-stepper');
+ * NDSStepper.goTo('my-stepper', 3);
+ *
+ * // State management using stepper ID
+ * NDSStepper.setState('my-stepper', 2, 'error');
+ * NDSStepper.setState('my-stepper', 1, 'completed');
+ *
+ * // Get stepper instance by ID
+ * const stepperInstance = NDSStepper.get('my-stepper');
+ * if (stepperInstance) {
+ *     const currentStep = stepperInstance.getCurrentStep();
+ *     const totalSteps = stepperInstance.getTotalSteps();
+ *     const progress = stepperInstance.getProgressPercentage();
+ * }
+ *
+ * // Get all steppers on the page
+ * const allSteppers = NDSStepper.getAll();
+ * console.log('All steppers:', allSteppers);
+ *
+ * // Generic control method
+ * NDSStepper.control('my-stepper', 'goto', 3);
+ * NDSStepper.control('my-stepper', 'next');
+ * NDSStepper.control('my-stepper', 'state', { stepIndex: 2, state: 'error' });
+ *
+ * // ========================================
+ * // DIRECT INSTANCE CONTROL (ALTERNATIVE)
+ * // ========================================
+ *
+ * // Navigation methods on instance
  * stepperInstance.nextStep();
  * stepperInstance.previousStep();
  * stepperInstance.goToStep(3);
  *
- * // State management
+ * // State management on instance
  * stepperInstance.setStepState(2, 'error');
  * stepperInstance.setStepState(1, 'completed');
  *
- * // Get current state
+ * // Get current state from instance
  * const currentStep = stepperInstance.getCurrentStep();
  * const totalSteps = stepperInstance.getTotalSteps();
  * const progress = stepperInstance.getProgressPercentage();
