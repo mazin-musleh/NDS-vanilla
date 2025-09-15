@@ -51,6 +51,10 @@ direction: ltr
                                 <span class="label">Go to 3</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='[["nds-oncolor", ".nds-stepper", "containerBg"],["dark-bg", ".demo-container", "containerBg"]]'>
+                                <span class="label">On Color</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                                 <span class="label">Remove bg</span>
                             </button>
@@ -131,47 +135,58 @@ direction: ltr
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-                                    <!-- Government service application stepper -->
-                                    <div class="nds-stepper" id="stepper-1">
-                                      <div class="nds-stepper-step completed has-line">
-                                        <div class="nds-stepper-base">
-                                          <div class="nds-stepper-circle" data-step-text="1"></div>
+                                    <!-- Government service application stepper with progress circle -->
+                                    <div class="nds-stepper" id="stepper-1" data-current="2" data-total="4">
+                                        <div class="progress-circle">
+                                            <svg width="64" height="64" viewBox="0 0 24 24">
+                                                <circle class="progress-bg" cx="12" cy="12" r="10" fill="none"
+                                                    stroke-width="3" />
+                                                <circle class="progress-bar" cx="12" cy="12" r="10" fill="none" stroke-width="3"
+                                                    stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" />
+                                            </svg>
+                                            <div class="progress-info">
+                                                <span class="progress-percentage">
+                                                    <span class="progress-number">0</span>
+                                                </span>
+                                                <span class="progress-text"></span>
+                                            </div>
                                         </div>
-                                        <div class="nds-stepper-content">
-                                          <p class="nds-stepper-title">Personal Information</p>
-                                          <p class="nds-stepper-description">Identity details and contact information</p>
+                                        <div class="nds-stepper-step completed has-line">
+                                            <div class="nds-stepper-base">
+                                                <div class="nds-stepper-circle" data-step-text="1"></div>
+                                            </div>
+                                            <div class="nds-stepper-content">
+                                                <p class="nds-stepper-title">Personal Information</p>
+                                                <p class="nds-stepper-description">Identity details and contact information</p>
+                                            </div>
                                         </div>
-                                      </div>
-
-                                      <div class="nds-stepper-step current has-line">
-                                        <div class="nds-stepper-base">
-                                          <div class="nds-stepper-circle" data-step-text="2"></div>
+                                        <div class="nds-stepper-step current has-line">
+                                            <div class="nds-stepper-base">
+                                                <div class="nds-stepper-circle" data-step-text="2"></div>
+                                            </div>
+                                            <div class="nds-stepper-content">
+                                                <p class="nds-stepper-title">Document Upload</p>
+                                                <p class="nds-stepper-description">Upload required supporting documents</p>
+                                            </div>
                                         </div>
-                                        <div class="nds-stepper-content">
-                                          <p class="nds-stepper-title">Document Upload</p>
-                                          <p class="nds-stepper-description">Upload required supporting documents</p>
+                                        <div class="nds-stepper-step upcoming has-line">
+                                            <div class="nds-stepper-base">
+                                                <div class="nds-stepper-circle" data-step-text="3"></div>
+                                            </div>
+                                            <div class="nds-stepper-content">
+                                                <p class="nds-stepper-title">Review & Confirmation</p>
+                                                <p class="nds-stepper-description">Verify information before submission</p>
+                                            </div>
                                         </div>
-                                      </div>
-
-                                      <div class="nds-stepper-step upcoming has-line">
-                                        <div class="nds-stepper-base">
-                                          <div class="nds-stepper-circle" data-step-text="3"></div>
+                                        <div class="nds-stepper-step upcoming">
+                                            <div class="nds-stepper-base">
+                                                <div class="nds-stepper-circle" data-step-text="4"></div>
+                                            </div>
+                                            <div class="nds-stepper-content">
+                                                <p class="nds-stepper-title">Application Submitted</p>
+                                                <p class="nds-stepper-description">Confirmation and next steps</p>
+                                            </div>
                                         </div>
-                                        <div class="nds-stepper-content">
-                                          <p class="nds-stepper-title">Review & Confirmation</p>
-                                          <p class="nds-stepper-description">Verify information before submission</p>
-                                        </div>
-                                      </div>
-
-                                      <div class="nds-stepper-step upcoming">
-                                        <div class="nds-stepper-base">
-                                          <div class="nds-stepper-circle" data-step-text="4"></div>
-                                        </div>
-                                        <div class="nds-stepper-content">
-                                          <p class="nds-stepper-title">Application Submitted</p>
-                                          <p class="nds-stepper-description">Confirmation and next steps</p>
-                                        </div>
-                                      </div>
                                     </div>
                                 </code>
                             </div>
@@ -183,74 +198,122 @@ direction: ltr
     </div>
 </section>
 
-<!-- Usage Guidelines -->
-<section id="stepperGuidelines" class="nds-content-section">
+<!-- Usage -->
+<section id="stepperUsage" class="nds-content-section">
     <div class="nds-section-content-container">
         <div class="nds-section-head">
-            <h2 class="nds-section-title">Usage Guidelines</h2>
-            <p class="nds-section-description">Best practices for implementing stepper components</p>
+            <h2 class="nds-section-title">Usage</h2>
+            <p class="nds-section-description">How to implement stepper components</p>
         </div>
         <div class="nds-section-content">
-            <div class="guidelines-content">
-                <h3>When to Use</h3>
-                <ul>
-                    <li>Multi-step forms or processes</li>
-                    <li>Sequential workflows</li>
-                    <li>Progress indication for complex tasks</li>
-                    <li>Breaking down complicated processes into manageable steps</li>
-                </ul>
 
-                <h3>Unified Component Structure</h3>
-                <ul>
-                    <li><strong>Container:</strong> <code>.nds-stepper</code> - Main wrapper with optional layout
-                        modifiers</li>
-                    <li><strong>Step:</strong> <code>.nds-stepper-step</code> - Individual step wrapper</li>
-                    <li><strong>Base:</strong> <code>.nds-stepper-base</code> - Contains the circle indicator</li>
-                    <li><strong>Circle:</strong> <code>.nds-stepper-circle</code> - Numbered indicator</li>
-                    <li><strong>Content:</strong> <code>.nds-stepper-content</code> - Title and description area</li>
-                </ul>
+            <h3>Structure</h3>
+            <ul>
+                <li><code>.nds-stepper</code> - Main container</li>
+                <li><code>.nds-stepper-step</code> - Individual step wrapper</li>
+                <li><code>.nds-stepper-base</code> - Contains the circle indicator</li>
+                <li><code>.nds-stepper-circle</code> - Numbered indicator</li>
+                <li><code>.nds-stepper-content</code> - Title and description area</li>
+            </ul>
 
-                <h3>State Classes</h3>
-                <ul>
-                    <li><code>.completed</code> - Finished steps (shows checkmark or filled circle)</li>
-                    <li><code>.current</code> - Active step (highlighted with primary color)</li>
-                    <li><code>.upcoming</code> - Future steps (muted colors)</li>
-                    <li><code>.has-line</code> - Adds connecting line to next step</li>
-                </ul>
+            <h3>States</h3>
+            <ul>
+                <li><code>.completed</code> - Finished steps</li>
+                <li><code>.current</code> - Active step</li>
+                <li><code>.upcoming</code> - Future steps</li>
+                <li><code>.error</code> - Error state</li>
+                <li><code>.has-line</code> - Adds connecting line</li>
+            </ul>
 
-                <h3>Layout Options</h3>
-                <ul>
-                    <li><strong>Default (Horizontal):</strong> <code>.nds-stepper</code> - Horizontal step arrangement
-                        with connecting lines</li>
-                    <li><strong>Vertical Enhanced:</strong> <code>.nds-stepper.nds-vertical</code> - Vertical layout
-                        with vertical connecting lines and side-by-side content</li>
-                    <li>All layouts use the same HTML structure - only CSS classes change the appearance</li>
-                    <li>Horizontal layout automatically switches to vertical on mobile devices</li>
-                </ul>
+            <h3>Layouts</h3>
+            <ul>
+                <li><strong>Horizontal:</strong> Default layout</li>
+                <li><strong>Vertical:</strong> Add <code>.nds-vertical</code> class</li>
+            </ul>
 
-                <h3>Vertical Layout Benefits</h3>
-                <ul>
-                    <li>Vertical connecting lines between steps for better visual flow</li>
-                    <li>Side-by-side circle and content alignment for improved readability</li>
-                    <li>Enhanced spacing for better visual hierarchy</li>
-                    <li>Perfect for detailed multi-step processes and forms</li>
-                </ul>
+            <h3>Data Attributes</h3>
+            <ul>
+                <li><code>data-current="2"</code> - Current step number</li>
+                <li><code>data-total="4"</code> - Total number of steps</li>
+                <li><code>data-step-text="1"</code> - Custom step text or number</li>
+            </ul>
 
-                <h3>CSS-Only Dynamic Text</h3>
-                <ul>
-                    <li><strong>CSS Counters:</strong> Add <code>.css-content</code> class for automatic step numbering
-                    </li>
-                    <li><strong>Data Attributes:</strong> Use <code>data-step-text="custom"</code> for custom
-                        text/symbols</li>
-                    <li><strong>State Overrides:</strong> Completed steps show ✓, error steps show !, warning steps show
-                        ⚠</li>
-                    <li><strong>No JavaScript:</strong> Pure CSS solution using <code>content</code> property and
-                        <code>counter()</code>
-                    </li>
-                    <li><strong>Automatic Fallback:</strong> Regular HTML text still works without CSS classes</li>
-                </ul>
+            <h3>Progress Circle</h3>
+            <p>Add a progress circle inside the stepper container to show overall completion percentage.</p>
 
+            <h3>JavaScript Control</h3>
+            <p>Control stepper programmatically using the NDS Stepper API:</p>
+
+            <div class="nds-code">
+                <div class="nds-code-action">
+                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                    </button>
+                </div>
+                <code class="lang-javascript">
+// Navigate between steps (requires stepper ID)
+NDSStepper.next('my-stepper');
+NDSStepper.previous('my-stepper');
+NDSStepper.goTo('my-stepper', 3);
+
+// Set step states
+NDSStepper.setState('my-stepper', 2, 'error');
+NDSStepper.setState('my-stepper', 1, 'completed');
+
+// Get stepper information
+const stepper = NDSStepper.get('my-stepper');
+const currentStep = stepper.getCurrentStep();
+const progress = stepper.getProgressPercentage();
+                </code>
             </div>
+
+            <h3>Control Buttons</h3>
+            <p>Use data attributes to create control buttons with automatic or explicit targeting:</p>
+
+            <div class="nds-code">
+                <div class="nds-code-action">
+                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                    </button>
+                </div>
+                <code class="lang-html">
+<!-- Basic controls (targets closest or first stepper) -->
+<button data-stepper-control="next">Next Step</button>
+<button data-stepper-control="previous">Previous Step</button>
+<button data-stepper-control="goto" data-stepper-value="3">Go to Step 3</button>
+
+<!-- Explicit targeting for multiple steppers -->
+<button data-stepper-control="next" data-stepper-target="stepper-1">Next for Stepper 1</button>
+<button data-stepper-control="goto" data-stepper-value="2" data-stepper-target="stepper-2">Go to Step 2</button>
+                </code>
+            </div>
+
+            <h3>Button Targeting</h3>
+            <p>Control buttons use this targeting priority:</p>
+            <ul>
+                <li><strong>Explicit:</strong> <code>data-stepper-target="stepper-id"</code> - Target specific stepper
+                    by ID</li>
+                <li><strong>Automatic:</strong> Closest parent <code>.nds-stepper</code> element</li>
+                <li><strong>Fallback:</strong> First <code>.nds-stepper</code> on the page</li>
+            </ul>
+
+            <h3>Event Listening</h3>
+            <p>Listen for step changes:</p>
+
+            <div class="nds-code">
+                <div class="nds-code-action">
+                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                    </button>
+                </div>
+                <code class="lang-javascript">
+document.addEventListener('nds:stepper:change', (e) => {
+    console.log('Step changed to:', e.detail.currentStep);
+    console.log('Progress:', e.detail.progressPercentage + '%');
+});
+                </code>
+            </div>
+
         </div>
     </div>
 </section>

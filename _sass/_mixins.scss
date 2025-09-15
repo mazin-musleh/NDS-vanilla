@@ -449,6 +449,16 @@ textarea {
         stroke: var(--background-error-600);
       }
     }
+
+    @else if $style =='oncolor' {
+      &.progress-bg {
+        stroke: var(--alpha-white-30);
+      }
+
+      &.progress-bar {
+        stroke: var(--background-surface-oncolor);
+      }
+    }
   }
 }
 

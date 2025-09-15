@@ -325,23 +325,15 @@
                     bottom: calc(var(--stepper-gap) * -1); // Connect to next step
                     width: 2px;
                     height: unset;
-                    background-color: var(--stepper-line-current);
                     z-index: 0;
 
-                    @include ltr{
+                    @include ltr {
                         right: unset;
                         left: calc((var(--stepper-size) / 2) - 1px);
                     }
                 }
             }
 
-            &.completed .nds-stepper-base::after {
-                background-color: var(--stepper-line-completed);
-            }
-
-            &.upcoming .nds-stepper-base::before {
-                background-color: var(--stepper-line-upcomming);
-            }
         }
 
         &:last-child {
@@ -402,6 +394,122 @@
         flex-shrink: 0;
 
     }
+
+
+}
+
+// ==============================================
+// ON COLOR STEPPER LAYOUT MODIFIER
+// ==============================================
+
+.nds-stepper.nds-oncolor {
+
+    .nds-stepper-title {
+        color: var(--alpha-white-40);
+    }
+
+    .nds-stepper-description {
+        color: var(--alpha-white-30);
+    }
+
+    .nds-stepper-step {
+
+        &.has-line .nds-stepper-base:after {
+            background-color: var(--alpha-white-30);
+        }
+
+        .nds-stepper-circle {
+            border-color: var(--alpha-white-30);
+            background-color: var(--alpha-white-10);
+            color: var(--alpha-white-50);
+
+            &:hover {
+                border-color: var(--alpha-white-60);
+                background-color: var(--alpha-white-20);
+                color: var(--alpha-white-60);
+            }
+
+        }
+
+
+        &.current {
+
+            .nds-stepper-title {
+                color: var(--text-oncolor-primary);
+            }
+
+            .nds-stepper-description {
+                color: var(--text-oncolor-secondary);
+            }
+
+            .nds-stepper-circle {
+                border-color: var(--background-surface-oncolor);
+                color: var(--colors-base-white);
+                &:hover {
+                    border-color: var(--alpha-white-40);
+                }
+
+            }
+
+        }
+
+        &.completed {
+
+            .nds-stepper-title {
+                color: var(--text-oncolor-primary);
+            }
+
+            .nds-stepper-description {
+                color: var(--text-oncolor-secondary);
+            }
+
+            .nds-stepper-base:after {
+                background-color: var(--background-surface-oncolor);
+            }
+
+            .nds-stepper-circle {
+                border-color: var(--background-surface-oncolor);
+                background-color: var(--background-surface-oncolor);
+
+                &:hover {
+                    border-color: var(--background-surface-oncolor);
+                    background-color: var(--alpha-white-80);
+                }
+
+                // Default content override for completed state
+                &::before,
+                &[data-step-text]::before {
+                    color: var(--colors-base-white);
+                }
+
+                &:before {
+                    color: var(--stepper-button-completed) !important;
+                }
+            }
+
+
+        }
+
+
+    }
+
+    &.nds-radial {
+        .progress-circle {
+            @include progress-circle-steps($size: 120px,
+                $style: 'oncolor',
+                $rotate: -90deg,
+                $show-text: true,
+                $show-symbol: false,
+                $current: var(--current-step),
+                $total: var(--total-steps));
+        }
+
+        .progress-circle .progress-info {
+            color: var(--text-oncolor-primary);
+
+        }
+    }
+
 
 
 }
