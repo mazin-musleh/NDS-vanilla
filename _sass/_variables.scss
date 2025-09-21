@@ -870,7 +870,18 @@
     --chip-text-oncolor-primary: var(--colors-base-white);
     --chip-text-disabled: var(--colors-neutral-400);
     --chip-text-oncolor-disabled: var(--colors-alpha-alpha-white-40);
-    
+
+    /* Rating Component Tokens - Based on Figma _RatingStar component */
+    /* Default Style */
+    --rating-star-normal-default: var(--colors-neutral-300); /* Background/background-neutral-200 equivalent */
+    --rating-star-selected-default: var(--background-secondary); /* Golden yellow from Figma */
+    --rating-star-pressed-default: var(--background-secondary);
+
+    /* Brand Style */
+    --rating-star-normal-brand: var(--colors-neutral-300);
+    --rating-star-selected-brand: var(--colors-primary-sa-flag-600-primary);
+    --rating-star-pressed-brand: var(--colors-primary-sa-flag-700);
+
     --form-text-form-title: var(--text-default);
     --controls-control-primary: var(--alpha-white-0);
     --table-cell-border: var(--colors-neutral-300);

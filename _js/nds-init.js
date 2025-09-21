@@ -113,6 +113,12 @@
             selector: '#ndsCookiesAcceptBtn',
             init: () => window.NDSCookies?.init?.(),
         },
+        {
+            name: 'rating',
+            priority: 18,
+            selector: '.nds-rating',
+            init: () => window.NDSRating?.initializeRatings?.(),
+        },
     ];
 
     function initializeNDS() {

@@ -34,6 +34,7 @@
 
     /* Accordion Buttons */
     .nds-accordion-btn {
+        --nds-button-icon-size: 20px!important;
         justify-content: space-between;
         width: 100%;
         border-radius: 0 !important;
@@ -42,7 +43,6 @@
         line-height: var(--nds-text-md-LH);
 
         &.nds-menu {
-            --nds-button-icon-size: 20px;
             gap: var(--accordion-lg-header-gap, var(--spacing-md));
         }
 
