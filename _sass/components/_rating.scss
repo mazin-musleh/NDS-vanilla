@@ -1,0 +1,207 @@
+/**
+ * NDS Rating Component - SCSS Version
+ * Star rating component with custom star shape based on Figma design specifications
+ * Supports: 3 sizes (Small/Medium/Large), 4 states (Normal/Pressed/Selected/Half), 2 styles (Default/Brand)
+ */
+
+@use '../mixins' as *;
+
+// ==============================================
+// BASE COMPONENT STYLES
+// ==============================================
+
+.nds-rating {
+  display: flex;
+  gap: var(--spacing-xs);
+  align-items: flex-start;
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+}
+
+.nds-rating-star {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: default;
+
+  // Exact Figma star shape using SVG path
+  &::before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    background-color: currentColor;
+    mask: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='42' height='40' viewBox='0 0 42 40' fill='none'%3e%3cpath d='M19.1839 1.93733C19.8987 0.387582 22.1013 0.387586 22.8161 1.93733L27.3024 11.6635C27.5937 12.2952 28.1923 12.73 28.883 12.8119L39.5195 14.0731C41.2143 14.274 41.8949 16.3688 40.6419 17.5275L32.7781 24.7998C32.2674 25.272 32.0388 25.9757 32.1744 26.6579L34.2618 37.1636C34.5944 38.8375 32.8125 40.1321 31.3233 39.2985L21.9769 34.0668C21.3699 33.7271 20.6301 33.7271 20.0231 34.0668L10.6767 39.2985C9.1875 40.1321 7.40558 38.8375 7.73819 37.1636L9.82565 26.6579C9.96121 25.9757 9.73257 25.272 9.2219 24.7998L1.35805 17.5275C0.105054 16.3688 0.78569 14.274 2.48048 14.0731L13.117 12.8119C13.8077 12.73 14.4063 12.2952 14.6976 11.6635L19.1839 1.93733Z' fill='black'/%3e%3c/svg%3e") no-repeat center / contain;
+  }
+}
+
+// ==============================================
+// STAR STATES
+// ==============================================
+
+.nds-rating-star {
+  // Default (normal/empty) state
+  color: var(--rating-star-normal-default);
+
+  // Selected state (filled)
+  &.selected {
+    color: var(--rating-star-selected-default);
+  }
+
+  // Pressed state
+  &.pressed {
+    color: var(--rating-star-pressed-default);
+  }
+
+  // Half state
+  &.half {
+    color: var(--rating-star-normal-default);
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--rating-star-selected-default);
+      mask:
+        url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='42' height='40' viewBox='0 0 42 40' fill='none'%3e%3cpath d='M19.1839 1.93733C19.8987 0.387582 22.1013 0.387586 22.8161 1.93733L27.3024 11.6635C27.5937 12.2952 28.1923 12.73 28.883 12.8119L39.5195 14.0731C41.2143 14.274 41.8949 16.3688 40.6419 17.5275L32.7781 24.7998C32.2674 25.272 32.0388 25.9757 32.1744 26.6579L34.2618 37.1636C34.5944 38.8375 32.8125 40.1321 31.3233 39.2985L21.9769 34.0668C21.3699 33.7271 20.6301 33.7271 20.0231 34.0668L10.6767 39.2985C9.1875 40.1321 7.40558 38.8375 7.73819 37.1636L9.82565 26.6579C9.96121 25.9757 9.73257 25.272 9.2219 24.7998L1.35805 17.5275C0.105054 16.3688 0.78569 14.274 2.48048 14.0731L13.117 12.8119C13.8077 12.73 14.4063 12.2952 14.6976 11.6635L19.1839 1.93733Z' fill='black'/%3e%3c/svg%3e") no-repeat center / contain,
+        linear-gradient(to right, black 50%, transparent 50%);
+      mask-composite: intersect;
+      -webkit-mask-composite: source-in;
+      z-index: 1;
+    }
+  }
+}
+
+// ==============================================
+// COMPONENT SIZES (following Figma specs)
+// ==============================================
+
+.nds-rating.nds-md,
+.nds-rating {
+  gap: var(--spacing-xs);
+
+  .nds-rating-star {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+.nds-rating.nds-xs {
+  gap: var(--spacing-xxs);
+
+  .nds-rating-star {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.nds-rating.nds-sm {
+  gap: var(--spacing-xxs);
+
+  .nds-rating-star {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.nds-rating.nds-lg {
+  gap: var(--spacing-sm);
+
+  .nds-rating-star {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+// ==============================================
+// STYLE VARIANTS (Default vs Brand)
+// ==============================================
+
+.nds-rating.nds-brand {
+  .nds-rating-star {
+    // Normal state
+    color: var(--rating-star-normal-brand);
+
+    // Selected state
+    &.selected {
+      color: var(--rating-star-selected-brand);
+    }
+
+    // Pressed state
+    &.pressed {
+      color: var(--rating-star-pressed-brand);
+    }
+
+    // Half state
+    &.half::after {
+      background-color: var(--rating-star-selected-brand);
+    }
+  }
+}
+
+
+// ==============================================
+// INTERACTIVE STATES (for clickable ratings)
+// ==============================================
+
+.nds-rating.interactive {
+  .nds-rating-star {
+    cursor: pointer;
+    border: none;
+    background: none;
+    padding: 0;
+    transition: var(--nds-transition);
+
+    &:hover {
+      transform: scale(1.05);
+    }
+
+    &.preview {
+      color: var(--rating-star-selected-default);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--colors-primary-sa-flag-600-primary);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+  }
+
+  // Brand variant preview
+  &.nds-brand {
+    .nds-rating-star.preview {
+      color: var(--rating-star-selected-brand);
+    }
+  }
+}
+
+// ==============================================
+// RESPONSIVE BEHAVIOR
+// ==============================================
+
+@include mobile {
+  .nds-rating.nds-lg {
+    .nds-rating-star {
+      width: 40px;
+      height: 40px;
+      font-size: 32px;
+    }
+  }
+}
+
+// ==============================================
+// RTL/LTR SUPPORT
+// ==============================================
+
+@include ltr {
+  .nds-rating {
+    direction: ltr;
+  }
+}

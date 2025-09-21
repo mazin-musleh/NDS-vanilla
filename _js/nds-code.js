@@ -197,25 +197,25 @@
                     tag += '&lt;/' + tagName + '&gt;';
                     result += indent + tag + '\n';
                 } else {
-                    // Check if this is an inline element with simple text content
-                    const isInlineWithText = node.children.length === 0 && node.textContent.trim();
-                    
-                    if (isInlineWithText) {
-                        // Inline element with text - keep on same line
-                        tag += '&gt;' + encodeHtmlEntities(node.textContent.trim()) + '&lt;/' + node.tagName.toLowerCase() + '&gt;';
+                    // Check if this is an element with simple text content or empty
+                    const isSimpleElement = node.children.length === 0;
+
+                    if (isSimpleElement) {
+                        // Simple element (with text or empty) - keep on same line
+                        tag += '&gt;';
+                        if (node.textContent.trim()) {
+                            tag += encodeHtmlEntities(node.textContent.trim());
+                        }
+                        tag += '&lt;/' + node.tagName.toLowerCase() + '&gt;';
                         result += indent + tag + '\n';
                     } else {
-                        // Block element or element with children
+                        // Block element with children
                         tag += '&gt;';
                         result += indent + tag + '\n';
-                        
+
                         // Process children
-                        if (node.children.length > 0) {
-                            result += formatHtmlAsText(node, indentLevel + 1);
-                        } else if (node.textContent.trim()) {
-                            result += indent + '    ' + encodeHtmlEntities(node.textContent.trim()) + '\n';
-                        }
-                        
+                        result += formatHtmlAsText(node, indentLevel + 1);
+
                         // Closing tag
                         result += indent + '&lt;/' + node.tagName.toLowerCase() + '&gt;' + '\n';
                     }
