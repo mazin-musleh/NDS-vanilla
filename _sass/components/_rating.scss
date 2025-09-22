@@ -12,7 +12,6 @@
 
 .nds-rating {
   display: flex;
-  gap: var(--spacing-xs);
   align-items: flex-start;
   font-family: 'IBM Plex Sans Arabic', sans-serif;
 }
@@ -81,8 +80,6 @@
 
 .nds-rating.nds-md,
 .nds-rating {
-  gap: var(--spacing-xs);
-
   .nds-rating-star {
     width: 32px;
     height: 32px;
@@ -90,8 +87,6 @@
 }
 
 .nds-rating.nds-xs {
-  gap: var(--spacing-xxs);
-
   .nds-rating-star {
     width: 16px;
     height: 16px;
@@ -99,8 +94,6 @@
 }
 
 .nds-rating.nds-sm {
-  gap: var(--spacing-xxs);
-
   .nds-rating-star {
     width: 24px;
     height: 24px;
@@ -108,8 +101,6 @@
 }
 
 .nds-rating.nds-lg {
-  gap: var(--spacing-sm);
-
   .nds-rating-star {
     width: 48px;
     height: 48px;
@@ -124,6 +115,10 @@
   .nds-rating-star {
     // Normal state
     color: var(--rating-star-normal-brand);
+
+    &:hover {
+      color: var(--rating-star-hovered-brand);
+    }
 
     // Selected state
     &.selected {
@@ -148,23 +143,35 @@
 // ==============================================
 
 .nds-rating.interactive {
+
+  &:hover .nds-rating-star {
+    color: var(--rating-star-normal-default);
+
+    &:after {
+      display: none;
+    }
+  }
+  &:active .nds-rating-star:after {
+      display: none;
+  }
+
   .nds-rating-star {
     cursor: pointer;
     border: none;
     background: none;
     padding: 0;
-    transition: var(--nds-transition);
-
-    &:hover {
-      transform: scale(1.05);
-    }
 
     &.preview {
       color: var(--rating-star-selected-default);
     }
 
+    &:hover {
+      color: var(--rating-star-hovered-default);
+    }
+
+
     &:active {
-      transform: scale(0.95);
+      color: var(--rating-star-pressed-default);
     }
 
     &:focus-visible {
@@ -179,6 +186,16 @@
     .nds-rating-star.preview {
       color: var(--rating-star-selected-brand);
     }
+
+    .nds-rating-star:hover {
+      color: var(--rating-star-hovered-brand);
+    }
+
+    // Pressed state
+    &.pressed {
+      color: var(--rating-star-pressed-brand);
+    }
+
   }
 }
 

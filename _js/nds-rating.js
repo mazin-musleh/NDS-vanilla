@@ -8,7 +8,7 @@ class NDSRating {
     this.rating = element;
     this.stars = element.querySelectorAll('.nds-rating-star');
     this.currentRating = parseFloat(element.dataset.rating) || 0;
-    this.isInteractive = element.classList.contains('interactive');
+    this.isInteractive = element.classList.contains('interactive') && !element.classList.contains('nds-disabled');
 
     if (this.isInteractive) {
       this.init();
@@ -178,12 +178,33 @@ class NDSRating {
       }
     });
 
-    // Toggle interactive class to reflect state
+    // Update interactive state and classes
+    this.isInteractive = !disabled;
     if (disabled) {
+      this.rating.classList.add('nds-disabled');
       this.rating.classList.remove('interactive');
+      // Clear any existing preview state when disabling
+      this.hidePreview();
     } else {
+      this.rating.classList.remove('nds-disabled');
       this.rating.classList.add('interactive');
+      // Re-initialize event listeners if needed
+      if (!this.rating.dataset.initialized) {
+        this.init();
+        this.rating.dataset.initialized = 'true';
+      }
     }
+  }
+
+  // Public method to enable rating (convenience method)
+  enable() {
+    this.setDisabled(false);
+  }
+
+  // Public method to check if rating is disabled
+  isDisabled() {
+    return this.rating.classList.contains('nds-disabled') ||
+           (this.stars[0] && this.stars[0].disabled);
   }
 
 }
@@ -198,6 +219,15 @@ function initializeRatings() {
     }
   });
 }
+
+// Static method to enable a disabled rating
+NDSRating.enableRating = function(element) {
+  if (!element.ndsRating) {
+    // If rating was disabled from start, initialize it
+    element.ndsRating = new NDSRating(element);
+  }
+  element.ndsRating.enable();
+};
 
 // Expose to window for nds-init.js
 window.NDSRating = window.NDSRating || {};

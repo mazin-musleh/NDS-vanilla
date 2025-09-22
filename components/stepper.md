@@ -19,7 +19,7 @@ direction: ltr
         <div class="nds-section-content">
             <div class="stepper-showcase">
 
-                <!-- Data Attribute Example -->
+                <!-- Horizontal & Vertical Stepper -->
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-label">Stepper with Custom Text & Dynamic Actions</div>
@@ -27,10 +27,6 @@ direction: ltr
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-vertical", ".nds-stepper", "layoutToggle"]'>
                                 <span class="label">Vertical</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-radial", ".nds-stepper", "layoutToggle"]'>
-                                <span class="label">Radial</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["error", ".nds-stepper-step.current", "stepState"]'>
@@ -62,7 +58,126 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-stepper" id="demo-stepper-1" data-current="2" data-total="4">
+                            <div class="nds-stepper" id="demo-stepper-1" data-current="2" data-total="3">
+                                <div class="nds-stepper-step completed has-line">
+                                    <div class="nds-stepper-base">
+                                        <div class="nds-stepper-circle" data-step-text="1"></div>
+                                    </div>
+                                    <div class="nds-stepper-content">
+                                        <p class="nds-stepper-title">Personal Information</p>
+                                        <p class="nds-stepper-description">Identity details and contact information</p>
+                                    </div>
+                                </div>
+                                <div class="nds-stepper-step current has-line">
+                                    <div class="nds-stepper-base">
+                                        <div class="nds-stepper-circle" data-step-text="2"></div>
+                                    </div>
+                                    <div class="nds-stepper-content">
+                                        <p class="nds-stepper-title">Document Upload</p>
+                                        <p class="nds-stepper-description">Upload required supporting documents</p>
+                                    </div>
+                                </div>
+                                <div class="nds-stepper-step upcoming">
+                                    <div class="nds-stepper-base">
+                                        <div class="nds-stepper-circle" data-step-text="3"></div>
+                                    </div>
+                                    <div class="nds-stepper-content">
+                                        <p class="nds-stepper-title">Review & Confirmation</p>
+                                        <p class="nds-stepper-description">Verify information before submission</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="nds-tabs nds-code withDivider">
+                        <div class="nds-tab-list-container">
+                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-data-attr-1" id="tab-data-attr-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                            </nav>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-data-attr-1"
+                                aria-labelledby="tab-data-attr-1">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <code class="lang-html code">
+                                    <!-- Government service application stepper -->
+                                    <div class="nds-stepper" id="stepper-1" data-current="2" data-total="3">
+                                        <div class="nds-stepper-step completed has-line">
+                                            <div class="nds-stepper-base">
+                                                <div class="nds-stepper-circle" data-step-text="1"></div>
+                                            </div>
+                                            <div class="nds-stepper-content">
+                                                <p class="nds-stepper-title">Personal Information</p>
+                                                <p class="nds-stepper-description">Identity details and contact information</p>
+                                            </div>
+                                        </div>
+                                        <div class="nds-stepper-step current has-line">
+                                            <div class="nds-stepper-base">
+                                                <div class="nds-stepper-circle" data-step-text="2"></div>
+                                            </div>
+                                            <div class="nds-stepper-content">
+                                                <p class="nds-stepper-title">Document Upload</p>
+                                                <p class="nds-stepper-description">Upload required supporting documents</p>
+                                            </div>
+                                        </div>
+                                        <div class="nds-stepper-step upcoming">
+                                            <div class="nds-stepper-base">
+                                                <div class="nds-stepper-circle" data-step-text="3"></div>
+                                            </div>
+                                            <div class="nds-stepper-content">
+                                                <p class="nds-stepper-title">Review & Confirmation</p>
+                                                <p class="nds-stepper-description">Verify information before submission</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Radial Stepper -->
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Radial Stepper with Progress Circle</div>
+                        <div class="demo-action">
+                            <button class="nds-btn nds-sm nds-subtle" data-stepper-control="previous"
+                                data-stepper-target="demo-stepper-radial">
+                                <span class="label">← Previous</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle" data-stepper-control="next"
+                                data-stepper-target="demo-stepper-radial">
+                                <span class="label">Next →</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle" data-stepper-control="goto" data-stepper-value="1"
+                                data-stepper-target="demo-stepper-radial">
+                                <span class="label">Go to 1</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle" data-stepper-control="goto" data-stepper-value="3"
+                                data-stepper-target="demo-stepper-radial">
+                                <span class="label">Go to 3</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='[["nds-oncolor", ".nds-stepper.nds-radial", "containerBg"],["dark-bg", ".demo-container", "containerBg"]]'>
+                                <span class="label">On Color</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                                <span class="label">Remove bg</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <div class="nds-stepper nds-radial" id="demo-stepper-radial" data-current="2"
+                                data-total="4">
                                 <div class="progress-circle">
                                     <svg width="64" height="64" viewBox="0 0 24 24">
                                         <circle class="progress-bg" cx="12" cy="12" r="10" fill="none"
@@ -87,7 +202,6 @@ direction: ltr
                                     </div>
                                 </div>
                                 <div class="nds-stepper-step current has-line">
-
                                     <div class="nds-stepper-base">
                                         <div class="nds-stepper-circle" data-step-text="2"></div>
                                     </div>
@@ -121,22 +235,22 @@ direction: ltr
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                                    aria-controls="panel-data-attr-1" id="tab-data-attr-1">
+                                    aria-controls="panel-radial-1" id="tab-radial-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
                             </nav>
                         </div>
                         <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-data-attr-1"
-                                aria-labelledby="tab-data-attr-1">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-radial-1"
+                                aria-labelledby="tab-radial-1">
                                 <div class="nds-code-action">
                                     <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-                                    <!-- Government service application stepper with progress circle -->
-                                    <div class="nds-stepper" id="stepper-1" data-current="2" data-total="4">
+                                    <!-- Radial stepper with progress circle -->
+                                    <div class="nds-stepper nds-radial" id="stepper-radial" data-current="2" data-total="4">
                                         <div class="progress-circle">
                                             <svg width="64" height="64" viewBox="0 0 24 24">
                                                 <circle class="progress-bg" cx="12" cy="12" r="10" fill="none"
@@ -229,6 +343,7 @@ direction: ltr
             <ul>
                 <li><strong>Horizontal:</strong> Default layout</li>
                 <li><strong>Vertical:</strong> Add <code>.nds-vertical</code> class</li>
+                <li><strong>Radial:</strong> Add <code>.nds-radial</code> class (includes progress circle)</li>
             </ul>
 
             <h3>Data Attributes</h3>

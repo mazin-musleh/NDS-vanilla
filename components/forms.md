@@ -161,7 +161,8 @@ direction: ltr
                 </div>
                 <div class="nds-form-control">
                   <i class="hgi hgi-stroke hgi-search-01 icon"></i>
-                  <input type="text" id="demo-searchInput" class="nds-search-input" name="search" placeholder="Search...">
+                  <input type="text" id="demo-searchInput" class="nds-search-input" name="search"
+                    placeholder="Search...">
                   <div class="nds-form-action">
                     <button class="nds-btn nds-subtle voiceInput" type="button" aria-label="Voice input">
                       <i class="hgi hgi-stroke hgi-mic-01 icon"></i>

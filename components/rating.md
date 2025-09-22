@@ -127,22 +127,33 @@ direction: ltr
                     <script>
                         function toggleRatingDisabled(button) {
                             const ratingElement = button.closest('.nds-demo-card').querySelector('.nds-rating');
-                            if (ratingElement && ratingElement.ndsRating) {
-                                const isCurrentlyDisabled = ratingElement.querySelector('.nds-rating-star').disabled;
+                            const codeElement = button.closest('.nds-demo-card').querySelector('code');
+
+                            if (ratingElement && codeElement) {
+                                // Initialize rating if not already done
+                                if (!ratingElement.ndsRating) {
+                                    ratingElement.ndsRating = new NDSRating(ratingElement);
+                                }
+
+                                const isCurrentlyDisabled = ratingElement.ndsRating.isDisabled();
+
+                                // Toggle disabled state using built-in method
                                 ratingElement.ndsRating.setDisabled(!isCurrentlyDisabled);
 
-                                // Update button selected state (keep label as "Disable")
+                                // Update button state and code example
                                 if (isCurrentlyDisabled) {
                                     button.classList.remove('selected');
+                                    codeElement.innerHTML = codeElement.innerHTML.replace('nds-disabled', 'interactive');
                                 } else {
                                     button.classList.add('selected');
+                                    codeElement.innerHTML = codeElement.innerHTML.replace('interactive', 'nds-disabled');
                                 }
                             }
                         }
                     </script>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-rating nds-md interactive" data-rating="0">
+                            <div class="nds-rating nds-md interactive" data-rating="2.5">
                                 <button class="nds-rating-star" type="button" aria-label="1 star"></button>
                                 <button class="nds-rating-star" type="button" aria-label="2 stars"></button>
                                 <button class="nds-rating-star" type="button" aria-label="3 stars"></button>
