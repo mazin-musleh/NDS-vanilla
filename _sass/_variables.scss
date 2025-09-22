@@ -875,12 +875,14 @@
     /* Default Style */
     --rating-star-normal-default: var(--colors-neutral-300); /* Background/background-neutral-200 equivalent */
     --rating-star-selected-default: var(--background-secondary); /* Golden yellow from Figma */
-    --rating-star-pressed-default: var(--background-secondary);
+    --rating-star-pressed-default: var(--colors-secondary-gold-700);
+    --rating-star-hovered-default: var(--colors-secondary-gold-500);
 
     /* Brand Style */
     --rating-star-normal-brand: var(--colors-neutral-300);
     --rating-star-selected-brand: var(--colors-primary-sa-flag-600-primary);
     --rating-star-pressed-brand: var(--colors-primary-sa-flag-700);
+    --rating-star-hovered-brand: var(--colors-primary-sa-flag-500);
 
     --form-text-form-title: var(--text-default);
     --controls-control-primary: var(--alpha-white-0);
