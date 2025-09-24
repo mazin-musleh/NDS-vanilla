@@ -250,6 +250,13 @@
       height: 10px;
       border-radius: 50%;
     }
+
+    &.nds-sm {
+      .label::before {
+        width: 8px;
+        height: 8px;
+      }
+    }
   }
 
   // Rounded variant

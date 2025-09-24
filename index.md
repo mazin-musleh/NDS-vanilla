@@ -16,12 +16,13 @@ hero_image_pos: 50% 10%
                 is a living documentation and component library built to standardize digital government services. It
                 provides reusable components, design tokens, accessibility guidelines, and interaction patterns that
                 ensure consistency across all government digital touchpoints.</p>
+        </div>
+        <div class="nds-section-content">
             <a href="{{ '/components/button.html' | relative_url }}" class="nds-btn nds-primary"
                 aria-label="Explore Components">
                 <span class="label">Explore Components</span>
                 <i class="hgi hgi-stroke hgi-arrow-right" aria-hidden="true"></i>
             </a>
-
         </div>
     </div>
 </section>

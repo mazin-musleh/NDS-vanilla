@@ -177,7 +177,7 @@
 
         activateTab(tab, index) {
             const panel = this.panels[index];
-            
+
             if (!panel) return;
 
             // Update tab attributes
@@ -187,6 +187,13 @@
             // Show panel
             panel.classList.remove('hidden');
             panel.setAttribute('tabindex', '0');
+
+            // Recheck height for expandable components now that they're visible
+            if (window.NDSExpandable && window.NDSExpandable.recheckHeights) {
+                setTimeout(() => {
+                    window.NDSExpandable.recheckHeights();
+                }, 10);
+            }
         }
 
         deactivateTab(tab, index) {

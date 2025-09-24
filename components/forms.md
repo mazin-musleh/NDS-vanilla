@@ -13,47 +13,9 @@ direction: ltr
   <div class="nds-section-content-container">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Form Input Types</h2>
-      <p class="nds-section-description">All form input types available in the National Design System with clear
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        actions</p>
+      <p class="nds-section-description">
+        All form input types available in the National Design System with clear actions
+      </p>
     </div>
     <div class="nds-section-content">
       <div class="form-showcase">
@@ -106,14 +68,14 @@ direction: ltr
               </nav>
             </div>
             <div class="nds-tab-content">
-              <div class="nds-tab-panel code-example" role="tabpanel" id="panel-text-input-1"
+              <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-text-input-1"
                 aria-labelledby="tab-text-input-1">
                 <div class="nds-code-action">
                   <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                   </button>
                 </div>
-                <code class="lang-html code">
+                <code class="lang-html code nds-expandable-content">
                   <div class="nds-form-container">
                     <div class="nds-form-header">
                       <label for="textInput">
@@ -189,14 +151,14 @@ direction: ltr
               </nav>
             </div>
             <div class="nds-tab-content">
-              <div class="nds-tab-panel code-example" role="tabpanel" id="panel-search-input-1"
+              <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-search-input-1"
                 aria-labelledby="tab-search-input-1">
                 <div class="nds-code-action">
                   <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                   </button>
                 </div>
-                <code class="lang-html code">
+                <code class="lang-html code nds-expandable-content">
                   <div class="nds-form-container">
                     <div class="nds-form-header">
                       <label for="searchInput">
@@ -272,14 +234,14 @@ direction: ltr
               </nav>
             </div>
             <div class="nds-tab-content">
-              <div class="nds-tab-panel code-example" role="tabpanel" id="panel-email-input-1"
+              <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-email-input-1"
                 aria-labelledby="tab-email-input-1">
                 <div class="nds-code-action">
                   <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                   </button>
                 </div>
-                <code class="lang-html code">
+                <code class="lang-html code nds-expandable-content">
                   <div class="nds-form-container">
                     <div class="nds-form-header">
                       <label for="emailInput">
@@ -356,14 +318,14 @@ direction: ltr
               </nav>
             </div>
             <div class="nds-tab-content">
-              <div class="nds-tab-panel code-example" role="tabpanel" id="panel-password-input-1"
+              <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-password-input-1"
                 aria-labelledby="tab-password-input-1">
                 <div class="nds-code-action">
                   <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                   </button>
                 </div>
-                <code class="lang-html code">
+                <code class="lang-html code nds-expandable-content">
                   <div class="nds-form-container">
                     <div class="nds-form-header">
                       <label for="passwordInput">
@@ -435,14 +397,14 @@ direction: ltr
               </nav>
             </div>
             <div class="nds-tab-content">
-              <div class="nds-tab-panel code-example" role="tabpanel" id="panel-textarea-1"
+              <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-textarea-1"
                 aria-labelledby="tab-textarea-1">
                 <div class="nds-code-action">
                   <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                   </button>
                 </div>
-                <code class="lang-html code">
+                <code class="lang-html code nds-expandable-content">
                   <div class="nds-form-container nds-textarea">
                     <div class="nds-form-header">
                       <label for="textareaInput">
@@ -523,14 +485,14 @@ direction: ltr
               </nav>
             </div>
             <div class="nds-tab-content">
-              <div class="nds-tab-panel code-example" role="tabpanel" id="panel-select-1"
+              <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-select-1"
                 aria-labelledby="tab-select-1">
                 <div class="nds-code-action">
                   <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                   </button>
                 </div>
-                <code class="lang-html code">
+                <code class="lang-html code nds-expandable-content">
                   <div class="nds-form-container">
                     <div class="nds-form-header">
                       <label for="selectInput">
@@ -576,11 +538,11 @@ direction: ltr
                 data-toggler='["nds-lg", ".nds-radio-container", "sizeToggle"]'>
                 <span class="label">LG</span>
               </button>
-              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["nds-md", ".nds-radio-container", "sizeToggle"]'>
                 <span class="label">MD</span>
               </button>
-              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
                 data-toggler='["nds-sm", ".nds-radio-container", "sizeToggle"]'>
                 <span class="label">SM</span>
               </button>
@@ -642,13 +604,14 @@ direction: ltr
               </nav>
             </div>
             <div class="nds-tab-content">
-              <div class="nds-tab-panel code-example" role="tabpanel" id="panel-radio-1" aria-labelledby="tab-radio-1">
+              <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-radio-1"
+                aria-labelledby="tab-radio-1">
                 <div class="nds-code-action">
                   <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                   </button>
                 </div>
-                <code class="lang-html code">
+                <code class="lang-html code nds-expandable-content">
                   <fieldset class="nds-radio-group">
                     <legend class="label">Radio Button Group</legend>
                     <div class="nds-form-container nds-radio-container">
@@ -688,11 +651,11 @@ direction: ltr
                 data-toggler='["nds-lg", ".nds-check-container", "sizeToggle"]'>
                 <span class="label">LG</span>
               </button>
-              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["nds-md", ".nds-check-container", "sizeToggle"]'>
                 <span class="label">MD</span>
               </button>
-              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
                 data-toggler='["nds-sm", ".nds-check-container", "sizeToggle"]'>
                 <span class="label">SM</span>
               </button>
@@ -771,14 +734,14 @@ direction: ltr
               </nav>
             </div>
             <div class="nds-tab-content">
-              <div class="nds-tab-panel code-example" role="tabpanel" id="panel-checkbox-1"
+              <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-checkbox-1"
                 aria-labelledby="tab-checkbox-1">
                 <div class="nds-code-action">
                   <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                   </button>
                 </div>
-                <code class="lang-html code">
+                <code class="lang-html code nds-expandable-content">
                   <fieldset class="nds-check-group">
                     <legend class="label">Checkbox Group</legend>
                     <div class="nds-form-container nds-check-container">
@@ -910,14 +873,14 @@ direction: ltr
               </nav>
             </div>
             <div class="nds-tab-content">
-              <div class="nds-tab-panel code-example" role="tabpanel" id="panel-switch-1"
+              <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-switch-1"
                 aria-labelledby="tab-switch-1">
                 <div class="nds-code-action">
                   <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                   </button>
                 </div>
-                <code class="lang-html code">
+                <code class="lang-html code nds-expandable-content">
                   <fieldset class="nds-switch-group">
                     <legend class="label">Switch Group</legend>
                     <div class="nds-form-container nds-switch-container">
@@ -1079,14 +1042,14 @@ direction: ltr
               </nav>
             </div>
             <div class="nds-tab-content">
-              <div class="nds-tab-panel code-example" role="tabpanel" id="panel-date-picker-1"
+              <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-date-picker-1"
                 aria-labelledby="tab-date-picker-1">
                 <div class="nds-code-action">
                   <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                   </button>
                 </div>
-                <code class="lang-html code">
+                <code class="lang-html code nds-expandable-content">
                   <div class="nds-form-container nds-date-picker">
                     <div class="nds-form-header">
                       <label for="datePickerInput">

@@ -13,7 +13,8 @@ direction: ltr
   <div class="nds-section-content-container">
     <div class="nds-section-head">
       <h2 class="nds-section-title">File Upload</h2>
-      <p class="nds-section-description">Upload files with drag-and-drop support, progress tracking, and comprehensive validation</p>
+      <p class="nds-section-description">Upload files with drag-and-drop support, progress tracking, and comprehensive
+        validation</p>
     </div>
     <div class="nds-section-content">
       <div class="form-showcase">
@@ -136,14 +137,14 @@ direction: ltr
               </nav>
             </div>
             <div class="nds-tab-content">
-              <div class="nds-tab-panel code-example" role="tabpanel" id="panel-file-upload-1"
+              <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-file-upload-1"
                 aria-labelledby="tab-file-upload-1">
                 <div class="nds-code-action">
                   <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                   </button>
                 </div>
-                <code class="lang-html code">
+                <code class="lang-html code nds-expandable-content">
                   <div class="nds-form-container nds-file-upload multi-file-upload dropBox">
                     <div class="nds-form-header hidden">
                       <label for="multiFileUpload">
@@ -231,13 +232,13 @@ direction: ltr
 
                 <h3>Quick Start</h3>
 
-                <div class="nds-code">
+                <div class="nds-code nds-expandable">
                   <div class="nds-code-action">
                     <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                       <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                   </div>
-                  <code class="lang-javascript">
+                  <code class="lang-javascript nds-expandable-content">
 // Get controller instance
 const uploadElement = document.querySelector('.nds-file-upload');
 const fileUpload = uploadElement.ndsFileUpload;
@@ -252,20 +253,14 @@ fileUpload.startUpload(fileId);
 
                 <p>Configure the component using HTML data attributes:</p>
 
-                <div class="nds-code">
+                <div class="nds-code nds-expandable">
                   <div class="nds-code-action">
                     <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                       <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                   </div>
-                  <code class="lang-html">
-<div class="nds-file-upload"
-     data-upload-url="/api/upload"
-     data-auto-upload="true"
-     data-max-files="5"
-     data-max-file-size="10485760"
-     data-accepted-types="image/*,.pdf,.docx">
-</div>
+                  <code class="lang-html nds-expandable-content">
+                    <div class="nds-file-upload" data-upload-url="/api/upload"  data-auto-upload="true"  data-max-files="5"  data-max-file-size="10485760"  data-accepted-types="image/*,.pdf,.docx"></div>
                   </code>
                 </div>
 
@@ -284,13 +279,13 @@ fileUpload.startUpload(fileId);
 
                 <p><strong>addFile(file, options)</strong></p>
                 <p>Adds a file to the upload queue.</p>
-                <div class="nds-code">
+                <div class="nds-code nds-expandable">
                   <div class="nds-code-action">
                     <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                       <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                   </div>
-                  <code class="lang-javascript">
+                  <code class="lang-javascript nds-expandable-content">
 const fileId = fileUpload.addFile(file, {
   status: 'ready',    // Initial status
   progress: 0,        // Initial progress (0-100)
@@ -302,13 +297,13 @@ const fileId = fileUpload.addFile(file, {
 
                 <p><strong>removeFile(fileId)</strong></p>
                 <p>Removes a file from the upload queue.</p>
-                <div class="nds-code">
+                <div class="nds-code nds-expandable">
                   <div class="nds-code-action">
                     <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                       <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                   </div>
-                  <code class="lang-javascript">
+                  <code class="lang-javascript nds-expandable-content">
 const success = fileUpload.removeFile(fileId);
 // Returns: boolean (true if file was removed)
                   </code>
@@ -316,13 +311,13 @@ const success = fileUpload.removeFile(fileId);
 
                 <p><strong>clearAllFiles()</strong></p>
                 <p>Removes all files from the upload queue.</p>
-                <div class="nds-code">
+                <div class="nds-code nds-expandable">
                   <div class="nds-code-action">
                     <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                       <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                   </div>
-                  <code class="lang-javascript">
+                  <code class="lang-javascript nds-expandable-content">
 fileUpload.clearAllFiles();
                   </code>
                 </div>
@@ -331,13 +326,13 @@ fileUpload.clearAllFiles();
 
                 <p><strong>getFile(fileId)</strong></p>
                 <p>Get file data by ID.</p>
-                <div class="nds-code">
+                <div class="nds-code nds-expandable">
                   <div class="nds-code-action">
                     <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                       <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                   </div>
-                  <code class="lang-javascript">
+                  <code class="lang-javascript nds-expandable-content">
 const fileData = fileUpload.getFile(fileId);
 // Returns: { file, id, status, progress, error, response }
                   </code>
@@ -345,13 +340,13 @@ const fileData = fileUpload.getFile(fileId);
 
                 <p><strong>getAllFiles()</strong></p>
                 <p>Get all files in the upload queue.</p>
-                <div class="nds-code">
+                <div class="nds-code nds-expandable">
                   <div class="nds-code-action">
                     <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                       <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                   </div>
-                  <code class="lang-javascript">
+                  <code class="lang-javascript nds-expandable-content">
 const allFiles = fileUpload.getAllFiles();
 // Returns: Array of file objects
                   </code>
@@ -359,13 +354,13 @@ const allFiles = fileUpload.getAllFiles();
 
                 <p><strong>getFilesByStatus(status)</strong></p>
                 <p>Filter files by status.</p>
-                <div class="nds-code">
+                <div class="nds-code nds-expandable">
                   <div class="nds-code-action">
                     <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                       <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                   </div>
-                  <code class="lang-javascript">
+                  <code class="lang-javascript nds-expandable-content">
 const readyFiles = fileUpload.getFilesByStatus('ready');
 const uploadingFiles = fileUpload.getFilesByStatus('uploading');
 const completedFiles = fileUpload.getFilesByStatus('complete');
@@ -376,13 +371,13 @@ const completedFiles = fileUpload.getFilesByStatus('complete');
 
                 <p><strong>setFileStatus(fileId, status, options)</strong></p>
                 <p>Update file status.</p>
-                <div class="nds-code">
+                <div class="nds-code nds-expandable">
                   <div class="nds-code-action">
                     <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                       <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                   </div>
-                  <code class="lang-javascript">
+                  <code class="lang-javascript nds-expandable-content">
 fileUpload.setFileStatus(fileId, 'error', {
     error: 'Upload failed',
     progress: 0
@@ -392,13 +387,13 @@ fileUpload.setFileStatus(fileId, 'error', {
 
                 <p><strong>setFileProgress(fileId, progress)</strong></p>
                 <p>Update upload progress (0-100).</p>
-                <div class="nds-code">
+                <div class="nds-code nds-expandable">
                   <div class="nds-code-action">
                     <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                       <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                   </div>
-                  <code class="lang-javascript">
+                  <code class="lang-javascript nds-expandable-content">
 fileUpload.setFileProgress(fileId, 75); // 75% complete
                   </code>
                 </div>
@@ -407,13 +402,13 @@ fileUpload.setFileProgress(fileId, 75); // 75% complete
 
                 <p><strong>startUpload(fileId)</strong></p>
                 <p>Start upload for specific file or all ready files.</p>
-                <div class="nds-code">
+                <div class="nds-code nds-expandable">
                   <div class="nds-code-action">
                     <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                       <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                   </div>
-                  <code class="lang-javascript">
+                  <code class="lang-javascript nds-expandable-content">
 fileUpload.startUpload(fileId);  // Upload specific file
 fileUpload.startUpload();        // Upload all ready files
                   </code>
@@ -423,13 +418,13 @@ fileUpload.startUpload();        // Upload all ready files
 
                 <p>Listen for upload events:</p>
 
-                <div class="nds-code">
+                <div class="nds-code nds-expandable">
                   <div class="nds-code-action">
                     <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                       <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                   </div>
-                  <code class="lang-javascript">
+                  <code class="lang-javascript nds-expandable-content">
 const uploadElement = document.querySelector('.nds-file-upload');
 
 uploadElement.addEventListener('filesSelected', (e) => {
@@ -469,13 +464,13 @@ uploadElement.addEventListener('uploadError', (e) => {
 
                 <h3>Example Usage</h3>
 
-                <div class="nds-code">
+                <div class="nds-code nds-expandable">
                   <div class="nds-code-action">
                     <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                       <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                   </div>
-                  <code class="lang-javascript">
+                  <code class="lang-javascript nds-expandable-content">
 // Get controller reference
 const uploadElement = document.querySelector('.nds-file-upload');
 const fileUpload = uploadElement.ndsFileUpload;

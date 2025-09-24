@@ -142,3 +142,103 @@ button,
     cursor: pointer;
 }
 
+
+/* table {
+    width: 100%;
+    background-color: var(--table-cell-border);
+    border: 1px solid var(--table-cell-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+th,
+thead th,
+thead td {
+    background-color: var(--table-background-header);
+    color: var(--table-text-head);
+    font-weight: 600;
+    padding: var(--table-cell-v-padding) var(--table-cell-h-padding);
+    border-right: 1px solid var(--table-cell-border);
+    border-bottom: 1px solid var(--table-cell-border);
+}
+
+th:first-child,
+thead th:first-child,
+thead td:first-child {
+    padding: var(--table-cell-v-padding) var(--table-cell-h-padding);
+    border-right: none;
+}
+
+tr {
+    border-bottom: 1px solid var(--table-cell-border);
+}
+
+tr:last-child {
+    border-bottom: none;
+}
+
+td {
+    padding: var(--table-cell-v-padding) var(--table-cell-h-padding);
+    vertical-align: middle;
+    background-color: var(--background-card);
+}
+
+tr:hover td {
+    background-color: var(--table-background-header);
+}
+
+table tr:nth-child(even) td {
+    background-color: var(--table-background-row);
+}
+
+table tr:nth-child(even):hover td {
+    background-color: var(--table-background-hover-selected);
+} */
+
+.nds-expandable.nds-expand {
+    .nds-expandable-content {
+        overflow-y: hidden;
+        max-height: var(--max-height, 300px);
+        position: relative;
+
+        .nds-expand-btn {
+            position: absolute;
+            bottom: 0;
+            z-index: 6;
+            left: 0;
+
+            @include ltr {
+                left: unset;
+                right: 0;
+            }
+        }
+
+        &::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 25%, rgba(255, 255, 255, 0) 100%);
+            pointer-events: none;
+            z-index: 2;
+        }
+    }
+
+    &.nds-expanded {
+        .nds-expandable-content {
+            max-height: 100%;
+            padding-bottom: var(--spacing-4xl);
+
+            &::after {
+            content: "";
+            height: var(--spacing-4xl);
+            background: linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 25%, rgba(255, 255, 255, 0) 100%);
+
+        }
+
+        }
+
+    }
+}

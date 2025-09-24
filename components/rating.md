@@ -69,14 +69,14 @@ direction: ltr
                             </nav>
                         </div>
                         <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-rating-display"
+                            <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-rating-display"
                                 aria-labelledby="tab-rating-display">
                                 <div class="nds-code-action">
                                     <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
-                                <code class="lang-html code">
+                                <code class="lang-html code nds-expandable-content">
 <div class="nds-rating nds-md" data-rating="3.5">
   <span class="nds-rating-star"></span>
   <span class="nds-rating-star"></span>
@@ -172,14 +172,14 @@ direction: ltr
                             </nav>
                         </div>
                         <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-rating-interactive"
+                            <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-rating-interactive"
                                 aria-labelledby="tab-rating-interactive">
                                 <div class="nds-code-action">
                                     <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
-                                <code class="lang-html code">
+                                <code class="lang-html code nds-expandable-content">
 <div class="nds-rating nds-md interactive" data-rating="0">
   <button class="nds-rating-star" type="button" aria-label="1 star"></button>
   <button class="nds-rating-star" type="button" aria-label="2 stars"></button>
@@ -282,13 +282,13 @@ direction: ltr
                     </ul>
 
                     <h4>Code Example:</h4>
-                    <div class="nds-code">
+                    <div class="nds-code nds-expandable">
                         <div class="nds-code-action">
                             <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
-                        <code class="lang-javascript">
+                        <code class="lang-javascript nds-expandable-content">
 // Listen for rating change events
 document.addEventListener('ratingChange', (e) => {
     console.log('Rating changed to:', e.detail.rating);
