@@ -99,14 +99,14 @@ direction: ltr
                             </nav>
                         </div>
                         <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-data-attr-1"
+                            <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-data-attr-1"
                                 aria-labelledby="tab-data-attr-1">
                                 <div class="nds-code-action">
                                     <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
-                                <code class="lang-html code">
+                                <code class="lang-html code nds-expandable-content">
                                     <!-- Government service application stepper -->
                                     <div class="nds-stepper" id="stepper-1" data-current="2" data-total="3">
                                         <div class="nds-stepper-step completed has-line">
@@ -241,14 +241,14 @@ direction: ltr
                             </nav>
                         </div>
                         <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-radial-1"
+                            <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-radial-1"
                                 aria-labelledby="tab-radial-1">
                                 <div class="nds-code-action">
                                     <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
-                                <code class="lang-html code">
+                                <code class="lang-html code nds-expandable-content">
                                     <!-- Radial stepper with progress circle -->
                                     <div class="nds-stepper nds-radial" id="stepper-radial" data-current="2" data-total="4">
                                         <div class="progress-circle">
@@ -359,13 +359,13 @@ direction: ltr
             <h3>JavaScript Control</h3>
             <p>Control stepper programmatically using the NDS Stepper API:</p>
 
-            <div class="nds-code">
+            <div class="nds-code nds-expandable">
                 <div class="nds-code-action">
                     <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>
-                <code class="lang-javascript">
+                <code class="lang-javascript nds-expandable-content">
 // Navigate between steps (requires stepper ID)
 NDSStepper.next('my-stepper');
 NDSStepper.previous('my-stepper');
@@ -385,13 +385,13 @@ const progress = stepper.getProgressPercentage();
             <h3>Control Buttons</h3>
             <p>Use data attributes to create control buttons with automatic or explicit targeting:</p>
 
-            <div class="nds-code">
+            <div class="nds-code nds-expandable">
                 <div class="nds-code-action">
                     <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>
-                <code class="lang-html">
+                <code class="lang-html nds-expandable-content">
 <!-- Basic controls (targets closest or first stepper) -->
 <button data-stepper-control="next">Next Step</button>
 <button data-stepper-control="previous">Previous Step</button>
@@ -415,13 +415,13 @@ const progress = stepper.getProgressPercentage();
             <h3>Event Listening</h3>
             <p>Listen for step changes:</p>
 
-            <div class="nds-code">
+            <div class="nds-code nds-expandable">
                 <div class="nds-code-action">
                     <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>
-                <code class="lang-javascript">
+                <code class="lang-javascript nds-expandable-content">
 document.addEventListener('nds:stepper:change', (e) => {
     console.log('Step changed to:', e.detail.currentStep);
     console.log('Progress:', e.detail.progressPercentage + '%');

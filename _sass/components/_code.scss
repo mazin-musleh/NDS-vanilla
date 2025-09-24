@@ -62,6 +62,7 @@
     padding: 0;
     background: transparent;
     border: none;
+    overflow-y: hidden;
     overflow-x: auto;
   }
 
@@ -94,6 +95,7 @@
     flex-direction: column;
     flex-wrap: nowrap;
     white-space: pre;
+    overflow-y: hidden;
     overflow-x: auto;
     margin: 0;
     padding: var(--spacing-xl) 0;
@@ -133,7 +135,7 @@
           top: calc(var(--spacing-xl) * -1);
           left: 0;
           width: 3em;
-          height: calc(100% + var(--spacing-4xl));
+          height: calc(100% + var(--spacing-6xl));
           font-size: var(--nds-text-xs-FS);
           background-color: var(--background-neutral-100);
           border: 1px solid var(--background-neutral-100);

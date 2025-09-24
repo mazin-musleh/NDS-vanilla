@@ -29,6 +29,7 @@
             color: var(--text-primary-paragraph);
             font-size: var(--nds-text-sm-FS);
             line-height: var(--nds-text-sm-LH);
+            min-width: 200px;
         }
 
         .error {
@@ -46,13 +47,12 @@
     &.nds-radio-container,
     &.nds-check-container,
     &.nds-switch-container {
-        --nds-input-size: 20px;
+        --nds-input-size: 16px;
         display: flex;
-        gap: var(--spacing-lg);
+        gap: var(--spacing-md);
         flex-direction: row-reverse;
         width: fit-content;
         flex-wrap: nowrap;
-        min-width: 200px;
         justify-content: flex-end;
 
         &>.nds-form-header .label {
@@ -64,14 +64,18 @@
 
         }
 
-
+        &.nds-md * {
+            --nds-input-size: 20px;
+        }
 
         &.nds-lg * {
             --nds-input-size: 24px;
         }
 
-        &.nds-sm * {
-            --nds-input-size: 16px;
+        &.nds-md {
+
+            gap: var(--spacing-lg);
+
         }
 
         &.nds-lg {
@@ -79,12 +83,6 @@
             gap: var(--spacing-xl);
 
         }
-
-        &.nds-sm {
-            gap: var(--spacing-md);
-
-        }
-
 
 
     }

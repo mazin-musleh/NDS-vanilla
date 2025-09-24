@@ -1,0 +1,358 @@
+/**
+ * NDS Table Component - SCSS Version
+ * Responsive data tables with consistent styling and interactive features
+ * RTL-first design (Arabic layout by default)
+ */
+
+@use '../mixins' as *;
+
+// ==============================================
+// BASE TABLE STYLES
+// ==============================================
+
+.nds-table {
+    width: 100%;
+    background-color: var(--table-cell-border);
+    border: 1px solid var(--table-cell-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+
+
+    // Row styles
+    tr {
+        border-bottom: 1px solid var(--table-cell-border);
+
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+
+    // Header styles
+    th,
+    thead th,
+    thead td {
+        background-color: var(--table-background-header);
+        color: var(--table-text-head);
+        font-weight: 600;
+        padding: var(--table-cell-v-padding) var(--table-cell-h-padding);
+        border-left: 1px solid var(--table-cell-border);
+        border-bottom: 1px solid var(--table-cell-border);
+        text-align: start;
+        vertical-align: middle;
+        height: 64px;
+
+
+
+        &:last-child {
+            border-right: none;
+        }
+
+        // LTR override when needed
+        @include ltr {
+            border-right: 1px solid var(--table-cell-border);
+
+            &:last-child {
+                border-left: none;
+            }
+        }
+    }
+
+    // Cell styles
+    td {
+        padding: var(--table-cell-v-padding) var(--table-cell-h-padding);
+        vertical-align: middle;
+        background-color: var(--background-card);
+        color: var(--table-text-body);
+        border-left: 1px solid var(--table-cell-border);
+        height: 64px;
+
+        &:last-child {
+            border-right: none;
+        }
+
+        // LTR override when needed
+        @include ltr {
+            border-right: 1px solid var(--table-cell-border);
+
+            &:last-child {
+                border-left: none;
+            }
+        }
+    }
+
+    // Hover states
+    tbody tr:hover td {
+        background-color: var(--table-background-header);
+    }
+
+    // Striped rows
+    tbody tr:nth-child(even) td {
+        background-color: var(--table-background-row);
+    }
+
+    // Even rows should use same hover as regular rows
+    tbody tr:nth-child(even):hover td {
+        background-color: var(--table-background-header);
+    }
+}
+
+// ==============================================
+// COMPACT TABLE VARIANT
+// ==============================================
+
+.nds-table.nds-compact {
+    th,
+    thead th,
+    thead td {
+        padding: var(--spacing-1) var(--spacing-3);
+        font-size: var(--nds-text-sm-FS);
+        line-height: var(--nds-text-sm-LH);
+    }
+
+    td {
+        padding: var(--spacing-1) var(--spacing-3);
+        font-size: var(--nds-text-sm-FS);
+        line-height: var(--nds-text-sm-LH);
+    }
+
+    @include mobile {
+        th,
+        thead th,
+        thead td,
+        td {
+            padding: var(--spacing-0-5) var(--spacing-2);
+            font-size: var(--nds-text-xs-FS);
+            line-height: var(--nds-text-xs-LH);
+        }
+    }
+}
+
+// ==============================================
+// SORTABLE TABLE VARIANT
+// ==============================================
+
+.nds-table.nds-sortable {
+    th.sortable {
+        padding: 0;
+        position: relative;
+
+        .sort-header {
+            width: 100%;
+            padding: var(--table-cell-v-padding) var(--table-cell-h-padding);
+            background: transparent;
+            border: none;
+            color: var(--table-text-head);
+            font-weight: 600;
+            font-size: inherit;
+            font-family: inherit;
+            text-align: start;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--spacing-1);
+            transition: var(--nds-transition);
+            outline: none;
+
+            &:hover {
+                background-color: var(--colors-neutral-200);
+            }
+
+            &:focus {
+                outline: none;
+            }
+
+            .sort-icon {
+                font-size: var(--nds-text-sm-FS);
+                color: var(--colors-neutral-500);
+                transition: var(--nds-transition);
+            }
+
+            // RTL-specific adjustments
+            flex-direction: row-reverse;
+
+            @include ltr {
+                flex-direction: row;
+            }
+        }
+
+        // Sorted states
+        &.sorted-asc .sort-header .sort-icon {
+            color: var(--colors-primary-sa-flag-600-primary);
+        }
+
+        &.sorted-desc .sort-header .sort-icon {
+            color: var(--colors-primary-sa-flag-600-primary);
+            transform: rotate(180deg);
+        }
+    }
+}
+
+// ==============================================
+// RESPONSIVE BEHAVIOR
+// ==============================================
+
+@include mobile {
+    .nds-table {
+        // Stack table horizontally on mobile if needed
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+
+        th,
+        thead th,
+        thead td {
+            min-width: 120px;
+        }
+
+        td {
+            min-width: 120px;
+        }
+
+        // Compact spacing on mobile
+        &:not(.nds-compact) {
+            th,
+            thead th,
+            thead td,
+            td {
+                padding: var(--table-cell-v-padding) var(--spacing-3);
+            }
+        }
+    }
+}
+
+@include tablet(max) {
+    .nds-table {
+        // Medium spacing on tablets
+        th,
+        thead th,
+        thead td,
+        td {
+            padding: var(--table-cell-v-padding) var(--table-cell-h-padding);
+        }
+    }
+}
+
+// ==============================================
+// ACCESSIBILITY IMPROVEMENTS
+// ==============================================
+
+.nds-table {
+    // Remove default focus outline on table cells
+    th,
+    td {
+        outline: none;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    // Focus styles only for interactive elements within cells
+    th:focus-within,
+    td:focus-within {
+        // Only apply focus styles to interactive elements, not the cell itself
+        button:focus,
+        input:focus,
+        a:focus {
+            outline: 2px solid var(--colors-primary-sa-flag-600-primary);
+            outline-offset: -2px;
+        }
+    }
+
+    // Screen reader improvements
+    caption {
+        padding: var(--spacing-4);
+        font-weight: 600;
+        text-align: start;
+        background-color: var(--table-background-header);
+        border-bottom: 1px solid var(--table-cell-border);
+    }
+}
+
+// ==============================================
+// TABLE LOADING STATE
+// ==============================================
+
+.nds-table.loading {
+    tbody tr td {
+        background-color: var(--colors-neutral-100);
+        color: var(--colors-neutral-400);
+        animation: tableLoading 1.5s ease-in-out infinite alternate;
+    }
+}
+
+@keyframes tableLoading {
+    0% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+// ==============================================
+// TABLE WITH ACTIONS
+// ==============================================
+
+.nds-table {
+    .table-actions {
+        display: flex;
+        gap: var(--spacing-1);
+        align-items: center;
+
+        .nds-btn {
+            min-width: auto;
+        }
+    }
+
+    // Actions column should be narrower
+    .actions-column {
+        width: 1%;
+        white-space: nowrap;
+    }
+
+    // Checkbox column should have consistent width
+    th:has(.nds-check-container),
+    td:has(.nds-check-container) {
+        width: 40px;
+        text-align: center;
+
+        .nds-form-container.nds-check-container {
+            margin: 0;
+
+            .nds-form-control {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 0;
+
+                .nds-check {
+                    margin: 0;
+                }
+            }
+        }
+    }
+
+    // Fallback for browsers that don't support :has()
+    .checkbox-column {
+        width: 40px;
+        text-align: center;
+
+        .nds-form-container.nds-check-container {
+            margin: 0;
+
+            .nds-form-control {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 0;
+
+                .nds-check {
+                    margin: 0;
+                }
+            }
+        }
+    }
+}

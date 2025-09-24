@@ -152,7 +152,7 @@
         // Create a temporary div to work with the HTML
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = html;
-        
+
         // Convert to formatted text with proper indentation
         return formatHtmlAsText(tempDiv, 0);
     }

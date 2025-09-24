@@ -119,6 +119,12 @@
             selector: '.nds-rating',
             init: () => window.NDSRating?.initializeRatings?.(),
         },
+        {
+            name: 'expandable',
+            priority: 19,
+            selector: '.nds-expandable',
+            init: () => window.NDSExpandable?.init?.(),
+        },
     ];
 
     function initializeNDS() {

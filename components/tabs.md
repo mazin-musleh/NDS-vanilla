@@ -192,13 +192,14 @@ direction: ltr
                         </nav>
                     </div>
                     <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-1" aria-labelledby="tab-1">
+                        <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-1"
+                            aria-labelledby="tab-1">
                             <div class="nds-code-action">
                                 <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                                 </button>
                             </div>
-                            <code class="lang-html code">
+                            <code class="lang-html code nds-expandable-content">
                                 <div class="nds-tabs">
                                     <div class="nds-tab-list-container">
                                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -289,7 +290,8 @@ direction: ltr
                                         <div class="stat-label">Pending Reviews</div>
                                     </div>
                                     <div class="stat-card">
-                                        <div class="stat-number"><span class="nds-counter-value">98</span><span class="suffix">.2%</span></div>
+                                        <div class="stat-number"><span class="nds-counter-value">98</span><span
+                                                class="suffix">.2%</span></div>
                                         <div class="stat-label">Success Rate</div>
                                     </div>
                                 </div>
@@ -507,14 +509,14 @@ direction: ltr
                         </nav>
                     </div>
                     <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-icons-1"
+                        <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-icons-1"
                             aria-labelledby="tab-icons-1">
                             <div class="nds-code-action">
                                 <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                                 </button>
                             </div>
-                            <code class="lang-html code">
+                            <code class="lang-html code nds-expandable-content">
                                 <div class="nds-tabs">
                                     <div class="nds-tab-list-container">
                                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Icon tab navigation">
