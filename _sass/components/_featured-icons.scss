@@ -149,6 +149,7 @@
   body.hgi-loaded & i {
     position: relative;
     z-index: 1;
+
     &:after {
       content: '';
       position: absolute;
@@ -234,9 +235,11 @@
       box-shadow: 0 0 0px 4px var(--icon-error-ring);
     }
 
-    .icon:before {
-      content: "㿃";
-
+    .icon {
+      transform: translateX(-0.04rem);
+      &:before {
+        content: "㿃";
+      }
     }
 
     &.nds-alert {
@@ -273,6 +276,7 @@
 
   &.nds-outline {
     background-color: unset;
+
     &::before {
       display: none;
     }

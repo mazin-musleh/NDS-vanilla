@@ -38,7 +38,7 @@
             font-size: var(--nds-text-sm-FS);
             line-height: var(--nds-text-sm-LH);
             font-weight: 500;
-            gap: var(--icon-text-gap);
+            gap: var(--spacing-sm);
             color: var(--controls-control-text-error);
 
         }
@@ -61,7 +61,6 @@
             line-height: var(--nds-input-size);
             font-weight: 500;
             height: var(--nds-input-size);
-
         }
 
         &.nds-md * {
@@ -70,6 +69,7 @@
 
         &.nds-lg * {
             --nds-input-size: 24px;
+            
         }
 
         &.nds-md {
@@ -84,6 +84,15 @@
 
         }
 
+
+    }
+
+    &.nds-switch-container  {
+
+        &>.nds-form-header .label {
+            line-height: calc(var(--nds-input-size) + 4px)!important;
+            height: calc(var(--nds-input-size) + 4px)!important;
+        }
 
     }
 
@@ -605,7 +614,7 @@ fieldset {
             display: inline-flex;
             width: var(--nds-input-size);
             height: var(--nds-input-size);
-            font-size: 16px;
+            font-size: calc(var(--nds-input-size) - 4px);
             line-height: var(--nds-input-size);
             font-weight: 600;
         }
@@ -614,29 +623,7 @@ fieldset {
             content: "儣" !important;
         }
 
-        /* .nds-sm &:checked::after {
-            width: 16px;
-            height: 16px;
-            font-size: 12px;
-            line-height: 12px;
-        }
-
-        .nds-lg &:checked::after {
-            width: 24px;
-            height: 24px;
-            font-size: 20px;
-            line-height: 20px;
-        } */
-
-        /* &:checked:read-only::after{
-            background-color: var(--colors-base-white)!important;
-
-        } */
-
-
     }
-
-
 
     .nds-switch {
         --switch-width: 48px;
