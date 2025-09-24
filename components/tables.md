@@ -608,7 +608,7 @@ direction: ltr
                                     <th>
                                         <div class="nds-form-container nds-check-container">
                                             <div class="nds-form-control">
-                                                <input type="checkbox" id="selectAll" class="nds-check">
+                                                <input type="checkbox" class="nds-check">
                                             </div>
                                         </div>
                                     </th>
@@ -623,7 +623,7 @@ direction: ltr
                                     <td>
                                         <div class="nds-form-container nds-check-container">
                                             <div class="nds-form-control">
-                                                <input type="checkbox" id="select1" class="nds-check">
+                                                <input type="checkbox" class="nds-check">
                                             </div>
                                         </div>
                                     </td>
@@ -637,7 +637,7 @@ direction: ltr
                                     <td>
                                         <div class="nds-form-container nds-check-container">
                                             <div class="nds-form-control">
-                                                <input type="checkbox" id="select2" class="nds-check" checked>
+                                                <input type="checkbox" class="nds-check" checked>
                                             </div>
                                         </div>
                                     </td>
@@ -651,7 +651,7 @@ direction: ltr
                                     <td>
                                         <div class="nds-form-container nds-check-container">
                                             <div class="nds-form-control">
-                                                <input type="checkbox" id="select3" class="nds-check">
+                                                <input type="checkbox" class="nds-check">
                                             </div>
                                         </div>
                                     </td>
@@ -703,7 +703,7 @@ direction: ltr
                                       <th>
                                         <div class="nds-form-container nds-check-container">
                                           <div class="nds-form-control">
-                                            <input type="checkbox" id="selectAll" class="nds-check">
+                                            <input type="checkbox" class="nds-check">
                                           </div>
                                         </div>
                                       </th>
@@ -718,7 +718,7 @@ direction: ltr
                                       <td>
                                         <div class="nds-form-container nds-check-container">
                                           <div class="nds-form-control">
-                                            <input type="checkbox" id="select1" class="nds-check">
+                                            <input type="checkbox" class="nds-check">
                                           </div>
                                         </div>
                                       </td>
