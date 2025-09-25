@@ -76,7 +76,8 @@ direction: ltr
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
-                                <code class="lang-html code nds-expandable-content">
+                                <div class="nds-expandable-content">
+                                <code class="lang-html code">
 <div class="nds-rating nds-md" data-rating="3.5">
   <span class="nds-rating-star"></span>
   <span class="nds-rating-star"></span>
@@ -84,7 +85,8 @@ direction: ltr
   <span class="nds-rating-star"></span>
   <span class="nds-rating-star"></span>
 </div>
-                                </code>
+                                    </code>
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -179,7 +181,8 @@ direction: ltr
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
-                                <code class="lang-html code nds-expandable-content">
+                                <div class="nds-expandable-content">
+                                <code class="lang-html code">
 <div class="nds-rating nds-md interactive" data-rating="0">
   <button class="nds-rating-star" type="button" aria-label="1 star"></button>
   <button class="nds-rating-star" type="button" aria-label="2 stars"></button>
@@ -187,7 +190,8 @@ direction: ltr
   <button class="nds-rating-star" type="button" aria-label="4 stars"></button>
   <button class="nds-rating-star" type="button" aria-label="5 stars"></button>
 </div>
-                                </code>
+                                    </code>
+                            </div>
                             </div>
                         </div>
                     </div>

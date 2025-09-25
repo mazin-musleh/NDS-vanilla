@@ -87,26 +87,29 @@ direction: ltr
                                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                                 </button>
                             </div>
-                            <code class="lang-html code nds-expandable-content">
-                                <table class="nds-table">
-                                  <thead>
-                                    <tr>
-                                      <th>Name</th>
-                                      <th>Email</th>
-                                      <th>Role</th>
-                                      <th>Status</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    <tr>
-                                      <td>Ahmed Mohammed</td>
-                                      <td>ahmed.mohammed@moi.gov.sa</td>
-                                      <td>Developer</td>
-                                      <td><span class="nds-tag nds-success nds-status nds-sm"><span class="label">Active</span></span></td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                            </code>
+                            <div class="nds-expandable-content">
+                                <code class="lang-html code">
+                                    <table class="nds-table">
+                                      <thead>
+                                        <tr>
+                                          <th>Name</th>
+                                          <th>Email</th>
+                                          <th>Role</th>
+                                          <th>Status</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <td>Ahmed Mohammed</td>
+                                          <td>ahmed.mohammed@moi.gov.sa</td>
+                                          <td>Developer</td>
+                                          <td><span class="nds-tag nds-success nds-status nds-sm"><span class="label">Active</span></span></td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                    </code>
+                            </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -237,7 +240,8 @@ direction: ltr
                                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                                 </button>
                             </div>
-                            <code class="lang-html code nds-expandable-content">
+                            <div class="nds-expandable-content">
+                                <code class="lang-html code">
                                 <table class="nds-table nds-compact">
                                   <thead>
                                     <tr>
@@ -266,7 +270,8 @@ direction: ltr
                                     </tr>
                                   </tbody>
                                 </table>
-                            </code>
+                                </code>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -369,7 +374,8 @@ direction: ltr
                                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                                 </button>
                             </div>
-                            <code class="lang-html code nds-expandable-content">
+                            <div class="nds-expandable-content">
+                                <code class="lang-html code">
                                 <table class="nds-table nds-sortable">
                                   <thead>
                                     <tr>
@@ -403,7 +409,8 @@ direction: ltr
                                     </tr>
                                   </tbody>
                                 </table>
-                            </code>
+                                </code>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -540,7 +547,8 @@ direction: ltr
                                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                                 </button>
                             </div>
-                            <code class="lang-html code nds-expandable-content">
+                            <div class="nds-expandable-content">
+                                <code class="lang-html code">
                                 <table class="nds-table">
                                   <thead>
                                     <tr>
@@ -573,7 +581,8 @@ direction: ltr
                                     </tr>
                                   </tbody>
                                 </table>
-                            </code>
+                                </code>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -696,7 +705,8 @@ direction: ltr
                                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                                 </button>
                             </div>
-                            <code class="lang-html code nds-expandable-content">
+                            <div class="nds-expandable-content">
+                                <code class="lang-html code">
                                 <table class="nds-table">
                                   <thead>
                                     <tr>
@@ -729,7 +739,8 @@ direction: ltr
                                     </tr>
                                   </tbody>
                                 </table>
-                            </code>
+                                </code>
+                            </div>
                         </div>
                     </div>
                 </div>

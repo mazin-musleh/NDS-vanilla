@@ -75,7 +75,8 @@ direction: ltr
                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                   </button>
                 </div>
-                <code class="lang-html code nds-expandable-content">
+                <div class="nds-expandable-content">
+                    <code class="lang-html code">
                   <div class="nds-form-container">
                     <div class="nds-form-header">
                       <label for="textInput">
@@ -92,7 +93,8 @@ direction: ltr
                     </div>
                     <div class="nds-form-footer"></div>
                   </div>
-                </code>
+                    </code>
+                </div>
               </div>
             </div>
           </div>
@@ -158,7 +160,8 @@ direction: ltr
                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                   </button>
                 </div>
-                <code class="lang-html code nds-expandable-content">
+                <div class="nds-expandable-content">
+                    <code class="lang-html code">
                   <div class="nds-form-container">
                     <div class="nds-form-header">
                       <label for="searchInput">
@@ -179,7 +182,8 @@ direction: ltr
                     </div>
                     <div class="nds-form-footer"></div>
                   </div>
-                </code>
+                    </code>
+                </div>
               </div>
             </div>
           </div>
@@ -241,7 +245,8 @@ direction: ltr
                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                   </button>
                 </div>
-                <code class="lang-html code nds-expandable-content">
+                <div class="nds-expandable-content">
+                    <code class="lang-html code">
                   <div class="nds-form-container">
                     <div class="nds-form-header">
                       <label for="emailInput">
@@ -259,7 +264,8 @@ direction: ltr
                     </div>
                     <div class="nds-form-footer"></div>
                   </div>
-                </code>
+                    </code>
+                </div>
               </div>
             </div>
           </div>
@@ -325,7 +331,8 @@ direction: ltr
                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                   </button>
                 </div>
-                <code class="lang-html code nds-expandable-content">
+                <div class="nds-expandable-content">
+                    <code class="lang-html code">
                   <div class="nds-form-container">
                     <div class="nds-form-header">
                       <label for="passwordInput">
@@ -347,7 +354,8 @@ direction: ltr
                     </div>
                     <div class="nds-form-footer"></div>
                   </div>
-                </code>
+                    </code>
+                </div>
               </div>
             </div>
           </div>
@@ -404,7 +412,8 @@ direction: ltr
                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                   </button>
                 </div>
-                <code class="lang-html code nds-expandable-content">
+                <div class="nds-expandable-content">
+                    <code class="lang-html code">
                   <div class="nds-form-container nds-textarea">
                     <div class="nds-form-header">
                       <label for="textareaInput">
@@ -416,7 +425,8 @@ direction: ltr
                     </div>
                     <div class="nds-form-footer"></div>
                   </div>
-                </code>
+                    </code>
+                </div>
               </div>
             </div>
           </div>
@@ -492,7 +502,8 @@ direction: ltr
                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                   </button>
                 </div>
-                <code class="lang-html code nds-expandable-content">
+                <div class="nds-expandable-content">
+                    <code class="lang-html code">
                   <div class="nds-form-container">
                     <div class="nds-form-header">
                       <label for="selectInput">
@@ -523,7 +534,8 @@ direction: ltr
                     </div>
                     <div class="nds-form-footer"></div>
                   </div>
-                </code>
+                    </code>
+                </div>
               </div>
             </div>
           </div>
@@ -611,7 +623,8 @@ direction: ltr
                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                   </button>
                 </div>
-                <code class="lang-html code nds-expandable-content">
+                <div class="nds-expandable-content">
+                    <code class="lang-html code">
                   <fieldset class="nds-radio-group">
                     <legend class="label">Radio Button Group</legend>
                     <div class="nds-form-container nds-radio-container">
@@ -636,7 +649,8 @@ direction: ltr
                       </div>
                     </div>
                   </fieldset>
-                </code>
+                    </code>
+                </div>
               </div>
             </div>
           </div>
@@ -741,7 +755,8 @@ direction: ltr
                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                   </button>
                 </div>
-                <code class="lang-html code nds-expandable-content">
+                <div class="nds-expandable-content">
+                    <code class="lang-html code">
                   <fieldset class="nds-check-group">
                     <legend class="label">Checkbox Group</legend>
                     <div class="nds-form-container nds-check-container">
@@ -766,7 +781,8 @@ direction: ltr
                       </div>
                     </div>
                   </fieldset>
-                </code>
+                    </code>
+                </div>
               </div>
             </div>
           </div>
@@ -880,7 +896,8 @@ direction: ltr
                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                   </button>
                 </div>
-                <code class="lang-html code nds-expandable-content">
+                <div class="nds-expandable-content">
+                    <code class="lang-html code">
                   <fieldset class="nds-switch-group">
                     <legend class="label">Switch Group</legend>
                     <div class="nds-form-container nds-switch-container">
@@ -915,7 +932,8 @@ direction: ltr
                       </div>
                     </div>
                   </fieldset>
-                </code>
+                    </code>
+                </div>
               </div>
             </div>
           </div>
@@ -1049,7 +1067,8 @@ direction: ltr
                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                   </button>
                 </div>
-                <code class="lang-html code nds-expandable-content">
+                <div class="nds-expandable-content">
+                    <code class="lang-html code">
                   <div class="nds-form-container nds-date-picker">
                     <div class="nds-form-header">
                       <label for="datePickerInput">
@@ -1124,7 +1143,8 @@ direction: ltr
                     </div>
                     <div class="nds-form-footer"></div>
                   </div>
-                </code>
+                    </code>
+                </div>
               </div>
             </div>
           </div>

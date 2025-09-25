@@ -106,7 +106,8 @@ direction: ltr
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
-                                <code class="lang-html code nds-expandable-content">
+                                <div class="nds-expandable-content">
+                                <code class="lang-html code">
                                     <!-- Government service application stepper -->
                                     <div class="nds-stepper" id="stepper-1" data-current="2" data-total="3">
                                         <div class="nds-stepper-step completed has-line">
@@ -137,7 +138,8 @@ direction: ltr
                                             </div>
                                         </div>
                                     </div>
-                                </code>
+                                    </code>
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -248,7 +250,8 @@ direction: ltr
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
-                                <code class="lang-html code nds-expandable-content">
+                                <div class="nds-expandable-content">
+                                <code class="lang-html code">
                                     <!-- Radial stepper with progress circle -->
                                     <div class="nds-stepper nds-radial" id="stepper-radial" data-current="2" data-total="4">
                                         <div class="progress-circle">
@@ -302,7 +305,8 @@ direction: ltr
                                             </div>
                                         </div>
                                     </div>
-                                </code>
+                                    </code>
+                            </div>
                             </div>
                         </div>
                     </div>

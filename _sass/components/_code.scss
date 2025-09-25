@@ -101,7 +101,6 @@
     padding: var(--spacing-xl) 0;
     background: transparent;
     border: none;
-    max-height: 400px;
 
     // Line numbering styles
     &.line-numbers {
@@ -135,7 +134,7 @@
           top: calc(var(--spacing-xl) * -1);
           left: 0;
           width: 3em;
-          height: calc(100% + var(--spacing-6xl));
+          height: calc(100% + var(--spacing-7xl));
           font-size: var(--nds-text-xs-FS);
           background-color: var(--background-neutral-100);
           border: 1px solid var(--background-neutral-100);
