@@ -199,7 +199,8 @@ direction: ltr
                                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                                 </button>
                             </div>
-                            <code class="lang-html code nds-expandable-content">
+                            <div class="nds-expandable-content">
+                                <code class="lang-html code">
                                 <div class="nds-tabs">
                                     <div class="nds-tab-list-container">
                                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -222,7 +223,8 @@ direction: ltr
                                         </div>
                                     </div>
                                 </div>
-                            </code>
+                                </code>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -516,7 +518,8 @@ direction: ltr
                                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                                 </button>
                             </div>
-                            <code class="lang-html code nds-expandable-content">
+                            <div class="nds-expandable-content">
+                                <code class="lang-html code">
                                 <div class="nds-tabs">
                                     <div class="nds-tab-list-container">
                                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Icon tab navigation">
@@ -548,7 +551,8 @@ direction: ltr
                                         </div>
                                     </div>
                                 </div>
-                            </code>
+                                </code>
+                            </div>
                         </div>
                     </div>
                 </div>

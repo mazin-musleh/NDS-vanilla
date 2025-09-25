@@ -144,7 +144,8 @@ direction: ltr
                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                   </button>
                 </div>
-                <code class="lang-html code nds-expandable-content">
+                <div class="nds-expandable-content">
+                    <code class="lang-html code">
                   <div class="nds-form-container nds-file-upload multi-file-upload dropBox">
                     <div class="nds-form-header hidden">
                       <label for="multiFileUpload">
@@ -220,7 +221,8 @@ direction: ltr
                       </div>
                     </div>
                   </div>
-                </code>
+                    </code>
+                </div>
               </div>
               <div class="nds-tab-panel hidden" role="tabpanel" id="panel-file-upload-2"
                 aria-labelledby="tab-file-upload-2">
@@ -238,7 +240,8 @@ direction: ltr
                       <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                   </div>
-                  <code class="lang-javascript nds-expandable-content">
+                  <div class="nds-expandable-content">
+                      <code class="lang-javascript">
 // Get controller instance
 const uploadElement = document.querySelector('.nds-file-upload');
 const fileUpload = uploadElement.ndsFileUpload;
@@ -246,7 +249,8 @@ const fileUpload = uploadElement.ndsFileUpload;
 // Add files and start upload
 const fileId = fileUpload.addFile(file);
 fileUpload.startUpload(fileId);
-                  </code>
+                      </code>
+                  </div>
                 </div>
 
                 <h3>Configuration</h3>
@@ -259,9 +263,11 @@ fileUpload.startUpload(fileId);
                       <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                   </div>
-                  <code class="lang-html nds-expandable-content">
+                  <div class="nds-expandable-content">
+                      <code class="lang-html">
                     <div class="nds-file-upload" data-upload-url="/api/upload"  data-auto-upload="true"  data-max-files="5"  data-max-file-size="10485760"  data-accepted-types="image/*,.pdf,.docx"></div>
-                  </code>
+                      </code>
+                  </div>
                 </div>
 
                 <p><strong>Configuration Options:</strong></p>
@@ -285,14 +291,16 @@ fileUpload.startUpload(fileId);
                       <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                   </div>
-                  <code class="lang-javascript nds-expandable-content">
+                  <div class="nds-expandable-content">
+                      <code class="lang-javascript">
 const fileId = fileUpload.addFile(file, {
   status: 'ready',    // Initial status
   progress: 0,        // Initial progress (0-100)
   error: null         // Error message if status is 'error'
 });
 // Returns: string (unique file ID)
-                  </code>
+                      </code>
+                  </div>
                 </div>
 
                 <p><strong>removeFile(fileId)</strong></p>
@@ -303,10 +311,12 @@ const fileId = fileUpload.addFile(file, {
                       <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                   </div>
-                  <code class="lang-javascript nds-expandable-content">
+                  <div class="nds-expandable-content">
+                      <code class="lang-javascript">
 const success = fileUpload.removeFile(fileId);
 // Returns: boolean (true if file was removed)
-                  </code>
+                      </code>
+                  </div>
                 </div>
 
                 <p><strong>clearAllFiles()</strong></p>
@@ -317,9 +327,11 @@ const success = fileUpload.removeFile(fileId);
                       <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                   </div>
-                  <code class="lang-javascript nds-expandable-content">
+                  <div class="nds-expandable-content">
+                      <code class="lang-javascript">
 fileUpload.clearAllFiles();
-                  </code>
+                      </code>
+                  </div>
                 </div>
 
                 <h4>File Information</h4>
@@ -332,10 +344,12 @@ fileUpload.clearAllFiles();
                       <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                   </div>
-                  <code class="lang-javascript nds-expandable-content">
+                  <div class="nds-expandable-content">
+                      <code class="lang-javascript">
 const fileData = fileUpload.getFile(fileId);
 // Returns: { file, id, status, progress, error, response }
-                  </code>
+                      </code>
+                  </div>
                 </div>
 
                 <p><strong>getAllFiles()</strong></p>
@@ -346,10 +360,12 @@ const fileData = fileUpload.getFile(fileId);
                       <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                   </div>
-                  <code class="lang-javascript nds-expandable-content">
+                  <div class="nds-expandable-content">
+                      <code class="lang-javascript">
 const allFiles = fileUpload.getAllFiles();
 // Returns: Array of file objects
-                  </code>
+                      </code>
+                  </div>
                 </div>
 
                 <p><strong>getFilesByStatus(status)</strong></p>
@@ -360,11 +376,13 @@ const allFiles = fileUpload.getAllFiles();
                       <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                   </div>
-                  <code class="lang-javascript nds-expandable-content">
+                  <div class="nds-expandable-content">
+                      <code class="lang-javascript">
 const readyFiles = fileUpload.getFilesByStatus('ready');
 const uploadingFiles = fileUpload.getFilesByStatus('uploading');
 const completedFiles = fileUpload.getFilesByStatus('complete');
-                  </code>
+                      </code>
+                  </div>
                 </div>
 
                 <h4>Status Management</h4>
@@ -377,12 +395,14 @@ const completedFiles = fileUpload.getFilesByStatus('complete');
                       <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                   </div>
-                  <code class="lang-javascript nds-expandable-content">
+                  <div class="nds-expandable-content">
+                      <code class="lang-javascript">
 fileUpload.setFileStatus(fileId, 'error', {
     error: 'Upload failed',
     progress: 0
 });
-                  </code>
+                      </code>
+                  </div>
                 </div>
 
                 <p><strong>setFileProgress(fileId, progress)</strong></p>
@@ -393,9 +413,11 @@ fileUpload.setFileStatus(fileId, 'error', {
                       <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                   </div>
-                  <code class="lang-javascript nds-expandable-content">
+                  <div class="nds-expandable-content">
+                      <code class="lang-javascript">
 fileUpload.setFileProgress(fileId, 75); // 75% complete
-                  </code>
+                      </code>
+                  </div>
                 </div>
 
                 <h4>Upload Control</h4>
@@ -408,10 +430,12 @@ fileUpload.setFileProgress(fileId, 75); // 75% complete
                       <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                   </div>
-                  <code class="lang-javascript nds-expandable-content">
+                  <div class="nds-expandable-content">
+                      <code class="lang-javascript">
 fileUpload.startUpload(fileId);  // Upload specific file
 fileUpload.startUpload();        // Upload all ready files
-                  </code>
+                      </code>
+                  </div>
                 </div>
 
                 <h3>Events</h3>
@@ -424,7 +448,8 @@ fileUpload.startUpload();        // Upload all ready files
                       <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                   </div>
-                  <code class="lang-javascript nds-expandable-content">
+                  <div class="nds-expandable-content">
+                      <code class="lang-javascript">
 const uploadElement = document.querySelector('.nds-file-upload');
 
 uploadElement.addEventListener('filesSelected', (e) => {
@@ -442,7 +467,8 @@ uploadElement.addEventListener('uploadComplete', (e) => {
 uploadElement.addEventListener('uploadError', (e) => {
     console.error('Upload error:', e.detail.error);
 });
-                  </code>
+                      </code>
+                  </div>
                 </div>
 
                 <p><strong>Available Events:</strong></p>
@@ -470,7 +496,8 @@ uploadElement.addEventListener('uploadError', (e) => {
                       <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                   </div>
-                  <code class="lang-javascript nds-expandable-content">
+                  <div class="nds-expandable-content">
+                      <code class="lang-javascript">
 // Get controller reference
 const uploadElement = document.querySelector('.nds-file-upload');
 const fileUpload = uploadElement.ndsFileUpload;
@@ -503,7 +530,8 @@ console.log(pendingUploads.length + ' uploads in progress');
 document.getElementById('resetButton').addEventListener('click', () => {
     fileUpload.clearAllFiles();
 });
-                  </code>
+                      </code>
+                  </div>
                 </div>
 
               </div>

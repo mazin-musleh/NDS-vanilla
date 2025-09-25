@@ -139,34 +139,36 @@ css_files:
                                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                                 </button>
                             </div>
-                            <code class="lang-html code nds-expandable-content">
-                                <div class="nds-accordion" id="basicAccordion">
-                                    <div class="nds-accordion-item">
-                                        <h3 class="nds-accordion-header" id="heading-1">
-                                        <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button" aria-expanded="true" aria-controls="collapse-1">
-                                            <span class="nds-accordion-title">Accordion Item #1</span>
-                                        </button>
-                                        </h3>
-                                        <div class="nds-accordion-collapse show" id="collapse-1" aria-labelledby="heading-1">
-                                        <div class="nds-accordion-body">
-                                            Content for the first accordion item goes here.
+                            <div class="nds-expandable-content">
+                                <code class="lang-html code">
+                                    <div class="nds-accordion" id="basicAccordion">
+                                        <div class="nds-accordion-item">
+                                            <h3 class="nds-accordion-header" id="heading-1">
+                                            <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button" aria-expanded="true" aria-controls="collapse-1">
+                                                <span class="nds-accordion-title">Accordion Item #1</span>
+                                            </button>
+                                            </h3>
+                                            <div class="nds-accordion-collapse show" id="collapse-1" aria-labelledby="heading-1">
+                                            <div class="nds-accordion-body">
+                                                Content for the first accordion item goes here.
+                                            </div>
+                                            </div>
                                         </div>
+                                        <div class="nds-accordion-item">
+                                            <h3 class="nds-accordion-header" id="heading-2">
+                                            <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn collapsed" type="button" aria-expanded="false" aria-controls="collapse-2">
+                                                <span class="nds-accordion-title">Accordion Item #2</span>
+                                            </button>
+                                            </h3>
+                                            <div class="nds-accordion-collapse" id="collapse-2" aria-labelledby="heading-2">
+                                            <div class="nds-accordion-body">
+                                                Content for the second accordion item goes here.
+                                            </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="nds-accordion-item">
-                                        <h3 class="nds-accordion-header" id="heading-2">
-                                        <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn collapsed" type="button" aria-expanded="false" aria-controls="collapse-2">
-                                            <span class="nds-accordion-title">Accordion Item #2</span>
-                                        </button>
-                                        </h3>
-                                        <div class="nds-accordion-collapse" id="collapse-2" aria-labelledby="heading-2">
-                                        <div class="nds-accordion-body">
-                                            Content for the second accordion item goes here.
-                                        </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </code>
+                                </code>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -297,23 +299,25 @@ css_files:
                                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                                 </button>
                             </div>
-                            <code class="lang-html code nds-expandable-content">
-                                <div class="nds-accordion" id="iconAccordion">
-                                  <div class="nds-accordion-item">
-                                    <h3 class="nds-accordion-header" id="heading-1">
-                                      <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button" aria-expanded="true" aria-controls="collapse-1">
-                                        <i class="nds-accordion-leading-icon hgi hgi-stroke hgi-user-circle"></i>
-                                        <span class="nds-accordion-title">Accordion with Icon</span>
-                                      </button>
-                                    </h3>
-                                    <div class="nds-accordion-collapse show" id="collapse-1" aria-labelledby="heading-1">
-                                      <div class="nds-accordion-body">
-                                        Content with leading icon accordion item.
-                                      </div>
+                            <div class="nds-expandable-content">
+                                <code class="lang-html code">
+                                    <div class="nds-accordion" id="iconAccordion">
+                                        <div class="nds-accordion-item">
+                                            <h3 class="nds-accordion-header" id="heading-1">
+                                            <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button" aria-expanded="true" aria-controls="collapse-1">
+                                                <i class="nds-accordion-leading-icon hgi hgi-stroke hgi-user-circle"></i>
+                                                <span class="nds-accordion-title">Accordion with Icon</span>
+                                            </button>
+                                            </h3>
+                                            <div class="nds-accordion-collapse show" id="collapse-1" aria-labelledby="heading-1">
+                                            <div class="nds-accordion-body">
+                                                Content with leading icon accordion item.
+                                            </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                  </div>
-                                </div>
-                            </code>
+                                </code>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -392,24 +396,27 @@ css_files:
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>
-                <code class="lang-html nds-expandable-content">// Accordions initialize automatically on page load
-// Just add the HTML structure with .nds-accordion class
+                <div class="nds-expandable-content">
+                    <code class="lang-html">// Accordions initialize automatically on page load
+    // Just add the HTML structure with .nds-accordion class
 
-<div class="nds-accordion">
-  <div class="nds-accordion-item">
-    <h3 class="nds-accordion-header">
-      <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" 
-              aria-expanded="false" aria-controls="panel-1">
-        <span class="nds-accordion-title">Panel Title</span>
-      </button>
-    </h3>
-    <div class="nds-accordion-collapse" id="panel-1">
-      <div class="nds-accordion-body">
-        Panel content goes here...
-      </div>
-    </div>
-  </div>
-</div></code>
+                        <div class="nds-accordion">
+                        <div class="nds-accordion-item">
+                            <h3 class="nds-accordion-header">
+                            <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" 
+                                    aria-expanded="false" aria-controls="panel-1">
+                                <span class="nds-accordion-title">Panel Title</span>
+                            </button>
+                            </h3>
+                            <div class="nds-accordion-collapse" id="panel-1">
+                            <div class="nds-accordion-body">
+                                Panel content goes here...
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                    </code>
+                </div>
             </div>
 
             <h3>Dynamic Content Handling</h3>
@@ -421,7 +428,8 @@ css_files:
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>
-                <code class="lang-javascript nds-expandable-content">// After adding accordion HTML dynamically
+                <div class="nds-expandable-content">
+                    <code class="lang-javascript">// After adding accordion HTML dynamically
 document.getElementById('container').innerHTML = accordionHTML;
 
 // Reinitialize to activate new accordions
@@ -430,6 +438,7 @@ NDSAccordion.reinit();
 // Or initialize a specific accordion
 const newAccordion = document.querySelector('#newAccordion');
 const instance = NDSAccordion.create(newAccordion);</code>
+                </div>
             </div>
 
             <h3>Programmatic Control</h3>
@@ -441,7 +450,8 @@ const instance = NDSAccordion.create(newAccordion);</code>
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>
-                <code class="lang-javascript nds-expandable-content">// Get accordion instance
+                <div class="nds-expandable-content">
+                    <code class="lang-javascript">// Get accordion instance
 const accordion = document.querySelector('.nds-accordion');
 const instance = accordion.ndsAccordionInstance;
 
@@ -454,6 +464,7 @@ instance.closeAll();       // Close all items
 // Get current state
 const openItems = instance.getOpenItems();
 console.log(`${openItems.length} items are currently open`);</code>
+                </div>
             </div>
 
             <h3>Event Handling</h3>
@@ -465,7 +476,8 @@ console.log(`${openItems.length} items are currently open`);</code>
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>
-                <code class="lang-javascript nds-expandable-content">// Listen for accordion events
+                <div class="nds-expandable-content">
+                    <code class="lang-javascript">// Listen for accordion events
 document.addEventListener('nds:accordion:shown', (e) => {
     console.log('Accordion item opened:', e.detail.index);
     console.log('Button:', e.detail.button);
@@ -485,6 +497,7 @@ document.addEventListener('nds:accordion:hidden', (e) => {
         'accordion_title': e.detail.button.textContent.trim()  
     });
 });</code>
+                </div>
             </div>
 
             <div class="accessibility-info">
