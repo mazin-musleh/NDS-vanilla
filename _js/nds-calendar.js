@@ -202,7 +202,7 @@
                     throw new Error('Invalid Hijri date: ' + hDay + '/' + hMonth + '/' + hYear);
                 }
 
-                // Simple cache without LRU complexity
+                // Simple cache
                 if (!this._hijriCache) this._hijriCache = {};
                 var key = hYear + '-' + hMonth + '-' + hDay;
                 if (this._hijriCache[key]) return new Date(this._hijriCache[key]);
@@ -251,7 +251,7 @@
                     }
                 }
 
-                // Simple cache storage
+                // Cache the result
                 this._hijriCache[key] = new Date(result);
 
                 return result;
@@ -677,7 +677,7 @@
         },
 
         getTodaysHijriDate: function () {
-            // Cache today's Hijri date to avoid repeated calls
+            // Simple cache for today's Hijri date
             if (!this._cachedTodaysHijriDate) {
                 // Try to use global getHijriDate function if available
                 if (typeof getHijriDate === 'function') {
@@ -696,9 +696,6 @@
                             self.state.currentDate._hijriDay = hijriData.day;
                             self.state.currentDate._hijriMonth = hijriData.month;
                             self.state.currentDate._hijriYear = hijriData.year;
-
-                            // Clear cache to force recalculation with accurate reference
-                            CalendarConfig.hijri._hijriCache = {};
 
                             // Re-render calendar with accurate date
                             self.render();
@@ -801,8 +798,6 @@
             this.state.calendarType = this.detectCalendarType();
             this.state.isInitialized = true;
 
-            // Clear cached Hijri date when initializing
-            this._cachedTodaysHijriDate = null;
             this.parseInitialValue();
             this.setupCalendarUI();
             this.bindCalendarEvents();
@@ -832,9 +827,6 @@
                     self.state.currentDate._hijriMonth = hijriData.month;
                     self.state.currentDate._hijriYear = hijriData.year;
 
-                    // Clear cache to force recalculation with accurate reference
-                    CalendarConfig.hijri._hijriCache = {};
-
                     // Render once with accurate data
                     self.render();
                 }
@@ -853,12 +845,12 @@
             this.renderCalendarDates();
         },
 
-        // Cleanup on close
+        // Cleanup on close - Clear all cache
         cleanup: function () {
             // Remove event listeners
             var handlers = ['monthDropdown', 'yearDropdown', 'todayBtn', 'clearBtn', 'prevBtn', 'nextBtn'];
             var elements = ['monthDropdownBtn', 'yearDropdownBtn', 'todayBtn', 'clearBtn', 'prevBtn', 'nextBtn'];
-            
+
             for (var i = 0; i < handlers.length; i++) {
                 if (this.handlers[handlers[i]] && this.elements[elements[i]]) {
                     this.elements[elements[i]].removeEventListener('click', this.handlers[handlers[i]]);
@@ -871,10 +863,11 @@
             if (this.elements.yearDropdownMenu) this.elements.yearDropdownMenu.innerHTML = '';
             if (this.elements.datesContainer) this.elements.datesContainer.innerHTML = '';
 
-            // Clear caches
-            var calendar = this.getCurrentCalendar();
-            if (calendar && calendar._hijriCache) calendar._hijriCache = {};
+            // Clear ALL Hijri cache
+            CalendarConfig.hijri._hijriCache = {};
             this._cachedTodaysHijriDate = null;
+            window._accurateTodaysHijriDate = null;
+            window._accurateTodaysGregorianDate = null;
 
             // Disconnect observers
             if (this.observers) {

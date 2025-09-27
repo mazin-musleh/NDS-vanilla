@@ -36,6 +36,7 @@
       margin-bottom: var(--nds-display-clamp-lg-MB, 15px);
       letter-spacing: -0.02rem;
       font-weight: 700;
+      color: #fff;
       position: relative;
       margin: 0;
     }
@@ -55,14 +56,23 @@
     // ==============================================
 
     .nds-shareablePage {
-      display: flex;
-      justify-content: space-between;
+      display: block;
       width: 100%;
-      align-items: flex-start;
-      gap: var(--spacing-lg, 12px);
+      position: relative;
+
+      .nds-heroTitle {
+        width: calc(100% - 160px);
+
+        @include tablet(max) {
+          width: calc(100% - 75px);
+        }
+      }
 
       #nds-sharePage {
         display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
       }
     }
   }
@@ -76,13 +86,15 @@
       color: var(--text-default, #161616);
 
       .nds-heroTitle {
-        font-size: var(--nds-display-clamp-sm-FS, 30px);
-        line-height: var(--nds-display-clamp-sm-LH, 38px);
-        margin-bottom: var(--nds-display-clamp-sm-MB, 9.5px);
+        font-size: var(--nds-display-clamp-md-FS, 30px);
+        line-height: var(--nds-display-clamp-md-LH, 38px);
+        margin-bottom: var(--nds-display-clamp-md-MB, 9.5px);
+        color: var(--text-display, #1f2a37);
       }
 
       .nds-heroDesc {
-        display: none;
+        font-size: var(--nds-text-clamp-xl-FS, 20px);
+        line-height: var(--nds-text-clamp-xl-LH, 28px);
       }
     }
   }
@@ -143,7 +155,7 @@
     #nds-sharePage-dropdown {
       display: flex;
 
-      & > * {
+      &>* {
         width: 100%;
         justify-content: flex-start;
       }
