@@ -1,0 +1,160 @@
+/**
+ * NDS Feedback Icon - SCSS Version
+ * Circular status icons with predefined content for system feedback
+ * Supports success, info, warning, error, and neutral states with ring variants
+ */
+
+@use '../mixins' as *;
+
+// ==============================================
+// BASE FEEDBACK ICON STYLES
+// ==============================================
+
+.nds-feedback-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  position: relative;
+  width: var(--nds-icon-size);
+  height: var(--nds-icon-size);
+  font-size: calc(var(--nds-icon-size) / 1);
+  padding: 0;
+  line-height: calc(var(--nds-icon-size) / 1);
+  border: unset;
+
+  body.hgi-loaded & i {
+    position: relative;
+    z-index: 1;
+
+    &:after {
+      content: '';
+      position: absolute;
+      display: block;
+      width: calc(var(--nds-icon-size) / 2);
+      height: calc(var(--nds-icon-size) / 2);
+      background-color: var(--icon-oncolor);
+      top: 50%;
+      z-index: -1;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  // ==============================================
+  // FEEDBACK ICON SIZES
+  // ==============================================
+
+  &.nds-md,
+  & {
+    --nds-icon-size: 24px;
+  }
+
+  &.nds-sm {
+    --nds-icon-size: 16px;
+  }
+
+  &.nds-lg {
+    --nds-icon-size: 32px;
+  }
+
+  // ==============================================
+  // FEEDBACK ICON VARIANTS
+  // ==============================================
+
+  &.nds-success {
+    background-color: var(--icon-success);
+    color: var(--icon-success);
+
+    &.nds-ring {
+      box-shadow: 0 0 0px 4px var(--icon-success-ring);
+    }
+
+    .icon:before {
+      content: "䂇";
+    }
+  }
+
+  &.nds-info {
+    background-color: var(--icon-info);
+    color: var(--icon-info);
+
+    &.nds-ring {
+      box-shadow: 0 0 0px 4px var(--icon-info-ring);
+    }
+
+    .icon:before {
+      content: "䢵";
+    }
+  }
+
+  &.nds-warning {
+    background-color: var(--icon-warning);
+    color: var(--icon-warning);
+
+    &.nds-ring {
+      box-shadow: 0 0 0px 4px var(--icon-warning-ring);
+    }
+
+    .icon:before {
+      content: "㬿";
+    }
+  }
+
+  &.nds-error {
+    background-color: var(--icon-error);
+    color: var(--icon-error);
+
+    &.nds-ring {
+      box-shadow: 0 0 0px 4px var(--icon-error-ring);
+    }
+
+    .icon {
+      transform: translateX(-0.04rem);
+      &:before {
+        content: "㿃";
+      }
+    }
+
+    &.nds-alert {
+      .icon:before {
+        content: "㬿" !important;
+      }
+    }
+  }
+
+  &.nds-neutral {
+    background-color: var(--icon-neutral);
+    color: var(--icon-neutral);
+
+    &.nds-ring {
+      box-shadow: 0 0 0px 4px var(--icon-neutral-ring);
+    }
+
+    .icon:before {
+      content: "䞭";
+    }
+
+    &.nds-info {
+      .icon:before {
+        content: "䢵" !important;
+      }
+    }
+  }
+
+  // ==============================================
+  // FEEDBACK ICON STYLE VARIANTS
+  // ==============================================
+
+  &.nds-outline {
+    background-color: unset;
+
+    &::before {
+      display: none;
+    }
+
+    .icon::before {
+      font-family: "hgi-stroke-rounded" !important;
+    }
+  }
+}
