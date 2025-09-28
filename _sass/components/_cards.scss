@@ -21,6 +21,7 @@
   width: 100%;
   max-width: 360px;
   position: relative;
+  overflow: hidden;
 
   // Shadow variant
   &.nds-shadow {
@@ -30,6 +31,11 @@
   // Stroke variant
   &.nds-stroke {
     border: 1px solid var(--border-neutral-primary);
+  }
+
+  &.nds-full {
+    max-width: 100%;
+    width: 100%;
   }
 
   // Featured variant
@@ -74,11 +80,25 @@
   // CARD CONTENT SECTION
   // ==============================================
 
-  .nds-card-content,.nds-expandable-content {
+  .nds-card-content {
     display: flex;
     flex-direction: column;
     gap: var(--card-lg-gap);
     width: 100%;
+  }
+
+  .nds-expandable-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--card-lg-gap);
+     margin: calc(var(--spacing-xl) * -1);
+    width: -webkit-fill-available;
+    padding: inherit; 
+    
+  }
+
+  &.nds-expanded .nds-expandable-content {
+    padding-bottom: var(--spacing-5xl)!important;
   }
 
   .nds-card-text {

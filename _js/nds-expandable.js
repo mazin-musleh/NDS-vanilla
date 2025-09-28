@@ -43,7 +43,9 @@
                 this.expandButton.style.display = '';
             } else {
                 this.expandableContainer.classList.remove('nds-expand');
+                this.expandableContainer.classList.remove('nds-expanded'); // Remove expanded state if no longer needed
                 this.expandButton.style.display = 'none';
+                this.isExpanded = false; // Reset expanded state
             }
         }
 
@@ -118,14 +120,28 @@
         }
 
         setupEventListeners() {
-            // Watch for window resize to recheck content height
-            window.addEventListener('resize', () => {
-                this.handleResize();
-            });
+            // Use ResizeObserver for better element-specific size detection
+            if (window.ResizeObserver) {
+                this.resizeObserver = new ResizeObserver(entries => {
+                    // Debounce for performance (shorter delay since it's more targeted)
+                    clearTimeout(this.resizeTimer);
+                    this.resizeTimer = setTimeout(() => {
+                        this.checkContentHeight();
+                    }, 100);
+                });
+
+                // Observe the content element for size changes
+                this.resizeObserver.observe(this.contentElement);
+            } else {
+                // Fallback to window resize for older browsers
+                window.addEventListener('resize', () => {
+                    this.handleResize();
+                });
+            }
         }
 
         handleResize() {
-            // Debounce resize events
+            // Debounce resize events (fallback method)
             clearTimeout(this.resizeTimer);
             this.resizeTimer = setTimeout(() => {
                 this.checkContentHeight();
@@ -179,6 +195,12 @@
         }
 
         destroy() {
+            // Clean up ResizeObserver
+            if (this.resizeObserver) {
+                this.resizeObserver.disconnect();
+                this.resizeObserver = null;
+            }
+
             // Remove button if it exists
             if (this.expandButton) {
                 this.expandButton.remove();

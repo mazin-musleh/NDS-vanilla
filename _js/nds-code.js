@@ -121,7 +121,7 @@
                 // Raw HTML case - needs full conversion
                 const textWithEntities = htmlToText(htmlContent);
                 cleanText = decodeHtmlEntities(textWithEntities);
-                
+
                 // Note: Text for copying is now stored in hidden copy system
                 codeElement.textContent = cleanText;
             } else if (containsEntities) {
@@ -178,7 +178,7 @@
                 }
                 
                 // List of tags that should never be self-closing in HTML
-                const neverSelfClosing = ['i', 'span', 'div', 'button', 'a', 'script', 'style'];
+                const neverSelfClosing = ['i', 'span', 'div','p', 'button', 'a', 'script', 'style'];
                 // List of tags that should stay inline (single line)
                 // Remove 'span' from inline elements to prevent nested span issues
                 const inlineElements = ['i', 'a', 'strong', 'em', 'code'];
@@ -198,7 +198,9 @@
                     result += indent + tag + '\n';
                 } else {
                     // Check if this is an element with simple text content or empty
-                    const isSimpleElement = node.children.length === 0;
+                    // Elements with only text nodes (no element children) should be treated as simple
+                    const hasElementChildren = node.children.length > 0;
+                    const isSimpleElement = !hasElementChildren;
 
                     if (isSimpleElement) {
                         // Simple element (with text or empty) - keep on same line

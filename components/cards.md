@@ -193,7 +193,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-card nds-stroke nds-expandable">
+                            <div class="nds-card nds-stroke">
                                 <div class="nds-card-header">
                                     <!-- Checkbox for selection -->
                                     <div class="nds-card-checkbox">
@@ -211,7 +211,7 @@ direction: ltr
                                     </div>
                                 </div>
 
-                                <div class="nds-card-content nds-expandable-content" style="--max-height:200px">
+                                <div class="nds-card-content">
                                     <div class="nds-card-text">
                                         <h3 class="nds-card-title">Advanced Technology Product</h3>
                                         <p class="nds-card-description">Modern technology product that provides advanced
@@ -275,7 +275,7 @@ direction: ltr
                                 </div>
                                 <div class="nds-expandable-content">
                                     <code class="lang-html code">
-                                        <div class="nds-card nds-stroke nds-expandable">
+                                        <div class="nds-card nds-stroke">
                                             <div class="nds-card-header">
                                                 <!-- Checkbox for selection -->
                                                 <div class="nds-card-checkbox">
@@ -293,7 +293,7 @@ direction: ltr
                                                 </div>
                                             </div>
             
-                                            <div class="nds-card-content nds-expandable-content" style="--max-height:200px">
+                                            <div class="nds-card-content">
                                                 <div class="nds-card-text">
                                                     <h3 class="nds-card-title">Advanced Technology Product</h3>
                                                     <p class="nds-card-description">Modern technology product that provides advanced
@@ -356,20 +356,12 @@ direction: ltr
                                 <span class="label">Stroke</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-interactive", ".nds-card", "cardInteractive"]'>
-                                <span class="label">Interactive</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-featured", ".nds-card", "cardVariant2"]'>
-                                <span class="label">Featured</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='[["nds-truncate", ".nds-card-title"],["nds-truncate", ".nds-card-description"], "truncation"]'>
                                 <span class="label">Truncate</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-card-compact", ".nds-card", "cardSize"]'>
-                                <span class="label">Compact</span>
+                                data-toggler='["nds-full", ".nds-card", "cardSize"]'>
+                                <span class="label">full</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
@@ -380,10 +372,7 @@ direction: ltr
                     <div class="demo-container">
                         <div class="state-demo">
                             <div class="nds-card nds-stroke nds-expandable nds-expand">
-                                <div class="nds-card-header">
-
-                                </div>
-                                <div class="nds-expandable-content" style="--max-height:120px">
+                                <div class="nds-expandable-content" style="--max-height:200px">
                                     <div class="nds-card-content">
                                         <div class="nds-card-text">
                                             <h3 class="nds-card-title">Ministry Services Documentation</h3>
@@ -394,31 +383,6 @@ direction: ltr
                                                 applications. This comprehensive resource covers everything from basic
                                                 setup to advanced configurations.</p>
                                         </div>
-                                        <div class="nds-card-meta">
-                                            <!-- Tags -->
-                                            <div class="nds-card-tags">
-                                                <span class="nds-tag nds-neutral nds-sm">
-                                                    <span class="label">Documentation</span>
-                                                </span>
-                                                <span class="nds-tag nds-info nds-sm">
-                                                    <span class="label">API</span>
-                                                </span>
-                                                <span class="nds-tag nds-warning nds-sm">
-                                                    <span class="label">Guidelines</span>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="nds-card-actions">
-                                        <button class="nds-btn nds-secondary-outline nds-lg nds-trail-icon">
-                                            <i class="hgi hgi-stroke hgi-download-02 icon"></i>
-                                            <span class="label">Download</span>
-                                        </button>
-                                        <button class="nds-btn nds-primary nds-lg nds-trail-icon">
-                                            <i class="hgi hgi-stroke hgi-link-external-01 icon"></i>
-                                            <span class="label">View Online</span>
-                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -444,10 +408,7 @@ direction: ltr
                                 <div class="nds-expandable-content">
                                     <code class="lang-html code">
                                         <div class="nds-card nds-stroke nds-expandable nds-expand">
-                                            <div class="nds-card-header">
-
-                                            </div>
-                                            <div class="nds-expandable-content" style="--max-height:120px">
+                                            <div class="nds-expandable-content" style="--max-height:200px">
                                                 <div class="nds-card-content">
                                                     <div class="nds-card-text">
                                                         <h3 class="nds-card-title">Ministry Services Documentation</h3>
@@ -458,31 +419,6 @@ direction: ltr
                                                             applications. This comprehensive resource covers everything from basic
                                                             setup to advanced configurations.</p>
                                                     </div>
-                                                    <div class="nds-card-meta">
-                                                        <!-- Tags -->
-                                                        <div class="nds-card-tags">
-                                                            <span class="nds-tag nds-neutral nds-sm">
-                                                                <span class="label">Documentation</span>
-                                                            </span>
-                                                            <span class="nds-tag nds-info nds-sm">
-                                                                <span class="label">API</span>
-                                                            </span>
-                                                            <span class="nds-tag nds-warning nds-sm">
-                                                                <span class="label">Guidelines</span>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-            
-                                                <div class="nds-card-actions">
-                                                    <button class="nds-btn nds-secondary-outline nds-lg nds-trail-icon">
-                                                        <i class="hgi hgi-stroke hgi-download-02 icon"></i>
-                                                        <span class="label">Download</span>
-                                                    </button>
-                                                    <button class="nds-btn nds-primary nds-lg nds-trail-icon">
-                                                        <i class="hgi hgi-stroke hgi-link-external-01 icon"></i>
-                                                        <span class="label">View Online</span>
-                                                    </button>
                                                 </div>
                                             </div>
                                         </div>

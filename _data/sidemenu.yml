@@ -54,3 +54,13 @@
     - label: "Upload"
       url: "/components/upload"
       href: "/components/upload.html"
+
+- label: "Utilities"
+  has_sub: true
+  children:
+    - label: "Expandable Content"
+      url: "/utilities/expandable-content"
+      href: "/utilities/expandable-content.html"
+    - label: "Truncate Text"
+      url: "/utilities/truncate-text"
+      href: "/utilities/truncate-text.html"
