@@ -68,10 +68,7 @@ $breakpoints: (
   md: 'min-width: 768px', 
   lg: 'min-width: 992px',
   xl: 'min-width: 1200px',
-  xxl: 'min-width: 1400px',
-  tablet: 'min-width: 600px',     // NDS tablet(min)
-  desktop: 'min-width: 960px',    // NDS desktop(min) 
-  large: 'min-width: 1280px'      // NDS large-desktop(min)
+  xxl: 'min-width: 1400px'
 );
 
 // Generate margin utilities - Bootstrap 5 naming
@@ -164,4 +161,3 @@ $breakpoints: (
   .gap-x-#{$key} { column-gap: #{$value} !important; }
   .gap-y-#{$key} { row-gap: #{$value} !important; }
 }
-
