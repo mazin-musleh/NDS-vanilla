@@ -198,3 +198,12 @@ button,
 
     }
 }
+
+.nds-truncate{
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: var(--truncate-line, 1);
+    line-clamp: var(--truncate-line, 1);
+    text-overflow: ellipsis;
+  }

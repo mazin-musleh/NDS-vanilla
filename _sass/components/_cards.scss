@@ -34,8 +34,8 @@
 
   // Featured variant
   &.nds-featured {
-    border: 2px solid var(--colors-primary-sa-flag-600-primary);
-    box-shadow: var(--shadow-lg);
+    outline: 2px solid var(--colors-primary-sa-flag-600-primary);
+    outline-offset: -2px;
   }
 
 
@@ -74,7 +74,7 @@
   // CARD CONTENT SECTION
   // ==============================================
 
-  .nds-card-content {
+  .nds-card-content,.nds-expandable-content {
     display: flex;
     flex-direction: column;
     gap: var(--card-lg-gap);
@@ -89,6 +89,7 @@
 
 
     .nds-card-title {
+      --truncate-line: 2;
       font-size: var(--nds-text-lg-FS);
       line-height: var(--nds-text-lg-LH);
       font-weight: 700;
@@ -98,6 +99,7 @@
     }
 
     .nds-card-description {
+      --truncate-line: 2;
       font-size: var(--nds-text-md-FS);
       line-height: var(--nds-text-md-LH);
       font-weight: 400;
@@ -166,7 +168,7 @@
   .nds-card-actions {
     display: flex;
     gap: var(--spacing-xl, 16px);
-    align-items: center;
+    align-items: flex-start;
     width: 100%;
     margin-top: auto;
 
@@ -250,9 +252,5 @@
 
   .nds-card-actions {
     flex-direction: column;
-
-    .nds-btn {
-      width: 100%;
-    }
   }
 }

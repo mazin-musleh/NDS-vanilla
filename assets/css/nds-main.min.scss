@@ -18,9 +18,6 @@
 // Import base styles
 @use 'base';
 
-// Import utilities
-/* @use 'utilities'; */
-
 @use 'components/buttons';
 @use 'components/cards';
 @use 'components/chips';
@@ -46,6 +43,9 @@
 @use 'components/statistics';
 @use 'components/footer';
 @use 'components/cookie';
+
+// Import utilities
+/* @use 'utilities'; */
 
 // Import showcase styles
 @use 'showcase';
