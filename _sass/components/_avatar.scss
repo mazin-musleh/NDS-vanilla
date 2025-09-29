@@ -1,0 +1,233 @@
+/**
+ * NDS Avatar Component - SCSS Version
+ * Avatar component with support for initials, icons, and images
+ * Available in 7 sizes from 24px to 120px
+ * Circle shape by default with square variant option
+ */
+
+@use '../mixins' as *;
+
+// ==============================================
+// BASE AVATAR STYLES
+// ==============================================
+
+.nds-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%; // Circle by default
+  background-color: var(--button-background-neutral-default);
+  color: var(--icon-default);
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-weight: 500;
+  flex-shrink: 0;
+  user-select: none;
+  border: 2px solid var(--border-white);
+
+  // Image styling
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: inherit;
+  }
+
+  // Optional image border variant
+  &.nds-image-border img {
+    outline: 2px solid var(--alpha-black-20);
+    outline-offset: -2px;
+  }
+
+  // Icon styling
+  .hgi {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: inherit;
+  }
+
+  // Initials styling
+  .initials {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+}
+
+// ==============================================
+// AVATAR SIZES
+// ==============================================
+
+// Extra Small - 24px
+.nds-avatar.nds-xs {
+  width: 24px;
+  height: 24px;
+  font-size: var(--nds-text-xs-FS);
+
+  .hgi {
+    font-size: 12px;
+  }
+}
+
+// Small - 32px
+.nds-avatar.nds-sm {
+  width: 32px;
+  height: 32px;
+  font-size: var(--nds-text-sm-FS);
+
+  .hgi {
+    font-size: 16px;
+  }
+}
+
+// Medium - 40px (default)
+.nds-avatar.nds-md,
+.nds-avatar {
+  width: 40px;
+  height: 40px;
+  font-size: var(--nds-text-md-FS);
+
+  .hgi {
+    font-size: 20px;
+  }
+}
+
+// Large - 56px
+.nds-avatar.nds-lg {
+  width: 56px;
+  height: 56px;
+  font-size: var(--nds-text-lg-FS);
+
+  .hgi {
+    font-size: 28px;
+  }
+}
+
+// Extra Large - 80px
+.nds-avatar.nds-xl {
+  width: 80px;
+  height: 80px;
+  font-size: var(--nds-text-xl-FS);
+
+  .hgi {
+    font-size: 40px;
+  }
+}
+
+// 2X Extra Large - 96px
+.nds-avatar.nds-2xl {
+  width: 96px;
+  height: 96px;
+  font-size: 28px;
+  line-height: 36px;
+
+  .hgi {
+    font-size: 48px;
+  }
+}
+
+// 3X Extra Large - 120px
+.nds-avatar.nds-3xl {
+  width: 120px;
+  height: 120px;
+  font-size: 36px;
+  line-height: 44px;
+  border: 2px solid var(--border-white);
+
+  .hgi {
+    font-size: 60px;
+  }
+}
+
+// ==============================================
+// SQUARE VARIANT
+// ==============================================
+
+.nds-avatar.nds-square {
+  border-radius: 8px;
+
+  &.nds-xs {
+    border-radius: 4px;
+  }
+
+  &.nds-sm {
+    border-radius: 6px;
+  }
+
+  &.nds-md {
+    border-radius: 8px;
+  }
+
+  &.nds-lg {
+    border-radius: 10px;
+  }
+
+  &.nds-xl {
+    border-radius: 12px;
+  }
+
+  &.nds-2xl {
+    border-radius: 14px;
+  }
+
+  &.nds-3xl {
+    border-radius: 16px;
+  }
+}
+
+// ==============================================
+// AVATAR TYPES
+// ==============================================
+
+// Initials Type (default)
+.nds-avatar.nds-initials {
+  .initials {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+// Icon Type
+.nds-avatar.nds-icon {
+  .hgi {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+// Image Type (already handled in base styles)
+
+// ==============================================
+// AVATAR GROUP
+// ==============================================
+
+.nds-avatar-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  // Stacked variant - avatars overlap
+  &.nds-stacked {
+    gap: 0;
+    padding-right: 4px;
+
+    .nds-avatar {
+      margin-right: -4px;
+    }
+  }
+}
+
+// ==============================================
+// RESPONSIVE BEHAVIOR
+// ==============================================
+
+@include mobile {
+  .nds-avatar {
+    // Mobile-specific adjustments if needed
+  }
+}

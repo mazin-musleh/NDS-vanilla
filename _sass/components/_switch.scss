@@ -10,15 +10,19 @@
 // ==============================================
 
 .nds-form-container.nds-switch-container {
-    --nds-input-size: 16px;
+    --nds-input-size: 20px;
+    --switch-width: 48px;
+    --switch-height: 24px;
+    --thumb-size: 16px;
+    --thumb-left: 4px;
     display: flex;
-    gap: var(--spacing-md);
+    gap: var(--spacing-lg);
     flex-direction: row-reverse;
     width: fit-content;
     flex-wrap: nowrap;
     justify-content: flex-end;
 
-    & > .nds-form-header .label {
+    &>.nds-form-header .label {
         color: var(--text-display);
         font-size: var(--nds-text-md-FS);
         line-height: calc(var(--nds-input-size) + 4px) !important;
@@ -26,16 +30,24 @@
         height: calc(var(--nds-input-size) + 4px) !important;
     }
 
-    &.nds-md * {
-        --nds-input-size: 20px;
+    &.nds-sm * {
+        --nds-input-size: 16px;
+        --switch-width: 36px;
+        --switch-height: 18px;
+        --thumb-size: 12px;
+        --thumb-left: 2px;
     }
 
     &.nds-lg * {
         --nds-input-size: 24px;
+        --switch-width: 56px;
+        --switch-height: 28px;
+        --thumb-size: 20px;
+        --thumb-left: 4px;
     }
 
-    &.nds-md {
-        gap: var(--spacing-lg);
+    &.nds-sm {
+        gap: var(--spacing-md);
     }
 
     &.nds-lg {
@@ -85,25 +97,7 @@
 // ==============================================
 
 .nds-switch {
-    --switch-width: 48px;
-    --switch-height: 24px;
-    --thumb-size: 18px;
-    --thumb-left: 2px;
 
-    // Size variations
-    .nds-sm & {
-        --switch-width: 36px;
-        --switch-height: 18px;
-        --thumb-size: 12px;
-        --thumb-left: 2px;
-    }
-
-    .nds-lg & {
-        --switch-width: 56px;
-        --switch-height: 28px;
-        --thumb-size: 22px;
-        --thumb-left: 2px;
-    }
 
     position: relative;
     display: inline-block;
@@ -148,7 +142,7 @@
             cursor: pointer;
         }
 
-        &:focus + .nds-switch-track {
+        &:focus+.nds-switch-track {
             outline: 2px solid var(--colors-base-black);
             outline-offset: 2px;
         }
@@ -197,7 +191,7 @@
     // CHECKED STATE
     // ==============================================
 
-    .nds-switch-input:checked + .nds-switch-track {
+    .nds-switch-input:checked+.nds-switch-track {
         background-color: var(--controls-control-neutral-checked, #0D121C);
         border-color: var(--controls-control-neutral-checked, #0D121C);
 
@@ -222,7 +216,7 @@
     // PRIMARY VARIANT
     // ==============================================
 
-    &.primary .nds-switch-input:checked + .nds-switch-track {
+    &.primary .nds-switch-input:checked+.nds-switch-track {
         background-color: var(--controls-control-primary-checked);
         border-color: var(--controls-control-primary-checked);
 
@@ -236,7 +230,7 @@
     // DISABLED STATE
     // ==============================================
 
-    .nds-switch-input:disabled + .nds-switch-track,
+    .nds-switch-input:disabled+.nds-switch-track,
     &.disabled .nds-switch-track {
         opacity: 0.5;
         cursor: not-allowed;
@@ -254,12 +248,12 @@
         width: calc(var(--thumb-size) + 6px) !important;
     }
 
-    .filled.active & .nds-switch-thumb {
+    .filled & .nds-switch-thumb {
         right: var(--thumb-left) !important;
         left: unset !important;
     }
 
-    
+
 }
 
 // ==============================================
