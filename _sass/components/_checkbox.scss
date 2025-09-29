@@ -1,0 +1,275 @@
+/**
+ * NDS Checkbox Component - SCSS Version
+ * Multi-selection input controls with clear visual states and accessibility support
+ */
+
+@use '../mixins' as *;
+
+// ==============================================
+// CHECKBOX CONTAINER
+// ==============================================
+
+.nds-form-container.nds-check-container {
+    --nds-input-size: 16px;
+    display: flex;
+    gap: var(--spacing-md);
+    flex-direction: row-reverse;
+    width: fit-content;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+
+    & > .nds-form-header .label {
+        color: var(--text-display);
+        font-size: var(--nds-text-md-FS);
+        line-height: var(--nds-input-size);
+        font-weight: 500;
+        height: var(--nds-input-size);
+    }
+
+    &.nds-md * {
+        --nds-input-size: 20px;
+    }
+
+    &.nds-lg * {
+        --nds-input-size: 24px;
+    }
+
+    &.nds-md {
+        gap: var(--spacing-lg);
+    }
+
+    &.nds-lg {
+        gap: var(--spacing-xl);
+    }
+
+    .nds-form-control {
+        min-width: unset;
+        min-height: unset;
+        width: fit-content;
+        height: fit-content;
+        padding: 0;
+        border: 0;
+        border-radius: var(--radius-xs);
+        box-shadow: unset;
+        background-color: unset !important;
+
+        &.focused:focus-visible {
+            outline: 2px solid var(--colors-base-black) !important;
+            outline-offset: -2px !important;
+            box-shadow: inset 0 0 0 3px var(--colors-base-white) !important;
+        }
+
+        &::before {
+            display: none;
+        }
+    }
+}
+
+// ==============================================
+// CHECKBOX GROUP
+// ==============================================
+
+.nds-check-group {
+    row-gap: var(--spacing-xl);
+    column-gap: var(--spacing-6xl);
+    display: flex;
+    flex-direction: column;
+
+    &.rowView {
+        flex-direction: row;
+    }
+}
+
+// ==============================================
+// CHECKBOX INPUT
+// ==============================================
+
+.nds-form-control input[type="checkbox"] {
+    width: var(--nds-input-size);
+    height: var(--nds-input-size);
+    z-index: 2;
+    appearance: none;
+    border-radius: var(--radius-xs);
+    position: relative;
+
+    &:not(:disabled) {
+        cursor: pointer;
+    }
+
+    // Ripple effect on hover
+    &:not(:disabled)::before {
+        content: '';
+        position: absolute;
+        width: var(--nds-input-size);
+        height: var(--nds-input-size);
+        bottom: 50%;
+        left: 50%;
+        border-radius: 50%;
+        transform: translate(-50%, 50%);
+        background-color: var(--controls-control-ripple-effect);
+        transition: width var(--nds-transition), height var(--nds-transition);
+        z-index: -1;
+        pointer-events: none;
+        user-select: none;
+    }
+
+    &:not(:disabled):hover::before {
+        width: calc(var(--nds-input-size) * 2);
+        height: calc(var(--nds-input-size) * 2);
+    }
+
+    // Base checkbox appearance
+    &::after {
+        content: "";
+        border-radius: var(--radius-xs);
+        width: 100%;
+        height: 100%;
+        display: block;
+        background-color: var(--colors-base-white);
+        color: var(--colors-base-white) !important;
+        border: 1px solid transparent;
+        border-radius: var(--radius-xs);
+        box-shadow: 0 0 0 1px var(--controls-control-border, #6C737F);
+        z-index: 1;
+        justify-content: center;
+        align-content: center;
+        align-items: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        border: unset !important;
+        background-color: var(--colors-base-white);
+        color: var(--colors-base-white);
+        transform: translate(-50%, -50%);
+        z-index: 2;
+    }
+
+    // Icon opacity fix for loaded state
+    body.hgi-loaded &::after {
+        opacity: 1;
+    }
+
+    // ==============================================
+    // CHECKED STATE
+    // ==============================================
+
+    &:checked::after {
+        content: "坉" !important;
+        font-family: "hgi-stroke-rounded" !important;
+        font-style: normal;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        position: relative;
+        opacity: 0;
+        display: inline-flex;
+        width: var(--nds-input-size);
+        height: var(--nds-input-size);
+        font-size: calc(var(--nds-input-size) - 4px);
+        line-height: var(--nds-input-size);
+        font-weight: 600;
+        background-color: var(--controls-control-neutral-checked);
+        color: var(--controls-control-neutral-checked);
+        box-shadow: 0 0 0 1px var(--controls-control-neutral-checked);
+        border-color: var(--colors-base-white);
+    }
+
+    // Hover states for checked checkbox
+    &:checked:hover::after {
+        background-color: var(--controls-control-neutral-hovered);
+        color: var(--controls-control-neutral-hovered);
+        box-shadow: 0 0 0 1px var(--controls-control-neutral-hovered);
+        border-color: var(--colors-base-white);
+    }
+
+    // Active states for checked checkbox
+    &:checked:active::after {
+        background-color: var(--controls-control-neutral-pressed);
+        color: var(--controls-control-neutral-pressed);
+        box-shadow: 0 0 0 1px var(--controls-control-neutral-pressed);
+        border-color: var(--colors-base-white);
+    }
+
+    // Active state for unchecked checkbox
+    &:not(:checked):active::after {
+        background-color: var(--controls-control-pressed, #D2D6DB);
+        color: var(--controls-control-pressed, #D2D6DB);
+    }
+
+    // ==============================================
+    // PRIMARY VARIANT
+    // ==============================================
+
+    &.primary {
+        &:checked::after {
+            background-color: var(--controls-control-primary-checked);
+            color: var(--controls-control-primary-checked);
+            box-shadow: 0 0 0 1px var(--controls-control-primary-checked);
+            border-color: var(--colors-base-white);
+        }
+
+        &:checked:hover::after {
+            background-color: var(--controls-control-primary-hovered);
+            color: var(--controls-control-primary-hovered);
+            box-shadow: 0 0 0 1px var(--controls-control-primary-hovered);
+            border-color: var(--colors-base-white);
+        }
+
+        &:checked:active::after {
+            background-color: var(--controls-control-primary-pressed);
+            color: var(--controls-control-primary-pressed);
+            box-shadow: 0 0 0 1px var(--controls-control-primary-pressed);
+            border-color: var(--colors-base-white);
+        }
+    }
+
+    // ==============================================
+    // INDETERMINATE STATE
+    // ==============================================
+
+    &.indeterminate:checked::after {
+        content: "儣" !important;
+    }
+
+    // ==============================================
+    // DISABLED STATE
+    // ==============================================
+
+    &:checked:disabled::after {
+        background-color: var(--background-disabled) !important;
+        color: var(--control-disabled) !important;
+        box-shadow: 0 0 0 1px var(--background-disabled) !important;
+    }
+
+    &:not(:checked):disabled::after {
+        background-color: var(--colors-base-white) !important;
+        box-shadow: 0 0 0 1px var(--background-disabled) !important;
+    }
+}
+
+// ==============================================
+// RESPONSIVE BEHAVIOR
+// ==============================================
+
+@include mobile {
+    .nds-check-container {
+        // Mobile-specific adjustments
+        gap: var(--spacing-sm);
+
+        &.nds-md {
+            gap: var(--spacing-md);
+        }
+
+        &.nds-lg {
+            gap: var(--spacing-lg);
+        }
+    }
+
+    .nds-check-group {
+        row-gap: var(--spacing-lg);
+        column-gap: var(--spacing-4xl);
+
+        &.rowView {
+            flex-wrap: wrap;
+        }
+    }
+}

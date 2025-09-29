@@ -20,11 +20,13 @@
 
 @use 'components/buttons';
 @use 'components/cards';
+@use 'components/checkbox';
 @use 'components/chips';
 @use 'components/date-picker';
 @use 'components/featured-icons';
 @use 'components/feedback-icons';
 @use 'components/stepper';
+@use 'components/switch';
 @use 'components/tags';
 @use 'components/accordion';
 @use 'components/tables';
@@ -34,6 +36,7 @@
 @use 'components/breadcrumb';
 @use 'components/oneRowContent';
 @use 'components/forms';
+@use 'components/radio';
 @use 'components/rating';
 @use 'components/upload';
 @use 'components/code';
