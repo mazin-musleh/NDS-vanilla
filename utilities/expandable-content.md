@@ -57,33 +57,35 @@ direction: ltr
                         </nav>
                     </div>
                     <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-basic-1"
+                        <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-basic-1"
                             aria-labelledby="tab-basic-1">
                             <div class="nds-code-action">
                                 <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                                 </button>
                             </div>
-                            <code class="lang-html code">
-                                <div class="nds-expandable" style="--max-height: 200px;">
-                                    <div class="nds-expandable-content">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
-                                            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                                            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                                        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                                            fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
-                                            qui officia deserunt mollit anim id est laborum.</p>
-                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-                                            laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
-                                            architecto beatae vitae dicta sunt explicabo.</p>
-                                        <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia
-                                            consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
-                                        <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur,
-                                            adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore
-                                            magnam aliquam quaerat voluptatem.</p>
+                            <div class="nds-expandable-content">
+                                <code class="lang-html code">
+                                    <div class="nds-expandable" style="--max-height: 200px;">
+                                        <div class="nds-expandable-content">
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+                                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                                                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                                            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+                                                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
+                                                qui officia deserunt mollit anim id est laborum.</p>
+                                            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
+                                                laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
+                                                architecto beatae vitae dicta sunt explicabo.</p>
+                                            <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia
+                                                consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                                            <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur,
+                                                adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore
+                                                magnam aliquam quaerat voluptatem.</p>
+                                        </div>
                                     </div>
-                                </div>
-                            </code>
+                                </code>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -147,30 +149,32 @@ direction: ltr
                         </nav>
                     </div>
                     <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-card-1"
+                        <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-card-1"
                             aria-labelledby="tab-card-1">
                             <div class="nds-code-action">
                                 <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                                 </button>
                             </div>
-                            <code class="lang-html code">
-                                <div class="nds-card nds-stroke nds-expandable nds-expand">
-                                    <div class="nds-expandable-content" style="--max-height:200px">
-                                        <div class="nds-card-content">
-                                            <div class="nds-card-text">
-                                                <h3 class="nds-card-title">Ministry Services Documentation</h3>
-                                                <p class="nds-card-description">Complete documentation and guidelines for
-                                                    all ministry digital services including API references, implementation
-                                                    guides, best practices for developers, integration specifications,
-                                                    security protocols, and compliance requirements for government
-                                                    applications. This comprehensive resource covers everything from basic
-                                                    setup to advanced configurations.</p>
+                            <div class="nds-expandable-content">
+                                <code class="lang-html code">
+                                    <div class="nds-card nds-stroke nds-expandable nds-expand">
+                                        <div class="nds-expandable-content" style="--max-height:200px">
+                                            <div class="nds-card-content">
+                                                <div class="nds-card-text">
+                                                    <h3 class="nds-card-title">Ministry Services Documentation</h3>
+                                                    <p class="nds-card-description">Complete documentation and guidelines for
+                                                        all ministry digital services including API references, implementation
+                                                        guides, best practices for developers, integration specifications,
+                                                        security protocols, and compliance requirements for government
+                                                        applications. This comprehensive resource covers everything from basic
+                                                        setup to advanced configurations.</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </code>
+                                </code>
+                            </div>
                         </div>
                     </div>
                 </div>

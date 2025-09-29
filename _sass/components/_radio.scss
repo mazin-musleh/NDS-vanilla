@@ -1,0 +1,247 @@
+/**
+ * NDS Radio Button Component - SCSS Version
+ * Single-selection input controls for mutually exclusive options with clear visual feedback
+ */
+
+@use '../mixins' as *;
+
+// ==============================================
+// RADIO CONTAINER
+// ==============================================
+
+.nds-form-container.nds-radio-container {
+    --nds-input-size: 16px;
+    display: flex;
+    gap: var(--spacing-md);
+    flex-direction: row-reverse;
+    width: fit-content;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+
+    & > .nds-form-header .label {
+        color: var(--text-display);
+        font-size: var(--nds-text-md-FS);
+        line-height: var(--nds-input-size);
+        font-weight: 500;
+        height: var(--nds-input-size);
+    }
+
+    &.nds-md * {
+        --nds-input-size: 20px;
+    }
+
+    &.nds-lg * {
+        --nds-input-size: 24px;
+    }
+
+    &.nds-md {
+        gap: var(--spacing-lg);
+    }
+
+    &.nds-lg {
+        gap: var(--spacing-xl);
+    }
+
+    .nds-form-control {
+        min-width: unset;
+        min-height: unset;
+        width: fit-content;
+        height: fit-content;
+        padding: 0;
+        border: 0;
+        border-radius: var(--radius-sm);
+        box-shadow: unset;
+        background-color: unset !important;
+
+        &.focused:focus-visible {
+            outline: 2px solid var(--colors-base-black) !important;
+            outline-offset: -2px !important;
+            box-shadow: inset 0 0 0 3px var(--colors-base-white) !important;
+        }
+
+        &::before {
+            display: none;
+        }
+    }
+}
+
+// ==============================================
+// RADIO GROUP
+// ==============================================
+
+.nds-radio-group {
+    row-gap: var(--spacing-xl);
+    column-gap: var(--spacing-6xl);
+    display: flex;
+    flex-direction: column;
+
+    &.rowView {
+        flex-direction: row;
+    }
+}
+
+// ==============================================
+// RADIO INPUT
+// ==============================================
+
+.nds-form-control input[type="radio"] {
+    width: var(--nds-input-size);
+    height: var(--nds-input-size);
+    z-index: 2;
+    appearance: none;
+    border-radius: 50%;
+    position: relative;
+
+    &:not(:disabled) {
+        cursor: pointer;
+    }
+
+    // Ripple effect on hover
+    &:not(:disabled)::before {
+        content: '';
+        position: absolute;
+        width: var(--nds-input-size);
+        height: var(--nds-input-size);
+        bottom: 50%;
+        left: 50%;
+        border-radius: 50%;
+        transform: translate(-50%, 50%);
+        background-color: var(--controls-control-ripple-effect);
+        transition: width var(--nds-transition), height var(--nds-transition);
+        z-index: -1;
+        pointer-events: none;
+        user-select: none;
+    }
+
+    &:not(:disabled):hover::before {
+        width: calc(var(--nds-input-size) * 2);
+        height: calc(var(--nds-input-size) * 2);
+    }
+
+    // Base radio appearance
+    &::after {
+        content: "";
+        border-radius: 50%;
+        width: 100%;
+        height: 100%;
+        display: block;
+        background-color: var(--colors-base-white);
+        color: var(--colors-base-white) !important;
+        border: 1px solid transparent;
+        box-shadow: 0 0 0 1px var(--controls-control-border, #6C737F);
+        z-index: 1;
+    }
+
+    // ==============================================
+    // CHECKED STATE
+    // ==============================================
+
+    &:checked::after {
+        border: 4px solid var(--colors-base-white);
+        background-color: var(--controls-control-neutral-checked);
+        color: var(--controls-control-neutral-checked);
+        box-shadow: 0 0 0 1px var(--controls-control-neutral-checked);
+        border-color: var(--colors-base-white);
+    }
+
+    // Size-specific border thickness
+    .nds-sm &:checked::after {
+        border: 3px solid var(--colors-base-white);
+    }
+
+    .nds-lg &:checked::after {
+        border: 5px solid var(--colors-base-white);
+    }
+
+    // Hover states for checked radio
+    &:checked:hover::after {
+        background-color: var(--controls-control-neutral-hovered);
+        color: var(--controls-control-neutral-hovered);
+        box-shadow: 0 0 0 1px var(--controls-control-neutral-hovered);
+        border-color: var(--colors-base-white);
+    }
+
+    // Active states for checked radio
+    &:checked:active::after {
+        background-color: var(--controls-control-neutral-pressed);
+        color: var(--controls-control-neutral-pressed);
+        box-shadow: 0 0 0 1px var(--controls-control-neutral-pressed);
+        border-color: var(--colors-base-white);
+    }
+
+    // Active state for unchecked radio
+    &:not(:checked):active::after {
+        background-color: var(--controls-control-pressed, #D2D6DB);
+        color: var(--controls-control-pressed, #D2D6DB);
+    }
+
+    // ==============================================
+    // PRIMARY VARIANT
+    // ==============================================
+
+    &.primary {
+        &:checked::after {
+            background-color: var(--controls-control-primary-checked);
+            color: var(--controls-control-primary-checked);
+            box-shadow: 0 0 0 1px var(--controls-control-primary-checked);
+            border-color: var(--colors-base-white);
+        }
+
+        &:checked:hover::after {
+            background-color: var(--controls-control-primary-hovered);
+            color: var(--controls-control-primary-hovered);
+            box-shadow: 0 0 0 1px var(--controls-control-primary-hovered);
+            border-color: var(--colors-base-white);
+        }
+
+        &:checked:active::after {
+            background-color: var(--controls-control-primary-pressed);
+            color: var(--controls-control-primary-pressed);
+            box-shadow: 0 0 0 1px var(--controls-control-primary-pressed);
+            border-color: var(--colors-base-white);
+        }
+    }
+
+    // ==============================================
+    // DISABLED STATE
+    // ==============================================
+
+    &:checked:disabled::after {
+        background-color: var(--background-disabled) !important;
+        color: var(--control-disabled) !important;
+        box-shadow: 0 0 0 1px var(--background-disabled) !important;
+    }
+
+    &:not(:checked):disabled::after {
+        background-color: var(--colors-base-white) !important;
+        box-shadow: 0 0 0 1px var(--background-disabled) !important;
+    }
+}
+
+// ==============================================
+// RESPONSIVE BEHAVIOR
+// ==============================================
+
+@include mobile {
+    .nds-radio-container {
+        // Mobile-specific adjustments
+        gap: var(--spacing-sm);
+
+        &.nds-md {
+            gap: var(--spacing-md);
+        }
+
+        &.nds-lg {
+            gap: var(--spacing-lg);
+        }
+    }
+
+    .nds-radio-group {
+        row-gap: var(--spacing-lg);
+        column-gap: var(--spacing-4xl);
+
+        &.rowView {
+            flex-wrap: wrap;
+        }
+    }
+}

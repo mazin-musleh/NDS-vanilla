@@ -1,0 +1,291 @@
+/**
+ * NDS Switch Component - SCSS Version
+ * Toggle switches for binary choices with clear visual feedback and accessibility support
+ */
+
+@use '../mixins' as *;
+
+// ==============================================
+// SWITCH CONTAINER
+// ==============================================
+
+.nds-form-container.nds-switch-container {
+    --nds-input-size: 16px;
+    display: flex;
+    gap: var(--spacing-md);
+    flex-direction: row-reverse;
+    width: fit-content;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+
+    & > .nds-form-header .label {
+        color: var(--text-display);
+        font-size: var(--nds-text-md-FS);
+        line-height: calc(var(--nds-input-size) + 4px) !important;
+        font-weight: 500;
+        height: calc(var(--nds-input-size) + 4px) !important;
+    }
+
+    &.nds-md * {
+        --nds-input-size: 20px;
+    }
+
+    &.nds-lg * {
+        --nds-input-size: 24px;
+    }
+
+    &.nds-md {
+        gap: var(--spacing-lg);
+    }
+
+    &.nds-lg {
+        gap: var(--spacing-xl);
+    }
+
+    .nds-form-control {
+        min-width: unset;
+        min-height: unset;
+        width: fit-content;
+        height: fit-content;
+        padding: 0;
+        border: 0;
+        border-radius: var(--radius-sm);
+        box-shadow: unset;
+        background-color: unset !important;
+
+        &.focused:focus-visible {
+            outline: 2px solid var(--colors-base-black) !important;
+            outline-offset: -2px !important;
+            box-shadow: inset 0 0 0 3px var(--colors-base-white) !important;
+        }
+
+        &::before {
+            display: none;
+        }
+    }
+}
+
+// ==============================================
+// SWITCH GROUP
+// ==============================================
+
+.nds-switch-group {
+    row-gap: var(--spacing-xl);
+    column-gap: var(--spacing-6xl);
+    display: flex;
+    flex-direction: column;
+
+    &.rowView {
+        flex-direction: row;
+    }
+}
+
+// ==============================================
+// SWITCH COMPONENT
+// ==============================================
+
+.nds-switch {
+    --switch-width: 48px;
+    --switch-height: 24px;
+    --thumb-size: 18px;
+    --thumb-left: 2px;
+
+    // Size variations
+    .nds-sm & {
+        --switch-width: 36px;
+        --switch-height: 18px;
+        --thumb-size: 12px;
+        --thumb-left: 2px;
+    }
+
+    .nds-lg & {
+        --switch-width: 56px;
+        --switch-height: 28px;
+        --thumb-size: 22px;
+        --thumb-left: 2px;
+    }
+
+    position: relative;
+    display: inline-block;
+    width: var(--switch-width);
+    height: var(--switch-height);
+    user-select: none;
+
+    // Ripple effect on hover
+    &:not(:disabled)::before {
+        content: '';
+        position: absolute;
+        width: calc(var(--switch-width));
+        height: calc(var(--switch-height));
+        bottom: 50%;
+        left: 50%;
+        border-radius: 9999px;
+        transform: translate(-50%, 50%);
+        background-color: var(--controls-control-ripple-effect);
+        transition: width var(--nds-transition), height var(--nds-transition);
+        z-index: 1;
+        pointer-events: none;
+        user-select: none;
+    }
+
+    &:not(:disabled):hover::before {
+        width: calc(var(--switch-width) + var(--spacing-lg));
+        height: calc(var(--switch-height) + var(--spacing-lg));
+    }
+
+    // ==============================================
+    // SWITCH INPUT (HIDDEN CHECKBOX)
+    // ==============================================
+
+    .nds-switch-input {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+        margin: 0;
+
+        &:not(:disabled) {
+            cursor: pointer;
+        }
+
+        &:focus + .nds-switch-track {
+            outline: 2px solid var(--colors-base-black);
+            outline-offset: 2px;
+        }
+    }
+
+    // ==============================================
+    // SWITCH TRACK
+    // ==============================================
+
+    .nds-switch-track {
+        position: absolute;
+        inset: 0;
+        cursor: pointer;
+        background-color: var(--background-white);
+        border-radius: 9999px;
+        border: 1px solid var(--controls-control-neutral-checked);
+        z-index: 2;
+
+        &:hover:not([disabled]) {
+            border-color: var(--controls-control-hovered, #5A6169);
+
+            .nds-switch-thumb {
+                background-color: var(--controls-control-hovered, #5A6169);
+            }
+        }
+
+        // ==============================================
+        // SWITCH THUMB
+        // ==============================================
+
+        .nds-switch-thumb {
+            position: absolute;
+            top: 50%;
+            left: var(--thumb-left);
+            width: var(--thumb-size);
+            height: var(--thumb-size);
+            background-color: var(--controls-control-neutral-checked);
+            border-radius: 9999px;
+            transform: translate(0px, -50%);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.1s ease;
+        }
+    }
+
+    // ==============================================
+    // CHECKED STATE
+    // ==============================================
+
+    .nds-switch-input:checked + .nds-switch-track {
+        background-color: var(--controls-control-neutral-checked, #0D121C);
+        border-color: var(--controls-control-neutral-checked, #0D121C);
+
+        &:hover:not([disabled]) {
+            background-color: var(--controls-control-neutral-hovered);
+            border-color: var(--controls-control-neutral-hovered);
+        }
+
+        .nds-switch-thumb {
+            background-color: var(--colors-base-white);
+            left: unset;
+            right: var(--thumb-left);
+
+            @include ltr {
+                left: calc(var(--switch-width) - var(--thumb-size) - var(--thumb-left) *2);
+                right: unset;
+            }
+        }
+    }
+
+    // ==============================================
+    // PRIMARY VARIANT
+    // ==============================================
+
+    &.primary .nds-switch-input:checked + .nds-switch-track {
+        background-color: var(--controls-control-primary-checked);
+        border-color: var(--controls-control-primary-checked);
+
+        &:hover:not([disabled]) {
+            background-color: var(--controls-control-primary-hovered);
+            border-color: var(--controls-control-primary-hovered);
+        }
+    }
+
+    // ==============================================
+    // DISABLED STATE
+    // ==============================================
+
+    .nds-switch-input:disabled + .nds-switch-track,
+    &.disabled .nds-switch-track {
+        opacity: 0.5;
+        cursor: not-allowed;
+
+        .nds-switch-thumb {
+            cursor: not-allowed;
+        }
+    }
+
+    // ==============================================
+    // ACTIVE STATE (DURING PRESS)
+    // ==============================================
+
+    .active & .nds-switch-thumb {
+        width: calc(var(--thumb-size) + 6px) !important;
+    }
+
+    .filled.active & .nds-switch-thumb {
+        right: var(--thumb-left) !important;
+        left: unset !important;
+    }
+
+    
+}
+
+// ==============================================
+// RESPONSIVE BEHAVIOR
+// ==============================================
+
+@include mobile {
+    .nds-switch-container {
+        // Mobile-specific adjustments
+        gap: var(--spacing-sm);
+
+        &.nds-md {
+            gap: var(--spacing-md);
+        }
+
+        &.nds-lg {
+            gap: var(--spacing-lg);
+        }
+    }
+
+    .nds-switch-group {
+        row-gap: var(--spacing-lg);
+        column-gap: var(--spacing-4xl);
+
+        &.rowView {
+            flex-wrap: wrap;
+        }
+    }
+}

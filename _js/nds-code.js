@@ -17,6 +17,12 @@
         processCode(); // Process all registered language types
         addLineNumbers();
         initializeCopyButtons();
+
+        // Set code elements display to flex after processing finishes
+        const codeElements = document.querySelectorAll('code');
+        codeElements.forEach(function(codeElement) {
+            codeElement.style.display = 'flex';
+        });
     }
 
     // CRITICAL: Expose global API immediately (called by unified init system)
