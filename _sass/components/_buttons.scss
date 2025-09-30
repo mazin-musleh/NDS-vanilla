@@ -91,12 +91,12 @@
   // ==============================================
 
   /* 
-Available sizes:
-- Small (SM): 24px height
-- Medium (MD): 32px height  
-- Large (LG): 40px height - Default size
-- Extra Large (XL): 48px height
-*/
+ Available sizes:
+ - Small (SM): 24px height
+ - Medium (MD): 32px height  
+ - Large (LG): 40px height - Default size
+ - Extra Large (XL): 48px height
+ */
 
   &,
   &.nds-lg {
@@ -413,27 +413,27 @@ Available sizes:
 
     &,
     &[data-state="default"] {
-      color: var(--button-background-danger-primary-default);
+      color: var(--text-error);
       border-color: var(--border-error-light);
     }
 
     &:hover,
     &[data-state="hover"] {
       background-color: var(--button-background-danger-secondary-hovered);
-      color: var(--button-background-danger-primary-hovered);
+      color: var(--text-error);
     }
 
     &.active,
     &.selected,
     &[data-state="selected"] {
       background-color: var(--button-background-danger-secondary-selected);
-      color: var(--button-background-danger-primary-selected);
+      color: var(--text-error);
     }
 
     &:active,
     &[data-state="active"] {
       background-color: var(--button-background-danger-secondary-pressed);
-      color: var(--button-background-danger-primary-pressed);
+      color: var(--text-error);
     }
 
     &:disabled,
@@ -485,26 +485,26 @@ Available sizes:
     &,
     &[data-state="default"] {
       background-color: var(--button-background-danger-secondary-default);
-      color: var(--button-background-danger-primary-default);
+      color: var(--text-error);
     }
 
     &:hover,
     &[data-state="hover"] {
       background-color: var(--button-background-danger-secondary-hovered);
-      color: var(--button-background-danger-primary-hovered);
+      color: var(--text-error);
     }
 
     &.active,
     &.selected,
     &[data-state="selected"] {
       background-color: var(--button-background-danger-secondary-selected);
-      color: var(--button-background-danger-primary-selected);
+      color: var(--text-error);
     }
 
     &:active,
     &[data-state="active"] {
       background-color: var(--button-background-danger-secondary-pressed);
-      color: var(--button-background-danger-primary-pressed);
+      color: var(--text-error);
     }
 
     &:disabled,
@@ -519,26 +519,26 @@ Available sizes:
 
     &,
     &[data-state="default"] {
-      color: var(--button-background-danger-primary-default);
+      color: var(--text-error);
     }
 
     &:hover,
     &[data-state="hover"] {
       background-color: var(--button-background-danger-secondary-default);
-      color: var(--button-background-danger-primary-hovered);
+      color: var(--text-error);
     }
 
     &.active,
     &.selected,
     &[data-state="selected"] {
       background-color: var(--button-background-danger-secondary-selected);
-      color: var(--button-background-danger-primary-selected);
+      color: var(--text-error);
     }
 
     &:active,
     &[data-state="active"] {
       background-color: var(--button-background-danger-secondary-hovered);
-      color: var(--button-background-danger-primary-pressed);
+      color: var(--text-error);
     }
 
     &:disabled,

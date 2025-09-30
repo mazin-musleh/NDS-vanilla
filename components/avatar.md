@@ -73,40 +73,40 @@ direction: ltr
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
-                                <code class="lang-html code">&lt;!-- Extra Small (24px) --&gt;
-&lt;div class="nds-avatar nds-xs nds-initials"&gt;
-  &lt;span class="initials"&gt;AB&lt;/span&gt;
-&lt;/div&gt;
+                                <code class="lang-html code"><!-- Extra Small (24px) -->
+<div class="nds-avatar nds-xs nds-initials">
+  <span class="initials">AB</span>
+</div>
 
-&lt;!-- Small (32px) --&gt;
-&lt;div class="nds-avatar nds-sm nds-initials"&gt;
-  &lt;span class="initials"&gt;AB&lt;/span&gt;
-&lt;/div&gt;
+<!-- Small (32px) -->
+<div class="nds-avatar nds-sm nds-initials">
+  <span class="initials">AB</span>
+</div>
 
-&lt;!-- Medium (40px - default) --&gt;
-&lt;div class="nds-avatar nds-md nds-initials"&gt;
-  &lt;span class="initials"&gt;AB&lt;/span&gt;
-&lt;/div&gt;
+<!-- Medium (40px - default) -->
+<div class="nds-avatar nds-md nds-initials">
+  <span class="initials">AB</span>
+</div>
 
-&lt;!-- Large (56px) --&gt;
-&lt;div class="nds-avatar nds-lg nds-initials"&gt;
-  &lt;span class="initials"&gt;AB&lt;/span&gt;
-&lt;/div&gt;
+<!-- Large (56px) -->
+<div class="nds-avatar nds-lg nds-initials">
+  <span class="initials">AB</span>
+</div>
 
-&lt;!-- Extra Large (80px) --&gt;
-&lt;div class="nds-avatar nds-xl nds-initials"&gt;
-  &lt;span class="initials"&gt;AB&lt;/span&gt;
-&lt;/div&gt;
+<!-- Extra Large (80px) -->
+<div class="nds-avatar nds-xl nds-initials">
+  <span class="initials">AB</span>
+</div>
 
-&lt;!-- 2X Extra Large (96px) --&gt;
-&lt;div class="nds-avatar nds-2xl nds-initials"&gt;
-  &lt;span class="initials"&gt;AB&lt;/span&gt;
-&lt;/div&gt;
+<!-- 2X Extra Large (96px) -->
+<div class="nds-avatar nds-2xl nds-initials">
+  <span class="initials">AB</span>
+</div>
 
-&lt;!-- 3X Extra Large (120px) --&gt;
-&lt;div class="nds-avatar nds-3xl nds-initials"&gt;
-  &lt;span class="initials"&gt;AB&lt;/span&gt;
-&lt;/div&gt;</code>
+<!-- 3X Extra Large (120px) -->
+<div class="nds-avatar nds-3xl nds-initials">
+  <span class="initials">AB</span>
+</div></code>
                             </div>
                         </div>
                     </div>
@@ -163,9 +163,9 @@ direction: ltr
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
-                                <code class="lang-html code">&lt;div class="nds-avatar nds-lg nds-initials"&gt;
-  &lt;span class="initials"&gt;AB&lt;/span&gt;
-&lt;/div&gt;</code>
+                                <code class="lang-html code"><div class="nds-avatar nds-lg nds-initials">
+  <span class="initials">AB</span>
+</div></code>
                             </div>
                         </div>
                     </div>
@@ -209,9 +209,9 @@ direction: ltr
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
-                                <code class="lang-html code">&lt;div class="nds-avatar nds-lg nds-icon"&gt;
-  &lt;i class="hgi hgi-stroke hgi-user"&gt;&lt;/i&gt;
-&lt;/div&gt;</code>
+                                <code class="lang-html code"><div class="nds-avatar nds-lg nds-icon">
+  <i class="hgi hgi-stroke hgi-user"></i>
+</div></code>
                             </div>
                         </div>
                     </div>
@@ -259,9 +259,9 @@ direction: ltr
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
-                                <code class="lang-html code">&lt;div class="nds-avatar nds-lg nds-image"&gt;
-  &lt;img src="path/to/avatar.jpg" alt="User Avatar"&gt;
-&lt;/div&gt;</code>
+                                <code class="lang-html code"><div class="nds-avatar nds-lg nds-image">
+  <img src="path/to/avatar.jpg" alt="User Avatar">
+</div></code>
                             </div>
                         </div>
                     </div>
@@ -284,9 +284,37 @@ direction: ltr
                     <div class="demo-header">
                         <div class="demo-label">Avatar Group</div>
                         <div class="demo-action">
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
                                 data-toggler='["nds-stacked", ".nds-avatar-group", "stackedVariant"]'>
-                                <span class="label">Toggle Stacked</span>
+                                <span class="label">Stacked</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-xs", ".nds-avatar-group", "avatarSize"]'>
+                                <span class="label">XS</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-sm", ".nds-avatar-group", "avatarSize"]'>
+                                <span class="label">SM</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
+                                data-toggler='["nds-md", ".nds-avatar-group", "avatarSize"]'>
+                                <span class="label">MD</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-lg", ".nds-avatar-group", "avatarSize"]'>
+                                <span class="label">LG</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-xl", ".nds-avatar-group", "avatarSize"]'>
+                                <span class="label">XL</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-2xl", ".nds-avatar-group", "avatarSize"]'>
+                                <span class="label">2XL</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-3xl", ".nds-avatar-group", "avatarSize"]'>
+                                <span class="label">3XL</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
@@ -296,23 +324,23 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-avatar-group nds-stacked">
-                                <div class="nds-avatar nds-sm nds-image">
+                            <div class="nds-avatar-group nds-stacked nds-md">
+                                <div class="nds-avatar nds-image">
                                     <img src="{{ '/assets/img/avatar1.png' | relative_url }}" alt="User 1">
                                 </div>
-                                <div class="nds-avatar nds-sm nds-image">
+                                <div class="nds-avatar nds-image">
                                     <img src="{{ '/assets/img/avatar2.png' | relative_url }}" alt="User 2">
                                 </div>
-                                <div class="nds-avatar nds-sm nds-image">
+                                <div class="nds-avatar nds-image">
                                     <img src="{{ '/assets/img/avatar3.png' | relative_url }}" alt="User 3">
                                 </div>
-                                <div class="nds-avatar nds-sm nds-image">
+                                <div class="nds-avatar nds-image">
                                     <img src="{{ '/assets/img/avatar4.png' | relative_url }}" alt="User 4">
                                 </div>
-                                <div class="nds-avatar nds-sm nds-image">
+                                <div class="nds-avatar nds-image">
                                     <img src="{{ '/assets/img/avatar5.png' | relative_url }}" alt="User 5">
                                 </div>
-                                <div class="nds-avatar nds-sm nds-initials">
+                                <div class="nds-avatar nds-lg nds-initials">
                                     <span class="initials">+99</span>
                                 </div>
                             </div>
@@ -335,40 +363,28 @@ direction: ltr
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
-                                <code class="lang-html code">&lt;!-- Stacked Avatar Group --&gt;
-&lt;div class="nds-avatar-group nds-stacked"&gt;
-  &lt;div class="nds-avatar nds-sm nds-image"&gt;
-    &lt;img src="path/to/avatar1.jpg" alt="User 1"&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-avatar nds-sm nds-image"&gt;
-    &lt;img src="path/to/avatar2.jpg" alt="User 2"&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-avatar nds-sm nds-image"&gt;
-    &lt;img src="path/to/avatar3.jpg" alt="User 3"&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-avatar nds-sm nds-image"&gt;
-    &lt;img src="path/to/avatar4.jpg" alt="User 4"&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-avatar nds-sm nds-image"&gt;
-    &lt;img src="path/to/avatar5.jpg" alt="User 5"&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-avatar nds-sm nds-initials"&gt;
-    &lt;span class="initials"&gt;+99&lt;/span&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;!-- Non-stacked Avatar Group (default with gap) --&gt;
-&lt;div class="nds-avatar-group"&gt;
-  &lt;div class="nds-avatar nds-sm nds-image"&gt;
-    &lt;img src="path/to/avatar1.jpg" alt="User 1"&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-avatar nds-sm nds-image"&gt;
-    &lt;img src="path/to/avatar2.jpg" alt="User 2"&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-avatar nds-sm nds-initials"&gt;
-    &lt;span class="initials"&gt;+99&lt;/span&gt;
-  &lt;/div&gt;
-&lt;/div&gt;</code>
+                                <code class="lang-html code"><!-- Stacked Avatar Group -->
+<div class="nds-avatar-group nds-stacked nds-md">
+  <div class="nds-avatar nds-image">
+    <img src="path/to/avatar1.jpg" alt="User 1">
+  </div>
+  <div class="nds-avatar nds-image">
+    <img src="path/to/avatar2.jpg" alt="User 2">
+  </div>
+  <div class="nds-avatar nds-image">
+    <img src="path/to/avatar3.jpg" alt="User 3">
+  </div>
+  <div class="nds-avatar nds-image">
+    <img src="path/to/avatar4.jpg" alt="User 4">
+  </div>
+  <div class="nds-avatar nds-image">
+    <img src="path/to/avatar5.jpg" alt="User 5">
+  </div>
+  <div class="nds-avatar nds-initials">
+    <span class="initials">+99</span>
+  </div>
+</div>
+</code>
                             </div>
                         </div>
                     </div>
@@ -377,4 +393,3 @@ direction: ltr
         </div>
     </div>
 </section>
-

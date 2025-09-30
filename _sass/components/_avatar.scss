@@ -42,7 +42,7 @@
   }
 
   // Icon styling
-  .hgi {
+  i {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -63,85 +63,42 @@
 // AVATAR SIZES
 // ==============================================
 
-// Extra Small - 24px
-.nds-avatar.nds-xs {
-  width: 24px;
-  height: 24px;
-  font-size: var(--nds-text-xs-FS);
-
-  .hgi {
-    font-size: 12px;
-  }
-}
-
-// Small - 32px
-.nds-avatar.nds-sm {
-  width: 32px;
-  height: 32px;
-  font-size: var(--nds-text-sm-FS);
-
-  .hgi {
-    font-size: 16px;
-  }
-}
-
 // Medium - 40px (default)
 .nds-avatar.nds-md,
 .nds-avatar {
-  width: 40px;
-  height: 40px;
-  font-size: var(--nds-text-md-FS);
+  --avatar-size: 40px;
+  width: var(--avatar-size);
+  height: var(--avatar-size);
+  font-size: calc(var(--avatar-size) / 3);
 
-  .hgi {
-    font-size: 20px;
+  i {
+    font-size: calc(var(--avatar-size) / 2);
   }
 }
 
-// Large - 56px
+.nds-avatar.nds-xs {
+  --avatar-size: 24px;
+}
+
+.nds-avatar.nds-sm {
+  --avatar-size: 32px;
+}
+
 .nds-avatar.nds-lg {
-  width: 56px;
-  height: 56px;
-  font-size: var(--nds-text-lg-FS);
-
-  .hgi {
-    font-size: 28px;
-  }
+  --avatar-size: 56px;
 }
 
-// Extra Large - 80px
 .nds-avatar.nds-xl {
-  width: 80px;
-  height: 80px;
-  font-size: var(--nds-text-xl-FS);
-
-  .hgi {
-    font-size: 40px;
-  }
+  --avatar-size: 80px;
 }
 
-// 2X Extra Large - 96px
 .nds-avatar.nds-2xl {
-  width: 96px;
-  height: 96px;
-  font-size: 28px;
-  line-height: 36px;
-
-  .hgi {
-    font-size: 48px;
-  }
+  --avatar-size: 96px;
 }
 
-// 3X Extra Large - 120px
 .nds-avatar.nds-3xl {
-  width: 120px;
-  height: 120px;
-  font-size: 36px;
-  line-height: 44px;
-  border: 2px solid var(--border-white);
-
-  .hgi {
-    font-size: 60px;
-  }
+  --avatar-size: 120px;
+  border: 4px solid var(--border-white);
 }
 
 // ==============================================
@@ -149,34 +106,9 @@
 // ==============================================
 
 .nds-avatar.nds-square {
-  border-radius: 8px;
-
-  &.nds-xs {
-    border-radius: 4px;
-  }
-
-  &.nds-sm {
-    border-radius: 6px;
-  }
-
-  &.nds-md {
-    border-radius: 8px;
-  }
-
-  &.nds-lg {
-    border-radius: 10px;
-  }
-
-  &.nds-xl {
-    border-radius: 12px;
-  }
-
-  &.nds-2xl {
-    border-radius: 14px;
-  }
-
-  &.nds-3xl {
-    border-radius: 16px;
+  border-radius: var(--radius-sm);
+  .nds-3xl &, &.nds-3xl {
+    border-radius: var(--radius-md);
   }
 }
 
@@ -194,7 +126,7 @@
 
 // Icon Type
 .nds-avatar.nds-icon {
-  .hgi {
+  i {
     width: 100%;
     height: 100%;
   }
@@ -207,19 +139,85 @@
 // ==============================================
 
 .nds-avatar-group {
+
+  --avatar-gap: 6px;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: var(--avatar-gap, 6px);
 
   // Stacked variant - avatars overlap
   &.nds-stacked {
+    --stacked-gap: calc(var(--avatar-gap, 6px) * 2);
     gap: 0;
-    padding-right: 4px;
+    padding-left: var(--stacked-gap);
 
     .nds-avatar {
-      margin-right: -4px;
+      --avatar-size: 40px;
+      margin-left: calc(var(--stacked-gap) * -1);
+    }
+
+    @include ltr {
+      padding-left: unset;
+      padding-right: var(--stacked-gap);
+
+      .nds-avatar {
+        margin-left: unset;
+        margin-right: calc(var(--stacked-gap) * -1);
+      }
     }
   }
+
+
+  &.nds-xs {
+    --avatar-gap: 2px;
+    .nds-avatar {
+      --avatar-size: 24px;
+    }
+  }
+
+  &.nds-sm {
+    --avatar-gap: 4px;
+    .nds-avatar {
+      --avatar-size: 32px;
+    }
+  }
+
+  &.nds-md {
+    --avatar-gap: 6px;
+    .nds-avatar {
+      --avatar-size: 40px;
+    }
+  }
+
+  &.nds-lg {
+    --avatar-gap: 8px;
+    .nds-avatar {
+      --avatar-size: 56px;
+    }
+  }
+
+  &.nds-xl {
+    --avatar-gap: 10px;
+    .nds-avatar {
+      --avatar-size: 80px;
+    }
+  }
+
+  &.nds-2xl {
+    --avatar-gap: 12px;
+    .nds-avatar {
+      --avatar-size: 96px;
+    }
+  }
+
+  &.nds-3xl {
+    --avatar-gap: 14px;
+    .nds-avatar {
+      --avatar-size: 120px;
+      border: 4px solid var(--border-white);
+    }
+  }
+
 }
 
 // ==============================================
