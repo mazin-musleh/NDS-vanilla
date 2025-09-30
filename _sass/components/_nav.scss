@@ -244,6 +244,11 @@
             padding-top: var(--spacing-2xl);
             padding-bottom: var(--spacing-2xl);
             width: 100%;
+
+            @include mobile {
+                padding-top: 0;
+                padding-bottom: 0;
+            }
         }
     }
 
@@ -281,7 +286,8 @@
 
     /* Dropdown Columns Grid */
     .nds-dropdown-columns {
-        &.nds-grid {
+        &.columnView {
+
             column-count: 4;
             column-gap: var(--spacing-2xl);
 
@@ -307,18 +313,11 @@
 
 /* Dropdown Row List */
 .nds-dropdown-columns {
-    &.nds-rowList {
-        .nds-list {
-            display: flex;
-            justify-content: space-evenly;
-            flex-wrap: wrap;
-            column-gap: var(--spacing-2xl);
-        }
-    }
 
     .nds-list {
         display: flex;
         flex-wrap: wrap;
+        flex-direction: column;
         column-gap: var(--spacing-2xl);
 
         &.nds-multi-column-list {
@@ -336,12 +335,22 @@
         }
 
     }
+
+    &.nds-rowList {
+        .nds-list {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            flex-wrap: wrap;
+            column-gap: var(--spacing-2xl);
+        }
+    }
 }
 
 
 
 .nds-dropdown .nds-dropdown-menu .nds-column {
-    padding: 0 var(--spacing-lg);
+    padding: var(--spacing-lg);
     display: flex;
     flex-direction: column;
     gap: var(--spacing-md);
@@ -479,7 +488,7 @@ body:not(.minimal) .nds-main-nav {
 /* Large Desktop: 1280px and down */
 @include desktop(max) {
 
-    .nds-dropdown-menu .nds-dropdown-columns.nds-grid {
+    .nds-dropdown-menu .nds-dropdown-columns.columnView {
         column-count: 3;
     }
 }
@@ -488,7 +497,7 @@ body:not(.minimal) .nds-main-nav {
 @include tablet(max) {
     .nds-dropdown-menu {
         .nds-dropdown-columns {
-            &.nds-grid {
+            &.columnView {
                 column-count: 2;
             }
 
@@ -737,7 +746,7 @@ body.minimal .nds-main-nav {
         display: none;
     }
 
-    .nds-dropdown-menu .nds-dropdown-columns.nds-grid {
+    .nds-dropdown-menu .nds-dropdown-columns.columnView {
         column-count: 1;
         width: 100%;
     }
@@ -749,9 +758,10 @@ body.minimal .nds-main-nav {
 
 /* Respect reduced motion preferences */
 @media (prefers-reduced-motion: reduce) {
-  .nds-main-nav .nds-dropdown-menu,
-  .nds-main-nav .nds-collapse,
-  .nds-main-nav .nds-nav-primary .showMore i {
-    transition: none !important;
-  }
+
+    .nds-main-nav .nds-dropdown-menu,
+    .nds-main-nav .nds-collapse,
+    .nds-main-nav .nds-nav-primary .showMore i {
+        transition: none !important;
+    }
 }

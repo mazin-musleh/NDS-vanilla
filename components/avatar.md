@@ -271,6 +271,114 @@ direction: ltr
     </div>
 </section>
 
+<!-- Interactive Avatars -->
+<section id="avatarInteractive" class="nds-content-section">
+    <div class="nds-section-content-container">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Interactive Avatars</h2>
+            <p class="nds-section-description">Avatars can be wrapped in anchor tags or button elements for interactive
+                use cases</p>
+        </div>
+        <div class="nds-section-content">
+            <div class="avatar-showcase">
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Avatar as Link (anchor tag)</div>
+                        <div class="demo-action">
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-square", ".nds-avatar", "avatarShape"]'>
+                                <span class="label">Square</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                                <span class="label">Remove bg</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <a href="/user/profile" class="nds-avatar nds-lg nds-icon">
+                                <i class="hgi hgi-stroke hgi-user"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="nds-tabs nds-code withDivider">
+                        <div class="nds-tab-list-container">
+                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-link-1" id="tab-link-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                            </nav>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-link-1"
+                                aria-labelledby="tab-link-1">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <code class="lang-html code">
+                                    <a href="/user/profile" class="nds-avatar nds-lg nds-icon">
+                                        <i class="hgi hgi-stroke hgi-user"></i>
+                                    </a>
+                                </code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Avatar as Button</div>
+                        <div class="demo-action">
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-square", ".nds-avatar", "avatarShape"]'>
+                                <span class="label">Square</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                                <span class="label">Remove bg</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <button type="button" class="nds-avatar nds-lg nds-icon" aria-label="Open user menu">
+                                <i class="hgi hgi-stroke hgi-user"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="nds-tabs nds-code withDivider">
+                        <div class="nds-tab-list-container">
+                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-button-1" id="tab-button-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                            </nav>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-button-1"
+                                aria-labelledby="tab-button-1">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <code class="lang-html code"><button type="button" class="nds-avatar nds-lg nds-icon" aria-label="Open user menu">
+  <i class="hgi hgi-stroke hgi-user"></i>
+</button></code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Avatar Group -->
 <section id="avatarGroup" class="nds-content-section">
     <div class="nds-section-content-container">

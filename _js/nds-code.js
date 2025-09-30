@@ -185,22 +185,11 @@
                 
                 // List of tags that should never be self-closing in HTML
                 const neverSelfClosing = ['i', 'span', 'div','p', 'button', 'a', 'script', 'style'];
-                // List of tags that should stay inline (single line)
-                // Remove 'span' from inline elements to prevent nested span issues
-                const inlineElements = ['i', 'a', 'strong', 'em', 'code'];
                 const tagName = node.tagName.toLowerCase();
-                
+
                 if (node.children.length === 0 && !node.textContent.trim() && !neverSelfClosing.includes(tagName)) {
                     // Self-closing tag (only for appropriate elements like img, br, hr, etc.)
                     tag += ' /&gt;';
-                    result += indent + tag + '\n';
-                } else if (inlineElements.includes(tagName)) {
-                    // Inline element - keep everything on one line
-                    tag += '&gt;';
-                    if (node.textContent.trim()) {
-                        tag += encodeHtmlEntities(node.textContent.trim());
-                    }
-                    tag += '&lt;/' + tagName + '&gt;';
                     result += indent + tag + '\n';
                 } else {
                     // Check if this is an element with simple text content or empty

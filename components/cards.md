@@ -87,10 +87,10 @@ direction: ltr
 
                                 </div>
                                 <div class="nds-card-actions">
-                                    <button class="nds-btn nds-secondary-outline nds-lg nds-trail-icon">
+                                    <a href="#" class="nds-btn nds-secondary-outline nds-lg nds-trail-icon">
                                         <i class="hgi hgi-stroke hgi-link-square-02 icon"></i>
                                         <span class="label">Learn More</span>
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -148,10 +148,10 @@ direction: ltr
             
                                             </div>
                                             <div class="nds-card-actions">
-                                                <button class="nds-btn nds-secondary-outline nds-lg nds-trail-icon">
+                                                <a href="#" class="nds-btn nds-secondary-outline nds-lg nds-trail-icon">
                                                     <i class="hgi hgi-stroke hgi-link-square-02 icon"></i>
                                                     <span class="label">Learn More</span>
-                                                </button>
+                                                </a>
                                             </div>
                                         </div>
                                     </code>
