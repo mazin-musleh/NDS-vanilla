@@ -129,119 +129,6 @@ direction: ltr
             <p class="nds-section-description">Different breadcrumb levels and states</p>
         </div>
         <div class="nds-section-content">
-            <div class="nds-demo-card">
-                <div class="demo-header">
-                    <div class="demo-label">Four Level Breadcrumb</div>
-                    <div class="demo-action">
-                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                            <span class="label">Remove bg</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="demo-container">
-                    <div class="state-demo">
-                        <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
-                            <ol class="nds-breadcrumb">
-                                <li><a href="/">Home</a></li>
-                                <li><a href="#">Components</a></li>
-                                <li><a href="#">Navigation</a></li>
-                                <li aria-current="page">Breadcrumb</li>
-                            </ol>
-                        </nav>
-                    </div>
-                </div>
-                <div class="nds-tabs nds-code withDivider">
-                    <div class="nds-tab-list-container">
-                        <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                                aria-controls="panel-four-level-1" id="tab-four-level-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                        </nav>
-                    </div>
-                    <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-four-level-1"
-                            aria-labelledby="tab-four-level-1">
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                </button>
-                            </div>
-                            <code class="lang-html code">
-                                <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
-                                  <ol class="nds-breadcrumb">
-                                    <li><a href="/">Home</a></li>
-                                    <li><a href="#">Components</a></li>
-                                    <li><a href="#">Navigation</a></li>
-                                    <li aria-current="page">Breadcrumb</li>
-                                  </ol>
-                                </nav>
-                            </code>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="nds-demo-card">
-                <div class="demo-header">
-                    <div class="demo-label">Seven Level Breadcrumb</div>
-                    <div class="demo-action">
-                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                            <span class="label">Remove bg</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="demo-container">
-                    <div class="state-demo">
-                        <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
-                            <ol class="nds-breadcrumb">
-                                <li><a href="/">Home</a></li>
-                                <li><a href="#">Services</a></li>
-                                <li><a href="#">Digital Government</a></li>
-                                <li><a href="#">Components</a></li>
-                                <li><a href="#">Navigation</a></li>
-                                <li><a href="#">Breadcrumb</a></li>
-                                <li aria-current="page">Documentation</li>
-                            </ol>
-                        </nav>
-                    </div>
-                </div>
-                <div class="nds-tabs nds-code withDivider">
-                    <div class="nds-tab-list-container">
-                        <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                                aria-controls="panel-seven-level-1" id="tab-seven-level-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                        </nav>
-                    </div>
-                    <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-seven-level-1"
-                            aria-labelledby="tab-seven-level-1">
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                </button>
-                            </div>
-                            <code class="lang-html code">
-                                <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
-                                  <ol class="nds-breadcrumb">
-                                    <li><a href="/">Home</a></li>
-                                    <li><a href="#">Services</a></li>
-                                    <li><a href="#">Digital Government</a></li>
-                                    <li><a href="#">Components</a></li>
-                                    <li><a href="#">Navigation</a></li>
-                                    <li><a href="#">Breadcrumb</a></li>
-                                    <li aria-current="page">Documentation</li>
-                                  </ol>
-                                </nav>
-                            </code>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <div class="nds-demo-card">
                 <div class="demo-header">
@@ -370,7 +257,7 @@ direction: ltr
                             </code>
                         </div>
                         <div class="nds-tab-panel code-example" role="tabpanel" id="panel-collapsed-2"
-                            aria-labelledby="tab-collapsed-2" hidden>
+                            aria-labelledby="tab-collapsed-2">
                             <code class="lang-text code">
 Automatic Collapsing Behavior:
 
@@ -396,63 +283,6 @@ Dropdown contains:
                 </div>
             </div>
 
-            <div class="nds-demo-card">
-                <div class="demo-header">
-                    <div class="demo-label">Six Level Breadcrumb (Also Collapses)</div>
-                    <div class="demo-action">
-                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                            <span class="label">Remove bg</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="demo-container">
-                    <div class="state-demo">
-                        <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
-                            <ol class="nds-breadcrumb">
-                                <li><a href="/">Home</a></li>
-                                <li><a href="#">Services</a></li>
-                                <li><a href="#">Digital Government</a></li>
-                                <li><a href="#">Components</a></li>
-                                <li><a href="#">Navigation</a></li>
-                                <li aria-current="page">Breadcrumb</li>
-                            </ol>
-                        </nav>
-                    </div>
-                </div>
-                <div class="nds-tabs nds-code withDivider">
-                    <div class="nds-tab-list-container">
-                        <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                                aria-controls="panel-six-level-1" id="tab-six-level-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                        </nav>
-                    </div>
-                    <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-six-level-1"
-                            aria-labelledby="tab-six-level-1">
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                </button>
-                            </div>
-                            <code class="lang-html code">
-                                <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
-                                  <ol class="nds-breadcrumb">
-                                    <li><a href="/">Home</a></li>
-                                    <li><a href="#">Services</a></li>
-                                    <li><a href="#">Digital Government</a></li>
-                                    <li><a href="#">Components</a></li>
-                                    <li><a href="#">Navigation</a></li>
-                                    <li aria-current="page">Breadcrumb</li>
-                                  </ol>
-                                </nav>
-                            </code>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </section>

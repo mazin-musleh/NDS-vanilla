@@ -20,12 +20,19 @@
                 return;
             }
 
+            // Check if already initialized to prevent duplicate listeners
+            if (this.dropmenu.hasAttribute('data-nds-dropmenu-initialized')) {
+                return;
+            }
+
             this.init();
         }
 
         init() {
             this.setupAria();
             this.setupEventListeners();
+            // Mark as initialized to prevent duplicate initialization
+            this.dropmenu.setAttribute('data-nds-dropmenu-initialized', 'true');
         }
 
         setupAria() {
@@ -59,16 +66,26 @@
                 this.toggle();
             });
 
-            // Close on outside click
-            document.addEventListener('click', (e) => {
+            // Close on outside click - scoped to document but checked per instance
+            this.handleOutsideClick = (e) => {
                 if (this.isOpen && !this.dropmenu.contains(e.target)) {
                     this.close();
                 }
-            });
+            };
+            document.addEventListener('click', this.handleOutsideClick);
 
-            // Keyboard navigation
+            // Keyboard navigation - scoped to dropmenu element
             this.trigger.addEventListener('keydown', (e) => this.handleTriggerKeydown(e));
             this.menu.addEventListener('keydown', (e) => this.handleMenuKeydown(e));
+
+            // Close on Escape key - scoped to dropmenu element only
+            this.dropmenu.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && this.isOpen) {
+                    e.stopPropagation(); // Prevent other dropmenus from also closing
+                    this.close();
+                    this.trigger.focus();
+                }
+            });
 
             // Close on item click
             this.items.forEach(item => {
@@ -83,14 +100,6 @@
                     // Close menu after a short delay to allow handlers to execute
                     setTimeout(() => this.close(), 100);
                 });
-            });
-
-            // Close on Escape key
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && this.isOpen) {
-                    this.close();
-                    this.trigger.focus();
-                }
             });
         }
 
@@ -183,36 +192,37 @@
 
             // Get menu and viewport dimensions
             const menuRect = this.menu.getBoundingClientRect();
+            const triggerRect = this.trigger.getBoundingClientRect();
             const viewportWidth = window.innerWidth;
             const viewportHeight = window.innerHeight;
+            const edgePadding = 16;
 
-            // Check horizontal overflow
-            const isRTL = document.dir === 'rtl' || document.documentElement.getAttribute('dir') === 'rtl';
+            // ==============================================
+            // HORIZONTAL POSITIONING
+            // ==============================================
+            // Check if menu is too close to edges (with padding threshold)
+            // Use 2x padding on right to account for menu extending beyond trigger
+            const tooCloseLeft = menuRect.left < edgePadding;
+            const tooCloseRight = menuRect.right > (viewportWidth - edgePadding * 2);
 
-            if (isRTL) {
-                // RTL: Default is right-aligned, check if it overflows left
-                if (menuRect.left < 0) {
-                    // Overflow on left, switch to left-align (which aligns to right edge in RTL)
-                    this.dropmenu.classList.add('align-left');
-                }
-            } else {
-                // LTR: Default is left-aligned, check if it overflows right
-                if (menuRect.right > viewportWidth) {
-                    // Overflow on right, switch to right-align
-                    this.dropmenu.classList.add('align-right');
-                }
+            if (tooCloseLeft && tooCloseRight) {
+                // Menu wider than viewport - align to side with more space
+                const spaceLeft = menuRect.left;
+                const spaceRight = viewportWidth - menuRect.right;
+                this.dropmenu.classList.add(spaceRight > spaceLeft ? 'align-right' : 'align-left');
+            } else if (tooCloseLeft) {
+                this.dropmenu.classList.add('align-left');
+            } else if (tooCloseRight) {
+                this.dropmenu.classList.add('align-right');
             }
 
-            // Check vertical overflow
+            // ==============================================
+            // VERTICAL POSITIONING
+            // ==============================================
             const spaceBelow = viewportHeight - menuRect.bottom;
-
             if (spaceBelow < 0) {
-                // Not enough space below, check space above
-                const triggerRect = this.trigger.getBoundingClientRect();
                 const spaceAbove = triggerRect.top;
-
                 if (spaceAbove > Math.abs(spaceBelow)) {
-                    // More space above, open upward
                     this.dropmenu.classList.add('top');
                 }
             }
@@ -243,11 +253,14 @@
 
         // Public API
         destroy() {
+            // Remove document-level event listeners
+            if (this.handleOutsideClick) {
+                document.removeEventListener('click', this.handleOutsideClick);
+            }
+
             // Remove event listeners by cloning elements
-            this.trigger.replaceWith(this.trigger.cloneNode(true));
-            this.items.forEach(item => {
-                item.replaceWith(item.cloneNode(true));
-            });
+            const newDropmenu = this.dropmenu.cloneNode(true);
+            this.dropmenu.replaceWith(newDropmenu);
         }
     }
 
@@ -264,7 +277,7 @@
             if (!dropmenu.hasAttribute('data-nds-dropmenu-initialized')) {
                 const dropmenuInstance = new NDSDropmenu(dropmenu);
                 dropmenu.ndsDropmenuInstance = dropmenuInstance;
-                dropmenu.setAttribute('data-nds-dropmenu-initialized', 'true');
+                // Attribute set by constructor's init() method
             }
         });
     }
