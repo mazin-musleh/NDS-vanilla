@@ -201,7 +201,7 @@ button,
 
 .nds-truncate{
     overflow: hidden;
-    display: -webkit-box;
+    display: -webkit-box!important;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: var(--truncate-line, 1);
     line-clamp: var(--truncate-line, 1);

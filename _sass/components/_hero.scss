@@ -103,15 +103,11 @@
 // ==============================================
 // SHARE PAGE COMPONENT
 // ==============================================
+// Uses unified nds-dropmenu component
+// Share-specific adjustments only
 
 #nds-sharePage {
-  position: relative;
-  color: var(--text-default, #161616);
-
-  // ==============================================
-  // SHARE PAGE BUTTON
-  // ==============================================
-
+  // Share button styling
   &Btn {
     background-color: var(--background-white, #fff);
     border: 1px solid var(--colors-neutral-300, #d2d6db);
@@ -119,64 +115,19 @@
     box-shadow: var(--shadow-md);
   }
 
-  // ==============================================
-  // SHARE DROPDOWN
-  // ==============================================
+  // Copied state for copy link button
+  .nds-dropmenu-menu .copied {
+    background-color: var(--background-success-light);
+    color: var(--text-success);
 
-  &-dropdown {
-    display: none;
-    position: absolute;
-    z-index: 999;
-    left: 0;
-    width: 150px;
-    margin: 0;
-    padding: var(--spacing-md);
-    list-style: none;
-    font-size: var(--nds-text-md-FS, 16px);
-    color: var(--text-default);
-    background-color: var(--background-white, #fff);
-    border: 1px solid var(--colors-neutral-300);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-md);
-    flex-direction: column;
-    gap: var(--spacing-lg);
-
-    @include ltr {
-      left: unset;
-      right: 0;
-    }
-  }
-
-  // ==============================================
-  // OPEN STATE
-  // ==============================================
-
-  &.open {
-    #nds-sharePage-dropdown {
-      display: flex;
-
-      &>* {
-        width: 100%;
-        justify-content: flex-start;
-      }
-
-      .copied {
-        background-color: var(--background-success-light);
-        color: var(--text-success);
-
-        .label {
-          white-space: nowrap;
-        }
-      }
+    .label {
+      white-space: nowrap;
     }
   }
 }
 
-// ==============================================
-// ICON STATES
-// ==============================================
-
-.hgi-loaded #nds-sharePage.open #nds-sharePage-dropdown .copied i::before {
+// Icon change for copied state
+.hgi-loaded #nds-sharePage .nds-dropmenu-menu .copied i::before {
   content: "䂇";
 }
 
