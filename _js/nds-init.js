@@ -125,6 +125,18 @@
             selector: '.nds-expandable',
             init: () => window.NDSExpandable?.init?.(),
         },
+        {
+            name: 'breadcrumb',
+            priority: 20,
+            selector: '.nds-breadcrumb-nav',
+            init: () => window.NDSBreadcrumb?.init?.(),
+        },
+        {
+            name: 'dropmenu',
+            priority: 21,
+            selector: '.nds-dropmenu',
+            init: () => window.NDSDropmenu?.init?.(),
+        },
     ];
 
     function initializeNDS() {

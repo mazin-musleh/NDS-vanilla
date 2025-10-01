@@ -22,29 +22,26 @@
         <div class="nds-shareablePage">
             <h1 class="nds-heroTitle">{{ page.hero_title | default: site.title }}</h1>
             <p class="nds-heroDesc">{{ page.hero_description | default: site.description }}</p>
-            <div id="nds-sharePage">
-                <button id="nds-sharePageBtn" class="nds-btn nds-subtle nds-menu-btn nds-md" aria-expanded="false">
+            <div id="nds-sharePage" class="nds-dropmenu">
+                <button id="nds-sharePageBtn" class="nds-btn nds-subtle nds-dropmenu-trigger nds-md">
                     <i class="hgi hgi-stroke hgi-share-01 icon"></i>
                     <span class="label">Share Page</span>
                 </button>
-                <div id="nds-sharePage-dropdown" class="nds-sharePage-dropdown" role="menu"
-                    aria-labelledby="nds-sharePageBtn">
-                    <button class="nds-btn nds-subtle share-x" type="button" role="menuitem" aria-label="Share on X">
+                <div id="nds-sharePage-dropdown" class="nds-dropmenu-menu">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item share-x" type="button" aria-label="Share on X">
                         <i class="hgi hgi-stroke hgi-new-twitter icon"></i>
                         <span class="label">X</span>
                     </button>
-                    <button class="nds-btn nds-subtle share-linkedin" type="button" role="menuitem"
-                        aria-label="Share on LinkedIn">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item share-linkedin" type="button" aria-label="Share on LinkedIn">
                         <i class="hgi hgi-stroke hgi-linkedin-02 icon"></i>
                         <span class="label">LinkedIn</span>
                     </button>
-                    <button class="nds-btn nds-subtle share-whatsapp" type="button" role="menuitem"
-                        aria-label="Share on WhatsApp">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item share-whatsapp" type="button" aria-label="Share on WhatsApp">
                         <i class="hgi hgi-stroke hgi-whatsapp icon"></i>
                         <span class="label">WhatsApp</span>
                     </button>
-                    <button class="nds-btn nds-subtle share-copy" type="button" role="menuitem" aria-label="Copy Link"
-                        data-copied-text="Link Copied!">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item share-copy" type="button" aria-label="Copy Link"
+                        data-copied-text="Link Copied!" data-no-auto-close>
                         <i class="hgi hgi-stroke hgi-link-04 icon"></i>
                         <span class="label">Copy Link</span>
                     </button>

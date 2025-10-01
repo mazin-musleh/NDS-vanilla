@@ -1,85 +1,52 @@
-// Share Page Dropdown
+// Share Page Functionality
+// Uses nds-dropmenu for dropdown behavior
 (() => {
     'use strict';
 
     class SharePageDropdown {
         constructor() {
             this.container = document.getElementById('nds-sharePage');
-            this.button = document.getElementById('nds-sharePageBtn');
             this.dropdown = document.getElementById('nds-sharePage-dropdown');
-            this.isOpen = false;
+
+            if (!this.container || !this.dropdown) {
+                console.warn('NDS Share: Required elements not found');
+                return;
+            }
 
             this.init();
         }
 
         init() {
-            // Add ARIA attributes
-            this.button.setAttribute('aria-expanded', 'false');
-            this.button.setAttribute('aria-haspopup', 'true');
-            this.button.setAttribute('aria-controls', 'nds-sharePage-dropdown');
+            // Initialize nds-dropmenu component
+            if (window.NDSDropmenu && this.container.classList.contains('nds-dropmenu')) {
+                window.NDSDropmenu.create(this.container);
+            }
 
-            // Button click event
-            this.button.addEventListener('click', (e) => {
-                e.preventDefault();
-                this.toggle();
-            });
-
-            // Menu item click events
-            const menuItems = this.dropdown.querySelectorAll('button[role="menuitem"]');
+            // Menu item click events for share functionality
+            const menuItems = this.dropdown.querySelectorAll('.nds-dropmenu-item');
             menuItems.forEach((item) => {
                 item.addEventListener('click', (e) => {
                     e.preventDefault();
                     this.handleShare(item);
                 });
             });
-
-            // Close on outside click
-            document.addEventListener('click', (e) => {
-                if (!e.target.closest('#nds-sharePage')) {
-                    this.close();
-                }
-            });
-        }
-
-        toggle() {
-            if (this.isOpen) {
-                this.close();
-            } else {
-                this.open();
-            }
-        }
-
-        open() {
-            this.isOpen = true;
-            this.container.classList.add('open');
-            this.button.setAttribute('aria-expanded', 'true');
-        }
-
-        close() {
-            this.isOpen = false;
-            this.container.classList.remove('open');
-            this.button.setAttribute('aria-expanded', 'false');
         }
 
         handleShare(clickedItem) {
             if (!clickedItem) return;
-            
+
             const url = window.location.href;
             const title = document.title;
 
             // Determine share type by class
             if (clickedItem.classList.contains('share-x')) {
                 this.shareOnX(url, title);
-                this.close();
             } else if (clickedItem.classList.contains('share-linkedin')) {
                 this.shareOnLinkedIn(url);
-                this.close();
             } else if (clickedItem.classList.contains('share-whatsapp')) {
                 this.shareOnWhatsApp(url, title);
-                this.close();
             } else if (clickedItem.classList.contains('share-copy')) {
                 this.copyToClipboard(url);
-                // Close dropdown after copied text is restored
             }
         }
 
@@ -108,31 +75,41 @@
 
             try {
                 await navigator.clipboard.writeText(text);
-                this.showCopiedState(copyLinkItem, labelElement, copiedText, originalText, 1500);
+                this.showCopiedState(copyLinkItem, labelElement, copiedText, originalText);
             } catch (err) {
-                this.showCopiedState(copyLinkItem, labelElement, copiedText, originalText, 2000, true);
+                this.showCopiedState(copyLinkItem, labelElement, copiedText, originalText);
             }
         }
 
-        showCopiedState(item, label, copiedText, originalText, duration, shouldClose = false) {
+        showCopiedState(item, label, copiedText, originalText) {
             item.classList.add('copied');
             label.textContent = copiedText;
 
+            // Restore original state and close dropdown after 2000ms
             setTimeout(() => {
                 item.classList.remove('copied');
                 label.textContent = originalText;
-                if (shouldClose) this.close();
-            }, duration);
+
+                // Close the dropdown using nds-dropmenu API
+                this.closeDropdown();
+            }, 2000);
+        }
+
+        closeDropdown() {
+            // Access the nds-dropmenu instance and close it
+            if (this.container && this.container.ndsDropmenuInstance) {
+                this.container.ndsDropmenuInstance.close();
+            }
         }
 
     }
 
     function initializeShareDropdown() {
         // Check if required elements exist before initializing
-        const shareButton = document.getElementById('nds-sharePageBtn');
+        const shareContainer = document.getElementById('nds-sharePage');
         const shareDropdown = document.getElementById('nds-sharePage-dropdown');
 
-        if (shareButton && shareDropdown) {
+        if (shareContainer && shareDropdown) {
             new SharePageDropdown();
         }
     }

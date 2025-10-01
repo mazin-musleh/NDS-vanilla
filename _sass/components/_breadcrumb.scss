@@ -23,7 +23,7 @@
     flex-wrap: wrap;
 }
 
-.nds-breadcrumb li {
+.nds-breadcrumb>li {
     display: flex;
     align-items: center;
     color: var(--colors-neutral-400, #9DA4AE);
@@ -54,7 +54,7 @@ body.hgi-loaded .nds-breadcrumb li:not(:last-child)::after {
 }
 
 /* LTR Support - flip arrow direction */
-.nds-breadcrumb li:not(:last-child)::after {
+.nds-breadcrumb>li:not(:last-child)::after {
     @include ltr {
         transform: scaleX(-1);
     }
@@ -64,20 +64,17 @@ body.hgi-loaded .nds-breadcrumb li:not(:last-child)::after {
    BREADCRUMB LINK STYLES
    ======================================== */
 
-.breadcrumb li[aria-current="page"] {
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
-    line-clamp: 1;
-    text-overflow: ellipsis;
-    display: -webkit-inline-box;
-    overflow: hidden;
-}
-
-.nds-breadcrumb a {
+.nds-breadcrumb>li > a {
     text-decoration: none;
     color: var(--text-default);
 }
 
-.nds-breadcrumb a:hover {
+.nds-breadcrumb>li > a:hover {
     color: var(--colors-neutral-400, #9DA4AE);
 }
+
+/* ========================================
+   BREADCRUMB DROPDOWN (FOR COLLAPSED BREADCRUMBS)
+   ======================================== */
+/* Uses unified nds-dropmenu component */
+/* Breadcrumb-specific adjustments only */

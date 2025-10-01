@@ -1,0 +1,196 @@
+/**
+ * NDS Dropmenu Component - SCSS Version
+ * Unified dropdown menu component for consistent dropdown patterns
+ * Based on share page dropdown pattern with subtle button style
+ */
+
+@use '../mixins' as *;
+
+// ==============================================
+// BASE DROPMENU COMPONENT
+// ==============================================
+
+.nds-dropmenu {
+  position: relative;
+  display: inline-block;
+
+  // ==============================================
+  // DROPMENU TRIGGER BUTTON
+  // ==============================================
+
+  &-trigger {
+    // Uses nds-btn nds-subtle classes from _buttons.scss
+    // Additional dropdown-specific styles
+    &[aria-expanded="true"] {
+      background-color: var(--button-background-subtle-pressed, #F2F4F7);
+    }
+  }
+
+  // ==============================================
+  // DROPDOWN MENU CONTAINER
+  // ==============================================
+
+  &-menu {
+    display: none;
+    position: absolute;
+    z-index: 1000;
+    right: 0;
+    min-width: 150px;
+    margin-top: 4px;
+    padding: var(--spacing-sm, 8px);
+    list-style: none;
+    background-color: var(--colors-neutral-white, #FFFFFF);
+    border: 1px solid var(--colors-neutral-200, #EAECF0);
+    border-radius: var(--radius-md, 8px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+    // RTL/LTR positioning
+    @include ltr {
+      left: 0;
+      right: unset;
+    }
+
+    // Open state
+    &[aria-hidden="false"] {
+      display: block;
+    }
+  }
+
+  // ==============================================
+  // DROPDOWN MENU ITEMS
+  // ==============================================
+  // Items inherit from .nds-btn.nds-subtle styling
+  // -item class used for JavaScript targeting
+
+  &-item {
+    // Ensures items use full width and left-align content
+    width: 100%;
+    justify-content: flex-start;
+    text-decoration: none;
+
+    // When used as link (anchor tag)
+    &:link,
+    &:visited {
+      text-decoration: none;
+    }
+  }
+
+
+  // ==============================================
+  // DIVIDER
+  // ==============================================
+
+  &-divider {
+    height: 1px;
+    margin: var(--spacing-sm, 8px) 0;
+    background-color: var(--colors-neutral-200, #EAECF0);
+    border: none;
+  }
+
+  // ==============================================
+  // OPEN STATE
+  // ==============================================
+
+  &.open {
+    .nds-dropmenu-menu {
+      display: block;
+    }
+
+    .nds-dropmenu-trigger[aria-expanded="true"] {
+      background-color: var(--button-background-subtle-pressed, #F2F4F7);
+    }
+  }
+
+  // ==============================================
+  // POSITION VARIANTS
+  // ==============================================
+
+  // Top positioning (dropdown opens upward)
+  &.top {
+    .nds-dropmenu-menu {
+      bottom: 100%;
+      top: auto;
+      margin-top: 0;
+      margin-bottom: 4px;
+    }
+  }
+
+  // Left alignment
+  &.align-left {
+    .nds-dropmenu-menu {
+      left: 0;
+      right: auto;
+    }
+  }
+
+  // Right alignment
+  &.align-right {
+    .nds-dropmenu-menu {
+      left: auto;
+      right: 0;
+    }
+  }
+
+  // Center alignment
+  &.align-center {
+    .nds-dropmenu-menu {
+      left: 50%;
+      right: auto;
+      transform: translateX(-50%);
+    }
+  }
+
+  // ==============================================
+  // SIZE VARIANTS
+  // ==============================================
+
+  &.wide {
+    .nds-dropmenu-menu {
+      min-width: 200px;
+    }
+  }
+
+  &.narrow {
+    .nds-dropmenu-menu {
+      min-width: 120px;
+    }
+  }
+
+  // ==============================================
+  // RESPONSIVE BEHAVIOR
+  // ==============================================
+
+  @include mobile {
+    &-menu {
+      min-width: 140px;
+      max-width: calc(100vw - 32px);
+    }
+  }
+}
+
+// ==============================================
+// ACCESSIBILITY & ANIMATION
+// ==============================================
+
+// Fade in animation
+@keyframes nds-dropmenu-fadein {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.nds-dropmenu-menu[aria-hidden="false"] {
+  animation: nds-dropmenu-fadein 0.15s ease-out;
+}
+
+// Respect reduced motion preference
+@media (prefers-reduced-motion: reduce) {
+  .nds-dropmenu-menu[aria-hidden="false"] {
+    animation: none;
+  }
+}
