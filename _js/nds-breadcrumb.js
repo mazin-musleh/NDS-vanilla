@@ -13,7 +13,7 @@
             this.breadcrumbNav = breadcrumbNav;
             this.breadcrumb = breadcrumbNav.querySelector('.nds-breadcrumb');
             this.items = Array.from(this.breadcrumb.querySelectorAll('li'));
-            this.threshold = 5; // Collapse if more than 4 items
+            this.threshold = 5; // Collapse if more than 5 items
 
             if (this.items.length === 0) {
                 console.warn('NDS Breadcrumb: No breadcrumb items found');
@@ -52,12 +52,11 @@
                 this.breadcrumb.appendChild(item);
             });
 
-            // Initialize nds-dropmenu component
-            if (window.NDSDropmenu) {
-                const dropmenuElement = dropdownContainer.querySelector('.nds-dropmenu');
-                if (dropmenuElement) {
-                    window.NDSDropmenu.create(dropmenuElement);
-                }
+            // Initialize only the newly created dropdown menu
+            const dropmenuElement = dropdownContainer.querySelector('.nds-dropmenu');
+            if (dropmenuElement && window.NDSDropmenu) {
+                // Use create() to initialize just this dropdown
+                window.NDSDropmenu.create(dropmenuElement);
             }
         }
 

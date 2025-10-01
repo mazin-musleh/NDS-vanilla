@@ -72,7 +72,12 @@
         display: block;
         position: absolute;
         top: 0;
-        right: 0;
+        left: 0;
+
+        @include ltr {
+          right: 0;
+          left: unset;
+        }
       }
     }
   }

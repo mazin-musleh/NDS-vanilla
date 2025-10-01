@@ -17,10 +17,8 @@
         }
 
         init() {
-            // Initialize nds-dropmenu component
-            if (window.NDSDropmenu && this.container.classList.contains('nds-dropmenu')) {
-                window.NDSDropmenu.create(this.container);
-            }
+            // nds-dropmenu auto-initializes via its own init system
+            // No manual initialization needed here
 
             // Menu item click events for share functionality
             const menuItems = this.dropdown.querySelectorAll('.nds-dropmenu-item');

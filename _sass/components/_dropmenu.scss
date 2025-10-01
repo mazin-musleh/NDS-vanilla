@@ -33,7 +33,7 @@
   &-menu {
     display: none;
     position: absolute;
-    z-index: 1000;
+    z-index: 900;
     right: 0;
     min-width: 150px;
     margin-top: 4px;
@@ -115,19 +115,19 @@
     }
   }
 
-  // Left alignment
+  // Left alignment - forces left:0 (overrides any default)
   &.align-left {
     .nds-dropmenu-menu {
-      left: 0;
-      right: auto;
+      left: 0 !important;
+      right: auto !important;
     }
   }
 
-  // Right alignment
+  // Right alignment - forces right:0 (overrides any default)
   &.align-right {
     .nds-dropmenu-menu {
-      left: auto;
-      right: 0;
+      left: auto !important;
+      right: 0 !important;
     }
   }
 
