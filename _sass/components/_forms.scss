@@ -24,27 +24,28 @@
             font-weight: 500;
             cursor: pointer;
         }
+    }
 
-        .info {
-            color: var(--text-primary-paragraph);
-            font-size: var(--nds-text-sm-FS);
-            line-height: var(--nds-text-sm-LH);
-            min-width: 200px;
-        }
-
-        .error {
-            display: flex;
-            align-items: center;
-            font-size: var(--nds-text-sm-FS);
-            line-height: var(--nds-text-sm-LH);
-            font-weight: 500;
-            gap: var(--spacing-sm);
-            color: var(--controls-control-text-error);
-
+    // Required field indicator
+    &.nds-required {
+        .nds-form-header .label::after {
+            content: " *";
+            color: var(--controls-control-text-error, #dc2626);
         }
     }
 
+    .info {
+        color: var(--text-primary-paragraph);
+        font-size: var(--nds-text-sm-FS);
+        line-height: var(--nds-text-sm-LH);
+        min-width: 200px;
+    }
 
+    .nds-form-footer {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-xs);
+    }
 
 }
 
@@ -136,7 +137,14 @@ fieldset {
         }
     }
 
+    &.error {
 
+        &::before {
+            background-color: var(--form-field-border-error);
+        }
+
+        border-color: var(--form-field-border-error);
+    }
 
     &.disabled {
         background-color: var(--background-disabled) !important;
@@ -398,5 +406,3 @@ fieldset {
         font-weight: 500;
     }
 }
-
-
