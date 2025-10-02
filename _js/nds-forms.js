@@ -145,7 +145,7 @@
     // Utility functions
     function updateFormState(input, formControl) {
         var hasValue;
-        
+
         if (input.type === 'checkbox' || input.type === 'radio') {
             hasValue = input.checked;
         } else {
@@ -155,11 +155,135 @@
         formControl.classList.toggle('filled', hasValue);
         formControl.classList.toggle('disabled', input.disabled);
 
+        // Add error state based on HTML5 validation
+        var isInvalid = false;
+        if (input.validity) {
+            isInvalid = !input.validity.valid;
+        }
+
+        // Also check for custom error state (aria-invalid attribute)
+        if (input.hasAttribute('aria-invalid')) {
+            isInvalid = input.getAttribute('aria-invalid') === 'true';
+        }
+
+        formControl.classList.toggle('error', isInvalid);
+
+        // Update error message in form footer
+        updateErrorMessage(input, formControl, isInvalid);
+
         // Show/hide clear button for text-based inputs only
         var clearButton = formControl.querySelector('.clear');
         if (clearButton && input.type !== 'radio' && input.type !== 'checkbox') {
             clearButton.classList.toggle('hidden', !hasValue);
         }
+    }
+
+    // Update error message in feedback placeholder
+    function updateErrorMessage(input, formControl, isInvalid) {
+        var formContainer = formControl.closest('.nds-form-container');
+        if (!formContainer) return;
+
+        // Find the feedback placeholder (can be anywhere in form container)
+        var feedbackPlaceholder = formContainer.querySelector('.nds-feedback');
+        if (!feedbackPlaceholder) return;
+
+        if (isInvalid) {
+            var errorMessage = getValidationMessage(input);
+
+            // Add error class
+            feedbackPlaceholder.classList.add('error');
+
+            // Add nds-error class to icon if not present
+            var iconElement = feedbackPlaceholder.querySelector('.nds-feedback-icon');
+            if (iconElement && !iconElement.classList.contains('nds-error')) {
+                iconElement.classList.add('nds-error');
+            }
+
+            // Update message text
+            var msgElement = feedbackPlaceholder.querySelector('.msg');
+            if (msgElement) {
+                msgElement.textContent = errorMessage;
+            }
+
+            // Set aria-describedby for accessibility
+            if (!feedbackPlaceholder.id) {
+                feedbackPlaceholder.id = 'error-' + (input.id || 'input-' + Date.now());
+            }
+            input.setAttribute('aria-describedby', feedbackPlaceholder.id);
+            input.setAttribute('aria-invalid', 'true');
+        } else {
+            // Remove error class
+            feedbackPlaceholder.classList.remove('error');
+
+            // Remove nds-error class from icon
+            var iconElement = feedbackPlaceholder.querySelector('.nds-feedback-icon');
+            if (iconElement) {
+                iconElement.classList.remove('nds-error');
+            }
+
+            // Clear message text
+            var msgElement = feedbackPlaceholder.querySelector('.msg');
+            if (msgElement) {
+                msgElement.textContent = '';
+            }
+
+            input.removeAttribute('aria-describedby');
+            input.removeAttribute('aria-invalid');
+        }
+    }
+
+    // Get current language helper
+    function getCurrentLanguage() {
+        var htmlLang = document.documentElement.lang || 'en';
+        return htmlLang.split('-')[0].toLowerCase();
+    }
+
+    // Get validation error message
+    function getValidationMessage(input) {
+        var validity = input.validity;
+
+        // Check for custom validation message first
+        if (input.hasAttribute('data-error-message')) {
+            return input.getAttribute('data-error-message');
+        }
+
+        // Detect language at the time of error (delayed check)
+        var isArabic = getCurrentLanguage() === 'ar';
+
+        // Fallback to default messages based on validity state and language
+        var errorMessage = '';
+
+        if (validity.valueMissing) {
+            errorMessage = isArabic ? 'هذا الحقل مطلوب' : 'This field is required';
+        } else if (validity.typeMismatch) {
+            if (input.type === 'email') {
+                errorMessage = isArabic ? 'يرجى إدخال عنوان بريد إلكتروني صحيح' : 'Please enter a valid email address';
+            } else if (input.type === 'url') {
+                errorMessage = isArabic ? 'يرجى إدخال رابط صحيح' : 'Please enter a valid URL';
+            }
+        } else if (validity.tooShort) {
+            errorMessage = isArabic
+                ? 'المدخل قصير جداً (الحد الأدنى ' + input.minLength + ' حرف)'
+                : 'Input is too short (minimum ' + input.minLength + ' characters)';
+        } else if (validity.tooLong) {
+            errorMessage = isArabic
+                ? 'المدخل طويل جداً (الحد الأقصى ' + input.maxLength + ' حرف)'
+                : 'Input is too long (maximum ' + input.maxLength + ' characters)';
+        } else if (validity.rangeUnderflow) {
+            errorMessage = isArabic
+                ? 'القيمة يجب أن تكون على الأقل ' + input.min
+                : 'Value must be at least ' + input.min;
+        } else if (validity.rangeOverflow) {
+            errorMessage = isArabic
+                ? 'القيمة يجب ألا تزيد عن ' + input.max
+                : 'Value must be no more than ' + input.max;
+        } else if (validity.patternMismatch) {
+            errorMessage = isArabic ? 'يرجى مطابقة التنسيق المطلوب' : 'Please match the requested format';
+        } else {
+            errorMessage = isArabic ? 'مدخل غير صحيح' : 'Invalid input';
+        }
+
+        return errorMessage;
     }
     
     function updateRadioGroup(changedRadio, formControl) {
@@ -727,6 +851,41 @@
         });
     }
 
+    // Manual validation trigger
+    function validateInput(input) {
+        var formControl = input.closest('.nds-form-control');
+        if (!formControl) return false;
+
+        // Trigger HTML5 validation
+        var isValid = input.checkValidity();
+
+        // Update form state which will handle error display
+        updateFormState(input, formControl);
+
+        return isValid;
+    }
+
+    // Set custom error message
+    function setCustomError(input, message) {
+        var formControl = input.closest('.nds-form-control');
+        if (!formControl) return;
+
+        if (message) {
+            input.setCustomValidity(message);
+            input.setAttribute('aria-invalid', 'true');
+        } else {
+            input.setCustomValidity('');
+            input.removeAttribute('aria-invalid');
+        }
+
+        updateFormState(input, formControl);
+    }
+
+    // Clear error state
+    function clearError(input) {
+        setCustomError(input, '');
+    }
+
     // CRITICAL: Expose global API immediately (called by unified init system)
     window.NDS = window.NDS || {};
     window.NDS.Forms = {
@@ -734,6 +893,9 @@
         VoiceRecognition: VoiceRecognition,
         reinit: initializeAllForms,
         updateFormState: updateFormState,
+        validateInput: validateInput,
+        setCustomError: setCustomError,
+        clearError: clearError,
         initializeContainer: initializeContainer,
         initializeDynamic: function(element) {
             // Alias for initializeContainer for backward compatibility
@@ -917,13 +1079,13 @@
         
         // Watch for all field status changes
         if (window.MutationObserver) {
-            var observer = new MutationObserver(function(mutations) {
+            var inputObserver = new MutationObserver(function(mutations) {
                 mutations.forEach(function(mutation) {
                     if (mutation.type === 'attributes') {
                         var attr = mutation.attributeName;
                         if (attr === 'disabled' || attr === 'checked' || attr === 'value') {
                             updateFormState(input, formControl);
-                            
+
                             // Handle radio group updates for checked changes
                             if (attr === 'checked') {
                                 updateRadioGroup(input, formControl);
@@ -932,8 +1094,8 @@
                     }
                 });
             });
-            observer.observe(input, { 
-                attributes: true, 
+            inputObserver.observe(input, {
+                attributes: true,
                 attributeFilter: ['disabled', 'checked', 'value']
             });
         }

@@ -161,7 +161,7 @@ direction: ltr
                       <label for="demo-checkbox2">
                         <span class="label">Sports</span>
                         <span class="info">Include all sports and fitness activities</span>
-                        <span class="error">
+                        <span class="nds-feedback error">
                           <span class="nds-feedback-icon nds-error nds-outline nds-sm">
                             <i class="hgi hgi-solid icon"></i>
                           </span>
@@ -192,7 +192,8 @@ direction: ltr
                       </label>
                     </div>
                     <div class="nds-form-control">
-                      <input type="checkbox" id="demo-checkbox4" name="interests" value="education" checked class="nds-check">
+                      <input type="checkbox" id="demo-checkbox4" name="interests" value="education" checked
+                        class="nds-check">
                     </div>
                   </div>
                 </div>

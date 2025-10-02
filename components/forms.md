@@ -26,6 +26,14 @@ direction: ltr
             <div class="demo-label">Text Input</div>
             <div class="demo-action">
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='[["nds-required", ".nds-form-container", "requiredClass"], ["required", "#demo-textInput", "requiredAttr", "attr"]]'>
+                <span class="label">Required</span>
+              </button>
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='["error", ".nds-form-control", "errorToggle"]'>
+                <span class="label">Error</span>
+              </button>
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["disabled", "#demo-textInput", "stateToggle", "attr"]'>
                 <span class="label">Disabled</span>
               </button>
@@ -51,7 +59,14 @@ direction: ltr
                     </button>
                   </div>
                 </div>
-                <div class="nds-form-footer"></div>
+                <div class="nds-form-footer">
+                  <span class="nds-feedback">
+                    <span class="nds-feedback-icon nds-outline nds-sm">
+                      <i class="hgi hgi-solid icon"></i>
+                    </span>
+                    <span class="msg"></span>
+                  </span>
+                </div>
               </div>
             </div>
           </div>
@@ -76,7 +91,7 @@ direction: ltr
                   </button>
                 </div>
                 <div class="nds-expandable-content">
-                    <code class="lang-html code">
+                  <code class="lang-html code">
                   <div class="nds-form-container">
                     <div class="nds-form-header">
                       <label for="textInput">
@@ -91,7 +106,14 @@ direction: ltr
                         </button>
                       </div>
                     </div>
-                    <div class="nds-form-footer"></div>
+                    <div class="nds-form-footer">
+                      <span class="nds-feedback">
+                        <span class="nds-feedback-icon nds-outline nds-sm">
+                          <i class="hgi hgi-solid icon"></i>
+                        </span>
+                        <span class="msg"></span>
+                      </span>
+                    </div>
                   </div>
                     </code>
                 </div>
@@ -105,6 +127,14 @@ direction: ltr
           <div class="demo-header">
             <div class="demo-label">Search Input</div>
             <div class="demo-action">
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='[["nds-required", ".nds-form-container", "requiredClass"], ["required", "#demo-searchInput", "requiredAttr", "attr"]]'>
+                <span class="label">Required</span>
+              </button>
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='["error", ".nds-form-control", "errorToggle"]'>
+                <span class="label">Error</span>
+              </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["disabled", "#demo-searchInput", "stateToggle", "attr"]'>
                 <span class="label">Disabled</span>
@@ -136,7 +166,14 @@ direction: ltr
                     </button>
                   </div>
                 </div>
-                <div class="nds-form-footer"></div>
+                <div class="nds-form-footer">
+                  <span class="nds-feedback">
+                    <span class="nds-feedback-icon nds-outline nds-sm">
+                      <i class="hgi hgi-solid icon"></i>
+                    </span>
+                    <span class="msg"></span>
+                  </span>
+                </div>
               </div>
             </div>
           </div>
@@ -161,7 +198,7 @@ direction: ltr
                   </button>
                 </div>
                 <div class="nds-expandable-content">
-                    <code class="lang-html code">
+                  <code class="lang-html code">
                   <div class="nds-form-container">
                     <div class="nds-form-header">
                       <label for="searchInput">
@@ -180,7 +217,14 @@ direction: ltr
                         </button>
                       </div>
                     </div>
-                    <div class="nds-form-footer"></div>
+                    <div class="nds-form-footer">
+                      <span class="nds-feedback">
+                        <span class="nds-feedback-icon nds-outline nds-sm">
+                          <i class="hgi hgi-solid icon"></i>
+                        </span>
+                        <span class="msg"></span>
+                      </span>
+                    </div>
                   </div>
                     </code>
                 </div>
@@ -194,6 +238,14 @@ direction: ltr
           <div class="demo-header">
             <div class="demo-label">Email Input</div>
             <div class="demo-action">
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='[["nds-required", ".nds-form-container", "requiredClass"], ["required", "#demo-emailInput", "requiredAttr", "attr"]]'>
+                <span class="label">Required</span>
+              </button>
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='["error", ".nds-form-control", "errorToggle"]'>
+                <span class="label">Error</span>
+              </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["disabled", "#demo-emailInput", "stateToggle", "attr"]'>
                 <span class="label">Disabled</span>
@@ -221,7 +273,14 @@ direction: ltr
                     </button>
                   </div>
                 </div>
-                <div class="nds-form-footer"></div>
+                <div class="nds-form-footer">
+                  <span class="nds-feedback">
+                    <span class="nds-feedback-icon nds-outline nds-sm">
+                      <i class="hgi hgi-solid icon"></i>
+                    </span>
+                    <span class="msg"></span>
+                  </span>
+                </div>
               </div>
             </div>
           </div>
@@ -246,7 +305,7 @@ direction: ltr
                   </button>
                 </div>
                 <div class="nds-expandable-content">
-                    <code class="lang-html code">
+                  <code class="lang-html code">
                   <div class="nds-form-container">
                     <div class="nds-form-header">
                       <label for="emailInput">
@@ -262,7 +321,14 @@ direction: ltr
                         </button>
                       </div>
                     </div>
-                    <div class="nds-form-footer"></div>
+                    <div class="nds-form-footer">
+                      <span class="nds-feedback">
+                        <span class="nds-feedback-icon nds-outline nds-sm">
+                          <i class="hgi hgi-solid icon"></i>
+                        </span>
+                        <span class="msg"></span>
+                      </span>
+                    </div>
                   </div>
                     </code>
                 </div>
@@ -276,6 +342,14 @@ direction: ltr
           <div class="demo-header">
             <div class="demo-label">Password Input</div>
             <div class="demo-action">
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='[["nds-required", ".nds-form-container", "requiredClass"], ["required", "#demo-passwordInput", "requiredAttr", "attr"]]'>
+                <span class="label">Required</span>
+              </button>
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='["error", ".nds-form-control", "errorToggle"]'>
+                <span class="label">Error</span>
+              </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["disabled", "#demo-passwordInput", "stateToggle", "attr"]'>
                 <span class="label">Disabled</span>
@@ -307,7 +381,14 @@ direction: ltr
                     </button>
                   </div>
                 </div>
-                <div class="nds-form-footer"></div>
+                <div class="nds-form-footer">
+                  <span class="nds-feedback">
+                    <span class="nds-feedback-icon nds-outline nds-sm">
+                      <i class="hgi hgi-solid icon"></i>
+                    </span>
+                    <span class="msg"></span>
+                  </span>
+                </div>
               </div>
             </div>
           </div>
@@ -332,7 +413,7 @@ direction: ltr
                   </button>
                 </div>
                 <div class="nds-expandable-content">
-                    <code class="lang-html code">
+                  <code class="lang-html code">
                   <div class="nds-form-container">
                     <div class="nds-form-header">
                       <label for="passwordInput">
@@ -352,7 +433,14 @@ direction: ltr
                         </button>
                       </div>
                     </div>
-                    <div class="nds-form-footer"></div>
+                    <div class="nds-form-footer">
+                      <span class="nds-feedback">
+                        <span class="nds-feedback-icon nds-outline nds-sm">
+                          <i class="hgi hgi-solid icon"></i>
+                        </span>
+                        <span class="msg"></span>
+                      </span>
+                    </div>
                   </div>
                     </code>
                 </div>
@@ -366,6 +454,14 @@ direction: ltr
           <div class="demo-header">
             <div class="demo-label">Textarea</div>
             <div class="demo-action">
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='[["nds-required", ".nds-form-container", "requiredClass"], ["required", "#textareaInput", "requiredAttr", "attr"]]'>
+                <span class="label">Required</span>
+              </button>
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='["error", ".nds-form-control", "errorToggle"]'>
+                <span class="label">Error</span>
+              </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["disabled", "#textareaInput", "stateToggle", "attr"]'>
                 <span class="label">Disabled</span>
@@ -388,7 +484,14 @@ direction: ltr
                   <textarea id="textareaInput" class="nds-textarea" placeholder="Enter your message..."
                     rows="4"></textarea>
                 </div>
-                <div class="nds-form-footer"></div>
+                <div class="nds-form-footer">
+                  <span class="nds-feedback">
+                    <span class="nds-feedback-icon nds-outline nds-sm">
+                      <i class="hgi hgi-solid icon"></i>
+                    </span>
+                    <span class="msg"></span>
+                  </span>
+                </div>
               </div>
             </div>
           </div>
@@ -413,7 +516,7 @@ direction: ltr
                   </button>
                 </div>
                 <div class="nds-expandable-content">
-                    <code class="lang-html code">
+                  <code class="lang-html code">
                   <div class="nds-form-container nds-textarea">
                     <div class="nds-form-header">
                       <label for="textareaInput">
@@ -423,7 +526,14 @@ direction: ltr
                     <div class="nds-form-control">
                       <textarea id="textareaInput" class="nds-textarea" placeholder="Enter your message..." rows="4"></textarea>
                     </div>
-                    <div class="nds-form-footer"></div>
+                    <div class="nds-form-footer">
+                      <span class="nds-feedback">
+                        <span class="nds-feedback-icon nds-outline nds-sm">
+                          <i class="hgi hgi-solid icon"></i>
+                        </span>
+                        <span class="msg"></span>
+                      </span>
+                    </div>
                   </div>
                     </code>
                 </div>
@@ -437,6 +547,14 @@ direction: ltr
           <div class="demo-header">
             <div class="demo-label">Select Dropdown</div>
             <div class="demo-action">
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='[["nds-required", ".nds-form-container", "requiredClass"], ["required", "#demo-selectInput", "requiredAttr", "attr"]]'>
+                <span class="label">Required</span>
+              </button>
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='["error", ".nds-form-control", "errorToggle"]'>
+                <span class="label">Error</span>
+              </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["disabled", "#demo-selectInput", "stateToggle", "attr"]'>
                 <span class="label">Disabled</span>
@@ -478,7 +596,14 @@ direction: ltr
                     </div>
                   </div>
                 </div>
-                <div class="nds-form-footer"></div>
+                <div class="nds-form-footer">
+                  <span class="nds-feedback">
+                    <span class="nds-feedback-icon nds-outline nds-sm">
+                      <i class="hgi hgi-solid icon"></i>
+                    </span>
+                    <span class="msg"></span>
+                  </span>
+                </div>
               </div>
             </div>
           </div>
@@ -503,7 +628,7 @@ direction: ltr
                   </button>
                 </div>
                 <div class="nds-expandable-content">
-                    <code class="lang-html code">
+                  <code class="lang-html code">
                   <div class="nds-form-container">
                     <div class="nds-form-header">
                       <label for="selectInput">
@@ -532,7 +657,14 @@ direction: ltr
                         </div>
                       </div>
                     </div>
-                    <div class="nds-form-footer"></div>
+                    <div class="nds-form-footer">
+                      <span class="nds-feedback">
+                        <span class="nds-feedback-icon nds-outline nds-sm">
+                          <i class="hgi hgi-solid icon"></i>
+                        </span>
+                        <span class="msg"></span>
+                      </span>
+                    </div>
                   </div>
                     </code>
                 </div>

@@ -350,6 +350,273 @@ direction: ltr
     </div>
 </section>
 
+<!-- Feedback Messages -->
+<section id="feedbackMessages" class="nds-content-section">
+    <div class="nds-section-content-container">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Feedback Messages</h2>
+            <p class="nds-section-description">Complete feedback components with icons and text messages</p>
+        </div>
+        <div class="nds-section-content">
+            <div class="feedback-messages-showcase">
+
+                <!-- Error Feedback Message -->
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Error Message</div>
+                        <div class="demo-action">
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-ring", ".nds-feedback-icon", "iconVariant"]'>
+                                <span class="label">Ring</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-outline", ".nds-feedback-icon", "iconVariant"]'>
+                                <span class="label">Outline</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-sm", ".nds-feedback-icon", "iconSize"]'>
+                                <span class="label">SM</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                                <span class="label">Remove bg</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <span class="nds-feedback error">
+                                <span class="nds-feedback-icon nds-error nds-outline nds-sm">
+                                    <i class="hgi hgi-solid icon"></i>
+                                </span>
+                                <span class="msg">This field is required</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="nds-tabs nds-code withDivider">
+                        <div class="nds-tab-list-container">
+                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-error-msg-1" id="tab-error-msg-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                            </nav>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-error-msg-1"
+                                aria-labelledby="tab-error-msg-1">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <code class="lang-html code">
+&lt;span class="nds-feedback error"&gt;
+  &lt;span class="nds-feedback-icon nds-error nds-outline nds-sm"&gt;
+    &lt;i class="hgi hgi-solid icon"&gt;&lt;/i&gt;
+  &lt;/span&gt;
+  &lt;span class="msg"&gt;This field is required&lt;/span&gt;
+&lt;/span&gt;
+                                </code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Success Feedback Message -->
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Success Message</div>
+                        <div class="demo-action">
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-ring", ".nds-feedback-icon", "iconVariant"]'>
+                                <span class="label">Ring</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-outline", ".nds-feedback-icon", "iconVariant"]'>
+                                <span class="label">Outline</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-sm", ".nds-feedback-icon", "iconSize"]'>
+                                <span class="label">SM</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                                <span class="label">Remove bg</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <span class="nds-feedback success">
+                                <span class="nds-feedback-icon nds-success nds-outline nds-sm">
+                                    <i class="hgi hgi-solid icon"></i>
+                                </span>
+                                <span class="msg">Form submitted successfully</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="nds-tabs nds-code withDivider">
+                        <div class="nds-tab-list-container">
+                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-success-msg-1" id="tab-success-msg-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                            </nav>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-success-msg-1"
+                                aria-labelledby="tab-success-msg-1">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <code class="lang-html code">
+&lt;span class="nds-feedback success"&gt;
+  &lt;span class="nds-feedback-icon nds-success nds-outline nds-sm"&gt;
+    &lt;i class="hgi hgi-solid icon"&gt;&lt;/i&gt;
+  &lt;/span&gt;
+  &lt;span class="msg"&gt;Form submitted successfully&lt;/span&gt;
+&lt;/span&gt;
+                                </code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Warning Feedback Message -->
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Warning Message</div>
+                        <div class="demo-action">
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-ring", ".nds-feedback-icon", "iconVariant"]'>
+                                <span class="label">Ring</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-outline", ".nds-feedback-icon", "iconVariant"]'>
+                                <span class="label">Outline</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-sm", ".nds-feedback-icon", "iconSize"]'>
+                                <span class="label">SM</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                                <span class="label">Remove bg</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <span class="nds-feedback warning">
+                                <span class="nds-feedback-icon nds-warning nds-outline nds-sm">
+                                    <i class="hgi hgi-solid icon"></i>
+                                </span>
+                                <span class="msg">This action cannot be undone</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="nds-tabs nds-code withDivider">
+                        <div class="nds-tab-list-container">
+                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-warning-msg-1" id="tab-warning-msg-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                            </nav>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-warning-msg-1"
+                                aria-labelledby="tab-warning-msg-1">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <code class="lang-html code">
+&lt;span class="nds-feedback warning"&gt;
+  &lt;span class="nds-feedback-icon nds-warning nds-outline nds-sm"&gt;
+    &lt;i class="hgi hgi-solid icon"&gt;&lt;/i&gt;
+  &lt;/span&gt;
+  &lt;span class="msg"&gt;This action cannot be undone&lt;/span&gt;
+&lt;/span&gt;
+                                </code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Info Feedback Message -->
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Info Message</div>
+                        <div class="demo-action">
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-ring", ".nds-feedback-icon", "iconVariant"]'>
+                                <span class="label">Ring</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-outline", ".nds-feedback-icon", "iconVariant"]'>
+                                <span class="label">Outline</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-sm", ".nds-feedback-icon", "iconSize"]'>
+                                <span class="label">SM</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                                <span class="label">Remove bg</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <span class="nds-feedback info">
+                                <span class="nds-feedback-icon nds-info nds-outline nds-sm">
+                                    <i class="hgi hgi-solid icon"></i>
+                                </span>
+                                <span class="msg">Additional information available</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="nds-tabs nds-code withDivider">
+                        <div class="nds-tab-list-container">
+                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-info-msg-1" id="tab-info-msg-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                            </nav>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-info-msg-1"
+                                aria-labelledby="tab-info-msg-1">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <code class="lang-html code">
+&lt;span class="nds-feedback info"&gt;
+  &lt;span class="nds-feedback-icon nds-info nds-outline nds-sm"&gt;
+    &lt;i class="hgi hgi-solid icon"&gt;&lt;/i&gt;
+  &lt;/span&gt;
+  &lt;span class="msg"&gt;Additional information available&lt;/span&gt;
+&lt;/span&gt;
+                                </code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Usage Guidelines -->
 <section id="usageGuidelines" class="nds-content-section">
     <div class="nds-section-content-container">

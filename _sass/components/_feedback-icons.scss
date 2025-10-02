@@ -158,3 +158,43 @@
     }
   }
 }
+
+// ==============================================
+// FEEDBACK MESSAGE COMPONENT
+// ==============================================
+
+.nds-feedback {
+  display: flex;
+  align-items: center;
+  font-size: var(--nds-text-sm-FS);
+  line-height: var(--nds-text-sm-LH);
+  font-weight: 500;
+  gap: var(--spacing-sm);
+
+  &.error {
+    color: var(--controls-control-text-error);
+  }
+
+  &.success {
+    color: var(--controls-control-text-success, #16a34a);
+  }
+
+  &.warning {
+    color: var(--controls-control-text-warning, #f59e0b);
+  }
+
+  &.info {
+    color: var(--controls-control-text-info, #3b82f6);
+  }
+
+  .nds-feedback-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .msg {
+    flex: 1;
+  }
+}
