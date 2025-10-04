@@ -1,0 +1,200 @@
+/**
+* NDS Pagination - SCSS Version
+* Navigation component for paginated content using button indicators
+*/
+
+@use '../mixins' as *;
+
+// ==============================================
+// PAGINATION CONTAINER
+// ==============================================
+
+.nds-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  @include mobile {
+    gap: var(--spacing-xxs);
+  }
+}
+
+// ==============================================
+// PAGINATION ITEMS
+// ==============================================
+
+.nds-pagination-item {
+  display: inline-flex;
+
+  // Pagination button styling
+  .nds-btn {
+    min-width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 var(--spacing-sm);
+    position: relative;
+
+    .label{
+      text-align: center;
+    }
+
+    @include mobile {
+      min-width: 36px;
+      height: 36px;
+      font-size: var(--nds-text-sm-FS);
+    }
+
+
+
+    // Active state
+    &[aria-current="page"],
+    &.active {
+      font-weight: 600;
+      color: var(--button-label-primary-default);
+      background-color: unset;
+
+      &.nds-indicator:before{
+        background-color: var(--button-background-primary-hovered);
+      }
+    }
+  }
+}
+
+// ==============================================
+// NAVIGATION BUTTONS (Previous/Next)
+// ==============================================
+
+.nds-pagination-prev,
+.nds-pagination-next {
+  .nds-btn {
+    // Icons for prev/next
+    i {
+      font-size: var(--nds-text-lg-FS);
+      @include ltr{
+        transform: scale(-1);
+      }
+    }
+  }
+}
+
+// ==============================================
+// ELLIPSIS WITH DROPDOWN
+// ==============================================
+
+.nds-pagination-ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+  color: var(--text-neutral-600);
+  font-size: var(--nds-text-md-FS);
+  user-select: none;
+  position: relative;
+
+  @include mobile {
+    min-width: 36px;
+    height: 36px;
+    font-size: var(--nds-text-sm-FS);
+  }
+
+
+  // Dropdown menu positioning
+  .nds-dropmenu-menu {
+    min-width: 100px;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+
+  // Dropdown menu items
+  .nds-dropmenu-item {
+    justify-content: center;
+    min-width: 40px;
+
+    &.nds-indicator {
+      @include btn-indicator-styles(
+        var(--button-background-neutral-hovered),
+        var(--button-background-neutral-selected),
+        'b'
+      );
+    }
+  }
+}
+
+// ==============================================
+// DISABLED STATE
+// ==============================================
+
+.nds-pagination-item .nds-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+// ==============================================
+// PAGINATION SIZES
+// ==============================================
+
+.nds-pagination.nds-sm {
+  .nds-pagination-item .nds-btn {
+    min-width: 32px;
+    height: 32px;
+    font-size: var(--nds-text-sm-FS);
+  }
+
+  .nds-pagination-ellipsis {
+    min-width: 32px;
+    height: 32px;
+    font-size: var(--nds-text-sm-FS);
+  }
+}
+
+.nds-pagination.nds-lg {
+  .nds-pagination-item .nds-btn {
+    min-width: 48px;
+    height: 48px;
+    font-size: var(--nds-text-lg-FS);
+  }
+
+  .nds-pagination-ellipsis {
+    min-width: 48px;
+    height: 48px;
+    font-size: var(--nds-text-lg-FS);
+  }
+}
+
+// ==============================================
+// RESPONSIVE BEHAVIOR
+// ==============================================
+
+@include mobile {
+  .nds-pagination-ellipsis {
+    .nds-dropmenu-menu {
+      min-width: 80px;
+      max-width: calc(100vw - 32px);
+      max-height: 50vh;
+    }
+  }
+}
+
+// ==============================================
+// AUTO-PAGINATION CONTENT
+// ==============================================
+
+.nds-pagination-content {
+  .pagination-item {
+    &:not(.active) {
+      display: none; // Hidden by default, shown by pagination JS
+    }
+  }
+}
+
+.nds-auto-pagination {
+  margin-top: 24px;
+}

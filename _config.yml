@@ -14,9 +14,12 @@ headerBrandH: 48
 #brandName: "National Design System" #comment this to remove text from brand
 brandNameColor: var(--colors-neutral-500)
 
-# Hero Settings
+# Hero Settings (fallback defaults)
 hero_image: /assets/img/riyadhcenter.webp
-
+hero_image_sub: 
+hero_image_pos: 50% 50%
+hero_title: National Design System
+hero_description: The National Design System provides comprehensive design guidelines, components, and resources for creating consistent and accessible digital experiences across government services in Saudi Arabia.
 
 # Build settings
 markdown: kramdown
@@ -36,6 +39,20 @@ author_profile: https://www.linkedin.com/in/mazin-musleh/
 # Language settings (RTL/LTR switching only)
 lang: en
 dir: ltr
+
+# City location settings (Riyadh, Saudi Arabia)
+city_latitude: 24.7136
+city_longitude: 46.6753
+
+# DGA Registration
+dga_registration_number: 20240520402
+dga_registration_url: https://raqmi.dga.gov.sa/platforms/DigitalStamp/ShowCertificate/4990
+
+# Default navigation data files
+mainnav: mainnav
+sidemenu: sidemenu
+footer: footer
+footerlogos: footerlogos
 
 
 # Plugins

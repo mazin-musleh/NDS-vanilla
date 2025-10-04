@@ -40,6 +40,12 @@
     }
 
     // Note: Initialization now handled by nds-init.js unified system
+    // EXCEPTION: Language switcher must run on ALL pages (not just demo pages)
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializeDirectionSwitcher);
+    } else {
+        initializeDirectionSwitcher();
+    }
 
     // Store original code content in hidden copies before highlighting is applied
     function storeOriginalCodeContent() {
@@ -838,7 +844,7 @@
         const urlLang = urlParams.get('lang');
         const cookieLang = getCookie('preferred-language');
         const currentLang = urlLang || cookieLang || 'en';
-        
+
         // If URL parameter exists, update cookie and remove URL parameter
         if (urlLang) {
             setCookie('preferred-language', urlLang, 365); // Store for 1 year
@@ -850,27 +856,27 @@
             // Set default cookie if none exists
             setCookie('preferred-language', currentLang, 365);
         }
-        
+
         // Update the language display in header
         const currentLangLabel = document.getElementById('currentLangLabel');
         if (currentLangLabel) {
             currentLangLabel.textContent = currentLang === 'ar' ? 'العربية' : 'English';
         }
-        
+
         // Set HTML attributes for current language
         document.documentElement.setAttribute('lang', currentLang);
         document.documentElement.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
-        
+
         // Handle language toggle button click
         const langToggleBtn = document.getElementById('langToggleBtn');
         if (langToggleBtn) {
             langToggleBtn.addEventListener('click', function() {
                 // Toggle to opposite language
                 const targetLang = currentLang === 'ar' ? 'en' : 'ar';
-                
+
                 // Update cookie directly
                 setCookie('preferred-language', targetLang, 365);
-                
+
                 // Reload page to apply new language
                 window.location.reload();
             });
@@ -881,7 +887,9 @@
     function setCookie(name, value, days) {
         const expires = new Date();
         expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
-        document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
+        // Use the base path from current location to ensure cookie works across all pages
+        const basePath = window.location.pathname.split('/').slice(0, 2).join('/') || '/';
+        document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=${basePath}`;
     }
 
     function getCookie(name) {

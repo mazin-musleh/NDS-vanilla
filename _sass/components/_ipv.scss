@@ -1,0 +1,345 @@
+/**
+* NDS Image Popup Viewer - SCSS Version
+* A component for viewing images in a popup overlay with zoom, pan, and pinch-to-zoom support
+*/
+
+@use '../mixins' as *;
+
+// ==============================================
+// GALLERY STYLES
+// ==============================================
+
+.nds-ipv-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--spacing-lg);
+  max-width: 1200px;
+  width: 100%;
+
+  @include mobile {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+  }
+}
+
+.nds-ipv-image-card {
+  background-color: var(--background-neutral-50);
+  display: inline-block;
+  position: relative;
+
+  &.showZoom::before {
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    position: absolute;
+    color: rgb(255, 255, 255);
+    z-index: 999;
+    font-size: 1.5rem;
+    bottom: 8px;
+    left: 8px;
+    content: "媧";
+    line-height: normal;
+    text-shadow: rgba(22, 22, 22, 0.5) 1px 1px 3px;
+    pointer-events: none;
+    background-color: rgba(0, 0, 0, 0.3);
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: hgi-stroke-rounded !important;
+    border-radius: 8px;
+  }
+
+}
+
+.nds-ipv-thumbnail {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  box-shadow: var(--shadow-sm);
+
+  &:hover {
+    transform: scale(1.02);
+  }
+}
+
+.nds-ipv-image-title {
+  color: var(--text-primary-default);
+  margin-top: var(--spacing-sm);
+  font-size: var(--nds-text-md-FS);
+  line-height: var(--nds-text-md-LH);
+  font-weight: 500;
+}
+
+// ==============================================
+// POPUP OVERLAY STYLES
+// ==============================================
+
+.nds-ipv-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.9);
+  display: none;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+
+  &.nds-ipv-active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: ndsIpvFadeIn 0.3s ease-out;
+  }
+}
+
+@keyframes ndsIpvFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.nds-ipv-popup-container {
+  position: relative;
+  width: 90vw;
+  height: 90vh;
+  overflow: hidden;
+}
+
+.nds-ipv-popup-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  cursor: grab;
+  user-select: none;
+  transform-origin: center center;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+// ==============================================
+// POPUP CONTROLS
+// ==============================================
+
+.nds-ipv-popup-controls {
+  position: absolute;
+  top: 20px;
+  left: 20px; // RTL default (Arabic)
+  display: flex;
+  gap: var(--spacing-sm);
+  z-index: 1001;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+
+  @include ltr {
+    left: unset;
+    right: 20px;
+  }
+
+  @include mobile {
+    top: 10px;
+    left: 10px; // RTL default
+
+    @include ltr {
+      left: unset;
+      right: 10px;
+    }
+  }
+}
+
+// Navigation controls (prev/next)
+.nds-ipv-navigation-controls {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+  z-index: 1001;
+  pointer-events: none;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+
+  @include mobile {
+    padding: 0 10px;
+  }
+
+  button {
+    pointer-events: all;
+  }
+
+  // Flip arrows for LTR
+  @include ltr {
+    i {
+      transform: scaleX(-1);
+    }
+  }
+}
+
+.nds-ipv-control-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: var(--nds-text-xl-FS);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.3);
+    color: var(--colors-neutral-900);
+    transform: scale(1.1);
+  }
+
+  @include mobile {
+    width: 40px;
+    height: 40px;
+    font-size: var(--nds-text-lg-FS);
+  }
+}
+
+// ==============================================
+// ZOOM INFO
+// ==============================================
+
+.nds-ipv-zoom-info {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: 25px;
+  font-size: var(--nds-text-sm-FS);
+  line-height: var(--nds-text-sm-LH);
+  backdrop-filter: blur(10px);
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.nds-ipv-image-counter {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: 25px;
+  font-size: var(--nds-text-sm-FS);
+  line-height: var(--nds-text-sm-LH);
+  font-weight: 500;
+  backdrop-filter: blur(10px);
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+
+  @include mobile {
+    top: 70px;
+    font-size: var(--nds-text-xs-FS);
+    padding: var(--spacing-xs) var(--spacing-md);
+  }
+}
+
+// ==============================================
+// LOADING SPINNER
+// ==============================================
+
+.nds-ipv-loading-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top: 4px solid #fff;
+  border-radius: 50%;
+  animation: ndsIpvSpin 1s linear infinite;
+  z-index: 1002;
+  display: none;
+}
+
+@keyframes ndsIpvSpin {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+// ==============================================
+// INSTRUCTIONS PANEL
+// ==============================================
+
+.nds-ipv-instructions {
+  position: absolute;
+  top: 20px;
+  right: 20px; // RTL default (Arabic)
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  font-size: var(--nds-text-sm-FS);
+  line-height: var(--nds-text-sm-LH);
+  max-width: 250px;
+  backdrop-filter: blur(10px);
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+
+  @include ltr {
+    right: unset;
+    left: 20px;
+  }
+
+  strong {
+    font-weight: 600;
+  }
+
+  @include mobile {
+    display: none;
+  }
+}
+
+// ==============================================
+// HIDDEN UI STATES
+// ==============================================
+
+.nds-ipv-popup-controls.nds-ipv-ui-hidden .nds-ipv-control-btn:not(.nds-ipv-ui-toggle-btn) {
+  display: none !important;
+}
+
+.nds-ipv-instructions.nds-ipv-ui-hidden {
+  display: none !important;
+}
+
+.nds-ipv-zoom-info.nds-ipv-ui-hidden {
+  display: none !important;
+}
+
+.nds-ipv-navigation-controls.nds-ipv-ui-hidden {
+  display: none !important;
+}
+
+.nds-ipv-image-counter.nds-ipv-ui-hidden {
+  display: none !important;
+}

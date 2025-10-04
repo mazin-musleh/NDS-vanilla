@@ -26,6 +26,16 @@
             let useSiblingSuffix = false;
             let suffixEl = null;
 
+            // Auto-extract prefix/suffix from data-target if present
+            if (targetStr && !suffixAttr && !prefixAttr) {
+                const targetMatch = targetStr.match(/^([^\d.-]*)([-+]?\d*\.?\d+)(.*)$/);
+                if (targetMatch) {
+                    prefixAttr = targetMatch[1] || '';
+                    targetStr = targetMatch[2];
+                    suffixAttr = targetMatch[3] || '';
+                }
+            }
+
             if (!targetStr) {
                 // Handle split suffix pattern: <span.nds-counter-value>98</span><span.suffix>.2%</span>
                 const next = el.nextElementSibling;

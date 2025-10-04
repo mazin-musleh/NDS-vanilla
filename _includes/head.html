@@ -1,23 +1,27 @@
 <head>
+    {% assign site_title = page.siteTitle | default: site.title %}
+
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description"
         content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}">
-    <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+    <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site_title }}</title>
 
     <!-- Persist fonts-loaded state across navigations -->
     <script>
-      try {
-        if (localStorage.getItem('nds-fonts-loaded') === '1') {
-          document.documentElement.classList.add('fonts-loaded');
-        }
-        
-      } catch (e) {}
+        try {
+            if (localStorage.getItem('nds-fonts-loaded') === '1') {
+                document.documentElement.classList.add('fonts-loaded');
+            }
+
+        } catch (e) { }
     </script>
 
     <!-- Preload primary text fonts (limit to above-the-fold weights) -->
-    <link rel="preload" as="font" type="font/woff2" href="{{ '/assets/fonts/IBMPlexSansArabic-Regular.woff2' | relative_url }}" crossorigin>
-    <link rel="preload" as="font" type="font/woff2" href="{{ '/assets/fonts/IBMPlexSansArabic-Bold.woff2' | relative_url }}" crossorigin>
+    <link rel="preload" as="font" type="font/woff2"
+        href="{{ '/assets/fonts/IBMPlexSansArabic-Regular.woff2' | relative_url }}" crossorigin>
+    <link rel="preload" as="font" type="font/woff2"
+        href="{{ '/assets/fonts/IBMPlexSansArabic-Bold.woff2' | relative_url }}" crossorigin>
 
     <!-- Critical CSS inline -->
     <style>
@@ -124,7 +128,8 @@
             display: none;
         }
 
-        .nds-breadcrumb, .nds-breadcrumb li {
+        .nds-breadcrumb,
+        .nds-breadcrumb li {
             display: flex;
         }
 
@@ -187,6 +192,11 @@
             display: none;
         }
 
+        .nds-hero-section.sub.flat {
+            background: #fff !important;
+            box-shadow: unset;
+        }
+
         .nds-breadcrumb li::after {
             content: '';
             min-width: 24px;
@@ -214,7 +224,7 @@
             pointer-events: none;
         }
 
-        
+
         #nds-sharePage {
             display: none;
         }

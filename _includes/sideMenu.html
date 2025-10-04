@@ -3,8 +3,10 @@
         <i class="hgi hgi-stroke hgi-menu-02"></i>
     </button>
     <nav>
+        {% assign sidemenu_data_file = page.sidemenu | default: site.sidemenu | default: "sidemenu" %}
+        {% assign sidemenu_items = site.data[sidemenu_data_file] %}
         <ul class="topLevel">
-            {% for item in site.data.sidemenu %}
+            {% for item in sidemenu_items %}
                 {% if item.has_sub %}
                     <!-- Check if any child is active -->
                     {% assign has_active_child = false %}
