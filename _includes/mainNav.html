@@ -1,8 +1,15 @@
 <nav class="nds-main-nav" id="ndsMainNav" aria-label="Primary navigation">
     <div class="nds-nav-container nds-content-container">
+        {% assign brand_logo = page.brandLogo | default: site.brandLogo %}
+        {% assign brand_width = page.headerBrandW | default: site.headerBrandW %}
+        {% assign brand_height = page.headerBrandH | default: site.headerBrandH %}
+        {% assign brand_name = page.brandName | default: site.brandName %}
+        {% assign brand_name_color = page.brandNameColor | default: site.brandNameColor %}
+        {% assign site_title = page.siteTitle | default: site.title %}
+
         <a href="{{ '/' | relative_url }}" class="nds-brand">
-            <img class="nds-brand-logo" src="{{ site.brandLogo | relative_url }}" width="{{ site.headerBrandW }}" height="{{ site.headerBrandH }}" alt="{{ site.title }} Logo">
-            {% if site.brandName %}<span class="nds-brand-name" style="color: {{ site.brandNameColor }};">{{ site.brandName }}</span>{% endif %}
+            <img class="nds-brand-logo" src="{{ brand_logo | relative_url }}" width="{{ brand_width }}" height="{{ brand_height }}" alt="{{ site_title }} Logo">
+            {% if brand_name %}<span class="nds-brand-name" style="color: {{ brand_name_color }};">{{ brand_name }}</span>{% endif %}
         </a>
         <ul class="nds-nav-minimal">
             <li class="nds-mainNav-toggler nds-nav-item" data-toggle="navbar">
@@ -12,71 +19,42 @@
             </li>
         </ul>
 
+        {% assign nav_data_file = page.mainnav | default: site.mainnav | default: "mainnav" %}
+        {% assign nav_items = site.data[nav_data_file] %}
+
         <div class="nds-collapse" id="ndsNavCollapse">
             <ul class="nds-nav-primary">
-                <li class="nds-nav-item">
-                    <a href="{{ '/' | relative_url }}" class="nds-nav-link nds-btn nds-subtle nds-indicator"><span class="label">Item 1</span></a>
-                </li>
-                <li class="nds-nav-item nds-dropdown">
-                    <a href="#" class="nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator" data-toggle="dropdown"><span class="label">Item 2</span></a>
+                {% for item in nav_items %}
+                <li class="nds-nav-item{% if item.has_dropdown %} nds-dropdown{% endif %}">
+                    {% if item.has_dropdown %}
+                    <a href="#" class="nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator" data-toggle="dropdown"><span class="label">{{ item.label }}</span></a>
                     <div class="nds-dropdown-menu">
-                        <div class="nds-content-container nds-dropdown-columns columnView">
-                            <div class="nds-column">
-                                <div class="nds-dropdown-title">Category A</div>
+                        <div class="nds-content-container nds-dropdown-columns {% if item.dropdown_type == 'columnView' %}columnView{% elsif item.dropdown_type == 'rowList' %}nds-rowList{% endif %}">
+                            {% if item.columns %}
+                                {% for column in item.columns %}
+                                <div class="nds-column">
+                                    {% if column.title %}<div class="nds-dropdown-title">{{ column.title }}</div>{% endif %}
+                                    <div class="nds-list{% if column.multi_column_list %} nds-multi-column-list{% endif %}">
+                                        {% for subitem in column.items %}
+                                        <a class="nds-btn nds-subtle nds-dropdown-item" href="{{ subitem.url | relative_url }}"><span class="label">{{ subitem.label }}</span></a>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            {% elsif item.items %}
                                 <div class="nds-list">
-                                    <a class="nds-btn nds-subtle nds-dropdown-item" href="#"><span class="label">Sub Item A1</span></a>
-                                    <a class="nds-btn nds-subtle nds-dropdown-item" href="#"><span class="label">Sub Item A2</span></a>
-                                    <a class="nds-btn nds-subtle nds-dropdown-item" href="#"><span class="label">Sub Item A3</span></a>
-                                    <a class="nds-btn nds-subtle nds-dropdown-item" href="#"><span class="label">Sub Item A4</span></a>
-                                    <a class="nds-btn nds-subtle nds-dropdown-item" href="#"><span class="label">Sub Item A5</span></a>
+                                    {% for subitem in item.items %}
+                                    <a class="nds-btn nds-subtle nds-dropdown-item" href="{{ subitem.url | relative_url }}"><span class="label">{{ subitem.label }}</span></a>
+                                    {% endfor %}
                                 </div>
-                            </div>
-                            <div class="nds-column">
-                                <div class="nds-dropdown-title">Locations</div>
-                                <div class="nds-list nds-multi-column-list">
-                                    <a class="nds-btn nds-subtle nds-dropdown-item" href="#"><span class="label">Riyadh</span></a>
-                                    <a class="nds-btn nds-subtle nds-dropdown-item" href="#"><span class="label">Jeddah</span></a>
-                                    <a class="nds-btn nds-subtle nds-dropdown-item" href="#"><span class="label">Mecca</span></a>
-                                    <a class="nds-btn nds-subtle nds-dropdown-item" href="#"><span class="label">Medina</span></a>
-                                    <a class="nds-btn nds-subtle nds-dropdown-item" href="#"><span class="label">Dammam</span></a>
-                                    <a class="nds-btn nds-subtle nds-dropdown-item" href="#"><span class="label">Abha</span></a>
-                                    <a class="nds-btn nds-subtle nds-dropdown-item" href="#"><span class="label">Tabuk</span></a>
-                                    <a class="nds-btn nds-subtle nds-dropdown-item" href="#"><span class="label">Jazan</span></a>
-                                    <a class="nds-btn nds-subtle nds-dropdown-item" href="#"><span class="label">Hail</span></a>
-                                    <a class="nds-btn nds-subtle nds-dropdown-item" href="#"><span class="label">Najran</span></a>
-                                    <a class="nds-btn nds-subtle nds-dropdown-item" href="#"><span class="label">Jouf</span></a>
-                                    <a class="nds-btn nds-subtle nds-dropdown-item" href="#"><span class="label">Yanbu</span></a>
-                                    <a class="nds-btn nds-subtle nds-dropdown-item" href="#"><span class="label">Taif</span></a>
-                                    <a class="nds-btn nds-subtle nds-dropdown-item" href="#"><span class="label">Qassim</span></a>
-                                    <a class="nds-btn nds-subtle nds-dropdown-item" href="#"><span class="label">Ahsa</span></a>
-                                </div>
-                            </div>
+                            {% endif %}
                         </div>
                     </div>
+                    {% else %}
+                    <a href="{{ item.url | relative_url }}" class="nds-nav-link nds-btn nds-subtle nds-indicator"><span class="label">{{ item.label }}</span></a>
+                    {% endif %}
                 </li>
-                <li class="nds-nav-item nds-dropdown">
-                    <a href="#" class="nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator" data-toggle="dropdown"><span class="label">Item 3</span></a>
-                    <div class="nds-dropdown-menu">
-                        <div class="nds-content-container nds-dropdown-columns nds-rowList">
-                            <div class="nds-list">
-                                <a class="nds-btn nds-subtle nds-dropdown-item" href="{{ '/about' | relative_url }}"><span class="label">Sub Item 3.1</span></a>
-                                <a class="nds-btn nds-subtle nds-dropdown-item" href="#"><span class="label">Sub Item 3.2</span></a>
-                                <a class="nds-btn nds-subtle nds-dropdown-item" href="#"><span class="label">Sub Item 3.3</span></a>
-                                <a class="nds-btn nds-subtle nds-dropdown-item" href="#"><span class="label">Sub Item 3.4</span></a>
-                                <a class="nds-btn nds-subtle nds-dropdown-item" href="#"><span class="label">Sub Item 3.5</span></a>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="nds-nav-item">
-                    <a href="{{ '/services' | relative_url }}" class="nds-nav-link nds-btn nds-subtle nds-indicator"><span class="label">Item 4</span></a>
-                </li>
-                <li class="nds-nav-item">
-                    <a href="{{ '/contact' | relative_url }}" class="nds-nav-link nds-btn nds-subtle nds-indicator"><span class="label">Item 5</span></a>
-                </li>
-                <li class="nds-nav-item">
-                    <a href="{{ '/contact' | relative_url }}" class="nds-nav-link nds-btn nds-subtle nds-indicator"><span class="label">Item 6</span></a>
-                </li>
+                {% endfor %}
                 <li class="nds-nav-item showMore">
                     <a href="#" class="nds-nav-link nds-btn nds-subtle nds-indicator" title="Show More">
                         <i class="hgi hgi-stroke hgi-arrow-down-01 toggleArrow icon"></i>
@@ -85,9 +63,11 @@
             </ul>
 
             <ul class="nds-nav-secondary">
+                {% assign cta_text = page.ctaText | default: site.ctaText | default: "Call to Action" %}
+                {% assign cta_link = page.ctaLink | default: site.ctaLink | default: "#" %}
                 <li class="nds-nav-item CTA">
-                    <a href="#" class="nds-btn nds-primary nds-md nds-indicator" title="Guidelines">
-                        <span class="label">Call to Action</span>
+                    <a href="{{ cta_link | relative_url }}" class="nds-btn nds-primary nds-md nds-indicator" title="{{ cta_text }}">
+                        <span class="label">{{ cta_text }}</span>
                     </a>
                 </li>
                 <li class="nds-nav-item nds-dropdown iconOnly search PAB">

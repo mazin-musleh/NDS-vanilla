@@ -374,10 +374,6 @@ direction: ltr
                                 <span class="label">Outline</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-sm", ".nds-feedback-icon", "iconSize"]'>
-                                <span class="label">SM</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                                 <span class="label">Remove bg</span>
                             </button>
@@ -411,12 +407,12 @@ direction: ltr
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-&lt;span class="nds-feedback error"&gt;
-  &lt;span class="nds-feedback-icon nds-error nds-outline nds-sm"&gt;
-    &lt;i class="hgi hgi-solid icon"&gt;&lt;/i&gt;
-  &lt;/span&gt;
-  &lt;span class="msg"&gt;This field is required&lt;/span&gt;
-&lt;/span&gt;
+                                <span class="nds-feedback error">
+                                    <span class="nds-feedback-icon nds-error nds-outline nds-sm">
+                                        <i class="hgi hgi-solid icon"></i>
+                                    </span>
+                                    <span class="msg">This field is required</span>
+                                </span>
                                 </code>
                             </div>
                         </div>
@@ -435,10 +431,6 @@ direction: ltr
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-outline", ".nds-feedback-icon", "iconVariant"]'>
                                 <span class="label">Outline</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-sm", ".nds-feedback-icon", "iconSize"]'>
-                                <span class="label">SM</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
@@ -474,12 +466,12 @@ direction: ltr
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-&lt;span class="nds-feedback success"&gt;
-  &lt;span class="nds-feedback-icon nds-success nds-outline nds-sm"&gt;
-    &lt;i class="hgi hgi-solid icon"&gt;&lt;/i&gt;
-  &lt;/span&gt;
-  &lt;span class="msg"&gt;Form submitted successfully&lt;/span&gt;
-&lt;/span&gt;
+                                    <span class="nds-feedback success">
+                                        <span class="nds-feedback-icon nds-success nds-outline nds-sm">
+                                            <i class="hgi hgi-solid icon"></i>
+                                        </span>
+                                        <span class="msg">Form submitted successfully</span>
+                                    </span>
                                 </code>
                             </div>
                         </div>
@@ -498,10 +490,6 @@ direction: ltr
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-outline", ".nds-feedback-icon", "iconVariant"]'>
                                 <span class="label">Outline</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-sm", ".nds-feedback-icon", "iconSize"]'>
-                                <span class="label">SM</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
@@ -537,12 +525,12 @@ direction: ltr
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-&lt;span class="nds-feedback warning"&gt;
-  &lt;span class="nds-feedback-icon nds-warning nds-outline nds-sm"&gt;
-    &lt;i class="hgi hgi-solid icon"&gt;&lt;/i&gt;
-  &lt;/span&gt;
-  &lt;span class="msg"&gt;This action cannot be undone&lt;/span&gt;
-&lt;/span&gt;
+                                <span class="nds-feedback warning">
+                                    <span class="nds-feedback-icon nds-warning nds-outline nds-sm">
+                                        <i class="hgi hgi-solid icon"></i>
+                                    </span>
+                                    <span class="msg">This action cannot be undone</span>
+                                </span>
                                 </code>
                             </div>
                         </div>
@@ -561,10 +549,6 @@ direction: ltr
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-outline", ".nds-feedback-icon", "iconVariant"]'>
                                 <span class="label">Outline</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-sm", ".nds-feedback-icon", "iconSize"]'>
-                                <span class="label">SM</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
@@ -600,12 +584,12 @@ direction: ltr
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-&lt;span class="nds-feedback info"&gt;
-  &lt;span class="nds-feedback-icon nds-info nds-outline nds-sm"&gt;
-    &lt;i class="hgi hgi-solid icon"&gt;&lt;/i&gt;
-  &lt;/span&gt;
-  &lt;span class="msg"&gt;Additional information available&lt;/span&gt;
-&lt;/span&gt;
+                                    <span class="nds-feedback info">
+                                        <span class="nds-feedback-icon nds-info nds-outline nds-sm">
+                                            <i class="hgi hgi-solid icon"></i>
+                                        </span>
+                                        <span class="msg">Additional information available</span>
+                                    </span>
                                 </code>
                             </div>
                         </div>

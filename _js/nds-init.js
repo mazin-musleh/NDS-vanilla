@@ -137,6 +137,24 @@
             selector: '.nds-dropmenu',
             init: () => window.NDSDropmenu?.init?.(),
         },
+        {
+            name: 'pagination',
+            priority: 22,
+            selector: '.nds-pagination',
+            init: () => window.NDSPagination?.init?.(),
+        },
+        {
+            name: 'autoPagination',
+            priority: 23,
+            selector: '.nds-auto-pagination',
+            init: () => window.NDSPagination?.initAuto?.(),
+        },
+        {
+            name: 'ipv',
+            priority: 24,
+            selector: '.nds-ipv-thumbnail',
+            init: () => window.NDSImagePopupViewer?.init?.(),
+        },
     ];
 
     function initializeNDS() {

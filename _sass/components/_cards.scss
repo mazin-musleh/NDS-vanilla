@@ -59,7 +59,7 @@
 
   .nds-card-image {
     width: 100%;
-    height: 200px;
+    aspect-ratio: 2 / 1;
     border-radius: var(--radius-md, 8px);
     overflow: hidden;
     margin-bottom: var(--spacing-md, 8px);
@@ -68,6 +68,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: var(--img-pos-x, 50%) var(--img-pos-y, 50%);
     }
   }
 
@@ -91,14 +92,14 @@
     display: flex;
     flex-direction: column;
     gap: var(--card-lg-gap);
-     margin: calc(var(--spacing-xl) * -1);
+    margin: calc(var(--spacing-xl) * -1);
     width: -webkit-fill-available;
-    padding: inherit; 
-    
+    padding: inherit;
+
   }
 
   &.nds-expanded .nds-expandable-content {
-    padding-bottom: var(--spacing-5xl)!important;
+    padding-bottom: var(--spacing-5xl) !important;
   }
 
   .nds-card-text {
@@ -181,6 +182,23 @@
     }
   }
 
+
+  // ==============================================
+  // CARD Status SECTION
+  // ==============================================
+
+  .nds-card-status {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    @include ltr {
+      left: auto;
+      right: 0;
+    }
+  }
+
+
   // ==============================================
   // CARD ACTIONS SECTION
   // ==============================================
@@ -215,6 +233,66 @@
   .nds-card-title {
     font-size: var(--nds-text-md-FS);
     line-height: var(--nds-text-md-LH);
+  }
+}
+
+// Statistic card variant
+.nds-card.nds-statistic {
+  max-width: 224px;
+
+  .nds-card-header {
+    align-items: center;
+  }
+
+  .nds-card-featured-icon {
+    align-self: center;
+    margin-bottom: 0;
+  }
+
+  .nds-card-content {
+    align-items: center;
+  }
+
+  .nds-card-text {
+    align-items: center;
+    text-align: center;
+
+    .nds-counter-value {
+      color: var(--text-primary-sa-flag);
+      font-size: var(--nds-display-clamp-lg-FS);
+      line-height: var(--nds-display-clamp-lg-LH);
+      font-weight: 400;
+      letter-spacing: -0.96px;
+      direction: ltr;
+    }
+
+  }
+}
+
+
+// Statistic card variant
+.nds-card.nds-user {
+  max-width: 224px;
+
+  .nds-card-header,
+  .nds-card-tags,
+  .nds-card-actions {
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nds-card-content {
+    align-items: center;
+  }
+
+  .nds-card-text {
+    align-items: center;
+    text-align: center;
+  }
+
+  .nds-card-tags {
+    min-height: 48px;
+    align-content: flex-start;
   }
 }
 
@@ -256,6 +334,27 @@
 
   &.nds-stroke:active {
     border-color: var(--border-neutral-primary);
+  }
+}
+
+// ==============================================
+// CARD GROUP
+// ==============================================
+
+.nds-cards-group {
+  display: grid;
+  grid-template-columns: repeat(var(--max-col, 4), 1fr);
+  gap: var(--spacing-2xl);
+  width: 100%;
+
+  // Override card max-width in grid layout
+  .nds-card {
+    max-width: 100%;
+  }
+
+  @include tablet(max) {
+    grid-template-columns: repeat(var(--min-col, 2), 1fr);
+    gap: var(--spacing-lg);
   }
 }
 

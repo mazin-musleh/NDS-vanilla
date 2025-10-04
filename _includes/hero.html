@@ -1,7 +1,7 @@
 {% assign hero_type = include.hero_type | default: 'main' %}
 {% if hero_type == 'sub' %}
-<section class="nds-hero-section sub" aria-label="قسم العرض الرئيسي"
-    style="--hero_image: url('{{ page.hero_image | default: site.hero_image_sub | relative_url }}');">
+<section class="nds-hero-section sub {{ page.hero_style }}" aria-label="قسم العرض الرئيسي"
+    style="--hero_image: url('{{ page.hero_image_sub | default: site.hero_image_sub | relative_url }}');">
     <div class="nds-heroContent nds-content-container">
         <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
             <ol class="nds-breadcrumb">
@@ -20,8 +20,8 @@
             </ol>
         </nav>
         <div class="nds-shareablePage">
-            <h1 class="nds-heroTitle">{{ page.hero_title | default: site.title }}</h1>
-            <p class="nds-heroDesc">{{ page.hero_description | default: site.description }}</p>
+            <h1 class="nds-heroTitle">{{ page.hero_title | default: site.hero_title }}</h1>
+            <p class="nds-heroDesc">{{ page.hero_description | default: site.hero_description }}</p>
             <div id="nds-sharePage" class="nds-dropmenu">
                 <button id="nds-sharePageBtn" class="nds-btn nds-subtle nds-dropmenu-trigger nds-md">
                     <i class="hgi hgi-stroke hgi-share-01 icon"></i>
@@ -60,8 +60,8 @@
                     fetchpriority="high">
             </div>
             <div class="nds-heroContent nds-content-container" style="position: relative; z-index: 3;">
-                <h1 class="nds-heroTitle">{{ page.hero_title | default: site.title }}</h1>
-                <p class="nds-heroDesc">{{ page.hero_description | default: site.description }}</p>
+                <h1 class="nds-heroTitle">{{ page.hero_title | default: site.hero_title }}</h1>
+                <p class="nds-heroDesc">{{ page.hero_description | default: site.hero_description }}</p>
             </div>
         </div>
         <div class="swiper-pagination"></div>

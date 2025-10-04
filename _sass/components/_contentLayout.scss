@@ -88,6 +88,14 @@ main {
     border-radius: var(--radius-md);
 }
 
+.contentLayout.post .mainContent > section:first-of-type {
+    padding-top: 0;
+
+    .nds-section-content{
+        margin-top: 0;
+    }
+}
+
 /* ========================================
    MOBILE CONTENT LAYOUT
    ======================================== */

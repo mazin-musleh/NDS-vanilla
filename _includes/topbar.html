@@ -35,8 +35,8 @@
             <img src="{{ '/assets/img/dga-logo-icon.svg' | relative_url }}" width="21" height="31"
                 alt="هيئة الحكومة الرقمية" loading="lazy">
             <span id="register-text">مسجل لدى هيئة الحكومة الرقمية برقم:</span>
-            <a class="registration-number" href="https://raqmi.dga.gov.sa/platforms/DigitalStamp/ShowCertificate/4990"
-                target="_blank">20240520402</a>
+            <a class="registration-number" href="{{ page.dga_registration_url | default: site.dga_registration_url }}"
+                target="_blank">{{ page.dga_registration_number | default: site.dga_registration_number }}</a>
         </div>
     </div>
 </div>
@@ -54,7 +54,7 @@
         </button>
         <div class="infoContainer">
             <span id="nds-cityName" class="textIcon"></span>
-            <span id="nds-weatherInfo" class="textIcon" data-latitude="24.7136" data-longitude="46.6753"></span>
+            <span id="nds-weatherInfo" class="textIcon" data-latitude="{{ site.city_latitude | default: '24.7136' }}" data-longitude="{{ site.city_longitude | default: '46.6753' }}"></span>
         </div>
     </div>
 </div>

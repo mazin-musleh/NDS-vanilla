@@ -1,0 +1,11 @@
+- image: /assets/img/dga-logo-icon.svg
+  width: 71
+  height: 40
+  alt: "National Design System Logo"
+  url: "#"
+
+- image: /assets/img/2030-vision.svg
+  width: 60
+  height: 40
+  alt: "Saudi Vision 2030"
+  url: "https://www.vision2030.gov.sa/"
