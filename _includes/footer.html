@@ -13,7 +13,11 @@
                 <ul class="nds-footer-links-list">
                     {% for link in column.links %}
                     <li>
-                        <a href="{{ link.url | relative_url }}"{% if link.target %} target="{{ link.target }}"{% endif %}>
+                        {% assign url_output = link.url %}
+                        {% unless link.url contains "http" or link.url contains "mailto:" or link.url contains "#" %}
+                            {% assign url_output = link.url | relative_url %}
+                        {% endunless %}
+                        <a href="{{ url_output }}"{% if link.target %} target="{{ link.target }}"{% endif %}>
                             {% if link.icon %}<i class="hgi hgi-stroke {{ link.icon }} icon"></i> {% endif %}{{ link.label }}
                         </a>
                     </li>
@@ -66,7 +70,11 @@
             <div class="nds-footer-copyright">
                 <div class="nds-footer-links">
                     {% for link in footer_data.bottom.links %}
-                    <a class="nds-btn nds-transparent nds-oncolor nds-md" href="{{ link.url | relative_url }}">{{ link.label }}</a>
+                    {% assign url_output = link.url %}
+                    {% unless link.url contains "http" or link.url contains "mailto:" or link.url contains "#" %}
+                        {% assign url_output = link.url | relative_url %}
+                    {% endunless %}
+                    <a class="nds-btn nds-transparent nds-oncolor nds-md" href="{{ url_output }}">{{ link.label }}</a>
                     {% unless forloop.last %}<span class="nds-footer-separator">|</span>{% endunless %}
                     {% endfor %}
                 </div>

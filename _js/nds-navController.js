@@ -39,8 +39,7 @@
                 const rootStyles = getComputedStyle(document.documentElement);
                 this._staticCSS = {
                     minimalNavBp: parseInt(rootStyles.getPropertyValue('--nds-minimal-nav-bp')) || 768,
-                    transitionSpeed: parseFloat(rootStyles.getPropertyValue('--nds-transition-speed')) || 0.2,
-                    contentMaxWidth: parseFloat(rootStyles.getPropertyValue('--nds-content-MaxWidth')) || 1280
+                    transitionSpeed: parseFloat(rootStyles.getPropertyValue('--nds-transition-speed')) || 0.2
                 };
             }
             return this._staticCSS;
@@ -299,15 +298,15 @@
 
             if (container) {
                 const containerStyles = getComputedStyle(container);
-                padding = parseFloat(containerStyles.paddingLeft || 0) + 
+                padding = parseFloat(containerStyles.paddingLeft || 0) +
                          parseFloat(containerStyles.paddingRight || 0);
                 gap = parseFloat(containerStyles.gap || containerStyles.columnGap || 0);
                 if (isNaN(gap)) gap = 0;
             }
 
             const navWidth = this.getElementWidth(DOM.nav);
-            const maxWidth = state.getStaticCSS().contentMaxWidth;
-            const constraint = Math.min(navWidth, maxWidth);
+            const contentMaxWidth = container ? container.offsetWidth : (state.getStaticCSS().contentMaxWidth || 1280);
+            const constraint = Math.min(navWidth, contentMaxWidth);
 
             // Simple visible children check
             const visibleChildren = container ? Array.from(container.children).filter(child =>

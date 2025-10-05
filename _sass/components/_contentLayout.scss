@@ -217,6 +217,7 @@ main {
         img {
             max-width: 80%;
             margin: auto;
+            display: block;
 
             @include tablet(max) {
                 max-width: 100%;
