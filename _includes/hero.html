@@ -5,18 +5,13 @@
     <div class="nds-heroContent nds-content-container">
         <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
             <ol class="nds-breadcrumb">
-                <li><a href="{{ '/' | relative_url }}">Home</a></li>
+                <li><a href="{{ page.breadcrumb_root_url | default: '/' | relative_url }}">{{ page.breadcrumb_root | default: 'Home' }}</a></li>
                 {% if page.breadcrumb %}
                 {% for crumb in page.breadcrumb %}
-                {% if forloop.last %}
-                <li aria-current="page">{{ crumb }}</li>
-                {% else %}
-                <li><a href="#">{{ crumb }}</a></li>
-                {% endif %}
+                <li><a href="{% if crumb.first %}{{ crumb[1] | relative_url }}{% else %}#{% endif %}">{% if crumb.first %}{{ crumb[0] }}{% else %}{{ crumb }}{% endif %}</a></li>
                 {% endfor %}
-                {% else %}
-                <li aria-current="page">{{ page.title }}</li>
                 {% endif %}
+                <li aria-current="page">{{ page.title }}</li>
             </ol>
         </nav>
         <div class="nds-shareablePage">

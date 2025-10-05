@@ -50,20 +50,20 @@ main {
 
 }
 
-.contentLayout:not(.wSideMenu) .mainContent > section.noBg {
+.contentLayout:not(.wSideMenu) .mainContent>section.noBg {
     margin-top: var(--spacing-5xl);
 }
 
-.contentLayout:not(.wSideMenu) .mainContent > section.noBg:first-of-type {
+.contentLayout:not(.wSideMenu) .mainContent>section.noBg:first-of-type {
     margin-top: 0;
 }
 
 /* Add margin-bottom only when next element doesn't have .noBg class */
-.contentLayout:not(.wSideMenu) .mainContent > section.noBg:not(:has(+ .noBg)) {
+.contentLayout:not(.wSideMenu) .mainContent>section.noBg:not(:has(+ .noBg)) {
     margin-bottom: var(--spacing-5xl);
 }
 
-.contentLayout .mainContent > section {
+.contentLayout .mainContent>section {
     width: 100%;
     min-width: 300px;
     height: fit-content;
@@ -81,17 +81,17 @@ main {
     row-gap: 0;
 }
 
-.contentLayout.wSideMenu .mainContent > section {
+.contentLayout.wSideMenu .mainContent>section {
     width: 100%;
     min-width: 300px;
     box-shadow: var(--shadow-md);
     border-radius: var(--radius-md);
 }
 
-.contentLayout.post .mainContent > section:first-of-type {
+.contentLayout.post .mainContent>section:first-of-type {
     padding-top: 0;
 
-    .nds-section-content{
+    .nds-section-content {
         margin-top: 0;
     }
 }
@@ -101,7 +101,7 @@ main {
    ======================================== */
 
 @include tablet(max) {
-    .contentLayout .mainContent .content-section > .container {
+    .contentLayout .mainContent .content-section>.container {
         padding-left: var(--nds-viewport-padding);
         padding-right: var(--nds-viewport-padding);
     }
@@ -110,7 +110,7 @@ main {
         height: 100% !important;
     }
 
-    .contentLayout .mainContent > section {
+    .contentLayout .mainContent>section {
         height: 100% !important;
         box-shadow: unset;
         box-shadow: unset !important;
@@ -118,7 +118,7 @@ main {
     }
 }
 
-.contentLayout:not(.wSideMenu) > aside {
+.contentLayout:not(.wSideMenu)>aside {
     display: none !important;
 }
 
@@ -144,8 +144,15 @@ main {
     margin: auto;
 }
 
+
+
 .nds-content-section.noBg .nds-section-content-container {
     padding: 0 var(--spacing-lg);
+}
+
+.contentLayout:not(.wSideMenu) .nds-section-content-container {
+    padding-left: var(--nds-viewport-padding);
+    padding-right: var(--nds-viewport-padding);
 }
 
 .nds-content-section.noBg:first-of-type .nds-section-content-container {
@@ -155,6 +162,7 @@ main {
 .nds-content-section.noBg:last-of-type .nds-section-content-container {
     padding-bottom: var(--spacing-2xl);
 }
+
 
 .nds-section-head {
     margin-bottom: var(--spacing-4xl, 32px);
@@ -184,4 +192,43 @@ main {
 
 .nds-section-content {
     margin-top: var(--spacing-4xl, 32px);
+}
+
+.nds-section-content {
+
+    p {
+        color: var(--text-primary-paragraph);
+    }
+
+    p:not(:last-child),
+    ul:not(:last-child),
+    ol:not(:last-child) {
+        margin-bottom: 1rem;
+    }
+
+    h2:not(:first-child),
+    h3:not(:first-child),
+    h4:not(:first-child),
+    h5:not(:first-child) {
+        margin-top: 1rem;
+    }
+
+    article {
+        img {
+            max-width: 80%;
+            margin: auto;
+
+            @include tablet(max) {
+                max-width: 100%;
+            }
+        }
+
+        video {
+            max-height: 60vh;
+            width: auto;
+            margin: auto;
+            display: block;
+        }
+    }
+
 }

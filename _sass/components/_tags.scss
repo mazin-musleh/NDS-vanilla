@@ -280,4 +280,8 @@
   @include ltr {
     // LTR-specific group styling if needed
   }
+
+  &.article-tags {
+    margin-bottom: var(--spacing-lg);
+  }
 }

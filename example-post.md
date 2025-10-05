@@ -71,24 +71,16 @@ direction: ltr
 
                 <h2>Event Gallery</h2>
                 <p>Highlights from the launch ceremony:</p>
-                <div class="nds-cards-group" style="--max-col: 3; --min-col: 2;">
+                <div class="nds-cards-group" style="--max-col: 3; --min-col: 1;">
                     <div class="nds-card nds-ipv-image-card showZoom">
-                        <img src="/assets/img/riyadhcenter.webp" alt="Launch ceremony venue" class="nds-ipv-thumbnail">
-                        <div class="nds-card-content">
-                            <h3 class="nds-ipv-image-title">Ceremony Venue</h3>
-                        </div>
+                        <img src="./assets/img/riyadhcenter.webp" alt="Launch ceremony venue" class="nds-ipv-thumbnail">
                     </div>
                     <div class="nds-card nds-ipv-image-card showZoom">
-                        <img src="/assets/img/riyadhcenter.webp" alt="Attendees" class="nds-ipv-thumbnail">
-                        <div class="nds-card-content">
-                            <h3 class="nds-ipv-image-title">Event Attendees</h3>
-                        </div>
+                        <img src="./assets/img/riyadhcenter.webp" alt="Attendees" class="nds-ipv-thumbnail">
                     </div>
                     <div class="nds-card nds-ipv-image-card showZoom">
-                        <img src="/assets/img/riyadhcenter.webp" alt="Design system showcase" class="nds-ipv-thumbnail">
-                        <div class="nds-card-content">
-                            <h3 class="nds-ipv-image-title">System Showcase</h3>
-                        </div>
+                        <img src="./assets/img/riyadhcenter.webp" alt="Design system showcase"
+                            class="nds-ipv-thumbnail">
                     </div>
                 </div>
 
