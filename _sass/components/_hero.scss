@@ -102,7 +102,17 @@
       }
     }
   }
+
+  &.sub.flat {
+    .nds-heroContent {
+      .nds-heroDesc {
+        color: var(--text-primary-paragraph);
+      }
+    }
+  }
 }
+
+
 
 // ==============================================
 // SHARE PAGE COMPONENT
@@ -111,6 +121,7 @@
 // Share-specific adjustments only
 
 #nds-sharePage {
+
   // Share button styling
   &Btn {
     background-color: var(--background-white, #fff);
