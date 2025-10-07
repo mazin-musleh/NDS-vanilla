@@ -3,20 +3,27 @@
 
 {% include head.html %}
 
-<body class="minimal {{ page.body_class }}">
+<body class="minimal toEdge {{ page.body_class }}">
     <header>
         {% include topbar.html %}
         {% include mainNav.html %}
     </header>
     <main>
-        {{ content }}
+        <div class="contentLayout wSideMenu toEdge">
+            {% include sideMenu.html %}
+
+            <div class="mainContent">
+                {% include hero.html hero_type="sub" %}
+                {{ content }}
+            </div>
+        </div>
     </main>
 
     {% include footer.html %}
 
     <!-- Scripts -->
     <script defer src="{{ '/assets/js/nds-main.min.js' | relative_url }}?ver=1.076"></script>
-    <script defer src="{{ '/assets/js/nds-showcase.min.js' | relative_url }}?ver=1.015"></script>
+    
 </body>
 
 </html>
