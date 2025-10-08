@@ -1086,7 +1086,7 @@
 // RESPONSIVE VARIABLES - MOBILE OVERRIDES
 // ==============================================
 
-@include tablet(max) {
+@include mobile {
     :root {
         --nds-viewport-padding: calc(var(--nds-viewport-base-padding)/2);
     }
