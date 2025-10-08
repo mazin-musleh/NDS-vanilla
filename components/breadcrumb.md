@@ -3,7 +3,7 @@ layout: page
 title: Breadcrumb
 hero_title: Breadcrumb Component - National Design System
 hero_description: Navigation component showing the current page's location within the site hierarchy
-breadcrumb: ["Components", "Breadcrumb"]
+breadcrumb: ["Components"]
 lang: en
 direction: ltr
 ---

@@ -3,7 +3,7 @@ layout: page
 title: Tags
 hero_title: Tag Components - National Design System
 hero_description: A comprehensive collection of different tag styles for labeling and categorization
-breadcrumb: ["Components", "Tags"]
+breadcrumb: ["Components"]
 lang: en
 direction: ltr
 ---

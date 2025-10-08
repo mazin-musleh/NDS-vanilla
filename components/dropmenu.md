@@ -3,7 +3,7 @@ layout: page
 title: Dropmenu
 hero_title: Dropmenu Component - National Design System
 hero_description: Unified dropdown menu component for consistent dropdown patterns with accessibility support
-breadcrumb: ["Components", "Dropmenu"]
+breadcrumb: ["Components"]
 lang: en
 direction: ltr
 ---

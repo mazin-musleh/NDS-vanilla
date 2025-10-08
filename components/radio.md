@@ -3,7 +3,7 @@ layout: page
 title: Radio Button
 hero_title: Radio Button - National Design System
 hero_description: Single-selection input controls for mutually exclusive options with clear visual feedback
-breadcrumb: ["Components", "Radio Button"]
+breadcrumb: ["Components"]
 lang: en
 direction: ltr
 ---
@@ -191,8 +191,8 @@ direction: ltr
           <div class="nds-tabs nds-code withDivider">
             <div class="nds-tab-list-container">
               <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-radio-group-1"
-                  id="tab-radio-group-1">
+                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                  aria-controls="panel-radio-group-1" id="tab-radio-group-1">
                   <span class="nds-tab-label">HTML</span>
                 </button>
                 <button class="nds-btn nds-subtle nds-tab showMore"><i

@@ -3,7 +3,7 @@ layout: page
 title: Forms
 hero_title: Form Components - National Design System
 hero_description: A comprehensive collection of form input types with interactive controls and clear actions
-breadcrumb: ["Components", "Forms"]
+breadcrumb: ["Components"]
 lang: en
 direction: ltr
 ---

@@ -3,7 +3,7 @@ layout: page
 title: Date Picker
 hero_title: Date Picker Component - National Design System
 hero_description: Interactive calendar component for selecting dates with support for both Gregorian and Hijri calendars
-breadcrumb: ["Components", "Date Picker"]
+breadcrumb: ["Components"]
 lang: en
 direction: ltr
 ---
@@ -14,7 +14,8 @@ direction: ltr
     <div class="nds-section-head">
       <h2 class="nds-section-title">Date Picker Component</h2>
       <p class="nds-section-description">
-        Interactive calendar component with advanced features including Hijri calendar support, date ranges, and flexible year selection
+        Interactive calendar component with advanced features including Hijri calendar support, date ranges, and
+        flexible year selection
       </p>
     </div>
     <div class="nds-section-content">
@@ -146,7 +147,7 @@ direction: ltr
                   </button>
                 </div>
                 <div class="nds-expandable-content">
-                    <code class="lang-html code">
+                  <code class="lang-html code">
                   <div class="nds-form-container nds-date-picker">
                     <div class="nds-form-header">
                       <label for="datePickerInput">

@@ -3,7 +3,7 @@ layout: page
 title: Checkbox
 hero_title: Checkbox - National Design System
 hero_description: Multi-selection input controls with clear visual states and accessibility support
-breadcrumb: ["Components", "Checkbox"]
+breadcrumb: ["Components"]
 lang: en
 direction: ltr
 ---

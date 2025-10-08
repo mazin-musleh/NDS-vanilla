@@ -1,0 +1,171 @@
+/**
+ * NDS Modal Component - SCSS Version
+ * Modal dialog built on top of the card component with backdrop overlay
+ *
+ * Features:
+ * - Uses existing .nds-card component structure
+ * - Close button in card-header (top-right LTR, top-left RTL)
+ * - Backdrop overlay with blur effect
+ * - Smooth fade/scale animations
+ * - Size variants: SM (400px), MD (600px), LG (800px), Full
+ * - Responsive: Full-screen on mobile
+ * - Accessibility: Focus trap, ESC key, ARIA attributes
+ */
+
+@use '../mixins' as *;
+
+// ==============================================
+// MODAL BACKDROP/OVERLAY
+// ==============================================
+
+.nds-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--colors-alpha-alpha-black-60);
+  backdrop-filter: blur(4px);
+  z-index: 1100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-xl);
+  overflow-y: auto;
+
+  // Animation
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+
+  // When modal is open
+  &.nds-modal-open {
+    display: flex;
+    opacity: 1;
+  }
+
+  @include mobile {
+    padding: 0;
+  }
+}
+
+// ==============================================
+// MODAL CONTAINER (extends card)
+// ==============================================
+
+.nds-modal {
+  position: relative;
+  z-index: 1101;
+  max-height: 90vh;
+  overflow: visible;
+
+  // Animation
+  transform: scale(0.95);
+  opacity: 0;
+  transition: transform 0.3s ease-out,
+              opacity 0.3s ease-out;
+
+  // When modal is open - animate in
+  .nds-modal-open & {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  // Extend card component styles
+  &.nds-card {
+    max-width: 600px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+
+    // Remove default card max-width on mobile
+    @include mobile {
+      max-width: 100%;
+      max-height: 100vh;
+      border-radius: 0;
+      height: 100%;
+
+      .nds-card-actions .nds-btn{
+        width: 100%;
+        .label{
+          text-align: center;
+        }
+      }
+
+    }
+  }
+
+  // ==============================================
+  // MODAL CLOSE BUTTON (uses card-header)
+  // ==============================================
+
+  // Close button positioned in card header
+  .nds-modal-close {
+    position: absolute;
+    top: 0;
+    // RTL default: close button on left
+    left: 0;
+
+    @include ltr {
+      left: auto;
+      right: 0;
+    }
+
+  }
+}
+
+// ==============================================
+// SIZE VARIANTS
+// ==============================================
+
+.nds-modal.nds-sm {
+  max-width: 400px;
+}
+
+.nds-modal.nds-md {
+  max-width: 600px;
+}
+
+.nds-modal.nds-lg {
+  max-width: 800px;
+}
+
+.nds-modal.nds-full {
+  max-width: calc(100vw - var(--spacing-10xl));
+
+  @include mobile {
+    max-width: 100%;
+  }
+}
+
+// ==============================================
+// BODY SCROLL LOCK
+// ==============================================
+
+body.nds-modal-active {
+  overflow: hidden;
+
+  @include mobile {
+    position: fixed;
+    width: 100%;
+  }
+}
+
+// ==============================================
+// ACCESSIBILITY
+// ==============================================
+
+// Focus trap styles
+.nds-modal[role="dialog"] {
+  &:focus {
+    outline: none;
+  }
+}
+
+// Backdrop click target
+.nds-modal-backdrop {
+  cursor: pointer;
+}
+
+.nds-modal {
+  cursor: default;
+}

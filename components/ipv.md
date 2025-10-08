@@ -3,7 +3,7 @@ layout: page
 title: Image Popup Viewer
 hero_title: Image Popup Viewer - National Design System
 hero_description: A powerful image viewer component with zoom, pan, and pinch-to-zoom capabilities
-breadcrumb: ["Components", "Image Popup Viewer"]
+breadcrumb: ["Components"]
 lang: en
 direction: ltr
 ---
@@ -13,7 +13,8 @@ direction: ltr
     <div class="nds-section-content-container">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Image Popup Viewer</h2>
-            <p class="nds-section-description">Interactive image viewer with advanced zoom and pan controls for detailed image inspection</p>
+            <p class="nds-section-description">Interactive image viewer with advanced zoom and pan controls for detailed
+                image inspection</p>
         </div>
         <div class="nds-section-content">
             <div class="nds-demo-card">
@@ -31,25 +32,22 @@ direction: ltr
                         <div class="nds-ipv-gallery">
                             <div class="nds-ipv-image-card">
                                 <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400"
-                                     data-ipv-full="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=2000"
-                                     alt="Mountain Landscape"
-                                     class="nds-ipv-thumbnail">
+                                    data-ipv-full="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=2000"
+                                    alt="Mountain Landscape" class="nds-ipv-thumbnail">
                                 <div class="nds-ipv-image-title">Mountain Landscape</div>
                             </div>
 
                             <div class="nds-ipv-image-card">
                                 <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400"
-                                     data-ipv-full="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=2000"
-                                     alt="Forest Road"
-                                     class="nds-ipv-thumbnail">
+                                    data-ipv-full="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=2000"
+                                    alt="Forest Road" class="nds-ipv-thumbnail">
                                 <div class="nds-ipv-image-title">Forest Road</div>
                             </div>
 
                             <div class="nds-ipv-image-card">
                                 <img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=400"
-                                     data-ipv-full="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=2000"
-                                     alt="Ocean View"
-                                     class="nds-ipv-thumbnail">
+                                    data-ipv-full="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=2000"
+                                    alt="Ocean View" class="nds-ipv-thumbnail">
                                 <div class="nds-ipv-image-title">Ocean View</div>
                             </div>
                         </div>
@@ -188,82 +186,82 @@ direction: ltr
 <!-- Popup overlay is automatically created by nds-ipv.js -->
 
 <style>
-.nds-feature-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: var(--spacing-lg);
-    margin-top: var(--spacing-lg);
-}
+    .nds-feature-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: var(--spacing-lg);
+        margin-top: var(--spacing-lg);
+    }
 
-.nds-feature-item {
-    padding: var(--spacing-lg);
-    background: var(--background-neutral-50);
-    border-radius: var(--border-radius-md);
-    text-align: center;
-}
+    .nds-feature-item {
+        padding: var(--spacing-lg);
+        background: var(--background-neutral-50);
+        border-radius: var(--border-radius-md);
+        text-align: center;
+    }
 
-.nds-feature-item i {
-    font-size: 32px;
-    color: var(--colors-primary-sa-flag-600-primary);
-    margin-bottom: var(--spacing-md);
-}
+    .nds-feature-item i {
+        font-size: 32px;
+        color: var(--colors-primary-sa-flag-600-primary);
+        margin-bottom: var(--spacing-md);
+    }
 
-.nds-feature-item h3 {
-    font-size: var(--nds-text-lg-FS);
-    line-height: var(--nds-text-lg-LH);
-    font-weight: 600;
-    color: var(--text-primary-default);
-    margin-bottom: var(--spacing-sm);
-}
+    .nds-feature-item h3 {
+        font-size: var(--nds-text-lg-FS);
+        line-height: var(--nds-text-lg-LH);
+        font-weight: 600;
+        color: var(--text-primary-default);
+        margin-bottom: var(--spacing-sm);
+    }
 
-.nds-feature-item p {
-    font-size: var(--nds-text-sm-FS);
-    line-height: var(--nds-text-sm-LH);
-    color: var(--text-neutral-600);
-}
+    .nds-feature-item p {
+        font-size: var(--nds-text-sm-FS);
+        line-height: var(--nds-text-sm-LH);
+        color: var(--text-neutral-600);
+    }
 
-.nds-usage-panel {
-    background: var(--background-neutral-50);
-    border-radius: var(--border-radius-md);
-    padding: var(--spacing-lg);
-    margin-bottom: var(--spacing-md);
-}
+    .nds-usage-panel {
+        background: var(--background-neutral-50);
+        border-radius: var(--border-radius-md);
+        padding: var(--spacing-lg);
+        margin-bottom: var(--spacing-md);
+    }
 
-.nds-usage-panel h3 {
-    font-size: var(--nds-text-lg-FS);
-    line-height: var(--nds-text-lg-LH);
-    font-weight: 600;
-    color: var(--text-primary-default);
-    margin-bottom: var(--spacing-md);
-}
+    .nds-usage-panel h3 {
+        font-size: var(--nds-text-lg-FS);
+        line-height: var(--nds-text-lg-LH);
+        font-weight: 600;
+        color: var(--text-primary-default);
+        margin-bottom: var(--spacing-md);
+    }
 
-.nds-usage-panel ul,
-.nds-usage-panel ol {
-    margin-left: var(--spacing-lg);
-}
+    .nds-usage-panel ul,
+    .nds-usage-panel ol {
+        margin-left: var(--spacing-lg);
+    }
 
-.nds-usage-panel li {
-    margin-bottom: var(--spacing-sm);
-    color: var(--text-neutral-700);
-}
+    .nds-usage-panel li {
+        margin-bottom: var(--spacing-sm);
+        color: var(--text-neutral-700);
+    }
 
-.nds-usage-panel kbd {
-    background: var(--background-neutral-100);
-    border: 1px solid var(--border-neutral-default);
-    border-radius: 4px;
-    padding: 2px 8px;
-    font-family: monospace;
-    font-size: var(--nds-text-sm-FS);
-}
+    .nds-usage-panel kbd {
+        background: var(--background-neutral-100);
+        border: 1px solid var(--border-neutral-default);
+        border-radius: 4px;
+        padding: 2px 8px;
+        font-family: monospace;
+        font-size: var(--nds-text-sm-FS);
+    }
 
-.nds-usage-panel code {
-    background: var(--background-neutral-100);
-    border-radius: 4px;
-    padding: 2px 6px;
-    font-family: monospace;
-    font-size: var(--nds-text-sm-FS);
-    color: var(--colors-primary-sa-flag-700);
-}
+    .nds-usage-panel code {
+        background: var(--background-neutral-100);
+        border-radius: 4px;
+        padding: 2px 6px;
+        font-family: monospace;
+        font-size: var(--nds-text-sm-FS);
+        color: var(--colors-primary-sa-flag-700);
+    }
 </style>
 
 <!-- IPV is now included in nds-main.min.js bundle -->

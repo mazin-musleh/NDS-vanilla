@@ -3,7 +3,7 @@ layout: page
 title: Chips
 hero_title: Chip Components - National Design System
 hero_description: Interactive elements for tags, categories, selections, and filtering
-breadcrumb: ["Components", "Chips"]
+breadcrumb: ["Components"]
 lang: en
 direction: ltr
 ---

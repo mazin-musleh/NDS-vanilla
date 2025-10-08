@@ -1,22 +1,22 @@
 ---
 layout: dashboard
-title: لوحة الأداء الشخصية
-hero_title: لوحة الأداء الشخصية
-hero_description: تتبع إنجازاتك الشخصية ومقارنتك في المجتمع
-lang: ar
-direction: rtl
+title: Dashboard Demo
+hero_title: Operations Dashboard Demo
+hero_description: A sample operations dashboard showcasing National Design System components working together.
+lang: en
+direction: ltr
 ---
 
 <!-- Statistics Overview Section -->
 <section id="statisticsOverview" class="nds-content-section">
     <div class="nds-section-content-container">
         <div class="nds-section-head">
-            <h2 class="nds-section-title">إحصائيات الأداء</h2>
-            <p class="nds-section-description">نظرة عامة على مؤشرات الأداء الرئيسية</p>
+            <h2 class="nds-section-title">Key Performance Metrics</h2>
+            <p class="nds-section-description">High-level indicators refreshed every 15 minutes to keep teams aligned.</p>
         </div>
         <div class="nds-section-content">
             <div class="nds-cards-group" style="--max-col: 6; --min-col: 2;">
-                <!-- Points Card -->
+                <!-- Completed Projects Card -->
                 <div class="nds-card nds-stroke nds-statistic">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
@@ -27,13 +27,13 @@ direction: rtl
                     </div>
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <span class="nds-counter-value nds-number-format" data-target="430">0</span>
-                            <p class="nds-card-description">النقاط</p>
+                            <span class="nds-counter-value nds-number-format" data-target="128">0</span>
+                            <p class="nds-card-description">Projects completed this quarter</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Rewards Card -->
+                <!-- Open Requests Card -->
                 <div class="nds-card nds-stroke nds-statistic">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
@@ -44,13 +44,13 @@ direction: rtl
                     </div>
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <span class="nds-counter-value nds-number-format" data-target="0">0</span>
-                            <p class="nds-card-description">الجوائز</p>
+                            <span class="nds-counter-value nds-number-format" data-target="18">0</span>
+                            <p class="nds-card-description">Open employee recognition requests</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Badges Card -->
+                <!-- Team Awards Card -->
                 <div class="nds-card nds-stroke nds-statistic">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
@@ -62,12 +62,12 @@ direction: rtl
                     <div class="nds-card-content">
                         <div class="nds-card-text">
                             <span class="nds-counter-value nds-number-format" data-target="4">0</span>
-                            <p class="nds-card-description">الشارات</p>
+                            <p class="nds-card-description">Teams nominated for monthly spotlight</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Success Opportunities Card -->
+                <!-- Strategic Goals Card -->
                 <div class="nds-card nds-stroke nds-statistic">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
@@ -78,13 +78,13 @@ direction: rtl
                     </div>
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <span class="nds-counter-value nds-number-format" data-target="0">0</span>
-                            <p class="nds-card-description">فرص النجاح</p>
+                            <span class="nds-counter-value nds-number-format" data-target="7">0</span>
+                            <p class="nds-card-description">Strategic initiatives on track</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Attendance Card -->
+                <!-- Meetings Card -->
                 <div class="nds-card nds-stroke nds-statistic">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
@@ -95,13 +95,13 @@ direction: rtl
                     </div>
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <span class="nds-counter-value nds-number-format" data-target="0">0</span>
-                            <p class="nds-card-description">الحضور</p>
+                            <span class="nds-counter-value nds-number-format" data-target="12">0</span>
+                            <p class="nds-card-description">Leadership reviews scheduled this week</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Skills Card -->
+                <!-- Satisfaction Score Card -->
                 <div class="nds-card nds-stroke nds-statistic">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
@@ -112,8 +112,8 @@ direction: rtl
                     </div>
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <span class="nds-counter-value nds-number-format" data-target="0">0</span>
-                            <p class="nds-card-description">المهارات</p>
+                            <span class="nds-counter-value nds-number-format" data-target="92">0</span>
+                            <p class="nds-card-description">Customer satisfaction score (CSAT)</p>
                         </div>
                     </div>
                 </div>
@@ -126,8 +126,8 @@ direction: rtl
 <section id="quickUpdates" class="nds-content-section">
     <div class="nds-section-content-container">
         <div class="nds-section-head">
-            <h2 class="nds-section-title">التحديثات السريعة</h2>
-            <p class="nds-section-description">آخر الأخبار والإعلانات والمُستجدات</p>
+            <h2 class="nds-section-title">Quick Updates</h2>
+            <p class="nds-section-description">Latest announcements and action items relevant to the operations team.</p>
         </div>
         <div class="nds-section-content">
             <div class="nds-cards-group" style="--max-col: 3; --min-col: 1;">
@@ -142,22 +142,21 @@ direction: rtl
                     </div>
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">أسماء الفائزين بجائزة المملكة وأداء المعرض</h3>
-                            <p class="nds-card-description">تهانينا بإنجاز الأسماء لجائزة المملكة المرموقة والأداء
-                                المتميز في المعرض السنوي للتطوير الرقمي</p>
+                            <h3 class="nds-card-title">Security audit kickoff scheduled</h3>
+                            <p class="nds-card-description">Audit partners arrive Monday to review access controls, data retention, and recovery playbooks with department leads.</p>
                         </div>
                         <div class="nds-card-meta">
                             <div class="nds-card-tags">
                                 <span class="nds-tag nds-neutral nds-sm">
                                     <i class="hgi hgi-stroke hgi-calendar-01 icon"></i>
-                                    <span class="label">٢٣ أكتوبر ٢٠٢٥</span>
+                                    <span class="label">Due 14 Oct</span>
                                 </span>
                             </div>
                         </div>
                     </div>
                     <div class="nds-card-actions">
                         <a href="#" class="nds-btn nds-secondary-outline nds-lg">
-                            <span class="label">اقرأ المزيد</span>
+                            <span class="label">View details</span>
                         </a>
                     </div>
                 </div>
@@ -173,22 +172,21 @@ direction: rtl
                     </div>
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">إعلان استقبال المجندين</h3>
-                            <p class="nds-card-description">تعلن مديرية التجنيد والقبول الآن عن استقبال طلبات التسجيل
-                                للدورة الجديدة من التأهيل والتدريب</p>
+                            <h3 class="nds-card-title">All-hands prep and run of show</h3>
+                            <p class="nds-card-description">Finalize presentation slides, confirm panel speakers, and prepare the Q&amp;A queue before Thursday’s global all-hands.</p>
                         </div>
                         <div class="nds-card-meta">
                             <div class="nds-card-tags">
                                 <span class="nds-tag nds-neutral nds-sm">
                                     <i class="hgi hgi-stroke hgi-calendar-01 icon"></i>
-                                    <span class="label">٢٢ أكتوبر ٢٠٢٥</span>
+                                    <span class="label">Due 17 Oct</span>
                                 </span>
                             </div>
                         </div>
                     </div>
                     <div class="nds-card-actions">
                         <a href="#" class="nds-btn nds-secondary-outline nds-lg">
-                            <span class="label">اقرأ المزيد</span>
+                            <span class="label">View agenda</span>
                         </a>
                     </div>
                 </div>
@@ -204,22 +202,21 @@ direction: rtl
                     </div>
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">تحديث البيانات الشخصية</h3>
-                            <p class="nds-card-description">يرجى تحديث بياناتك الشخصية من خلال المنصة الرقمية لضمان دقة
-                                المعلومات وتوافقها مع السجلات الرسمية</p>
+                            <h3 class="nds-card-title">Knowledge base refresh in progress</h3>
+                            <p class="nds-card-description">Support articles now include revised SLA guidance, escalation matrix, and localized quick-start instructions.</p>
                         </div>
                         <div class="nds-card-meta">
                             <div class="nds-card-tags">
                                 <span class="nds-tag nds-neutral nds-sm">
                                     <i class="hgi hgi-stroke hgi-calendar-01 icon"></i>
-                                    <span class="label">٢١ أكتوبر ٢٠٢٥</span>
+                                    <span class="label">Draft review 21 Oct</span>
                                 </span>
                             </div>
                         </div>
                     </div>
                     <div class="nds-card-actions">
                         <a href="#" class="nds-btn nds-secondary-outline nds-lg">
-                            <span class="label">اقرأ المزيد</span>
+                            <span class="label">Open workspace</span>
                         </a>
                     </div>
                 </div>
@@ -232,8 +229,8 @@ direction: rtl
 <section id="personalMetrics" class="nds-content-section">
     <div class="nds-section-content-container">
         <div class="nds-section-head">
-            <h2 class="nds-section-title">مقاييس أدائك الشخصي</h2>
-            <p class="nds-section-description">تتبع إنجازاتك الشخصية ومقارنتك في المجتمع</p>
+            <h2 class="nds-section-title">My Operational Snapshot</h2>
+            <p class="nds-section-description">Track your current workload, progress, and notifications at a glance.</p>
         </div>
         <div class="nds-section-content">
             <div class="nds-cards-group" style="--max-col: 3; --min-col: 1;">
@@ -242,13 +239,13 @@ direction: rtl
                     <div class="nds-card-content">
                         <div class="nds-card-text">
                             <span class="nds-counter-value nds-number-format" data-target="9450">0</span>
-                            <p class="nds-card-description">المعدل الإجمالي للمستخدمين</p>
+                            <p class="nds-card-description">Monthly visits to your product pages</p>
                         </div>
                         <div class="nds-card-meta">
                             <div class="nds-card-tags">
                                 <span class="nds-tag nds-success nds-sm">
                                     <i class="hgi hgi-stroke hgi-trend-up icon"></i>
-                                    <span class="label">+٢٪ عن الشهر الماضي</span>
+                                    <span class="label">Up 12% vs last month</span>
                                 </span>
                             </div>
                         </div>
@@ -256,7 +253,7 @@ direction: rtl
                     <div class="nds-card-actions">
                         <button class="nds-btn nds-primary nds-lg">
                             <i class="hgi hgi-stroke hgi-chart-line icon"></i>
-                            <span class="label">عرض التفاصيل</span>
+                            <span class="label">View traffic trends</span>
                         </button>
                     </div>
                 </div>
@@ -265,14 +262,14 @@ direction: rtl
                 <div class="nds-card nds-stroke">
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <span class="nds-counter-value nds-number-format" data-target="0">0</span>
-                            <p class="nds-card-description">المهام قيد الانتظار</p>
+                            <span class="nds-counter-value nds-number-format" data-target="32">0</span>
+                            <p class="nds-card-description">Requests waiting for your approval</p>
                         </div>
                         <div class="nds-card-meta">
                             <div class="nds-card-tags">
                                 <span class="nds-tag nds-neutral nds-sm">
                                     <i class="hgi hgi-stroke hgi-hourglass icon"></i>
-                                    <span class="label">لا يوجد مهام معلقة</span>
+                                    <span class="label">3 due today</span>
                                 </span>
                             </div>
                         </div>
@@ -280,7 +277,7 @@ direction: rtl
                     <div class="nds-card-actions">
                         <button class="nds-btn nds-primary nds-lg">
                             <i class="hgi hgi-stroke hgi-task icon"></i>
-                            <span class="label">إضافة مهمة</span>
+                            <span class="label">Review requests</span>
                         </button>
                     </div>
                 </div>
@@ -289,14 +286,14 @@ direction: rtl
                 <div class="nds-card nds-stroke">
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <span class="nds-counter-value nds-number-format" data-target="0">0</span>
-                            <p class="nds-card-description">الإشعارات الجديدة</p>
+                            <span class="nds-counter-value nds-number-format" data-target="18">0</span>
+                            <p class="nds-card-description">New alerts from observed services</p>
                         </div>
                         <div class="nds-card-meta">
                             <div class="nds-card-tags">
                                 <span class="nds-tag nds-info nds-sm">
                                     <i class="hgi hgi-stroke hgi-bell-01 icon"></i>
-                                    <span class="label">جميع الإشعارات مقروءة</span>
+                                    <span class="label">Escalations enabled</span>
                                 </span>
                             </div>
                         </div>
@@ -304,7 +301,7 @@ direction: rtl
                     <div class="nds-card-actions">
                         <button class="nds-btn nds-primary nds-lg">
                             <i class="hgi hgi-stroke hgi-notification icon"></i>
-                            <span class="label">إعدادات الإشعارات</span>
+                            <span class="label">Manage alerts</span>
                         </button>
                     </div>
                 </div>
@@ -317,8 +314,8 @@ direction: rtl
 <section id="communityNotifications" class="nds-content-section">
     <div class="nds-section-content-container">
         <div class="nds-section-head">
-            <h2 class="nds-section-title">تنبيهات المجتمع</h2>
-            <p class="nds-section-description">استكشف، مجدد، المتابعات والمشاركات</p>
+            <h2 class="nds-section-title">Community Notifications</h2>
+            <p class="nds-section-description">Stay in sync with updates from partners and teams you collaborate with.</p>
         </div>
         <div class="nds-section-content">
             <div class="nds-tabs" id="communityTabs">
@@ -327,22 +324,22 @@ direction: rtl
                         <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                             aria-controls="panel-all" id="tab-all" tabindex="0">
                             <i class="hgi hgi-stroke hgi-users-01 icon"></i>
-                            <span class="label">الجميع</span>
+                            <span class="label">All</span>
                         </button>
                         <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
                             aria-controls="panel-new" id="tab-new" tabindex="-1">
                             <i class="hgi hgi-stroke hgi-star icon"></i>
-                            <span class="label">الجديد</span>
+                            <span class="label">New</span>
                         </button>
                         <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
                             aria-controls="panel-following" id="tab-following" tabindex="-1">
                             <i class="hgi hgi-stroke hgi-user-check-01 icon"></i>
-                            <span class="label">المتابعون</span>
+                            <span class="label">Following</span>
                         </button>
                         <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
                             aria-controls="panel-popular" id="tab-popular" tabindex="-1">
                             <i class="hgi hgi-stroke hgi-trending-up icon"></i>
-                            <span class="label">الرائج</span>
+                            <span class="label">Popular</span>
                         </button>
                     </nav>
                 </div>
@@ -352,10 +349,10 @@ direction: rtl
                         <table class="nds-table">
                             <thead>
                                 <tr>
-                                    <th>الاسم</th>
-                                    <th>الاسم الشخصي</th>
-                                    <th>الجنسية</th>
-                                    <th>الإجراءات</th>
+                                    <th>Name</th>
+                                    <th>Username</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -365,18 +362,18 @@ direction: rtl
                                             <span class="nds-avatar nds-md">
                                                 <img src="https://via.placeholder.com/40" alt="User">
                                             </span>
-                                            <span>محمد أحمد</span>
+                                            <span>Sara Ibrahim</span>
                                         </div>
                                     </td>
-                                    <td>mohammed.ahmed</td>
+                                    <td>sara.ibrahim</td>
                                     <td>
                                         <span class="nds-tag nds-neutral nds-sm">
-                                            <span class="label">السعودية</span>
+                                            <span class="label">Project sponsor</span>
                                         </span>
                                     </td>
                                     <td>
                                         <button class="nds-btn nds-subtle nds-sm">
-                                            <span class="label">عرض الملف</span>
+                                            <span class="label">View profile</span>
                                         </button>
                                     </td>
                                 </tr>
@@ -386,18 +383,18 @@ direction: rtl
                                             <span class="nds-avatar nds-md">
                                                 <img src="https://via.placeholder.com/40" alt="User">
                                             </span>
-                                            <span>فاطمة علي</span>
+                                            <span>Omar Khalid</span>
                                         </div>
                                     </td>
-                                    <td>fatima.ali</td>
+                                    <td>omar.khalid</td>
                                     <td>
                                         <span class="nds-tag nds-neutral nds-sm">
-                                            <span class="label">السعودية</span>
+                                            <span class="label">Key contributor</span>
                                         </span>
                                     </td>
                                     <td>
                                         <button class="nds-btn nds-subtle nds-sm">
-                                            <span class="label">عرض الملف</span>
+                                            <span class="label">View profile</span>
                                         </button>
                                     </td>
                                 </tr>
@@ -407,18 +404,18 @@ direction: rtl
                                             <span class="nds-avatar nds-md">
                                                 <img src="https://via.placeholder.com/40" alt="User">
                                             </span>
-                                            <span>عبدالله سعيد</span>
+                                            <span>Lamia Alqahtani</span>
                                         </div>
                                     </td>
-                                    <td>abdullah.saeed</td>
+                                    <td>lamia.alqahtani</td>
                                     <td>
                                         <span class="nds-tag nds-neutral nds-sm">
-                                            <span class="label">السعودية</span>
+                                            <span class="label">Onboarding</span>
                                         </span>
                                     </td>
                                     <td>
                                         <button class="nds-btn nds-subtle nds-sm">
-                                            <span class="label">عرض الملف</span>
+                                            <span class="label">View profile</span>
                                         </button>
                                     </td>
                                 </tr>
@@ -429,19 +426,19 @@ direction: rtl
                     <!-- New Tab Panel -->
                     <div class="nds-tab-panel" role="tabpanel" id="panel-new" aria-labelledby="tab-new" tabindex="0"
                         hidden>
-                        <p>محتوى الجديد سيظهر هنا</p>
+                        <p>Three new workspace invitations and two access requests require your review.</p>
                     </div>
 
                     <!-- Following Tab Panel -->
                     <div class="nds-tab-panel" role="tabpanel" id="panel-following" aria-labelledby="tab-following"
                         tabindex="0" hidden>
-                        <p>محتوى المتابعون سيظهر هنا</p>
+                        <p>Teams you follow have published updates on service SLAs and inventory forecasts.</p>
                     </div>
 
                     <!-- Popular Tab Panel -->
                     <div class="nds-tab-panel" role="tabpanel" id="panel-popular" aria-labelledby="tab-popular"
                         tabindex="0" hidden>
-                        <p>محتوى الرائج سيظهر هنا</p>
+                        <p>Trending topics include incident retrospectives and the new vendor onboarding workflow.</p>
                     </div>
                 </div>
             </div>

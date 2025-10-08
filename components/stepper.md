@@ -3,7 +3,7 @@ layout: page
 title: Stepper
 hero_title: Stepper Components - National Design System
 hero_description: Progress indicator components for multi-step processes and workflows
-breadcrumb: ["Components", "Stepper"]
+breadcrumb: ["Components"]
 lang: en
 direction: ltr
 ---
@@ -99,15 +99,15 @@ direction: ltr
                             </nav>
                         </div>
                         <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-data-attr-1"
-                                aria-labelledby="tab-data-attr-1">
+                            <div class="nds-tab-panel code-example nds-expandable" role="tabpanel"
+                                id="panel-data-attr-1" aria-labelledby="tab-data-attr-1">
                                 <div class="nds-code-action">
                                     <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
                                 <div class="nds-expandable-content">
-                                <code class="lang-html code">
+                                    <code class="lang-html code">
                                     <!-- Government service application stepper -->
                                     <div class="nds-stepper" id="stepper-1" data-current="2" data-total="3">
                                         <div class="nds-stepper-step completed has-line">
@@ -139,7 +139,7 @@ direction: ltr
                                         </div>
                                     </div>
                                     </code>
-                            </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -251,7 +251,7 @@ direction: ltr
                                     </button>
                                 </div>
                                 <div class="nds-expandable-content">
-                                <code class="lang-html code">
+                                    <code class="lang-html code">
                                     <!-- Radial stepper with progress circle -->
                                     <div class="nds-stepper nds-radial" id="stepper-radial" data-current="2" data-total="4">
                                         <div class="progress-circle">
@@ -306,7 +306,7 @@ direction: ltr
                                         </div>
                                     </div>
                                     </code>
-                            </div>
+                                </div>
                             </div>
                         </div>
                     </div>

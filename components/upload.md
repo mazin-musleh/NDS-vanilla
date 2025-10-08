@@ -3,7 +3,7 @@ layout: page
 title: File Upload
 hero_title: File Upload Component - National Design System
 hero_description: A comprehensive file upload component with drag-and-drop support, progress tracking, and validation
-breadcrumb: ["Components", "File Upload"]
+breadcrumb: ["Components"]
 lang: en
 direction: ltr
 ---
@@ -145,7 +145,7 @@ direction: ltr
                   </button>
                 </div>
                 <div class="nds-expandable-content">
-                    <code class="lang-html code">
+                  <code class="lang-html code">
                   <div class="nds-form-container nds-file-upload multi-file-upload dropBox">
                     <div class="nds-form-header hidden">
                       <label for="multiFileUpload">
@@ -241,7 +241,7 @@ direction: ltr
                     </button>
                   </div>
                   <div class="nds-expandable-content">
-                      <code class="lang-javascript">
+                    <code class="lang-javascript">
 // Get controller instance
 const uploadElement = document.querySelector('.nds-file-upload');
 const fileUpload = uploadElement.ndsFileUpload;
@@ -264,7 +264,7 @@ fileUpload.startUpload(fileId);
                     </button>
                   </div>
                   <div class="nds-expandable-content">
-                      <code class="lang-html">
+                    <code class="lang-html">
                     <div class="nds-file-upload" data-upload-url="/api/upload"  data-auto-upload="true"  data-max-files="5"  data-max-file-size="10485760"  data-accepted-types="image/*,.pdf,.docx"></div>
                       </code>
                   </div>
@@ -292,7 +292,7 @@ fileUpload.startUpload(fileId);
                     </button>
                   </div>
                   <div class="nds-expandable-content">
-                      <code class="lang-javascript">
+                    <code class="lang-javascript">
 const fileId = fileUpload.addFile(file, {
   status: 'ready',    // Initial status
   progress: 0,        // Initial progress (0-100)
@@ -312,7 +312,7 @@ const fileId = fileUpload.addFile(file, {
                     </button>
                   </div>
                   <div class="nds-expandable-content">
-                      <code class="lang-javascript">
+                    <code class="lang-javascript">
 const success = fileUpload.removeFile(fileId);
 // Returns: boolean (true if file was removed)
                       </code>
@@ -328,7 +328,7 @@ const success = fileUpload.removeFile(fileId);
                     </button>
                   </div>
                   <div class="nds-expandable-content">
-                      <code class="lang-javascript">
+                    <code class="lang-javascript">
 fileUpload.clearAllFiles();
                       </code>
                   </div>
@@ -345,7 +345,7 @@ fileUpload.clearAllFiles();
                     </button>
                   </div>
                   <div class="nds-expandable-content">
-                      <code class="lang-javascript">
+                    <code class="lang-javascript">
 const fileData = fileUpload.getFile(fileId);
 // Returns: { file, id, status, progress, error, response }
                       </code>
@@ -361,7 +361,7 @@ const fileData = fileUpload.getFile(fileId);
                     </button>
                   </div>
                   <div class="nds-expandable-content">
-                      <code class="lang-javascript">
+                    <code class="lang-javascript">
 const allFiles = fileUpload.getAllFiles();
 // Returns: Array of file objects
                       </code>
@@ -377,7 +377,7 @@ const allFiles = fileUpload.getAllFiles();
                     </button>
                   </div>
                   <div class="nds-expandable-content">
-                      <code class="lang-javascript">
+                    <code class="lang-javascript">
 const readyFiles = fileUpload.getFilesByStatus('ready');
 const uploadingFiles = fileUpload.getFilesByStatus('uploading');
 const completedFiles = fileUpload.getFilesByStatus('complete');
@@ -396,7 +396,7 @@ const completedFiles = fileUpload.getFilesByStatus('complete');
                     </button>
                   </div>
                   <div class="nds-expandable-content">
-                      <code class="lang-javascript">
+                    <code class="lang-javascript">
 fileUpload.setFileStatus(fileId, 'error', {
     error: 'Upload failed',
     progress: 0
@@ -414,7 +414,7 @@ fileUpload.setFileStatus(fileId, 'error', {
                     </button>
                   </div>
                   <div class="nds-expandable-content">
-                      <code class="lang-javascript">
+                    <code class="lang-javascript">
 fileUpload.setFileProgress(fileId, 75); // 75% complete
                       </code>
                   </div>
@@ -431,7 +431,7 @@ fileUpload.setFileProgress(fileId, 75); // 75% complete
                     </button>
                   </div>
                   <div class="nds-expandable-content">
-                      <code class="lang-javascript">
+                    <code class="lang-javascript">
 fileUpload.startUpload(fileId);  // Upload specific file
 fileUpload.startUpload();        // Upload all ready files
                       </code>
@@ -449,7 +449,7 @@ fileUpload.startUpload();        // Upload all ready files
                     </button>
                   </div>
                   <div class="nds-expandable-content">
-                      <code class="lang-javascript">
+                    <code class="lang-javascript">
 const uploadElement = document.querySelector('.nds-file-upload');
 
 uploadElement.addEventListener('filesSelected', (e) => {
@@ -497,7 +497,7 @@ uploadElement.addEventListener('uploadError', (e) => {
                     </button>
                   </div>
                   <div class="nds-expandable-content">
-                      <code class="lang-javascript">
+                    <code class="lang-javascript">
 // Get controller reference
 const uploadElement = document.querySelector('.nds-file-upload');
 const fileUpload = uploadElement.ndsFileUpload;
