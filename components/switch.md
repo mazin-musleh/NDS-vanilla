@@ -3,7 +3,7 @@ layout: page
 title: Switch
 hero_title: Switch - National Design System
 hero_description: Toggle switches for binary choices with clear visual feedback and accessibility support
-breadcrumb: ["Components", "Switch"]
+breadcrumb: ["Components"]
 lang: en
 direction: ltr
 ---

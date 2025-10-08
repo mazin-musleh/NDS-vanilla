@@ -3,7 +3,7 @@ layout: page
 title: Feedback Icons
 hero_title: Feedback Icon Components - National Design System
 hero_description: Circular status icons with predefined content for system feedback and user interface states
-breadcrumb: ["Components", "Feedback Icons"]
+breadcrumb: ["Components"]
 lang: en
 direction: ltr
 ---

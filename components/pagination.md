@@ -3,7 +3,7 @@ layout: page
 title: Pagination
 hero_title: Pagination Component - National Design System
 hero_description: Navigation component for paginated content with button indicators
-breadcrumb: ["Components", "Pagination"]
+breadcrumb: ["Components"]
 lang: en
 direction: ltr
 ---

@@ -3,7 +3,7 @@ layout: page
 title: Featured Icons
 hero_title: Featured Icon Components - National Design System
 hero_description: Circular background containers with centered icons for highlighting content and creating visual focus
-breadcrumb: ["Components", "Featured Icons"]
+breadcrumb: ["Components"]
 lang: en
 direction: ltr
 ---

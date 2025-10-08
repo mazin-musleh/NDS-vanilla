@@ -3,7 +3,7 @@ layout: page
 title: Cards
 hero_title: Card Components - National Design System
 hero_description: Card components for displaying content with featured icons, tags, ratings, buttons, and checkboxes
-breadcrumb: ["Components", "Cards"]
+breadcrumb: ["Components"]
 lang: en
 direction: ltr
 ---

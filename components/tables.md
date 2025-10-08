@@ -3,7 +3,7 @@ layout: page
 title: Tables
 hero_title: Table Components - National Design System
 hero_description: Responsive data tables with consistent styling and interactive features
-breadcrumb: ["Components", "Tables"]
+breadcrumb: ["Components"]
 lang: en
 direction: ltr
 ---

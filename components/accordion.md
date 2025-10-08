@@ -4,7 +4,7 @@ title: Accordion
 hero_title: Accordion Components - National Design System
 hero_description: "Collapsible accordion components for organizing content with proper ARIA accessibility and smooth
 animations"
-breadcrumb: ["Components", "Accordion"]
+breadcrumb: ["Components"]
 lang: en
 direction: ltr
 css_files:

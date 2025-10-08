@@ -3,7 +3,7 @@ layout: page
 title: Buttons
 hero_title: Button Components - National Design System
 hero_description: A comprehensive collection of different button styles according to Figma specifications
-breadcrumb: ["Components", "Buttons"]
+breadcrumb: ["Components"]
 lang: en
 direction: ltr
 ---

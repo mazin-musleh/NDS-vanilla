@@ -3,7 +3,7 @@ layout: page
 title: Avatar
 hero_title: Avatar Components - National Design System
 hero_description: Avatars represent users or entities with initials, icons, or images in various sizes and shapes
-breadcrumb: ["Components", "Avatar"]
+breadcrumb: ["Components"]
 lang: en
 direction: ltr
 ---

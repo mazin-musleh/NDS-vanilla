@@ -11,6 +11,10 @@
     - label: "Example Post"
       url: "/example-post"
       href: "/example-post.html"
+    - label: "dashboard-demo"
+      url: "/dashboard-demo"
+      href: "/dashboard-demo.html"
+      
 
 - label: "Components"
   has_sub: true
@@ -54,6 +58,9 @@
     - label: "Image Popup Viewer"
       url: "/components/ipv"
       href: "/components/ipv.html"
+    - label: "Modal"
+      url: "/components/modal"
+      href: "/components/modal.html"
     - label: "Pagination"
       url: "/components/pagination"
       href: "/components/pagination.html"

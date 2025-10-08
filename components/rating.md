@@ -3,7 +3,7 @@ layout: page
 title: Rating
 hero_title: Rating Components - National Design System
 hero_description: Star rating components with multiple states and styles based on Figma specifications
-breadcrumb: ["Components", "Rating"]
+breadcrumb: ["Components"]
 lang: en
 direction: ltr
 ---
@@ -69,15 +69,15 @@ direction: ltr
                             </nav>
                         </div>
                         <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-rating-display"
-                                aria-labelledby="tab-rating-display">
+                            <div class="nds-tab-panel code-example nds-expandable" role="tabpanel"
+                                id="panel-rating-display" aria-labelledby="tab-rating-display">
                                 <div class="nds-code-action">
                                     <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
                                 <div class="nds-expandable-content">
-                                <code class="lang-html code">
+                                    <code class="lang-html code">
 <div class="nds-rating nds-md" data-rating="3.5">
   <span class="nds-rating-star"></span>
   <span class="nds-rating-star"></span>
@@ -86,7 +86,7 @@ direction: ltr
   <span class="nds-rating-star"></span>
 </div>
                                     </code>
-                            </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -174,15 +174,15 @@ direction: ltr
                             </nav>
                         </div>
                         <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-rating-interactive"
-                                aria-labelledby="tab-rating-interactive">
+                            <div class="nds-tab-panel code-example nds-expandable" role="tabpanel"
+                                id="panel-rating-interactive" aria-labelledby="tab-rating-interactive">
                                 <div class="nds-code-action">
                                     <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
                                 <div class="nds-expandable-content">
-                                <code class="lang-html code">
+                                    <code class="lang-html code">
 <div class="nds-rating nds-md interactive" data-rating="0">
   <button class="nds-rating-star" type="button" aria-label="1 star"></button>
   <button class="nds-rating-star" type="button" aria-label="2 stars"></button>
@@ -191,7 +191,7 @@ direction: ltr
   <button class="nds-rating-star" type="button" aria-label="5 stars"></button>
 </div>
                                     </code>
-                            </div>
+                                </div>
                             </div>
                         </div>
                     </div>

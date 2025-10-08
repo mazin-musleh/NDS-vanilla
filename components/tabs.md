@@ -3,7 +3,7 @@ layout: page
 title: Tabs
 hero_title: Tab Components - National Design System
 hero_description: Interactive tab navigation components with proper ARIA accessibility and content switching
-breadcrumb: ["Components", "Tabs"]
+breadcrumb: ["Components"]
 lang: en
 direction: ltr
 ---
