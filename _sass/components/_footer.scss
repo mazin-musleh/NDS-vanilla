@@ -38,12 +38,7 @@
 .nds-footer-links-list {
     list-style: none;
     padding: 0;
-    margin: 0 16px;
-
-    * {
-        color: var(--text-oncolor-primary, #fff);
-        text-decoration: none;
-    }
+    margin: 0;
 
     >li {
         padding: 4px 0;
@@ -54,12 +49,6 @@
         align-items: center;
         gap: 0.5rem;
         font-size: 0.9rem;
-        transition: all 0.3s ease;
-
-        &:hover {
-            text-decoration: underline;
-            color: var(--text-oncolor-primary, #fff);
-        }
 
         i {
             font-size: 1rem;
@@ -226,7 +215,7 @@
             text-align: center;
         }
 
-        .nds-footer-copyright .nds-footer-links {
+        .nds-footer-copyright .nds-footer-links,#authorCopyright {
             justify-content: center;
         }
 
