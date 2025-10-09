@@ -17,8 +17,8 @@
                         {% unless link.url contains "http" or link.url contains "mailto:" or link.url contains "#" %}
                             {% assign url_output = link.url | relative_url %}
                         {% endunless %}
-                        <a href="{{ url_output }}"{% if link.target %} target="{{ link.target }}"{% endif %}>
-                            {% if link.icon %}<i class="hgi hgi-stroke {{ link.icon }} icon"></i> {% endif %}{{ link.label }}
+                        <a class="nds-btn nds-transparent nds-oncolor nds-md" href="{{ url_output }}"{% if link.target %} target="{{ link.target }}"{% endif %}>
+                            {% if link.icon %}<i class="hgi hgi-stroke {{ link.icon }} icon"></i> {% endif %}<span class="label">{{ link.label }}</span>
                         </a>
                     </li>
                     {% endfor %}
@@ -28,7 +28,7 @@
                 {% if column.social_icons %}
                 <div class="nds-footer-social-icons">
                     {% for social in column.social_icons %}
-                    <a href="{{ social.url }}" class="nds-footer-social-icon" aria-label="{{ social.label }}">
+                    <a class="nds-btn nds-transparent nds-oncolor nds-md" href="{{ social.url }}" class="nds-footer-social-icon" aria-label="{{ social.label }}">
                         <i class="hgi hgi-stroke {{ social.icon }}"></i>
                     </a>
                     {% endfor %}
@@ -39,7 +39,7 @@
                 <h2 class="nds-footer-heading">{{ column.mobile_apps.heading }}</h2>
                 <div class="nds-footer-mobile-app-icons">
                     {% for app in column.mobile_apps.apps %}
-                    <a href="{{ app.url }}" target="_blank" class="nds-footer-app-icon" aria-label="{{ app.label }}">
+                    <a class="nds-btn nds-transparent nds-oncolor nds-md" href="{{ app.url }}" target="_blank" class="nds-footer-app-icon" aria-label="{{ app.label }}">
                         {% if app.type == 'apple' %}
                         <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect x="0.5" y="0.5" width="47" height="47" rx="5.5" stroke="white"/>
@@ -74,14 +74,14 @@
                     {% unless link.url contains "http" or link.url contains "mailto:" or link.url contains "#" %}
                         {% assign url_output = link.url | relative_url %}
                     {% endunless %}
-                    <a class="nds-btn nds-transparent nds-oncolor nds-md" href="{{ url_output }}">{{ link.label }}</a>
+                    <a class="nds-btn nds-transparent nds-oncolor nds-md" href="{{ url_output }}"><span class="label">{{ link.label }}</span></a>
                     {% unless forloop.last %}<span class="nds-footer-separator">|</span>{% endunless %}
                     {% endfor %}
                 </div>
                 <div class="nds-footer-copy-right">
                     <span>All Rights Reserved {{ site.title }} © {{ site.time | date: '%Y' }}</span>
                     {% if site.author and site.author_profile %}<br>
-                    <a id="authorCopyright" href="{{ site.author_profile | relative_url }}"><span>Template developed by {{ site.author }}</span><i class="hgi hgi-stroke hgi-link-square-02"></i></a>
+                    <a id="authorCopyright" href="{{ site.author_profile | relative_url }}" target="_blank" rel="noopener noreferrer"><span>Template developed by {{ site.author }}</span><i class="hgi hgi-stroke hgi-link-square-02"></i></a>
                     {% endif %}
                 </div>
             </div>

@@ -31,16 +31,19 @@
   align-items: center;
   justify-content: center;
   padding: var(--spacing-xl);
-  overflow-y: auto;
+  overflow-y: hidden;
 
   // Animation
-  opacity: 0;
-  transition: opacity 0.3s ease-out;
+  opacity: 1;
+
 
   // When modal is open
   &.nds-modal-open {
     display: flex;
     opacity: 1;
+    @include mobile {
+      align-items: flex-end;
+    }
   }
 
   @include mobile {
@@ -57,17 +60,11 @@
   z-index: 1101;
   max-height: 90vh;
   overflow: visible;
-
-  // Animation
-  transform: scale(0.95);
-  opacity: 0;
-  transition: transform 0.3s ease-out,
-              opacity 0.3s ease-out;
-
+  
   // When modal is open - animate in
   .nds-modal-open & {
-    transform: scale(1);
-    opacity: 1;
+
+    
   }
 
   // Extend card component styles
@@ -76,14 +73,14 @@
     width: 100%;
     max-height: 90vh;
     overflow-y: auto;
-
+    
     // Remove default card max-width on mobile
     @include mobile {
       max-width: 100%;
       max-height: 100vh;
-      border-radius: 0;
-      height: 100%;
-
+      border-radius: var(--components-card-radius) var(--components-card-radius) 0 0;
+      height: fit-content;
+      min-height: 256px;
       .nds-card-actions .nds-btn{
         width: 100%;
         .label{
