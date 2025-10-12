@@ -3,6 +3,8 @@ layout: dashboard
 title: Dashboard Demo
 hero_title: Operations Dashboard Demo
 hero_description: A sample operations dashboard showcasing National Design System components working together.
+breadcrumb:
+- ["Pages", "/Pages"]
 lang: en
 direction: ltr
 ---
@@ -12,12 +14,13 @@ direction: ltr
     <div class="nds-section-content-container">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Key Performance Metrics</h2>
-            <p class="nds-section-description">High-level indicators refreshed every 15 minutes to keep teams aligned.</p>
+            <p class="nds-section-description">High-level indicators refreshed every 15 minutes to keep teams aligned.
+            </p>
         </div>
         <div class="nds-section-content">
             <div class="nds-cards-group" style="--max-col: 6; --min-col: 2;">
                 <!-- Completed Projects Card -->
-                <div class="nds-card nds-stroke nds-statistic">
+                <div class="nds-card nds-statistic">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-brand nds-circle nds-xl">
@@ -34,7 +37,7 @@ direction: ltr
                 </div>
 
                 <!-- Open Requests Card -->
-                <div class="nds-card nds-stroke nds-statistic">
+                <div class="nds-card nds-statistic">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-brand nds-circle nds-xl">
@@ -51,7 +54,7 @@ direction: ltr
                 </div>
 
                 <!-- Team Awards Card -->
-                <div class="nds-card nds-stroke nds-statistic">
+                <div class="nds-card nds-statistic">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-brand nds-circle nds-xl">
@@ -68,7 +71,7 @@ direction: ltr
                 </div>
 
                 <!-- Strategic Goals Card -->
-                <div class="nds-card nds-stroke nds-statistic">
+                <div class="nds-card nds-statistic">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-brand nds-circle nds-xl">
@@ -85,7 +88,7 @@ direction: ltr
                 </div>
 
                 <!-- Meetings Card -->
-                <div class="nds-card nds-stroke nds-statistic">
+                <div class="nds-card nds-statistic">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-brand nds-circle nds-xl">
@@ -102,7 +105,7 @@ direction: ltr
                 </div>
 
                 <!-- Satisfaction Score Card -->
-                <div class="nds-card nds-stroke nds-statistic">
+                <div class="nds-card nds-statistic">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-brand nds-circle nds-xl">
@@ -127,7 +130,8 @@ direction: ltr
     <div class="nds-section-content-container">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Quick Updates</h2>
-            <p class="nds-section-description">Latest announcements and action items relevant to the operations team.</p>
+            <p class="nds-section-description">Latest announcements and action items relevant to the operations team.
+            </p>
         </div>
         <div class="nds-section-content">
             <div class="nds-cards-group" style="--max-col: 3; --min-col: 1;">
@@ -143,7 +147,8 @@ direction: ltr
                     <div class="nds-card-content">
                         <div class="nds-card-text">
                             <h3 class="nds-card-title">Security audit kickoff scheduled</h3>
-                            <p class="nds-card-description">Audit partners arrive Monday to review access controls, data retention, and recovery playbooks with department leads.</p>
+                            <p class="nds-card-description">Audit partners arrive Monday to review access controls, data
+                                retention, and recovery playbooks with department leads.</p>
                         </div>
                         <div class="nds-card-meta">
                             <div class="nds-card-tags">
@@ -173,7 +178,8 @@ direction: ltr
                     <div class="nds-card-content">
                         <div class="nds-card-text">
                             <h3 class="nds-card-title">All-hands prep and run of show</h3>
-                            <p class="nds-card-description">Finalize presentation slides, confirm panel speakers, and prepare the Q&amp;A queue before Thursday’s global all-hands.</p>
+                            <p class="nds-card-description">Finalize presentation slides, confirm panel speakers, and
+                                prepare the Q&amp;A queue before Thursday’s global all-hands.</p>
                         </div>
                         <div class="nds-card-meta">
                             <div class="nds-card-tags">
@@ -203,7 +209,8 @@ direction: ltr
                     <div class="nds-card-content">
                         <div class="nds-card-text">
                             <h3 class="nds-card-title">Knowledge base refresh in progress</h3>
-                            <p class="nds-card-description">Support articles now include revised SLA guidance, escalation matrix, and localized quick-start instructions.</p>
+                            <p class="nds-card-description">Support articles now include revised SLA guidance,
+                                escalation matrix, and localized quick-start instructions.</p>
                         </div>
                         <div class="nds-card-meta">
                             <div class="nds-card-tags">
@@ -315,7 +322,8 @@ direction: ltr
     <div class="nds-section-content-container">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Community Notifications</h2>
-            <p class="nds-section-description">Stay in sync with updates from partners and teams you collaborate with.</p>
+            <p class="nds-section-description">Stay in sync with updates from partners and teams you collaborate with.
+            </p>
         </div>
         <div class="nds-section-content">
             <div class="nds-tabs" id="communityTabs">

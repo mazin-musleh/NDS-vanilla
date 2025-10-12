@@ -1,274 +1,173 @@
 /**
  * NDS Modal Component
- * Handles modal open/close, backdrop clicks, ESC key, focus trap, and accessibility
+ * Simple modal dialog with backdrop overlay
+ *
+ * Usage:
+ * 1. Button trigger: <button data-modal-target="myModal">Open</button>
+ * 2. Programmatic: window.NDSModal.open('myModal')
+ * 3. Close: window.NDSModal.close()
  */
 
 (function () {
   'use strict';
 
-  // Store currently active modal
+  // State
   let activeModal = null;
-  let previousFocusedElement = null;
-  let focusableElements = [];
-  let firstFocusable = null;
-  let lastFocusable = null;
+  let scrollY = 0;
 
   /**
-   * Initialize all modals on page load
+   * Simple focus trap handler
    */
-  function initModals() {
-    // Find all modal triggers (buttons with data-modal-target)
-    const triggers = document.querySelectorAll('[data-modal-target]');
+  function trapFocus(e) {
+    if (e.key !== 'Tab' || !activeModal) return;
 
-    triggers.forEach(trigger => {
-      trigger.addEventListener('click', function (e) {
-        e.preventDefault();
-        const targetId = this.getAttribute('data-modal-target');
-        const modal = document.getElementById(targetId);
-        if (modal) {
-          openModal(modal);
-        }
-      });
-    });
+    const focusable = activeModal.querySelectorAll(
+      'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    );
 
-    // Initialize close buttons
-    const closeButtons = document.querySelectorAll('.nds-modal-close, [data-modal-close]');
-    closeButtons.forEach(button => {
-      button.addEventListener('click', function (e) {
-        e.stopPropagation();
-        const modal = this.closest('.nds-modal-backdrop');
-        if (modal) {
-          closeModal();
-        }
-      });
-    });
+    if (focusable.length === 0) return;
 
-    // Backdrop click to close
-    const backdrops = document.querySelectorAll('.nds-modal-backdrop');
-    backdrops.forEach(backdrop => {
-      backdrop.addEventListener('click', function (e) {
-        // Only close if clicking the backdrop itself, not the modal content
-        if (e.target === backdrop) {
-          closeModal();
-        }
-      });
-    });
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
 
-    // ESC key to close
-    document.addEventListener('keydown', handleEscKey);
+    // Shift + Tab: if on first, go to last
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    }
+    // Tab: if on last, go to first
+    else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
   }
 
   /**
-   * Open a modal
-   * @param {HTMLElement} modal - The modal element to open
+   * Open modal by ID or element
    */
-  function openModal(modal) {
-    if (!modal) return;
+  function open(target) {
+    const backdrop = typeof target === 'string'
+      ? document.getElementById(target)
+      : target.closest?.('.nds-modal-backdrop') || target;
 
-    // Store currently focused element (avoid storing body or null)
-    const activeEl = document.activeElement;
-    if (activeEl && activeEl !== document.body && activeEl.tagName !== 'BODY') {
-      previousFocusedElement = activeEl;
-    } else {
-      previousFocusedElement = null;
-    }
+    if (!backdrop) return;
 
-    // Find the backdrop (modal should be inside backdrop)
-    let backdrop = modal.closest('.nds-modal-backdrop');
-    if (!backdrop) {
-      backdrop = modal;
-    }
-
-    // Set active modal
-    activeModal = backdrop;
-
-    // Open modal
-    backdrop.classList.add('nds-modal-open');
+    // Store scroll position and lock body
+    scrollY = window.pageYOffset;
+    document.body.style.top = `-${scrollY}px`;
     document.body.classList.add('nds-modal-active');
 
-    // Set ARIA attributes
-    modal.setAttribute('aria-hidden', 'false');
-    backdrop.setAttribute('aria-modal', 'true');
+    // Show backdrop
+    backdrop.style.display = 'flex';
+    backdrop.offsetHeight; // Force reflow
 
-    // Setup focus trap
-    setupFocusTrap(modal);
+    // Trigger animation
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        backdrop.classList.add('nds-modal-open');
+        backdrop.setAttribute('aria-modal', 'true');
 
-    // Focus the modal or first focusable element
-    setTimeout(() => {
-      if (firstFocusable) {
-        firstFocusable.focus();
-      } else if (modal && modal.tabIndex === -1) {
-        modal.tabIndex = -1;
-        modal.focus();
-      }
-    }, 100);
+        const modal = backdrop.querySelector('.nds-modal');
+        if (modal) {
+          modal.setAttribute('aria-hidden', 'false');
+          modal.dispatchEvent(new CustomEvent('nds-modal-opened', { bubbles: true }));
+        }
 
-    // Trigger custom event
-    modal.dispatchEvent(new CustomEvent('nds-modal-opened', {
-      bubbles: true,
-      detail: { modal }
-    }));
+        // Enable focus trap
+        document.addEventListener('keydown', trapFocus);
+      });
+    });
+
+    activeModal = backdrop;
   }
 
   /**
-   * Close the active modal
+   * Close active modal
    */
-  function closeModal() {
+  function close() {
     if (!activeModal) return;
 
     const modal = activeModal.querySelector('.nds-modal');
 
-    // CRITICAL: Move focus OUT of modal BEFORE setting aria-hidden
-    // This prevents "aria-hidden on focused element" warning
+    // Disable focus trap
+    document.removeEventListener('keydown', trapFocus);
 
-    // Try to restore focus to original element
-    let focusRestored = false;
-    if (previousFocusedElement) {
-      try {
-        if (previousFocusedElement &&
-            previousFocusedElement.focus &&
-            typeof previousFocusedElement.focus === 'function' &&
-            document.body.contains(previousFocusedElement)) {
-          previousFocusedElement.focus();
-          focusRestored = true;
-        }
-      } catch (e) {
-        // Silently fail
-      }
-    }
-
-    // If we couldn't restore focus, ensure focus leaves the modal
-    if (!focusRestored) {
-      // Move focus to body FIRST to remove it from modal
-      if (document.body) {
-        document.body.setAttribute('tabindex', '-1');
-        document.body.focus();
-        // Remove tabindex after focus
-        setTimeout(() => {
-          document.body.removeAttribute('tabindex');
-        }, 100);
-      }
-    }
-
-    // Close modal
+    // Remove animation class
     activeModal.classList.remove('nds-modal-open');
     document.body.classList.remove('nds-modal-active');
+    document.body.style.top = '';
 
-    // Set ARIA attributes AFTER focus has definitely moved
-    // Double requestAnimationFrame ensures all focus events have processed
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        if (modal) {
-          modal.setAttribute('aria-hidden', 'true');
-        }
-        const currentActiveModal = document.querySelector('.nds-modal-backdrop.nds-modal-open');
-        if (!currentActiveModal && activeModal) {
-          activeModal.setAttribute('aria-modal', 'false');
-        }
-      });
+    // Restore scroll
+    window.scrollTo(0, scrollY);
+
+    // Update ARIA
+    activeModal.setAttribute('aria-modal', 'false');
+    if (modal) {
+      modal.setAttribute('aria-hidden', 'true');
+      modal.dispatchEvent(new CustomEvent('nds-modal-closed', { bubbles: true }));
+    }
+
+    // Reset display after animation
+    const backdrop = activeModal;
+    setTimeout(() => {
+      if (!backdrop.classList.contains('nds-modal-open')) {
+        backdrop.style.display = '';
+      }
+    }, 300);
+
+    activeModal = null;
+  }
+
+  /**
+   * Initialize event listeners
+   */
+  function init() {
+    if (document.body.hasAttribute('data-nds-modal-initialized')) return;
+
+    // Trigger buttons
+    document.addEventListener('click', (e) => {
+      const trigger = e.target.closest('[data-modal-target]');
+      if (trigger) {
+        e.preventDefault();
+        const targetId = trigger.getAttribute('data-modal-target');
+        open(targetId);
+      }
     });
 
-    // Trigger custom event
-    if (modal) {
-      modal.dispatchEvent(new CustomEvent('nds-modal-closed', {
-        bubbles: true,
-        detail: { modal }
-      }));
-    }
-
-    // Clear active modal
-    activeModal = null;
-    previousFocusedElement = null;
-    focusableElements = [];
-    firstFocusable = null;
-    lastFocusable = null;
-  }
-
-  /**
-   * Handle ESC key press to close modal
-   * @param {KeyboardEvent} e - The keyboard event
-   */
-  function handleEscKey(e) {
-    if (e.key === 'Escape' || e.key === 'Esc') {
-      if (activeModal) {
-        e.preventDefault();
-        closeModal();
+    // Close buttons
+    document.addEventListener('click', (e) => {
+      if (e.target.closest('.nds-modal-close, [data-modal-close]')) {
+        e.stopPropagation();
+        close();
       }
-    }
-  }
+    });
 
-  /**
-   * Setup focus trap within modal
-   * @param {HTMLElement} modal - The modal element
-   */
-  function setupFocusTrap(modal) {
-    if (!modal) return;
-
-    // Get all focusable elements
-    const focusableSelectors = [
-      'a[href]',
-      'button:not([disabled])',
-      'textarea:not([disabled])',
-      'input:not([disabled])',
-      'select:not([disabled])',
-      '[tabindex]:not([tabindex="-1"])'
-    ].join(', ');
-
-    focusableElements = Array.from(modal.querySelectorAll(focusableSelectors));
-
-    if (focusableElements.length > 0) {
-      firstFocusable = focusableElements[0];
-      lastFocusable = focusableElements[focusableElements.length - 1];
-
-      // Trap focus within modal
-      modal.addEventListener('keydown', trapFocus);
-    }
-  }
-
-  /**
-   * Trap focus within modal on Tab key
-   * @param {KeyboardEvent} e - The keyboard event
-   */
-  function trapFocus(e) {
-    if (e.key !== 'Tab') return;
-
-    // Shift + Tab
-    if (e.shiftKey) {
-      if (document.activeElement === firstFocusable) {
-        e.preventDefault();
-        lastFocusable.focus();
+    // Backdrop clicks
+    document.addEventListener('click', (e) => {
+      if (e.target.classList.contains('nds-modal-backdrop')) {
+        close();
       }
-    }
-    // Tab
-    else {
-      if (document.activeElement === lastFocusable) {
+    });
+
+    // ESC key
+    document.addEventListener('keydown', (e) => {
+      if ((e.key === 'Escape' || e.key === 'Esc') && activeModal) {
         e.preventDefault();
-        firstFocusable.focus();
+        close();
       }
-    }
+    });
+
+    document.body.setAttribute('data-nds-modal-initialized', 'true');
   }
 
   /**
-   * Public API for programmatic modal control
+   * Public API
    */
   window.NDSModal = {
-    open: function (modalId) {
-      const modal = document.getElementById(modalId);
-      if (modal) {
-        openModal(modal);
-      }
-    },
-    close: closeModal,
-    isOpen: function () {
-      return activeModal !== null;
-    }
+    init,
+    open,
+    close,
+    isOpen: () => activeModal !== null
   };
-
-  // Initialize on DOM ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initModals);
-  } else {
-    initModals();
-  }
 
 })();

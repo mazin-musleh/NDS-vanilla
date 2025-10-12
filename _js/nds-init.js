@@ -155,6 +155,12 @@
             selector: '.nds-ipv-thumbnail',
             init: () => window.NDSImagePopupViewer?.init?.(),
         },
+        {
+            name: 'modal',
+            priority: 25,
+            selector: '.nds-modal-backdrop, .nds-modal',
+            init: () => window.NDSModal?.init?.(),
+        },
     ];
 
     function initializeNDS() {
@@ -266,8 +272,8 @@
 
     const CONFIG = {
         staggerDelay: 3, // ms between component initializations
-        enableLogging: true,
-        enableTiming: true,
+        enableLogging: false,
+        enableTiming: false,
         // When false, prevents automatic initialization on DOM ready
         autoInitialize: GLOBAL.autoInitialize ?? (attrAutoInit != null ? attrAutoInit !== 'false' : true),
         // When true, disables initializing any component (manual calls still respected if caller overrides)
