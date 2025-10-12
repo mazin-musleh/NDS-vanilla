@@ -64,8 +64,9 @@ direction: ltr
                                         <div class="nds-stepper-circle" data-step-text="1"></div>
                                     </div>
                                     <div class="nds-stepper-content">
-                                        <p class="nds-stepper-title">Personal Information</p>
-                                        <p class="nds-stepper-description">Identity details and contact information</p>
+                                        <span class="nds-stepper-title">Personal Information</span>
+                                        <span class="nds-stepper-description">Identity details and contact
+                                            information</span>
                                     </div>
                                 </div>
                                 <div class="nds-stepper-step current has-line">
@@ -73,8 +74,9 @@ direction: ltr
                                         <div class="nds-stepper-circle" data-step-text="2"></div>
                                     </div>
                                     <div class="nds-stepper-content">
-                                        <p class="nds-stepper-title">Document Upload</p>
-                                        <p class="nds-stepper-description">Upload required supporting documents</p>
+                                        <span class="nds-stepper-title">Document Upload</span>
+                                        <span class="nds-stepper-description">Upload required supporting
+                                            documents</span>
                                     </div>
                                 </div>
                                 <div class="nds-stepper-step upcoming">
@@ -82,8 +84,9 @@ direction: ltr
                                         <div class="nds-stepper-circle" data-step-text="3"></div>
                                     </div>
                                     <div class="nds-stepper-content">
-                                        <p class="nds-stepper-title">Review & Confirmation</p>
-                                        <p class="nds-stepper-description">Verify information before submission</p>
+                                        <span class="nds-stepper-title">Review & Confirmation</span>
+                                        <span class="nds-stepper-description">Verify information before
+                                            submission</span>
                                     </div>
                                 </div>
                             </div>
@@ -109,35 +112,35 @@ direction: ltr
                                 <div class="nds-expandable-content">
                                     <code class="lang-html code">
                                     <!-- Government service application stepper -->
-                                    <div class="nds-stepper" id="stepper-1" data-current="2" data-total="3">
-                                        <div class="nds-stepper-step completed has-line">
-                                            <div class="nds-stepper-base">
-                                                <div class="nds-stepper-circle" data-step-text="1"></div>
+                                        <div class="nds-stepper" id="demo-stepper-1" data-current="2" data-total="3">
+                                            <div class="nds-stepper-step completed has-line">
+                                                <div class="nds-stepper-base">
+                                                    <div class="nds-stepper-circle" data-step-text="1"></div>
+                                                </div>
+                                                <div class="nds-stepper-content">
+                                                    <span class="nds-stepper-title">Personal Information</span>
+                                                    <span class="nds-stepper-description">Identity details and contact information</span>
+                                                </div>
                                             </div>
-                                            <div class="nds-stepper-content">
-                                                <p class="nds-stepper-title">Personal Information</p>
-                                                <p class="nds-stepper-description">Identity details and contact information</p>
+                                            <div class="nds-stepper-step current has-line">
+                                                <div class="nds-stepper-base">
+                                                    <div class="nds-stepper-circle" data-step-text="2"></div>
+                                                </div>
+                                                <div class="nds-stepper-content">
+                                                    <span class="nds-stepper-title">Document Upload</span>
+                                                    <span class="nds-stepper-description">Upload required supporting documents</span>
+                                                </div>
+                                            </div>
+                                            <div class="nds-stepper-step upcoming">
+                                                <div class="nds-stepper-base">
+                                                    <div class="nds-stepper-circle" data-step-text="3"></div>
+                                                </div>
+                                                <div class="nds-stepper-content">
+                                                    <span class="nds-stepper-title">Review & Confirmation</span>
+                                                    <span class="nds-stepper-description">Verify information before submission</span>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="nds-stepper-step current has-line">
-                                            <div class="nds-stepper-base">
-                                                <div class="nds-stepper-circle" data-step-text="2"></div>
-                                            </div>
-                                            <div class="nds-stepper-content">
-                                                <p class="nds-stepper-title">Document Upload</p>
-                                                <p class="nds-stepper-description">Upload required supporting documents</p>
-                                            </div>
-                                        </div>
-                                        <div class="nds-stepper-step upcoming">
-                                            <div class="nds-stepper-base">
-                                                <div class="nds-stepper-circle" data-step-text="3"></div>
-                                            </div>
-                                            <div class="nds-stepper-content">
-                                                <p class="nds-stepper-title">Review & Confirmation</p>
-                                                <p class="nds-stepper-description">Verify information before submission</p>
-                                            </div>
-                                        </div>
-                                    </div>
                                     </code>
                                 </div>
                             </div>
@@ -199,8 +202,9 @@ direction: ltr
                                         <div class="nds-stepper-circle" data-step-text="1"></div>
                                     </div>
                                     <div class="nds-stepper-content">
-                                        <p class="nds-stepper-title">Personal Information</p>
-                                        <p class="nds-stepper-description">Identity details and contact information</p>
+                                        <span class="nds-stepper-title">Personal Information</span>
+                                        <span class="nds-stepper-description">Identity details and contact
+                                            information</span>
                                     </div>
                                 </div>
                                 <div class="nds-stepper-step current has-line">
@@ -208,8 +212,9 @@ direction: ltr
                                         <div class="nds-stepper-circle" data-step-text="2"></div>
                                     </div>
                                     <div class="nds-stepper-content">
-                                        <p class="nds-stepper-title">Document Upload</p>
-                                        <p class="nds-stepper-description">Upload required supporting documents</p>
+                                        <span class="nds-stepper-title">Document Upload</span>
+                                        <span class="nds-stepper-description">Upload required supporting
+                                            documents</span>
                                     </div>
                                 </div>
                                 <div class="nds-stepper-step upcoming has-line">
@@ -217,8 +222,9 @@ direction: ltr
                                         <div class="nds-stepper-circle" data-step-text="3"></div>
                                     </div>
                                     <div class="nds-stepper-content">
-                                        <p class="nds-stepper-title">Review & Confirmation</p>
-                                        <p class="nds-stepper-description">Verify information before submission</p>
+                                        <span class="nds-stepper-title">Review & Confirmation</span>
+                                        <span class="nds-stepper-description">Verify information before
+                                            submission</span>
                                     </div>
                                 </div>
                                 <div class="nds-stepper-step upcoming">
@@ -226,8 +232,8 @@ direction: ltr
                                         <div class="nds-stepper-circle" data-step-text="4"></div>
                                     </div>
                                     <div class="nds-stepper-content">
-                                        <p class="nds-stepper-title">Application Submitted</p>
-                                        <p class="nds-stepper-description">Confirmation and next steps</p>
+                                        <span class="nds-stepper-title">Application Submitted</span>
+                                        <span class="nds-stepper-description">Confirmation and next steps</span>
                                     </div>
                                 </div>
                             </div>
@@ -273,8 +279,8 @@ direction: ltr
                                                 <div class="nds-stepper-circle" data-step-text="1"></div>
                                             </div>
                                             <div class="nds-stepper-content">
-                                                <p class="nds-stepper-title">Personal Information</p>
-                                                <p class="nds-stepper-description">Identity details and contact information</p>
+                                                <span class="nds-stepper-title">Personal Information</span>
+                                                <span class="nds-stepper-description">Identity details and contact information</span>
                                             </div>
                                         </div>
                                         <div class="nds-stepper-step current has-line">
@@ -282,8 +288,8 @@ direction: ltr
                                                 <div class="nds-stepper-circle" data-step-text="2"></div>
                                             </div>
                                             <div class="nds-stepper-content">
-                                                <p class="nds-stepper-title">Document Upload</p>
-                                                <p class="nds-stepper-description">Upload required supporting documents</p>
+                                                <span class="nds-stepper-title">Document Upload</span>
+                                                <span class="nds-stepper-description">Upload required supporting documents</span>
                                             </div>
                                         </div>
                                         <div class="nds-stepper-step upcoming has-line">
@@ -291,8 +297,8 @@ direction: ltr
                                                 <div class="nds-stepper-circle" data-step-text="3"></div>
                                             </div>
                                             <div class="nds-stepper-content">
-                                                <p class="nds-stepper-title">Review & Confirmation</p>
-                                                <p class="nds-stepper-description">Verify information before submission</p>
+                                                <span class="nds-stepper-title">Review & Confirmation</span>
+                                                <span class="nds-stepper-description">Verify information before submission</span>
                                             </div>
                                         </div>
                                         <div class="nds-stepper-step upcoming">
@@ -300,8 +306,8 @@ direction: ltr
                                                 <div class="nds-stepper-circle" data-step-text="4"></div>
                                             </div>
                                             <div class="nds-stepper-content">
-                                                <p class="nds-stepper-title">Application Submitted</p>
-                                                <p class="nds-stepper-description">Confirmation and next steps</p>
+                                                <span class="nds-stepper-title">Application Submitted</span>
+                                                <span class="nds-stepper-description">Confirmation and next steps</span>
                                             </div>
                                         </div>
                                     </div>

@@ -44,6 +44,13 @@
             this.element.style.setProperty('--current-step', this.currentStep);
             this.element.style.setProperty('--total-steps', this.totalSteps);
 
+            // Add/remove 'completed' class when reaching last step
+            if (this.currentStep === this.totalSteps) {
+                this.element.classList.add('completed');
+            } else {
+                this.element.classList.remove('completed');
+            }
+
             // Update progress display
             if (this.progressNumber) {
                 this.progressNumber.textContent = percentage;
@@ -70,6 +77,10 @@
                     step.classList.add('completed');
                 } else if (stepNumber === this.currentStep) {
                     step.classList.add('current');
+                    // Add 'completed' class to last step when it's reached
+                    if (stepNumber === this.totalSteps) {
+                        step.classList.add('completed');
+                    }
                 } else {
                     step.classList.add('upcoming');
                 }

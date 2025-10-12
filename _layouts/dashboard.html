@@ -3,7 +3,7 @@
 
 {% include head.html %}
 
-<body class="minimal dashboard {{ page.body_class }}">
+<body class="minimal fullWidth {{ page.body_class }}">
     <header>
         {% include topbar.html %}
         {% include mainNav.html %}
@@ -12,7 +12,7 @@
         <div class="contentLayout wSideMenu toEdge">
             {% include sideMenu.html %}
 
-            <div class="mainContent">
+            <div class="mainContent cardView">
                 {% include hero.html hero_type="sub" %}
                 {{ content }}
             </div>

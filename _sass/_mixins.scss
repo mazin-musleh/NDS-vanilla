@@ -385,6 +385,10 @@ textarea {
     height: var(--pc-size, #{$size}) !important;
     transform: rotate($rotate) !important;
 
+    @include ltr{
+       transform: rotate($rotate) scaleY(-1) !important; 
+    }
+
     circle {
       fill: none;
       stroke-width: 2;

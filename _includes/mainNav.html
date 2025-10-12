@@ -20,9 +20,11 @@
         </ul>
 
         {% assign nav_data_file = page.mainnav | default: site.mainnav | default: "mainnav" %}
-        {% assign nav_items = site.data[nav_data_file] %}
+        {% assign nav_data = site.data[nav_data_file] %}
+        {% assign nav_items = nav_data.primary_nav | default: nav_data %}
 
         <div class="nds-collapse" id="ndsNavCollapse">
+            {% if nav_items and nav_items.size > 0 %}
             <ul class="nds-nav-primary">
                 {% for item in nav_items %}
                 <li class="nds-nav-item{% if item.has_dropdown %} nds-dropdown{% endif %}">
@@ -36,7 +38,10 @@
                                     {% if column.title %}<div class="nds-dropdown-title">{{ column.title }}</div>{% endif %}
                                     <div class="nds-list{% if column.multi_column_list %} nds-multi-column-list{% endif %}">
                                         {% for subitem in column.items %}
-                                        <a class="nds-btn nds-subtle nds-dropdown-item" href="{{ subitem.url | relative_url }}"><span class="label">{{ subitem.label }}</span></a>
+                                        <a class="nds-btn nds-subtle nds-dropdown-item" href="{{ subitem.url | relative_url }}">
+                                            {% if subitem.icon %}<i class="hgi hgi-stroke {{ subitem.icon }} icon"></i>{% endif %}
+                                            <span class="label">{{ subitem.label }}</span>
+                                        </a>
                                         {% endfor %}
                                     </div>
                                 </div>
@@ -44,7 +49,10 @@
                             {% elsif item.items %}
                                 <div class="nds-list">
                                     {% for subitem in item.items %}
-                                    <a class="nds-btn nds-subtle nds-dropdown-item" href="{{ subitem.url | relative_url }}"><span class="label">{{ subitem.label }}</span></a>
+                                    <a class="nds-btn nds-subtle nds-dropdown-item" href="{{ subitem.url | relative_url }}">
+                                        {% if subitem.icon %}<i class="hgi hgi-stroke {{ subitem.icon }} icon"></i>{% endif %}
+                                        <span class="label">{{ subitem.label }}</span>
+                                    </a>
                                     {% endfor %}
                                 </div>
                             {% endif %}
@@ -61,66 +69,75 @@
                     </a>
                 </li>
             </ul>
+            {% endif %}
 
+            {% comment %} Data-driven Secondary Navigation {% endcomment %}
+            {% if nav_data.secondary_nav %}
             <ul class="nds-nav-secondary">
-                {% assign cta_text = page.ctaText | default: site.ctaText | default: "Call to Action" %}
-                {% assign cta_link = page.ctaLink | default: site.ctaLink | default: "#" %}
-                <li class="nds-nav-item CTA">
-                    <a href="{{ cta_link | relative_url }}" class="nds-btn nds-primary nds-md nds-indicator" title="{{ cta_text }}">
-                        <span class="label">{{ cta_text }}</span>
-                    </a>
-                </li>
-                <li class="nds-nav-item nds-dropdown iconOnly search PAB">
-                    <button class="nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator" data-toggle="dropdown" title="Search">
-                        <i class="hgi hgi-stroke hgi-search-01 icon"></i>
-                        <span class="label">Search</span>
-                    </button>
-                    <div class="nds-dropdown-menu">
-                        <div class="nds-content-container">
-                            <div class="nds-search-box">
-                                <div class="nds-search-content">
-                                    <div class="nds-form-control">
-                                        <i class="hgi hgi-stroke hgi-search-01 icon"></i>
-                                        <input id="mainSearch" type="text" class="nds-search-input" name="search" placeholder="Search...">
-                                        <div class="nds-form-action">
-                                            <button class="nds-btn nds-subtle voiceInput"><i class="hgi hgi-stroke hgi-mic-01 icon"></i></button>
-                                            <button class="nds-btn nds-subtle clear hidden"><i class="hgi hgi-stroke hgi-cancel-01 icon"></i></button>
+                    {% for item in nav_data.secondary_nav %}
+                    <li class="nds-nav-item{% if item.has_dropdown %} nds-dropdown{% endif %}{% if item.custom_class %} {{ item.custom_class }}{% endif %}">
+                        {% if item.has_dropdown %}
+                            <button class="{{ item.button_style | default: 'nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator' }}" data-toggle="dropdown" title="{{ item.label }}"{% if item.id %} id="{{ item.id }}"{% endif %}>
+                                {% if item.icon %}<i class="hgi hgi-stroke {{ item.icon }} icon">{% if item.badge %}<span class="nds-badge">{{ item.badge }}</span>{% endif %}</i>{% endif %}
+                                <span class="label">{{ item.label }}</span>
+                            </button>
+                            <div class="nds-dropdown-menu{% if item.dropdown_class %} {{ item.dropdown_class }}{% endif %}">
+                                {% if item.dropdown_type == 'search' %}
+                                    {% comment %} Special Search Dropdown {% endcomment %}
+                                    <div class="nds-content-container">
+                                        <div class="nds-search-box">
+                                            <div class="nds-search-content">
+                                                <div class="nds-form-control">
+                                                    <i class="hgi hgi-stroke hgi-search-01 icon"></i>
+                                                    <input id="mainSearch" type="text" class="nds-search-input" name="search" placeholder="Search...">
+                                                    <div class="nds-form-action">
+                                                        <button class="nds-btn nds-subtle voiceInput"><i class="hgi hgi-stroke hgi-mic-01 icon"></i></button>
+                                                        <button class="nds-btn nds-subtle clear hidden"><i class="hgi hgi-stroke hgi-cancel-01 icon"></i></button>
+                                                    </div>
+                                                </div>
+                                                <button class="nds-btn nds-primary"><span class="label">Search</span></button>
+                                            </div>
+                                            <span class="nds-dropdown-title">Suggestions</span>
+                                            <div class="nds-chips nds-autoFill" data-target="mainSearch">
+                                                <button class="nds-chip nds-neutral nds-rounded nds-item"><i class="hgi hgi-stroke hgi-rounded hgi-plus-sign"></i><span class="label">Tag 1</span></button>
+                                                <button class="nds-chip nds-neutral nds-rounded nds-item"><i class="hgi hgi-stroke hgi-rounded hgi-plus-sign"></i><span class="label">Tag 2</span></button>
+                                                <button class="nds-chip nds-neutral nds-rounded nds-item"><i class="hgi hgi-stroke hgi-rounded hgi-plus-sign"></i><span class="label">Tag 3</span></button>
+                                            </div>
                                         </div>
                                     </div>
-                                    <button class="nds-btn nds-primary"><span class="label">Search</span></button>
-                                </div>
-                                <span class="nds-dropdown-title">Suggestions</span>
-                                <div class="nds-chips nds-autoFill" data-target="mainSearch">
-                                    <button class="nds-chip nds-neutral nds-rounded nds-item"><i class="hgi hgi-stroke hgi-rounded hgi-plus-sign"></i><span class="label">Tag 1</span></button>
-                                    <button class="nds-chip nds-neutral nds-rounded nds-item"><i class="hgi hgi-stroke hgi-rounded hgi-plus-sign"></i><span class="label">Tag 2</span></button>
-                                    <button class="nds-chip nds-neutral nds-rounded nds-item"><i class="hgi hgi-stroke hgi-rounded hgi-plus-sign"></i><span class="label">Tag 3</span></button>
-                                </div>
+                                {% else %}
+                                    {% comment %} Standard Dropdown Menu (Login, etc) {% endcomment %}
+                                    <div class="nds-column">
+                                        {% if item.items %}
+                                            {% for subitem in item.items %}
+                                            <a href="{{ subitem.url | relative_url }}" class="nds-btn nds-subtle nds-dropdown-item{% if subitem.custom_class %} {{ subitem.custom_class }}{% endif %}">
+                                                {% if subitem.icon %}<i class="hgi hgi-stroke {{ subitem.icon }} icon"></i>{% endif %}
+                                                <span class="label">{{ subitem.label }}</span>
+                                            </a>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
                             </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="nds-nav-item iconOnly lang">
-                    <button class="nds-nav-link nds-btn nds-subtle nds-indicator" id="langToggleBtn" title="Toggle Language">
-                        <i class="hgi hgi-stroke hgi-translation icon"></i>
-                        <span class="label nds-lang-current" id="currentLangLabel">
-                            English
-                        </span>
-                    </button>
-                </li>
-                <li class="nds-nav-item nds-dropdown iconOnly login ">
-                    <a href="#" class="nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator" data-toggle="dropdown" title="Login">
-                        <i class="hgi hgi-stroke hgi-user icon"></i>
-                        <span class="label">Login</span>
-                    </a>
-                    <div class="nds-dropdown-menu widthFit">
-                        <div class="nds-column">
-                            <a href="#" class="nds-btn nds-subtle nds-dropdown-item"><span class="label">Login</span></a>
-                            <a href="#" class="nds-btn nds-subtle nds-dropdown-item"><span class="label">Create Account</span></a>
-                            <a href="#" class="nds-btn nds-subtle nds-dropdown-item"><span class="label">Forgot Password?</span></a>
-                        </div>
-                    </div>
-                </li>
+                        {% else %}
+                            {% comment %} Simple link or button {% endcomment %}
+                            {% if item.url %}
+                                <a href="{{ item.url | relative_url }}" class="{{ item.button_style | default: 'nds-nav-link nds-btn nds-subtle nds-indicator' }}" title="{{ item.label }}"{% if item.id %} id="{{ item.id }}"{% endif %}>
+                                    {% if item.icon %}<i class="hgi hgi-stroke {{ item.icon }} icon">{% if item.badge %}<span class="nds-badge">{{ item.badge }}</span>{% endif %}</i>{% endif %}
+                                    <span class="label{% if item.custom_class == 'lang' %} nds-lang-current{% endif %}"{% if item.id == 'langToggleBtn' %} id="currentLangLabel"{% endif %}>{{ item.label }}</span>
+                                </a>
+                            {% else %}
+                                <button class="{{ item.button_style | default: 'nds-nav-link nds-btn nds-subtle nds-indicator' }}" title="{{ item.label }}"{% if item.id %} id="{{ item.id }}"{% endif %}>
+                                    {% if item.icon %}<i class="hgi hgi-stroke {{ item.icon }} icon">{% if item.badge %}<span class="nds-badge">{{ item.badge }}</span>{% endif %}</i>{% endif %}
+                                    <span class="label{% if item.custom_class == 'lang' %} nds-lang-current{% endif %}"{% if item.id == 'langToggleBtn' %} id="currentLangLabel"{% endif %}>{{ item.label }}</span>
+                                    
+                                </button>
+                            {% endif %}
+                        {% endif %}
+                    </li>
+                    {% endfor %}
             </ul>
+            {% endif %}
         </div>
     </div>
 </nav>
