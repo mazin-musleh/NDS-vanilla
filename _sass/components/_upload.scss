@@ -240,7 +240,7 @@
         &.uploading {
 
             .progress-circle {
-                @include progress-circle($size: 24px,
+                @include progress-circle($size: 120px,
                     $style: 'primary',
                     $rotate: -90deg,
                     $show-text: false,

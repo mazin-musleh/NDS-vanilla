@@ -1,0 +1,378 @@
+/**
+ * NDS Progress Components - SCSS Version
+ * Standalone progress indicators including circular and linear progress bars
+ * Supports multiple variants, sizes, and states
+ */
+
+@use '../mixins' as *;
+
+// ==============================================
+// PROGRESS CIRCLE COMPONENT
+// ==============================================
+
+.nds-progress-circle {
+  --pc-size: 64px;
+  --progress-value: 0; // Default progress value (0-100)
+  --progress-circumference: 62.83; // 2πr where r=10
+
+  @include progress-circle-base(var(--pc-size), -90deg);
+
+  // Default primary style
+  @include progress-circle-style('primary');
+  @include progress-circle-text($show-text: true, $show-symbol: true, $size: var(--pc-size));
+
+  // CSS counter for automatic number display
+  counter-reset: progress-counter var(--progress-value);
+
+  // Dynamic progress using CSS custom property
+  svg circle.progress-bar {
+    stroke-dasharray: var(--progress-circumference) !important;
+    stroke-dashoffset: calc(var(--progress-circumference) - (var(--progress-circumference) * var(--progress-value) / 100));
+    transition: stroke-dashoffset 0.3s ease !important;
+  }
+
+  // Auto-update progress number from CSS counter
+  .progress-number {
+
+    &::before {
+      content: counter(progress-counter);
+      // Restore proper sizing for the counter
+      font-size: clamp(10px, calc(var(--pc-size) * 0.15), 36px) !important;
+      font-weight: 700 !important;
+      line-height: normal;
+      color: var(--text-primary-paragraph);
+      letter-spacing: clamp(0rem, calc(var(--pc-size) * -0.0006), -0.072rem);
+    }
+  }
+
+  // Size variants
+  &.nds-xs {
+    --pc-size: 24px;
+
+    .progress-info .progress-symbol {
+      display: none;
+    }
+  }
+
+  &.nds-sm {
+    --pc-size: 40px;
+  }
+
+  &.nds-md,
+  & {
+    --pc-size: 64px;
+  }
+
+  &.nds-lg {
+    --pc-size: 120px;
+  }
+
+  &.nds-xl {
+    --pc-size: 240px;
+  }
+
+  // Style variants
+  &.nds-primary {
+    @include progress-circle-style('primary');
+  }
+
+  &.nds-neutral {
+    @include progress-circle-style('neutral');
+  }
+
+  &.nds-success {
+    @include progress-circle-style('success');
+  }
+
+  &.nds-error {
+    @include progress-circle-style('error');
+  }
+
+  &.nds-oncolor {
+    @include progress-circle-style('oncolor');
+
+    .progress-info {
+      color: var(--text-oncolor-primary);
+    }
+  }
+
+  // Text visibility modifiers
+  &.nds-no-text {
+    .progress-info {
+      display: none;
+    }
+  }
+
+  &.nds-no-symbol {
+    .progress-symbol {
+      display: none !important;
+    }
+  }
+}
+
+// ==============================================
+// PROGRESS BAR COMPONENT
+// ==============================================
+
+.nds-progress-bar {
+  --pb-height: 8px;
+  --progress-value: 0; // Default progress value (0-100)
+
+  width: 100%;
+  height: var(--pb-height);
+  background-color: var(--background-neutral-100);
+  border-radius: var(--radius-full);
+  position: relative;
+  overflow-x: hidden;
+  display: flex;
+  align-items: center;
+
+  .nds-progress-header {
+    position: absolute;
+    transform: translateY(calc(var(--pb-height, 16px) * -1));
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: var(--nds-text-sm-FS);
+    line-height: var(--nds-text-sm-LH);
+    color: var(--text-default);
+    font-weight: 500;
+
+    .progress-label {
+      flex: 1;
+    }
+
+    .progress-percentage {
+      font-weight: 600;
+      color: var(--text-primary-paragraph);
+    }
+  }
+
+  .progress-fill {
+    height: 100%;
+    background-color: var(--button-background-primary-default);
+    border-radius: var(--radius-full);
+    transition: width 0.3s ease;
+    width: calc(var(--progress-value) * 1%);
+    position: relative;
+  }
+
+  // Size variants
+  &.nds-xs {
+    --pb-height: 4px;
+  }
+
+  &.nds-sm {
+    --pb-height: 6px;
+  }
+
+  &.nds-md,
+  & {
+    --pb-height: 8px;
+  }
+
+  &.nds-lg {
+    --pb-height: 12px;
+  }
+
+  &.nds-xl {
+    --pb-height: 16px;
+  }
+
+  // Style variants
+  &.nds-primary .progress-fill {
+    background-color: var(--button-background-primary-default);
+  }
+
+  &.nds-neutral .progress-fill {
+    background-color: var(--button-background-black-selected);
+  }
+
+  &.nds-success .progress-fill {
+    background-color: var(--background-success-600);
+  }
+
+  &.nds-error .progress-fill {
+    background-color: var(--background-error-600);
+  }
+
+  &.nds-oncolor {
+    background-color: var(--alpha-white-30);
+
+    .progress-fill {
+      background-color: var(--background-surface-oncolor);
+    }
+  }
+
+  // Indeterminate state (loading animation)
+  &.nds-indeterminate {
+    .progress-fill {
+      width: 40%;
+      animation: progress-indeterminate 1.5s ease-in-out infinite;
+
+      @include ltr {
+        animation: progress-indeterminate-ltr 1.5s ease-in-out infinite;
+      }
+    }
+  }
+
+  // Striped variant
+  &.nds-striped .progress-fill {
+    background-image: linear-gradient(45deg,
+        rgba(255, 255, 255, 0.15) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(255, 255, 255, 0.15) 50%,
+        rgba(255, 255, 255, 0.15) 75%,
+        transparent 75%,
+        transparent);
+    background-size: var(--pb-height) var(--pb-height);
+  }
+
+  // Animated stripes
+  &.nds-striped.nds-animated .progress-fill {
+    animation: progress-stripes 1s linear infinite;
+
+    @include ltr {
+      animation: progress-stripes-ltr 1s linear infinite;
+    }
+  }
+}
+
+// ==============================================
+// PROGRESS WITH LABEL CONTAINER
+// ==============================================
+
+.nds-progress-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  width: 100%;
+
+  .nds-progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: var(--nds-text-sm-FS);
+    line-height: var(--nds-text-sm-LH);
+    color: var(--text-default);
+    font-weight: 500;
+
+    .progress-label {
+      flex: 1;
+    }
+
+    .progress-percentage {
+      font-weight: 600;
+      color: var(--text-primary-paragraph);
+    }
+  }
+
+  // Auto-update percentage from progress bar's custom property
+  .nds-progress-bar {
+    counter-reset: progress-counter var(--progress-value);
+  }
+
+  .progress-percentage.auto {
+    // Hide any HTML text content to prevent duplication
+    font-size: 0 !important;
+
+    &::before {
+      content: counter(progress-counter);
+      font-size: var(--nds-text-sm-FS) !important;
+      line-height: var(--nds-text-sm-LH);
+      font-weight: 600;
+      color: var(--text-primary-paragraph);
+    }
+
+    &::after {
+      content: '%';
+      font-size: var(--nds-text-sm-FS) !important;
+      line-height: var(--nds-text-sm-LH);
+      font-weight: 600;
+      color: var(--text-primary-paragraph);
+    }
+  }
+
+  // On color variant
+  &.nds-oncolor {
+    .nds-progress-header {
+      color: var(--text-oncolor-primary);
+
+      .progress-percentage {
+        color: var(--text-oncolor-primary);
+      }
+    }
+  }
+}
+
+// ==============================================
+// PROGRESS ANIMATIONS
+// ==============================================
+
+@keyframes progress-indeterminate {
+  0% {
+    right: 100%;
+    left: 0;
+  }
+
+  50% {
+    right: 0;
+    left: 0;
+  }
+
+  100% {
+    right: 0;
+    left: 100%;
+  }
+}
+
+@keyframes progress-indeterminate-ltr {
+  0% {
+    left: -40%;
+  }
+
+  50% {
+    left: 30%;
+  }
+
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes progress-stripes {
+  0% {
+    background-position: var(--pb-height) 0;
+  }
+
+  100% {
+    background-position: 0 0;
+  }
+}
+
+@keyframes progress-stripes-ltr {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: var(--pb-height) 0;
+  }
+}
+
+// ==============================================
+// RESPONSIVE BEHAVIOR
+// ==============================================
+
+@include mobile {
+  .nds-progress-circle {
+    &.nds-lg {
+      --pc-size: 80px;
+    }
+
+    &.nds-xl {
+      --pc-size: 120px;
+    }
+  }
+}
