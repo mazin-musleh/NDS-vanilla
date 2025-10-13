@@ -524,7 +524,7 @@ body:not(.minimal) .nds-main-nav {
     }
 
     .nds-main-nav {
-        .nds-nav-secondary {
+        .nds-nav-secondary, .nds-nav-minimal{
             .nds-nav-item:not(.CTA) {
                 .nds-nav-link .label {
                     display: none;

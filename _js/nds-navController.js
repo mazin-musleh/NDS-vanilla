@@ -533,8 +533,21 @@
         checkTogglerVisibility() {
             if (!DOM.toggler) return;
 
-            const hasVisiblePrimary = DOM.primary && getComputedStyle(DOM.primary).display !== 'none' && DOM.primary.children.length > 0;
-            const hasVisibleSecondary = DOM.secondary && getComputedStyle(DOM.secondary).display !== 'none' && DOM.secondary.children.length > 0;
+            // Count visible items in primary nav (excluding showMore button)
+            const primaryItemCount = DOM.primary ?
+                Array.from(DOM.primary.children).filter(child =>
+                    !child.classList.contains('showMore') &&
+                    getComputedStyle(child).display !== 'none'
+                ).length : 0;
+
+            // Count visible items in secondary nav
+            const secondaryItemCount = DOM.secondary ?
+                Array.from(DOM.secondary.children).filter(child =>
+                    getComputedStyle(child).display !== 'none'
+                ).length : 0;
+
+            const hasVisiblePrimary = DOM.primary && getComputedStyle(DOM.primary).display !== 'none' && primaryItemCount > 0;
+            const hasVisibleSecondary = DOM.secondary && getComputedStyle(DOM.secondary).display !== 'none' && secondaryItemCount > 0;
 
             const shouldShowToggler = hasVisiblePrimary || hasVisibleSecondary;
 

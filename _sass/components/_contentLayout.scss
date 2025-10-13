@@ -50,20 +50,20 @@ main {
 
 }
 
-.contentLayout:not(.wSideMenu) .mainContent>section.noBg {
+.contentLayout:not(.wSideMenu) .mainContent section.noBg {
     margin-top: var(--spacing-5xl);
 }
 
-.contentLayout:not(.wSideMenu) .mainContent>section.noBg:first-of-type {
+.contentLayout:not(.wSideMenu) .mainContent section.noBg:first-of-type {
     margin-top: 0;
 }
 
 /* Add margin-bottom only when next element doesn't have .noBg class */
-.contentLayout:not(.wSideMenu) .mainContent>section.noBg:not(:has(+ .noBg)) {
+.contentLayout:not(.wSideMenu) .mainContent section.noBg:not(:has(+ .noBg)) {
     margin-bottom: var(--spacing-5xl);
 }
 
-.contentLayout .mainContent>section {
+.contentLayout .mainContent section {
     width: 100%;
     min-width: 300px;
     height: fit-content;
@@ -81,14 +81,14 @@ main {
     row-gap: 0;
 }
 
-.contentLayout.wSideMenu .mainContent>section {
+.contentLayout.wSideMenu .mainContent section {
     width: 100%;
     min-width: 300px;
     box-shadow: var(--shadow-md);
     border-radius: var(--radius-md);
 }
 
-.contentLayout.post .mainContent>section:first-of-type {
+.contentLayout.post .mainContent section:first-of-type {
     padding-top: 0;
 
     .nds-section-content {
@@ -96,12 +96,18 @@ main {
     }
 }
 
-.contentLayout.cardView .mainContent>section:not(.nds-hero-section) {
+.contentLayout.cardView .mainContent section:not(.nds-hero-section) {
     width: 100%;
     min-width: 300px;
     box-shadow: var(--shadow-md);
     border-radius: var(--radius-md);
     margin: var(--spacing-xl);
+    padding: 0;
+
+    .nds-section-title {
+    font-size: var(--nds-display-clamp-xs-FS, 24px);
+    line-height: var(--nds-display-clamp-xs-LH, 30px);
+    }
 }
 
 /* ========================================
@@ -109,7 +115,7 @@ main {
    ======================================== */
 
 @include tablet(max) {
-    .contentLayout .mainContent .content-section>.container {
+    .contentLayout .mainContent .content-section .container {
         padding-left: var(--nds-viewport-padding);
         padding-right: var(--nds-viewport-padding);
     }
@@ -118,7 +124,7 @@ main {
         height: 100% !important;
     }
 
-    .contentLayout:not(.cardView) .mainContent>section:not(.nds-hero-section) {
+    .contentLayout:not(.cardView) .mainContent section:not(.nds-hero-section) {
         height: 100% !important;
         box-shadow: unset;
         box-shadow: unset !important;

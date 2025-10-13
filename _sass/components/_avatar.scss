@@ -32,8 +32,10 @@
     height: 100%;
     object-fit: cover;
     display: block;
-    border-radius: inherit;
+    border-radius: 50%;
   }
+
+
 
   // Optional image border variant
   &.nds-image-border img {
@@ -74,6 +76,14 @@
   i {
     font-size: calc(var(--avatar-size) / 2);
   }
+
+  &.nds-btn {
+    img {
+      width: calc(var(--nds-btn-height));
+      height: calc(var(--nds-btn-height));
+      padding: 4px;
+    }
+  }
 }
 
 .nds-avatar.nds-xs {
@@ -107,7 +117,9 @@
 
 .nds-avatar.nds-square {
   border-radius: var(--radius-sm);
-  .nds-3xl &, &.nds-3xl {
+
+  .nds-3xl &,
+  &.nds-3xl {
     border-radius: var(--radius-md);
   }
 }
@@ -170,6 +182,7 @@
 
   &.nds-xs {
     --avatar-gap: 2px;
+
     .nds-avatar {
       --avatar-size: 24px;
     }
@@ -177,6 +190,7 @@
 
   &.nds-sm {
     --avatar-gap: 4px;
+
     .nds-avatar {
       --avatar-size: 32px;
     }
@@ -184,6 +198,7 @@
 
   &.nds-md {
     --avatar-gap: 6px;
+
     .nds-avatar {
       --avatar-size: 40px;
     }
@@ -191,6 +206,7 @@
 
   &.nds-lg {
     --avatar-gap: 8px;
+
     .nds-avatar {
       --avatar-size: 56px;
     }
@@ -198,6 +214,7 @@
 
   &.nds-xl {
     --avatar-gap: 10px;
+
     .nds-avatar {
       --avatar-size: 80px;
     }
@@ -205,6 +222,7 @@
 
   &.nds-2xl {
     --avatar-gap: 12px;
+
     .nds-avatar {
       --avatar-size: 96px;
     }
@@ -212,6 +230,7 @@
 
   &.nds-3xl {
     --avatar-gap: 14px;
+
     .nds-avatar {
       --avatar-size: 120px;
       border: 4px solid var(--border-white);

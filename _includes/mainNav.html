@@ -21,12 +21,11 @@
 
         {% assign nav_data_file = page.mainnav | default: site.mainnav | default: "mainnav" %}
         {% assign nav_data = site.data[nav_data_file] %}
-        {% assign nav_items = nav_data.primary_nav | default: nav_data %}
 
         <div class="nds-collapse" id="ndsNavCollapse">
-            {% if nav_items and nav_items.size > 0 %}
+            {% if nav_data.primary_nav and nav_data.primary_nav.size > 0 %}
             <ul class="nds-nav-primary">
-                {% for item in nav_items %}
+                {% for item in nav_data.primary_nav %}
                 <li class="nds-nav-item{% if item.has_dropdown %} nds-dropdown{% endif %}">
                     {% if item.has_dropdown %}
                     <a href="#" class="nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator" data-toggle="dropdown"><span class="label">{{ item.label }}</span></a>
@@ -39,7 +38,7 @@
                                     <div class="nds-list{% if column.multi_column_list %} nds-multi-column-list{% endif %}">
                                         {% for subitem in column.items %}
                                         <a class="nds-btn nds-subtle nds-dropdown-item" href="{{ subitem.url | relative_url }}">
-                                            {% if subitem.icon %}<i class="hgi hgi-stroke {{ subitem.icon }} icon"></i>{% endif %}
+                                            {% if subitem.img_icon %}<img src="{{ subitem.img_icon | relative_url }}" alt="{{ subitem.label }}" class="icon">{% elsif subitem.icon %}<i class="hgi hgi-stroke {{ subitem.icon }} icon"></i>{% endif %}
                                             <span class="label">{{ subitem.label }}</span>
                                         </a>
                                         {% endfor %}
@@ -50,7 +49,7 @@
                                 <div class="nds-list">
                                     {% for subitem in item.items %}
                                     <a class="nds-btn nds-subtle nds-dropdown-item" href="{{ subitem.url | relative_url }}">
-                                        {% if subitem.icon %}<i class="hgi hgi-stroke {{ subitem.icon }} icon"></i>{% endif %}
+                                        {% if subitem.img_icon %}<img src="{{ subitem.img_icon | relative_url }}" alt="{{ subitem.label }}" class="icon">{% elsif subitem.icon %}<i class="hgi hgi-stroke {{ subitem.icon }} icon"></i>{% endif %}
                                         <span class="label">{{ subitem.label }}</span>
                                     </a>
                                     {% endfor %}
@@ -72,15 +71,22 @@
             {% endif %}
 
             {% comment %} Data-driven Secondary Navigation {% endcomment %}
-            {% if nav_data.secondary_nav %}
+            {% if nav_data.secondary_nav and nav_data.secondary_nav.size > 0 %}
             <ul class="nds-nav-secondary">
                     {% for item in nav_data.secondary_nav %}
                     <li class="nds-nav-item{% if item.has_dropdown %} nds-dropdown{% endif %}{% if item.custom_class %} {{ item.custom_class }}{% endif %}">
-                        {% if item.has_dropdown %}
-                            <button class="{{ item.button_style | default: 'nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator' }}" data-toggle="dropdown" title="{{ item.label }}"{% if item.id %} id="{{ item.id }}"{% endif %}>
-                                {% if item.icon %}<i class="hgi hgi-stroke {{ item.icon }} icon">{% if item.badge %}<span class="nds-badge">{{ item.badge }}</span>{% endif %}</i>{% endif %}
-                                <span class="label">{{ item.label }}</span>
+                        {% if item.url %}
+                            <a href="{{ item.url | relative_url }}" class="{{ item.button_style | default: 'nds-nav-link nds-btn nds-subtle nds-indicator' }}"{% if item.has_dropdown %} data-toggle="dropdown"{% endif %} title="{{ item.label }}"{% if item.id %} id="{{ item.id }}"{% endif %}>
+                                {% if item.img_icon %}<img src="{{ item.img_icon | relative_url }}" alt="{{ item.label }}" class="icon">{% elsif item.icon %}<i class="hgi hgi-stroke {{ item.icon }} icon">{% if item.badge %}<span class="nds-badge">{{ item.badge }}</span>{% endif %}</i>{% endif %}
+                                <span class="label{% if item.custom_class == 'lang' %} nds-lang-current{% endif %}"{% if item.id == 'langToggleBtn' %} id="currentLangLabel"{% endif %}>{{ item.label }}</span>
+                            </a>
+                        {% else %}
+                            <button class="{{ item.button_style | default: 'nds-nav-link nds-btn nds-subtle nds-indicator' }}"{% if item.has_dropdown %} data-toggle="dropdown"{% endif %} title="{{ item.label }}"{% if item.id %} id="{{ item.id }}"{% endif %}>
+                                {% if item.img_icon %}<img src="{{ item.img_icon | relative_url }}" alt="{{ item.label }}" class="icon">{% elsif item.icon %}<i class="hgi hgi-stroke {{ item.icon }} icon">{% if item.badge %}<span class="nds-badge">{{ item.badge }}</span>{% endif %}</i>{% endif %}
+                                <span class="label{% if item.custom_class == 'lang' %} nds-lang-current{% endif %}"{% if item.id == 'langToggleBtn' %} id="currentLangLabel"{% endif %}>{{ item.label }}</span>
                             </button>
+                        {% endif %}
+                        {% if item.has_dropdown %}
                             <div class="nds-dropdown-menu{% if item.dropdown_class %} {{ item.dropdown_class }}{% endif %}">
                                 {% if item.dropdown_type == 'search' %}
                                     {% comment %} Special Search Dropdown {% endcomment %}
@@ -106,12 +112,12 @@
                                         </div>
                                     </div>
                                 {% else %}
-                                    {% comment %} Standard Dropdown Menu (Login, etc) {% endcomment %}
+                                    {% comment %} Standard Dropdown Menu {% endcomment %}
                                     <div class="nds-column">
                                         {% if item.items %}
                                             {% for subitem in item.items %}
                                             <a href="{{ subitem.url | relative_url }}" class="nds-btn nds-subtle nds-dropdown-item{% if subitem.custom_class %} {{ subitem.custom_class }}{% endif %}">
-                                                {% if subitem.icon %}<i class="hgi hgi-stroke {{ subitem.icon }} icon"></i>{% endif %}
+                                                {% if subitem.img_icon %}<img src="{{ subitem.img_icon | relative_url }}" alt="{{ subitem.label }}" class="icon">{% elsif subitem.icon %}<i class="hgi hgi-stroke {{ subitem.icon }} icon"></i>{% endif %}
                                                 <span class="label">{{ subitem.label }}</span>
                                             </a>
                                             {% endfor %}
@@ -119,20 +125,6 @@
                                     </div>
                                 {% endif %}
                             </div>
-                        {% else %}
-                            {% comment %} Simple link or button {% endcomment %}
-                            {% if item.url %}
-                                <a href="{{ item.url | relative_url }}" class="{{ item.button_style | default: 'nds-nav-link nds-btn nds-subtle nds-indicator' }}" title="{{ item.label }}"{% if item.id %} id="{{ item.id }}"{% endif %}>
-                                    {% if item.icon %}<i class="hgi hgi-stroke {{ item.icon }} icon">{% if item.badge %}<span class="nds-badge">{{ item.badge }}</span>{% endif %}</i>{% endif %}
-                                    <span class="label{% if item.custom_class == 'lang' %} nds-lang-current{% endif %}"{% if item.id == 'langToggleBtn' %} id="currentLangLabel"{% endif %}>{{ item.label }}</span>
-                                </a>
-                            {% else %}
-                                <button class="{{ item.button_style | default: 'nds-nav-link nds-btn nds-subtle nds-indicator' }}" title="{{ item.label }}"{% if item.id %} id="{{ item.id }}"{% endif %}>
-                                    {% if item.icon %}<i class="hgi hgi-stroke {{ item.icon }} icon">{% if item.badge %}<span class="nds-badge">{{ item.badge }}</span>{% endif %}</i>{% endif %}
-                                    <span class="label{% if item.custom_class == 'lang' %} nds-lang-current{% endif %}"{% if item.id == 'langToggleBtn' %} id="currentLangLabel"{% endif %}>{{ item.label }}</span>
-                                    
-                                </button>
-                            {% endif %}
                         {% endif %}
                     </li>
                     {% endfor %}
