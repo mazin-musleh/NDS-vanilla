@@ -1,7 +1,7 @@
 ---
-layout: dashboard
-body_class: fullWidth
-layout_class: cardView nds-content-container toEdge
+layout: cardView
+body_class:
+layout_class:
 title: Dashboard Demo
 hero_title: Operations Dashboard Demo
 hero_description: A sample operations dashboard showcasing National Design System components working together.
@@ -10,13 +10,13 @@ breadcrumb:
 lang: en
 direction: ltr
 ---
-
 <!-- Statistics Overview Section -->
 <section id="statisticsOverview" class="nds-content-section">
     <div class="nds-section-content-container">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Key Performance Metrics</h2>
-            <p class="nds-section-description">High-level indicators refreshed every 15 minutes to keep teams aligned.
+            <p class="nds-section-description">High-level indicators refreshed every 15 minutes to keep teams
+                aligned.
             </p>
         </div>
         <div class="nds-section-content">
@@ -132,7 +132,8 @@ direction: ltr
     <div class="nds-section-content-container">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Quick Updates</h2>
-            <p class="nds-section-description">Latest announcements and action items relevant to the operations team.
+            <p class="nds-section-description">Latest announcements and action items relevant to the operations
+                team.
             </p>
         </div>
         <div class="nds-section-content">
@@ -149,7 +150,8 @@ direction: ltr
                     <div class="nds-card-content">
                         <div class="nds-card-text">
                             <h3 class="nds-card-title">Security audit kickoff scheduled</h3>
-                            <p class="nds-card-description">Audit partners arrive Monday to review access controls, data
+                            <p class="nds-card-description">Audit partners arrive Monday to review access controls,
+                                data
                                 retention, and recovery playbooks with department leads.</p>
                         </div>
                         <div class="nds-card-meta">
@@ -180,7 +182,8 @@ direction: ltr
                     <div class="nds-card-content">
                         <div class="nds-card-text">
                             <h3 class="nds-card-title">All-hands prep and run of show</h3>
-                            <p class="nds-card-description">Finalize presentation slides, confirm panel speakers, and
+                            <p class="nds-card-description">Finalize presentation slides, confirm panel speakers,
+                                and
                                 prepare the Q&amp;A queue before Thursday’s global all-hands.</p>
                         </div>
                         <div class="nds-card-meta">
@@ -239,7 +242,8 @@ direction: ltr
     <div class="nds-section-content-container">
         <div class="nds-section-head">
             <h2 class="nds-section-title">My Operational Snapshot</h2>
-            <p class="nds-section-description">Track your current workload, progress, and notifications at a glance.</p>
+            <p class="nds-section-description">Track your current workload, progress, and notifications at a glance.
+            </p>
         </div>
         <div class="nds-section-content">
             <div class="nds-cards-group" style="--max-col: 3; --min-col: 1;">
@@ -324,7 +328,8 @@ direction: ltr
     <div class="nds-section-content-container">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Community Notifications</h2>
-            <p class="nds-section-description">Stay in sync with updates from partners and teams you collaborate with.
+            <p class="nds-section-description">Stay in sync with updates from partners and teams you collaborate
+                with.
             </p>
         </div>
         <div class="nds-section-content">
@@ -448,7 +453,8 @@ direction: ltr
                     <!-- Popular Tab Panel -->
                     <div class="nds-tab-panel" role="tabpanel" id="panel-popular" aria-labelledby="tab-popular"
                         tabindex="0" hidden>
-                        <p>Trending topics include incident retrospectives and the new vendor onboarding workflow.</p>
+                        <p>Trending topics include incident retrospectives and the new vendor onboarding workflow.
+                        </p>
                     </div>
                 </div>
             </div>
