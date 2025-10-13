@@ -1,29 +1,12 @@
-<!DOCTYPE html>
-<html lang="{{ page.lang | default: 'en' }}" dir="{{ page.direction | default: 'ltr' }}">
+---
+layout: default
+---
 
-{% include head.html %}
-
-<body class="minimal fullWidth {{ page.body_class }}">
-    <header>
-        {% include topbar.html %}
-        {% include mainNav.html %}
-    </header>
-    <main>
-        <div class="contentLayout wSideMenu toEdge">
-            {% include sideMenu.html %}
-
-            <div class="mainContent cardView">
-                {% include hero.html hero_type="sub" %}
-                {{ content }}
-            </div>
-        </div>
-    </main>
-
-    {% include footer.html %}
-
-    <!-- Scripts -->
-    <script defer src="{{ '/assets/js/nds-main.min.js' | relative_url }}?ver=1.076"></script>
+<div class="contentLayout wSideMenu toEdge {{ page.layout_class }}">
+    {% include sideMenu.html %}
     
-</body>
-
-</html>
+    <div class="mainContent">
+        {% include hero.html hero_type="sub" %}
+        {{ content }}
+    </div>
+</div>

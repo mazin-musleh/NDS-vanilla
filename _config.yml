@@ -11,7 +11,7 @@ headerBrandW: 151
 headerBrandH: 48
 
 # Brand Name
-#brandName: "National Design System" #comment this to remove text from brand
+brandName: "National Design System" #comment this to remove text from brand
 brandNameColor: var(--colors-neutral-500)
 
 # Hero Settings (fallback defaults)

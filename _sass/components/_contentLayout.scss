@@ -96,7 +96,7 @@ main {
     }
 }
 
-.contentLayout .mainContent.cardView>section:not(.nds-hero-section) {
+.contentLayout.cardView .mainContent>section:not(.nds-hero-section) {
     width: 100%;
     min-width: 300px;
     box-shadow: var(--shadow-md);
@@ -118,7 +118,7 @@ main {
         height: 100% !important;
     }
 
-    .contentLayout .mainContent:not(.cardView)>section:not(.nds-hero-section) {
+    .contentLayout:not(.cardView) .mainContent>section:not(.nds-hero-section) {
         height: 100% !important;
         box-shadow: unset;
         box-shadow: unset !important;
@@ -150,7 +150,7 @@ main {
 .contentLayout {
 
     // Without side menu - always reset
-    &:not(.wSideMenu) .mainContent:not(.cardView) {
+    &:not(.wSideMenu, .cardView) .mainContent {
         &:not(.odd-stripper) .nds-content-section:nth-of-type(even) {
             @include reset-section-style;
         }
@@ -161,7 +161,7 @@ main {
     }
 
     // With side menu - reset only on tablet and below
-    &.wSideMenu .mainContent:not(.cardView) {
+    &:not(.cardView).wSideMenu .mainContent {
         @include tablet(max) {
             &:not(.odd-stripper) .nds-content-section:nth-of-type(even) {
                 @include reset-section-style;
@@ -266,7 +266,8 @@ main {
             margin-top: 1rem;
         }
 
-        img {
+        
+        & > img {
             max-width: 80%;
             margin: auto;
             display: block;
@@ -276,7 +277,7 @@ main {
             }
         }
 
-        video {
+        & > video {
             max-height: 60vh;
             width: auto;
             margin: auto;
