@@ -121,7 +121,14 @@ direction: ltr
                     </div>
                   </div>
                 </div>
-                <div class="nds-form-footer"></div>
+                <div class="nds-form-footer">
+                  <span class="nds-feedback nds-neutral">
+                    <span class="nds-feedback-icon nds-neutral nds-info nds-outline nds-sm">
+                      <i class="hgi hgi-solid icon"></i>
+                    </span>
+                    <span class="msg"></span>
+                  </span>
+                </div>
               </div>
 
             </div>
@@ -220,7 +227,14 @@ direction: ltr
                         </div>
                       </div>
                     </div>
-                    <div class="nds-form-footer"></div>
+                    <div class="nds-form-footer">
+                        <span class="nds-feedback nds-neutral">
+                            <span class="nds-feedback-icon nds-neutral nds-info nds-outline nds-sm">
+                                <i class="hgi hgi-solid icon"></i>
+                            </span>
+                            <span class="msg"></span>
+                        </span>
+                    </div>
                   </div>
                     </code>
                 </div>

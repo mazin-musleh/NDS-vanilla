@@ -788,9 +788,68 @@
 
             if (isNowOpen) {
                 this.initializeCalendar();
+                this.adjustDropdownPosition();
             } else {
                 this.cleanup();
             }
+        },
+
+        adjustDropdownPosition: function () {
+            var self = this;
+            // Wait for dropdown to be rendered
+            setTimeout(function () {
+                var dropdown = self.elements.dropdown;
+                var formControl = self.elements.formControl;
+
+                if (!dropdown || !formControl) return;
+
+                // Get dropdown height and position
+                var dropdownRect = dropdown.getBoundingClientRect();
+                var formControlRect = formControl.getBoundingClientRect();
+                var viewportHeight = window.innerHeight;
+                var viewportWidth = window.innerWidth;
+
+                // Calculate space below and above the input
+                var spaceBelow = viewportHeight - formControlRect.bottom;
+                var spaceAbove = formControlRect.top;
+                var dropdownHeight = dropdownRect.height;
+
+                // Vertical positioning: Check if there's not enough space below
+                if (spaceBelow < dropdownHeight && spaceAbove > spaceBelow) {
+                    // Position above the input
+                    dropdown.style.top = 'unset';
+                    dropdown.style.marginTop = 'unset';
+                    dropdown.style.bottom = '100%';
+                    dropdown.style.marginBottom = '4px';
+                } else {
+                    // Reset to default position (below the input)
+                    dropdown.style.top = '';
+                    dropdown.style.marginTop = '';
+                    dropdown.style.bottom = '';
+                    dropdown.style.marginBottom = '';
+                }
+
+                // Horizontal positioning: Check if dropdown goes off-screen
+                var dropdownWidth = dropdownRect.width;
+                var spaceOnRight = viewportWidth - dropdownRect.right;
+                var spaceOnLeft = dropdownRect.left;
+
+                // Check if dropdown goes off the right edge
+                if (spaceOnRight < 0 && Math.abs(spaceOnRight) > 20) {
+                    dropdown.style.left = 'auto';
+                    dropdown.style.right = '0';
+                }
+                // Check if dropdown goes off the left edge
+                else if (spaceOnLeft < 0 && Math.abs(spaceOnLeft) > 20) {
+                    dropdown.style.right = 'auto';
+                    dropdown.style.left = '0';
+                }
+                // Reset to default if it fits
+                else {
+                    dropdown.style.left = '';
+                    dropdown.style.right = '';
+                }
+            }, 10);
         },
 
         initializeCalendar: function () {
@@ -862,6 +921,16 @@
             if (this.elements.monthDropdownMenu) this.elements.monthDropdownMenu.innerHTML = '';
             if (this.elements.yearDropdownMenu) this.elements.yearDropdownMenu.innerHTML = '';
             if (this.elements.datesContainer) this.elements.datesContainer.innerHTML = '';
+
+            // Reset all inline positioning styles
+            if (this.elements.dropdown) {
+                this.elements.dropdown.style.top = '';
+                this.elements.dropdown.style.marginTop = '';
+                this.elements.dropdown.style.bottom = '';
+                this.elements.dropdown.style.marginBottom = '';
+                this.elements.dropdown.style.left = '';
+                this.elements.dropdown.style.right = '';
+            }
 
             // Clear ALL Hijri cache
             CalendarConfig.hijri._hijriCache = {};
@@ -1676,20 +1745,29 @@
 
             // Read year range from input element instead of dropdown menu
             var yearRangeBefore = parseInt(this.elements.input.dataset.yearBefore) || 5;
-            var yearRangeAfter = parseInt(this.elements.input.dataset.yearAfter) || 5;
+            var yearRangeAfter = parseInt(this.elements.input.dataset.yearAfter);
+
+            // If yearRangeAfter is 0, null, or undefined, use current year as last year
+            var useCurrentYearAsLast = yearRangeAfter === 0 || yearRangeAfter === null || isNaN(yearRangeAfter);
+            if (isNaN(yearRangeAfter)) {
+                yearRangeAfter = 5; // Default value if not specified
+            }
 
             var currentYear = this.getCurrentYear();
             var startYear, endYear;
 
             if (this.state.calendarType === 'hijri') {
                 // For Hijri calendar, use current Hijri year as reference
-                startYear = currentYear - yearRangeBefore;
-                endYear = currentYear + yearRangeAfter;
+                var todaysHijriDate = this.getTodaysHijriDate();
+                var todayHijriYear = todaysHijriDate.year;
+
+                startYear = todayHijriYear - yearRangeBefore;
+                endYear = useCurrentYearAsLast ? todayHijriYear : todayHijriYear + yearRangeAfter;
             } else {
                 // For Gregorian calendar, use today's year as reference
                 var todayYear = new Date().getFullYear();
                 startYear = todayYear - yearRangeBefore;
-                endYear = todayYear + yearRangeAfter;
+                endYear = useCurrentYearAsLast ? todayYear : todayYear + yearRangeAfter;
             }
 
             var self = this;
