@@ -259,6 +259,14 @@
       padding: var(--spacing-xl);
     }
   }
+  &.hug-x {
+    padding-left: 0;
+    padding-right: 0;
+
+    &>* {
+      padding: 0 var(--spacing-xl);
+    }
+  }
 
   &.hidden {
     display: none;

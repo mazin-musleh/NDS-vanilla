@@ -204,8 +204,9 @@
                 msgElement._originalContent = msgElement.textContent;
             }
 
-            // Add error class
+            // Add error class and show feedback
             feedbackPlaceholder.classList.add('error');
+            feedbackPlaceholder.classList.remove('hidden');
 
             // Add nds-error class to icon if not present
             var iconElement = feedbackPlaceholder.querySelector('.nds-feedback-icon');
@@ -233,9 +234,18 @@
             }
 
             // Restore original content if it was stored
-            if (msgElement._originalContent !== undefined) {
+            var hadOriginalContent = msgElement._originalContent !== undefined;
+            if (hadOriginalContent) {
                 msgElement.textContent = msgElement._originalContent;
                 delete msgElement._originalContent; // Clean up stored reference
+            }
+
+            // Hide feedback if message is empty or if there was no original content
+            var msgText = msgElement.textContent.trim();
+            if (!msgText || msgText === '' || !hadOriginalContent) {
+                feedbackPlaceholder.classList.add('hidden');
+            } else {
+                feedbackPlaceholder.classList.remove('hidden');
             }
 
             input.removeAttribute('aria-describedby');
@@ -390,12 +400,80 @@
         function updateOpenState() {
             formControl.classList.toggle('open', isOpen);
             dropdown.classList.toggle('hidden', !isOpen);
-            
+
             if (isOpen) {
                 updateSelectedOptions();
+                adjustDropdownPosition();
                 // Focus first option for keyboard navigation
                 if (options[0]) options[0].focus();
+            } else {
+                resetDropdownPosition();
             }
+        }
+
+        function adjustDropdownPosition() {
+            // Wait for dropdown to be rendered
+            setTimeout(function() {
+                if (!dropdown || !formControl) return;
+
+                // Get dropdown and form control positions
+                var dropdownRect = dropdown.getBoundingClientRect();
+                var formControlRect = formControl.getBoundingClientRect();
+                var viewportHeight = window.innerHeight;
+                var viewportWidth = window.innerWidth;
+
+                // Calculate space below and above the input
+                var spaceBelow = viewportHeight - formControlRect.bottom;
+                var spaceAbove = formControlRect.top;
+                var dropdownHeight = dropdownRect.height;
+
+                // Vertical positioning: Check if there's not enough space below
+                if (spaceBelow < dropdownHeight && spaceAbove > spaceBelow) {
+                    // Position above the input
+                    dropdown.style.top = 'unset';
+                    dropdown.style.marginTop = 'unset';
+                    dropdown.style.bottom = '100%';
+                    dropdown.style.marginBottom = '4px';
+                } else {
+                    // Reset to default position (below the input)
+                    dropdown.style.top = '';
+                    dropdown.style.marginTop = '';
+                    dropdown.style.bottom = '';
+                    dropdown.style.marginBottom = '';
+                }
+
+                // Horizontal positioning: Check if dropdown goes off-screen
+                var spaceOnRight = viewportWidth - dropdownRect.right;
+                var spaceOnLeft = dropdownRect.left;
+
+                // Check if dropdown goes off the right edge
+                if (spaceOnRight < 0 && Math.abs(spaceOnRight) > 20) {
+                    dropdown.style.left = 'auto';
+                    dropdown.style.right = '0';
+                }
+                // Check if dropdown goes off the left edge
+                else if (spaceOnLeft < 0 && Math.abs(spaceOnLeft) > 20) {
+                    dropdown.style.right = 'auto';
+                    dropdown.style.left = '0';
+                }
+                // Reset to default if it fits
+                else {
+                    dropdown.style.left = '';
+                    dropdown.style.right = '';
+                }
+            }, 10);
+        }
+
+        function resetDropdownPosition() {
+            if (!dropdown) return;
+
+            // Reset all inline positioning styles
+            dropdown.style.top = '';
+            dropdown.style.marginTop = '';
+            dropdown.style.bottom = '';
+            dropdown.style.marginBottom = '';
+            dropdown.style.left = '';
+            dropdown.style.right = '';
         }
         
         function updateSelectedOptions() {
