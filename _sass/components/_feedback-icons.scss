@@ -88,40 +88,6 @@
     }
   }
 
-  &.nds-warning {
-    background-color: var(--icon-warning);
-    color: var(--icon-warning);
-
-    &.nds-ring {
-      box-shadow: 0 0 0px 4px var(--icon-warning-ring);
-    }
-
-    .icon:before {
-      content: "㬿";
-    }
-  }
-
-  &.nds-error {
-    background-color: var(--icon-error);
-    color: var(--icon-error);
-
-    &.nds-ring {
-      box-shadow: 0 0 0px 4px var(--icon-error-ring);
-    }
-
-    .icon {
-      transform: translateX(-0.04rem);
-      &:before {
-        content: "㿃";
-      }
-    }
-
-    &.nds-alert {
-      .icon:before {
-        content: "㬿" !important;
-      }
-    }
-  }
 
   &.nds-neutral {
     background-color: var(--icon-neutral);
@@ -137,7 +103,42 @@
 
     &.nds-info {
       .icon:before {
-        content: "䢵" !important;
+        content: "䢵";
+      }
+    }
+  }
+
+  &.nds-warning {
+    background-color: var(--icon-warning);
+    color: var(--icon-warning)!important;
+
+    &.nds-ring {
+      box-shadow: 0 0 0px 4px var(--icon-warning-ring)!important;
+    }
+
+    .icon:before {
+      content: "㬿"!important;
+    }
+  }
+
+  &.nds-error {
+    background-color: var(--icon-error);
+    color: var(--icon-error)!important;
+
+    &.nds-ring {
+      box-shadow: 0 0 0px 4px var(--icon-error-ring)!important;
+    }
+
+    .icon {
+      transform: translateX(-0.04rem);
+      &:before {
+        content: "㿃"!important;
+      }
+    }
+
+    &.nds-alert {
+      .icon:before {
+        content: "㬿" !important;
       }
     }
   }
