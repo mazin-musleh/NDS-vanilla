@@ -143,7 +143,7 @@
     };
 
     // Utility functions
-    function updateFormState(input, formControl) {
+    function updateFormState(input, formControl, skipValidation) {
         var hasValue;
 
         if (input.type === 'checkbox' || input.type === 'radio') {
@@ -155,27 +155,33 @@
         formControl.classList.toggle('filled', hasValue);
         formControl.classList.toggle('disabled', input.disabled);
 
+        // Show/hide clear button for text-based inputs only
+        var clearButton = formControl.querySelector('.clear');
+        if (clearButton && input.type !== 'radio' && input.type !== 'checkbox') {
+            clearButton.classList.toggle('hidden', !hasValue);
+        }
+
+        // Skip validation if requested (for input event while typing)
+        if (skipValidation) {
+            return;
+        }
+
         // Add error state based on HTML5 validation
         var isInvalid = false;
         if (input.validity) {
             isInvalid = !input.validity.valid;
         }
 
-        // Also check for custom error state (aria-invalid attribute)
-        if (input.hasAttribute('aria-invalid')) {
-            isInvalid = input.getAttribute('aria-invalid') === 'true';
+        // IMPORTANT: Clear custom validation errors when HTML5 validation passes
+        // This ensures aria-invalid doesn't keep the error state active
+        if (!isInvalid && input.validationMessage) {
+            input.setCustomValidity('');
         }
 
         formControl.classList.toggle('error', isInvalid);
 
         // Update error message in form footer
         updateErrorMessage(input, formControl, isInvalid);
-
-        // Show/hide clear button for text-based inputs only
-        var clearButton = formControl.querySelector('.clear');
-        if (clearButton && input.type !== 'radio' && input.type !== 'checkbox') {
-            clearButton.classList.toggle('hidden', !hasValue);
-        }
     }
 
     // Update error message in feedback placeholder
@@ -187,8 +193,16 @@
         var feedbackPlaceholder = formContainer.querySelector('.nds-feedback');
         if (!feedbackPlaceholder) return;
 
+        var msgElement = feedbackPlaceholder.querySelector('.msg');
+        if (!msgElement) return;
+
         if (isInvalid) {
             var errorMessage = getValidationMessage(input);
+
+            // Store original content ONLY if feedback is not currently in error state
+            if (!msgElement._originalContent && !feedbackPlaceholder.classList.contains('error')) {
+                msgElement._originalContent = msgElement.textContent;
+            }
 
             // Add error class
             feedbackPlaceholder.classList.add('error');
@@ -199,11 +213,8 @@
                 iconElement.classList.add('nds-error');
             }
 
-            // Update message text
-            var msgElement = feedbackPlaceholder.querySelector('.msg');
-            if (msgElement) {
-                msgElement.textContent = errorMessage;
-            }
+            // Update message text with error
+            msgElement.textContent = errorMessage;
 
             // Set aria-describedby for accessibility
             if (!feedbackPlaceholder.id) {
@@ -221,10 +232,10 @@
                 iconElement.classList.remove('nds-error');
             }
 
-            // Clear message text
-            var msgElement = feedbackPlaceholder.querySelector('.msg');
-            if (msgElement) {
-                msgElement.textContent = '';
+            // Restore original content if it was stored
+            if (msgElement._originalContent !== undefined) {
+                msgElement.textContent = msgElement._originalContent;
+                delete msgElement._originalContent; // Clean up stored reference
             }
 
             input.removeAttribute('aria-describedby');
@@ -1061,21 +1072,48 @@
 
         input.addEventListener('blur', function () {
             formControl.classList.remove('focus');
-        });
-
-        // Value changes - use input for immediate feedback
-        input.addEventListener('input', function () {
+            // Validate on blur (when user leaves the field)
             updateFormState(input, formControl);
         });
 
-        // Also listen for change for form validation compatibility 
+        // Value changes - clear previous errors but don't validate while typing
+        input.addEventListener('input', function () {
+            // Update UI (filled class, clear button)
+            updateFormState(input, formControl, true);
+
+            // If there was an error showing, clear it and restore original feedback
+            var formContainer = formControl.closest('.nds-form-container');
+            if (formContainer) {
+                var feedbackPlaceholder = formContainer.querySelector('.nds-feedback');
+                if (feedbackPlaceholder && feedbackPlaceholder.classList.contains('error')) {
+                    feedbackPlaceholder.classList.remove('error');
+
+                    var iconElement = feedbackPlaceholder.querySelector('.nds-feedback-icon');
+                    if (iconElement) {
+                        iconElement.classList.remove('nds-error');
+                    }
+
+                    var msgElement = feedbackPlaceholder.querySelector('.msg');
+                    if (msgElement && msgElement._originalContent !== undefined) {
+                        msgElement.textContent = msgElement._originalContent;
+                        delete msgElement._originalContent;
+                    }
+
+                    formControl.classList.remove('error');
+                    input.removeAttribute('aria-describedby');
+                    input.removeAttribute('aria-invalid');
+                }
+            }
+        });
+
+        // Also listen for change for form validation compatibility
         input.addEventListener('change', function () {
             updateFormState(input, formControl);
             updateRadioGroup(input, formControl);
         });
 
-        // Initialize state
-        updateFormState(input, formControl);
+        // Initialize state without validation on page load
+        updateFormState(input, formControl, true);
         
         // Watch for all field status changes
         if (window.MutationObserver) {
