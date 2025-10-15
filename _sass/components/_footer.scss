@@ -7,7 +7,7 @@
     display: block;
     background-color: var(--background-sa-flag);
     color: var(--text-oncolor-primary, #fff);
-    padding: 3rem 0 1rem;
+    padding: var(--spacing-2xl) 0;
     margin-top: auto;
 
     .nds-footer-content {
@@ -15,6 +15,7 @@
         grid-template-columns: repeat(4, 1fr);
         gap: 2rem;
         margin-bottom: 2rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     }
 
     .nds-footer-column {
@@ -42,6 +43,10 @@
 
     >li {
         padding: 4px 0;
+    }
+
+    .nds-btn{
+        justify-content: start;
     }
 
     a {
@@ -126,9 +131,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 2rem 0;
-    padding-top: 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .nds-footer-copyright {
@@ -215,7 +217,8 @@
             text-align: center;
         }
 
-        .nds-footer-copyright .nds-footer-links,#authorCopyright {
+        .nds-footer-copyright .nds-footer-links,
+        #authorCopyright {
             justify-content: center;
         }
 

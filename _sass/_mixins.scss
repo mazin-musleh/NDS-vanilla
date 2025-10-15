@@ -80,7 +80,8 @@
 @mixin ltr {
   @at-root {
     @each $selector in & {
-      html[dir="ltr"] #{$selector} {
+      html[dir="ltr"] #{$selector},
+      .ltr #{$selector} {
         @content;
       }
     }
@@ -166,6 +167,7 @@ textarea {
   position: relative;
   box-sizing: border-box;
   vertical-align: middle;
+  justify-content: center;
 }
 
 // Button size mixins

@@ -4,6 +4,7 @@
     {% assign footer_data = site.data[footer_data_file] %}
 
     <div class="nds-content-container">
+        {% if footer_data.columns and footer_data.columns.size > 0 %}
         <div class="nds-footer-content">
             {% for column in footer_data.columns %}
             <div class="nds-footer-column">
@@ -64,10 +65,12 @@
             </div>
             {% endfor %}
         </div>
+        {% endif %}
 
         <!-- Footer Bottom -->
         <div class="nds-footer-bottom">
             <div class="nds-footer-copyright">
+                {% if footer_data.bottom.links and footer_data.bottom.links.size > 0 %}
                 <div class="nds-footer-links">
                     {% for link in footer_data.bottom.links %}
                     {% assign url_output = link.url %}
@@ -78,6 +81,7 @@
                     {% unless forloop.last %}<span class="nds-footer-separator">|</span>{% endunless %}
                     {% endfor %}
                 </div>
+                {% endif %}
                 <div class="nds-footer-copy-right">
                     <span>All Rights Reserved {{ site.title }} © {{ site.time | date: '%Y' }}</span>
                     {% if site.author and site.author_profile %}<br>
@@ -88,6 +92,7 @@
             {% assign footer_logos_file = page.footerlogos | default: site.footerlogos | default: "footerlogos" %}
             {% assign footer_logos = site.data[footer_logos_file] %}
 
+            {% if footer_logos and footer_logos.size > 0 %}
             <div class="nds-footer-logos">
                 {% for logo in footer_logos %}
                     {% if logo.url %}
@@ -99,6 +104,7 @@
                     {% endif %}
                 {% endfor %}
             </div>
+            {% endif %}
         </div>
     </div>
 </footer>

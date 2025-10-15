@@ -22,6 +22,7 @@
     function initializeShowcase() {
         storeOriginalCodeContent();
         initializeDemoToggleButtons();
+        initializeDirectionSwitcher();
         initializeFakeFileUpload();
         initializeDemoActionButtons();
     }
@@ -39,8 +40,12 @@
     }
 
     // Note: Initialization now handled by nds-init.js unified system
-    // Language switcher is now ONLY initialized when explicitly called (e.g., in initializeShowcase)
-    // It will not run automatically unless the toggle button exists
+    // EXCEPTION: Language switcher must run on ALL pages (not just demo pages)
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializeDirectionSwitcher);
+    } else {
+        initializeDirectionSwitcher();
+    }
 
     // Store original code content in hidden copies before highlighting is applied
     function storeOriginalCodeContent() {
@@ -832,37 +837,50 @@
         updateCodeFromHiddenCopy(codeElement, updatedCode);
     }
 
-    // RTL/LTR Direction Switcher - Only runs if toggle button exists
+    // RTL/LTR Direction Switcher - Cookie-based System
     function initializeDirectionSwitcher() {
-        // Check if language toggle button exists before initializing
-        const langToggleBtn = document.getElementById('langToggleBtn');
-        if (!langToggleBtn) {
-            return; // Exit early - NO cookie reading/writing if button doesn't exist
-        }
-
-        // Only if button exists, get current language from cookie
+        // Get current language: URL parameter takes priority, then cookie, then default to 'en'
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlLang = urlParams.get('lang');
         const cookieLang = getCookie('preferred-language');
-        if (!cookieLang) {
-            return; // Exit if no language preference is stored
+        const currentLang = urlLang || cookieLang || 'en';
+
+        // If URL parameter exists, update cookie and remove URL parameter
+        if (urlLang) {
+            setCookie('preferred-language', urlLang, 365); // Store for 1 year
+            // Clean URL by removing language parameter
+            const cleanUrl = new URL(window.location);
+            cleanUrl.searchParams.delete('lang');
+            window.history.replaceState({}, document.title, cleanUrl.pathname + cleanUrl.search);
+        } else if (!cookieLang) {
+            // Set default cookie if none exists
+            setCookie('preferred-language', currentLang, 365);
         }
 
         // Update the language display in header
         const currentLangLabel = document.getElementById('currentLangLabel');
         if (currentLangLabel) {
-            currentLangLabel.textContent = cookieLang === 'ar' ? 'العربية' : 'English';
+            currentLangLabel.textContent = currentLang === 'ar' ? 'العربية' : 'English';
         }
 
+        // Set HTML attributes for current language
+        document.documentElement.setAttribute('lang', currentLang);
+        document.documentElement.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
+
         // Handle language toggle button click
-        langToggleBtn.addEventListener('click', function() {
-            // Toggle to opposite language
-            const targetLang = cookieLang === 'ar' ? 'en' : 'ar';
+        const langToggleBtn = document.getElementById('langToggleBtn');
+        if (langToggleBtn) {
+            langToggleBtn.addEventListener('click', function() {
+                // Toggle to opposite language
+                const targetLang = currentLang === 'ar' ? 'en' : 'ar';
 
-            // Update cookie directly
-            setCookie('preferred-language', targetLang, 365);
+                // Update cookie directly
+                setCookie('preferred-language', targetLang, 365);
 
-            // Reload page to apply new language
-            window.location.reload();
-        });
+                // Reload page to apply new language
+                window.location.reload();
+            });
+        }
     }
 
     // Cookie utility functions for RTL/LTR switcher

@@ -17,6 +17,7 @@
         <div class="nds-shareablePage">
             <h1 class="nds-heroTitle">{{ page.hero_title | default: site.hero_title }}</h1>
             <p class="nds-heroDesc">{{ page.hero_description | default: site.hero_description }}</p>
+            {% unless page.hide_share_page %}
             <div id="nds-sharePage" class="nds-dropmenu">
                 <button id="nds-sharePageBtn" class="nds-btn nds-subtle nds-dropmenu-trigger nds-md">
                     <i class="hgi hgi-stroke hgi-share-01 icon"></i>
@@ -42,6 +43,7 @@
                     </button>
                 </div>
             </div>
+            {% endunless %}
         </div>
     </div>
 </section>
