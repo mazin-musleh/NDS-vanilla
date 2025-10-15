@@ -110,8 +110,8 @@
         }
 
         .nds-brand-slogan {
-            font-size: var(--nds-text-xs-FS);
-            line-height: var(--nds-text-xs-LH);
+            font-size: var(--nds-text-sm-FS);
+            line-height: var(--nds-text-sm-LH);
             font-weight: 400;
             display: block;
         }
@@ -285,6 +285,7 @@
     .nds-dropdown-item {
         color: var(--text-default);
         text-decoration: none;
+        justify-content: start;
 
         &:last-child {
             border-bottom: none;

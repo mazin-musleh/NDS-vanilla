@@ -105,8 +105,8 @@ main {
     padding: 0;
 
     .nds-section-title {
-    font-size: var(--nds-display-clamp-xs-FS, 24px);
-    line-height: var(--nds-display-clamp-xs-LH, 30px);
+        font-size: var(--nds-display-clamp-xs-FS, 24px);
+        line-height: var(--nds-display-clamp-xs-LH, 30px);
     }
 }
 
@@ -272,8 +272,8 @@ main {
             margin-top: 1rem;
         }
 
-        
-        & > img {
+
+        &>img {
             max-width: 80%;
             margin: auto;
             display: block;
@@ -283,7 +283,7 @@ main {
             }
         }
 
-        & > video {
+        &>video {
             max-height: 60vh;
             width: auto;
             margin: auto;
@@ -291,4 +291,26 @@ main {
         }
     }
 
+}
+
+.nds-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--max-col, 4), 1fr);
+    gap: var(--spacing-2xl);
+    width: 100%;
+
+    // Override card max-width in grid layout
+    &>* {
+        max-width: 100%;
+    }
+
+    @include tablet(max) {
+        grid-template-columns: repeat(var(--mid-col, calc(var(--max-col, 3)/2)), 1fr);
+        gap: var(--spacing-lg);
+    }
+
+    @include mobile {
+        grid-template-columns: repeat(var(--min-col, 2), 1fr);
+        gap: var(--spacing-md);
+    }
 }

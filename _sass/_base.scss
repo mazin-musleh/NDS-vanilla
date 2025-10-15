@@ -49,8 +49,9 @@ h6 {
     margin-bottom: var(--nds-display-clamp-xs-MB);
     color: var(--text-display, #1f2a37);
 }
+
 h3,
-h4{
+h4 {
     font-size: var(--nds-display-clamp-xs-FS);
     line-height: var(--nds-display-clamp-xs-FS);
     margin-bottom: var(--nds-display-clamp-xs-MB);
@@ -150,6 +151,9 @@ button,
     cursor: pointer;
 }
 
+.ltr {
+    direction: ltr !important;
+}
 
 .nds-expandable.nds-expand {
     .nds-expandable-content {
@@ -188,22 +192,22 @@ button,
             padding-bottom: var(--spacing-4xl);
 
             &::after {
-            content: "";
-            height: var(--spacing-4xl);
-            background: linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 25%, rgba(255, 255, 255, 0) 100%);
+                content: "";
+                height: var(--spacing-4xl);
+                background: linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 25%, rgba(255, 255, 255, 0) 100%);
 
-        }
+            }
 
         }
 
     }
 }
 
-.nds-truncate{
+.nds-truncate {
     overflow: hidden;
-    display: -webkit-box!important;
+    display: -webkit-box !important;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: var(--truncate-line, 1);
     line-clamp: var(--truncate-line, 1);
     text-overflow: ellipsis;
-  }
+}

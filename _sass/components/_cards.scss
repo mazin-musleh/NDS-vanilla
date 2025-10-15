@@ -351,14 +351,14 @@
     max-width: 100%;
   }
 
-    @include tablet(max) {
-    grid-template-columns: repeat(calc(var(--max-col, 4)/2), 1fr);
+  @include tablet(max) {
+    grid-template-columns: repeat(var(--mid-col, calc(var(--max-col, 3)/2)), 1fr);
     gap: var(--spacing-lg);
   }
 
   @include mobile {
     grid-template-columns: repeat(var(--min-col, 2), 1fr);
-    gap: var(--spacing-lg);
+    gap: var(--spacing-md);
   }
 }
 

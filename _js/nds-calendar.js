@@ -619,6 +619,18 @@
 
         // Utility methods
         getLanguage: function () {
+            // Check if the date input has a data-lang attribute
+            if (this.elements && this.elements.input) {
+                var dataLang = this.elements.input.getAttribute('data-lang');
+                if (dataLang) {
+                    return dataLang.split('-')[0].toLowerCase() === 'ar' ? 'ar' : 'en';
+                }
+                // Check if the date input has a lang attribute
+                if (this.elements.input.lang) {
+                    return this.elements.input.lang.split('-')[0].toLowerCase() === 'ar' ? 'ar' : 'en';
+                }
+            }
+            // Fallback to document language
             return document.documentElement.lang === 'ar' ? 'ar' : 'en';
         },
 

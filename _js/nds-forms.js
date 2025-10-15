@@ -238,15 +238,19 @@
             if (hadOriginalContent) {
                 msgElement.textContent = msgElement._originalContent;
                 delete msgElement._originalContent; // Clean up stored reference
-            }
 
-            // Hide feedback if message is empty or if there was no original content
-            var msgText = msgElement.textContent.trim();
-            if (!msgText || msgText === '' || !hadOriginalContent) {
-                feedbackPlaceholder.classList.add('hidden');
-            } else {
-                feedbackPlaceholder.classList.remove('hidden');
+                // Check if restored content is not empty
+                var msgText = msgElement.textContent.trim();
+                if (msgText && msgText !== '') {
+                    // Show feedback with restored original content
+                    feedbackPlaceholder.classList.remove('hidden');
+                } else {
+                    // Restored content is empty, hide the feedback
+                    feedbackPlaceholder.classList.add('hidden');
+                }
             }
+            // If no original content was stored, don't modify the hidden state
+            // (preserve whatever visibility state it had before the error)
 
             input.removeAttribute('aria-describedby');
             input.removeAttribute('aria-invalid');
