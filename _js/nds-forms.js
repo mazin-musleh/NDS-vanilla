@@ -617,12 +617,19 @@
         });
 
         // Initialize selected option if there's a value
-        var initialValue = selectInput.value || (hiddenInput ? hiddenInput.value : '');
+        // Check hidden input first, then selectInput (for pre-populated forms)
+        var initialValue = (hiddenInput ? hiddenInput.value : '') || selectInput.value;
         if (initialValue) {
             var matchingOption = Array.from(options).find(opt => opt.dataset.value === initialValue);
             if (matchingOption) {
                 selectedValue = initialValue;
+                var optionText = matchingOption.querySelector('.option-text');
+                var text = optionText ? optionText.textContent : initialValue;
+                // Update the visible input with the option text
+                selectInput.value = text;
                 updateSelectedOptions();
+                // Update form state to show as filled
+                updateFormState(selectInput, formControl);
             }
         }
     }

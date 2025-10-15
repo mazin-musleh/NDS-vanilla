@@ -92,6 +92,7 @@
         gap: var(--spacing-lg, 12px);
         align-content: center;
         flex-wrap: nowrap;
+        white-space: nowrap;
         max-width: var(--spacing-48, 192px);
 
         img,
@@ -103,6 +104,16 @@
         .nds-brand-name {
             line-height: var(--nds-text-clamp-md-LH);
             font-size: var(--nds-text-clamp-md-FS);
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-2xs, 2px);
+        }
+
+        .nds-brand-slogan {
+            font-size: var(--nds-text-xs-FS);
+            line-height: var(--nds-text-xs-LH);
+            font-weight: 400;
+            display: block;
         }
     }
 
