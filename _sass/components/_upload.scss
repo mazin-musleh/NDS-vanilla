@@ -155,6 +155,7 @@
     }
 
     .file-item {
+        --pc-size: 24px;
         display: flex;
         align-items: flex-start;
         padding: var(--spacing-md);
