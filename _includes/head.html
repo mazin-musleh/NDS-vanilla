@@ -378,4 +378,15 @@
     </noscript>
 
     <link rel="icon" type="image/svg+xml" href="{{ '/assets/img/favicon.svg' | relative_url }}">
+
+    <!-- Custom page-specific CSS files with deferred loading -->
+    {% if page.custom_css %}
+        {% for css_file in page.custom_css %}
+    <link rel="preload" href="{{ css_file | relative_url }}" as="style"
+        onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="{{ css_file | relative_url }}">
+    </noscript>
+        {% endfor %}
+    {% endif %}
 </head>

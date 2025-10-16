@@ -17,6 +17,13 @@
     <!-- Scripts -->
     <script defer src="{{ '/assets/js/nds-main.min.js' | relative_url }}?ver=1.076"></script>
     <script defer src="{{ '/assets/js/nds-showcase.min.js' | relative_url }}?ver=1.015"></script>
+
+    <!-- Custom page-specific JavaScript files with deferred loading -->
+    {% if page.custom_js %}
+        {% for js_file in page.custom_js %}
+    <script defer src="{{ js_file | relative_url }}"></script>
+        {% endfor %}
+    {% endif %}
 </body>
 
 </html>
