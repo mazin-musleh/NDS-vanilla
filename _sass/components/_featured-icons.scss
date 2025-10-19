@@ -79,6 +79,15 @@
     }
   }
 
+    &.nds-gold {
+      background-color: var(--colors-secondary-gold-100);
+      color: var(--colors-secondary-gold-800);
+  
+      &.nds-dark {
+        background-color: var(--colors-secondary-gold-800);
+      }
+    }
+
   &.nds-warning {
     background-color: var(--featuredicons-background-warning-light);
     color: var(--featuredicons-icon-warning);

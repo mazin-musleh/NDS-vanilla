@@ -44,6 +44,19 @@
     outline-offset: -2px;
   }
 
+  &.nds-center {
+
+    .nds-card-header,
+    .nds-card-content,
+    .nds-card-text,
+    .nds-card-tags,
+    .nds-card-actions {
+      align-items: center !important;
+      justify-content: center !important;
+      text-align: center !important;
+    }
+  }
+
 
   // ==============================================
   // CARD HEADER SECTION
@@ -256,13 +269,25 @@
     align-items: center;
     text-align: center;
 
-    .nds-counter-value {
+    .nds-card-number,
+    .nds-counter-value,
+    .nds-number-format {
       color: var(--text-primary-sa-flag);
       font-size: var(--nds-display-clamp-lg-FS);
       line-height: var(--nds-display-clamp-lg-LH);
-      font-weight: 400;
+      font-weight: 500;
       letter-spacing: -0.96px;
       direction: ltr;
+
+      &.nds-md {
+        font-size: var(--nds-display-clamp-md-FS);
+        line-height: var(--nds-display-clamp-md-LH);
+      }
+
+      &.nds-sm {
+        font-size: var(--nds-display-clamp-sm-FS);
+        line-height: var(--nds-display-clamp-sm-LH);
+      }
     }
 
   }
@@ -333,6 +358,58 @@
 
   &.nds-stroke:active {
     border-color: var(--border-neutral-primary);
+  }
+}
+
+
+.nds-card.nds-gold {
+
+  .nds-featured-icon {
+    background-color: var(--colors-secondary-gold-100);
+    color: var(--colors-secondary-gold-800);
+
+
+    &.nds-dark {
+      background-color: var(--colors-secondary-gold-800);
+    }
+  }
+
+  .nds-card-number {
+    color: var(--colors-secondary-gold-800) !important;
+  }
+}
+
+.nds-card.nds-neutral {
+
+  .nds-featured-icon {
+    background-color: var(--colors-neutral-100);
+    color: var(--colors-neutral-600);
+
+
+    &.nds-dark {
+      background-color: var(--colors-neutral-600);
+    }
+  }
+
+  .nds-card-number {
+    color: var(--colors-neutral-600) !important;
+  }
+}
+
+.nds-card.nds-lavendar {
+
+  .nds-featured-icon {
+    background-color: var(--colors-tertiary-lavendar-100);
+    color: var(--colors-tertiary-lavendar-600);
+
+
+    &.nds-dark {
+      background-color: var(--colors-tertiary-lavendar-600);
+    }
+  }
+
+  .nds-card-number {
+    color: var(--colors-tertiary-lavendar-600) !important;
   }
 }
 
