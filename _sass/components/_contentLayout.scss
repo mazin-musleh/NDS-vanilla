@@ -244,6 +244,12 @@ main {
     display: flex;
 }
 
+.nds-section-action {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-lg);
+}
+
 .nds-section-content {
     margin-top: var(--spacing-4xl, 32px);
 }

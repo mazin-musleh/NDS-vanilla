@@ -868,8 +868,8 @@
   &.nds-notification {
     .nds-badge {
       position: absolute;
-      top: calc((var(--nds-button-icon-size)/4)*-1);
-      right: calc((var(--nds-button-icon-size)/6)*-1);
+      inset-block-start: calc(var(--nds-nav-height) / 4);
+      inset-inline-end: calc(var(--nds-nav-height) / 6);
       font-size: 9px;
       background-color: #d92c20;
       color: #fff;
