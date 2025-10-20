@@ -6,6 +6,11 @@
 
 @use '../mixins' as *;
 
+#ndsMainNav :is(ul,ol,li) {
+    padding: 0;
+    margin: 0;
+  }
+
 /* ========================================
    TOPBAR STYLES
    ======================================== */

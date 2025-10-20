@@ -214,14 +214,6 @@ direction: ltr
                 <span class="label">Neutral</span>
               </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["nds-success", ".nds-progress-bar", "progressBarVariant"]'>
-                <span class="label">Success</span>
-              </button>
-              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["nds-error", ".nds-progress-bar", "progressBarVariant"]'>
-                <span class="label">Error</span>
-              </button>
-              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='[["nds-oncolor", ".nds-progress-bar", "progressBarVariant"],["dark-bg", ".demo-container", "containerBg"]]'>
                 <span class="label">On Color</span>
               </button>
@@ -271,6 +263,26 @@ direction: ltr
             <div class="demo-label">Progress Bar - With Label</div>
             <div class="demo-action">
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='["nds-primary", ".nds-progress-bar", "progressBarVariant"]'>
+                <span class="label">Primary</span>
+              </button>
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='["nds-neutral", ".nds-progress-bar", "progressBarVariant"]'>
+                <span class="label">Neutral</span>
+              </button>
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='["nds-striped", ".nds-progress-bar", "progressBarPattern"]'>
+                <span class="label">Striped</span>
+              </button>
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='["nds-animated", ".nds-progress-bar", "progressBarAnimation"]'>
+                <span class="label">Animated</span>
+              </button>
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='[["nds-oncolor", ".nds-progress-bar", "progressBarVariant"],["dark-bg", ".demo-container", "containerBg"]]'>
+                <span class="label">On Color</span>
+              </button>
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                 <span class="label">Remove bg</span>
               </button>
@@ -319,73 +331,6 @@ direction: ltr
           </div>
         </div>
 
-        <!-- Progress Bar - Indeterminate & Striped -->
-        <div class="nds-demo-card">
-          <div class="demo-header">
-            <div class="demo-label">Progress Bar - Indeterminate & Striped</div>
-            <div class="demo-action">
-              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["nds-indeterminate", ".nds-progress-bar", "progressBarState"]'>
-                <span class="label">Indeterminate</span>
-              </button>
-              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["nds-striped", ".nds-progress-bar", "progressBarPattern"]'>
-                <span class="label">Striped</span>
-              </button>
-              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["nds-animated", ".nds-progress-bar", "progressBarAnimation"]'>
-                <span class="label">Animated</span>
-              </button>
-              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                <span class="label">Remove bg</span>
-              </button>
-            </div>
-          </div>
-          <div class="demo-container">
-            <div class="state-demo">
-              <div class="nds-progress-bar nds-lg" style="--progress-value: 60;">
-                <div class="progress-fill"></div>
-              </div>
-            </div>
-          </div>
-          <div class="nds-tabs nds-code withDivider">
-            <div class="nds-tab-list-container">
-              <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                  aria-controls="panel-bar-special-1" id="tab-bar-special-1">
-                  <span class="nds-tab-label">HTML</span>
-                </button>
-              </nav>
-            </div>
-            <div class="nds-tab-content">
-              <div class="nds-tab-panel code-example" role="tabpanel" id="panel-bar-special-1"
-                aria-labelledby="tab-bar-special-1">
-                <div class="nds-code-action">
-                  <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                  </button>
-                </div>
-                <code class="lang-html code">
-<!-- Indeterminate (loading) -->
-<div class="nds-progress-bar nds-lg nds-indeterminate">
-  <div class="progress-fill"></div>
-</div>
-
-<!-- Striped -->
-<div class="nds-progress-bar nds-lg nds-striped" style="--progress-value: 60;">
-  <div class="progress-fill"></div>
-</div>
-
-<!-- Striped + Animated -->
-<div class="nds-progress-bar nds-lg nds-striped nds-animated" style="--progress-value: 75;">
-  <div class="progress-fill"></div>
-</div>
-                </code>
-              </div>
-            </div>
-          </div>
-        </div>
 
       </div>
     </div>

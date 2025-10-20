@@ -118,18 +118,22 @@
   --pb-height: 8px;
   --progress-value: 0; // Default progress value (0-100)
 
+  // Auto-update percentage from progress bar's custom property
+  counter-reset: progress-counter var(--progress-value);
+
+
   width: 100%;
   height: var(--pb-height);
   background-color: var(--background-neutral-100);
   border-radius: var(--radius-full);
   position: relative;
-  overflow-x: hidden;
   display: flex;
   align-items: center;
 
   .nds-progress-header {
     position: absolute;
-    transform: translateY(calc(var(--pb-height, 16px) * -1));
+    margin-top: calc((var(--pb-height) + var(--spacing-2xl) + var(--pb-height)/10) * -1);
+    padding: 0 calc(var(--pb-height)/2);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -137,14 +141,32 @@
     line-height: var(--nds-text-sm-LH);
     color: var(--text-default);
     font-weight: 500;
+    width: 100%;
 
     .progress-label {
       flex: 1;
     }
 
     .progress-percentage {
+      font-size: 0 !important;
       font-weight: 600;
       color: var(--text-primary-paragraph);
+
+      &::before {
+        content: counter(progress-counter);
+        font-size: var(--nds-text-sm-FS) !important;
+        line-height: var(--nds-text-sm-LH);
+        font-weight: 600;
+        color: var(--text-primary-paragraph);
+      }
+
+      &::after {
+        content: '%';
+        font-size: var(--nds-text-sm-FS) !important;
+        line-height: var(--nds-text-sm-LH);
+        font-weight: 600;
+        color: var(--text-primary-paragraph);
+      }
     }
   }
 
@@ -155,6 +177,19 @@
     transition: width 0.3s ease;
     width: calc(var(--progress-value) * 1%);
     position: relative;
+  }
+
+
+  &.nds-oncolor {
+    .nds-progress-header {
+      color: var(--text-oncolor-primary);
+
+      .progress-percentage,
+      .progress-percentage::before,
+      .progress-percentage::after {
+        color: var(--text-oncolor-primary);
+      }
+    }
   }
 
   // Size variants
@@ -204,18 +239,6 @@
     }
   }
 
-  // Indeterminate state (loading animation)
-  &.nds-indeterminate {
-    .progress-fill {
-      width: 40%;
-      animation: progress-indeterminate 1.5s ease-in-out infinite;
-
-      @include ltr {
-        animation: progress-indeterminate-ltr 1.5s ease-in-out infinite;
-      }
-    }
-  }
-
   // Striped variant
   &.nds-striped .progress-fill {
     background-image: linear-gradient(45deg,
@@ -226,7 +249,19 @@
         rgba(255, 255, 255, 0.15) 75%,
         transparent 75%,
         transparent);
+        
     background-size: var(--pb-height) var(--pb-height);
+  }
+
+  &.nds-striped.nds-oncolor .progress-fill{
+    background-image: linear-gradient(45deg,
+    rgba(0, 0, 0, 0.15) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(0, 0, 0, 0.15) 50%,
+    rgba(0, 0, 0, 0.15) 75%,
+    transparent 75%,
+    transparent);
   }
 
   // Animated stripes
@@ -236,108 +271,6 @@
     @include ltr {
       animation: progress-stripes-ltr 1s linear infinite;
     }
-  }
-}
-
-// ==============================================
-// PROGRESS WITH LABEL CONTAINER
-// ==============================================
-
-.nds-progress-container {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-xs);
-  width: 100%;
-
-  .nds-progress-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: var(--nds-text-sm-FS);
-    line-height: var(--nds-text-sm-LH);
-    color: var(--text-default);
-    font-weight: 500;
-
-    .progress-label {
-      flex: 1;
-    }
-
-    .progress-percentage {
-      font-weight: 600;
-      color: var(--text-primary-paragraph);
-    }
-  }
-
-  // Auto-update percentage from progress bar's custom property
-  .nds-progress-bar {
-    counter-reset: progress-counter var(--progress-value);
-  }
-
-  .progress-percentage.auto {
-    // Hide any HTML text content to prevent duplication
-    font-size: 0 !important;
-
-    &::before {
-      content: counter(progress-counter);
-      font-size: var(--nds-text-sm-FS) !important;
-      line-height: var(--nds-text-sm-LH);
-      font-weight: 600;
-      color: var(--text-primary-paragraph);
-    }
-
-    &::after {
-      content: '%';
-      font-size: var(--nds-text-sm-FS) !important;
-      line-height: var(--nds-text-sm-LH);
-      font-weight: 600;
-      color: var(--text-primary-paragraph);
-    }
-  }
-
-  // On color variant
-  &.nds-oncolor {
-    .nds-progress-header {
-      color: var(--text-oncolor-primary);
-
-      .progress-percentage {
-        color: var(--text-oncolor-primary);
-      }
-    }
-  }
-}
-
-// ==============================================
-// PROGRESS ANIMATIONS
-// ==============================================
-
-@keyframes progress-indeterminate {
-  0% {
-    right: 100%;
-    left: 0;
-  }
-
-  50% {
-    right: 0;
-    left: 0;
-  }
-
-  100% {
-    right: 0;
-    left: 100%;
-  }
-}
-
-@keyframes progress-indeterminate-ltr {
-  0% {
-    left: -40%;
-  }
-
-  50% {
-    left: 30%;
-  }
-
-  100% {
-    left: 100%;
   }
 }
 
