@@ -6,10 +6,10 @@
 
 @use '../mixins' as *;
 
-#ndsMainNav :is(ul,ol,li) {
+#ndsMainNav :is(ul, ol, li) {
     padding: 0;
     margin: 0;
-  }
+}
 
 /* ========================================
    TOPBAR STYLES
@@ -84,6 +84,15 @@
         justify-content: space-between;
         gap: var(--spacing-lg);
         background-color: var(--nds-nav-background-color);
+
+        &::before {
+            content: "";
+            position: fixed;
+            height: var(--nds-nav-height);
+            background-color: var(--nds-nav-background-color);
+            left: 0;
+            right: 0;
+          }
     }
 
     /* Navigation Brand */
@@ -99,6 +108,7 @@
         flex-wrap: nowrap;
         white-space: nowrap;
         max-width: var(--spacing-48, 192px);
+        z-index: 1;
 
         img,
         svg {
@@ -541,7 +551,9 @@ body:not(.minimal) .nds-main-nav {
     }
 
     .nds-main-nav {
-        .nds-nav-secondary, .nds-nav-minimal{
+
+        .nds-nav-secondary,
+        .nds-nav-minimal {
             .nds-nav-item:not(.CTA) {
                 .nds-nav-link .label {
                     display: none;
