@@ -18,10 +18,13 @@
   display: flex;
   flex-direction: column;
   gap: var(--card-lg-gap);
-  width: 100%;
-  max-width: 360px;
+  width: var(--card-width, 100%);
+  max-width: var(--card-width, 400px);
   position: relative;
-  overflow: hidden;
+
+  &.nds-expandable{
+    overflow: hidden;
+  }
 
   // Shadow variant
   &.nds-shadow {
@@ -221,6 +224,7 @@
     align-items: flex-start;
     width: 100%;
     margin-top: auto;
+    flex-direction: row;
 
     .nds-btn {
 
@@ -231,6 +235,18 @@
     }
   }
 }
+  // ==============================================
+  // CARD FORM SECTION
+  // ==============================================
+
+  .nds-card-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--card-lg-gap);
+    width: 100%;
+
+}
+    
 
 // ==============================================
 // CARD VARIANTS
@@ -250,7 +266,7 @@
 
 // Statistic card variant
 .nds-card.nds-statistic {
-  max-width: 224px;
+  max-width: var(--card-width, 224px);
 
   .nds-card-header {
     align-items: center;
@@ -296,7 +312,7 @@
 
 // Statistic card variant
 .nds-card.nds-user {
-  max-width: 224px;
+  max-width: var(--card-width, 224px);
 
   .nds-card-header,
   .nds-card-tags,

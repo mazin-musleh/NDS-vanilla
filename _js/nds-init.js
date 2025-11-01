@@ -140,7 +140,7 @@
         {
             name: 'pagination',
             priority: 22,
-            selector: '.nds-pagination',
+            selector: '.nds-pagination-nav, .nds-pagination',
             init: () => window.NDSPagination?.init?.(),
         },
         {

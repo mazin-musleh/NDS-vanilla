@@ -184,7 +184,7 @@
                 }
                 
                 // List of tags that should never be self-closing in HTML
-                const neverSelfClosing = ['i', 'span', 'div','p', 'button', 'a', 'script', 'style'];
+                const neverSelfClosing = ['i', 'span', 'div','p','nav', 'button', 'a', 'script', 'style'];
                 const tagName = node.tagName.toLowerCase();
 
                 if (node.children.length === 0 && !node.textContent.trim() && !neverSelfClosing.includes(tagName)) {

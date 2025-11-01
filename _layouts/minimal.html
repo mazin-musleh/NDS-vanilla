@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: 'en' }}" dir="{{ page.direction | default: 'ltr' }}">
+
+{% include head.html %}
+
+<body class="minimal {{ page.body_class }}">
+    <main>
+        <div class="contentLayout nds-content-container {{ page.layout_class }}">
+            <div class="mainContent">
+                {{ content }}
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script defer src="{{ '/assets/js/nds-main.min.js' | relative_url }}?ver=1.076"></script>
+    {% unless page.exclude_showcase == true %}
+    <script defer src="{{ '/assets/js/nds-showcase.min.js' | relative_url }}?ver=1.015"></script>
+    {% endunless %}
+
+    <!-- Custom page-specific JavaScript files with deferred loading -->
+    {% if page.custom_js %}
+    {% for js_file in page.custom_js %}
+    <script defer src="{{ js_file | relative_url }}"></script>
+    {% endfor %}
+    {% endif %}
+</body>
+
+</html>

@@ -60,7 +60,7 @@
 
   }
 
-  &.nds-success {
+  &.nds-success,&.success {
     background-color: var(--featuredicons-background-success-light);
     color: var(--featuredicons-icon-success);
 
@@ -70,7 +70,7 @@
 
   }
 
-  &.nds-info {
+  &.nds-info,&.info {
     background-color: var(--featuredicons-background-info-light);
     color: var(--featuredicons-icon-info);
 
@@ -88,7 +88,7 @@
       }
     }
 
-  &.nds-warning {
+  &.nds-warning,&.warning  {
     background-color: var(--featuredicons-background-warning-light);
     color: var(--featuredicons-icon-warning);
 
@@ -97,7 +97,7 @@
     }
   }
 
-  &.nds-error {
+  &.nds-error,&.error {
     background-color: var(--featuredicons-background-error-light);
     color: var(--featuredicons-icon-error);
 

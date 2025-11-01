@@ -24,6 +24,21 @@ main {
     flex-wrap: wrap;
 }
 
+.contentLayout.nds-middle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+
+    &.nds-content-container {
+        padding: var(--nds-viewport-padding, 32px);
+    }
+
+    .mainContent {
+        justify-content: center;
+    }
+}
+
 /* ========================================
    CONTENT LAYOUT WITH SIDE MENU
    ======================================== */
@@ -302,21 +317,25 @@ main {
 .nds-grid {
     display: grid;
     grid-template-columns: repeat(var(--max-col, 4), 1fr);
-    gap: var(--spacing-2xl);
+    gap: var(--gap, var(--spacing-2xl));
     width: 100%;
+
+    &.nds-center {
+        width: fit-content;
+    }
 
     // Override card max-width in grid layout
     &>* {
-        max-width: 100%;
+        max-width: 100% !important;
     }
 
     @include tablet(max) {
         grid-template-columns: repeat(var(--mid-col, calc(var(--max-col, 3)/2)), 1fr);
-        gap: var(--spacing-lg);
+        gap: max(8px, calc(var(--gap, var(--spacing-2xl)) / 2));
     }
 
     @include mobile {
         grid-template-columns: repeat(var(--min-col, 2), 1fr);
-        gap: var(--spacing-md);
+        gap: max(8px, calc(var(--gap, var(--spacing-2xl)) / 2));
     }
 }

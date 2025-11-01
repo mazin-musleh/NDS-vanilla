@@ -59,14 +59,12 @@ direction: ltr
                     </button>
                   </div>
                 </div>
-                <div class="nds-form-footer">
-                  <span class="nds-feedback">
-                    <span class="nds-feedback-icon nds-neutral nds-info nds-outline nds-sm">
-                      <i class="hgi hgi-solid icon"></i>
-                    </span>
-                    <span class="msg">More Info</span>
+                <span class="nds-feedback">
+                  <span class="nds-feedback-icon nds-neutral nds-info nds-outline nds-sm">
+                    <i class="hgi hgi-solid icon"></i>
                   </span>
-                </div>
+                  <span class="msg">More Info</span>
+                </span>
               </div>
             </div>
           </div>

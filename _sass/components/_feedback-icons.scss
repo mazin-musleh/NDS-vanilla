@@ -62,7 +62,8 @@
   // FEEDBACK ICON VARIANTS
   // ==============================================
 
-  &.nds-success {
+  &.nds-success,
+  &.success {
     background-color: var(--icon-success);
     color: var(--icon-success);
 
@@ -75,7 +76,8 @@
     }
   }
 
-  &.nds-info {
+  &.nds-info,
+  &.info {
     background-color: var(--icon-info);
     color: var(--icon-info);
 
@@ -108,31 +110,32 @@
     }
   }
 
-  &.nds-warning {
+  &.nds-warning,
+  &.warning {
     background-color: var(--icon-warning);
-    color: var(--icon-warning)!important;
+    color: var(--icon-warning) !important;
 
     &.nds-ring {
-      box-shadow: 0 0 0px 4px var(--icon-warning-ring)!important;
+      box-shadow: 0 0 0px 4px var(--icon-warning-ring) !important;
     }
 
     .icon:before {
-      content: "㬿"!important;
+      content: "㬿" !important;
     }
   }
 
-  &.nds-error {
+  &.nds-error,
+  &.error {
     background-color: var(--icon-error);
-    color: var(--icon-error)!important;
+    color: var(--icon-error) !important;
 
     &.nds-ring {
-      box-shadow: 0 0 0px 4px var(--icon-error-ring)!important;
+      box-shadow: 0 0 0px 4px var(--icon-error-ring) !important;
     }
 
     .icon {
-      transform: translateX(-0.04rem);
       &:before {
-        content: "㿃"!important;
+        content: "㿃" !important;
       }
     }
 
@@ -172,18 +175,22 @@
   font-weight: 500;
   gap: var(--spacing-sm);
 
+  &.nds-error,
   &.error {
     color: var(--controls-control-text-error);
   }
 
+  &.nds-success,
   &.success {
     color: var(--controls-control-text-success, #16a34a);
   }
 
+  &.nds-warning,
   &.warning {
     color: var(--controls-control-text-warning, #f59e0b);
   }
 
+  &.nds-info,
   &.info {
     color: var(--controls-control-text-info, #3b82f6);
   }

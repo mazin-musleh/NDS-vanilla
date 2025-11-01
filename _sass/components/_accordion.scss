@@ -53,10 +53,14 @@
 
         &.nds-sm {
             height: var(--spacing-5xl);
+            font-size: var(--nds-text-sm-FS);
+            line-height: var(--nds-text-sm-LH);
         }
 
         &.nds-lg {
             height: var(--spacing-7xl);
+            font-size: var(--nds-text-lg-FS);
+            line-height: var(--nds-text-lg-LH);
         }
 
         .nds-accordion-title {

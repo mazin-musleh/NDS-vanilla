@@ -37,6 +37,14 @@ body {
     text-rendering: optimizeLegibility;
 }
 
+hr {
+  opacity: .10;
+  border: 0;
+  border-top: 1px solid;
+  margin: 4px 0;
+  color: inherit;
+}
+
 h1,
 h2,
 h3,
@@ -210,4 +218,11 @@ button,
     -webkit-line-clamp: var(--truncate-line, 1);
     line-clamp: var(--truncate-line, 1);
     text-overflow: ellipsis;
+}
+
+.nds-center {
+    text-align: center;
+    margin-inline-end: auto;
+    margin-inline-start: auto;
+    align-self: center;
 }

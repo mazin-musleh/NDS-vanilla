@@ -41,11 +41,18 @@
         min-width: 200px;
     }
 
-    .nds-form-footer {
-        display: flex;
+    .nds-form-footer:not(.show) {
+        display: none;
+    }
+
+    &.nds-feedback{
+
+    .nds-form-footer:not(.show){
+        display: none;
         flex-direction: column;
         gap: var(--spacing-xs);
     }
+}
 
 }
 
@@ -107,7 +114,7 @@ fieldset {
         z-index: 2;
     }
 
-    &.focus {
+    &.nds-focus,&.focus {
         &::before {
             width: 100%;
         }
@@ -122,7 +129,7 @@ fieldset {
 
     }
 
-    &.active {
+    &.nds-active,&.active {
 
         &::before {
             width: 50%;
@@ -137,7 +144,7 @@ fieldset {
         }
     }
 
-    &.error {
+    &.nds-error,&.error {
 
         &::before {
             background-color: var(--form-field-border-error);
@@ -146,7 +153,7 @@ fieldset {
         border-color: var(--form-field-border-error);
     }
 
-    &.disabled {
+    &.nds-disabled,&.disabled {
         background-color: var(--background-disabled) !important;
         color: var(--text-default-disabled) !important;
         border-color: var(--border-disabled) !important;

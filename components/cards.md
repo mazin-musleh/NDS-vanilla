@@ -22,11 +22,11 @@ direction: ltr
                         <div class="demo-label">Basic Card</div>
                         <div class="demo-action">
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-shadow", ".nds-card", "cardVariant"]'>
+                                data-toggler='["nds-shadow", ".nds-card", "cardShadow"]'>
                                 <span class="label">Shadow</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
-                                data-toggler='["nds-stroke", ".nds-card", "cardVariant"]'>
+                                data-toggler='["nds-stroke", ".nds-card", "cardStroke"]'>
                                 <span class="label">Stroke</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
@@ -166,11 +166,11 @@ direction: ltr
                         <div class="demo-label">Card with image</div>
                         <div class="demo-action">
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-shadow", ".nds-card", "cardVariant"]'>
+                                data-toggler='["nds-shadow", ".nds-card", "cardShadow"]'>
                                 <span class="label">Shadow</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
-                                data-toggler='["nds-stroke", ".nds-card", "cardVariant"]'>
+                                data-toggler='["nds-stroke", ".nds-card", "cardStroke"]'>
                                 <span class="label">Stroke</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
@@ -348,11 +348,11 @@ direction: ltr
                         <div class="demo-label">Expandable Card</div>
                         <div class="demo-action">
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-shadow", ".nds-card", "cardVariant"]'>
+                                data-toggler='["nds-shadow", ".nds-card", "cardShadow"]'>
                                 <span class="label">Shadow</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
-                                data-toggler='["nds-stroke", ".nds-card", "cardVariant"]'>
+                                data-toggler='["nds-stroke", ".nds-card", "cardStroke"]'>
                                 <span class="label">Stroke</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
@@ -434,11 +434,11 @@ direction: ltr
                         <div class="demo-label">Statistic Card</div>
                         <div class="demo-action">
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-shadow", ".nds-card", "cardVariant"]'>
+                                data-toggler='["nds-shadow", ".nds-card", "cardShadow"]'>
                                 <span class="label">Shadow</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
-                                data-toggler='["nds-stroke", ".nds-card", "cardVariant"]'>
+                                data-toggler='["nds-stroke", ".nds-card", "cardStroke"]'>
                                 <span class="label">Stroke</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
@@ -541,12 +541,16 @@ direction: ltr
                     <div class="demo-label">Card Group Grid</div>
                     <div class="demo-action">
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='["nds-shadow", ".nds-card", "cardVariant"]'>
+                            data-toggler='["nds-shadow", ".nds-card", "cardShadow"]'>
                             <span class="label">Shadow</span>
                         </button>
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
-                            data-toggler='["nds-stroke", ".nds-card", "cardVariant"]'>
+                            data-toggler='["nds-stroke", ".nds-card", "cardStroke"]'>
                             <span class="label">Stroke</span>
+                        </button>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-center", ".nds-grid", "cardCenter"]'>
+                            <span class="label">Center</span>
                         </button>
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='["noBg", ".demo-container", "containerBg"]'>
@@ -556,7 +560,7 @@ direction: ltr
                 </div>
                 <div class="demo-container">
                     <div class="state-demo">
-                        <div class="nds-cards-group" style="--max-col: 4; --min-col: 2;">
+                        <div class="nds-grid" style="--max-col: 4; --mid-col: 2; --min-col: 2;">
                             <div class="nds-card nds-stroke nds-statistic">
                                 <div class="nds-card-header">
                                     <div class="nds-card-featured-icon">
@@ -642,7 +646,7 @@ direction: ltr
                             </div>
                             <div class="nds-expandable-content">
                                 <code class="lang-html code">
-                                    <div class="nds-cards-group" style="--max-col: 4; --min-col: 2;">
+                                    <div class="nds-grid" style="--max-col: 4; --mid-col: 2; --min-col: 2;">
                                         <div class="nds-card nds-stroke nds-statistic">
                                             <div class="nds-card-header">
                                                 <div class="nds-card-featured-icon">

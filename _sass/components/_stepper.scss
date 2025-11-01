@@ -22,6 +22,11 @@
     align-items: flex-start;
     counter-reset: step-counter;
 
+    &.nds-lg {
+        --stepper-size: 48px;
+        --stepper-gap: calc(var(--progressindicator-progress-indicator-gap) * 1.5);
+    }
+
     // RTL support is default - LTR overrides when needed
     @include ltr {
         direction: ltr;
@@ -73,15 +78,10 @@
                 content: '';
                 position: absolute;
                 top: calc(var(--stepper-size) /2); // Half of circle height (32px)
-                right: var(--stepper-size); // Circle width
-                left: calc(var(--stepper-gap) * -1);
+                inset-inline-start: var(--stepper-size);
+                inset-inline-end: calc(var(--stepper-gap) * -1);
                 height: 2px;
                 background-color: var(--stepper-line-current);
-
-                @include ltr {
-                    right: calc(var(--stepper-gap) * -1);
-                    left: var(--stepper-size);
-                }
             }
         }
 
@@ -91,6 +91,30 @@
 
         &.upcoming .nds-stepper-base::after {
             background-color: var(--stepper-line-upcomming);
+        }
+    }
+
+
+}
+
+.nds-stepper.nds-center {
+    .nds-stepper-step {
+        .nds-stepper-base {
+            justify-content: center;
+        }
+
+        .nds-stepper-content {
+            align-items: center;
+        }
+
+        &.has-line {
+            .nds-stepper-base {
+                &::after {
+                    inset-inline-start: 50%;
+                    inset-inline-end: -50%;
+                }
+            }
+
         }
     }
 }
@@ -120,8 +144,7 @@
     border: 2px solid var(--stepper-button-current);
     background-color: var(--stepper-button-background);
     color: var(--stepper-button-current);
-    font-size: var(--nds-text-md-FS);
-    line-height: var(--nds-text-md-LH);
+    font-size: calc(var(--stepper-size)/2);
     font-weight: 500;
     transition: var(--nds-transition);
     position: relative;
@@ -139,8 +162,7 @@
 
     &::before {
         content: counter(step-counter);
-        font-size: var(--nds-text-md-FS);
-        line-height: var(--nds-text-md-LH);
+        font-size: calc(var(--stepper-size)/2);
         font-weight: 500;
     }
 
@@ -150,8 +172,7 @@
 
         &::before {
             content: attr(data-step-text);
-            font-size: var(--nds-text-md-FS);
-            line-height: var(--nds-text-md-LH);
+            font-size: calc(var(--stepper-size)/2);
             font-weight: 500;
         }
     }
@@ -165,12 +186,11 @@
 .nds-stepper-content {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-2xs);
+    gap: var(--spacing-sm);
 }
 
 .nds-stepper-title {
     font-size: var(--nds-text-md-FS);
-    line-height: var(--nds-text-md-LH);
     font-weight: 500;
     color: var(--stepper-text-primary);
     margin: 0;
@@ -178,7 +198,6 @@
 
 .nds-stepper-description {
     font-size: var(--nds-text-sm-FS);
-    line-height: var(--nds-text-sm-LH);
     font-weight: 400;
     color: var(--stepper-text-secondary);
     margin: 0;
@@ -214,7 +233,7 @@
             justify-content: center;
             width: var(--stepper-size);
             height: var(--stepper-size);
-            font-size: 16px;
+            font-size: calc(var(--stepper-size)/2);
             line-height: var(--stepper-size);
             font-weight: 600;
             color: var(--colors-base-white);
@@ -308,7 +327,7 @@
 // Enhanced vertical stepper with vertical connecting lines
 .nds-stepper.nds-vertical {
     flex-direction: column;
-    --stepper-gap: var(--spacing-4xl);
+    --stepper-gap: calc(var(--stepper-size)*1.5);
 
     .nds-stepper-step {
         position: relative;
@@ -364,6 +383,8 @@
 
 .nds-stepper.nds-radial {
     --pc-size: 64px;
+    --stepper-gap: calc(var(--pc-size)/8);
+    --content-gap: 0;/* calc(var(--pc-size)/16); */
     align-items: center;
 
     .nds-stepper-step {
@@ -379,6 +400,30 @@
     // Hide regular stepper base
     .nds-stepper-base {
         display: none;
+    }
+
+    &.nds-sm {
+        --pc-size: 48px;
+    }
+
+    &.nds-lg {
+        --pc-size: 96px;
+    }
+
+    &.nds-xl {
+        --pc-size: 120px;
+    }
+
+    .nds-stepper-content {
+        gap: var(--content-gap);
+
+        .nds-stepper-title {
+            font-size: calc(var(--pc-size)/4);
+        }
+
+        .nds-stepper-description {
+            font-size: calc(var(--pc-size)/5);
+        }
     }
 
     .progress-circle {
@@ -444,6 +489,7 @@
             .nds-stepper-circle {
                 border-color: var(--background-surface-oncolor);
                 color: var(--colors-base-white);
+
                 &:hover {
                     border-color: var(--alpha-white-40);
                 }

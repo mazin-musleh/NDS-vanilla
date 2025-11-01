@@ -167,25 +167,25 @@
         font-size: calc(var(--nds-input-size) - 4px);
         line-height: var(--nds-input-size);
         font-weight: 600;
-        background-color: var(--controls-control-neutral-checked);
-        color: var(--controls-control-neutral-checked);
-        box-shadow: 0 0 0 1px var(--controls-control-neutral-checked);
+        background-color: var(--controls-control-primary-checked);
+        color: var(--controls-control-primary-checked);
+        box-shadow: 0 0 0 1px var(--controls-control-primary-checked);
         border-color: var(--colors-base-white);
     }
 
     // Hover states for checked checkbox
     &:checked:hover::after {
-        background-color: var(--controls-control-neutral-hovered);
-        color: var(--controls-control-neutral-hovered);
-        box-shadow: 0 0 0 1px var(--controls-control-neutral-hovered);
+        background-color: var(--controls-control-primary-hovered);
+        color: var(--controls-control-primary-hovered);
+        box-shadow: 0 0 0 1px var(--controls-control-primary-hovered);
         border-color: var(--colors-base-white);
     }
 
     // Active states for checked checkbox
     &:checked:active::after {
-        background-color: var(--controls-control-neutral-pressed);
-        color: var(--controls-control-neutral-pressed);
-        box-shadow: 0 0 0 1px var(--controls-control-neutral-pressed);
+        background-color: var(--controls-control-primary-pressed);
+        color: var(--controls-control-primary-pressed);
+        box-shadow: 0 0 0 1px var(--controls-control-primary-pressed);
         border-color: var(--colors-base-white);
     }
 
@@ -196,28 +196,28 @@
     }
 
     // ==============================================
-    // PRIMARY VARIANT
+    // NEUTRAL VARIANT
     // ==============================================
 
-    &.primary {
+    &.nds-neutral {
         &:checked::after {
-            background-color: var(--controls-control-primary-checked);
-            color: var(--controls-control-primary-checked);
-            box-shadow: 0 0 0 1px var(--controls-control-primary-checked);
+            background-color: var(--controls-control-neutral-checked);
+            color: var(--controls-control-neutral-checked);
+            box-shadow: 0 0 0 1px var(--controls-control-neutral-checked);
             border-color: var(--colors-base-white);
         }
 
         &:checked:hover::after {
-            background-color: var(--controls-control-primary-hovered);
-            color: var(--controls-control-primary-hovered);
-            box-shadow: 0 0 0 1px var(--controls-control-primary-hovered);
+            background-color: var(--controls-control-neutral-hovered);
+            color: var(--controls-control-neutral-hovered);
+            box-shadow: 0 0 0 1px var(--controls-control-neutral-hovered);
             border-color: var(--colors-base-white);
         }
 
         &:checked:active::after {
-            background-color: var(--controls-control-primary-pressed);
-            color: var(--controls-control-primary-pressed);
-            box-shadow: 0 0 0 1px var(--controls-control-primary-pressed);
+            background-color: var(--controls-control-neutral-pressed);
+            color: var(--controls-control-neutral-pressed);
+            box-shadow: 0 0 0 1px var(--controls-control-neutral-pressed);
             border-color: var(--colors-base-white);
         }
     }

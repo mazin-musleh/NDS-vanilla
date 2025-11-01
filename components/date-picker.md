@@ -62,68 +62,11 @@ direction: ltr
                     </button>
                   </div>
                   <input type="text" id="demo-datePickerInput" class="nds-input nds-date-input" placeholder="DD/MM/YYYY"
-                    data-year-before="40" data-year-after="5" data-hijri-offset="0">
-
-                  <!-- Custom Calendar Dropdown -->
-                  <div class="nds-date-picker-dropdown hidden">
-                    <div class="calendar-header">
-                      <div class="calendar-title">
-                        <div class="month-year-selectors">
-                          <div class="month-dropdown-wrapper">
-                            <button class="nds-btn nds-subtle nds-menu-btn month-dropdown-btn" aria-expanded="false"
-                              aria-label="Select month">
-                              <span class="label"></span>
-                            </button>
-                            <div class="month-dropdown-menu hidden" role="menu">
-                            </div>
-                          </div>
-                          <div class="year-dropdown-wrapper">
-                            <button class="nds-btn nds-subtle nds-menu-btn year-dropdown-btn" aria-expanded="false"
-                              aria-label="Select year">
-                              <span class="label"></span>
-                            </button>
-                            <div class="year-dropdown-menu hidden" role="menu">
-                            </div>
-                          </div>
-                        </div>
-                        <div class="calendar-month-switch">
-                          <button class="nds-btn nds-subtle next-month" type="button" aria-label="Next month">
-                            <i class="hgi hgi-stroke hgi-arrow-right-02 icon"></i>
-                          </button>
-                          <button class="nds-btn nds-subtle prev-month" type="button" aria-label="Previous month">
-                            <i class="hgi hgi-stroke hgi-arrow-left-02 icon"></i>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="calendar-body">
-                      <div class="calendar-weekdays">
-                      </div>
-                      <div class="calendar-dates">
-                      </div>
-                    </div>
-
-                    <div class="calendar-footer">
-                      <div class="calendar-action-start">
-                        <button class="nds-btn nds-secondary-outline today-btn" type="button">
-                          <span class="label">Today</span>
-                        </button>
-                      </div>
-                      <div class="calendar-action-end">
-                        <button class="nds-btn nds-primary save-btn" type="button">
-                          <span class="label">Save</span>
-                        </button>
-                        <button class="nds-btn nds-secondary-outline clear-btn" type="button">
-                          <span class="label">Clear</span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
+                    data-year-before="40" data-year-after="5">
                 </div>
                 <div class="nds-form-footer">
-                  <span class="nds-feedback nds-neutral">
-                    <span class="nds-feedback-icon nds-neutral nds-info nds-outline nds-sm">
+                  <span class="nds-feedback">
+                    <span class="nds-feedback-icon nds-outline nds-sm">
                       <i class="hgi hgi-solid icon"></i>
                     </span>
                     <span class="msg"></span>
@@ -155,88 +98,31 @@ direction: ltr
                 </div>
                 <div class="nds-expandable-content">
                   <code class="lang-html code">
-                  <div class="nds-form-container nds-date-picker">
-                    <div class="nds-form-header">
-                      <label for="datePickerInput">
-                        <span class="label">Select Date</span>
-                      </label>
-                    </div>
-                    <div class="nds-form-control">
-                      <div class="nds-form-action before">
-                        <button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle" aria-label="Calendar Toggler">
-                          <i class="hgi hgi-stroke hgi-calendar-03 icon"></i>
-                        </button>
+                    <div class="nds-form-container nds-date-picker">
+                      <div class="nds-form-header">
+                        <label for="datePickerInput">
+                          <span class="label">Select Date</span>
+                        </label>
                       </div>
-                      <input type="text" id="datePickerInput" class="nds-input nds-date-input" placeholder="DD/MM/YYYY"
-                        data-year-before="40" data-year-after="5" data-hijri-offset="0">
-
-                      <!-- Custom Calendar Dropdown -->
-                      <div class="nds-date-picker-dropdown hidden">
-                        <div class="calendar-header">
-                          <div class="calendar-title">
-                            <div class="month-year-selectors">
-                              <div class="month-dropdown-wrapper">
-                                <button class="nds-btn nds-subtle nds-menu-btn month-dropdown-btn" aria-expanded="false"
-                                  aria-label="Select month">
-                                  <span class="label"></span>
-                                </button>
-                                <div class="month-dropdown-menu hidden" role="menu">
-                                </div>
-                              </div>
-                              <div class="year-dropdown-wrapper">
-                                <button class="nds-btn nds-subtle nds-menu-btn year-dropdown-btn" aria-expanded="false"
-                                  aria-label="Select year">
-                                  <span class="label"></span>
-                                </button>
-                                <div class="year-dropdown-menu hidden" role="menu">
-                                </div>
-                              </div>
-                            </div>
-                            <div class="calendar-month-switch">
-                              <button class="nds-btn nds-subtle next-month" type="button" aria-label="Next month">
-                                <i class="hgi hgi-stroke hgi-arrow-right-02 icon"></i>
-                              </button>
-                              <button class="nds-btn nds-subtle prev-month" type="button" aria-label="Previous month">
-                                <i class="hgi hgi-stroke hgi-arrow-left-02 icon"></i>
-                              </button>
-                            </div>
-                          </div>
+                      <div class="nds-form-control">
+                        <div class="nds-form-action before">
+                          <button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle" aria-label="Calendar Toggler">
+                            <i class="hgi hgi-stroke hgi-calendar-03 icon"></i>
+                          </button>
                         </div>
-
-                        <div class="calendar-body">
-                          <div class="calendar-weekdays">
-                          </div>
-                          <div class="calendar-dates">
-                          </div>
-                        </div>
-
-                        <div class="calendar-footer">
-                          <div class="calendar-action-start">
-                            <button class="nds-btn nds-secondary-outline today-btn" type="button">
-                              <span class="label">Today</span>
-                            </button>
-                          </div>
-                          <div class="calendar-action-end">
-                            <button class="nds-btn nds-primary save-btn" type="button">
-                              <span class="label">Save</span>
-                            </button>
-                            <button class="nds-btn nds-secondary-outline clear-btn" type="button">
-                              <span class="label">Clear</span>
-                            </button>
-                          </div>
-                        </div>
+                        <input type="text" id="datePickerInput" class="nds-input nds-date-input" placeholder="DD/MM/YYYY"
+                          data-year-before="40" data-year-after="5">
                       </div>
-                    </div>
-                    <div class="nds-form-footer">
-                        <span class="nds-feedback nds-neutral">
-                            <span class="nds-feedback-icon nds-neutral nds-info nds-outline nds-sm">
-                                <i class="hgi hgi-solid icon"></i>
-                            </span>
-                            <span class="msg"></span>
+                      <div class="nds-form-footer">
+                        <span class="nds-feedback">
+                          <span class="nds-feedback-icon nds-outline nds-sm">
+                            <i class="hgi hgi-solid icon"></i>
+                          </span>
+                          <span class="msg"></span>
                         </span>
+                      </div>
                     </div>
-                  </div>
-                    </code>
+                  </code>
                 </div>
               </div>
             </div>

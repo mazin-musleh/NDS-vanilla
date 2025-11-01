@@ -1010,11 +1010,55 @@
     // Mark forms script as loaded
     window.NDS.Forms._loaded = true;
 
+    // Initialize feedback message observer to toggle show class
+    function initFeedbackObserver() {
+        var feedbackElements = document.querySelectorAll('.nds-feedback .msg');
+
+        feedbackElements.forEach(function(msgElement) {
+            var feedbackPlaceholder = msgElement.closest('.nds-feedback');
+            var feedbackParent = feedbackPlaceholder ? feedbackPlaceholder.parentElement : null;
+
+            if (!feedbackPlaceholder) return;
+
+            // Check if parent should be toggled (only specific containers with feedback as only child)
+            var shouldToggleParent = false;
+            if (feedbackParent) {
+                var isFormContainer = feedbackParent.classList.contains('nds-form-footer') ||
+                                     feedbackParent.classList.contains('nds-form-header');
+                var isOnlyChild = feedbackParent.children.length === 1;
+                shouldToggleParent = isFormContainer && isOnlyChild;
+            }
+
+            // Initial state
+            var hasContent = msgElement.textContent.trim() !== '';
+            feedbackPlaceholder.classList.toggle('show', hasContent);
+            if (shouldToggleParent) {
+                feedbackParent.classList.toggle('show', hasContent);
+            }
+
+            // Observe changes to message content
+            var observer = new MutationObserver(function() {
+                var hasContent = msgElement.textContent.trim() !== '';
+                feedbackPlaceholder.classList.toggle('show', hasContent);
+                if (shouldToggleParent) {
+                    feedbackParent.classList.toggle('show', hasContent);
+                }
+            });
+
+            observer.observe(msgElement, {
+                characterData: true,
+                childList: true,
+                subtree: true
+            });
+        });
+    }
+
     function initializeAllForms() {
         VoiceRecognition.audioFeedback.init();
         initFormControlClasses();
         initInputAutoFill();
         initDynamicContentObserver();
+        initFeedbackObserver();
         // File uploads are initialized by nds-fileUpload.js
     }
 
