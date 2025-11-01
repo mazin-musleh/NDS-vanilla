@@ -369,7 +369,7 @@ direction: ltr
                                 data-toggler='["nds-ring", ".nds-feedback-icon", "iconVariant"]'>
                                 <span class="label">Ring</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
                                 data-toggler='["nds-outline", ".nds-feedback-icon", "iconVariant"]'>
                                 <span class="label">Outline</span>
                             </button>
@@ -428,7 +428,7 @@ direction: ltr
                                 data-toggler='["nds-ring", ".nds-feedback-icon", "iconVariant"]'>
                                 <span class="label">Ring</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
                                 data-toggler='["nds-outline", ".nds-feedback-icon", "iconVariant"]'>
                                 <span class="label">Outline</span>
                             </button>
@@ -487,7 +487,7 @@ direction: ltr
                                 data-toggler='["nds-ring", ".nds-feedback-icon", "iconVariant"]'>
                                 <span class="label">Ring</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
                                 data-toggler='["nds-outline", ".nds-feedback-icon", "iconVariant"]'>
                                 <span class="label">Outline</span>
                             </button>
@@ -546,7 +546,7 @@ direction: ltr
                                 data-toggler='["nds-ring", ".nds-feedback-icon", "iconVariant"]'>
                                 <span class="label">Ring</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
                                 data-toggler='["nds-outline", ".nds-feedback-icon", "iconVariant"]'>
                                 <span class="label">Outline</span>
                             </button>

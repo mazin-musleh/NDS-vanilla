@@ -239,6 +239,7 @@ textarea {
   }
 
   &:disabled,
+  &.disabled,
   &[data-state="disabled"] {
     background-color: $disabled-bg;
     color: $disabled-color;
@@ -278,6 +279,7 @@ textarea {
   }
 
   &:disabled,
+  &.disabled,
   &[data-state="disabled"] {
     background-color: $disabled-bg;
     color: $disabled-color;

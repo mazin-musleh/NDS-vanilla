@@ -192,12 +192,12 @@
     // ==============================================
 
     .nds-switch-input:checked+.nds-switch-track {
-        background-color: var(--controls-control-neutral-checked, #0D121C);
-        border-color: var(--controls-control-neutral-checked, #0D121C);
+        background-color: var(--controls-control-primary-checked, #0D121C);
+        border-color: var(--controls-control-primary-checked, #0D121C);
 
         &:hover:not([disabled]) {
-            background-color: var(--controls-control-neutral-hovered);
-            border-color: var(--controls-control-neutral-hovered);
+            background-color: var(--controls-control-primary-hovered);
+            border-color: var(--controls-control-primary-hovered);
         }
 
         .nds-switch-thumb {
@@ -213,16 +213,16 @@
     }
 
     // ==============================================
-    // PRIMARY VARIANT
+    // NEUTRAL VARIANT
     // ==============================================
 
-    &.primary .nds-switch-input:checked+.nds-switch-track {
-        background-color: var(--controls-control-primary-checked);
-        border-color: var(--controls-control-primary-checked);
+    &.nds-neutral .nds-switch-input:checked+.nds-switch-track {
+        background-color: var(--controls-control-neutral-checked);
+        border-color: var(--controls-control-neutral-checked);
 
         &:hover:not([disabled]) {
-            background-color: var(--controls-control-primary-hovered);
-            border-color: var(--controls-control-primary-hovered);
+            background-color: var(--controls-control-neutral-hovered);
+            border-color: var(--controls-control-neutral-hovered);
         }
     }
 

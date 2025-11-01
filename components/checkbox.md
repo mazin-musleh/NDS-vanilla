@@ -38,8 +38,8 @@ direction: ltr
                 <span class="label">SM</span>
               </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["primary", ".nds-check", "variantToggle"]'>
-                <span class="label">Primary</span>
+                data-toggler='["nds-neutral", ".nds-check", "variantToggle"]'>
+                <span class="label">Neutral</span>
               </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["indeterminate", ".nds-check", "stateToggle"]'>

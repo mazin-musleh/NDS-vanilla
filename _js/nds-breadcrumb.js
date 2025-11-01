@@ -69,7 +69,7 @@
 
             const button = document.createElement('button');
             button.className = 'nds-btn nds-subtle nds-dropmenu-trigger';
-            button.innerHTML = '...';
+            button.innerHTML = '<span class="label">...</span>';
 
             const menu = document.createElement('div');
             menu.className = 'nds-dropmenu-menu';

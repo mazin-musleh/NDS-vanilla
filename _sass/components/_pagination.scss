@@ -9,6 +9,10 @@
 // PAGINATION CONTAINER
 // ==============================================
 
+.nds-pagination-nav {
+  width: 100%;
+}
+
 .nds-pagination {
   display: flex;
   align-items: center;
@@ -40,7 +44,7 @@
     padding: 0 var(--spacing-sm);
     position: relative;
 
-    .label{
+    .label {
       text-align: center;
     }
 
@@ -57,9 +61,12 @@
     &.active {
       font-weight: 600;
       color: var(--button-label-primary-default);
-      background-color: unset;
 
-      &.nds-indicator:before{
+      &:not(.nds-dropmenu-trigger:hover) {
+        background-color: unset;
+      }
+
+      &.nds-indicator:before {
         background-color: var(--button-background-primary-hovered);
       }
     }
@@ -73,10 +80,12 @@
 .nds-pagination-prev,
 .nds-pagination-next {
   .nds-btn {
+
     // Icons for prev/next
     i {
       font-size: var(--nds-text-lg-FS);
-      @include ltr{
+
+      @include ltr {
         transform: scale(-1);
       }
     }
@@ -88,26 +97,10 @@
 // ==============================================
 
 .nds-pagination-ellipsis {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 40px;
-  height: 40px;
-  color: var(--text-neutral-600);
-  font-size: var(--nds-text-md-FS);
-  user-select: none;
-  position: relative;
-
-  @include mobile {
-    min-width: 36px;
-    height: 36px;
-    font-size: var(--nds-text-sm-FS);
-  }
-
 
   // Dropdown menu positioning
   .nds-dropmenu-menu {
-    min-width: 100px;
+    min-width: 60px;
     max-height: 300px;
     overflow-y: auto;
   }
@@ -118,9 +111,8 @@
     min-width: 40px;
 
     &.nds-indicator {
-      @include btn-indicator-styles(
-        var(--button-background-neutral-hovered),
-        var(--button-background-neutral-selected),
+      @include btn-indicator-styles(var(--background-neutral-400),
+        var(--background-neutral-800),
         'b'
       );
     }
@@ -148,11 +140,6 @@
     font-size: var(--nds-text-sm-FS);
   }
 
-  .nds-pagination-ellipsis {
-    min-width: 32px;
-    height: 32px;
-    font-size: var(--nds-text-sm-FS);
-  }
 }
 
 .nds-pagination.nds-lg {
@@ -197,4 +184,14 @@
 
 .nds-auto-pagination {
   margin-top: 24px;
+}
+
+.nds-pagination-ellipsis .nds-dropmenu-trigger.active .label::after {
+  content: '...';
+  display: block;
+  position: absolute;
+  bottom: 0;
+  inset-block-start: auto;
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
 }

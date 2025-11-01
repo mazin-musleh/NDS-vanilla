@@ -32,7 +32,8 @@
     @include btn-focus;
   }
 
-  &:disabled {
+  &:disabled,
+  &.disabled {
     @include btn-disabled;
   }
 
@@ -238,6 +239,7 @@
     }
 
     &:disabled,
+    &.disabled,
     &[data-state="disabled"] {
       color: var(--text-default-disabled);
     }
@@ -295,6 +297,7 @@
       }
 
       &:disabled,
+      &.disabled,
       &[data-state="disabled"] {
         background-color: var(--button-background-disabled-on-color);
         color: var(--text-default-oncolor-disabled);
@@ -327,6 +330,7 @@
       }
 
       &:disabled,
+      &.disabled,
       &[data-state="disabled"] {
         background-color: var(--button-background-transparent-default);
         color: var(--text-default-oncolor-disabled);
@@ -357,6 +361,7 @@
       }
 
       &:disabled,
+      &.disabled,
       &[data-state="disabled"] {
         color: var(--text-default-oncolor-disabled);
       }
@@ -386,6 +391,7 @@
       }
 
       &:disabled,
+      &.disabled,
       &[data-state="disabled"] {
         color: var(--text-default-oncolor-disabled);
       }
@@ -436,6 +442,7 @@
     }
 
     &:disabled,
+    &.disabled,
     &[data-state="disabled"] {
       background-color: var(--button-background-transparent-default);
       border-color: var(--border-neutral-secondary);
@@ -472,6 +479,7 @@
     }
 
     &:disabled,
+    &.disabled,
     &[data-state="disabled"] {
       background-color: var(--button-background-transparent-default);
       color: var(--text-default-disabled);
@@ -507,6 +515,7 @@
     }
 
     &:disabled,
+    &.disabled,
     &[data-state="disabled"] {
       background-color: var(--background-disabled);
       color: var(--text-default-disabled);
@@ -541,6 +550,7 @@
     }
 
     &:disabled,
+    &.disabled,
     &[data-state="disabled"] {
       color: var(--text-default-disabled);
     }
@@ -589,6 +599,7 @@
       }
 
       &:disabled,
+      &.disabled,
       &[data-state="disabled"] {
         background-color: var(--button-background-transparent-default);
         border-color: var(--border-neutral-secondary);
@@ -620,6 +631,7 @@
       }
 
       &:disabled,
+      &.disabled,
       &[data-state="disabled"] {
         color: var(--text-default-disabled);
       }
@@ -662,6 +674,7 @@
       }
 
       &:disabled,
+      &.disabled,
       &[data-state="disabled"] {
         color: var(--text-default-disabled);
       }
@@ -881,7 +894,7 @@
       align-items: center;
       line-height: normal;
       padding: 4px;
-      
+
     }
   }
 

@@ -3,7 +3,7 @@
  * Cleaner, more straightforward stepper functionality
  */
 
-(function() {
+(function () {
     'use strict';
 
     class NDSStepper {
@@ -78,9 +78,10 @@
                 } else if (stepNumber === this.currentStep) {
                     step.classList.add('current');
                     // Add 'completed' class to last step when it's reached
-                    if (stepNumber === this.totalSteps) {
+                    /* if (stepNumber === this.totalSteps) {
                         step.classList.add('completed');
-                    }
+                    } */
+
                 } else {
                     step.classList.add('upcoming');
                 }
@@ -98,10 +99,32 @@
         }
 
         next() {
+            // If already on last step, mark it as completed (except for radial steppers)
+            if (this.currentStep === this.totalSteps && !this.element.classList.contains('nds-radial')) {
+                const lastStep = this.steps[this.totalSteps - 1];
+                if (lastStep && !lastStep.classList.contains('completed')) {
+                    lastStep.classList.remove('current');
+                    lastStep.classList.add('completed');
+                    this.element.classList.add('completed');
+                    this.dispatchEvent();
+                }
+                return true;
+            }
             return this.goTo(this.currentStep + 1);
         }
 
         previous() {
+            // If on last step and it's completed, un-complete it instead of going back (except for radial steppers)
+            if (this.currentStep === this.totalSteps && !this.element.classList.contains('nds-radial')) {
+                const lastStep = this.steps[this.totalSteps - 1];
+                if (lastStep && lastStep.classList.contains('completed')) {
+                    lastStep.classList.remove('completed');
+                    lastStep.classList.add('current');
+                    this.element.classList.remove('completed');
+                    this.dispatchEvent();
+                    return true;
+                }
+            }
             return this.goTo(this.currentStep - 1);
         }
 

@@ -38,8 +38,8 @@ direction: ltr
                 <span class="label">SM</span>
               </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["primary", ".nds-switch", "variantToggle"]'>
-                <span class="label">Primary</span>
+                data-toggler='["nds-neutral", ".nds-switch", "variantToggle"]'>
+                <span class="label">Neutral</span>
               </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["disabled", "input.nds-switch-input", "stateToggle", "attr"]'>
@@ -160,7 +160,7 @@ direction: ltr
                       </label>
                     </div>
                     <div class="nds-form-control">
-                      <div class="nds-switch">
+                      <div class="nds-switch nds-neutral">
                         <input type="checkbox" id="switch1" name="switchGroup" value="option1" class="nds-switch-input">
                         <div class="nds-switch-track">
                           <div class="nds-switch-thumb"></div>
@@ -176,7 +176,7 @@ direction: ltr
                       </label>
                     </div>
                     <div class="nds-form-control">
-                      <div class="nds-switch primary">
+                      <div class="nds-switch">
                         <input type="checkbox" id="switch2" name="switchGroup" value="option2" checked
                           class="nds-switch-input">
                         <div class="nds-switch-track">

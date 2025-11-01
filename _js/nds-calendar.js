@@ -477,17 +477,137 @@
 
     // Calendar Instance Class
     function DatePickerCalendar(dateInput, formControl) {
-        this.elements = this.cacheElements(dateInput, formControl);
-        if (!this.elements.dropdown) return;
+        var container = formControl.closest(UIConfig.selectors.container);
+        if (!container) {
+            console.warn('Calendar container not found');
+            return;
+        }
+
+        this.elements = {
+            input: dateInput,
+            formControl: formControl,
+            container: container,
+            toggleBtn: container.querySelector(UIConfig.selectors.toggleBtn)
+        };
 
         this.state = this.initializeState();
         this.handlers = {};
         this.observers = [];
+        this.isDropdownCreated = false;
 
-        this.bindBasicEvents();
+        // Bind events that need dropdown creation
+        this.bindInitEvents();
     }
 
     DatePickerCalendar.prototype = {
+        // Bind events that trigger dropdown creation
+        bindInitEvents: function () {
+            var self = this;
+
+            // Handler to ensure dropdown exists before toggling
+            var ensureDropdownAndToggle = function (e) {
+                if (!self.isDropdownCreated) {
+                    // Create dropdown DOM
+                    self.removeDropdownDOM();
+                    self.createDropdownDOM();
+
+                    // Re-cache all elements
+                    self.elements = self.cacheElements(self.elements.input, self.elements.formControl);
+                    if (!self.elements.dropdown) {
+                        console.error('Failed to create dropdown');
+                        return;
+                    }
+
+                    self.isDropdownCreated = true;
+
+                    // Bind dropdown events (including outside click) after a small delay
+                    // to avoid catching the current click event
+                    setTimeout(function() {
+                        self.bindBasicEvents();
+                    }, 0);
+                }
+
+                // Now toggle the dropdown
+                self.toggleDropdown();
+            };
+
+            // Bind to input click only (focus will trigger click anyway)
+            this.elements.input.addEventListener('click', ensureDropdownAndToggle);
+
+            // Bind to toggle button if it exists
+            if (this.elements.toggleBtn) {
+                this.elements.toggleBtn.addEventListener('click', ensureDropdownAndToggle);
+            }
+
+            this.handlers.ensureDropdownAndToggle = ensureDropdownAndToggle;
+        },
+
+        // Create dropdown DOM structure
+        createDropdownDOM: function () {
+            var dropdown = document.createElement('div');
+            dropdown.className = 'nds-date-picker-dropdown hidden';
+
+            var calendarHTML =
+                '<div class="calendar-header">' +
+                    '<div class="calendar-title">' +
+                        '<div class="month-year-selectors">' +
+                            '<div class="month-dropdown-wrapper">' +
+                                '<button class="nds-btn nds-subtle nds-menu-btn month-dropdown-btn" aria-expanded="false" aria-label="Select month">' +
+                                    '<span class="label"></span>' +
+                                '</button>' +
+                                '<div class="month-dropdown-menu hidden" role="menu"></div>' +
+                            '</div>' +
+                            '<div class="year-dropdown-wrapper">' +
+                                '<button class="nds-btn nds-subtle nds-menu-btn year-dropdown-btn" aria-expanded="false" aria-label="Select year">' +
+                                    '<span class="label"></span>' +
+                                '</button>' +
+                                '<div class="year-dropdown-menu hidden" role="menu"></div>' +
+                            '</div>' +
+                        '</div>' +
+                        '<div class="calendar-month-switch">' +
+                            '<button class="nds-btn nds-subtle next-month" type="button" aria-label="Next month">' +
+                                '<i class="hgi hgi-stroke hgi-arrow-right-02 icon"></i>' +
+                            '</button>' +
+                            '<button class="nds-btn nds-subtle prev-month" type="button" aria-label="Previous month">' +
+                                '<i class="hgi hgi-stroke hgi-arrow-left-02 icon"></i>' +
+                            '</button>' +
+                        '</div>' +
+                    '</div>' +
+                '</div>' +
+                '<div class="calendar-body">' +
+                    '<div class="calendar-weekdays"></div>' +
+                    '<div class="calendar-dates"></div>' +
+                '</div>' +
+                '<div class="calendar-footer">' +
+                    '<div class="calendar-action-start">' +
+                        '<button class="nds-btn nds-secondary-outline today-btn" type="button">' +
+                            '<span class="label">Today</span>' +
+                        '</button>' +
+                    '</div>' +
+                    '<div class="calendar-action-end">' +
+                        '<button class="nds-btn nds-subtle clear-btn" type="button">' +
+                            '<span class="label">Clear</span>' +
+                        '</button>' +
+                        '<button class="nds-btn nds-primary save-btn" type="button">' +
+                            '<span class="label">Save</span>' +
+                        '</button>' +
+                    '</div>' +
+                '</div>';
+
+            dropdown.innerHTML = calendarHTML;
+
+            // Insert dropdown after the input, inside the same parent (form-control)
+            this.elements.input.insertAdjacentElement('afterend', dropdown);
+        },
+
+        // Remove dropdown DOM
+        removeDropdownDOM: function () {
+            var dropdown = this.elements.container.querySelector(UIConfig.selectors.dropdown);
+            if (dropdown) {
+                dropdown.remove();
+            }
+        },
+
         // Cache DOM elements
         cacheElements: function (dateInput, formControl) {
             var container = formControl.closest(UIConfig.selectors.container);
@@ -766,18 +886,6 @@
         bindBasicEvents: function () {
             var self = this;
 
-            // Toggle button
-            if (this.elements.toggleBtn) {
-                this.elements.toggleBtn.addEventListener('click', function () {
-                    self.toggleDropdown();
-                });
-            }
-
-            // Input click
-            this.elements.input.addEventListener('click', function () {
-                self.toggleDropdown();
-            });
-
             // Outside click handler
             this.handlers.outsideClick = function (e) {
                 self.handleOutsideClick(e);
@@ -786,22 +894,28 @@
 
             // Prevent dropdown from closing when clicking inside
             if (this.elements.dropdown) {
-                this.elements.dropdown.addEventListener('click', function (e) {
+                this.handlers.dropdownClick = function (e) {
                     e.stopPropagation();
                     self.closeOtherDropdowns(e);
-                });
+                };
+                this.elements.dropdown.addEventListener('click', this.handlers.dropdownClick);
             }
         },
 
         toggleDropdown: function () {
             var isNowOpen = this.elements.dropdown.classList.contains('hidden');
-            this.elements.dropdown.classList.toggle('hidden');
-            this.elements.formControl.classList.toggle('open', isNowOpen);
 
             if (isNowOpen) {
+                // Make dropdown invisible BEFORE removing hidden class
+                this.elements.dropdown.style.visibility = 'hidden';
+                this.elements.dropdown.classList.remove('hidden');
+                this.elements.formControl.classList.add('open');
+
                 this.initializeCalendar();
                 this.adjustDropdownPosition();
             } else {
+                this.elements.dropdown.classList.add('hidden');
+                this.elements.formControl.classList.remove('open');
                 this.cleanup();
             }
         },
@@ -861,6 +975,9 @@
                     dropdown.style.left = '';
                     dropdown.style.right = '';
                 }
+
+                // Make dropdown visible after positioning is complete
+                dropdown.style.visibility = 'visible';
             }, 10);
         },
 
@@ -918,16 +1035,18 @@
 
         // Cleanup on close - Clear all cache
         cleanup: function () {
-            // Remove event listeners
-            var handlers = ['monthDropdown', 'yearDropdown', 'todayBtn', 'clearBtn', 'prevBtn', 'nextBtn'];
-            var elements = ['monthDropdownBtn', 'yearDropdownBtn', 'todayBtn', 'clearBtn', 'prevBtn', 'nextBtn'];
+            // Remove event listeners for calendar-specific elements
+            var handlers = ['monthDropdown', 'yearDropdown', 'todayBtn', 'clearBtn', 'prevBtn', 'nextBtn', 'dropdownClick'];
+            var elements = ['monthDropdownBtn', 'yearDropdownBtn', 'todayBtn', 'clearBtn', 'prevBtn', 'nextBtn', 'dropdown'];
 
             for (var i = 0; i < handlers.length; i++) {
                 if (this.handlers[handlers[i]] && this.elements[elements[i]]) {
                     this.elements[elements[i]].removeEventListener('click', this.handlers[handlers[i]]);
+                    delete this.handlers[handlers[i]];
                 }
             }
-            this.handlers = {};
+
+            // Note: Keep ensureDropdownAndToggle and outsideClick handlers - they persist
 
             // Clear rendered content
             if (this.elements.monthDropdownMenu) this.elements.monthDropdownMenu.innerHTML = '';
@@ -942,6 +1061,7 @@
                 this.elements.dropdown.style.marginBottom = '';
                 this.elements.dropdown.style.left = '';
                 this.elements.dropdown.style.right = '';
+                this.elements.dropdown.style.visibility = '';
             }
 
             // Clear ALL Hijri cache
@@ -1652,15 +1772,25 @@
         // Handle outside clicks
         handleOutsideClick: function (e) {
             var self = this;
+            var clickTarget = e.target;
+
             setTimeout(function () {
-                if (self.state.isInitialized && !self.elements.dropdown.classList.contains('hidden')) {
+                // Don't process if clicked on input or toggle button
+                if (clickTarget === self.elements.input ||
+                    (self.elements.toggleBtn && self.elements.toggleBtn.contains(clickTarget))) {
+                    return;
+                }
+
+                if (self.isDropdownCreated && self.state.isInitialized && self.elements.dropdown && !self.elements.dropdown.classList.contains('hidden')) {
                     // Close dropdowns when clicking inside calendar but outside dropdowns
-                    self.closeDropdownsIfClickedOutside(e.target);
+                    self.closeDropdownsIfClickedOutside(clickTarget);
                 }
 
                 // Close entire calendar if clicked outside container
-                if (!self.elements.container.contains(e.target)) {
-                    self.elements.dropdown.classList.add('hidden');
+                if (self.isDropdownCreated && !self.elements.container.contains(clickTarget)) {
+                    if (self.elements.dropdown) {
+                        self.elements.dropdown.classList.add('hidden');
+                    }
                     self.elements.formControl.classList.remove('open');
                     self.cleanup();
                 }
@@ -1918,15 +2048,24 @@
 
         // Destroy instance
         destroy: function () {
-            // Remove all event listeners
+            // Remove persistent event listeners
+            if (this.handlers.ensureDropdownAndToggle) {
+                this.elements.input.removeEventListener('click', this.handlers.ensureDropdownAndToggle);
+                if (this.elements.toggleBtn) {
+                    this.elements.toggleBtn.removeEventListener('click', this.handlers.ensureDropdownAndToggle);
+                }
+            }
+
             if (this.handlers.outsideClick) {
                 document.removeEventListener('click', this.handlers.outsideClick);
             }
 
             // Disconnect observers
-            this.observers.forEach(function (observer) {
-                observer.disconnect();
-            });
+            if (this.observers) {
+                this.observers.forEach(function (observer) {
+                    observer.disconnect();
+                });
+            }
 
             this.cleanup();
         }
