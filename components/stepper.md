@@ -480,34 +480,124 @@ direction: ltr
 
             <h3>Structure</h3>
             <ul>
-                <li><code>.nds-stepper</code> - Main container</li>
-                <li><code>.nds-stepper-step</code> - Individual step wrapper</li>
-                <li><code>.nds-stepper-base</code> - Contains the circle indicator</li>
-                <li><code>.nds-stepper-circle</code> - Numbered indicator</li>
-                <li><code>.nds-stepper-content</code> - Title and description area</li>
+                <li>
+                    <div class="nds-code nds-expandable">
+                        <div class="nds-code-action">
+                            <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                <i class="hgi hgi-stroke hgi-copy-01"></i>
+                            </button>
+                        </div>
+                        <code
+                            class="lang-html nds-expandable-content line-numbers"><span class="progress-text">.nds-stepper</span></code>
+                    </div> - Main container
+                </li>
+                <li>
+                    <div class="nds-code">
+                        <div class="nds-code-action"><button class="nds-btn nds-subtle copy-btn"
+                                aria-label="Copy code"><i class="hgi hgi-stroke hgi-copy-01"></i></button></div><code
+                            class="lang-html code">.nds-stepper-step</code>
+                    </div> - Individual step wrapper
+                </li>
+                <li>
+                    <div class="nds-code">
+                        <div class="nds-code-action"><button class="nds-btn nds-subtle copy-btn"
+                                aria-label="Copy code"><i class="hgi hgi-stroke hgi-copy-01"></i></button></div><code
+                            class="code">.nds-stepper-base</code>
+                    </div> - Contains the circle indicator
+                </li>
+                <li>
+                    <div class="nds-code">
+                        <div class="nds-code-action"><button class="nds-btn nds-subtle copy-btn"
+                                aria-label="Copy code"><i class="hgi hgi-stroke hgi-copy-01"></i></button></div><code
+                            class="code">.nds-stepper-circle</code>
+                    </div> - Numbered indicator
+                </li>
+                <li>
+                    <div class="nds-code">
+                        <div class="nds-code-action"><button class="nds-btn nds-subtle copy-btn"
+                                aria-label="Copy code"><i class="hgi hgi-stroke hgi-copy-01"></i></button></div><code
+                            class="code">.nds-stepper-content</code>
+                    </div> - Title and description area
+                </li>
             </ul>
 
             <h3>States</h3>
             <ul>
-                <li><code>.completed</code> - Finished steps</li>
-                <li><code>.current</code> - Active step</li>
-                <li><code>.upcoming</code> - Future steps</li>
-                <li><code>.error</code> - Error state</li>
-                <li><code>.has-line</code> - Adds connecting line</li>
+                <li>
+                    <div class="nds-code">
+                        <div class="nds-code-action"><button class="nds-btn nds-subtle copy-btn"
+                                aria-label="Copy code"><i class="hgi hgi-stroke hgi-copy-01"></i></button></div><code
+                            class="code">.completed</code>
+                    </div> - Finished steps
+                </li>
+                <li>
+                    <div class="nds-code">
+                        <div class="nds-code-action"><button class="nds-btn nds-subtle copy-btn"
+                                aria-label="Copy code"><i class="hgi hgi-stroke hgi-copy-01"></i></button></div><code
+                            class="code">.current</code>
+                    </div> - Active step
+                </li>
+                <li>
+                    <div class="nds-code">
+                        <div class="nds-code-action"><button class="nds-btn nds-subtle copy-btn"
+                                aria-label="Copy code"><i class="hgi hgi-stroke hgi-copy-01"></i></button></div><code
+                            class="code">.upcoming</code>
+                    </div> - Future steps
+                </li>
+                <li>
+                    <div class="nds-code">
+                        <div class="nds-code-action"><button class="nds-btn nds-subtle copy-btn"
+                                aria-label="Copy code"><i class="hgi hgi-stroke hgi-copy-01"></i></button></div><code
+                            class="code">.error</code>
+                    </div> - Error state
+                </li>
+                <li>
+                    <div class="nds-code">
+                        <div class="nds-code-action"><button class="nds-btn nds-subtle copy-btn"
+                                aria-label="Copy code"><i class="hgi hgi-stroke hgi-copy-01"></i></button></div><code
+                            class="code">.has-line</code>
+                    </div> - Adds connecting line
+                </li>
             </ul>
 
             <h3>Layouts</h3>
             <ul>
                 <li><strong>Horizontal:</strong> Default layout</li>
-                <li><strong>Vertical:</strong> Add <code>.nds-vertical</code> class</li>
-                <li><strong>Radial:</strong> Add <code>.nds-radial</code> class (includes progress circle)</li>
+                <li><strong>Vertical:</strong> Add <div class="nds-code">
+                        <div class="nds-code-action"><button class="nds-btn nds-subtle copy-btn"
+                                aria-label="Copy code"><i class="hgi hgi-stroke hgi-copy-01"></i></button></div><code
+                            class="code">.nds-vertical</code>
+                    </div> class</li>
+                <li><strong>Radial:</strong> Add <div class="nds-code">
+                        <div class="nds-code-action"><button class="nds-btn nds-subtle copy-btn"
+                                aria-label="Copy code"><i class="hgi hgi-stroke hgi-copy-01"></i></button></div><code
+                            class="code">.nds-radial</code>
+                    </div> class (includes progress circle)</li>
             </ul>
 
             <h3>Data Attributes</h3>
             <ul>
-                <li><code>data-current="2"</code> - Current step number</li>
-                <li><code>data-total="4"</code> - Total number of steps</li>
-                <li><code>data-step-text="1"</code> - Custom step text or number</li>
+                <li>
+                    <div class="nds-code">
+                        <div class="nds-code-action"><button class="nds-btn nds-subtle copy-btn"
+                                aria-label="Copy code"><i class="hgi hgi-stroke hgi-copy-01"></i></button></div><code
+                            class="code">data-current="2"</code>
+                    </div> - Current step number
+                </li>
+                <li>
+                    <div class="nds-code">
+                        <div class="nds-code-action"><button class="nds-btn nds-subtle copy-btn"
+                                aria-label="Copy code"><i class="hgi hgi-stroke hgi-copy-01"></i></button></div><code
+                            class="code">data-total="4"</code>
+                    </div> - Total number of steps
+                </li>
+                <li>
+                    <div class="nds-code">
+                        <div class="nds-code-action"><button class="nds-btn nds-subtle copy-btn"
+                                aria-label="Copy code"><i class="hgi hgi-stroke hgi-copy-01"></i></button></div><code
+                            class="code">data-step-text="1"</code>
+                    </div> - Custom step text or number
+                </li>
             </ul>
 
             <h3>Progress Circle</h3>
@@ -522,20 +612,43 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>
-                <code class="lang-javascript nds-expandable-content">
-// Navigate between steps (requires stepper ID)
+                <code class="lang-javascript nds-expandable-content line-numbers">
+// Method 1: Global API (requires stepper ID)
 NDSStepper.next('my-stepper');
 NDSStepper.previous('my-stepper');
 NDSStepper.goTo('my-stepper', 3);
-
-// Set step states
 NDSStepper.setState('my-stepper', 2, 'error');
-NDSStepper.setState('my-stepper', 1, 'completed');
 
-// Get stepper information
+// Method 2: Get instance by ID
 const stepper = NDSStepper.get('my-stepper');
-const currentStep = stepper.getCurrentStep();
-const progress = stepper.getProgressPercentage();
+stepper.next();
+stepper.previous();
+stepper.goTo(3);
+stepper.setState(2, 'warning');
+console.log(stepper.current, stepper.total, stepper.progress);
+                </code>
+            </div>
+
+            <h3>Data Attribute Control (NEW!)</h3>
+            <p>Control stepper directly via data attributes with automatic synchronization:</p>
+
+            <div class="nds-code nds-expandable">
+                <div class="nds-code-action">
+                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                    </button>
+                </div>
+                <code class="lang-javascript nds-expandable-content line-numbers">
+const stepper = document.getElementById('my-stepper');
+
+// Update current step (automatically updates UI)
+stepper.dataset.current = '2';
+
+// Complete stepper (linear only - marks all steps completed)
+stepper.dataset.current = '4'; // On 3-step stepper = all completed
+
+// Note: Radial steppers clamp to totalSteps
+radialStepper.dataset.current = '4'; // On 3-step = clamped to 3
                 </code>
             </div>
 
@@ -548,7 +661,7 @@ const progress = stepper.getProgressPercentage();
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>
-                <code class="lang-html nds-expandable-content">
+                <code class="lang-html nds-expandable-content line-numbers">
 <!-- Basic controls (targets closest or first stepper) -->
 <button data-stepper-control="next">Next Step</button>
 <button data-stepper-control="previous">Previous Step</button>
@@ -563,10 +676,23 @@ const progress = stepper.getProgressPercentage();
             <h3>Button Targeting</h3>
             <p>Control buttons use this targeting priority:</p>
             <ul>
-                <li><strong>Explicit:</strong> <code>data-stepper-target="stepper-id"</code> - Target specific stepper
-                    by ID</li>
-                <li><strong>Automatic:</strong> Closest parent <code>.nds-stepper</code> element</li>
-                <li><strong>Fallback:</strong> First <code>.nds-stepper</code> on the page</li>
+                <li><strong>Explicit:</strong>
+                    <div class="nds-code">
+                        <div class="nds-code-action"><button class="nds-btn nds-subtle copy-btn"
+                                aria-label="Copy code"><i class="hgi hgi-stroke hgi-copy-01"></i></button></div><code
+                            class="code">data-stepper-target="stepper-id"</code>
+                    </div> - Target specific stepper by ID
+                </li>
+                <li><strong>Automatic:</strong> Closest parent <div class="nds-code">
+                        <div class="nds-code-action"><button class="nds-btn nds-subtle copy-btn"
+                                aria-label="Copy code"><i class="hgi hgi-stroke hgi-copy-01"></i></button></div><code
+                            class="code">.nds-stepper</code>
+                    </div> element</li>
+                <li><strong>Fallback:</strong> First <div class="nds-code">
+                        <div class="nds-code-action"><button class="nds-btn nds-subtle copy-btn"
+                                aria-label="Copy code"><i class="hgi hgi-stroke hgi-copy-01"></i></button></div><code
+                            class="code">.nds-stepper</code>
+                    </div> on the page</li>
             </ul>
 
             <h3>Event Listening</h3>
@@ -578,13 +704,66 @@ const progress = stepper.getProgressPercentage();
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>
-                <code class="lang-javascript nds-expandable-content">
+                <code class="lang-javascript nds-expandable-content line-numbers">
 document.addEventListener('nds:stepper:change', (e) => {
-    console.log('Step changed to:', e.detail.currentStep);
+    console.log('Current Step:', e.detail.currentStep);
+    console.log('Total Steps:', e.detail.totalSteps);
     console.log('Progress:', e.detail.progressPercentage + '%');
 });
                 </code>
             </div>
+
+            <h3>Linear vs Radial Behavior</h3>
+            <p>Different stepper types have different completion behaviors:</p>
+
+            <h4>Linear Steppers (Default & Vertical)</h4>
+            <ul>
+                <li>Allow <div class="nds-code">
+                        <div class="nds-code-action"><button class="nds-btn nds-subtle copy-btn"
+                                aria-label="Copy code"><i class="hgi hgi-stroke hgi-copy-01"></i></button></div><code
+                            class="code">currentStep > totalSteps</code>
+                    </div> (marks all steps completed)</li>
+                <li>Clicking <div class="nds-code">
+                        <div class="nds-code-action"><button class="nds-btn nds-subtle copy-btn"
+                                aria-label="Copy code"><i class="hgi hgi-stroke hgi-copy-01"></i></button></div><code
+                            class="code">next()</code>
+                    </div> on last step marks it completed</li>
+                <li>Clicking <div class="nds-code">
+                        <div class="nds-code-action"><button class="nds-btn nds-subtle copy-btn"
+                                aria-label="Copy code"><i class="hgi hgi-stroke hgi-copy-01"></i></button></div><code
+                            class="code">previous()</code>
+                    </div> on completed last step un-completes it</li>
+                <li>Perfect for multi-step forms and registration flows</li>
+            </ul>
+
+            <h4>Radial Steppers (<div class="nds-code">
+                    <div class="nds-code-action"><button class="nds-btn nds-subtle copy-btn" aria-label="Copy code"><i
+                                class="hgi hgi-stroke hgi-copy-01"></i></button></div><code
+                        class="code">.nds-radial</code>
+                </div>)</h4>
+            <ul>
+                <li>Clamp <div class="nds-code">
+                        <div class="nds-code-action"><button class="nds-btn nds-subtle copy-btn"
+                                aria-label="Copy code"><i class="hgi hgi-stroke hgi-copy-01"></i></button></div><code
+                            class="code">currentStep</code>
+                    </div> to <div class="nds-code">
+                        <div class="nds-code-action"><button class="nds-btn nds-subtle copy-btn"
+                                aria-label="Copy code"><i class="hgi hgi-stroke hgi-copy-01"></i></button></div><code
+                            class="code">totalSteps</code>
+                    </div> (cannot exceed)</li>
+                <li>Normal next/previous navigation only</li>
+                <li>No automatic completion behavior</li>
+                <li>Maintains controlled circular progression</li>
+            </ul>
+
+            <h3>Performance Features</h3>
+            <ul>
+                <li>Cached radial check (no repeated DOM lookups)</li>
+                <li>MutationObserver for automatic data-attribute synchronization</li>
+                <li>Efficient microtask queue flag management</li>
+                <li>Optimized for multiple steppers on the same page</li>
+                <li>Zero infinite loops with internal update flag</li>
+            </ul>
 
         </div>
     </div>
