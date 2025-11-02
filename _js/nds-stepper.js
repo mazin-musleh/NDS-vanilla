@@ -13,6 +13,9 @@
             this.progressNumber = element.querySelector('.progress-number');
             this.progressText = element.querySelector('.progress-text');
 
+            // Cache radial check
+            this.isRadial = element.classList.contains('nds-radial');
+
             this.currentStep = this.getCurrentStep();
             this.totalSteps = this.steps.length;
 
@@ -20,9 +23,58 @@
         }
 
         init() {
+            this.setupObserver();
             this.updateProgress();
             this.syncStepStates();
             this.setupControls();
+        }
+
+        setupObserver() {
+            this.isInternalUpdate = false;
+
+            this.observer = new MutationObserver(() => {
+                if (this.isInternalUpdate) return;
+
+                const newCurrent = parseInt(this.element.dataset.current);
+                const newTotal = parseInt(this.element.dataset.total);
+                let changed = false;
+
+                // Check if total steps changed externally first
+                if (newTotal > 0 && newTotal !== this.totalSteps) {
+                    this.totalSteps = newTotal;
+                    this.steps = this.element.querySelectorAll('.nds-stepper-step');
+                    changed = true;
+                }
+
+                // Check if current step changed externally
+                if (newCurrent >= 1 && newCurrent !== this.currentStep) {
+                    // For radial steppers: clamp to totalSteps
+                    // For non-radial: allow currentStep > totalSteps for completion state
+                    this.currentStep = this.isRadial ? Math.min(newCurrent, this.totalSteps) : newCurrent;
+                    changed = true;
+                }
+
+                if (changed) {
+                    this.updateProgressDisplay();
+                    this.syncStepStates();
+                    this.dispatchEvent();
+                }
+            });
+
+            this.observer.observe(this.element, {
+                attributes: true,
+                attributeFilter: ['data-current', 'data-total']
+            });
+        }
+
+        isValidStep(stepNumber) {
+            return stepNumber >= 1 && stepNumber <= this.totalSteps;
+        }
+
+        destroy() {
+            if (this.observer) {
+                this.observer.disconnect();
+            }
         }
 
         getCurrentStep() {
@@ -34,54 +86,53 @@
         }
 
         updateProgress() {
-            const percentage = Math.round((this.currentStep / this.totalSteps) * 100);
-
-            // Update data attributes
+            this.isInternalUpdate = true;
             this.element.dataset.current = this.currentStep;
             this.element.dataset.total = this.totalSteps;
+            this.updateProgressDisplay();
 
-            // Update CSS custom properties for calculations
+            // Reset flag using microtask queue
+            Promise.resolve().then(() => {
+                this.isInternalUpdate = false;
+            });
+        }
+
+        updateProgressDisplay() {
+            const percentage = Math.min(100, Math.round((this.currentStep / this.totalSteps) * 100));
+
             this.element.style.setProperty('--current-step', this.currentStep);
             this.element.style.setProperty('--total-steps', this.totalSteps);
 
-            // Add/remove 'completed' class when reaching last step
-            if (this.currentStep === this.totalSteps) {
-                this.element.classList.add('completed');
-            } else {
-                this.element.classList.remove('completed');
-            }
+            // Only mark as completed if not radial
+            this.element.classList.toggle('completed', !this.isRadial && this.currentStep >= this.totalSteps);
 
-            // Update progress display
             if (this.progressNumber) {
                 this.progressNumber.textContent = percentage;
             }
 
             if (this.progressText) {
                 const isRTL = document.documentElement.dir === 'rtl';
-                const stepText = isRTL ?
-                    `${this.currentStep} من ${this.totalSteps}` :
-                    `${this.currentStep} of ${this.totalSteps}`;
-                this.progressText.innerHTML = stepText;
+                const displayCurrent = Math.min(this.currentStep, this.totalSteps);
+                this.progressText.innerHTML = isRTL ?
+                    `${displayCurrent} من ${this.totalSteps}` :
+                    `${displayCurrent} of ${this.totalSteps}`;
             }
         }
 
         syncStepStates() {
+            const allCompleted = !this.isRadial && this.currentStep > this.totalSteps;
+
             this.steps.forEach((step, index) => {
                 const stepNumber = index + 1;
-
-                // Remove all state classes
                 step.classList.remove('completed', 'current', 'upcoming');
 
-                // Add appropriate state
-                if (stepNumber < this.currentStep) {
+                if (allCompleted) {
+                    // Mark all steps as completed if current > total (non-radial only)
+                    step.classList.add('completed');
+                } else if (stepNumber < this.currentStep) {
                     step.classList.add('completed');
                 } else if (stepNumber === this.currentStep) {
                     step.classList.add('current');
-                    // Add 'completed' class to last step when it's reached
-                    /* if (stepNumber === this.totalSteps) {
-                        step.classList.add('completed');
-                    } */
-
                 } else {
                     step.classList.add('upcoming');
                 }
@@ -89,7 +140,7 @@
         }
 
         goTo(stepNumber) {
-            if (stepNumber < 1 || stepNumber > this.totalSteps) return false;
+            if (!this.isValidStep(stepNumber)) return false;
 
             this.currentStep = stepNumber;
             this.updateProgress();
@@ -99,8 +150,10 @@
         }
 
         next() {
-            // If already on last step, mark it as completed (except for radial steppers)
-            if (this.currentStep === this.totalSteps && !this.element.classList.contains('nds-radial')) {
+            const isLastStep = this.currentStep === this.totalSteps;
+
+            // Mark last step as completed (linear steppers only)
+            if (isLastStep && !this.isRadial) {
                 const lastStep = this.steps[this.totalSteps - 1];
                 if (lastStep && !lastStep.classList.contains('completed')) {
                     lastStep.classList.remove('current');
@@ -114,8 +167,10 @@
         }
 
         previous() {
-            // If on last step and it's completed, un-complete it instead of going back (except for radial steppers)
-            if (this.currentStep === this.totalSteps && !this.element.classList.contains('nds-radial')) {
+            const isLastStep = this.currentStep === this.totalSteps;
+
+            // Un-complete last step instead of going back (linear steppers only)
+            if (isLastStep && !this.isRadial) {
                 const lastStep = this.steps[this.totalSteps - 1];
                 if (lastStep && lastStep.classList.contains('completed')) {
                     lastStep.classList.remove('completed');
@@ -248,32 +303,127 @@
 })();
 
 /**
- * Simplified Usage:
+ * NDS Stepper Usage Guide
  *
- * // HTML: <div class="nds-stepper" id="my-stepper">...</div>
+ * ========================================
+ * BASIC HTML STRUCTURE
+ * ========================================
  *
- * // Method 1: Global API (Recommended)
+ * Linear/Vertical Stepper:
+ * <div class="nds-stepper" id="my-stepper" data-current="1" data-total="3">
+ *   <div class="nds-stepper-step">
+ *     <div class="nds-stepper-base">
+ *       <div class="nds-stepper-circle" data-step-text="1"></div>
+ *     </div>
+ *     <div class="nds-stepper-content">
+ *       <span class="nds-stepper-title">Step Title</span>
+ *       <span class="nds-stepper-description">Step description</span>
+ *     </div>
+ *   </div>
+ * </div>
+ *
+ * Radial Stepper (with progress circle):
+ * <div class="nds-stepper nds-radial" id="radial-stepper" data-current="1" data-total="4">
+ *   <div class="progress-circle">
+ *     <svg width="64" height="64" viewBox="0 0 24 24">
+ *       <circle class="progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="3" />
+ *       <circle class="progress-bar" cx="12" cy="12" r="10" fill="none" stroke-width="3"
+ *         stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" />
+ *     </svg>
+ *     <div class="progress-info">
+ *       <span class="progress-percentage">
+ *         <span class="progress-number">0</span>
+ *       </span>
+ *       <span class="progress-text"></span>
+ *     </div>
+ *   </div>
+ *   <!-- Steps here -->
+ * </div>
+ *
+ * ========================================
+ * JAVASCRIPT API
+ * ========================================
+ *
+ * Method 1: Global API (Recommended)
  * NDSStepper.next('my-stepper');
  * NDSStepper.previous('my-stepper');
  * NDSStepper.goTo('my-stepper', 3);
  * NDSStepper.setState('my-stepper', 2, 'error');
  *
- * // Method 2: Get instance by ID
+ * Method 2: Get instance by ID
  * const stepper = NDSStepper.get('my-stepper');
  * stepper.next();
+ * stepper.previous();
  * stepper.goTo(3);
+ * stepper.setState(2, 'warning');
  * console.log(stepper.current, stepper.total, stepper.progress);
  *
- * // Control Buttons with Targeting
- * // Inside stepper (automatic targeting)
- * // <button data-stepper-control="next">Next</button>
+ * ========================================
+ * DATA ATTRIBUTE CONTROL (NEW!)
+ * ========================================
  *
- * // Outside stepper (explicit targeting)
- * // <button data-stepper-control="next" data-stepper-target="stepper-1">Next for Stepper 1</button>
- * // <button data-stepper-control="goto" data-stepper-value="3" data-stepper-target="stepper-2">Go to Step 3</button>
+ * Control stepper via data attributes (automatically synced):
+ * const stepper = document.getElementById('my-stepper');
  *
- * // Listen for changes
+ * // Update current step
+ * stepper.dataset.current = '2';  // Moves to step 2
+ *
+ * // Complete stepper (linear only - sets all steps completed)
+ * stepper.dataset.current = '4';  // On 3-step stepper = all completed
+ *
+ * // Note: Radial steppers clamp to totalSteps
+ * radialStepper.dataset.current = '4';  // On 3-step = clamped to 3
+ *
+ * ========================================
+ * CONTROL BUTTONS
+ * ========================================
+ *
+ * Inside stepper (automatic targeting):
+ * <button data-stepper-control="next">Next</button>
+ * <button data-stepper-control="previous">Previous</button>
+ *
+ * Outside stepper (explicit targeting):
+ * <button data-stepper-control="next" data-stepper-target="stepper-1">
+ *   Next for Stepper 1
+ * </button>
+ * <button data-stepper-control="goto" data-stepper-value="3" data-stepper-target="stepper-2">
+ *   Go to Step 3
+ * </button>
+ *
+ * ========================================
+ * EVENT LISTENERS
+ * ========================================
+ *
+ * Listen for step changes:
  * document.addEventListener('nds:stepper:change', (e) => {
- *     console.log('Step:', e.detail.currentStep);
+ *   console.log('Current Step:', e.detail.currentStep);
+ *   console.log('Total Steps:', e.detail.totalSteps);
+ *   console.log('Progress:', e.detail.progressPercentage + '%');
  * });
+ *
+ * ========================================
+ * LINEAR vs RADIAL BEHAVIOR
+ * ========================================
+ *
+ * LINEAR STEPPERS:
+ * - Allow currentStep > totalSteps (marks all completed)
+ * - Clicking next() on last step marks it completed
+ * - Clicking previous() on completed last step un-completes it
+ * - Perfect for multi-step forms and registration flows
+ *
+ * RADIAL STEPPERS (.nds-radial):
+ * - Clamp currentStep to totalSteps (cannot exceed)
+ * - Normal next/previous navigation only
+ * - No automatic completion behavior
+ * - Maintains controlled circular progression
+ *
+ * ========================================
+ * PERFORMANCE FEATURES
+ * ========================================
+ *
+ * - Cached radial check (no repeated classList.contains())
+ * - MutationObserver for automatic data-attribute sync
+ * - Efficient microtask queue flag management
+ * - Optimized for multiple steppers on same page
+ * - Zero infinite loops with isInternalUpdate flag
  */
