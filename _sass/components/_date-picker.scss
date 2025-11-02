@@ -12,6 +12,7 @@
 
 .nds-date-picker {
     position: relative;
+    --nds-btn-height: 32px;
 
     // Arrow styling for date picker input (same as select)
     .nds-form-control {
@@ -187,12 +188,13 @@
         margin-bottom: 8px;
 
         .weekday {
+            
             text-align: center;
             font-size: var(--nds-text-md-FS);
             font-weight: 400;
             color: var(--text-primary-paragraph);
             padding: var(--spacing-md) var(--spacing-xs);
-            min-width: 40px;
+            min-width: var(--nds-btn-height);
 
             @include mobile {
                 font-size: var(--nds-text-sm-FS);
@@ -208,9 +210,10 @@
         overflow: hidden;
 
         .date-cell {
+
             border-radius: 50% !important;
-            width: 40px;
-            height: 40px;
+            width: var(--nds-btn-height);
+            height: var(--nds-btn-height);
             font-weight: 400;
             padding: 0;
 
@@ -223,8 +226,8 @@
                 content: "";
                 position: absolute;
                 background-color: var(--form-datecell-background-100);
-                width: 40px;
-                height: 40px;
+                width: var(--nds-btn-height);
+                height: var(--nds-btn-height);
                 z-index: -1;
             }
 
@@ -321,6 +324,12 @@
                 &:active {
                     background-color: var(--form-datecell-background-300);
                 }
+            }
+
+            --nds-btn-height: 40px;
+
+            @include mobile {
+                --nds-btn-height: 32px;
             }
         }
     }
