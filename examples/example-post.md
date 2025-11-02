@@ -11,6 +11,7 @@ date: 2025-01-15
 author: "Digital Government Authority"
 lang: en
 direction: ltr
+breadcrumb: ["Examples"]
 ---
 
 <section class="nds-content-section">

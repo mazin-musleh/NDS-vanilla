@@ -2,18 +2,18 @@
   url: "/"
   href: "/"
   
-- label: "Pages"
+- label: "Examples"
   has_sub: true
   children:
-    - label: "Service"
-      url: "/components/Service"
-      href: "/components/Service.html"
-    - label: "Example Post"
-      url: "/example-post"
-      href: "/example-post.html"
+    - label: "Registration"
+      url: "/examples/registration"
+      href: "/examples/registration.html"
+    - label: "Post"
+      url: "/examples/example-post"
+      href: "/examples/example-post.html"
     - label: "dashboard-demo"
-      url: "/dashboard-demo"
-      href: "/dashboard-demo.html"
+      url: "/examples/dashboard-demo"
+      href: "/examples/dashboard-demo.html"
       
 
 - label: "Components"

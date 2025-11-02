@@ -5,6 +5,7 @@ lang: ar
 direction: rtl
 layout_class: nds-middle
 exclude_showcase: true
+breadcrumb: ["Examples"]
 ---
 {% assign brand_logo = page.brandLogo | default: site.brandLogo %}
 {% assign brand_width = page.headerBrandW | default: site.headerBrandW %}
@@ -94,32 +95,6 @@ exclude_showcase: true
           </div>
         </div>
 
-        <!-- Date of Birth Field -->
-        <div class="nds-form-container nds-date-picker nds-required">
-          <div class="nds-form-header">
-            <label for="date-of-birth">
-              <span class="label">تاريخ الميلاد</span>
-            </label>
-          </div>
-          <div class="nds-form-control">
-            <div class="nds-form-action before">
-              <button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle" aria-label="Calendar Toggler">
-                <i class="hgi hgi-stroke hgi-calendar-03 icon"></i>
-              </button>
-            </div>
-            <input type="text" id="date-of-birth" class="nds-input nds-date-input" placeholder="mm/dd/yyyy"
-              data-year-before="40" data-year-after="5" data-hijri-offset="0" required>
-          </div>
-          <div class="nds-form-footer">
-            <span class="nds-feedback">
-              <span class="nds-feedback-icon nds-outline nds-sm">
-                <i class="hgi hgi-solid icon"></i>
-              </span>
-              <span class="msg"></span>
-            </span>
-          </div>
-        </div>
-
         <!-- Graduation Year Dropdown -->
         <div class="nds-form-container nds-select nds-required">
           <div class="nds-form-header">
@@ -155,6 +130,32 @@ exclude_showcase: true
                 </button>
               </div>
             </div>
+          </div>
+          <div class="nds-form-footer">
+            <span class="nds-feedback">
+              <span class="nds-feedback-icon nds-outline nds-sm">
+                <i class="hgi hgi-solid icon"></i>
+              </span>
+              <span class="msg"></span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Date of Birth Field -->
+        <div class="nds-form-container nds-date-picker nds-required">
+          <div class="nds-form-header">
+            <label for="date-of-birth">
+              <span class="label">تاريخ الميلاد</span>
+            </label>
+          </div>
+          <div class="nds-form-control">
+            <div class="nds-form-action before">
+              <button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle" aria-label="Calendar Toggler">
+                <i class="hgi hgi-stroke hgi-calendar-03 icon"></i>
+              </button>
+            </div>
+            <input type="text" id="date-of-birth" class="nds-input nds-date-input" placeholder="mm/dd/yyyy"
+              data-year-before="40" data-year-after="5" data-hijri-offset="0" required>
           </div>
           <div class="nds-form-footer">
             <span class="nds-feedback">

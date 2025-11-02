@@ -100,22 +100,22 @@
 
   &,
   &.nds-lg {
-    --nds-button-icon-size: 20px;
+    /* --nds-button-icon-size: 20px; */
     @include btn-size(40px, var(--spacing-lg), var(--nds-text-md-FS), var(--nds-text-md-LH));
   }
 
   &.nds-md {
-    --nds-button-icon-size: 16px;
+    /* --nds-button-icon-size: 16px; */
     @include btn-size(32px, var(--spacing-md), var(--nds-text-sm-FS), var(--nds-text-sm-LH));
   }
 
   &.nds-sm {
-    --nds-button-icon-size: 12px;
+    /* --nds-button-icon-size: 12px; */
     @include btn-size(24px, var(--spacing-sm), var(--nds-text-xs-FS), var(--nds-text-xs-LH));
   }
 
   &.nds-xl {
-    --nds-button-icon-size: 24px;
+    /* --nds-button-icon-size: 24px; */
     @include btn-size(48px, var(--spacing-xl), var(--nds-text-xl-FS), var(--nds-text-xl-LH));
   }
 
