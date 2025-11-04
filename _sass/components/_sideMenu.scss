@@ -36,6 +36,7 @@
     top: calc(var(--nds-nav-height) + var(--spacing-xl));
     width: 100%;
     max-height: calc(100svh - 100px);
+    padding-bottom: var(--spacing-6xl);
     overflow-y: auto;
     -ms-overflow-style: none;
     scrollbar-width: none;
