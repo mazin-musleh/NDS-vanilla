@@ -23,6 +23,11 @@
     counter-reset: step-counter;
 
     &.nds-lg {
+        --stepper-size: 40px;
+        --stepper-gap: calc(var(--progressindicator-progress-indicator-gap) * 1.2);
+    }
+
+    &.nds-xl {
         --stepper-size: 48px;
         --stepper-gap: calc(var(--progressindicator-progress-indicator-gap) * 1.5);
     }

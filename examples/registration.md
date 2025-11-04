@@ -22,53 +22,33 @@ breadcrumb: ["Examples"]
   <div class="nds-card-header">
     <img class="nds-brand-logo nds-center" src="{{ brand_logo | relative_url }}" width="{{ brand_width }}"
       height="{{ brand_height }}" alt="{{ site_title }} Logo">
-    <div class="nds-stepper nds-radial" id="registration-stepper" data-current="1" data-total="3"
-      style="--pc-size:72px;">
-      <div class="progress-circle">
-        <svg width="64" height="64" viewBox="0 0 24 24">
-          <circle class="progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="3" />
-          <circle class="progress-bar" cx="12" cy="12" r="10" fill="none" stroke-width="3" stroke-dasharray="62.83"
-            stroke-dashoffset="62.83" stroke-linecap="round" />
-        </svg>
-        <div class="progress-info">
-          <span class="progress-percentage">
-            <span class="progress-number">0</span>
-          </span>
-          <span class="progress-text"></span>
-        </div>
-      </div>
-      <div class="nds-stepper-step has-line">
+    <div class="nds-stepper nds-center nds-lg" id="registration-stepper" data-current="1" data-total="3">
+      <div class="nds-stepper-step completed has-line">
         <div class="nds-stepper-base">
           <div class="nds-stepper-circle" data-step-text="1"></div>
         </div>
-        <div class="nds-stepper-content">
-          <span class="nds-stepper-title">البيانات الأساسية</span>
-          <span class="nds-stepper-description">يرجى إدخال بياناتك الأكاديمية للتحقق من هويتك</span>
-        </div>
       </div>
-      <div class="nds-stepper-step has-line">
+      <div class="nds-stepper-step current has-line">
         <div class="nds-stepper-base">
           <div class="nds-stepper-circle" data-step-text="2"></div>
         </div>
-        <div class="nds-stepper-content">
-          <span class="nds-stepper-title">البريد الإلكتروني</span>
-          <span class="nds-stepper-description">أدخل بريدك الإلكتروني لإرسال رمز التحقق</span>
-        </div>
       </div>
-      <div class="nds-stepper-step">
+      <div class="nds-stepper-step upcoming">
         <div class="nds-stepper-base">
           <div class="nds-stepper-circle" data-step-text="3"></div>
         </div>
-        <div class="nds-stepper-content">
-          <span class="nds-stepper-title">تأكيد البريد الإلكتروني</span>
-          <span class="nds-stepper-description">تم إرسال رمز التحقق إلى بريدك الإلكتروني</span>
-        </div>
       </div>
     </div>
+
+
   </div>
   <form id="registration-form" class="nds-card-form">
     <!-- Step 1: Basic Information -->
     <div class="nds-card-content registration-step active">
+      <div class="nds-card-text nds-center">
+        <h3 class="nds-card-title">البيانات الأساسية</h3>
+        <p class="nds-card-description">يرجى إدخال بياناتك الأكاديمية للتحقق من هويتك</p>
+      </div>
       <div class="nds-card-form">
         <!-- University ID Field -->
         <div class="nds-form-container nds-required">
@@ -231,6 +211,10 @@ breadcrumb: ["Examples"]
 
     <!-- Step 2: Email Verification -->
     <div class="nds-card-content registration-step">
+      <div class="nds-card-text nds-center">
+        <h3 class="nds-card-title">البريد الإلكتروني</h3>
+        <p class="nds-card-description">أدخل بريدك الإلكتروني لإرسال رمز التحقق</p>
+      </div>
       <div class="nds-card-form">
         <!-- Email Field -->
         <div class="nds-form-container nds-required">
@@ -283,6 +267,10 @@ breadcrumb: ["Examples"]
 
     <!-- Step 3: Verification Code -->
     <div class="nds-card-content registration-step">
+      <div class="nds-card-text nds-center">
+        <h3 class="nds-card-title">تأكيد البريد الإلكتروني</h3>
+        <p class="nds-card-description">تم إرسال رمز التحقق إلى بريدك الإلكتروني</p>
+      </div>
       <div class="nds-card-form">
         <!-- Verification Code Field -->
         <div class="nds-form-container nds-required">

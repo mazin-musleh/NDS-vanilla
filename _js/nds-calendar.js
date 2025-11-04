@@ -136,7 +136,7 @@
             },
 
             /**
-             * Converts Gregorian date to Hijri using browser Intl API with mathematical fallback
+             * Converts Gregorian date to Hijri using accurate API reference with browser Intl fallback
              * @param {Date} gDate - Gregorian date to convert
              * @returns {Object} Hijri date object with day, month, year properties
              * @throws {Error} If date is invalid or conversion fails
@@ -146,33 +146,43 @@
                 if (!gDate || !(gDate instanceof Date) || isNaN(gDate.getTime())) {
                     throw new Error('Invalid date provided to gregorianToHijri');
                 }
-                
-                // Don't call getHijriDate here, use browser's Intl or math conversion
+
+                // Try to use accurate today's date as reference if available
+                if (window._accurateTodaysHijriDate && window._accurateTodaysGregorianDate) {
+                    try {
+                        return this.gregorianToHijriUsingReference(gDate,
+                            window._accurateTodaysHijriDate, window._accurateTodaysGregorianDate);
+                    } catch (e) {
+                        // Continue to fallback methods
+                    }
+                }
+
+                // Fallback to browser's Intl API
                 try {
                     var hijriString = new Intl.DateTimeFormat('en-US-u-ca-islamic', {
-                        day: 'numeric', 
-                        month: 'numeric', 
+                        day: 'numeric',
+                        month: 'numeric',
                         year: 'numeric'
                     }).format(gDate);
-                    
+
                     var parts = hijriString.split('/');
                     if (parts.length === 3) {
                         var day = parseInt(parts[1], 10);
                         var month = parseInt(parts[0], 10);
                         var year = parseInt(parts[2], 10);
-                        
+
                         // Validate parsed values
-                        if (isNaN(day) || isNaN(month) || isNaN(year) || 
+                        if (isNaN(day) || isNaN(month) || isNaN(year) ||
                             day < 1 || day > 30 || month < 1 || month > 12 || year < 1) {
                             throw new Error('Invalid Hijri date components');
                         }
-                        
+
                         return createHijriDate(day, month, year);
                     }
                 } catch (e) {
                     console.warn('Hijri conversion via Intl failed, using mathematical fallback:', e.message);
                 }
-                
+
                 // Mathematical fallback using Julian Day method
                 try {
                     return this.gregorianToHijriMath(gDate);
@@ -276,6 +286,27 @@
                 // Apply the same difference to today's Gregorian date
                 var result = new Date(todaysGregorian);
                 result.setDate(result.getDate() + daysDifference);
+
+                return result;
+            },
+
+            /**
+             * Convert Gregorian date to Hijri using accurate today's date as reference
+             * @param {Date} gDate - Target Gregorian date
+             * @param {Object} todaysHijri - Today's accurate Hijri date {day, month, year}
+             * @param {Date} todaysGregorian - Today's Gregorian date
+             * @returns {Object} Hijri date object with day, month, year properties
+             */
+            gregorianToHijriUsingReference: function(gDate, todaysHijri, todaysGregorian) {
+                // Normalize both dates to midnight for accurate day calculation
+                var targetDate = new Date(gDate.getFullYear(), gDate.getMonth(), gDate.getDate());
+                var todayDate = new Date(todaysGregorian.getFullYear(), todaysGregorian.getMonth(), todaysGregorian.getDate());
+
+                // Calculate difference in days between target date and today's date
+                var daysDifference = Math.round((targetDate.getTime() - todayDate.getTime()) / (1000 * 60 * 60 * 24));
+
+                // Add the difference to today's Hijri date
+                var result = this.addDaysToHijriDate(todaysHijri, daysDifference);
 
                 return result;
             },
@@ -809,7 +840,7 @@
         },
 
         getTodaysHijriDate: function () {
-            // Simple cache for today's Hijri date
+            // Simple cache for today's Hijri date - API handles date validation internally
             if (!this._cachedTodaysHijriDate) {
                 // Try to use global getHijriDate function if available
                 if (typeof getHijriDate === 'function') {
@@ -991,9 +1022,15 @@
             this.bindCalendarEvents();
             this.setupLanguageObserver();
 
-            // For Hijri calendars, get accurate date first to avoid double render
-            if (this.state.calendarType === 'hijri' && typeof getHijriDate === 'function') {
-                this.initializeHijriCalendar();
+            // Get accurate Hijri date for all calendars (needed for accurate conversions)
+            if (typeof getHijriDate === 'function') {
+                if (this.state.calendarType === 'hijri') {
+                    this.initializeHijriCalendar();
+                } else {
+                    // For Gregorian calendar, fetch accurate Hijri date in background for conversions
+                    this.fetchAccurateHijriReference();
+                    this.render();
+                }
             } else {
                 this.render();
             }
@@ -1021,6 +1058,29 @@
             }).catch(function(e) {
                 // Fallback to normal render
                 self.render();
+            });
+        },
+
+        fetchAccurateHijriReference: function () {
+            var self = this;
+
+            // Fetch accurate Hijri date in background for Gregorian-to-Hijri conversions
+            getHijriDate(false, true).then(function(hijriData) {
+                if (hijriData && hijriData.day && hijriData.month && hijriData.year) {
+                    // Save accurate data
+                    self._cachedTodaysHijriDate = hijriData;
+
+                    // Store accurate reference data globally for conversions
+                    window._accurateTodaysHijriDate = hijriData;
+                    window._accurateTodaysGregorianDate = new Date();
+
+                    // Update input with corrected converted date if a date is already selected
+                    if (self.state.selectedDate || self.state.rangeStart) {
+                        self.updateInput();
+                    }
+                }
+            }).catch(function(e) {
+                // Silent fail - fallback conversions will be used
             });
         },
 

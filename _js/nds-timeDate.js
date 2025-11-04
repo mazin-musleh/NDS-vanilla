@@ -2,13 +2,18 @@
 (() => {
     'use strict';
 
-    // Simple cache helper
+    // Simple cache helper with date validation
     function getCache(key) {
         try {
             const data = localStorage.getItem(`nds_${key}`);
             if (data) {
                 const parsed = JSON.parse(data);
-                if (Date.now() < parsed.expires) return parsed.value;
+                // Check if cache is still valid by timestamp AND date
+                const today = new Date().toISOString().slice(0, 10);
+                if (Date.now() < parsed.expires && parsed.date === today) {
+                    return parsed.value;
+                }
+                // Remove expired or old-date cache
                 localStorage.removeItem(`nds_${key}`);
             }
         } catch {}
@@ -17,9 +22,11 @@
 
     function setCache(key, value, minutes) {
         try {
+            const today = new Date().toISOString().slice(0, 10);
             localStorage.setItem(`nds_${key}`, JSON.stringify({
                 value,
-                expires: Date.now() + (minutes * 60 * 1000)
+                expires: Date.now() + (minutes * 60 * 1000),
+                date: today // Store the date when cache was created
             }));
         } catch {}
     }
