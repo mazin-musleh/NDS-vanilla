@@ -18,7 +18,7 @@
     flex-wrap: nowrap;
     justify-content: flex-end;
 
-    & > .nds-form-header .label {
+    &>.nds-form-header .label {
         color: var(--text-display);
         font-size: var(--nds-text-md-FS);
         line-height: var(--nds-input-size);
@@ -226,7 +226,8 @@
     // INDETERMINATE STATE
     // ==============================================
 
-    &.indeterminate:checked::after {
+    &.indeterminate:checked::after,
+    &:indeterminate:checked::after {
         content: "儣" !important;
     }
 

@@ -170,7 +170,7 @@
   position: relative;
 
   /* Centered Tab List */
-  &.center {
+  &.nds-center,&.center {
     justify-content: flex-start;
     width: fit-content;
     margin: 0 auto;
@@ -276,169 +276,7 @@
     outline: none;
   }
 
-  h3 {
-    color: var(--text-default);
-    font-size: var(--nds-text-lg-FS);
-    font-weight: 600;
-    margin: 0 0 var(--spacing-md) 0;
-  }
-
-  p {
-    color: var(--text-default);
-    font-size: var(--nds-text-md-FS);
-    line-height: var(--nds-text-md-LH);
-    margin: 0 0 var(--spacing-md) 0;
-  }
-
-  ul {
-    margin: 0 0 var(--spacing-md) 0;
-    padding-left: var(--spacing-lg);
-
-    @include ltr {
-      padding-right: var(--spacing-lg);
-      padding-left: 0;
-    }
-  }
-
-  li {
-    color: var(--text-default);
-    font-size: var(--nds-text-md-FS);
-    line-height: var(--nds-text-md-LH);
-    margin-bottom: var(--spacing-xs);
-  }
 }
-
-// ==============================================
-// DEMO & EXAMPLE CONTENT STYLES
-// ==============================================
-
-/* Dashboard Stats */
-.dashboard-stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: var(--spacing-lg);
-  margin-top: var(--spacing-lg);
-}
-
-.stat-card {
-  padding: var(--spacing-lg);
-  background: var(--background-neutral-50);
-  border: 1px solid var(--border-neutral-secondary);
-  border-radius: var(--radius-md);
-  text-align: center;
-}
-
-.stat-number {
-  font-size: var(--nds-display-sm-FS);
-  font-weight: 700;
-  color: var(--text-primary);
-  margin-bottom: var(--spacing-xs);
-}
-
-.stat-label {
-  font-size: var(--nds-text-sm-FS);
-  color: var(--text-default);
-  font-weight: 500;
-}
-
-/* Contact Info */
-.contact-info {
-  margin-top: var(--spacing-lg);
-
-  p {
-    margin-bottom: var(--spacing-sm);
-  }
-}
-
-/* Settings */
-.settings-options {
-  margin-top: var(--spacing-lg);
-}
-
-.setting-item {
-  margin-bottom: var(--spacing-md);
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-xs);
-
-  label {
-    font-weight: 500;
-    color: var(--text-default);
-    font-size: var(--nds-text-sm-FS);
-  }
-
-  select,
-  input[type="checkbox"] {
-    padding: var(--spacing-sm);
-    border: 1px solid var(--colors-neutral-300);
-    border-radius: var(--radius-sm);
-    font-family: 'IBM Plex Sans Arabic', sans-serif;
-  }
-
-  select {
-    width: 200px;
-  }
-}
-
-/* Accessibility Info */
-.accessibility-info {
-  background: var(--background-neutral-50);
-  border: 1px solid var(--border-neutral-secondary);
-  border-radius: var(--radius-lg);
-  padding: var(--spacing-xl);
-
-  h3 {
-    color: var(--text-default);
-    font-size: var(--nds-text-lg-FS);
-    font-weight: 600;
-    margin: 0 0 var(--spacing-md) 0;
-
-    &:not(:first-child) {
-      margin-top: var(--spacing-lg);
-    }
-  }
-
-  ul {
-    margin: 0 0 var(--spacing-md) 0;
-    padding-left: var(--spacing-lg);
-
-    @include ltr {
-      padding-right: var(--spacing-lg);
-      padding-left: 0;
-    }
-  }
-
-  li {
-    color: var(--text-default);
-    font-size: var(--nds-text-md-FS);
-    line-height: var(--nds-text-md-LH);
-    margin-bottom: var(--spacing-xs);
-  }
-
-  code {
-    background: var(--background-neutral-100);
-    padding: 2px 6px;
-    border-radius: var(--radius-xs);
-    font-size: var(--nds-text-sm-FS);
-    color: var(--text-primary);
-    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-  }
-
-  kbd {
-    background: var(--background-neutral-200);
-    border: 1px solid var(--colors-neutral-300);
-    border-radius: var(--radius-xs);
-    padding: 2px 6px;
-    font-size: var(--nds-text-sm-FS);
-    color: var(--text-default);
-    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-  }
-}
-
-// ==============================================
-// ANIMATIONS & TRANSITIONS
-// ==============================================
-
 
 // ==============================================
 // RESPONSIVE & ACCESSIBILITY
@@ -449,23 +287,8 @@
   .nds-tab-panel {
     padding: var(--spacing-lg);
   }
-
-  .dashboard-stats {
-    grid-template-columns: 1fr;
-  }
-
-  .setting-item select {
-    width: 100%;
-  }
 }
 
-/* Right-to-Left Language Support */
-html[dir="rtl"] {
-  .nds-tab-panel ul {
-    padding-right: var(--spacing-lg);
-    padding-left: 0;
-  }
-}
 
 /* High Contrast Accessibility */
 @include high-contrast {

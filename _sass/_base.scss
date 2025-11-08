@@ -17,8 +17,10 @@ nav.nds-main-nav>*,
 *::before,
 *::after {
     box-sizing: border-box;
-    margin: 0;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
     padding: 0;
+    margin: 0;
 }
 
 html {
@@ -35,14 +37,15 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    margin: 0;
 }
 
 hr {
-  opacity: .10;
-  border: 0;
-  border-top: 1px solid;
-  margin: 4px 0;
-  color: inherit;
+    opacity: .10;
+    border: 0;
+    border-top: 1px solid;
+    margin: 4px 0;
+    color: inherit;
 }
 
 h1,
@@ -56,6 +59,10 @@ h6 {
     line-height: var(--nds-display-clamp-xs-FS);
     margin-bottom: var(--nds-display-clamp-xs-MB);
     color: var(--text-display, #1f2a37);
+
+    &:first-child {
+        margin-top: 0;
+    }
 }
 
 h3,
@@ -67,7 +74,17 @@ h4 {
 
 ul,
 ol {
-    list-style: none;
+    padding-inline-start: 40px;
+}
+
+nav {
+
+    ul,
+    ol {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
 }
 
 a {
@@ -225,4 +242,11 @@ button,
     margin-inline-end: auto;
     margin-inline-start: auto;
     align-self: center;
+}
+
+.nds-flush {
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
 }

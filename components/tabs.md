@@ -36,7 +36,7 @@ direction: ltr
                             <span class="label">Divider</span>
                         </button>
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='["center", ".nds-tab-list", "tabsAlign"]'>
+                            data-toggler='["nds-center", ".nds-tab-list", "tabsAlign"]'>
                             <span class="label">Center</span>
                         </button>
                     </div>
@@ -248,7 +248,7 @@ direction: ltr
                             <span class="label">Divider</span>
                         </button>
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='["center", ".nds-tab-list", "tabsAlign"]'>
+                            data-toggler='["nds-center", ".nds-tab-list", "tabsAlign"]'>
                             <span class="label">Center</span>
                         </button>
                     </div>
