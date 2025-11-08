@@ -20,9 +20,9 @@ direction: ltr
             </p>
         </div>
         <div class="nds-section-content">
-            <div class="nds-cards-group" style="--max-col: 6; --min-col: 2;">
+            <div class="nds-grid" style="--max-col: 3; --mid-col: 2; --min-col: 2;">
                 <!-- Completed Projects Card -->
-                <div class="nds-card nds-statistic">
+                <div class="nds-card nds-statistic nds-stroke nds-shadow">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-brand nds-circle nds-xl">
@@ -32,14 +32,14 @@ direction: ltr
                     </div>
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <span class="nds-counter-value nds-number-format" data-target="128">0</span>
+                            <span class="nds-card-number nds-counter-value nds-number-format" data-target="128">0</span>
                             <p class="nds-card-description">Projects completed this quarter</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Open Requests Card -->
-                <div class="nds-card nds-statistic">
+                <div class="nds-card nds-statistic nds-stroke nds-shadow">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-brand nds-circle nds-xl">
@@ -49,14 +49,14 @@ direction: ltr
                     </div>
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <span class="nds-counter-value nds-number-format" data-target="18">0</span>
+                            <span class="nds-card-number nds-counter-value nds-number-format" data-target="18">0</span>
                             <p class="nds-card-description">Open employee recognition requests</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Team Awards Card -->
-                <div class="nds-card nds-statistic">
+                <div class="nds-card nds-statistic nds-stroke nds-shadow">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-brand nds-circle nds-xl">
@@ -66,14 +66,14 @@ direction: ltr
                     </div>
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <span class="nds-counter-value nds-number-format" data-target="4">0</span>
+                            <span class="nds-card-number nds-counter-value nds-number-format" data-target="4">0</span>
                             <p class="nds-card-description">Teams nominated for monthly spotlight</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Strategic Goals Card -->
-                <div class="nds-card nds-statistic">
+                <div class="nds-card nds-statistic nds-stroke nds-shadow">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-brand nds-circle nds-xl">
@@ -83,14 +83,14 @@ direction: ltr
                     </div>
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <span class="nds-counter-value nds-number-format" data-target="7">0</span>
+                            <span class="nds-card-number nds-counter-value nds-number-format" data-target="7">0</span>
                             <p class="nds-card-description">Strategic initiatives on track</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Meetings Card -->
-                <div class="nds-card nds-statistic">
+                <div class="nds-card nds-statistic nds-stroke nds-shadow">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-brand nds-circle nds-xl">
@@ -100,14 +100,14 @@ direction: ltr
                     </div>
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <span class="nds-counter-value nds-number-format" data-target="12">0</span>
+                            <span class="nds-card-number nds-counter-value nds-number-format" data-target="12">0</span>
                             <p class="nds-card-description">Leadership reviews scheduled this week</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Satisfaction Score Card -->
-                <div class="nds-card nds-statistic">
+                <div class="nds-card nds-statistic nds-stroke nds-shadow">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-brand nds-circle nds-xl">
@@ -117,7 +117,7 @@ direction: ltr
                     </div>
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <span class="nds-counter-value nds-number-format" data-target="92">0</span>
+                            <span class="nds-card-number nds-counter-value nds-number-format" data-target="92">0</span>
                             <p class="nds-card-description">Customer satisfaction score (CSAT)</p>
                         </div>
                     </div>
@@ -247,7 +247,8 @@ direction: ltr
                 <div class="nds-card nds-stroke">
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <span class="nds-counter-value nds-number-format" data-target="9450">0</span>
+                            <span class="nds-card-number nds-counter-value nds-number-format"
+                                data-target="9450">0</span>
                             <p class="nds-card-description">Monthly visits to your product pages</p>
                         </div>
                         <div class="nds-card-meta">
@@ -271,7 +272,7 @@ direction: ltr
                 <div class="nds-card nds-stroke">
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <span class="nds-counter-value nds-number-format" data-target="32">0</span>
+                            <span class="nds-card-number nds-counter-value nds-number-format" data-target="32">0</span>
                             <p class="nds-card-description">Requests waiting for your approval</p>
                         </div>
                         <div class="nds-card-meta">
@@ -295,7 +296,7 @@ direction: ltr
                 <div class="nds-card nds-stroke">
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <span class="nds-counter-value nds-number-format" data-target="18">0</span>
+                            <span class="nds-card-number nds-counter-value nds-number-format" data-target="18">0</span>
                             <p class="nds-card-description">New alerts from observed services</p>
                         </div>
                         <div class="nds-card-meta">

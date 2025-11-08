@@ -31,6 +31,7 @@
 require 'execjs'
 require 'json'
 require 'fileutils'
+require 'yaml'
 
 class JSProcessor
   def initialize
@@ -39,6 +40,18 @@ class JSProcessor
     @bundles = {
       'nds-main.min.js' => ['nds-navController.js', 'nds-fontLoading.js', 'nds-cityWeather.js', 'nds-timeDate.js','nds-calendar.js', 'nds-sideMenu.js', 'nds-share.js', 'nds-cookies.js', 'nds-numbers.js', 'nds-oneRowContent.js', 'nds-accordion.js', 'nds-tabs.js', 'nds-stepper.js', 'nds-forms.js', 'nds-fileUpload.js', 'nds-code.js', 'nds-rating.js', 'nds-expandable.js', 'nds-breadcrumb.js', 'nds-dropmenu.js', 'nds-pagination.js', 'nds-ipv.js', 'nds-modal.js', 'nds-init.js']
     }
+
+    # Load config from _config.yml
+    @config = load_config
+  end
+
+  def load_config
+    config_path = '_config.yml'
+    if File.exist?(config_path)
+      YAML.load_file(config_path)
+    else
+      {}
+    end
   end
 
   # Helper function to compress JavaScript using Terser
@@ -116,7 +129,21 @@ class JSProcessor
       if !processed_files.empty?
         # Now compress the clean bundle with Terser
         final_content = compress_with_terser(bundle_content)
-        
+
+        # Add build date and author comment at the start
+        build_date = Time.now.strftime('%Y-%m-%d %H:%M:%S')
+        project_title = @config['title'] || 'National Design System'
+        author_name = @config['author'] || 'Unknown'
+        author_profile = @config['author_profile'] || ''
+
+        header_comment = "/*\n"
+        header_comment += " * #{project_title}\n"
+        header_comment += " * Generated on: #{build_date}\n"
+        header_comment += " * Author: #{author_name}\n"
+        header_comment += " * Profile: #{author_profile}\n" unless author_profile.empty?
+        header_comment += " */\n"
+        final_content = header_comment + final_content
+
         # Write bundle file to assets/js
         bundle_path = File.join(@output_dir, bundle_name)
         File.write(bundle_path, final_content)
@@ -145,7 +172,21 @@ class JSProcessor
       # Create .min.js version using Terser compression
       begin
         compressed_content = compress_with_terser(original_content)
-        
+
+        # Add build date and author comment at the start
+        build_date = Time.now.strftime('%Y-%m-%d %H:%M:%S')
+        project_title = @config['title'] || 'National Design System'
+        author_name = @config['author'] || 'Unknown'
+        author_profile = @config['author_profile'] || ''
+
+        header_comment = "/*\n"
+        header_comment += " * #{project_title}\n"
+        header_comment += " * Generated on: #{build_date}\n"
+        header_comment += " * Author: #{author_name}\n"
+        header_comment += " * Profile: #{author_profile}\n" unless author_profile.empty?
+        header_comment += " */\n"
+        compressed_content = header_comment + compressed_content
+
         # Create minified version with .min.js extension in assets/js
         filename = File.basename(file_path, '.js')
         min_file = File.join(@output_dir, "#{filename}.min.js")

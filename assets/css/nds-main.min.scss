@@ -2,8 +2,12 @@
 # Main SCSS file for NDS (National Design System)
 # This file compiles all Sass components into CSS for Jekyll
 ---
-
-// Import fonts first
+/*!
+ * National Design System
+ * Generated on: {{ site.time | date: '%Y-%m-%d %H:%M:%S' }}
+ * Author: {{ site.author }}
+ * Profile: {{ site.author_profile }}
+ */
 @use 'fonts';
 
 // Import variables (CSS custom properties)

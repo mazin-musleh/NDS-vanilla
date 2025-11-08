@@ -442,16 +442,16 @@ direction: ltr
                                 <span class="label">Stroke</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-interactive", ".nds-card", "cardInteractive"]'>
-                                <span class="label">Interactive</span>
+                                data-toggler='["nds-gold", ".nds-card", "cardColor"]'>
+                                <span class="label">Gold</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-featured", ".nds-card", "cardVariant2"]'>
-                                <span class="label">Featured</span>
+                                data-toggler='["nds-lavendar", ".nds-card", "cardColor"]'>
+                                <span class="label">Lavendar</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-card-compact", ".nds-card", "cardSize"]'>
-                                <span class="label">Compact</span>
+                                data-toggler='["nds-neutral", ".nds-card", "cardColor"]'>
+                                <span class="label">Neutral</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
@@ -473,7 +473,8 @@ direction: ltr
 
                                 <div class="nds-card-content">
                                     <div class="nds-card-text">
-                                        <span class="nds-counter-value nds-number-format" data-target="125847">0</span>
+                                        <span class="nds-card-number nds-counter-value nds-number-format"
+                                            data-target="125847">0</span>
                                         <p class="nds-card-description">Active Users</p>
                                     </div>
                                 </div>
@@ -511,7 +512,7 @@ direction: ltr
 
                                             <div class="nds-card-content">
                                                 <div class="nds-card-text">
-                                                    <span class="nds-counter-value nds-number-format" data-target="125847">0</span>
+                                                    <span class="nds-card-number nds-counter-value nds-number-format" data-target="125847">0</span>
                                                     <p class="nds-card-description">Active Users</p>
                                                 </div>
                                             </div>
@@ -571,7 +572,8 @@ direction: ltr
                                 </div>
                                 <div class="nds-card-content">
                                     <div class="nds-card-text">
-                                        <span class="nds-counter-value nds-number-format" data-target="125847">0</span>
+                                        <span class="nds-card-number nds-counter-value nds-number-format"
+                                            data-target="125847">0</span>
                                         <p class="nds-card-description">Active Users</p>
                                     </div>
                                 </div>
@@ -587,7 +589,8 @@ direction: ltr
                                 </div>
                                 <div class="nds-card-content">
                                     <div class="nds-card-text">
-                                        <span class="nds-counter-value nds-number-format" data-target="8542">0</span>
+                                        <span class="nds-card-number nds-counter-value nds-number-format"
+                                            data-target="8542">0</span>
                                         <p class="nds-card-description">Completed Services</p>
                                     </div>
                                 </div>
@@ -603,7 +606,8 @@ direction: ltr
                                 </div>
                                 <div class="nds-card-content">
                                     <div class="nds-card-text">
-                                        <span class="nds-counter-value nds-number-format" data-target="92%">0</span>
+                                        <span class="nds-card-number nds-counter-value nds-number-format"
+                                            data-target="92%">0</span>
                                         <p class="nds-card-description">Success Rate</p>
                                     </div>
                                 </div>
@@ -619,7 +623,8 @@ direction: ltr
                                 </div>
                                 <div class="nds-card-content">
                                     <div class="nds-card-text">
-                                        <span class="nds-counter-value nds-number-format" data-target="+1247">0</span>
+                                        <span class="nds-card-number nds-counter-value nds-number-format"
+                                            data-target="+1247">0</span>
                                         <p class="nds-card-description">Pending Requests</p>
                                     </div>
                                 </div>
@@ -657,7 +662,7 @@ direction: ltr
                                             </div>
                                             <div class="nds-card-content">
                                                 <div class="nds-card-text">
-                                                    <span class="nds-counter-value nds-number-format" data-target="125847">0</span>
+                                                    <span class="nds-card-number nds-counter-value nds-number-format" data-target="125847">0</span>
                                                     <p class="nds-card-description">Active Users</p>
                                                 </div>
                                             </div>
