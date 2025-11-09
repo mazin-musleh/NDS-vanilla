@@ -303,20 +303,20 @@ direction: ltr
                             <thead>
                                 <tr>
                                     <th class="sortable">
-                                        <button class="sort-header">
-                                            Department
+                                        <button class="nds-btn sort-header">
+                                            <span class="label">Department</span>
                                             <i class="hgi hgi-stroke hgi-arrow-up-down sort-icon"></i>
                                         </button>
                                     </th>
                                     <th class="sortable sorted-asc">
-                                        <button class="sort-header">
-                                            Employees
+                                        <button class="nds-btn sort-header">
+                                            <span class="label">Employees</span>
                                             <i class="hgi hgi-stroke hgi-arrow-up sort-icon"></i>
                                         </button>
                                     </th>
                                     <th class="sortable">
-                                        <button class="sort-header">
-                                            Budget
+                                        <button class="nds-btn sort-header">
+                                            <span class="label">Budget</span>
                                             <i class="hgi hgi-stroke hgi-arrow-up-down sort-icon"></i>
                                         </button>
                                     </th>
@@ -379,19 +379,19 @@ direction: ltr
                                   <thead>
                                     <tr>
                                       <th class="sortable">
-                                        <button class="sort-header">
+                                        <button class="nds-btn sort-header">
                                           Department
                                           <i class="hgi hgi-stroke hgi-arrow-up-down sort-icon"></i>
                                         </button>
                                       </th>
                                       <th class="sortable sorted-asc">
-                                        <button class="sort-header">
+                                        <button class="nds-btn sort-header">
                                           Employees
                                           <i class="hgi hgi-stroke hgi-arrow-up sort-icon"></i>
                                         </button>
                                       </th>
                                       <th class="sortable">
-                                        <button class="sort-header">
+                                        <button class="nds-btn sort-header">
                                           Budget
                                           <i class="hgi hgi-stroke hgi-arrow-up-down sort-icon"></i>
                                         </button>

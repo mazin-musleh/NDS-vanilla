@@ -153,7 +153,7 @@
     // CHECKED STATE
     // ==============================================
 
-    &:checked::after {
+    &:is(:checked, :indeterminate, .indeterminate)::after {
         content: "坉" !important;
         font-family: "hgi-stroke-rounded" !important;
         font-style: normal;
@@ -174,7 +174,7 @@
     }
 
     // Hover states for checked checkbox
-    &:checked:hover::after {
+    &:is(:checked, :indeterminate, .indeterminate):hover::after {
         background-color: var(--controls-control-primary-hovered);
         color: var(--controls-control-primary-hovered);
         box-shadow: 0 0 0 1px var(--controls-control-primary-hovered);
@@ -182,7 +182,7 @@
     }
 
     // Active states for checked checkbox
-    &:checked:active::after {
+    &:is(:checked, :indeterminate, .indeterminate):active::after {
         background-color: var(--controls-control-primary-pressed);
         color: var(--controls-control-primary-pressed);
         box-shadow: 0 0 0 1px var(--controls-control-primary-pressed);
@@ -190,7 +190,7 @@
     }
 
     // Active state for unchecked checkbox
-    &:not(:checked):active::after {
+    &:not(:checked, :indeterminate, .indeterminate):active::after {
         background-color: var(--controls-control-pressed, #D2D6DB);
         color: var(--controls-control-pressed, #D2D6DB);
     }
@@ -200,21 +200,21 @@
     // ==============================================
 
     &.nds-neutral {
-        &:checked::after {
+        &:is(:checked, :indeterminate, .indeterminate)::after {
             background-color: var(--controls-control-neutral-checked);
             color: var(--controls-control-neutral-checked);
             box-shadow: 0 0 0 1px var(--controls-control-neutral-checked);
             border-color: var(--colors-base-white);
         }
 
-        &:checked:hover::after {
+        &:is(:checked, :indeterminate, .indeterminate):hover::after {
             background-color: var(--controls-control-neutral-hovered);
             color: var(--controls-control-neutral-hovered);
             box-shadow: 0 0 0 1px var(--controls-control-neutral-hovered);
             border-color: var(--colors-base-white);
         }
 
-        &:checked:active::after {
+        &:is(:checked, :indeterminate, .indeterminate):active::after {
             background-color: var(--controls-control-neutral-pressed);
             color: var(--controls-control-neutral-pressed);
             box-shadow: 0 0 0 1px var(--controls-control-neutral-pressed);
@@ -226,8 +226,8 @@
     // INDETERMINATE STATE
     // ==============================================
 
-    &.indeterminate:checked::after,
-    &:indeterminate:checked::after {
+    &.indeterminate::after,
+    &:indeterminate::after {
         content: "儣" !important;
     }
 
@@ -235,7 +235,7 @@
     // DISABLED STATE
     // ==============================================
 
-    &:checked:disabled::after {
+    &:is(:checked, :indeterminate, .indeterminate):disabled::after {
         background-color: var(--background-disabled) !important;
         color: var(--control-disabled) !important;
         box-shadow: 0 0 0 1px var(--background-disabled) !important;
