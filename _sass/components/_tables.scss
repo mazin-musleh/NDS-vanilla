@@ -152,7 +152,7 @@
             align-items: center;
             justify-content: space-between;
             gap: var(--spacing-1);
-            transition: var(--nds-transition);
+            height: 100%;
             outline: none;
 
             &:hover {
@@ -166,7 +166,10 @@
             .sort-icon {
                 font-size: var(--nds-text-sm-FS);
                 color: var(--colors-neutral-500);
-                transition: var(--nds-transition);
+            }
+
+            &.nds-btn{
+                border-radius: 0;
             }
 
             // RTL-specific adjustments
@@ -177,6 +180,8 @@
             }
         }
 
+        th.sortable
+
         // Sorted states
         &.sorted-asc .sort-header .sort-icon {
             color: var(--colors-primary-sa-flag-600-primary);
@@ -184,7 +189,6 @@
 
         &.sorted-desc .sort-header .sort-icon {
             color: var(--colors-primary-sa-flag-600-primary);
-            transform: rotate(180deg);
         }
     }
 }
