@@ -100,7 +100,6 @@ main {
     width: 100%;
     min-width: 300px;
     box-shadow: var(--shadow-md);
-    border-radius: var(--radius-md);
 
     @include tablet(max) {
         &:first-child {
@@ -249,10 +248,10 @@ main {
 .nds-section-title {
     font-size: var(--nds-display-clamp-md-FS, 36px);
     line-height: var(--nds-display-clamp-md-LH, 44px);
+    margin-bottom: var(--nds-display-clamp-md-MB, 11px);
     letter-spacing: -0.02rem;
     font-weight: bold;
     color: var(--text-display, #1f2a37);
-    margin-bottom: var(--spacing-lg, 16px);
 }
 
 .nds-section-description {
@@ -298,7 +297,7 @@ main {
     h3:not(:first-child),
     h4:not(:first-child),
     h5:not(:first-child) {
-        margin-block-start: 1em;
+        margin-block-start: 2rem;
     }
 
     article,

@@ -74,13 +74,15 @@ breadcrumb: ["Examples"]
                 <p>Highlights from the launch ceremony:</p>
                 <div class="nds-cards-group" style="--max-col: 3; --min-col: 1;">
                     <div class="nds-card nds-ipv-image-card showZoom">
-                        <img src="./assets/img/riyadhcenter.webp" alt="Launch ceremony venue" class="nds-ipv-thumbnail">
+                        <img src="{{ './assets/img/riyadhcenter.webp' | relative_url }}" alt="Launch ceremony venue"
+                            class="nds-ipv-thumbnail">
                     </div>
                     <div class="nds-card nds-ipv-image-card showZoom">
-                        <img src="./assets/img/riyadhcenter.webp" alt="Attendees" class="nds-ipv-thumbnail">
+                        <img src="{{ './assets/img/riyadhcenter.webp' | relative_url }}" alt="Attendees"
+                            class="nds-ipv-thumbnail">
                     </div>
                     <div class="nds-card nds-ipv-image-card showZoom">
-                        <img src="./assets/img/riyadhcenter.webp" alt="Design system showcase"
+                        <img src="{{ './assets/img/riyadhcenter.webp' | relative_url }}" alt="Design system showcase"
                             class="nds-ipv-thumbnail">
                     </div>
                 </div>
