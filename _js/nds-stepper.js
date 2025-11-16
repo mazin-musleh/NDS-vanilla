@@ -183,16 +183,6 @@
             return this.goTo(this.currentStep - 1);
         }
 
-        setState(stepNumber, state) {
-            const step = this.steps[stepNumber - 1];
-            if (!step) return false;
-
-            step.classList.remove('error', 'warning');
-            if (state === 'error' || state === 'warning') {
-                step.classList.add(state);
-            }
-            return true;
-        }
 
         setupControls() {
             // Global event delegation for stepper controls
@@ -276,7 +266,6 @@
             case 'next': return stepper.next();
             case 'previous': return stepper.previous();
             case 'goto': return stepper.goTo(parseInt(value));
-            case 'state': return stepper.setState(value.step, value.state);
             default: return false;
         }
     }
@@ -289,8 +278,7 @@
         // Convenience methods
         next: (id) => control(id, 'next'),
         previous: (id) => control(id, 'previous'),
-        goTo: (id, step) => control(id, 'goto', step),
-        setState: (id, step, state) => control(id, 'state', { step, state })
+        goTo: (id, step) => control(id, 'goto', step)
     };
 
     // Auto-initialize on DOMContentLoaded
@@ -348,14 +336,12 @@
  * NDSStepper.next('my-stepper');
  * NDSStepper.previous('my-stepper');
  * NDSStepper.goTo('my-stepper', 3);
- * NDSStepper.setState('my-stepper', 2, 'error');
  *
  * Method 2: Get instance by ID
  * const stepper = NDSStepper.get('my-stepper');
  * stepper.next();
  * stepper.previous();
  * stepper.goTo(3);
- * stepper.setState(2, 'warning');
  * console.log(stepper.current, stepper.total, stepper.progress);
  *
  * ========================================
