@@ -53,7 +53,7 @@
         <div class="swiper-wrapper">
             <div class="nds-hero-image-wrapper" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
                 <img src="{{ page.hero_image | default: site.hero_image | relative_url }}" class="nds-hero-image" alt=""
-                    style="width: 100%; height: 100%; object-fit: cover; object-position: {{ page.hero_image_pos | default: '50% 50%' }}; display: block;"
+                    style="width: 100%; height: 100%; object-fit: cover; object-position: {{ page.hero_image_pos | default: site.hero_image_pos }}; display: block;"
                     fetchpriority="high">
             </div>
             <div class="nds-heroContent nds-content-container" style="position: relative; z-index: 3;">
