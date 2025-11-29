@@ -8,114 +8,6 @@ lang: en
 direction: ltr
 ---
 
-<!-- Avatar Sizes -->
-<section id="avatarSizes" class="nds-content-section">
-    <div class="nds-section-content-container">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Avatar Sizes</h2>
-            <p class="nds-section-description">Avatars are available in 7 sizes ranging from 24px to 120px</p>
-        </div>
-        <div class="nds-section-content">
-            <div class="avatar-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Avatar Sizes</div>
-                        <div class="demo-action">
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-square", ".nds-avatar", "avatarShape"]'>
-                                <span class="label">Square</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo" style="gap: 24px; align-items: flex-end;">
-                            <div class="nds-avatar nds-xs nds-initials">
-                                <span class="initials">AB</span>
-                            </div>
-                            <div class="nds-avatar nds-sm nds-initials">
-                                <span class="initials">AB</span>
-                            </div>
-                            <div class="nds-avatar nds-md nds-initials">
-                                <span class="initials">AB</span>
-                            </div>
-                            <div class="nds-avatar nds-lg nds-initials">
-                                <span class="initials">AB</span>
-                            </div>
-                            <div class="nds-avatar nds-xl nds-initials">
-                                <span class="initials">AB</span>
-                            </div>
-                            <div class="nds-avatar nds-2xl nds-initials">
-                                <span class="initials">AB</span>
-                            </div>
-                            <div class="nds-avatar nds-3xl nds-initials">
-                                <span class="initials">AB</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="nds-tabs nds-code withDivider">
-                        <div class="nds-tab-list-container">
-                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                                    aria-controls="panel-sizes-1" id="tab-sizes-1">
-                                    <span class="nds-tab-label">HTML</span>
-                                </button>
-                            </nav>
-                        </div>
-                        <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-sizes-1"
-                                aria-labelledby="tab-sizes-1">
-                                <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                    </button>
-                                </div>
-                                <code class="lang-html code"><!-- Extra Small (24px) -->
-<div class="nds-avatar nds-xs nds-initials">
-  <span class="initials">AB</span>
-</div>
-
-<!-- Small (32px) -->
-<div class="nds-avatar nds-sm nds-initials">
-  <span class="initials">AB</span>
-</div>
-
-<!-- Medium (40px - default) -->
-<div class="nds-avatar nds-md nds-initials">
-  <span class="initials">AB</span>
-</div>
-
-<!-- Large (56px) -->
-<div class="nds-avatar nds-lg nds-initials">
-  <span class="initials">AB</span>
-</div>
-
-<!-- Extra Large (80px) -->
-<div class="nds-avatar nds-xl nds-initials">
-  <span class="initials">AB</span>
-</div>
-
-<!-- 2X Extra Large (96px) -->
-<div class="nds-avatar nds-2xl nds-initials">
-  <span class="initials">AB</span>
-</div>
-
-<!-- 3X Extra Large (120px) -->
-<div class="nds-avatar nds-3xl nds-initials">
-  <span class="initials">AB</span>
-</div></code>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
 <!-- Avatar Types -->
 <section id="avatarTypes" class="nds-content-section">
     <div class="nds-section-content-container">
@@ -132,6 +24,34 @@ direction: ltr
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-square", ".nds-avatar", "avatarShape"]'>
                                 <span class="label">Square</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-xs", ".nds-avatar", "avatarSize"]'>
+                                <span class="label">XS</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-sm", ".nds-avatar", "avatarSize"]'>
+                                <span class="label">SM</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-md", ".nds-avatar", "avatarSize"]'>
+                                <span class="label">MD</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
+                                data-toggler='["nds-lg", ".nds-avatar", "avatarSize"]'>
+                                <span class="label">LG</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-xl", ".nds-avatar", "avatarSize"]'>
+                                <span class="label">XL</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-2xl", ".nds-avatar", "avatarSize"]'>
+                                <span class="label">2XL</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-3xl", ".nds-avatar", "avatarSize"]'>
+                                <span class="label">3XL</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
@@ -178,6 +98,34 @@ direction: ltr
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-square", ".nds-avatar", "avatarShape"]'>
                                 <span class="label">Square</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-xs", ".nds-avatar", "avatarSize"]'>
+                                <span class="label">XS</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-sm", ".nds-avatar", "avatarSize"]'>
+                                <span class="label">SM</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-md", ".nds-avatar", "avatarSize"]'>
+                                <span class="label">MD</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
+                                data-toggler='["nds-lg", ".nds-avatar", "avatarSize"]'>
+                                <span class="label">LG</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-xl", ".nds-avatar", "avatarSize"]'>
+                                <span class="label">XL</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-2xl", ".nds-avatar", "avatarSize"]'>
+                                <span class="label">2XL</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-3xl", ".nds-avatar", "avatarSize"]'>
+                                <span class="label">3XL</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
@@ -228,6 +176,34 @@ direction: ltr
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-square", ".nds-avatar", "avatarShape"]'>
                                 <span class="label">Square</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-xs", ".nds-avatar", "avatarSize"]'>
+                                <span class="label">XS</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-sm", ".nds-avatar", "avatarSize"]'>
+                                <span class="label">SM</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-md", ".nds-avatar", "avatarSize"]'>
+                                <span class="label">MD</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
+                                data-toggler='["nds-lg", ".nds-avatar", "avatarSize"]'>
+                                <span class="label">LG</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-xl", ".nds-avatar", "avatarSize"]'>
+                                <span class="label">XL</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-2xl", ".nds-avatar", "avatarSize"]'>
+                                <span class="label">2XL</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-3xl", ".nds-avatar", "avatarSize"]'>
+                                <span class="label">3XL</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
@@ -290,6 +266,34 @@ direction: ltr
                                 <span class="label">Square</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-xs", ".nds-avatar", "avatarSize"]'>
+                                <span class="label">XS</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-sm", ".nds-avatar", "avatarSize"]'>
+                                <span class="label">SM</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-md", ".nds-avatar", "avatarSize"]'>
+                                <span class="label">MD</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
+                                data-toggler='["nds-lg", ".nds-avatar", "avatarSize"]'>
+                                <span class="label">LG</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-xl", ".nds-avatar", "avatarSize"]'>
+                                <span class="label">XL</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-2xl", ".nds-avatar", "avatarSize"]'>
+                                <span class="label">2XL</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-3xl", ".nds-avatar", "avatarSize"]'>
+                                <span class="label">3XL</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                                 <span class="label">Remove bg</span>
                             </button>
@@ -336,6 +340,34 @@ direction: ltr
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-square", ".nds-avatar", "avatarShape"]'>
                                 <span class="label">Square</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-xs", ".nds-avatar", "avatarSize"]'>
+                                <span class="label">XS</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-sm", ".nds-avatar", "avatarSize"]'>
+                                <span class="label">SM</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-md", ".nds-avatar", "avatarSize"]'>
+                                <span class="label">MD</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
+                                data-toggler='["nds-lg", ".nds-avatar", "avatarSize"]'>
+                                <span class="label">LG</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-xl", ".nds-avatar", "avatarSize"]'>
+                                <span class="label">XL</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-2xl", ".nds-avatar", "avatarSize"]'>
+                                <span class="label">2XL</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-3xl", ".nds-avatar", "avatarSize"]'>
+                                <span class="label">3XL</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["noBg", ".demo-container", "containerBg"]'>

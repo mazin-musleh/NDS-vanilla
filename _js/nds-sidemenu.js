@@ -39,6 +39,11 @@
                 siblings.forEach(sibling => {
                     const siblingSub = sibling.querySelector(":scope > ul");
                     if (sibling.classList.contains("open") && siblingSub) {
+                        const siblingAnchor = sibling.querySelector(":scope > a");
+                        if (siblingAnchor) {
+                            siblingAnchor.setAttribute('aria-expanded', 'false');
+                        }
+
                         siblingSub.style.height = siblingSub.scrollHeight + "px";
                         siblingSub.offsetHeight;
                         siblingSub.style.height = "0px";

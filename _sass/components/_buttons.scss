@@ -101,21 +101,25 @@
   &,
   &.nds-lg {
     /* --nds-button-icon-size: 20px; */
+    --button-indicator-size: 3px;
     @include btn-size(40px, var(--spacing-lg), var(--nds-text-md-FS), var(--nds-text-md-LH));
   }
 
   &.nds-md {
     /* --nds-button-icon-size: 16px; */
+    --button-indicator-size: 3px;
     @include btn-size(32px, var(--spacing-md), var(--nds-text-sm-FS), var(--nds-text-sm-LH));
   }
 
   &.nds-sm {
     /* --nds-button-icon-size: 12px; */
+    --button-indicator-size: 2px;
     @include btn-size(24px, var(--spacing-sm), var(--nds-text-xs-FS), var(--nds-text-xs-LH));
   }
 
   &.nds-xl {
     /* --nds-button-icon-size: 24px; */
+    --button-indicator-size: 4px;
     @include btn-size(48px, var(--spacing-xl), var(--nds-text-xl-FS), var(--nds-text-xl-LH));
   }
 
@@ -708,35 +712,22 @@
     display: none;
   }
 
-  &.nds-label-only i {
+  &.nds-label-only i,
+  .nds-label-only svg,
+  .nds-label-only img {
     display: none;
   }
 
   /* Icon-Only Button Configurations */
   &.nds-icon-only {
-    aspect-ratio: 1;
     justify-content: center;
+    width: var(--nds-btn-height);
     padding: 0;
-
-    &.nds-sm {
-      width: 24px;
-    }
-
-    &.nds-md {
-      width: 32px;
-    }
-
-    &.nds-lg {
-      width: 40px;
-    }
-
-    &.nds-xl {
-      width: 48px;
-    }
 
     // Menu button exceptions
     &.nds-menu-btn {
       width: fit-content;
+      padding: 0 var(--spacing-lg);
 
       &.nds-sm {
         padding: 0 var(--spacing-sm);
@@ -754,7 +745,14 @@
         padding: 0 var(--spacing-xl);
       }
     }
+
+    &.nds-circle {
+      border-radius: 50%;
+    }
+
   }
+
+
 
   /* Icon Sizing */
   &.nds-btn i {
@@ -774,44 +772,13 @@
     }
   }
 
-  /* Button Groups */
-  .nds-group {
-    display: inline-flex;
-    border-radius: var(--radius-md);
-    overflow: hidden;
-
-    .nds-btn {
-      border-radius: 0;
-      border-right-width: 0;
-      position: relative;
-      z-index: 1;
-
-      &:first-child {
-        border-top-right-radius: var(--radius-md);
-        border-bottom-right-radius: var(--radius-md);
-      }
-
-      &:last-child {
-        border-top-left-radius: var(--radius-md);
-        border-bottom-left-radius: var(--radius-md);
-        border-right-width: 1px;
-      }
-
-      &:hover,
-      &:focus,
-      &.nds-active {
-        z-index: 2;
-        border-right-width: 1px;
-      }
-    }
-  }
-
   // ==============================================
   // LOADING STATES & ANIMATIONS
   // ==============================================
 
   /* Base Loading State */
-  &.nds-loading {
+  &.nds-loading,
+  &.loading {
     position: relative;
     pointer-events: none;
     color: transparent !important;
@@ -900,6 +867,51 @@
 
 }
 
+
+/* Button Groups */
+.nds-btn-group {
+  --btn-group-radius: var(--radius-md);
+  display: flex;
+  border-radius: var(--btn-group-radius);
+  overflow: hidden;
+  gap: 0 !important;
+  width: fit-content;
+  flex-wrap: nowrap;
+
+  &:has(>.nds-md,>.nds-sm){
+    --btn-group-radius: var(--radius-sm);
+  }
+
+  .nds-btn {
+    border-radius: 0;
+    border-inline-start-width: 0;
+    position: relative;
+    z-index: 1;
+    
+
+    & + .nds-btn {
+    border-inline-start-width: 1px;
+  }
+
+    /* Reverse */
+    &:first-child {
+      border-start-start-radius: var(--btn-group-radius);
+      border-end-start-radius: var(--btn-group-radius);
+    }
+
+    &:last-child {
+      border-start-end-radius: var(--btn-group-radius);
+      border-end-end-radius: var(--btn-group-radius);
+      
+    }
+
+    &:hover,
+    &:focus,
+    &.nds-active {
+      z-index: 2;
+    }
+  }
+}
 
 
 

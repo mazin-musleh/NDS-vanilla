@@ -1332,6 +1332,10 @@ direction: ltr
                         <div class="demo-label">Icon Only Buttons</div>
                         <div class="demo-action">
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-circle", ".nds-btn", "CircleBtn"]'>
+                                <span class="label">Circle</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                                 <span class="label">Remove bg</span>
                             </button>
@@ -1536,6 +1540,90 @@ direction: ltr
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Button Group -->
+<section id="buttonSizes" class="nds-content-section">
+    <div class="nds-section-content-container">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Button Group</h2>
+            <p class="nds-section-description">Group multiple buttons together in a horizontal layout with consistent
+                spacing and alignment. Button groups support all button sizes and variants.
+            </p>
+        </div>
+        <div class="nds-section-content">
+            <div class="button-showcase">
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Button Group</div>
+                        <div class="demo-action">
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-indicator", ".nds-demo", "indicator"]'>
+                                <span class="label">Toggle Indicator</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-xl", ".nds-demo", "sizeToggle"]'>
+                                <span class="label">XL</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
+                                data-toggler='["nds-lg", ".nds-demo", "sizeToggle"]'>
+                                <span class="label">LG</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-md", ".nds-demo", "sizeToggle"]'>
+                                <span class="label">MD</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-sm", ".nds-demo", "sizeToggle"]'>
+                                <span class="label">SM</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="nds-btn-group nds-center">
+                            <button class="nds-btn nds-primary nds-demo"><span class="label">Button</span></button>
+                            <button class="nds-btn nds-primary nds-demo"><span class="label">Button</span></button>
+                            <button class="nds-btn nds-primary nds-demo"><span class="label">Button</span></button>
+                            <button class="nds-btn nds-primary nds-demo"><span class="label">Button</span></button>
+                        </div>
+                    </div>
+                    <div class="nds-tabs nds-code withDivider">
+                        <div class="nds-tab-list-container">
+                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-size-1" id="tab-size-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                                <button class="nds-btn nds-subtle nds-tab showMore"><i
+                                        class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                                </button>
+                            </nav>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-size-1"
+                                aria-labelledby="tab-size-1">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <code class="lang-html code">
+                                    <div class="nds-btn-group nds-center">
+                                        <button class="nds-btn nds-primary"><span class="label">Button</span></button>
+                                        <button class="nds-btn nds-primary"><span class="label">Button</span></button>
+                                        <button class="nds-btn nds-primary"><span class="label">Button</span></button>
+                                        <button class="nds-btn nds-primary"><span class="label">Button</span></button>
+                                    </div>
+                                </code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

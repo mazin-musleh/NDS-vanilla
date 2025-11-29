@@ -273,46 +273,46 @@ direction: ltr
                         <!-- Content Container -->
                         <div class="nds-pagination-content nds-grid"
                             style="--per-page: 4; --max-col: 4; --mid-col: 3; --min-col: 2;">
-                            <div class="nds-card nds-stroke pagination-item">Card 1</div>
-                            <div class="nds-card nds-stroke pagination-item">Card 2</div>
-                            <div class="nds-card nds-stroke pagination-item">Card 3</div>
-                            <div class="nds-card nds-stroke pagination-item">Card 4</div>
-                            <div class="nds-card nds-stroke pagination-item">Card 5</div>
-                            <div class="nds-card nds-stroke pagination-item">Card 6</div>
-                            <div class="nds-card nds-stroke pagination-item">Card 7</div>
-                            <div class="nds-card nds-stroke pagination-item">Card 8</div>
-                            <div class="nds-card nds-stroke pagination-item">Card 9</div>
-                            <div class="nds-card nds-stroke pagination-item">Card 10</div>
-                            <div class="nds-card nds-stroke pagination-item">Card 11</div>
-                            <div class="nds-card nds-stroke pagination-item">Card 12</div>
-                            <div class="nds-card nds-stroke pagination-item">Card 13</div>
-                            <div class="nds-card nds-stroke pagination-item">Card 14</div>
-                            <div class="nds-card nds-stroke pagination-item">Card 15</div>
-                            <div class="nds-card nds-stroke pagination-item">Card 16</div>
-                            <div class="nds-card nds-stroke pagination-item">Card 17</div>
-                            <div class="nds-card nds-stroke pagination-item">Card 18</div>
-                            <div class="nds-card nds-stroke pagination-item">Card 19</div>
-                            <div class="nds-card nds-stroke pagination-item">Card 20</div>
-                            <div class="nds-card nds-stroke pagination-item">Card 21</div>
-                            <div class="nds-card nds-stroke pagination-item">Card 22</div>
-                            <div class="nds-card nds-stroke pagination-item">Card 23</div>
-                            <div class="nds-card nds-stroke pagination-item">Card 24</div>
-                            <div class="nds-card nds-stroke pagination-item">Card 25</div>
-                            <div class="nds-card nds-stroke pagination-item">Card 26</div>
-                            <div class="nds-card nds-stroke pagination-item">Card 27</div>
-                            <div class="nds-card nds-stroke pagination-item">Card 28</div>
-                            <div class="nds-card nds-stroke pagination-item">Card 29</div>
-                            <div class="nds-card nds-stroke pagination-item">Card 30</div>
-                            <div class="nds-card nds-stroke pagination-item">Card 31</div>
-                            <div class="nds-card nds-stroke pagination-item">Card 32</div>
-                            <div class="nds-card nds-stroke pagination-item">Card 33</div>
-                            <div class="nds-card nds-stroke pagination-item">Card 34</div>
-                            <div class="nds-card nds-stroke pagination-item">Card 35</div>
-                            <div class="nds-card nds-stroke pagination-item">Card 36</div>
-                            <div class="nds-card nds-stroke pagination-item">Card 37</div>
-                            <div class="nds-card nds-stroke pagination-item">Card 38</div>
-                            <div class="nds-card nds-stroke pagination-item">Card 39</div>
-                            <div class="nds-card nds-stroke pagination-item">Card 40</div>
+                            <div class="pagination-item nds-card nds-stroke">Card 1</div>
+                            <div class="pagination-item nds-card nds-stroke">Card 2</div>
+                            <div class="pagination-item nds-card nds-stroke">Card 3</div>
+                            <div class="pagination-item nds-card nds-stroke">Card 4</div>
+                            <div class="pagination-item nds-card nds-stroke">Card 5</div>
+                            <div class="pagination-item nds-card nds-stroke">Card 6</div>
+                            <div class="pagination-item nds-card nds-stroke">Card 7</div>
+                            <div class="pagination-item nds-card nds-stroke">Card 8</div>
+                            <div class="pagination-item nds-card nds-stroke">Card 9</div>
+                            <div class="pagination-item nds-card nds-stroke">Card 10</div>
+                            <div class="pagination-item nds-card nds-stroke">Card 11</div>
+                            <div class="pagination-item nds-card nds-stroke">Card 12</div>
+                            <div class="pagination-item nds-card nds-stroke">Card 13</div>
+                            <div class="pagination-item nds-card nds-stroke">Card 14</div>
+                            <div class="pagination-item nds-card nds-stroke">Card 15</div>
+                            <div class="pagination-item nds-card nds-stroke">Card 16</div>
+                            <div class="pagination-item nds-card nds-stroke">Card 17</div>
+                            <div class="pagination-item nds-card nds-stroke">Card 18</div>
+                            <div class="pagination-item nds-card nds-stroke">Card 19</div>
+                            <div class="pagination-item nds-card nds-stroke">Card 20</div>
+                            <div class="pagination-item nds-card nds-stroke">Card 21</div>
+                            <div class="pagination-item nds-card nds-stroke">Card 22</div>
+                            <div class="pagination-item nds-card nds-stroke">Card 23</div>
+                            <div class="pagination-item nds-card nds-stroke">Card 24</div>
+                            <div class="pagination-item nds-card nds-stroke">Card 25</div>
+                            <div class="pagination-item nds-card nds-stroke">Card 26</div>
+                            <div class="pagination-item nds-card nds-stroke">Card 27</div>
+                            <div class="pagination-item nds-card nds-stroke">Card 28</div>
+                            <div class="pagination-item nds-card nds-stroke">Card 29</div>
+                            <div class="pagination-item nds-card nds-stroke">Card 30</div>
+                            <div class="pagination-item nds-card nds-stroke">Card 31</div>
+                            <div class="pagination-item nds-card nds-stroke">Card 32</div>
+                            <div class="pagination-item nds-card nds-stroke">Card 33</div>
+                            <div class="pagination-item nds-card nds-stroke">Card 34</div>
+                            <div class="pagination-item nds-card nds-stroke">Card 35</div>
+                            <div class="pagination-item nds-card nds-stroke">Card 36</div>
+                            <div class="pagination-item nds-card nds-stroke">Card 37</div>
+                            <div class="pagination-item nds-card nds-stroke">Card 38</div>
+                            <div class="pagination-item nds-card nds-stroke">Card 39</div>
+                            <div class="pagination-item nds-card nds-stroke">Card 40</div>
                         </div>
 
                         <!-- Pagination will be auto-generated here -->
@@ -341,13 +341,13 @@ direction: ltr
                                 <!-- Content Container -->
                                 <div class="nds-pagination-content nds-grid"
                                     style="--per-page: 4; --max-col: 4; --mid-col: 3; --min-col: 2;">
-                                    <div class="nds-card nds-stroke pagination-item">Card 1</div>
-                                    <div class="nds-card nds-stroke pagination-item">Card 2</div>
-                                    <div class="nds-card nds-stroke pagination-item">Card 3</div>
+                                    <div class="pagination-item nds-card nds-stroke">Card 1</div>
+                                    <div class="pagination-item nds-card nds-stroke">Card 2</div>
+                                    <div class="pagination-item nds-card nds-stroke">Card 3</div>
                                     <!-- ... Cards 4-37 ... -->
-                                    <div class="nds-card nds-stroke pagination-item">Card 38</div>
-                                    <div class="nds-card nds-stroke pagination-item">Card 39</div>
-                                    <div class="nds-card nds-stroke pagination-item">Card 40</div>
+                                    <div class="pagination-item nds-card nds-stroke">Card 38</div>
+                                    <div class="pagination-item nds-card nds-stroke">Card 39</div>
+                                    <div class="pagination-item nds-card nds-stroke">Card 40</div>
                                 </div>
                                 <!-- Pagination will be auto-generated here -->
                                 <nav class="nds-pagination-nav nds-auto-pagination" aria-label="Pagination"></nav>

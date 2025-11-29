@@ -21,23 +21,14 @@
 }
 
 .nds-topbar .dga-tab {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translate(-50%, 0);
     z-index: 10;
     cursor: pointer;
-    font-size: var(--nds-text-sm-FS);
-    line-height: var(--nds-text-sm-LH);
-}
-
-.nds-topbar .dga-tab {
-    gap: var(--spacing-md);
-    --nds-btn-height: 35px;
-    background-color: var(--background-white);
-    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
-    box-shadow: var(--shadow-md);
-
+    font-size: var(--nds-text-clamp-sm-FS);
+    line-height: var(--nds-text-clamp-sm-LH);
+    font-weight: 300;
+    padding-left: 0;
+    padding-right: 0;
+    gap: var(--spacing-xs);
 }
 
 
@@ -137,26 +128,26 @@
 
 .saudi-security-icon-wrapper {
     position: relative;
-    background: linear-gradient(135deg, var(--background-primary), var(--background-primary-400));
+    border: 1px solid var(--border-primary);
     border-radius: 50%;
-    width: var(--spacing-7xl);
-    height: var(--spacing-7xl);
-    font-size: 2rem;
+    width: var(--spacing-6xl);
+    height: var(--spacing-6xl);
+    font-size: 1.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
 
     @include tablet(max) {
-        width: var(--spacing-6xl);
-        height: var(--spacing-6xl);
-        font-size: 1.5rem;
+        width: var(--spacing-5xl);
+        height: var(--spacing-5xl);
+        font-size: 1.2rem;
     }
 
 }
 
 .saudi-security-icon-wrapper>.icon {
-    color: var(--text-oncolor-primary);
+    color: var(--text-primary);
 }
 
 .saudi-notice-content-block {
@@ -177,6 +168,10 @@
 }
 
 @include mobile {
+    .nds-topbar .dga-tab {
+        width: 100%;
+    }
+
     .saudi-security-notices-container {
         margin: var(--spacing-xl) auto;
         flex-direction: column;
@@ -205,22 +200,6 @@
     font-weight: bold;
 }
 
-.saudi-security-verification-badge {
-    position: absolute;
-    top: -4px;
-    right: -4px;
-    background-color: var(--colors-green-400);
-    color: var(--text-oncolor-primary);
-    border-radius: 50%;
-    width: 24px;
-    height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: var(--nds-text-clamp-sm-FS);
-    line-height: var(--nds-text-clamp-sm-LH);
-    font-weight: bold;
-}
 
 .registration-number {
     color: var(--text-primary);

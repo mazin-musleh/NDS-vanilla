@@ -80,6 +80,7 @@
 @mixin ltr {
   @at-root {
     @each $selector in & {
+
       html[dir="ltr"] #{$selector},
       .ltr #{$selector} {
         @content;
@@ -215,6 +216,7 @@ textarea {
   &[data-state="default"] {
     background-color: $default-bg;
     color: $default-color;
+
   }
 
   &:hover,
@@ -237,6 +239,10 @@ textarea {
   &[data-state="active"] {
     background-color: $active-bg;
     color: $default-color;
+  }
+
+  .nds-btn-group & {
+    border-inline-start-color: $hover-bg;
   }
 
   &:disabled,
@@ -390,8 +396,8 @@ textarea {
     height: var(--pc-size, #{$size}) !important;
     transform: rotate($rotate) !important;
 
-    @include ltr{
-       transform: rotate($rotate) scaleY(-1) !important; 
+    @include ltr {
+      transform: rotate($rotate) scaleY(-1) !important;
     }
 
     circle {
@@ -495,7 +501,9 @@ textarea {
     .progress-symbol {
       @if $show-symbol {
         display: block;
-      } @else {
+      }
+
+      @else {
         display: none;
       }
     }
@@ -513,7 +521,8 @@ textarea {
 // Progress circle animation mixin
 @mixin progress-circle-progress($percent: 0) {
   $circumference: 62.83; // 2πr where r=10
-  $offset: calc(#{$circumference} - (#{$circumference} * #{$percent} / 100));
+  $clamped-percent: min($percent, 100); // Clamp to max 100
+  $offset: calc(#{$circumference} - (#{$circumference} * #{$clamped-percent} / 100));
 
   svg circle.progress-bar {
     stroke-dasharray: $circumference !important;
@@ -572,6 +581,6 @@ textarea {
     }
   }
 
-$percent: calc((#{$current} / #{$total}) * 100);
-@include progress-circle-progress($percent);
+  $percent: calc((#{$current} / #{$total}) * 100);
+  @include progress-circle-progress($percent);
 }

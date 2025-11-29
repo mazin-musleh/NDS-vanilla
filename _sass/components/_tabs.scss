@@ -100,6 +100,7 @@
     }
 
     &.cardView .nds-tab-content {
+      background-color: var(--background-white);
       border-radius: var(--radius-md);
       box-shadow: var(--shadow-md);
       margin-top: unset;
@@ -143,6 +144,7 @@
 
   /* Card view styling */
   &.cardView .nds-tab-content {
+    background-color: var(--background-white);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-md);
     margin-top: var(--spacing-lg);
@@ -170,7 +172,8 @@
   position: relative;
 
   /* Centered Tab List */
-  &.nds-center,&.center {
+  &.nds-center,
+  &.center {
     justify-content: flex-start;
     width: fit-content;
     margin: 0 auto;
@@ -242,7 +245,6 @@
 
 /* Tab Content Container */
 .nds-tab-content {
-  background-color: var(--background-white);
   min-height: 40px;
   width: 100%;
 }
@@ -259,6 +261,7 @@
       padding: var(--spacing-xl);
     }
   }
+
   &.hug-x {
     padding-left: 0;
     padding-right: 0;
@@ -287,6 +290,7 @@
   .nds-tab-panel {
     padding: var(--spacing-lg);
   }
+
 }
 
 

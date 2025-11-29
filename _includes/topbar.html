@@ -19,7 +19,6 @@
         <div class="saudi-gov-security-card">
             <div class="saudi-security-icon-wrapper">
                 <i class="hgi hgi-stroke hgi-square-lock-01 icon"></i>
-                <div class="saudi-security-verification-badge">✓</div>
             </div>
             <div class="saudi-notice-content-block">
                 <div class="saudi-notice-primary-heading" id="https-title">
@@ -42,17 +41,14 @@
 </div>
 <div class="nds-topbar" role="region" aria-label="Top bar utilities">
     <div class="nds-content-container">
+        <button class="nds-btn nds-menu-btn infoContainer dga-tab" role="button" aria-expanded="false" aria-controls="dgaDigitalStamp">
+            <span class="bigScreenText" id="big-screen-text">A government website registered with the Digital Government Authority.</span>
+            <span class="smallScreenText" id="small-screen-text">Government website registered with DGA</span>
+            <b id="dgaVerify-text">How you know?</b>
+        </button>
         <div class="infoContainer">
             <span id="nds-date" class="textIcon" data-calendar="hijri"></span>
             <span id="nds-realTimeClock" class="textIcon"></span>
-        </div>
-        <button class="nds-btn nds-subtle nds-menu-btn infoContainer dga-tab" role="button" aria-expanded="false" aria-controls="dgaDigitalStamp">
-            <span class="bigScreenText" id="big-screen-text">موقع حكومي رسمي تابع لحكومة المملكة العربية
-                السعودية:</span>
-            <span class="smallScreenText" id="small-screen-text">موقع حكومي رسمي:</span>
-            <b id="dgaVerify-text">كيف تتحقق؟</b>
-        </button>
-        <div class="infoContainer">
             <span id="nds-cityName" class="textIcon"></span>
             <span id="nds-weatherInfo" class="textIcon" data-latitude="{{ site.city_latitude | default: '24.7136' }}" data-longitude="{{ site.city_longitude | default: '46.6753' }}"></span>
         </div>

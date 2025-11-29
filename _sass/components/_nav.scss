@@ -40,6 +40,7 @@
         &>.text {
             font-size: var(--nds-text-clamp-md-FS);
             line-height: var(--nds-text-clamp-md-LH);
+            white-space: nowrap;
         }
 
         &>i {

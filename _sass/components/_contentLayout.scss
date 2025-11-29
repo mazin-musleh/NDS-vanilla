@@ -7,6 +7,37 @@
    MAIN CONTENT LAYOUT
    ======================================== */
 
+.nds-content-grid {
+    --nds-breakout-max-width: calc(var(--nds-content-MaxWidth) + var(--nds-viewport-padding));
+    --nds-breakout-size: calc((var(--nds-breakout-max-width) - var(--nds-content-MaxWidth)) / 2);
+
+    display: grid !important;
+    grid-template-columns:
+        [full-width-start] minmax(var(--nds-viewport-padding), 1fr) [breakout-start] minmax(0, var(--nds-breakout-size)) [content-start] min(100% - (var(--nds-viewport-padding) * 2),
+            var(--nds-content-MaxWidth)) [content-end] minmax(0, var(--nds-breakout-size)) [breakout-end] minmax(var(--nds-viewport-padding), 1fr) [full-width-end];
+
+& > :not(.nds-breakout, .nds-full-width),
+& > :not(.nds-breakout, .nds-full-width) {
+    grid-column: content;
+}
+
+& > .nds-breakout {
+    grid-column: breakout;
+}
+
+& > .nds-full-width {
+    grid-column: full-width;
+    display: grid;
+    grid-template-columns: inherit;
+}
+
+& > .nds-grid-content{
+    grid-column: content-start / content-end;
+    display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--spacing, 16px);
+}
+}
 main {
     height: 100%;
 }
@@ -105,6 +136,7 @@ main {
         &:first-child {
             padding-top: var(--spacing-4xl);
         }
+
         &:first-child:is(.nds-hero-section) {
             padding-top: var(--spacing-6xl);
         }
@@ -179,24 +211,18 @@ main {
 .contentLayout {
 
     // Without side menu - always reset
-    &:not(.wSideMenu, .cardView) .mainContent {
-        &:not(.odd-stripper) .nds-content-section:nth-of-type(even) {
+    &:not(.wSideMenu, .cardView) .mainContent:has(>.nds-hero-section) {
+
+        .nds-content-section:nth-of-type(odd) {
             @include reset-section-style;
         }
 
-        &.odd-stripper .nds-content-section:nth-of-type(odd) {
-            @include reset-section-style;
-        }
     }
 
     // With side menu - reset only on tablet and below
-    &:not(.cardView).wSideMenu .mainContent {
+    &:not(.cardView).wSideMenu .mainContent:has(>.nds-hero-section) {
         @include tablet(max) {
-            &:not(.odd-stripper) .nds-content-section:nth-of-type(even) {
-                @include reset-section-style;
-            }
-
-            &.odd-stripper .nds-content-section:nth-of-type(odd) {
+            .nds-content-section:nth-of-type(odd) {
                 @include reset-section-style;
             }
         }
