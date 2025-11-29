@@ -74,24 +74,13 @@
         // Update the hidden copy
         hiddenCopy.textContent = updatedContent;
 
-        // Copy to visible code element
-        codeElement.textContent = updatedContent;
+        // Update original content for reprocessing
+        codeElement.dataset.originalContent = updatedContent;
+        codeElement.innerHTML = updatedContent;
 
-        // Reapply syntax highlighting
-        if (window.NDSCode && codeElement.classList.contains('lang-html')) {
-            codeElement.dataset.processed = 'false';
-            codeElement.dataset.lineNumbers = 'false';
-
-            if (window.NDSCode.highlightHTMLSafe) {
-                window.NDSCode.highlightHTMLSafe(codeElement);
-            }
-
-            if (window.NDSCode.addLineNumbers) {
-                const lines = codeElement.textContent.split('\n');
-                if (lines.length > 1 && !(lines.length === 2 && lines[1].trim() === '')) {
-                    window.NDSCode.addLineNumbers();
-                }
-            }
+        // Reprocess using new simplified API
+        if (window.NDSCode && window.NDSCode.reprocessCodeElement) {
+            window.NDSCode.reprocessCodeElement(codeElement);
         }
     }
 

@@ -21,13 +21,13 @@
   @include progress-circle-style('primary');
   @include progress-circle-text($show-text: true, $show-symbol: true, $size: var(--pc-size));
 
-  // CSS counter for automatic number display
-  counter-reset: progress-counter var(--progress-value);
+  // CSS counter for automatic number display (clamped to 100)
+  counter-reset: progress-counter min(var(--progress-value), 100);
 
   // Dynamic progress using CSS custom property
   svg circle.progress-bar {
     stroke-dasharray: var(--progress-circumference) !important;
-    stroke-dashoffset: calc(var(--progress-circumference) - (var(--progress-circumference) * var(--progress-value) / 100));
+    stroke-dashoffset: calc(var(--progress-circumference) - (var(--progress-circumference) * min(var(--progress-value), 100) / 100));
     transition: stroke-dashoffset 0.3s ease !important;
   }
 
@@ -49,13 +49,16 @@
   &.nds-xs {
     --pc-size: 24px;
 
-    .progress-info .progress-symbol {
+    .progress-info .progress-symbol,.progress-info .progress-text {
       display: none;
     }
   }
 
   &.nds-sm {
     --pc-size: 40px;
+    .progress-info .progress-text {
+      display: none;
+    }
   }
 
   &.nds-md,
@@ -118,8 +121,8 @@
   --pb-height: 8px;
   --progress-value: 0; // Default progress value (0-100)
 
-  // Auto-update percentage from progress bar's custom property
-  counter-reset: progress-counter var(--progress-value);
+  // Auto-update percentage from progress bar's custom property (clamped to 100)
+  counter-reset: progress-counter min(var(--progress-value), 100);
 
 
   width: 100%;
@@ -175,7 +178,7 @@
     background-color: var(--button-background-primary-default);
     border-radius: var(--radius-full);
     transition: width 0.3s ease;
-    width: calc(var(--progress-value) * 1%);
+    width: calc(min(var(--progress-value), 100) * 1%);
     position: relative;
   }
 

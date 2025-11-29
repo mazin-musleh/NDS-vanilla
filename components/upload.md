@@ -82,7 +82,7 @@ direction: ltr
                       <i class="hgi hgi-solid icon"></i>
                     </span>
 
-                    <div class="progress-circle" style="display: none;">
+                    <div class="nds-progress-circle nds-xs" style="display: none; --progress-value: 0;">
                       <svg width="24" height="24" viewBox="0 0 24 24">
                         <circle class="progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="3" />
                         <circle class="progress-bar" cx="12" cy="12" r="10" fill="none" stroke-width="3"
@@ -90,7 +90,7 @@ direction: ltr
                       </svg>
                       <div class="progress-info">
                         <span class="progress-percentage">
-                          <span class="progress-number">0</span>
+                          <span class="progress-number"></span>
                           <span class="progress-symbol">%</span>
                         </span>
                         <span class="progress-text"></span>
@@ -146,82 +146,82 @@ direction: ltr
                 </div>
                 <div class="nds-expandable-content">
                   <code class="lang-html code">
-                  <div class="nds-form-container nds-file-upload multi-file-upload dropBox">
-                    <div class="nds-form-header hidden">
-                      <label for="multiFileUpload">
-                        <span class="label">Upload files</span>
-                        <span class="info">
-                          Maximum file size allowed is 2MB, supported file formats include .jpg, .png, and .pdf.
-                        </span>
-                      </label>
-                    </div>
-
-                    <div class="nds-form-control" id="multiDropZone">
-                      <input type="file" id="multiFileUpload" multiple accept=".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx,.txt"
-                        class="file-input" />
-                      <div class="upload-zone">
-                        <i class="hgi hgi-stroke hgi-file-upload upload-icon icon"></i>
-                        <div class="upload-text">
-                          <span class="dropFileHint">Drag and drop files here to upload</span>
-                        </div>
-                        <div class="upload-hint">Maximum file size allowed is 2MB, supported file formats include .jpg,
-                          .png, and .pdf.</div>
+                    <div class="nds-form-container nds-file-upload multi-file-upload dropBox">
+                      <div class="nds-form-header hidden">
+                        <label for="multiFileUpload">
+                          <span class="label">Upload files</span>
+                          <span class="info">
+                            Maximum file size allowed is 2MB, supported file formats include .jpg, .png, and .pdf.
+                          </span>
+                        </label>
                       </div>
 
-                      <div class="upload-actions">
-                        <button type="button" class="nds-btn nds-secondary nds-md browse-btn">
-                          <i class="hgi hgi-stroke hgi-folder-01"></i>
-                          <span class="label">Browse Files</span>
-                        </button>
-                      </div>
-                    </div>
-
-                    <div class="file-list" id="multiFileList"></div>
-                    <div class="nds-form-footer"></div>
-
-                    <!-- Hidden template for file items -->
-                    <div class="file-item-template" style="display: none;">
-                      <div class="file-item">
-                        <span class="nds-feedback-icon nds-success">
-                          <i class="hgi hgi-solid icon"></i>
-                        </span>
-
-                        <div class="progress-circle" style="display: none;">
-                          <svg width="24" height="24" viewBox="0 0 24 24">
-                            <circle class="progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="3" />
-                            <circle class="progress-bar" cx="12" cy="12" r="10" fill="none" stroke-width="3" stroke-dasharray="62.83"
-                              stroke-dashoffset="62.83" stroke-linecap="round" />
-                          </svg>
-                          <div class="progress-info">
-                            <span class="progress-percentage">
-                              <span class="progress-number">0</span>
-                              <span class="progress-symbol">%</span>
-                            </span>
-                            <span class="progress-text"></span>
+                      <div class="nds-form-control" id="multiDropZone">
+                        <input type="file" id="multiFileUpload" multiple accept=".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx,.txt"
+                          class="file-input" />
+                        <div class="upload-zone">
+                          <i class="hgi hgi-stroke hgi-file-upload upload-icon icon"></i>
+                          <div class="upload-text">
+                            <span class="dropFileHint">Drag and drop files here to upload</span>
                           </div>
+                          <div class="upload-hint">Maximum file size allowed is 2MB, supported file formats include .jpg,
+                            .png, and .pdf.</div>
                         </div>
 
-                        <div class="file-info">
-                          <div class="file-name"></div>
-                          <div class="file-details">
-                            <span class="file-size"></span>
-                            <span class="file-type"></span>
-                            <span class="file-status"></span>
-                          </div>
-                          <div class="file-error" style="display: none;">
-                            <span class="error-message"></span>
-                          </div>
-                        </div>
-
-                        <div class="file-actions">
-                          <button type="button" class="nds-btn nds-subtle nds-md remove-file" aria-label="Remove file">
-                            <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
+                        <div class="upload-actions">
+                          <button type="button" class="nds-btn nds-secondary nds-md browse-btn">
+                            <i class="hgi hgi-stroke hgi-folder-01"></i>
+                            <span class="label">Browse Files</span>
                           </button>
                         </div>
                       </div>
+
+                      <div class="file-list" id="multiFileList"></div>
+                      <div class="nds-form-footer"></div>
+
+                      <!-- Hidden template for file items -->
+                      <div class="file-item-template" style="display: none;">
+                        <div class="file-item">
+                          <span class="nds-feedback-icon nds-success">
+                            <i class="hgi hgi-solid icon"></i>
+                          </span>
+
+                          <div class="nds-progress-circle nds-xs" style="display: none; --progress-value: 0;">
+                            <svg width="24" height="24" viewBox="0 0 24 24">
+                              <circle class="progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="3" />
+                              <circle class="progress-bar" cx="12" cy="12" r="10" fill="none" stroke-width="3"
+                                stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" />
+                            </svg>
+                            <div class="progress-info">
+                              <span class="progress-percentage">
+                                <span class="progress-number"></span>
+                                <span class="progress-symbol">%</span>
+                              </span>
+                              <span class="progress-text"></span>
+                            </div>
+                          </div>
+
+                          <div class="file-info">
+                            <div class="file-name"></div>
+                            <div class="file-details">
+                              <span class="file-size"></span>
+                              <span class="file-type"></span>
+                              <span class="file-status"></span>
+                            </div>
+                            <div class="file-error" style="display: none;">
+                              <span class="error-message"></span>
+                            </div>
+                          </div>
+
+                          <div class="file-actions">
+                            <button type="button" class="nds-btn nds-subtle nds-md remove-file" aria-label="Remove file">
+                              <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                    </code>
+                  </code>
                 </div>
               </div>
               <div class="nds-tab-panel hidden" role="tabpanel" id="panel-file-upload-2"
@@ -264,9 +264,14 @@ fileUpload.startUpload(fileId);
                     </button>
                   </div>
                   <div class="nds-expandable-content">
-                    <code class="lang-html">
-                    <div class="nds-file-upload" data-upload-url="/api/upload"  data-auto-upload="true"  data-max-files="5"  data-max-file-size="10485760"  data-accepted-types="image/*,.pdf,.docx"></div>
-                      </code>
+                    <code class="lang-html code">
+                      <div class="nds-file-upload"
+                      data-upload-url="/api/upload"
+                      data-auto-upload="true"
+                      data-max-files="5"
+                      data-max-file-size="10485760"
+                      data-accepted-types="image/*,.pdf,.docx"></div>
+                    </code>
                   </div>
                 </div>
 

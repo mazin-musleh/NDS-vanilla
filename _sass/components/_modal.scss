@@ -84,11 +84,16 @@
       height: fit-content;
       min-height: 256px;
 
-      .nds-card-actions .nds-btn {
-        width: 100%;
+      .nds-card-actions {
+        flex-direction: column;
+        gap: var(--spacing-lg, 12px);
 
-        .label {
-          text-align: center;
+        .nds-btn {
+          width: 100%;
+
+          .label {
+            text-align: center;
+          }
         }
       }
 

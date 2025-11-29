@@ -155,6 +155,13 @@
 
       }
     }
+    &:not(.line-numbers){
+
+      .code-line:first-child{
+        margin-inline-start: var(--spacing-xl);
+      }
+
+    }
   }
 }
 

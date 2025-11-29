@@ -237,11 +237,13 @@ button,
     text-overflow: ellipsis;
 }
 
-.nds-center {
-    text-align: center;
-    margin-inline-end: auto;
-    margin-inline-start: auto;
-    align-self: center;
+.nds-center,
+.nds-center>* {
+    text-align: center !important;
+    margin-inline-end: auto !important;
+    margin-inline-start: auto !important;
+    align-self: center !important;
+    height: 100%;
 }
 
 .nds-flush {

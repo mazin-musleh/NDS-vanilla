@@ -63,13 +63,8 @@
         // Icon generation removed - using template icons instead
 
         function updateProgress(progressElement, percentage) {
-            const circle = progressElement.querySelector('.progress-bar');
-            const text = progressElement.querySelector('.progress-number');
-            const circumference = 62.83; // 2 * Math.PI * 10
-            const offset = circumference - (percentage / 100) * circumference;
-            
-            if (circle) circle.style.strokeDashoffset = offset;
-            if (text) text.textContent = Math.round(percentage);
+            // Use CSS custom property for progress (automatically handled by nds-progress-circle)
+            progressElement.style.setProperty('--progress-value', percentage);
         }
 
         function createFileItem(fileData, index) {
@@ -100,7 +95,7 @@
             const fileType = fileItem.querySelector('.file-type');
             const fileStatus = fileItem.querySelector('.file-status');
             const feedbackIcon = fileItem.querySelector('.nds-feedback-icon');
-            const progressCircle = fileItem.querySelector('.progress-circle');
+            const progressCircle = fileItem.querySelector('.nds-progress-circle');
             const removeButton = fileItem.querySelector('.remove-file');
             const fileError = fileItem.querySelector('.file-error');
             const errorMessage = fileItem.querySelector('.error-message');
@@ -170,16 +165,10 @@
         }
         
         function updateProgressInItem(fileItem, progress) {
-            const progressElement = fileItem.querySelector('.progress-circle');
+            const progressElement = fileItem.querySelector('.nds-progress-circle');
             if (progressElement) {
-                const circle = progressElement.querySelector('.progress-bar');
-                const text = progressElement.querySelector('.progress-number');
-                if (circle && text) {
-                    const circumference = 62.83;
-                    const offset = circumference - (progress / 100) * circumference;
-                    circle.style.strokeDashoffset = offset;
-                    text.textContent = Math.round(progress);
-                }
+                // Use CSS custom property for progress (automatically handled by nds-progress-circle)
+                progressElement.style.setProperty('--progress-value', progress);
             }
         }
 
@@ -311,7 +300,7 @@
                     
                     // Update progress bar
                     const fileItem = fileList.querySelector(`[data-index="${index}"]`);
-                    const progressElement = fileItem?.querySelector('.progress-circle');
+                    const progressElement = fileItem?.querySelector('.nds-progress-circle');
                     if (progressElement) {
                         updateProgress(progressElement, percentComplete);
                     }

@@ -155,7 +155,6 @@
     }
 
     .file-item {
-        --pc-size: 24px;
         display: flex;
         align-items: flex-start;
         padding: var(--spacing-md);
@@ -164,32 +163,6 @@
         background-color: var(--background-neutral-100);
         gap: var(--spacing-md);
         min-height: 36px;
-
-        /* .nds-feedback-icon {
-            font-size: 16px;
-            width: 24px;
-            height: 24px;
-            line-height: 24px;
-            background-color: var(--background-primary);
-            border-radius: 50%;
-            color: var(--background-white);
-            text-align: center;
-            font-weight: 700;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-
-        }
-
-        &.error .nds-feedback-icon {
-            background-color: var(--icon-error);
-
-            &::before {
-                content: "!";
-                font-family: sans-serif;
-            }
-        }*/
 
         .file-info {
             flex: 1;
@@ -239,35 +212,13 @@
         }
 
         &.uploading {
-
-            .progress-circle {
-                @include progress-circle($size: 120px,
-                    $style: 'primary',
-                    $rotate: -90deg,
-                    $show-text: false,
-                    $show-symbol: false,
-                    $percent: 0);
-            }
+            // Progress circle styles now handled by .nds-progress-circle component
         }
 
         &.processing {
-
             animation: processing 1.5s ease-in-out infinite;
 
-            .progress-circle {
-                @include progress-circle($size: 24px,
-                    $style: 'primary',
-                    $rotate: -90deg,
-                    $show-text: false,
-                    $show-symbol: false,
-                    $percent: 100);
-
-                /* animation: processing-spin 1s linear infinite; */
-                .progress-info {
-                    /* display: none; */
-                }
-            }
-
+            // Progress circle already at 100% via --progress-value
         }
 
         // Error state styling

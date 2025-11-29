@@ -115,7 +115,8 @@
 // SQUARE VARIANT
 // ==============================================
 
-.nds-avatar.nds-square {
+.nds-avatar.nds-square,
+.nds-avatar.nds-square > img {
   border-radius: var(--radius-sm);
 
   .nds-3xl &,

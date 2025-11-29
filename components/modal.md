@@ -61,6 +61,26 @@ direction: ltr
                                             action?
                                             This cannot be undone.</p>
                                     </div>
+                                    <div class="nds-form-container nds-textarea">
+                                        <div class="nds-form-header">
+                                            <label for="textareaInput">
+                                                <span class="label">Textarea</span>
+                                            </label>
+                                        </div>
+                                        <div class="nds-form-control">
+                                            <textarea id="textareaInput" class="nds-textarea"
+                                                placeholder="Enter your message..." rows="4"></textarea>
+                                        </div>
+                                        <div class="nds-form-footer">
+                                            <span class="nds-feedback">
+                                                <span class="nds-feedback-icon nds-outline nds-sm">
+                                                    <i class="hgi hgi-solid icon"></i>
+                                                </span>
+                                                <span class="msg"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+
                                 </div>
                                 <div class="nds-card-actions">
                                     <button class="nds-btn nds-primary nds-lg" data-modal-close>
@@ -176,9 +196,14 @@ direction: ltr
                     <ul>
                         <li><strong>Focus trap:</strong> Focus cycles within the modal using Tab/Shift+Tab</li>
                         <li><strong>Keyboard support:</strong> ESC key closes the modal</li>
-                        <li><strong>ARIA attributes:</strong> Set <code>role="dialog"</code>, <code>aria-labelledby</code>, and <code>aria-hidden</code></li>
-                        <li><strong>Close button:</strong> Include visible close control with <code>aria-label="Close modal"</code></li>
-                        <li><strong>Scroll preservation:</strong> Page scroll position maintained when modal opens/closes</li>
+                        <li><strong>ARIA attributes:</strong> Set <code>role="dialog"</code>,
+                            <code>aria-labelledby</code>, and <code>aria-hidden</code>
+                        </li>
+                        <li><strong>Close button:</strong> Include visible close control with
+                            <code>aria-label="Close modal"</code>
+                        </li>
+                        <li><strong>Scroll preservation:</strong> Page scroll position maintained when modal
+                            opens/closes</li>
                     </ul>
                 </div>
                 <div class="guideline-item">
@@ -194,10 +219,14 @@ direction: ltr
                 <div class="guideline-item">
                     <h3>JavaScript Integration</h3>
                     <ul>
-                        <li><strong>Automatic initialization:</strong> Modals initialize automatically via nds-init.js</li>
-                        <li><strong>Programmatic control:</strong> Use <code>window.NDSModal.open('modal-id')</code></li>
+                        <li><strong>Automatic initialization:</strong> Modals initialize automatically via nds-init.js
+                        </li>
+                        <li><strong>Programmatic control:</strong> Use <code>window.NDSModal.open('modal-id')</code>
+                        </li>
                         <li><strong>State checks:</strong> <code>window.NDSModal.isOpen()</code> returns boolean</li>
-                        <li><strong>Custom events:</strong> Listen to <code>nds-modal-opened</code> and <code>nds-modal-closed</code></li>
+                        <li><strong>Custom events:</strong> Listen to <code>nds-modal-opened</code> and
+                            <code>nds-modal-closed</code>
+                        </li>
                         <li><strong>Focus trap:</strong> Automatically enabled when modal opens</li>
                     </ul>
 
