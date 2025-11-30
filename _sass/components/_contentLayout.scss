@@ -356,29 +356,3 @@ main {
     }
 
 }
-
-.nds-grid {
-    display: grid;
-    grid-template-columns: repeat(var(--max-col, 4), 1fr);
-    gap: var(--gap, var(--spacing-2xl));
-    width: 100%;
-
-    &.nds-center {
-        width: fit-content;
-    }
-
-    // Override card max-width in grid layout
-    &>* {
-        max-width: 100% !important;
-    }
-
-    @include tablet(max) {
-        grid-template-columns: repeat(var(--mid-col, calc(var(--max-col, 3)/2)), 1fr);
-        gap: max(8px, calc(var(--gap, var(--spacing-2xl)) / 2));
-    }
-
-    @include mobile {
-        grid-template-columns: repeat(var(--min-col, 2), 1fr);
-        gap: max(8px, calc(var(--gap, var(--spacing-2xl)) / 2));
-    }
-}

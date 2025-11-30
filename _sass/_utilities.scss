@@ -1,7 +1,7 @@
 // ==============================================
 // NDS UTILITIES - Bootstrap 5 Inspired
 // ==============================================
-
+@use './mixins' as *;
 @use 'sass:map';
 
 // Generate spacing utilities using NDS spacing tokens
@@ -62,14 +62,102 @@ $semantic-spacers: (
 // Merge all spacer maps
 $all-spacers: map.merge($spacers, map.merge($nds-extended-spacers, $semantic-spacers));
 
-// Bootstrap 5 breakpoints + NDS breakpoints (both available)
+// Bootstrap naming with NDS breakpoint values
 $breakpoints: (
-  sm: 'min-width: 576px',
-  md: 'min-width: 768px', 
-  lg: 'min-width: 992px',
-  xl: 'min-width: 1200px',
-  xxl: 'min-width: 1400px'
+  sm: 'min-width: 0px',      // Mobile
+  md: 'min-width: 600px',      // Tablet
+  lg: 'min-width: 960px',      // Desktop
+  xl: 'min-width: 1280px'      // Large Desktop
 );
+
+
+.nds-grid {
+  --grid-col: var(--max-col, 4);
+
+  display: grid;
+  grid-template-columns: repeat(var(--grid-col, 4), minmax(0, 1fr));
+  gap: var(--gap, var(--spacing-2xl));
+  width: 100%;
+
+  &.nds-center {
+    width: fit-content;
+    margin-inline: auto;
+  }
+
+  > * {
+    max-width: 100% !important;
+    min-width: 0; // prevent overflow in grid
+  }
+
+  @include tablet(max) {
+    --grid-col: var(--mid-col, 4);
+    gap: max(8px, calc(var(--gap, var(--spacing-2xl)) / 2));
+  }
+
+  @include mobile {
+    --grid-col: var(--min-col, 4);
+    gap: max(8px, calc(var(--gap, var(--spacing-2xl)) / 2));
+  }
+}
+
+/* ==========================================
+   NDS 12-COLUMN GRID SYSTEM
+   ========================================== */
+
+.nds-grid-12 {
+  --nds-grid-columns: 12;
+
+  display: grid;
+  grid-template-columns: repeat(var(--nds-grid-columns), minmax(0, 1fr));
+  gap: var(--gap, var(--spacing-2xl));
+  width: 100%;
+  > * {
+    min-width: 0;
+    max-width: 100%!important;
+  }
+
+  @include tablet(max) {
+    gap: max(8px, calc(var(--gap, var(--spacing-2xl)) / 2));
+  }
+
+  @include mobile {
+    gap: max(8px, calc(var(--gap, var(--spacing-2xl)) / 2));
+  }
+}
+
+/* Column spans (1…12) - Mobile first (base) */
+.nds-col-1  { grid-column: span 1; }
+.nds-col-2  { grid-column: span 2; }
+.nds-col-3  { grid-column: span 3; }
+.nds-col-4  { grid-column: span 4; }
+.nds-col-5  { grid-column: span 5; }
+.nds-col-6  { grid-column: span 6; }
+.nds-col-7  { grid-column: span 7; }
+.nds-col-8  { grid-column: span 8; }
+.nds-col-9  { grid-column: span 9; }
+.nds-col-10 { grid-column: span 10; }
+.nds-col-11 { grid-column: span 11; }
+.nds-col-12 { grid-column: span 12; }
+
+.nds-col-full {
+  grid-column: 1 / -1;
+}
+
+/* Generate responsive column spans using breakpoints map */
+@each $breakpoint, $query in $breakpoints {
+  @media (#{$query}) {
+    @for $i from 1 through 12 {
+      .nds-col-#{$breakpoint}-#{$i} {
+        grid-column: span #{$i};
+      }
+    }
+
+    .nds-col-#{$breakpoint}-full {
+      grid-column: 1 / -1;
+    }
+  }
+}
+
 
 // Generate margin utilities - Bootstrap 5 naming
 @each $key, $value in $all-spacers {
