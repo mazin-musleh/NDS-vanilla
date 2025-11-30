@@ -241,7 +241,7 @@ textarea {
     color: $default-color;
   }
 
-  .nds-btn-group & {
+  .nds-btn-group &:not(:first-child) {
     border-inline-start-color: $hover-bg;
   }
 

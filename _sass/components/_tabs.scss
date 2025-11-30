@@ -20,6 +20,7 @@
 .nds-tabs {
   display: flex;
   flex-direction: column;
+  --button-indicator-size: 3px;
 
   /* Vertical Tab Layout */
   &.nds-vertical-tabs {
