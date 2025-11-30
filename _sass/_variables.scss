@@ -16,7 +16,6 @@
     /*  --shadow-md: 0px 3.288px 6.575px -1.644px rgba(16, 24, 40, 0.10), 0px 1.644px 3.288px -1.644px rgba(16, 24, 40, 0.06); */
     --shadow-md-top: 0px -3.288px 6.575px -1.644px rgba(16, 24, 40, 0.10), 0px -1.644px 3.288px -1.644px rgba(16, 24, 40, 0.06);
 
-
     /* Fluid Typography using clamp() and vw units */
     /* Formula: clamp(min-size, fluid-size, max-size) */
 
@@ -705,10 +704,10 @@
     --button-background-primary-selected: var(--colors-primary-sa-flag-800);
     --button-background-primary-focused: var(--colors-primary-sa-flag-600-primary);
     --button-background-neutral-default: var(--colors-neutral-100);
-    --button-background-neutral-hovered: var(--colors-neutral-100);
-    --button-background-neutral-pressed: var(--colors-neutral-200);
-    --button-background-neutral-selected: var(--colors-neutral-200);
-    --button-background-neutral-focused: var(--colors-neutral-100);
+    --button-background-neutral-hovered: var(--colors-neutral-200);
+    --button-background-neutral-pressed: var(--colors-neutral-300);
+    --button-background-neutral-selected: var(--colors-neutral-300);
+    --button-background-neutral-focused: var(--colors-neutral-200);
     --button-background-danger-primary-default: var(--colors-red-600);
     --button-background-danger-primary-hovered: var(--colors-red-700);
     --button-background-danger-primary-pressed: var(--colors-red-900);

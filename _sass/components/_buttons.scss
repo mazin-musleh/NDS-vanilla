@@ -873,7 +873,6 @@
   --btn-group-radius: var(--radius-md);
   display: flex;
   border-radius: var(--btn-group-radius);
-  overflow: hidden;
   gap: 0 !important;
   width: fit-content;
   flex-wrap: nowrap;
@@ -884,9 +883,12 @@
 
   .nds-btn {
     border-radius: 0;
-    border-inline-start-width: 0;
     position: relative;
     z-index: 1;
+
+    &:not(:last-child){
+      border-inline-end-width: 0;
+    }
     
 
     & + .nds-btn {
