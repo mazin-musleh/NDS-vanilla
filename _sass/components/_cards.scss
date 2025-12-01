@@ -122,6 +122,7 @@
     flex-direction: column;
     gap: var(--spacing-md, 8px);
     width: 100%;
+    white-space: wrap;
 
 
     .nds-card-title {
