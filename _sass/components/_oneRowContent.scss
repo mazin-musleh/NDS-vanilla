@@ -11,7 +11,7 @@
     display: none !important;
 }
 
-.hasMore > .showMore {
+.hasMore>.showMore {
     display: flex !important;
 }
 
@@ -26,16 +26,20 @@
     position: relative;
 }
 
-.oneRowContent > * {
+.oneRowContent>* {
     white-space: nowrap;
     width: fit-content;
+
+    @include mobile {
+        max-width: 85%;
+    }
 }
 
 /* ========================================
    SHOW MORE BUTTON STYLES
    ======================================== */
 
-.oneRowContent.hasMore > *.showMore {
+.oneRowContent.hasMore>*.showMore {
     position: sticky;
     background-color: var(--nds-nav-background-color);
     z-index: 2;
@@ -43,17 +47,16 @@
     transform: translateX(0);
 }
 
-.oneRowContent.hasMore > *.showMore {
-    left: 0;
-    margin-right: var(--spacing-md);
+.oneRowContent.hasMore>*.showMore {
+    margin-inline-start: var(--spacing-md);
     /* box-shadow: 2px 0px 8px 2px rgba(0, 0, 0, 0.08); */
 }
 
-.oneRowContent.hasMore > *.showMore i {
+.oneRowContent.hasMore>*.showMore i {
     transition: transform 0.1s ease;
 }
 
-.oneRowContent.hasMore.atEnd > *.showMore i {
+.oneRowContent.hasMore.atEnd>*.showMore i {
     transform: rotate(180deg);
 }
 
@@ -61,14 +64,8 @@
    LTR SUPPORT FOR ONE ROW CONTENT
    ======================================== */
 
-.oneRowContent.hasMore > *.showMore {
-    @include ltr {
-        left: unset;
-        right: 0;
-        margin-right: unset;
-        margin-left: var(--spacing-md);
-    }
-    
+.oneRowContent.hasMore>*.showMore {
+
     i {
         @include ltr {
             transform: rotate(180deg);
@@ -76,7 +73,7 @@
     }
 }
 
-.oneRowContent.hasMore.atEnd > *.showMore i {
+.oneRowContent.hasMore.atEnd>*.showMore i {
     @include ltr {
         transform: rotate(0deg) !important;
     }

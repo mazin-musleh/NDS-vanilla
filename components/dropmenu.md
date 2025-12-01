@@ -153,21 +153,20 @@ direction: ltr
                             </div>
                             <code class="lang-html code">
                                 <div class="nds-dropmenu">
-                                  <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="label">Options</span>
-                                    <i class="hgi hgi-stroke hgi-arrow-down-01"></i>
-                                  </button>
-                                  <div class="nds-dropmenu-menu">
-                                    <button class="nds-btn nds-subtle nds-dropmenu-item">
-                                      <span class="label">Option 1</span>
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                        <span class="label">Options</span>
                                     </button>
-                                    <button class="nds-btn nds-subtle nds-dropmenu-item">
-                                      <span class="label">Option 2</span>
-                                    </button>
-                                    <button class="nds-btn nds-subtle nds-dropmenu-item">
-                                      <span class="label">Option 3</span>
-                                    </button>
-                                  </div>
+                                    <div class="nds-dropmenu-menu">
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item">
+                                            <span class="label">Option 1</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item">
+                                            <span class="label">Option 2</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item">
+                                            <span class="label">Option 3</span>
+                                        </button>
+                                    </div>
                                 </div>
                             </code>
                         </div>

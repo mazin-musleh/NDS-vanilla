@@ -149,23 +149,21 @@ $breakpoints: (
   text-align: center !important;
   margin-inline: auto !important;
   align-self: center !important;
-  height: 100%;
+  justify-content: center!important;
 }
 
 .nds-start,
 .nds-start>* {
   text-align: start !important;
-  margin-inline: start !important;
   align-self: start !important;
-  height: 100%;
+  justify-content: start!important;
 }
 
 .nds-end,
 .nds-end>* {
   text-align: end !important;
-  margin-inline: end !important;
   align-self: end !important;
-  height: 100%;
+  justify-content: end!important;
 }
 
 .nds-flush {
@@ -173,6 +171,12 @@ $breakpoints: (
   margin: 0 !important;
   border: 0 !important;
   border-radius: 0 !important;
+}
+
+.nds-circle {
+  clip-path: circle(50%);
+  border-radius: 50%;
+  aspect-ratio: 1 / 1;
 }
 
 
