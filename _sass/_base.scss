@@ -227,28 +227,3 @@ button,
 
     }
 }
-
-.nds-truncate {
-    overflow: hidden;
-    display: -webkit-box !important;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: var(--truncate-line, 1);
-    line-clamp: var(--truncate-line, 1);
-    text-overflow: ellipsis;
-}
-
-.nds-center,
-.nds-center>* {
-    text-align: center !important;
-    margin-inline-end: auto !important;
-    margin-inline-start: auto !important;
-    align-self: center !important;
-    height: 100%;
-}
-
-.nds-flush {
-    padding: 0 !important;
-    margin: 0 !important;
-    border: 0 !important;
-    border-radius: 0 !important;
-}
