@@ -48,8 +48,6 @@
       width: 100%;
       justify-content: start;
 
-
-
       /* Override horizontal indicator with vertical */
       @include btn-indicator('v');
     }
@@ -230,6 +228,7 @@
 
   /* Show more button styling */
   &.showMore {
+    display: none;
     border-radius: 0;
     /* box-shadow: 4px 0px 0px 4px var(--nds-nav-background-color); */
   }
@@ -237,6 +236,70 @@
   /* Tab disabled state */
   &:disabled {
     color: var(--text-default-disabled);
+  }
+}
+
+// ==============================================
+// HORIZONTAL TAB LIST OVERFLOW (cloned from oneRowContent)
+// Applied to non-vertical tab lists only
+// ==============================================
+
+/* Only apply to horizontal (non-vertical) tabs */
+.nds-tabs:not(.nds-vertical-tabs) {
+
+  .nds-tab-list {
+    /* Base overflow styles */
+    flex-wrap: nowrap !important;
+    overflow-x: auto;
+    max-width: 100%;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+    position: relative;
+
+    > * {
+      white-space: nowrap;
+      width: fit-content;
+
+      @include mobile {
+        max-width: 85%;
+      }
+    }
+
+    /* Show showMore when overflow detected */
+    &.hasMore > .showMore {
+      display: flex !important;
+      position: sticky;
+      background-color: var(--background-white);
+      z-index: 2;
+      transition: opacity var(--nds-transition);
+      transform: translateX(0);
+      margin-inline-start: var(--spacing-md);
+      inset-inline-end: 0;
+    }
+
+    /* Icon rotation for showMore button */
+    &.hasMore > .showMore i {
+      transition: transform 0.1s ease;
+
+      @include ltr {
+        transform: rotate(180deg);
+      }
+    }
+
+    /* Rotate icon when at end of scroll */
+    &.hasMore.atEnd > .showMore i {
+      transform: rotate(180deg);
+
+      @include ltr {
+        transform: rotate(0deg) !important;
+      }
+    }
+
+    /* Hide scrollbar in webkit browsers */
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 }
 

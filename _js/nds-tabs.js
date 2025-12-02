@@ -26,6 +26,7 @@
         init() {
             this.setupEventListeners();
             this.setupInitialState();
+            this.setupScrollBehavior();
         }
 
         findActiveTabIndex() {
@@ -43,6 +44,249 @@
                 }
             });
         }
+
+        // ==============================================
+        // SCROLL BEHAVIOR (cloned from oneRowContent)
+        // ==============================================
+
+        setupScrollBehavior() {
+            if (!this.tabList) return;
+
+            // Skip for vertical tabs
+            if (this.tabsContainer.classList.contains('nds-vertical-tabs')) {
+                return;
+            }
+
+            // Set initial scroll behavior
+            this.tabList.style.scrollBehavior = 'smooth';
+
+            // Initialize drag state
+            this.dragState = { active: false, startX: 0, scrollLeft: 0, hasDragged: false };
+
+            // Setup all scroll-related event listeners
+            this.setupScrollEventListeners();
+
+            // Initial overflow check
+            setTimeout(() => this.updateScrollIndicators(), 200);
+        }
+
+        needsScroll() {
+            if (!this.tabList) return false;
+
+            // Skip for vertical tabs
+            if (this.tabsContainer.classList.contains('nds-vertical-tabs')) {
+                return false;
+            }
+
+            // Calculate total width of tab children (excluding showMore button)
+            const containerWidth = this.tabList.clientWidth;
+            const children = Array.from(this.tabList.children);
+            const contentWidth = children
+                .filter(child => !child.classList.contains('showMore'))
+                .reduce((total, child) => total + child.offsetWidth, 0);
+
+            return contentWidth > containerWidth;
+        }
+
+        updateScrollIndicators() {
+            if (!this.tabList) return;
+
+            // Skip for vertical tabs
+            if (this.tabsContainer.classList.contains('nds-vertical-tabs')) {
+                this.tabList.classList.remove('hasMore', 'atStart', 'atEnd');
+                return;
+            }
+
+            const hasOverflow = this.needsScroll();
+            this.tabList.classList.toggle('hasMore', hasOverflow);
+
+            if (hasOverflow) {
+                const { scrollLeft, scrollWidth, clientWidth } = this.tabList;
+                const maxScroll = scrollWidth - clientWidth;
+                const isRTL = document.documentElement.dir === 'rtl';
+
+                let atStart, atEnd;
+
+                if (isRTL) {
+                    atStart = Math.abs(scrollLeft) <= 2;
+                    atEnd = Math.abs(scrollLeft) >= maxScroll - 2;
+                } else {
+                    atStart = scrollLeft <= 2;
+                    atEnd = scrollLeft >= maxScroll - 2;
+                }
+
+                this.tabList.classList.toggle('atStart', atStart);
+                this.tabList.classList.toggle('atEnd', atEnd);
+            } else {
+                this.tabList.classList.remove('atStart', 'atEnd');
+            }
+        }
+
+        scrollToTarget(target) {
+            if (!this.tabList || !target) return;
+
+            target.scrollIntoView({
+                behavior: 'smooth',
+                inline: 'center',
+                block: 'nearest',
+                scrollMode: 'if-needed'
+            });
+
+            setTimeout(() => this.updateScrollIndicators(), 300);
+        }
+
+        setupScrollEventListeners() {
+            if (!this.tabList) return;
+
+            // Click handler for tabs - scroll into view on click
+            this.tabs.forEach(tab => {
+                tab.addEventListener('click', (e) => {
+                    if (this.dragState.hasDragged) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        return;
+                    }
+
+                    if (!this.needsScroll()) return;
+
+                    // Don't interfere with normal tab switching
+                    setTimeout(() => this.scrollToTarget(tab), 10);
+                });
+            });
+
+            // ShowMore button click handler
+            const showMoreBtn = this.tabList.querySelector('.showMore');
+            if (showMoreBtn) {
+                showMoreBtn.addEventListener('click', (e) => {
+                    if (!this.needsScroll()) return;
+
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    if (this.tabList.classList.contains('atEnd')) {
+                        this.tabList.scrollTo({ left: 0, behavior: 'smooth' });
+                    } else {
+                        const scrollAmount = this.tabList.clientWidth * 0.8;
+                        const isRTL = document.documentElement.dir === 'rtl';
+                        const currentScroll = this.tabList.scrollLeft;
+                        this.tabList.scrollTo({
+                            left: isRTL ? currentScroll - scrollAmount : currentScroll + scrollAmount,
+                            behavior: 'smooth'
+                        });
+                    }
+
+                    setTimeout(() => this.updateScrollIndicators(), 300);
+                });
+            }
+
+            // Mouse wheel horizontal scroll
+            let isScrolling = false;
+            this.tabList.addEventListener('wheel', (e) => {
+                if (this.tabsContainer.classList.contains('nds-vertical-tabs')) return;
+                if (!this.needsScroll()) return;
+                if (Math.abs(e.deltaX) >= Math.abs(e.deltaY)) return;
+
+                e.preventDefault();
+                if (isScrolling) return;
+
+                isScrolling = true;
+                this.tabList.style.scrollBehavior = 'auto';
+
+                const isRTL = document.documentElement.dir === 'rtl';
+                const scrollMultiplier = isRTL ? -0.8 : 0.8;
+                const scrollAmount = e.deltaY * scrollMultiplier;
+                const startScroll = this.tabList.scrollLeft;
+                let frame = 0;
+                const duration = 150;
+
+                const animate = () => {
+                    frame += 16;
+                    const progress = Math.min(frame / duration, 1);
+                    const easeOut = 1 - Math.pow(1 - progress, 3);
+
+                    this.tabList.scrollLeft = startScroll + (scrollAmount * easeOut);
+
+                    if (progress < 1) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        isScrolling = false;
+                        this.tabList.style.scrollBehavior = 'smooth';
+                        this.updateScrollIndicators();
+                    }
+                };
+                requestAnimationFrame(animate);
+            }, { passive: false });
+
+            // Drag scroll functionality
+            this.tabList.addEventListener('mousedown', (e) => {
+                if (this.tabsContainer.classList.contains('nds-vertical-tabs')) return;
+                if (!this.needsScroll()) return;
+
+                this.dragState = {
+                    active: true,
+                    startX: e.pageX,
+                    scrollLeft: this.tabList.scrollLeft,
+                    hasDragged: false
+                };
+
+                Object.assign(this.tabList.style, {
+                    cursor: 'grabbing',
+                    userSelect: 'none',
+                    scrollBehavior: 'auto'
+                });
+            });
+
+            const handleMouseUp = () => {
+                if (this.dragState.active) {
+                    this.dragState.active = false;
+                    Object.assign(this.tabList.style, {
+                        cursor: '',
+                        userSelect: '',
+                        scrollBehavior: 'smooth'
+                    });
+
+                    if (this.dragState.hasDragged) {
+                        setTimeout(() => {
+                            this.dragState.hasDragged = false;
+                        }, 100);
+                    }
+                }
+            };
+
+            const handleMouseMove = (e) => {
+                if (!this.dragState.active) return;
+                if (this.tabsContainer.classList.contains('nds-vertical-tabs')) {
+                    handleMouseUp();
+                    return;
+                }
+                e.preventDefault();
+
+                if (Math.abs(e.pageX - this.dragState.startX) > 3) {
+                    this.dragState.hasDragged = true;
+                }
+
+                this.tabList.scrollLeft = this.dragState.scrollLeft - (e.pageX - this.dragState.startX) * 1.0;
+                this.updateScrollIndicators();
+            };
+
+            document.addEventListener('mouseup', handleMouseUp);
+            document.addEventListener('mousemove', handleMouseMove);
+
+            // Window resize handler
+            this.resizeHandler = () => {
+                setTimeout(() => this.updateScrollIndicators(), 100);
+            };
+            window.addEventListener('resize', this.resizeHandler);
+
+            // Scroll event listener for updating indicators
+            this.tabList.addEventListener('scroll', () => {
+                this.updateScrollIndicators();
+            }, { passive: true });
+        }
+
+        // ==============================================
+        // END SCROLL BEHAVIOR
+        // ==============================================
 
         setupEventListeners() {
             // Click events
@@ -86,7 +330,7 @@
                          getComputedStyle(document.documentElement).direction === 'rtl';
             
             // Check if this is a vertical tab layout
-            const isVertical = this.tabsContainer.classList.contains('nds-tabs-vertical');
+            const isVertical = this.tabsContainer.classList.contains('nds-vertical-tabs');
 
             switch (e.key) {
                 case 'ArrowLeft':
@@ -243,6 +487,11 @@
         }
 
         destroy() {
+            // Clean up scroll behavior event listeners
+            if (this.resizeHandler) {
+                window.removeEventListener('resize', this.resizeHandler);
+            }
+
             // Remove event listeners and clean up
             this.tabs.forEach(tab => {
                 tab.replaceWith(tab.cloneNode(true));

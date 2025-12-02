@@ -24,7 +24,7 @@ direction: ltr
                     <div class="demo-label">Basic Tabs</div>
                     <div class="demo-action">
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='[["nds-vertical-tabs", ".nds-tabs", "tabLayout"], ["oneRowContent", ".nds-tab-list", "VerticalTabs"]]'>
+                            data-toggler='["nds-vertical-tabs", ".nds-tabs", "tabLayout"]'>
                             <span class="label">Vertical</span>
                         </button>
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
@@ -44,7 +44,7 @@ direction: ltr
                 <div class="demo-container">
                     <div class="nds-tabs" id="basicTabs">
                         <div class="nds-tab-list-container">
-                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Basic tab navigation">
+                            <nav class="nds-tab-list" role="tablist" aria-label="Basic tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                     aria-controls="panel-home" id="tab-home" tabindex="0" data-label="Home">
                                     <span class="label">Home</span>
@@ -181,7 +181,7 @@ direction: ltr
                 </div>
                 <div class="nds-tabs nds-code withDivider">
                     <div class="nds-tab-list-container">
-                        <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                        <nav class="nds-tab-list" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                 aria-controls="panel-1" id="tab-1">
                                 <span class="label">HTML</span>
@@ -203,7 +203,7 @@ direction: ltr
                                 <code class="lang-html code">
                                 <div class="nds-tabs">
                                     <div class="nds-tab-list-container">
-                                        <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                                        <nav class="nds-tab-list" role="tablist" aria-label="Tab navigation">
                                         <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-1" id="tab-1">
                                             <span class="label">Tab 1</span>
                                         </button>
@@ -236,7 +236,7 @@ direction: ltr
                     <div class="demo-label">Tabs with Icons</div>
                     <div class="demo-action">
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='[["nds-vertical-tabs", ".nds-tabs", "tabLayout"], ["oneRowContent", ".nds-tab-list", "VerticalTabs"]]'>
+                            data-toggler='["nds-vertical-tabs", ".nds-tabs", "tabLayout"]'>
                             <span class="label">Vertical</span>
                         </button>
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
@@ -256,7 +256,7 @@ direction: ltr
                 <div class="demo-container">
                     <div class="nds-tabs" id="iconTabs">
                         <div class="nds-tab-list-container">
-                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Icon tab navigation">
+                            <nav class="nds-tab-list" role="tablist" aria-label="Icon tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                     aria-controls="panel-dashboard" id="tab-dashboard" tabindex="0">
                                     <i class="hgi hgi-stroke hgi-home-05"></i>
@@ -500,7 +500,7 @@ direction: ltr
                 </div>
                 <div class="nds-tabs nds-code withDivider">
                     <div class="nds-tab-list-container">
-                        <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                        <nav class="nds-tab-list" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                 aria-controls="panel-icons-1" id="tab-icons-1">
                                 <span class="label">HTML</span>
@@ -522,7 +522,7 @@ direction: ltr
                                 <code class="lang-html code">
                                 <div class="nds-tabs">
                                     <div class="nds-tab-list-container">
-                                        <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Icon tab navigation">
+                                        <nav class="nds-tab-list" role="tablist" aria-label="Icon tab navigation">
                                         <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-1" id="tab-1">
                                             <i class="hgi hgi-stroke hgi-home-05"></i>
                                             <span class="label">Dashboard</span>
