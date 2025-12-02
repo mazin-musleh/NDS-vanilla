@@ -38,7 +38,7 @@ class JSProcessor
     @source_dir = '_js'
     @output_dir = 'assets/js'
     @bundles = {
-      'nds-main.min.js' => ['nds-navController.js', 'nds-fontLoading.js', 'nds-cityWeather.js', 'nds-timeDate.js','nds-calendar.js', 'nds-sideMenu.js', 'nds-share.js', 'nds-cookies.js', 'nds-numbers.js', 'nds-oneRowContent.js', 'nds-accordion.js', 'nds-tabs.js', 'nds-tables.js', 'nds-stepper.js', 'nds-forms.js', 'nds-fileUpload.js', 'nds-code.js', 'nds-rating.js', 'nds-expandable.js', 'nds-breadcrumb.js', 'nds-dropmenu.js', 'nds-pagination.js', 'nds-ipv.js', 'nds-modal.js', 'nds-init.js']
+      'nds-main.min.js' => ['nds-navController.js', 'nds-fontLoading.js', 'nds-cityWeather.js', 'nds-timeDate.js','nds-calendar.js', 'nds-sideMenu.js', 'nds-share.js', 'nds-cookies.js', 'nds-numbers.js', 'nds-oneRowContent.js', 'nds-accordion.js', 'nds-tabs.js', 'nds-tables.js', 'nds-stepper.js', 'nds-swiper.js', 'nds-forms.js', 'nds-fileUpload.js', 'nds-code.js', 'nds-rating.js', 'nds-expandable.js', 'nds-breadcrumb.js', 'nds-dropmenu.js', 'nds-pagination.js', 'nds-ipv.js', 'nds-modal.js', 'nds-init.js']
     }
 
     # Load config from _config.yml

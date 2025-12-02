@@ -114,8 +114,8 @@
                 const isRTL = document.documentElement.dir === 'rtl';
                 const displayCurrent = Math.min(this.currentStep, this.totalSteps);
                 this.progressText.innerHTML = isRTL ?
-                    `${displayCurrent} من ${this.totalSteps}` :
-                    `${displayCurrent} of ${this.totalSteps}`;
+                    `${displayCurrent} / ${this.totalSteps}` :
+                    `${displayCurrent} / ${this.totalSteps}`;
             }
         }
 
