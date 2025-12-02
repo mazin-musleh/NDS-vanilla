@@ -43,26 +43,32 @@
             init: () => window.NDSStepper?.init?.(),
         },
         {
-            name: 'fileUpload',
+            name: 'swiper',
             priority: 7,
+            selector: '.nds-swiper',
+            init: () => window.NDSSwiper?.init?.(),
+        },
+        {
+            name: 'fileUpload',
+            priority: 8,
             selector: '.nds-file-upload',
             init: () => window.NDS?.Forms?.FileUpload?.init?.(),
         },
         {
             name: 'oneRowContent',
-            priority: 8,
+            priority: 9,
             selector: '.oneRowContent',
             init: () => window.NDSOneRowContent?.initializeRowScroll?.(),
         },
         {
             name: 'sideMenu',
-            priority: 9,
+            priority: 10,
             selector: '.wSideMenu',
             init: () => window.NDSSideMenu?.init?.(),
         },
         {
             name: 'numbers',
-            priority: 10,
+            priority: 11,
             selector: '.nds-number-format, .nds-counter-value',
             init: () => {
                 // Run both formatting and counter setup regardless of return values
@@ -72,7 +78,7 @@
         },
         {
             name: 'code',
-            priority: 11,
+            priority: 12,
             selector: 'code',
             init: () => window.NDSCode?.init?.(),
         },

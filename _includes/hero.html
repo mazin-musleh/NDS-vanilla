@@ -5,10 +5,12 @@
     <div class="nds-heroContent nds-content-container">
         <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
             <ol class="nds-breadcrumb">
-                <li><a href="{{ page.breadcrumb_root_url | default: '/' | relative_url }}">{{ page.breadcrumb_root | default: 'Home' }}</a></li>
+                <li><a href="{{ page.breadcrumb_root_url | default: '/' | relative_url }}">{{ page.breadcrumb_root |
+                        default: 'Home' }}</a></li>
                 {% if page.breadcrumb %}
                 {% for crumb in page.breadcrumb %}
-                <li><a href="{% if crumb.first %}{{ crumb[1] | relative_url }}{% else %}#{% endif %}">{% if crumb.first %}{{ crumb[0] }}{% else %}{{ crumb }}{% endif %}</a></li>
+                <li><a href="{% if crumb.first %}{{ crumb[1] | relative_url }}{% else %}#{% endif %}">{% if crumb.first
+                        %}{{ crumb[0] }}{% else %}{{ crumb }}{% endif %}</a></li>
                 {% endfor %}
                 {% endif %}
                 <li aria-current="page">{{ page.title }}</li>
@@ -28,11 +30,13 @@
                         <i class="hgi hgi-stroke hgi-new-twitter icon"></i>
                         <span class="label">X</span>
                     </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item share-linkedin" type="button" aria-label="Share on LinkedIn">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item share-linkedin" type="button"
+                        aria-label="Share on LinkedIn">
                         <i class="hgi hgi-stroke hgi-linkedin-02 icon"></i>
                         <span class="label">LinkedIn</span>
                     </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item share-whatsapp" type="button" aria-label="Share on WhatsApp">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item share-whatsapp" type="button"
+                        aria-label="Share on WhatsApp">
                         <i class="hgi hgi-stroke hgi-whatsapp icon"></i>
                         <span class="label">WhatsApp</span>
                     </button>
@@ -49,21 +53,51 @@
 </section>
 {% else %}
 <section class="nds-hero-section" aria-label="قسم العرض الرئيسي">
-    <div class="swiper nds-heroSwiper">
-        <div class="swiper-wrapper">
-            <div class="nds-hero-image-wrapper" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
-                <img src="{{ page.hero_image | default: site.hero_image | relative_url }}" class="nds-hero-image" alt=""
-                    style="width: 100%; height: 100%; object-fit: cover; object-position: {{ page.hero_image_pos | default: site.hero_image_pos }}; display: block;"
-                    fetchpriority="high">
+    <div class="nds-swiper nds-heroSwiper nds-oncolor" speed="800" loop="true" autoplay="5000">
+        <div class="nds-swiper-wrapper">
+            <div class="nds-swiper-slide">
+                <div class="nds-hero-image-wrapper"
+                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                    <img src="{{ page.hero_image | default: site.hero_image | relative_url }}" class="nds-hero-image"
+                        alt=""
+                        style="width: 100%; height: 100%; object-fit: cover; object-position: {{ page.hero_image_pos | default: site.hero_image_pos }}; display: block;"
+                        fetchpriority="high">
+                </div>
+                <div class="nds-heroContent nds-content-container" style="position: relative; z-index: 3;">
+                    <h1 class="nds-heroTitle">{{ page.hero_title | default: site.hero_title }}</h1>
+                    <p class="nds-heroDesc">{{ page.hero_description | default: site.hero_description }}</p>
+                </div>
             </div>
-            <div class="nds-heroContent nds-content-container" style="position: relative; z-index: 3;">
-                <h1 class="nds-heroTitle">{{ page.hero_title | default: site.hero_title }}</h1>
-                <p class="nds-heroDesc">{{ page.hero_description | default: site.hero_description }}</p>
+            <div class="nds-swiper-slide">
+                <div class="nds-hero-image-wrapper"
+                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                    <img src="{{ page.hero_image | default: site.hero_image | relative_url }}" class="nds-hero-image"
+                        alt=""
+                        style="width: 100%; height: 100%; object-fit: cover; object-position: {{ page.hero_image_pos | default: site.hero_image_pos }}; display: block;"
+                        fetchpriority="high">
+                </div>
+                <div class="nds-heroContent nds-content-container" style="position: relative; z-index: 3;">
+                    <h1 class="nds-heroTitle">{{ page.hero_title | default: site.hero_title }}</h1>
+                    <p class="nds-heroDesc">{{ page.hero_description | default: site.hero_description }}</p>
+                </div>
+            </div>
+            <div class="nds-swiper-slide">
+                <div class="nds-hero-image-wrapper"
+                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                    <img src="{{ page.hero_image | default: site.hero_image | relative_url }}" class="nds-hero-image"
+                        alt=""
+                        style="width: 100%; height: 100%; object-fit: cover; object-position: {{ page.hero_image_pos | default: site.hero_image_pos }}; display: block;"
+                        fetchpriority="high">
+                </div>
+                <div class="nds-heroContent nds-content-container" style="position: relative; z-index: 3;">
+                    <h1 class="nds-heroTitle">{{ page.hero_title | default: site.hero_title }}</h1>
+                    <p class="nds-heroDesc">{{ page.hero_description | default: site.hero_description }}</p>
+                </div>
             </div>
         </div>
-        <div class="swiper-pagination"></div>
-        <div class="swiper-button-prev d-none"></div>
-        <div class="swiper-button-next d-none"></div>
+        <div class="nds-swiper-pagination"></div>
+        <button class="nds-swiper-button-prev" aria-label="Previous slide" style="display: none;"></button>
+        <button class="nds-swiper-button-next" aria-label="Next slide" style="display: none;"></button>
     </div>
 </section>
 {% endif %}

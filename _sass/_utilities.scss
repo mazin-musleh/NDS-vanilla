@@ -65,18 +65,20 @@ $all-spacers: $semantic-spacers;
 
 // Bootstrap naming with NDS breakpoint values
 $breakpoints: (
-  sm: 'min-width: 0px',      // Mobile
-  md: 'min-width: 600px',      // Tablet
-  lg: 'min-width: 960px',      // Desktop
-  xl: 'min-width: 1280px'      // Large Desktop
+  sm: 'min-width: 0px',
+  // Mobile
+  md: 'min-width: 600px',
+  // Tablet
+  lg: 'min-width: 960px',
+  // Desktop
+  xl: 'min-width: 1280px' // Large Desktop
 );
 
 
 .nds-grid {
   --grid-col: var(--max-col, auto-fit);
-
   display: grid;
-  grid-template-columns: repeat(var(--grid-col, 12), minmax(0, 1fr));
+  grid-template-columns: repeat(var(--grid-col, 12), minmax(var(--grid-col-minsize, 0), 1fr));
   gap: var(--grid-gap, var(--spacing-2xl));
   width: 100%;
 
@@ -85,7 +87,7 @@ $breakpoints: (
     margin-inline: auto;
   }
 
-  > * {
+  >* {
     max-width: 100% !important;
     min-width: 0; // prevent overflow in grid
   }
@@ -102,18 +104,53 @@ $breakpoints: (
 }
 
 /* Column spans (1…12) - Mobile first (base) */
-.col-1  { grid-column: span 1; }
-.col-2  { grid-column: span 2; }
-.col-3  { grid-column: span 3; }
-.col-4  { grid-column: span 4; }
-.col-5  { grid-column: span 5; }
-.col-6  { grid-column: span 6; }
-.col-7  { grid-column: span 7; }
-.col-8  { grid-column: span 8; }
-.col-9  { grid-column: span 9; }
-.col-10 { grid-column: span 10; }
-.col-11 { grid-column: span 11; }
-.col-12 { grid-column: span 12; }
+.col-1 {
+  grid-column: span 1;
+}
+
+.col-2 {
+  grid-column: span 2;
+}
+
+.col-3 {
+  grid-column: span 3;
+}
+
+.col-4 {
+  grid-column: span 4;
+}
+
+.col-5 {
+  grid-column: span 5;
+}
+
+.col-6 {
+  grid-column: span 6;
+}
+
+.col-7 {
+  grid-column: span 7;
+}
+
+.col-8 {
+  grid-column: span 8;
+}
+
+.col-9 {
+  grid-column: span 9;
+}
+
+.col-10 {
+  grid-column: span 10;
+}
+
+.col-11 {
+  grid-column: span 11;
+}
+
+.col-12 {
+  grid-column: span 12;
+}
 
 .col-full {
   grid-column: 1 / -1;
@@ -149,21 +186,21 @@ $breakpoints: (
   text-align: center !important;
   margin-inline: auto !important;
   align-self: center !important;
-  justify-content: center!important;
+  justify-content: center !important;
 }
 
 .nds-start,
 .nds-start>* {
   text-align: start !important;
   align-self: start !important;
-  justify-content: start!important;
+  justify-content: start !important;
 }
 
 .nds-end,
 .nds-end>* {
   text-align: end !important;
   align-self: end !important;
-  justify-content: end!important;
+  justify-content: end !important;
 }
 
 .nds-flush {
@@ -182,57 +219,148 @@ $breakpoints: (
 
 // Generate margin utilities - Bootstrap 5 naming
 @each $key, $value in $all-spacers {
-  @if $key != auto {
+  @if $key !=auto {
+
     // Positive margins
-    .m-#{$key} { margin: #{$value} !important; }
-    .mt-#{$key} { margin-block-start: #{$value} !important; }
-    .mb-#{$key} { margin-block-end: #{$value} !important; }
-    .ms-#{$key} { margin-inline-start: #{$value} !important; }
-    .me-#{$key} { margin-inline-end: #{$value} !important; }
-    .mx-#{$key} { margin-inline: #{$value} !important; }
-    .my-#{$key} { margin-block: #{$value} !important; }
+    .m-#{$key} {
+      margin: #{$value} !important;
+    }
+
+    .mt-#{$key} {
+      margin-block-start: #{$value} !important;
+    }
+
+    .mb-#{$key} {
+      margin-block-end: #{$value} !important;
+    }
+
+    .ms-#{$key} {
+      margin-inline-start: #{$value} !important;
+    }
+
+    .me-#{$key} {
+      margin-inline-end: #{$value} !important;
+    }
+
+    .mx-#{$key} {
+      margin-inline: #{$value} !important;
+    }
+
+    .my-#{$key} {
+      margin-block: #{$value} !important;
+    }
 
     // Negative margins (Bootstrap 5 style with 'n' prefix)
-    @if $key != 0 {
-      .m-n#{$key} { margin: calc(#{$value} * -1) !important; }
-      .mt-n#{$key} { margin-block-start: calc(#{$value} * -1) !important; }
-      .mb-n#{$key} { margin-block-end: calc(#{$value} * -1) !important; }
-      .ms-n#{$key} { margin-inline-start: calc(#{$value} * -1) !important; }
-      .me-n#{$key} { margin-inline-end: calc(#{$value} * -1) !important; }
-      .mx-n#{$key} { margin-inline: calc(#{$value} * -1) !important; }
-      .my-n#{$key} { margin-block: calc(#{$value} * -1) !important; }
+    @if $key !=0 {
+      .m-n#{$key} {
+        margin: calc(#{$value} * -1) !important;
+      }
+
+      .mt-n#{$key} {
+        margin-block-start: calc(#{$value} * -1) !important;
+      }
+
+      .mb-n#{$key} {
+        margin-block-end: calc(#{$value} * -1) !important;
+      }
+
+      .ms-n#{$key} {
+        margin-inline-start: calc(#{$value} * -1) !important;
+      }
+
+      .me-n#{$key} {
+        margin-inline-end: calc(#{$value} * -1) !important;
+      }
+
+      .mx-n#{$key} {
+        margin-inline: calc(#{$value} * -1) !important;
+      }
+
+      .my-n#{$key} {
+        margin-block: calc(#{$value} * -1) !important;
+      }
     }
-  } @else {
+  }
+
+  @else {
+
     // Handle auto separately (no negative auto)
-    .m-#{$key} { margin: #{$value} !important; }
-    .mt-#{$key} { margin-block-start: #{$value} !important; }
-    .mb-#{$key} { margin-block-end: #{$value} !important; }
-    .ms-#{$key} { margin-inline-start: #{$value} !important; }
-    .me-#{$key} { margin-inline-end: #{$value} !important; }
-    .mx-#{$key} { margin-inline: #{$value} !important; }
-    .my-#{$key} { margin-block: #{$value} !important; }
+    .m-#{$key} {
+      margin: #{$value} !important;
+    }
+
+    .mt-#{$key} {
+      margin-block-start: #{$value} !important;
+    }
+
+    .mb-#{$key} {
+      margin-block-end: #{$value} !important;
+    }
+
+    .ms-#{$key} {
+      margin-inline-start: #{$value} !important;
+    }
+
+    .me-#{$key} {
+      margin-inline-end: #{$value} !important;
+    }
+
+    .mx-#{$key} {
+      margin-inline: #{$value} !important;
+    }
+
+    .my-#{$key} {
+      margin-block: #{$value} !important;
+    }
   }
 }
 
 // Generate padding utilities - Bootstrap 5 naming
 @each $key, $value in $all-spacers {
+
   // All sides
-  .p-#{$key} { padding: #{$value} !important; }
-  
+  .p-#{$key} {
+    padding: #{$value} !important;
+  }
+
   // Individual sides - Bootstrap 5 uses t, b, s, e
-  .pt-#{$key} { padding-block-start: #{$value} !important; }
-  .pb-#{$key} { padding-block-end: #{$value} !important; }
-  .ps-#{$key} { padding-inline-start: #{$value} !important; }
-  .pe-#{$key} { padding-inline-end: #{$value} !important; }
+  .pt-#{$key} {
+    padding-block-start: #{$value} !important;
+  }
+
+  .pb-#{$key} {
+    padding-block-end: #{$value} !important;
+  }
+
+  .ps-#{$key} {
+    padding-inline-start: #{$value} !important;
+  }
+
+  .pe-#{$key} {
+    padding-inline-end: #{$value} !important;
+  }
 
   // Horizontal & Vertical
-  .px-#{$key} { padding-inline: #{$value} !important; }
-  .py-#{$key} { padding-block: #{$value} !important; }
+  .px-#{$key} {
+    padding-inline: #{$value} !important;
+  }
+
+  .py-#{$key} {
+    padding-block: #{$value} !important;
+  }
 }
 
 // Generate gap utilities
 @each $key, $value in $all-spacers {
-  .gap-#{$key} { gap: #{$value} !important; }
-  .gap-x-#{$key} { column-gap: #{$value} !important; }
-  .gap-y-#{$key} { row-gap: #{$value} !important; }
+  .gap-#{$key} {
+    gap: #{$value} !important;
+  }
+
+  .gap-x-#{$key} {
+    column-gap: #{$value} !important;
+  }
+
+  .gap-y-#{$key} {
+    row-gap: #{$value} !important;
+  }
 }
