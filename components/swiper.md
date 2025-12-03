@@ -2,7 +2,8 @@
 layout: page
 title: Swiper
 hero_title: Swiper - National Design System
-hero_description: A responsive carousel/slider component with full RTL/LTR support, seamless infinite loop, drag/swipe interaction, and keyboard navigation
+hero_description: "A responsive carousel/slider component with full RTL/LTR support, seamless infinite loop, drag/swipe
+interaction and keyboard navigation"
 breadcrumb: ["Components"]
 lang: en
 direction: ltr
@@ -13,7 +14,8 @@ direction: ltr
     <div class="nds-section-content-container">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Basic Swiper</h2>
-            <p class="nds-section-description">A simple swiper with single card per slide, navigation arrows, and pagination bullets.</p>
+            <p class="nds-section-description">A simple swiper with single card per slide, navigation arrows, and
+                pagination bullets.</p>
         </div>
         <div class="nds-section-content">
             <div class="nds-demo-card">
@@ -28,44 +30,50 @@ direction: ltr
                 </div>
                 <div class="demo-container">
                     <div class="state-demo">
-                        <div class="nds-swiper" speed="500" loop="true" style="height: 400px;">
+                        <div class="nds-swiper" speed="500" loop="true">
                             <div class="nds-swiper-wrapper">
                                 <div class="nds-swiper-slide">
-                                    <div class="nds-card" style="height: 100%;">
+                                    <div class="nds-card">
                                         <div class="nds-card-content">
                                             <h3 class="nds-card-title">Slide 1</h3>
-                                            <p class="nds-card-description">This is the first slide with a card component.</p>
+                                            <p class="nds-card-description">This is the first slide with a card
+                                                component.</p>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="nds-swiper-slide">
-                                    <div class="nds-card" style="height: 100%;">
+                                    <div class="nds-card">
                                         <div class="nds-card-content">
                                             <h3 class="nds-card-title">Slide 2</h3>
-                                            <p class="nds-card-description">This is the second slide with a card component.</p>
+                                            <p class="nds-card-description">This is the second slide with a card
+                                                component.</p>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="nds-swiper-slide">
-                                    <div class="nds-card" style="height: 100%;">
+                                    <div class="nds-card">
                                         <div class="nds-card-content">
                                             <h3 class="nds-card-title">Slide 3</h3>
-                                            <p class="nds-card-description">This is the third slide with a card component.</p>
+                                            <p class="nds-card-description">This is the third slide with a card
+                                                component.</p>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="nds-swiper-slide">
-                                    <div class="nds-card" style="height: 100%;">
+                                    <div class="nds-card">
                                         <div class="nds-card-content">
                                             <h3 class="nds-card-title">Slide 4</h3>
-                                            <p class="nds-card-description">This is the fourth slide with a card component.</p>
+                                            <p class="nds-card-description">This is the fourth slide with a card
+                                                component.</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="nds-swiper-pagination"></div>
-                            <button class="nds-swiper-button-prev" aria-label="Previous slide"></button>
-                            <button class="nds-swiper-button-next" aria-label="Next slide"></button>
+                            <button class="nds-swiper-button-prev" aria-label="Previous slide"><i
+                                    class="hgi hgi-stroke hgi-arrow-right-01 icon"></i></button>
+                            <button class="nds-swiper-button-next" aria-label="Next slide"><i
+                                    class="hgi hgi-stroke hgi-arrow-left-01 icon"></i></button>
                         </div>
                     </div>
                 </div>
@@ -115,7 +123,8 @@ direction: ltr
     <div class="nds-section-content-container">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Responsive Multi-Slide</h2>
-            <p class="nds-section-description">Display multiple slides at once with responsive breakpoints: 4 slides on large desktop, 3 on desktop, 2 on tablet, and 1 on mobile.</p>
+            <p class="nds-section-description">Display multiple slides at once with responsive breakpoints: 4 slides on
+                large desktop, 3 on desktop, 2 on tablet, and 1 on mobile.</p>
         </div>
         <div class="nds-section-content">
             <div class="nds-demo-card">
@@ -130,27 +139,28 @@ direction: ltr
                 </div>
                 <div class="demo-container">
                     <div class="state-demo">
-                        <div class="nds-swiper" speed="500" loop="true" slides-max="4" slides-mid="3" slides-min="1"
-                            style="height: 300px;">
+                        <div class="nds-swiper" speed="500" loop="false" slides-max="4" slides-mid="3" slides-min="1">
                             <div class="nds-swiper-wrapper">
                                 <div class="nds-swiper-slide">
-                                    <div class="nds-card nds-with-shadow" style="height: 100%; margin: 0 8px;">
+                                    <div class="nds-card nds-stroke nds-shadow">
                                         <div class="nds-card-content">
                                             <h4 class="nds-card-title">Card 1</h4>
-                                            <p class="nds-card-description">Multi-slide example with responsive breakpoints.</p>
+                                            <p class="nds-card-description">Multi-slide example with responsive
+                                                breakpoints.</p>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="nds-swiper-slide">
-                                    <div class="nds-card nds-with-shadow" style="height: 100%; margin: 0 8px;">
+                                    <div class="nds-card nds-stroke nds-shadow">
                                         <div class="nds-card-content">
                                             <h4 class="nds-card-title">Card 2</h4>
-                                            <p class="nds-card-description">Resize the browser to see responsive behavior.</p>
+                                            <p class="nds-card-description">Resize the browser to see responsive
+                                                behavior.</p>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="nds-swiper-slide">
-                                    <div class="nds-card nds-with-shadow" style="height: 100%; margin: 0 8px;">
+                                    <div class="nds-card nds-stroke nds-shadow">
                                         <div class="nds-card-content">
                                             <h4 class="nds-card-title">Card 3</h4>
                                             <p class="nds-card-description">Drag or use arrows to navigate.</p>
@@ -158,7 +168,7 @@ direction: ltr
                                     </div>
                                 </div>
                                 <div class="nds-swiper-slide">
-                                    <div class="nds-card nds-with-shadow" style="height: 100%; margin: 0 8px;">
+                                    <div class="nds-card nds-stroke nds-shadow">
                                         <div class="nds-card-content">
                                             <h4 class="nds-card-title">Card 4</h4>
                                             <p class="nds-card-description">Seamless infinite loop.</p>
@@ -166,7 +176,7 @@ direction: ltr
                                     </div>
                                 </div>
                                 <div class="nds-swiper-slide">
-                                    <div class="nds-card nds-with-shadow" style="height: 100%; margin: 0 8px;">
+                                    <div class="nds-card nds-stroke nds-shadow">
                                         <div class="nds-card-content">
                                             <h4 class="nds-card-title">Card 5</h4>
                                             <p class="nds-card-description">Full RTL/LTR support.</p>
@@ -174,7 +184,7 @@ direction: ltr
                                     </div>
                                 </div>
                                 <div class="nds-swiper-slide">
-                                    <div class="nds-card nds-with-shadow" style="height: 100%; margin: 0 8px;">
+                                    <div class="nds-card nds-stroke nds-shadow">
                                         <div class="nds-card-content">
                                             <h4 class="nds-card-title">Card 6</h4>
                                             <p class="nds-card-description">Touch and keyboard navigation.</p>
@@ -183,8 +193,10 @@ direction: ltr
                                 </div>
                             </div>
                             <div class="nds-swiper-pagination"></div>
-                            <button class="nds-swiper-button-prev" aria-label="Previous slide"></button>
-                            <button class="nds-swiper-button-next" aria-label="Next slide"></button>
+                            <button class="nds-swiper-button-prev" aria-label="Previous slide"><i
+                                    class="hgi hgi-stroke hgi-arrow-right-01 icon"></i></button>
+                            <button class="nds-swiper-button-next" aria-label="Next slide"><i
+                                    class="hgi hgi-stroke hgi-arrow-left-01 icon"></i></button>
                         </div>
                     </div>
                 </div>
@@ -209,7 +221,7 @@ direction: ltr
      slides-max="4" slides-mid="3" slides-min="1"&gt;
     &lt;div class="nds-swiper-wrapper"&gt;
         &lt;div class="nds-swiper-slide"&gt;
-            &lt;div class="nds-card nds-with-shadow"&gt;
+            &lt;div class="nds-card nds-stroke nds-shadow"&gt;
                 &lt;div class="nds-card-content"&gt;
                     &lt;h4 class="nds-card-title"&gt;Card 1&lt;/h4&gt;
                     &lt;p class="nds-card-description"&gt;Content&lt;/p&gt;
@@ -235,7 +247,8 @@ direction: ltr
     <div class="nds-section-content-container">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Auto-play Swiper</h2>
-            <p class="nds-section-description">Automatically advance slides every 3 seconds. Hover to pause, drag or click to restart.</p>
+            <p class="nds-section-description">Automatically advance slides every 3 seconds. Hover to pause, drag or
+                click to restart.</p>
         </div>
         <div class="nds-section-content">
             <div class="nds-demo-card">
@@ -251,10 +264,10 @@ direction: ltr
                 <div class="demo-container">
                     <div class="state-demo">
                         <div class="nds-swiper" speed="800" loop="true" autoplay="3000" slides-max="3" slides-mid="2"
-                            slides-min="1" style="height: 250px;">
+                            slides-min="1">
                             <div class="nds-swiper-wrapper">
                                 <div class="nds-swiper-slide">
-                                    <div class="nds-card nds-with-shadow" style="height: 100%; margin: 0 8px;">
+                                    <div class="nds-card nds-stroke nds-shadow">
                                         <div class="nds-card-content">
                                             <span class="nds-tag nds-primary nds-sm">Auto-play</span>
                                             <h4 class="nds-card-title">Feature 1</h4>
@@ -263,7 +276,7 @@ direction: ltr
                                     </div>
                                 </div>
                                 <div class="nds-swiper-slide">
-                                    <div class="nds-card nds-with-shadow" style="height: 100%; margin: 0 8px;">
+                                    <div class="nds-card nds-stroke nds-shadow">
                                         <div class="nds-card-content">
                                             <span class="nds-tag nds-primary nds-sm">Auto-play</span>
                                             <h4 class="nds-card-title">Feature 2</h4>
@@ -272,7 +285,7 @@ direction: ltr
                                     </div>
                                 </div>
                                 <div class="nds-swiper-slide">
-                                    <div class="nds-card nds-with-shadow" style="height: 100%; margin: 0 8px;">
+                                    <div class="nds-card nds-stroke nds-shadow">
                                         <div class="nds-card-content">
                                             <span class="nds-tag nds-primary nds-sm">Auto-play</span>
                                             <h4 class="nds-card-title">Feature 3</h4>
@@ -281,7 +294,7 @@ direction: ltr
                                     </div>
                                 </div>
                                 <div class="nds-swiper-slide">
-                                    <div class="nds-card nds-with-shadow" style="height: 100%; margin: 0 8px;">
+                                    <div class="nds-card nds-stroke nds-shadow">
                                         <div class="nds-card-content">
                                             <span class="nds-tag nds-primary nds-sm">Auto-play</span>
                                             <h4 class="nds-card-title">Feature 4</h4>
@@ -291,8 +304,10 @@ direction: ltr
                                 </div>
                             </div>
                             <div class="nds-swiper-pagination"></div>
-                            <button class="nds-swiper-button-prev" aria-label="Previous slide"></button>
-                            <button class="nds-swiper-button-next" aria-label="Next slide"></button>
+                            <button class="nds-swiper-button-prev" aria-label="Previous slide"><i
+                                    class="hgi hgi-stroke hgi-arrow-right-01 icon"></i></button>
+                            <button class="nds-swiper-button-next" aria-label="Next slide"><i
+                                    class="hgi hgi-stroke hgi-arrow-left-01 icon"></i></button>
                         </div>
                     </div>
                 </div>
@@ -402,26 +417,28 @@ direction: ltr
             <h2 class="nds-section-title">Features</h2>
         </div>
         <div class="nds-section-content">
-            <div class="nds-grid" style="--grid-columns: 2; gap: var(--spacing-lg);">
+            <div class="nds-grid">
                 <div class="nds-card">
                     <div class="nds-card-content">
-                        <i class="hgi hgi-stroke hgi-globe-02" style="font-size: 32px; color: var(--colors-primary-sa-flag-600-primary);"></i>
+                        <i class="hgi hgi-stroke hgi-globe-02"></i>
                         <h3 class="nds-card-title">RTL/LTR Support</h3>
-                        <p class="nds-card-description">Full bidirectional support with automatic direction detection. Works
+                        <p class="nds-card-description">Full bidirectional support with automatic direction detection.
+                            Works
                             seamlessly in both Arabic (RTL) and English (LTR) layouts.</p>
                     </div>
                 </div>
                 <div class="nds-card">
                     <div class="nds-card-content">
-                        <i class="hgi hgi-stroke hgi-repeat-04" style="font-size: 32px; color: var(--colors-primary-sa-flag-600-primary);"></i>
+                        <i class="hgi hgi-stroke hgi-repeat-04"></i>
                         <h3 class="nds-card-title">Seamless Loop</h3>
-                        <p class="nds-card-description">Infinite loop with no empty slides. Uses slide cloning for smooth
+                        <p class="nds-card-description">Infinite loop with no empty slides. Uses slide cloning for
+                            smooth
                             transitions between first and last slides.</p>
                     </div>
                 </div>
                 <div class="nds-card">
                     <div class="nds-card-content">
-                        <i class="hgi hgi-stroke hgi-cursor-01" style="font-size: 32px; color: var(--colors-primary-sa-flag-600-primary);"></i>
+                        <i class="hgi hgi-stroke hgi-cursor-01"></i>
                         <h3 class="nds-card-title">Drag & Swipe</h3>
                         <p class="nds-card-description">Interactive drag on desktop and swipe on mobile devices. Visual
                             feedback during drag with smooth animations.</p>
@@ -429,23 +446,25 @@ direction: ltr
                 </div>
                 <div class="nds-card">
                     <div class="nds-card-content">
-                        <i class="hgi hgi-stroke hgi-grid-01" style="font-size: 32px; color: var(--colors-primary-sa-flag-600-primary);"></i>
+                        <i class="hgi hgi-stroke hgi-grid-01"></i>
                         <h3 class="nds-card-title">Responsive</h3>
-                        <p class="nds-card-description">Three-tier responsive breakpoints (max/mid/min) for optimal viewing
+                        <p class="nds-card-description">Three-tier responsive breakpoints (max/mid/min) for optimal
+                            viewing
                             across all devices.</p>
                     </div>
                 </div>
                 <div class="nds-card">
                     <div class="nds-card-content">
-                        <i class="hgi hgi-stroke hgi-keyboard-01" style="font-size: 32px; color: var(--colors-primary-sa-flag-600-primary);"></i>
+                        <i class="hgi hgi-stroke hgi-keyboard-01"></i>
                         <h3 class="nds-card-title">Keyboard Navigation</h3>
-                        <p class="nds-card-description">Full keyboard support with arrow keys, Home, and End. Direction-aware
+                        <p class="nds-card-description">Full keyboard support with arrow keys, Home, and End.
+                            Direction-aware
                             key bindings for RTL/LTR.</p>
                     </div>
                 </div>
                 <div class="nds-card">
                     <div class="nds-card-content">
-                        <i class="hgi hgi-stroke hgi-check-circle" style="font-size: 32px; color: var(--colors-primary-sa-flag-600-primary);"></i>
+                        <i class="hgi hgi-stroke hgi-check-circle"></i>
                         <h3 class="nds-card-title">Accessible</h3>
                         <p class="nds-card-description">ARIA labels, screen reader announcements, and keyboard focus
                             management for full accessibility.</p>
@@ -466,23 +485,23 @@ direction: ltr
             <div class="nds-card">
                 <div class="nds-card-content">
                     <h3>Performance Tips</h3>
-                    <ul style="margin-top: var(--spacing-md); padding-inline-start: var(--spacing-lg);">
+                    <ul>
                         <li>Use <code>loop="true"</code> for seamless infinite scrolling</li>
                         <li>Set appropriate transition <code>speed</code> (300-800ms recommended)</li>
                         <li>Limit <code>autoplay</code> to 3000ms or more for better UX</li>
                         <li>Use consistent slide heights to avoid layout shifts</li>
                     </ul>
 
-                    <h3 style="margin-top: var(--spacing-lg);">Accessibility</h3>
-                    <ul style="margin-top: var(--spacing-md); padding-inline-start: var(--spacing-lg);">
+                    <h3>Accessibility</h3>
+                    <ul>
                         <li>Always include <code>aria-label</code> on navigation buttons</li>
                         <li>Provide meaningful content in each slide</li>
                         <li>Avoid autoplay speeds faster than 3 seconds</li>
                         <li>Ensure sufficient color contrast for on-color variants</li>
                     </ul>
 
-                    <h3 style="margin-top: var(--spacing-lg);">Responsive Design</h3>
-                    <ul style="margin-top: var(--spacing-md); padding-inline-start: var(--spacing-lg);">
+                    <h3>Responsive Design</h3>
+                    <ul>
                         <li>Use <code>slides-max</code>, <code>slides-mid</code>, <code>slides-min</code> for responsive
                             behavior</li>
                         <li>Test on multiple screen sizes and devices</li>

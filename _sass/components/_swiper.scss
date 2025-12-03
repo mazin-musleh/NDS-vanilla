@@ -14,6 +14,7 @@
   position: relative;
   width: 100%;
   overflow: hidden;
+  min-height: 250px; // Default minimum height
 
   // CSS custom property for responsive slides per view
   // Set dynamically by JavaScript based on attributes
@@ -58,7 +59,7 @@
 .nds-swiper-slide {
   flex-shrink: 0;
   width: 100%;
-  height: 100%;
+  height: auto;
   position: relative;
   transition-property: opacity;
 
@@ -73,13 +74,23 @@
   // Prevent text selection during drag
   user-select: none;
 
-  // Inner content padding
+  // Inner content padding for spacing between slides
   padding-inline: var(--spacing-xs);
   box-sizing: border-box;
+
+  // Card within slide should fill height
+  > .nds-card {
+    height: 100%;
+  }
 }
 
 // ==============================================
 // NAVIGATION BUTTONS
+// ==============================================
+
+
+// ==============================================
+// NAVIGATION BUTTONS (Previous/Next)
 // ==============================================
 
 .nds-swiper-button-prev,
@@ -106,6 +117,16 @@
   font-family: 'HGI Stroke Rounded', sans-serif;
   font-size: 20px;
   line-height: 1;
+
+
+  // Icons for prev/next
+  i {
+    font-size: var(--nds-text-lg-FS);
+
+    @include ltr {
+      transform: scale(-1);
+    }
+  }
 
   // Hover state
   &:hover:not(:disabled) {
@@ -138,33 +159,11 @@
 // Previous button positioning (uses logical properties)
 .nds-swiper-button-prev {
   inset-inline-start: var(--spacing-md);
-
-  // Icon content
-  &::before {
-    content: '\e900'; // HGI arrow-left icon code
-  }
-
-  @include ltr {
-    &::before {
-      content: '\e900'; // Arrow left for LTR
-    }
-  }
 }
 
 // Next button positioning (uses logical properties)
 .nds-swiper-button-next {
   inset-inline-end: var(--spacing-md);
-
-  // Icon content
-  &::before {
-    content: '\e901'; // HGI arrow-right icon code
-  }
-
-  @include ltr {
-    &::before {
-      content: '\e901'; // Arrow right for LTR
-    }
-  }
 }
 
 // ==============================================
@@ -394,4 +393,42 @@
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border-width: 0;
+}
+
+// ==============================================
+// DEMO PAGE SPECIFIC STYLES
+// ==============================================
+
+// Feature grid layout
+.nds-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-lg);
+
+  @include mobile {
+    grid-template-columns: 1fr;
+  }
+
+  // Feature icons
+  .nds-card-content > i {
+    font-size: 32px;
+    color: var(--colors-primary-sa-flag-600-primary);
+    margin-bottom: var(--spacing-md);
+  }
+}
+
+// Best practices section styling
+.nds-card {
+  h3 {
+    margin-top: var(--spacing-lg);
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  ul {
+    margin-top: var(--spacing-md);
+    padding-inline-start: var(--spacing-lg);
+  }
 }
