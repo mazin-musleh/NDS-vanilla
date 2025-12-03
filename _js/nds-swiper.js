@@ -33,7 +33,14 @@
             // Simple config from attributes
             this.speed = parseInt(container.getAttribute('speed')) || 500;
             this.loop = container.getAttribute('loop') === 'true';
-            this.autoplay = parseInt(container.getAttribute('autoplay')) || 0;
+
+            // Autoplay only works with loop mode enabled
+            const autoplayAttr = parseInt(container.getAttribute('autoplay')) || 0;
+            this.autoplay = this.loop ? autoplayAttr : 0;
+
+            if (autoplayAttr > 0 && !this.loop) {
+                console.warn('NDS Swiper: Autoplay requires loop="true". Autoplay disabled.');
+            }
 
             // Responsive slides per view
             this.slidesMax = parseInt(container.getAttribute('slides-max')) || 1;
@@ -43,9 +50,29 @@
             // Store the real slide count (excluding clones)
             this.realSlideCount = this.originalSlides.length;
 
-            // Calculate clone count for loop mode
-            const maxSlidesPerView = Math.max(this.slidesMax, this.slidesMid, this.slidesMin);
-            this.cloneCount = Math.min(maxSlidesPerView, this.originalSlides.length);
+            // Track current breakpoint for smart reinitialization
+            this.currentBreakpoint = this.detectBreakpoint();
+
+            // Calculate clone count for loop mode based on CURRENT breakpoint
+            const currentSlidesPerView = this.getSlidesPerViewForBreakpoint(this.currentBreakpoint);
+
+            // Optimized cloning strategy for seamless looping:
+            // Calculate ratio to detect simple vs edge cases
+            const ratio = currentSlidesPerView / this.originalSlides.length;
+
+            // Smart cloning based on how many slides are visible relative to total:
+            // - Simple cases (ratio ≤ 0.5): Showing few slides relative to total
+            //   Example: 3 slides showing 1 → ratio 0.33 → only need 1 clone per side
+            // - Edge cases (ratio > 0.5): Showing many slides relative to total
+            //   Example: 4 slides showing 3 → ratio 0.75 → need slideCount + currentSlidesPerView
+            if (ratio <= 0.5) {
+                // Simple case: Need only currentSlidesPerView clones to fill the viewport
+                this.cloneCount = currentSlidesPerView;
+            } else {
+                // Edge case: Need full slideCount + currentSlidesPerView for smooth wrapping
+                // When advancing by slidesPerView, we need enough clones to avoid gaps
+                this.cloneCount = this.originalSlides.length + currentSlidesPerView;
+            }
 
             // Clone slides for seamless loop if enabled
             if (this.loop && this.originalSlides.length > 1) {
@@ -55,12 +82,15 @@
             // Get all slides (including clones)
             this.slides = Array.from(container.querySelectorAll('.nds-swiper-slide'));
 
-            // State - start at logical index 0 (which is DOM index 1 in loop mode with clones)
+            // State - start at logical index 0 (which is DOM index cloneCount in loop mode with clones)
             this.currentIndex = 0;
+            this.currentDOMIndex = this.loop ? this.cloneCount : 0; // Track actual DOM position for smooth interruptions
             this.dragState = { active: false, startX: 0, currentX: 0, hasDragged: false };
             this.autoplayTimer = null;
             this.autoplayPaused = false; // Track if autoplay is paused (hover/drag)
             this.isTransitioning = false;
+            this.transitionTimeout = null; // Track transition timeout for interruption
+            this.pendingSnapIndex = undefined; // Track if we need to snap to real slide after animation
             this.resizeTimer = null;
 
             // Bound event handlers for cleanup
@@ -102,28 +132,60 @@
         }
 
         // ==============================================
+        // BREAKPOINT DETECTION
+        // ==============================================
+
+        detectBreakpoint() {
+            const width = window.innerWidth;
+            if (width >= 1280) return 'max';
+            if (width >= 960) return 'mid';
+            return 'min';
+        }
+
+        getSlidesPerViewForBreakpoint(breakpoint) {
+            switch (breakpoint) {
+                case 'max': return this.slidesMax;
+                case 'mid': return this.slidesMid;
+                case 'min': return this.slidesMin;
+                default: return this.slidesMin;
+            }
+        }
+
+        // ==============================================
         // SEAMLESS LOOP SETUP
         // ==============================================
 
         setupLoopClones() {
-            // Determine how many slides to clone based on max slides per view
-            const maxSlidesPerView = Math.max(this.slidesMax, this.slidesMid, this.slidesMin);
-            const cloneCount = Math.min(maxSlidesPerView, this.originalSlides.length);
+            // Use the pre-calculated clone count
+            const cloneCount = this.cloneCount;
+            const slideCount = this.originalSlides.length;
 
-            // Clone the last N slides and prepend them (in reverse to maintain order)
-            for (let i = cloneCount - 1; i >= 0; i--) {
-                const slideIndex = this.originalSlides.length - cloneCount + i;
+            // Clone slides by wrapping around the array if cloneCount > slideCount
+            // This handles cases like: 4 slides needing 7 clones = repeat slides [1,2,3,4,1,2,3]
+
+            // Clone and prepend (last N slides, wrapping if needed)
+            for (let i = 0; i < cloneCount; i++) {
+                // Calculate which original slide to clone (wrap using modulo)
+                const slideIndex = (slideCount - cloneCount + i + slideCount) % slideCount;
                 const clone = this.originalSlides[slideIndex].cloneNode(true);
                 clone.classList.add('nds-swiper-slide-clone');
-                clone.setAttribute('aria-hidden', 'true'); // Hide from screen readers
-                this.wrapper.insertBefore(clone, this.wrapper.firstChild);
+                clone.setAttribute('aria-hidden', 'true');
+                this.wrapper.appendChild(clone); // Append first, then we'll move them
             }
 
-            // Clone the first N slides and append them
+            // Move the prepended clones to the beginning
             for (let i = 0; i < cloneCount; i++) {
-                const clone = this.originalSlides[i].cloneNode(true);
+                const lastClone = this.wrapper.lastElementChild;
+                this.wrapper.insertBefore(lastClone, this.wrapper.firstChild);
+            }
+
+            // Clone and append (first N slides, wrapping if needed)
+            for (let i = 0; i < cloneCount; i++) {
+                // Calculate which original slide to clone (wrap using modulo)
+                const slideIndex = i % slideCount;
+                const clone = this.originalSlides[slideIndex].cloneNode(true);
                 clone.classList.add('nds-swiper-slide-clone');
-                clone.setAttribute('aria-hidden', 'true'); // Hide from screen readers
+                clone.setAttribute('aria-hidden', 'true');
                 this.wrapper.appendChild(clone);
             }
         }
@@ -173,11 +235,77 @@
             this.handleResizeBound = () => {
                 clearTimeout(this.resizeTimer);
                 this.resizeTimer = setTimeout(() => {
-                    this.setResponsiveProperties();
-                    this.updateSlidePositions();
+                    // Check if breakpoint changed
+                    const newBreakpoint = this.detectBreakpoint();
+
+                    if (newBreakpoint !== this.currentBreakpoint && this.loop) {
+                        // Only reinitialize if loop is enabled (requires clone management)
+                        // Store current slide to restore position
+                        const currentSlide = this.currentIndex;
+
+                        // Reinitialize with new breakpoint
+                        this.reinitialize(newBreakpoint, currentSlide);
+                    } else {
+                        // Just update positions for non-loop sliders or same breakpoint
+                        this.setResponsiveProperties();
+                        this.updateSlidePositions();
+                    }
                 }, RESIZE_DEBOUNCE);
             };
             window.addEventListener('resize', this.handleResizeBound);
+        }
+
+        reinitialize(newBreakpoint, preserveSlideIndex = 0) {
+            // Stop autoplay
+            if (this.autoplayTimer) {
+                clearInterval(this.autoplayTimer);
+                this.autoplayTimer = null;
+            }
+
+            // Update breakpoint
+            this.currentBreakpoint = newBreakpoint;
+
+            // Calculate new clone count based on new breakpoint
+            const newSlidesPerView = this.getSlidesPerViewForBreakpoint(newBreakpoint);
+            const ratio = newSlidesPerView / this.originalSlides.length;
+
+            if (ratio <= 0.5) {
+                this.cloneCount = newSlidesPerView;
+            } else {
+                this.cloneCount = this.originalSlides.length + newSlidesPerView;
+            }
+
+            // Remove all existing clones
+            const allSlides = Array.from(this.wrapper.querySelectorAll('.nds-swiper-slide'));
+            allSlides.forEach(slide => {
+                if (slide.classList.contains('nds-swiper-slide-clone')) {
+                    slide.remove();
+                }
+            });
+
+            // Rebuild clones with new count
+            if (this.loop && this.originalSlides.length > 1) {
+                this.setupLoopClones();
+            }
+
+            // Update slides reference
+            this.slides = Array.from(this.container.querySelectorAll('.nds-swiper-slide'));
+
+            // Rebuild pagination with new slide count
+            this.setupPagination();
+
+            // Update responsive properties
+            this.setResponsiveProperties();
+
+            // Restore position (ensure it's within bounds)
+            const maxIndex = this.getMaxIndex();
+            const safeIndex = Math.min(preserveSlideIndex, maxIndex);
+            this.goToSlide(safeIndex, false);
+
+            // Restart autoplay if it was enabled
+            if (this.autoplay && !this.autoplayPaused) {
+                this.startAutoplay();
+            }
         }
 
         // ==============================================
@@ -205,7 +333,22 @@
         }
 
         goToSlide(index, animate = true) {
-            if (this.isTransitioning) return;
+            // Prevent rapid clicks in loop mode to avoid DOM wrapping issues
+            if (this.loop && this.isTransitioning) {
+                return;
+            }
+
+            // Allow interrupting current transition for non-loop mode
+            if (this.isTransitioning) {
+                // Clear any pending snap-back timeout
+                if (this.transitionTimeout) {
+                    clearTimeout(this.transitionTimeout);
+                    this.transitionTimeout = null;
+                }
+
+                // Reset transition flag to allow new animation
+                this.isTransitioning = false;
+            }
 
             const slidesPerView = this.getSlidesPerView();
             const slideWidth = 100 / slidesPerView;
@@ -216,20 +359,29 @@
                 // Real slides are at indices cloneCount to (cloneCount + realSlideCount - 1)
                 // currentIndex represents the logical slide (0 to realSlideCount-1)
 
-                // Determine the actual DOM index to animate to (accounting for prepended clones)
-                let actualIndex = index + this.cloneCount;
-
                 // Normalize the logical index for UI updates (wrap around if needed)
+                // Use modulo to properly wrap when advancing by multiple slides
                 let normalizedIndex = index;
+                let needsCloneTransition = false;
+
                 if (index >= this.realSlideCount) {
-                    normalizedIndex = 0; // Wrapping forward
+                    normalizedIndex = index % this.realSlideCount; // Wrapping forward
+                    needsCloneTransition = true;
                 } else if (index < 0) {
-                    normalizedIndex = this.realSlideCount - 1; // Wrapping backward
+                    normalizedIndex = ((index % this.realSlideCount) + this.realSlideCount) % this.realSlideCount; // Wrapping backward
+                    needsCloneTransition = true;
                 }
+
+                // Use offset-based navigation for smooth continuation
+                const requestedOffset = index - this.currentIndex;
+                let actualIndex = this.currentDOMIndex + requestedOffset;
 
                 // Update currentIndex to the final logical position immediately
                 // This ensures UI updates reflect the final state at animation start
                 this.currentIndex = normalizedIndex;
+
+                // Store where we're animating to for next interrupt
+                this.currentDOMIndex = actualIndex;
 
                 // Apply transform to show the slide (may be a clone)
                 const translateValue = isRTL
@@ -240,25 +392,28 @@
                     this.isTransitioning = true;
                     this.wrapper.style.transition = `transform ${this.speed}ms var(--swiper-transition-timing)`;
 
-                    // After animation completes, check if we need to snap back
-                    setTimeout(() => {
-                        this.isTransitioning = false;
+                    // Track if we're animating to a clone position
+                    if (needsCloneTransition) {
+                        this.pendingSnapIndex = normalizedIndex;
+                    } else {
+                        this.pendingSnapIndex = undefined;
+                    }
 
-                        // If we animated to a clone, snap to the real slide
-                        if (index >= this.realSlideCount) {
-                            // We're at firstClones, snap to real first slide
-                            actualIndex = this.cloneCount; // First real slide position
+                    // After animation completes, check if we need to snap back
+                    this.transitionTimeout = setTimeout(() => {
+                        this.isTransitioning = false;
+                        this.transitionTimeout = null;
+
+                        // If we animated to a clone, snap to the real slide at the same logical position
+                        if (this.pendingSnapIndex !== undefined) {
+                            // Snap to the normalized index position (currentIndex was already set)
+                            const snapDOMIndex = this.currentIndex + this.cloneCount;
                             this.wrapper.style.transition = 'none';
-                            const finalTranslate = isRTL ? (actualIndex * slideWidth) : -(actualIndex * slideWidth);
+                            const finalTranslate = isRTL ? (snapDOMIndex * slideWidth) : -(snapDOMIndex * slideWidth);
                             this.wrapper.style.transform = `translateX(${finalTranslate}%)`;
+                            this.currentDOMIndex = snapDOMIndex; // Update DOM position after snap
                             void this.wrapper.offsetHeight; // Force reflow
-                        } else if (index < 0) {
-                            // We're at lastClones, snap to real last slide
-                            actualIndex = this.cloneCount + this.realSlideCount - 1; // Last real slide position
-                            this.wrapper.style.transition = 'none';
-                            const finalTranslate = isRTL ? (actualIndex * slideWidth) : -(actualIndex * slideWidth);
-                            this.wrapper.style.transform = `translateX(${finalTranslate}%)`;
-                            void this.wrapper.offsetHeight; // Force reflow
+                            this.pendingSnapIndex = undefined;
                         }
                     }, this.speed);
                 } else {
@@ -279,8 +434,9 @@
                 if (animate) {
                     this.isTransitioning = true;
                     this.wrapper.style.transition = `transform ${this.speed}ms var(--swiper-transition-timing)`;
-                    setTimeout(() => {
+                    this.transitionTimeout = setTimeout(() => {
                         this.isTransitioning = false;
+                        this.transitionTimeout = null;
                     }, this.speed);
                 } else {
                     this.wrapper.style.transition = 'none';
