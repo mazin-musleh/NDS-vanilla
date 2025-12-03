@@ -7,6 +7,15 @@
 (function() {
     'use strict';
 
+    // ==============================================
+    // CONSTANTS
+    // ==============================================
+    const DRAG_THRESHOLD = 50; // pixels to trigger slide change
+    const DRAG_START_THRESHOLD = 3; // pixels to mark as dragged
+    const LAZY_LOAD_MARGIN = '50px'; // margin before loading images
+    const RESIZE_DEBOUNCE = 150; // ms to debounce resize events
+    const DIR_CHECK_DELAY = 100; // ms to wait for dir attribute
+
     class NDSSwiper {
         constructor(container) {
             this.container = container;
@@ -34,6 +43,10 @@
             // Store the real slide count (excluding clones)
             this.realSlideCount = this.originalSlides.length;
 
+            // Calculate clone count for loop mode
+            const maxSlidesPerView = Math.max(this.slidesMax, this.slidesMid, this.slidesMin);
+            this.cloneCount = Math.min(maxSlidesPerView, this.originalSlides.length);
+
             // Clone slides for seamless loop if enabled
             if (this.loop && this.originalSlides.length > 1) {
                 this.setupLoopClones();
@@ -46,7 +59,14 @@
             this.currentIndex = 0;
             this.dragState = { active: false, startX: 0, currentX: 0, hasDragged: false };
             this.autoplayTimer = null;
+            this.autoplayPaused = false; // Track if autoplay is paused (hover/drag)
             this.isTransitioning = false;
+            this.resizeTimer = null;
+
+            // Bound event handlers for cleanup
+            this.handleDragMoveBound = (e) => this.handleDragMove(e);
+            this.handleDragEndBound = () => this.handleDragEnd();
+            this.handleResizeBound = null;
 
             this.init();
         }
@@ -86,17 +106,26 @@
         // ==============================================
 
         setupLoopClones() {
-            // Clone the last slide and prepend it
-            const lastClone = this.originalSlides[this.originalSlides.length - 1].cloneNode(true);
-            lastClone.classList.add('nds-swiper-slide-clone');
-            lastClone.setAttribute('aria-hidden', 'true'); // Hide from screen readers
-            this.wrapper.insertBefore(lastClone, this.wrapper.firstChild);
+            // Determine how many slides to clone based on max slides per view
+            const maxSlidesPerView = Math.max(this.slidesMax, this.slidesMid, this.slidesMin);
+            const cloneCount = Math.min(maxSlidesPerView, this.originalSlides.length);
 
-            // Clone the first slide and append it
-            const firstClone = this.originalSlides[0].cloneNode(true);
-            firstClone.classList.add('nds-swiper-slide-clone');
-            firstClone.setAttribute('aria-hidden', 'true'); // Hide from screen readers
-            this.wrapper.appendChild(firstClone);
+            // Clone the last N slides and prepend them (in reverse to maintain order)
+            for (let i = cloneCount - 1; i >= 0; i--) {
+                const slideIndex = this.originalSlides.length - cloneCount + i;
+                const clone = this.originalSlides[slideIndex].cloneNode(true);
+                clone.classList.add('nds-swiper-slide-clone');
+                clone.setAttribute('aria-hidden', 'true'); // Hide from screen readers
+                this.wrapper.insertBefore(clone, this.wrapper.firstChild);
+            }
+
+            // Clone the first N slides and append them
+            for (let i = 0; i < cloneCount; i++) {
+                const clone = this.originalSlides[i].cloneNode(true);
+                clone.classList.add('nds-swiper-slide-clone');
+                clone.setAttribute('aria-hidden', 'true'); // Hide from screen readers
+                this.wrapper.appendChild(clone);
+            }
         }
 
         // ==============================================
@@ -141,14 +170,14 @@
         }
 
         setupResize() {
-            let resizeTimer;
-            window.addEventListener('resize', () => {
-                clearTimeout(resizeTimer);
-                resizeTimer = setTimeout(() => {
+            this.handleResizeBound = () => {
+                clearTimeout(this.resizeTimer);
+                this.resizeTimer = setTimeout(() => {
                     this.setResponsiveProperties();
                     this.updateSlidePositions();
-                }, 150);
-            });
+                }, RESIZE_DEBOUNCE);
+            };
+            window.addEventListener('resize', this.handleResizeBound);
         }
 
         // ==============================================
@@ -183,17 +212,26 @@
             const isRTL = this.isRTL();
 
             if (this.loop) {
-                // With clones: slides array is [lastClone, slide0, slide1, ..., slideN, firstClone]
-                // Real slides are at indices 1 to realSlideCount
+                // With clones: slides array is [lastClones..., slide0, slide1, ..., slideN, firstClones...]
+                // Real slides are at indices cloneCount to (cloneCount + realSlideCount - 1)
                 // currentIndex represents the logical slide (0 to realSlideCount-1)
 
-                // Store the logical current index
-                this.currentIndex = index;
+                // Determine the actual DOM index to animate to (accounting for prepended clones)
+                let actualIndex = index + this.cloneCount;
 
-                // The actual DOM index to show (accounting for the prepended clone)
-                let actualIndex = index + 1;
+                // Normalize the logical index for UI updates (wrap around if needed)
+                let normalizedIndex = index;
+                if (index >= this.realSlideCount) {
+                    normalizedIndex = 0; // Wrapping forward
+                } else if (index < 0) {
+                    normalizedIndex = this.realSlideCount - 1; // Wrapping backward
+                }
 
-                // Apply transform to show the slide
+                // Update currentIndex to the final logical position immediately
+                // This ensures UI updates reflect the final state at animation start
+                this.currentIndex = normalizedIndex;
+
+                // Apply transform to show the slide (may be a clone)
                 const translateValue = isRTL
                     ? (actualIndex * slideWidth)
                     : -(actualIndex * slideWidth);
@@ -202,25 +240,21 @@
                     this.isTransitioning = true;
                     this.wrapper.style.transition = `transform ${this.speed}ms var(--swiper-transition-timing)`;
 
-                    // After animation completes, check if we need to wrap
+                    // After animation completes, check if we need to snap back
                     setTimeout(() => {
                         this.isTransitioning = false;
 
-                        // If we went past the last real slide, we're at the firstClone (index realSlideCount+1)
-                        // Instantly snap to the real first slide (index 1)
-                        if (this.currentIndex >= this.realSlideCount) {
-                            this.currentIndex = 0;
-                            actualIndex = 1;
+                        // If we animated to a clone, snap to the real slide
+                        if (index >= this.realSlideCount) {
+                            // We're at firstClones, snap to real first slide
+                            actualIndex = this.cloneCount; // First real slide position
                             this.wrapper.style.transition = 'none';
                             const finalTranslate = isRTL ? (actualIndex * slideWidth) : -(actualIndex * slideWidth);
                             this.wrapper.style.transform = `translateX(${finalTranslate}%)`;
                             void this.wrapper.offsetHeight; // Force reflow
-                        }
-                        // If we went before the first real slide, we're at the lastClone (index 0)
-                        // Instantly snap to the real last slide (index realSlideCount)
-                        else if (this.currentIndex < 0) {
-                            this.currentIndex = this.realSlideCount - 1;
-                            actualIndex = this.realSlideCount;
+                        } else if (index < 0) {
+                            // We're at lastClones, snap to real last slide
+                            actualIndex = this.cloneCount + this.realSlideCount - 1; // Last real slide position
                             this.wrapper.style.transition = 'none';
                             const finalTranslate = isRTL ? (actualIndex * slideWidth) : -(actualIndex * slideWidth);
                             this.wrapper.style.transform = `translateX(${finalTranslate}%)`;
@@ -271,19 +305,21 @@
         }
 
         next() {
-            this.goToSlide(this.currentIndex + 1);
+            const slidesPerView = this.getSlidesPerView();
+            this.goToSlide(this.currentIndex + slidesPerView);
 
-            // Reset autoplay timer
-            if (this.autoplay) {
+            // Reset autoplay timer only if not paused
+            if (this.autoplay && !this.autoplayPaused) {
                 this.resetAutoplay();
             }
         }
 
         prev() {
-            this.goToSlide(this.currentIndex - 1);
+            const slidesPerView = this.getSlidesPerView();
+            this.goToSlide(this.currentIndex - slidesPerView);
 
-            // Reset autoplay timer
-            if (this.autoplay) {
+            // Reset autoplay timer only if not paused
+            if (this.autoplay && !this.autoplayPaused) {
                 this.resetAutoplay();
             }
         }
@@ -325,7 +361,8 @@
                 bullet.setAttribute('aria-label', `Go to slide ${i + 1}`);
 
                 bullet.addEventListener('click', () => {
-                    this.goToSlide(i);
+                    // Go to the first slide of this page
+                    this.goToSlide(i * slidesPerView);
                     if (this.autoplay) {
                         this.resetAutoplay();
                     }
@@ -341,9 +378,13 @@
         updatePagination() {
             if (!this.pagination) return;
 
+            // Calculate which page we're on based on currentIndex and slidesPerView
+            const slidesPerView = this.getSlidesPerView();
+            const currentPage = Math.floor(this.currentIndex / slidesPerView);
+
             const bullets = this.pagination.querySelectorAll('.nds-swiper-pagination-bullet');
             bullets.forEach((bullet, i) => {
-                if (i === this.currentIndex) {
+                if (i === currentPage) {
                     bullet.classList.add('nds-swiper-pagination-bullet-active');
                     bullet.setAttribute('aria-current', 'true');
                 } else {
@@ -360,13 +401,13 @@
         setupDrag() {
             // Mouse events
             this.container.addEventListener('mousedown', (e) => this.handleDragStart(e));
-            document.addEventListener('mousemove', (e) => this.handleDragMove(e));
-            document.addEventListener('mouseup', () => this.handleDragEnd());
+            document.addEventListener('mousemove', this.handleDragMoveBound);
+            document.addEventListener('mouseup', this.handleDragEndBound);
 
             // Touch events
             this.container.addEventListener('touchstart', (e) => this.handleDragStart(e), { passive: false });
-            document.addEventListener('touchmove', (e) => this.handleDragMove(e), { passive: false });
-            document.addEventListener('touchend', () => this.handleDragEnd());
+            document.addEventListener('touchmove', this.handleDragMoveBound, { passive: false });
+            document.addEventListener('touchend', this.handleDragEndBound);
 
             // Prevent default drag behavior on images
             this.slides.forEach(slide => {
@@ -393,8 +434,10 @@
             this.wrapper.style.transition = 'none';
 
             // Pause autoplay during drag
+            this.autoplayPaused = true;
             if (this.autoplay && this.autoplayTimer) {
                 clearInterval(this.autoplayTimer);
+                this.autoplayTimer = null;
             }
         }
 
@@ -404,8 +447,8 @@
             const point = e.touches ? e.touches[0] : e;
             const diff = point.pageX - this.dragState.startX;
 
-            // Mark as dragged if moved more than 3px (threshold)
-            if (Math.abs(diff) > 3) {
+            // Mark as dragged if moved more than threshold
+            if (Math.abs(diff) > DRAG_START_THRESHOLD) {
                 this.dragState.hasDragged = true;
                 e.preventDefault(); // Prevent text selection
             }
@@ -421,8 +464,8 @@
                 // Check RTL dynamically
                 const isRTL = this.isRTL();
 
-                // In loop mode, account for the prepended clone (actualIndex = currentIndex + 1)
-                const baseIndex = this.loop ? (this.currentIndex + 1) : this.currentIndex;
+                // In loop mode, account for the prepended clones (actualIndex = currentIndex + cloneCount)
+                const baseIndex = this.loop ? (this.currentIndex + this.cloneCount) : this.currentIndex;
 
                 // RTL uses positive base, LTR uses negative base
                 const currentTranslate = isRTL
@@ -443,9 +486,8 @@
 
             if (this.dragState.hasDragged) {
                 const diff = this.dragState.currentX - this.dragState.startX;
-                const threshold = 50; // pixels to trigger slide change
 
-                if (Math.abs(diff) > threshold) {
+                if (Math.abs(diff) > DRAG_THRESHOLD) {
                     // Check RTL dynamically
                     const isRTL = this.isRTL();
 
@@ -476,12 +518,13 @@
                 }, 100);
             }
 
-            // Resume autoplay
+            this.dragState.active = false;
+
+            // Resume autoplay after drag ends
+            this.autoplayPaused = false;
             if (this.autoplay) {
                 this.startAutoplay();
             }
-
-            this.dragState.active = false;
         }
 
         // ==============================================
@@ -532,12 +575,15 @@
 
             // Pause on hover
             this.container.addEventListener('mouseenter', () => {
+                this.autoplayPaused = true;
                 if (this.autoplayTimer) {
                     clearInterval(this.autoplayTimer);
+                    this.autoplayTimer = null;
                 }
             });
 
             this.container.addEventListener('mouseleave', () => {
+                this.autoplayPaused = false;
                 if (this.autoplay && !this.dragState.active) {
                     this.startAutoplay();
                 }
@@ -545,12 +591,15 @@
 
             // Pause on focus (accessibility)
             this.container.addEventListener('focusin', () => {
+                this.autoplayPaused = true;
                 if (this.autoplayTimer) {
                     clearInterval(this.autoplayTimer);
+                    this.autoplayTimer = null;
                 }
             });
 
             this.container.addEventListener('focusout', () => {
+                this.autoplayPaused = false;
                 if (this.autoplay && !this.dragState.active) {
                     this.startAutoplay();
                 }
@@ -559,6 +608,11 @@
 
         startAutoplay() {
             if (!this.autoplay) return;
+
+            // Clear any existing timer first to prevent multiple intervals
+            if (this.autoplayTimer) {
+                clearInterval(this.autoplayTimer);
+            }
 
             this.autoplayTimer = setInterval(() => {
                 this.next();
@@ -592,7 +646,7 @@
                     });
                 }, {
                     root: this.container,
-                    rootMargin: '50px' // Load 50px before slide becomes visible
+                    rootMargin: LAZY_LOAD_MARGIN // Load before slide becomes visible
                 });
 
                 lazyImages.forEach(element => this.imageObserver.observe(element));
@@ -656,7 +710,8 @@
             }
 
             const slidesPerView = this.getSlidesPerView();
-            const totalSlides = Math.ceil(this.slides.length / slidesPerView);
+            const slideCount = this.loop ? this.realSlideCount : this.slides.length;
+            const totalSlides = Math.ceil(slideCount / slidesPerView);
             liveRegion.textContent = `Slide ${this.currentIndex + 1} of ${totalSlides}`;
         }
 
@@ -670,9 +725,24 @@
                 clearInterval(this.autoplayTimer);
             }
 
+            // Clear resize timer
+            if (this.resizeTimer) {
+                clearTimeout(this.resizeTimer);
+            }
+
             // Disconnect intersection observer
             if (this.imageObserver) {
                 this.imageObserver.disconnect();
+            }
+
+            // Remove event listeners
+            document.removeEventListener('mousemove', this.handleDragMoveBound);
+            document.removeEventListener('mouseup', this.handleDragEndBound);
+            document.removeEventListener('touchmove', this.handleDragMoveBound);
+            document.removeEventListener('touchend', this.handleDragEndBound);
+
+            if (this.handleResizeBound) {
+                window.removeEventListener('resize', this.handleResizeBound);
             }
 
             // Remove data attribute
@@ -723,13 +793,19 @@
 
     // Wait for dir attribute to be set before initializing
     function waitForDirAndInitialize() {
-        // Use requestAnimationFrame to ensure we check after other scripts have run
-        requestAnimationFrame(() => {
-            setTimeout(() => {
+        const checkDir = () => {
+            const dir = document.documentElement.dir;
+            if (dir === 'rtl' || dir === 'ltr') {
+                // Dir is set, safe to initialize
                 initializeComponents();
                 setupDirObserver();
-            }, 100); // Wait 100ms for showcase.js to set dir
-        });
+            } else {
+                // Dir not set yet, check again
+                requestAnimationFrame(checkDir);
+            }
+        };
+
+        requestAnimationFrame(checkDir);
     }
 
     // Export to window
