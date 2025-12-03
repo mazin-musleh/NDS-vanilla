@@ -100,23 +100,7 @@
   transform: translateY(-50%);
   z-index: 10;
 
-  // Use NDS button base styles
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: var(--border-radius-md);
-  border: 1px solid var(--border-neutral-default);
-  background-color: var(--swiper-button-background-default);
-  color: var(--swiper-button-icon-default);
-  cursor: pointer;
-  transition: all var(--nds-transition);
-
-  // Icon using HGI font
-  font-family: 'HGI Stroke Rounded', sans-serif;
-  font-size: 20px;
-  line-height: 1;
+ 
 
 
   // Icons for prev/next
@@ -128,32 +112,7 @@
     }
   }
 
-  // Hover state
-  &:hover:not(:disabled) {
-    background-color: var(--swiper-button-background-hovered);
-    color: var(--swiper-button-icon-hovered);
-    border-color: var(--colors-primary-sa-flag-600-primary);
-  }
 
-  // Active/pressed state
-  &:active:not(:disabled) {
-    background-color: var(--swiper-button-background-pressed);
-    transform: translateY(-50%) scale(0.95);
-  }
-
-  // Disabled state
-  &:disabled {
-    background-color: var(--swiper-button-background-disabled);
-    color: var(--swiper-button-icon-disabled);
-    cursor: not-allowed;
-    opacity: 0.5;
-  }
-
-  // Focus state for accessibility
-  &:focus-visible {
-    outline: 2px solid var(--colors-primary-sa-flag-600-primary);
-    outline-offset: 2px;
-  }
 }
 
 // Previous button positioning (uses logical properties)
@@ -219,22 +178,6 @@
 
 .nds-swiper.nds-oncolor {
 
-  .nds-swiper-button-prev,
-  .nds-swiper-button-next {
-    background-color: var(--swiper-button-oncolor-background-default);
-    color: var(--swiper-button-oncolor-icon-default);
-    border-color: rgba(255, 255, 255, 0.2);
-
-    &:hover:not(:disabled) {
-      background-color: var(--swiper-button-oncolor-background-hovered);
-      color: var(--swiper-button-oncolor-icon-hovered);
-      border-color: rgba(255, 255, 255, 0.4);
-    }
-
-    &:active:not(:disabled) {
-      background-color: var(--swiper-button-oncolor-background-pressed);
-    }
-  }
 
   .nds-swiper-pagination-bullet {
     background-color: var(--swiper-pagination-bullet-oncolor-default);
@@ -271,20 +214,6 @@
   // Pagination at bottom with more spacing
   .nds-swiper-pagination {
     bottom: var(--spacing-xl);
-  }
-
-  // Use on-color variant by default for hero
-  .nds-swiper-button-prev,
-  .nds-swiper-button-next {
-    background-color: var(--swiper-button-oncolor-background-default);
-    color: var(--swiper-button-oncolor-icon-default);
-    border-color: rgba(255, 255, 255, 0.2);
-
-    &:hover:not(:disabled) {
-      background-color: var(--swiper-button-oncolor-background-hovered);
-      color: var(--swiper-button-oncolor-icon-hovered);
-      border-color: rgba(255, 255, 255, 0.4);
-    }
   }
 
   .nds-swiper-pagination-bullet {
