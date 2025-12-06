@@ -173,7 +173,7 @@ textarea {
 
 // Button size mixins
 @mixin btn-size($height, $padding, $font-size, $line-height) {
-  --nds-btn-height: #{$height};
+  --nds-btn-height: var(--nds-btn-size, #{$height});
   --nds-btn-width: unset;
   --nds-button-icon-size: calc(var(--nds-btn-height) / 2);
   --nds-btn-space: calc(var(--nds-btn-height) - #{$padding} - 4px);
