@@ -10,11 +10,10 @@
     // ==============================================
     // CONSTANTS
     // ==============================================
-    const DRAG_THRESHOLD = 50; // pixels to trigger slide change
+    const DRAG_THRESHOLD = 60; // pixels to trigger slide change
     const DRAG_START_THRESHOLD = 3; // pixels to mark as dragged
-    const LAZY_LOAD_MARGIN = '50px'; // margin before loading images
-    const RESIZE_DEBOUNCE = 150; // ms to debounce resize events
-    const DIR_CHECK_DELAY = 100; // ms to wait for dir attribute
+    const LAZY_LOAD_MARGIN = '60px'; // margin before loading images
+    const RESIZE_DEBOUNCE = 160; // ms to debounce resize events
 
     class NDSSwiper {
         constructor(container) {
@@ -46,6 +45,11 @@
             this.slidesMax = parseInt(container.getAttribute('slides-max')) || 1;
             this.slidesMid = parseInt(container.getAttribute('slides-mid')) || 1;
             this.slidesMin = parseInt(container.getAttribute('slides-min')) || 1;
+
+            // Peek amount: pixels of next/prev slide to show on each side
+            // Example: peek="50" shows 50px of adjacent slides on each side
+            this.peekPx = parseInt(container.getAttribute('peek')) || 0;
+            this.peekPx = Math.max(0, this.peekPx); // Must be positive
 
             // Store the real slide count (excluding clones)
             this.realSlideCount = this.originalSlides.length;
@@ -205,18 +209,22 @@
         }
 
         setResponsiveProperties() {
-            // Set CSS custom property for slides-per-view
-            // This allows CSS to control some responsive behavior
+            // Set CSS custom properties for responsive behavior
             const slidesPerView = this.getSlidesPerView();
             this.container.style.setProperty('--slides-per-view', slidesPerView);
+            this.container.style.setProperty('--swiper-transition-speed', `${this.speed}ms`);
         }
 
         updateSlidePositions() {
-            const slidesPerView = this.getSlidesPerView();
-            const slideWidth = 100 / slidesPerView;
+            // Update peek padding first to determine active sides
+            this.updatePeekPadding();
+
+            // Set slide widths based on peek mode and active padding
+            const slideWidth = this.calculateSlideWidth();
+            const unit = this.peekPx > 0 ? 'px' : '%';
 
             this.slides.forEach(slide => {
-                slide.style.flex = `0 0 ${slideWidth}%`;
+                slide.style.flex = `0 0 ${slideWidth}${unit}`;
             });
 
             // Update pagination for new slide count
@@ -229,6 +237,53 @@
             if (this.currentIndex > maxIndex) {
                 this.goToSlide(maxIndex, false);
             }
+        }
+
+        updatePeekPadding() {
+            // Only apply dynamic padding in non-loop mode with peek enabled
+            if (this.peekPx > 0) {
+                // Don't set up padding transitions here - let goToSlide() handle it
+                // This method just updates the padding values
+
+                if (this.loop) {
+                    // Loop mode: always show peek on both sides
+                    this.wrapper.style.paddingInline = `${this.peekPx}px`;
+                } else {
+                    // Non-loop mode: show peek only when there are slides to peek at
+                    const maxIndex = this.getMaxIndex();
+
+                    // Check if there are previous slides to peek at
+                    const hasPrevSlides = this.currentIndex > 0;
+                    // Check if there are next slides to peek at (beyond what's currently visible)
+                    const hasNextSlides = this.currentIndex < maxIndex;
+
+                    // Always set both padding values (use 0px instead of removing) for smooth transitions
+                    const startPadding = hasPrevSlides ? `${this.peekPx}px` : '0px';
+                    const endPadding = hasNextSlides ? `${this.peekPx}px` : '0px';
+                    this.wrapper.style.paddingInline = `${startPadding} ${endPadding}`;
+                }
+            } else {
+                // No peek: set padding to 0px instead of removing for smooth transitions
+                this.wrapper.style.paddingInline = '0px';
+            }
+        }
+
+        updateSlideWidths() {
+            // Recalculate and update slide widths based on current peek state
+            if (this.peekPx > 0 && !this.loop) {
+                const slideWidth = this.calculateSlideWidth();
+
+                this.slides.forEach(slide => {
+                    slide.style.flex = `0 0 ${slideWidth}px`;
+                });
+            }
+        }
+
+        enableSlideFlexTransitions() {
+            // Add flex-basis to slide transitions for smooth width changes during peek animations
+            this.slides.forEach(slide => {
+                slide.style.transitionProperty = 'opacity, flex-basis';
+            });
         }
 
         setupResize() {
@@ -332,6 +387,65 @@
             return Math.max(0, this.slides.length - slidesPerView);
         }
 
+        getActivePeekSides(targetIndex = this.currentIndex) {
+            if (this.loop) {
+                return 2; // Both sides in loop mode
+            }
+
+            const maxIndex = this.getMaxIndex();
+            let count = 0;
+            if (targetIndex > 0) count++; // Has prev slides
+            if (targetIndex < maxIndex) count++; // Has next slides
+            return count;
+        }
+
+        calculateSlideWidth(targetIndex = this.currentIndex) {
+            const slidesPerView = this.getSlidesPerView();
+
+            if (this.peekPx > 0) {
+                // Pixel-based width calculation for peek mode
+                const containerWidth = this.container.offsetWidth;
+                const activePeekSides = this.getActivePeekSides(targetIndex);
+                const totalPadding = this.peekPx * activePeekSides;
+                const availableWidth = containerWidth - totalPadding;
+                return availableWidth / slidesPerView;
+            } else {
+                // Percentage-based width for non-peek mode
+                return 100 / slidesPerView;
+            }
+        }
+
+        calculateTranslate(index, slideWidth) {
+            const isRTL = this.isRTL();
+            // RTL uses positive values, LTR uses negative values
+            return isRTL ? (index * slideWidth) : -(index * slideWidth);
+        }
+
+        pauseAutoplay() {
+            this.autoplayPaused = true;
+            if (this.autoplay && this.autoplayTimer) {
+                clearInterval(this.autoplayTimer);
+                this.autoplayTimer = null;
+            }
+        }
+
+        resumeAutoplay() {
+            this.autoplayPaused = false;
+            if (this.autoplay) {
+                this.startAutoplay();
+            }
+        }
+
+        setupTransition() {
+            // Enable flex-basis transitions on slides when peek is enabled
+            if (this.peekPx > 0) {
+                this.enableSlideFlexTransitions();
+                this.wrapper.style.transition = `transform ${this.speed}ms var(--swiper-transition-timing), padding-inline ${this.speed}ms var(--swiper-transition-timing)`;
+            } else {
+                this.wrapper.style.transition = `transform ${this.speed}ms var(--swiper-transition-timing)`;
+            }
+        }
+
         goToSlide(index, animate = true) {
             // Prevent rapid clicks in loop mode to avoid DOM wrapping issues
             if (this.loop && this.isTransitioning) {
@@ -350,9 +464,14 @@
                 this.isTransitioning = false;
             }
 
-            const slidesPerView = this.getSlidesPerView();
-            const slideWidth = 100 / slidesPerView;
-            const isRTL = this.isRTL();
+            // Calculate slide width for navigation
+            // Check the target index, not current
+            const targetIndex = index >= this.realSlideCount ? index % this.realSlideCount :
+                               index < 0 ? ((index % this.realSlideCount) + this.realSlideCount) % this.realSlideCount :
+                               index;
+
+            const slideWidth = this.calculateSlideWidth(targetIndex);
+            const usePx = this.peekPx > 0;
 
             if (this.loop) {
                 // With clones: slides array is [lastClones..., slide0, slide1, ..., slideN, firstClones...]
@@ -384,13 +503,12 @@
                 this.currentDOMIndex = actualIndex;
 
                 // Apply transform to show the slide (may be a clone)
-                const translateValue = isRTL
-                    ? (actualIndex * slideWidth)
-                    : -(actualIndex * slideWidth);
+                const translateValue = this.calculateTranslate(actualIndex, slideWidth);
+                const translateUnit = usePx ? 'px' : '%';
 
                 if (animate) {
                     this.isTransitioning = true;
-                    this.wrapper.style.transition = `transform ${this.speed}ms var(--swiper-transition-timing)`;
+                    this.setupTransition();
 
                     // Track if we're animating to a clone position
                     if (needsCloneTransition) {
@@ -409,8 +527,8 @@
                             // Snap to the normalized index position (currentIndex was already set)
                             const snapDOMIndex = this.currentIndex + this.cloneCount;
                             this.wrapper.style.transition = 'none';
-                            const finalTranslate = isRTL ? (snapDOMIndex * slideWidth) : -(snapDOMIndex * slideWidth);
-                            this.wrapper.style.transform = `translateX(${finalTranslate}%)`;
+                            const finalTranslate = this.calculateTranslate(snapDOMIndex, slideWidth);
+                            this.wrapper.style.transform = `translateX(${finalTranslate}${translateUnit})`;
                             this.currentDOMIndex = snapDOMIndex; // Update DOM position after snap
                             void this.wrapper.offsetHeight; // Force reflow
                             this.pendingSnapIndex = undefined;
@@ -420,29 +538,40 @@
                     this.wrapper.style.transition = 'none';
                 }
 
-                this.wrapper.style.transform = `translateX(${translateValue}%)`;
+                this.wrapper.style.transform = `translateX(${translateValue}${translateUnit})`;
 
             } else {
                 // Non-loop mode: clamp to valid range
                 const maxIndex = this.getMaxIndex();
                 this.currentIndex = Math.max(0, Math.min(index, maxIndex));
 
-                const translateValue = isRTL
-                    ? (this.currentIndex * slideWidth)
-                    : -(this.currentIndex * slideWidth);
+                const translateValue = this.calculateTranslate(this.currentIndex, slideWidth);
+                const translateUnit = usePx ? 'px' : '%';
 
                 if (animate) {
                     this.isTransitioning = true;
-                    this.wrapper.style.transition = `transform ${this.speed}ms var(--swiper-transition-timing)`;
+                    this.setupTransition();
+
+                    // Update peek padding and slide widths AFTER setting transition so they animate
+                    if (this.peekPx > 0) {
+                        this.updatePeekPadding();
+                        // Also update slide widths immediately so they animate with padding
+                        this.updateSlideWidths();
+                    }
+
                     this.transitionTimeout = setTimeout(() => {
                         this.isTransitioning = false;
                         this.transitionTimeout = null;
                     }, this.speed);
                 } else {
                     this.wrapper.style.transition = 'none';
+                    // Update padding immediately for non-animated changes
+                    if (this.peekPx > 0) {
+                        this.updatePeekPadding();
+                    }
                 }
 
-                this.wrapper.style.transform = `translateX(${translateValue}%)`;
+                this.wrapper.style.transform = `translateX(${translateValue}${translateUnit})`;
             }
 
             // Update UI
@@ -495,16 +624,56 @@
         }
 
         // ==============================================
+        // PUBLIC API
+        // ==============================================
+
+        slideTo(targetIndex, animate = true) {
+            // Public API: Navigate to any slide index from current position
+            // Usage: swiperInstance.slideTo(3) - goes to slide at index 3
+            // Usage: swiperInstance.slideTo(0, false) - goes to first slide without animation
+            // Automatically normalizes the target index to valid range (0 to maxIndex)
+            const maxIndex = this.getMaxIndex();
+            const normalizedIndex = Math.max(0, Math.min(targetIndex, maxIndex));
+
+            this.goToSlide(normalizedIndex, animate);
+        }
+
+        // ==============================================
         // PAGINATION
         // ==============================================
+
+        getTotalPages() {
+            const slidesPerView = this.getSlidesPerView();
+            const slideCount = this.loop ? this.realSlideCount : this.slides.length;
+            return Math.ceil(slideCount / slidesPerView);
+        }
+
+        getCurrentPage() {
+            // Calculate which page we're on using the distance-based approach
+            const slidesPerView = this.getSlidesPerView();
+            const maxIndex = this.getMaxIndex();
+            const totalPages = this.getTotalPages();
+
+            let currentPage = 0;
+            let minDistance = Infinity;
+
+            for (let i = 0; i < totalPages; i++) {
+                const bulletTargetIndex = Math.min(i * slidesPerView, maxIndex);
+                const distance = Math.abs(this.currentIndex - bulletTargetIndex);
+
+                if (distance <= minDistance) {
+                    minDistance = distance;
+                    currentPage = i;
+                }
+            }
+
+            return currentPage;
+        }
 
         setupPagination() {
             if (!this.pagination) return;
 
-            // Calculate total pages using real slide count (not including clones)
-            const slidesPerView = this.getSlidesPerView();
-            const slideCount = this.loop ? this.realSlideCount : this.slides.length;
-            const totalPages = Math.ceil(slideCount / slidesPerView);
+            const totalPages = this.getTotalPages();
 
             // Clear existing bullets
             this.pagination.innerHTML = '';
@@ -517,8 +686,11 @@
                 bullet.setAttribute('aria-label', `Go to slide ${i + 1}`);
 
                 bullet.addEventListener('click', () => {
-                    // Go to the first slide of this page
-                    this.goToSlide(i * slidesPerView);
+                    // Calculate target slide index for this page
+                    const slidesPerView = this.getSlidesPerView();
+                    const targetIndex = i * slidesPerView;
+
+                    this.slideTo(targetIndex);
                     if (this.autoplay) {
                         this.resetAutoplay();
                     }
@@ -534,11 +706,9 @@
         updatePagination() {
             if (!this.pagination) return;
 
-            // Calculate which page we're on based on currentIndex and slidesPerView
-            const slidesPerView = this.getSlidesPerView();
-            const currentPage = Math.floor(this.currentIndex / slidesPerView);
-
+            const currentPage = this.getCurrentPage();
             const bullets = this.pagination.querySelectorAll('.nds-swiper-pagination-bullet');
+
             bullets.forEach((bullet, i) => {
                 if (i === currentPage) {
                     bullet.classList.add('nds-swiper-pagination-bullet-active');
@@ -590,11 +760,7 @@
             this.wrapper.style.transition = 'none';
 
             // Pause autoplay during drag
-            this.autoplayPaused = true;
-            if (this.autoplay && this.autoplayTimer) {
-                clearInterval(this.autoplayTimer);
-                this.autoplayTimer = null;
-            }
+            this.pauseAutoplay();
         }
 
         handleDragMove(e) {
@@ -613,24 +779,21 @@
 
             // Visual feedback during drag
             if (this.dragState.hasDragged) {
-                const slidesPerView = this.getSlidesPerView();
-                const slideWidth = 100 / slidesPerView;
-                const dragPercent = (diff / this.container.offsetWidth) * 100;
-
-                // Check RTL dynamically
-                const isRTL = this.isRTL();
+                // Calculate slide width and drag offset based on peek mode
+                const slideWidth = this.calculateSlideWidth();
+                const usePx = this.peekPx > 0;
+                const dragOffset = usePx ? diff : (diff / this.container.offsetWidth) * 100;
 
                 // In loop mode, account for the prepended clones (actualIndex = currentIndex + cloneCount)
                 const baseIndex = this.loop ? (this.currentIndex + this.cloneCount) : this.currentIndex;
 
                 // RTL uses positive base, LTR uses negative base
-                const currentTranslate = isRTL
-                    ? (baseIndex * slideWidth)
-                    : -(baseIndex * slideWidth);
+                const currentTranslate = this.calculateTranslate(baseIndex, slideWidth);
 
-                const newTranslate = currentTranslate + dragPercent;
+                const newTranslate = currentTranslate + dragOffset;
+                const unit = usePx ? 'px' : '%';
 
-                this.wrapper.style.transform = `translateX(${newTranslate}%)`;
+                this.wrapper.style.transform = `translateX(${newTranslate}${unit})`;
             }
         }
 
@@ -646,22 +809,32 @@
                 if (Math.abs(diff) > DRAG_THRESHOLD) {
                     // Check RTL dynamically
                     const isRTL = this.isRTL();
+                    const slidesPerView = this.getSlidesPerView();
 
+                    // Drag moves by slidesPerView amount
                     // Positive diff = dragged right, negative = dragged left
                     // LTR: drag right = prev, drag left = next
                     // RTL: drag right = next, drag left = prev (reversed because coordinate system is flipped)
+                    let targetIndex;
                     if (isRTL) {
                         if (diff > 0) {
-                            this.next();
+                            targetIndex = this.currentIndex + slidesPerView;
                         } else {
-                            this.prev();
+                            targetIndex = this.currentIndex - slidesPerView;
                         }
                     } else {
                         if (diff > 0) {
-                            this.prev();
+                            targetIndex = this.currentIndex - slidesPerView;
                         } else {
-                            this.next();
+                            targetIndex = this.currentIndex + slidesPerView;
                         }
+                    }
+
+                    this.goToSlide(targetIndex);
+
+                    // Reset autoplay timer
+                    if (this.autoplay && !this.autoplayPaused) {
+                        this.resetAutoplay();
                     }
                 } else {
                     // Snap back to current slide
@@ -677,10 +850,7 @@
             this.dragState.active = false;
 
             // Resume autoplay after drag ends
-            this.autoplayPaused = false;
-            if (this.autoplay) {
-                this.startAutoplay();
-            }
+            this.resumeAutoplay();
         }
 
         // ==============================================
@@ -731,33 +901,23 @@
 
             // Pause on hover
             this.container.addEventListener('mouseenter', () => {
-                this.autoplayPaused = true;
-                if (this.autoplayTimer) {
-                    clearInterval(this.autoplayTimer);
-                    this.autoplayTimer = null;
-                }
+                this.pauseAutoplay();
             });
 
             this.container.addEventListener('mouseleave', () => {
-                this.autoplayPaused = false;
-                if (this.autoplay && !this.dragState.active) {
-                    this.startAutoplay();
+                if (!this.dragState.active) {
+                    this.resumeAutoplay();
                 }
             });
 
             // Pause on focus (accessibility)
             this.container.addEventListener('focusin', () => {
-                this.autoplayPaused = true;
-                if (this.autoplayTimer) {
-                    clearInterval(this.autoplayTimer);
-                    this.autoplayTimer = null;
-                }
+                this.pauseAutoplay();
             });
 
             this.container.addEventListener('focusout', () => {
-                this.autoplayPaused = false;
-                if (this.autoplay && !this.dragState.active) {
-                    this.startAutoplay();
+                if (!this.dragState.active) {
+                    this.resumeAutoplay();
                 }
             });
         }

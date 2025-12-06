@@ -14,7 +14,6 @@
   position: relative;
   width: 100%;
   overflow: hidden;
-  min-height: 250px; // Default minimum height
 
   // CSS custom property for responsive slides per view
   // Set dynamically by JavaScript based on attributes
@@ -32,7 +31,7 @@
   display: flex;
   width: 100%;
   height: 100%;
-  transition-property: transform;
+  transition-property: transform, padding-inline;
   transition-timing-function: var(--swiper-transition-timing);
   transition-duration: var(--swiper-transition-speed);
   position: relative;
@@ -62,6 +61,8 @@
   height: auto;
   position: relative;
   transition-property: opacity;
+  transition-timing-function: var(--swiper-transition-timing);
+  transition-duration: var(--swiper-transition-speed);
 
   // Default: 1 slide per view
   flex: 0 0 100%;
@@ -79,7 +80,7 @@
   box-sizing: border-box;
 
   // Card within slide should fill height
-  > .nds-card {
+  >.nds-card {
     height: 100%;
   }
 }
@@ -99,8 +100,8 @@
   top: 50%;
   transform: translateY(-50%);
   z-index: 10;
+  text-shadow: 0px -1px 0px rgb(0 0 0 / 30%);
 
- 
 
 
   // Icons for prev/next
@@ -131,7 +132,7 @@
 
 .nds-swiper-pagination {
   position: absolute;
-  bottom: var(--spacing-md);
+  bottom: var(--spacing-lg);
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
@@ -176,8 +177,8 @@
 // ON-COLOR VARIANTS (for dark backgrounds)
 // ==============================================
 
-.nds-swiper.nds-oncolor {
-
+.nds-swiper.nds-oncolor,
+.nds-swiper.nds-hero {
 
   .nds-swiper-pagination-bullet {
     background-color: var(--swiper-pagination-bullet-oncolor-default);
@@ -194,7 +195,7 @@
 // HERO SWIPER VARIANT
 // ==============================================
 
-.nds-swiper.nds-heroSwiper {
+.nds-swiper.nds-hero {
   width: 100%;
   height: 100%;
 
@@ -209,6 +210,19 @@
 
   .nds-swiper-button-next {
     inset-inline-end: var(--spacing-lg);
+  }
+
+  .nds-swiper-button-prev,
+  .nds-swiper-button-next {
+    --nds-btn-size: 48px;
+    visibility: hidden;
+  }
+
+  &:hover {
+    .nds-swiper-button-prev,
+    .nds-swiper-button-next {
+      visibility: visible;
+    }
   }
 
   // Pagination at bottom with more spacing
@@ -232,6 +246,7 @@
 // ==============================================
 
 @include mobile {
+
   .nds-swiper-button-prev,
   .nds-swiper-button-next {
     width: 32px;
@@ -245,10 +260,6 @@
 
   .nds-swiper-button-next {
     inset-inline-end: var(--spacing-sm);
-  }
-
-  .nds-swiper-pagination {
-    bottom: var(--spacing-sm);
   }
 
   .nds-swiper-pagination-bullet {
@@ -274,18 +285,17 @@
 // ==============================================
 
 .nds-swiper-slide {
+
   // Placeholder for lazy-loading images
   img[data-src],
   [data-bg] {
     &::before {
       content: '';
       display: block;
-      background: linear-gradient(
-        90deg,
-        var(--background-neutral-100) 0%,
-        var(--background-neutral-200) 50%,
-        var(--background-neutral-100) 100%
-      );
+      background: linear-gradient(90deg,
+          var(--background-neutral-100) 0%,
+          var(--background-neutral-200) 50%,
+          var(--background-neutral-100) 100%);
       background-size: 200% 100%;
       animation: loading 1.5s infinite;
     }
@@ -296,6 +306,7 @@
   0% {
     background-position: 200% 0;
   }
+
   100% {
     background-position: -200% 0;
   }
@@ -308,7 +319,7 @@
 // Hide buttons visually but keep for screen readers when disabled
 .nds-swiper-button-prev:disabled,
 .nds-swiper-button-next:disabled {
-  visibility: hidden;
+  /* visibility: hidden; */
 }
 
 // Announce slide changes to screen readers
@@ -322,42 +333,4 @@
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border-width: 0;
-}
-
-// ==============================================
-// DEMO PAGE SPECIFIC STYLES
-// ==============================================
-
-// Feature grid layout
-.nds-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--spacing-lg);
-
-  @include mobile {
-    grid-template-columns: 1fr;
-  }
-
-  // Feature icons
-  .nds-card-content > i {
-    font-size: 32px;
-    color: var(--colors-primary-sa-flag-600-primary);
-    margin-bottom: var(--spacing-md);
-  }
-}
-
-// Best practices section styling
-.nds-card {
-  h3 {
-    margin-top: var(--spacing-lg);
-
-    &:first-child {
-      margin-top: 0;
-    }
-  }
-
-  ul {
-    margin-top: var(--spacing-md);
-    padding-inline-start: var(--spacing-lg);
-  }
 }
