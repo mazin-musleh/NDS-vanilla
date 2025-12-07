@@ -46,6 +46,7 @@
         &>i {
             font-size: var(--nds-text-lg-FS);
             line-height: var(--nds-text-lg-LH);
+            width: var(--nds-text-lg-FS);
         }
     }
 
@@ -110,6 +111,7 @@
         svg {
             height: 100%;
             width: auto;
+            max-width: unset;
         }
 
         .nds-brand-name {
