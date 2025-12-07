@@ -757,19 +757,10 @@
   /* Icon Sizing */
   &.nds-btn i {
     flex-shrink: 0;
-    font-size: 1.2em;
-
-    .nds-sm & {
-      font-size: 1.1em;
-    }
-
-    .nds-lg & {
-      font-size: 1.3em;
-    }
-
-    .nds-xl & {
-      font-size: 1.4em;
-    }
+    width: var(--nds-button-icon-size);
+    height: var(--nds-button-icon-size);
+    font-size: var(--nds-button-icon-size);
+    line-height: var(--nds-button-icon-size);
   }
 
   // ==============================================
@@ -877,7 +868,7 @@
   width: fit-content;
   flex-wrap: nowrap;
 
-  &:has(>.nds-md,>.nds-sm){
+  &:has(>.nds-md, >.nds-sm) {
     --btn-group-radius: var(--radius-sm);
   }
 
@@ -886,14 +877,14 @@
     position: relative;
     z-index: 1;
 
-    &:not(:last-child){
+    &:not(:last-child) {
       border-inline-end-width: 0;
     }
-    
 
-    & + .nds-btn {
-    border-inline-start-width: 1px;
-  }
+
+    &+.nds-btn {
+      border-inline-start-width: 1px;
+    }
 
     /* Reverse */
     &:first-child {
@@ -904,7 +895,7 @@
     &:last-child {
       border-start-end-radius: var(--btn-group-radius);
       border-end-end-radius: var(--btn-group-radius);
-      
+
     }
 
     &:hover,

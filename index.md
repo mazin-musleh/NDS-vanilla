@@ -6,8 +6,8 @@ hero_description: "A comprehensive design system empowering consistent, accessib
 government experiences across the Kingdom."
 hero_image: /assets/img/riyadhcenter.webp
 hero_image_pos: 50% 10%
-lang: ar
-direction: rtl
+lang: en
+direction: ltr
 ---
 
 <!-- About the System -->
