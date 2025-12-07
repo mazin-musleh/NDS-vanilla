@@ -340,14 +340,14 @@
 
             if (state.isMinimal && DOM.collapse) {
                 // Minimal mode: check if content exceeds collapse maxHeight
-                // Always read fresh values - don't cache during animations
                 const collapseStyle = getComputedStyle(DOM.collapse);
                 const maxH = parseFloat(collapseStyle.maxHeight);
 
                 if (isFinite(maxH) && maxH > 0) {
-                    // Get the actual scroll height of the collapse container
-                    const contentHeight = DOM.collapse.scrollHeight;
-                    hasOverflow = contentHeight > maxH;
+                    // Total content = primary nav + secondary nav heights
+                    const primaryHeight = DOM.primary.scrollHeight;
+                    const secondaryHeight = DOM.secondary?.offsetHeight || 0;
+                    hasOverflow = (primaryHeight + secondaryHeight) > maxH;
                 }
             } else {
                 // Desktop mode: check horizontal overflow
