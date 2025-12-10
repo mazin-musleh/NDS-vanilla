@@ -2,7 +2,8 @@
 layout: page
 title: Swiper
 hero_title: Swiper - National Design System
-hero_description: "A responsive carousel/slider component with CSS scroll-snap, RTL/LTR support, and keyboard navigation"
+hero_description: "A responsive carousel/slider component with CSS scroll-snap, RTL/LTR support, and keyboard
+navigation"
 breadcrumb: ["Components"]
 lang: en
 direction: ltr
@@ -13,7 +14,8 @@ direction: ltr
     <div class="nds-section-content-container">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Basic Slider</h2>
-            <p class="nds-section-description">A simple slider with navigation buttons and pagination. Uses native CSS scroll-snap for smooth, performant sliding.</p>
+            <p class="nds-section-description">A simple slider with navigation buttons and pagination. Uses native CSS
+                scroll-snap for smooth, performant sliding.</p>
         </div>
         <div class="nds-section-content">
             <div class="nds-demo-card">
@@ -28,7 +30,7 @@ direction: ltr
                 </div>
                 <div class="demo-container">
                     <div class="state-demo">
-                        <div class="nds-swiper">
+                        <div class="nds-swiper nds-hero">
                             <div class="nds-swiper-wrapper">
                                 <div class="nds-swiper-slide">
                                     <div class="slide-content"
@@ -152,7 +154,7 @@ direction: ltr
                 </div>
                 <div class="demo-container">
                     <div class="state-demo">
-                        <div class="nds-swiper">
+                        <div class="nds-swiper nds-hero">
                             <div class="nds-swiper-wrapper">
                                 <div class="nds-swiper-slide">
                                     <img src="https://picsum.photos/800/450?random=1" alt="Landscape 1" loading="lazy"
@@ -352,7 +354,8 @@ direction: ltr
     <div class="nds-section-content-container">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Peek Mode</h2>
-            <p class="nds-section-description">Show partial next/previous slides to indicate more content. Use the <code>peek</code> attribute to set the visible amount in pixels.</p>
+            <p class="nds-section-description">Show partial next/previous slides to indicate more content. Use the
+                <code>peek</code> attribute to set the visible amount in pixels.</p>
         </div>
         <div class="nds-section-content">
             <div class="nds-demo-card">
@@ -468,7 +471,8 @@ direction: ltr
     <div class="nds-section-content-container">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Configuration Options</h2>
-            <p class="nds-section-description">The swiper component supports the following attributes for customization.</p>
+            <p class="nds-section-description">The swiper component supports the following attributes for customization.
+            </p>
         </div>
         <div class="nds-section-content">
             <div class="nds-table-container">
