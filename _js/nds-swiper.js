@@ -81,9 +81,40 @@
             this.container.style.setProperty('--swiper-slides', this.slidesPerView);
             this.container.style.setProperty('--swiper-peek', `${peek}px`);
 
+            // Apply peek styles dynamically to first/last view slides
+            this.updatePeekStyles();
+
             // Rebuild pagination when slides per view changes
             if (this.pagination) {
                 this.setupPagination();
+            }
+        }
+
+        updatePeekStyles() {
+            const peek = parseInt(this.container.getAttribute('peek')) || 0;
+
+            if (peek <= 0) {
+                // Clear all inline styles if no peek
+                this.slides.forEach(slide => {
+                    slide.style.flexBasis = '';
+                });
+                return;
+            }
+
+            // Clear all inline styles first
+            this.slides.forEach(slide => {
+                slide.style.flexBasis = '';
+            });
+
+            // Apply expanded width to first N slides (first view)
+            for (let i = 0; i < Math.min(this.slidesPerView, this.slides.length); i++) {
+                this.slides[i].style.flexBasis = `calc((100% + var(--swiper-peek)) / var(--swiper-slides))`;
+            }
+
+            // Apply expanded width to last N slides (last view)
+            const startIndex = Math.max(0, this.slides.length - this.slidesPerView);
+            for (let i = startIndex; i < this.slides.length; i++) {
+                this.slides[i].style.flexBasis = `calc((100% + var(--swiper-peek)) / var(--swiper-slides))`;
             }
         }
 
@@ -126,13 +157,13 @@
 
         goTo(index) {
             const maxIndex = Math.max(0, this.slides.length - this.slidesPerView);
-            index = Math.max(0, Math.min(index, maxIndex));
+            const clampedIndex = Math.max(0, Math.min(index, maxIndex));
 
-            const targetSlide = this.slides[index];
+            const targetSlide = this.slides[clampedIndex];
             if (!targetSlide) return;
 
             // Update state immediately (before animation)
-            this.currentIndex = index;
+            this.currentIndex = clampedIndex;
             this.updateState();
 
             targetSlide.scrollIntoView({
@@ -208,7 +239,22 @@
             if (!this.pagination) return;
 
             const bullets = this.pagination.querySelectorAll('.nds-swiper-pagination-bullet');
-            const currentPage = Math.floor(this.currentIndex / this.slidesPerView);
+            const maxIndex = Math.max(0, this.slides.length - this.slidesPerView);
+
+            // Map currentIndex to page based on proximity to page start indices
+            // For 6 slides, 4 per view: page 0 starts at index 0, page 1 starts at index 2
+            let currentPage = 0;
+            let closestDistance = Infinity;
+
+            for (let i = 0; i < bullets.length; i++) {
+                const pageStartIndex = Math.min(i * this.slidesPerView, maxIndex);
+                const distance = Math.abs(this.currentIndex - pageStartIndex);
+
+                if (distance < closestDistance) {
+                    closestDistance = distance;
+                    currentPage = i;
+                }
+            }
 
             bullets.forEach((bullet, i) => {
                 const isActive = i === currentPage;

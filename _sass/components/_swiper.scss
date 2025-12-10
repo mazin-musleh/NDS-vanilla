@@ -37,6 +37,7 @@
 
     // Hide scrollbar
     scrollbar-width: none;
+
     &::-webkit-scrollbar {
         display: none;
     }
@@ -53,17 +54,10 @@
     // Scroll padding for proper snap alignment with peek
     scroll-padding-inline: var(--swiper-peek);
 
-    // At start: remove start peek padding
-    /* .nds-swiper.at-start & {
-        padding-inline-start: 0;
-        scroll-padding-inline-start: 0;
-    } */
+    .nds-swiper:not(.nds-hero) & {
+        padding-block-end: var(--spacing-md);
+    }
 
-    // At end: remove end peek padding
-    /* .nds-swiper.at-end & {
-        padding-inline-end: 0;
-        scroll-padding-inline-end: 0;
-    } */
 }
 
 // ==============================================
@@ -83,8 +77,20 @@
     // Inner content padding for spacing between slides
     padding-inline: var(--spacing-xs);
 
+    // Peek mode: first slide negative margin to offset wrapper padding
+    .nds-swiper[peek] &:first-child {
+        margin-inline-start: calc(var(--swiper-peek) * -1);
+        padding-inline-start: 0;
+    }
+
+    // Peek mode: first slide negative margin to offset wrapper padding
+    .nds-swiper[peek] &:last-child {
+        margin-inline-end: calc(var(--swiper-peek) * -1);
+        padding-inline-end: 0;
+    }
+
     // Card within slide should fill height
-    > .nds-card {
+    >.nds-card {
         height: 100%;
     }
 }
@@ -99,6 +105,11 @@
     top: 50%;
     transform: translateY(-50%);
     z-index: 10;
+
+    .nds-swiper.nds-hero & {
+        text-shadow: 0px -0px 2px rgb(0 0 0);
+    }
+
 
     // Icon flip for LTR
     i {
@@ -129,20 +140,28 @@
 // ==============================================
 
 .nds-swiper-pagination {
-    position: absolute;
-    bottom: var(--spacing-lg);
-    left: 50%;
-    transform: translateX(-50%);
+
+    .nds-swiper.nds-hero & {
+        position: absolute;
+        bottom: var(--spacing-lg);
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .nds-swiper:not(.nds-hero) & {
+        padding-block: var(--spacing-md);
+    }
+
     z-index: 10;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: var(--spacing-2xs);
+    gap: var(--spacing-lg);
 }
 
 .nds-swiper-pagination-bullet {
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
     border-radius: 50%;
     background-color: var(--swiper-pagination-bullet-default);
     opacity: 0.6;
@@ -153,14 +172,12 @@
 
     &:hover {
         opacity: 0.8;
-        transform: scale(1.1);
     }
 
     &.nds-swiper-pagination-bullet-active {
         opacity: 1;
         background-color: var(--swiper-pagination-bullet-active);
         border-color: var(--swiper-pagination-bullet-active);
-        transform: scale(1.2);
     }
 
     &:focus-visible {
@@ -213,6 +230,7 @@
     }
 
     &:hover {
+
         .nds-swiper-button-prev,
         .nds-swiper-button-next {
             visibility: visible;
@@ -229,6 +247,7 @@
 // ==============================================
 
 @include mobile {
+
     .nds-swiper-button-prev,
     .nds-swiper-button-next {
         width: 32px;
