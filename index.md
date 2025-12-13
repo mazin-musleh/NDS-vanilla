@@ -26,7 +26,9 @@ direction: ltr
                 <span class="label">Explore Components</span>
                 <i class="hgi hgi-stroke hgi-arrow-right" aria-hidden="true"></i>
             </a>
-
+            <button class="nds-btn nds-primary nds-loading">
+                <span class="label">Loading Button</span>
+            </button>
         </div>
     </div>
 </section>

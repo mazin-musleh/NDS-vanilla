@@ -90,6 +90,7 @@ $breakpoints: (
   >* {
     max-width: 100% !important;
     min-width: 0; // prevent overflow in grid
+    height: 100%;
   }
 
   @include tablet(max) {
