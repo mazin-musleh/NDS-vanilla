@@ -22,7 +22,7 @@
   max-width: var(--card-width, 400px);
   position: relative;
 
-  &.nds-expandable{
+  &.nds-expandable {
     overflow: hidden;
   }
 
@@ -236,18 +236,19 @@
     }
   }
 }
-  // ==============================================
-  // CARD FORM SECTION
-  // ==============================================
 
-  .nds-card-form {
-    display: flex;
-    flex-direction: column;
-    gap: var(--card-lg-gap);
-    width: 100%;
+// ==============================================
+// CARD FORM SECTION
+// ==============================================
+
+.nds-card-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--card-lg-gap);
+  width: 100%;
 
 }
-    
+
 
 // ==============================================
 // CARD VARIANTS
@@ -268,6 +269,7 @@
 // Statistic card variant
 .nds-card.nds-statistic {
   max-width: var(--card-width, 224px);
+  justify-content: flex-start !important;
 
   .nds-card-header {
     align-items: center;

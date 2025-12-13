@@ -52,6 +52,7 @@
             this.setupNavigation();
             this.setupPagination();
             this.setupScrollSync();
+            this.setupMouseDrag();
             this.setupKeyboard();
             this.setupResize();
             this.updateState();
@@ -185,6 +186,61 @@
             }, { passive: true });
         }
 
+        // ==============================================
+        // MOUSE DRAG (for non-touch devices)
+        // ==============================================
+
+        setupMouseDrag() {
+            let isDragging = false;
+            let startX = 0;
+            let scrollStart = 0;
+
+            // Only handle mouse, let touch use native behavior
+            this.wrapper.addEventListener('pointerdown', (e) => {
+                if (e.pointerType !== 'mouse') return;
+                if (e.button !== 0) return;
+
+                isDragging = true;
+                startX = e.clientX;
+                scrollStart = this.wrapper.scrollLeft;
+                this.wrapper.style.cursor = 'grabbing';
+                this.wrapper.setPointerCapture(e.pointerId);
+
+                // Disable scroll-snap and smooth behavior during drag
+                this.wrapper.style.scrollSnapType = 'none';
+                this.wrapper.style.scrollBehavior = 'auto';
+                e.preventDefault();
+            });
+
+            this.wrapper.addEventListener('pointermove', (e) => {
+                if (!isDragging || e.pointerType !== 'mouse') return;
+                const deltaX = e.clientX - startX;
+                this.wrapper.scrollLeft = scrollStart - deltaX;
+            });
+
+            this.wrapper.addEventListener('pointerup', (e) => {
+                if (!isDragging || e.pointerType !== 'mouse') return;
+                isDragging = false;
+                this.wrapper.style.cursor = 'grab';
+                this.wrapper.releasePointerCapture(e.pointerId);
+
+                // Detect nearest slide and use goTo for smooth animation
+                this.detectCurrentSlide();
+
+                // Re-enable smooth behavior and animate to slide
+                this.wrapper.style.scrollBehavior = '';
+                requestAnimationFrame(() => {
+                    this.goTo(this.currentIndex);
+                    // Re-enable scroll-snap after animation starts
+                    setTimeout(() => {
+                        this.wrapper.style.scrollSnapType = '';
+                    }, 50);
+                });
+            });
+
+            this.wrapper.style.cursor = 'grab';
+        }
+
         detectCurrentSlide() {
             if (this.slides.length === 0) return;
 
@@ -272,19 +328,28 @@
                 this.container.setAttribute('tabindex', '0');
             }
 
-            this.container.addEventListener('keydown', (e) => {
-                if (!this.container.contains(document.activeElement)) return;
+            // Track if mouse is over swiper for keyboard navigation
+            let isHovered = false;
+            this.container.addEventListener('mouseenter', () => isHovered = true);
+            this.container.addEventListener('mouseleave', () => isHovered = false);
+
+            document.addEventListener('keydown', (e) => {
+                // Only respond if swiper is focused or hovered
+                const isFocused = this.container.contains(document.activeElement);
+                if (!isFocused && !isHovered) return;
 
                 const rtl = isRTL();
 
                 switch (e.key) {
                     case 'ArrowLeft':
                         e.preventDefault();
-                        rtl ? this.next() : this.prev();
+                        const leftBtn = rtl ? this.nextBtn : this.prevBtn;
+                        if (leftBtn && !leftBtn.disabled) leftBtn.click();
                         break;
                     case 'ArrowRight':
                         e.preventDefault();
-                        rtl ? this.prev() : this.next();
+                        const rightBtn = rtl ? this.prevBtn : this.nextBtn;
+                        if (rightBtn && !rightBtn.disabled) rightBtn.click();
                         break;
                     case 'Home':
                         e.preventDefault();

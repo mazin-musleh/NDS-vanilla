@@ -242,32 +242,6 @@
     }
 }
 
-// ==============================================
-// RESPONSIVE
-// ==============================================
-
-@include mobile {
-
-    .nds-swiper-button-prev,
-    .nds-swiper-button-next {
-        width: 32px;
-        height: 32px;
-        font-size: 16px;
-    }
-
-    .nds-swiper-button-prev {
-        inset-inline-start: var(--spacing-sm);
-    }
-
-    .nds-swiper-button-next {
-        inset-inline-end: var(--spacing-sm);
-    }
-
-    .nds-swiper-pagination-bullet {
-        width: 10px;
-        height: 10px;
-    }
-}
 
 // ==============================================
 // ACCESSIBILITY
