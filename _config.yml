@@ -6,14 +6,14 @@ baseurl: "/_site"
 port: 4002
 
 # Brand Logo
-brandLogo: /assets/img/dga-logo.svg
-headerBrandW: 151
+brandLogo: /assets/img/palm_swords.svg
+headerBrandW: 48
 headerBrandH: 48
 
 # Brand Name
-#brandName: "National Design System" #comment this to remove text from brand
+brandName: "National Design System" #comment this to remove text from brand
 brandNameColor: var(--text-display)
-#brandSlogan: Digital Government Authority
+brandSlogan: Vanilla, Performance, control
 brandSloganColor: var(--text-secondary-paragraph)
 
 # Hero Settings (fallback defaults)

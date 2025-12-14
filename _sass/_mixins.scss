@@ -357,25 +357,10 @@ textarea {
 }
 
 // Loading spinner mixin with responsive sizing
+// Uses shared --loading-size, --loading-border, --loading-color, --loading-track custom properties
 @mixin btn-loading-spinner($border-color, $track-color) {
-  &::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: var(--nds-btn-space);
-    height: var(--nds-btn-space);
-    margin: calc(var(--nds-btn-space)*-1/2) 0 0 calc(var(--nds-btn-space)*-1/2);
-    border: 3px solid $track-color;
-    border-top: 3px solid $border-color;
-    border-radius: 50%;
-    animation: nds-btn-spin 1s linear infinite;
-  }
-
-  // Smaller border for small buttons
-  &.nds-sm::after {
-    border-width: 2px;
-  }
+  --loading-color: #{$border-color};
+  --loading-track: #{$track-color};
 }
 
 // ==============================================

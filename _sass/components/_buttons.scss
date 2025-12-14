@@ -767,12 +767,19 @@
   // LOADING STATES & ANIMATIONS
   // ==============================================
 
-  /* Base Loading State */
+  /* Base Loading State - uses shared .nds-loading component */
   &.nds-loading,
   &.loading {
-    position: relative;
-    pointer-events: none;
+    // Button-specific: use button's spacing for spinner size
+    --loading-size: var(--nds-btn-space) !important;
+    --loading-border: 3px !important;
     color: transparent !important;
+
+    // Smaller border for small buttons
+    &.nds-sm {
+      --loading-border: 2px !important;
+    }
+
 
     // Standard button loading states
     &.nds-primary,
