@@ -1,0 +1,126 @@
+/**
+ * NDS Loading Component
+ * Add .nds-loading to any element to show a loading spinner
+ * Works like button loading - just add the class to any container
+ */
+
+@use '../mixins' as *;
+
+// ==============================================
+// NDS LOADING COMPONENT
+// ==============================================
+
+.nds-loading {
+  --loading-size: 32px;
+  --loading-border: 3px;
+  --loading-color: var(--background-black);
+  --loading-track: var(--alpha-black-10);
+    max-height: 100svh;
+  position: relative;
+  pointer-events: none;
+
+  // Hide content while loading (except for buttons which hide via color: transparent)
+  &:not(.nds-btn) > * {
+    opacity: 0;
+  }
+
+  // Spinner (::after)
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: var(--loading-size);
+    height: var(--loading-size);
+    margin: calc(var(--loading-size) / -2) 0 0 calc(var(--loading-size) / -2);
+    border: var(--loading-border) solid var(--loading-track);
+    border-top-color: var(--loading-color);
+    border-radius: 50%;
+    animation: nds-spin 1s linear infinite;
+    z-index: 9;
+  }
+
+  // Overlay variants use ::before for background
+  &.nds-overlay::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 9;
+    border-radius: inherit;
+    background-color: var(--alpha-white-70);
+  }
+
+  // Show content behind overlay
+  &.nds-overlay > * {
+    opacity: 1;
+  }
+
+  // Dark overlay
+  &.nds-overlay.nds-dark::before,
+  &.nds-overlay.nds-oncolor::before  {
+    background-color: var(--alpha-black-50);
+  }
+}
+
+// ==============================================
+// SIZE VARIANTS
+// xxs: 20px, xs: 24px, sm: 28px, md: 32px (default), lg: 36px, xl: 40px, 2xl: 44px
+// ==============================================
+
+// XXS - 20px
+.nds-loading.nds-xxs {
+  --loading-size: 20px;
+  --loading-border: 2px;
+}
+
+// XS - 24px
+.nds-loading.nds-xs {
+  --loading-size: 24px;
+  --loading-border: 2px;
+}
+
+// SM - 28px
+.nds-loading.nds-sm {
+  --loading-size: 28px;
+  --loading-border: 3px;
+}
+
+// MD - 32px (default)
+.nds-loading.nds-md {
+  --loading-size: 32px;
+  --loading-border: 3px;
+}
+
+// LG - 36px
+.nds-loading.nds-lg {
+  --loading-size: 36px;
+  --loading-border: 3px;
+}
+
+// XL - 40px
+.nds-loading.nds-xl {
+  --loading-size: 40px;
+  --loading-border: 4px;
+}
+
+// 2XL - 44px
+.nds-loading.nds-2xl {
+  --loading-size: 44px;
+  --loading-border: 4px;
+}
+
+// ==============================================
+// COLOR VARIANTS
+// ==============================================
+
+// Primary (green spinner)
+.nds-loading.nds-primary {
+  --loading-color: var(--background-primary);
+  --loading-track: var(--alpha-black-10);
+}
+
+// On dark backgrounds
+.nds-loading.nds-oncolor {
+  --loading-color: var(--colors-base-white);
+  --loading-track: var(--alpha-white-20);
+}
