@@ -772,12 +772,16 @@
   &.loading {
     // Button-specific: use button's spacing for spinner size
     --loading-size: var(--nds-btn-space) !important;
-    --loading-border: 3px !important;
+    --loading-border: 2px !important;
     color: transparent !important;
 
-    // Smaller border for small buttons
     &.nds-sm {
       --loading-border: 2px !important;
+    }
+
+
+    &.nds-xl {
+      --loading-border: 3px !important;
     }
 
 

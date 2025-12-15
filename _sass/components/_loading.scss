@@ -13,7 +13,7 @@
 .nds-loading {
   --loading-size: 32px;
   --loading-border: 3px;
-  --loading-color: var(--background-black);
+  --loading-color: var(--background-primary);
   --loading-track: var(--alpha-black-10);
     max-height: 100svh;
   position: relative;
@@ -28,11 +28,11 @@
   &::after {
     content: '';
     position: absolute;
-    top: 50%;
-    left: 50%;
+    inset: 50% auto auto 50%;
     width: var(--loading-size);
     height: var(--loading-size);
-    margin: calc(var(--loading-size) / -2) 0 0 calc(var(--loading-size) / -2);
+    /* margin: calc(var(--loading-size) / -2) 0 0 calc(var(--loading-size) / -2); */
+    transform: translate(-50%, -50%);
     border: var(--loading-border) solid var(--loading-track);
     border-top-color: var(--loading-color);
     border-radius: 50%;
@@ -82,7 +82,7 @@
 // SM - 28px
 .nds-loading.nds-sm {
   --loading-size: 28px;
-  --loading-border: 3px;
+  --loading-border: 2px;
 }
 
 // MD - 32px (default)
@@ -114,13 +114,14 @@
 // ==============================================
 
 // Primary (green spinner)
-.nds-loading.nds-primary {
-  --loading-color: var(--background-primary);
+.nds-loading.nds-neutral {
+  --loading-color: var(--background-black);
   --loading-track: var(--alpha-black-10);
 }
 
 // On dark backgrounds
-.nds-loading.nds-oncolor {
+.nds-loading.nds-oncolor,
+.nds-loading.nds-dark {
   --loading-color: var(--colors-base-white);
   --loading-track: var(--alpha-white-20);
 }
