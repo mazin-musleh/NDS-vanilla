@@ -1,0 +1,275 @@
+/**
+ * NDS Alert Component - SCSS Version
+ * Alert notifications built on top of the card component
+ *
+ * Features:
+ * - Uses existing .nds-card component structure
+ * - Featured icons from nds-featured-icon
+ * - Close button (optional)
+ * - Color variants: success, info, warning, error, neutral
+ * - Inline and banner layouts
+ */
+
+@use '../mixins' as *;
+
+// ==============================================
+// ALERT COMPONENT (extends card)
+// ==============================================
+
+.nds-alert.nds-card {
+  // Extend card component styles
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-neutral-primary);
+  border-inline-start: 8px solid var(--border-neutral-primary);
+  max-width: 100%;
+  width: 100%;
+
+
+  // ==============================================
+  // ALERT ICON (uses feedback-icon)
+  // ==============================================
+
+  .nds-feedback-icon {
+    --nds-icon-size: 20px;
+    border-radius: 50%;
+    display: flex;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nds-alert-icon {
+    flex-shrink: 0;
+  }
+
+  // ==============================================
+  // ALERT CONTENT
+  // ==============================================
+
+  .nds-alert-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    flex: 1;
+    min-width: 0;
+  }
+
+  .nds-alert-title {
+    font-size: var(--nds-text-md-FS);
+    line-height: var(--nds-text-md-LH);
+    font-weight: 600;
+    color: var(--text-display);
+    margin: 0;
+  }
+
+  .nds-alert-description {
+    font-size: var(--nds-text-sm-FS);
+    line-height: var(--nds-text-sm-LH);
+    font-weight: 400;
+    color: var(--text-subdued);
+    margin: 0;
+  }
+
+  // ==============================================
+  // ALERT ACTIONS
+  // ==============================================
+
+  .nds-alert-actions {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-sm);
+  }
+
+  // ==============================================
+  // ALERT CLOSE BUTTON
+  // ==============================================
+
+  .nds-alert-close {
+    position: absolute;
+    inset-block-start: 8px;
+    inset-inline-end: 8px;
+  }
+
+  // ==============================================
+  // COLOR VARIANTS
+  // ==============================================
+
+  // Success variant
+  &.nds-success {
+
+    border-inline-start-color: var(--background-success);
+
+    @include mobile {
+      border-block-start-color: var(--background-success);
+    }
+
+    .nds-feedback-icon {
+      background-color: var(--featuredicons-background-success-light);
+    }
+
+    &.nds-color {
+      background-color: var(--background-success-25);
+      border-color: var(--border-success-light);
+      border-inline-start-color: var(--background-success);
+
+      @include mobile {
+        border-block-start-color: var(--background-success);
+      }
+
+      .nds-alert-title {
+        color: var(--featuredicons-icon-success);
+      }
+    }
+
+  }
+
+  // Info variant
+  &.nds-info {
+    background-color: var(--featuredicons-background-info-light);
+    border-color: var(--featuredicons-icon-info);
+
+    .nds-alert-title {
+      color: var(--featuredicons-icon-info);
+    }
+  }
+
+  // Warning variant
+  &.nds-warning {
+    background-color: var(--featuredicons-background-warning-light);
+    border-color: var(--featuredicons-icon-warning);
+
+    .nds-alert-title {
+      color: var(--featuredicons-icon-warning);
+    }
+  }
+
+  // Error variant
+  &.nds-error {
+    background-color: var(--featuredicons-background-error-light);
+    border-color: var(--featuredicons-icon-error);
+
+    .nds-alert-title {
+      color: var(--featuredicons-icon-error);
+    }
+  }
+
+  // Neutral variant
+  &.nds-neutral {
+    background-color: var(--featuredicons-background-default-light);
+    border-color: var(--featuredicons-icon-neutral);
+
+    .nds-alert-title {
+      color: var(--text-display);
+    }
+  }
+
+  // ==============================================
+  // STYLE VARIANTS
+  // ==============================================
+
+
+  // Solid/filled variant with colored background
+  &.nds-solid {
+    border: none;
+
+    &.nds-success {
+      background-color: var(--featuredicons-icon-success);
+
+      .nds-alert-title,
+      .nds-alert-description {
+        color: var(--text-oncolor-primary);
+      }
+    }
+
+    &.nds-info {
+      background-color: var(--featuredicons-icon-info);
+
+      .nds-alert-title,
+      .nds-alert-description {
+        color: var(--text-oncolor-primary);
+      }
+    }
+
+    &.nds-warning {
+      background-color: var(--featuredicons-icon-warning);
+
+      .nds-alert-title,
+      .nds-alert-description {
+        color: var(--text-display);
+      }
+    }
+
+    &.nds-error {
+      background-color: var(--featuredicons-icon-error);
+
+      .nds-alert-title,
+      .nds-alert-description {
+        color: var(--text-oncolor-primary);
+      }
+    }
+
+    &.nds-brand {
+      background-color: var(--featuredicons-icon-primary);
+
+      .nds-alert-title,
+      .nds-alert-description {
+        color: var(--text-oncolor-primary);
+      }
+    }
+  }
+
+  // ==============================================
+  // LAYOUT VARIANTS
+  // ==============================================
+
+  // Banner layout (full width, typically at top of page)
+  &.nds-banner {
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+
+  // Compact variant
+  &.nds-compact {
+    padding: var(--spacing-md);
+    gap: var(--spacing-md);
+
+    .nds-alert-content {
+      gap: var(--spacing-xs);
+    }
+  }
+
+  // Inline variant (single line)
+  &.nds-inline {
+    align-items: center;
+
+    .nds-alert-content {
+      flex-direction: row;
+      align-items: center;
+      gap: var(--spacing-md);
+    }
+
+    .nds-alert-actions {
+      margin-top: 0;
+      margin-inline-start: auto;
+    }
+  }
+}
+
+// ==============================================
+// RESPONSIVE BEHAVIOR
+// ==============================================
+
+@include mobile {
+  .nds-alert.nds-card {
+    flex-direction: column;
+    border-inline-start: 1px solid var(--border-neutral-primary) !important;
+    border-block-start-width: 8px;
+    border-block-start-style: solid;
+  }
+}
