@@ -106,11 +106,6 @@
       content: "䞭";
     }
 
-    &.nds-info {
-      .icon:before {
-        content: "䢵";
-      }
-    }
   }
 
   .nds-warning &,
@@ -125,7 +120,7 @@
     }
 
     .icon:before {
-      content: "㬿" !important;
+      content: "㬿";
     }
   }
 
@@ -142,16 +137,37 @@
 
     .icon {
       &:before {
-        content: "㿃" !important;
+        content: "㿃";
       }
     }
 
-    &.nds-alert {
-      .icon:before {
-        content: "㬿" !important;
-      }
+  }
+
+  // ==============================================
+  // FEEDBACK ICON VARIANTS OVERRIDE
+  // ==============================================
+
+  &.nds-icon-info,
+  .nds-icon-info & {
+    .icon:before {
+      content: "䢵" !important;
     }
   }
+
+  &.nds-icon-alert,
+  .nds-icon-alert & {
+    .icon:before {
+      content: "㬿" !important;
+    }
+  }
+
+  &.nds-icon-error,
+  .nds-icon-error & {
+    .icon:before {
+      content: "㿃" !important;
+    }
+  }
+
 
   // ==============================================
   // FEEDBACK ICON STYLE VARIANTS
@@ -219,52 +235,3 @@
     flex: 1;
   }
 }
-
-// ==============================================
-// INHERITED STATUS VARIANTS (from parent)
-// ==============================================
-
-/* .nds-success .nds-feedback-icon.nds-alert-icon {
-  background-color: var(--icon-success);
-  color: var(--icon-success);
-
-  .icon:before {
-    content: "䂇";
-  }
-}
-
-.nds-info .nds-feedback-icon.nds-alert-icon {
-  background-color: var(--icon-info);
-  color: var(--icon-info);
-
-  .icon:before {
-    content: "䢵";
-  }
-}
-
-.nds-warning .nds-feedback-icon.nds-alert-icon {
-  background-color: var(--icon-warning);
-  color: var(--icon-warning);
-
-  .icon:before {
-    content: "㬿";
-  }
-}
-
-.nds-error .nds-feedback-icon.nds-alert-icon {
-  background-color: var(--icon-error);
-  color: var(--icon-error);
-
-  .icon:before {
-    content: "㿃";
-  }
-}
-
-.nds-neutral .nds-feedback-icon.nds-alert-icon {
-  background-color: var(--icon-neutral);
-  color: var(--icon-neutral);
-
-  .icon:before {
-    content: "䞭";
-  }
-} */

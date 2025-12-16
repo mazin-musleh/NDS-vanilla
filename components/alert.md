@@ -24,7 +24,7 @@ direction: ltr
                         <div class="demo-label">Success Alert</div>
                         <div class="demo-action">
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-shadow", ".success-alert-demo .nds-alert","alertStyle"]'>
+                                data-toggler='["nds-shadow", ".nds-alert","alertStyle"]'>
                                 <span class="label">Shadow</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
@@ -96,12 +96,16 @@ direction: ltr
                         <div class="demo-label">Info Alert</div>
                         <div class="demo-action">
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-stroke", ".info-alert-demo .nds-alert","alertStyle"]'>
-                                <span class="label">Stroke</span>
+                                data-toggler='["nds-shadow", ".nds-alert","alertStyle"]'>
+                                <span class="label">Shadow</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-compact", ".info-alert-demo .nds-alert","alertSize"]'>
-                                <span class="label">Compact</span>
+                                data-toggler='["nds-color", ".nds-alert","alertColor"]'>
+                                <span class="label">Color</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                                <span class="label">Remove bg</span>
                             </button>
                         </div>
                     </div>
@@ -165,12 +169,16 @@ direction: ltr
                         <div class="demo-label">Warning Alert</div>
                         <div class="demo-action">
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-stroke", ".warning-alert-demo .nds-alert","alertStyle"]'>
-                                <span class="label">Stroke</span>
+                                data-toggler='["nds-shadow", ".nds-alert","alertStyle"]'>
+                                <span class="label">Shadow</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-compact", ".warning-alert-demo .nds-alert","alertSize"]'>
-                                <span class="label">Compact</span>
+                                data-toggler='["nds-color", ".nds-alert","alertColor"]'>
+                                <span class="label">Color</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                                <span class="label">Remove bg</span>
                             </button>
                         </div>
                     </div>
@@ -233,12 +241,16 @@ direction: ltr
                         <div class="demo-label">Error Alert</div>
                         <div class="demo-action">
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-stroke", ".error-alert-demo .nds-alert","alertStyle"]'>
-                                <span class="label">Stroke</span>
+                                data-toggler='["nds-shadow", ".nds-alert","alertStyle"]'>
+                                <span class="label">Shadow</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-compact", ".error-alert-demo .nds-alert","alertSize"]'>
-                                <span class="label">Compact</span>
+                                data-toggler='["nds-color", ".nds-alert","alertColor"]'>
+                                <span class="label">Color</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                                <span class="label">Remove bg</span>
                             </button>
                         </div>
                     </div>
@@ -312,6 +324,20 @@ direction: ltr
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-label">Alert with Actions</div>
+                        <div class="demo-action">
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-shadow", ".nds-alert","alertStyle"]'>
+                                <span class="label">Shadow</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-color", ".nds-alert","alertColor"]'>
+                                <span class="label">Color</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                                <span class="label">Remove bg</span>
+                            </button>
+                        </div>
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
@@ -391,7 +417,7 @@ direction: ltr
 <section id="neutralBrandAlerts" class="nds-content-section">
     <div class="nds-section-content-container">
         <div class="nds-section-head">
-            <h2 class="nds-section-title">Neutral & Brand Alerts</h2>
+            <h2 class="nds-section-title">Neutral Alerts</h2>
             <p class="nds-section-description">Additional color variants for general notifications</p>
         </div>
         <div class="nds-section-content">
@@ -400,6 +426,20 @@ direction: ltr
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-label">Neutral Alert</div>
+                        <div class="demo-action">
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-shadow", ".nds-alert","alertStyle"]'>
+                                <span class="label">Shadow</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-color", ".nds-alert","alertColor"]'>
+                                <span class="label">Color</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                                <span class="label">Remove bg</span>
+                            </button>
+                        </div>
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
@@ -451,61 +491,7 @@ direction: ltr
                     </div>
                 </div>
 
-                <!-- Brand Alert -->
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Brand Alert</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-alert nds-card nds-brand">
-                                <span class="nds-feedback-icon nds-outline nds-alert-icon">
-                                    <i class="hgi hgi-solid icon"></i>
-                                </span>
-                                <div class="nds-alert-content">
-                                    <h4 class="nds-alert-title">New Feature</h4>
-                                    <p class="nds-alert-description">Check out our latest feature updates and
-                                        improvements.</p>
-                                </div>
-                                <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close"
-                                    aria-label="Close alert">
-                                    <i class="hgi hgi-stroke hgi-cancel-01"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="nds-tabs nds-code withDivider">
-                        <div class="nds-tab-list-container">
-                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                                    aria-controls="panel-brand-1" id="tab-brand-1">
-                                    <span class="nds-tab-label">HTML</span>
-                                </button>
-                            </nav>
-                        </div>
-                        <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-brand-1"
-                                aria-labelledby="tab-brand-1">
-                                <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                    </button>
-                                </div>
-                                <code class="lang-html code">
-<div class="nds-alert nds-card nds-brand">
-    <span class="nds-featured-icon nds-brand nds-sm nds-outline nds-alert-icon">
-        <i class="hgi hgi-stroke hgi-stars icon"></i>
-    </span>
-    <div class="nds-alert-content">
-        <h4 class="nds-alert-title">New Feature</h4>
-        <p class="nds-alert-description">Check out our latest updates.</p>
-    </div>
-</div>
-                                </code>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
             </div>
         </div>
     </div>

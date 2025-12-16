@@ -20,8 +20,8 @@
 
 .nds-modal-backdrop {
   position: fixed;
-  top: 0;
-  left: 0;
+  inset-block-start: 0;
+  inset-inline-start: 0;
   width: 100%;
   height: 100%;
   background-color: var(--colors-alpha-alpha-black-60);
@@ -75,7 +75,7 @@
     // Mobile: bottom sheet animation
     @include mobile {
       position: absolute;
-      bottom: 0px;
+      inset-block-end: 0px;
       // Initial state - off screen at bottom
       transform: translateY(100%);
       max-width: 100%;
@@ -111,15 +111,8 @@
   // Close button positioned in card header
   .nds-modal-close {
     position: absolute;
-    top: 0;
-    // RTL default: close button on left
-    left: 0;
-
-    @include ltr {
-      left: auto;
-      right: 0;
-    }
-
+    inset-block-start: 0;
+    inset-inline-end: 0;
   }
 }
 
@@ -157,8 +150,7 @@ body.nds-modal-active {
   @include mobile {
     position: fixed;
     width: 100%;
-    left: 0;
-    right: 0;
+    inset-inline-start: 0;
   }
 }
 

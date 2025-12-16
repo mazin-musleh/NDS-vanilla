@@ -217,7 +217,7 @@ direction: ltr
                         <div class="demo-label">Error Feedback Icon</div>
                         <div class="demo-action">
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-alert", ".nds-feedback-icon", "iconSwitch"]'>
+                                data-toggler='["nds-icon-alert", ".nds-feedback-icon", "iconSwitch"]'>
                                 <span class="label">Alert</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"

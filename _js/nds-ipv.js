@@ -30,7 +30,6 @@
             this.el = {
                 overlay: document.getElementById('ndsIpvPopupOverlay'),
                 container: document.querySelector('.nds-ipv-popup-container'),
-                spinner: document.getElementById('ndsIpvLoadingSpinner'),
                 zoomInfo: document.getElementById('ndsIpvZoomInfo'),
                 controls: document.querySelector('.nds-ipv-popup-controls'),
                 instructions: document.querySelector('.nds-ipv-instructions'),
@@ -62,11 +61,15 @@
         }
 
         showSpinner() {
-            if (this.el.spinner) this.el.spinner.style.display = 'block';
+            if (this.el.container) {
+                this.el.container.classList.add('nds-loading', 'nds-lg', 'nds-oncolor');
+            }
         }
 
         hideSpinner() {
-            if (this.el.spinner) this.el.spinner.style.display = 'none';
+            if (this.el.container) {
+                this.el.container.classList.remove('nds-loading', 'nds-lg', 'nds-oncolor');
+            }
         }
 
         removeImage() {
@@ -391,8 +394,6 @@
         const overlayHTML = `
             <div class="nds-ipv-popup-overlay" id="ndsIpvPopupOverlay">
                 <div class="nds-ipv-popup-container">
-                    <div class="nds-ipv-loading-spinner" id="ndsIpvLoadingSpinner"></div>
-
                     <div class="nds-ipv-popup-controls">
                         <button class="nds-ipv-control-btn nds-ipv-zoom-in-btn" title="Zoom In">
                             <i class="hgi hgi-stroke hgi-zoom-in-area"></i>
