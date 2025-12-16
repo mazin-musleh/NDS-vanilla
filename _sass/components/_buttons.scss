@@ -719,7 +719,8 @@
   }
 
   /* Icon-Only Button Configurations */
-  &.nds-icon-only {
+  &.nds-icon-only,
+  &:not(:has(.label)) {
     justify-content: center;
     width: var(--nds-btn-height);
     padding: 0;

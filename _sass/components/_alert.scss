@@ -22,11 +22,40 @@
   align-items: flex-start;
   gap: var(--spacing-lg);
   padding: var(--spacing-lg);
+  padding-inline-start: calc(var(--spacing-lg) + 8px);
   border-radius: var(--radius-md);
   border: 1px solid var(--border-neutral-primary);
-  border-inline-start: 8px solid var(--border-neutral-primary);
   max-width: 100%;
   width: 100%;
+  position: relative;
+  overflow: clip;
+
+  &:before {
+    content: '';
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    display: block;
+    width: 8px;
+    height: 100%;
+    background-color: var(--border-neutral-primary);
+    opacity: 0.7;
+  }
+
+  &.nds-color {
+    background-color: var(--background-neutral-25);
+  }
+
+  @include mobile {
+      flex-direction: column;
+      padding-inline-start: var(--spacing-lg);
+      padding-block-start: calc(var(--spacing-lg) + 8px);
+      &:before {
+        width: 100%;
+        height: 8px;
+      }
+    
+  }
 
 
   // ==============================================
@@ -41,6 +70,7 @@
     height: 40px;
     align-items: center;
     justify-content: center;
+    background-color: var(--featuredicons-background-default-light);
   }
 
   .nds-alert-icon {
@@ -93,6 +123,9 @@
     position: absolute;
     inset-block-start: 8px;
     inset-inline-end: 8px;
+    @include mobile{
+      inset-block-start: calc(8px + 8px);
+    }
   }
 
   // ==============================================
@@ -102,10 +135,8 @@
   // Success variant
   &.nds-success {
 
-    border-inline-start-color: var(--background-success);
-
-    @include mobile {
-      border-block-start-color: var(--background-success);
+    &:before {
+      background-color: var(--background-success);
     }
 
     .nds-feedback-icon {
@@ -115,11 +146,6 @@
     &.nds-color {
       background-color: var(--background-success-25);
       border-color: var(--border-success-light);
-      border-inline-start-color: var(--background-success);
-
-      @include mobile {
-        border-block-start-color: var(--background-success);
-      }
 
       .nds-alert-title {
         color: var(--featuredicons-icon-success);
@@ -130,42 +156,68 @@
 
   // Info variant
   &.nds-info {
-    background-color: var(--featuredicons-background-info-light);
-    border-color: var(--featuredicons-icon-info);
 
-    .nds-alert-title {
-      color: var(--featuredicons-icon-info);
+    &:before {
+      background-color: var(--background-info);
     }
+
+    .nds-feedback-icon {
+      background-color: var(--featuredicons-background-info-light);
+    }
+
+    &.nds-color {
+      background-color: var(--background-info-25);
+      border-color: var(--border-info-light);
+
+      .nds-alert-title {
+        color: var(--featuredicons-icon-info);
+      }
+    }
+
   }
 
   // Warning variant
   &.nds-warning {
-    background-color: var(--featuredicons-background-warning-light);
-    border-color: var(--featuredicons-icon-warning);
 
-    .nds-alert-title {
-      color: var(--featuredicons-icon-warning);
+    &:before {
+      background-color: var(--background-warning);
     }
+
+    .nds-feedback-icon {
+      background-color: var(--featuredicons-background-warning-light);
+    }
+
+    &.nds-color {
+      background-color: var(--background-warning-25);
+      border-color: var(--border-warning-light);
+
+      .nds-alert-title {
+        color: var(--featuredicons-icon-warning);
+      }
+    }
+
   }
 
   // Error variant
   &.nds-error {
-    background-color: var(--featuredicons-background-error-light);
-    border-color: var(--featuredicons-icon-error);
 
-    .nds-alert-title {
-      color: var(--featuredicons-icon-error);
+    &:before {
+      background-color: var(--background-error);
     }
-  }
 
-  // Neutral variant
-  &.nds-neutral {
-    background-color: var(--featuredicons-background-default-light);
-    border-color: var(--featuredicons-icon-neutral);
-
-    .nds-alert-title {
-      color: var(--text-display);
+    .nds-feedback-icon {
+      background-color: var(--featuredicons-background-error-light);
     }
+
+    &.nds-color {
+      background-color: var(--background-error-25);
+      border-color: var(--border-error-light);
+
+      .nds-alert-title {
+        color: var(--featuredicons-icon-error);
+      }
+    }
+
   }
 
   // ==============================================
@@ -258,18 +310,5 @@
       margin-top: 0;
       margin-inline-start: auto;
     }
-  }
-}
-
-// ==============================================
-// RESPONSIVE BEHAVIOR
-// ==============================================
-
-@include mobile {
-  .nds-alert.nds-card {
-    flex-direction: column;
-    border-inline-start: 1px solid var(--border-neutral-primary) !important;
-    border-block-start-width: 8px;
-    border-block-start-style: solid;
   }
 }
