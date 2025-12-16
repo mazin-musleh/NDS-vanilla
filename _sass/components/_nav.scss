@@ -82,6 +82,7 @@
         gap: var(--spacing-lg);
         background-color: var(--nds-nav-background-color);
 
+
         &::before {
             content: "";
             position: fixed;
@@ -89,7 +90,7 @@
             background-color: var(--nds-nav-background-color);
             left: 0;
             right: 0;
-          }
+        }
     }
 
     /* Navigation Brand */
@@ -257,20 +258,30 @@
 
     .nds-dropdown-menu {
         display: none;
-        background: var(--nds-nav-background-color);
-        transform: translateY(-100%);
-        transition: transform var(--nds-transition);
         border-radius: 0;
         z-index: -1;
+        /* Fallback for older browsers */
+        overflow: hidden;
+        overflow: clip;
 
-        >.nds-content-container {
-            padding-top: var(--spacing-2xl);
-            padding-bottom: var(--spacing-2xl);
-            width: 100%;
+        >.nds-dropdown-content {
+            background: var(--nds-nav-background-color);
+            transform: translate(0, -100%);
+            transition: transform var(--nds-transition);
+            border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            max-height: 50svh;
 
-            @include mobile {
-                padding-top: 0;
-                padding-bottom: 0;
+            >.nds-content-container {
+                padding-top: var(--spacing-2xl);
+                padding-bottom: var(--spacing-2xl);
+                width: 100%;
+
+
+                @include mobile {
+                    padding-top: 0;
+                    padding-bottom: 0;
+                }
             }
         }
     }
@@ -280,19 +291,30 @@
     &.show .nds-dropdown-menu {
         display: flex;
         flex-direction: column;
-        border-radius: 0 0 var(--radius-lg) var(--radius-lg);
-        box-shadow: var(--shadow-md);
+
     }
 
-    &.opened.show .nds-dropdown-menu,
-    &.opening .nds-dropdown-menu {
-        display: flex;
+    .nds-dropdown-menu .nds-dropdown-content {
+        overflow: hidden;
+    }
+
+    &.opened.show .nds-dropdown-menu {
+        overflow: unset;
+        .nds-dropdown-content{
+            overflow-y: auto;
+        }
+    }
+
+    &.opened.show .nds-dropdown-menu .nds-dropdown-content,
+    &.opening .nds-dropdown-menu .nds-dropdown-content {
         transform: translateY(0);
     }
 
-    &.closing .nds-dropdown-menu {
+    &.closing .nds-dropdown-menu .nds-dropdown-content {
         transform: translateY(-100%);
     }
+
+    
 
     .nds-dropdown-item {
         color: var(--text-default);
@@ -395,9 +417,14 @@ body:not(.minimal) .nds-main-nav {
 
     .nds-collapse {
         display: flex !important;
-        justify-content: flex-end;
-        align-items: center;
         width: 100%;
+
+        .nds-collapse-content {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            width: 100%;
+        }
     }
 
     .nds-nav-primary {
@@ -448,12 +475,9 @@ body:not(.minimal) .nds-main-nav {
     .nds-dropdown-menu,
     .nds-nav-minimal .nds-dropdown-menu {
         position: fixed;
-        left: 0;
-        right: 0;
-        max-height: 60vh;
+        inset-inline: 0;
         min-height: 1px;
         /* fix graphics bug at 0 */
-        overflow-y: auto;
         height: unset !important;
     }
 
@@ -462,9 +486,13 @@ body:not(.minimal) .nds-main-nav {
     .nds-nav-minimal .nds-dropdown.show .nds-dropdown-menu.widthFit {
         min-width: fit-content !important;
         position: absolute !important;
-        left: 0;
-        right: unset;
+        inset-inline: auto 0;
         white-space: nowrap;
+
+        >.nds-dropdown-content {
+            max-height: 60vh;
+            overflow-y: auto;
+        }
     }
 }
 
@@ -473,8 +501,6 @@ body:not(.minimal) .nds-main-nav {
     body:not(.minimal) .nds-main-nav {
         .nds-nav-primary.hasMore {
             .showMore {
-                left: unset;
-                right: 0;
 
                 i {
                     transform: rotate(270deg);
@@ -486,18 +512,12 @@ body:not(.minimal) .nds-main-nav {
             }
 
             &::before {
-                right: unset;
-                left: var(--spacing-xs);
+                inset-inline-start: var(--spacing-xs);
                 transform: translateX(-4px);
             }
         }
 
-        .nds-dropdown.show .nds-dropdown-menu.widthFit {
-            left: unset;
-            right: 0;
-        }
     }
-
 
 }
 
@@ -579,23 +599,36 @@ body.minimal .nds-main-nav {
         top: var(--nds-nav-height);
         left: 0;
         right: 0;
-        background-color: var(--background-white);
-        box-shadow: var(--shadow-md);
         height: unset !important;
-        max-height: 60svh;
-        transition: transform var(--nds-transition);
-        /* Hint the browser we animate vertical size in minimal mode */
-        will-change: height;
         z-index: -1;
         display: none;
-        transform: translateY(-100%);
-        /* Ensure proper stacking */
+        /* Fallback for older browsers */
+        overflow: hidden;
+        overflow: clip;
+
+        .nds-collapse-content {
+            background-color: var(--background-white);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-100%);
+            transition: transform var(--nds-transition);
+            border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+
+            .nds-dropdown-menu .nds-dropdown-content {
+        overflow: unset;
+    }
+        }
 
         &.opened,
         &.opening {
-
             display: flex;
-            transform: translateY(0);
+
+            .nds-collapse-content {
+                transform: translateY(0);
+            }
+        }
+
+        &.opened {
+            overflow: unset;
         }
 
         &.show {
@@ -604,7 +637,9 @@ body.minimal .nds-main-nav {
         }
 
         &.closing {
-            transform: translateY(-100%);
+            .nds-collapse-content {
+                transform: translateY(-100%);
+            }
         }
     }
 
@@ -616,6 +651,7 @@ body.minimal .nds-main-nav {
         align-items: stretch;
         gap: 0;
         width: 100%;
+        max-height: 50svh;
         transition: margin-bottom 0.1s;
 
         .nds-nav-item {
@@ -658,11 +694,15 @@ body.minimal .nds-main-nav {
             box-shadow: unset !important;
             border-radius: unset !important;
             z-index: 1;
-            transform: translateY(0);
             overflow: hidden;
             /* Height transitions here; isolate layout scope */
             will-change: height;
             contain: layout;
+
+            .nds-dropdown-content {
+                transform: translateY(0);
+                transition: none;
+            }
         }
     }
 
@@ -702,8 +742,14 @@ body.minimal .nds-main-nav {
         width: 100%;
         border-top: 1px solid var(--border-neutral-secondary);
         justify-content: center;
-        background-color: var(--background-white);
+        background-color: var(--nds-nav-background-color);
         z-index: 1001;
+
+        &:not(:has(.show)) {
+            border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+            transition: border-radius var(--nds-transition);
+        }
+
 
         .nds-nav-item {
             border-bottom: none;
@@ -737,16 +783,27 @@ body.minimal .nds-main-nav {
         left: 0;
         right: 0;
         background-color: var(--background-white);
+        border-radius: 0 0 var(--radius-lg) var(--radius-lg);
         box-shadow: var(--shadow-md);
         z-index: 1002;
         /* Above all navigation */
         max-height: 40vh;
         overflow-y: hidden;
         height: 0;
-        transform: translateY(0px);
         transition: height var(--nds-transition);
         will-change: height;
         contain: layout;
+
+        .nds-dropdown-content {
+            transform: translateY(0);
+            transition: none;
+        }
+    }
+
+    :is(.nds-nav-primary, .nds-nav-secondary) .nds-dropdown-content {
+        border-radius: 0;
+        box-shadow: unset;
+        margin: 0;
     }
 }
 
@@ -755,13 +812,15 @@ body.minimal .nds-main-nav {
     position: fixed !important;
     left: 0;
     right: 0;
-    background-color: var(--background-white);
-    box-shadow: var(--shadow-md);
     z-index: -1;
     /* Above all navigation */
     height: unset !important;
     max-height: 40vh;
     overflow-y: hidden;
+
+    .nds-dropdown-content {
+        margin-inline: 0;
+    }
 }
 
 /* Small Mobile Screens */

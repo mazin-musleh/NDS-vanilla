@@ -215,7 +215,13 @@
             open.forEach(dd => {
                 if (dd !== except) {
                     this.toggle(dd, false);
-                    maxDuration = Math.max(maxDuration, state.getDuration(dd.querySelector('.nds-dropdown-menu')));
+                    const menu = dd.querySelector('.nds-dropdown-menu');
+                    const content = menu?.querySelector('.nds-dropdown-content');
+                    const isInMinimal = dd.closest('.nds-nav-minimal');
+                    const needsHeight = state.isMinimal && (dd.closest('.nds-nav-primary') || dd.closest('.nds-nav-secondary'));
+                    // Minimal nav dropdowns use content transform, mobile primary/secondary use menu height
+                    const animationTarget = isInMinimal ? (content || menu) : (needsHeight ? menu : (content || menu));
+                    maxDuration = Math.max(maxDuration, state.getDuration(animationTarget));
                 }
             });
             if (maxDuration > 0) {
@@ -226,13 +232,17 @@
 
         toggle(el, open) {
             const menu = el.querySelector('.nds-dropdown-menu');
+            const content = menu?.querySelector('.nds-dropdown-content');
             const isInMinimal = el.closest('.nds-nav-minimal');
             const needsHeight = state.isMinimal && (el.closest('.nds-nav-primary') || el.closest('.nds-nav-secondary'));
 
+            // For minimal nav dropdowns, always get duration from content to ensure proper blocking
+            const animationTarget = isInMinimal ? (content || menu) : (needsHeight ? menu : (content || menu));
+
             animate.run(el, open, {
-                getMenu: () => menu,
+                getMenu: () => animationTarget,
                 needsHeight,
-                // Don't block closing animations
+                // Block opening animations (including minimal nav dropdowns)
                 blockWhileAnimating: open,
                 onStart: () => overflow.schedule('high', 10),
                 onComplete: () => {
@@ -250,10 +260,13 @@
         toggle(open) {
             if (!DOM.collapse) return;
 
+            const collapseContent = DOM.collapse.querySelector('.nds-collapse-content');
+
             if (open) {
                 DOM.toggler?.classList.add('active');
 
                 animate.run(DOM.collapse, true, {
+                    getMenu: () => state.isMinimal ? (collapseContent || DOM.collapse) : null,
                     onStart: () => {
                         if (state.isMinimal) overflow.schedule('high', 10);
                     },
@@ -268,6 +281,7 @@
 
                 afterDelay(closeDelay, () => {
                     animate.run(DOM.collapse, false, {
+                        getMenu: () => state.isMinimal ? (collapseContent || DOM.collapse) : null,
                         onComplete: () => {
                             updatePositions();
                             overflow.schedule('low', 100);
@@ -338,16 +352,13 @@
             const wasOverflowing = DOM.primary.classList.contains('hasMore');
             let hasOverflow = false;
 
-            if (state.isMinimal && DOM.collapse) {
-                // Minimal mode: check if content exceeds collapse maxHeight
-                const collapseStyle = getComputedStyle(DOM.collapse);
-                const maxH = parseFloat(collapseStyle.maxHeight);
+            if (state.isMinimal) {
+                // Minimal mode: check if primary nav exceeds its own maxHeight
+                const primaryStyle = getComputedStyle(DOM.primary);
+                const maxH = parseFloat(primaryStyle.maxHeight);
 
                 if (isFinite(maxH) && maxH > 0) {
-                    // Total content = primary nav + secondary nav heights
-                    const primaryHeight = DOM.primary.scrollHeight;
-                    const secondaryHeight = DOM.secondary?.offsetHeight || 0;
-                    hasOverflow = (primaryHeight + secondaryHeight) > maxH;
+                    hasOverflow = DOM.primary.scrollHeight > maxH;
                 }
             } else {
                 // Desktop mode: check horizontal overflow
@@ -397,7 +408,8 @@
 
         // Schedule overflow check after animations settle
         if (state.isMinimal) {
-            afterDelay(state.getDuration(DOM.collapse) + 50, () => overflow.schedule());
+            const collapseContent = DOM.collapse?.querySelector('.nds-collapse-content');
+            afterDelay(state.getDuration(collapseContent || DOM.collapse) + 50, () => overflow.schedule());
         }
     }
 
@@ -534,9 +546,13 @@
 
         const isOpen = dd.classList.contains('show');
         const menu = dd.querySelector('.nds-dropdown-menu');
-        const duration = state.getDuration(menu);
+        const content = menu?.querySelector('.nds-dropdown-content');
         const isInMinimal = dd.closest('.nds-nav-minimal');
         const isInPrimary = dd.closest('.nds-nav-primary');
+        // Get duration from correct element: content for minimal nav and desktop mode, menu for mobile primary/secondary
+        const needsHeight = state.isMinimal && (isInPrimary || dd.closest('.nds-nav-secondary'));
+        const animationTarget = isInMinimal ? (content || menu) : (needsHeight ? menu : (content || menu));
+        const duration = state.getDuration(animationTarget);
 
         // If closing, always allow
         if (isOpen) {
@@ -557,9 +573,11 @@
         const closeDelay = dropdown.closeAll(dd);
 
         const open = () => {
-            // Reset animation state before opening new dropdown
-            state.isAnimating = false;
-            animate._activeCount = 0;
+            // Only reset animation state if no active animations
+            // This prevents resetting while minimal nav dropdowns are still animating
+            if (animate._activeCount === 0) {
+                state.isAnimating = false;
+            }
 
             dropdown.toggle(dd, true);
             if (isInPrimary && DOM.collapse?.classList.contains('show')) {
@@ -572,8 +590,18 @@
             let delay = 0;
 
             if (DOM.collapse?.classList.contains('show')) {
+                // Get navbar close duration (includes dropdowns + collapse)
+                const dropdownCloseDelay = state.reducedMotion ? 0 : dropdown.closeAll();
+                const collapseContent = DOM.collapse?.querySelector('.nds-collapse-content');
+                const collapseDuration = state.getDuration(collapseContent || DOM.collapse);
+                // Total time is dropdown animations + collapse animation
+                const totalNavbarDuration = dropdownCloseDelay + collapseDuration;
+
                 navbar.toggle(false);
-                delay = Math.max(delay, duration * 1.2);
+                delay = Math.max(delay, totalNavbarDuration * 1.2);
+            } else {
+                // Only wait for other minimal nav dropdowns if collapse not open
+                delay = Math.max(delay, closeDelay);
             }
 
             if (DOM.dgaContent?.classList.contains('dga-expanded')) {
@@ -581,7 +609,6 @@
                 delay = Math.max(delay, duration);
             }
 
-            delay = Math.max(delay, closeDelay);
             afterDelay(delay, open);
         } else if (!state.isMinimal && DOM.dgaContent?.classList.contains('dga-expanded')) {
             toggleDGA();
@@ -598,7 +625,9 @@
         }
 
         const isOpen = DOM.collapse?.classList.contains('show');
-        const duration = state.getDuration(DOM.collapse);
+        const collapseContent = DOM.collapse?.querySelector('.nds-collapse-content');
+        // Always read duration from content wrapper since transition is on .nds-collapse-content
+        const duration = state.getDuration(collapseContent || DOM.collapse);
 
         if (!isOpen) {
             const minimalDropdowns = document.querySelectorAll('.nds-nav-minimal .nds-dropdown.show');
@@ -625,7 +654,8 @@
     }
 
     function toggleDGA() {
-        const duration = state.getDuration(DOM.collapse);
+        const collapseContent = DOM.collapse?.querySelector('.nds-collapse-content');
+        const duration = state.getDuration(collapseContent || DOM.collapse);
 
         if (DOM.collapse?.classList.contains('show')) {
             navbar.toggle(false);
@@ -633,7 +663,13 @@
         } else {
             const openDropdowns = document.querySelectorAll('.nds-dropdown.show');
             if (openDropdowns.length) {
-                const ddDuration = state.getDuration(openDropdowns[0].querySelector('.nds-dropdown-menu'));
+                const firstDropdown = openDropdowns[0];
+                const menu = firstDropdown.querySelector('.nds-dropdown-menu');
+                const content = menu?.querySelector('.nds-dropdown-content');
+                const isInMinimal = firstDropdown.closest('.nds-nav-minimal');
+                const needsHeight = state.isMinimal && (firstDropdown.closest('.nds-nav-primary') || firstDropdown.closest('.nds-nav-secondary'));
+                const animationTarget = isInMinimal ? (content || menu) : (needsHeight ? menu : (content || menu));
+                const ddDuration = state.getDuration(animationTarget);
                 openDropdowns.forEach(d => dropdown.toggle(d, false));
                 afterDelay(ddDuration, () => dga.toggle());
             } else {
