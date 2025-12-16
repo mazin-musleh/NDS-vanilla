@@ -25,6 +25,7 @@
         {% assign nav_data = site.data[nav_data_file] %}
 
         <div class="nds-collapse" id="ndsNavCollapse">
+            <div class="nds-collapse-content">
             {% if nav_data.primary_nav and nav_data.primary_nav.size > 0 %}
             <ul class="nds-nav-primary">
                 {% for item in nav_data.primary_nav %}
@@ -32,6 +33,7 @@
                     {% if item.has_dropdown %}
                     <a href="#" class="nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator" data-toggle="dropdown"><span class="label">{{ item.label }}</span></a>
                     <div class="nds-dropdown-menu">
+                        <div class="nds-dropdown-content">
                         <div class="nds-content-container nds-dropdown-columns {% if item.dropdown_type == 'columnView' %}columnView{% elsif item.dropdown_type == 'rowList' %}nds-rowList{% endif %}">
                             {% if item.columns %}
                                 {% for column in item.columns %}
@@ -57,6 +59,7 @@
                                     {% endfor %}
                                 </div>
                             {% endif %}
+                        </div>
                         </div>
                     </div>
                     {% else %}
@@ -92,6 +95,7 @@
                         {% endif %}
                         {% if item.has_dropdown %}
                             <div class="nds-dropdown-menu{% if item.dropdown_class %} {{ item.dropdown_class }}{% endif %}">
+                                <div class="nds-dropdown-content">
                                 {% if item.dropdown_type == 'search' %}
                                     {% comment %} Special Search Dropdown {% endcomment %}
                                     <div class="nds-content-container">
@@ -128,12 +132,14 @@
                                         {% endif %}
                                     </div>
                                 {% endif %}
+                                </div>
                             </div>
                         {% endif %}
                     </li>
                     {% endfor %}
             </ul>
             {% endif %}
+            </div>
         </div>
     </div>
 </nav>
