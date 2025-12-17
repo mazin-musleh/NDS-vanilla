@@ -699,8 +699,9 @@
   }
 
   &.nds-full {
-    width: 100%;
+    width: 100% !important;
     justify-content: center !important;
+    min-width: var(--nds-btn-height);
 
     .label {
       text-align: center !important;
@@ -720,10 +721,10 @@
 
   /* Icon-Only Button Configurations */
   &.nds-icon-only,
-  &:not(:has(.label)) {
+  &:has(i, img, svg):not(:has(span, p, div, h1, h2, h3, h4, h5, h6)) {
     justify-content: center;
-    width: var(--nds-btn-height);
-    padding: 0;
+    width: var(--nds-btn-height) !important;
+    padding: 0 !important;
 
     // Menu button exceptions
     &.nds-menu-btn {

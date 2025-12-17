@@ -218,8 +218,9 @@
                     const menu = dd.querySelector('.nds-dropdown-menu');
                     const content = menu?.querySelector('.nds-dropdown-content');
                     const isInMinimal = dd.closest('.nds-nav-minimal');
-                    const needsHeight = state.isMinimal && (dd.closest('.nds-nav-primary') || dd.closest('.nds-nav-secondary'));
-                    // Minimal nav dropdowns use content transform, mobile primary/secondary use menu height
+                    const isInPrimary = dd.closest('.nds-nav-primary');
+                    // Primary uses height, secondary and minimal nav use content transform
+                    const needsHeight = state.isMinimal && isInPrimary;
                     const animationTarget = isInMinimal ? (content || menu) : (needsHeight ? menu : (content || menu));
                     maxDuration = Math.max(maxDuration, state.getDuration(animationTarget));
                 }
@@ -234,9 +235,10 @@
             const menu = el.querySelector('.nds-dropdown-menu');
             const content = menu?.querySelector('.nds-dropdown-content');
             const isInMinimal = el.closest('.nds-nav-minimal');
-            const needsHeight = state.isMinimal && (el.closest('.nds-nav-primary') || el.closest('.nds-nav-secondary'));
+            const isInPrimary = el.closest('.nds-nav-primary');
+            // Primary uses height, secondary and minimal nav use content transform
+            const needsHeight = state.isMinimal && isInPrimary;
 
-            // For minimal nav dropdowns, always get duration from content to ensure proper blocking
             const animationTarget = isInMinimal ? (content || menu) : (needsHeight ? menu : (content || menu));
 
             animate.run(el, open, {
@@ -549,23 +551,23 @@
         const content = menu?.querySelector('.nds-dropdown-content');
         const isInMinimal = dd.closest('.nds-nav-minimal');
         const isInPrimary = dd.closest('.nds-nav-primary');
-        // Get duration from correct element: content for minimal nav and desktop mode, menu for mobile primary/secondary
-        const needsHeight = state.isMinimal && (isInPrimary || dd.closest('.nds-nav-secondary'));
+        // Primary uses height, secondary and minimal nav use content transform
+        const needsHeight = state.isMinimal && isInPrimary;
         const animationTarget = isInMinimal ? (content || menu) : (needsHeight ? menu : (content || menu));
         const duration = state.getDuration(animationTarget);
 
-        // If closing, always allow
+        // If animation in progress, queue the action
+        if (state.isAnimating) {
+            animate.queue('dropdown', event);
+            return;
+        }
+
+        // If closing, allow
         if (isOpen) {
             dropdown.toggle(dd, false);
             if (isInPrimary && DOM.collapse?.classList.contains('show')) {
                 afterDelay(duration, updatePositions);
             }
-            return;
-        }
-
-        // If opening and animation in progress, queue it
-        if (state.isAnimating) {
-            animate.queue('dropdown', event);
             return;
         }
 
@@ -667,7 +669,9 @@
                 const menu = firstDropdown.querySelector('.nds-dropdown-menu');
                 const content = menu?.querySelector('.nds-dropdown-content');
                 const isInMinimal = firstDropdown.closest('.nds-nav-minimal');
-                const needsHeight = state.isMinimal && (firstDropdown.closest('.nds-nav-primary') || firstDropdown.closest('.nds-nav-secondary'));
+                const isInPrimary = firstDropdown.closest('.nds-nav-primary');
+                // Primary uses height, secondary and minimal nav use content transform
+                const needsHeight = state.isMinimal && isInPrimary;
                 const animationTarget = isInMinimal ? (content || menu) : (needsHeight ? menu : (content || menu));
                 const ddDuration = state.getDuration(animationTarget);
                 openDropdowns.forEach(d => dropdown.toggle(d, false));

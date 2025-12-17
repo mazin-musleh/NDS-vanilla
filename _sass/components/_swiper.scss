@@ -166,7 +166,7 @@
     background-color: var(--swiper-pagination-bullet-default);
     opacity: 0.6;
     cursor: pointer;
-    transition: all var(--nds-transition);
+    transition: opacity var(--nds-transition), background-color var(--nds-transition);
     border: 1px solid rgba(0, 0, 0, 0.1);
     padding: 0;
 

@@ -226,7 +226,6 @@
             background-color: var(--nds-nav-background-color);
             z-index: 999999;
             color: var(--text-default);
-            right: auto;
             transition: opacity var(--nds-transition);
 
             /* Scope icon font to the icon only */
@@ -262,7 +261,6 @@
         z-index: -1;
         /* Fallback for older browsers */
         overflow: hidden;
-        overflow: clip;
 
         >.nds-dropdown-content {
             background: var(--nds-nav-background-color);
@@ -300,7 +298,8 @@
 
     &.opened.show .nds-dropdown-menu {
         overflow: unset;
-        .nds-dropdown-content{
+
+        .nds-dropdown-content {
             overflow-y: auto;
         }
     }
@@ -314,7 +313,7 @@
         transform: translateY(-100%);
     }
 
-    
+
 
     .nds-dropdown-item {
         color: var(--text-default);
@@ -444,7 +443,7 @@ body:not(.minimal) .nds-main-nav {
     /* Show More Button Styles */
     .nds-nav-primary.hasMore {
         .showMore {
-            left: 0;
+            inset-inline-end: 0;
             transform: translateX(0);
 
             i {
@@ -613,9 +612,9 @@ body.minimal .nds-main-nav {
             transition: transform var(--nds-transition);
             border-radius: 0 0 var(--radius-lg) var(--radius-lg);
 
-            .nds-dropdown-menu .nds-dropdown-content {
-        overflow: unset;
-    }
+            .nds-nav-primary .nds-dropdown-menu .nds-dropdown-content {
+                overflow: unset;
+            }
         }
 
         &.opened,
@@ -668,8 +667,7 @@ body.minimal .nds-main-nav {
                 bottom: var(--nds-nav-height);
                 box-shadow: 0px -4px 8px 0px rgba(0, 0, 0, 0.08);
                 position: fixed;
-                left: 0;
-                right: 0;
+                inset-inline: 0;
                 z-index: 2;
                 display: flex !important;
                 opacity: 0;
@@ -734,8 +732,7 @@ body.minimal .nds-main-nav {
     /* Secondary Navigation */
     .nds-nav-secondary {
         position: sticky !important;
-        left: 0;
-        right: 0;
+        inset-inline: 0;
         flex-direction: row;
         align-items: stretch;
         gap: 0;
@@ -771,32 +768,28 @@ body.minimal .nds-main-nav {
 
     }
 
-
-
     .nds-nav-primary .nds-dropdown-menu {
         height: 0;
         transition: height var(--nds-transition);
-    }
-
-    .nds-nav-secondary .nds-dropdown-menu {
-        position: fixed !important;
-        left: 0;
-        right: 0;
-        background-color: var(--background-white);
-        border-radius: 0 0 var(--radius-lg) var(--radius-lg);
-        box-shadow: var(--shadow-md);
-        z-index: 1002;
-        /* Above all navigation */
-        max-height: 40vh;
-        overflow-y: hidden;
-        height: 0;
-        transition: height var(--nds-transition);
-        will-change: height;
-        contain: layout;
 
         .nds-dropdown-content {
             transform: translateY(0);
             transition: none;
+        }
+    }
+
+    .nds-nav-secondary .nds-dropdown-menu {
+        position: fixed !important;
+        inset-inline: 0;
+        z-index: 1002;
+        /* Above all navigation */
+        max-height: 40vh;
+        overflow-y: hidden;
+
+        .nds-dropdown-content {
+            background-color: var(--background-white);
+            border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+            box-shadow: var(--shadow-md);
         }
     }
 
@@ -810,8 +803,7 @@ body.minimal .nds-main-nav {
 /* Minimal Navigation Dropdown (shared between mobile and desktop) */
 .nds-main-nav .nds-nav-minimal .nds-dropdown-menu {
     position: fixed !important;
-    left: 0;
-    right: 0;
+    inset-inline: 0;
     z-index: -1;
     /* Above all navigation */
     height: unset !important;
