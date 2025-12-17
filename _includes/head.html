@@ -7,22 +7,6 @@
         content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}">
     <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site_title }}</title>
 
-    <!-- Persist fonts-loaded state across navigations -->
-    <script>
-        try {
-            if (localStorage.getItem('nds-fonts-loaded') === '1') {
-                document.documentElement.classList.add('fonts-loaded');
-            }
-
-        } catch (e) { }
-    </script>
-
-    <!-- Preload primary text fonts (limit to above-the-fold weights) -->
-    <link rel="preload" as="font" type="font/woff2"
-        href="{{ '/assets/fonts/IBMPlexSansArabic-Regular.woff2' | relative_url }}" crossorigin>
-    <link rel="preload" as="font" type="font/woff2"
-        href="{{ '/assets/fonts/IBMPlexSansArabic-Bold.woff2' | relative_url }}" crossorigin>
-
     <!-- Critical CSS inline -->
     <style>
         :root {
@@ -58,7 +42,7 @@
             color: var(--text-default, #161616);
             font-size: var(--nds-text-md-FS, 16px);
             line-height: var(--nds-text-md-LH, 24px);
-            min-height: 100vh;
+            min-height: 100dvh;
             display: flex;
             flex-direction: column;
             margin: 0;
@@ -140,7 +124,7 @@
 
         /* Hero Section Base Styles */
         .nds-hero-section {
-            height: 600px;
+            width: 100%;
             background-color: var(--background-sa-flag);
             position: relative;
             background-position: 50% 50%;
@@ -148,6 +132,8 @@
 
         .nds-hero-section:not(.sub) {
             overflow: hidden;
+            aspect-ratio: 16 / 9;
+            max-height: 80svh;
         }
 
         /* Hero Sub Section */
@@ -193,8 +179,7 @@
         }
 
 
-        .nds-hero-section.sub .nds-hero-image-wrapper,
-        .nds-hero-section.sub .nds-hero-shape {
+        .nds-hero-section.sub .nds-hero-image-wrapper {
             display: none;
         }
 
@@ -271,18 +256,6 @@
                 height: 500px;
             }
 
-            .nds-hero-shape>img,
-            .nds-hero-shape>svg {
-                height: 800px;
-            }
-
-            .nds-hero-shape {
-                transform: translate(55%, -50%);
-            }
-
-            html[dir="ltr"] .nds-hero-shape {
-                transform: translate(-55%, -50%);
-            }
         }
 
         /* Mobile Responsive */
@@ -290,16 +263,6 @@
 
             .nds-hero-section:not(.sub) .nds-heroContent .nds-heroTitle::before {
                 width: 80vw;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .nds-hero-shape {
-                transform: translate(60%, -50%);
-            }
-
-            html[dir="ltr"] .nds-hero-shape {
-                transform: translate(-60%, -50%);
             }
         }
 
@@ -321,8 +284,24 @@
         }
     </style>
 
+        <!-- Persist fonts-loaded state across navigations -->
+    <script>
+        try {
+            if (localStorage.getItem('nds-fonts-loaded') === '1') {
+                document.documentElement.classList.add('fonts-loaded');
+            }
+
+        } catch (e) { }
+    </script>
+
+    <!-- Preload primary text fonts (limit to above-the-fold weights) -->
+    <link rel="preload" as="font" type="font/woff2"
+        href="{{ '/assets/fonts/IBMPlexSansArabic-Regular.woff2' | relative_url }}" crossorigin>
+    <link rel="preload" as="font" type="font/woff2"
+        href="{{ '/assets/fonts/IBMPlexSansArabic-Bold.woff2' | relative_url }}" crossorigin>
+        
     <!-- Load CSS files -->
-    <link rel="preload" href="{{ '/assets/css/nds-main.min.css' | relative_url }}?ver=1.034" as="style"
+    <link rel="preload" href="{{ '/assets/css/nds-main.min.css' | relative_url }}?ver=1.037" as="style"
         onload="this.onload=null;this.rel='stylesheet'" fetchpriority="high">
     <noscript>
         <link rel="stylesheet" href="{{ '/assets/css/nds-main.min.css' | relative_url }}">
@@ -330,7 +309,10 @@
 
     <!-- Preload critical resources -->
     {% if page.layout == 'home' or page.url == '/' %}
-    <link rel="preload" href="{{ page.hero_image | default: site.hero_image | relative_url }}" as="image"
+    <link rel="preload" as="image"
+        href="{{ page.hero_image | default: site.hero_image | relative_url }}"
+        imagesrcset="{{ page.hero_image_small | default: site.hero_image_small | relative_url }} 600w, {{ page.hero_image | default: site.hero_image | relative_url }} 1200w"
+        imagesizes="100vw"
         fetchpriority="high">
     {% endif %}
 

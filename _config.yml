@@ -6,19 +6,20 @@ baseurl: "/_site"
 port: 4002
 
 # Brand Logo
-brandLogo: /assets/img/palm_swords.svg
+brandLogo: /assets/img/dga-logo.svg
 headerBrandW: 48
 headerBrandH: 48
 
 # Brand Name
-brandName: "National Design System" #comment this to remove text from brand
-brandNameColor: var(--text-display)
-brandSlogan: Vanilla, Full Control
-brandSloganColor: var(--text-secondary-paragraph)
+#brandName: "National Design System" #comment this to remove text from brand
+#brandNameColor: var(--text-display)
+#brandSlogan: Vanilla, Compatible, Adaptive
+#brandSloganColor: var(--text-secondary-paragraph)
 
 # Hero Settings (fallback defaults)
-hero_image: /assets/img/riyadhcenter.webp
-hero_image_sub: 
+hero_image: /assets/img/riyadhcenter3.webp
+hero_image_small: /assets/img/riyadhcenter3s.webp
+hero_image_sub:
 hero_image_pos: 50% 50%
 hero_title: National Design System
 hero_description: The National Design System provides comprehensive design guidelines, components, and resources for creating consistent and accessible digital experiences across government services in Saudi Arabia.
