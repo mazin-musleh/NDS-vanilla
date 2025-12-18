@@ -103,20 +103,36 @@
 }
 
 .nds-stepper.nds-center {
+
     .nds-stepper-step {
+        align-self: flex-start !important; //override nds-center align-self
+
         .nds-stepper-base {
-            justify-content: center;
+            /* justify-content: center; */
+            transform: translateX(calc(-50% + var(--stepper-size) / 2));
+
+            @include ltr {
+                transform: translateX(calc(50% - var(--stepper-size) / 2));
+            }
+
+            
+        }
+
+        &:last-child .nds-stepper-base{
+            margin-inline: auto;
         }
 
         .nds-stepper-content {
             align-items: center;
+            text-align: center;
         }
 
         &.has-line {
             .nds-stepper-base {
                 &::after {
-                    inset-inline-start: 50%;
-                    inset-inline-end: -50%;
+                    /* inset-inline-start: calc(var(--stepper-size) + var(--stepper-gap));
+                    inset-inline-end: calc(var(--stepper-size) * -1); */
+                    /* transform: translateX(calc(-50% + var(--stepper-gap) / 2)); */
                 }
             }
 
@@ -174,6 +190,7 @@
     // Data attribute support for custom text
     &[data-step-text] {
         font-size: 0;
+        line-height: 1;
 
         &::before {
             content: attr(data-step-text);
@@ -389,7 +406,8 @@
 .nds-stepper.nds-radial {
     --pc-size: 64px;
     --stepper-gap: calc(var(--pc-size)/8);
-    --content-gap: 0;/* calc(var(--pc-size)/16); */
+    --content-gap: 0;
+    /* calc(var(--pc-size)/16); */
     align-items: center;
 
     .nds-stepper-step {
