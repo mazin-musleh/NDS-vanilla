@@ -16,9 +16,7 @@
     justify-content: space-between;
     align-items: flex-end;
     /* Fallback for older browsers */
-    overflow: hidden;
-    overflow: clip;
-    transition: height var(--nds-transition);
+    overflow-y: clip;
 }
 
 .nds-topbar {
@@ -260,7 +258,7 @@
         border-radius: 0;
         z-index: -1;
         /* Fallback for older browsers */
-        overflow: hidden;
+        overflow-y: clip;
 
         >.nds-dropdown-content {
             background: var(--nds-nav-background-color);
@@ -293,7 +291,7 @@
     }
 
     .nds-dropdown-menu .nds-dropdown-content {
-        overflow: hidden;
+        overflow: clip;
     }
 
     &.opened.show .nds-dropdown-menu {
@@ -602,7 +600,6 @@ body.minimal .nds-main-nav {
         z-index: -1;
         display: none;
         /* Fallback for older browsers */
-        overflow: hidden;
         overflow: clip;
 
         .nds-collapse-content {
@@ -612,9 +609,7 @@ body.minimal .nds-main-nav {
             transition: transform var(--nds-transition);
             border-radius: 0 0 var(--radius-lg) var(--radius-lg);
 
-            .nds-nav-primary .nds-dropdown-menu .nds-dropdown-content {
-                overflow: unset;
-            }
+
         }
 
         &.opened,
@@ -650,7 +645,7 @@ body.minimal .nds-main-nav {
         align-items: stretch;
         gap: 0;
         width: 100%;
-        max-height: 50svh;
+        max-height: 50dvh;
         transition: margin-bottom 0.1s;
 
         .nds-nav-item {
@@ -689,18 +684,31 @@ body.minimal .nds-main-nav {
         }
 
         .nds-dropdown-menu {
+            display: grid;
+            transition: grid-template-rows var(--nds-transition);
+            grid-template-rows: 0fr;
             box-shadow: unset !important;
             border-radius: unset !important;
             z-index: 1;
-            overflow: hidden;
+            overflow: clip;
             /* Height transitions here; isolate layout scope */
             will-change: height;
             contain: layout;
 
             .nds-dropdown-content {
+                grid-row: 1 / span 2;
                 transform: translateY(0);
                 transition: none;
+                max-height: unset;
+                overflow: unset !important;
             }
+        }
+
+        .nds-dropdown.show .nds-dropdown-menu {
+            grid-template-rows: 1fr;
+        }
+        .nds-dropdown.closing .nds-dropdown-menu {
+            grid-template-rows: 0fr;
         }
     }
 
@@ -758,39 +766,20 @@ body.minimal .nds-main-nav {
 
         /* Mobile Dropdown Styles */
         .nds-dropdown-menu {
-            position: static;
-            width: 100%;
-            overflow: hidden;
-            z-index: -1;
+            position: fixed !important;
+            inset-inline: 0;
+            z-index: 1002;
+            /* Above all navigation */
+            max-height: 40vh;
+            overflow-y: clip;
 
-            /* Base level within mobile nav */
+            .nds-dropdown-content {
+                background-color: var(--background-white);
+                border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+                box-shadow: var(--shadow-md);
+            }
         }
 
-    }
-
-    .nds-nav-primary .nds-dropdown-menu {
-        height: 0;
-        transition: height var(--nds-transition);
-
-        .nds-dropdown-content {
-            transform: translateY(0);
-            transition: none;
-        }
-    }
-
-    .nds-nav-secondary .nds-dropdown-menu {
-        position: fixed !important;
-        inset-inline: 0;
-        z-index: 1002;
-        /* Above all navigation */
-        max-height: 40vh;
-        overflow-y: hidden;
-
-        .nds-dropdown-content {
-            background-color: var(--background-white);
-            border-radius: 0 0 var(--radius-lg) var(--radius-lg);
-            box-shadow: var(--shadow-md);
-        }
     }
 
     :is(.nds-nav-primary, .nds-nav-secondary) .nds-dropdown-content {
@@ -808,7 +797,7 @@ body.minimal .nds-main-nav {
     /* Above all navigation */
     height: unset !important;
     max-height: 40vh;
-    overflow-y: hidden;
+    overflow-y: clip;
 
     .nds-dropdown-content {
         margin-inline: 0;

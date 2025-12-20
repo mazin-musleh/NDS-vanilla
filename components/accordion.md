@@ -59,16 +59,19 @@ css_files:
                             </h3>
                             <div class="nds-accordion-collapse show" id="collapse-services"
                                 aria-labelledby="heading-services">
-                                <div class="nds-accordion-body">
-                                    <p>Explore our comprehensive digital government services designed to streamline your
-                                        interactions with government agencies. From document processing to online
-                                        applications, we provide secure and efficient digital solutions.</p>
-                                    <ul>
-                                        <li>Online permit applications</li>
-                                        <li>Digital certificate issuance</li>
-                                        <li>Tax filing and payment systems</li>
-                                        <li>Citizen service portals</li>
-                                    </ul>
+                                <div class="nds-accordion-content">
+                                    <div class="nds-accordion-body">
+                                        <p>Explore our comprehensive digital government services designed to streamline
+                                            your
+                                            interactions with government agencies. From document processing to online
+                                            applications, we provide secure and efficient digital solutions.</p>
+                                        <ul>
+                                            <li>Online permit applications</li>
+                                            <li>Digital certificate issuance</li>
+                                            <li>Tax filing and payment systems</li>
+                                            <li>Citizen service portals</li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -81,19 +84,24 @@ css_files:
                                 </button>
                             </h3>
                             <div class="nds-accordion-collapse" id="collapse-support" aria-labelledby="heading-support">
-                                <div class="nds-accordion-body">
-                                    <p>Access comprehensive support resources and documentation to help you navigate our
-                                        services effectively. Our support team is committed to providing you with the
-                                        assistance you need.</p>
-                                    <div class="support-options">
-                                        <div class="support-item">
-                                            <strong>Help Center:</strong> Browse our extensive knowledge base
-                                        </div>
-                                        <div class="support-item">
-                                            <strong>Live Chat:</strong> Get immediate assistance from our support team
-                                        </div>
-                                        <div class="support-item">
-                                            <strong>Email Support:</strong> Submit detailed inquiries via email
+                                <div class="nds-accordion-content">
+                                    <div class="nds-accordion-body">
+                                        <p>Access comprehensive support resources and documentation to help you navigate
+                                            our
+                                            services effectively. Our support team is committed to providing you with
+                                            the
+                                            assistance you need.</p>
+                                        <div class="support-options">
+                                            <div class="support-item">
+                                                <strong>Help Center:</strong> Browse our extensive knowledge base
+                                            </div>
+                                            <div class="support-item">
+                                                <strong>Live Chat:</strong> Get immediate assistance from our support
+                                                team
+                                            </div>
+                                            <div class="support-item">
+                                                <strong>Email Support:</strong> Submit detailed inquiries via email
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -109,11 +117,15 @@ css_files:
                             </h3>
                             <div class="nds-accordion-collapse" id="collapse-resources"
                                 aria-labelledby="heading-resources">
-                                <div class="nds-accordion-body">
-                                    <p>Access developer tools, APIs, and resources to integrate with our services. Build
-                                        innovative solutions using our comprehensive development platform.</p>
-                                    <p>Available resources include API documentation, code samples, SDKs, and developer
-                                        support forums.</p>
+                                <div class="nds-accordion-content">
+                                    <div class="nds-accordion-body">
+                                        <p>Access developer tools, APIs, and resources to integrate with our services.
+                                            Build
+                                            innovative solutions using our comprehensive development platform.</p>
+                                        <p>Available resources include API documentation, code samples, SDKs, and
+                                            developer
+                                            support forums.</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -149,9 +161,11 @@ css_files:
                                             </button>
                                             </h3>
                                             <div class="nds-accordion-collapse show" id="collapse-1" aria-labelledby="heading-1">
-                                            <div class="nds-accordion-body">
-                                                Content for the first accordion item goes here.
-                                            </div>
+                                                <div class="nds-accordion-content">
+                                                    <div class="nds-accordion-body">
+                                                        Content for the first accordion item goes here.
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="nds-accordion-item">
@@ -161,9 +175,11 @@ css_files:
                                             </button>
                                             </h3>
                                             <div class="nds-accordion-collapse" id="collapse-2" aria-labelledby="heading-2">
-                                            <div class="nds-accordion-body">
-                                                Content for the second accordion item goes here.
-                                            </div>
+                                                <div class="nds-accordion-content">
+                                                    <div class="nds-accordion-body">
+                                                        Content for the second accordion item goes here.
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -213,22 +229,24 @@ css_files:
                             </h3>
                             <div class="nds-accordion-collapse show" id="collapse-account"
                                 aria-labelledby="heading-account">
-                                <div class="nds-accordion-body">
-                                    <p>Manage your government account settings, update personal information, and control
-                                        your privacy preferences. Your account is the central hub for all your
-                                        government service interactions.</p>
-                                    <div class="account-features">
-                                        <div class="nds-btn nds-secondary-outline feature-item">
-                                            <i class="hgi hgi-stroke hgi-settings-01"></i>
-                                            <span>Profile Settings</span>
-                                        </div>
-                                        <div class="nds-btn nds-secondary-outline feature-item">
-                                            <i class="hgi hgi-stroke hgi-shield-01"></i>
-                                            <span>Security Settings</span>
-                                        </div>
-                                        <div class="nds-btn nds-secondary-outline feature-item">
-                                            <i class="hgi hgi-stroke hgi-notification-01"></i>
-                                            <span>Notification Preferences</span>
+                                <div class="nds-accordion-content">
+                                    <div class="nds-accordion-body">
+                                        <p>Manage your government account settings, update personal information, and control
+                                            your privacy preferences. Your account is the central hub for all your
+                                            government service interactions.</p>
+                                        <div class="account-features">
+                                            <div class="nds-btn nds-secondary-outline feature-item">
+                                                <i class="hgi hgi-stroke hgi-settings-01"></i>
+                                                <span>Profile Settings</span>
+                                            </div>
+                                            <div class="nds-btn nds-secondary-outline feature-item">
+                                                <i class="hgi hgi-stroke hgi-shield-01"></i>
+                                                <span>Security Settings</span>
+                                            </div>
+                                            <div class="nds-btn nds-secondary-outline feature-item">
+                                                <i class="hgi hgi-stroke hgi-notification-01"></i>
+                                                <span>Notification Preferences</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -245,15 +263,17 @@ css_files:
                             </h3>
                             <div class="nds-accordion-collapse" id="collapse-documents"
                                 aria-labelledby="heading-documents">
-                                <div class="nds-accordion-body">
-                                    <p>Access and manage your official documents, request new certificates, and track
-                                        the status of your applications.</p>
-                                    <ul>
-                                        <li>Birth and marriage certificates</li>
-                                        <li>Business licenses and permits</li>
-                                        <li>Educational transcripts and diplomas</li>
-                                        <li>Health and vaccination records</li>
-                                    </ul>
+                                <div class="nds-accordion-content">
+                                    <div class="nds-accordion-body">
+                                        <p>Access and manage your official documents, request new certificates, and track
+                                            the status of your applications.</p>
+                                        <ul>
+                                            <li>Birth and marriage certificates</li>
+                                            <li>Business licenses and permits</li>
+                                            <li>Educational transcripts and diplomas</li>
+                                            <li>Health and vaccination records</li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -268,12 +288,14 @@ css_files:
                             </h3>
                             <div class="nds-accordion-collapse" id="collapse-payments"
                                 aria-labelledby="heading-payments">
-                                <div class="nds-accordion-body">
-                                    <p>Make secure payments for government services, view payment history, and set up
-                                        automatic payments for recurring fees.</p>
-                                    <p>We support multiple payment methods including credit cards, bank transfers, and
-                                        digital wallets, all processed through secure, government-approved payment
-                                        gateways.</p>
+                                <div class="nds-accordion-content">
+                                    <div class="nds-accordion-body">
+                                        <p>Make secure payments for government services, view payment history, and set up
+                                            automatic payments for recurring fees.</p>
+                                        <p>We support multiple payment methods including credit cards, bank transfers, and
+                                            digital wallets, all processed through secure, government-approved payment
+                                            gateways.</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -310,9 +332,11 @@ css_files:
                                             </button>
                                             </h3>
                                             <div class="nds-accordion-collapse show" id="collapse-1" aria-labelledby="heading-1">
-                                            <div class="nds-accordion-body">
-                                                Content with leading icon accordion item.
-                                            </div>
+                                                <div class="nds-accordion-content">
+                                                    <div class="nds-accordion-body">
+                                                        Content with leading icon accordion item.
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -409,9 +433,11 @@ css_files:
                             </button>
                             </h3>
                             <div class="nds-accordion-collapse" id="panel-1">
-                            <div class="nds-accordion-body">
-                                Panel content goes here...
-                            </div>
+                                <div class="nds-accordion-content">
+                                    <div class="nds-accordion-body">
+                                        Panel content goes here...
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         </div>

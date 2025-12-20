@@ -1,56 +1,66 @@
-<div id="dgaDigitalStamp" class="dga-content" role="region" aria-label="Digital government stamp">
-    <div class="saudi-security-notices-container nds-content-container">
-        <!-- gov Links Notice -->
-        <div class="saudi-gov-security-card">
-            <div class="saudi-security-icon-wrapper">
-                <i class="hgi hgi-stroke hgi-link-04 icon"></i>
-            </div>
-            <div class="saudi-notice-content-block">
-                <div class="saudi-notice-primary-heading" id="domain-title">
-                    روابط المواقع الالكترونية الرسمية السعودية تنتهي بـ <span
-                        class="saudi-domain-highlight-text">gov.sa</span>
+<div id="dgaDigitalStamp" role="region" aria-label="Digital government stamp">
+    <div class="dga-content">
+        <div class="saudi-security-notices-container nds-content-container">
+            <!-- gov Links Notice -->
+            <div class="saudi-gov-security-card">
+                <div class="saudi-security-icon-wrapper">
+                    <i class="hgi hgi-stroke hgi-link-04 icon"></i>
                 </div>
-                <div class="saudi-notice-description-text" id="domain-desc">
-                    جميع روابط المواقع الرسمية التابعة للجهات الحكومية في المملكة العربية السعودية تنتهي بـ .gov.sa
-                </div>
-            </div>
-        </div>
-        <!-- HTTPS Security Notice -->
-        <div class="saudi-gov-security-card">
-            <div class="saudi-security-icon-wrapper">
-                <i class="hgi hgi-stroke hgi-square-lock-01 icon"></i>
-            </div>
-            <div class="saudi-notice-content-block">
-                <div class="saudi-notice-primary-heading" id="https-title">
-                    المواقع الالكترونية الحكومية تستخدم بروتوكول <span class="saudi-domain-highlight-text">HTTPS</span>
-                    للتشفير و الأمان.
-                </div>
-                <div class="saudi-notice-description-text" id="https-desc">
-                    المواقع الالكترونية الآمنة في المملكة العربية السعودية تستخدم بروتوكول HTTPS للتشفير.
+                <div class="saudi-notice-content-block">
+                    <div class="saudi-notice-primary-heading" id="domain-title">
+                        روابط المواقع الالكترونية الرسمية السعودية تنتهي بـ <span
+                            class="saudi-domain-highlight-text">gov.sa</span>
+                    </div>
+                    <div class="saudi-notice-description-text" id="domain-desc">
+                        جميع روابط المواقع الرسمية التابعة للجهات الحكومية في المملكة العربية السعودية تنتهي بـ .gov.sa
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="saudi-gov-security-register">
-            <img src="{{ '/assets/img/dga-logo-icon.svg' | relative_url }}" width="21" height="31"
-                alt="هيئة الحكومة الرقمية" loading="lazy">
-            <span id="register-text">مسجل لدى هيئة الحكومة الرقمية برقم:</span>
-            <a class="registration-number" href="{{ page.dga_registration_url | default: site.dga_registration_url }}"
-                target="_blank">{{ page.dga_registration_number | default: site.dga_registration_number }}</a>
+            <!-- HTTPS Security Notice -->
+            <div class="saudi-gov-security-card">
+                <div class="saudi-security-icon-wrapper">
+                    <i class="hgi hgi-stroke hgi-square-lock-01 icon"></i>
+                </div>
+                <div class="saudi-notice-content-block">
+                    <div class="saudi-notice-primary-heading" id="https-title">
+                        المواقع الالكترونية الحكومية تستخدم بروتوكول <span
+                            class="saudi-domain-highlight-text">HTTPS</span>
+                        للتشفير و الأمان.
+                    </div>
+                    <div class="saudi-notice-description-text" id="https-desc">
+                        المواقع الالكترونية الآمنة في المملكة العربية السعودية تستخدم بروتوكول HTTPS للتشفير.
+                    </div>
+                </div>
+            </div>
+            <div class="saudi-gov-security-register">
+                <img src="{{ '/assets/img/dga-logo-icon.svg' | relative_url }}" width="21" height="31"
+                    alt="هيئة الحكومة الرقمية" loading="lazy">
+                <span id="register-text">مسجل لدى هيئة الحكومة الرقمية برقم:</span>
+                <a class="registration-number"
+                    href="{{ page.dga_registration_url | default: site.dga_registration_url }}" target="_blank">{{
+                    page.dga_registration_number | default: site.dga_registration_number }}</a>
+            </div>
         </div>
     </div>
 </div>
 <div class="nds-topbar" role="region" aria-label="Top bar utilities">
     <div class="nds-content-container">
-        <button class="nds-btn nds-menu-btn infoContainer dga-tab" role="button" aria-expanded="false" aria-controls="dgaDigitalStamp">
-            <span class="bigScreenText" id="big-screen-text">A government website registered with the Digital Government Authority.</span>
-            <span class="smallScreenText" id="small-screen-text">Government website registered with DGA</span>
+        <button class="nds-btn nds-menu-btn infoContainer dga-tab" role="button" aria-expanded="false"
+            aria-controls="dgaDigitalStamp">
+            <img class="flag" src="{{ '/assets/icon/SAflag.svg' | relative_url }}" width="20" height="14"
+                loading="lazy" alt="Logo of Saudi Arabia Flag">
+            <span class="bigScreenText" id="big-screen-text">A government website registered with the
+                Digital Government
+                Authority.</span>
+            <span class="smallScreenText" id="small-screen-text">Government website</span>
             <b id="dgaVerify-text">How you know?</b>
         </button>
         <div class="infoContainer">
             <span id="nds-date" class="textIcon" data-calendar="hijri"></span>
             <span id="nds-realTimeClock" class="textIcon"></span>
             <span id="nds-cityName" class="textIcon"></span>
-            <span id="nds-weatherInfo" class="textIcon" data-latitude="{{ site.city_latitude | default: '24.7136' }}" data-longitude="{{ site.city_longitude | default: '46.6753' }}"></span>
+            <span id="nds-weatherInfo" class="textIcon" data-latitude="{{ site.city_latitude | default: '24.7136' }}"
+                data-longitude="{{ site.city_longitude | default: '46.6753' }}"></span>
         </div>
     </div>
 </div>

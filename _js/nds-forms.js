@@ -4,24 +4,6 @@
 (function () {
     'use strict';
 
-    // Scroll field into view utility
-    function scrollFieldIntoView(el) {
-        // Wait for keyboard + layout to settle
-        requestAnimationFrame(function() {
-            requestAnimationFrame(function() {
-                el.scrollIntoView({ block: "center", inline: "nearest", behavior: "smooth" });
-            });
-        });
-    }
-
-    // Global focusin listener for all form fields
-    document.addEventListener("focusin", function(e) {
-        var el = e.target;
-        if (el.matches("input, textarea, select, [contenteditable='true']")) {
-            scrollFieldIntoView(el);
-        }
-    });
-
     // Voice Recognition Module
     var VoiceRecognition = {
         audioFeedback: {

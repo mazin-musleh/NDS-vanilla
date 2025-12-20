@@ -46,6 +46,8 @@
 
     .label {
       text-align: center;
+      width: 100%;
+      position: relative;
     }
 
     @include mobile {
@@ -68,7 +70,10 @@
 
       &.nds-indicator:before {
         background-color: var(--button-background-primary-hovered);
+        color: var(--button-background-primary-hovered);
       }
+
+
     }
   }
 }
@@ -190,9 +195,7 @@
 .nds-pagination-ellipsis .nds-dropmenu-trigger.active .label::after {
   content: '...';
   display: block;
-  position: absolute;
-  bottom: 0;
-  inset-block-start: auto;
-  inset-inline-start: 50%;
-  transform: translateX(-50%);
+  position: relative;
+  bottom: calc(var(--nds-btn-height) / 2 - 2px);
+  height: 0;
 }
