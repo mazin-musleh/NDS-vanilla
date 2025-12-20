@@ -9,7 +9,7 @@
         nav: document.getElementById('ndsMainNav'),
         dgaTab: document.querySelector('.dga-tab'),
         topbar: document.querySelector('.nds-topbar'),
-        dgaContent: document.querySelector('.dga-content'),
+        dgaDigitalStamp: document.querySelector('#dgaDigitalStamp'),
 
         get collapse() { return this.nav?.querySelector('#ndsNavCollapse'); },
         get container() { return this.nav?.querySelector('.nds-nav-container'); },
@@ -127,7 +127,6 @@
                 onStart,
                 onComplete,
                 getMenu,
-                needsHeight = false,
                 blockWhileAnimating = true
             } = config;
 
@@ -158,9 +157,6 @@
                 onStart?.();
 
                 requestAnimationFrame(() => requestAnimationFrame(() => {
-                    if (needsHeight && menu) {
-                        menu.style.height = `${menu.scrollHeight}px`;
-                    }
                     element.classList.add('opening');
                 }));
 
@@ -172,10 +168,6 @@
             } else {
                 element.classList.add('closing');
                 element.classList.remove('opened');
-
-                if (needsHeight && menu) {
-                    menu.style.height = '0px';
-                }
 
                 onStart?.();
 
@@ -299,21 +291,17 @@
     // ==============================================
     const dga = {
         toggle() {
-            if (!DOM.topbar || !DOM.dgaContent) return;
+            if (!DOM.topbar || !DOM.dgaDigitalStamp) return;
 
-            const duration = state.getDuration(DOM.dgaContent);
-            DOM.dgaContent.classList.add('dga-expanding');
-            afterDelay(duration, () => DOM.dgaContent.classList.remove('dga-expanding'));
+            const duration = state.getDuration(DOM.dgaDigitalStamp);
+            DOM.dgaDigitalStamp.classList.add('dga-expanding');
+            afterDelay(duration, () => DOM.dgaDigitalStamp.classList.remove('dga-expanding'));
 
-            DOM.dgaContent.classList.toggle('dga-expanded');
-            const isExpanded = DOM.dgaContent.classList.contains('dga-expanded');
+            DOM.dgaDigitalStamp.classList.toggle('dga-expanded');
+            const isExpanded = DOM.dgaDigitalStamp.classList.contains('dga-expanded');
 
             DOM.dgaTab?.setAttribute('aria-expanded', isExpanded);
             DOM.dgaTab?.classList.toggle('expanded', isExpanded);
-
-            requestAnimationFrame(() => {
-                DOM.dgaContent.style.height = isExpanded ? `${DOM.dgaContent.scrollHeight}px` : '0px';
-            });
 
             afterDelay(duration, () => {
                 updatePositions();
@@ -606,13 +594,13 @@
                 delay = Math.max(delay, closeDelay);
             }
 
-            if (DOM.dgaContent?.classList.contains('dga-expanded')) {
+            if (DOM.dgaDigitalStamp?.classList.contains('dga-expanded')) {
                 dga.toggle();
                 delay = Math.max(delay, duration);
             }
 
             afterDelay(delay, open);
-        } else if (!state.isMinimal && DOM.dgaContent?.classList.contains('dga-expanded')) {
+        } else if (!state.isMinimal && DOM.dgaDigitalStamp?.classList.contains('dga-expanded')) {
             toggleDGA();
             afterDelay(duration, () => afterDelay(closeDelay, open));
         } else {
@@ -636,7 +624,7 @@
             if (minimalDropdowns.length) {
                 minimalDropdowns.forEach(d => dropdown.toggle(d, false));
                 afterDelay(duration, () => {
-                    if (DOM.dgaContent?.classList.contains('dga-expanded')) {
+                    if (DOM.dgaDigitalStamp?.classList.contains('dga-expanded')) {
                         toggleDGA();
                         afterDelay(duration, () => navbar.toggle(true));
                     } else {
@@ -647,7 +635,7 @@
             }
         }
 
-        if (DOM.dgaContent?.classList.contains('dga-expanded')) {
+        if (DOM.dgaDigitalStamp?.classList.contains('dga-expanded')) {
             toggleDGA();
             afterDelay(duration, () => navbar.toggle(!isOpen));
         } else {
@@ -692,8 +680,8 @@
         const buffer = state.css.safeZone;
 
         // Close DGA if click outside
-        if (DOM.dgaContent?.classList.contains('dga-expanded')) {
-            if (isOutside(x, y, [DOM.dgaTab, DOM.dgaContent], buffer)) {
+        if (DOM.dgaDigitalStamp?.classList.contains('dga-expanded')) {
+            if (isOutside(x, y, [DOM.dgaTab, DOM.dgaDigitalStamp], buffer)) {
                 toggleDGA();
             }
         }
@@ -744,7 +732,7 @@
             if (modeChanged || widthChanged) {
                 document.querySelectorAll('.nds-dropdown.show').forEach(dd => dropdown.toggle(dd, false));
 
-                if (DOM.dgaContent?.classList.contains('dga-expanded')) {
+                if (DOM.dgaDigitalStamp?.classList.contains('dga-expanded')) {
                     dga.toggle();
                 }
 

@@ -34,7 +34,7 @@
 
     /* Accordion Buttons */
     .nds-accordion-btn {
-        --nds-button-icon-size: 20px!important;
+        --nds-button-icon-size: 20px !important;
         justify-content: space-between;
         width: 100%;
         border-radius: 0 !important;
@@ -70,26 +70,33 @@
         }
     }
 
+    /* Accordion Collapse */
+    .nds-accordion-collapse {
+        display: grid;
+        grid-template-rows: 0fr;
+        overflow: clip;
+        transition: grid-template-rows var(--nds-transition);
+
+        .nds-accordion-content {
+            grid-row: 1 / span 2;
+            overflow: hidden;
+        }
+
+        &.show:not(.closing),
+        &.opening {
+            grid-template-rows: 1fr;
+        }
+
+        &:not(.show) .nds-accordion-content{
+            display: none;
+        }
+
+    }
+
     /* Accordion Body */
     .nds-accordion-body {
         padding: var(--spacing-xl);
         color: var(--text-default);
-    }
-
-    /* Accordion Collapse */
-    .nds-accordion-collapse {
-        display: none;
-        overflow: hidden;
-
-        &.show,
-        &.collapsing {
-            display: block;
-        }
-
-        &.collapsing {
-            height: 0;
-            transition: height var(--nds-transition);
-        }
     }
 
     /* Card View Variant */
@@ -146,7 +153,7 @@
 
 @include reduced-motion {
     .nds-accordion {
-        .nds-accordion-collapse.collapsing {
+        .nds-accordion-collapse {
             transition: none;
         }
     }

@@ -161,10 +161,11 @@
             button.classList.remove('collapsed');
             button.classList.add('selected');
 
-            // Show the target panel
+            // Add show class immediately
+            collapse.classList.add('show');
+
+            // Animate and dispatch event after
             this.animateShow(collapse, () => {
-                collapse.classList.add('show');
-                
                 // Dispatch custom event
                 this.dispatchToggleEvent(index, button, collapse, true);
             });
@@ -188,8 +189,9 @@
             button.classList.remove('selected');
 
             this.animateHide(collapse, () => {
+                // Remove show class after animation completes
                 collapse.classList.remove('show');
-                
+
                 // Dispatch custom event
                 this.dispatchToggleEvent(index, button, collapse, false);
             });
@@ -211,32 +213,20 @@
             }
 
             // Set initial state for animation
-            collapse.style.height = '0px';
-            collapse.classList.add('collapsing');
-            collapse.classList.remove('show');
-            
-            // Force layout calculation
-            collapse.offsetHeight;
-            
-            // Get the full height
-            const scrollHeight = collapse.scrollHeight;
-            
-            // Start animation
-            collapse.style.height = scrollHeight + 'px';
-            
+            collapse.classList.add('opening');
+
             // Clean up after animation
             const handleTransitionEnd = () => {
                 collapse.removeEventListener('transitionend', handleTransitionEnd);
-                collapse.classList.remove('collapsing');
-                collapse.style.height = '';
+                collapse.classList.remove('opening');
                 callback();
             };
-            
+
             collapse.addEventListener('transitionend', handleTransitionEnd);
-            
+
             // Fallback in case transitionend doesn't fire
             setTimeout(() => {
-                if (collapse.classList.contains('collapsing')) {
+                if (collapse.classList.contains('opening')) {
                     handleTransitionEnd();
                 }
             }, this.getTransitionDuration());
@@ -249,29 +239,21 @@
                 return;
             }
 
-            // Set initial height
-            collapse.style.height = collapse.scrollHeight + 'px';
-            collapse.classList.add('collapsing');
-            
-            // Force layout calculation
-            collapse.offsetHeight;
-            
-            // Start animation
-            collapse.style.height = '0px';
-            
+            // Set initial state
+            collapse.classList.add('closing');
+
             // Clean up after animation
             const handleTransitionEnd = () => {
                 collapse.removeEventListener('transitionend', handleTransitionEnd);
-                collapse.classList.remove('collapsing');
-                collapse.style.height = '';
+                collapse.classList.remove('closing');
                 callback();
             };
-            
+
             collapse.addEventListener('transitionend', handleTransitionEnd);
-            
+
             // Fallback in case transitionend doesn't fire
             setTimeout(() => {
-                if (collapse.classList.contains('collapsing')) {
+                if (collapse.classList.contains('closing')) {
                     handleTransitionEnd();
                 }
             }, this.getTransitionDuration());

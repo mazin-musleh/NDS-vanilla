@@ -63,14 +63,9 @@
       }
 
       .nds-tab-list-container::after {
-        left: 0;
+        inset-inline-end: 0;
         height: 100%;
         width: var(--button-indicator-size);
-
-        @include ltr {
-          right: 0;
-          left: unset;
-        }
       }
 
       .nds-tab {
@@ -83,17 +78,9 @@
         }
 
         &:before {
-          margin-left: calc(var(--button-indicator-size) * -1);
-          right: unset;
-          left: 0;
+          margin-inline-end: calc(var(--button-indicator-size) * -1);
+          inset-inline-end: 0;
           margin-bottom: unset;
-
-          @include ltr {
-            margin-left: unset;
-            margin-right: calc(var(--button-indicator-size) * -1);
-            left: unset;
-            right: 0;
-          }
         }
       }
     }
@@ -103,12 +90,7 @@
       border-radius: var(--radius-md);
       box-shadow: var(--shadow-md);
       margin-top: unset;
-      margin-right: var(--spacing-lg);
-
-      @include ltr {
-        margin-right: unset;
-        margin-left: var(--spacing-lg);
-      }
+      margin-inline-start: var(--spacing-lg);
     }
   }
 
@@ -230,6 +212,7 @@
   &.showMore {
     display: none;
     border-radius: 0;
+    min-width: var(--nds-btn-height);
     /* box-shadow: 4px 0px 0px 4px var(--nds-nav-background-color); */
   }
 
