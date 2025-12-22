@@ -351,16 +351,11 @@
                     content: '';
                     position: absolute;
                     top: var(--stepper-size); // Below the circle
-                    right: calc((var(--stepper-size) / 2) - 1px);
+                    inset-inline-start: calc((var(--stepper-size) / 2) - 1px);
                     bottom: calc(var(--stepper-gap) * -1); // Connect to next step
                     width: 2px;
                     height: unset;
                     z-index: 0;
-
-                    @include ltr {
-                        right: unset;
-                        left: calc((var(--stepper-size) / 2) - 1px);
-                    }
                 }
             }
 
