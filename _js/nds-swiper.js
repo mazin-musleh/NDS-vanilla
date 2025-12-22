@@ -163,10 +163,6 @@
             const targetSlide = this.slides[clampedIndex];
             if (!targetSlide) return;
 
-            // Update state immediately (before animation)
-            this.currentIndex = clampedIndex;
-            this.updateState();
-
             targetSlide.scrollIntoView({
                 behavior: 'smooth',
                 block: 'nearest',
@@ -400,10 +396,6 @@
 
             const targetSlide = this.slides[index];
             if (!targetSlide) return;
-
-            // Update state immediately (before animation)
-            this.currentIndex = index;
-            this.updateState();
 
             targetSlide.scrollIntoView({
                 behavior: animate ? 'smooth' : 'instant',

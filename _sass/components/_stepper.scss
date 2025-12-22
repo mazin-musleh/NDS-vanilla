@@ -126,17 +126,6 @@
             align-items: center;
             text-align: center;
         }
-
-        &.has-line {
-            .nds-stepper-base {
-                &::after {
-                    /* inset-inline-start: calc(var(--stepper-size) + var(--stepper-gap));
-                    inset-inline-end: calc(var(--stepper-size) * -1); */
-                    /* transform: translateX(calc(-50% + var(--stepper-gap) / 2)); */
-                }
-            }
-
-        }
     }
 }
 
