@@ -310,25 +310,15 @@ textarea {
     @if $position =='b' {
       bottom: 0;
       width: calc(100% - var(--spacing-md) * 2);
-      right: var(--spacing-md);
-
-      @include ltr {
-        right: unset;
-        left: var(--spacing-md);
-      }
+      inset-inline-start: var(--spacing-md);
     }
 
     @else if $position =='v' {
-      right: 0;
+      inset-inline-start: 0;
       bottom: unset;
       width: $size !important;
       height: calc(100% - var(--spacing-md) * 2);
       top: var(--spacing-md);
-
-      @include ltr {
-        right: unset;
-        left: 0;
-      }
     }
   }
 }

@@ -473,9 +473,6 @@ body:not(.minimal) .nds-main-nav {
     .nds-nav-minimal .nds-dropdown-menu {
         position: fixed;
         inset-inline: 0;
-        min-height: 1px;
-        /* fix graphics bug at 0 */
-        height: unset !important;
     }
 
 
@@ -594,9 +591,7 @@ body.minimal .nds-main-nav {
     .nds-collapse {
         position: absolute;
         top: var(--nds-nav-height);
-        left: 0;
-        right: 0;
-        height: unset !important;
+        inset-inline: 0;
         z-index: -1;
         display: none;
         /* Fallback for older browsers */
@@ -794,8 +789,6 @@ body.minimal .nds-main-nav {
     position: fixed !important;
     inset-inline: 0;
     z-index: -1;
-    /* Above all navigation */
-    height: unset !important;
     max-height: 40vh;
     overflow-y: clip;
 
