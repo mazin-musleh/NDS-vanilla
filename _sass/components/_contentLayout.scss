@@ -16,28 +16,29 @@
         [full-width-start] minmax(var(--nds-viewport-padding), 1fr) [breakout-start] minmax(0, var(--nds-breakout-size)) [content-start] min(100% - (var(--nds-viewport-padding) * 2),
             var(--nds-content-MaxWidth)) [content-end] minmax(0, var(--nds-breakout-size)) [breakout-end] minmax(var(--nds-viewport-padding), 1fr) [full-width-end];
 
-& > :not(.nds-breakout, .nds-full-width),
-& > :not(.nds-breakout, .nds-full-width) {
-    grid-column: content;
+    &> :not(.nds-breakout, .nds-full-width),
+    &> :not(.nds-breakout, .nds-full-width) {
+        grid-column: content;
+    }
+
+    &>.nds-breakout {
+        grid-column: breakout;
+    }
+
+    &>.nds-full-width {
+        grid-column: full-width;
+        display: grid;
+        grid-template-columns: inherit;
+    }
+
+    &>.nds-grid-content {
+        grid-column: content-start / content-end;
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: var(--spacing, 16px);
+    }
 }
 
-& > .nds-breakout {
-    grid-column: breakout;
-}
-
-& > .nds-full-width {
-    grid-column: full-width;
-    display: grid;
-    grid-template-columns: inherit;
-}
-
-& > .nds-grid-content{
-    grid-column: content-start / content-end;
-    display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: var(--spacing, 16px);
-}
-}
 main {
     height: 100%;
 }
@@ -226,6 +227,39 @@ main {
                 @include reset-section-style;
             }
         }
+    }
+}
+
+.nds-content-section.nds-blue {
+    background-color: var(--colors-blue-950);
+    color: var(--text-oncolor-primary);
+    .nds-section-title{
+        color: var(--text-secondary);
+    }
+    .nds-section-description{
+        color: var(--text-oncolor-secondary);
+    }
+}
+
+.nds-content-section.nds-green {
+    background-color: var(--colors-green-900);
+    color: var(--text-oncolor-primary);
+    .nds-section-title{
+        color: var(--text-secondary);
+    }
+    .nds-section-description{
+        color: var(--text-oncolor-secondary);
+    }
+}
+
+.nds-content-section.nds-neutral {
+    background-color: var(--colors-neutral-900);
+    color: var(--text-oncolor-primary);
+    .nds-section-title{
+        color: var(--text-secondary);
+    }
+    .nds-section-description{
+        color: var(--text-oncolor-secondary);
     }
 }
 
