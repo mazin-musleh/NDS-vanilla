@@ -15,8 +15,7 @@
     background-color: var(--table-cell-border);
     border: 1px solid var(--table-cell-border);
     border-radius: var(--radius-md);
-    overflow: hidden;
-    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    overflow: clip;
 
 
     // Row styles
@@ -144,8 +143,6 @@
             border: none;
             color: var(--table-text-head);
             font-weight: 600;
-            font-size: inherit;
-            font-family: inherit;
             text-align: start;
             cursor: pointer;
             display: flex;
@@ -172,12 +169,6 @@
                 border-radius: 0;
             }
 
-            // RTL-specific adjustments
-            flex-direction: row-reverse;
-
-            @include ltr {
-                flex-direction: row;
-            }
         }
 
         th.sortable
@@ -189,51 +180,6 @@
 
         &.sorted-desc .sort-header .sort-icon {
             color: var(--colors-primary-sa-flag-600-primary);
-        }
-    }
-}
-
-// ==============================================
-// RESPONSIVE BEHAVIOR
-// ==============================================
-
-@include mobile {
-    .nds-table {
-        // Stack table horizontally on mobile if needed
-        display: block;
-        overflow-x: auto;
-        white-space: nowrap;
-
-        th,
-        thead th,
-        thead td {
-            min-width: 120px;
-        }
-
-        td {
-            min-width: 120px;
-        }
-
-        // Compact spacing on mobile
-        &:not(.nds-compact) {
-            th,
-            thead th,
-            thead td,
-            td {
-                padding: var(--table-cell-v-padding) var(--spacing-3);
-            }
-        }
-    }
-}
-
-@include tablet(max) {
-    .nds-table {
-        // Medium spacing on tablets
-        th,
-        thead th,
-        thead td,
-        td {
-            padding: var(--table-cell-v-padding) var(--table-cell-h-padding);
         }
     }
 }
