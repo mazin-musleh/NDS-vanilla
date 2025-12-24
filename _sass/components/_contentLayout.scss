@@ -233,10 +233,12 @@ main {
 .nds-content-section.nds-blue {
     background-color: var(--colors-blue-950);
     color: var(--text-oncolor-primary);
-    .nds-section-title{
+
+    .nds-section-title {
         color: var(--text-secondary);
     }
-    .nds-section-description{
+
+    .nds-section-description {
         color: var(--text-oncolor-secondary);
     }
 }
@@ -244,10 +246,12 @@ main {
 .nds-content-section.nds-green {
     background-color: var(--colors-green-900);
     color: var(--text-oncolor-primary);
-    .nds-section-title{
+
+    .nds-section-title {
         color: var(--text-secondary);
     }
-    .nds-section-description{
+
+    .nds-section-description {
         color: var(--text-oncolor-secondary);
     }
 }
@@ -255,10 +259,12 @@ main {
 .nds-content-section.nds-neutral {
     background-color: var(--colors-neutral-900);
     color: var(--text-oncolor-primary);
-    .nds-section-title{
+
+    .nds-section-title {
         color: var(--text-secondary);
     }
-    .nds-section-description{
+
+    .nds-section-description {
         color: var(--text-oncolor-secondary);
     }
 }
@@ -302,7 +308,16 @@ main {
 
 
 .nds-section-head {
+    position: relative;
     margin-bottom: var(--spacing-4xl, 32px);
+
+    @include tablet(min) {
+        .nds-section-action {
+            position: absolute;
+            top: 0;
+            inset-inline-end: 0;
+        }
+    }
 }
 
 .nds-section-title {
@@ -329,11 +344,6 @@ main {
     display: flex;
 }
 
-.nds-section-action {
-    display: flex;
-    justify-content: center;
-    gap: var(--spacing-lg);
-}
 
 .nds-section-content {
     margin-top: var(--spacing-4xl, 32px);
