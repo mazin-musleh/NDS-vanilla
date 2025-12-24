@@ -4,7 +4,7 @@
  */
 
 @use "sass:math";
-
+@use "sass:map";
 // ==============================================
 // UTILITY MIXINS
 // ==============================================
@@ -172,17 +172,31 @@ textarea {
 }
 
 // Button size mixins
-@mixin btn-size($height, $padding, $font-size, $line-height) {
-  --nds-btn-height: var(--nds-btn-size, #{$height});
+@mixin btn-size($height) {
+  /* Core size */
+  --nds-btn-height: #{$height};
   --nds-btn-width: unset;
+
+  /* Formula-based sizing */
+  --nds-btn-padding: calc(var(--nds-btn-height) * 0.375 - 3px);
+  --nds-btn-FS: calc(var(--nds-btn-height) * 0.2 + 8px);
   --nds-button-icon-size: calc(var(--nds-btn-height) / 2);
-  --nds-btn-space: calc(var(--nds-btn-height) - #{$padding} - 4px);
+
+  /* Indicator size (formula-only) */
+  --button-indicator-size: calc(var(--nds-btn-height) * 0.075);
+  --nds-btn-space: calc(var(--nds-btn-height) - var(--nds-btn-padding) - 4px);
+  --loading-border: max(2px, calc(var(--nds-btn-space) / 12)) !important;
+
+  /* Layout */
   height: var(--nds-btn-height);
   min-height: var(--nds-btn-height);
   width: var(--nds-btn-width);
-  padding: 0 $padding;
-  font-size: $font-size;
-  line-height: $line-height;
+
+  padding-inline: var(--nds-btn-padding);
+  padding-block: 0;
+
+  font-size: var(--nds-btn-FS);
+  line-height: 1;
 }
 
 // Button disabled state

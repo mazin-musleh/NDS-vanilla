@@ -35,6 +35,32 @@ direction: ltr
 
 <section id="AlumaniMap" class="nds-content-section nds-blue">
     <style>
+        @media (min-width: 991.98px) {
+            #AlumaniMap .nds-section-content-container {
+                display: grid;
+                grid-template-columns: auto 1fr;
+                align-items: center;
+            }
+
+            #AlumaniMap .nds-section-content-container .nds-section-head .nds-section-action {
+                position: relative;
+            }
+        }
+
+        @media (max-width: 991.98px) {
+
+            #AlumaniMap .nds-section-content-container .nds-section-head {
+                text-align: center;
+            }
+        }
+
+        #AlumaniMap .total-graduates {
+            display: inline-block;
+            direction: ltr;
+            font-size: var(--nds-text-clamp-xl-FS);
+
+        }
+
         #AlumaniMap .nds-worldmap {
             position: relative;
             margin-inline: auto;
@@ -167,12 +193,6 @@ direction: ltr
             overflow: clip;
         }
 
-        /* Button center alignment */
-        #AlumaniMap .nds-btn.nds-center {
-            display: block;
-            margin: 2rem auto 0;
-        }
-
         #AlumaniMap .nds-table.nds-center.nds-sortable th.sortable .sort-header {
             justify-content: center;
         }
@@ -180,25 +200,35 @@ direction: ltr
     <div class="nds-section-content-container">
         <div class="nds-section-head">
             <h2 class="nds-section-title">خريطة الخريجين</h2>
-            <p class="nds-section-description">+112000
-                (خريج منذ عام 1964)
+            <p class="nds-section-description">
+                <span class="total-graduates nds-number-format">+112000</span>
+                <span class="since-graduates">(خريج منذ عام 1964)</span>
             </p>
+            <div class="nds-section-action">
+                <button class="nds-btn nds-secondary-outline nds-oncolor nds-center"
+                    data-modal-target="modal-graduates">
+                    <span class="label">قائمة الخريجين</span>
+                </button>
+            </div>
         </div>
         <div class="nds-section-content">
             <div class="map-wrap">
                 <div class="nds-worldmap" data-map-src="{{ '/assets/img/world-map.min.svg' | relative_url }}"
                     data-meta-url="{{ '/assets/js/graduates-map.json' | relative_url }}">
                     <div id="mapTip" class="map-tip" role="status" aria-live="polite" hidden>
-                        <strong data-tip="name"></strong>
+                        <span class="textIcon"><i class="hgi hgi-stroke hgi-location-03"></i><strong
+                                data-tip="name"></strong></span>
                         <div class="tip-row" data-tip-row="value" hidden>
-                            <strong class="tip-k">عدد الخريجين:</strong> <span data-tip="value"></span>
+                            <span class="textIcon">
+                                <i class="hgi hgi-stroke hgi-student"></i>
+                                <strong class="tip-k">الخريجين:</strong>
+                                <span data-tip="value"></span>
+                            </span>
                         </div>
                     </div>
                 </div>
 
-                <button class="nds-btn nds-primary nds-oncolor nds-center" data-modal-target="modal-graduates">
-                    <span class="label">عرض الكل</span>
-                </button>
+
                 <div class="nds-modal-backdrop" id="modal-graduates">
                     <div class="nds-modal nds-card nds-stroke nds-modal-lg" role="dialog"
                         aria-labelledby="modal-graduates-title" aria-hidden="true">

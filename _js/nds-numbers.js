@@ -6,9 +6,20 @@
         const ThousandsNumbers = document.querySelectorAll('.nds-number-format');
         if (ThousandsNumbers.length > 0) {
             ThousandsNumbers.forEach(el => {
-                const num = parseInt(el.textContent.replace(/,/g, ''), 10);
-                if (!isNaN(num)) {
-                    el.textContent = num.toLocaleString();
+                const text = el.textContent.trim();
+                // Extract prefix (including + or - sign), number, and suffix
+                const match = text.match(/^([^\d]*)([-+]?\d[\d,]*\.?\d*)(.*)$/);
+                if (match) {
+                    const prefix = match[1] || '';
+                    const numStr = match[2].replace(/,/g, '');
+                    const suffix = match[3] || '';
+                    const num = parseFloat(numStr);
+
+                    if (!isNaN(num)) {
+                        const sign = numStr.startsWith('+') ? '+' : (numStr.startsWith('-') ? '-' : '');
+                        const formatted = Math.abs(num).toLocaleString();
+                        el.textContent = `${prefix}${sign}${formatted}${suffix}`;
+                    }
                 }
             });
         }

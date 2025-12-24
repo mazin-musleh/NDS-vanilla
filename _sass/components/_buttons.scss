@@ -100,27 +100,24 @@
 
   &,
   &.nds-lg {
-    /* --nds-button-icon-size: 20px; */
+    --nds-btn-size: 40px;
     --button-indicator-size: 3px;
-    @include btn-size(40px, var(--spacing-lg), var(--nds-text-md-FS), var(--nds-text-md-LH));
+    @include btn-size(var(--nds-btn-size));
   }
 
   &.nds-md {
-    /* --nds-button-icon-size: 16px; */
+    --nds-btn-size: 32px;
     --button-indicator-size: 3px;
-    @include btn-size(32px, var(--spacing-md), var(--nds-text-sm-FS), var(--nds-text-sm-LH));
   }
 
   &.nds-sm {
-    /* --nds-button-icon-size: 12px; */
+    --nds-btn-size: 24px;
     --button-indicator-size: 2px;
-    @include btn-size(24px, var(--spacing-sm), var(--nds-text-xs-FS), var(--nds-text-xs-LH));
   }
 
   &.nds-xl {
-    /* --nds-button-icon-size: 24px; */
+    --nds-btn-size: 48px;
     --button-indicator-size: 4px;
-    @include btn-size(48px, var(--spacing-xl), var(--nds-text-xl-FS), var(--nds-text-xl-LH));
   }
 
   // ==============================================
@@ -774,18 +771,7 @@
   &.loading {
     // Button-specific: use button's spacing for spinner size
     --loading-size: var(--nds-btn-space) !important;
-    --loading-border: 2px !important;
     color: transparent !important;
-
-    &.nds-sm {
-      --loading-border: 2px !important;
-    }
-
-
-    &.nds-xl {
-      --loading-border: 3px !important;
-    }
-
 
     // Standard button loading states
     &.nds-primary,
