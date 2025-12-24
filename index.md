@@ -35,14 +35,15 @@ direction: ltr
 
 <section id="AlumaniMap" class="nds-content-section nds-blue">
     <style>
-        #AlumaniMap .map-wrap {
+        #AlumaniMap .nds-worldmap {
             position: relative;
+            margin-inline: auto;
         }
 
         #AlumaniMap .nds-worldmap svg {
+            display: block;
             width: 100%;
             height: auto;
-            display: block;
         }
 
         #AlumaniMap .nds-worldmap path {
@@ -187,95 +188,95 @@ direction: ltr
             <div class="map-wrap">
                 <div class="nds-worldmap" data-map-src="{{ '/assets/img/world-map.min.svg' | relative_url }}"
                     data-meta-url="{{ '/assets/js/graduates-map.json' | relative_url }}">
-                </div>
-                <div id="mapTip" class="map-tip" role="status" aria-live="polite" hidden>
-                    <strong data-tip="name"></strong>
-                    <div class="tip-row" data-tip-row="value" hidden>
-                        <strong class="tip-k">عدد الخريجين:</strong> <span data-tip="value"></span>
-                    </div>
-                </div>
-            </div>
-            <button class="nds-btn nds-primary nds-oncolor nds-center" data-modal-target="modal-graduates">
-                <span class="label">عرض الكل</span>
-            </button>
-            <div class="nds-modal-backdrop" id="modal-graduates">
-                <div class="nds-modal nds-card nds-stroke nds-modal-lg" role="dialog"
-                    aria-labelledby="modal-graduates-title" aria-hidden="true">
-                    <div class="nds-card-header">
-                        <span class="nds-featured-icon nds-brand nds-lg nds-circle">
-                            <i class="hgi hgi-stroke hgi-globe icon"></i>
-                        </span>
-                        <button class="nds-modal-close nds-btn nds-subtle" aria-label="إغلاق">
-                            <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
-                        </button>
-                    </div>
-                    <div class="nds-card-content">
-                        <div class="nds-card-text">
-                            <h3 class="nds-card-title" id="modal-graduates-title">قائمة الخريجين حسب الدولة</h3>
-                            <p class="nds-card-description">جدول يعرض عدد الخريجين لكل دولة</p>
-                        </div>
-                        <div class="nds-table-wrapper" style="max-height: 500px; overflow-y: auto;">
-                            <table class="nds-table nds-sortable nds-center" id="graduates-table">
-                                <thead>
-                                    <tr>
-                                        <th class="nds-center">#</th>
-                                        <th class="sortable">
-                                            <button class="nds-btn sort-header">
-                                                <span class="label">الدولة</span>
-                                                <i class="hgi hgi-stroke hgi-arrow-up-down sort-icon"></i>
-                                            </button>
-                                        </th>
-                                        <th class="sortable sorted-desc">
-                                            <button class="nds-btn sort-header">
-                                                <span class="label">عدد الخريجين</span>
-                                                <i class="hgi hgi-stroke hgi-arrow-up-down sort-icon"></i>
-                                            </button>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody id="graduates-table-body">
-                                    <!-- Populated by JavaScript when modal opens -->
-                                </tbody>
-                            </table>
+                    <div id="mapTip" class="map-tip" role="status" aria-live="polite" hidden>
+                        <strong data-tip="name"></strong>
+                        <div class="tip-row" data-tip-row="value" hidden>
+                            <strong class="tip-k">عدد الخريجين:</strong> <span data-tip="value"></span>
                         </div>
                     </div>
-                    <div class="nds-card-actions">
-                        <button class="nds-btn nds-primary nds-lg" data-modal-close="">
-                            <span class="label">إغلاق</span>
-                        </button>
+                </div>
+
+                <button class="nds-btn nds-primary nds-oncolor nds-center" data-modal-target="modal-graduates">
+                    <span class="label">عرض الكل</span>
+                </button>
+                <div class="nds-modal-backdrop" id="modal-graduates">
+                    <div class="nds-modal nds-card nds-stroke nds-modal-lg" role="dialog"
+                        aria-labelledby="modal-graduates-title" aria-hidden="true">
+                        <div class="nds-card-header">
+                            <span class="nds-featured-icon nds-brand nds-lg nds-circle">
+                                <i class="hgi hgi-stroke hgi-globe icon"></i>
+                            </span>
+                            <button class="nds-modal-close nds-btn nds-subtle" aria-label="إغلاق">
+                                <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
+                            </button>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <h3 class="nds-card-title" id="modal-graduates-title">قائمة الخريجين حسب الدولة</h3>
+                                <p class="nds-card-description">جدول يعرض عدد الخريجين لكل دولة</p>
+                            </div>
+                            <div class="nds-table-wrapper" style="max-height: 500px; overflow-y: auto;">
+                                <table class="nds-table nds-sortable nds-center" id="graduates-table">
+                                    <thead>
+                                        <tr>
+                                            <th class="nds-center">#</th>
+                                            <th class="sortable">
+                                                <button class="nds-btn sort-header">
+                                                    <span class="label">الدولة</span>
+                                                    <i class="hgi hgi-stroke hgi-arrow-up-down sort-icon"></i>
+                                                </button>
+                                            </th>
+                                            <th class="sortable sorted-desc">
+                                                <button class="nds-btn sort-header">
+                                                    <span class="label">عدد الخريجين</span>
+                                                    <i class="hgi hgi-stroke hgi-arrow-up-down sort-icon"></i>
+                                                </button>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="graduates-table-body">
+                                        <!-- Populated by JavaScript when modal opens -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="nds-card-actions">
+                            <button class="nds-btn nds-primary nds-lg" data-modal-close="">
+                                <span class="label">إغلاق</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="heat-legend">
+                    <span class="heat-legend-title">كثافة الخريجين:</span>
+                    <div class="heat-legend-scale">
+                        <div class="heat-legend-item">
+                            <span class="heat-legend-label">لا يوجد</span>
+                            <div class="heat-legend-box" style="background: var(--alpha-white-10);"></div>
+                        </div>
+                        <div class="heat-legend-item">
+                            <div class="heat-legend-box" style="background: var(--alpha-white-20);"></div>
+                        </div>
+                        <div class="heat-legend-item">
+                            <div class="heat-legend-box" style="background: var(--alpha-white-30);"></div>
+                        </div>
+                        <div class="heat-legend-item">
+                            <div class="heat-legend-box" style="background: var(--alpha-white-40);"></div>
+                        </div>
+                        <div class="heat-legend-item">
+                            <div class="heat-legend-box" style="background: var(--alpha-white-50);"></div>
+                        </div>
+                        <div class="heat-legend-item">
+                            <div class="heat-legend-box" style="background: var(--alpha-white-60);"></div>
+                        </div>
+                        <div class="heat-legend-item">
+                            <div class="heat-legend-box" style="background: var(--alpha-white-70);"></div>
+                            <span class="heat-legend-label">الأعلى</span>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <div class="heat-legend">
-                <span class="heat-legend-title">كثافة الخريجين:</span>
-                <div class="heat-legend-scale">
-                    <div class="heat-legend-item">
-                        <span class="heat-legend-label">لا يوجد</span>
-                        <div class="heat-legend-box" style="background: var(--alpha-white-10);"></div>
-                    </div>
-                    <div class="heat-legend-item">
-                        <div class="heat-legend-box" style="background: var(--alpha-white-20);"></div>
-                    </div>
-                    <div class="heat-legend-item">
-                        <div class="heat-legend-box" style="background: var(--alpha-white-30);"></div>
-                    </div>
-                    <div class="heat-legend-item">
-                        <div class="heat-legend-box" style="background: var(--alpha-white-40);"></div>
-                    </div>
-                    <div class="heat-legend-item">
-                        <div class="heat-legend-box" style="background: var(--alpha-white-50);"></div>
-                    </div>
-                    <div class="heat-legend-item">
-                        <div class="heat-legend-box" style="background: var(--alpha-white-60);"></div>
-                    </div>
-                    <div class="heat-legend-item">
-                        <div class="heat-legend-box" style="background: var(--alpha-white-70);"></div>
-                        <span class="heat-legend-label">الأعلى</span>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
 
@@ -303,7 +304,8 @@ direction: ltr
 
                 // 🔹 LOAD SVG
                 const svgText = await (await fetch(src)).text();
-                host.innerHTML = svgText;
+                // Insert SVG before any existing children (preserve map-tip)
+                host.insertAdjacentHTML('afterbegin', svgText);
 
                 const svg = host.querySelector("svg");
                 if (!svg) return;
