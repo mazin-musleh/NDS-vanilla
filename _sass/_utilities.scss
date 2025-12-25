@@ -79,7 +79,7 @@ $breakpoints: (
   --grid-col: var(--max-col, auto-fit);
   display: grid;
   grid-template-columns: repeat(var(--grid-col, 12), minmax(var(--grid-col-minsize, 0), 1fr));
-  gap: var(--grid-gap, var(--spacing-2xl));
+  gap: var(--gap, var(--spacing-2xl));
   width: 100%;
 
   &.nds-center {
@@ -93,7 +93,7 @@ $breakpoints: (
     height: 100%;
   }
 
-  @include tablet(max) {
+  @include tablet {
     --grid-col: var(--mid-col, auto-fit);
     gap: max(8px, calc(var(--gap, var(--spacing-2xl)) / 2));
   }
@@ -102,6 +102,161 @@ $breakpoints: (
     --grid-col: var(--min-col, auto-fit);
     gap: max(8px, calc(var(--gap, var(--spacing-2xl)) / 2));
   }
+}
+
+.nds-flex {
+  display: flex;
+  gap: var(--gap, var(--spacing-2xl));
+  flex-direction: var(--flex-direction, row);
+  flex-wrap: var(--flex-wrap, wrap);
+  align-items: var(--flex-align, stretch);
+  justify-content: var(--flex-justify, flex-start);
+  width: 100%;
+
+  &.nds-center {
+    width: fit-content;
+    margin-inline: auto;
+  }
+
+  > * {
+    max-width: 100%;
+    min-width: 0; // prevent overflow in flex
+  }
+
+  @include tablet(max) {
+    gap: max(8px, calc(var(--gap, var(--spacing-2xl)) / 2));
+  }
+
+  @include mobile {
+    gap: max(8px, calc(var(--gap, var(--spacing-2xl)) / 2));
+  }
+}
+
+/* Flex direction utilities */
+.flex-row {
+  flex-direction: row !important;
+}
+
+.flex-row-reverse {
+  flex-direction: row-reverse !important;
+}
+
+.flex-column {
+  flex-direction: column !important;
+}
+
+.flex-column-reverse {
+  flex-direction: column-reverse !important;
+}
+
+/* Flex wrap utilities */
+.flex-wrap {
+  flex-wrap: wrap !important;
+}
+
+.flex-nowrap {
+  flex-wrap: nowrap !important;
+}
+
+.flex-wrap-reverse {
+  flex-wrap: wrap-reverse !important;
+}
+
+/* Justify content utilities */
+.justify-start {
+  justify-content: flex-start !important;
+}
+
+.justify-end {
+  justify-content: flex-end !important;
+}
+
+.justify-center {
+  justify-content: center !important;
+}
+
+.justify-between {
+  justify-content: space-between !important;
+}
+
+.justify-around {
+  justify-content: space-around !important;
+}
+
+.justify-evenly {
+  justify-content: space-evenly !important;
+}
+
+/* Align items utilities */
+.align-start {
+  align-items: flex-start !important;
+}
+
+.align-end {
+  align-items: flex-end !important;
+}
+
+.align-center {
+  align-items: center !important;
+}
+
+.align-baseline {
+  align-items: baseline !important;
+}
+
+.align-stretch {
+  align-items: stretch !important;
+}
+
+/* Align self utilities */
+.align-self-start {
+  align-self: flex-start !important;
+}
+
+.align-self-end {
+  align-self: flex-end !important;
+}
+
+.align-self-center {
+  align-self: center !important;
+}
+
+.align-self-baseline {
+  align-self: baseline !important;
+}
+
+.align-self-stretch {
+  align-self: stretch !important;
+}
+
+/* Flex grow and shrink utilities */
+.flex-grow-0 {
+  flex-grow: 0 !important;
+}
+
+.flex-grow-1 {
+  flex-grow: 1 !important;
+}
+
+.flex-shrink-0 {
+  flex-shrink: 0 !important;
+}
+
+.flex-shrink-1 {
+  flex-shrink: 1 !important;
+}
+
+/* Flex basis utilities */
+.flex-basis-auto {
+  flex-basis: auto !important;
+}
+
+.flex-basis-0 {
+  flex-basis: 0 !important;
+}
+
+.flex-basis-full {
+  flex-basis: 100% !important;
 }
 
 /* Column spans (1…12) - Mobile first (base) */
