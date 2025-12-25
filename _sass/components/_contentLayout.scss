@@ -203,12 +203,35 @@ main {
 
 // Mixin to reset section styling
 @mixin reset-section-style {
-    background-color: unset !important;
-    box-shadow: unset !important;
-    border: unset !important;
+    background-color: unset;
+    box-shadow: unset;
+    border: unset;
 }
 
 // Content section striping patterns
+
+.contentLayout {
+
+    // Without side menu - always reset
+    &:not(.wSideMenu, .cardView) .mainContent {
+
+        .nds-content-section:nth-of-type(odd) {
+            @include reset-section-style;
+        }
+
+    }
+
+    // With side menu - reset only on tablet and below
+    &:not(.cardView).wSideMenu .mainContent {
+        @include tablet(max) {
+            .nds-content-section:nth-of-type(odd) {
+                @include reset-section-style;
+            }
+        }
+    }
+}
+
+
 .contentLayout {
 
     // Without side menu - always reset
@@ -231,7 +254,7 @@ main {
 }
 
 .nds-content-section.nds-blue {
-    background-color: var(--colors-blue-950);
+    background-color: var(--colors-blue-950)!important;
     color: var(--text-oncolor-primary);
 
     .nds-section-title {
@@ -244,7 +267,7 @@ main {
 }
 
 .nds-content-section.nds-green {
-    background-color: var(--colors-green-900);
+    background-color: var(--colors-green-900)!important;
     color: var(--text-oncolor-primary);
 
     .nds-section-title {
@@ -257,7 +280,7 @@ main {
 }
 
 .nds-content-section.nds-neutral {
-    background-color: var(--colors-neutral-900);
+    background-color: var(--colors-neutral-900)!important;
     color: var(--text-oncolor-primary);
 
     .nds-section-title {
