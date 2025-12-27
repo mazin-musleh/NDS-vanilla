@@ -130,17 +130,28 @@
       font-size: var(--nds-text-lg-FS);
       line-height: var(--nds-text-lg-LH);
       font-weight: 700;
-      color: var(--text-display, #1f2a37);
+      color: var(--text-display);
       margin: 0;
       width: 100%;
     }
+
+    .nds-card-subtitle {
+      --truncate-line: 2;
+      font-size: var(--nds-text-md-FS);
+      line-height: var(--nds-text-md-LH);
+      font-weight: 600;
+      color: var(--colors-secondary-gold-800);
+      margin: 0;
+      width: 100%;
+    }
+
 
     .nds-card-description {
       --truncate-line: 2;
       font-size: var(--nds-text-md-FS);
       line-height: var(--nds-text-md-LH);
       font-weight: 400;
-      color: var(--text-display, #1f2a37);
+      color: var(--text-display);
       margin: 0;
       width: 100%;
     }
@@ -226,14 +237,6 @@
     width: 100%;
     margin-top: auto;
     flex-direction: row;
-
-    .nds-btn {
-
-      /*  &:only-child {
-      flex: none;
-      min-width: 120px;
-    } */
-    }
   }
 }
 

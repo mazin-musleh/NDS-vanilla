@@ -24,7 +24,7 @@
 
 
 .nds-topbar .dga-tab {
-    .flag{
+    .flag {
         width: 20px;
         margin-inline-end: 4px;
     }
@@ -62,7 +62,7 @@
 
 
 #dgaDigitalStamp {
-    display: grid;
+    display: none;
     background-color: var(--background-white);
     position: relative;
     box-shadow: var(--shadow-md);
@@ -71,26 +71,19 @@
     grid-template-rows: 0fr;
     overflow: clip;
 
-    .dga-content{
-        display: none;
+    &.show {
+        display: grid;
     }
 
-    &:is(.dga-expanded) {
+    &:is(.opening, .opened) {
         grid-template-rows: 1fr;
     }
 
     >* {
         grid-row: 1 / span 2;
     }
-    
-}
 
 
-
-#dgaDigitalStamp.dga-expanded .dga-content,
-#dgaDigitalStamp.dga-expanding .dga-content {
-    display: block;
-    height: fit-content;
 }
 
 .saudi-security-notices-container {

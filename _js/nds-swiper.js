@@ -4,7 +4,7 @@
  * Uses CSS scroll-snap for positioning, JS for navigation/pagination sync
  */
 
-(function() {
+(function () {
     'use strict';
 
     // ==============================================
@@ -43,6 +43,7 @@
 
             this.currentIndex = 0;
             this.slidesPerView = 1;
+            this.dragEnabled = false;
 
             this.init();
         }
@@ -55,6 +56,7 @@
             this.setupMouseDrag();
             this.setupKeyboard();
             this.setupResize();
+            this.setupLazyLoading();
             this.updateState();
 
             this.container.setAttribute('data-swiper-initialized', 'true');
@@ -79,8 +81,17 @@
                 this.slidesPerView = min;
             }
 
+            // Calculate number of pages
+            const pageCount = Math.ceil(this.slides.length / this.slidesPerView);
+
+            // Get swiper gap
+            const gap = parseInt(getComputedStyle(this.container).getPropertyValue('--swiper-gap')) || 0;
+
+            // Set peek to 0 if no peek attr, only one page, otherwise add gap to peek
+            const effectivePeek = (peek > 0 && pageCount > 1) ? peek + gap : 0;
+
             this.container.style.setProperty('--swiper-slides', this.slidesPerView);
-            this.container.style.setProperty('--swiper-peek', `${peek}px`);
+            this.container.style.setProperty('--swiper-peek', `${effectivePeek}px`);
 
             // Apply peek styles dynamically to first/last view slides
             this.updatePeekStyles();
@@ -94,18 +105,40 @@
         updatePeekStyles() {
             const peek = parseInt(this.container.getAttribute('peek')) || 0;
 
-            if (peek <= 0) {
-                // Clear all inline styles if no peek
-                this.slides.forEach(slide => {
-                    slide.style.flexBasis = '';
-                });
-                return;
-            }
-
             // Clear all inline styles first
             this.slides.forEach(slide => {
                 slide.style.flexBasis = '';
+                slide.style.paddingInlineStart = '';
+                slide.style.paddingInlineEnd = '';
             });
+
+            // Check if swiper has nds-full-width class
+            const isFullWidth = this.container.classList.contains('nds-full-width');
+
+            // Only apply viewport padding logic if swiper has nds-full-width class
+            if (isFullWidth) {
+                // Get viewport width and content max width
+                const viewportWidth = window.innerWidth;
+                const contentMaxWidth = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nds-content-MaxWidth')) || 1280;
+
+                // Calculate total swiper content width (scrollWidth of wrapper)
+                const swiperContentWidth = this.wrapper.scrollWidth;
+
+                // Apply viewport padding if viewport < contentMaxWidth AND viewport < swiperContentWidth
+                if (viewportWidth < contentMaxWidth && viewportWidth < swiperContentWidth) {
+                    if (this.slides[0]) {
+                        this.slides[0].style.paddingInlineStart = 'var(--nds-viewport-padding)';
+                    }
+                    if (this.slides[this.slides.length - 1]) {
+                        this.slides[this.slides.length - 1].style.paddingInlineEnd = 'var(--nds-viewport-padding)';
+                    }
+                }
+            }
+
+            // Only apply peek expansion if peek is set and more than one slide per view
+            if (peek <= 0 || this.slidesPerView <= 1) {
+                return;
+            }
 
             // Apply expanded width to first N slides (first view)
             for (let i = 0; i < Math.min(this.slidesPerView, this.slides.length); i++) {
@@ -124,9 +157,10 @@
                 const oldSlidesPerView = this.slidesPerView;
                 this.updateSlidesPerView();
 
-                // If slides per view changed, update state
+                // If slides per view changed, update state and drag listeners
                 if (oldSlidesPerView !== this.slidesPerView) {
                     this.updateState();
+                    this.updateDragListeners();
                 }
             }, 150);
 
@@ -187,18 +221,23 @@
         // ==============================================
 
         setupMouseDrag() {
-            let isDragging = false;
-            let startX = 0;
-            let scrollStart = 0;
+            // Store drag state
+            if (!this.dragState) {
+                this.dragState = {
+                    isDragging: false,
+                    startX: 0,
+                    scrollStart: 0
+                };
+            }
 
-            // Only handle mouse, let touch use native behavior
-            this.wrapper.addEventListener('pointerdown', (e) => {
+            // Define handlers
+            const handlePointerDown = (e) => {
                 if (e.pointerType !== 'mouse') return;
                 if (e.button !== 0) return;
 
-                isDragging = true;
-                startX = e.clientX;
-                scrollStart = this.wrapper.scrollLeft;
+                this.dragState.isDragging = true;
+                this.dragState.startX = e.clientX;
+                this.dragState.scrollStart = this.wrapper.scrollLeft;
                 this.wrapper.style.cursor = 'grabbing';
                 this.wrapper.setPointerCapture(e.pointerId);
 
@@ -206,17 +245,17 @@
                 this.wrapper.style.scrollSnapType = 'none';
                 this.wrapper.style.scrollBehavior = 'auto';
                 e.preventDefault();
-            });
+            };
 
-            this.wrapper.addEventListener('pointermove', (e) => {
-                if (!isDragging || e.pointerType !== 'mouse') return;
-                const deltaX = e.clientX - startX;
-                this.wrapper.scrollLeft = scrollStart - deltaX;
-            });
+            const handlePointerMove = (e) => {
+                if (!this.dragState.isDragging || e.pointerType !== 'mouse') return;
+                const deltaX = e.clientX - this.dragState.startX;
+                this.wrapper.scrollLeft = this.dragState.scrollStart - deltaX;
+            };
 
-            this.wrapper.addEventListener('pointerup', (e) => {
-                if (!isDragging || e.pointerType !== 'mouse') return;
-                isDragging = false;
+            const handlePointerUp = (e) => {
+                if (!this.dragState.isDragging || e.pointerType !== 'mouse') return;
+                this.dragState.isDragging = false;
                 this.wrapper.style.cursor = 'grab';
                 this.wrapper.releasePointerCapture(e.pointerId);
 
@@ -232,9 +271,41 @@
                         this.wrapper.style.scrollSnapType = '';
                     }, 50);
                 });
-            });
+            };
 
-            this.wrapper.style.cursor = 'grab';
+            // Store handlers for cleanup
+            this.dragHandlers = {
+                down: handlePointerDown,
+                move: handlePointerMove,
+                up: handlePointerUp
+            };
+
+            // Add or remove listeners based on page count
+            this.updateDragListeners();
+        }
+
+        updateDragListeners() {
+            const pageCount = Math.ceil(this.slides.length / this.slidesPerView);
+            const shouldEnableDrag = pageCount > 1;
+
+            // Remove existing listeners if they exist
+            if (this.dragHandlers && this.dragEnabled) {
+                this.wrapper.removeEventListener('pointerdown', this.dragHandlers.down);
+                this.wrapper.removeEventListener('pointermove', this.dragHandlers.move);
+                this.wrapper.removeEventListener('pointerup', this.dragHandlers.up);
+                this.dragEnabled = false;
+            }
+
+            // Add listeners if needed
+            if (shouldEnableDrag && this.dragHandlers) {
+                this.wrapper.addEventListener('pointerdown', this.dragHandlers.down);
+                this.wrapper.addEventListener('pointermove', this.dragHandlers.move);
+                this.wrapper.addEventListener('pointerup', this.dragHandlers.up);
+                this.wrapper.style.cursor = 'grab';
+                this.dragEnabled = true;
+            } else {
+                this.wrapper.style.cursor = '';
+            }
         }
 
         detectCurrentSlide() {
@@ -268,7 +339,21 @@
             if (!this.pagination) return;
 
             const pageCount = Math.ceil(this.slides.length / this.slidesPerView);
+
+            // Hide pagination and navigation buttons if only one page
+            if (pageCount <= 1) {
+                this.pagination.style.display = 'none';
+                this.pagination.innerHTML = '';
+                if (this.prevBtn) this.prevBtn.style.display = 'none';
+                if (this.nextBtn) this.nextBtn.style.display = 'none';
+                return;
+            }
+
+            // Show pagination and navigation buttons
+            this.pagination.style.display = '';
             this.pagination.innerHTML = '';
+            if (this.prevBtn) this.prevBtn.style.display = '';
+            if (this.nextBtn) this.nextBtn.style.display = '';
 
             for (let i = 0; i < pageCount; i++) {
                 const bullet = document.createElement('button');
@@ -360,6 +445,44 @@
         }
 
         // ==============================================
+        // LAZY LOADING
+        // ==============================================
+
+        setupLazyLoading() {
+            // Find slides with data-src images
+            const lazySlides = this.slides.filter(slide =>
+                slide.querySelector('img[data-src], img[data-srcset]')
+            );
+
+            if (lazySlides.length === 0) return;
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.querySelectorAll('img[data-src], img[data-srcset]').forEach(img => {
+                            if (img.dataset.src) {
+                                img.src = img.dataset.src;
+                                delete img.dataset.src;
+                            }
+                            if (img.dataset.srcset) {
+                                img.srcset = img.dataset.srcset;
+                                delete img.dataset.srcset;
+                            }
+                        });
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                root: null,
+                rootMargin: '200px',
+                threshold: 0
+            });
+
+            lazySlides.forEach(slide => observer.observe(slide));
+            this.lazyLoadObserver = observer;
+        }
+
+        // ==============================================
         // STATE UPDATE
         // ==============================================
 
@@ -414,6 +537,9 @@
             if (this.pagination) {
                 this.pagination.innerHTML = '';
             }
+            if (this.lazyLoadObserver) {
+                this.lazyLoadObserver.disconnect();
+            }
         }
     }
 
@@ -424,6 +550,7 @@
     function initializeComponents() {
         const swipers = document.querySelectorAll('.nds-swiper');
         swipers.forEach(swiper => {
+            if (swiper.closest('code, .code-example')) return;
             if (!swiper.hasAttribute('data-swiper-initialized')) {
                 const instance = new NDSSwiper(swiper);
                 swiper._ndsSwiper = instance;

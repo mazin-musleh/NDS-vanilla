@@ -7,10 +7,11 @@
    MAIN CONTENT LAYOUT
    ======================================== */
 
-.nds-content-grid {
+.nds-content-grid,
+.nds-content-section {
     --nds-breakout-max-width: calc(var(--nds-content-MaxWidth) + var(--nds-viewport-padding));
     --nds-breakout-size: calc((var(--nds-breakout-max-width) - var(--nds-content-MaxWidth)) / 2);
-
+    width: 100%;
     display: grid !important;
     grid-template-columns:
         [full-width-start] minmax(var(--nds-viewport-padding), 1fr) [breakout-start] minmax(0, var(--nds-breakout-size)) [content-start] min(100% - (var(--nds-viewport-padding) * 2),
@@ -31,11 +32,14 @@
         grid-template-columns: inherit;
     }
 
-    &>.nds-grid-content {
+    &>.nds-grid {
+        --grid-col: 12;
         grid-column: content-start / content-end;
-        display: grid;
-        grid-template-columns: repeat(12, 1fr);
-        gap: var(--spacing, 16px);
+    }
+
+    &>.nds-section-content-container {
+        padding: 0 !important;
+        width: 100%;
     }
 }
 
@@ -60,7 +64,7 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
+    min-height: 100dvh;
 
     &.nds-content-container {
         padding: var(--nds-viewport-padding, 32px);
@@ -69,6 +73,12 @@ main {
     .mainContent {
         justify-content: center;
     }
+}
+
+.nds-content-container {
+    max-width: var(--nds-content-MaxWidth, 1280px);
+    margin: 0 auto;
+    padding: 0 var(--nds-viewport-padding, 32px);
 }
 
 /* ========================================
@@ -254,7 +264,7 @@ main {
 }
 
 .nds-content-section.nds-blue {
-    background-color: var(--colors-blue-950)!important;
+    background-color: var(--colors-blue-950) !important;
     color: var(--text-oncolor-primary);
 
     .nds-section-title {
@@ -267,7 +277,7 @@ main {
 }
 
 .nds-content-section.nds-green {
-    background-color: var(--colors-green-900)!important;
+    background-color: var(--colors-green-900) !important;
     color: var(--text-oncolor-primary);
 
     .nds-section-title {
@@ -280,7 +290,7 @@ main {
 }
 
 .nds-content-section.nds-neutral {
-    background-color: var(--colors-neutral-900)!important;
+    background-color: var(--colors-neutral-900) !important;
     color: var(--text-oncolor-primary);
 
     .nds-section-title {
