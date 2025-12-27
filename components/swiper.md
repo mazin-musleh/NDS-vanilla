@@ -141,7 +141,8 @@ direction: ltr
     <div class="nds-section-content-container">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Image Slider</h2>
-            <p class="nds-section-description">Image slider with native lazy loading for optimal performance.</p>
+            <p class="nds-section-description">Image slider with lazy loading for optimal performance. Uses
+                <code>data-src</code> pattern to defer image loading until slides approach the viewport.</p>
         </div>
         <div class="nds-section-content">
             <div class="nds-demo-card">
@@ -159,23 +160,23 @@ direction: ltr
                         <div class="nds-swiper nds-hero">
                             <div class="nds-swiper-wrapper">
                                 <div class="nds-swiper-slide">
-                                    <img src="https://picsum.photos/800/450?random=1" alt="Landscape 1" loading="lazy"
+                                    <img data-src="https://picsum.photos/800/450?random=1" alt="Landscape 1"
                                         style="width: 100%; height: 450px; object-fit: cover; border-radius: 8px;">
                                 </div>
                                 <div class="nds-swiper-slide">
-                                    <img src="https://picsum.photos/800/450?random=2" alt="Landscape 2" loading="lazy"
+                                    <img data-src="https://picsum.photos/800/450?random=2" alt="Landscape 2"
                                         style="width: 100%; height: 450px; object-fit: cover; border-radius: 8px;">
                                 </div>
                                 <div class="nds-swiper-slide">
-                                    <img src="https://picsum.photos/800/450?random=3" alt="Landscape 3" loading="lazy"
+                                    <img data-src="https://picsum.photos/800/450?random=3" alt="Landscape 3"
                                         style="width: 100%; height: 450px; object-fit: cover; border-radius: 8px;">
                                 </div>
                                 <div class="nds-swiper-slide">
-                                    <img src="https://picsum.photos/800/450?random=4" alt="Landscape 4" loading="lazy"
+                                    <img data-src="https://picsum.photos/800/450?random=4" alt="Landscape 4"
                                         style="width: 100%; height: 450px; object-fit: cover; border-radius: 8px;">
                                 </div>
                                 <div class="nds-swiper-slide">
-                                    <img src="https://picsum.photos/800/450?random=5" alt="Landscape 5" loading="lazy"
+                                    <img data-src="https://picsum.photos/800/450?random=5" alt="Landscape 5"
                                         style="width: 100%; height: 450px; object-fit: cover; border-radius: 8px;">
                                 </div>
                             </div>
@@ -211,8 +212,11 @@ direction: ltr
                                 <div class="nds-swiper">
                                     <div class="nds-swiper-wrapper">
                                         <div class="nds-swiper-slide">
-                                            <img src="image1.jpg" alt="Description" loading="lazy"
-                                                style="width: 100%; height: 450px; object-fit: cover; border-radius: 8px;">
+                                            <img data-src="image1.jpg" alt="Description"
+                                                style="width: 100%; height: 450px; object-fit: cover;">
+                                        </div>
+                                        <div class="nds-swiper-slide">
+                                            <img data-src="image2.jpg" data-srcset="small.jpg 600w, large.jpg 1200w" alt="Description">
                                         </div>
                                         <!-- More slides... -->
                                     </div>
@@ -582,7 +586,8 @@ direction: ltr
                 <div class="nds-card-content">
                     <h3>Performance Tips</h3>
                     <ul>
-                        <li>Use native <code>loading="lazy"</code> on images for lazy loading</li>
+                        <li>Use <code>data-src</code> and <code>data-srcset</code> for lazy loading images (swiper will
+                            load them as slides approach the viewport)</li>
                         <li>Use consistent slide heights to avoid layout shifts</li>
                         <li>Leverage CSS scroll-snap for smooth, hardware-accelerated scrolling</li>
                     </ul>

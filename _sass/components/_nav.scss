@@ -20,7 +20,7 @@
 }
 
 .nds-topbar {
-    .nds-content-container {
+    .nds-topbar-content {
         display: flex;
         justify-content: space-between;
         width: 100%;
@@ -259,6 +259,7 @@
         z-index: -1;
         /* Fallback for older browsers */
         overflow-y: clip;
+        padding-bottom: 1rem; // fix shadow flicker
 
         >.nds-dropdown-content {
             background: var(--nds-nav-background-color);
@@ -689,6 +690,7 @@ body.minimal .nds-main-nav {
             /* Height transitions here; isolate layout scope */
             will-change: height;
             contain: layout;
+            padding: 0;
 
             .nds-dropdown-content {
                 grid-row: 1 / span 2;

@@ -11,6 +11,7 @@
 
 .nds-swiper {
     --swiper-slides: 1;
+    --swiper-gap: var(--gap, var(--spacing-md));
     --swiper-peek: 0px;
 
     position: relative;
@@ -75,7 +76,7 @@
     scroll-snap-align: start;
 
     // Inner content padding for spacing between slides
-    padding-inline: var(--spacing-xs);
+    padding-inline: var(--swiper-gap);
 
     // Peek mode: first slide negative margin to offset wrapper padding
     .nds-swiper[peek] &:first-child {
@@ -92,6 +93,7 @@
     // Card within slide should fill height
     >.nds-card {
         height: 100%;
+        max-width: unset;
     }
 }
 
