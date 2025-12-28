@@ -196,12 +196,7 @@ button,
             position: absolute;
             bottom: 0;
             z-index: 6;
-            left: 0;
-
-            @include ltr {
-                left: unset;
-                right: 0;
-            }
+            inset-inline-end: 0;
         }
 
         &::after {
@@ -211,7 +206,7 @@ button,
             left: 0;
             right: 0;
             height: 100px;
-            background: linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 25%, rgba(255, 255, 255, 0) 100%);
+            background: linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 35%, rgba(255, 255, 255, 0) 100%);
             pointer-events: none;
             z-index: 2;
         }
@@ -220,12 +215,12 @@ button,
     &.nds-expanded {
         .nds-expandable-content {
             max-height: 100%;
-            padding-bottom: var(--spacing-4xl);
+            padding-bottom: var(--spacing-6xl);
 
             &::after {
                 content: "";
                 height: var(--spacing-4xl);
-                background: linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 25%, rgba(255, 255, 255, 0) 100%);
+                background: linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 35%, rgba(255, 255, 255, 0) 100%);
 
             }
 
