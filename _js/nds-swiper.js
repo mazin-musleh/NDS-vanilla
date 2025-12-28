@@ -255,6 +255,9 @@
                 if (e.pointerType !== 'mouse') return;
                 if (e.button !== 0) return;
 
+                // Don't interfere with interactive elements
+                if (e.target.closest('button, a, input, select, textarea, [role="button"]')) return;
+
                 this.dragState.isDragging = true;
                 this.dragState.startX = e.clientX;
                 this.dragState.scrollStart = this.wrapper.scrollLeft;

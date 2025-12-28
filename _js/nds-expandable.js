@@ -7,6 +7,16 @@
 (function() {
     'use strict';
 
+    // Language labels
+    const labels = {
+        en: { showMore: 'Show More', showLess: 'Show Less' },
+        ar: { showMore: 'عرض المزيد', showLess: 'عرض أقل' }
+    };
+
+    function getLang() {
+        return document.documentElement.lang?.startsWith('ar') ? 'ar' : 'en';
+    }
+
     class NDSExpandable {
         constructor(expandableContainer) {
             this.expandableContainer = expandableContainer;
@@ -65,7 +75,7 @@
             this.expandButton.setAttribute('aria-label', 'Expand content');
             this.expandButton.setAttribute('aria-expanded', 'false');
 
-            this.expandButton.innerHTML = '<span class="label">Show More</span>';
+            this.expandButton.innerHTML = `<span class="label">${labels[getLang()].showMore}</span>`;
 
             // Add button to the content container
             this.contentElement.appendChild(this.expandButton);
@@ -85,7 +95,7 @@
             }
         }
 
-        expand() {
+        expand(syncSiblings = true) {
             this.isExpanded = true;
 
             // Add expanded class to container
@@ -95,14 +105,19 @@
             if (this.expandButton) {
                 this.expandButton.setAttribute('aria-expanded', 'true');
                 this.expandButton.setAttribute('aria-label', 'Menu');
-                this.expandButton.querySelector('.label').textContent = 'Show Less';
+                this.expandButton.querySelector('.label').textContent = labels[getLang()].showLess;
+            }
+
+            // Sync siblings if parent has nds-expand-all
+            if (syncSiblings) {
+                this.syncSiblings(true);
             }
 
             // Dispatch custom event
             this.dispatchEvent('nds:expandable:expanded');
         }
 
-        collapse() {
+        collapse(syncSiblings = true) {
             this.isExpanded = false;
 
             // Remove expanded class from container
@@ -112,11 +127,34 @@
             if (this.expandButton) {
                 this.expandButton.setAttribute('aria-expanded', 'false');
                 this.expandButton.setAttribute('aria-label', 'Menu');
-                this.expandButton.querySelector('.label').textContent = 'Show More';
+                this.expandButton.querySelector('.label').textContent = labels[getLang()].showMore;
+            }
+
+            // Sync siblings if parent has nds-expand-all
+            if (syncSiblings) {
+                this.syncSiblings(false);
             }
 
             // Dispatch custom event
             this.dispatchEvent('nds:expandable:collapsed');
+        }
+
+        syncSiblings(expand) {
+            const parent = this.expandableContainer.closest('.nds-expand-all');
+            if (!parent) return;
+
+            // Find all expandable siblings
+            const siblings = parent.querySelectorAll('.nds-expandable[data-nds-expandable-initialized]');
+            siblings.forEach(sibling => {
+                if (sibling === this.expandableContainer) return;
+                if (sibling.ndsExpandableInstance) {
+                    if (expand && !sibling.ndsExpandableInstance.isExpanded) {
+                        sibling.ndsExpandableInstance.expand(false);
+                    } else if (!expand && sibling.ndsExpandableInstance.isExpanded) {
+                        sibling.ndsExpandableInstance.collapse(false);
+                    }
+                }
+            });
         }
 
         setupEventListeners() {

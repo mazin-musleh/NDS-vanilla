@@ -22,10 +22,6 @@
   max-width: var(--card-width, 400px);
   position: relative;
 
-  &.nds-expandable {
-    overflow: hidden;
-  }
-
   // Shadow variant
   &.nds-shadow {
     box-shadow: var(--shadow-md);
@@ -75,10 +71,10 @@
 
   .nds-card-image {
     width: 100%;
+    height: 100%;
     aspect-ratio: 2 / 1;
     border-radius: var(--radius-md, 8px);
-    overflow: hidden;
-    margin-bottom: var(--spacing-md, 8px);
+    overflow: clip;
 
     img {
       width: 100%;
@@ -101,20 +97,6 @@
     flex-direction: column;
     gap: var(--card-lg-gap);
     width: 100%;
-  }
-
-  .nds-expandable-content {
-    display: flex;
-    flex-direction: column;
-    gap: var(--card-lg-gap);
-    margin: calc(var(--spacing-xl) * -1);
-    width: -webkit-fill-available;
-    padding: inherit;
-
-  }
-
-  &.nds-expanded .nds-expandable-content {
-    padding-bottom: var(--spacing-5xl) !important;
   }
 
   .nds-card-text {
@@ -359,11 +341,6 @@
 
   &:hover {
     background-color: var(--background-neutral-50);
-
-    &.nds-expand .nds-expandable-content::after {
-      background: linear-gradient(0deg, var(--background-neutral-50) 0%, var(--background-neutral-50) 25%, rgba(255, 255, 255, 0) 100%) !important;
-    }
-
   }
 
   &:active {
