@@ -103,12 +103,13 @@
 
 .nds-swiper-button-prev,
 .nds-swiper-button-next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 10;
+    user-select: none;
 
     .nds-swiper.nds-hero & {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 10;
         text-shadow: 0px -0px 2px rgb(0 0 0);
     }
 
@@ -131,10 +132,20 @@
 
 .nds-swiper-button-prev {
     inset-inline-start: var(--spacing-md);
+
+    .nds-swiper:not(.nds-hero) & {
+        inset-inline-start: var(--nds-viewport-padding);
+        margin-block: var(--spacing-sm);
+    }
 }
 
 .nds-swiper-button-next {
     inset-inline-end: var(--spacing-md);
+
+    .nds-swiper:not(.nds-hero) & {
+        inset-inline-start: calc(var(--nds-viewport-padding) + var(--spacing-xs));
+        margin-block: var(--spacing-sm);
+    }
 }
 
 // ==============================================
@@ -152,6 +163,8 @@
 
     .nds-swiper:not(.nds-hero) & {
         padding-block: var(--spacing-md);
+        float: inline-end;
+        margin-inline-end: var(--nds-viewport-padding);
     }
 
     z-index: 10;
@@ -171,6 +184,7 @@
     transition: opacity var(--nds-transition);
     border: 1px solid rgba(0, 0, 0, 0.1);
     padding: 0;
+    user-select: none;
 
     &:hover {
         opacity: 0.8;
@@ -180,6 +194,28 @@
         opacity: 1;
         background-color: var(--swiper-pagination-bullet-active);
         border-color: var(--swiper-pagination-bullet-active);
+    }
+}
+
+
+.nds-swiper-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-inline: var(--nds-viewport-padding);
+    margin-top: var(--spacing-md);
+
+    .nds-swiper-buttons {
+        display: flex;
+        gap: var(--spacing-md);
+    }
+
+    .nds-swiper-button-prev,
+    .nds-swiper-button-next,
+    .nds-swiper-pagination {
+        inset-inline: 0 !important;
+        margin-block: 0 !important;
+        margin-inline: 0 !important;
+        float: unset;
     }
 }
 

@@ -13,6 +13,7 @@
     --nds-breakout-size: calc((var(--nds-breakout-max-width) - var(--nds-content-MaxWidth)) / 2);
     width: 100%;
     display: grid !important;
+    row-gap: var(--gap, var(--spacing-2xl));
     grid-template-columns:
         [full-width-start] minmax(var(--nds-viewport-padding), 1fr) [breakout-start] minmax(0, var(--nds-breakout-size)) [content-start] min(100% - (var(--nds-viewport-padding) * 2),
             var(--nds-content-MaxWidth)) [content-end] minmax(0, var(--nds-breakout-size)) [breakout-end] minmax(var(--nds-viewport-padding), 1fr) [full-width-end];
@@ -40,6 +41,10 @@
     &>.nds-section-content-container {
         padding: 0 !important;
         width: 100%;
+    }
+
+    &>.nds-section-head{
+        margin-bottom: 0 !important;
     }
 }
 
@@ -124,7 +129,7 @@ main {
     width: 100%;
     min-width: 300px;
     height: fit-content;
-    padding: var(--spacing-2xl) 0;
+    padding: var(--spacing-4xl) 0;
 }
 
 .contentLayout.wSideMenu .mainContent {
@@ -342,10 +347,13 @@ main {
 
 .nds-section-head {
     position: relative;
-    margin-bottom: var(--spacing-4xl, 32px);
+    &:not(:last-child){
+        margin-bottom: var(--spacing-4xl, 32px);
+    }
+    
 
     @include tablet(min) {
-        .nds-section-action {
+        &:not(.nds-center) .nds-section-action {
             position: absolute;
             top: 0;
             inset-inline-end: 0;
@@ -377,10 +385,6 @@ main {
     display: flex;
 }
 
-
-.nds-section-content {
-    margin-top: var(--spacing-4xl, 32px);
-}
 
 .nds-section-content {
 

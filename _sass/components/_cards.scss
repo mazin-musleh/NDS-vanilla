@@ -154,6 +154,7 @@
       color: var(--text-display);
       margin: 0;
       width: 100%;
+      text-align: justify;
     }
   }
 
@@ -288,8 +289,11 @@
   }
 
   .nds-card-text {
-    align-items: center;
-    text-align: center;
+
+    &>* {
+      align-items: center;
+      text-align: center;
+    }
 
     .nds-card-number,
     .nds-counter-value,
@@ -300,6 +304,8 @@
       font-weight: 500;
       letter-spacing: -0.96px;
       direction: ltr;
+      display: block;
+      width: 100%;
 
       &.nds-md {
         font-size: var(--nds-display-clamp-md-FS);
