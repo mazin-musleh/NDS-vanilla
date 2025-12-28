@@ -33,6 +33,7 @@
             this.wrapper = container.querySelector('.nds-swiper-wrapper');
             this.slides = Array.from(container.querySelectorAll('.nds-swiper-slide'));
             this.pagination = container.querySelector('.nds-swiper-pagination');
+            this.navigation = container.querySelector('.nds-swiper-navigation');
             this.prevBtn = container.querySelector('.nds-swiper-button-prev');
             this.nextBtn = container.querySelector('.nds-swiper-button-next');
 
@@ -173,10 +174,16 @@
 
         setupNavigation() {
             if (this.prevBtn) {
-                this.prevBtn.addEventListener('click', () => this.prev());
+                this.prevBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.prev();
+                });
             }
             if (this.nextBtn) {
-                this.nextBtn.addEventListener('click', () => this.next());
+                this.nextBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.next();
+                });
             }
         }
 
@@ -197,10 +204,23 @@
             const targetSlide = this.slides[clampedIndex];
             if (!targetSlide) return;
 
-            targetSlide.scrollIntoView({
-                behavior: 'smooth',
-                block: 'nearest',
-                inline: 'start'
+            // Calculate scroll position relative to wrapper
+            const wrapperRect = this.wrapper.getBoundingClientRect();
+            const slideRect = targetSlide.getBoundingClientRect();
+
+            const rtl = isRTL();
+            let scrollDelta;
+
+            if (rtl) {
+                scrollDelta = slideRect.right - wrapperRect.right;
+            } else {
+                scrollDelta = slideRect.left - wrapperRect.left;
+            }
+
+            // Scroll wrapper smoothly
+            this.wrapper.scrollBy({
+                left: scrollDelta,
+                behavior: 'smooth'
             });
         }
 
@@ -344,6 +364,7 @@
             if (pageCount <= 1) {
                 this.pagination.style.display = 'none';
                 this.pagination.innerHTML = '';
+                if (this.navigation) this.navigation.style.display = 'none';
                 if (this.prevBtn) this.prevBtn.style.display = 'none';
                 if (this.nextBtn) this.nextBtn.style.display = 'none';
                 return;
@@ -352,6 +373,7 @@
             // Show pagination and navigation buttons
             this.pagination.style.display = '';
             this.pagination.innerHTML = '';
+            if (this.navigation) this.navigation.style.display = '';
             if (this.prevBtn) this.prevBtn.style.display = '';
             if (this.nextBtn) this.nextBtn.style.display = '';
 
@@ -361,7 +383,8 @@
                 bullet.type = 'button';
                 bullet.setAttribute('aria-label', `Go to slide ${i + 1}`);
 
-                bullet.addEventListener('click', () => {
+                bullet.addEventListener('click', (e) => {
+                    e.preventDefault();
                     const targetIndex = i * this.slidesPerView;
                     this.goTo(targetIndex);
                 });
@@ -520,10 +543,23 @@
             const targetSlide = this.slides[index];
             if (!targetSlide) return;
 
-            targetSlide.scrollIntoView({
-                behavior: animate ? 'smooth' : 'instant',
-                block: 'nearest',
-                inline: 'start'
+            // Calculate scroll position relative to wrapper
+            const wrapperRect = this.wrapper.getBoundingClientRect();
+            const slideRect = targetSlide.getBoundingClientRect();
+
+            const rtl = isRTL();
+            let scrollDelta;
+
+            if (rtl) {
+                scrollDelta = slideRect.right - wrapperRect.right;
+            } else {
+                scrollDelta = slideRect.left - wrapperRect.left;
+            }
+
+            // Scroll wrapper
+            this.wrapper.scrollBy({
+                left: scrollDelta,
+                behavior: animate ? 'smooth' : 'instant'
             });
         }
 
