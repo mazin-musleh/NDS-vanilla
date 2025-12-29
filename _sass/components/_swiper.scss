@@ -10,14 +10,19 @@
 // ==============================================
 
 .nds-swiper {
-    --swiper-slides: 1;
+    // --swiper-slides set by JavaScript in constructor to prevent CLS
     --swiper-gap: var(--gap, var(--spacing-md));
     --swiper-peek: 0px;
 
     position: relative;
     width: 100%;
-    overflow: hidden;
     direction: inherit;
+
+    // Hide until JavaScript sets --swiper-slides to prevent flash of wrong layout
+    // Don't hide hero swipers (above the fold content)
+    &:not([data-swiper-initialized]):not(.nds-hero) {
+        visibility: hidden;
+    }
 }
 
 // ==============================================
@@ -55,6 +60,10 @@
     // Peek mode: add padding to show partial slides
     padding-inline: var(--swiper-peek);
 
+    .nds-swiper.nds-full-width & {
+        padding-inline: var(--nds-viewport-padding);
+    }
+
     // Scroll padding for proper snap alignment with peek
     scroll-padding-inline: var(--swiper-peek);
 
@@ -70,7 +79,8 @@
 
 .nds-swiper-slide {
     // Account for gap in slide width: (100% - total gaps) / slides per view
-    flex: 0 0 calc((100% - (var(--swiper-gap) * (var(--swiper-slides) - 1))) / var(--swiper-slides));
+    // Fallback to 100% if --swiper-slides not set yet (before JS runs)
+    flex: 0 0 calc((100% - (var(--swiper-gap) * (var(--swiper-slides, 1) - 1))) / var(--swiper-slides, 1) - var(--swiper-peek));
     min-width: 0;
     height: auto;
     position: relative;
@@ -80,14 +90,27 @@
     scroll-snap-align: start;
 
     // Peek mode: first slide negative margin to offset wrapper padding
-    .nds-swiper[peek] &:first-child {
+    /* .nds-swiper[peek] &:first-child {
         margin-inline-start: calc(var(--swiper-peek) * -1);
-    }
+    } */
 
     // Peek mode: last slide negative margin to offset wrapper padding
-    .nds-swiper[peek] &:last-child {
+    /* .nds-swiper[peek] &:last-child {
         margin-inline-end: calc(var(--swiper-peek) * -1);
+    } */
+
+/*     .nds-swiper.nds-full-width & {
+        flex: 0 0 calc((100% - (var(--swiper-gap) * (var(--swiper-slides, 1) - 1))) / var(--swiper-slides, 1) - var(--swiper-peek));
+    } */
+
+    // Full-width swiper: add viewport padding to first and last slides
+    /* .nds-swiper.nds-full-width &:first-child {
+        padding-inline-start: var(--nds-viewport-padding);
     }
+
+    .nds-swiper.nds-full-width &:last-child {
+        padding-inline-end: var(--nds-viewport-padding);
+    } */
 
     // Card within slide should fill height
     >.nds-card {

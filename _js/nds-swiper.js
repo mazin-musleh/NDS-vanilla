@@ -42,11 +42,32 @@
                 return;
             }
 
+            // Set initial slides per view BEFORE any layout calculations to prevent CLS
             this.currentIndex = 0;
             this.slidesPerView = 1;
             this.dragEnabled = false;
+            this.setInitialSlidesPerView();
 
             this.init();
+        }
+
+        setInitialSlidesPerView() {
+            // Read slides count directly from attributes and set CSS variable immediately
+            const width = window.innerWidth;
+            const max = parseInt(this.container.getAttribute('slides-max')) || 1;
+            const mid = parseInt(this.container.getAttribute('slides-mid')) || 1;
+            const min = parseInt(this.container.getAttribute('slides-min')) || 1;
+
+            let initial = min;
+            if (width >= 1280) {
+                initial = max;
+            } else if (width >= 960) {
+                initial = mid;
+            }
+
+            // Set both CSS variable and instance property to prevent CLS
+            this.container.style.setProperty('--swiper-slides', initial);
+            this.slidesPerView = initial;
         }
 
         init() {
@@ -59,9 +80,11 @@
             this.setupResize();
             this.setupLazyLoading();
             this.updateState();
+            this.updatePeekStyles();
 
             this.container.setAttribute('data-swiper-initialized', 'true');
         }
+
 
         // ==============================================
         // RESPONSIVE SLIDES PER VIEW
@@ -74,12 +97,17 @@
             const min = parseInt(this.container.getAttribute('slides-min')) || 1;
             const peek = parseInt(this.container.getAttribute('peek')) || 0;
 
+            let newSlidesPerView = min;
             if (width >= 1280) {
-                this.slidesPerView = max;
+                newSlidesPerView = max;
             } else if (width >= 960) {
-                this.slidesPerView = mid;
-            } else {
-                this.slidesPerView = min;
+                newSlidesPerView = mid;
+            }
+
+            // Only update if changed (prevents unnecessary recalculation during init)
+            if (newSlidesPerView !== this.slidesPerView) {
+                this.slidesPerView = newSlidesPerView;
+                this.container.style.setProperty('--swiper-slides', this.slidesPerView);
             }
 
             // Calculate number of pages
@@ -91,11 +119,7 @@
             // Set peek to 0 if no peek attr, only one page, otherwise add gap to peek
             const effectivePeek = (peek > 0 && pageCount > 1) ? peek + gap : 0;
 
-            this.container.style.setProperty('--swiper-slides', this.slidesPerView);
             this.container.style.setProperty('--swiper-peek', `${effectivePeek}px`);
-
-            // Apply peek styles with delay for slow connections
-            this.updatePeekStylesDelayed();
 
             // Rebuild pagination when slides per view changes
             if (this.pagination) {
@@ -105,45 +129,27 @@
 
         updatePeekStyles() {
             const peek = parseInt(this.container.getAttribute('peek')) || 0;
-
-            // Clear inline padding styles first
-            this.slides.forEach(slide => {
-                slide.style.paddingInlineStart = '';
-                slide.style.paddingInlineEnd = '';
-            });
-
-            // Check if swiper has nds-full-width class
-            const isFullWidth = this.container.classList.contains('nds-full-width');
             const isHeroSlider = this.container.classList.contains('nds-hero');
 
-            // Apply edge padding for full-width swipers with peek (not hero)
-            if (isFullWidth && peek > 0 && !isHeroSlider) {
+            // Only process if has peek and not hero
+            if (peek > 0 && !isHeroSlider) {
                 // Get viewport width and content max width
                 const viewportWidth = window.innerWidth;
                 const contentMaxWidth = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nds-content-MaxWidth')) || 1280;
 
-                // Calculate total swiper content width (scrollWidth of wrapper)
+                // Calculate widths
+                const wrapperWidth = this.wrapper.clientWidth;
                 const swiperContentWidth = this.wrapper.scrollWidth;
 
-                // Apply viewport padding if viewport < contentMaxWidth AND viewport < swiperContentWidth
-                if (viewportWidth < contentMaxWidth && viewportWidth < swiperContentWidth) {
-                    if (this.slides[0]) {
-                        this.slides[0].style.paddingInlineStart = 'var(--nds-viewport-padding)';
-                    }
-                    if (this.slides[this.slides.length - 1]) {
-                        this.slides[this.slides.length - 1].style.paddingInlineEnd = 'var(--nds-viewport-padding)';
-                    }
+                // Auto-toggle nds-full-width class based on actual content width
+                const shouldBeFullWidth = (viewportWidth < contentMaxWidth && viewportWidth < swiperContentWidth) || (wrapperWidth < contentMaxWidth && wrapperWidth < swiperContentWidth);
+
+                if (shouldBeFullWidth) {
+                    this.container.classList.add('nds-full-width');
+                } else {
+                    this.container.classList.remove('nds-full-width');
                 }
             }
-        }
-
-        // Delayed update for slow connections
-        updatePeekStylesDelayed() {
-            // Run immediately
-            this.updatePeekStyles();
-
-            // Run again after delay for slow connections where layout may not be ready
-            setTimeout(() => this.updatePeekStyles(), 250);
         }
 
         setupResize() {
@@ -156,6 +162,9 @@
                     this.updateState();
                     this.updateDragListeners();
                 }
+
+                // Update peek styles and full-width class on resize
+                this.updatePeekStyles();
             }, 150);
 
             window.addEventListener('resize', handleResize);
@@ -363,6 +372,8 @@
                 if (this.navigation) this.navigation.style.display = 'none';
                 if (this.prevBtn) this.prevBtn.style.display = 'none';
                 if (this.nextBtn) this.nextBtn.style.display = 'none';
+                // Disable overflow on wrapper when only one page
+                this.wrapper.style.overflow = 'unset';
                 return;
             }
 
@@ -372,6 +383,8 @@
             if (this.navigation) this.navigation.style.display = '';
             if (this.prevBtn) this.prevBtn.style.display = '';
             if (this.nextBtn) this.nextBtn.style.display = '';
+            // Re-enable overflow on wrapper
+            this.wrapper.style.overflow = '';
 
             for (let i = 0; i < pageCount; i++) {
                 const bullet = document.createElement('button');
