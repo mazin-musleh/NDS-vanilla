@@ -94,8 +94,8 @@
             this.container.style.setProperty('--swiper-slides', this.slidesPerView);
             this.container.style.setProperty('--swiper-peek', `${effectivePeek}px`);
 
-            // Apply peek styles dynamically to first/last view slides
-            this.updatePeekStyles();
+            // Apply peek styles with delay for slow connections
+            this.updatePeekStylesDelayed();
 
             // Rebuild pagination when slides per view changes
             if (this.pagination) {
@@ -106,18 +106,18 @@
         updatePeekStyles() {
             const peek = parseInt(this.container.getAttribute('peek')) || 0;
 
-            // Clear all inline styles first
+            // Clear inline padding styles first
             this.slides.forEach(slide => {
-                slide.style.flexBasis = '';
                 slide.style.paddingInlineStart = '';
                 slide.style.paddingInlineEnd = '';
             });
 
             // Check if swiper has nds-full-width class
             const isFullWidth = this.container.classList.contains('nds-full-width');
+            const isHeroSlider = this.container.classList.contains('nds-hero');
 
-            // Only apply viewport padding logic if swiper has nds-full-width class
-            if (isFullWidth) {
+            // Apply edge padding for full-width swipers with peek (not hero)
+            if (isFullWidth && peek > 0 && !isHeroSlider) {
                 // Get viewport width and content max width
                 const viewportWidth = window.innerWidth;
                 const contentMaxWidth = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nds-content-MaxWidth')) || 1280;
@@ -135,22 +135,15 @@
                     }
                 }
             }
+        }
 
-            // Only apply peek expansion if peek is set and more than one slide per view
-            if (peek <= 0 || this.slidesPerView <= 1) {
-                return;
-            }
+        // Delayed update for slow connections
+        updatePeekStylesDelayed() {
+            // Run immediately
+            this.updatePeekStyles();
 
-            // Apply expanded width to first N slides (first view)
-            for (let i = 0; i < Math.min(this.slidesPerView, this.slides.length); i++) {
-                this.slides[i].style.flexBasis = `calc((100% + var(--swiper-peek)) / var(--swiper-slides))`;
-            }
-
-            // Apply expanded width to last N slides (last view)
-            const startIndex = Math.max(0, this.slides.length - this.slidesPerView);
-            for (let i = startIndex; i < this.slides.length; i++) {
-                this.slides[i].style.flexBasis = `calc((100% + var(--swiper-peek)) / var(--swiper-slides))`;
-            }
+            // Run again after delay for slow connections where layout may not be ready
+            setTimeout(() => this.updatePeekStyles(), 250);
         }
 
         setupResize() {
