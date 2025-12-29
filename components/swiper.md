@@ -142,7 +142,8 @@ direction: ltr
         <div class="nds-section-head">
             <h2 class="nds-section-title">Image Slider</h2>
             <p class="nds-section-description">Image slider with lazy loading for optimal performance. Uses
-                <code>data-src</code> pattern to defer image loading until slides approach the viewport.</p>
+                <code>data-src</code> pattern to defer image loading until slides approach the viewport.
+            </p>
         </div>
         <div class="nds-section-content">
             <div class="nds-demo-card">
@@ -254,7 +255,7 @@ direction: ltr
                 </div>
                 <div class="demo-container">
                     <div class="state-demo">
-                        <div class="nds-swiper" slides-max="4" slides-mid="3" slides-min="1">
+                        <div class="nds-swiper" slides-max="4" slides-mid="3" slides-min="1" peek="0">
                             <div class="nds-swiper-wrapper">
                                 <div class="nds-swiper-slide">
                                     <div class="nds-card nds-stroke nds-shadow">

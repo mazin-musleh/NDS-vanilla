@@ -29,6 +29,9 @@
     width: 100%;
     height: 100%;
 
+    // Gap between slides (replaces padding-inline on each slide)
+    gap: var(--swiper-gap);
+
     // Scroll-snap behavior
     overflow-x: auto;
     overflow-y: hidden;
@@ -66,7 +69,8 @@
 // ==============================================
 
 .nds-swiper-slide {
-    flex: 0 0 calc(100% / var(--swiper-slides));
+    // Account for gap in slide width: (100% - total gaps) / slides per view
+    flex: 0 0 calc((100% - (var(--swiper-gap) * (var(--swiper-slides) - 1))) / var(--swiper-slides));
     min-width: 0;
     height: auto;
     position: relative;
@@ -75,19 +79,14 @@
     // Scroll snap alignment
     scroll-snap-align: start;
 
-    // Inner content padding for spacing between slides
-    padding-inline: var(--swiper-gap);
-
     // Peek mode: first slide negative margin to offset wrapper padding
     .nds-swiper[peek] &:first-child {
         margin-inline-start: calc(var(--swiper-peek) * -1);
-        padding-inline-start: 0;
     }
 
-    // Peek mode: first slide negative margin to offset wrapper padding
+    // Peek mode: last slide negative margin to offset wrapper padding
     .nds-swiper[peek] &:last-child {
         margin-inline-end: calc(var(--swiper-peek) * -1);
-        padding-inline-end: 0;
     }
 
     // Card within slide should fill height
@@ -244,8 +243,14 @@
     width: 100%;
     height: 100%;
 
+    // Hero swiper has no gap between slides
+    .nds-swiper-wrapper {
+        gap: 0;
+    }
+
     .nds-swiper-slide {
-        padding-inline: 0;
+        // Full width slides in hero (no gap adjustment needed)
+        flex: 0 0 100%;
     }
 
     .nds-swiper-button-prev {
