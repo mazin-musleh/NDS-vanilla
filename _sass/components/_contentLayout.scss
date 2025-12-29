@@ -27,10 +27,9 @@
         grid-column: breakout;
     }
 
-    &>.nds-full-width {
+    &>.nds-full-width,
+    &>.nds-section-content:has(.nds-full-width) {
         grid-column: full-width;
-        display: grid;
-        grid-template-columns: inherit;
     }
 
     &>.nds-grid {
