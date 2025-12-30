@@ -65,7 +65,7 @@
     }
 
     // Scroll padding for proper snap alignment with peek
-    scroll-padding-inline: var(--swiper-peek);
+    scroll-padding-inline: var(--nds-viewport-padding);
 
     .nds-swiper:not(.nds-hero) & {
         padding-block-end: var(--spacing-md);
