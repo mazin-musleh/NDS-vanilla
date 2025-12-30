@@ -80,7 +80,7 @@
 .nds-swiper-slide {
     // Account for gap in slide width: (100% - total gaps) / slides per view
     // Fallback to 100% if --swiper-slides not set yet (before JS runs)
-    flex: 0 0 calc((100% - (var(--swiper-gap) * (var(--swiper-slides, 1) - 1))) / var(--swiper-slides, 1) - var(--swiper-peek));
+    flex: 0 0 calc((100% - (var(--swiper-gap) * (var(--swiper-slides, 1) - 1))) / var(--swiper-slides, 1));
     min-width: 0;
     height: auto;
     position: relative;

@@ -32,15 +32,10 @@
       flex-direction: column;
       flex-wrap: nowrap;
       min-width: fit-content;
-      padding-left: var(--button-indicator-size);
+      padding-inline-end: var(--button-indicator-size);
       position: sticky;
       z-index: 2;
       top: var(--nds-nav-height);
-
-      @include ltr {
-        padding-right: var(--button-indicator-size);
-        padding-left: unset;
-      }
     }
 
     .nds-tab {
@@ -60,6 +55,7 @@
         .label {
           text-align: end;
         }
+
       }
 
       .nds-tab-list-container::after {
@@ -80,6 +76,7 @@
         &:before {
           margin-inline-end: calc(var(--button-indicator-size) * -1);
           inset-inline-end: 0;
+          inset-inline-start: unset;
           margin-bottom: unset;
         }
       }
