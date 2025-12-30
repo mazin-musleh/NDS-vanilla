@@ -57,7 +57,6 @@
             // Set initial slides per view BEFORE any layout calculations to prevent CLS
             this.currentIndex = 0;
             this.slidesPerView = 1;
-            this.dragEnabled = false;
             this.setInitialSlidesPerView();
 
             this.init();
@@ -87,7 +86,6 @@
             this.setupNavigation();
             this.setupPagination();
             this.setupScrollSync();
-            this.setupMouseDrag();
             this.setupKeyboard();
             this.setupResize();
             this.setupLazyLoading();
@@ -159,8 +157,18 @@
         }
 
         updatePeekStyles() {
-            // Skip if no peek or is hero slider
-            if (!this.container.hasAttribute('peek') || this.container.classList.contains('nds-hero')) {
+            // Skip hero sliders
+            if (this.container.classList.contains('nds-hero')) {
+                return;
+            }
+
+            const hasPeek = this.container.hasAttribute('peek');
+            const hasOneSlidePage = this.slidesPerView === 1;
+
+            // If not peek and not single slide, remove full-width and gap if present
+            if (!hasPeek && !hasOneSlidePage) {
+                this.container.classList.remove('nds-full-width');
+                this.container.style.removeProperty('--gap');
                 return;
             }
 
@@ -176,6 +184,15 @@
             // Only toggle if state changed
             if (shouldBeFullWidth !== isFullWidth) {
                 this.container.classList.toggle('nds-full-width', shouldBeFullWidth);
+
+                // For non-peek single slide mode: set gap to viewport padding when full-width
+                if (!hasPeek && hasOneSlidePage) {
+                    if (shouldBeFullWidth) {
+                        this.container.style.setProperty('--gap', 'var(--nds-viewport-padding)');
+                    } else {
+                        this.container.style.removeProperty('--gap');
+                    }
+                }
             }
         }
 
@@ -184,10 +201,9 @@
                 const oldSlidesPerView = this.slidesPerView;
                 this.updateSlidesPerView();
 
-                // If slides per view changed, update state and drag listeners
+                // If slides per view changed, update state
                 if (oldSlidesPerView !== this.slidesPerView) {
                     this.updateState();
-                    this.updateDragListeners();
                 }
 
                 // Update peek styles and full-width class on resize
@@ -263,98 +279,6 @@
                 this.detectCurrentSlide();
                 this.updateState();
             }, { passive: true });
-        }
-
-        // ==============================================
-        // MOUSE DRAG (for non-touch devices)
-        // ==============================================
-
-        setupMouseDrag() {
-            // Store drag state
-            if (!this.dragState) {
-                this.dragState = {
-                    isDragging: false,
-                    startX: 0,
-                    scrollStart: 0
-                };
-            }
-
-            // Define handlers
-            const handlePointerDown = (e) => {
-                if (e.pointerType !== 'mouse') return;
-                if (e.button !== 0) return;
-
-                // Don't interfere with interactive elements
-                if (e.target.closest('button, a, input, select, textarea, [role="button"]')) return;
-
-                this.dragState.isDragging = true;
-                this.dragState.startX = e.clientX;
-                this.dragState.scrollStart = this.wrapper.scrollLeft;
-                this.wrapper.style.cursor = 'grabbing';
-                this.wrapper.setPointerCapture(e.pointerId);
-
-                // Disable scroll-snap and smooth behavior during drag
-                this.wrapper.style.scrollSnapType = 'none';
-                this.wrapper.style.scrollBehavior = 'auto';
-                e.preventDefault();
-            };
-
-            const handlePointerMove = (e) => {
-                if (!this.dragState.isDragging || e.pointerType !== 'mouse') return;
-                const deltaX = e.clientX - this.dragState.startX;
-                this.wrapper.scrollLeft = this.dragState.scrollStart - deltaX;
-            };
-
-            const handlePointerUp = (e) => {
-                if (!this.dragState.isDragging || e.pointerType !== 'mouse') return;
-                this.dragState.isDragging = false;
-                this.wrapper.style.cursor = 'grab';
-                this.wrapper.releasePointerCapture(e.pointerId);
-
-                // Re-enable scroll-snap and smooth behavior - let CSS handle snapping
-                this.wrapper.style.scrollBehavior = '';
-                this.wrapper.style.scrollSnapType = '';
-
-                // Update state after snap settles
-                setTimeout(() => {
-                    this.detectCurrentSlide();
-                    this.updateState();
-                }, 100);
-            };
-
-            // Store handlers for cleanup
-            this.dragHandlers = {
-                down: handlePointerDown,
-                move: handlePointerMove,
-                up: handlePointerUp
-            };
-
-            // Add or remove listeners based on page count
-            this.updateDragListeners();
-        }
-
-        updateDragListeners() {
-            const pageCount = Math.ceil(this.slides.length / this.slidesPerView);
-            const shouldEnableDrag = pageCount > 1;
-
-            // Remove existing listeners if they exist
-            if (this.dragHandlers && this.dragEnabled) {
-                this.wrapper.removeEventListener('pointerdown', this.dragHandlers.down);
-                this.wrapper.removeEventListener('pointermove', this.dragHandlers.move);
-                this.wrapper.removeEventListener('pointerup', this.dragHandlers.up);
-                this.dragEnabled = false;
-            }
-
-            // Add listeners if needed
-            if (shouldEnableDrag && this.dragHandlers) {
-                this.wrapper.addEventListener('pointerdown', this.dragHandlers.down);
-                this.wrapper.addEventListener('pointermove', this.dragHandlers.move);
-                this.wrapper.addEventListener('pointerup', this.dragHandlers.up);
-                this.wrapper.style.cursor = 'grab';
-                this.dragEnabled = true;
-            } else {
-                this.wrapper.style.cursor = '';
-            }
         }
 
         detectCurrentSlide() {
@@ -550,10 +474,6 @@
 
         updateButtons() {
             const maxIndex = Math.max(0, this.slides.length - this.slidesPerView);
-            const scrollLeft = Math.abs(this.wrapper.scrollLeft);
-            const maxScroll = this.wrapper.scrollWidth - this.wrapper.clientWidth;
-
-            console.log(`[Swiper #${this.id}] slides:${this.slides.length} perView:${this.slidesPerView} | idx:${this.currentIndex} maxIdx:${maxIndex} | scroll:${scrollLeft.toFixed(1)} maxScroll:${maxScroll.toFixed(1)}`);
 
             if (this.prevBtn) {
                 this.prevBtn.disabled = this.currentIndex <= 0;
