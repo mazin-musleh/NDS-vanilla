@@ -23,12 +23,24 @@
         return document.documentElement.dir === 'rtl';
     }
 
+    // Cache contentMaxWidth globally (same for all swipers)
+    let contentMaxWidth = null;
+    function getContentMaxWidth() {
+        if (contentMaxWidth === null) {
+            contentMaxWidth = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nds-content-MaxWidth')) || 1280;
+        }
+        return contentMaxWidth;
+    }
+
     // ==============================================
     // MAIN CLASS
     // ==============================================
 
+    let instanceCounter = 0;
+
     class NDSSwiper {
         constructor(container) {
+            this.id = ++instanceCounter;
             this.container = container;
             this.wrapper = container.querySelector('.nds-swiper-wrapper');
             this.slides = Array.from(container.querySelectorAll('.nds-swiper-slide'));
@@ -79,10 +91,29 @@
             this.setupKeyboard();
             this.setupResize();
             this.setupLazyLoading();
+            this.setupContentObserver();
             this.updateState();
             this.updatePeekStyles();
 
             this.container.setAttribute('data-swiper-initialized', 'true');
+        }
+
+        setupContentObserver() {
+            let lastScrollWidth = this.wrapper.scrollWidth;
+
+            const checkScrollWidth = debounce(() => {
+                const currentScrollWidth = this.wrapper.scrollWidth;
+                if (currentScrollWidth !== lastScrollWidth) {
+                    lastScrollWidth = currentScrollWidth;
+                    this.updatePeekStyles();
+                }
+            }, 100);
+
+            const observer = new ResizeObserver(checkScrollWidth);
+            observer.observe(this.wrapper);
+
+            // Disconnect after 500ms
+            setTimeout(() => observer.disconnect(), 500);
         }
 
 
@@ -128,27 +159,23 @@
         }
 
         updatePeekStyles() {
-            const peek = parseInt(this.container.getAttribute('peek')) || 0;
-            const isHeroSlider = this.container.classList.contains('nds-hero');
+            // Skip if no peek or is hero slider
+            if (!this.container.hasAttribute('peek') || this.container.classList.contains('nds-hero')) {
+                return;
+            }
 
-            // Only process if has peek and not hero
-            if (peek > 0 && !isHeroSlider) {
-                // Get viewport width and content max width
-                const viewportWidth = window.innerWidth;
-                const contentMaxWidth = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nds-content-MaxWidth')) || 1280;
+            const maxWidth = getContentMaxWidth();
+            const viewportWidth = window.innerWidth;
+            const wrapperWidth = this.wrapper.clientWidth;
+            const swiperContentWidth = this.wrapper.scrollWidth;
 
-                // Calculate widths
-                const wrapperWidth = this.wrapper.clientWidth;
-                const swiperContentWidth = this.wrapper.scrollWidth;
+            const shouldBeFullWidth = (viewportWidth < maxWidth && viewportWidth < swiperContentWidth) ||
+                                      (wrapperWidth < maxWidth && wrapperWidth < swiperContentWidth);
+            const isFullWidth = this.container.classList.contains('nds-full-width');
 
-                // Auto-toggle nds-full-width class based on actual content width
-                const shouldBeFullWidth = (viewportWidth < contentMaxWidth && viewportWidth < swiperContentWidth) || (wrapperWidth < contentMaxWidth && wrapperWidth < swiperContentWidth);
-
-                if (shouldBeFullWidth) {
-                    this.container.classList.add('nds-full-width');
-                } else {
-                    this.container.classList.remove('nds-full-width');
-                }
+            // Only toggle if state changed
+            if (shouldBeFullWidth !== isFullWidth) {
+                this.container.classList.toggle('nds-full-width', shouldBeFullWidth);
             }
         }
 
@@ -284,18 +311,15 @@
                 this.wrapper.style.cursor = 'grab';
                 this.wrapper.releasePointerCapture(e.pointerId);
 
-                // Detect nearest slide and use goTo for smooth animation
-                this.detectCurrentSlide();
-
-                // Re-enable smooth behavior and animate to slide
+                // Re-enable scroll-snap and smooth behavior - let CSS handle snapping
                 this.wrapper.style.scrollBehavior = '';
-                requestAnimationFrame(() => {
-                    this.goTo(this.currentIndex);
-                    // Re-enable scroll-snap after animation starts
-                    setTimeout(() => {
-                        this.wrapper.style.scrollSnapType = '';
-                    }, 50);
-                });
+                this.wrapper.style.scrollSnapType = '';
+
+                // Update state after snap settles
+                setTimeout(() => {
+                    this.detectCurrentSlide();
+                    this.updateState();
+                }, 100);
             };
 
             // Store handlers for cleanup
@@ -526,6 +550,10 @@
 
         updateButtons() {
             const maxIndex = Math.max(0, this.slides.length - this.slidesPerView);
+            const scrollLeft = Math.abs(this.wrapper.scrollLeft);
+            const maxScroll = this.wrapper.scrollWidth - this.wrapper.clientWidth;
+
+            console.log(`[Swiper #${this.id}] slides:${this.slides.length} perView:${this.slidesPerView} | idx:${this.currentIndex} maxIdx:${maxIndex} | scroll:${scrollLeft.toFixed(1)} maxScroll:${maxScroll.toFixed(1)}`);
 
             if (this.prevBtn) {
                 this.prevBtn.disabled = this.currentIndex <= 0;
