@@ -145,11 +145,6 @@
         }
     }
 
-    // Disabled state
-    &:disabled {
-        opacity: 0.3;
-        cursor: not-allowed;
-    }
 }
 
 .nds-swiper-button-prev {
@@ -246,7 +241,8 @@
 // ==============================================
 
 .nds-swiper.nds-oncolor,
-.nds-swiper.nds-hero {
+.nds-swiper.nds-hero,
+.nds-oncolor {
     .nds-swiper-pagination-bullet {
         background-color: var(--swiper-pagination-bullet-oncolor-default);
         border-color: rgba(255, 255, 255, 0.3);
