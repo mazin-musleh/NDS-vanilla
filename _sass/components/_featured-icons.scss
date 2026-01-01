@@ -11,6 +11,11 @@
 // ==============================================
 
 .nds-featured-icon {
+  // Custom properties with fallbacks for parent override
+  --featuredicons-bg-color: var(--icon-bg-color, var(--featuredicons-background-brand-light));
+  --featuredicons-icon-color: var(--icon-color, var(--featuredicons-icon-primary));
+  --featuredicons-dark-bg-color: var(--dark-bg-color, var(--featuredicons-icon-primary));
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -22,6 +27,8 @@
   padding: calc(var(--nds-icon-size) / 4);
   line-height: calc(var(--nds-icon-size) / 2);
   border: unset;
+  background-color: var(--featuredicons-bg-color);
+  color: var(--featuredicons-icon-color);
 
 
   // ==============================================
@@ -51,68 +58,45 @@
   // ==============================================
 
   &.nds-brand {
-    background-color: var(--featuredicons-background-brand-light);
-    color: var(--featuredicons-icon-primary);
-
-    &.nds-dark {
-      background-color: var(--featuredicons-icon-primary);
-    }
-
+    --icon-bg-color: var(--featuredicons-background-brand-light);
+    --icon-color: var(--featuredicons-icon-primary);
+    --dark-bg-color: var(--featuredicons-icon-primary);
   }
 
-  &.nds-success,&.success {
-    background-color: var(--featuredicons-background-success-light);
-    color: var(--featuredicons-icon-success);
-
-    &.nds-dark {
-      background-color: var(--featuredicons-icon-success);
-    }
-
+  &.nds-success, &.success {
+    --icon-bg-color: var(--featuredicons-background-success-light);
+    --icon-color: var(--featuredicons-icon-success);
+    --dark-bg-color: var(--featuredicons-icon-success);
   }
 
-  &.nds-info,&.info {
-    background-color: var(--featuredicons-background-info-light);
-    color: var(--featuredicons-icon-info);
-
-    &.nds-dark {
-      background-color: var(--featuredicons-icon-info);
-    }
+  &.nds-info, &.info {
+    --icon-bg-color: var(--featuredicons-background-info-light);
+    --icon-color: var(--featuredicons-icon-info);
+    --dark-bg-color: var(--featuredicons-icon-info);
   }
 
-    &.nds-gold {
-      background-color: var(--colors-secondary-gold-100);
-      color: var(--colors-secondary-gold-800);
-  
-      &.nds-dark {
-        background-color: var(--colors-secondary-gold-800);
-      }
-    }
-
-  &.nds-warning,&.warning  {
-    background-color: var(--featuredicons-background-warning-light);
-    color: var(--featuredicons-icon-warning);
-
-    &.nds-dark {
-      background-color: var(--featuredicons-icon-warning);
-    }
+  &.nds-gold {
+    --icon-bg-color: var(--colors-secondary-gold-100);
+    --icon-color: var(--colors-secondary-gold-800);
+    --dark-bg-color: var(--colors-secondary-gold-800);
   }
 
-  &.nds-error,&.error {
-    background-color: var(--featuredicons-background-error-light);
-    color: var(--featuredicons-icon-error);
+  &.nds-warning, &.warning {
+    --icon-bg-color: var(--featuredicons-background-warning-light);
+    --icon-color: var(--featuredicons-icon-warning);
+    --dark-bg-color: var(--featuredicons-icon-warning);
+  }
 
-    &.nds-dark {
-      background-color: var(--featuredicons-icon-error);
-    }
+  &.nds-error, &.error {
+    --icon-bg-color: var(--featuredicons-background-error-light);
+    --icon-color: var(--featuredicons-icon-error);
+    --dark-bg-color: var(--featuredicons-icon-error);
   }
 
   &.nds-neutral {
-    background-color: var(--featuredicons-background-default-light);
-    color: var(--featuredicons-icon-neutral);
-
-    &.nds-dark {
-      background-color: var(--featuredicons-icon-default-500);
-    }
+    --icon-bg-color: var(--featuredicons-background-default-light);
+    --icon-color: var(--featuredicons-icon-neutral);
+    --dark-bg-color: var(--featuredicons-icon-default-500);
   }
 
   // ==============================================
@@ -129,12 +113,12 @@
   }
 
   &.nds-dark {
+    background-color: var(--featuredicons-dark-bg-color);
     border: 1px solid transparent;
 
     .icon {
       color: var(--icon-oncolor);
     }
-
   }
 }
 
