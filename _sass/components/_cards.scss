@@ -10,8 +10,22 @@
 // ==============================================
 
 .nds-card {
+  --nds-card-bg-color: var(--bg-color, var(--background-card));
+  --nds-card-bg-hover-color: var(--bg-hover-color, var(--background-neutral-50));
+  --nds-card-border-color: var(--border-color, var(--border-neutral-primary));
+  --nds-card-border-hover-color: var(--border-hover-color, var(--colors-primary-sa-flag-600-primary));
+  --nds-card-border-active-color: var(--border-active-color, var(--border-neutral-primary));
+  --nds-card-text-color: var(--text-color, var(--text-display));
+  --nds-card-title-color: var(--title-color, var(--text-display));
+  --nds-card-subtitle-color: var(--subtitle-color, var(--colors-secondary-gold-800));
+  --nds-card-number-color: var(--number-color, var(--text-primary-sa-flag));
+  --nds-card-icon-color: var(--icon-color, var(--featuredicons-icon-primary));
+  --nds-card-icon-bg-color: var(--icon-bg-color, var(--featuredicons-background-brand-light));
+  --nds-card-rating-color: var(--rating-color, var(--colors-neutral-600));
+  
+
   font-family: 'IBM Plex Sans Arabic', sans-serif;
-  background-color: var(--background-card);
+  background-color: var(--nds-card-bg-color);
   border: 1px solid transparent;
   border-radius: var(--components-card-radius);
   padding: var(--spacing-xl);
@@ -29,7 +43,7 @@
 
   // Stroke variant
   &.nds-stroke {
-    border: 1px solid var(--border-neutral-primary);
+    border: 1px solid var(--nds-card-border-color);
   }
 
   &.nds-full {
@@ -39,7 +53,7 @@
 
   // Featured variant
   &.nds-featured {
-    outline: 2px solid var(--colors-primary-sa-flag-600-primary);
+    outline: 2px solid var(--nds-card-border-active-color);
     outline-offset: -2px;
   }
 
@@ -112,7 +126,7 @@
       font-size: var(--nds-text-lg-FS);
       line-height: var(--nds-text-lg-LH);
       font-weight: 700;
-      color: var(--text-display);
+      color: var(--title-color);
       margin: 0;
       width: 100%;
     }
@@ -122,7 +136,7 @@
       font-size: var(--nds-text-md-FS);
       line-height: var(--nds-text-md-LH);
       font-weight: 600;
-      color: var(--colors-secondary-gold-800);
+      color: var(--subtitle-color);
       margin: 0;
       width: 100%;
     }
@@ -133,7 +147,7 @@
       font-size: var(--nds-text-md-FS);
       line-height: var(--nds-text-md-LH);
       font-weight: 400;
-      color: var(--text-display);
+      color: var(--text-color);
       margin: 0;
       width: 100%;
       text-align: justify;
@@ -172,7 +186,7 @@
     font-size: var(--nds-text-xs-FS);
     line-height: var(--nds-text-xs-LH);
     font-weight: 400;
-    color: var(--colors-neutral-600);
+    color: var(--rating-color);
     margin: 0;
   }
 
@@ -280,7 +294,7 @@
     .nds-card-number,
     .nds-counter-value,
     .nds-number-format {
-      color: var(--text-primary-sa-flag);
+      color: var(--nds-card-number-color);
       font-size: var(--nds-display-clamp-lg-FS);
       line-height: var(--nds-display-clamp-lg-LH);
       font-weight: 500;
@@ -330,17 +344,91 @@
   }
 }
 
+// ==============================================
+// COLORED CARD VARIANTS
+// ==============================================
+
+.nds-card:not(.nds-oncolor).nds-gold {
+  --border-hover-color: var(--colors-secondary-gold-600);
+  --border-active-color: var(--colors-secondary-gold-300);
+  --title-color: var(--colors-secondary-gold-900);
+  --subtitle-color: var(--colors-secondary-gold-800);
+  --number-color: var(--colors-secondary-gold-800);
+  --icon-bg-color: var(--colors-secondary-gold-100);
+  --icon-color: var(--colors-secondary-gold-800);
+  --dark-bg-color: var(--colors-secondary-gold-800);
+
+  &.nds-color {
+    --bg-color: var(--colors-secondary-gold-50);
+    --bg-hover-color: var(--colors-secondary-gold-100);
+    --border-color: var(--colors-secondary-gold-200);
+  }
+}
+
+.nds-card:not(.nds-oncolor).nds-neutral {
+  --border-hover-color: var(--colors-neutral-500);
+    --border-active-color: var(--colors-neutral-300);
+  --title-color: var(--colors-neutral-900);
+  --subtitle-color: var(--colors-neutral-600);
+  --number-color: var(--colors-neutral-600);
+  --icon-bg-color: var(--colors-neutral-100);
+  --icon-color: var(--colors-neutral-600);
+  --dark-bg-color: var(--colors-neutral-600);
+
+  &.nds-color {
+    --bg-color: var(--colors-neutral-50);
+    --bg-hover-color: var(--colors-neutral-100);
+    --border-color: var(--colors-neutral-200);
+  }
+}
+
+.nds-card:not(.nds-oncolor).nds-lavendar {
+  --border-hover-color: var(--colors-tertiary-lavendar-500);
+  --border-active-color: var(--colors-tertiary-lavendar-300);
+  --title-color: var(--colors-tertiary-lavendar-900);
+  --subtitle-color: var(--colors-tertiary-lavendar-600);
+  --number-color: var(--colors-tertiary-lavendar-600);
+  --icon-bg-color: var(--colors-tertiary-lavendar-100);
+  --icon-color: var(--colors-tertiary-lavendar-600);
+  --dark-bg-color: var(--colors-tertiary-lavendar-600);
+
+  &.nds-color {
+    --bg-color: var(--colors-tertiary-lavendar-50);
+    --bg-hover-color: var(--colors-tertiary-lavendar-100);
+    --border-color: var(--colors-tertiary-lavendar-200);
+  }
+}
+
+// ==============================================
+// ONCOLOR VARIANT (for dark backgrounds)
+// ==============================================
+
+.nds-card.nds-oncolor {
+  --bg-color: var(--alpha-white-10);
+  --bg-hover-color: var(--alpha-white-20);
+  --border-color: var(--alpha-white-20);
+  --border-hover-color: var(--alpha-white-40);
+  --border-active-color: var(--alpha-white-30);
+  --text-color: var(--text-oncolor-primary);
+  --title-color: var(--text-oncolor-primary);
+  --subtitle-color: var(--text-oncolor-primary);
+  --number-color: var(--text-oncolor-primary);
+  --icon-bg-color: var(--alpha-white-10);
+  --icon-color: var(--featuredicons-icon-oncolor);
+  --dark-bg-color: var(--alpha-white-20);
+  --rating-color: var(--alpha-white-80);
+}
 
 
 // ==============================================
 // INTERACTIVE STATES
 // ==============================================
 
-.nds-interactive {
+.nds-card:is(a,button,.nds-interactive) {
   cursor: pointer;
 
-  &:hover {
-    background-color: var(--background-neutral-50);
+  &:not(.nds-stroke):hover {
+    background-color: var(--nds-card-bg-hover-color);
   }
 
   &:active {
@@ -358,63 +446,11 @@
 
   // Stroke variant interactive states
   &.nds-stroke:hover {
-    border-color: var(--colors-primary-sa-flag-600-primary);
+    border-color: var(--nds-card-border-hover-color);
   }
 
   &.nds-stroke:active {
-    border-color: var(--border-neutral-primary);
-  }
-}
-
-
-.nds-card.nds-gold {
-
-  .nds-featured-icon {
-    background-color: var(--colors-secondary-gold-100);
-    color: var(--colors-secondary-gold-800);
-
-
-    &.nds-dark {
-      background-color: var(--colors-secondary-gold-800);
-    }
-  }
-
-  .nds-card-number {
-    color: var(--colors-secondary-gold-800) !important;
-  }
-}
-
-.nds-card.nds-neutral {
-
-  .nds-featured-icon {
-    background-color: var(--colors-neutral-100);
-    color: var(--colors-neutral-600);
-
-
-    &.nds-dark {
-      background-color: var(--colors-neutral-600);
-    }
-  }
-
-  .nds-card-number {
-    color: var(--colors-neutral-600) !important;
-  }
-}
-
-.nds-card.nds-lavendar {
-
-  .nds-featured-icon {
-    background-color: var(--colors-tertiary-lavendar-100);
-    color: var(--colors-tertiary-lavendar-600);
-
-
-    &.nds-dark {
-      background-color: var(--colors-tertiary-lavendar-600);
-    }
-  }
-
-  .nds-card-number {
-    color: var(--colors-tertiary-lavendar-600) !important;
+    border-color: var(--nds-card-border-active-color);
   }
 }
 

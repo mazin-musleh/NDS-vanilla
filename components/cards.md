@@ -57,7 +57,7 @@ direction: ltr
                                 <div class="nds-card-header">
                                     <!-- Featured Icon -->
                                     <div class="nds-card-featured-icon">
-                                        <span class="nds-featured-icon nds-brand nds-circle nds-lg">
+                                        <span class="nds-featured-icon nds-circle nds-lg">
                                             <i class="hgi hgi-stroke hgi-stars icon"></i>
                                         </span>
                                     </div>
@@ -118,7 +118,7 @@ direction: ltr
                                             <div class="nds-card-header">
                                                 <!-- Featured Icon -->
                                                 <div class="nds-card-featured-icon">
-                                                    <span class="nds-featured-icon nds-brand nds-circle nds-lg">
+                                                    <span class="nds-featured-icon nds-circle nds-lg">
                                                         <i class="hgi hgi-stroke hgi-stars icon"></i>
                                                     </span>
                                                 </div>
@@ -454,6 +454,18 @@ direction: ltr
                                 <span class="label">Neutral</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-color", ".nds-card", "cardColorfull"]'>
+                                <span class="label">Color</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='[["nds-oncolor", ".nds-card", "containerBg"],["dark-bg", ".demo-container", "containerBg"]]'>
+                                <span class="label">On Color</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-interactive", ".nds-card", "cardInteractive"]'>
+                                <span class="label">Interactive</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                                 <span class="label">Remove bg</span>
                             </button>
@@ -465,7 +477,7 @@ direction: ltr
                                 <div class="nds-card-header">
                                     <!-- Featured Icon -->
                                     <div class="nds-card-featured-icon">
-                                        <span class="nds-featured-icon nds-brand nds-circle nds-xl">
+                                        <span class="nds-featured-icon nds-circle nds-xl">
                                             <i class="hgi hgi-stroke hgi-user icon"></i>
                                         </span>
                                     </div>
@@ -504,7 +516,7 @@ direction: ltr
                                             <div class="nds-card-header">
                                                 <!-- Featured Icon -->
                                                 <div class="nds-card-featured-icon">
-                                                    <span class="nds-featured-icon nds-brand nds-circle nds-lg">
+                                                    <span class="nds-featured-icon nds-circle nds-lg">
                                                         <i class="hgi hgi-stroke hgi-chart-line icon"></i>
                                                     </span>
                                                 </div>
@@ -565,7 +577,7 @@ direction: ltr
                             <div class="nds-card nds-stroke nds-statistic">
                                 <div class="nds-card-header">
                                     <div class="nds-card-featured-icon">
-                                        <span class="nds-featured-icon nds-brand nds-circle nds-xl">
+                                        <span class="nds-featured-icon nds-circle nds-xl">
                                             <i class="hgi hgi-stroke hgi-user-multiple icon"></i>
                                         </span>
                                     </div>
@@ -582,7 +594,7 @@ direction: ltr
                             <div class="nds-card nds-stroke nds-statistic">
                                 <div class="nds-card-header">
                                     <div class="nds-card-featured-icon">
-                                        <span class="nds-featured-icon nds-brand nds-circle nds-xl">
+                                        <span class="nds-featured-icon nds-circle nds-xl">
                                             <i class="hgi hgi-stroke hgi-checkmark-circle-02 icon"></i>
                                         </span>
                                     </div>
@@ -599,7 +611,7 @@ direction: ltr
                             <div class="nds-card nds-stroke nds-statistic">
                                 <div class="nds-card-header">
                                     <div class="nds-card-featured-icon">
-                                        <span class="nds-featured-icon nds-brand nds-circle nds-xl">
+                                        <span class="nds-featured-icon nds-circle nds-xl">
                                             <i class="hgi hgi-stroke hgi-star icon"></i>
                                         </span>
                                     </div>
@@ -616,7 +628,7 @@ direction: ltr
                             <div class="nds-card nds-stroke nds-statistic">
                                 <div class="nds-card-header">
                                     <div class="nds-card-featured-icon">
-                                        <span class="nds-featured-icon nds-brand nds-circle nds-xl">
+                                        <span class="nds-featured-icon nds-circle nds-xl">
                                             <i class="hgi hgi-stroke hgi-queue-01 icon"></i>
                                         </span>
                                     </div>
@@ -655,7 +667,7 @@ direction: ltr
                                         <div class="nds-card nds-stroke nds-statistic">
                                             <div class="nds-card-header">
                                                 <div class="nds-card-featured-icon">
-                                                    <span class="nds-featured-icon nds-brand nds-circle nds-xl">
+                                                    <span class="nds-featured-icon nds-circle nds-xl">
                                                         <i class="hgi hgi-stroke hgi-user-multiple icon"></i>
                                                     </span>
                                                 </div>
