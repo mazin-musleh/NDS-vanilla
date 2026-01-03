@@ -11,8 +11,10 @@
 
 .nds-swiper {
     // --swiper-slides set by JavaScript in constructor to prevent CLS
+    --swiper-slides: var(--slides, 1);
     --swiper-gap: var(--gap, var(--spacing-md));
-    --swiper-peek: 0px;
+    --swiper-peek: var(--peek, 0px);
+    --swiper-padding: var(--padding, 0px);
 
     position: relative;
     width: 100%;
@@ -58,14 +60,9 @@
     user-select: none;
 
     // Peek mode: add padding to show partial slides
-    padding-inline: var(--swiper-peek);
-
-    .nds-swiper.nds-full-width & {
-        padding-inline: var(--nds-viewport-padding);
-    }
-
+    padding-inline: var(--swiper-padding);
     // Scroll padding for proper snap alignment with peek
-    scroll-padding-inline: var(--nds-viewport-padding);
+    scroll-padding-inline: max(var(--swiper-peek),var(--swiper-padding));
 
     .nds-swiper:not(.nds-hero) & {
         padding-block-end: var(--spacing-md);
@@ -78,9 +75,10 @@
 // ==============================================
 
 .nds-swiper-slide {
-    // Account for gap in slide width: (100% - total gaps) / slides per view
-    // Fallback to 100% if --swiper-slides not set yet (before JS runs)
-    flex: 0 0 calc((100% - (var(--swiper-gap) * (var(--swiper-slides, 1) - 1))) / var(--swiper-slides, 1));
+    // Slide width formula:
+    // Available = 100% - (padding × 2) - peek
+    // Slide = (Available - (gap × (slides - 1))) / slides
+    flex: 0 0 calc((100% - var(--swiper-peek) - (var(--swiper-gap) * (var(--swiper-slides, 1) - 1))) / var(--swiper-slides, 1));
     min-width: 0;
     height: auto;
     position: relative;
@@ -99,7 +97,7 @@
         margin-inline-end: calc(var(--swiper-peek) * -1);
     } */
 
-/*     .nds-swiper.nds-full-width & {
+    /*     .nds-swiper.nds-full-width & {
         flex: 0 0 calc((100% - (var(--swiper-gap) * (var(--swiper-slides, 1) - 1))) / var(--swiper-slides, 1) - var(--swiper-peek));
     } */
 
@@ -218,7 +216,7 @@
 .nds-swiper-navigation {
     display: flex;
     justify-content: space-between;
-    margin-inline: var(--nds-viewport-padding);
+    margin-inline: calc(var(--nds-viewport-padding) + var(--spacing-xl));
     margin-top: var(--spacing-md);
 
     .nds-swiper-buttons {

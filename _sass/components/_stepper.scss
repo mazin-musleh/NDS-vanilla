@@ -434,13 +434,34 @@
     }
 
     .progress-circle {
-        @include progress-circle-steps($size: 120px,
-            $style: 'primary',
-            $rotate: -90deg,
-            $show-text: true,
-            $show-symbol: false,
-            $current: var(--current-step),
-            $total: var(--total-steps));
+        --pc-size: 120px;
+        --pc-bg-stroke: var(--background-neutral-100);
+        --pc-bar-stroke: var(--button-background-primary-default);
+
+        @include progress-circle-base(var(--pc-size), -90deg);
+
+        // Progress based on steps
+        svg circle.progress-bar {
+            stroke-dasharray: 62.83 !important;
+            stroke-dashoffset: calc(62.83 - (62.83 * var(--current-step) / var(--total-steps)));
+            transition: stroke-dashoffset 0.3s ease !important;
+        }
+
+        .progress-percentage {
+            display: none !important;
+        }
+
+        .progress-text {
+            display: flex !important;
+            align-items: center;
+            flex-wrap: nowrap;
+            justify-content: center;
+            font-size: clamp(10px, calc(var(--pc-size) * 0.2), 24px) !important;
+            font-weight: 700;
+            white-space: nowrap;
+            gap: clamp(2px, calc(var(--pc-size) * 0.05), 4px);
+            line-height: 1;
+        }
 
         position: relative;
         flex-shrink: 0;
@@ -547,18 +568,12 @@
 
     &.nds-radial {
         .progress-circle {
-            @include progress-circle-steps($size: 120px,
-                $style: 'oncolor',
-                $rotate: -90deg,
-                $show-text: true,
-                $show-symbol: false,
-                $current: var(--current-step),
-                $total: var(--total-steps));
+            --pc-bg-stroke: var(--alpha-white-30);
+            --pc-bar-stroke: var(--background-surface-oncolor);
         }
 
         .progress-circle .progress-info {
             color: var(--text-oncolor-primary);
-
         }
     }
 

@@ -23,15 +23,6 @@
         return document.documentElement.dir === 'rtl';
     }
 
-    // Cache contentMaxWidth globally (same for all swipers)
-    let contentMaxWidth = null;
-    function getContentMaxWidth() {
-        if (contentMaxWidth === null) {
-            contentMaxWidth = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nds-content-MaxWidth')) || 1280;
-        }
-        return contentMaxWidth;
-    }
-
     // ==============================================
     // MAIN CLASS
     // ==============================================
@@ -77,7 +68,7 @@
             }
 
             // Set both CSS variable and instance property to prevent CLS
-            this.container.style.setProperty('--swiper-slides', initial);
+            this.container.style.setProperty('--slides', initial);
             this.slidesPerView = initial;
         }
 
@@ -136,19 +127,19 @@
             // Only update if changed (prevents unnecessary recalculation during init)
             if (newSlidesPerView !== this.slidesPerView) {
                 this.slidesPerView = newSlidesPerView;
-                this.container.style.setProperty('--swiper-slides', this.slidesPerView);
+                this.container.style.setProperty('--slides', this.slidesPerView);
             }
 
             // Calculate number of pages
             const pageCount = Math.ceil(this.slides.length / this.slidesPerView);
 
             // Get swiper gap
-            const gap = parseInt(getComputedStyle(this.container).getPropertyValue('--swiper-gap')) || 0;
+            const gap = parseInt(getComputedStyle(this.container).getPropertyValue('--gap')) || 0;
 
             // Set peek to 0 if no peek attr, only one page, otherwise add gap to peek
             const effectivePeek = (peek > 0 && pageCount > 1) ? peek + gap : 0;
 
-            this.container.style.setProperty('--swiper-peek', `${effectivePeek}px`);
+            this.container.style.setProperty('--peek', `${effectivePeek}px`);
 
             // Rebuild pagination when slides per view changes
             if (this.pagination) {
@@ -165,34 +156,34 @@
             const hasPeek = this.container.hasAttribute('peek');
             const hasOneSlidePage = this.slidesPerView === 1;
 
-            // If not peek and not single slide, remove full-width and gap if present
+            // Check if parent has nds-full-width and parent width >= viewport width
+            const parent = this.container.parentElement;
+            const viewportWidth = document.documentElement.clientWidth;
+            const parentWidth = parent?.clientWidth || 0;
+            const parentHasFullWidth = parent?.classList.contains('nds-full-width');
+            const parentFillsViewport = parentWidth >= viewportWidth;
+            const widthDiff = Math.abs(parentWidth - viewportWidth);
+
+            console.log(`[Swiper #${this.id}] parent.nds-full-width:${parentHasFullWidth} parentWidth:${parentWidth} viewportWidth:${viewportWidth} widthDiff:${widthDiff} parentFillsViewport:${parentFillsViewport}`);
+
+            // If parent has nds-full-width AND fills viewport, add swiper padding
+            if (parentHasFullWidth && parentFillsViewport) {
+                this.container.style.setProperty('--padding', 'var(--nds-viewport-padding)');
+                console.log(`[Swiper #${this.id}] --padding ADDED`);
+            } else {
+                this.container.style.removeProperty('--padding');
+                console.log(`[Swiper #${this.id}] --padding REMOVED`);
+            }
+
+            // If not peek and not single slide, remove gap if present
             if (!hasPeek && !hasOneSlidePage) {
-                this.container.classList.remove('nds-full-width');
                 this.container.style.removeProperty('--gap');
                 return;
             }
 
-            const maxWidth = getContentMaxWidth();
-            const viewportWidth = window.innerWidth;
-            const wrapperWidth = this.wrapper.clientWidth;
-            const swiperContentWidth = this.wrapper.scrollWidth;
-
-            const shouldBeFullWidth = (viewportWidth < maxWidth && viewportWidth < swiperContentWidth) ||
-                                      (wrapperWidth < maxWidth && wrapperWidth < swiperContentWidth);
-            const isFullWidth = this.container.classList.contains('nds-full-width');
-
-            // Only toggle if state changed
-            if (shouldBeFullWidth !== isFullWidth) {
-                this.container.classList.toggle('nds-full-width', shouldBeFullWidth);
-
-                // For non-peek single slide mode: set gap to viewport padding when full-width
-                if (!hasPeek && hasOneSlidePage) {
-                    if (shouldBeFullWidth) {
-                        this.container.style.setProperty('--gap', 'var(--nds-viewport-padding)');
-                    } else {
-                        this.container.style.removeProperty('--gap');
-                    }
-                }
+            // For non-peek single slide mode: set gap to viewport padding
+            if (!hasPeek && hasOneSlidePage) {
+                this.container.style.setProperty('--gap', 'var(--nds-viewport-padding)');
             }
         }
 
@@ -274,34 +265,33 @@
         // ==============================================
 
         setupScrollSync() {
-            // Update immediately on scroll for real-time feedback during drag
+            let ticking = false;
             this.wrapper.addEventListener('scroll', () => {
-                this.detectCurrentSlide();
-                this.updateState();
+                if (!ticking) {
+                    requestAnimationFrame(() => {
+                        this.detectCurrentSlide();
+                        this.updateState();
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
             }, { passive: true });
         }
 
         detectCurrentSlide() {
             if (this.slides.length === 0) return;
 
-            const wrapperRect = this.wrapper.getBoundingClientRect();
-            const wrapperStart = isRTL() ? wrapperRect.right : wrapperRect.left;
+            // Use scroll position instead of getBoundingClientRect for each slide
+            const scrollLeft = this.wrapper.scrollLeft;
+            const slideWidth = this.slides[0].offsetWidth;
+            const gap = parseInt(getComputedStyle(this.container).getPropertyValue('--gap')) || 0;
 
-            let closestIndex = 0;
-            let closestDistance = Infinity;
+            // Calculate index from scroll position
+            const rtl = isRTL();
+            const scrollPos = rtl ? -scrollLeft : scrollLeft;
+            const newIndex = Math.round(scrollPos / (slideWidth + gap));
 
-            this.slides.forEach((slide, index) => {
-                const slideRect = slide.getBoundingClientRect();
-                const slideStart = isRTL() ? slideRect.right : slideRect.left;
-                const distance = Math.abs(slideStart - wrapperStart);
-
-                if (distance < closestDistance) {
-                    closestDistance = distance;
-                    closestIndex = index;
-                }
-            });
-
-            this.currentIndex = closestIndex;
+            this.currentIndex = Math.max(0, Math.min(newIndex, this.slides.length - this.slidesPerView));
         }
 
         // ==============================================
@@ -467,6 +457,10 @@
         // ==============================================
 
         updateState() {
+            // Skip if index hasn't changed
+            if (this.lastIndex === this.currentIndex) return;
+            this.lastIndex = this.currentIndex;
+
             this.updatePagination();
             this.updateButtons();
             this.updateBoundaryClasses();

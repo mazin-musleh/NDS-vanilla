@@ -1,8 +1,10 @@
 /* ========================================
    SIDE MENU COMPONENT
+   Uses nds-drawer for list functionality
    ======================================== */
 
 @use '../mixins' as *;
+
 /* ========================================
    SIDE MENU BASE STYLES
    ======================================== */
@@ -27,184 +29,33 @@
 }
 
 /* ========================================
-   NAVIGATION CONTAINER
+   NAVIGATION CONTAINER (nds-drawer)
    ======================================== */
 
-/* Navigation Container */
-.nds-sideMenu>nav {
+.nds-sideMenu > nav.nds-drawer {
+    // Max height accounts for: nav height + sticky top offset + bottom padding
+    --_max-height: calc(100svh - var(--nds-nav-height) - var(--spacing-xl) - var(--spacing-xl));
     position: sticky;
     top: calc(var(--nds-nav-height) + var(--spacing-xl));
     width: 100%;
-    max-height: calc(100svh - 100px);
-    padding-bottom: var(--spacing-6xl);
-    overflow-y: auto;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-    scroll-behavior: smooth;
 }
-
-/* ========================================
-   LIST BASE STYLES
-   ======================================== */
-
-.nds-sideMenu ul li a {
-    width: 100%;
-    justify-content: start;
-    color: var(--text-primary-paragraph);
-
-    &>.label {
-        width: 100%;
-    }
-}
-
-.nds-sideMenu ul {
-    & .open>a>.label {
-        color: var(--text-default);
-        filter: drop-shadow(0 0 0.02em currentColor);
-    }
-
-}
-
-.nds-sideMenu .topLevel .nds-btn.nds-indicator {
-    --button-indicator-size: 5px;
-    @include btn-indicator('v');
-}
-
-/* ========================================
-   PRIMARY MENU ITEMS
-   ======================================== */
-
-.nds-sideMenu>nav>.topLevel>li {
-    border-bottom: 1px solid var(--border-background-white);
-
-    &:last-child {
-        border-bottom: unset;
-    }
-}
-
-.nds-sideMenu>nav>.topLevel>li:last-child>a {
-    border-bottom: none;
-}
-
-/* ========================================
-   SUBMENU STYLES
-   ======================================== */
-
-.nds-sideMenu ul ul {
-    margin: 0 var(--spacing-md);
-    overflow: hidden;
-    height: 0;
-    transition: height var(--nds-transition);
-    padding-right: var(--spacing-3xl);
-}
-
-.nds-sideMenu ul ul {
-    @include ltr {
-        padding-left: var(--spacing-3xl);
-        padding-right: unset;
-    }
-}
-
-.nds-sideMenu ul .has-sub.open ul {
-    height: auto;
-}
-
-.nds-sideMenu ul .has-sub:not(.open) ul {
-    display: none;
-}
-
-.nds-sideMenu>nav>.topLevel>li.active>ul {
-    display: block;
-}
-
-/* Submenu Items */
-.nds-sideMenu .has-sub ul li {
-    display: list-item !important;
-    list-style: outside;
-    color: var(--colors-neutral-400, #9DA4AE);
-}
-
-.nds-sideMenu .has-sub ul li:first-child {
-    margin-top: var(--spacing-md);
-}
-
-.nds-sideMenu .has-sub ul li:last-child {
-    margin-bottom: var(--spacing-md);
-}
-
-.nds-sideMenu .topLevel>li.has-sub li a {
-    padding: var(--spacing-md) var(--spacing-sm);
-    margin-right: calc(var(--spacing-xs) * -1);
-}
-
-.nds-sideMenu .topLevel>li.has-sub li a {
-    @include ltr {
-        margin-left: calc(var(--spacing-xs) * -1);
-        margin-right: unset;
-    }
-}
-
-
-/* Nested Submenus */
-.nds-sideMenu ul ul li.has-sub ul {
-    margin: var(--spacing-md) var(--spacing-lg) 0 0;
-    border-bottom: 0;
-}
-
-.nds-sideMenu ul ul li.has-sub ul {
-    @include ltr {
-        margin: var(--spacing-md) 0 0 var(--spacing-lg);
-    }
-}
-
-.nds-sideMenu ul ul li.has-sub {
-    border-bottom: 1px solid #eaeaea;
-    padding-bottom: var(--spacing-md);
-}
-
-/* ========================================
-   MENU ITEM STATES
-   ======================================== */
-
-.nds-sideMenu ul li.active a {
-    color: var(--text-primary) !important;
-
-    &::before {
-        background-color: var(--background-primary) !important;
-    }
-}
-
 
 /* ========================================
    MENU ITEM ICONS (::after)
    ======================================== */
 
-.hgi-loaded .nds-sideMenu nav li.gridView>a:after,
-.hgi-loaded .nds-sideMenu nav li.redirect.external>a:after {
+.hgi-loaded .nds-sideMenu nav li.gridView > a:after,
+.hgi-loaded .nds-sideMenu nav li.redirect.external > a:after {
     content: '㭫';
 }
 
-.hgi-loaded .nds-sideMenu nav li.redirect.external>a:after {
+.hgi-loaded .nds-sideMenu nav li.redirect.external > a:after {
     content: "䊔";
 }
 
-.hgi-loaded .nds-sideMenu nav li.gridView>a:after {
+.hgi-loaded .nds-sideMenu nav li.gridView > a:after {
     content: "䃺";
 }
-
-.hgi-loaded .nds-sideMenu .topLevel>li.gridView>a::after,
-.hgi-loaded .nds-sideMenu .topLevel>li.redirect.external>a::after {
-    content: '㭫';
-}
-
-.hgi-loaded .nds-sideMenu .topLevel>li.redirect.external>a::after {
-    content: "䊔";
-}
-
-.hgi-loaded .nds-sideMenu .topLevel>li.gridView>a::after {
-    content: "䃺";
-}
-
 
 /* ========================================
    TABLET AND MOBILE STYLES (959.98px and below)
@@ -226,7 +77,7 @@
         transform: translateX(0px) !important;
     }
 
-    .nds-sideMenu>nav {
+    .nds-sideMenu > nav.nds-drawer {
         margin-top: -40px !important;
     }
 
@@ -276,35 +127,8 @@
         }
     }
 
-/*     @include ltr {
-        .nds-sideMenu .has-sub ul {
-            margin: var(--spacing-md) 0px 0 28px;
-            padding-right: 0;
-            padding-left: 24px;
-        }
-
-        .nds-sideMenu>nav>.topLevel>li>a:before {
-            right: unset;
-            left: 0;
-        }
-
-        .nds-sideMenu nav li.has-sub>a:after {
-            right: 7px;
-            left: unset;
-        }
-
-        .nds-sideMenu nav>.topLevel>li.has-sub.open>a:after {
-            transform: rotate(180deg);
-        }
-
-        .nds-sideMenu .topLevel>li.has-sub li a {
-            margin-left: 0;
-            margin-left: -4px;
-        }
-    } */
-
     @include ltr {
-        .nds-sideMenu .topLevel>li.redirect.external>a::after {
+        .nds-sideMenu li.redirect.external > a::after {
             transform: scale(-1);
         }
     }

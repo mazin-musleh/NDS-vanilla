@@ -291,21 +291,11 @@ fieldset {
         display: flex;
         gap: var(--spacing-sm);
         flex-direction: row-reverse;
-        margin-left: calc(var(--spacing-md) * -1);
+        margin-inline-end: calc(var(--spacing-md) * -1);
 
         &.before {
-            margin-left: unset;
-            margin-right: calc(var(--spacing-md) * -1);
-        }
-
-        @include ltr {
-            margin-left: unset;
-            margin-right: calc(var(--spacing-md) * -1);
-
-            &.before {
-                margin-right: unset;
-                margin-left: calc(var(--spacing-md) * -1);
-            }
+            margin-inline-end: unset;
+            margin-inline-start: calc(var(--spacing-md) * -1);
         }
 
         >* {
@@ -325,65 +315,14 @@ fieldset {
                 background-color: var(--border-neutral-primary);
                 height: calc(100% - var(--spacing-lg));
                 position: absolute;
-                left: calc(var(--spacing-xs) * -1);
+                inset-inline-end: calc(var(--spacing-xs) * -1);
                 top: 50%;
                 transform: translateY(-50%);
-
-                @include ltr {
-                    left: unset;
-                    right: calc(var(--spacing-xs) * -1);
-                }
             }
         }
     }
-
-    .nds-form-action {
-        display: flex;
-        gap: var(--spacing-sm);
-        flex-direction: row-reverse;
-        margin-left: calc(var(--spacing-md) * -1);
-
-        @include ltr {
-            margin-left: unset;
-            margin-right: calc(var(--spacing-md) * -1);
-        }
-
-        >* {
-            --nds-input-size: 38px;
-            position: relative;
-            width: var(--nds-input-size);
-            height: var(--nds-input-size);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-default, #161616);
-
-            &:not(:first-child, .hidden)::before {
-                content: '';
-                width: 1px;
-                background-color: var(--border-neutral-primary);
-                height: calc(100% - var(--spacing-lg));
-                position: absolute;
-                left: calc(var(--spacing-xs) * -1);
-                top: 50%;
-                transform: translateY(-50%);
-
-                @include ltr {
-                    left: unset;
-                    right: calc(var(--spacing-xs) * -1);
-                }
-            }
-        }
-    }
-
-
-
-
-
-
 
 }
-
 
 .voiceInput.listening>i {
     animation: colorCycle 1s linear infinite alternate;

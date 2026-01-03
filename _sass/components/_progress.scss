@@ -16,10 +16,7 @@
   --progress-circumference: 62.83; // 2πr where r=10
 
   @include progress-circle-base(var(--pc-size), -90deg);
-
-  // Default primary style
-  @include progress-circle-style('primary');
-  @include progress-circle-text($show-text: true, $show-symbol: true, $size: var(--pc-size));
+  @include progress-circle-text(var(--pc-size));
 
   // CSS counter for automatic number display (clamped to 100)
   counter-reset: progress-counter min(var(--progress-value), 100);
@@ -74,25 +71,30 @@
     --pc-size: 240px;
   }
 
-  // Style variants
+  // Style variants using CSS custom properties
   &.nds-primary {
-    @include progress-circle-style('primary');
+    --pc-bg-stroke: var(--background-neutral-100);
+    --pc-bar-stroke: var(--button-background-primary-default);
   }
 
   &.nds-neutral {
-    @include progress-circle-style('neutral');
+    --pc-bg-stroke: var(--background-neutral-100);
+    --pc-bar-stroke: var(--button-background-black-selected);
   }
 
   &.nds-success {
-    @include progress-circle-style('success');
+    --pc-bg-stroke: var(--background-success-100);
+    --pc-bar-stroke: var(--background-success-600);
   }
 
   &.nds-error {
-    @include progress-circle-style('error');
+    --pc-bg-stroke: var(--background-error-100);
+    --pc-bar-stroke: var(--background-error-600);
   }
 
   &.nds-oncolor {
-    @include progress-circle-style('oncolor');
+    --pc-bg-stroke: var(--alpha-white-30);
+    --pc-bar-stroke: var(--background-surface-oncolor);
 
     .progress-info {
       color: var(--text-oncolor-primary);
