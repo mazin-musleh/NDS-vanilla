@@ -471,7 +471,8 @@
     --colors-primary-sa-flag-400: #54c08a;
     --colors-primary-sa-flag-500-alpha-10: #25935f19;
     --colors-primary-sa-flag-500: #25935f;
-    --colors-primary-sa-flag-600-primary: var(--colors-primary-sa-flag-500);
+    --colors-primary-sa-flag-600: #1b8354;
+    --colors-primary-sa-flag-600-primary: var(--colors-primary-sa-flag-600);
     --colors-primary-sa-flag-700: #166a45;
     --colors-primary-sa-flag-800: #14573a;
     --colors-primary-sa-flag-900: #104631;
@@ -484,8 +485,8 @@
     --colors-secondary-gold-400: #f7d54d;
     --colors-secondary-gold-500: #f5bd02;
     --colors-secondary-gold-600:#dba102;
-    --colors-tertiary-gold-primary: var(--colors-secondary-gold-600);
-    --colors-tertiary-gold-600-primary: var(--colors-secondary-gold-600);
+    --colors-secondary-gold-primary: var(--colors-secondary-gold-600);
+    --colors-secondary-gold-600-primary: var(--colors-secondary-gold-600);
     --colors-secondary-gold-700: #b87b02;
     --colors-secondary-gold-800: #945c01;
     --colors-secondary-gold-900: #6e3c00;

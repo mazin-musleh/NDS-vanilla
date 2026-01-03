@@ -43,7 +43,7 @@
 @use 'components/nav';
 @use 'components/DGAdigitalStamp';
 @use 'components/breadcrumb';
-@use 'components/oneRowContent';
+/* @use 'components/oneRowContent'; */
 @use 'components/forms';
 @use 'components/ipv';
 @use 'components/pagination';
@@ -53,6 +53,7 @@
 @use 'components/upload';
 @use 'components/code';
 @use 'components/sideMenu';
+@use 'components/drawer';
 @use 'components/contentLayout';
 @use 'components/hero';
 @use 'components/footer';

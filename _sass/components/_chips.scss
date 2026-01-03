@@ -186,28 +186,15 @@
 
   &.nds-lead-icon {
     .hgi:first-child {
-      margin-left: var(--spacing-xs);
-    }
-
-    @include ltr {
-      .hgi:first-child {
-        margin-left: 0;
-        margin-right: var(--spacing-xs);
-      }
+      margin-inline-end: var(--spacing-xs);
     }
   }
 
   &.nds-trail-icon {
     .hgi:last-child {
-      margin-right: var(--spacing-xs);
+      margin-inline-start: var(--spacing-xs);
     }
 
-    @include ltr {
-      .hgi:last-child {
-        margin-right: 0;
-        margin-left: var(--spacing-xs);
-      }
-    }
   }
 }
 

@@ -2,33 +2,38 @@
     <button id="sideMenuToggle" class="sideMenuToggle" aria-label="Sidebar Menu">
         <i class="hgi hgi-stroke hgi-menu-02"></i>
     </button>
-    <nav>
+    <nav class="nds-drawer nds-divided nds-full-height">
         {% assign sidemenu_data_file = page.sidemenu | default: site.sidemenu | default: "sidemenu" %}
         {% assign sidemenu_items = site.data[sidemenu_data_file] %}
-        <ul class="topLevel">
-            {% for item in sidemenu_items %}
-                {% if item.has_sub %}
-                    <!-- Check if any child is active -->
-                    {% assign has_active_child = false %}
-                    {% for child in item.children %}
-                        {% if page.url == child.href %}
-                            {% assign has_active_child = true %}
-                            {% break %}
-                        {% endif %}
-                    {% endfor %}
-                    
-                    <li class="has-sub{% if has_active_child %} open{% endif %}">
-                        <a class="nds-btn nds-subtle nds-menu-btn nds-indicator" href="#" aria-haspopup="true" aria-expanded="{{ has_active_child }}"><span class="label">{{ item.label }}</span></a>
-                        <ul>
-                            {% for child in item.children %}
-                                <li{% if page.url == child.href %} class="active"{% endif %}><a class="nds-btn {% if page.url == child.href %}nds-transparent{% else %}nds-subtle{% endif %}" href="{{ child.href | relative_url }}"><span class="label">{{ child.label }}</span></a></li>
-                            {% endfor %}
-                        </ul>
-                    </li>
-                {% else %}
-                    <li{% if page.url == item.href %} class="active"{% endif %}><a class="nds-btn {% if page.url == item.href %}nds-transparent{% else %}nds-subtle{% endif %} nds-indicator" href="{{ item.href | relative_url }}"><span class="label">{{ item.label }}</span></a></li>
-                {% endif %}
-            {% endfor %}
-        </ul>
+        <div class="nds-drawer-scroll">
+            <ul class="nds-drawer-list">
+                {% for item in sidemenu_items %}
+                    {% if item.has_sub %}
+                        <!-- Check if any child is active -->
+                        {% assign has_active_child = false %}
+                        {% for child in item.children %}
+                            {% if page.url == child.href %}
+                                {% assign has_active_child = true %}
+                                {% break %}
+                            {% endif %}
+                        {% endfor %}
+
+                        <li{% if has_active_child %} class="open"{% endif %}>
+                            <button class="nds-btn nds-subtle nds-menu-btn nds-indicator" aria-expanded="{{ has_active_child }}"><span class="label">{{ item.label }}</span></button>
+                            <ul>
+                                {% for child in item.children %}
+                                    <li{% if page.url == child.href %} class="active"{% endif %}><a class="nds-btn nds-subtle nds-indicator" href="{{ child.href | relative_url }}"><span class="label">{{ child.label }}</span></a></li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li{% if page.url == item.href %} class="active"{% endif %}><a class="nds-btn nds-subtle nds-indicator" href="{{ item.href | relative_url }}"><span class="label">{{ item.label }}</span></a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+        <button class="nds-drawer-more nds-btn nds-subtle">
+            <i class="hgi hgi-stroke hgi-arrow-down-01 chevron"></i>
+        </button>
     </nav>
 </aside>

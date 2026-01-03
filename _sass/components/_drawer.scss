@@ -1,0 +1,270 @@
+/**
+ * NDS Drawer Component
+ * A 2-level nested navigation drawer with grid-based animations
+ * Uses --_ prefix pattern for internal custom properties
+ * Uses CSS :has() for submenu detection - no .has-sub class needed
+ */
+
+@use '../mixins' as *;
+
+// ==============================================
+// BASE DRAWER STYLES
+// ==============================================
+
+.nds-drawer {
+    // Internal custom properties with external fallbacks
+    --_gap: var(--drawer-gap, 0px);
+    --_indent: var(--drawer-indent, var(--spacing-md));
+    --_indicator-width: var(--drawer-indicator-width, 5px);
+    --_indicator: var(--drawer-indicator, var(--colors-neutral-300));
+    --_indicator-active: var(--drawer-indicator-active, var(--colors-primary-sa-flag-600-primary));
+    --_indicator-hover: var(--drawer-indicator-hover, var(--colors-neutral-400));
+    --_btn-height: var(--drawer-btn-height, 40px);
+    --_btn-padding: var(--drawer-btn-padding, var(--spacing-sm) var(--spacing-md));
+    --_font-size: var(--drawer-font-size, var(--nds-text-md-FS));
+    --_line-height: var(--drawer-line-height, var(--nds-text-md-LH));
+    --_transition: var(--drawer-transition, var(--nds-transition));
+    --_max-height: var(--drawer-max-height, 400px);
+
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    /* Scrollbar Hiding */
+    ::-webkit-scrollbar {
+        display: none;
+    }
+
+    * {
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+}
+
+// ==============================================
+// DRAWER LIST
+// ==============================================
+
+.nds-drawer-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--_gap);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    // Reset nested lists
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+}
+
+// ==============================================
+// DRAWER ITEMS
+// ==============================================
+
+.nds-drawer-list li {
+    display: flex;
+    flex-direction: column;
+
+    // Button/link styling within drawer
+    > .nds-btn {
+        width: 100%;
+        justify-content: flex-start;
+
+        // Label takes available space
+        .label {
+            flex: 1;
+        }
+    }
+}
+
+// ==============================================
+// INDICATOR STYLES
+// ==============================================
+
+.nds-drawer .nds-btn.nds-indicator {
+    --button-indicator-size: var(--_indicator-width);
+    @include btn-indicator('v');
+}
+
+// ==============================================
+// ACTIVE STATE
+// ==============================================
+
+.nds-drawer-list>li.active {
+    // Update featured icon colors
+    --icon-color: var(--_indicator-active);
+    --icon-bg-color: var(--colors-primary-sa-flag-50);
+
+    >.nds-btn {
+
+
+        &.nds-indicator::before {
+            opacity: 1;
+            background-color: var(--_indicator-active);
+        }
+    }
+}
+
+// Nested active item
+.nds-drawer-list ul li.active>.nds-btn {
+    color: var(--_indicator-active);
+}
+
+// ==============================================
+// SUBMENU - CSS :has() DETECTION
+// ==============================================
+
+// Detect items with nested menus using :has()
+.nds-drawer-list>li:has(> ul) {
+    >.nds-btn {
+        // Ensure proper cursor
+        cursor: pointer;
+    }
+}
+
+// ==============================================
+// SUBMENU - HEIGHT ANIMATION
+// ==============================================
+
+.nds-drawer-list>li>ul {
+    display: none;
+    height: 0;
+    overflow: clip;
+    transition: height var(--_transition);
+    padding-inline-start: var(--_indent);
+
+    // Submenu items with list markers (like sidemenu)
+    >li {
+        display: list-item;
+        color: var(--colors-neutral-400);
+        position: relative;
+
+        &:first-child {
+            padding-top: var(--spacing-md);
+        }
+
+        &:last-child {
+            padding-bottom: var(--spacing-md);
+        }
+
+        .nds-btn.nds-indicator::before {
+            --button-indicator-size: var(--_indicator-width);
+            height: var(--button-indicator-size);
+            display: block !important;
+            background-color: var(--_indicator);
+        }
+    }
+}
+
+// Animation states - height set by JS during show/opening/closing
+.nds-drawer-list>li>ul.show {
+    display: unset;
+}
+
+.nds-drawer-list>li>ul.opened {
+    height: auto;
+}
+
+
+// ==============================================
+// SIZE VARIANTS
+// ==============================================
+
+.nds-drawer.nds-sm {
+    --_btn-height: 32px;
+    --_btn-padding: var(--spacing-xs) var(--spacing-sm);
+    --_font-size: var(--nds-text-sm-FS);
+    --_line-height: var(--nds-text-sm-LH);
+    /* --_gap: 2px; */
+    --_indent: var(--spacing-lg);
+    --_indicator-width: 2px;
+}
+
+.nds-drawer.nds-lg {
+    --_btn-height: 48px;
+    --_btn-padding: var(--spacing-md) var(--spacing-lg);
+    --_font-size: var(--nds-text-lg-FS);
+    --_line-height: var(--nds-text-lg-LH);
+    /*  --_gap: var(--spacing-sm); */
+    --_indent: var(--spacing-2xl);
+    --_indicator-width: 4px;
+}
+
+// ==============================================
+// CONSTRAINED MODE (hasMore)
+// Auto-enabled when nds-drawer-scroll is present
+// ==============================================
+
+// Auto-constrained when has scroll container
+.nds-drawer:has(.nds-drawer-scroll) {
+    position: relative;
+    max-height: var(--_max-height);
+}
+
+.nds-drawer-scroll {
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex: 1;
+    min-height: 0;
+
+    // Fade effect at bottom when scrollable
+    .hasMore:not(.atEnd) & {
+        mask-image: linear-gradient(to bottom, black calc(100% - 48px), transparent 100%);
+    }
+}
+
+.nds-drawer-more {
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    background: var(--background-surface, var(--background-white));
+    border-top: 1px solid var(--border-neutral-secondary);
+    justify-content: center;
+
+    // Hidden by default
+    display: none;
+
+    .hasMore & {
+        display: flex;
+        width: 100%;
+    }
+
+    & i{
+        transition: transform 0.1s ease;
+    }
+
+    // Rotate icon when at end
+    .atEnd & i{
+        transform: rotate(180deg);
+    }
+}
+
+// ==============================================
+// DIVIDER VARIANT
+// ==============================================
+
+.nds-drawer.nds-divided {
+    .nds-drawer-list>li {
+        border-bottom: 1px solid var(--border-neutral-secondary);
+
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+}
+
+// ==============================================
+// RESPONSIVE BEHAVIOR
+// ==============================================
+
+@include mobile {
+    .nds-drawer {
+        --_btn-height: 48px;
+        --_btn-padding: var(--spacing-md);
+    }
+}

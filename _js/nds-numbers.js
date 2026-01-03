@@ -148,6 +148,7 @@
 
         // Group counters by threshold to minimize observers
         const observersByThreshold = new Map();
+        const observerCounts = new Map();
 
         counters.forEach(counter => {
             const config = counterConfigs.get(counter);
@@ -158,76 +159,77 @@
             if (!observersByThreshold.has(threshold)) {
                 const observer = new IntersectionObserver(
                     (entries, obs) => {
-                        // Defer callback to avoid blocking scroll
-                        requestAnimationFrame(() => {
-                            entries.forEach((entry) => {
-                                if (!entry.isIntersecting || entry.target.hasAttribute('data-animated')) {
-                                    if (entry.target.hasAttribute('data-animated')) {
-                                        obs.unobserve(entry.target);
-                                    }
-                                    return;
-                                }
+                        entries.forEach((entry) => {
+                            if (!entry.isIntersecting || entry.target.hasAttribute('data-animated')) {
+                                return;
+                            }
 
-                                const el = entry.target;
-                                const config = counterConfigs.get(el);
-                                if (!config) return;
+                            const el = entry.target;
+                            obs.unobserve(el);
 
-                                const { cfg, start, duration, formatNumber, preFormattedTarget } = config;
-                                const animDuration = prefersReducedMotion ? 0 : duration;
+                            // Decrement count and disconnect if no more elements
+                            const count = (observerCounts.get(threshold) || 1) - 1;
+                            observerCounts.set(threshold, count);
+                            if (count <= 0) {
+                                obs.disconnect();
+                                observersByThreshold.delete(threshold);
+                                observerCounts.delete(threshold);
+                            }
 
-                                // Instant display for reduced motion
-                                if (animDuration === 0) {
-                                    updateText(el, cfg, preFormattedTarget);
-                                    el.setAttribute('data-animated', 'true');
-                                    obs.unobserve(el);
-                                    return;
-                                }
+                            const config = counterConfigs.get(el);
+                            if (!config) return;
 
-                                const startTime = performance.now();
-                                const formattedCache = new Map();
-                                let rafId = null;
+                            const { cfg, start, duration, formatNumber, preFormattedTarget } = config;
+                            const animDuration = prefersReducedMotion ? 0 : duration;
 
-                                function updateCounter(now) {
-                                    // Early exit if element removed from DOM
-                                    if (!document.body.contains(el)) {
-                                        if (rafId) cancelAnimationFrame(rafId);
-                                        return;
-                                    }
+                            // Instant display for reduced motion
+                            if (animDuration === 0) {
+                                updateText(el, cfg, preFormattedTarget);
+                                el.setAttribute('data-animated', 'true');
+                                return;
+                            }
 
-                                    const elapsed = now - startTime;
-                                    const progress = Math.min(elapsed / animDuration, 1);
+                            const startTime = performance.now();
+                            const formattedCache = new Map();
+                            let lastCacheKey = null;
+
+                            function updateCounter(now) {
+                                const elapsed = now - startTime;
+                                const progress = Math.min(elapsed / animDuration, 1);
+
+                                if (progress < 1) {
                                     const currentValue = start + (cfg.target - start) * progress;
+                                    const cacheKey = getCacheKey(currentValue, cfg.target, cfg.decimals);
 
-                                    if (progress < 1) {
-                                        // Use smart cache key for better hit rate
-                                        const cacheKey = getCacheKey(currentValue, cfg.target, cfg.decimals);
-
+                                    // Skip update if display value hasn't changed
+                                    if (cacheKey !== lastCacheKey) {
+                                        lastCacheKey = cacheKey;
                                         if (!formattedCache.has(cacheKey)) {
                                             formattedCache.set(cacheKey, formatNumber(cacheKey));
                                         }
-
                                         updateText(el, cfg, formattedCache.get(cacheKey));
-                                        rafId = requestAnimationFrame(updateCounter);
-                                    } else {
-                                        // Final frame: use pre-formatted exact value
-                                        updateText(el, cfg, preFormattedTarget);
-                                        el.setAttribute('data-animated', 'true');
-                                        formattedCache.clear();
-                                        rafId = null;
                                     }
-                                }
 
-                                rafId = requestAnimationFrame(updateCounter);
-                                obs.unobserve(el);
-                            });
+                                    requestAnimationFrame(updateCounter);
+                                } else {
+                                    // Final frame: use pre-formatted exact value
+                                    updateText(el, cfg, preFormattedTarget);
+                                    el.setAttribute('data-animated', 'true');
+                                    formattedCache.clear();
+                                }
+                            }
+
+                            requestAnimationFrame(updateCounter);
                         });
                     },
                     { threshold }
                 );
 
                 observersByThreshold.set(threshold, observer);
+                observerCounts.set(threshold, 0);
             }
 
+            observerCounts.set(threshold, (observerCounts.get(threshold) || 0) + 1);
             observersByThreshold.get(threshold).observe(counter);
         });
     }

@@ -153,7 +153,19 @@ textarea {
 
 // Base button structure
 @mixin btn-base {
-  width: fit-content;
+  --nds-btn-height: var(--nds-btn-size);
+  --nds-btn-width: unset;
+
+  /* Formula-based sizing */
+  --nds-btn-padding: calc(var(--nds-btn-size) * 0.375 - 3px);
+  --nds-btn-FS: calc(var(--nds-btn-size) * 0.2 + 8px);
+  --nds-button-icon-size: calc(var(--nds-btn-size) / 2);
+
+  /* Indicator size (formula-only) */
+  --button-indicator-size: calc(var(--nds-btn-size) * 0.075);
+  --nds-btn-space: calc(var(--nds-btn-size) - var(--nds-btn-padding) - 4px);
+  --loading-border: max(2px, calc(var(--nds-btn-space) / 12)) !important;
+
   display: inline-flex;
   align-items: center;
   gap: var(--spacing-xs);
@@ -169,28 +181,12 @@ textarea {
   box-sizing: border-box;
   vertical-align: middle;
   justify-content: center;
-}
 
-// Button size mixins
-@mixin btn-size($height) {
-  /* Core size */
-  --nds-btn-height: #{$height};
-  --nds-btn-width: unset;
-
-  /* Formula-based sizing */
-  --nds-btn-padding: calc(var(--nds-btn-height) * 0.375 - 3px);
-  --nds-btn-FS: calc(var(--nds-btn-height) * 0.2 + 8px);
-  --nds-button-icon-size: calc(var(--nds-btn-height) / 2);
-
-  /* Indicator size (formula-only) */
-  --button-indicator-size: calc(var(--nds-btn-height) * 0.075);
-  --nds-btn-space: calc(var(--nds-btn-height) - var(--nds-btn-padding) - 4px);
-  --loading-border: max(2px, calc(var(--nds-btn-space) / 12)) !important;
 
   /* Layout */
   height: var(--nds-btn-height);
   min-height: var(--nds-btn-height);
-  width: var(--nds-btn-width);
+  width: var(--nds-btn-width, fit-content);
 
   padding-inline: var(--nds-btn-padding);
   padding-block: 0;
@@ -222,91 +218,6 @@ textarea {
   box-shadow: inset 0 0 0 3px var(--colors-base-black) !important;
 }
 
-// Button variant mixins (solid buttons)
-@mixin btn-variant($default-bg, $default-color, $hover-bg, $active-bg, $selected-bg, $disabled-bg, $disabled-color) {
-
-  &,
-  &[data-state="default"] {
-    background-color: $default-bg;
-    color: $default-color;
-
-  }
-
-  &:hover,
-  &[data-state="hover"] {
-    background-color: $hover-bg;
-    color: $default-color;
-  }
-
-  &.active,
-  &.selected,
-  .show>&,
-  .open>&,
-  .active>&,
-  &[data-state="selected"] {
-    background-color: $selected-bg;
-    color: $default-color;
-  }
-
-  &:active,
-  &[data-state="active"] {
-    background-color: $active-bg;
-    color: $default-color;
-  }
-
-  .nds-btn-group &:not(:first-child) {
-    border-inline-start-color: $hover-bg;
-  }
-
-  &:disabled,
-  &.disabled,
-  &[data-state="disabled"] {
-    background-color: $disabled-bg;
-    color: $disabled-color;
-  }
-}
-
-// Button state pattern mixin (outline/subtle/transparent variants)
-@mixin btn-state-pattern($default-bg, $default-color, $default-border, $hover-bg, $hover-border, $selected-bg, $selected-border, $pressed-bg, $pressed-border, $disabled-bg, $disabled-color, $disabled-border) {
-
-  &,
-  &[data-state="default"] {
-    background-color: $default-bg;
-    color: $default-color;
-    border-color: $default-border;
-  }
-
-  &:hover,
-  &[data-state="hover"] {
-    background-color: $hover-bg;
-    border-color: $hover-border;
-  }
-
-  &.active,
-  &.selected,
-  .show>&,
-  .open>&,
-  .active>&,
-  &[data-state="selected"] {
-    background-color: $selected-bg;
-    border-color: $selected-border;
-  }
-
-  &:active,
-  &[data-state="active"] {
-    background-color: $pressed-bg;
-    border-color: $pressed-border;
-  }
-
-  &:disabled,
-  &.disabled,
-  &[data-state="disabled"] {
-    background-color: $disabled-bg;
-    color: $disabled-color;
-    border-color: $disabled-border;
-  }
-}
-
 // ==============================================
 // COMPONENT-SPECIFIC MIXINS
 // ==============================================
@@ -331,7 +242,8 @@ textarea {
       bottom: unset;
       width: $size !important;
       height: calc(100% - var(--spacing-md) * 2);
-      top: var(--spacing-md);
+      transform: translateY(-50%);
+    top: 50%;
     }
   }
 }
@@ -359,19 +271,17 @@ textarea {
   }
 }
 
-// Loading spinner mixin with responsive sizing
-// Uses shared --loading-size, --loading-border, --loading-color, --loading-track custom properties
-@mixin btn-loading-spinner($border-color, $track-color) {
-  --loading-color: #{$border-color};
-  --loading-track: #{$track-color};
-}
 
 // ==============================================
 // PROGRESS CIRCLE MIXINS
 // ==============================================
 
-// Base progress circle structure
+// Base progress circle structure with CSS custom properties
 @mixin progress-circle-base($size: 24px, $rotate: -90deg) {
+  // Internal custom properties with defaults
+  --_pc-bg-stroke: var(--pc-bg-stroke, var(--background-neutral-100));
+  --_pc-bar-stroke: var(--pc-bar-stroke, var(--button-background-primary-default));
+
   position: relative;
   width: var(--pc-size, #{$size}) !important;
   height: var(--pc-size, #{$size}) !important;
@@ -394,6 +304,14 @@ textarea {
       stroke-linecap: round;
       transform: scale(1.08);
       transform-origin: center center;
+
+      &.progress-bg {
+        stroke: var(--_pc-bg-stroke);
+      }
+
+      &.progress-bar {
+        stroke: var(--_pc-bar-stroke);
+      }
     }
   }
 
@@ -410,63 +328,8 @@ textarea {
   }
 }
 
-// Progress circle style variants
-@mixin progress-circle-style($style: 'primary') {
-  svg circle {
-    @if $style =='primary' {
-      &.progress-bg {
-        stroke: var(--background-neutral-100);
-      }
-
-      &.progress-bar {
-        stroke: var(--button-background-primary-default);
-      }
-    }
-
-    @else if $style =='neutral' {
-      &.progress-bg {
-        stroke: var(--background-neutral-100);
-      }
-
-      &.progress-bar {
-        stroke: var(--button-background-black-selected);
-      }
-    }
-
-    @else if $style =='success' {
-      &.progress-bg {
-        stroke: var(--background-success-100);
-      }
-
-      &.progress-bar {
-        stroke: var(--background-success-600);
-      }
-    }
-
-    @else if $style =='error' {
-      &.progress-bg {
-        stroke: var(--background-error-100);
-      }
-
-      &.progress-bar {
-        stroke: var(--background-error-600);
-      }
-    }
-
-    @else if $style =='oncolor' {
-      &.progress-bg {
-        stroke: var(--alpha-white-30);
-      }
-
-      &.progress-bar {
-        stroke: var(--background-surface-oncolor);
-      }
-    }
-  }
-}
-
 // Progress circle text/info styling with dynamic font scaling
-@mixin progress-circle-text($show-text: true, $show-symbol: false, $size: 24px) {
+@mixin progress-circle-text($size: 24px) {
   .progress-info {
     gap: clamp(0px, calc(var(--pc-size, #{$size}) * 0.04), 8px) !important;
     padding: 0 clamp(8px, calc(var(--pc-size, #{$size}) * 0.2), 40px) !important;
@@ -486,22 +349,8 @@ textarea {
       line-height: normal;
     }
 
-    .progress-symbol {
-      @if $show-symbol {
-        display: block;
-      }
-
-      @else {
-        display: none;
-      }
-    }
-
     .progress-text {
       font-size: clamp(10px, calc(var(--pc-size, #{$size}) * 0.1), 20px) !important;
-
-      @if not $show-text {
-        display: none;
-      }
     }
   }
 }
@@ -514,61 +363,7 @@ textarea {
 
   svg circle.progress-bar {
     stroke-dasharray: $circumference !important;
-    stroke-dashoffset: $offset ;
+    stroke-dashoffset: $offset;
     transition: stroke-dashoffset 0.3s ease !important;
   }
-}
-
-// Complete progress circle mixin - combines all features
-@mixin progress-circle($size: 24px,
-  $style: 'primary',
-  $rotate: -90deg,
-  $show-text: true,
-  $show-symbol: false,
-  $percent: 0) {
-  @include progress-circle-base($size, $rotate);
-  @include progress-circle-style($style);
-  @include progress-circle-text($show-text, $show-symbol, $size);
-  @include progress-circle-progress($percent);
-}
-
-// Progress circle with step-based calculation
-@mixin progress-circle-steps($size: 24px,
-  $style: 'primary',
-  $rotate: -90deg,
-  $show-text: false,
-  $show-symbol: false,
-  $current: 1,
-  $total: 4) {
-  @include progress-circle-base($size, $rotate);
-  @include progress-circle-style($style);
-
-  .progress-percentage {
-    display: none !important;
-  }
-
-  .progress-text {
-    display: flex !important;
-    align-items: center;
-    flex-wrap: nowrap;
-    justify-content: center;
-    font-size: clamp(10px, calc(var(--pc-size, #{$size}) * 0.2), 24px) !important;
-    font-weight: 700;
-    white-space: nowrap;
-    gap: clamp(2px, calc(var(--pc-size, #{$size}) * 0.05), 4px);
-    line-height: 1;
-
-    .step-text {
-      font-size: clamp(9px, calc(var(--pc-size, #{$size}) * 0.2), 24px) !important;
-      line-height: 1;
-    }
-
-    .step-number {
-      font-size: clamp(10px, calc(var(--pc-size, #{$size}) * 0.2), 24px) !important;
-      line-height: 1;
-    }
-  }
-
-  $percent: calc((#{$current} / #{$total}) * 100);
-  @include progress-circle-progress($percent);
 }

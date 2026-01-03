@@ -79,6 +79,7 @@
         justify-content: space-between;
         gap: var(--spacing-lg);
         background-color: var(--nds-nav-background-color);
+        overflow: clip;
 
 
         &::before {
