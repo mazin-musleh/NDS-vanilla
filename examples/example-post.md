@@ -15,7 +15,7 @@ breadcrumb: ["Examples"]
 ---
 
 <section class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-content">
             <article>
                 <h2>Launch Ceremony</h2>

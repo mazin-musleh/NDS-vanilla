@@ -13,7 +13,7 @@ css_files:
 
 <!-- Accordion Examples Overview -->
 <section id="accordionOverview" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Accordion Navigation</h2>
             <p class="nds-section-description">Collapsible content panels for organizing information in a
@@ -353,7 +353,7 @@ css_files:
 
 <!-- Accessibility Guidelines -->
 <section id="accordionAccessibility" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Accessibility Guidelines</h2>
             <p class="nds-section-description">Proper ARIA implementation for accessible accordion navigation</p>
@@ -402,7 +402,7 @@ css_files:
 
 <!-- JavaScript Documentation Section -->
 <section id="accordionJavaScript" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">JavaScript Integration</h2>
             <p class="nds-section-description">Complete accordion functionality with automatic initialization and

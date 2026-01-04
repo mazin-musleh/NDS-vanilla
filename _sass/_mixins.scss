@@ -155,6 +155,7 @@ textarea {
 @mixin btn-base {
   --nds-btn-height: var(--nds-btn-size);
   --nds-btn-width: unset;
+  --nds-btn-gap: var(--gap,var(--spacing-xs));
 
   /* Formula-based sizing */
   --nds-btn-padding: calc(var(--nds-btn-size) * 0.375 - 3px);
@@ -168,7 +169,7 @@ textarea {
 
   display: inline-flex;
   align-items: center;
-  gap: var(--spacing-xs);
+  gap: var(--nds-btn-gap);
   border: 1px solid transparent;
   border-radius: var(--radius-sm);
   font-family: 'IBM Plex Sans Arabic', sans-serif;
@@ -189,7 +190,7 @@ textarea {
   width: var(--nds-btn-width, fit-content);
 
   padding-inline: var(--nds-btn-padding);
-  padding-block: 0;
+  padding-block: calc(var(--nds-btn-padding) / 2);
 
   font-size: var(--nds-btn-FS);
   line-height: 1;

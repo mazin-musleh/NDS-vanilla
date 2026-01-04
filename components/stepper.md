@@ -10,7 +10,7 @@ direction: ltr
 
 <!-- Stepper Demo -->
 <section id="stepperDemo" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Stepper Component</h2>
             <p class="nds-section-description">Interactive stepper with CSS-only dynamic text and multiple layout
@@ -488,7 +488,7 @@ direction: ltr
 
 <!-- Usage -->
 <section id="stepperUsage" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage</h2>
             <p class="nds-section-description">How to implement stepper components</p>

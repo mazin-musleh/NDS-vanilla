@@ -332,9 +332,10 @@ $breakpoints: (
   overflow: hidden;
   display: -webkit-box !important;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: var(--truncate-line, 1);
-  line-clamp: var(--truncate-line, 1);
+  -webkit-line-clamp: var(--_truncate, 1);
+  line-clamp: var(--_truncate, 1);
   text-overflow: ellipsis;
+  white-space: wrap;
 }
 
 .nds-center,

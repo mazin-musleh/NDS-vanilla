@@ -10,7 +10,7 @@ direction: ltr
 
 <!-- Rating Types Overview -->
 <section id="ratingTypesOverview" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Rating Component</h2>
             <p class="nds-section-description">Star rating components with different sizes, states, and styles</p>
@@ -203,7 +203,7 @@ direction: ltr
 
 <!-- Usage Guidelines -->
 <section id="usageGuidelines" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>
             <p class="nds-section-description">Best practices for using rating components</p>

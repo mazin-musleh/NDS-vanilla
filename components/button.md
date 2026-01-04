@@ -10,7 +10,7 @@ direction: ltr
 
 <!-- Button Types Overview -->
 <section id="buttonTypesOverview" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Six Button Types</h2>
             <p class="nds-section-description">All button types available in the National Design System</p>
@@ -718,7 +718,7 @@ direction: ltr
 
 <!-- Destructive Buttons with States -->
 <section id="buttonDestructive" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Destructive Buttons</h2>
             <p class="nds-section-description">Buttons for destructive actions like delete and cancel</p>
@@ -1271,7 +1271,7 @@ direction: ltr
 
 <!-- Icon Buttons -->
 <section id="buttonIcons" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Buttons with Icons</h2>
             <p class="nds-section-description">Buttons containing icons in different positions</p>
@@ -1434,7 +1434,7 @@ direction: ltr
 
 <!-- Button Sizes -->
 <section id="buttonSizes" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Button Sizes</h2>
             <p class="nds-section-description">Four sizes: Small (24px), Medium (32px), Large (40px), Extra Large (48px)
@@ -1548,7 +1548,7 @@ direction: ltr
 
 <!-- Button Group -->
 <section id="buttonSizes" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Button Group</h2>
             <p class="nds-section-description">Group multiple buttons together in a horizontal layout with consistent
@@ -1631,7 +1631,7 @@ direction: ltr
 
 <!-- Loading State -->
 <section id="buttonLoading" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Loading State</h2>
             <p class="nds-section-description">Buttons in loading state with spinning indicator</p>

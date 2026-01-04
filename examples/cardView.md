@@ -12,7 +12,7 @@ direction: ltr
 ---
 <!-- Statistics Overview Section -->
 <section id="statisticsOverview" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Key Performance Metrics</h2>
             <p class="nds-section-description">High-level indicators refreshed every 15 minutes to keep teams
@@ -129,7 +129,7 @@ direction: ltr
 
 <!-- Quick Updates Section -->
 <section id="quickUpdates" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Quick Updates</h2>
             <p class="nds-section-description">Latest announcements and action items relevant to the operations
@@ -239,7 +239,7 @@ direction: ltr
 
 <!-- Personal Metrics Section -->
 <section id="personalMetrics" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">My Operational Snapshot</h2>
             <p class="nds-section-description">Track your current workload, progress, and notifications at a glance.
@@ -325,7 +325,7 @@ direction: ltr
 
 <!-- Community Notifications Section -->
 <section id="communityNotifications" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Community Notifications</h2>
             <p class="nds-section-description">Stay in sync with updates from partners and teams you collaborate

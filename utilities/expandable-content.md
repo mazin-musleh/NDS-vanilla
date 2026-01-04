@@ -10,7 +10,7 @@ direction: ltr
 
 <!-- Expandable Content Overview -->
 <section id="expandableOverview" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Expandable Content Utility</h2>
             <p class="nds-section-description">Automatically adds expand/collapse functionality when content exceeds
@@ -186,7 +186,7 @@ direction: ltr
 
 <!-- Usage Guidelines -->
 <section id="expandableGuidelines" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>
         </div>
@@ -240,7 +240,7 @@ direction: ltr
 
 <!-- JavaScript API -->
 <section id="expandableAPI" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">JavaScript API</h2>
             <p class="nds-section-description">Programmatic control and event handling for expandable content</p>

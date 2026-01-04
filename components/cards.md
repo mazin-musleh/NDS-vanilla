@@ -10,7 +10,7 @@ direction: ltr
 
 <!-- Cards Overview -->
 <section id="cardsOverview" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Card Components</h2>
             <p class="nds-section-description">Card components for displaying content with integrated NDS components</p>
@@ -543,7 +543,7 @@ direction: ltr
 
 <!-- Card Group Section -->
 <section id="cardGroup" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Card Group</h2>
             <p class="nds-section-description">Responsive grid layout for multiple cards</p>
@@ -693,7 +693,7 @@ direction: ltr
 
 <!-- Usage Guidelines -->
 <section id="cardsGuidelines" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>
             <p class="nds-section-description">Best practices for using card components effectively</p>

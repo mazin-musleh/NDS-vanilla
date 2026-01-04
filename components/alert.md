@@ -10,7 +10,7 @@ direction: ltr
 
 <!-- Alert Overview -->
 <section id="alertOverview" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Alert Variants</h2>
             <p class="nds-section-description">Alert components built on nds-card with featured icons for different
@@ -314,7 +314,7 @@ direction: ltr
 
 <!-- Alert with Actions -->
 <section id="alertWithActions" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Alert with Actions</h2>
             <p class="nds-section-description">Alerts can include action buttons for user interaction</p>
@@ -415,7 +415,7 @@ direction: ltr
 
 <!-- Neutral and Brand Alerts -->
 <section id="neutralBrandAlerts" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Neutral Alerts</h2>
             <p class="nds-section-description">Additional color variants for general notifications</p>

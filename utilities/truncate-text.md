@@ -10,7 +10,7 @@ direction: ltr
 
 <!-- Truncate Text Overview -->
 <section id="truncateOverview" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Text Truncation Utility</h2>
             <p class="nds-section-description">Truncate overflowing text with ellipsis for single-line and multi-line
@@ -113,7 +113,7 @@ direction: ltr
                 <div class="demo-container">
                     <div class="state-demo">
                         <div style="width: 300px; border: 1px solid #ddd; padding: 16px;">
-                            <p class="nds-truncate" style="--truncate-line: 2;">This is a longer text content that will
+                            <p class="nds-truncate" style="--truncate: 2;">This is a longer text content that will
                                 be truncated to exactly two lines. When the content exceeds two lines, it will be cut
                                 off and show ellipsis at the end of the second line to indicate there is more content
                                 available.</p>
@@ -138,7 +138,7 @@ direction: ltr
                                 </button>
                             </div>
                             <code class="lang-html code">
-                                <p class="nds-truncate" style="--truncate-line: 2;">This is a longer text content that will
+                                <p class="nds-truncate" style="--truncate: 2;">This is a longer text content that will
                                 be truncated to exactly two lines. When the content exceeds two lines, it will be cut
                                 off and show ellipsis at the end of the second line to indicate there is more content
                                 available.</p>
@@ -159,7 +159,7 @@ direction: ltr
                 <div class="demo-container">
                     <div class="state-demo">
                         <div style="width: 350px; border: 1px solid #ddd; padding: 16px;">
-                            <p class="nds-truncate" style="--truncate-line: 3;">Lorem ipsum dolor sit amet, consectetur
+                            <p class="nds-truncate" style="--truncate: 3;">Lorem ipsum dolor sit amet, consectetur
                                 adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
                                 enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
                                 commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
@@ -185,7 +185,7 @@ direction: ltr
                                 </button>
                             </div>
                             <code class="lang-html code">
-                                <p class="nds-truncate" style="--truncate-line: 3;">Lorem ipsum dolor sit amet, consectetur
+                                <p class="nds-truncate" style="--truncate: 3;">Lorem ipsum dolor sit amet, consectetur
                                 adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
                                 enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
                                 commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
@@ -213,13 +213,13 @@ direction: ltr
 
                         <!-- Span -->
                         <div style="width: 200px; border: 1px solid #ddd; padding: 12px;">
-                            <span class="nds-truncate" style="--truncate-line: 2;">This is a span element with truncated
+                            <span class="nds-truncate" style="--truncate: 2;">This is a span element with truncated
                                 text content that spans multiple lines</span>
                         </div>
 
                         <!-- Div -->
                         <div style="width: 300px; border: 1px solid #ddd; padding: 12px;">
-                            <div class="nds-truncate" style="--truncate-line: 2;">This div element contains text that
+                            <div class="nds-truncate" style="--truncate: 2;">This div element contains text that
                                 will be truncated after two lines of content. The ellipsis will appear at the end.</div>
                         </div>
                     </div>
@@ -246,10 +246,10 @@ direction: ltr
                                 <h3 class="nds-truncate">This is a very long heading that will be truncated</h3>
 
                                 <!-- Span -->
-                                <span class="nds-truncate" style="--truncate-line: 2;">This is a span element with truncated text content that spans multiple lines</span>
+                                <span class="nds-truncate" style="--truncate: 2;">This is a span element with truncated text content that spans multiple lines</span>
 
                                 <!-- Div -->
-                                <div class="nds-truncate" style="--truncate-line: 2;">This div element contains text that will be truncated after two lines of content. The ellipsis will appear at the end.</div>
+                                <div class="nds-truncate" style="--truncate: 2;">This div element contains text that will be truncated after two lines of content. The ellipsis will appear at the end.</div>
                             </code>
                         </div>
                     </div>
@@ -262,7 +262,7 @@ direction: ltr
 
 <!-- Usage Guidelines -->
 <section id="truncateGuidelines" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>
         </div>
@@ -282,8 +282,8 @@ direction: ltr
                 <div class="nds-guideline-item">
                     <h3>Multi-line Truncation</h3>
                     <ul>
-                        <li>Use <code>--truncate-line</code> CSS custom property</li>
-                        <li>Set any number: <code>style="--truncate-line: 3;"</code></li>
+                        <li>Use <code>--truncate</code> CSS custom property</li>
+                        <li>Set any number: <code>style="--truncate: 3;"</code></li>
                         <li>Uses modern <code>line-clamp</code> for better browser support</li>
                         <li>Includes webkit prefix for older browsers</li>
                     </ul>
@@ -316,7 +316,7 @@ direction: ltr
 
 <!-- CSS Implementation -->
 <section id="truncateCSS" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">CSS Implementation</h2>
             <p class="nds-section-description">The underlying CSS that powers the truncate utility</p>
@@ -335,8 +335,8 @@ direction: ltr
     overflow: hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: var(--truncate-line, 1);
-    line-clamp: var(--truncate-line, 1);
+    -webkit-line-clamp: var(--truncate, 1);
+    line-clamp: var(--truncate, 1);
     text-overflow: ellipsis;
 }
 
@@ -346,11 +346,11 @@ direction: ltr
 }
 
 .two-lines {
-    --truncate-line: 2;
+    --truncate: 2;
 }
 
 .three-lines {
-    --truncate-line: 3;
+    --truncate: 3;
 }
 </code>
                         </div>
@@ -364,7 +364,7 @@ direction: ltr
 
 <!-- Comparison -->
 <section id="truncateComparison" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Truncate vs Expandable</h2>
             <p class="nds-section-description">When to use text truncation vs expandable content</p>

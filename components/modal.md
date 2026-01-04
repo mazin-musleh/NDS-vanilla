@@ -10,7 +10,7 @@ direction: ltr
 
 <!-- Modal Overview -->
 <section id="modalOverview" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Modal Dialog</h2>
             <p class="nds-section-description">Modal components built on the card system with backdrop overlay, close
@@ -163,7 +163,7 @@ direction: ltr
 
 <!-- Usage Guidelines -->
 <section id="usageGuidelines" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>
             <p class="nds-section-description">Best practices for using modal components effectively</p>
@@ -298,7 +298,7 @@ if (!localStorage.getItem('visited')) {
 
 <!-- Features Section -->
 <section id="modalFeatures" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Modal Features</h2>
             <p class="nds-section-description">Built-in functionality and behaviors</p>

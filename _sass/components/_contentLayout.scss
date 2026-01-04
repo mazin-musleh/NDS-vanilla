@@ -43,19 +43,10 @@
         grid-column: content-start / content-end;
     }
 
-    &>.nds-section-content-container {
-        padding: 0 !important;
-        width: 100%;
 
-        &>.nds-section-head {
-            @include tablet(max) {
-                padding-inline: var(--nds-viewport-padding);
-            }
-        }
-    }
 
     @include desktop(min) {
-        &.nds-horizontal>.nds-section-content-container {
+        &.nds-horizontal>.nds-section-wrapper {
             display: grid;
             grid-template-columns: auto 1fr;
             align-items: center;
@@ -339,38 +330,7 @@ main {
     @include reset-section-style;
 }
 
-.nds-section-content-container {
-    padding: var(--spacing-2xl) var(--spacing-2xl);
-    max-width: var(--nds-content-MaxWidth);
-    margin: auto;
 
-    @include tablet(max) {
-        padding: var(--spacing-2xl) var(--nds-viewport-padding, 32px);
-    }
-}
-
-
-
-.nds-content-section.noBg .nds-section-content-container {
-    padding: 0 var(--spacing-lg);
-
-    @include tablet(max) {
-        padding: 0 var(--nds-viewport-padding, 32px);
-    }
-}
-
-.contentLayout:not(.wSideMenu) .nds-section-content-container {
-    padding-left: var(--nds-viewport-padding);
-    padding-right: var(--nds-viewport-padding);
-}
-
-.nds-content-section.noBg:first-of-type .nds-section-content-container {
-    padding-top: var(--spacing-2xl);
-}
-
-.nds-content-section.noBg:last-of-type .nds-section-content-container {
-    padding-bottom: var(--spacing-2xl);
-}
 
 
 .nds-section-head {

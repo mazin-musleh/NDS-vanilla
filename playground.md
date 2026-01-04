@@ -10,125 +10,102 @@ lang: en
 direction: ltr
 ---
 
-<style>
-    .nds-btn-list {
-        display: flex;
-        flex-direction: column;
-
-
-        &>li:not(:last-child) {
-            border-bottom: 1px solid var(--border-neutral-secondary);
-        }
-
-        .nds-btn {
-            --nds-btn-height: var(--spacing-6xl);
-            width: 100%;
-            padding-inline: var(--spacing-sm);
-
-            &>.nds-featured-icon {
-                margin-inline-end: 2px;
-            }
-        }
-
-        .nds-btn .label {
-            width: 100%;
-        }
-    }
-</style>
 <section id="ads" class="nds-content-section">
-    <div class="nds-section-head">
-        <h2 class="nds-section-title">الاعلانات</h2>
-        <p class="nds-section-description">
-            أهم الإعلانات التي تهم جميع منسوبي الجامعة
-        </p>
-        <div class="nds-section-action">
-            <button class="nds-btn nds-secondary-outline nds-oncolor nds-center">
-                <span class="label">عرض الكل</span>
-            </button>
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">الاعلانات</h2>
+            <p class="nds-section-description">
+                أهم الإعلانات التي تهم جميع منسوبي الجامعة
+            </p>
+            <div class="nds-section-action">
+                <button class="nds-btn nds-secondary-outline nds-oncolor nds-center">
+                    <span class="label">عرض الكل</span>
+                </button>
+            </div>
         </div>
-    </div>
-    <div class="nds-section-content">
-        <nav class="nds-card nds-stroke">
-            <ul class="nds-btn-list">
-                <li>
-                    <button class="nds-btn nds-subtle">
-                        <span class="nds-featured-icon nds-brand nds-sm">
-                            <i class="hgi hgi-stroke hgi-promotion icon"></i>
-                        </span>
-                        <span class="label nds-truncate">جدول فعاليات الجامعة الإسلامية بمناسبة اليوم العالمي للغة
-                            العربي</span>
-                        <span class="nds-tag nds-info nds-xs">
-                            <span class="label">17/12/2025</span>
-                        </span>
-                        <i class="hgi hgi-stroke hgi-arrow-left-01 icon"></i>
-                    </button>
-                </li>
-                <li>
-                    <button class="nds-btn nds-subtle">
-                        <span class="nds-featured-icon nds-brand nds-sm">
-                            <i class="hgi hgi-stroke hgi-promotion icon"></i>
-                        </span>
-                        <span class="label nds-truncate">جدول فعاليات الجامعة الإسلامية بمناسبة اليوم العالمي للغة
-                            العربي</span>
-                        <span class="nds-tag nds-info nds-xs">
-                            <span class="label">17/12/2025</span>
-                        </span>
-                        <i class="hgi hgi-stroke hgi-arrow-left-01 icon"></i>
-                    </button>
-                </li>
-                <li>
-                    <button class="nds-btn nds-subtle">
-                        <span class="nds-featured-icon nds-brand nds-sm">
-                            <i class="hgi hgi-stroke hgi-promotion icon"></i>
-                        </span>
-                        <span class="label nds-truncate">جدول فعاليات الجامعة الإسلامية بمناسبة اليوم العالمي للغة
-                            العربي</span>
-                        <span class="nds-tag nds-info nds-xs">
-                            <span class="label">17/12/2025</span>
-                        </span>
-                        <i class="hgi hgi-stroke hgi-arrow-left-01 icon"></i>
-                    </button>
-                </li>
-                <li>
-                    <button class="nds-btn nds-subtle">
-                        <span class="nds-featured-icon nds-brand nds-sm">
-                            <i class="hgi hgi-stroke hgi-promotion icon"></i>
-                        </span>
-                        <span class="label nds-truncate">جدول فعاليات الجامعة الإسلامية بمناسبة اليوم العالمي للغة
-                            العربي</span>
-                        <span class="nds-tag nds-info nds-xs">
-                            <span class="label">17/12/2025</span>
-                        </span>
-                        <i class="hgi hgi-stroke hgi-arrow-left-01 icon"></i>
-                    </button>
-                </li>
-                <li>
-                    <button class="nds-btn nds-subtle">
-                        <span class="nds-featured-icon nds-brand nds-sm">
-                            <i class="hgi hgi-stroke hgi-promotion icon"></i>
-                        </span>
-                        <span class="label nds-truncate">جدول فعاليات الجامعة الإسلامية بمناسبة اليوم العالمي للغة
-                            العربي</span>
-                        <span class="nds-tag nds-info nds-xs">
-                            <span class="label">17/12/2025</span>
-                        </span>
-                        <i class="hgi hgi-stroke hgi-arrow-left-01 icon"></i>
-                    </button>
-                </li>
-
-
-            </ul>
-        </nav>
-
+        <div class="nds-section-content">
+            <div class="nds-card nds-stroke">
+                <nav class="nds-drawer nds-divided" style="--drawer-truncate:2;">
+                    <ul class="nds-drawer-list">
+                        <li>
+                            <button class="nds-btn nds-subtle nds-indicator">
+                                <span class="nds-featured-icon nds-brand nds-sm">
+                                    <i class="hgi hgi-stroke hgi-promotion icon"></i>
+                                </span>
+                                <span class="label nds-truncate">جدول فعاليات الجامعة الإسلامية بمناسبة اليوم العالمي للغة
+                                    العربي</span>
+                                <span class="nds-tag nds-info nds-xs">
+                                    <span class="label">17/12/2025</span>
+                                </span>
+                                <i class="hgi hgi-stroke hgi-arrow-left-01 icon"></i>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="nds-btn nds-subtle nds-indicator">
+                                <span class="nds-featured-icon nds-brand nds-sm">
+                                    <i class="hgi hgi-stroke hgi-promotion icon"></i>
+                                </span>
+                                <span class="label nds-truncate">جدول فعاليات الجامعة الإسلامية بمناسبة اليوم العالمي للغة
+                                    العربي</span>
+                                <span class="nds-tag nds-info nds-xs">
+                                    <span class="label">17/12/2025</span>
+                                </span>
+                                <i class="hgi hgi-stroke hgi-arrow-left-01 icon"></i>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="nds-btn nds-subtle nds-indicator">
+                                <span class="nds-featured-icon nds-brand nds-sm">
+                                    <i class="hgi hgi-stroke hgi-promotion icon"></i>
+                                </span>
+                                <span class="label nds-truncate">جدول فعاليات الجامعة الإسلامية بمناسبة اليوم العالمي للغة
+                                    العربي</span>
+                                <span class="nds-tag nds-info nds-xs">
+                                    <span class="label">17/12/2025</span>
+                                </span>
+                                <i class="hgi hgi-stroke hgi-arrow-left-01 icon"></i>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="nds-btn nds-subtle nds-indicator">
+                                <span class="nds-featured-icon nds-brand nds-sm">
+                                    <i class="hgi hgi-stroke hgi-promotion icon"></i>
+                                </span>
+                                <span class="label nds-truncate">جدول فعاليات الجامعة الإسلامية بمناسبة اليوم العالمي للغة
+                                    العربي</span>
+                                <span class="nds-tag nds-info nds-xs">
+                                    <span class="label">17/12/2025</span>
+                                </span>
+                                <i class="hgi hgi-stroke hgi-arrow-left-01 icon"></i>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="nds-btn nds-subtle nds-indicator">
+                                <span class="nds-featured-icon nds-brand nds-sm">
+                                    <i class="hgi hgi-stroke hgi-promotion icon"></i>
+                                </span>
+                                <span class="label nds-truncate">جدول فعاليات الجامعة الإسلامية بمناسبة اليوم العالمي للغة
+                                    العربي</span>
+                                <span class="nds-tag nds-info nds-xs">
+                                    <span class="label">17/12/2025</span>
+                                </span>
+                                <i class="hgi hgi-stroke hgi-arrow-left-01 icon"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
     </div>
 </section>
 
 <section id="drawer-test" class="nds-content-section">
-    <div class="nds-section-head">
-        <h2 class="nds-section-title">Drawer Component Test</h2>
-        <p class="nds-section-description">Testing the new nds-drawer component with nested menus</p>
-    </div>
-    <div class="nds-section-content">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Drawer Component Test</h2>
+            <p class="nds-section-description">Testing the new nds-drawer component with nested menus</p>
+        </div>
+        <div class="nds-section-content">
         <div class="nds-grid">
 
             <!-- Basic Drawer -->
@@ -316,5 +293,6 @@ direction: ltr
             </div>
         </div>
 
+        </div>
     </div>
 </section>

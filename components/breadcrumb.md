@@ -10,7 +10,7 @@ direction: ltr
 
 <!-- Breadcrumb Basic Demo -->
 <section id="breadcrumbBasic" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Basic Breadcrumb</h2>
             <p class="nds-section-description">Standard breadcrumb navigation with multiple levels</p>
@@ -123,7 +123,7 @@ direction: ltr
 
 <!-- Breadcrumb Variations -->
 <section id="breadcrumbVariations" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Breadcrumb Variations</h2>
             <p class="nds-section-description">Different breadcrumb levels and states</p>
@@ -188,7 +188,7 @@ direction: ltr
 
 <!-- Collapsed Breadcrumb Demo -->
 <section id="collapsedBreadcrumb" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Automatic Collapsing</h2>
             <p class="nds-section-description">Breadcrumbs with 5+ levels automatically collapse with a dropdown menu
@@ -289,7 +289,7 @@ Dropdown contains:
 
 <!-- Usage Guidelines -->
 <section id="usageGuidelines" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>
             <p class="nds-section-description">Best practices for using breadcrumb navigation</p>

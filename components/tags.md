@@ -10,7 +10,7 @@ direction: ltr
 
 <!-- Tag Types Overview -->
 <section id="tagTypesOverview" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Six Tag Styles</h2>
             <p class="nds-section-description">All tag styles available in the National Design System</p>
@@ -493,7 +493,7 @@ direction: ltr
 
 <!-- Tag Status Section -->
 <section id="tagStatusOverview" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Tag Status Styles</h2>
             <p class="nds-section-description">Status tag variants with additional styling options</p>
@@ -825,7 +825,7 @@ direction: ltr
 
 <!-- Usage Guidelines -->
 <section id="usageGuidelines" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>
             <p class="nds-section-description">Best practices for using tag components</p>

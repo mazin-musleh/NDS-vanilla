@@ -11,7 +11,7 @@ direction: ltr
 
 <!-- Basic Swiper Demo -->
 <section class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Basic Slider</h2>
             <p class="nds-section-description">A simple slider with navigation buttons and pagination. Uses native CSS
@@ -138,7 +138,7 @@ direction: ltr
 
 <!-- Image Slider Demo -->
 <section class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Image Slider</h2>
             <p class="nds-section-description">Image slider with lazy loading for optimal performance. Uses
@@ -236,7 +236,7 @@ direction: ltr
 
 <!-- Multi-Slide Responsive Demo -->
 <section class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Responsive Multi-Slide</h2>
             <p class="nds-section-description">Display multiple slides at once with responsive breakpoints: 4 slides on
@@ -362,7 +362,7 @@ direction: ltr
 
 <!-- Peek Mode Demo -->
 <section class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Peek Mode</h2>
             <p class="nds-section-description">Show partial next/previous slides to indicate more content. Use the
@@ -482,7 +482,7 @@ direction: ltr
 
 <!-- Configuration Options -->
 <section class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Configuration Options</h2>
             <p class="nds-section-description">The swiper component supports the following attributes for customization.
@@ -533,7 +533,7 @@ direction: ltr
 
 <!-- Features -->
 <section class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Features</h2>
         </div>
@@ -578,7 +578,7 @@ direction: ltr
 
 <!-- Best Practices -->
 <section class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Best Practices</h2>
         </div>

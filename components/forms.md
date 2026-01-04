@@ -10,7 +10,7 @@ direction: ltr
 
 <!-- Form Types Overview -->
 <section id="formTypesOverview" class="nds-content-section">
-  <div class="nds-section-content-container">
+  <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Form Input Types</h2>
       <p class="nds-section-description">

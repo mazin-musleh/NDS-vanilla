@@ -10,7 +10,7 @@ direction: ltr
 
 <!-- Avatar Types -->
 <section id="avatarTypes" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Avatar Types</h2>
             <p class="nds-section-description">Avatars support three content types: initials, icons, and images</p>
@@ -249,7 +249,7 @@ direction: ltr
 
 <!-- Interactive Avatars -->
 <section id="avatarInteractive" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Interactive Avatars</h2>
             <p class="nds-section-description">Avatars can be wrapped in anchor tags or button elements for interactive
@@ -413,7 +413,7 @@ direction: ltr
 
 <!-- Avatar Group -->
 <section id="avatarGroup" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Avatar Group</h2>
             <p class="nds-section-description">Group multiple avatars together with stacked or spaced layouts</p>

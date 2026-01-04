@@ -10,7 +10,7 @@ direction: ltr
 
 <!-- Image Popup Viewer Overview -->
 <section id="imagePopupViewerOverview" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Image Popup Viewer</h2>
             <p class="nds-section-description">Interactive image viewer with advanced zoom and pan controls for detailed
@@ -91,7 +91,7 @@ direction: ltr
 
 <!-- Features Section -->
 <section id="imagePopupFeatures" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Features</h2>
             <p class="nds-section-description">Powerful capabilities for image viewing and interaction</p>
@@ -135,7 +135,7 @@ direction: ltr
 
 <!-- Usage Instructions -->
 <section id="imagePopupUsage" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Instructions</h2>
             <p class="nds-section-description">How to implement and use the image popup viewer</p>

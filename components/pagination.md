@@ -10,7 +10,7 @@ direction: ltr
 
 <!-- Pagination Basic Demo -->
 <section id="paginationBasic" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Basic Pagination</h2>
             <p class="nds-section-description">Standard pagination with numbered pages and navigation controls</p>
