@@ -10,7 +10,7 @@ direction: ltr
 
 <!-- Feedback Icons Overview -->
 <section id="feedbackIconsOverview" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Feedback Icon Styles</h2>
             <p class="nds-section-description">All Feedback icon styles available in the National Design System</p>
@@ -352,7 +352,7 @@ direction: ltr
 
 <!-- Feedback Messages -->
 <section id="feedbackMessages" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Feedback Messages</h2>
             <p class="nds-section-description">Complete feedback components with icons and text messages</p>
@@ -603,7 +603,7 @@ direction: ltr
 
 <!-- Usage Guidelines -->
 <section id="usageGuidelines" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>
             <p class="nds-section-description">Best practices for using feedback icon components</p>

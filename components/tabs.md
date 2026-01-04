@@ -10,7 +10,7 @@ direction: ltr
 
 <!-- Tab Examples Overview -->
 <section id="tabsOverview" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Tab Navigation</h2>
             <p class="nds-section-description">Interactive tabs for organizing and switching between different content
@@ -564,7 +564,7 @@ direction: ltr
 
 <!-- Accessibility Guidelines -->
 <section id="tabsAccessibility" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Accessibility Guidelines</h2>
             <p class="nds-section-description">Proper ARIA implementation for accessible tab navigation</p>

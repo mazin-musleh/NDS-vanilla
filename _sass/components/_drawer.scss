@@ -14,15 +14,17 @@
 .nds-drawer {
     // Internal custom properties with external fallbacks
     --_gap: var(--drawer-gap, 0px);
+    --_btn-gap: var(--drawer-btn-gap, var(--spacing-md));
     --_indent: var(--drawer-indent, var(--spacing-md));
     --_indicator-width: var(--drawer-indicator-width, 5px);
     --_indicator: var(--drawer-indicator, var(--colors-neutral-300));
     --_indicator-active: var(--drawer-indicator-active, var(--colors-primary-sa-flag-600-primary));
     --_indicator-hover: var(--drawer-indicator-hover, var(--colors-neutral-400));
-    --_btn-height: var(--drawer-btn-height, 40px);
+    --_btn-height: var(--drawer-btn-height, 48px);
     --_btn-padding: var(--drawer-btn-padding, var(--spacing-sm) var(--spacing-md));
     --_font-size: var(--drawer-font-size, var(--nds-text-md-FS));
     --_line-height: var(--drawer-line-height, var(--nds-text-md-LH));
+    --_truncate: var(--drawer-truncate, 1);
     --_transition: var(--drawer-transition, var(--nds-transition));
     --_max-height: var(--drawer-max-height, 400px);
 
@@ -72,12 +74,21 @@
 
     // Button/link styling within drawer
     > .nds-btn {
+        --nds-btn-height: var(--_btn-height);
+        --nds-btn-gap: var(--_btn-gap);
         width: 100%;
         justify-content: flex-start;
+        min-height: fit-content;
 
         // Label takes available space
         .label {
             flex: 1;
+        }
+
+        .hgi-arrow-left-01{
+            @include ltr{
+                transform: scaleX(-1);
+            }
         }
     }
 }

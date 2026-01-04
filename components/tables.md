@@ -10,7 +10,7 @@ direction: ltr
 
 <!-- Basic Table Section -->
 <section id="basicTableOverview" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Basic Table</h2>
             <p class="nds-section-description">Standard table structure with header, body, and interactive states</p>
@@ -119,7 +119,7 @@ direction: ltr
 
 <!-- Compact Table Section -->
 <section id="compactTableOverview" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Compact Table</h2>
             <p class="nds-section-description">Space-efficient table design for dense data display</p>
@@ -281,7 +281,7 @@ direction: ltr
 
 <!-- Sortable Table Section -->
 <section id="sortableTableOverview" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Sortable Table</h2>
             <p class="nds-section-description">Interactive table with sorting capabilities and visual indicators</p>
@@ -420,7 +420,7 @@ direction: ltr
 
 <!-- Table with Feedback Icons -->
 <section id="feedbackIconsTableOverview" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Table with Feedback Icons</h2>
             <p class="nds-section-description">Interactive table showcasing feedback status with feedback icons</p>
@@ -592,7 +592,7 @@ direction: ltr
 
 <!-- Table with Checkboxes -->
 <section id="checkboxTableOverview" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Table with Selection</h2>
             <p class="nds-section-description">Data table with checkbox selection for bulk operations</p>
@@ -750,7 +750,7 @@ direction: ltr
 
 <!-- Usage Guidelines -->
 <section id="usageGuidelines" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>
             <p class="nds-section-description">Best practices for implementing table components</p>

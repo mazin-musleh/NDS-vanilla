@@ -10,7 +10,7 @@ direction: ltr
 
 <!-- Featured Icons Overview -->
 <section id="featuredIconsOverview" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Featured Icon Styles</h2>
             <p class="nds-section-description">All featured icon styles available in the National Design System</p>
@@ -456,7 +456,7 @@ direction: ltr
 
 <!-- Usage Guidelines -->
 <section id="usageGuidelines" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>
             <p class="nds-section-description">Best practices for using featured icon components</p>

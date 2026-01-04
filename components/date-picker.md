@@ -10,7 +10,7 @@ direction: ltr
 
 <!-- Date Picker Overview -->
 <section id="datePickerOverview" class="nds-content-section">
-  <div class="nds-section-content-container">
+  <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Date Picker Component</h2>
       <p class="nds-section-description">
@@ -136,7 +136,7 @@ direction: ltr
 
 <!-- Usage Guidelines -->
 <section id="datePickerGuidelines" class="nds-content-section">
-  <div class="nds-section-content-container">
+  <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Usage Guidelines</h2>
       <p class="nds-section-description">Best practices for implementing date picker components</p>

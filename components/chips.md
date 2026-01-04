@@ -10,7 +10,7 @@ direction: ltr
 
 <!-- Chip Types Overview -->
 <section id="chipTypesOverview" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Chip Styles</h2>
             <p class="nds-section-description">Interactive chip components with different styles and states</p>
@@ -260,7 +260,7 @@ direction: ltr
 
 <!-- Usage Guidelines -->
 <section id="usageGuidelines" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>
             <p class="nds-section-description">Best practices for using chip components</p>

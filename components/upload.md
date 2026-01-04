@@ -10,7 +10,7 @@ direction: ltr
 
 <!-- File Upload Component -->
 <section id="fileUploadComponent" class="nds-content-section">
-  <div class="nds-section-content-container">
+  <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">File Upload</h2>
       <p class="nds-section-description">Upload files with drag-and-drop support, progress tracking, and comprehensive

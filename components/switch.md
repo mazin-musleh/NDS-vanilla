@@ -10,7 +10,7 @@ direction: ltr
 
 <!-- Switch Overview -->
 <section id="switchOverview" class="nds-content-section">
-  <div class="nds-section-content-container">
+  <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Switch Component</h2>
       <p class="nds-section-description">

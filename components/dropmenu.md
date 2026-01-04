@@ -10,7 +10,7 @@ direction: ltr
 
 <!-- Basic Dropmenu -->
 <section id="basicDropmenu" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Basic Dropmenu</h2>
             <p class="nds-section-description">Standard dropdown menu with multiple items</p>
@@ -179,7 +179,7 @@ direction: ltr
 
 <!-- Dropmenu with Links -->
 <section id="linksDropmenu" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Dropmenu with Links</h2>
             <p class="nds-section-description">Dropdown menu using anchor tags for navigation</p>
@@ -278,7 +278,7 @@ direction: ltr
 
 <!-- Usage Guidelines -->
 <section id="usageGuidelines" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>
             <p class="nds-section-description">Best practices for using dropmenu components</p>
@@ -329,7 +329,7 @@ direction: ltr
 
 <!-- Component Structure -->
 <section id="componentStructure" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Component Structure</h2>
             <p class="nds-section-description">Required classes and structure</p>

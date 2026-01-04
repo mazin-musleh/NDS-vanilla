@@ -10,7 +10,7 @@ direction: ltr
 
 <!-- Loading Overview -->
 <section id="loadingOverview" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Loading Spinner</h2>
             <p class="nds-section-description">Add .nds-loading to any element to show a centered loading spinner</p>
@@ -171,7 +171,7 @@ direction: ltr
 
 <!-- Overlay Section -->
 <section id="overlaySection" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Loading Overlay</h2>
             <p class="nds-section-description">Add .nds-overlay to show content behind a dimmed background while loading
@@ -264,7 +264,7 @@ direction: ltr
 
 <!-- Size Variants -->
 <section id="sizeVariants" class="nds-content-section">
-    <div class="nds-section-content-container">
+    <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Size Variants</h2>
             <p class="nds-section-description">Loading spinners are available in 7 sizes: xxs (20px), xs (24px), sm

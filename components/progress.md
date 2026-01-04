@@ -10,7 +10,7 @@ direction: ltr
 
 <!-- Progress Circle Component -->
 <section id="progressCircle" class="nds-content-section">
-  <div class="nds-section-content-container">
+  <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Progress Circle</h2>
       <p class="nds-section-description">Circular progress indicators with dynamic CSS custom properties</p>
@@ -134,7 +134,7 @@ direction: ltr
 
 <!-- Progress Bar Component -->
 <section id="progressBar" class="nds-content-section">
-  <div class="nds-section-content-container">
+  <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Progress Bar</h2>
       <p class="nds-section-description">Linear progress bars with CSS custom properties</p>
