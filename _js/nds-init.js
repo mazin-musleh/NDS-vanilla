@@ -54,12 +54,12 @@
             selector: '.nds-file-upload',
             init: () => window.NDS?.Forms?.FileUpload?.init?.(),
         },
-        {
+/*         {
             name: 'oneRowContent',
             priority: 9,
             selector: '.oneRowContent',
             init: () => window.NDSOneRowContent?.initializeRowScroll?.(),
-        },
+        }, */
         {
             name: 'sideMenu',
             priority: 10,

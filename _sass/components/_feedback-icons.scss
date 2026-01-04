@@ -11,6 +11,11 @@
 // ==============================================
 
 .nds-feedback-icon {
+  // Private custom properties with public override capability
+  --_bg: var(--feedback-bg, var(--icon-neutral));
+  --_color: var(--feedback-color, var(--icon-neutral));
+  --_ring: var(--feedback-ring, var(--icon-neutral-ring));
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -22,6 +27,8 @@
   padding: 0;
   line-height: calc(var(--nds-icon-size) / 1);
   border: unset;
+  background-color: var(--_bg);
+  color: var(--_color);
 
   body.hgi-loaded & i {
     position: relative;
@@ -61,15 +68,15 @@
   // ==============================================
   // FEEDBACK ICON VARIANTS
   // ==============================================
-  .nds-success &,
-  .success &,
-  &.nds-success,
-  &.success {
-    background-color: var(--icon-success);
-    color: var(--icon-success);
+
+  :is(.nds-success, .success) &,
+  &:is(.nds-success, .success) {
+    --feedback-bg: var(--icon-success);
+    --feedback-color: var(--icon-success);
+    --feedback-ring: var(--icon-success-ring);
 
     &.nds-ring {
-      box-shadow: 0 0 0px 4px var(--icon-success-ring);
+      box-shadow: 0 0 0px 4px var(--_ring);
     }
 
     .icon:before {
@@ -77,15 +84,14 @@
     }
   }
 
-  .nds-info &,
-  .info &,
-  &.nds-info,
-  &.info {
-    background-color: var(--icon-info);
-    color: var(--icon-info);
+  :is(.nds-info, .info) &,
+  &:is(.nds-info, .info) {
+    --feedback-bg: var(--icon-info);
+    --feedback-color: var(--icon-info);
+    --feedback-ring: var(--icon-info-ring);
 
     &.nds-ring {
-      box-shadow: 0 0 0px 4px var(--icon-info-ring);
+      box-shadow: 0 0 0px 4px var(--_ring);
     }
 
     .icon:before {
@@ -95,28 +101,27 @@
 
   .nds-neutral &,
   &.nds-neutral {
-    background-color: var(--icon-neutral);
-    color: var(--icon-neutral);
+    --feedback-bg: var(--icon-neutral);
+    --feedback-color: var(--icon-neutral);
+    --feedback-ring: var(--icon-neutral-ring);
 
     &.nds-ring {
-      box-shadow: 0 0 0px 4px var(--icon-neutral-ring);
+      box-shadow: 0 0 0px 4px var(--_ring);
     }
 
     .icon:before {
       content: "䞭";
     }
-
   }
 
-  .nds-warning &,
-  .warning &,
-  &.nds-warning,
-  &.warning {
-    background-color: var(--icon-warning);
-    color: var(--icon-warning) !important;
+  :is(.nds-warning, .warning) &,
+  &:is(.nds-warning, .warning) {
+    --feedback-bg: var(--icon-warning);
+    --feedback-color: var(--icon-warning);
+    --feedback-ring: var(--icon-warning-ring);
 
     &.nds-ring {
-      box-shadow: 0 0 0px 4px var(--icon-warning-ring) !important;
+      box-shadow: 0 0 0px 4px var(--_ring);
     }
 
     .icon:before {
@@ -124,23 +129,19 @@
     }
   }
 
-  .nds-error &,
-  .error &,
-  &.nds-error,
-  &.error {
-    background-color: var(--icon-error);
-    color: var(--icon-error) !important;
+  :is(.nds-error, .error) &,
+  &:is(.nds-error, .error) {
+    --feedback-bg: var(--icon-error);
+    --feedback-color: var(--icon-error);
+    --feedback-ring: var(--icon-error-ring);
 
     &.nds-ring {
-      box-shadow: 0 0 0px 4px var(--icon-error-ring) !important;
+      box-shadow: 0 0 0px 4px var(--_ring);
     }
 
-    .icon {
-      &:before {
-        content: "㿃";
-      }
+    .icon:before {
+      content: "㿃";
     }
-
   }
 
   // ==============================================
@@ -197,31 +198,30 @@
 // ==============================================
 
 .nds-feedback {
+  --_text: var(--feedback-text, inherit);
+
   display: flex;
   align-items: center;
   font-size: var(--nds-text-sm-FS);
   line-height: var(--nds-text-sm-LH);
   font-weight: 500;
   gap: var(--spacing-sm);
+  color: var(--_text);
 
-  &.nds-error,
-  &.error {
-    color: var(--controls-control-text-error);
+  &:is(.nds-error, .error) {
+    --feedback-text: var(--controls-control-text-error);
   }
 
-  &.nds-success,
-  &.success {
-    color: var(--controls-control-text-success, #16a34a);
+  &:is(.nds-success, .success) {
+    --feedback-text: var(--controls-control-text-success, #16a34a);
   }
 
-  &.nds-warning,
-  &.warning {
-    color: var(--controls-control-text-warning, #f59e0b);
+  &:is(.nds-warning, .warning) {
+    --feedback-text: var(--controls-control-text-warning, #f59e0b);
   }
 
-  &.nds-info,
-  &.info {
-    color: var(--controls-control-text-info, #3b82f6);
+  &:is(.nds-info, .info) {
+    --feedback-text: var(--controls-control-text-info, #3b82f6);
   }
 
   .nds-feedback-icon {

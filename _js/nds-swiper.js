@@ -162,17 +162,12 @@
             const parentWidth = parent?.clientWidth || 0;
             const parentHasFullWidth = parent?.classList.contains('nds-full-width');
             const parentFillsViewport = parentWidth >= viewportWidth;
-            const widthDiff = Math.abs(parentWidth - viewportWidth);
-
-            console.log(`[Swiper #${this.id}] parent.nds-full-width:${parentHasFullWidth} parentWidth:${parentWidth} viewportWidth:${viewportWidth} widthDiff:${widthDiff} parentFillsViewport:${parentFillsViewport}`);
 
             // If parent has nds-full-width AND fills viewport, add swiper padding
             if (parentHasFullWidth && parentFillsViewport) {
                 this.container.style.setProperty('--padding', 'var(--nds-viewport-padding)');
-                console.log(`[Swiper #${this.id}] --padding ADDED`);
             } else {
                 this.container.style.removeProperty('--padding');
-                console.log(`[Swiper #${this.id}] --padding REMOVED`);
             }
 
             // If not peek and not single slide, remove gap if present
@@ -188,20 +183,22 @@
         }
 
         setupResize() {
-            const handleResize = debounce(() => {
+            this.resizeHandler = debounce(() => {
                 const oldSlidesPerView = this.slidesPerView;
                 this.updateSlidesPerView();
 
-                // If slides per view changed, update state
+                // If slides per view changed, update buttons and pagination
                 if (oldSlidesPerView !== this.slidesPerView) {
-                    this.updateState();
+                    this.updateButtons();
+                    this.updatePagination();
+                    this.updateBoundaryClasses();
                 }
 
                 // Update peek styles and full-width class on resize
                 this.updatePeekStyles();
             }, 150);
 
-            window.addEventListener('resize', handleResize);
+            window.addEventListener('resize', this.resizeHandler);
         }
 
         // ==============================================
@@ -526,6 +523,9 @@
             }
             if (this.lazyLoadObserver) {
                 this.lazyLoadObserver.disconnect();
+            }
+            if (this.resizeHandler) {
+                window.removeEventListener('resize', this.resizeHandler);
             }
         }
     }

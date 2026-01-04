@@ -1,11 +1,9 @@
 /**
  * NDS Chip Component - SCSS Version
  * Small interactive elements for tags, categories, and selections
- * 
- * Variants:
- * - Primary (Green), Neutral (Gray)
- * 
- * Sizes: Small (24px), Medium (32px), Large (40px)
+ *
+ * Variants: Primary (Green), Neutral (Gray)
+ * Sizes: Small (20px), Medium (24px), Large (32px)
  * States: Default, Hover, Pressed, Selected, Focused, Disabled
  * Features: Leading icons, Trailing icons, Rounded corners, On-color variants
  */
@@ -17,6 +15,10 @@
 // ==============================================
 
 .nds-chip {
+  // Private custom properties with public override capability
+  --_bg: var(--chip-bg, var(--chip-background-neutral-default));
+  --_text: var(--chip-text, var(--chip-text-neutral-default));
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -31,6 +33,8 @@
   box-sizing: border-box;
   height: var(--nds-chip-size);
   line-height: var(--nds-chip-size);
+  background-color: var(--_bg);
+  color: var(--_text);
 
   &.nds-rounded {
     border-radius: 999px;
@@ -49,7 +53,6 @@
     background-color: var(--background-disabled);
     color: var(--text-default-disabled);
   }
-
 
   // ==============================================
   // CHIP SIZES
@@ -75,105 +78,104 @@
   }
 
   // ==============================================
-  // CHIP STYLES - PRIMARY
+  // COLOR VARIANTS
   // ==============================================
 
-  &.nds-primary {
-    background-color: var(--chip-background-primary-default);
-    color: var(--chip-text-primary-default);
+  &:is(.nds-primary, .nds-green) {
+    --chip-bg: var(--chip-background-primary-default);
+    --chip-text: var(--chip-text-primary-default);
 
-    &:hover,
-    &[data-state="hover"] {
-      background-color: var(--chip-background-primary-hovered);
+    &:is(:hover, [data-state="hover"]) {
+      --chip-bg: var(--chip-background-primary-hovered);
     }
 
-    &:active,
-    &.pressed,
-    &[data-state="active"] {
-      background-color: var(--chip-background-primary-pressed);
-      color: var(--chip-text-primary-selected);
+    &:is(:active, .pressed, [data-state="active"]) {
+      --chip-bg: var(--chip-background-primary-pressed);
+      --chip-text: var(--chip-text-primary-selected);
     }
 
-    &.selected,
-    &[data-state="selected"] {
-      background-color: var(--chip-background-primary-selected);
-      color: var(--chip-text-oncolor-primary);
+    &:is(.selected, [data-state="selected"]) {
+      --chip-bg: var(--chip-background-primary-selected);
+      --chip-text: var(--chip-text-oncolor-primary);
     }
 
-    &:focus-visible,
-    &[data-state="focused"] {
-      background-color: var(--chip-background-primary-focused);
-      color: var(--chip-text-primary-default);
-    }
-  }
-
-  // ==============================================
-  // CHIP STYLES - NEUTRAL
-  // ==============================================
-
-  &.nds-neutral {
-    background-color: var(--chip-background-neutral-default);
-    color: var(--chip-text-neutral-default);
-
-    &:hover,
-    &[data-state="hover"] {
-      background-color: var(--chip-background-neutral-hovered);
+    &:is(:focus-visible, [data-state="focused"]) {
+      --chip-bg: var(--chip-background-primary-focused);
+      --chip-text: var(--chip-text-primary-default);
     }
 
-    &:active,
-    &.pressed,
-    &[data-state="active"] {
-      background-color: var(--chip-background-neutral-pressed);
-    }
+    &.nds-oncolor {
+      --chip-bg: var(--chip-background-on-color-default);
+      --chip-text: var(--chip-text-neutral-default);
 
-    &.selected,
-    &[data-state="selected"] {
-      background-color: var(--chip-background-neutral-selected);
-      color: var(--chip-text-oncolor-primary);
-    }
-
-    &:focus-visible,
-    &[data-state="focused"] {
-      background-color: var(--chip-background-neutral-focused);
-      color: var(--chip-text-neutral-default);
-    }
-  }
-
-  // ==============================================
-  // CHIP ON-COLOR VARIANTS
-  // ==============================================
-
-  &.nds-oncolor {
-
-    &.nds-primary,
-    &.nds-neutral {
-      background-color: var(--chip-background-on-color-default);
-      color: var(--chip-text-neutral-default);
-
-      &:hover,
-      &[data-state="hover"] {
-        background-color: var(--chip-background-on-color-hovered);
+      &:is(:hover, [data-state="hover"]) {
+        --chip-bg: var(--chip-background-on-color-hovered);
       }
 
-      &:active,
-      &.pressed,
-      &[data-state="active"] {
-        background-color: var(--chip-background-on-color-pressed);
+      &:is(:active, .pressed, [data-state="active"]) {
+        --chip-bg: var(--chip-background-on-color-pressed);
       }
 
-      &.selected,
-      &[data-state="selected"] {
-        background-color: var(--chip-background-on-color-selected);
+      &:is(.selected, [data-state="selected"]) {
+        --chip-bg: var(--chip-background-on-color-selected);
       }
 
-      &:focus-visible,
-      &[data-state="focused"] {
-        background-color: var(--chip-background-on-color-focused);
+      &:is(:focus-visible, [data-state="focused"]) {
+        --chip-bg: var(--chip-background-on-color-focused);
         @include btn-focus-oncolor;
       }
 
-      &:disabled,
-      &[data-state="disabled"] {
+      &:is(:disabled, [data-state="disabled"]) {
+        background-color: var(--chip-background-on-color-disabled);
+        color: var(--text-default-oncolor-disabled);
+      }
+    }
+  }
+
+  &:is(.nds-neutral, .nds-gray) {
+    --chip-bg: var(--chip-background-neutral-default);
+    --chip-text: var(--chip-text-neutral-default);
+
+    &:is(:hover, [data-state="hover"]) {
+      --chip-bg: var(--chip-background-neutral-hovered);
+    }
+
+    &:is(:active, .pressed, [data-state="active"]) {
+      --chip-bg: var(--chip-background-neutral-pressed);
+    }
+
+    &:is(.selected, [data-state="selected"]) {
+      --chip-bg: var(--chip-background-neutral-selected);
+      --chip-text: var(--chip-text-oncolor-primary);
+    }
+
+    &:is(:focus-visible, [data-state="focused"]) {
+      --chip-bg: var(--chip-background-neutral-focused);
+      --chip-text: var(--chip-text-neutral-default);
+    }
+
+    &.nds-oncolor {
+      --chip-bg: var(--chip-background-on-color-default);
+      --chip-text: var(--chip-text-neutral-default);
+
+      &:is(:hover, [data-state="hover"]) {
+        --chip-bg: var(--chip-background-on-color-hovered);
+      }
+
+      &:is(:active, .pressed, [data-state="active"]) {
+        --chip-bg: var(--chip-background-on-color-pressed);
+      }
+
+      &:is(.selected, [data-state="selected"]) {
+        --chip-bg: var(--chip-background-on-color-selected);
+      }
+
+      &:is(:focus-visible, [data-state="focused"]) {
+        --chip-bg: var(--chip-background-on-color-focused);
+        @include btn-focus-oncolor;
+      }
+
+      &:is(:disabled, [data-state="disabled"]) {
         background-color: var(--chip-background-on-color-disabled);
         color: var(--text-default-oncolor-disabled);
       }
@@ -194,7 +196,6 @@
     .hgi:last-child {
       margin-inline-start: var(--spacing-xs);
     }
-
   }
 }
 

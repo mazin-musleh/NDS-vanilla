@@ -49,40 +49,31 @@
   // BUTTON STATES
   // ==============================================
 
-  &:hover,
-  &[data-state="hover"] {
+  &:is(:hover, [data-state="hover"]) {
     background-color: var(--_bg-hover);
     color: var(--_color-hover);
     border-color: var(--_border-hover);
   }
 
-  &:active,
-  &[data-state="active"] {
+  &:is(:active, [data-state="active"]) {
     background-color: var(--_bg-active);
     border-color: var(--_border-active);
   }
 
-  &.active,
-  &.selected,
-  .show > &,
-  .open > &,
-  .active > &,
-  &[data-state="selected"] {
+  &:is(.active, .selected, [data-state="selected"]),
+  :is(.show, .open, .active) > & {
     background-color: var(--_bg-selected);
     border-color: var(--_border-selected);
   }
 
-  &:disabled,
-  &.disabled,
-  &[data-state="disabled"] {
+  &:is(:disabled, .disabled, [data-state="disabled"]) {
     background-color: var(--_bg-disabled);
     color: var(--_color-disabled);
     border-color: var(--_border-disabled);
     @include btn-disabled;
   }
 
-  &.focus,
-  &:focus-visible {
+  &:is(.focus, :focus-visible) {
     @include btn-focus;
   }
 
@@ -186,13 +177,11 @@
     --btn-color-hover: var(--button-background-primary-hovered);
     --btn-loading-color: var(--colors-primary-sa-flag-600-primary);
 
-    &.selected,
-    &[data-state="selected"] {
+    &:is(.selected, [data-state="selected"]) {
       color: var(--button-background-primary-selected);
     }
 
-    &:active,
-    &[data-state="active"] {
+    &:is(:active, [data-state="active"]) {
       color: var(--button-background-primary-pressed);
     }
   }
@@ -207,8 +196,7 @@
   // ==============================================
 
   &.nds-oncolor {
-    &.nds-primary,
-    &.nds-neutral {
+    &:is(.nds-primary, .nds-neutral) {
       --btn-bg: var(--button-background-oncolor-default);
       --btn-bg-hover: var(--button-background-oncolor-hovered);
       --btn-bg-active: var(--button-background-oncolor-pressed);
@@ -218,8 +206,7 @@
       --btn-color-disabled: var(--text-default-oncolor-disabled);
       --btn-loading-color: var(--text-default);
 
-      &.focus,
-      &:focus-visible {
+      &:is(.focus, :focus-visible) {
         @include btn-focus-oncolor;
       }
     }
@@ -268,10 +255,7 @@
       --btn-loading-color: var(--text-oncolor-primary);
       --btn-loading-track: var(--alpha-white-20);
 
-      &.selected,
-      &[data-state="selected"],
-      &:active,
-      &[data-state="active"] {
+      &:is(.selected, [data-state="selected"], :active, [data-state="active"]) {
         color: var(--button-label-transparent-pressed-on-color);
       }
     }
@@ -333,13 +317,11 @@
       --btn-color-hover: var(--button-background-danger-primary-hovered);
       --btn-loading-color: var(--button-background-danger-primary-default);
 
-      &.selected,
-      &[data-state="selected"] {
+      &:is(.selected, [data-state="selected"]) {
         color: var(--button-background-danger-primary-selected);
       }
 
-      &:active,
-      &[data-state="active"] {
+      &:is(:active, [data-state="active"]) {
         color: var(--button-background-danger-primary-pressed);
       }
     }
@@ -383,13 +365,11 @@
       --btn-loading-color: var(--colors-base-white);
       --btn-loading-track: var(--alpha-white-20);
 
-      &.selected,
-      &[data-state="selected"] {
+      &:is(.selected, [data-state="selected"]) {
         color: var(--button-background-danger-primary-selected);
       }
 
-      &:active,
-      &[data-state="active"] {
+      &:is(:active, [data-state="active"]) {
         color: var(--button-background-danger-primary-pressed);
       }
     }
@@ -405,13 +385,11 @@
       --btn-loading-color: var(--colors-base-white);
       --btn-loading-track: var(--alpha-white-20);
 
-      &.selected,
-      &[data-state="selected"] {
+      &:is(.selected, [data-state="selected"]) {
         color: var(--button-background-danger-primary-selected);
       }
 
-      &:active,
-      &[data-state="active"] {
+      &:is(:active, [data-state="active"]) {
         color: var(--button-background-danger-primary-pressed);
       }
     }
@@ -422,13 +400,11 @@
       --btn-loading-color: var(--colors-base-white);
       --btn-loading-track: var(--alpha-white-20);
 
-      &.selected,
-      &[data-state="selected"] {
+      &:is(.selected, [data-state="selected"]) {
         color: var(--button-label-danger-primary-selected-oncolor);
       }
 
-      &:active,
-      &[data-state="active"] {
+      &:is(:active, [data-state="active"]) {
         color: var(--button-label-danger-primary-pressed-oncolor);
       }
     }
@@ -441,21 +417,12 @@
   &.nds-indicator {
     @include btn-indicator;
 
-    &:hover::before,
-    &[data-state="hover"]::before {
+    &:is(:hover, [data-state="hover"])::before {
       background-color: var(--_indicator-color);
     }
 
-    &:active::before,
-    &.selected::before,
-    &:focus-visible::before,
-    .show > &::before,
-    .open > &::before,
-    .active > &::before,
-    &[aria-selected="true"]::before,
-    &[data-state="selected"]::before,
-    &[data-state="active"]::before,
-    &[data-state="focused"]::before {
+    &:is(:active, .selected, :focus-visible, [aria-selected="true"], [data-state="selected"], [data-state="active"], [data-state="focused"])::before,
+    :is(.show, .open, .active) > &::before {
       background-color: var(--_indicator-selected);
     }
   }
@@ -488,13 +455,8 @@
       align-items: center;
     }
 
-    &.selected::after,
-    &.expanded::after,
-    &[aria-expanded="true"]::after,
-    &.open::after,
-    .show > &::after,
-    .open > &::after,
-    .active > &::after {
+    &:is(.selected, .expanded, .open, [aria-expanded="true"])::after,
+    :is(.show, .open, .active) > &::after {
       transform: rotate(180deg);
     }
   }
@@ -525,15 +487,12 @@
     display: none;
   }
 
-  &.nds-label-only i,
-  .nds-label-only svg,
-  .nds-label-only img {
+  :is(&.nds-label-only, .nds-label-only) :is(i, svg, img) {
     display: none;
   }
 
   /* Icon-Only Button Configurations */
-  &.nds-icon-only,
-  &:has(i, img, svg):not(:has(span, p, div, h1, h2, h3, h4, h5, h6)) {
+  &:is(.nds-icon-only, :has(i, img, svg):not(:has(span, p, div, h1, h2, h3, h4, h5, h6))) {
     justify-content: center;
     width: var(--nds-btn-size);
     padding: 0;
@@ -566,8 +525,7 @@
   // LOADING STATES
   // ==============================================
 
-  &.nds-loading,
-  &.loading {
+  &:is(.nds-loading, .loading) {
     --loading-size: var(--nds-btn-space) !important;
     --loading-color: var(--_loading-color);
     --loading-track: var(--_loading-track);
@@ -637,9 +595,7 @@
       border-end-end-radius: var(--btn-group-radius);
     }
 
-    &:hover,
-    &:focus,
-    &.nds-active {
+    &:is(:hover, :focus, .nds-active) {
       z-index: 2;
     }
   }
