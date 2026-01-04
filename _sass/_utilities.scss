@@ -8,77 +8,36 @@
 // Pattern: {property}{sides?}-{breakpoint?}-{size}
 // Following Bootstrap 5 exact naming conventions
 
-// Spacing map - direct NDS values (DISABLED - use semantic spacers instead)
-// $spacers: (
-//   0: var(--spacing-0),
-//   1: var(--spacing-1),
-//   2: var(--spacing-2),
-//   3: var(--spacing-3),
-//   4: var(--spacing-4),
-//   5: var(--spacing-5),
-//   auto: auto
-// );
-
-// Extended NDS spacing options (DISABLED - use semantic spacers instead)
-// $nds-extended-spacers: (
-//   0-5: var(--spacing-0-5),
-//   1-5: var(--spacing-1-5),
-//   6: var(--spacing-6),
-//   8: var(--spacing-8),
-//   10: var(--spacing-10),
-//   12: var(--spacing-12),
-//   16: var(--spacing-16),
-//   20: var(--spacing-20),
-//   24: var(--spacing-24),
-//   32: var(--spacing-32),
-//   40: var(--spacing-40),
-//   48: var(--spacing-48),
-//   56: var(--spacing-56),
-//   64: var(--spacing-64),
-//   96: var(--spacing-96)
-// );
-
-// Semantic spacing shortcuts (NDS specific)
-$semantic-spacers: (
-  auto: auto,
-  none: var(--spacing-none),
-  xxs: var(--spacing-xxs),
-  xs: var(--spacing-xs),
-  sm: var(--spacing-sm),
-  md: var(--spacing-md),
-  lg: var(--spacing-lg),
-  xl: var(--spacing-xl),
-  2xl: var(--spacing-2xl),
-  3xl: var(--spacing-3xl),
-  4xl: var(--spacing-4xl),
-  5xl: var(--spacing-5xl),
-  6xl: var(--spacing-6xl),
-  7xl: var(--spacing-7xl),
-  8xl: var(--spacing-8xl),
-  9xl: var(--spacing-9xl),
-  10xl: var(--spacing-10xl),
-  11xl: var(--spacing-11xl)
+// Spacing map - numeric NDS tokens only
+$spacers: (
+  0: var(--spacing-0),
+  1: var(--spacing-1),
+  2: var(--spacing-2),
+  3: var(--spacing-3),
+  4: var(--spacing-4),
+  5: var(--spacing-5)
 );
 
-// Use only semantic spacers
-$all-spacers: $semantic-spacers;
+// Use only numeric spacers
+$all-spacers: $spacers;
 
 // Bootstrap naming with NDS breakpoint values
 $breakpoints: (
-  sm: 'min-width: 0px',
+  sm: '(min-width: 0px)',
   // Mobile
-  md: 'min-width: 600px',
+  md: '(min-width: 600px)',
   // Tablet
-  lg: 'min-width: 960px',
+  lg: '(min-width: 960px)',
   // Desktop
-  xl: 'min-width: 1280px' // Large Desktop
+  xl: '(min-width: 1280px)' // Large Desktop
 );
 
-
 .nds-grid {
+  $col-token-selector: '> :is([class^="col-"], [class*=" col-"])';
+
   --grid-col: var(--max-col, auto-fit);
   display: grid;
-  grid-template-columns: repeat(var(--grid-col, 12), minmax(var(--grid-col-minsize, 0), 1fr));
+  grid-template-columns: repeat(var(--grid-col, 12), minmax(var(--grid-col-width, 0), 1fr));
   gap: var(--gap, var(--spacing-2xl));
   width: 100%;
 
@@ -94,13 +53,22 @@ $breakpoints: (
   }
 
   @include tablet {
-    --grid-col: var(--mid-col, auto-fit);
-    gap: max(8px, calc(var(--gap, var(--spacing-2xl)) / 2));
+    &:not(:has(#{$col-token-selector})) {
+      --grid-col: var(--mid-col, auto-fit);
+      gap: max(8px, calc(var(--gap, var(--spacing-2xl)) / 2));
+    }
   }
 
   @include mobile {
-    --grid-col: var(--min-col, auto-fit);
-    gap: max(8px, calc(var(--gap, var(--spacing-2xl)) / 2));
+    &:not(:has(#{$col-token-selector})) {
+      --grid-col: var(--min-col, auto-fit);
+      gap: max(8px, calc(var(--gap, var(--spacing-2xl)) / 2));
+    }
+  }
+
+  &:has(#{$col-token-selector}) {
+    --grid-col-width: unset !important;
+    --grid-col: 12;
   }
 }
 
@@ -118,7 +86,7 @@ $breakpoints: (
     margin-inline: auto;
   }
 
-  > * {
+  >* {
     max-width: 100%;
     min-width: 0; // prevent overflow in flex
   }
@@ -260,52 +228,10 @@ $breakpoints: (
 }
 
 /* Column spans (1…12) - Mobile first (base) */
-.col-1 {
-  grid-column: span 1;
-}
-
-.col-2 {
-  grid-column: span 2;
-}
-
-.col-3 {
-  grid-column: span 3;
-}
-
-.col-4 {
-  grid-column: span 4;
-}
-
-.col-5 {
-  grid-column: span 5;
-}
-
-.col-6 {
-  grid-column: span 6;
-}
-
-.col-7 {
-  grid-column: span 7;
-}
-
-.col-8 {
-  grid-column: span 8;
-}
-
-.col-9 {
-  grid-column: span 9;
-}
-
-.col-10 {
-  grid-column: span 10;
-}
-
-.col-11 {
-  grid-column: span 11;
-}
-
-.col-12 {
-  grid-column: span 12;
+@for $i from 1 through 12 {
+  .col-#{$i} {
+    grid-column: span #{$i};
+  }
 }
 
 .col-full {
@@ -314,7 +240,7 @@ $breakpoints: (
 
 /* Generate responsive column spans using breakpoints map */
 @each $breakpoint, $query in $breakpoints {
-  @media (#{$query}) {
+  @media #{$query} {
     @for $i from 1 through 12 {
       .col-#{$breakpoint}-#{$i} {
         grid-column: span #{$i};
@@ -371,150 +297,124 @@ $breakpoints: (
 }
 
 
-// Generate margin utilities - Bootstrap 5 naming
-@each $key, $value in $all-spacers {
-  @if $key !=auto {
+// Generate spacing utilities - Bootstrap 5 naming
+@mixin spacing-utilities($infix: null) {
+  $suffix: if($infix ==null, "", "-#{$infix}");
 
-    // Positive margins
-    .m-#{$key} {
+  // Margin utilities
+  @each $key, $value in $all-spacers {
+    .m#{$suffix}-#{$key} {
       margin: #{$value} !important;
     }
 
-    .mt-#{$key} {
+    .mt#{$suffix}-#{$key} {
       margin-block-start: #{$value} !important;
     }
 
-    .mb-#{$key} {
+    .mb#{$suffix}-#{$key} {
       margin-block-end: #{$value} !important;
     }
 
-    .ms-#{$key} {
+    .ms#{$suffix}-#{$key} {
       margin-inline-start: #{$value} !important;
     }
 
-    .me-#{$key} {
+    .me#{$suffix}-#{$key} {
       margin-inline-end: #{$value} !important;
     }
 
-    .mx-#{$key} {
+    .mx#{$suffix}-#{$key} {
       margin-inline: #{$value} !important;
     }
 
-    .my-#{$key} {
+    .my#{$suffix}-#{$key} {
       margin-block: #{$value} !important;
     }
 
     // Negative margins (Bootstrap 5 style with 'n' prefix)
     @if $key !=0 {
-      .m-n#{$key} {
+      .m#{$suffix}-n#{$key} {
         margin: calc(#{$value} * -1) !important;
       }
 
-      .mt-n#{$key} {
+      .mt#{$suffix}-n#{$key} {
         margin-block-start: calc(#{$value} * -1) !important;
       }
 
-      .mb-n#{$key} {
+      .mb#{$suffix}-n#{$key} {
         margin-block-end: calc(#{$value} * -1) !important;
       }
 
-      .ms-n#{$key} {
+      .ms#{$suffix}-n#{$key} {
         margin-inline-start: calc(#{$value} * -1) !important;
       }
 
-      .me-n#{$key} {
+      .me#{$suffix}-n#{$key} {
         margin-inline-end: calc(#{$value} * -1) !important;
       }
 
-      .mx-n#{$key} {
+      .mx#{$suffix}-n#{$key} {
         margin-inline: calc(#{$value} * -1) !important;
       }
 
-      .my-n#{$key} {
+      .my#{$suffix}-n#{$key} {
         margin-block: calc(#{$value} * -1) !important;
       }
     }
   }
 
-  @else {
-
-    // Handle auto separately (no negative auto)
-    .m-#{$key} {
-      margin: #{$value} !important;
+  // Padding utilities
+  @each $key, $value in $all-spacers {
+    .p#{$suffix}-#{$key} {
+      padding: #{$value} !important;
     }
 
-    .mt-#{$key} {
-      margin-block-start: #{$value} !important;
+    .pt#{$suffix}-#{$key} {
+      padding-block-start: #{$value} !important;
     }
 
-    .mb-#{$key} {
-      margin-block-end: #{$value} !important;
+    .pb#{$suffix}-#{$key} {
+      padding-block-end: #{$value} !important;
     }
 
-    .ms-#{$key} {
-      margin-inline-start: #{$value} !important;
+    .ps#{$suffix}-#{$key} {
+      padding-inline-start: #{$value} !important;
     }
 
-    .me-#{$key} {
-      margin-inline-end: #{$value} !important;
+    .pe#{$suffix}-#{$key} {
+      padding-inline-end: #{$value} !important;
     }
 
-    .mx-#{$key} {
-      margin-inline: #{$value} !important;
+    .px#{$suffix}-#{$key} {
+      padding-inline: #{$value} !important;
     }
 
-    .my-#{$key} {
-      margin-block: #{$value} !important;
+    .py#{$suffix}-#{$key} {
+      padding-block: #{$value} !important;
+    }
+  }
+
+  // Gap utilities
+  @each $key, $value in $all-spacers {
+    .gap#{$suffix}-#{$key} {
+      gap: #{$value} !important;
+    }
+
+    .gap-x#{$suffix}-#{$key} {
+      column-gap: #{$value} !important;
+    }
+
+    .gap-y#{$suffix}-#{$key} {
+      row-gap: #{$value} !important;
     }
   }
 }
 
-// Generate padding utilities - Bootstrap 5 naming
-@each $key, $value in $all-spacers {
+@include spacing-utilities();
 
-  // All sides
-  .p-#{$key} {
-    padding: #{$value} !important;
-  }
-
-  // Individual sides - Bootstrap 5 uses t, b, s, e
-  .pt-#{$key} {
-    padding-block-start: #{$value} !important;
-  }
-
-  .pb-#{$key} {
-    padding-block-end: #{$value} !important;
-  }
-
-  .ps-#{$key} {
-    padding-inline-start: #{$value} !important;
-  }
-
-  .pe-#{$key} {
-    padding-inline-end: #{$value} !important;
-  }
-
-  // Horizontal & Vertical
-  .px-#{$key} {
-    padding-inline: #{$value} !important;
-  }
-
-  .py-#{$key} {
-    padding-block: #{$value} !important;
-  }
-}
-
-// Generate gap utilities
-@each $key, $value in $all-spacers {
-  .gap-#{$key} {
-    gap: #{$value} !important;
-  }
-
-  .gap-x-#{$key} {
-    column-gap: #{$value} !important;
-  }
-
-  .gap-y-#{$key} {
-    row-gap: #{$value} !important;
+// Generate responsive spacing utilities for sm/md/lg/xl
+@each $breakpoint, $query in $breakpoints {
+  @media #{$query} {
+    @include spacing-utilities($breakpoint);
   }
 }

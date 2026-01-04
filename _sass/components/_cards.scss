@@ -58,12 +58,7 @@
   }
 
   &.nds-center {
-
-    .nds-card-header,
-    .nds-card-content,
-    .nds-card-text,
-    .nds-card-tags,
-    .nds-card-actions {
+    :is(.nds-card-header, .nds-card-content, .nds-card-text, .nds-card-tags, .nds-card-actions) {
       align-items: center !important;
       justify-content: center !important;
       text-align: center !important;
@@ -291,9 +286,7 @@
       text-align: center;
     }
 
-    .nds-card-number,
-    .nds-counter-value,
-    .nds-number-format {
+    :is(.nds-card-number, .nds-counter-value, .nds-number-format) {
       color: var(--_number);
       font-size: var(--nds-display-clamp-lg-FS);
       line-height: var(--nds-display-clamp-lg-LH);
@@ -322,9 +315,7 @@
 .nds-card.nds-user {
   max-width: var(--card-width, 224px);
 
-  .nds-card-header,
-  .nds-card-tags,
-  .nds-card-actions {
+  :is(.nds-card-header, .nds-card-tags, .nds-card-actions) {
     align-items: center;
     justify-content: center;
   }
@@ -348,51 +339,53 @@
 // COLORED CARD VARIANTS
 // ==============================================
 
-.nds-card:not(.nds-oncolor).nds-gold {
-  --card-border-hover: var(--colors-secondary-gold-600);
-  --card-border-active: var(--colors-secondary-gold-300);
-  --card-title: var(--colors-secondary-gold-900);
-  --card-subtitle: var(--colors-secondary-gold-800);
-  --card-number: var(--colors-secondary-gold-800);
-  --icon-bg-color: var(--colors-secondary-gold-100);
-  --icon-color: var(--colors-secondary-gold-800);
+.nds-card:not(.nds-oncolor) {
+  &.nds-gold {
+    --card-border-hover: var(--colors-secondary-gold-600);
+    --card-border-active: var(--colors-secondary-gold-300);
+    --card-title: var(--colors-secondary-gold-900);
+    --card-subtitle: var(--colors-secondary-gold-800);
+    --card-number: var(--colors-secondary-gold-800);
+    --icon-bg-color: var(--colors-secondary-gold-100);
+    --icon-color: var(--colors-secondary-gold-800);
 
-  &.nds-color {
-    --card-bg: var(--colors-secondary-gold-50);
-    --card-bg-hover: var(--colors-secondary-gold-100);
-    --card-border: var(--colors-secondary-gold-200);
+    &.nds-color {
+      --card-bg: var(--colors-secondary-gold-50);
+      --card-bg-hover: var(--colors-secondary-gold-100);
+      --card-border: var(--colors-secondary-gold-200);
+    }
   }
-}
 
-.nds-card:not(.nds-oncolor).nds-neutral {
-  --card-border-hover: var(--colors-neutral-500);
-  --card-border-active: var(--colors-neutral-300);
-  --card-title: var(--colors-neutral-900);
-  --card-subtitle: var(--colors-neutral-600);
-  --card-number: var(--colors-neutral-600);
-  --icon-bg-color: var(--colors-neutral-100);
-  --icon-color: var(--colors-neutral-600);
+  &.nds-neutral {
+    --card-border-hover: var(--colors-neutral-500);
+    --card-border-active: var(--colors-neutral-300);
+    --card-title: var(--colors-neutral-900);
+    --card-subtitle: var(--colors-neutral-600);
+    --card-number: var(--colors-neutral-600);
+    --icon-bg-color: var(--colors-neutral-100);
+    --icon-color: var(--colors-neutral-600);
 
-  &.nds-color {
-    --card-bg: var(--colors-neutral-50);
-    --card-bg-hover: var(--colors-neutral-100);
-    --card-border: var(--colors-neutral-200);
+    &.nds-color {
+      --card-bg: var(--colors-neutral-50);
+      --card-bg-hover: var(--colors-neutral-100);
+      --card-border: var(--colors-neutral-200);
+    }
   }
-}
 
-.nds-card:not(.nds-oncolor).nds-lavendar {
-  --card-border-hover: var(--colors-tertiary-lavendar-500);
-  --card-border-active: var(--colors-tertiary-lavendar-300);
-  --card-title: var(--colors-tertiary-lavendar-900);
-  --card-subtitle: var(--colors-tertiary-lavendar-600);
-  --card-number: var(--colors-tertiary-lavendar-600);
-  --icon-bg-color: var(--colors-tertiary-lavendar-100);
-  --icon-color: var(--colors-tertiary-lavendar-600);
+  &.nds-lavendar {
+    --card-border-hover: var(--colors-tertiary-lavendar-500);
+    --card-border-active: var(--colors-tertiary-lavendar-300);
+    --card-title: var(--colors-tertiary-lavendar-900);
+    --card-subtitle: var(--colors-tertiary-lavendar-600);
+    --card-number: var(--colors-tertiary-lavendar-600);
+    --icon-bg-color: var(--colors-tertiary-lavendar-100);
+    --icon-color: var(--colors-tertiary-lavendar-600);
 
-  &.nds-color {
-    --card-bg: var(--colors-tertiary-lavendar-50);
-    --card-bg-hover: var(--colors-tertiary-lavendar-100);
-    --card-border: var(--colors-tertiary-lavendar-200);
+    &.nds-color {
+      --card-bg: var(--colors-tertiary-lavendar-50);
+      --card-bg-hover: var(--colors-tertiary-lavendar-100);
+      --card-border: var(--colors-tertiary-lavendar-200);
+    }
   }
 }
 
@@ -420,11 +413,10 @@
 // INTERACTIVE STATES
 // ==============================================
 
-.nds-card:is(a,button,.nds-interactive) {
+.nds-card:is(a, button, .nds-interactive) {
   cursor: pointer;
 
-  &:not(.nds-stroke):hover,
-  &.nds-oncolor:hover {
+  &:is(:not(.nds-stroke), .nds-oncolor):hover {
     background-color: var(--_bg-hover);
   }
 
@@ -433,21 +425,25 @@
   }
 
   // Shadow variant interactive states
-  &.nds-shadow:hover {
-    box-shadow: var(--shadow-lg);
-  }
+  &.nds-shadow {
+    &:hover {
+      box-shadow: var(--shadow-lg);
+    }
 
-  &.nds-shadow:active {
-    box-shadow: var(--shadow-md);
+    &:active {
+      box-shadow: var(--shadow-md);
+    }
   }
 
   // Stroke variant interactive states
-  &.nds-stroke:hover {
-    border-color: var(--_border-hover);
-  }
+  &.nds-stroke {
+    &:hover {
+      border-color: var(--_border-hover);
+    }
 
-  &.nds-stroke:active {
-    border-color: var(--_border-active);
+    &:active {
+      border-color: var(--_border-active);
+    }
   }
 }
 

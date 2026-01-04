@@ -114,12 +114,14 @@
   $border: var(--form-field-border-default)) {
 
   // Chrome/Edge/Safari
-  &:-webkit-autofill,
-  &:-webkit-autofill:hover,
-  &:-webkit-autofill:focus,
-  &:autofill,
-  &:autofill:hover,
-  &:autofill:focus {
+  &:is(
+    :-webkit-autofill,
+    :-webkit-autofill:hover,
+    :-webkit-autofill:focus,
+    :autofill,
+    :autofill:hover,
+    :autofill:focus
+  ) {
 
     -webkit-box-shadow: 0 0 0 1000px #{$bg} inset !important;
     box-shadow: 0 0 0 1000px #{$bg} inset !important;
@@ -137,12 +139,14 @@
 
 }
 
-input[type="text"],
-input[type="email"],
-input[type="password"],
-input[type="search"],
-input[type="tel"],
-input[type="url"],
+input:is(
+  [type="text"],
+  [type="email"],
+  [type="password"],
+  [type="search"],
+  [type="tel"],
+  [type="url"]
+),
 textarea {
   @include autofill-reset();
 }
@@ -253,21 +257,20 @@ textarea {
 @mixin btn-indicator-styles($hover-color: var(--background-neutral-400), $selected-color: var(--background-neutral-800), $position : 'b') {
   @include btn-indicator($position);
 
-  &:hover::before,
-  &[data-state="hover"]::before {
+  &:is(:hover, [data-state="hover"])::before {
     background-color: $hover-color;
   }
 
-  &:active::before,
-  &.selected::before,
-  &:focus-visible::before,
-  .show>&::before,
-  .open>&::before,
-  .active>&::before,
-  &[aria-selected="true"]::before,
-  &[data-state="selected"]::before,
-  &[data-state="active"]::before,
-  &[data-state="focused"]::before {
+  &:is(
+    :active,
+    .selected,
+    :focus-visible,
+    [aria-selected="true"],
+    [data-state="selected"],
+    [data-state="active"],
+    [data-state="focused"]
+  )::before,
+  :is(.show, .open, .active) > &::before {
     background-color: $selected-color;
   }
 }

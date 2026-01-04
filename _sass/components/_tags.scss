@@ -1,9 +1,21 @@
-// Tags Component
-// Based on Figma specifications with RTL-first approach
+/**
+ * NDS Tags Component - SCSS Version
+ * Tag components with multiple variants and states
+ */
 
 @use '../mixins' as *;
 
+// ==============================================
+// BASE TAG STYLES
+// ==============================================
+
 .nds-tag {
+  // Private custom properties with public override capability
+  --_bg: var(--tag-bg, var(--tag-background-neutral-light));
+  --_text: var(--tag-text, var(--tag-text-neutral));
+  --_border: var(--tag-border, var(--border-neutral-secondary));
+  --_icon: var(--tag-icon, var(--tag-icon-neutral));
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -17,13 +29,24 @@
   border-radius: var(--radius-sm);
   position: relative;
   padding: var(--spacing-none) var(--spacing-lg);
+  background-color: var(--_bg);
+  color: var(--_text);
+  border: 1px solid var(--_border);
 
-  // Size variations
+  // ==============================================
+  // SIZE VARIATIONS
+  // ==============================================
+
   &.nds-sm {
     padding: var(--spacing-none) var(--spacing-md);
     font-size: var(--nds-text-sm-FS);
     height: 24px;
     line-height: 24px;
+
+    &.nds-status .label::before {
+      width: 8px;
+      height: 8px;
+    }
   }
 
   &.nds-xs {
@@ -33,15 +56,18 @@
     line-height: 20px;
   }
 
-  // Icon support
+  // ==============================================
+  // ICON SUPPORT
+  // ==============================================
+
   .icon {
     flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
+    color: var(--_icon);
   }
 
-  // Icon-only variant
   &.nds-icon-only {
     aspect-ratio: 1;
     padding: var(--spacing-none) var(--spacing-xxs);
@@ -60,176 +86,136 @@
     }
   }
 
+  // ==============================================
+  // COLOR VARIANTS
+  // ==============================================
 
-  // Style variations - Filled (default)
-  &.nds-neutral {
-    background-color: var(--tag-background-neutral-light);
-    color: var(--tag-text-neutral);
-    border: 1px solid var(--border-neutral-secondary);
-
-    .icon {
-      color: var(--tag-icon-neutral);
-    }
-
-    .label::before {
-      background-color: var(--tag-icon-neutral);
-    }
+  &:is(.nds-neutral, .nds-gray) {
+    --tag-bg: var(--tag-background-neutral-light);
+    --tag-text: var(--tag-text-neutral);
+    --tag-border: var(--border-neutral-secondary);
+    --tag-icon: var(--tag-icon-neutral);
 
     &.nds-inverted {
-      background-color: var(--tag-background-neutral);
-      border-color: transparent;
-      color: var(--text-oncolor-primary);
-
-      .label::before {
-        background-color: var(--tag-dot);
-      }
+      --tag-bg: var(--tag-background-neutral);
+      --tag-text: var(--text-oncolor-primary);
+      --tag-border: transparent;
+      --tag-icon: var(--tag-dot);
     }
 
-  }
-
-  &.nds-success {
-    background-color: var(--tag-background-success-light);
-    color: var(--tag-text-success);
-    border: 1px solid var(--tag-border-success-light);
-
-    .icon {
-      color: var(--tag-icon-success);
-    }
-
-    .label::before {
-      background-color: var(--tag-icon-success);
-    }
-
-    &.nds-inverted {
-      background-color: var(--tag-background-success);
-      border-color: transparent;
-      color: var(--text-oncolor-primary);
-
-      .label::before {
-        background-color: var(--tag-dot);
-      }
-    }
-
-  }
-
-  &.nds-info {
-    background-color: var(--tag-background-info-light);
-    color: var(--tag-text-info);
-    border: 1px solid var(--tag-border-info-light);
-
-    .icon {
-      color: var(--tag-icon-info);
-    }
-
-    .label::before {
-      background-color: var(--tag-icon-info);
-    }
-
-    &.nds-inverted {
-      background-color: var(--tag-background-info);
-      border-color: transparent;
-      color: var(--text-oncolor-primary);
-
-      .label::before {
-        background-color: var(--tag-dot);
-      }
+    &.nds-outline {
+      --tag-bg: transparent;
+      --tag-border: var(--tag-border-neutral);
+      --tag-text: var(--tag-text-neutral);
     }
   }
 
-  &.nds-warning {
-    background-color: var(--tag-background-warning-light);
-    color: var(--tag-text-warning);
-    border: 1px solid var(--tag-border-warning-light);
-
-    .icon {
-      color: var(--tag-icon-warning);
-    }
-
-    .label::before {
-      background-color: var(--tag-icon-warning);
-    }
+  &:is(.nds-success, .nds-green) {
+    --tag-bg: var(--tag-background-success-light);
+    --tag-text: var(--tag-text-success);
+    --tag-border: var(--tag-border-success-light);
+    --tag-icon: var(--tag-icon-success);
 
     &.nds-inverted {
-      background-color: var(--tag-background-warning);
-      border-color: transparent;
-      color: var(--text-oncolor-primary);
+      --tag-bg: var(--tag-background-success);
+      --tag-text: var(--text-oncolor-primary);
+      --tag-border: transparent;
+      --tag-icon: var(--tag-dot);
+    }
 
-      .label::before {
-        background-color: var(--tag-dot);
-      }
+    &.nds-outline {
+      --tag-bg: transparent;
+      --tag-border: var(--tag-border-success);
+      --tag-text: var(--tag-text-success);
     }
   }
 
-  &.nds-error {
-    background-color: var(--tag-background-error-light);
-    color: var(--tag-text-error);
-    border: 1px solid var(--tag-border-error-light);
-
-    .icon {
-      color: var(--tag-icon-error);
-    }
-
-    .label::before {
-      background-color: var(--tag-icon-error);
-    }
+  &:is(.nds-info, .nds-blue) {
+    --tag-bg: var(--tag-background-info-light);
+    --tag-text: var(--tag-text-info);
+    --tag-border: var(--tag-border-info-light);
+    --tag-icon: var(--tag-icon-info);
 
     &.nds-inverted {
-      background-color: var(--tag-background-error);
-      border-color: transparent;
-      color: var(--text-oncolor-primary);
+      --tag-bg: var(--tag-background-info);
+      --tag-text: var(--text-oncolor-primary);
+      --tag-border: transparent;
+      --tag-icon: var(--tag-dot);
+    }
 
-      .label::before {
-        background-color: var(--tag-dot);
-      }
+    &.nds-outline {
+      --tag-bg: transparent;
+      --tag-border: var(--tag-border-info);
+      --tag-text: var(--tag-text-info);
+    }
+  }
+
+  &:is(.nds-warning, .nds-orange) {
+    --tag-bg: var(--tag-background-warning-light);
+    --tag-text: var(--tag-text-warning);
+    --tag-border: var(--tag-border-warning-light);
+    --tag-icon: var(--tag-icon-warning);
+
+    &.nds-inverted {
+      --tag-bg: var(--tag-background-warning);
+      --tag-text: var(--text-oncolor-primary);
+      --tag-border: transparent;
+      --tag-icon: var(--tag-dot);
+    }
+
+    &.nds-outline {
+      --tag-bg: transparent;
+      --tag-border: var(--tag-border-warning);
+      --tag-text: var(--tag-text-warning);
+    }
+  }
+
+  &:is(.nds-error, .nds-red) {
+    --tag-bg: var(--tag-background-error-light);
+    --tag-text: var(--tag-text-error);
+    --tag-border: var(--tag-border-error-light);
+    --tag-icon: var(--tag-icon-error);
+
+    &.nds-inverted {
+      --tag-bg: var(--tag-background-error);
+      --tag-text: var(--text-oncolor-primary);
+      --tag-border: transparent;
+      --tag-icon: var(--tag-dot);
+    }
+
+    &.nds-outline {
+      --tag-bg: transparent;
+      --tag-border: var(--tag-border-error);
+      --tag-text: var(--tag-text-error);
     }
   }
 
   &.nds-oncolor {
-    background-color: var(--tag-background-on-color);
-    color: var(--text-oncolor-primary);
-    border: unset;
-  }
+    --tag-bg: var(--tag-background-on-color);
+    --tag-text: var(--text-oncolor-primary);
+    --tag-border: transparent;
 
-  // Outline variants
-  &.nds-outline {
-    background-color: transparent;
-
-    &.nds-neutral {
-      border: 1px solid var(--tag-border-neutral);
-      color: var(--tag-text-neutral);
-    }
-
-    &.nds-success {
-      border: 1px solid var(--tag-border-success);
-      color: var(--tag-text-success);
-    }
-
-    &.nds-info {
-      border: 1px solid var(--tag-border-info);
-      color: var(--tag-text-info);
-    }
-
-    &.nds-warning {
-      border: 1px solid var(--tag-border-warning);
-      color: var(--tag-text-warning);
-    }
-
-    &.nds-error {
-      border: 1px solid var(--tag-border-error);
-      color: var(--tag-text-error);
-    }
-
-    &.nds-oncolor {
-      border: 1px solid var(--tag-border-on-color);
-      color: var(--text-oncolor-primary);
+    &.nds-outline {
+      --tag-bg: transparent;
+      --tag-border: var(--tag-border-on-color);
+      --tag-text: var(--text-oncolor-primary);
     }
   }
+
+
+  // ==============================================
+  // GHOST VARIANT
+  // ==============================================
 
   &.nds-ghost {
-    background-color: transparent;
-    border-color: transparent;
-    color: var(--tag-text-neutral);
+    --tag-bg: transparent;
+    --tag-border: transparent;
+    --tag-text: var(--tag-text-neutral);
   }
+
+  // ==============================================
+  // STATUS VARIANT
+  // ==============================================
 
   &.nds-status {
     border-radius: 999px;
@@ -239,36 +225,32 @@
       justify-content: center;
       align-items: center;
       gap: var(--spacing-xs);
-    }
 
-    .label::before {
-      content: "";
-      display: block;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-    }
-
-    &.nds-sm {
-      .label::before {
-        width: 8px;
-        height: 8px;
+      &::before {
+        content: "";
+        display: block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: var(--_icon);
       }
     }
   }
 
-  // Rounded variant
+  // ==============================================
+  // ROUNDED VARIANT
+  // ==============================================
+
   &.nds-rounded {
     border-radius: 999px;
   }
 
-  @include ltr {
-    // LTR-specific adjustments if needed
-    // Most styling is handled by logical properties above
-  }
 }
 
-// Tag group/list styling
+// ==============================================
+// TAG GROUP
+// ==============================================
+
 .nds-group {
   display: flex;
   flex-wrap: wrap;
