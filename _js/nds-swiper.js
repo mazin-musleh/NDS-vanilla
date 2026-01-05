@@ -237,22 +237,20 @@
             const targetSlide = this.slides[clampedIndex];
             if (!targetSlide) return;
 
-            // Calculate scroll position relative to wrapper
-            const wrapperRect = this.wrapper.getBoundingClientRect();
-            const slideRect = targetSlide.getBoundingClientRect();
-
+            // Calculate absolute scroll position using slide dimensions
+            const slideWidth = targetSlide.offsetWidth;
+            const gap = parseInt(getComputedStyle(this.container).getPropertyValue('--gap')) || 0;
             const rtl = isRTL();
-            let scrollDelta;
 
+            // Calculate target scroll position
+            let targetScrollLeft = clampedIndex * (slideWidth + gap);
             if (rtl) {
-                scrollDelta = slideRect.right - wrapperRect.right;
-            } else {
-                scrollDelta = slideRect.left - wrapperRect.left;
+                targetScrollLeft = -targetScrollLeft;
             }
 
-            // Scroll wrapper smoothly
-            this.wrapper.scrollBy({
-                left: scrollDelta,
+            // Use scrollTo with absolute position (like native scroll-snap)
+            this.wrapper.scrollTo({
+                left: targetScrollLeft,
                 behavior: 'smooth'
             });
         }

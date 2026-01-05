@@ -73,7 +73,7 @@
     flex-direction: column;
 
     // Button/link styling within drawer
-    > .nds-btn {
+    >.nds-btn {
         --nds-btn-height: var(--_btn-height);
         --nds-btn-gap: var(--_btn-gap);
         width: 100%;
@@ -81,14 +81,20 @@
         min-height: fit-content;
 
         // Label takes available space
-        .label {
+        > .label {
             flex: 1;
         }
 
-        .hgi-arrow-left-01{
-            @include ltr{
+        .hgi-arrow-left-01 {
+            @include ltr {
                 transform: scaleX(-1);
             }
+        }
+
+        &:hover .nds-featured-icon {
+            --icon-bg-color: var(--featuredicons-background-default-light);
+            --icon-color: var(--featuredicons-icon-neutral);
+            --dark-bg-color: var(--featuredicons-icon-default-500);
         }
     }
 }
@@ -243,12 +249,12 @@
         width: 100%;
     }
 
-    & i{
+    & i {
         transition: transform 0.1s ease;
     }
 
     // Rotate icon when at end
-    .atEnd & i{
+    .atEnd & i {
         transform: rotate(180deg);
     }
 }

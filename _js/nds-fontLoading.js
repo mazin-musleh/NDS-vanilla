@@ -21,26 +21,49 @@
         fontLoadingState.isChecking = true;
         const startTime = Date.now();
 
+        function markAsLoaded() {
+            fontLoadingState.isLoaded = true;
+            fontLoadingState.isChecking = false;
+
+            // Add class to body only after font file is confirmed loaded
+            document.body.classList.add('hgi-loaded');
+
+            // Execute all queued callbacks
+            fontLoadingState.callbacks.forEach(cb => cb(true));
+            fontLoadingState.callbacks = [];
+        }
+
         function check() {
+            // Check if CSS file with @font-face is loaded
+            const cssLoaded = Array.from(document.styleSheets).some(sheet => {
+                try {
+                    return sheet.href && sheet.href.toLowerCase().includes('hgi');
+                } catch (e) {
+                    return false;
+                }
+            });
+
             // Check Performance API for actual font file loading
             const resources = performance.getEntriesByType('resource');
-            const fontLoaded = resources.some(resource => {
+            const fontFileInPerformance = resources.some(resource => {
                 const url = resource.name.toLowerCase();
-                return url.includes(fontName.toLowerCase()) && 
+                return url.includes(fontName.toLowerCase()) &&
                        (url.includes('.woff2') || url.includes('.woff') || url.includes('.ttf') || url.includes('.otf')) &&
                        resource.responseEnd > 0;
             });
 
-            if (fontLoaded) {
-                fontLoadingState.isLoaded = true;
-                fontLoadingState.isChecking = false;
-
-                // Add class to body only after font file is confirmed loaded
-                document.body.classList.add('hgi-loaded');
-
-                // Execute all queued callbacks
-                fontLoadingState.callbacks.forEach(cb => cb(true));
-                fontLoadingState.callbacks = [];
+            // Font is considered loaded if CSS is loaded (even if font file not in Performance API due to cache)
+            if (cssLoaded || fontFileInPerformance) {
+                // Wait for document.fonts.ready to ensure font is actually rendered
+                if (document.fonts && document.fonts.ready) {
+                    document.fonts.ready.then(() => {
+                        markAsLoaded();
+                    }).catch(() => {
+                        markAsLoaded(); // Still mark as loaded even if error
+                    });
+                } else {
+                    markAsLoaded();
+                }
                 return;
             }
 
