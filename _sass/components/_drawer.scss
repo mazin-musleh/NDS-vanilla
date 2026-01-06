@@ -72,13 +72,13 @@
     // Button/link styling within drawer
     >.nds-btn {
         --btn-height: var(--drawer-btn-height);
-        --btn-gap: var(--drawer-btn-gap);
+        --btn-gap: var(--drawer-btn-gap, var(--spacing-md));
         width: 100%;
         justify-content: flex-start;
         min-height: fit-content;
 
         // Label takes available space
-        > .label {
+        >.label {
             flex: 1;
         }
 
@@ -267,6 +267,23 @@
         &:last-child {
             border-bottom: none;
         }
+    }
+}
+
+
+// ==============================================
+// FIT MODE
+// ==============================================
+
+.nds-drawer.nds-fit {
+    --drawer-btn-height:100%;
+    .nds-drawer-list {
+        height: 100%;
+
+        >li {
+            height: 100%;
+        }
+
     }
 }
 

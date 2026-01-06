@@ -23,9 +23,6 @@
 }
 
 .nds-ipv-image-card {
-  background-color: var(--background-neutral-50);
-  padding: 0;
-  position: relative;
 
   &.showZoom::before {
     font-style: normal;
@@ -59,12 +56,6 @@
   border-radius: var(--radius-md);
   overflow: hidden;
   cursor: pointer;
-  transition: transform 0.2s ease;
-  box-shadow: var(--shadow-sm);
-
-  &:hover {
-    transform: scale(1.02);
-  }
 }
 
 .nds-ipv-image-title {
@@ -176,7 +167,7 @@
 }
 
 .nds-ipv-control-btn {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.3);
   color: white;
   width: 50px;
@@ -191,8 +182,7 @@
   backdrop-filter: blur(10px);
 
   &:hover {
-    background: rgba(255, 255, 255, 0.3);
-    color: var(--colors-neutral-900);
+    background: rgba(0, 0, 0, 0.3);
     transform: scale(1.1);
   }
 
