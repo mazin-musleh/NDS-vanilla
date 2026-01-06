@@ -79,8 +79,8 @@
 
   &.nds-btn {
     img {
-      width: calc(var(--nds-btn-height));
-      height: calc(var(--nds-btn-height));
+      width: calc(var(--btn-height));
+      height: calc(var(--btn-height));
       padding: 4px;
     }
   }

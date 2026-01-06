@@ -16,8 +16,9 @@
 
 .nds-chip {
   // Private custom properties with public override capability
-  --_bg: var(--chip-bg, var(--chip-background-neutral-default));
-  --_text: var(--chip-text, var(--chip-text-neutral-default));
+  --_chip-bg: var(--chip-bg, var(--chip-background-neutral-default));
+  --_chip-text: var(--chip-text, var(--chip-text-neutral-default));
+  --_chip-size: var(--chip-size, 24px);
 
   display: inline-flex;
   align-items: center;
@@ -31,10 +32,10 @@
   white-space: nowrap;
   cursor: pointer;
   box-sizing: border-box;
-  height: var(--nds-chip-size);
-  line-height: var(--nds-chip-size);
-  background-color: var(--_bg);
-  color: var(--_text);
+  height: var(--_chip-size);
+  line-height: var(--_chip-size);
+  background-color: var(--_chip-bg);
+  color: var(--_chip-text);
 
   &.nds-rounded {
     border-radius: 999px;
@@ -60,19 +61,19 @@
 
   &.nds-md,
   & {
-    --nds-chip-size: 24px;
+    --chip-size: 24px;
     padding: var(--spacing-sm) var(--spacing-lg);
     font-size: var(--nds-text-xs-FS);
   }
 
   &.nds-sm {
-    --nds-chip-size: 20px;
+    --chip-size: 20px;
     padding: var(--spacing-xs) var(--spacing-md);
     font-size: var(--nds-text-xxs-FS);
   }
 
   &.nds-lg {
-    --nds-chip-size: 32px;
+    --chip-size: 32px;
     padding: var(--spacing-md) var(--spacing-lg);
     font-size: var(--nds-text-md-FS);
   }

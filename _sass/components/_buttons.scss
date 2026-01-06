@@ -14,31 +14,13 @@
 // ==============================================
 
 .nds-btn {
-  // Internal custom properties with external fallbacks
-  --_bg: var(--btn-bg, transparent);
-  --_bg-hover: var(--btn-bg-hover, var(--_bg));
-  --_bg-active: var(--btn-bg-active, var(--_bg));
-  --_bg-selected: var(--btn-bg-selected, var(--_bg));
-  --_bg-disabled: var(--btn-bg-disabled, var(--background-disabled));
-  --_color: var(--btn-color, var(--text-default));
-  --_color-hover: var(--btn-color-hover, var(--_color));
-  --_color-disabled: var(--btn-color-disabled, var(--text-default-disabled));
-  --_border: var(--btn-border, transparent);
-  --_border-hover: var(--btn-border-hover, var(--_border));
-  --_border-active: var(--btn-border-active, var(--_border));
-  --_border-selected: var(--btn-border-selected, var(--_border));
-  --_border-disabled: var(--btn-border-disabled, transparent);
-  --_indicator-color: var(--btn-indicator-color, var(--background-neutral-400));
-  --_indicator-selected: var(--btn-indicator-selected, var(--background-neutral-800));
-  --_loading-color: var(--btn-loading-color, var(--text-default));
-  --_loading-track: var(--btn-loading-track, var(--alpha-black-10));
-
+  
   @include btn-base;
 
   // Apply internal properties
-  background-color: var(--_bg);
-  color: var(--_color);
-  border-color: var(--_border);
+  background-color: var(--_btn-bg);
+  color: var(--_btn-color);
+  border-color: var(--_btn-border);
 
   .label {
     text-align: start;
@@ -50,26 +32,26 @@
   // ==============================================
 
   &:is(:hover, [data-state="hover"]) {
-    background-color: var(--_bg-hover);
-    color: var(--_color-hover);
-    border-color: var(--_border-hover);
+    background-color: var(--_btn-bg-hover);
+    color: var(--_btn-color-hover);
+    border-color: var(--_btn-border-hover);
   }
 
   &:is(:active, [data-state="active"]) {
-    background-color: var(--_bg-active);
-    border-color: var(--_border-active);
+    background-color: var(--_btn-bg-active);
+    border-color: var(--_btn-border-active);
   }
 
   &:is(.active, .selected, [data-state="selected"]),
   :is(.show, .open, .active) > & {
-    background-color: var(--_bg-selected);
-    border-color: var(--_border-selected);
+    background-color: var(--_btn-bg-selected);
+    border-color: var(--_btn-border-selected);
   }
 
   &:is(:disabled, .disabled, [data-state="disabled"]) {
-    background-color: var(--_bg-disabled);
-    color: var(--_color-disabled);
-    border-color: var(--_border-disabled);
+    background-color: var(--_btn-bg-disabled);
+    color: var(--_btn-color-disabled);
+    border-color: var(--_btn-border-disabled);
     @include btn-disabled;
   }
 
@@ -83,23 +65,23 @@
 
   &,
   &.nds-lg {
-    --nds-btn-size: 40px;
-    --button-indicator-size: 3px;
+    --btn-size: 40px;
+    --btn-indicator-size: 3px;
   }
 
   &.nds-md {
-    --nds-btn-size: 32px;
-    --button-indicator-size: 3px;
+    --btn-size: 32px;
+    --btn-indicator-size: 3px;
   }
 
   &.nds-sm {
-    --nds-btn-size: 24px;
-    --button-indicator-size: 2px;
+    --btn-size: 24px;
+    --btn-indicator-size: 2px;
   }
 
   &.nds-xl {
-    --nds-btn-size: 48px;
-    --button-indicator-size: 4px;
+    --btn-size: 48px;
+    --btn-indicator-size: 4px;
   }
 
   // ==============================================
@@ -188,7 +170,7 @@
 
   // Button group border handling
   .nds-btn-group &:not(:first-child) {
-    border-inline-start-color: var(--_bg-hover);
+    border-inline-start-color: var(--_btn-bg-hover);
   }
 
   // ==============================================
@@ -418,12 +400,12 @@
     @include btn-indicator;
 
     &:is(:hover, [data-state="hover"])::before {
-      background-color: var(--_indicator-color);
+      background-color: var(--_btn-indicator-color);
     }
 
     &:is(:active, .selected, :focus-visible, [aria-selected="true"], [data-state="selected"], [data-state="active"], [data-state="focused"])::before,
     :is(.show, .open, .active) > &::before {
-      background-color: var(--_indicator-selected);
+      background-color: var(--_btn-indicator-selected);
     }
   }
 
@@ -446,10 +428,10 @@
       opacity: 0;
       transition: transform 0.1s ease;
       display: inline-flex;
-      width: var(--nds-button-icon-size);
-      height: var(--nds-button-icon-size);
-      font-size: var(--nds-button-icon-size);
-      line-height: var(--nds-button-icon-size);
+      width: var(--_btn-icon-size);
+      height: var(--_btn-icon-size);
+      font-size: var(--_btn-icon-size);
+      line-height: var(--_btn-icon-size);
       justify-content: center;
       align-content: center;
       align-items: center;
@@ -476,7 +458,7 @@
   &.nds-full {
     width: 100% !important;
     justify-content: center !important;
-    min-width: var(--nds-btn-size);
+    min-width: var(--btn-size);
 
     .label {
       text-align: center !important;
@@ -494,7 +476,7 @@
   /* Icon-Only Button Configurations */
   &:is(.nds-icon-only, :has(i, img, svg):not(:has(span, p, div, h1, h2, h3, h4, h5, h6))) {
     justify-content: center;
-    width: var(--nds-btn-size);
+    width: var(--btn-size);
     padding: 0;
 
     &.nds-menu-btn {
@@ -515,10 +497,10 @@
   /* Icon Sizing */
   &.nds-btn i {
     flex-shrink: 0;
-    width: var(--nds-button-icon-size);
-    height: var(--nds-button-icon-size);
-    font-size: var(--nds-button-icon-size);
-    line-height: var(--nds-button-icon-size);
+    width: var(--_btn-icon-size);
+    height: var(--_btn-icon-size);
+    font-size: var(--_btn-icon-size);
+    line-height: var(--_btn-icon-size);
   }
 
   // ==============================================
@@ -526,9 +508,8 @@
   // ==============================================
 
   &:is(.nds-loading, .loading) {
-    --loading-size: var(--nds-btn-space) !important;
-    --loading-color: var(--_loading-color);
-    --loading-track: var(--_loading-track);
+    --loading-color: var(--_btn-loading-color);
+    --loading-track: var(--_btn-loading-track);
     color: transparent !important;
   }
 

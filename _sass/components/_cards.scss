@@ -11,21 +11,21 @@
 
 .nds-card {
   // Internal custom properties with external fallbacks
-  --_bg: var(--card-bg, var(--background-card));
-  --_bg-hover: var(--card-bg-hover, var(--background-neutral-50));
-  --_border: var(--card-border, var(--border-neutral-primary));
-  --_border-hover: var(--card-border-hover, var(--colors-primary-sa-flag-600-primary));
-  --_border-active: var(--card-border-active, var(--border-neutral-primary));
-  --_text: var(--card-text, var(--text-display));
-  --_title: var(--card-title, var(--text-display));
-  --_subtitle: var(--card-subtitle, var(--colors-secondary-gold-800));
-  --_number: var(--card-number, var(--text-primary-sa-flag));
-  --_icon: var(--icon-color, var(--featuredicons-icon-primary));
-  --_icon-bg: var(--icon-bg-color, var(--featuredicons-background-brand-light));
-  --_rating: var(--card-rating, var(--colors-neutral-600));
+  --_card-bg: var(--card-bg, var(--background-card));
+  --_card-bg-hover: var(--card-bg-hover, var(--background-neutral-50));
+  --_card-border: var(--card-border, var(--border-neutral-primary));
+  --_card-border-hover: var(--card-border-hover, var(--colors-primary-sa-flag-600-primary));
+  --_card-border-active: var(--card-border-active, var(--border-neutral-primary));
+  --_card-text: var(--card-text, var(--text-display));
+  --_card-title: var(--card-title, var(--text-display));
+  --_card-subtitle: var(--card-subtitle, var(--colors-secondary-gold-800));
+  --_card-number: var(--card-number, var(--text-primary-sa-flag));
+  --_card-icon: var(--icon-color, var(--featuredicons-icon-primary));
+  --_card-icon-bg: var(--icon-bg-color, var(--featuredicons-background-brand-light));
+  --_card-rating: var(--card-rating, var(--colors-neutral-600));
 
   font-family: 'IBM Plex Sans Arabic', sans-serif;
-  background-color: var(--_bg);
+  background-color: var(--_card-bg);
   border: 1px solid transparent;
   border-radius: var(--components-card-radius);
   padding: var(--spacing-xl);
@@ -43,7 +43,7 @@
 
   // Stroke variant
   &.nds-stroke {
-    border: 1px solid var(--_border);
+    border: 1px solid var(--_card-border);
   }
 
   &.nds-full {
@@ -53,7 +53,7 @@
 
   // Featured variant
   &.nds-featured {
-    outline: 2px solid var(--_border-active);
+    outline: 2px solid var(--_card-border-active);
     outline-offset: -2px;
   }
 
@@ -117,32 +117,32 @@
 
 
     .nds-card-title {
-      --_truncate: 2;
+      --_card-truncate: 2;
       font-size: var(--nds-text-lg-FS);
       line-height: var(--nds-text-lg-LH);
       font-weight: 700;
-      color: var(--_title);
+      color: var(--_card-title);
       margin: 0;
       width: 100%;
     }
 
     .nds-card-subtitle {
-      --_truncate: 2;
+      --_card-truncate: 2;
       font-size: var(--nds-text-md-FS);
       line-height: var(--nds-text-md-LH);
       font-weight: 600;
-      color: var(--_subtitle);
+      color: var(--_card-subtitle);
       margin: 0;
       width: 100%;
     }
 
 
     .nds-card-description {
-      --_truncate: 2;
+      --_card-truncate: 2;
       font-size: var(--nds-text-md-FS);
       line-height: var(--nds-text-md-LH);
       font-weight: 400;
-      color: var(--_text);
+      color: var(--_card-text);
       margin: 0;
       width: 100%;
       text-align: justify;
@@ -181,7 +181,7 @@
     font-size: var(--nds-text-xs-FS);
     line-height: var(--nds-text-xs-LH);
     font-weight: 400;
-    color: var(--_rating);
+    color: var(--_card-rating);
     margin: 0;
   }
 
@@ -287,7 +287,7 @@
     }
 
     :is(.nds-card-number, .nds-counter-value, .nds-number-format) {
-      color: var(--_number);
+      color: var(--_card-number);
       font-size: var(--nds-display-clamp-lg-FS);
       line-height: var(--nds-display-clamp-lg-LH);
       font-weight: 500;
@@ -417,7 +417,7 @@
   cursor: pointer;
 
   &:is(:not(.nds-stroke), .nds-oncolor):hover {
-    background-color: var(--_bg-hover);
+    background-color: var(--_card-bg-hover);
   }
 
   &:active {
@@ -438,11 +438,11 @@
   // Stroke variant interactive states
   &.nds-stroke {
     &:hover {
-      border-color: var(--_border-hover);
+      border-color: var(--_card-border-hover);
     }
 
     &:active {
-      border-color: var(--_border-active);
+      border-color: var(--_card-border-active);
     }
   }
 }
