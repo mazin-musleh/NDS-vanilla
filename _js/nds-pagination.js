@@ -309,62 +309,105 @@
                 return;
             }
 
-            // Get items and per-page value
+            // Get items
             const items = Array.from(contentContainer.querySelectorAll('.pagination-item'));
-            const perPage = parseInt(getComputedStyle(contentContainer).getPropertyValue('--per-page')) || 5;
-            const totalPages = Math.ceil(items.length / perPage);
 
-            // If no pagination needed, still show all items as active
-            if (totalPages <= 1) {
-                items.forEach(item => item.classList.add('active'));
-                return;
+            // Store last perPage to detect changes
+            let lastPerPage = parseInt(getComputedStyle(contentContainer).getPropertyValue('--per-page')) || 5;
+
+            // Function to update pagination based on current --per-page
+            function updatePagination() {
+                const perPage = parseInt(getComputedStyle(contentContainer).getPropertyValue('--per-page')) || 5;
+                const totalPages = Math.ceil(items.length / perPage);
+
+                // Store current page before regenerating
+                const pagination = paginationNav.querySelector('.nds-pagination');
+                const currentPage = pagination ? getCurrentPage(pagination) : 1;
+
+                // If no pagination needed, show all items as active
+                if (totalPages <= 1) {
+                    items.forEach(item => item.classList.add('active'));
+                    paginationNav.innerHTML = '';
+                    return;
+                }
+
+                // Calculate which page the current page should map to with new perPage
+                // Keep user on approximately the same content position
+                const newCurrentPage = Math.min(currentPage, totalPages);
+
+                // Generate pagination HTML
+                const paginationHTML = generatePaginationHTML(totalPages, newCurrentPage);
+                paginationNav.innerHTML = paginationHTML;
+
+                // Show current page items
+                showPage(items, newCurrentPage, perPage);
+
+                // Initialize pagination component
+                new NDSPagination(paginationNav);
+
+                // Store perPage for click handler closure
+                const finalPerPage = perPage;
+                const finalTotalPages = totalPages;
+
+                // Add click handlers
+                const newPagination = paginationNav.querySelector('.nds-pagination');
+                newPagination.addEventListener('click', (e) => {
+                    // Check for page buttons/links (both in pagination list and dropdown menu)
+                    const pageElement = e.target.closest('.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) button, .nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) a, .nds-dropmenu-item');
+
+                    if (pageElement) {
+                        // Prevent default for anchors in auto-pagination
+                        if (pageElement.tagName.toLowerCase() === 'a') {
+                            e.preventDefault();
+                        }
+
+                        const pageNumber = parseInt(pageElement.querySelector('.label')?.textContent || pageElement.textContent);
+                        if (pageNumber) {
+                            goToPage(newPagination, items, pageNumber, finalPerPage, finalTotalPages);
+                        }
+                    } else {
+                        // Handle prev/next (support both buttons and anchors)
+                        const prevElement = e.target.closest('.nds-pagination-prev button, .nds-pagination-prev a');
+                        const nextElement = e.target.closest('.nds-pagination-next button, .nds-pagination-next a');
+                        const currentPage = getCurrentPage(newPagination);
+
+                        if (prevElement) {
+                            e.preventDefault();
+                            if (currentPage > 1) {
+                                goToPage(newPagination, items, currentPage - 1, finalPerPage, finalTotalPages);
+                            }
+                        } else if (nextElement) {
+                            e.preventDefault();
+                            if (currentPage < finalTotalPages) {
+                                goToPage(newPagination, items, currentPage + 1, finalPerPage, finalTotalPages);
+                            }
+                        }
+                    }
+                });
             }
 
-            // Generate pagination HTML
-            const paginationHTML = generatePaginationHTML(totalPages);
-            paginationNav.innerHTML = paginationHTML;
+            // Initial pagination setup
+            updatePagination();
 
-            // Show first page items
-            showPage(items, 1, perPage);
+            // Add ResizeObserver to watch for --per-page changes with debouncing
+            let resizeTimeout;
+            const resizeObserver = new ResizeObserver(() => {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(() => {
+                    const currentPerPage = parseInt(getComputedStyle(contentContainer).getPropertyValue('--per-page')) || 5;
 
-            // Add click handlers
-            const pagination = paginationNav.querySelector('.nds-pagination');
-            pagination.addEventListener('click', (e) => {
-                // Check for page buttons/links (both in pagination list and dropdown menu)
-                const pageElement = e.target.closest('.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) button, .nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) a, .nds-dropmenu-item');
-
-                if (pageElement) {
-                    // Prevent default for anchors in auto-pagination
-                    if (pageElement.tagName.toLowerCase() === 'a') {
-                        e.preventDefault();
+                    // Only update if --per-page actually changed
+                    if (currentPerPage !== lastPerPage) {
+                        lastPerPage = currentPerPage;
+                        updatePagination();
                     }
-
-                    const pageNumber = parseInt(pageElement.querySelector('.label')?.textContent || pageElement.textContent);
-                    if (pageNumber) {
-                        goToPage(pagination, items, pageNumber, perPage, totalPages);
-                    }
-                } else {
-                    // Handle prev/next (support both buttons and anchors)
-                    const prevElement = e.target.closest('.nds-pagination-prev button, .nds-pagination-prev a');
-                    const nextElement = e.target.closest('.nds-pagination-next button, .nds-pagination-next a');
-                    const currentPage = getCurrentPage(pagination);
-
-                    if (prevElement) {
-                        e.preventDefault();
-                        if (currentPage > 1) {
-                            goToPage(pagination, items, currentPage - 1, perPage, totalPages);
-                        }
-                    } else if (nextElement) {
-                        e.preventDefault();
-                        if (currentPage < totalPages) {
-                            goToPage(pagination, items, currentPage + 1, perPage, totalPages);
-                        }
-                    }
-                }
+                }, 150);
             });
 
-            // Initialize pagination component
-            new NDSPagination(paginationNav);
+            resizeObserver.observe(contentContainer);
+
+            // Store observer reference for cleanup if needed
+            paginationNav._autoPaginationObserver = resizeObserver;
 
             paginationNav.setAttribute('data-nds-auto-pagination-initialized', 'true');
         });

@@ -16,6 +16,8 @@
   --_card-border: var(--card-border, var(--border-neutral-primary));
   --_card-border-hover: var(--card-border-hover, var(--colors-primary-sa-flag-600-primary));
   --_card-border-active: var(--card-border-active, var(--border-neutral-primary));
+  --_card-padding: var(--card-padding, var(--spacing-xl));
+  --_card-gap: var(--card-gap, var(--spacing-3xl));
   --_card-text: var(--card-text, var(--text-display));
   --_card-title: var(--card-title, var(--text-display));
   --_card-subtitle: var(--card-subtitle, var(--colors-secondary-gold-800));
@@ -28,10 +30,10 @@
   background-color: var(--_card-bg);
   border: 1px solid transparent;
   border-radius: var(--components-card-radius);
-  padding: var(--spacing-xl);
+  padding: var(--_card-padding);
   display: flex;
   flex-direction: column;
-  gap: var(--card-lg-gap);
+  gap: var(--_card-gap);
   width: var(--card-width, 100%);
   max-width: var(--card-width, 100%);
   position: relative;
@@ -74,14 +76,14 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: var(--card-lg-gap);
+    gap: var(--_card-gap);
     width: 100%;
   }
 
   .nds-card-image {
     width: 100%;
     height: 100%;
-    aspect-ratio: 2 / 1;
+    aspect-ratio: var(--img-ratio, 2 / 1);
     border-radius: var(--radius-md, 8px);
     overflow: clip;
 
@@ -104,8 +106,9 @@
   .nds-card-content {
     display: flex;
     flex-direction: column;
-    gap: var(--card-lg-gap);
+    gap: var(--_card-gap);
     width: 100%;
+    height: 100%;
   }
 
   .nds-card-text {
@@ -152,7 +155,7 @@
   .nds-card-meta {
     display: flex;
     flex-direction: column;
-    gap: var(--card-lg-gap);
+    gap: var(--_card-gap);
     width: 100%;
   }
 
@@ -239,7 +242,7 @@
 .nds-card-form {
   display: flex;
   flex-direction: column;
-  gap: var(--card-lg-gap);
+  gap: var(--_card-gap);
   width: 100%;
 
 }
@@ -401,7 +404,7 @@
   --card-border-active: var(--alpha-white-30);
   --card-text: var(--text-oncolor-primary);
   --card-title: var(--text-oncolor-primary);
-  --card-subtitle: var(--text-oncolor-primary);
+  --card-subtitle: var(--text-secondary);
   --card-number: var(--text-oncolor-primary);
   --icon-bg-color: var(--alpha-white-10);
   --icon-color: var(--featuredicons-icon-oncolor);
@@ -478,11 +481,10 @@
 // ==============================================
 
 @include mobile {
-  .nds-card {
-    max-width: 100%;
-    padding: var(--card-md-padding);
-    gap: var(--card-md-gap);
-  }
+/*   .nds-card {
+    --card-padding: var(--spacing-lg);
+    --card-gap: var(--spacing-2xl);
+  } */
 
   .nds-card-actions {
     flex-direction: column;

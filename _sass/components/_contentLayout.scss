@@ -31,7 +31,7 @@
     &>:has(>.nds-full-width) {
         grid-column: full-width;
 
-        &.nds-section-content{
+        &.nds-section-content {
             width: 100%;
             max-width: var(--nds-content-MaxWidth);
             margin-inline: auto;
@@ -39,7 +39,6 @@
     }
 
     &>.nds-grid {
-        --grid-col: 12;
         grid-column: content-start / content-end;
     }
 
@@ -60,7 +59,8 @@
         }
     }
 
-    &>.nds-section-head {
+    &>.nds-section-head,
+    .nds-grid>.nds-section-head {
         margin-bottom: 0 !important;
     }
 
