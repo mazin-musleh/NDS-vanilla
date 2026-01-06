@@ -20,7 +20,7 @@
 .nds-tabs {
   display: flex;
   flex-direction: column;
-  --button-indicator-size: 3px;
+  --btn-indicator-size: 3px;
 
   /* Vertical Tab Layout */
   &.nds-vertical-tabs {
@@ -32,7 +32,7 @@
       flex-direction: column;
       flex-wrap: nowrap;
       min-width: fit-content;
-      padding-inline-end: var(--button-indicator-size);
+      padding-inline-end: var(--btn-indicator-size);
       position: sticky;
       z-index: 2;
       top: var(--nds-nav-height);
@@ -61,7 +61,7 @@
       .nds-tab-list-container::after {
         inset-inline-end: 0;
         height: 100%;
-        width: var(--button-indicator-size);
+        width: var(--btn-indicator-size);
       }
 
       .nds-tab {
@@ -74,7 +74,7 @@
         }
 
         &:before {
-          margin-inline-end: calc(var(--button-indicator-size) * -1);
+          margin-inline-end: calc(var(--btn-indicator-size) * -1);
           inset-inline-end: 0;
           inset-inline-start: unset;
           margin-bottom: unset;
@@ -100,17 +100,17 @@
       width: 100%;
       background-color: var(--border-neutral-primary);
       display: block;
-      height: var(--button-indicator-size);
+      height: var(--btn-indicator-size);
       z-index: 1;
       border-radius: var(--radius-full);
     }
 
     .nds-tab {
-      margin-bottom: var(--button-indicator-size);
+      margin-bottom: var(--btn-indicator-size);
       border-radius: var(--radius-sm) var(--radius-sm) 0 0;
 
       &:before {
-        margin-bottom: calc(var(--button-indicator-size) * -1);
+        margin-bottom: calc(var(--btn-indicator-size) * -1);
       }
     }
   }
@@ -209,7 +209,7 @@
   &.showMore {
     display: none;
     border-radius: 0;
-    min-width: var(--nds-btn-height);
+    min-width: var(--btn-height);
     /* box-shadow: 4px 0px 0px 4px var(--nds-nav-background-color); */
   }
 

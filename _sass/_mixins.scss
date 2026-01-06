@@ -114,14 +114,12 @@
   $border: var(--form-field-border-default)) {
 
   // Chrome/Edge/Safari
-  &:is(
-    :-webkit-autofill,
+  &:is( :-webkit-autofill,
     :-webkit-autofill:hover,
     :-webkit-autofill:focus,
     :autofill,
     :autofill:hover,
-    :autofill:focus
-  ) {
+    :autofill:focus) {
 
     -webkit-box-shadow: 0 0 0 1000px #{$bg} inset !important;
     box-shadow: 0 0 0 1000px #{$bg} inset !important;
@@ -139,14 +137,12 @@
 
 }
 
-input:is(
-  [type="text"],
+input:is([type="text"],
   [type="email"],
   [type="password"],
   [type="search"],
   [type="tel"],
-  [type="url"]
-),
+  [type="url"]),
 textarea {
   @include autofill-reset();
 }
@@ -157,23 +153,43 @@ textarea {
 
 // Base button structure
 @mixin btn-base {
-  --nds-btn-height: var(--nds-btn-size);
-  --nds-btn-width: unset;
-  --nds-btn-gap: var(--gap,var(--spacing-xs));
+  // Internal custom properties with external fallbacks
+  --_btn-bg: var(--btn-bg, transparent);
+  --_btn-bg-hover: var(--btn-bg-hover, var(--_btn-bg));
+  --_btn-bg-active: var(--btn-bg-active, var(--_btn-bg));
+  --_btn-bg-selected: var(--btn-bg-selected, var(--_btn-bg));
+  --_btn-bg-disabled: var(--btn-bg-disabled, var(--background-disabled));
+  --_btn-color: var(--btn-color, var(--text-default));
+  --_btn-color-hover: var(--btn-color-hover, var(--_btn-color));
+  --_btn-color-disabled: var(--btn-color-disabled, var(--text-default-disabled));
+  --_btn-border: var(--btn-border, transparent);
+  --_btn-border-hover: var(--btn-border-hover, var(--_btn-border));
+  --_btn-border-active: var(--btn-border-active, var(--_btn-border));
+  --_btn-border-selected: var(--btn-border-selected, var(--_btn-border));
+  --_btn-border-disabled: var(--btn-border-disabled, transparent);
+  --_btn-indicator-color: var(--btn-indicator-color, var(--background-neutral-400));
+  --_btn-indicator-selected: var(--btn-indicator-selected, var(--background-neutral-800));
+  --_btn-loading-color: var(--btn-loading-color, var(--text-default));
+  --_btn-loading-track: var(--btn-loading-track, var(--alpha-black-10));
+  --_btn-size: var(--btn-size, 40px);
+  --_btn-height: var(--btn-height, var(--_btn-size));
+  --_btn-width: var(--btn-width, unset);
+  --_btn-gap: var(--btn-gap, var(--spacing-xs));
 
   /* Formula-based sizing */
-  --nds-btn-padding: calc(var(--nds-btn-size) * 0.375 - 3px);
-  --nds-btn-FS: calc(var(--nds-btn-size) * 0.2 + 8px);
-  --nds-button-icon-size: calc(var(--nds-btn-size) / 2);
+  --_btn-padding: calc(var(--_btn-size) * 0.375 - 3px);
+  --_btn-FS: calc(var(--_btn-size) * 0.2 + 8px);
+  --_btn-icon-size: calc(var(--_btn-size) / 2);
 
   /* Indicator size (formula-only) */
-  --button-indicator-size: calc(var(--nds-btn-size) * 0.075);
-  --nds-btn-space: calc(var(--nds-btn-size) - var(--nds-btn-padding) - 4px);
-  --loading-border: max(2px, calc(var(--nds-btn-space) / 12)) !important;
+  --btn-indicator-size: calc(var(--_btn-size) * 0.075);
+  --_btn-space: calc(var(--_btn-size) - var(--_btn-padding) - 4px);
+  --loading-size: var(--_btn-space) !important;
+  --loading-border: max(2px, calc(var(--_btn-space) / 12)) !important;
 
   display: inline-flex;
   align-items: center;
-  gap: var(--nds-btn-gap);
+  gap: var(--_btn-gap);
   border: 1px solid transparent;
   border-radius: var(--radius-sm);
   font-family: 'IBM Plex Sans Arabic', sans-serif;
@@ -189,14 +205,14 @@ textarea {
 
 
   /* Layout */
-  height: var(--nds-btn-height);
-  min-height: var(--nds-btn-height);
-  width: var(--nds-btn-width, fit-content);
+  height: var(--_btn-height);
+  min-height: var(--_btn-height);
+  width: var(--_btn-width, fit-content);
 
-  padding-inline: var(--nds-btn-padding);
-  padding-block: calc(var(--nds-btn-padding) / 2);
+  padding-inline: var(--_btn-padding);
+  padding-block: calc(var(--_btn-padding) / 2);
 
-  font-size: var(--nds-btn-FS);
+  font-size: var(--_btn-FS);
   line-height: 1;
 }
 
@@ -228,7 +244,7 @@ textarea {
 // ==============================================
 
 // Button indicator mixin (tabs, navigation)
-@mixin btn-indicator($position: 'b', $size: var(--button-indicator-size)) {
+@mixin btn-indicator($position: 'b', $size: var(--btn-indicator-size)) {
   &::before {
     content: '';
     position: absolute !important;
@@ -248,7 +264,7 @@ textarea {
       width: $size !important;
       height: calc(100% - var(--spacing-md) * 2);
       transform: translateY(-50%);
-    top: 50%;
+      top: 50%;
     }
   }
 }
@@ -261,16 +277,14 @@ textarea {
     background-color: $hover-color;
   }
 
-  &:is(
-    :active,
+  &:is( :active,
     .selected,
     :focus-visible,
     [aria-selected="true"],
     [data-state="selected"],
     [data-state="active"],
-    [data-state="focused"]
-  )::before,
-  :is(.show, .open, .active) > &::before {
+    [data-state="focused"])::before,
+  :is(.show, .open, .active)>&::before {
     background-color: $selected-color;
   }
 }

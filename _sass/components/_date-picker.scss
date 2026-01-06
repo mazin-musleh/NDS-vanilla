@@ -12,7 +12,7 @@
 
 .nds-date-picker {
     position: relative;
-    --nds-btn-height: 32px;
+    --btn-size: 32px;
 
     // Arrow styling for date picker input (same as select)
     .nds-form-control {
@@ -194,7 +194,7 @@
             font-weight: 400;
             color: var(--text-primary-paragraph);
             padding: var(--spacing-md) var(--spacing-xs);
-            min-width: var(--nds-btn-height);
+            min-width: var(--btn-size);
 
             @include mobile {
                 font-size: var(--nds-text-sm-FS);
@@ -212,8 +212,8 @@
         .date-cell {
 
             border-radius: 50% !important;
-            width: var(--nds-btn-height);
-            height: var(--nds-btn-height);
+            width: var(--btn-size);
+            height: var(--btn-size);
             font-weight: 400;
             padding: 0;
 
@@ -226,8 +226,8 @@
                 content: "";
                 position: absolute;
                 background-color: var(--form-datecell-background-100);
-                width: var(--nds-btn-height);
-                height: var(--nds-btn-height);
+                width: var(--btn-size);
+                height: var(--btn-size);
                 z-index: -1;
             }
 
@@ -326,10 +326,10 @@
                 }
             }
 
-            --nds-btn-height: 40px;
+            --btn-size: 40px;
 
             @include mobile {
-                --nds-btn-height: 32px;
+                --btn-size: 32px;
             }
         }
     }
