@@ -1,0 +1,23 @@
+- src: /assets/img/riyadhcenter3.webp
+  src_small: /assets/img/riyadhcenter3s.webp
+  overlay: 0.7
+  position: center center
+  title: "National Design System"
+  description: "Building consistent digital experiences for Saudi Arabia"
+  url: "#"
+
+- src: /assets/img/riyadhcenter3.webp
+  src_small: /assets/img/riyadhcenter3s.webp
+  overlay: 0.7
+  position: center center
+  title: "Design with Confidence"
+  description: "Comprehensive components and guidelines for government services"
+  url: "#"
+
+- src: /assets/img/riyadhcenter3.webp
+  src_small: /assets/img/riyadhcenter3s.webp
+  overlay: 0.7
+  position: center center
+  title: "Accessible by Design"
+  description: "Meet WCAG standards with built-in accessibility features"
+  url: "#"

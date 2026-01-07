@@ -1,11 +1,23 @@
 ---
 layout: home
 title: "National Design System for Saudi Arabia"
-hero_title: "National Design System for Saudi Arabia"
-hero_description: "A comprehensive design system empowering consistent, accessible, and high-performance digital
-government experiences across the Kingdom."
-#hero_image: /assets/img/riyadhcenter.webp
-hero_image_pos: 50% 10%
+
+# Hero sliders configuration (3 options):
+#
+# Option 1: Use default data file (set in _config.yml: herosliders: herosliders)
+# No configuration needed - just comment out or remove herosliders below
+#
+# Option 2: Use a different data file from _data/ folder
+# herosliders: herosliders-components  # loads _data/herosliders-components.yml
+#
+# Option 3: Define custom slides directly in page front matter
+# hero_sliders:
+#   - src: /assets/img/custom-hero.webp
+#     overlay: 0.7
+#     title: "Custom Title"
+#     description: "Custom description"
+#     url: "#"
+
 lang: en
 direction: ltr
 ---

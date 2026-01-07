@@ -57,6 +57,9 @@ sidemenu: sidemenu
 footer: footer
 footerlogos: footerlogos
 
+# Default hero sliders data file
+herosliders: herosliders
+
 
 # Plugins
 plugins: []

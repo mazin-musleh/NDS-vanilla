@@ -297,6 +297,7 @@
 
     &.opened.show .nds-dropdown-menu {
         overflow: unset;
+        padding-bottom: unset !important;
 
         .nds-dropdown-content {
             overflow-y: auto;
@@ -704,6 +705,7 @@ body.minimal .nds-main-nav {
         .nds-dropdown.show .nds-dropdown-menu {
             grid-template-rows: 1fr;
         }
+
         .nds-dropdown.closing .nds-dropdown-menu {
             grid-template-rows: 0fr;
         }

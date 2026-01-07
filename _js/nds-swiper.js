@@ -63,7 +63,7 @@
             let initial = min;
             if (width >= 1280) {
                 initial = max;
-            } else if (width >= 960) {
+            } else if (width > 600) {
                 initial = mid;
             }
 
@@ -74,6 +74,10 @@
 
         init() {
             this.updateSlidesPerView();
+
+            // Set total slides count as CSS custom property
+            this.container.style.setProperty('--total', this.slides.length);
+
             this.setupNavigation();
             this.setupPagination();
             this.setupScrollSync();
@@ -81,6 +85,7 @@
             this.setupResize();
             this.setupLazyLoading();
             this.setupContentObserver();
+            this.setupVisibilityObserver();
             this.updateState();
             this.updatePeekStyles();
 
@@ -105,6 +110,36 @@
             setTimeout(() => observer.disconnect(), 500);
         }
 
+        setupVisibilityObserver() {
+            // Track if peek styles have been applied after becoming visible
+            this.peekStylesApplied = false;
+
+            // Use IntersectionObserver to detect when swiper becomes visible
+            // This handles tabs, modals, accordions, and any hidden container
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting && entry.intersectionRatio > 0) {
+                        // Only apply once until window resize
+                        if (!this.peekStylesApplied) {
+                            setTimeout(() => {
+                                this.updatePeekStyles();
+                                this.updateState();
+                                this.peekStylesApplied = true;
+                            }, 50);
+                        }
+                    }
+                });
+            }, {
+                root: null, // viewport
+                threshold: 0.01 // trigger when at least 1% is visible
+            });
+
+            observer.observe(this.container);
+
+            // Store observer for cleanup if needed
+            this.visibilityObserver = observer;
+        }
+
 
         // ==============================================
         // RESPONSIVE SLIDES PER VIEW
@@ -120,7 +155,7 @@
             let newSlidesPerView = min;
             if (width >= 1280) {
                 newSlidesPerView = max;
-            } else if (width >= 960) {
+            } else if (width > 600) {
                 newSlidesPerView = mid;
             }
 
@@ -196,6 +231,9 @@
 
                 // Update peek styles and full-width class on resize
                 this.updatePeekStyles();
+
+                // Reset visibility flag to allow update on next visibility
+                this.peekStylesApplied = false;
             }, 150);
 
             window.addEventListener('resize', this.resizeHandler);
