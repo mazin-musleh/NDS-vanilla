@@ -52,57 +52,55 @@
     </div>
 </section>
 {% else %}
+{% comment %}
+    Determine hero sliders source:
+    1. Use page.hero_sliders if custom slides defined in page front matter
+    2. Use page.herosliders to specify which data file to load (e.g., "herosliders-about")
+    3. Fall back to site.herosliders config (default: "herosliders")
+    4. Load from site.data[hero_file_name]
+{% endcomment %}
+{% if page.hero_sliders %}
+    {% assign hero_sliders = page.hero_sliders %}
+{% else %}
+    {% assign hero_file_name = page.herosliders | default: site.herosliders | default: "herosliders" %}
+    {% assign hero_sliders = site.data[hero_file_name] %}
+{% endif %}
+
 <section class="nds-hero-section" aria-label="قسم العرض الرئيسي">
-    <div class="nds-swiper nds-heroSwiper nds-hero">
+    <div class="nds-swiper nds-heroSwiper nds-hero" style="--total: {{ hero_sliders | size }}">
         <div class="nds-swiper-wrapper">
+            {% for slide in hero_sliders %}
             <div class="nds-swiper-slide">
                 <div class="nds-hero-image-wrapper"
-                    style="--overlay:0.7; position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
-                    <img src="{{ page.hero_image_small | default: site.hero_image_small | relative_url }}"
-                        srcset="{{ page.hero_image_small | default: site.hero_image_small | relative_url }} 600w, {{ page.hero_image | default: site.hero_image | relative_url }} 1200w"
+                    style="--overlay:{{ slide.overlay | default: 0.7 }}; position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                    {% if forloop.first %}
+                    <img src="{{ slide.src_small | default: slide.src | relative_url }}"
+                        srcset="{{ slide.src_small | default: slide.src | relative_url }} 600w, {{ slide.src | relative_url }} 1200w"
                         sizes="100vw"
                         class="nds-hero-image"
                         alt=""
-                        style="width: 100%; height: 100%; object-fit: cover; object-position: {{ page.hero_image_pos | default: site.hero_image_pos }}; display: block;"
+                        style="width: 100%; height: 100%; object-fit: cover; object-position: {{ slide.position | default: 'center center' }}; display: block;"
                         fetchpriority="high">
-                </div>
-                <div class="nds-heroContent nds-content-container" style="position: relative; z-index: 3;">
-                    <h1 class="nds-heroTitle">{{ page.hero_title | default: site.hero_title }}</h1>
-                    <p class="nds-heroDesc">{{ page.hero_description | default: site.hero_description }}</p>
-                </div>
-            </div>
-            <div class="nds-swiper-slide">
-                <div class="nds-hero-image-wrapper"
-                    style="--overlay:0.7; position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
-                    <img src="{{ page.hero_image_small | default: site.hero_image_small | relative_url }}"
-                        srcset="{{ page.hero_image_small | default: site.hero_image_small | relative_url }} 600w, {{ page.hero_image | default: site.hero_image | relative_url }} 1200w"
+                    {% else %}
+                    <img data-src="{{ slide.src_small | default: slide.src | relative_url }}"
+                        data-srcset="{{ slide.src_small | default: slide.src | relative_url }} 600w, {{ slide.src | relative_url }} 1200w"
                         sizes="100vw"
-                        class="nds-hero-image"
+                        class="nds-hero-image nds-swiper-lazy"
                         alt=""
-                        style="width: 100%; height: 100%; object-fit: cover; object-position: {{ page.hero_image_pos | default: site.hero_image_pos }}; display: block;"
-                        fetchpriority="high">
+                        style="width: 100%; height: 100%; object-fit: cover; object-position: {{ slide.position | default: 'center center' }}; display: block;">
+                    {% endif %}
                 </div>
                 <div class="nds-heroContent nds-content-container" style="position: relative; z-index: 3;">
-                    <h1 class="nds-heroTitle">{{ page.hero_title | default: site.hero_title }}</h1>
-                    <p class="nds-heroDesc">{{ page.hero_description | default: site.hero_description }}</p>
+                    <h1 class="nds-heroTitle">{{ slide.title }}</h1>
+                    <p class="nds-heroDesc">{{ slide.description }}</p>
+                    {% if slide.url and slide.url != '#' %}
+                    <a href="{{ slide.url | relative_url }}" class="nds-btn nds-primary nds-oncolor nds-lg">
+                        <span class="label">Learn More</span>
+                    </a>
+                    {% endif %}
                 </div>
             </div>
-            <div class="nds-swiper-slide">
-                <div class="nds-hero-image-wrapper"
-                    style="--overlay:0.7; position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
-                    <img src="{{ page.hero_image_small | default: site.hero_image_small | relative_url }}"
-                        srcset="{{ page.hero_image_small | default: site.hero_image_small | relative_url }} 600w, {{ page.hero_image | default: site.hero_image | relative_url }} 1200w"
-                        sizes="100vw"
-                        class="nds-hero-image"
-                        alt=""
-                        style="width: 100%; height: 100%; object-fit: cover; object-position: {{ page.hero_image_pos | default: site.hero_image_pos }}; display: block;"
-                        fetchpriority="high">
-                </div>
-                <div class="nds-heroContent nds-content-container" style="position: relative; z-index: 3;">
-                    <h1 class="nds-heroTitle">{{ page.hero_title | default: site.hero_title }}</h1>
-                    <p class="nds-heroDesc">{{ page.hero_description | default: site.hero_description }}</p>
-                </div>
-            </div>
+            {% endfor %}
         </div>
         <div class="nds-swiper-pagination"></div>
         <button class="nds-btn nds-subtle nds-oncolor nds-icon-only nds-swiper-button-prev"
