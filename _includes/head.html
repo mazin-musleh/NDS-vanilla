@@ -294,15 +294,15 @@
 
     <!-- Preload primary text fonts (limit to above-the-fold weights) -->
     <link rel="preload" as="font" type="font/woff2"
-        href="{{ '/assets/fonts/IBMPlexSansArabic-Regular.woff2' | relative_url }}" crossorigin>
+        href="{{ 'assets/fonts/IBMPlexSansArabic-Regular.woff2' | relative_url }}" crossorigin>
     <link rel="preload" as="font" type="font/woff2"
-        href="{{ '/assets/fonts/IBMPlexSansArabic-Bold.woff2' | relative_url }}" crossorigin>
+        href="{{ 'assets/fonts/IBMPlexSansArabic-Bold.woff2' | relative_url }}" crossorigin>
 
     <!-- Load CSS files -->
-    <link rel="preload" href="{{ '/assets/css/nds-main.min.css' | relative_url }}?ver=1.052" as="style"
+    <link rel="preload" href="{{ 'assets/css/nds-main.min.css' | relative_url }}?ver=1.052" as="style"
         onload="this.onload=null;this.rel='stylesheet'" fetchpriority="high">
     <noscript>
-        <link rel="stylesheet" href="{{ '/assets/css/nds-main.min.css' | relative_url }}">
+        <link rel="stylesheet" href="{{ 'assets/css/nds-main.min.css' | relative_url }}">
     </noscript>
 
     <!-- Preload critical resources -->
@@ -314,13 +314,13 @@
 
     <!-- Preload icon CSS (loads icon font via CSS) -->
 
-    <link rel="preload" href="{{ '/assets/css/hgi-rounded-stroke-solid-min.css?ver=1.001' | relative_url }}" as="style"
+    <link rel="preload" href="{{ 'assets/css/hgi-rounded-stroke-solid-min.css?ver=1.001' | relative_url }}" as="style"
         onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
-        <link rel="stylesheet" href="{{ '/assets/css/hgi-rounded-stroke-solid-min.css' | relative_url }}">
+        <link rel="stylesheet" href="{{ 'assets/css/hgi-rounded-stroke-solid-min.css' | relative_url }}">
     </noscript>
 
-    <link rel="icon" type="image/svg+xml" href="{{ '/assets/img/favicon.svg' | relative_url }}">
+    <link rel="icon" type="image/svg+xml" href="{{ 'assets/img/favicon.svg' | relative_url }}">
 
     <!-- Custom page-specific CSS files with deferred loading -->
     {% if page.custom_css %}

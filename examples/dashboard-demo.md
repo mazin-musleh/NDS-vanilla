@@ -1,7 +1,7 @@
 ---
 layout: dashboard
 body_class: fullWidth
-layout_class: cardView nds-content-container toEdge
+layout_class: nds-content-container toEdge
 title: Dashboard Demo
 hero_title: Operations Dashboard Demo
 hero_description: A sample operations dashboard showcasing National Design System components working together.

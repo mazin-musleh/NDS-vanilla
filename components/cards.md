@@ -206,7 +206,7 @@ direction: ltr
                                     </div>
                                     <!-- Card Image -->
                                     <div class="nds-card-image" style="--img-pos-x:50%; --img-pos-y:10%;">
-                                        <img src="{{ '/assets/img/riyadhcenter.webp' | relative_url }}"
+                                        <img src="{{ 'assets/img/riyadhcenter.webp' | relative_url }}"
                                             alt="Technology Product">
                                     </div>
                                 </div>
@@ -288,7 +288,7 @@ direction: ltr
                                                 </div>
                                                 <!-- Card Image -->
                                                 <div class="nds-card-image" style="--img-pos-x:50%; --img-pos-y:10%;">
-                                                    <img src="{{ '/assets/img/riyadhcenter.webp' | relative_url }}"
+                                                    <img src="{{ 'assets/img/riyadhcenter.webp' | relative_url }}"
                                                         alt="Technology Product">
                                                 </div>
                                             </div>
