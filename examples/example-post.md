@@ -4,7 +4,7 @@ title: "National Design System Launch Event"
 hero_title: "National Design System Launch Event"
 hero_description: "Celebrating the official launch of Saudi Arabia's comprehensive design system for government digital
 services"
-hero_image: /assets/img/riyadhcenter.webp
+hero_image: assets/img/riyadhcenter.webp
 hero_image_pos: 50% 30%
 hero_style: "flat"
 date: 2025-01-15
@@ -74,15 +74,15 @@ breadcrumb: ["Examples"]
                 <p>Highlights from the launch ceremony:</p>
                 <div class="nds-cards-group" style="--max-col: 3; --min-col: 1;">
                     <div class="nds-card nds-ipv-image-card showZoom">
-                        <img src="{{ './assets/img/riyadhcenter.webp' | relative_url }}" alt="Launch ceremony venue"
+                        <img src="{{ '.assets/img/riyadhcenter.webp' | relative_url }}" alt="Launch ceremony venue"
                             class="nds-ipv-thumbnail">
                     </div>
                     <div class="nds-card nds-ipv-image-card showZoom">
-                        <img src="{{ './assets/img/riyadhcenter.webp' | relative_url }}" alt="Attendees"
+                        <img src="{{ '.assets/img/riyadhcenter.webp' | relative_url }}" alt="Attendees"
                             class="nds-ipv-thumbnail">
                     </div>
                     <div class="nds-card nds-ipv-image-card showZoom">
-                        <img src="{{ './assets/img/riyadhcenter.webp' | relative_url }}" alt="Design system showcase"
+                        <img src="{{ '.assets/img/riyadhcenter.webp' | relative_url }}" alt="Design system showcase"
                             class="nds-ipv-thumbnail">
                     </div>
                 </div>

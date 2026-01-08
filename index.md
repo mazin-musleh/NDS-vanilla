@@ -8,15 +8,15 @@ title: "National Design System for Saudi Arabia"
 # No configuration needed - just comment out or remove herosliders below
 #
 # Option 2: Use a different data file from _data/ folder
-# herosliders: herosliders-components  # loads _data/herosliders-components.yml
+# herosliders: herosliders-components # loads _data/herosliders-components.yml
 #
 # Option 3: Define custom slides directly in page front matter
 # hero_sliders:
-#   - src: /assets/img/custom-hero.webp
-#     overlay: 0.7
-#     title: "Custom Title"
-#     description: "Custom description"
-#     url: "#"
+# - src: assets/img/custom-hero.webp
+# overlay: 0.7
+# title: "Custom Title"
+# description: "Custom description"
+# url: "#"
 
 lang: en
 direction: ltr
@@ -225,8 +225,8 @@ direction: ltr
         </div>
         <div class="nds-section-content">
             <div class="map-wrap">
-                <div class="nds-worldmap" data-map-src="{{ '/assets/img/world-map.min.svg' | relative_url }}"
-                    data-meta-url="{{ '/assets/js/graduates-map.json' | relative_url }}">
+                <div class="nds-worldmap" data-map-src="{{ 'assets/img/world-map.min.svg' | relative_url }}"
+                    data-meta-url="{{ 'assets/js/graduates-map.json' | relative_url }}">
                     <div id="mapTip" class="map-tip" role="status" aria-live="polite" hidden>
                         <span class="textIcon"><i class="hgi hgi-stroke hgi-location-03"></i><strong
                                 data-tip="name"></strong></span>
@@ -485,7 +485,7 @@ direction: ltr
             const modalButton = document.querySelector('[data-modal-target="modal-graduates"]');
             const tableBody = document.getElementById('graduates-table-body');
             const graduatesTable = document.getElementById('graduates-table');
-            const metaUrl = "{{ '/assets/js/graduates-map.json' | relative_url }}";
+            const metaUrl = "{{ 'assets/js/graduates-map.json' | relative_url }}";
             let isTablePopulated = false;
 
             if (!modalButton || !tableBody || !graduatesTable) return;

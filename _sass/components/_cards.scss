@@ -232,6 +232,16 @@
     width: 100%;
     margin-top: auto;
     flex-direction: row;
+
+    &.nds-end {
+      justify-content: flex-end;
+    }
+
+    @include ltr {
+      .hgi-arrow-left-02 {
+        transform: scale(-1);
+      }
+    }
   }
 }
 
@@ -481,7 +491,7 @@
 // ==============================================
 
 @include mobile {
-/*   .nds-card {
+  /*   .nds-card {
     --card-padding: var(--spacing-lg);
     --card-gap: var(--spacing-2xl);
   } */

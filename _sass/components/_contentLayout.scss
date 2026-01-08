@@ -148,7 +148,11 @@ main {
     width: 100%;
     min-width: 300px;
     height: fit-content;
-    padding: var(--spacing-4xl) 0;
+    padding: var(--spacing-7xl) 0;
+
+    @include mobile {
+        padding: var(--spacing-5xl) 0;
+    }
 }
 
 .contentLayout.wSideMenu .mainContent {
@@ -249,7 +253,7 @@ main {
     // Without side menu - always reset
     &:not(.wSideMenu, .cardView) .mainContent {
 
-        .nds-content-section:nth-of-type(odd) {
+        .nds-content-section:nth-of-type(even) {
             @include reset-section-style;
         }
 
@@ -258,7 +262,7 @@ main {
     // With side menu - reset only on tablet and below
     &:not(.cardView).wSideMenu .mainContent {
         @include tablet(max) {
-            .nds-content-section:nth-of-type(odd) {
+            .nds-content-section:nth-of-type(even) {
                 @include reset-section-style;
             }
         }
