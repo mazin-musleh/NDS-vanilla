@@ -15,13 +15,12 @@
     background-color: var(--background-white);
     box-shadow: var(--shadow-md);
     padding: var(--spacing-md);
-    border-radius: var(--radius-md);
     min-height: fit-content;
     z-index: 2;
 }
 
-.contentLayout.toEdge .nds-sideMenu {
-    border-radius: 0 !important;
+.contentLayout.cardView .nds-sideMenu {
+    border-radius: var(--radius-md);
 }
 
 #sideMenuToggle {

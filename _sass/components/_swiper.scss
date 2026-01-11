@@ -13,7 +13,7 @@
     // --swiper-slides set by JavaScript in constructor to prevent CLS
     --swiper-total: var(--total, 1);
     --swiper-slides: var(--slides, 1);
-    --swiper-gap: var(--gap, var(--spacing-md));
+    --swiper-gap: var(--gap, var(--spacing-xl));
     --swiper-peek: var(--peek, 0px);
     --swiper-padding: var(--padding, 0px);
 
@@ -37,12 +37,12 @@
 // ==============================================
 
 .nds-swiper-wrapper {
-    /* display: flex; */
+    display: flex;
     width: 100%;
     height: 100%;
 
-    display: grid;
-    grid-template-columns: repeat(var(--swiper-total), calc((100% - var(--swiper-peek, 0px) - (var(--swiper-gap, 0px) * (var(--swiper-slides, 1) - 1))) / var(--swiper-slides, 1)));
+    //display: grid;
+    //grid-template-columns: repeat(var(--swiper-total), calc((100% - var(--swiper-peek, 0px) - (var(--swiper-gap, 0px) * (var(--swiper-slides, 1) - 1))) / var(--swiper-slides, 1)));
     // Gap between slides (replaces padding-inline on each slide)
     gap: var(--swiper-gap);
 
@@ -88,7 +88,7 @@
     // Slide width formula:
     // Available = 100% - (padding × 2) - peek
     // Slide = (Available - (gap × (slides - 1))) / slides
-    /* flex: 0 0 calc((100% - var(--swiper-peek) - (var(--swiper-gap) * (var(--swiper-slides, 1) - 1))) / var(--swiper-slides, 1)); */
+     flex: 0 0 calc((100% - var(--swiper-peek) - (var(--swiper-gap) * (var(--swiper-slides, 1) - 1))) / var(--swiper-slides, 1));
     min-width: 0;
     height: auto;
     position: relative;
@@ -120,11 +120,11 @@
         padding-inline-end: var(--nds-viewport-padding);
     } */
 
-    &:first-child {
+    .nds-swiper:not(.nds-hero) &:first-child {
         padding-inline-start: 2px;
     }
 
-    &:last-child {
+    .nds-swiper:not(.nds-hero)  &:last-child {
         padding-inline-end: 2px;
     }
 
@@ -259,6 +259,10 @@
 .nds-swiper.nds-oncolor,
 .nds-swiper.nds-hero,
 .nds-oncolor {
+    .nds-section-title,
+    .nds-section-description{
+        color: var(--text-oncolor-primary, #fff);
+    }
     .nds-swiper-pagination-bullet {
         background-color: var(--swiper-pagination-bullet-oncolor-default);
         border-color: rgba(255, 255, 255, 0.3);

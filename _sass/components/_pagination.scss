@@ -81,13 +81,11 @@
 // NAVIGATION BUTTONS (Previous/Next)
 // ==============================================
 
-.nds-pagination:is(.nds-pagination-prev, .nds-pagination-next) {
+.nds-pagination-item:is(.nds-pagination-prev, .nds-pagination-next) {
   .nds-btn {
 
     // Icons for prev/next
     i {
-      font-size: var(--nds-text-lg-FS);
-
       @include ltr {
         transform: scale(-1);
       }

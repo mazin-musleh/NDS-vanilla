@@ -18,25 +18,26 @@
   // HERO CONTENT CONTAINER
   // ==============================================
 
-  .nds-heroContent {
+  .nds-section-content {
     height: 100%;
+    width: 100%;
     display: flex;
     align-items: flex-start;
     flex-direction: column;
     justify-content: center;
-    color: var(--text-oncolor-primary, #fff);
+    max-width: var(--nds-content-MaxWidth);
+    margin: auto;
 
     // ==============================================
     // HERO TITLE
     // ==============================================
 
-    .nds-heroTitle {
+    .nds-section-title {
       font-size: var(--nds-display-clamp-lg-FS, 48px);
       line-height: var(--nds-display-clamp-lg-LH, 60px);
       margin-bottom: var(--nds-display-clamp-lg-MB, 15px);
       letter-spacing: -0.02rem;
       font-weight: 700;
-      color: #fff;
       position: relative;
     }
 
@@ -44,7 +45,7 @@
     // HERO DESCRIPTION
     // ==============================================
 
-    .nds-heroDesc {
+    .nds-section-description {
       font-size: var(--nds-text-clamp-xl-FS, 20px);
       line-height: var(--nds-text-clamp-xl-LH, 28px);
       max-width: var(--maxwidth-paragraph-max-width, 720px);
@@ -59,7 +60,7 @@
       width: 100%;
       position: relative;
 
-      .nds-heroTitle {
+      .nds-section-title {
         width: calc(100% - 160px);
 
         @include tablet(max) {
@@ -81,17 +82,15 @@
   // ==============================================
 
   &.sub {
-    .nds-heroContent {
-      color: var(--text-default, #161616);
+    .nds-section-content {
 
-      .nds-heroTitle {
+      .nds-section-title {
         font-size: var(--nds-display-clamp-md-FS, 30px);
         line-height: var(--nds-display-clamp-md-LH, 38px);
         margin-bottom: var(--nds-display-clamp-md-MB, 9.5px);
-        color: var(--text-display, #1f2a37);
       }
 
-      .nds-heroDesc {
+      .nds-section-description {
         font-size: var(--nds-text-clamp-xl-FS, 20px);
         line-height: var(--nds-text-clamp-xl-LH, 28px);
       }
@@ -99,8 +98,8 @@
   }
 
   &.sub.flat {
-    .nds-heroContent {
-      .nds-heroDesc {
+    .nds-section-content {
+      .nds-section-description {
         color: var(--text-primary-paragraph);
       }
     }

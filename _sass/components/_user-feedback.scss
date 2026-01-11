@@ -1,0 +1,167 @@
+@use '../mixins' as *;
+
+.nds-user-feedback {
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4xl);
+
+    // ==============================================
+    // COMPONENT STATES - Default visibility
+    // ==============================================
+
+    // Hidden by default
+    .nds-user-feedback-success,
+    .nds-user-feedback-close,
+    .nds-user-feedback-details,
+    .nds-user-feedback-submit {
+        display: none;
+    }
+
+    // Visible by default
+    .nds-user-feedback-question,
+    .nds-user-feedback-answer-btn,
+    .nds-user-feedback-status {
+        display: flex;
+    }
+
+    // ==============================================
+    // STATE: Details (when Yes/No clicked)
+    // ==============================================
+
+    &[data-status="details"] {
+        .nds-user-feedback-details {
+            display: flex;
+        }
+
+        .nds-user-feedback-submit {
+            display: flex;
+        }
+
+        .nds-user-feedback-close {
+            display: block;
+        }
+
+        .nds-user-feedback-status {
+            display: none;
+        }
+
+        // Hide both fieldsets by default in details state
+        .why-yes,
+        .why-no {
+            display: none;
+        }
+
+        // Show yes reasons when answered yes
+        &[data-answer="yes"] .why-yes {
+            display: flex;
+        }
+
+        // Show no reasons when answered no
+        &[data-answer="no"] .why-no {
+            display: flex;
+        }
+    }
+
+    // ==============================================
+    // STATE: Success (after submit)
+    // ==============================================
+
+    &[data-status="success"] {
+        .nds-user-feedback-question,
+        .nds-user-feedback-answer-btn,
+        .nds-user-feedback-details,
+        .nds-user-feedback-submit,
+        .nds-user-feedback-close {
+            display: none;
+        }
+
+        .nds-user-feedback-success,
+        .nds-user-feedback-status {
+            display: flex;
+        }
+    }
+
+    // ==============================================
+    // COMPONENT STRUCTURE STYLES
+    // ==============================================
+
+    .nds-user-feedback-overview {
+        display: flex;
+        gap: var(--spacing-xl);
+        align-items: center;
+
+        @include mobile {
+            flex-direction: column;
+            align-items: start;
+        }
+
+        .nds-user-feedback-answer-btn {
+            gap: var(--spacing-lg);
+            flex-wrap: nowrap;
+            flex: 1;
+        }
+
+        .nds-user-feedback-status {
+            font-size: var(--nds-text-sm-FS);
+        }
+
+    }
+
+    .nds-user-feedback-details {
+        gap: var(--spacing-4xl);
+
+        @include mobile {
+            flex-direction: column;
+            align-items: start;
+        }
+
+        .nds-user-feedback-options {
+            flex: 1 0 60%;
+            display: flex;
+            gap: var(--spacing-4xl);
+            flex-direction: column;
+        }
+
+        .nds-user-feedback-comment {
+            flex: 1 1 40%;
+            width: 100%;
+        }
+
+    }
+
+    .nds-user-feedback-submit {
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--spacing-4xl);
+
+        @include mobile {
+            flex-direction: column;
+            align-items: start;
+        }
+
+        .nds-user-feedback-agreement {
+            font-size: var(--nds-text-sm-FS);
+            line-height: var(--nds-text-sm-LH);
+            color: var(--text-primary-default);
+
+            a {
+                color: var(--colors-primary-sa-flag-600-primary);
+                text-decoration: underline;
+
+                &:hover {
+                    color: var(--colors-primary-sa-flag-700);
+                }
+            }
+        }
+
+        .nds-user-feedback-submit-btn {
+            flex-shrink: 0;
+        }
+    }
+}
+
+.nds-user-feedback-section {
+    border-top: 2px solid var(--border-primary) !important;
+    background: var(--background-white);
+}

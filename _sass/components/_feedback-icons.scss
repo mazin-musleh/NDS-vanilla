@@ -12,23 +12,25 @@
 
 .nds-feedback-icon {
   // Private custom properties with public override capability
-  --_bg: var(--feedback-bg, var(--icon-neutral));
-  --_color: var(--feedback-color, var(--icon-neutral));
-  --_ring: var(--feedback-ring, var(--icon-neutral-ring));
+  --_feedback-bg: var(--feedback-bg, var(--icon-neutral));
+  --_feedback-color: var(--feedback-color, var(--icon-neutral));
+  --_feedback-ring: var(--feedback-ring, var(--icon-neutral-ring));
+  --_feedback-size: var(--feedback-size, 24px);
+
 
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
   position: relative;
-  width: var(--nds-icon-size);
-  height: var(--nds-icon-size);
-  font-size: calc(var(--nds-icon-size) / 1);
+  width: var(--_feedback-size);
+  height: var(--_feedback-size);
+  font-size: calc(var(--_feedback-size) / 1);
   padding: 0;
-  line-height: calc(var(--nds-icon-size) / 1);
+  line-height: calc(var(--_feedback-size) / 1);
   border: unset;
-  background-color: var(--_bg);
-  color: var(--_color);
+  background-color: var(--_feedback-bg);
+  color: var(--_feedback-color);
 
   body.hgi-loaded & i {
     position: relative;
@@ -38,8 +40,8 @@
       content: '';
       position: absolute;
       display: block;
-      width: calc(var(--nds-icon-size) / 2);
-      height: calc(var(--nds-icon-size) / 2);
+      width: calc(var(--_feedback-size) / 2);
+      height: calc(var(--_feedback-size) / 2);
       background-color: var(--icon-oncolor);
       top: 50%;
       z-index: -1;
@@ -52,17 +54,17 @@
   // FEEDBACK ICON SIZES
   // ==============================================
 
-  &.nds-md,
-  & {
-    --nds-icon-size: 24px;
-  }
 
   &.nds-sm {
-    --nds-icon-size: 16px;
+    --feedback-size: 16px;
+  }
+
+  &.nds-md {
+    --feedback-size: 24px;
   }
 
   &.nds-lg {
-    --nds-icon-size: 32px;
+    --feedback-size: 32px;
   }
 
   // ==============================================
@@ -76,7 +78,7 @@
     --feedback-ring: var(--icon-success-ring);
 
     &.nds-ring {
-      box-shadow: 0 0 0px 4px var(--_ring);
+      box-shadow: 0 0 0px 4px var(--_feedback-ring);
     }
 
     .icon:before {
@@ -91,7 +93,7 @@
     --feedback-ring: var(--icon-info-ring);
 
     &.nds-ring {
-      box-shadow: 0 0 0px 4px var(--_ring);
+      box-shadow: 0 0 0px 4px var(--_feedback-ring);
     }
 
     .icon:before {
@@ -106,7 +108,7 @@
     --feedback-ring: var(--icon-neutral-ring);
 
     &.nds-ring {
-      box-shadow: 0 0 0px 4px var(--_ring);
+      box-shadow: 0 0 0px 4px var(--_feedback-ring);
     }
 
     .icon:before {
@@ -121,7 +123,7 @@
     --feedback-ring: var(--icon-warning-ring);
 
     &.nds-ring {
-      box-shadow: 0 0 0px 4px var(--_ring);
+      box-shadow: 0 0 0px 4px var(--_feedback-ring);
     }
 
     .icon:before {
@@ -136,7 +138,7 @@
     --feedback-ring: var(--icon-error-ring);
 
     &.nds-ring {
-      box-shadow: 0 0 0px 4px var(--_ring);
+      box-shadow: 0 0 0px 4px var(--_feedback-ring);
     }
 
     .icon:before {
@@ -198,30 +200,50 @@
 // ==============================================
 
 .nds-feedback {
-  --_text: var(--feedback-text, inherit);
+  --_feedback-text: var(--feedback-text, inherit);
+  --_feedback-fs: var(--feedback-fs, --nds-text-sm-FS);
+  --_feedback-lh: var(--feedback-fs, --nds-text-sm-LH);
+
+  &.nds-sm {
+    --feedback-size: 16px;
+    --feedback-fs: var(--nds-text-sm-FS);
+    --feedback-lh: var(--nds-text-sm-LH);
+  }
+
+  &.nds-md{
+    --feedback-size: 24px;
+    --feedback-fs: var(--nds-text-md-FS);
+    --feedback-lh: var(--nds-text-md-LH);
+  }
+
+  &.nds-lg {
+    --feedback-size: 32px;
+    --feedback-fs: var(--nds-text-lg-FS);
+    --feedback-lh: var(--nds-text-lg-LH);
+  }
 
   display: flex;
   align-items: center;
-  font-size: var(--nds-text-sm-FS);
-  line-height: var(--nds-text-sm-LH);
+  font-size: var(--_feedback-fs);
+  line-height: var(--_feedback-lh);
   font-weight: 500;
   gap: var(--spacing-sm);
-  color: var(--_text);
+  color: var(--_feedback-text);
 
   &:is(.nds-error, .error) {
-    --feedback-text: var(--controls-control-text-error);
+    --feedback-text: var(--text-error);
   }
 
   &:is(.nds-success, .success) {
-    --feedback-text: var(--controls-control-text-success, #16a34a);
+    --feedback-text: var(--text-success);
   }
 
   &:is(.nds-warning, .warning) {
-    --feedback-text: var(--controls-control-text-warning, #f59e0b);
+    --feedback-text: var(--text-warning);
   }
 
   &:is(.nds-info, .info) {
-    --feedback-text: var(--controls-control-text-info, #3b82f6);
+    --feedback-text: var(--text-info);
   }
 
   .nds-feedback-icon {

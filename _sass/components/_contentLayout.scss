@@ -8,6 +8,7 @@
    ======================================== */
 
 .nds-content-grid,
+.nds-hero-section,
 .nds-content-section {
     --nds-breakout-max-width: calc(var(--nds-content-MaxWidth) + var(--nds-viewport-padding));
     --nds-breakout-size: calc((var(--nds-breakout-max-width) - var(--nds-content-MaxWidth)) / 2);
@@ -15,10 +16,16 @@
     display: grid !important;
     row-gap: var(--gap, var(--spacing-2xl));
     grid-template-columns:
-        [full-width-start] minmax(var(--nds-viewport-padding), 1fr) [breakout-start] minmax(0, var(--nds-breakout-size)) [content-start] min(100% - (var(--nds-viewport-padding) * 2),
-            var(--nds-content-MaxWidth)) [content-end] minmax(0, var(--nds-breakout-size)) [breakout-end] minmax(var(--nds-viewport-padding), 1fr) [full-width-end];
+        [full-width-start] minmax(var(--nds-viewport-padding), 1fr)
+        [breakout-start] minmax(0, var(--nds-breakout-size))
+        [content-start] min(
+            100% - (var(--nds-viewport-padding) * 2),
+            var(--nds-content-MaxWidth)
+        )
+        [content-end] minmax(0, var(--nds-breakout-size))
+        [breakout-end] minmax(var(--nds-viewport-padding), 1fr)
+        [full-width-end];
 
-    &> :not(.nds-breakout, .nds-full-width),
     &> :not(.nds-breakout, .nds-full-width) {
         grid-column: content;
     }
@@ -41,9 +48,6 @@
     &>.nds-grid {
         grid-column: content-start / content-end;
     }
-
-
-
     @include desktop(min) {
         &.nds-horizontal>.nds-section-wrapper {
             display: grid;
@@ -63,8 +67,6 @@
     .nds-grid>.nds-section-head {
         margin-bottom: 0 !important;
     }
-
-
 }
 
 main {
@@ -75,28 +77,121 @@ main {
     position: relative;
     min-height: 400px;
     display: flex;
-}
-
-.contentLayout .mainContent {
-    width: calc(100%);
-    min-width: 300px;
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.contentLayout.nds-middle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100dvh;
-
-    &.nds-content-container {
-        padding: var(--nds-viewport-padding, 32px);
-    }
 
     .mainContent {
-        justify-content: center;
+        width: calc(100%);
+        min-width: 300px;
+        display: flex;
+        flex-wrap: wrap;
+
+        section:not(.nds-hero-section) {
+            width: 100%;
+            min-width: 300px;
+            height: fit-content;
+            padding: var(--spacing-5xl) 0;
+        }
     }
+
+    &.nds-middle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100dvh;
+
+        &.nds-content-container {
+            padding: var(--nds-viewport-padding, 32px);
+        }
+
+        .mainContent {
+            justify-content: center;
+        }
+    }
+
+    &.toEdge {
+        --nds-content-MaxWidth: 100%;
+        padding: 0;
+        gap: 0;
+        height: 100%;
+    }
+
+    &:not(.wSideMenu) {
+        .mainContent {
+            section:not(.nds-hero-section) {
+                @include desktop(min) {
+                    padding: var(--spacing-7xl) 0;
+                }
+            }
+            section.noBg {
+                margin-top: var(--spacing-5xl);
+            }
+
+            section.noBg:first-of-type {
+                margin-top: 0;
+            }
+
+            /* Add margin-bottom only when next element doesn't have .noBg class */
+            section.noBg:not(:has(+ .noBg)) {
+                margin-bottom: var(--spacing-5xl);
+            }
+        }
+
+        > aside {
+            display: none !important;
+        }
+    }
+
+    &.wSideMenu {
+        .mainContent {
+            /* column-gap: var(--spacing-lg);
+            row-gap: var(--spacing-5xl); */
+            height: fit-content;
+
+            section {
+                width: 100%;
+                min-width: 300px;
+                box-shadow: var(--shadow-md);
+
+                @include tablet(max) {
+                    &:first-child {
+                        padding-top: var(--spacing-4xl);
+                    }
+
+                    &:first-child:is(.nds-hero-section) {
+                        padding-top: var(--spacing-6xl);
+                    }
+                }
+            }
+        }
+    }
+
+    &.toEdge.wSideMenu .mainContent {
+        padding: 0;
+        row-gap: 0;
+    }
+
+    &.post .mainContent section:first-of-type {
+        padding-top: 0;
+
+        .nds-section-content {
+            margin-top: 0;
+        }
+    }
+
+    &.cardView {
+        @include desktop(min) {
+            margin: var(--spacing-xl) 0;
+            gap: var(--spacing-xl);
+            .mainContent {
+                gap: var(--spacing-xl);
+                section:not(.nds-hero-section) {
+                    box-shadow: var(--shadow-md);
+                    border-radius: var(--radius-md);
+                    padding: var(--spacing-5xl) 0;
+                }
+            }
+        }
+    }
+
 }
 
 .nds-content-container {
@@ -110,97 +205,17 @@ main {
    ======================================== */
 
 @include desktop(min) {
-    .contentLayout.wSideMenu {
-        display: flex;
+    .contentLayout.wSideMenu:not(.toEdge) {
+        /* display: flex;
         justify-content: space-between;
         padding: var(--spacing-5xl) var(--nds-viewport-padding);
+        gap: var(--spacing-xl); */
         max-width: var(--nds-content-MaxWidth);
-        margin: auto;
-        gap: var(--spacing-xl);
+        margin-inline: auto;
     }
 
     .contentLayout.wSideMenu .mainContent {
         width: 100%;
-    }
-}
-
-.contentLayout.toEdge {
-    padding: 0px;
-    gap: 0px;
-    height: 100%;
-
-}
-
-.contentLayout:not(.wSideMenu) .mainContent section.noBg {
-    margin-top: var(--spacing-5xl);
-}
-
-.contentLayout:not(.wSideMenu) .mainContent section.noBg:first-of-type {
-    margin-top: 0;
-}
-
-/* Add margin-bottom only when next element doesn't have .noBg class */
-.contentLayout:not(.wSideMenu) .mainContent section.noBg:not(:has(+ .noBg)) {
-    margin-bottom: var(--spacing-5xl);
-}
-
-.contentLayout .mainContent section {
-    width: 100%;
-    min-width: 300px;
-    height: fit-content;
-    padding: var(--spacing-7xl) 0;
-
-    @include mobile {
-        padding: var(--spacing-5xl) 0;
-    }
-}
-
-.contentLayout.wSideMenu .mainContent {
-    column-gap: var(--spacing-lg);
-    row-gap: var(--spacing-5xl);
-    height: fit-content;
-}
-
-.contentLayout.toEdge.wSideMenu .mainContent {
-    padding: 0;
-    row-gap: 0;
-}
-
-.contentLayout.wSideMenu .mainContent section {
-    width: 100%;
-    min-width: 300px;
-    box-shadow: var(--shadow-md);
-
-    @include tablet(max) {
-        &:first-child {
-            padding-top: var(--spacing-4xl);
-        }
-
-        &:first-child:is(.nds-hero-section) {
-            padding-top: var(--spacing-6xl);
-        }
-    }
-}
-
-.contentLayout.post .mainContent section:first-of-type {
-    padding-top: 0;
-
-    .nds-section-content {
-        margin-top: 0;
-    }
-}
-
-.contentLayout.cardView .mainContent section:not(.nds-hero-section) {
-    width: 100%;
-    min-width: 300px;
-    box-shadow: var(--shadow-md);
-    border-radius: var(--radius-md);
-    margin: var(--spacing-xl);
-    padding: 0;
-
-    .nds-section-title {
-        font-size: var(--nds-display-clamp-xs-FS, 24px);
-        line-height: var(--nds-display-clamp-xs-LH, 30px);
     }
 }
 
@@ -220,43 +235,79 @@ main {
 
     .contentLayout:not(.cardView) .mainContent section:not(.nds-hero-section) {
         height: 100% !important;
-        box-shadow: unset;
         box-shadow: unset !important;
         border-radius: unset !important;
     }
-}
-
-.contentLayout:not(.wSideMenu)>aside {
-    display: none !important;
 }
 
 /* ========================================
    NDS CONTENT SECTIONS - NEW NAMING CONVENTION
    ======================================== */
 
-/* NDS Content Sections - New Naming Convention */
-.nds-content-section {
-    background-color: var(--background-white);
-}
-
-// Mixin to reset section styling
 @mixin reset-section-style {
     background-color: unset;
     box-shadow: unset;
     border: unset;
 }
 
+@mixin section-variant($background, $title-color, $description-color) {
+    background-color: $background !important;
+    color: var(--text-oncolor-primary);
+
+    .nds-section-title {
+        color: $title-color;
+    }
+
+    .nds-section-description {
+        color: $description-color;
+    }
+}
+
+.nds-content-section {
+    background-color: var(--background-white);
+
+    &.nds-blue {
+        @include section-variant(
+            var(--colors-blue-950),
+            var(--text-secondary),
+            var(--text-oncolor-secondary)
+        );
+    }
+
+    &.nds-green {
+        @include section-variant(
+            var(--colors-green-900),
+            var(--text-oncolor-primary),
+            var(--text-oncolor-secondary)
+        );
+    }
+
+    &.nds-neutral {
+        @include section-variant(
+            var(--colors-neutral-900),
+            var(--text-secondary),
+            var(--text-oncolor-secondary)
+        );
+    }
+
+    &.noBg {
+        @include reset-section-style;
+    }
+}
+
 // Content section striping patterns
-
 .contentLayout {
-
     // Without side menu - always reset
     &:not(.wSideMenu, .cardView) .mainContent {
-
         .nds-content-section:nth-of-type(even) {
             @include reset-section-style;
         }
 
+        &:has(>.nds-hero-section) {
+            .nds-content-section:nth-of-type(odd) {
+                @include reset-section-style;
+            }
+        }
     }
 
     // With side menu - reset only on tablet and below
@@ -265,77 +316,15 @@ main {
             .nds-content-section:nth-of-type(even) {
                 @include reset-section-style;
             }
-        }
-    }
-}
 
-
-.contentLayout {
-
-    // Without side menu - always reset
-    &:not(.wSideMenu, .cardView) .mainContent:has(>.nds-hero-section) {
-
-        .nds-content-section:nth-of-type(odd) {
-            @include reset-section-style;
-        }
-
-    }
-
-    // With side menu - reset only on tablet and below
-    &:not(.cardView).wSideMenu .mainContent:has(>.nds-hero-section) {
-        @include tablet(max) {
-            .nds-content-section:nth-of-type(odd) {
-                @include reset-section-style;
+            &:has(>.nds-hero-section) {
+                .nds-content-section:nth-of-type(odd) {
+                    @include reset-section-style;
+                }
             }
         }
     }
 }
-
-.nds-content-section.nds-blue {
-    background-color: var(--colors-blue-950) !important;
-    color: var(--text-oncolor-primary);
-
-    .nds-section-title {
-        color: var(--text-secondary);
-    }
-
-    .nds-section-description {
-        color: var(--text-oncolor-secondary);
-    }
-}
-
-.nds-content-section.nds-green {
-    background-color: var(--colors-green-900) !important;
-    color: var(--text-oncolor-primary);
-
-    .nds-section-title {
-        color: var(--text-oncolor-primary);
-    }
-
-    .nds-section-description {
-        color: var(--text-oncolor-secondary);
-    }
-}
-
-.nds-content-section.nds-neutral {
-    background-color: var(--colors-neutral-900) !important;
-    color: var(--text-oncolor-primary);
-
-    .nds-section-title {
-        color: var(--text-secondary);
-    }
-
-    .nds-section-description {
-        color: var(--text-oncolor-secondary);
-    }
-}
-
-.nds-content-section.noBg {
-    @include reset-section-style;
-}
-
-
-
 
 .nds-section-head {
     position: relative;
@@ -370,9 +359,7 @@ main {
     display: flex;
 }
 
-
 .nds-section-content {
-
     p,
     ul,
     ol {
@@ -394,14 +381,9 @@ main {
 
     article,
     .nds-block-content {
-
         p {
             color: var(--text-primary-paragraph);
         }
-
-
-
-
 
         &>img {
             max-width: 80%;
@@ -420,5 +402,4 @@ main {
             display: block;
         }
     }
-
 }
