@@ -91,7 +91,7 @@
             z-index: 1000;
         }
 
-        nav.nds-main-nav {
+        .nds-main-nav {
             position: sticky;
             top: 0;
             left: 0;
@@ -108,10 +108,13 @@
 
 
         .nds-topbar>*,
-        nav.nds-main-nav>*,
-        .nds-heroContent,
-        .contentLayout,
+        .nds-main-nav>*,
+        .nds-hero-section .nds-section-content,
         .nds-footer {
+            display: none;
+        }
+
+        .contentLayout {
             visibility: hidden;
         }
 
@@ -259,7 +262,7 @@
         /* Mobile Responsive */
         @media (max-width: 768px) {
 
-            .nds-hero-section:not(.sub) .nds-heroContent .nds-heroTitle::before {
+            .nds-hero-section:not(.sub) .nds-section-content .nds-section-title::before {
                 width: 80vw;
             }
         }
@@ -282,29 +285,6 @@
         }
     </style>
 
-    <!-- Persist fonts-loaded state across navigations -->
-    <script>
-        try {
-            if (localStorage.getItem('nds-fonts-loaded') === '1') {
-                document.documentElement.classList.add('fonts-loaded');
-            }
-
-        } catch (e) { }
-    </script>
-
-    <!-- Preload primary text fonts (limit to above-the-fold weights) -->
-    <link rel="preload" as="font" type="font/woff2"
-        href="{{ 'assets/fonts/IBMPlexSansArabic-Regular.woff2' | relative_url }}" crossorigin>
-    <link rel="preload" as="font" type="font/woff2"
-        href="{{ 'assets/fonts/IBMPlexSansArabic-Bold.woff2' | relative_url }}" crossorigin>
-
-    <!-- Load CSS files -->
-    <link rel="preload" href="{{ 'assets/css/nds-main.min.css' | relative_url }}?ver=1.052" as="style"
-        onload="this.onload=null;this.rel='stylesheet'" fetchpriority="high">
-    <noscript>
-        <link rel="stylesheet" href="{{ 'assets/css/nds-main.min.css' | relative_url }}">
-    </noscript>
-
     <!-- Preload critical resources -->
     {% if page.layout == 'home' or page.url == '/' %}
     <link rel="preload" as="image" href="{{ page.hero_image | default: site.hero_image | relative_url }}"
@@ -312,15 +292,12 @@
         imagesizes="100vw" fetchpriority="high">
     {% endif %}
 
-    <!-- Preload icon CSS (loads icon font via CSS) -->
-
-    <link rel="preload" href="{{ 'assets/css/hgi-rounded-stroke-solid-min.css?ver=1.001' | relative_url }}" as="style"
-        onload="this.onload=null;this.rel='stylesheet'">
+    <!-- Load CSS files -->
+    <link rel="stylesheet" href="{{ 'assets/css/nds-main.min.css' | relative_url }}?ver=1.052" as="style"
+        onload="this.onload=null;this.rel='stylesheet';loadDeferredAssets()" fetchpriority="low">
     <noscript>
-        <link rel="stylesheet" href="{{ 'assets/css/hgi-rounded-stroke-solid-min.css' | relative_url }}">
+        <link rel="stylesheet" href="{{ 'assets/css/nds-main.min.css' | relative_url }}">
     </noscript>
-
-    <link rel="icon" type="image/svg+xml" href="{{ 'assets/img/favicon.svg' | relative_url }}">
 
     <!-- Custom page-specific CSS files with deferred loading -->
     {% if page.custom_css %}
@@ -331,4 +308,26 @@
     </noscript>
     {% endfor %}
     {% endif %}
+
+    <!-- Deferred assets loaded after main CSS finishes -->
+    <script>
+        function loadDeferredAssets() {
+            // Load icon font CSS
+            var iconLink = document.createElement('link');
+            iconLink.rel = 'stylesheet';
+            iconLink.href = '{{ "assets/css/hgi-rounded-stroke-solid-min.css?ver=1.001" | relative_url }}';
+            document.head.appendChild(iconLink);
+
+            // Load favicon
+            var favicon = document.createElement('link');
+            favicon.rel = 'icon';
+            favicon.type = 'image/svg+xml';
+            favicon.href = '{{ "assets/img/favicon.svg" | relative_url }}';
+            document.head.appendChild(favicon);
+        }
+    </script>
+    <noscript>
+        <link rel="stylesheet" href="{{ 'assets/css/hgi-rounded-stroke-solid-min.css' | relative_url }}">
+        <link rel="icon" type="image/svg+xml" href="{{ 'assets/img/favicon.svg' | relative_url }}">
+    </noscript>
 </head>

@@ -58,6 +58,25 @@
     }
 
     function showSubmenu(listItem, button, submenu) {
+        // Capture container height BEFORE expansion
+        const drawer = listItem.closest(CONFIG.selectors.drawer);
+        const sideMenu = drawer?.closest('.nds-sideMenu');
+        const sideMenuSibling = sideMenu?.nextElementSibling;
+
+        // Calculate available space and set max-height immediately
+        let containerHeight = null;
+        if (drawer && sideMenuSibling) {
+            const drawerRect = drawer.getBoundingClientRect();
+            const siblingRect = sideMenuSibling.getBoundingClientRect();
+
+            // Calculate actual available space from drawer top to sibling bottom
+            const siblingBottom = siblingRect.top + siblingRect.height;
+            const availableSpace = siblingBottom - drawerRect.top - 8;
+            containerHeight = availableSpace;
+
+            drawer.style.setProperty('--_max-height', `${availableSpace}px`);
+        }
+
         submenu.classList.add(CONFIG.classes.show, CONFIG.classes.opening);
         listItem.classList.add(CONFIG.classes.open);
         button.setAttribute('aria-expanded', 'true');
@@ -68,7 +87,7 @@
             submenu.classList.remove(CONFIG.classes.opening);
             submenu.classList.add(CONFIG.classes.opened);
             submenu.style.height = '';
-            dispatchDrawerEvent(listItem, 'shown');
+            dispatchDrawerEvent(listItem, 'shown', { containerHeight });
         };
 
         submenu.addEventListener('transitionend', cleanup);
@@ -99,10 +118,10 @@
         }, CONFIG.transitionDuration + 50);
     }
 
-    function dispatchDrawerEvent(listItem, eventType) {
+    function dispatchDrawerEvent(listItem, eventType, data = {}) {
         const drawer = listItem.closest(CONFIG.selectors.drawer);
         drawer?.dispatchEvent(new CustomEvent(`nds:drawer:${eventType}`, {
-            detail: { item: listItem, drawer },
+            detail: { item: listItem, drawer, ...data },
             bubbles: true
         }));
     }
@@ -140,7 +159,7 @@
         return drawer.classList.contains('nds-full-height') || drawer.closest('.nds-sideMenu');
     }
 
-    function updateMaxHeight(drawer) {
+    function updateMaxHeight(drawer, containerHeight = null) {
         const scrollContainer = drawer.querySelector(CONFIG.selectors.scroll);
         if (!scrollContainer) return;
 
@@ -155,7 +174,13 @@
             parentBottom = Math.min(viewportHeight, parentRect.top + parent.clientHeight);
         }
 
-        const availableHeight = parentBottom - visibleTop - 8;
+        let availableHeight = parentBottom - visibleTop - 16;
+
+        // If containerHeight was passed and availableHeight exceeds it, constrain to container
+        if (containerHeight !== null && availableHeight > containerHeight) {
+            availableHeight = containerHeight;
+        }
+
         if (availableHeight < 100) return;
 
         const list = scrollContainer.querySelector(CONFIG.selectors.list);
@@ -183,9 +208,10 @@
             });
         };
 
-        const handleDrawerChange = () => {
+        const handleDrawerChange = (event) => {
+            const containerHeight = event?.detail?.containerHeight || null;
             requestAnimationFrame(() => {
-                updateMaxHeight(drawer);
+                updateMaxHeight(drawer, containerHeight);
                 checkOverflow(drawer);
             });
         };
