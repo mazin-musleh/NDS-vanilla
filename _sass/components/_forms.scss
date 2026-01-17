@@ -28,41 +28,94 @@
 
     // Required field indicator
     &.nds-required {
-        .nds-form-header .label::after {
+
+        .nds-form-header .label::after,
+        >.label::after {
             content: " *";
             color: var(--controls-control-text-error, #dc2626);
         }
-    }
-
-    .info {
-        color: var(--text-primary-paragraph);
-        font-size: var(--nds-text-sm-FS);
-        line-height: var(--nds-text-sm-LH);
-        min-width: 200px;
     }
 
     .nds-form-footer:not(.show) {
         display: none;
     }
 
-    &.nds-feedback{
+    // ==============================================
+    // FORM CONTAINER STATUS (data-status attribute)
+    // ==============================================
 
-    .nds-form-footer:not(.show){
-        display: none;
-        flex-direction: column;
-        gap: var(--spacing-xs);
+    // Error state - style form control border
+    &[data-status="error"] .nds-form-control {
+        border-color: var(--form-field-border-error);
+
+        &::before {
+            background-color: var(--form-field-border-error);
+        }
+    }
+
+    // Success state
+    &[data-status="success"] .nds-form-control {
+        border-color: var(--form-field-border-success);
+
+        &::before {
+            background-color: var(--form-field-border-success);
+        }
+    }
+
+    // Warning state
+    &[data-status="warning"] .nds-form-control {
+        border-color: var(--form-field-border-warning);
+
+        &::before {
+            background-color: var(--form-field-border-warning);
+        }
+    }
+
+    // Info state
+    &[data-status="info"] .nds-form-control {
+        border-color: var(--form-field-border-info);
+
+        &::before {
+            background-color: var(--form-field-border-info);
+        }
     }
 }
 
+.label+.info {
+    color: var(--text-primary-paragraph);
+    font-size: var(--nds-text-sm-FS);
+    line-height: var(--nds-text-sm-LH);
+    min-width: 200px;
+}
+
+.label+.note {
+    color: var(--text-secondary-paragraph);
+    font-weight: 300;
 }
 
 fieldset {
     border: 0;
+    padding: 0;
+    margin: 0;
+    min-width: 0; // Fix for flexbox overflow
 
-    &>.label {
+    &>legend,
+    >legend>.label {
+        padding: 0;
         margin-bottom: var(--spacing-lg);
         font-weight: 500;
         line-height: 1;
+    }
+
+    // Auto-add required indicator when group has data-min-checked or nds-required class
+    &[data-min-checked],
+    &.nds-required {
+
+        >legend>.label::after,
+        >.label::after {
+            content: " *";
+            color: var(--controls-control-text-error, #dc2626);
+        }
     }
 }
 
@@ -115,7 +168,8 @@ fieldset {
         z-index: 2;
     }
 
-    &.nds-focus,&.focus {
+    &.nds-focus,
+    &.focus {
         &::before {
             width: 100%;
         }
@@ -130,7 +184,8 @@ fieldset {
 
     }
 
-    &.nds-active,&.active {
+    &.nds-active,
+    &.active {
 
         &::before {
             width: 50%;
@@ -145,7 +200,8 @@ fieldset {
         }
     }
 
-    &.nds-error,&.error {
+    &.nds-error,
+    &.error {
 
         &::before {
             background-color: var(--form-field-border-error);
@@ -154,7 +210,8 @@ fieldset {
         border-color: var(--form-field-border-error);
     }
 
-    &.nds-disabled,&.disabled {
+    &.nds-disabled,
+    &.disabled {
         background-color: var(--background-disabled) !important;
         color: var(--text-default-disabled) !important;
         border-color: var(--border-disabled) !important;
@@ -277,8 +334,9 @@ fieldset {
             flex-direction: column;
             gap: var(--spacing-xs);
 
-            .nds-btn{
+            .nds-btn {
                 justify-content: start;
+                width: 100%;
             }
         }
     }

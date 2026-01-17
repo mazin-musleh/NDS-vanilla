@@ -22,9 +22,10 @@ $spacers: (
 $all-spacers: $spacers;
 
 // Bootstrap naming with NDS breakpoint values
-$breakpoints: (
+// $breakpoints-all includes sm as an alias for base styles
+$breakpoints-all: (
   sm: '(min-width: 0px)',
-  // Mobile
+  // Mobile (alias for base)
   md: '(min-width: 600px)',
   // Tablet
   lg: '(min-width: 960px)',
@@ -32,19 +33,51 @@ $breakpoints: (
   xl: '(min-width: 1280px)' // Large Desktop
 );
 
+// $breakpoints-responsive excludes sm to avoid generating redundant classes
+// sm classes are added as aliases to base classes instead
+$breakpoints-responsive: (
+  md: '(min-width: 600px)',
+  // Tablet
+  lg: '(min-width: 960px)',
+  // Desktop
+  xl: '(min-width: 1280px)' // Large Desktop
+);
+
+// Range-based breakpoints for alignment utilities to prevent cascade conflicts
+// Each breakpoint is exclusive to allow proper responsive alignment switching
+$breakpoints-range: (
+  sm: '(max-width: 599px)',
+  // Mobile only (0-599px)
+  md: '(min-width: 600px) and (max-width: 959px)',
+  // Tablet only (600-959px)
+  lg: '(min-width: 960px) and (max-width: 1279px)',
+  // Desktop only (960-1279px)
+  xl: '(min-width: 1280px)' // Large desktop (1280px+)
+);
+
+// Container query breakpoints for .nds-grid
+// Matches viewport breakpoints but queries container width instead of viewport
+// Allows grids to respond to their container size, enabling context-aware layouts
+$container-breakpoints: (
+  sm: '(max-width: 599px)',
+  // Mobile container
+  md: '(min-width: 600px) and (max-width: 959px)',
+  // Tablet container
+  lg: '(min-width: 960px) and (max-width: 1279px)',
+  // Desktop container
+  xl: '(min-width: 1280px)' // Large desktop container
+);
+
 .nds-grid {
   $col-token-selector: '> :is([class^="col-"], [class*=" col-"])';
 
   --grid-col: var(--max-col, auto-fit);
   display: grid;
-  grid-template-columns: repeat(var(--grid-col, 12), minmax(var(--grid-col-width, 0), 1fr));
+  grid-template-columns: repeat(var(--grid-col, 12), minmax(var(--col-width, 0px), 1fr));
   gap: var(--gap, var(--spacing-2xl));
+  justify-items: var(--justify, stretch);
+  align-items: var(--align, center);
   width: 100%;
-
-  &.nds-center {
-    width: fit-content;
-    margin-inline: auto;
-  }
 
   >* {
     max-width: 100% !important;
@@ -67,24 +100,26 @@ $breakpoints: (
   }
 
   &:has(#{$col-token-selector}) {
-    --grid-col-width: unset !important;
+    --col-width: 0 !important;
     --grid-col: 12;
   }
 }
 
-/* Column spans (1…12) - Mobile first (base) */
+/* Column spans (1…12) - Mobile first (base) with sm aliases */
 @for $i from 1 through 12 {
-  .col-#{$i} {
+  .col-#{$i},
+  .col-sm-#{$i} {
     grid-column: span #{$i};
   }
 }
 
-.col-full {
+.col-full,
+.col-sm-full {
   grid-column: 1 / -1;
 }
 
-/* Generate responsive column spans using breakpoints map */
-@each $breakpoint, $query in $breakpoints {
+/* Generate responsive column spans using responsive breakpoints only (excludes sm) */
+@each $breakpoint, $query in $breakpoints-responsive {
   @media #{$query} {
     @for $i from 1 through 12 {
       .col-#{$breakpoint}-#{$i} {
@@ -98,9 +133,76 @@ $breakpoints: (
   }
 }
 
-.nds-note {
-    color: var(--text-secondary-paragraph);
-    font-weight: 300;
+// ==============================================
+// NDS FLEX UTILITY
+// ==============================================
+
+.nds-flex {
+  display: flex;
+  justify-content: var(--justify, flex-start);
+  align-items: var(--align, center);
+  gap: var(--gap, var(--spacing-xl));
+  width: 100%;
+}
+
+// Base flex direction classes (mobile-first) with sm aliases
+// Primary directions: row and col (most common)
+// Pattern: .flex-{direction}-{size} - Size comes last
+.flex-row,
+.flex-row-sm {
+  flex-direction: row;
+}
+
+.flex-col,
+.flex-col-sm {
+  flex-direction: column;
+}
+
+// Reverse directions (base only - use inline styles for responsive reverse if needed)
+.flex-row-reverse {
+  flex-direction: row-reverse;
+}
+
+.flex-col-reverse {
+  flex-direction: column-reverse;
+}
+
+// Wrap utilities (base only - use inline styles for responsive wrap if needed)
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.flex-nowrap {
+  flex-wrap: nowrap;
+}
+
+// Responsive flex direction classes using responsive breakpoints only (excludes sm)
+// Only includes row/col (most common use cases), excludes reverse/wrap/nowrap to reduce CSS
+// Pattern: .flex-{direction}-{breakpoint} - Size (breakpoint) comes last
+// Note: Alignment utilities now use range-based breakpoints (see ALIGNMENT UTILITIES section)
+@each $breakpoint, $query in $breakpoints-responsive {
+  @media #{$query} {
+    .flex-row-#{$breakpoint} {
+      flex-direction: row;
+    }
+
+    .flex-col-#{$breakpoint} {
+      flex-direction: column;
+    }
+  }
+}
+
+// Flex item utilities
+.nds-flex-1 {
+  flex: var(--flex, 1 1 0%);
+}
+
+.nds-flex-auto {
+  flex: 1 1 auto;
+}
+
+.nds-flex-none {
+  flex: none;
 }
 
 .nds-truncate {
@@ -113,23 +215,27 @@ $breakpoints: (
   white-space: wrap;
 }
 
+// ==============================================
+// ALIGNMENT UTILITIES
+// ==============================================
+
+// Center alignment utility
+// Note: Uses mobile-first approach. For start/end alignment, use text-align CSS property directly
+
+// Base center alignment class (applies to all screens unless overridden)
 .nds-center,
 .nds-center>* {
   text-align: center !important;
-  margin-inline: auto !important;
-  align-self: center !important;
 }
 
-.nds-start,
-.nds-start>* {
-  text-align: start !important;
-  align-self: start !important;
-}
-
-.nds-end,
-.nds-end>* {
-  text-align: end !important;
-  align-self: end !important;
+// Responsive center alignment (mobile-first, cascades upward)
+@each $breakpoint, $query in $breakpoints-range {
+  @media #{$query} {
+    .nds-center-#{$breakpoint},
+    .nds-center-#{$breakpoint}>* {
+      text-align: center !important;
+    }
+  }
 }
 
 .nds-flush {
@@ -143,4 +249,17 @@ $breakpoints: (
   clip-path: circle(50%);
   border-radius: 50%;
   aspect-ratio: 1 / 1;
+}
+
+// ==============================================
+// VISIBILITY UTILITIES
+// ==============================================
+
+/* Hidden utility - ensures elements with hidden attribute are properly hidden
+ * Uses !important to override any display property (flex, grid, block, etc.)
+ * Supports both hidden attribute and .hidden class for legacy compatibility
+ */
+[hidden],
+.hidden {
+  display: none !important;
 }

@@ -179,8 +179,62 @@ variation.
 - `@include tablet(min|max)` - Tablet breakpoints (600px-959px)
 - `@include desktop(min|max)` - Desktop breakpoints (960px-1279px)
 - `@include large-desktop(min|max)` - Large desktop (1280px+)
-- `@include rtl` - RTL (Arabic) language support
-- `@include ltr` - LTR (English) language override when needed
+- `@include ltr` - LTR (English) language override when needed (see RTL/LTR section below)
+
+**RTL/LTR Support - IMPORTANT:**
+
+This project is **RTL (Arabic) by default**. There is NO `@include rtl` mixin because RTL is the base behavior.
+
+**Use CSS Logical Properties (Preferred):**
+CSS logical properties automatically work with both RTL and LTR without needing mixins:
+
+```scss
+// ✅ GOOD - Use logical properties (works automatically for RTL/LTR)
+.nds-component {
+    margin-inline-start: var(--spacing-md);  // Adapts to text direction
+    margin-inline-end: var(--spacing-lg);    // Adapts to text direction
+    padding-inline: var(--spacing-sm);       // Adapts to text direction
+    border-inline-start: 1px solid;          // Adapts to text direction
+    text-align: start;                       // Adapts to text direction (right for RTL, left for LTR)
+}
+
+// ❌ AVOID - Physical properties require LTR overrides
+.nds-component {
+    margin-left: var(--spacing-md);   // Fixed to left side
+    margin-right: var(--spacing-lg);  // Fixed to right side
+    text-align: right;                // Fixed to right
+}
+```
+
+**Common CSS Logical Properties:**
+- `margin-inline-start` / `margin-inline-end` - Replaces margin-left/right
+- `padding-inline-start` / `padding-inline-end` - Replaces padding-left/right
+- `padding-inline` - Replaces padding left and right
+- `margin-inline` - Replaces margin left and right
+- `border-inline-start` / `border-inline-end` - Replaces border-left/right
+- `inset-inline-start` / `inset-inline-end` - Replaces left/right positioning
+- `text-align: start` / `text-align: end` - Adapts to text direction automatically
+
+**When to Use `@include ltr` Mixin:**
+Only use the `@include ltr` mixin for special cases where logical properties don't work:
+
+```scss
+.nds-component {
+    // Transforms need direction-specific values
+    transform: translateX(10px);  // RTL default: move right
+
+    @include ltr {
+        transform: translateX(-10px);  // LTR: move left
+    }
+
+    // Gradients with directional angles
+    background: linear-gradient(90deg, ...);  // RTL default
+
+    @include ltr {
+        background: linear-gradient(270deg, ...);  // LTR reversed
+    }
+}
+```
 
 **Standard SCSS Structure:**
 ```scss
@@ -191,18 +245,19 @@ variation.
 // ==============================================
 
 .nds-component {
-// Base styles using CSS custom properties
-font-family: 'IBM Plex Sans Arabic', sans-serif;
-transition: var(--nds-transition);
+    // Base styles using CSS custom properties
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    transition: var(--nds-transition);
 
-// RTL/LTR support
-@include rtl {
-// RTL-specific styles
-}
+    // ✅ Prefer logical properties (automatic RTL/LTR)
+    padding-inline: var(--spacing-md);
+    margin-inline-start: var(--spacing-sm);
+    text-align: start;
 
-@include ltr {
-// LTR override styles when needed
-}
+    // Only use ltr mixin for special cases (transforms, gradients, etc.)
+    @include ltr {
+        // Special LTR overrides when logical properties don't work
+    }
 }
 
 // ==============================================
@@ -435,7 +490,7 @@ direction: ltr
                 <!-- Component variations go here -->
             </div>
         </div>
-        <div class="nds-tabs nds-code withDivider">
+        <div class="nds-tabs nds-code nds-divided">
             <div class="nds-tab-list-container">
                 <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -550,7 +605,8 @@ direction: ltr
     - The site showcases component variations, states, and usage examples
     - Copy-to-clipboard functionality allows developers to copy component HTML
     - Interactive demos show different button states and background scenarios
-    - **CRITICAL**: This project is **RTL (Arabic) by default**. Use `@include ltr` mixin when LTR-specific styling is
-    needed for English/Latin text. Never use `@include rtl` - that mixin doesn't exist because RTL is the default
-    behavior.
+    - **CRITICAL**: This project is **RTL (Arabic) by default**. There is NO `@include rtl` mixin.
+    - **Prefer CSS Logical Properties**: Use `margin-inline-start/end`, `padding-inline`, `text-align: start/end` which automatically adapt to RTL/LTR.
+    - **Use `@include ltr` mixin ONLY for special cases**: transforms, gradients, or other properties that logical properties don't cover.
+    - Never write RTL-specific code in mixins - RTL is the default, write base styles for RTL and override with `@include ltr` only when needed.
     - add this mcp server when needed "claude mcp add --transport sse figma http://127.0.0.1:3845/sse"

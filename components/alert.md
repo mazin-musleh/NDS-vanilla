@@ -41,8 +41,10 @@ layout_class: cardView
                     <div class="demo-container">
                         <div class="state-demo success-alert-demo">
                             <div class="nds-alert nds-card nds-success">
-                                <span class="nds-feedback-icon nds-outline nds-alert-icon">
-                                    <i class="hgi hgi-solid icon"></i>
+                                <span class="nds-feedback nds-alert-icon" data-status="success">
+                                    <span class="nds-feedback-icon nds-outline">
+                                        <i class="hgi hgi-solid icon"></i>
+                                    </span>
                                 </span>
                                 <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close"
                                     aria-label="Close alert">
@@ -55,7 +57,7 @@ layout_class: cardView
                             </div>
                         </div>
                     </div>
-                    <div class="nds-tabs nds-code withDivider">
+                    <div class="nds-tabs nds-code nds-divided">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -74,16 +76,18 @@ layout_class: cardView
                                 </div>
                                 <code class="lang-html code">
 <div class="nds-alert nds-card nds-success">
-    <span class="nds-feedback-icon nds-outline nds-alert-icon">
-        <i class="hgi hgi-solid icon"></i>
+  <span class="nds-feedback nds-alert-icon" data-status="success">
+    <span class="nds-feedback-icon nds-outline">
+      <i class="hgi hgi-solid icon"></i>
     </span>
-    <div class="nds-alert-content">
-        <h4 class="nds-alert-title">Success</h4>
-        <p class="nds-alert-description">Your changes have been saved successfully.</p>
-    </div>
-    <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close">
-        <i class="hgi hgi-stroke hgi-cancel-01"></i>
-    </button>
+  </span>
+  <div class="nds-alert-content">
+    <h4 class="nds-alert-title">Success</h4>
+    <p class="nds-alert-description">Your changes have been saved successfully.</p>
+  </div>
+  <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close">
+    <i class="hgi hgi-stroke hgi-cancel-01"></i>
+  </button>
 </div>
                                 </code>
                             </div>
@@ -113,8 +117,10 @@ layout_class: cardView
                     <div class="demo-container">
                         <div class="state-demo info-alert-demo">
                             <div class="nds-alert nds-card nds-info">
-                                <span class="nds-feedback-icon nds-outline nds-alert-icon">
-                                    <i class="hgi hgi-solid icon"></i>
+                                <span class="nds-feedback nds-alert-icon" data-status="info">
+                                    <span class="nds-feedback-icon nds-outline">
+                                        <i class="hgi hgi-solid icon"></i>
+                                    </span>
                                 </span>
                                 <div class="nds-alert-content">
                                     <h4 class="nds-alert-title">Information</h4>
@@ -128,7 +134,7 @@ layout_class: cardView
                             </div>
                         </div>
                     </div>
-                    <div class="nds-tabs nds-code withDivider">
+                    <div class="nds-tabs nds-code nds-divided">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -147,16 +153,18 @@ layout_class: cardView
                                 </div>
                                 <code class="lang-html code">
 <div class="nds-alert nds-card nds-info">
-    <span class="nds-feedback-icon nds-outline nds-alert-icon">
-        <i class="hgi hgi-solid icon"></i>
+  <span class="nds-feedback nds-alert-icon" data-status="info">
+    <span class="nds-feedback-icon nds-outline">
+      <i class="hgi hgi-solid icon"></i>
     </span>
-    <div class="nds-alert-content">
-        <h4 class="nds-alert-title">Information</h4>
-        <p class="nds-alert-description">A new software update is available.</p>
-    </div>
-    <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close">
-        <i class="hgi hgi-stroke hgi-cancel-01"></i>
-    </button>
+  </span>
+  <div class="nds-alert-content">
+    <h4 class="nds-alert-title">Information</h4>
+    <p class="nds-alert-description">A new software update is available.</p>
+  </div>
+  <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close">
+    <i class="hgi hgi-stroke hgi-cancel-01"></i>
+  </button>
 </div>
                                 </code>
                             </div>
@@ -186,8 +194,10 @@ layout_class: cardView
                     <div class="demo-container">
                         <div class="state-demo warning-alert-demo">
                             <div class="nds-alert nds-card nds-warning">
-                                <span class="nds-feedback-icon nds-outline nds-alert-icon">
-                                    <i class="hgi hgi-solid icon"></i>
+                                <span class="nds-feedback nds-alert-icon" data-status="warning">
+                                    <span class="nds-feedback-icon nds-outline">
+                                        <i class="hgi hgi-solid icon"></i>
+                                    </span>
                                 </span>
                                 <div class="nds-alert-content">
                                     <h4 class="nds-alert-title">Warning</h4>
@@ -200,7 +210,7 @@ layout_class: cardView
                             </div>
                         </div>
                     </div>
-                    <div class="nds-tabs nds-code withDivider">
+                    <div class="nds-tabs nds-code nds-divided">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -219,16 +229,18 @@ layout_class: cardView
                                 </div>
                                 <code class="lang-html code">
 <div class="nds-alert nds-card nds-warning">
-    <span class="nds-featured-icon nds-warning nds-sm nds-outline nds-alert-icon">
-        <i class="hgi hgi-stroke hgi-alert-02 icon"></i>
+  <span class="nds-feedback nds-alert-icon" data-status="warning">
+    <span class="nds-feedback-icon nds-outline">
+      <i class="hgi hgi-solid icon"></i>
     </span>
-    <div class="nds-alert-content">
-        <h4 class="nds-alert-title">Warning</h4>
-        <p class="nds-alert-description">Your session will expire in 5 minutes.</p>
-    </div>
-    <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close">
-        <i class="hgi hgi-stroke hgi-cancel-01"></i>
-    </button>
+  </span>
+  <div class="nds-alert-content">
+    <h4 class="nds-alert-title">Warning</h4>
+    <p class="nds-alert-description">Your session will expire in 5 minutes.</p>
+  </div>
+  <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close">
+    <i class="hgi hgi-stroke hgi-cancel-01"></i>
+  </button>
 </div>
                                 </code>
                             </div>
@@ -258,8 +270,10 @@ layout_class: cardView
                     <div class="demo-container">
                         <div class="state-demo error-alert-demo">
                             <div class="nds-alert nds-card nds-error">
-                                <span class="nds-feedback-icon nds-outline nds-alert-icon">
-                                    <i class="hgi hgi-solid icon"></i>
+                                <span class="nds-feedback nds-alert-icon" data-status="error">
+                                    <span class="nds-feedback-icon nds-outline">
+                                        <i class="hgi hgi-solid icon"></i>
+                                    </span>
                                 </span>
                                 <div class="nds-alert-content">
                                     <h4 class="nds-alert-title">Error</h4>
@@ -273,7 +287,7 @@ layout_class: cardView
                             </div>
                         </div>
                     </div>
-                    <div class="nds-tabs nds-code withDivider">
+                    <div class="nds-tabs nds-code nds-divided">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -292,16 +306,18 @@ layout_class: cardView
                                 </div>
                                 <code class="lang-html code">
 <div class="nds-alert nds-card nds-error">
-    <span class="nds-featured-icon nds-error nds-sm nds-outline nds-alert-icon">
-        <i class="hgi hgi-stroke hgi-cancel-circle icon"></i>
+  <span class="nds-feedback nds-alert-icon" data-status="error">
+    <span class="nds-feedback-icon nds-outline">
+      <i class="hgi hgi-solid icon"></i>
     </span>
-    <div class="nds-alert-content">
-        <h4 class="nds-alert-title">Error</h4>
-        <p class="nds-alert-description">There was an error processing your request.</p>
-    </div>
-    <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close">
-        <i class="hgi hgi-stroke hgi-cancel-01"></i>
-    </button>
+  </span>
+  <div class="nds-alert-content">
+    <h4 class="nds-alert-title">Error</h4>
+    <p class="nds-alert-description">There was an error processing your request.</p>
+  </div>
+  <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close">
+    <i class="hgi hgi-stroke hgi-cancel-01"></i>
+  </button>
 </div>
                                 </code>
                             </div>
@@ -343,8 +359,10 @@ layout_class: cardView
                     <div class="demo-container">
                         <div class="state-demo">
                             <div class="nds-alert nds-card nds-info">
-                                <span class="nds-feedback-icon nds-outline nds-alert-icon">
-                                    <i class="hgi hgi-solid icon"></i>
+                                <span class="nds-feedback nds-alert-icon" data-status="info">
+                                    <span class="nds-feedback-icon nds-outline">
+                                        <i class="hgi hgi-solid icon"></i>
+                                    </span>
                                 </span>
                                 <div class="nds-alert-content">
                                     <h4 class="nds-alert-title">Update Available</h4>
@@ -366,7 +384,7 @@ layout_class: cardView
                             </div>
                         </div>
                     </div>
-                    <div class="nds-tabs nds-code withDivider">
+                    <div class="nds-tabs nds-code nds-divided">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -385,24 +403,26 @@ layout_class: cardView
                                 </div>
                                 <code class="lang-html code">
 <div class="nds-alert nds-card nds-info">
-    <span class="nds-feedback-icon nds-outline nds-alert-icon">
-        <i class="hgi hgi-solid icon"></i>
+  <span class="nds-feedback nds-alert-icon" data-status="info">
+    <span class="nds-feedback-icon nds-outline">
+      <i class="hgi hgi-solid icon"></i>
     </span>
-    <div class="nds-alert-content">
-        <h4 class="nds-alert-title">Update Available</h4>
-        <p class="nds-alert-description">A new version is available.</p>
-        <div class="nds-alert-actions">
-            <button class="nds-btn nds-primary nds-sm">
-                <span class="label">Update Now</span>
-            </button>
-            <button class="nds-btn nds-subtle nds-sm">
-                <span class="label">Later</span>
-            </button>
-        </div>
+  </span>
+  <div class="nds-alert-content">
+    <h4 class="nds-alert-title">Update Available</h4>
+    <p class="nds-alert-description">A new version is available.</p>
+    <div class="nds-alert-actions">
+      <button class="nds-btn nds-primary nds-sm">
+        <span class="label">Update Now</span>
+      </button>
+      <button class="nds-btn nds-subtle nds-sm">
+        <span class="label">Later</span>
+      </button>
     </div>
-    <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close">
-        <i class="hgi hgi-stroke hgi-cancel-01"></i>
-    </button>
+  </div>
+  <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close">
+    <i class="hgi hgi-stroke hgi-cancel-01"></i>
+  </button>
 </div>
                                 </code>
                             </div>
@@ -445,8 +465,10 @@ layout_class: cardView
                     <div class="demo-container">
                         <div class="state-demo">
                             <div class="nds-alert nds-card nds-neutral">
-                                <span class="nds-feedback-icon nds-outline nds-alert-icon">
-                                    <i class="hgi hgi-solid icon"></i>
+                                <span class="nds-feedback nds-alert-icon" data-status="neutral">
+                                    <span class="nds-feedback-icon nds-outline">
+                                        <i class="hgi hgi-solid icon"></i>
+                                    </span>
                                 </span>
                                 <div class="nds-alert-content">
                                     <h4 class="nds-alert-title">Notification</h4>
@@ -459,7 +481,7 @@ layout_class: cardView
                             </div>
                         </div>
                     </div>
-                    <div class="nds-tabs nds-code withDivider">
+                    <div class="nds-tabs nds-code nds-divided">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -478,13 +500,15 @@ layout_class: cardView
                                 </div>
                                 <code class="lang-html code">
 <div class="nds-alert nds-card nds-neutral">
-    <span class="nds-featured-icon nds-neutral nds-sm nds-outline nds-alert-icon">
-        <i class="hgi hgi-stroke hgi-notification-03 icon"></i>
+  <span class="nds-feedback nds-alert-icon" data-status="neutral">
+    <span class="nds-feedback-icon nds-outline">
+      <i class="hgi hgi-solid icon"></i>
     </span>
-    <div class="nds-alert-content">
-        <h4 class="nds-alert-title">Notification</h4>
-        <p class="nds-alert-description">You have 3 new messages.</p>
-    </div>
+  </span>
+  <div class="nds-alert-content">
+    <h4 class="nds-alert-title">Notification</h4>
+    <p class="nds-alert-description">You have 3 new messages.</p>
+  </div>
 </div>
                                 </code>
                             </div>

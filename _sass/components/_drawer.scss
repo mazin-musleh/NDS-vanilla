@@ -80,6 +80,7 @@
         // Label takes available space
         >.label {
             flex: 1;
+            white-space: normal;
         }
 
         .hgi-arrow-left-01 {
@@ -275,6 +276,7 @@
 // FIT MODE
 // ==============================================
 
+.nds-grid
 .nds-drawer.nds-fit {
     --drawer-btn-height:100%;
     .nds-drawer-list {

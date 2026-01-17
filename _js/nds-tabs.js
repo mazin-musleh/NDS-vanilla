@@ -53,7 +53,7 @@
             if (!this.tabList) return;
 
             // Skip for vertical tabs
-            if (this.tabsContainer.classList.contains('nds-vertical-tabs')) {
+            if (this.tabsContainer.classList.contains('nds-vertical')) {
                 return;
             }
 
@@ -74,7 +74,7 @@
             if (!this.tabList) return false;
 
             // Skip for vertical tabs
-            if (this.tabsContainer.classList.contains('nds-vertical-tabs')) {
+            if (this.tabsContainer.classList.contains('nds-vertical')) {
                 return false;
             }
 
@@ -92,7 +92,7 @@
             if (!this.tabList) return;
 
             // Skip for vertical tabs
-            if (this.tabsContainer.classList.contains('nds-vertical-tabs')) {
+            if (this.tabsContainer.classList.contains('nds-vertical')) {
                 this.tabList.classList.remove('hasMore', 'atStart', 'atEnd');
                 return;
             }
@@ -182,7 +182,7 @@
             // Mouse wheel horizontal scroll
             let isScrolling = false;
             this.tabList.addEventListener('wheel', (e) => {
-                if (this.tabsContainer.classList.contains('nds-vertical-tabs')) return;
+                if (this.tabsContainer.classList.contains('nds-vertical')) return;
                 if (!this.needsScroll()) return;
                 if (Math.abs(e.deltaX) >= Math.abs(e.deltaY)) return;
 
@@ -219,7 +219,7 @@
 
             // Drag scroll functionality
             this.tabList.addEventListener('mousedown', (e) => {
-                if (this.tabsContainer.classList.contains('nds-vertical-tabs')) return;
+                if (this.tabsContainer.classList.contains('nds-vertical')) return;
                 if (!this.needsScroll()) return;
 
                 this.dragState = {
@@ -255,7 +255,7 @@
 
             const handleMouseMove = (e) => {
                 if (!this.dragState.active) return;
-                if (this.tabsContainer.classList.contains('nds-vertical-tabs')) {
+                if (this.tabsContainer.classList.contains('nds-vertical')) {
                     handleMouseUp();
                     return;
                 }
@@ -272,11 +272,22 @@
             document.addEventListener('mouseup', handleMouseUp);
             document.addEventListener('mousemove', handleMouseMove);
 
-            // Window resize handler
-            this.resizeHandler = () => {
-                setTimeout(() => this.updateScrollIndicators(), 100);
-            };
-            window.addEventListener('resize', this.resizeHandler);
+            // Use ResizeObserver for better element-specific size detection
+            if (window.ResizeObserver) {
+                this.resizeObserver = new ResizeObserver(() => {
+                    clearTimeout(this.resizeTimer);
+                    this.resizeTimer = setTimeout(() => {
+                        this.updateScrollIndicators();
+                    }, 100);
+                });
+                this.resizeObserver.observe(this.tabList);
+            } else {
+                // Fallback to window resize for older browsers
+                this.resizeHandler = () => {
+                    setTimeout(() => this.updateScrollIndicators(), 100);
+                };
+                window.addEventListener('resize', this.resizeHandler);
+            }
 
             // Scroll event listener for updating indicators
             this.tabList.addEventListener('scroll', () => {
@@ -330,7 +341,7 @@
                          getComputedStyle(document.documentElement).direction === 'rtl';
             
             // Check if this is a vertical tab layout
-            const isVertical = this.tabsContainer.classList.contains('nds-vertical-tabs');
+            const isVertical = this.tabsContainer.classList.contains('nds-vertical');
 
             switch (e.key) {
                 case 'ArrowLeft':
@@ -429,7 +440,8 @@
             tab.setAttribute('tabindex', '0');
 
             // Show panel
-            panel.classList.remove('hidden');
+            panel.removeAttribute('aria-hidden');
+            panel.removeAttribute('hidden');
             panel.setAttribute('tabindex', '0');
 
             // Recheck height for expandable components now that they're visible
@@ -442,7 +454,7 @@
 
         deactivateTab(tab, index) {
             const panel = this.panels[index];
-            
+
             if (!panel) return;
 
             // Update tab attributes
@@ -450,7 +462,8 @@
             tab.setAttribute('tabindex', '-1');
 
             // Hide panel
-            panel.classList.add('hidden');
+            panel.setAttribute('aria-hidden', 'true');
+            panel.setAttribute('hidden', '');
             panel.setAttribute('tabindex', '-1');
         }
 
@@ -487,7 +500,18 @@
         }
 
         destroy() {
-            // Clean up scroll behavior event listeners
+            // Clean up ResizeObserver
+            if (this.resizeObserver) {
+                this.resizeObserver.disconnect();
+                this.resizeObserver = null;
+            }
+
+            // Clean up resize timer
+            if (this.resizeTimer) {
+                clearTimeout(this.resizeTimer);
+            }
+
+            // Clean up scroll behavior event listeners (fallback for older browsers)
             if (this.resizeHandler) {
                 window.removeEventListener('resize', this.resizeHandler);
             }

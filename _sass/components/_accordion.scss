@@ -1,10 +1,9 @@
 /**
  * NDS Accordion Component
  * Collapsible accordion component with NDS design tokens
- * 
+ *
  * Structure:
  * - Base accordion container (.nds-accordion)
- * - Card view variant (.nds-accordion.cardView) 
  * - Accordion items (.nds-accordion-item)
  * - Interactive buttons (.nds-accordion-btn)
  * - Collapsible content (.nds-accordion-collapse)
@@ -99,13 +98,14 @@
         color: var(--text-default);
     }
 
-    /* Card View Variant */
-    &.cardView {
-        border: 1px solid var(--border-neutral-primary);
-        border-radius: var(--radius-md);
-        background-color: var(--background-white);
-        box-shadow: var(--shadow-md);
+    /* Card View Styling */
+    &.nds-card {
+        padding: 0;
         overflow: hidden;
+
+        &:not(.nds-stroke) {
+            border: 0;
+        }
 
         .nds-accordion-item:first-child {
             border-top: 0;
@@ -120,27 +120,9 @@
 // RESPONSIVE DESIGN & ACCESSIBILITY
 // ==============================================
 
-/* Mobile Responsive */
-@include mobile {
-    .nds-accordion {
-        .nds-accordion-btn {
-            padding: var(--spacing-md) !important;
-            font-size: var(--nds-text-sm-FS);
-        }
-
-        .nds-accordion-body {
-            padding: var(--spacing-md);
-        }
-    }
-}
-
 /* Accessibility Support */
 @include high-contrast {
     .nds-accordion {
-        &.cardView {
-            border: 2px solid var(--text-primary);
-        }
-
         .nds-accordion-item {
             border-color: var(--text-primary);
         }

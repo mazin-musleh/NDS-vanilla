@@ -14,17 +14,10 @@
     --nds-breakout-size: calc((var(--nds-breakout-max-width) - var(--nds-content-MaxWidth)) / 2);
     width: 100%;
     display: grid !important;
-    row-gap: var(--gap, var(--spacing-2xl));
+    row-gap: var(--gap, 0);
     grid-template-columns:
-        [full-width-start] minmax(var(--nds-viewport-padding), 1fr)
-        [breakout-start] minmax(0, var(--nds-breakout-size))
-        [content-start] min(
-            100% - (var(--nds-viewport-padding) * 2),
-            var(--nds-content-MaxWidth)
-        )
-        [content-end] minmax(0, var(--nds-breakout-size))
-        [breakout-end] minmax(var(--nds-viewport-padding), 1fr)
-        [full-width-end];
+        [full-width-start] minmax(var(--nds-viewport-padding), 1fr) [breakout-start] minmax(0, var(--nds-breakout-size)) [content-start] min(100% - (var(--nds-viewport-padding) * 2),
+            var(--nds-content-MaxWidth)) [content-end] minmax(0, var(--nds-breakout-size)) [breakout-end] minmax(var(--nds-viewport-padding), 1fr) [full-width-end];
 
     &> :not(.nds-breakout, .nds-full-width) {
         grid-column: content;
@@ -35,7 +28,8 @@
     }
 
     &>.nds-full-width,
-    &>:has(>.nds-full-width) {
+    &>:has(>.nds-full-width),
+    .contentLayout:is(.cardView) &.nds-ghost>* {
         grid-column: full-width;
 
         &.nds-section-content {
@@ -43,11 +37,15 @@
             max-width: var(--nds-content-MaxWidth);
             margin-inline: auto;
         }
+
+
     }
 
+
     &>.nds-grid {
-        grid-column: content-start / content-end;
+        grid-column: content;
     }
+
     @include desktop(min) {
         &.nds-horizontal>.nds-section-wrapper {
             display: grid;
@@ -63,10 +61,7 @@
         }
     }
 
-    &>.nds-section-head,
-    .nds-grid>.nds-section-head {
-        margin-bottom: 0 !important;
-    }
+
 }
 
 main {
@@ -121,6 +116,7 @@ main {
                     padding: var(--spacing-7xl) 0;
                 }
             }
+
             section.noBg {
                 margin-top: var(--spacing-5xl);
             }
@@ -135,7 +131,7 @@ main {
             }
         }
 
-        > aside {
+        >aside {
             display: none !important;
         }
     }
@@ -178,16 +174,44 @@ main {
     }
 
     &.cardView {
-        @include desktop(min) {
-            margin: var(--spacing-xl) 0;
-            gap: var(--spacing-xl);
-            .mainContent {
-                gap: var(--spacing-xl);
-                section:not(.nds-hero-section) {
-                    box-shadow: var(--shadow-md);
-                    border-radius: var(--radius-md);
-                    padding: var(--spacing-5xl) 0;
+
+
+        gap: var(--spacing-xl);
+
+        .mainContent {
+
+            margin-block: var(--spacing-xl);
+            gap: var(--spacing-4xl);
+
+            @include desktop(min) {
+
+                margin-inline: 0 var(--spacing-xl);
+            }
+
+            section:not(.nds-hero-section, .nds-ghost) {
+                box-shadow: var(--shadow-md);
+                border-radius: var(--radius-md);
+                padding: var(--nds-viewport-padding) 0;
+
+                @include tablet(max) {
+                    margin-inline: var(--nds-viewport-padding) !important;
                 }
+            }
+        }
+
+        @include desktop(min) {
+            .nds-sideMenu {
+                margin-block: var(--spacing-xl);
+                margin-inline: var(--spacing-xl) 0;
+            }
+        }
+
+
+        @include large-desktop(min) {
+
+            .mainContent,
+            .nds-sideMenu {
+                margin-inline: 0;
             }
         }
     }
@@ -233,7 +257,7 @@ main {
         height: 100% !important;
     }
 
-    .contentLayout:not(.cardView) .mainContent section:not(.nds-hero-section) {
+    .contentLayout:not(.cardView) .mainContent section:not(.nds-hero-section, .nds-user-feedback-section) {
         height: 100% !important;
         box-shadow: unset !important;
         border-radius: unset !important;
@@ -244,62 +268,12 @@ main {
    NDS CONTENT SECTIONS - NEW NAMING CONVENTION
    ======================================== */
 
-@mixin reset-section-style {
-    background-color: unset;
-    box-shadow: unset;
-    border: unset;
-}
-
-@mixin section-variant($background, $title-color, $description-color) {
-    background-color: $background !important;
-    color: var(--text-oncolor-primary);
-
-    .nds-section-title {
-        color: $title-color;
-    }
-
-    .nds-section-description {
-        color: $description-color;
-    }
-}
-
-.nds-content-section {
-    background-color: var(--background-white);
-
-    &.nds-blue {
-        @include section-variant(
-            var(--colors-blue-950),
-            var(--text-secondary),
-            var(--text-oncolor-secondary)
-        );
-    }
-
-    &.nds-green {
-        @include section-variant(
-            var(--colors-green-900),
-            var(--text-oncolor-primary),
-            var(--text-oncolor-secondary)
-        );
-    }
-
-    &.nds-neutral {
-        @include section-variant(
-            var(--colors-neutral-900),
-            var(--text-secondary),
-            var(--text-oncolor-secondary)
-        );
-    }
-
-    &.noBg {
-        @include reset-section-style;
-    }
-}
-
 // Content section striping patterns
 .contentLayout {
+
     // Without side menu - always reset
     &:not(.wSideMenu, .cardView) .mainContent {
-        .nds-content-section:nth-of-type(even) {
+        .nds-content-section:not(.nds-user-feedback-section):nth-of-type(even) {
             @include reset-section-style;
         }
 
@@ -313,7 +287,7 @@ main {
     // With side menu - reset only on tablet and below
     &:not(.cardView).wSideMenu .mainContent {
         @include tablet(max) {
-            .nds-content-section:nth-of-type(even) {
+            .nds-content-section:not(.nds-user-feedback-section):nth-of-type(even) {
                 @include reset-section-style;
             }
 
@@ -326,11 +300,95 @@ main {
     }
 }
 
+.nds-content-section {
+    background-color: var(--background-white);
+
+    &.nds-blue {
+        @include section-variant(var(--colors-blue-950),
+            var(--text-secondary),
+            var(--text-oncolor-secondary));
+    }
+
+    &.nds-green {
+        @include section-variant(var(--colors-green-900),
+            var(--text-oncolor-primary),
+            var(--text-oncolor-secondary));
+    }
+
+    &.nds-neutral {
+        @include section-variant(var(--colors-neutral-900),
+            var(--text-secondary),
+            var(--text-oncolor-secondary));
+    }
+
+    &.noBg {
+        @include reset-section-style;
+    }
+
+    /* .contentLayout:not(.wSideMenu, .cardView) &.nds-ghost {
+        @include reset-section-style;
+    } */
+
+    .contentLayout:is(.cardView) &.nds-ghost {
+
+        @include reset-section-style;
+        padding-block: 0 !important;
+
+
+        @include tablet(max) {
+            >* {
+                grid-column: full-width;
+
+                &:has(> .nds-section-content >.nds-card),
+                &.nds-section-content:has(>.nds-card) {
+                    grid-column: content;
+                }
+            }
+
+
+        }
+    }
+}
+
+
+
 .nds-section-head {
     position: relative;
 
+    &:has(.nds-section-image) {
+        display: flex;
+        gap: var(--spacing-xl, 16px);
+
+        .nds-section-text {
+            flex: 1;
+            align-self: center;
+        }
+
+        @include tablet(max) {
+            flex-direction: column;
+
+            &:has(.nds-avatar) {
+                align-items: center;
+
+                .nds-section-text {
+                    text-align: center;
+                }
+
+                .nds-section-action {
+                    align-self: center;
+                }
+            }
+        }
+    }
+
     &:not(:last-child) {
         margin-bottom: var(--spacing-4xl, 32px);
+    }
+
+
+    .contentLayout.cardView &:not(:last-child) {
+        margin-bottom: var(--spacing-2xl, 20px);
+
     }
 
 }
@@ -338,21 +396,36 @@ main {
 .nds-section-title {
     font-size: var(--nds-display-clamp-md-FS, 36px);
     line-height: var(--nds-display-clamp-md-LH, 44px);
-    margin-bottom: var(--nds-display-clamp-md-MB, 11px);
     letter-spacing: -0.02rem;
     font-weight: bold;
     color: var(--text-display, #1f2a37);
+
+    &:has(+ *) {
+        margin-bottom: var(--nds-display-clamp-md-MB, 11px);
+    }
+
+    .contentLayout.cardView & {
+        font-size: var(--nds-display-clamp-sm-FS, 30px);
+        line-height: var(--nds-display-clamp-sm-LH, 38px);
+        margin-bottom: var(--nds-display-clamp-sm-MB, 9.5px);
+
+    }
 }
 
 .nds-section-description {
     font-size: var(--nds-text-clamp-lg-FS, 18px);
     line-height: var(--nds-text-clamp-lg-LH, 26px);
     color: var(--text-default, #161616);
-    margin-bottom: var(--spacing-2xl, 24px);
     margin-top: 0;
     margin-block-start: 0;
     max-width: var(--maxwidth-paragraph-max-width, 720px);
+
+    &:has(+ *) {
+        margin-bottom: var(--spacing-2xl, 24px);
+    }
 }
+
+
 
 .nds-readMore {
     margin: var(--spacing-xl, 20px) auto 0;
@@ -360,10 +433,35 @@ main {
 }
 
 .nds-section-content {
+
+    & :not(nav, .nds-drawer-scroll)>ul,
+    & :not(nav, .nds-drawer-scroll)>ol {
+
+        &.nds-divided li {
+            border-bottom: 1px solid var(--border-neutral-secondary);
+        }
+
+        li {
+            padding-block: var(--spacing-md);
+
+            &:first-child {
+                padding-block-start: 0;
+            }
+
+            &:last-child {
+                padding-block-end: 0;
+                border-bottom: none;
+            }
+        }
+
+
+    }
+
     p,
     ul,
     ol {
         margin-block-end: 1rem;
+        text-align: justify;
     }
 
     p:last-child,
@@ -380,7 +478,8 @@ main {
     }
 
     article,
-    .nds-block-content {
+    .nds-block-content,
+    .nds-block-item {
         p {
             color: var(--text-primary-paragraph);
         }

@@ -58,7 +58,7 @@
 
 @mixin large-desktop($break: null) {
   @if $break =='min' {
-    @media (min-width: 1280px) {
+    @media (min-width: 1344px) {
       @content;
     }
   }
@@ -70,7 +70,7 @@
   }
 
   @else {
-    @media (min-width: 1280px) {
+    @media (min-width: 1344px) {
       @content;
     }
   }
@@ -384,4 +384,24 @@ textarea {
     stroke-dashoffset: $offset;
     transition: stroke-dashoffset 0.3s ease !important;
   }
+}
+
+
+@mixin reset-section-style {
+    background-color: unset !important;
+    box-shadow: unset !important;
+    border: unset !important;
+}
+
+@mixin section-variant($background, $title-color, $description-color) {
+    background-color: $background !important;
+    color: var(--text-oncolor-primary);
+
+    .nds-section-title {
+        color: $title-color;
+    }
+
+    .nds-section-description {
+        color: $description-color;
+    }
 }

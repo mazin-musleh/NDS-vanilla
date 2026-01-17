@@ -31,15 +31,15 @@ direction: ltr
                                 <span class="label">Outline</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-sm", ".nds-feedback-icon", "iconSize"]'>
+                                data-toggler='["nds-sm", ".nds-feedback", "iconSize"]'>
                                 <span class="label">SM</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle selected demo-toggle-btn"
-                                data-toggler='["nds-md", ".nds-feedback-icon", "iconSize"]'>
+                                data-toggler='["nds-md", ".nds-feedback", "iconSize"]'>
                                 <span class="label">MD</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-lg", ".nds-feedback-icon", "iconSize"]'>
+                                data-toggler='["nds-lg", ".nds-feedback", "iconSize"]'>
                                 <span class="label">LG</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
@@ -50,12 +50,14 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <span class="nds-feedback-icon nds-success">
-                                <i class="hgi hgi-solid icon"></i>
+                            <span class="nds-feedback nds-md" data-status="success">
+                                <span class="nds-feedback-icon">
+                                    <i class="hgi hgi-solid icon"></i>
+                                </span>
                             </span>
                         </div>
                     </div>
-                    <div class="nds-tabs nds-code withDivider">
+                    <div class="nds-tabs nds-code nds-divided">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -73,9 +75,11 @@ direction: ltr
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-                                    <span class="nds-feedback-icon nds-success">
-                                      <i class="hgi hgi-solid icon"></i>
-                                    </span>
+<span class="nds-feedback nds-md" data-status="success">
+  <span class="nds-feedback-icon">
+    <i class="hgi hgi-solid icon"></i>
+  </span>
+</span>
                                 </code>
                             </div>
                         </div>
@@ -95,15 +99,15 @@ direction: ltr
                                 <span class="label">Outline</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-sm", ".nds-feedback-icon", "iconSize"]'>
+                                data-toggler='["nds-sm", ".nds-feedback", "iconSize"]'>
                                 <span class="label">SM</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle selected demo-toggle-btn"
-                                data-toggler='["nds-md", ".nds-feedback-icon", "iconSize"]'>
+                                data-toggler='["nds-md", ".nds-feedback", "iconSize"]'>
                                 <span class="label">MD</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-lg", ".nds-feedback-icon", "iconSize"]'>
+                                data-toggler='["nds-lg", ".nds-feedback", "iconSize"]'>
                                 <span class="label">LG</span>
                             </button>
 
@@ -115,12 +119,14 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <span class="nds-feedback-icon nds-info">
-                                <i class="hgi hgi-solid icon"></i>
+                            <span class="nds-feedback nds-md" data-status="info">
+                                <span class="nds-feedback-icon">
+                                    <i class="hgi hgi-solid icon"></i>
+                                </span>
                             </span>
                         </div>
                     </div>
-                    <div class="nds-tabs nds-code withDivider">
+                    <div class="nds-tabs nds-code nds-divided">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -138,9 +144,11 @@ direction: ltr
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-                                    <span class="nds-feedback-icon nds-info">
-                                      <i class="hgi hgi-solid icon"></i>
-                                    </span>
+<span class="nds-feedback nds-md" data-status="info">
+  <span class="nds-feedback-icon">
+    <i class="hgi hgi-solid icon"></i>
+  </span>
+</span>
                                 </code>
                             </div>
                         </div>
@@ -160,15 +168,15 @@ direction: ltr
                                 <span class="label">Outline</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-sm", ".nds-feedback-icon", "iconSize"]'>
+                                data-toggler='["nds-sm", ".nds-feedback", "iconSize"]'>
                                 <span class="label">SM</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle selected demo-toggle-btn"
-                                data-toggler='["nds-md", ".nds-feedback-icon", "iconSize"]'>
+                                data-toggler='["nds-md", ".nds-feedback", "iconSize"]'>
                                 <span class="label">MD</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-lg", ".nds-feedback-icon", "iconSize"]'>
+                                data-toggler='["nds-lg", ".nds-feedback", "iconSize"]'>
                                 <span class="label">LG</span>
                             </button>
 
@@ -180,12 +188,14 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <span class="nds-feedback-icon nds-warning">
-                                <i class="hgi hgi-solid hgi-alert-circle icon"></i>
+                            <span class="nds-feedback nds-md" data-status="warning">
+                                <span class="nds-feedback-icon">
+                                    <i class="hgi hgi-solid icon"></i>
+                                </span>
                             </span>
                         </div>
                     </div>
-                    <div class="nds-tabs nds-code withDivider">
+                    <div class="nds-tabs nds-code nds-divided">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -203,9 +213,11 @@ direction: ltr
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-                                    <span class="nds-feedback-icon nds-warning">
-                                      <i class="hgi hgi-solid icon"></i>
-                                    </span>
+<span class="nds-feedback nds-md" data-status="warning">
+  <span class="nds-feedback-icon">
+    <i class="hgi hgi-solid icon"></i>
+  </span>
+</span>
                                 </code>
                             </div>
                         </div>
@@ -217,10 +229,6 @@ direction: ltr
                         <div class="demo-label">Error Feedback Icon</div>
                         <div class="demo-action">
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-icon-alert", ".nds-feedback-icon", "iconSwitch"]'>
-                                <span class="label">Alert</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-ring", ".nds-feedback-icon", "iconVariant"]'>
                                 <span class="label">Ring</span>
                             </button>
@@ -229,15 +237,15 @@ direction: ltr
                                 <span class="label">Outline</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-sm", ".nds-feedback-icon", "iconSize"]'>
+                                data-toggler='["nds-sm", ".nds-feedback", "iconSize"]'>
                                 <span class="label">SM</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle selected demo-toggle-btn"
-                                data-toggler='["nds-md", ".nds-feedback-icon", "iconSize"]'>
+                                data-toggler='["nds-md", ".nds-feedback", "iconSize"]'>
                                 <span class="label">MD</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-lg", ".nds-feedback-icon", "iconSize"]'>
+                                data-toggler='["nds-lg", ".nds-feedback", "iconSize"]'>
                                 <span class="label">LG</span>
                             </button>
 
@@ -249,12 +257,14 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <span class="nds-feedback-icon nds-error">
-                                <i class="hgi hgi-solid icon"></i>
+                            <span class="nds-feedback nds-md" data-status="error">
+                                <span class="nds-feedback-icon">
+                                    <i class="hgi hgi-solid icon"></i>
+                                </span>
                             </span>
                         </div>
                     </div>
-                    <div class="nds-tabs nds-code withDivider">
+                    <div class="nds-tabs nds-code nds-divided">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -272,9 +282,11 @@ direction: ltr
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-                                    <span class="nds-feedback-icon nds-error">
-                                      <i class="hgi hgi-solid icon"></i>
-                                    </span>
+<span class="nds-feedback nds-md" data-status="error">
+  <span class="nds-feedback-icon">
+    <i class="hgi hgi-solid icon"></i>
+  </span>
+</span>
                                 </code>
                             </div>
                         </div>
@@ -294,15 +306,15 @@ direction: ltr
                                 <span class="label">Outline</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-sm", ".nds-feedback-icon", "iconSize"]'>
+                                data-toggler='["nds-sm", ".nds-feedback", "iconSize"]'>
                                 <span class="label">SM</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle selected demo-toggle-btn"
-                                data-toggler='["nds-md", ".nds-feedback-icon", "iconSize"]'>
+                                data-toggler='["nds-md", ".nds-feedback", "iconSize"]'>
                                 <span class="label">MD</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-lg", ".nds-feedback-icon", "iconSize"]'>
+                                data-toggler='["nds-lg", ".nds-feedback", "iconSize"]'>
                                 <span class="label">LG</span>
                             </button>
 
@@ -314,12 +326,14 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <span class="nds-feedback-icon nds-neutral">
-                                <i class="hgi hgi-solid icon"></i>
+                            <span class="nds-feedback nds-md" data-status="neutral">
+                                <span class="nds-feedback-icon">
+                                    <i class="hgi hgi-solid icon"></i>
+                                </span>
                             </span>
                         </div>
                     </div>
-                    <div class="nds-tabs nds-code withDivider">
+                    <div class="nds-tabs nds-code nds-divided">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -337,9 +351,11 @@ direction: ltr
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-                                    <span class="nds-feedback-icon nds-neutral">
-                                      <i class="hgi hgi-solid icon"></i>
-                                    </span>
+<span class="nds-feedback nds-md" data-status="neutral">
+  <span class="nds-feedback-icon">
+    <i class="hgi hgi-solid icon"></i>
+  </span>
+</span>
                                 </code>
                             </div>
                         </div>
@@ -381,15 +397,15 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <span class="nds-feedback error">
-                                <span class="nds-feedback-icon nds-error nds-outline nds-sm">
+                            <span class="nds-feedback" data-status="error">
+                                <span class="nds-feedback-icon nds-outline nds-sm">
                                     <i class="hgi hgi-solid icon"></i>
                                 </span>
                                 <span class="msg">This field is required</span>
                             </span>
                         </div>
                     </div>
-                    <div class="nds-tabs nds-code withDivider">
+                    <div class="nds-tabs nds-code nds-divided">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -407,12 +423,12 @@ direction: ltr
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-                                <span class="nds-feedback error">
-                                    <span class="nds-feedback-icon nds-error nds-outline nds-sm">
-                                        <i class="hgi hgi-solid icon"></i>
-                                    </span>
-                                    <span class="msg">This field is required</span>
-                                </span>
+<span class="nds-feedback" data-status="error">
+  <span class="nds-feedback-icon nds-outline nds-sm">
+    <i class="hgi hgi-solid icon"></i>
+  </span>
+  <span class="msg">This field is required</span>
+</span>
                                 </code>
                             </div>
                         </div>
@@ -440,15 +456,15 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <span class="nds-feedback success">
-                                <span class="nds-feedback-icon nds-success nds-outline nds-sm">
+                            <span class="nds-feedback" data-status="success">
+                                <span class="nds-feedback-icon nds-outline nds-sm">
                                     <i class="hgi hgi-solid icon"></i>
                                 </span>
                                 <span class="msg">Form submitted successfully</span>
                             </span>
                         </div>
                     </div>
-                    <div class="nds-tabs nds-code withDivider">
+                    <div class="nds-tabs nds-code nds-divided">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -466,12 +482,12 @@ direction: ltr
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-                                    <span class="nds-feedback success">
-                                        <span class="nds-feedback-icon nds-success nds-outline nds-sm">
-                                            <i class="hgi hgi-solid icon"></i>
-                                        </span>
-                                        <span class="msg">Form submitted successfully</span>
-                                    </span>
+<span class="nds-feedback" data-status="success">
+  <span class="nds-feedback-icon nds-outline nds-sm">
+    <i class="hgi hgi-solid icon"></i>
+  </span>
+  <span class="msg">Form submitted successfully</span>
+</span>
                                 </code>
                             </div>
                         </div>
@@ -499,15 +515,15 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <span class="nds-feedback warning">
-                                <span class="nds-feedback-icon nds-warning nds-outline nds-sm">
+                            <span class="nds-feedback" data-status="warning">
+                                <span class="nds-feedback-icon nds-outline nds-sm">
                                     <i class="hgi hgi-solid icon"></i>
                                 </span>
                                 <span class="msg">This action cannot be undone</span>
                             </span>
                         </div>
                     </div>
-                    <div class="nds-tabs nds-code withDivider">
+                    <div class="nds-tabs nds-code nds-divided">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -525,12 +541,12 @@ direction: ltr
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-                                <span class="nds-feedback warning">
-                                    <span class="nds-feedback-icon nds-warning nds-outline nds-sm">
-                                        <i class="hgi hgi-solid icon"></i>
-                                    </span>
-                                    <span class="msg">This action cannot be undone</span>
-                                </span>
+<span class="nds-feedback" data-status="warning">
+  <span class="nds-feedback-icon nds-outline nds-sm">
+    <i class="hgi hgi-solid icon"></i>
+  </span>
+  <span class="msg">This action cannot be undone</span>
+</span>
                                 </code>
                             </div>
                         </div>
@@ -558,15 +574,15 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <span class="nds-feedback info">
-                                <span class="nds-feedback-icon nds-info nds-outline nds-sm">
+                            <span class="nds-feedback" data-status="info">
+                                <span class="nds-feedback-icon nds-outline nds-sm">
                                     <i class="hgi hgi-solid icon"></i>
                                 </span>
                                 <span class="msg">Additional information available</span>
                             </span>
                         </div>
                     </div>
-                    <div class="nds-tabs nds-code withDivider">
+                    <div class="nds-tabs nds-code nds-divided">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -584,12 +600,12 @@ direction: ltr
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-                                    <span class="nds-feedback info">
-                                        <span class="nds-feedback-icon nds-info nds-outline nds-sm">
-                                            <i class="hgi hgi-solid icon"></i>
-                                        </span>
-                                        <span class="msg">Additional information available</span>
-                                    </span>
+<span class="nds-feedback" data-status="info">
+  <span class="nds-feedback-icon nds-outline nds-sm">
+    <i class="hgi hgi-solid icon"></i>
+  </span>
+  <span class="msg">Additional information available</span>
+</span>
                                 </code>
                             </div>
                         </div>
@@ -621,13 +637,13 @@ direction: ltr
                     </ul>
                 </div>
                 <div class="guideline-item">
-                    <h3>Icon Selection</h3>
+                    <h3>Status Types</h3>
                     <ul>
-                        <li><strong>Success:</strong> Checkmark icon with green background</li>
-                        <li><strong>Info:</strong> Information icon with blue background</li>
-                        <li><strong>Warning:</strong> Alert icon with yellow/orange background</li>
-                        <li><strong>Error:</strong> X or alert icon with red background</li>
-                        <li><strong>Neutral:</strong> General purpose icon with gray background</li>
+                        <li><strong>success:</strong> Checkmark icon with green styling</li>
+                        <li><strong>info:</strong> Information icon with blue styling</li>
+                        <li><strong>warning:</strong> Alert icon with yellow/orange styling</li>
+                        <li><strong>error:</strong> X icon with red styling</li>
+                        <li><strong>neutral:</strong> General purpose icon with gray styling</li>
                     </ul>
                 </div>
                 <div class="guideline-item">

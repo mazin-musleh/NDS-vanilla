@@ -366,6 +366,215 @@
         }
     }
 
+    // Responsive table handler (similar to expandable pattern)
+    class NDSResponsiveTable {
+        constructor(tableElement) {
+            // tableElement is the <table> element with nds-table and nds-responsive classes
+            this.table = tableElement;
+            this.wrapper = null;
+            this.needsScroll = false;
+            this.currentScrollState = null; // Track current state to avoid redundant DOM operations
+
+            this.init();
+        }
+
+        init() {
+            this.setupWrapper();
+            this.checkTableWidth();
+            this.setupEventListeners();
+        }
+
+        setupWrapper() {
+            // Check if already wrapped
+            if (this.table.parentElement.classList.contains('nds-table-wrapper')) {
+                this.wrapper = this.table.parentElement;
+                this.copyMaxWidthToWrapper();
+                return;
+            }
+
+            // Create wrapper
+            this.wrapper = document.createElement('div');
+            this.wrapper.className = 'nds-table-wrapper';
+
+            // Insert wrapper before table
+            this.table.parentElement.insertBefore(this.wrapper, this.table);
+
+            // Move table into wrapper
+            this.wrapper.appendChild(this.table);
+
+            // Copy max-width from table to wrapper
+            this.copyMaxWidthToWrapper();
+        }
+
+        copyMaxWidthToWrapper() {
+            // Get max-width from table's inline style or computed style
+            const tableMaxWidth = this.table.style.getPropertyValue('--max-width') ||
+                                 getComputedStyle(this.table).getPropertyValue('--max-width');
+
+            if (tableMaxWidth && tableMaxWidth.trim()) {
+                this.wrapper.style.setProperty('--max-width', tableMaxWidth.trim());
+            }
+        }
+
+        checkTableWidth() {
+            // Get wrapper's scrollable width (full content width)
+            const wrapperScrollWidth = this.wrapper.scrollWidth;
+            // Get wrapper's visible width (constrained by max-width)
+            const wrapperClientWidth = this.wrapper.clientWidth;
+
+            // Check if content is wider than visible area (needs scrolling)
+            if (wrapperScrollWidth > wrapperClientWidth) {
+                this.wrapper.classList.add('nds-scroll');
+                this.wrapper.classList.add('scrolled-start'); // Start at the beginning
+                this.needsScroll = true;
+                console.log(`NDS Responsive Table: Scroll enabled (content: ${wrapperScrollWidth}px > wrapper: ${wrapperClientWidth}px)`);
+            } else {
+                this.wrapper.classList.remove('nds-scroll');
+                this.wrapper.classList.remove('scrolled-start');
+                this.wrapper.classList.remove('scrolled-end');
+                this.needsScroll = false;
+                console.log(`NDS Responsive Table: No scroll needed (content: ${wrapperScrollWidth}px <= wrapper: ${wrapperClientWidth}px)`);
+            }
+        }
+
+        handleScroll() {
+            if (!this.needsScroll) return;
+
+            const scrollLeft = Math.abs(this.wrapper.scrollLeft);
+            const maxScroll = this.wrapper.scrollWidth - this.wrapper.clientWidth;
+
+            // Determine new state
+            let newState = 'middle';
+            if (scrollLeft <= 5) {
+                newState = 'start';
+            } else if (scrollLeft >= maxScroll - 5) {
+                newState = 'end';
+            }
+
+            // Only update DOM if state changed (prevents redundant class operations)
+            if (this.currentScrollState !== newState) {
+                this.wrapper.classList.remove('scrolled-start', 'scrolled-end');
+
+                if (newState === 'start') {
+                    this.wrapper.classList.add('scrolled-start');
+                } else if (newState === 'end') {
+                    this.wrapper.classList.add('scrolled-end');
+                }
+
+                this.currentScrollState = newState;
+            }
+        }
+
+        setupEventListeners() {
+            // Scroll event listener with requestAnimationFrame throttling
+            let scrollTicking = false;
+            this.wrapper.addEventListener('scroll', () => {
+                if (!scrollTicking) {
+                    window.requestAnimationFrame(() => {
+                        this.handleScroll();
+                        scrollTicking = false;
+                    });
+                    scrollTicking = true;
+                }
+            });
+
+            // Use ResizeObserver for better element-specific size detection
+            if (window.ResizeObserver) {
+                this.resizeObserver = new ResizeObserver(entries => {
+                    clearTimeout(this.resizeTimer);
+                    this.resizeTimer = setTimeout(() => {
+                        this.checkTableWidth();
+                    }, 100);
+                });
+
+                this.resizeObserver.observe(this.table);
+                // Also observe wrapper for visibility changes
+                this.resizeObserver.observe(this.wrapper);
+            } else {
+                // Fallback to window resize
+                window.addEventListener('resize', () => {
+                    this.handleResize();
+                });
+            }
+
+            // Use IntersectionObserver to detect visibility changes (when tab becomes visible)
+            if (window.IntersectionObserver) {
+                this.intersectionObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            // Table became visible, recheck width
+                            clearTimeout(this.visibilityTimer);
+                            this.visibilityTimer = setTimeout(() => {
+                                this.checkTableWidth();
+                            }, 150);
+                        }
+                    });
+                }, {
+                    threshold: 0.1
+                });
+
+                this.intersectionObserver.observe(this.wrapper);
+            }
+
+            // Tab change listener is now handled globally (see initializeTables function)
+        }
+
+        handleResize() {
+            clearTimeout(this.resizeTimer);
+            this.resizeTimer = setTimeout(() => {
+                this.checkTableWidth();
+            }, 250);
+        }
+
+        recheckWidth() {
+            this.checkTableWidth();
+        }
+
+        destroy() {
+            if (this.resizeObserver) {
+                this.resizeObserver.disconnect();
+                this.resizeObserver = null;
+            }
+
+            if (this.intersectionObserver) {
+                this.intersectionObserver.disconnect();
+                this.intersectionObserver = null;
+            }
+
+            if (this.resizeTimer) {
+                clearTimeout(this.resizeTimer);
+            }
+
+            if (this.visibilityTimer) {
+                clearTimeout(this.visibilityTimer);
+            }
+
+            this.wrapper.classList.remove('nds-scroll', 'scrolled-start', 'scrolled-end');
+            this.currentScrollState = null;
+        }
+    }
+
+    // Global tab change handler (single listener for all responsive tables)
+    if (!window.ndsTabChangeHandlerInitialized) {
+        window.ndsTabChangeHandlerInitialized = true;
+        document.addEventListener('nds:tab:changed', (e) => {
+            const activePanel = e.detail?.panel;
+            if (activePanel) {
+                // Find all responsive tables inside the activated tab panel
+                const tables = activePanel.querySelectorAll('.nds-table.nds-responsive[data-nds-responsive-initialized]');
+                tables.forEach(table => {
+                    if (table.ndsResponsiveTableInstance) {
+                        // Debounce the recheck
+                        clearTimeout(table.ndsResponsiveTableInstance.tabChangeTimer);
+                        table.ndsResponsiveTableInstance.tabChangeTimer = setTimeout(() => {
+                            table.ndsResponsiveTableInstance.checkTableWidth();
+                        }, 200);
+                    }
+                });
+            }
+        });
+    }
+
     // Auto-initialize tables on page load (sortable and/or selectable)
     function initializeTables() {
         // Find all NDS tables
@@ -375,6 +584,15 @@
             // Skip elements inside code examples
             if (table.closest('code, .code-example')) {
                 return;
+            }
+
+            // Initialize responsive wrapper ONLY for tables with nds-responsive class
+            // If table has --max-width, it will use that value
+            // Otherwise, wrapper will use default max-width (100%)
+            if (table.classList.contains('nds-responsive') && !table.hasAttribute('data-nds-responsive-initialized')) {
+                const responsiveInstance = new NDSResponsiveTable(table);
+                table.ndsResponsiveTableInstance = responsiveInstance;
+                table.setAttribute('data-nds-responsive-initialized', 'true');
             }
 
             // Check if table is sortable or has checkboxes
@@ -394,12 +612,24 @@
         initializeTables();
     }
 
+    // Recheck width for all responsive tables
+    function recheckAllWidths() {
+        const responsiveTables = document.querySelectorAll('.nds-table.nds-responsive[data-nds-responsive-initialized]');
+        responsiveTables.forEach(table => {
+            if (table.ndsResponsiveTableInstance && table.ndsResponsiveTableInstance.recheckWidth) {
+                table.ndsResponsiveTableInstance.recheckWidth();
+            }
+        });
+    }
+
     // CRITICAL: Expose global API immediately (called by unified init system)
     if (typeof window !== 'undefined') {
         window.NDSTables = {
             init: initializeTables,
             reinit: reinitializeTables,
-            create: (table) => new NDSTables(table)
+            recheckWidths: recheckAllWidths,
+            create: (table) => new NDSTables(table),
+            createResponsive: (table) => new NDSResponsiveTable(table)
         };
     }
 

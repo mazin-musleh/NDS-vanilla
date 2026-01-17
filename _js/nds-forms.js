@@ -1,1016 +1,1288 @@
 // NDS Forms Controller - Form Control Logic
 // File: nds-forms.js
+// Optimized and simplified version
 
 (function () {
     'use strict';
 
-    // Voice Recognition Module
-    var VoiceRecognition = {
-        audioFeedback: {
-            context: null,
+    // ==============================================
+    // CONSTANTS
+    // ==============================================
+    var StatusTypes = {
+        DEFAULT: '',
+        ERROR: 'error',
+        SUCCESS: 'success',
+        WARNING: 'warning',
+        INFO: 'info'
+    };
 
-            init: function () {
+    var VOICE_TIMEOUT = 30000; // 30 seconds
+
+    // ==============================================
+    // VOICE RECOGNITION MODULE
+    // ==============================================
+    var VoiceRecognition = (function() {
+        var audioContext = null;
+
+        function initAudioContext() {
+            if (!audioContext) {
                 try {
-                    this.context = new (window.AudioContext || window.webkitAudioContext)();
+                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
                 } catch (e) {
-                    this.context = null;
+                    audioContext = null;
                 }
+            }
+            return audioContext;
+        }
+
+        function playTone(frequency, duration) {
+            var ctx = initAudioContext();
+            if (!ctx) return;
+
+            try {
+                if (ctx.state === 'suspended') ctx.resume();
+
+                var osc = ctx.createOscillator();
+                var gain = ctx.createGain();
+                var now = ctx.currentTime;
+
+                osc.connect(gain).connect(ctx.destination);
+                osc.frequency.setValueAtTime(frequency, now);
+                osc.type = 'sine';
+
+                gain.gain.setValueAtTime(0.1, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + duration / 1000);
+
+                osc.start(now);
+                osc.stop(now + duration / 1000);
+            } catch (e) {
+                // Silent fail
+            }
+        }
+
+        return {
+            audioFeedback: {
+                init: initAudioContext,
+                start: function() { playTone(800, 200); },
+                end: function() { playTone(400, 300); },
+                error: function() { playTone(200, 400); }
             },
 
-            playTone: function (frequency, duration) {
-                if (!this.context) this.init();
-                if (!this.context) return;
-
-                try {
-                    if (this.context.state === 'suspended') {
-                        this.context.resume();
-                    }
-
-                    var osc = this.context.createOscillator();
-                    var gain = this.context.createGain();
-                    var now = this.context.currentTime;
-
-                    osc.connect(gain).connect(this.context.destination);
-                    osc.frequency.setValueAtTime(frequency, now);
-                    osc.type = 'sine';
-
-                    gain.gain.setValueAtTime(0.1, now);
-                    gain.gain.exponentialRampToValueAtTime(0.01, now + duration / 1000);
-
-                    osc.start(now);
-                    osc.stop(now + duration / 1000);
-                } catch (e) {
-                    // Silent fail
-                }
+            isSupported: function() {
+                return 'webkitSpeechRecognition' in window || 'SpeechRecognition' in window;
             },
 
-            start: function () { this.playTone(800, 200); },
-            end: function () { this.playTone(400, 300); },
-            error: function () { this.playTone(200, 400); }
-        },
+            getLanguage: function() {
+                var lang = document.documentElement.lang || 'ar';
+                var baseLang = lang.split('-')[0].toLowerCase();
+                return baseLang === 'en' ? 'en-US' : 'ar-SA';
+            },
 
-        isSupported: function () {
-            return 'webkitSpeechRecognition' in window || 'SpeechRecognition' in window;
-        },
+            create: function(options) {
+                if (!this.isSupported()) return null;
 
-        getLanguage: function () {
-            var lang = document.documentElement.lang || 'ar';
-            var baseLang = lang.split('-')[0].toLowerCase();
-            
-            return baseLang === 'en' ? 'en-US' : 'ar-SA';
-        },
+                var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+                var detectedLang = this.getLanguage();
 
-        getLanguageInfo: function(lang) {
-            return lang === 'en-US' ? 
-                { name: 'English', dir: 'ltr' } : 
-                { name: 'العربية', dir: 'rtl' };
-        },
+                Object.assign(recognition, {
+                    continuous: false,
+                    interimResults: true,
+                    lang: detectedLang,
+                    maxAlternatives: 1
+                }, options || {});
 
-        create: function (options) {
-            if (!this.isSupported()) return null;
+                recognition._ndsLang = detectedLang;
+                return recognition;
+            },
 
-            var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-            var detectedLang = this.getLanguage();
-            var langInfo = this.getLanguageInfo(detectedLang);
-            
-            var settings = Object.assign({
-                continuous: false,
-                interimResults: true,
-                lang: detectedLang,
-                maxAlternatives: 1
-            }, options);
+            startListening: function(recognition, callbacks) {
+                if (!recognition) return;
 
-            Object.assign(recognition, settings);
-            
-            // Store language info for reference
-            recognition._ndsLangInfo = langInfo;
-            recognition._ndsDetectedLang = detectedLang;
-            
-            return recognition;
-        },
+                var finalTranscript = '';
+                callbacks = callbacks || {};
 
-        startListening: function (recognition, callbacks) {
-            if (!recognition) return;
+                recognition.onstart = function() {
+                    VoiceRecognition.audioFeedback.start();
+                    if (callbacks.onStart) callbacks.onStart();
+                };
 
-            var finalTranscript = '';
-            callbacks = callbacks || {};
+                recognition.onresult = function(event) {
+                    var interimTranscript = '';
 
-            recognition.onstart = function () {
-                VoiceRecognition.audioFeedback.start();
-                if (callbacks.onStart) callbacks.onStart();
-            };
-
-            recognition.onresult = function (event) {
-                var interimTranscript = '';
-
-                for (var i = event.resultIndex; i < event.results.length; i++) {
-                    var transcript = event.results[i][0].transcript;
-                    if (event.results[i].isFinal) {
-                        finalTranscript += transcript;
-                    } else {
-                        interimTranscript += transcript;
+                    for (var i = event.resultIndex; i < event.results.length; i++) {
+                        var transcript = event.results[i][0].transcript;
+                        if (event.results[i].isFinal) {
+                            finalTranscript += transcript;
+                        } else {
+                            interimTranscript += transcript;
+                        }
                     }
-                }
 
-                if (callbacks.onResult) {
-                    callbacks.onResult({
-                        final: finalTranscript,
-                        interim: interimTranscript,
-                        isFinal: event.results[event.results.length - 1].isFinal
-                    });
-                }
-            };
+                    if (callbacks.onResult) {
+                        callbacks.onResult({
+                            final: finalTranscript,
+                            interim: interimTranscript,
+                            isFinal: event.results[event.results.length - 1].isFinal
+                        });
+                    }
+                };
 
-            recognition.onerror = function (event) {
-                VoiceRecognition.audioFeedback.error();
-                if (callbacks.onError) {
-                    callbacks.onError(event.error);
-                } else {
-                }
-            };
+                recognition.onerror = function(event) {
+                    VoiceRecognition.audioFeedback.error();
+                    if (callbacks.onError) callbacks.onError(event.error);
+                };
 
-            recognition.onend = function () {
-                VoiceRecognition.audioFeedback.end();
-                if (callbacks.onEnd) callbacks.onEnd(finalTranscript);
-            };
+                recognition.onend = function() {
+                    VoiceRecognition.audioFeedback.end();
+                    if (callbacks.onEnd) callbacks.onEnd(finalTranscript);
+                };
 
-            recognition.start();
+                recognition.start();
+            },
+
+            stopListening: function(recognition) {
+                if (recognition) recognition.stop();
+            }
+        };
+    })();
+
+    // ==============================================
+    // UTILITY FUNCTIONS
+    // ==============================================
+    var Utils = {
+        getCurrentLanguage: function() {
+            var htmlLang = document.documentElement.lang || 'en';
+            return htmlLang.split('-')[0].toLowerCase();
         },
 
-        stopListening: function (recognition) {
-            if (recognition) recognition.stop();
+        isArabic: function() {
+            return this.getCurrentLanguage() === 'ar';
+        },
+
+        debounce: function(func, wait) {
+            var timeout;
+            return function() {
+                var context = this, args = arguments;
+                clearTimeout(timeout);
+                timeout = setTimeout(function() {
+                    func.apply(context, args);
+                }, wait);
+            };
+        },
+
+        triggerEvents: function(element) {
+            element.dispatchEvent(new Event('input', { bubbles: true }));
+            element.dispatchEvent(new Event('change', { bubbles: true }));
+        },
+
+        findPrimaryInput: function(container) {
+            return container.querySelector(':scope > input[type="text"], :scope > input[type="email"], :scope > input[type="search"], :scope > textarea') ||
+                container.querySelector(':scope > input, :scope > textarea');
         }
     };
 
-    // Utility functions
-    function updateFormState(input, formControl, skipValidation) {
-        var hasValue;
+    // ==============================================
+    // STATUS MANAGEMENT API
+    // ==============================================
+    var StatusManager = {
+        set: function(element, status, message) {
+            if (!element) return false;
 
-        if (input.type === 'checkbox' || input.type === 'radio') {
-            hasValue = input.checked;
-        } else {
-            hasValue = input.value.trim() !== '';
-        }
+            var container = this._findContainer(element);
+            if (!container) return false;
 
-        formControl.classList.toggle('filled', hasValue);
-        formControl.classList.toggle('disabled', input.disabled);
-
-        // Show/hide clear button for text-based inputs only
-        var clearButton = formControl.querySelector('.clear');
-        if (clearButton && input.type !== 'radio' && input.type !== 'checkbox') {
-            clearButton.classList.toggle('hidden', !hasValue);
-        }
-
-        // Skip validation if requested (for input event while typing)
-        if (skipValidation) {
-            return;
-        }
-
-        // Add error state based on HTML5 validation
-        var isInvalid = false;
-        if (input.validity) {
-            isInvalid = !input.validity.valid;
-        }
-
-        // IMPORTANT: Clear custom validation errors when HTML5 validation passes
-        // This ensures aria-invalid doesn't keep the error state active
-        if (!isInvalid && input.validationMessage) {
-            input.setCustomValidity('');
-        }
-
-        formControl.classList.toggle('error', isInvalid);
-
-        // Update error message in form footer
-        updateErrorMessage(input, formControl, isInvalid);
-    }
-
-    // Update error message in feedback placeholder
-    function updateErrorMessage(input, formControl, isInvalid) {
-        var formContainer = formControl.closest('.nds-form-container');
-        if (!formContainer) return;
-
-        // Find the feedback placeholder (can be anywhere in form container)
-        var feedbackPlaceholder = formContainer.querySelector('.nds-feedback');
-        if (!feedbackPlaceholder) return;
-
-        var msgElement = feedbackPlaceholder.querySelector('.msg');
-        if (!msgElement) return;
-
-        if (isInvalid) {
-            var errorMessage = getValidationMessage(input);
-
-            // Store original content ONLY if feedback is not currently in error state
-            if (!msgElement._originalContent && !feedbackPlaceholder.classList.contains('error')) {
-                msgElement._originalContent = msgElement.textContent;
+            // Handle standalone feedback
+            if (container.classList.contains('nds-feedback')) {
+                return this._setFeedbackStatus(container, status, message);
             }
 
-            // Add error class and show feedback
-            feedbackPlaceholder.classList.add('error');
-            feedbackPlaceholder.classList.remove('hidden');
+            var feedbackElement = container.querySelector('.nds-feedback');
+            var msgElement = feedbackElement ? feedbackElement.querySelector('.msg') : null;
 
-            // Add nds-error class to icon if not present
-            var iconElement = feedbackPlaceholder.querySelector('.nds-feedback-icon');
-            if (iconElement && !iconElement.classList.contains('nds-error')) {
-                iconElement.classList.add('nds-error');
+            // Store original message
+            if (msgElement && !container.hasAttribute('data-original-message')) {
+                container.setAttribute('data-original-message', msgElement.textContent || '');
             }
 
-            // Update message text with error
-            msgElement.textContent = errorMessage;
-
-            // Set aria-describedby for accessibility
-            if (!feedbackPlaceholder.id) {
-                feedbackPlaceholder.id = 'error-' + (input.id || 'input-' + Date.now());
-            }
-            input.setAttribute('aria-describedby', feedbackPlaceholder.id);
-            input.setAttribute('aria-invalid', 'true');
-        } else {
-            // Remove error class
-            feedbackPlaceholder.classList.remove('error');
-
-            // Remove nds-error class from icon
-            var iconElement = feedbackPlaceholder.querySelector('.nds-feedback-icon');
-            if (iconElement) {
-                iconElement.classList.remove('nds-error');
-            }
-
-            // Restore original content if it was stored
-            var hadOriginalContent = msgElement._originalContent !== undefined;
-            if (hadOriginalContent) {
-                msgElement.textContent = msgElement._originalContent;
-                delete msgElement._originalContent; // Clean up stored reference
-
-                // Check if restored content is not empty
-                var msgText = msgElement.textContent.trim();
-                if (msgText && msgText !== '') {
-                    // Show feedback with restored original content
-                    feedbackPlaceholder.classList.remove('hidden');
-                } else {
-                    // Restored content is empty, hide the feedback
-                    feedbackPlaceholder.classList.add('hidden');
+            if (status) {
+                container.setAttribute('data-status', status);
+                if (feedbackElement) {
+                    feedbackElement.setAttribute('data-status', status);
                 }
-            }
-            // If no original content was stored, don't modify the hidden state
-            // (preserve whatever visibility state it had before the error)
-
-            input.removeAttribute('aria-describedby');
-            input.removeAttribute('aria-invalid');
-        }
-    }
-
-    // Get current language helper
-    function getCurrentLanguage() {
-        var htmlLang = document.documentElement.lang || 'en';
-        return htmlLang.split('-')[0].toLowerCase();
-    }
-
-    // Get validation error message
-    function getValidationMessage(input) {
-        var validity = input.validity;
-
-        // Check for custom validation message first
-        if (input.hasAttribute('data-error-message')) {
-            return input.getAttribute('data-error-message');
-        }
-
-        // Detect language at the time of error (delayed check)
-        var isArabic = getCurrentLanguage() === 'ar';
-
-        // Fallback to default messages based on validity state and language
-        var errorMessage = '';
-
-        if (validity.valueMissing) {
-            errorMessage = isArabic ? 'هذا الحقل مطلوب' : 'This field is required';
-        } else if (validity.typeMismatch) {
-            if (input.type === 'email') {
-                errorMessage = isArabic ? 'يرجى إدخال عنوان بريد إلكتروني صحيح' : 'Please enter a valid email address';
-            } else if (input.type === 'url') {
-                errorMessage = isArabic ? 'يرجى إدخال رابط صحيح' : 'Please enter a valid URL';
-            }
-        } else if (validity.tooShort) {
-            errorMessage = isArabic
-                ? 'المدخل قصير جداً (الحد الأدنى ' + input.minLength + ' حرف)'
-                : 'Input is too short (minimum ' + input.minLength + ' characters)';
-        } else if (validity.tooLong) {
-            errorMessage = isArabic
-                ? 'المدخل طويل جداً (الحد الأقصى ' + input.maxLength + ' حرف)'
-                : 'Input is too long (maximum ' + input.maxLength + ' characters)';
-        } else if (validity.rangeUnderflow) {
-            errorMessage = isArabic
-                ? 'القيمة يجب أن تكون على الأقل ' + input.min
-                : 'Value must be at least ' + input.min;
-        } else if (validity.rangeOverflow) {
-            errorMessage = isArabic
-                ? 'القيمة يجب ألا تزيد عن ' + input.max
-                : 'Value must be no more than ' + input.max;
-        } else if (validity.patternMismatch) {
-            errorMessage = isArabic ? 'يرجى مطابقة التنسيق المطلوب' : 'Please match the requested format';
-        } else {
-            errorMessage = isArabic ? 'مدخل غير صحيح' : 'Invalid input';
-        }
-
-        return errorMessage;
-    }
-    
-    function updateRadioGroup(changedRadio, formControl) {
-        if (changedRadio.type !== 'radio' || !changedRadio.name) return;
-        
-        var radioGroupContainer = changedRadio.closest('.nds-radio-group');
-        if (!radioGroupContainer) return;
-        
-        var radioGroup = radioGroupContainer.querySelectorAll('input[type="radio"][name="' + changedRadio.name + '"]');
-        radioGroup.forEach(function(radio) {
-            if (radio !== changedRadio) {
-                var radioFormControl = radio.closest('.nds-form-control');
-                if (radioFormControl) {
-                    updateFormState(radio, radioFormControl);
+                if (message && msgElement) {
+                    container.setAttribute('data-message', message);
+                    msgElement.textContent = message;
                 }
-            }
-        });
-    }
 
-    function findPrimaryInput(container) {
-        return container.querySelector(':scope > input[type="text"], :scope > input[type="email"], :scope > input[type="search"], :scope > textarea') ||
-            container.querySelector(':scope > input, :scope > textarea');
-    }
-
-    function triggerEvents(element) {
-        element.dispatchEvent(new Event('input', { bubbles: true }));
-        element.dispatchEvent(new Event('change', { bubbles: true }));
-    }
-
-    // Auto-fill functionality
-    function initInputAutoFill() {
-        // Find all auto-fill containers and initialize them
-        document.querySelectorAll('.nds-autoFill[data-target]').forEach(function (container) {
-            initAutoFillContainer(container);
-        });
-    }
-
-
-    // Form control functionality
-    function initFormControlClasses() {
-        // Use the new container initialization approach
-        initializeContainer(document.body);
-    }
-
-    // Select dropdown functionality
-    function initSelectDropdown(selectElement, formControl) {
-        var isOpen = false;
-        
-        function updateOpenState() {
-            formControl.classList.toggle('open', isOpen);
-        }
-        
-        // Mouse interaction
-        selectElement.addEventListener('mousedown', function (e) {
-            isOpen = !isOpen;
-            updateOpenState();
-        });
-        
-        // Keyboard navigation
-        selectElement.addEventListener('keydown', function (e) {
-            var openKeys = ['ArrowDown', 'ArrowUp', 'Enter', ' '];
-            var closeKeys = ['Escape', 'Tab'];
-            
-            if (openKeys.includes(e.key) && !isOpen) {
-                isOpen = true;
-                updateOpenState();
-            } else if (closeKeys.includes(e.key)) {
-                isOpen = false;
-                updateOpenState();
-            }
-        });
-        
-        // Auto-close events
-        ['blur', 'change'].forEach(function(event) {
-            selectElement.addEventListener(event, function () {
-                isOpen = false;
-                updateOpenState();
-            });
-        });
-    }
-
-    // Custom Select dropdown functionality
-    function initCustomSelectDropdown(selectInput, formControl) {
-        var dropdown = formControl.querySelector('.nds-select-dropdown');
-        var hiddenInput = formControl.querySelector('.nds-select-value');
-        var options = formControl.querySelectorAll('.select-option');
-        
-        if (!dropdown || !options.length) return;
-
-        var isOpen = false;
-        var selectedValue = '';
-        
-        function updateOpenState() {
-            formControl.classList.toggle('open', isOpen);
-            dropdown.classList.toggle('hidden', !isOpen);
-
-            if (isOpen) {
-                updateSelectedOptions();
-                adjustDropdownPosition();
-                // Focus first option for keyboard navigation
-                if (options[0]) options[0].focus();
+                // Accessibility
+                var input = container.querySelector('input, textarea, select');
+                if (input) {
+                    input.setAttribute('aria-invalid', status === 'error' ? 'true' : 'false');
+                }
             } else {
-                resetDropdownPosition();
+                this.clear(container);
             }
-        }
 
-        function adjustDropdownPosition() {
-            // Wait for dropdown to be rendered
-            setTimeout(function() {
-                if (!dropdown || !formControl) return;
-
-                // Get dropdown and form control positions
-                var dropdownRect = dropdown.getBoundingClientRect();
-                var formControlRect = formControl.getBoundingClientRect();
-                var viewportHeight = window.innerHeight;
-                var viewportWidth = window.innerWidth;
-
-                // Calculate space below and above the input
-                var spaceBelow = viewportHeight - formControlRect.bottom;
-                var spaceAbove = formControlRect.top;
-                var dropdownHeight = dropdownRect.height;
-
-                // Vertical positioning: Check if there's not enough space below
-                if (spaceBelow < dropdownHeight && spaceAbove > spaceBelow) {
-                    // Position above the input
-                    dropdown.style.top = 'unset';
-                    dropdown.style.marginTop = 'unset';
-                    dropdown.style.bottom = '100%';
-                    dropdown.style.marginBottom = '4px';
-                } else {
-                    // Reset to default position (below the input)
-                    dropdown.style.top = '';
-                    dropdown.style.marginTop = '';
-                    dropdown.style.bottom = '';
-                    dropdown.style.marginBottom = '';
-                }
-
-                // Horizontal positioning: Check if dropdown goes off-screen
-                var spaceOnRight = viewportWidth - dropdownRect.right;
-                var spaceOnLeft = dropdownRect.left;
-
-                // Check if dropdown goes off the right edge
-                if (spaceOnRight < 0 && Math.abs(spaceOnRight) > 20) {
-                    dropdown.style.left = 'auto';
-                    dropdown.style.right = '0';
-                }
-                // Check if dropdown goes off the left edge
-                else if (spaceOnLeft < 0 && Math.abs(spaceOnLeft) > 20) {
-                    dropdown.style.right = 'auto';
-                    dropdown.style.left = '0';
-                }
-                // Reset to default if it fits
-                else {
-                    dropdown.style.left = '';
-                    dropdown.style.right = '';
-                }
-            }, 10);
-        }
-
-        function resetDropdownPosition() {
-            if (!dropdown) return;
-
-            // Reset all inline positioning styles
-            dropdown.style.top = '';
-            dropdown.style.marginTop = '';
-            dropdown.style.bottom = '';
-            dropdown.style.marginBottom = '';
-            dropdown.style.left = '';
-            dropdown.style.right = '';
-        }
-        
-        function updateSelectedOptions() {
-            options.forEach(function(option) {
-                var isSelected = option.dataset.value === selectedValue;
-                option.classList.toggle('selected', isSelected);
-            });
-        }
-        
-        function selectValue(value, text) {
-            selectedValue = value;
-            selectInput.value = text;
-            if (hiddenInput) {
-                hiddenInput.value = value;
-            }
-            updateSelectedOptions();
-            closeDropdown();
-            
-            // Trigger change events
-            triggerEvents(selectInput);
-            if (hiddenInput) {
-                triggerEvents(hiddenInput);
-            }
-            
-            // Update form state
-            updateFormState(selectInput, formControl);
-            
-            // Dispatch custom change event
-            formControl.dispatchEvent(new CustomEvent('selectChange', {
-                detail: { value: value, text: text }
+            container.dispatchEvent(new CustomEvent('nds:statusChange', {
+                detail: { status: status, message: message },
+                bubbles: true
             }));
-        }
-        
-        function openDropdown() {
-            if (formControl.classList.contains('disabled') || selectInput.disabled) return;
-            isOpen = true;
-            updateOpenState();
-        }
-        
-        function closeDropdown() {
-            isOpen = false;
-            updateOpenState();
-        }
-        
-        function toggleDropdown() {
-            if (isOpen) {
-                closeDropdown();
-            } else {
-                openDropdown();
+
+            return true;
+        },
+
+        clear: function(element) {
+            if (!element) return false;
+
+            if (element.classList.contains('nds-feedback')) {
+                return this._setFeedbackStatus(element, null, null);
             }
-        }
 
-        // Click events
-        selectInput.addEventListener('click', function(e) {
-            e.preventDefault();
-            toggleDropdown();
-        });
+            var container = this._findContainer(element);
+            if (!container) return false;
 
-        // Option selection
-        options.forEach(function(option) {
-            option.addEventListener('click', function(e) {
-                e.preventDefault();
-                var value = this.dataset.value || '';
-                var optionText = this.querySelector('.option-text');
-                var text = optionText ? optionText.textContent : value;
-                selectValue(value, text);
-                selectInput.focus();
-            });
-
-            // Keyboard navigation for options
-            option.addEventListener('keydown', function(e) {
-                var currentIndex = Array.from(options).indexOf(this);
-                
-                switch(e.key) {
-                    case 'Enter':
-                    case ' ':
-                        e.preventDefault();
-                        var value = this.dataset.value || '';
-                        var optionText = this.querySelector('.option-text');
-                var text = optionText ? optionText.textContent : value;
-                        selectValue(value, text);
-                        selectInput.focus();
-                        break;
-                        
-                    case 'ArrowDown':
-                        e.preventDefault();
-                        var nextIndex = Math.min(currentIndex + 1, options.length - 1);
-                        options[nextIndex].focus();
-                        break;
-                        
-                    case 'ArrowUp':
-                        e.preventDefault();
-                        var prevIndex = Math.max(currentIndex - 1, 0);
-                        options[prevIndex].focus();
-                        break;
-                        
-                    case 'Escape':
-                        closeDropdown();
-                        selectInput.focus();
-                        break;
-                }
-            });
-        });
-
-        // Keyboard navigation for main input
-        selectInput.addEventListener('keydown', function(e) {
-            if (selectInput.disabled) return;
-            
-            switch(e.key) {
-                case 'Enter':
-                case ' ':
-                case 'ArrowDown':
-                    e.preventDefault();
-                    if (!isOpen) {
-                        openDropdown();
-                    } else if (options[0]) {
-                        options[0].focus();
-                    }
-                    break;
-                    
-                case 'ArrowUp':
-                    e.preventDefault();
-                    if (isOpen && options.length > 0) {
-                        options[options.length - 1].focus();
-                    }
-                    break;
-                    
-                case 'Escape':
-                    if (isOpen) {
-                        closeDropdown();
-                    }
-                    break;
+            // Restore original message
+            var msgElement = container.querySelector('.nds-feedback .msg');
+            var originalMessage = container.getAttribute('data-original-message');
+            if (msgElement && originalMessage !== null) {
+                msgElement.textContent = originalMessage;
             }
-        });
 
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!formControl.contains(e.target)) {
-                closeDropdown();
+            // Remove status attributes
+            container.removeAttribute('data-status');
+            container.removeAttribute('data-message');
+            container.removeAttribute('data-original-message');
+
+            var feedbackElement = container.querySelector('.nds-feedback');
+            if (feedbackElement) {
+                feedbackElement.removeAttribute('data-status');
             }
-        });
 
-        // Initialize selected option if there's a value
-        // Check hidden input first, then selectInput (for pre-populated forms)
-        var initialValue = (hiddenInput ? hiddenInput.value : '') || selectInput.value;
-        if (initialValue) {
-            var matchingOption = Array.from(options).find(opt => opt.dataset.value === initialValue);
-            if (matchingOption) {
-                selectedValue = initialValue;
-                var optionText = matchingOption.querySelector('.option-text');
-                var text = optionText ? optionText.textContent : initialValue;
-                // Update the visible input with the option text
-                selectInput.value = text;
-                updateSelectedOptions();
-                // Update form state to show as filled
-                updateFormState(selectInput, formControl);
-            }
-        }
-    }
-
-
-    // Date Picker functionality
-    function initDatePicker(dateInput, formControl) {
-        // Use the new modular calendar system
-        if (typeof DatePickerCalendar !== 'undefined') {
-            new DatePickerCalendar(dateInput, formControl);
-        } else {
-            console.warn('DatePickerCalendar not available. Make sure nds-calendar.js is loaded.');
-        }
-    }
-
-    // Date picker initialization now uses the new modular calendar system
-    // All functionality moved to nds-calendar.js for better maintainability
-
-    // Voice input functionality - Simple approach
-    function initVoiceInput(formControl) {
-        var voiceButton = formControl.querySelector('.nds-form-action .voiceInput');
-        if (!voiceButton || !VoiceRecognition.isSupported()) {
-            if (voiceButton) voiceButton.style.display = 'none';
-            return;
-        }
-
-        var isListening = false;
-        var recognition = null;
-        var timeout = null;
-        var input = findPrimaryInput(formControl);
-        var originalPlaceholder = input ? input.placeholder : '';
-        
-        // Language detection based on HTML lang attribute
-        function getCurrentLanguage() {
-            var htmlLang = document.documentElement.lang || 'ar';
-            return htmlLang.split('-')[0].toLowerCase();
-        }
-        
-        function isCurrentlyArabic() {
-            return getCurrentLanguage() === 'ar';
-        }
-        
-        var isArabic = isCurrentlyArabic();
-        var voiceLang = isArabic ? 'ar-SA' : 'en-US';
-        var langName = isArabic ? 'العربية' : 'English';
-
-        // Setup button with language-aware labels
-        var startLabel = isArabic ? 'بدء إدخال الصوت (' + langName + ')' : 'Start voice input (' + langName + ')';
-        var stopLabel = isArabic ? 'إيقاف إدخال الصوت' : 'Stop voice input';
-        
-        voiceButton.setAttribute('aria-label', startLabel);
-        voiceButton.setAttribute('aria-pressed', 'false');
-        voiceButton.title = startLabel;
-
-        function showMessage(message, duration) {
-            if (!input) return;
-            input.placeholder = message;
-            input.style.fontStyle = 'italic';
-            input.style.opacity = '0.7';
-            
-            setTimeout(function() {
-                input.placeholder = originalPlaceholder;
-                input.style.fontStyle = '';
-                input.style.opacity = '';
-            }, duration || 3000);
-        }
-
-        function stop() {
-            isListening = false;
-            if (recognition) {
-                try { recognition.abort(); } catch (e) {}
-                recognition = null;
-            }
-            if (timeout) {
-                clearTimeout(timeout);
-                timeout = null;
-            }
-            
-            voiceButton.classList.remove('listening');
-            voiceButton.setAttribute('aria-pressed', 'false');
-            voiceButton.setAttribute('aria-label', startLabel);
-            formControl.classList.remove('voice-active');
-            
+            // Clear accessibility
+            var input = container.querySelector('input, textarea, select');
             if (input) {
-                input.style.fontStyle = '';
-                input.style.opacity = '';
+                input.removeAttribute('aria-invalid');
             }
-        }
 
-        function start() {
-            if (!input) return;
-            
-            recognition = VoiceRecognition.create();
-            if (!recognition) return;
+            container.dispatchEvent(new CustomEvent('nds:statusChange', {
+                detail: { status: null, message: null },
+                bubbles: true
+            }));
 
-            isListening = true;
-            voiceButton.classList.add('listening');
-            voiceButton.setAttribute('aria-pressed', 'true');
-            voiceButton.setAttribute('aria-label', stopLabel);
-            formControl.classList.add('voice-active');
-            input.focus();
+            return true;
+        },
 
-            // 30-second timeout
-            timeout = setTimeout(function() {
-                stop();
-                var msg = isCurrentlyArabic() ? 'انتهت مهلة إدخال الصوت' : 'Voice input timed out';
-                showMessage(msg, 4000);
-            }, 30000);
+        get: function(element) {
+            if (!element) return { status: '', message: '', isValid: true };
 
-            VoiceRecognition.startListening(recognition, {
-                language: voiceLang,
-                
-                onStart: function() {
-                    // Already handled in start()
-                },
+            var container = this._findContainer(element);
+            return {
+                status: container.getAttribute('data-status') || '',
+                message: container.getAttribute('data-message') || '',
+                isValid: container.getAttribute('data-status') !== 'error'
+            };
+        },
 
-                onResult: function(result) {
-                    var value = result.isFinal ? result.final.trim() : result.interim;
-                    
-                    input.style.fontStyle = result.isFinal ? '' : 'italic';
-                    input.style.opacity = result.isFinal ? '' : '0.7';
-                    input.value = value;
-                    
-                    if (result.isFinal) {
-                        stop();
-                        triggerEvents(input);
-                        updateFormState(input, formControl);
-                    }
-                },
+        _findContainer: function(element) {
+            var selectors = '.nds-form-container, .nds-check-group, .nds-radio-group, .nds-feedback';
+            return (element.matches && element.matches(selectors))
+                ? element
+                : element.closest(selectors);
+        },
 
-                onError: function(error) {
-                    stop();
-                    
-                    var currentlyArabic = isCurrentlyArabic();
-                    var errorMsg = currentlyArabic ? 'خطأ في إدخال الصوت' : 'Voice input error';
-                    var errorType = typeof error === 'string' ? error : (error && error.error);
-                    
-                    if (errorType === 'no-speech') {
-                        errorMsg = currentlyArabic ? 'لم يتم اكتشاف صوت' : 'No speech detected';
-                    } else if (errorType === 'not-allowed') {
-                        errorMsg = currentlyArabic ? 'مطلوب إذن الميكروفون' : 'Microphone permission required';
-                    } else if (errorType === 'audio-capture') {
-                        errorMsg = currentlyArabic ? 'تم رفض الوصول للميكروفون' : 'Microphone access denied';
-                    } else if (errorType === 'network') {
-                        errorMsg = currentlyArabic ? 'خطأ في الشبكة' : 'Network error';
-                    } else if (errorType === 'aborted') {
-                        errorMsg = currentlyArabic ? 'تم إلغاء إدخال الصوت' : 'Voice input cancelled';
-                    } else if (errorType === 'language-not-supported') {
-                        errorMsg = currentlyArabic ? 'اللغة غير مدعومة' : 'Language not supported';
-                    }
-                    
-                    showMessage(errorMsg);
-                },
+        _setFeedbackStatus: function(feedback, status, message) {
+            if (!feedback) return false;
 
-                onEnd: stop
-            });
-        }
+            var msgElement = feedback.querySelector('.msg');
 
-        voiceButton.addEventListener('click', function() {
-            if (isListening) {
-                stop();
-                VoiceRecognition.stopListening(recognition);
+            if (!feedback.hasAttribute('data-original-message') && msgElement) {
+                feedback.setAttribute('data-original-message', msgElement.textContent || '');
+            }
+
+            if (status) {
+                feedback.setAttribute('data-status', status);
+                if (message && msgElement) {
+                    feedback.setAttribute('data-message', message);
+                    msgElement.textContent = message;
+                }
             } else {
-                start();
+                feedback.removeAttribute('data-status');
+                feedback.removeAttribute('data-message');
+                var original = feedback.getAttribute('data-original-message');
+                if (msgElement && original !== null) {
+                    msgElement.textContent = original;
+                }
+                feedback.removeAttribute('data-original-message');
             }
-        });
-    }
 
-    // Password toggle functionality
-    function initPasswordToggle(formControl) {
-        var passwordToggle = formControl.querySelector('.nds-form-action .toggle-password');
-        if (!passwordToggle) return;
+            return true;
+        }
+    };
 
-        passwordToggle.addEventListener('click', function (e) {
-            e.preventDefault();
-            
-            var passwordInput = formControl.querySelector(':scope > input[type="password"], :scope > input[type="text"]');
-            if (!passwordInput) return;
-            
-            var isPassword = passwordInput.type === 'password';
-            passwordInput.type = isPassword ? 'text' : 'password';
-            passwordToggle.classList.toggle('show', isPassword);
-            passwordToggle.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
-        });
-    }
+    // ==============================================
+    // VALIDATION MODULE
+    // ==============================================
+    var Validator = {
+        getMessage: function(input) {
+            if (input.hasAttribute('data-error-message')) {
+                return input.getAttribute('data-error-message');
+            }
 
+            var validity = input.validity;
+            var isArabic = Utils.isArabic();
 
-    // Switch controls functionality
-    function initSwitchControls(formControl) {
-        var switchElements = formControl.querySelectorAll('.nds-switch');
-        if (!switchElements.length) return;
+            if (validity.valueMissing) {
+                return isArabic ? 'هذا الحقل مطلوب' : 'This field is required';
+            } else if (validity.typeMismatch) {
+                if (input.type === 'email') {
+                    return isArabic ? 'يرجى إدخال عنوان بريد إلكتروني صحيح' : 'Please enter a valid email address';
+                } else if (input.type === 'url') {
+                    return isArabic ? 'يرجى إدخال رابط صحيح' : 'Please enter a valid URL';
+                }
+            } else if (validity.tooShort) {
+                return isArabic
+                    ? 'المدخل قصير جداً (الحد الأدنى ' + input.minLength + ' حرف)'
+                    : 'Input is too short (minimum ' + input.minLength + ' characters)';
+            } else if (validity.tooLong) {
+                return isArabic
+                    ? 'المدخل طويل جداً (الحد الأقصى ' + input.maxLength + ' حرف)'
+                    : 'Input is too long (maximum ' + input.maxLength + ' characters)';
+            } else if (validity.rangeUnderflow) {
+                return isArabic
+                    ? 'القيمة يجب أن تكون على الأقل ' + input.min
+                    : 'Value must be at least ' + input.min;
+            } else if (validity.rangeOverflow) {
+                return isArabic
+                    ? 'القيمة يجب ألا تزيد عن ' + input.max
+                    : 'Value must be no more than ' + input.max;
+            } else if (validity.patternMismatch) {
+                return isArabic ? 'يرجى مطابقة التنسيق المطلوب' : 'Please match the requested format';
+            }
 
-        switchElements.forEach(function(switchElement) {
-            var switchInput = switchElement.querySelector('.nds-switch-input');
-            var switchTrack = switchElement.querySelector('.nds-switch-track');
-            
-            if (!switchInput || !switchTrack) return;
+            return isArabic ? 'مدخل غير صحيح' : 'Invalid input';
+        },
 
-            // Prevent duplicate initialization
-            if (switchTrack._switchInitialized) return;
-            switchTrack._switchInitialized = true;
+        validateCheckboxGroup: function(groupElement, options) {
+            options = options || { showMessage: true };
 
-            // Add mouse interaction for active state
-            switchTrack.addEventListener('mousedown', function(e) {
-                if (!switchInput.disabled && !switchElement.classList.contains('disabled')) {
-                    formControl.classList.add('active');
+            var group = groupElement.closest('.nds-check-group') || groupElement;
+            var checkboxes = group.querySelectorAll('input[type="checkbox"]');
+            var checkedCount = Array.from(checkboxes).filter(function(cb) { return cb.checked; }).length;
+
+            var minChecked = parseInt(group.getAttribute('data-min-checked') || '0', 10);
+            var maxChecked = parseInt(group.getAttribute('data-max-checked') || checkboxes.length, 10);
+
+            var isValid = checkedCount >= minChecked && checkedCount <= maxChecked;
+            var message = '';
+            var isArabic = Utils.isArabic();
+
+            if (!isValid) {
+                if (checkedCount < minChecked) {
+                    message = isArabic
+                        ? 'يرجى اختيار ' + minChecked + ' خيارات على الأقل'
+                        : 'Please select at least ' + minChecked + ' option(s)';
+                } else {
+                    message = isArabic
+                        ? 'يرجى اختيار ' + maxChecked + ' خيارات كحد أقصى'
+                        : 'Please select no more than ' + maxChecked + ' option(s)';
+                }
+            }
+
+            var customMessage = group.getAttribute('data-error-message');
+            if (!isValid && customMessage) message = customMessage;
+
+            if (options.showMessage) {
+                if (!isValid) StatusManager.set(group, 'error', message);
+                else StatusManager.clear(group);
+            }
+
+            return { valid: isValid, checked: checkedCount, min: minChecked, max: maxChecked, message: message };
+        },
+
+        validateRadioGroup: function(groupElement, options) {
+            options = options || { showMessage: true };
+
+            var group = groupElement.closest('.nds-radio-group') || groupElement;
+            var radios = group.querySelectorAll('input[type="radio"]');
+            var isSelected = Array.from(radios).some(function(r) { return r.checked; });
+
+            var isRequired = group.classList.contains('nds-required');
+            var isValid = !isRequired || isSelected;
+            var message = '';
+            var isArabic = Utils.isArabic();
+
+            if (!isValid) {
+                message = isArabic ? 'يرجى اختيار خيار واحد' : 'Please select an option';
+            }
+
+            var customMessage = group.getAttribute('data-error-message');
+            if (!isValid && customMessage) message = customMessage;
+
+            if (options.showMessage) {
+                if (!isValid) StatusManager.set(group, 'error', message);
+                else StatusManager.clear(group);
+            }
+
+            return { valid: isValid, selected: isSelected, message: message };
+        },
+
+        validateForm: function(formElement, options) {
+            options = options || { showMessages: true, focusFirst: true };
+
+            var form = formElement.closest('.nds-form') || formElement;
+            if (!form) return { valid: true, invalidFields: [], errors: [] };
+
+            var invalidFields = [];
+            var errors = [];
+            var firstInvalidInput = null;
+
+            // Validate form containers
+            form.querySelectorAll('.nds-form-container').forEach(function(container) {
+                var input = container.querySelector('input, textarea, select');
+                if (!input || input.disabled) return;
+
+                if (!input.checkValidity()) {
+                    invalidFields.push(container);
+                    errors.push({
+                        field: container,
+                        input: input,
+                        message: Validator.getMessage(input)
+                    });
+
+                    if (!firstInvalidInput) firstInvalidInput = input;
+                    if (options.showMessages) {
+                        StatusManager.set(container, 'error', Validator.getMessage(input));
+                    }
                 }
             });
 
-            // Remove active state on mouse events
+            // Validate checkbox groups
+            form.querySelectorAll('.nds-check-group[data-min-checked], .nds-check-group[data-max-checked]').forEach(function(group) {
+                var result = Validator.validateCheckboxGroup(group, { showMessage: options.showMessages });
+                if (!result.valid) {
+                    invalidFields.push(group);
+                    errors.push({
+                        field: group,
+                        input: group.querySelector('input[type="checkbox"]'),
+                        message: result.message
+                    });
+                    if (!firstInvalidInput) firstInvalidInput = group.querySelector('input[type="checkbox"]');
+                }
+            });
+
+            // Validate radio groups
+            form.querySelectorAll('.nds-radio-group.nds-required').forEach(function(group) {
+                var result = Validator.validateRadioGroup(group, { showMessage: options.showMessages });
+                if (!result.valid) {
+                    invalidFields.push(group);
+                    errors.push({
+                        field: group,
+                        input: group.querySelector('input[type="radio"]'),
+                        message: result.message
+                    });
+                    if (!firstInvalidInput) firstInvalidInput = group.querySelector('input[type="radio"]');
+                }
+            });
+
+            if (options.focusFirst && firstInvalidInput) {
+                firstInvalidInput.focus();
+            }
+
+            var isFormValid = invalidFields.length === 0;
+
+            form.dispatchEvent(new CustomEvent('nds:formValidate', {
+                detail: { valid: isFormValid, invalidFields: invalidFields, errors: errors },
+                bubbles: true
+            }));
+
+            return {
+                valid: isFormValid,
+                invalidFields: invalidFields,
+                errors: errors
+            };
+        }
+    };
+
+    // ==============================================
+    // FORM STATE MANAGEMENT
+    // ==============================================
+    var FormState = {
+        update: function(input, formControl, skipValidation) {
+            var hasValue = (input.type === 'checkbox' || input.type === 'radio')
+                ? input.checked
+                : input.value.trim() !== '';
+
+            formControl.classList.toggle('filled', hasValue);
+            formControl.classList.toggle('disabled', input.disabled);
+
+            // Show/hide clear button
+            var clearButton = formControl.querySelector('.clear');
+            if (clearButton && input.type !== 'radio' && input.type !== 'checkbox') {
+                clearButton.classList.toggle('hidden', !hasValue);
+            }
+
+            if (skipValidation) return;
+
+            // Validate
+            var isInvalid = input.validity && !input.validity.valid;
+
+            // Clear custom validation when HTML5 validation passes
+            if (!isInvalid && input.validationMessage) {
+                input.setCustomValidity('');
+            }
+
+            formControl.classList.toggle('error', isInvalid);
+
+            // Update error message
+            var formContainer = formControl.closest('.nds-form-container');
+            if (!formContainer) return;
+
+            if (isInvalid) {
+                StatusManager.set(formContainer, 'error', Validator.getMessage(input));
+            } else {
+                var currentStatus = formContainer.getAttribute('data-status');
+                if (currentStatus === 'error') {
+                    StatusManager.clear(formContainer);
+                }
+            }
+        },
+
+        updateRadioGroup: function(changedRadio) {
+            if (changedRadio.type !== 'radio' || !changedRadio.name) return;
+
+            var radioGroupContainer = changedRadio.closest('.nds-radio-group');
+            if (!radioGroupContainer) return;
+
+            var radioGroup = radioGroupContainer.querySelectorAll('input[type="radio"][name="' + changedRadio.name + '"]');
+            radioGroup.forEach(function(radio) {
+                if (radio !== changedRadio) {
+                    var radioFormControl = radio.closest('.nds-form-control');
+                    if (radioFormControl) {
+                        FormState.update(radio, radioFormControl);
+                    }
+                }
+            });
+        }
+    };
+
+    // ==============================================
+    // FORM CONTROLS INITIALIZATION
+    // ==============================================
+    var FormControls = {
+        initializeInput: function(input, formControl) {
+            if (input._ndsInitialized) return;
+            input._ndsInitialized = true;
+
+            // Auto-add required attribute
+            var formContainer = formControl.closest('.nds-form-container');
+            if (formContainer && formContainer.classList.contains('nds-required') && !input.hasAttribute('required')) {
+                input.setAttribute('required', '');
+            }
+
+            // Mouse interaction
+            input.addEventListener('mousedown', function() {
+                formControl.classList.add('active');
+            });
+
             ['mouseup', 'mouseleave'].forEach(function(event) {
-                switchTrack.addEventListener(event, function() {
+                input.addEventListener(event, function() {
                     formControl.classList.remove('active');
                 });
             });
 
-            // Make track clickable to toggle switch
-            switchTrack.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                
-                // Don't toggle if disabled
-                if (switchInput.disabled || switchElement.classList.contains('disabled')) {
-                    return;
-                }
-
-                // Toggle the checked state
-                switchInput.checked = !switchInput.checked;
-                
-                // Trigger events to update form state
-                triggerEvents(switchInput);
-                updateFormState(switchInput, formControl);
-                
-                // Dispatch custom switch change event
-                switchElement.dispatchEvent(new CustomEvent('switchChange', {
-                    detail: { 
-                        checked: switchInput.checked,
-                        value: switchInput.value,
-                        input: switchInput
-                    },
-                    bubbles: true
-                }));
+            // Focus states
+            input.addEventListener('focus', function() {
+                formControl.classList.add('focus');
             });
 
-            // Handle keyboard interaction on the input
-            switchInput.addEventListener('keydown', function(e) {
-                // Space or Enter should toggle the switch
-                if (e.key === ' ' || e.key === 'Enter') {
-                    e.preventDefault();
-                    
-                    if (!this.disabled && !switchElement.classList.contains('disabled')) {
-                        this.checked = !this.checked;
-                        triggerEvents(this);
-                        updateFormState(this, formControl);
-                        
-                        // Dispatch custom switch change event
-                        switchElement.dispatchEvent(new CustomEvent('switchChange', {
-                            detail: { 
-                                checked: this.checked,
-                                value: this.value,
-                                input: this
-                            },
-                            bubbles: true
-                        }));
-                    }
+            input.addEventListener('blur', function() {
+                formControl.classList.remove('focus');
+                FormState.update(input, formControl);
+            });
+
+            // Input changes - clear errors but don't validate while typing
+            input.addEventListener('input', function() {
+                FormState.update(input, formControl, true);
+
+                var formContainer = formControl.closest('.nds-form-container');
+                if (formContainer && formContainer.hasAttribute('data-status')) {
+                    StatusManager.clear(formContainer);
                 }
             });
 
-            // Handle label clicks (if label is outside the switch)
-            var label = formControl.querySelector('label[for="' + switchInput.id + '"]');
-            if (label && !switchElement.contains(label)) {
-                label.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    if (!switchInput.disabled && !switchElement.classList.contains('disabled')) {
-                        switchInput.checked = !switchInput.checked;
-                        triggerEvents(switchInput);
-                        updateFormState(switchInput, formControl);
-                        
-                        // Dispatch custom switch change event
-                        switchElement.dispatchEvent(new CustomEvent('switchChange', {
-                            detail: { 
-                                checked: switchInput.checked,
-                                value: switchInput.value,
-                                input: switchInput
-                            },
-                            bubbles: true
-                        }));
-                    }
+            // Change event
+            input.addEventListener('change', function() {
+                FormState.update(input, formControl);
+                FormState.updateRadioGroup(input);
+            });
+
+            // Initialize state
+            FormState.update(input, formControl, true);
+
+            // Watch for attribute changes
+            if (window.MutationObserver) {
+                var observer = new MutationObserver(function(mutations) {
+                    mutations.forEach(function(mutation) {
+                        var attr = mutation.attributeName;
+                        if (attr === 'disabled' || attr === 'checked' || attr === 'value') {
+                            FormState.update(input, formControl);
+                            if (attr === 'checked') {
+                                FormState.updateRadioGroup(input);
+                            }
+                        }
+                    });
+                });
+                observer.observe(input, {
+                    attributes: true,
+                    attributeFilter: ['disabled', 'checked', 'value']
                 });
             }
 
-            // Initialize state
-            updateFormState(switchInput, formControl);
-        });
-    }
+            // Property change detection for programmatic updates
+            this._setupPropertyWatchers(input, formControl);
 
-    // Clear button functionality
-    function initClearButton(formControl, inputElements) {
-        var clearButton = formControl.querySelector('.nds-form-action .clear');
-        if (!clearButton) return;
+            // Initialize specialized controls
+            if (input.tagName.toLowerCase() === 'select') {
+                this.initSelectDropdown(input, formControl);
+            }
+            if (input.classList.contains('nds-select-input')) {
+                this.initCustomSelectDropdown(input, formControl);
+            }
+            if (input.classList.contains('nds-date-input')) {
+                this.initDatePicker(input, formControl);
+            }
+        },
 
-        clearButton.addEventListener('click', function (e) {
-            e.preventDefault();
-            
-            inputElements.forEach(function (input) {
-                if (input.type === 'checkbox' || input.type === 'radio') {
-                    input.checked = false;
-                } else {
-                    input.value = '';
+        _setupPropertyWatchers: function(input, formControl) {
+            try {
+                var proto = Object.getPrototypeOf(input);
+                var valueDescriptor = Object.getOwnPropertyDescriptor(proto, 'value');
+                var checkedDescriptor = Object.getOwnPropertyDescriptor(proto, 'checked');
+
+                if (valueDescriptor && valueDescriptor.set) {
+                    Object.defineProperty(input, 'value', {
+                        get: valueDescriptor.get,
+                        set: function(val) {
+                            valueDescriptor.set.call(this, val);
+                            FormState.update(this, formControl, true);
+                        },
+                        configurable: true
+                    });
                 }
-                triggerEvents(input);
-                updateFormState(input, formControl);
+
+                if (checkedDescriptor && checkedDescriptor.set && (input.type === 'radio' || input.type === 'checkbox')) {
+                    Object.defineProperty(input, 'checked', {
+                        get: checkedDescriptor.get,
+                        set: function(val) {
+                            var wasChecked = this.checked;
+                            checkedDescriptor.set.call(this, val);
+                            FormState.update(this, formControl, true);
+                            if (val && !wasChecked) {
+                                FormState.updateRadioGroup(this);
+                            }
+                        },
+                        configurable: true
+                    });
+                }
+            } catch (e) {
+                // Silent fail if property definition not supported
+            }
+        },
+
+        initSelectDropdown: function(selectElement, formControl) {
+            var isOpen = false;
+
+            function updateOpenState() {
+                formControl.classList.toggle('open', isOpen);
+            }
+
+            selectElement.addEventListener('mousedown', function() {
+                isOpen = !isOpen;
+                updateOpenState();
+            });
+
+            selectElement.addEventListener('keydown', function(e) {
+                var openKeys = ['ArrowDown', 'ArrowUp', 'Enter', ' '];
+                var closeKeys = ['Escape', 'Tab'];
+
+                if (openKeys.includes(e.key) && !isOpen) {
+                    isOpen = true;
+                    updateOpenState();
+                } else if (closeKeys.includes(e.key)) {
+                    isOpen = false;
+                    updateOpenState();
+                }
+            });
+
+            ['blur', 'change'].forEach(function(event) {
+                selectElement.addEventListener(event, function() {
+                    isOpen = false;
+                    updateOpenState();
+                });
+            });
+        },
+
+        initCustomSelectDropdown: function(selectInput, formControl) {
+            var dropdown = formControl.querySelector('.nds-select-dropdown');
+            var hiddenInput = formControl.querySelector('.nds-select-value');
+            var options = formControl.querySelectorAll('.select-option');
+
+            if (!dropdown || !options.length) return;
+
+            var isOpen = false;
+            var selectedValue = '';
+
+            function updateOpenState() {
+                formControl.classList.toggle('open', isOpen);
+                dropdown.classList.toggle('hidden', !isOpen);
+
+                if (isOpen) {
+                    updateSelectedOptions();
+                    adjustDropdownPosition();
+                    if (options[0]) options[0].focus();
+                } else {
+                    resetDropdownPosition();
+                }
+            }
+
+            function adjustDropdownPosition() {
+                setTimeout(function() {
+                    if (!dropdown || !formControl) return;
+
+                    var dropdownRect = dropdown.getBoundingClientRect();
+                    var formControlRect = formControl.getBoundingClientRect();
+                    var viewportHeight = window.innerHeight;
+                    var spaceBelow = viewportHeight - formControlRect.bottom;
+                    var spaceAbove = formControlRect.top;
+                    var dropdownHeight = dropdownRect.height;
+
+                    // Vertical positioning
+                    if (spaceBelow < dropdownHeight && spaceAbove > spaceBelow) {
+                        dropdown.style.top = 'unset';
+                        dropdown.style.bottom = '100%';
+                        dropdown.style.marginBottom = '4px';
+                    } else {
+                        dropdown.style.top = '';
+                        dropdown.style.bottom = '';
+                        dropdown.style.marginBottom = '';
+                    }
+
+                    // Horizontal positioning
+                    var spaceOnRight = window.innerWidth - dropdownRect.right;
+                    if (spaceOnRight < 0 && Math.abs(spaceOnRight) > 20) {
+                        dropdown.style.left = 'auto';
+                        dropdown.style.right = '0';
+                    } else {
+                        dropdown.style.left = '';
+                        dropdown.style.right = '';
+                    }
+                }, 10);
+            }
+
+            function resetDropdownPosition() {
+                if (!dropdown) return;
+                dropdown.style.top = '';
+                dropdown.style.bottom = '';
+                dropdown.style.marginBottom = '';
+                dropdown.style.left = '';
+                dropdown.style.right = '';
+            }
+
+            function updateSelectedOptions() {
+                options.forEach(function(option) {
+                    option.classList.toggle('selected', option.dataset.value === selectedValue);
+                });
+            }
+
+            function selectValue(value, text) {
+                selectedValue = value;
+                selectInput.value = text;
+                if (hiddenInput) hiddenInput.value = value;
+                updateSelectedOptions();
+                closeDropdown();
+
+                Utils.triggerEvents(selectInput);
+                if (hiddenInput) Utils.triggerEvents(hiddenInput);
+
+                FormState.update(selectInput, formControl);
+
+                formControl.dispatchEvent(new CustomEvent('selectChange', {
+                    detail: { value: value, text: text }
+                }));
+            }
+
+            function openDropdown() {
+                if (formControl.classList.contains('disabled') || selectInput.disabled) return;
+                isOpen = true;
+                updateOpenState();
+            }
+
+            function closeDropdown() {
+                isOpen = false;
+                updateOpenState();
+            }
+
+            function toggleDropdown() {
+                isOpen ? closeDropdown() : openDropdown();
+            }
+
+            // Event listeners
+            selectInput.addEventListener('click', function(e) {
+                e.preventDefault();
+                toggleDropdown();
+            });
+
+            options.forEach(function(option) {
+                option.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    var value = this.dataset.value || '';
+                    var optionText = this.querySelector('.option-text');
+                    var text = optionText ? optionText.textContent : value;
+                    selectValue(value, text);
+                    selectInput.focus();
+                });
+
+                option.addEventListener('keydown', function(e) {
+                    var currentIndex = Array.from(options).indexOf(this);
+
+                    switch(e.key) {
+                        case 'Enter':
+                        case ' ':
+                            e.preventDefault();
+                            var value = this.dataset.value || '';
+                            var optionText = this.querySelector('.option-text');
+                            var text = optionText ? optionText.textContent : value;
+                            selectValue(value, text);
+                            selectInput.focus();
+                            break;
+                        case 'ArrowDown':
+                            e.preventDefault();
+                            options[Math.min(currentIndex + 1, options.length - 1)].focus();
+                            break;
+                        case 'ArrowUp':
+                            e.preventDefault();
+                            options[Math.max(currentIndex - 1, 0)].focus();
+                            break;
+                        case 'Escape':
+                            closeDropdown();
+                            selectInput.focus();
+                            break;
+                    }
+                });
+            });
+
+            selectInput.addEventListener('keydown', function(e) {
+                if (selectInput.disabled) return;
+
+                switch(e.key) {
+                    case 'Enter':
+                    case ' ':
+                    case 'ArrowDown':
+                        e.preventDefault();
+                        if (!isOpen) {
+                            openDropdown();
+                        } else if (options[0]) {
+                            options[0].focus();
+                        }
+                        break;
+                    case 'ArrowUp':
+                        e.preventDefault();
+                        if (isOpen && options.length > 0) {
+                            options[options.length - 1].focus();
+                        }
+                        break;
+                    case 'Escape':
+                        if (isOpen) closeDropdown();
+                        break;
+                }
+            });
+
+            document.addEventListener('click', function(e) {
+                if (!formControl.contains(e.target)) {
+                    closeDropdown();
+                }
+            });
+
+            // Initialize selected option
+            var initialValue = (hiddenInput ? hiddenInput.value : '') || selectInput.value;
+            if (initialValue) {
+                var matchingOption = Array.from(options).find(function(opt) {
+                    return opt.dataset.value === initialValue;
+                });
+                if (matchingOption) {
+                    selectedValue = initialValue;
+                    var optionText = matchingOption.querySelector('.option-text');
+                    var text = optionText ? optionText.textContent : initialValue;
+                    selectInput.value = text;
+                    updateSelectedOptions();
+                    FormState.update(selectInput, formControl);
+                }
+            }
+        },
+
+        initDatePicker: function(dateInput, formControl) {
+            if (typeof DatePickerCalendar !== 'undefined') {
+                new DatePickerCalendar(dateInput, formControl);
+            }
+        },
+
+        initVoiceInput: function(formControl) {
+            var voiceButton = formControl.querySelector('.nds-form-action .voiceInput');
+            if (!voiceButton || !VoiceRecognition.isSupported()) {
+                if (voiceButton) voiceButton.style.display = 'none';
+                return;
+            }
+
+            var isListening = false;
+            var recognition = null;
+            var timeout = null;
+            var input = Utils.findPrimaryInput(formControl);
+            var originalPlaceholder = input ? input.placeholder : '';
+
+            var isArabic = Utils.isArabic();
+            var langName = isArabic ? 'العربية' : 'English';
+            var startLabel = isArabic ? 'بدء إدخال الصوت (' + langName + ')' : 'Start voice input (' + langName + ')';
+            var stopLabel = isArabic ? 'إيقاف إدخال الصوت' : 'Stop voice input';
+
+            voiceButton.setAttribute('aria-label', startLabel);
+            voiceButton.setAttribute('aria-pressed', 'false');
+            voiceButton.title = startLabel;
+
+            function showMessage(message, duration) {
+                if (!input) return;
+                input.placeholder = message;
+                input.style.fontStyle = 'italic';
+                input.style.opacity = '0.7';
+
+                setTimeout(function() {
+                    input.placeholder = originalPlaceholder;
+                    input.style.fontStyle = '';
+                    input.style.opacity = '';
+                }, duration || 3000);
+            }
+
+            function stop() {
+                isListening = false;
+                if (recognition) {
+                    try { recognition.abort(); } catch (e) {}
+                    recognition = null;
+                }
+                if (timeout) {
+                    clearTimeout(timeout);
+                    timeout = null;
+                }
+
+                voiceButton.classList.remove('listening');
+                voiceButton.setAttribute('aria-pressed', 'false');
+                voiceButton.setAttribute('aria-label', startLabel);
+                formControl.classList.remove('voice-active');
+
+                if (input) {
+                    input.style.fontStyle = '';
+                    input.style.opacity = '';
+                }
+            }
+
+            function start() {
+                if (!input) return;
+
+                recognition = VoiceRecognition.create();
+                if (!recognition) return;
+
+                isListening = true;
+                voiceButton.classList.add('listening');
+                voiceButton.setAttribute('aria-pressed', 'true');
+                voiceButton.setAttribute('aria-label', stopLabel);
+                formControl.classList.add('voice-active');
+                input.focus();
+
+                timeout = setTimeout(function() {
+                    stop();
+                    var msg = Utils.isArabic() ? 'انتهت مهلة إدخال الصوت' : 'Voice input timed out';
+                    showMessage(msg, 4000);
+                }, VOICE_TIMEOUT);
+
+                VoiceRecognition.startListening(recognition, {
+                    onResult: function(result) {
+                        var value = result.isFinal ? result.final.trim() : result.interim;
+                        input.style.fontStyle = result.isFinal ? '' : 'italic';
+                        input.style.opacity = result.isFinal ? '' : '0.7';
+                        input.value = value;
+
+                        if (result.isFinal) {
+                            stop();
+                            Utils.triggerEvents(input);
+                            FormState.update(input, formControl);
+                        }
+                    },
+                    onError: function(error) {
+                        stop();
+                        var errorType = typeof error === 'string' ? error : (error && error.error);
+                        var messages = {
+                            ar: {
+                                'no-speech': 'لم يتم اكتشاف صوت',
+                                'not-allowed': 'مطلوب إذن الميكروفون',
+                                'audio-capture': 'تم رفض الوصول للميكروفون',
+                                'network': 'خطأ في الشبكة',
+                                'aborted': 'تم إلغاء إدخال الصوت',
+                                'language-not-supported': 'اللغة غير مدعومة',
+                                'default': 'خطأ في إدخال الصوت'
+                            },
+                            en: {
+                                'no-speech': 'No speech detected',
+                                'not-allowed': 'Microphone permission required',
+                                'audio-capture': 'Microphone access denied',
+                                'network': 'Network error',
+                                'aborted': 'Voice input cancelled',
+                                'language-not-supported': 'Language not supported',
+                                'default': 'Voice input error'
+                            }
+                        };
+                        var lang = Utils.isArabic() ? 'ar' : 'en';
+                        var msg = messages[lang][errorType] || messages[lang]['default'];
+                        showMessage(msg);
+                    },
+                    onEnd: stop
+                });
+            }
+
+            voiceButton.addEventListener('click', function() {
+                if (isListening) {
+                    stop();
+                    VoiceRecognition.stopListening(recognition);
+                } else {
+                    start();
+                }
+            });
+        },
+
+        initPasswordToggle: function(formControl) {
+            var passwordToggle = formControl.querySelector('.nds-form-action .toggle-password');
+            if (!passwordToggle) return;
+
+            passwordToggle.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                var passwordInput = formControl.querySelector(':scope > input[type="password"], :scope > input[type="text"]');
+                if (!passwordInput) return;
+
+                var isPassword = passwordInput.type === 'password';
+                passwordInput.type = isPassword ? 'text' : 'password';
+                passwordToggle.classList.toggle('show', isPassword);
+                passwordToggle.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
+            });
+        },
+
+        initSwitchControls: function(formControl) {
+            var switchElements = formControl.querySelectorAll('.nds-switch');
+            if (!switchElements.length) return;
+
+            switchElements.forEach(function(switchElement) {
+                var switchInput = switchElement.querySelector('.nds-switch-input');
+                var switchTrack = switchElement.querySelector('.nds-switch-track');
+
+                if (!switchInput || !switchTrack || switchTrack._switchInitialized) return;
+                switchTrack._switchInitialized = true;
+
+                switchTrack.addEventListener('mousedown', function() {
+                    if (!switchInput.disabled && !switchElement.classList.contains('disabled')) {
+                        formControl.classList.add('active');
+                    }
+                });
+
+                ['mouseup', 'mouseleave'].forEach(function(event) {
+                    switchTrack.addEventListener(event, function() {
+                        formControl.classList.remove('active');
+                    });
+                });
+
+                switchTrack.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    if (switchInput.disabled || switchElement.classList.contains('disabled')) return;
+
+                    switchInput.checked = !switchInput.checked;
+                    Utils.triggerEvents(switchInput);
+                    FormState.update(switchInput, formControl);
+
+                    switchElement.dispatchEvent(new CustomEvent('switchChange', {
+                        detail: { checked: switchInput.checked, value: switchInput.value, input: switchInput },
+                        bubbles: true
+                    }));
+                });
+
+                switchInput.addEventListener('keydown', function(e) {
+                    if (e.key === ' ' || e.key === 'Enter') {
+                        e.preventDefault();
+
+                        if (!this.disabled && !switchElement.classList.contains('disabled')) {
+                            this.checked = !this.checked;
+                            Utils.triggerEvents(this);
+                            FormState.update(this, formControl);
+
+                            switchElement.dispatchEvent(new CustomEvent('switchChange', {
+                                detail: { checked: this.checked, value: this.value, input: this },
+                                bubbles: true
+                            }));
+                        }
+                    }
+                });
+
+                var label = formControl.querySelector('label[for="' + switchInput.id + '"]');
+                if (label && !switchElement.contains(label)) {
+                    label.addEventListener('click', function(e) {
+                        e.preventDefault();
+
+                        if (!switchInput.disabled && !switchElement.classList.contains('disabled')) {
+                            switchInput.checked = !switchInput.checked;
+                            Utils.triggerEvents(switchInput);
+                            FormState.update(switchInput, formControl);
+
+                            switchElement.dispatchEvent(new CustomEvent('switchChange', {
+                                detail: { checked: switchInput.checked, value: switchInput.value, input: switchInput },
+                                bubbles: true
+                            }));
+                        }
+                    });
+                }
+
+                FormState.update(switchInput, formControl, true);
+            });
+        },
+
+        initClearButton: function(formControl, inputElements) {
+            var clearButton = formControl.querySelector('.nds-form-action .clear');
+            if (!clearButton) return;
+
+            clearButton.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                inputElements.forEach(function(input) {
+                    if (input.type === 'checkbox' || input.type === 'radio') {
+                        input.checked = false;
+                    } else {
+                        input.value = '';
+                    }
+                    Utils.triggerEvents(input);
+                    FormState.update(input, formControl);
+                });
+            });
+        }
+    };
+
+    // ==============================================
+    // GROUP VALIDATION INITIALIZATION
+    // ==============================================
+    function initCheckboxGroupValidation(group) {
+        if (!group || group._checkGroupInitialized) return;
+        group._checkGroupInitialized = true;
+
+        var checkboxes = group.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(function(checkbox) {
+            checkbox.addEventListener('change', function() {
+                if (group.hasAttribute('data-min-checked') || group.hasAttribute('data-max-checked')) {
+                    if (group.hasAttribute('data-status')) {
+                        Validator.validateCheckboxGroup(group);
+                    }
+                }
             });
         });
     }
 
-    // Manual validation trigger
-    function validateInput(input) {
-        var formControl = input.closest('.nds-form-control');
-        if (!formControl) return false;
+    function initRadioGroupValidation(group) {
+        if (!group || group._radioGroupInitialized) return;
+        group._radioGroupInitialized = true;
 
-        // Trigger HTML5 validation
-        var isValid = input.checkValidity();
-
-        // Update form state which will handle error display
-        updateFormState(input, formControl);
-
-        return isValid;
+        var radios = group.querySelectorAll('input[type="radio"]');
+        radios.forEach(function(radio) {
+            radio.addEventListener('change', function() {
+                if (group.classList.contains('nds-required')) {
+                    if (group.hasAttribute('data-status')) {
+                        Validator.validateRadioGroup(group);
+                    }
+                }
+            });
+        });
     }
 
-    // Set custom error message
-    function setCustomError(input, message) {
-        var formControl = input.closest('.nds-form-control');
-        if (!formControl) return;
+    // ==============================================
+    // FORM INITIALIZATION
+    // ==============================================
+    function initForm(formElement) {
+        var form = formElement.closest('.nds-form') || formElement;
+        if (!form || form._ndsFormInitialized) return;
+        form._ndsFormInitialized = true;
 
-        if (message) {
-            input.setCustomValidity(message);
-            input.setAttribute('aria-invalid', 'true');
-        } else {
-            input.setCustomValidity('');
-            input.removeAttribute('aria-invalid');
-        }
+        form.addEventListener('submit', function(e) {
+            var result = Validator.validateForm(form, { showMessages: true, focusFirst: true });
 
-        updateFormState(input, formControl);
+            if (!result.valid) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                form.dispatchEvent(new CustomEvent('nds:formInvalid', {
+                    detail: { invalidFields: result.invalidFields, errors: result.errors },
+                    bubbles: true
+                }));
+
+                return false;
+            }
+
+            form.dispatchEvent(new CustomEvent('nds:formValid', {
+                detail: {},
+                bubbles: true
+            }));
+
+            if (form.hasAttribute('data-ajax')) {
+                e.preventDefault();
+            }
+        });
     }
 
-    // Clear error state
-    function clearError(input) {
-        setCustomError(input, '');
+    // ==============================================
+    // AUTO-FILL INITIALIZATION
+    // ==============================================
+    function initAutoFillContainer(container) {
+        if (!container) return;
+
+        var targetId = container.getAttribute('data-target');
+        if (!targetId) return;
+
+        container.querySelectorAll('.nds-item').forEach(function(item) {
+            if (item._autoFillHandler) {
+                item.removeEventListener('click', item._autoFillHandler);
+            }
+
+            item._autoFillHandler = function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                var itemText = (item.textContent || item.innerText).trim().replace(/\s+/g, ' ');
+
+                var targetInput = document.getElementById(targetId) ||
+                    document.querySelector('[name="' + targetId + '"]') ||
+                    document.querySelector('[data-name="' + targetId + '"]');
+
+                if (targetInput && itemText) {
+                    targetInput.value = itemText;
+                    targetInput.focus();
+                    Utils.triggerEvents(targetInput);
+
+                    var formControl = targetInput.closest('.nds-form-control');
+                    if (formControl) {
+                        FormState.update(targetInput, formControl);
+                    }
+                }
+            };
+
+            item.addEventListener('click', item._autoFillHandler);
+        });
     }
 
-    // CRITICAL: Expose global API immediately (called by unified init system)
-    window.NDS = window.NDS || {};
-    window.NDS.Forms = {
-        init: initializeAllForms,
-        VoiceRecognition: VoiceRecognition,
-        reinit: initializeAllForms,
-        updateFormState: updateFormState,
-        validateInput: validateInput,
-        setCustomError: setCustomError,
-        clearError: clearError,
-        initializeContainer: initializeContainer,
-        initializeDynamic: function(element) {
-            // Alias for initializeContainer for backward compatibility
-            initializeContainer(element);
-        }
-    };
-
-    // Backward compatibility
-    window.VoiceRecognition = VoiceRecognition;
-    window.reinitFormControlClasses = initializeAllForms;
-
-    // Mark forms script as loaded
-    window.NDS.Forms._loaded = true;
-
-    // Initialize feedback message observer to toggle show class
+    // ==============================================
+    // FEEDBACK OBSERVER
+    // ==============================================
     function initFeedbackObserver() {
         var feedbackElements = document.querySelectorAll('.nds-feedback .msg');
 
@@ -1020,7 +1292,6 @@
 
             if (!feedbackPlaceholder) return;
 
-            // Check if parent should be toggled (only specific containers with feedback as only child)
             var shouldToggleParent = false;
             if (feedbackParent) {
                 var isFormContainer = feedbackParent.classList.contains('nds-form-footer') ||
@@ -1036,7 +1307,7 @@
                 feedbackParent.classList.toggle('show', hasContent);
             }
 
-            // Observe changes to message content
+            // Observe changes
             var observer = new MutationObserver(function() {
                 var hasContent = msgElement.textContent.trim() !== '';
                 feedbackPlaceholder.classList.toggle('show', hasContent);
@@ -1053,114 +1324,87 @@
         });
     }
 
-    function initializeAllForms() {
-        VoiceRecognition.audioFeedback.init();
-        initFormControlClasses();
-        initInputAutoFill();
-        initDynamicContentObserver();
-        initFeedbackObserver();
-        // File uploads are initialized by nds-fileUpload.js
-    }
-
-    // Note: Initialization now handled by nds-init.js unified system
-
-    // Dynamic content observer to handle form controls added after page load
+    // ==============================================
+    // DYNAMIC CONTENT OBSERVER
+    // ==============================================
     function initDynamicContentObserver() {
-        // Avoid creating multiple observers
         if (window.NDS && window.NDS.Forms && window.NDS.Forms._dynamicObserver) {
             return;
         }
 
-        if (window.MutationObserver) {
-            var observer = new MutationObserver(function(mutations) {
-                var needsInit = false;
-                var needsAutoFillInit = false;
-                var needsFileUploadInit = false;
+        if (!window.MutationObserver) return;
 
-                mutations.forEach(function(mutation) {
-                    if (mutation.type === 'childList') {
-                        mutation.addedNodes.forEach(function(node) {
-                            if (node.nodeType === Node.ELEMENT_NODE) {
-                                // Check if the added node is a form control or contains form controls
-                                if (node.classList && node.classList.contains('nds-form-control')) {
-                                    needsInit = true;
-                                } else if (node.querySelectorAll && node.querySelectorAll('.nds-form-control').length > 0) {
-                                    needsInit = true;
-                                }
+        var observer = new MutationObserver(function(mutations) {
+            var needsInit = false;
+            var needsAutoFillInit = false;
+            var needsFileUploadInit = false;
 
-                                // Check for auto-fill containers
-                                if (node.classList && node.classList.contains('nds-autoFill')) {
-                                    needsAutoFillInit = true;
-                                } else if (node.querySelectorAll && node.querySelectorAll('.nds-autoFill').length > 0) {
-                                    needsAutoFillInit = true;
-                                }
-
-                                // Check for file upload containers
-                                if (node.classList && node.classList.contains('nds-file-upload')) {
-                                    needsFileUploadInit = true;
-                                } else if (node.querySelectorAll && node.querySelectorAll('.nds-file-upload').length > 0) {
-                                    needsFileUploadInit = true;
-                                }
+            mutations.forEach(function(mutation) {
+                if (mutation.type === 'childList') {
+                    mutation.addedNodes.forEach(function(node) {
+                        if (node.nodeType === Node.ELEMENT_NODE) {
+                            if (node.classList && node.classList.contains('nds-form-control')) {
+                                needsInit = true;
+                            } else if (node.querySelectorAll && node.querySelectorAll('.nds-form-control').length > 0) {
+                                needsInit = true;
                             }
-                        });
-                    }
-                });
 
-                // Initialize only what's needed to avoid performance issues
-                if (needsInit) {
-                    initFormControlClasses();
-                }
-                if (needsAutoFillInit) {
-                    initInputAutoFill();
-                }
-                if (needsFileUploadInit) {
-                    initializeFileUploads();
+                            if (node.classList && node.classList.contains('nds-autoFill')) {
+                                needsAutoFillInit = true;
+                            } else if (node.querySelectorAll && node.querySelectorAll('.nds-autoFill').length > 0) {
+                                needsAutoFillInit = true;
+                            }
+
+                            if (node.classList && node.classList.contains('nds-file-upload')) {
+                                needsFileUploadInit = true;
+                            } else if (node.querySelectorAll && node.querySelectorAll('.nds-file-upload').length > 0) {
+                                needsFileUploadInit = true;
+                            }
+                        }
+                    });
                 }
             });
 
-            // Start observing
-            observer.observe(document.body, {
-                childList: true,
-                subtree: true
-            });
+            if (needsInit) initFormControlClasses();
+            if (needsAutoFillInit) initInputAutoFill();
+            if (needsFileUploadInit && window.NDS && window.NDS.Forms && window.NDS.Forms.FileUpload) {
+                window.NDS.Forms.FileUpload.initFileUpload();
+            }
+        });
 
-            // Store observer reference to prevent duplicates
-            if (!window.NDS.Forms) window.NDS.Forms = {};
-            window.NDS.Forms._dynamicObserver = observer;
-        }
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+
+        if (!window.NDS.Forms) window.NDS.Forms = {};
+        window.NDS.Forms._dynamicObserver = observer;
     }
 
-    // Utility function to initialize a specific container or element
+    // ==============================================
+    // CONTAINER INITIALIZATION
+    // ==============================================
     function initializeContainer(container) {
         if (!container) return;
 
-        // Initialize form controls within the container
-        var formControls = container.classList && container.classList.contains('nds-form-control') 
-            ? [container] 
+        // Initialize form controls
+        var formControls = container.classList && container.classList.contains('nds-form-control')
+            ? [container]
             : Array.from(container.querySelectorAll('.nds-form-control'));
 
         formControls.forEach(function(formControl) {
-            // Skip elements inside code examples
-            if (formControl.closest('code, .code-example')) {
-                return;
-            }
-            
+            if (formControl.closest('code, .code-example')) return;
+
             var inputElements = formControl.querySelectorAll(':scope > input, :scope > textarea, :scope > select');
 
-            inputElements.forEach(function (input) {
-                // Skip if already initialized (check more carefully)
-                if (input._ndsInitialized) return;
-                input._ndsInitialized = true;
-
-                // Apply all the same initialization as in initFormControlClasses
-                initializeFormInput(input, formControl);
+            inputElements.forEach(function(input) {
+                FormControls.initializeInput(input, formControl);
             });
 
-            // Initialize specialized controls
-            initVoiceInput(formControl);
-            initPasswordToggle(formControl);
-            initClearButton(formControl, inputElements);
-            initSwitchControls(formControl);
+            FormControls.initVoiceInput(formControl);
+            FormControls.initPasswordToggle(formControl);
+            FormControls.initClearButton(formControl, inputElements);
+            FormControls.initSwitchControls(formControl);
         });
 
         // Initialize auto-fill containers
@@ -1168,9 +1412,7 @@
             ? [container]
             : Array.from(container.querySelectorAll('.nds-autoFill'));
 
-        autoFillContainers.forEach(function(autoFillContainer) {
-            initAutoFillContainer(autoFillContainer);
-        });
+        autoFillContainers.forEach(initAutoFillContainer);
 
         // Initialize file upload containers
         var fileUploadContainers = container.classList && container.classList.contains('nds-file-upload')
@@ -1178,189 +1420,74 @@
             : Array.from(container.querySelectorAll('.nds-file-upload'));
 
         fileUploadContainers.forEach(function(uploadContainer) {
-            // Initialize file upload using the separate nds-fileUpload.js module
             if (window.NDS && window.NDS.Forms && window.NDS.Forms.FileUpload && window.NDS.Forms.FileUpload.initFileUpload) {
                 window.NDS.Forms.FileUpload.initFileUpload(uploadContainer);
             }
         });
+
+        // Initialize checkbox/radio groups
+        container.querySelectorAll('.nds-check-group[data-min-checked], .nds-check-group[data-max-checked]').forEach(initCheckboxGroupValidation);
+        container.querySelectorAll('.nds-radio-group.nds-required').forEach(initRadioGroupValidation);
+
+        // Initialize forms
+        var forms = container.classList && container.classList.contains('nds-form')
+            ? [container]
+            : Array.from(container.querySelectorAll('.nds-form'));
+
+        forms.forEach(initForm);
     }
 
-    // Extract form input initialization logic for reuse
-    function initializeFormInput(input, formControl) {
-        // Mouse interaction
-        input.addEventListener('mousedown', function () {
-            formControl.classList.add('active');
-        });
-
-        ['mouseup', 'mouseleave'].forEach(function (event) {
-            input.addEventListener(event, function () {
-                formControl.classList.remove('active');
-            });
-        });
-
-        // Focus states
-        input.addEventListener('focus', function () {
-            formControl.classList.add('focus');
-        });
-
-        input.addEventListener('blur', function () {
-            formControl.classList.remove('focus');
-            // Validate on blur (when user leaves the field)
-            updateFormState(input, formControl);
-        });
-
-        // Value changes - clear previous errors but don't validate while typing
-        input.addEventListener('input', function () {
-            // Update UI (filled class, clear button)
-            updateFormState(input, formControl, true);
-
-            // If there was an error showing, clear it and restore original feedback
-            var formContainer = formControl.closest('.nds-form-container');
-            if (formContainer) {
-                var feedbackPlaceholder = formContainer.querySelector('.nds-feedback');
-                if (feedbackPlaceholder && feedbackPlaceholder.classList.contains('error')) {
-                    feedbackPlaceholder.classList.remove('error');
-
-                    var iconElement = feedbackPlaceholder.querySelector('.nds-feedback-icon');
-                    if (iconElement) {
-                        iconElement.classList.remove('nds-error');
-                    }
-
-                    var msgElement = feedbackPlaceholder.querySelector('.msg');
-                    if (msgElement && msgElement._originalContent !== undefined) {
-                        msgElement.textContent = msgElement._originalContent;
-                        delete msgElement._originalContent;
-                    }
-
-                    formControl.classList.remove('error');
-                    input.removeAttribute('aria-describedby');
-                    input.removeAttribute('aria-invalid');
-                }
-            }
-        });
-
-        // Also listen for change for form validation compatibility
-        input.addEventListener('change', function () {
-            updateFormState(input, formControl);
-            updateRadioGroup(input, formControl);
-        });
-
-        // Initialize state without validation on page load
-        updateFormState(input, formControl, true);
-        
-        // Watch for all field status changes
-        if (window.MutationObserver) {
-            var inputObserver = new MutationObserver(function(mutations) {
-                mutations.forEach(function(mutation) {
-                    if (mutation.type === 'attributes') {
-                        var attr = mutation.attributeName;
-                        if (attr === 'disabled' || attr === 'checked' || attr === 'value') {
-                            updateFormState(input, formControl);
-
-                            // Handle radio group updates for checked changes
-                            if (attr === 'checked') {
-                                updateRadioGroup(input, formControl);
-                            }
-                        }
-                    }
-                });
-            });
-            inputObserver.observe(input, {
-                attributes: true,
-                attributeFilter: ['disabled', 'checked', 'value']
-            });
-        }
-        
-        // Enhanced property change detection for programmatic updates
-        try {
-            var originalValueDescriptor = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(input), 'value');
-            var originalCheckedDescriptor = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(input), 'checked');
-            
-            if (originalValueDescriptor && originalValueDescriptor.set) {
-                Object.defineProperty(input, 'value', {
-                    get: originalValueDescriptor.get,
-                    set: function(val) {
-                        originalValueDescriptor.set.call(this, val);
-                        updateFormState(this, formControl);
-                    },
-                    configurable: true
-                });
-            }
-            
-            if (originalCheckedDescriptor && originalCheckedDescriptor.set && (input.type === 'radio' || input.type === 'checkbox')) {
-                Object.defineProperty(input, 'checked', {
-                    get: originalCheckedDescriptor.get,
-                    set: function(val) {
-                        var wasChecked = this.checked;
-                        originalCheckedDescriptor.set.call(this, val);
-                        updateFormState(this, formControl);
-                        
-                        // Handle radio group updates for programmatic changes
-                        if (val && !wasChecked) {
-                            updateRadioGroup(this, formControl);
-                        }
-                    },
-                    configurable: true
-                });
-            }
-        } catch (e) {
-        }
-
-        // Select dropdown open state handling
-        if (input.tagName.toLowerCase() === 'select') {
-            initSelectDropdown(input, formControl);
-        }
-
-        // Custom select dropdown handling
-        if (input.classList.contains('nds-select-input')) {
-            initCustomSelectDropdown(input, formControl);
-        }
-
-        // Date picker handling
-        if (input.classList.contains('nds-date-input')) {
-            initDatePicker(input, formControl);
-        }
+    // ==============================================
+    // MAIN INITIALIZATION
+    // ==============================================
+    function initFormControlClasses() {
+        initializeContainer(document.body);
     }
 
-    // Extract auto-fill initialization logic for reuse
-    function initAutoFillContainer(container) {
-        if (!container) return;
-        
-        var targetId = container.getAttribute('data-target');
-        if (!targetId) return;
-
-        container.querySelectorAll('.nds-item').forEach(function (item) {
-            if (item._autoFillHandler) {
-                item.removeEventListener('click', item._autoFillHandler);
-            }
-
-            item._autoFillHandler = function (e) {
-                e.preventDefault();
-                e.stopPropagation();
-
-                var itemText = (item.textContent || item.innerText).trim();
-                // Clean up excessive whitespace and normalize spaces
-                itemText = itemText.replace(/\s+/g, ' ');
-
-                var targetInput = document.getElementById(targetId) ||
-                    document.querySelector('[name="' + targetId + '"]') ||
-                    document.querySelector('[data-name="' + targetId + '"]');
-
-                if (targetInput && itemText) {
-                    targetInput.value = itemText;
-                    targetInput.focus();
-                    triggerEvents(targetInput);
-
-                    var formControl = targetInput.closest('.nds-form-control');
-                    if (formControl) {
-                        updateFormState(targetInput, formControl);
-                    }
-                }
-            };
-
-            item.addEventListener('click', item._autoFillHandler);
-        });
+    function initInputAutoFill() {
+        document.querySelectorAll('.nds-autoFill[data-target]').forEach(initAutoFillContainer);
     }
 
+    function initializeAllForms() {
+        VoiceRecognition.audioFeedback.init();
+        initFormControlClasses();
+        initInputAutoFill();
+        initDynamicContentObserver();
+        initFeedbackObserver();
+    }
+
+    // ==============================================
+    // PUBLIC API
+    // ==============================================
+    window.NDS = window.NDS || {};
+    window.NDS.Forms = {
+        // Core initialization
+        init: initializeAllForms,
+        initializeContainer: initializeContainer,
+
+        // Status Management API
+        StatusTypes: StatusTypes,
+        setStatus: StatusManager.set.bind(StatusManager),
+        clearStatus: StatusManager.clear.bind(StatusManager),
+        getStatus: StatusManager.get.bind(StatusManager),
+
+        // Checkbox Group Validation
+        validateCheckboxGroup: Validator.validateCheckboxGroup.bind(Validator),
+        initCheckboxGroupValidation: initCheckboxGroupValidation,
+
+        // Radio Group Validation
+        validateRadioGroup: Validator.validateRadioGroup.bind(Validator),
+        initRadioGroupValidation: initRadioGroupValidation,
+
+        // Form Validation
+        validateForm: Validator.validateForm.bind(Validator),
+        initForm: initForm,
+
+        // Utility
+        VoiceRecognition: VoiceRecognition,
+
+        // Mark as loaded
+        _loaded: true
+    };
 
 })();

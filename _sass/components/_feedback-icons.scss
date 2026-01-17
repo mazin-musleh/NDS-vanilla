@@ -1,259 +1,224 @@
 /**
- * NDS Feedback Icon - SCSS Version
- * Circular status icons with predefined content for system feedback
- * Supports success, info, warning, error, and neutral states with ring variants
+ * NDS Feedback Component - SCSS Version
+ * Standalone feedback messages with status-based styling
+ * Uses data-status attribute for error, success, warning, info states
  */
 
 @use '../mixins' as *;
 
 // ==============================================
-// BASE FEEDBACK ICON STYLES
-// ==============================================
-
-.nds-feedback-icon {
-  // Private custom properties with public override capability
-  --_feedback-bg: var(--feedback-bg, var(--icon-neutral));
-  --_feedback-color: var(--feedback-color, var(--icon-neutral));
-  --_feedback-ring: var(--feedback-ring, var(--icon-neutral-ring));
-  --_feedback-size: var(--feedback-size, 24px);
-
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  position: relative;
-  width: var(--_feedback-size);
-  height: var(--_feedback-size);
-  font-size: calc(var(--_feedback-size) / 1);
-  padding: 0;
-  line-height: calc(var(--_feedback-size) / 1);
-  border: unset;
-  background-color: var(--_feedback-bg);
-  color: var(--_feedback-color);
-
-  body.hgi-loaded & i {
-    position: relative;
-    z-index: 1;
-
-    &:after {
-      content: '';
-      position: absolute;
-      display: block;
-      width: calc(var(--_feedback-size) / 2);
-      height: calc(var(--_feedback-size) / 2);
-      background-color: var(--icon-oncolor);
-      top: 50%;
-      z-index: -1;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-  }
-
-  // ==============================================
-  // FEEDBACK ICON SIZES
-  // ==============================================
-
-
-  &.nds-sm {
-    --feedback-size: 16px;
-  }
-
-  &.nds-md {
-    --feedback-size: 24px;
-  }
-
-  &.nds-lg {
-    --feedback-size: 32px;
-  }
-
-  // ==============================================
-  // FEEDBACK ICON VARIANTS
-  // ==============================================
-
-  :is(.nds-success, .success) &,
-  &:is(.nds-success, .success) {
-    --feedback-bg: var(--icon-success);
-    --feedback-color: var(--icon-success);
-    --feedback-ring: var(--icon-success-ring);
-
-    &.nds-ring {
-      box-shadow: 0 0 0px 4px var(--_feedback-ring);
-    }
-
-    .icon:before {
-      content: "䂇";
-    }
-  }
-
-  :is(.nds-info, .info) &,
-  &:is(.nds-info, .info) {
-    --feedback-bg: var(--icon-info);
-    --feedback-color: var(--icon-info);
-    --feedback-ring: var(--icon-info-ring);
-
-    &.nds-ring {
-      box-shadow: 0 0 0px 4px var(--_feedback-ring);
-    }
-
-    .icon:before {
-      content: "䢵";
-    }
-  }
-
-  .nds-neutral &,
-  &.nds-neutral {
-    --feedback-bg: var(--icon-neutral);
-    --feedback-color: var(--icon-neutral);
-    --feedback-ring: var(--icon-neutral-ring);
-
-    &.nds-ring {
-      box-shadow: 0 0 0px 4px var(--_feedback-ring);
-    }
-
-    .icon:before {
-      content: "䞭";
-    }
-  }
-
-  :is(.nds-warning, .warning) &,
-  &:is(.nds-warning, .warning) {
-    --feedback-bg: var(--icon-warning);
-    --feedback-color: var(--icon-warning);
-    --feedback-ring: var(--icon-warning-ring);
-
-    &.nds-ring {
-      box-shadow: 0 0 0px 4px var(--_feedback-ring);
-    }
-
-    .icon:before {
-      content: "㬿";
-    }
-  }
-
-  :is(.nds-error, .error) &,
-  &:is(.nds-error, .error) {
-    --feedback-bg: var(--icon-error);
-    --feedback-color: var(--icon-error);
-    --feedback-ring: var(--icon-error-ring);
-
-    &.nds-ring {
-      box-shadow: 0 0 0px 4px var(--_feedback-ring);
-    }
-
-    .icon:before {
-      content: "㿃";
-    }
-  }
-
-  // ==============================================
-  // FEEDBACK ICON VARIANTS OVERRIDE
-  // ==============================================
-
-  &.nds-icon-info,
-  .nds-icon-info & {
-    .icon:before {
-      content: "䢵" !important;
-    }
-  }
-
-  &.nds-icon-alert,
-  .nds-icon-alert & {
-    .icon:before {
-      content: "㬿" !important;
-    }
-  }
-
-  &.nds-icon-error,
-  .nds-icon-error & {
-    .icon:before {
-      content: "㿃" !important;
-    }
-  }
-
-
-  // ==============================================
-  // FEEDBACK ICON STYLE VARIANTS
-  // ==============================================
-
-  &.nds-outline {
-    background-color: unset;
-
-    &::before {
-      display: none;
-    }
-
-
-    .icon::before {
-      font-family: "hgi-stroke-rounded" !important;
-    }
-
-    .icon::after {
-      background-color: transparent;
-    }
-
-  }
-}
-
-// ==============================================
-// FEEDBACK MESSAGE COMPONENT
+// STANDALONE FEEDBACK COMPONENT
 // ==============================================
 
 .nds-feedback {
-  --_feedback-text: var(--feedback-text, inherit);
-  --_feedback-fs: var(--feedback-fs, --nds-text-sm-FS);
-  --_feedback-lh: var(--feedback-fs, --nds-text-sm-LH);
+    display: none; // Hidden by default
+    align-items: center;
+    font-size: var(--nds-text-sm-FS);
+    line-height: var(--nds-text-sm-LH);
+    font-weight: 500;
+    gap: var(--spacing-sm);
 
-  &.nds-sm {
-    --feedback-size: 16px;
-    --feedback-fs: var(--nds-text-sm-FS);
-    --feedback-lh: var(--nds-text-sm-LH);
-  }
+    // Show when status is set
+    &[data-status] {
+        display: flex;
+    }
 
-  &.nds-md{
-    --feedback-size: 24px;
-    --feedback-fs: var(--nds-text-md-FS);
-    --feedback-lh: var(--nds-text-md-LH);
-  }
+    // ==============================================
+    // STATUS-BASED STYLING
+    // ==============================================
 
-  &.nds-lg {
-    --feedback-size: 32px;
-    --feedback-fs: var(--nds-text-lg-FS);
-    --feedback-lh: var(--nds-text-lg-LH);
-  }
+    &[data-status="error"] {
+        color: var(--text-error);
 
-  display: flex;
-  align-items: center;
-  font-size: var(--_feedback-fs);
-  line-height: var(--_feedback-lh);
-  font-weight: 500;
-  gap: var(--spacing-sm);
-  color: var(--_feedback-text);
+        .nds-feedback-icon {
+            --feedback-bg: var(--icon-error);
+            --feedback-color: var(--icon-error);
+            --feedback-ring: var(--icon-error-ring);
+        }
+    }
 
-  &:is(.nds-error, .error) {
-    --feedback-text: var(--text-error);
-  }
+    &[data-status="success"] {
+        color: var(--text-success);
 
-  &:is(.nds-success, .success) {
-    --feedback-text: var(--text-success);
-  }
+        .nds-feedback-icon {
+            --feedback-bg: var(--icon-success);
+            --feedback-color: var(--icon-success);
+            --feedback-ring: var(--icon-success-ring);
+        }
+    }
 
-  &:is(.nds-warning, .warning) {
-    --feedback-text: var(--text-warning);
-  }
+    &[data-status="warning"] {
+        color: var(--text-warning);
 
-  &:is(.nds-info, .info) {
-    --feedback-text: var(--text-info);
-  }
+        .nds-feedback-icon {
+            --feedback-bg: var(--icon-warning);
+            --feedback-color: var(--icon-warning);
+            --feedback-ring: var(--icon-warning-ring);
+        }
+    }
 
-  .nds-feedback-icon {
+    &[data-status="info"] {
+        color: var(--text-info);
+
+        .nds-feedback-icon {
+            --feedback-bg: var(--icon-info);
+            --feedback-color: var(--icon-info);
+            --feedback-ring: var(--icon-info-ring);
+        }
+    }
+
+    // Neutral/default (no status or explicit neutral)
+    &:not([data-status]),
+    &[data-status="neutral"] {
+        .nds-feedback-icon {
+            --feedback-bg: var(--icon-neutral);
+            --feedback-color: var(--icon-neutral);
+            --feedback-ring: var(--icon-neutral-ring);
+        }
+    }
+
+    // ==============================================
+    // SIZE VARIANTS
+    // ==============================================
+
+    &.nds-sm {
+        --feedback-size: 16px;
+        font-size: var(--nds-text-sm-FS);
+        line-height: var(--nds-text-sm-LH);
+    }
+
+    &.nds-md {
+        --feedback-size: 24px;
+        font-size: var(--nds-text-md-FS);
+        line-height: var(--nds-text-md-LH);
+    }
+
+    &.nds-lg {
+        --feedback-size: 32px;
+        font-size: var(--nds-text-lg-FS);
+        line-height: var(--nds-text-lg-LH);
+    }
+
+    .msg {
+        flex: 1;
+    }
+}
+
+// ==============================================
+// FEEDBACK ICON (always inside .nds-feedback)
+// ==============================================
+
+.nds-feedback-icon {
+    --_feedback-size: var(--feedback-size, 24px);
+    --_feedback-bg: var(--feedback-bg, var(--icon-neutral));
+    --_feedback-color: var(--feedback-color, var(--icon-neutral));
+    --_feedback-ring: var(--feedback-ring, var(--icon-neutral-ring));
+
     display: inline-flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-  }
+    border-radius: 50%;
+    position: relative;
+    width: var(--_feedback-size);
+    height: var(--_feedback-size);
+    font-size: var(--_feedback-size);
+    line-height: var(--_feedback-size);
+    padding: 0;
+    border: unset;
+    background-color: var(--_feedback-bg);
+    color: var(--_feedback-color);
 
-  .msg {
-    flex: 1;
-  }
+    // Icon background for solid icons
+    body.hgi-loaded & i {
+        position: relative;
+        z-index: 1;
+
+        &:after {
+            content: '';
+            position: absolute;
+            display: block;
+            width: calc(var(--_feedback-size) / 2);
+            height: calc(var(--_feedback-size) / 2);
+            background-color: var(--icon-oncolor);
+            top: 50%;
+            z-index: -1;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    }
+
+    // ==============================================
+    // ICON SIZES
+    // ==============================================
+
+    &.nds-sm {
+        --feedback-size: 16px;
+    }
+
+    &.nds-md {
+        --feedback-size: 24px;
+    }
+
+    &.nds-lg {
+        --feedback-size: 32px;
+    }
+
+    // ==============================================
+    // ICON STYLE VARIANTS
+    // ==============================================
+
+    &.nds-outline {
+        background-color: transparent;
+
+        &::before {
+            display: none;
+        }
+
+        .icon::before {
+            font-family: "hgi-stroke-rounded" !important;
+        }
+
+        .icon::after {
+            background-color: transparent;
+        }
+    }
+
+    &.nds-ring {
+        box-shadow: 0 0 0 4px var(--_feedback-ring);
+    }
+
+    // ==============================================
+    // ICON CONTENT BY STATUS (auto-set via parent)
+    // ==============================================
+
+    // Success icon
+    [data-status="success"] & .icon:before,
+    &.nds-icon-success .icon:before {
+        content: "䂇";
+    }
+
+    // Info icon
+    [data-status="info"] & .icon:before,
+    &.nds-icon-info .icon:before {
+        content: "䢵";
+    }
+
+    // Warning icon
+    [data-status="warning"] & .icon:before,
+    &.nds-icon-alert .icon:before {
+        content: "㬿";
+    }
+
+    // Error icon
+    [data-status="error"] & .icon:before,
+    &.nds-icon-error .icon:before {
+        content: "㿃";
+    }
+
+    // Neutral icon
+    [data-status="neutral"] & .icon:before,
+    &.nds-icon-neutral .icon:before {
+        content: "䞭";
+    }
 }

@@ -70,7 +70,7 @@ direction: ltr
                         </table>
                     </div>
                 </div>
-                <div class="nds-tabs nds-code withDivider">
+                <div class="nds-tabs nds-code nds-divided">
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -222,7 +222,7 @@ direction: ltr
                         </table>
                     </div>
                 </div>
-                <div class="nds-tabs nds-code withDivider">
+                <div class="nds-tabs nds-code nds-divided">
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -356,7 +356,7 @@ direction: ltr
                         </table>
                     </div>
                 </div>
-                <div class="nds-tabs nds-code withDivider">
+                <div class="nds-tabs nds-code nds-divided">
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -529,7 +529,7 @@ direction: ltr
                         </table>
                     </div>
                 </div>
-                <div class="nds-tabs nds-code withDivider">
+                <div class="nds-tabs nds-code nds-divided">
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -687,7 +687,7 @@ direction: ltr
                         </table>
                     </div>
                 </div>
-                <div class="nds-tabs nds-code withDivider">
+                <div class="nds-tabs nds-code nds-divided">
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -738,6 +738,137 @@ direction: ltr
                                     </tr>
                                   </tbody>
                                 </table>
+                                </code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Responsive Table Section -->
+<section id="responsiveTableOverview" class="nds-content-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Responsive Table</h2>
+            <p class="nds-section-description">Table with horizontal scroll and gradient mask for overflow content</p>
+        </div>
+        <div class="nds-section-content">
+            <div class="nds-demo-card">
+                <div class="demo-header">
+                    <div class="demo-label">Responsive Table with Max-Width</div>
+                    <div class="demo-action">
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                            <span class="label">Remove bg</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="demo-container">
+                    <div class="state-demo">
+                        <table class="nds-table nds-responsive" style="--max-width: 600px;">
+                            <thead>
+                                <tr>
+                                    <th>Employee ID</th>
+                                    <th>Full Name</th>
+                                    <th>Email Address</th>
+                                    <th>Department</th>
+                                    <th>Position</th>
+                                    <th>Start Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>EMP-001</td>
+                                    <td>Ahmed Mohammed Al-Rashid</td>
+                                    <td>ahmed.alrashid@moi.gov.sa</td>
+                                    <td>Information Technology</td>
+                                    <td>Senior Developer</td>
+                                    <td>2023-01-15</td>
+                                    <td><span class="nds-tag nds-success nds-sm"><span class="label">Active</span></span></td>
+                                </tr>
+                                <tr>
+                                    <td>EMP-002</td>
+                                    <td>Fatima Al-Zahra Al-Mansouri</td>
+                                    <td>fatima.almansouri@moi.gov.sa</td>
+                                    <td>Human Resources</td>
+                                    <td>HR Manager</td>
+                                    <td>2022-06-20</td>
+                                    <td><span class="nds-tag nds-success nds-sm"><span class="label">Active</span></span></td>
+                                </tr>
+                                <tr>
+                                    <td>EMP-003</td>
+                                    <td>Khalid Abdullah Al-Sudairi</td>
+                                    <td>khalid.alsudairi@moi.gov.sa</td>
+                                    <td>Marketing</td>
+                                    <td>Marketing Specialist</td>
+                                    <td>2023-03-10</td>
+                                    <td><span class="nds-tag nds-warning nds-sm"><span class="label">On Leave</span></span></td>
+                                </tr>
+                                <tr>
+                                    <td>EMP-004</td>
+                                    <td>Nora Ibrahim Al-Faisal</td>
+                                    <td>nora.alfaisal@moi.gov.sa</td>
+                                    <td>Finance</td>
+                                    <td>Financial Analyst</td>
+                                    <td>2021-11-05</td>
+                                    <td><span class="nds-tag nds-success nds-sm"><span class="label">Active</span></span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="nds-tabs nds-code nds-divided">
+                    <div class="nds-tab-list-container">
+                        <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                            <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                aria-controls="panel-responsive-1" id="tab-responsive-1">
+                                <span class="nds-tab-label">HTML</span>
+                            </button>
+                        </nav>
+                    </div>
+                    <div class="nds-tab-content">
+                        <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-responsive-1"
+                            aria-labelledby="tab-responsive-1">
+                            <div class="nds-code-action">
+                                <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                </button>
+                            </div>
+                            <div class="nds-expandable-content">
+                                <code class="lang-html code">
+                                <table class="nds-table nds-responsive" style="--max-width: 600px;">
+                                  <thead>
+                                    <tr>
+                                      <th>Employee ID</th>
+                                      <th>Full Name</th>
+                                      <th>Email Address</th>
+                                      <th>Department</th>
+                                      <th>Position</th>
+                                      <th>Start Date</th>
+                                      <th>Status</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <td>EMP-001</td>
+                                      <td>Ahmed Mohammed Al-Rashid</td>
+                                      <td>ahmed.alrashid@moi.gov.sa</td>
+                                      <td>Information Technology</td>
+                                      <td>Senior Developer</td>
+                                      <td>2023-01-15</td>
+                                      <td><span class="nds-tag nds-success nds-sm"><span class="label">Active</span></span></td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+
+                                <!-- Custom max-width options -->
+                                <!-- style="--max-width: 600px;" - Fixed pixel width -->
+                                <!-- style="--max-width: 80%;" - Percentage of parent -->
+                                <!-- No style attribute - Full width (100%) -->
                                 </code>
                             </div>
                         </div>

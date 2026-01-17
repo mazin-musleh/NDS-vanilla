@@ -51,11 +51,15 @@
             if (actualHeight > maxHeight) {
                 this.expandableContainer.classList.add('nds-expand');
                 this.expandButton.style.display = '';
+                // Reset inline style to let CSS handle max-height
+                this.contentElement.style.maxHeight = '';
             } else {
                 this.expandableContainer.classList.remove('nds-expand');
                 this.expandableContainer.classList.remove('nds-expanded'); // Remove expanded state if no longer needed
                 this.expandButton.style.display = 'none';
                 this.isExpanded = false; // Reset expanded state
+                // Remove max-height constraint when content fits
+                this.contentElement.style.maxHeight = 'none';
             }
         }
 
@@ -77,8 +81,8 @@
 
             this.expandButton.innerHTML = `<span class="label">${labels[getLang()].showMore}</span>`;
 
-            // Add button to the content container
-            this.contentElement.appendChild(this.expandButton);
+            // Add button to the parent container (not the content element)
+            this.expandableContainer.appendChild(this.expandButton);
 
             // Setup button click event
             this.expandButton.addEventListener('click', (e) => {

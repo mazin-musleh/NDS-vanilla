@@ -11,7 +11,7 @@
     // ==============================================
 
     // Hidden by default
-    .nds-user-feedback-success,
+    .nds-user-feedback-status,
     .nds-user-feedback-close,
     .nds-user-feedback-details,
     .nds-user-feedback-submit {
@@ -21,7 +21,7 @@
     // Visible by default
     .nds-user-feedback-question,
     .nds-user-feedback-answer-btn,
-    .nds-user-feedback-status {
+    .nds-user-feedback-statistic {
         display: flex;
     }
 
@@ -39,10 +39,15 @@
         }
 
         .nds-user-feedback-close {
-            display: block;
+            display: flex;
+
+            @include mobile {
+                order: -1;
+                align-self: end;
+            }
         }
 
-        .nds-user-feedback-status {
+        .nds-user-feedback-statistic {
             display: none;
         }
 
@@ -68,6 +73,7 @@
     // ==============================================
 
     &[data-status="success"] {
+
         .nds-user-feedback-question,
         .nds-user-feedback-answer-btn,
         .nds-user-feedback-details,
@@ -76,8 +82,8 @@
             display: none;
         }
 
-        .nds-user-feedback-success,
-        .nds-user-feedback-status {
+        .nds-user-feedback-status,
+        .nds-user-feedback-statistic {
             display: flex;
         }
     }
@@ -103,6 +109,10 @@
         }
 
         .nds-user-feedback-status {
+            flex: 1;
+        }
+
+        .nds-user-feedback-statistic {
             font-size: var(--nds-text-sm-FS);
         }
 
