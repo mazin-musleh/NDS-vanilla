@@ -216,13 +216,30 @@
             });
         };
 
+        // Scroll listener (still needed for sticky positioning)
         window.addEventListener('scroll', handleUpdate, { passive: true });
-        window.addEventListener('resize', handleUpdate, { passive: true });
+        drawer._scrollHandler = handleUpdate;
+
+        // Use ResizeObserver for resize detection
+        if (window.ResizeObserver) {
+            drawer._heightResizeObserver = new ResizeObserver(() => {
+                handleUpdate();
+            });
+            // Observe the drawer itself for size changes
+            drawer._heightResizeObserver.observe(drawer);
+            // Also observe parent container
+            if (drawer.parentElement) {
+                drawer._heightResizeObserver.observe(drawer.parentElement);
+            }
+        } else {
+            // Fallback to window resize for older browsers
+            window.addEventListener('resize', handleUpdate, { passive: true });
+            drawer._resizeHandler = handleUpdate;
+        }
+
+        // Drawer state change listeners
         drawer.addEventListener('nds:drawer:shown', handleDrawerChange);
         drawer.addEventListener('nds:drawer:hidden', handleDrawerChange);
-
-        drawer._scrollHandler = handleUpdate;
-        drawer._resizeHandler = handleUpdate;
         drawer._drawerChangeHandler = handleDrawerChange;
     }
 
@@ -337,18 +354,31 @@
     }
 
     function destroyDrawer(drawer) {
+        // Clean up overflow ResizeObserver
         if (drawer._resizeObserver) {
             drawer._resizeObserver.disconnect();
             delete drawer._resizeObserver;
         }
+
+        // Clean up height ResizeObserver
+        if (drawer._heightResizeObserver) {
+            drawer._heightResizeObserver.disconnect();
+            delete drawer._heightResizeObserver;
+        }
+
+        // Clean up scroll listener
         if (drawer._scrollHandler) {
             window.removeEventListener('scroll', drawer._scrollHandler);
             delete drawer._scrollHandler;
         }
+
+        // Clean up resize listener (fallback for older browsers)
         if (drawer._resizeHandler) {
             window.removeEventListener('resize', drawer._resizeHandler);
             delete drawer._resizeHandler;
         }
+
+        // Clean up drawer change listeners
         if (drawer._drawerChangeHandler) {
             drawer.removeEventListener('nds:drawer:shown', drawer._drawerChangeHandler);
             drawer.removeEventListener('nds:drawer:hidden', drawer._drawerChangeHandler);

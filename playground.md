@@ -303,3 +303,174 @@ direction: ltr
         </div>
     </div>
 </section>
+<section id="ads" class="nds-content-section">
+    <div class="nds-section-content nds-grid" style="--gap: var(--spacing-4xl);">
+        <div class="ads-col col-sm-12 col-lg-6">
+            <div class="nds-section-head">
+                <h2 class="nds-section-title">الإعلانات</h2>
+                <div class="nds-section-action">
+                    <button class="nds-btn nds-secondary-outline nds-center">
+                        <span class="label">عرض الكل</span>
+                    </button>
+                </div>
+            </div>
+            <nav class="nds-drawer nds-divided nds-fit nds-card nds-stroke "
+                style="--drawer-max-height:100%; --drawer-truncate:2;">
+                <div class="nds-drawer-scroll">
+                    <ul class="nds-drawer-list">
+                        <li>
+                            <button class="nds-btn nds-subtle nds-indicator">
+                                <span class="nds-featured-icon nds-brand nds-sm">
+                                    <i class="hgi hgi-stroke hgi-promotion icon"></i>
+                                </span>
+                                <span class="label nds-truncate">دعوة لحضور الدورة التعريفية بعنوان: (مستقبلك المهني في
+                                    صناعة الألعاب)</span>
+                                <span class="nds-tag nds-gray nds-xs">
+                                    <span class="label">23/12/2025</span>
+                                </span>
+                                <i class="hgi hgi-stroke hgi-arrow-left-01 icon"></i>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="nds-btn nds-subtle nds-indicator">
+                                <span class="nds-featured-icon nds-brand nds-sm">
+                                    <i class="hgi hgi-stroke hgi-promotion icon"></i>
+                                </span>
+                                <span class="label nds-truncate">تعلن الجامعة الإسلامية عن بدء استقبال طلبات الدراسة
+                                    للطلاب الدوليين</span>
+                                <span class="nds-tag nds-gray nds-xs">
+                                    <span class="label">18/12/2025</span>
+                                </span>
+                                <i class="hgi hgi-stroke hgi-arrow-left-01 icon"></i>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="nds-btn nds-subtle nds-indicator">
+                                <span class="nds-featured-icon nds-brand nds-sm">
+                                    <i class="hgi hgi-stroke hgi-promotion icon"></i>
+                                </span>
+                                <span class="label nds-truncate">دعوة لحضور الأمسية الشعرية "ينابيع شعرية"</span>
+                                <span class="nds-tag nds-gray nds-xs">
+                                    <span class="label">18/12/2025</span>
+                                </span>
+                                <i class="hgi hgi-stroke hgi-arrow-left-01 icon"></i>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="nds-btn nds-subtle nds-indicator">
+                                <span class="nds-featured-icon nds-brand nds-sm">
+                                    <i class="hgi hgi-stroke hgi-promotion icon"></i>
+                                </span>
+                                <span class="label nds-truncate">جدول فعاليات الجامعة الإسلامية بمناسبة اليوم العالمي
+                                    للغة العربية</span>
+                                <span class="nds-tag nds-gray nds-xs">
+                                    <span class="label">17/12/2025</span>
+                                </span>
+                                <i class="hgi hgi-stroke hgi-arrow-left-01 icon"></i>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="nds-btn nds-subtle nds-indicator">
+                                <span class="nds-featured-icon nds-brand nds-sm">
+                                    <i class="hgi hgi-stroke hgi-promotion icon"></i>
+                                </span>
+                                <span class="label nds-truncate">دعوة لحضور فعاليات اليوم العالمي للغة العربية</span>
+                                <span class="nds-tag nds-gray nds-xs">
+                                    <span class="label">17/12/2025</span>
+                                </span>
+                                <i class="hgi hgi-stroke hgi-arrow-left-01 icon"></i>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="nds-btn nds-subtle nds-indicator">
+                                <span class="nds-featured-icon nds-brand nds-sm">
+                                    <i class="hgi hgi-stroke hgi-promotion icon"></i>
+                                </span>
+                                <span class="label nds-truncate">ورشة عمل بعنوان: "المحتوى المحلي في نظام المنافسات
+                                    والمشتريات الحكومية"</span>
+                                <span class="nds-tag nds-gray nds-xs">
+                                    <span class="label">16/12/2025</span>
+                                </span>
+                                <i class="hgi hgi-stroke hgi-arrow-left-01 icon"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <button class="nds-drawer-more nds-btn nds-subtle">
+                    <i class="hgi hgi-stroke hgi-arrow-down-01"></i>
+                </button>
+            </nav>
+        </div>
+        <div class="importantlinks-col col-sm-12 col-lg-6">
+            <div class="nds-section-head">
+                <h2 class="nds-section-title">روابط هامة</h2>
+            </div>
+            <nav class="nds-drawer nds-divided nds-fit nds-card nds-stroke "
+                style="--drawer-max-height:100%; --drawer-truncate:2;">
+                <div class="nds-drawer-scroll">
+                    <ul class="nds-drawer-list">
+                        <li>
+                            <a class="nds-btn nds-subtle nds-indicator" href="https://iu.edu.sa/iuvr/islamic-univ.html">
+                                <span class="nds-featured-icon nds-brand nds-sm">
+                                    <i class="hgi hgi-stroke hgi-link-02 icon"></i>
+                                </span>
+                                <span class="label nds-truncate">جولة افتراضية</span>
+                                <i class="hgi hgi-stroke hgi-arrow-left-01 icon"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nds-btn nds-subtle nds-indicator" href="/university/A055">
+                                <span class="nds-featured-icon nds-brand nds-sm">
+                                    <i class="hgi hgi-stroke hgi-link-02 icon"></i>
+                                </span>
+                                <span class="label nds-truncate">الأنظمة و اللوائح</span>
+                                <i class="hgi hgi-stroke hgi-arrow-left-01 icon"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nds-btn nds-subtle nds-indicator" href="https://competition.iu.edu.sa/">
+                                <span class="nds-featured-icon nds-brand nds-sm">
+                                    <i class="hgi hgi-stroke hgi-link-02 icon"></i>
+                                </span>
+                                <span class="label nds-truncate">التوظيف</span>
+                                <i class="hgi hgi-stroke hgi-arrow-left-01 icon"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nds-btn nds-subtle nds-indicator"
+                                href="https://directory.iu.edu.sa/ords/r/empapp/phone-directory/phone_directory">
+                                <span class="nds-featured-icon nds-brand nds-sm">
+                                    <i class="hgi hgi-stroke hgi-link-02 icon"></i>
+                                </span>
+                                <span class="label nds-truncate">دليل الهاتف</span>
+                                <i class="hgi hgi-stroke hgi-arrow-left-01 icon"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nds-btn nds-subtle nds-indicator" href="/Deanship-Admission-Registration">
+                                <span class="nds-featured-icon nds-brand nds-sm">
+                                    <i class="hgi hgi-stroke hgi-link-02 icon"></i>
+                                </span>
+                                <span class="label nds-truncate">القبول فى الجامعة</span>
+                                <i class="hgi hgi-stroke hgi-arrow-left-01 icon"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nds-btn nds-subtle nds-indicator"
+                                href="https://eduportal.iu.edu.sa/iu/init?service=academicCalendar">
+                                <span class="nds-featured-icon nds-brand nds-sm">
+                                    <i class="hgi hgi-stroke hgi-link-02 icon"></i>
+                                </span>
+                                <span class="label nds-truncate">التقويم الأكاديمي</span>
+                                <i class="hgi hgi-stroke hgi-arrow-left-01 icon"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <button class="nds-drawer-more nds-btn nds-subtle">
+                    <i class="hgi hgi-stroke hgi-arrow-down-01"></i>
+                </button>
+            </nav>
+        </div>
+    </div>
+</section>

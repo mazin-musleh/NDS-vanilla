@@ -31,29 +31,33 @@
    NAVIGATION CONTAINER (nds-drawer)
    ======================================== */
 
-.nds-sideMenu > nav.nds-drawer {
-    --drawer-btn-height: 32px;
+.nds-sideMenu>nav.nds-drawer {
+    --drawer-btn-height: 48px;
     // Max height accounts for: nav height + sticky top offset + bottom padding
     --_max-height: calc(100svh - var(--nds-nav-height) - var(--spacing-xl) - var(--spacing-xl));
     position: sticky;
     top: calc(var(--nds-nav-height) + var(--spacing-xl));
     width: 100%;
+
+    .nds-drawer-list ul li > .nds-btn {
+        --drawer-btn-height: 40px;
+    }
 }
 
 /* ========================================
    MENU ITEM ICONS (::after)
    ======================================== */
 
-.hgi-loaded .nds-sideMenu nav li.gridView > a:after,
-.hgi-loaded .nds-sideMenu nav li.redirect.external > a:after {
+.hgi-loaded .nds-sideMenu nav li.gridView>a:after,
+.hgi-loaded .nds-sideMenu nav li.redirect.external>a:after {
     content: '㭫';
 }
 
-.hgi-loaded .nds-sideMenu nav li.redirect.external > a:after {
+.hgi-loaded .nds-sideMenu nav li.redirect.external>a:after {
     content: "䊔";
 }
 
-.hgi-loaded .nds-sideMenu nav li.gridView > a:after {
+.hgi-loaded .nds-sideMenu nav li.gridView>a:after {
     content: "䃺";
 }
 
@@ -77,7 +81,7 @@
         transform: translateX(0px) !important;
     }
 
-    .nds-sideMenu > nav.nds-drawer {
+    .nds-sideMenu>nav.nds-drawer {
         margin-top: -40px !important;
     }
 
@@ -128,7 +132,7 @@
     }
 
     @include ltr {
-        .nds-sideMenu li.redirect.external > a::after {
+        .nds-sideMenu li.redirect.external>a::after {
             transform: scale(-1);
         }
     }

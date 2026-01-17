@@ -46,6 +46,7 @@ hr {
     border-top: 1px solid;
     margin: 4px 0;
     color: inherit;
+    width: 100%;
 }
 
 h1,
@@ -75,6 +76,7 @@ h4 {
 ul,
 ol {
     padding-inline-start: 40px;
+    line-height: 1.5;
 }
 
 nav {
@@ -180,45 +182,39 @@ button,
     direction: ltr !important;
 }
 
-.nds-expandable.nds-expand {
+.nds-expandable {
+    position: relative;
+
+    // Default constrained state to prevent CLS
     .nds-expandable-content {
         overflow-y: hidden;
         max-height: var(--max-height, 300px);
-        position: relative;
+    }
+}
 
-        .nds-expand-btn {
-            position: absolute;
-            bottom: 0;
-            z-index: 6;
-            inset-inline-end: 0;
-        }
+.nds-expandable.nds-expand {
+    &:has(>.nds-expandable-content),
+    &>*:has(>.nds-expandable-content) {
+        overflow: hidden;
+    }
 
-        &::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 100px;
-            background: linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 35%, rgba(255, 255, 255, 0) 100%);
-            pointer-events: none;
-            z-index: 2;
-        }
+    .nds-expandable-content {
+        mask-image: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 65%, rgba(0, 0, 0, 0.2) 80%, rgba(0, 0, 0, 0) 100%);
+    }
+
+    .nds-expand-btn {
+        position: absolute;
+        bottom: 0;
+        z-index: 6;
+        inset-inline-end: 0;
     }
 
     &.nds-expanded {
         .nds-expandable-content {
             max-height: 100%;
-            padding-bottom: var(--spacing-6xl);
-
-            &::after {
-                content: "";
-                height: var(--spacing-4xl);
-                background: linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 35%, rgba(255, 255, 255, 0) 100%);
-
-            }
-
+            padding-bottom: var(--spacing-4xl);
+            mask-image: none;
+            -webkit-mask-image: none;
         }
-
     }
 }

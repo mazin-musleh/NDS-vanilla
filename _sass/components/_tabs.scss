@@ -23,7 +23,7 @@
   --btn-indicator-size: 3px;
 
   /* Vertical Tab Layout */
-  &.nds-vertical-tabs {
+  &.nds-vertical {
     display: flex;
     flex-direction: row;
 
@@ -47,7 +47,7 @@
       @include btn-indicator('v');
     }
 
-    &.withDivider {
+    &.nds-divided {
 
       .nds-tab {
         flex-direction: row-reverse;
@@ -82,17 +82,10 @@
       }
     }
 
-    &.cardView .nds-tab-content {
-      background-color: var(--background-white);
-      border-radius: var(--radius-md);
-      box-shadow: var(--shadow-md);
-      margin-top: unset;
-      margin-inline-start: var(--spacing-lg);
-    }
   }
 
   /* Tabs with divider styling */
-  &.withDivider {
+  &.nds-divided {
     .nds-tab-list-container::after {
       content: '';
       position: absolute;
@@ -115,18 +108,6 @@
     }
   }
 
-  /* Tabs without divider */
-  &.noDivider .nds-tab-list {
-    padding: unset;
-  }
-
-  /* Card view styling */
-  &.cardView .nds-tab-content {
-    background-color: var(--background-white);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-md);
-    margin-top: var(--spacing-lg);
-  }
 }
 
 // ==============================================
@@ -187,6 +168,10 @@
   position: relative;
   z-index: 2;
 
+  .nds-lg & {
+    --btn-size: 48px;
+  }
+
   /* Tab indicator using mixin */
   @include btn-indicator('b');
 
@@ -209,7 +194,7 @@
   &.showMore {
     display: none;
     border-radius: 0;
-    min-width: var(--btn-height);
+    min-width: var(--btn-size);
     /* box-shadow: 4px 0px 0px 4px var(--nds-nav-background-color); */
   }
 
@@ -225,7 +210,7 @@
 // ==============================================
 
 /* Only apply to horizontal (non-vertical) tabs */
-.nds-tabs:not(.nds-vertical-tabs) {
+.nds-tabs:not(.nds-vertical) {
 
   .nds-tab-list {
     /* Base overflow styles */
@@ -237,7 +222,7 @@
     scroll-behavior: smooth;
     position: relative;
 
-    > * {
+    >* {
       white-space: nowrap;
       width: fit-content;
 
@@ -247,8 +232,8 @@
     }
 
     /* Show showMore when overflow detected */
-    &.hasMore > .showMore {
-      display: flex !important;
+    &.hasMore>.showMore {
+      display: flex;
       position: sticky;
       background-color: var(--background-white);
       z-index: 2;
@@ -259,7 +244,7 @@
     }
 
     /* Icon rotation for showMore button */
-    &.hasMore > .showMore i {
+    &.hasMore>.showMore i {
       transition: transform 0.1s ease;
 
       @include ltr {
@@ -268,7 +253,7 @@
     }
 
     /* Rotate icon when at end of scroll */
-    &.hasMore.atEnd > .showMore i {
+    &.hasMore.atEnd>.showMore i {
       transform: rotate(180deg);
 
       @include ltr {
@@ -295,29 +280,9 @@
 
 /* Tab Panel */
 .nds-tab-panel {
-  padding: var(--spacing-xl);
-  animation: fadeInUp 0.2s ease-in-out;
 
-  &.hug {
-    padding: 0;
-
-    &>* {
-      padding: var(--spacing-xl);
-    }
-  }
-
-  &.hug-x {
-    padding-left: 0;
-    padding-right: 0;
-
-    &>* {
-      padding: 0 var(--spacing-xl);
-    }
-  }
-
-  &.hidden {
-    display: none;
-  }
+  padding: var(--spacing-2xl);
+  /* animation: fadeInUp 0.2s ease-in-out; */
 
   &:focus {
     outline: none;
@@ -325,17 +290,12 @@
 
 }
 
+
+
 // ==============================================
 // RESPONSIVE & ACCESSIBILITY
 // ==============================================
 
-/* Mobile Responsive */
-@include mobile {
-  .nds-tab-panel {
-    padding: var(--spacing-lg);
-  }
-
-}
 
 
 /* High Contrast Accessibility */
@@ -361,5 +321,86 @@
   .nds-tab-panel {
     transition: none;
     animation: none;
+  }
+}
+
+// ==============================================
+// CARD VARIANT (Last to override other styles)
+// ==============================================
+
+/* Card View Styling */
+.nds-tabs.nds-card {
+
+  &:not(.nds-stroke) {
+    border: 0;
+  }
+
+  .nds-tab-content {
+    padding-inline: var(--_card-padding);
+    padding-block: var(--spacing-2xl);
+
+    .nds-tab-panel {
+      padding: 0;
+    }
+  }
+
+  /* Only apply to horizontal tabs */
+  &:not(.nds-vertical) {
+    --card-gap: 0;
+    padding: 0;
+    overflow: hidden;
+
+    .nds-tab {
+      --btn-height: calc(var(--btn-size)*1.25);
+    }
+  }
+
+  &.nds-vertical {
+    .nds-tab-content {
+      padding-inline-end: 0;
+    }
+  }
+
+}
+
+.nds-tab-content.nds-card {
+  padding-inline: var(--_card-padding);
+  padding-block: var(--spacing-2xl);
+
+  .nds-tab-panel {
+    padding: 0;
+  }
+}
+
+.nds-tab-content.nds-card,
+.nds-tab-panel.nds-card {
+  margin-block-start: var(--spacing-xl);
+}
+
+.contentLayout.cardView .nds-ghost,
+section>.nds-full-width {
+  .nds-tabs:not(.nds-card) {
+
+    @include tablet(max) {
+      /* &.nds-divided .nds-tab-list-container::after {
+        display: none;
+      }
+
+      &.nds-divided .nds-tab:before {
+        margin-bottom: unset;
+      } */
+
+      .nds-tab-content:not(.nds-card) {
+        padding-inline: var(--nds-viewport-padding);
+      }
+
+      .nds-tab-list {
+        padding-inline: var(--nds-viewport-padding);
+
+        .showMore {
+          display: none !important;
+        }
+      }
+    }
   }
 }

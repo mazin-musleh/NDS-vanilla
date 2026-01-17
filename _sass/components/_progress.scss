@@ -298,19 +298,3 @@
     background-position: var(--pb-height) 0;
   }
 }
-
-// ==============================================
-// RESPONSIVE BEHAVIOR
-// ==============================================
-
-@include mobile {
-  .nds-progress-circle {
-    &.nds-lg {
-      --pc-size: 80px;
-    }
-
-    &.nds-xl {
-      --pc-size: 120px;
-    }
-  }
-}

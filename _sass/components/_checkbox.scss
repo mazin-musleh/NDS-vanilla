@@ -77,6 +77,50 @@
 
     &.rowView {
         flex-direction: row;
+        flex-wrap: wrap;
+
+        // Force feedback to new line in row layout
+        > .nds-feedback {
+            flex-basis: 100%;
+            width: 100%;
+        }
+    }
+
+    // ==============================================
+    // GROUP VALIDATION (data-status attribute)
+    // ==============================================
+
+    // Show feedback when group has status
+    &[data-status] > .nds-feedback {
+        display: flex;
+    }
+
+    // Error state
+    &[data-status="error"] {
+        > .nds-feedback {
+            color: var(--text-error);
+        }
+    }
+
+    // Success state
+    &[data-status="success"] {
+        > .nds-feedback {
+            color: var(--text-success);
+        }
+    }
+
+    // Warning state
+    &[data-status="warning"] {
+        > .nds-feedback {
+            color: var(--text-warning);
+        }
+    }
+
+    // Info state
+    &[data-status="info"] {
+        > .nds-feedback {
+            color: var(--text-info);
+        }
     }
 }
 

@@ -75,6 +75,16 @@
         if (submitButton) {
             submitButton.addEventListener('click', function (e) {
                 e.preventDefault();
+
+                // Find the parent form and validate
+                const form = feedbackComponent.closest('.nds-form') || feedbackComponent.closest('form');
+                if (form && window.NDS && window.NDS.Forms && window.NDS.Forms.validateForm) {
+                    const result = window.NDS.Forms.validateForm(form, { showMessages: true, focusFirst: true });
+                    if (!result.valid) {
+                        return; // Don't show success if validation fails
+                    }
+                }
+
                 showSuccess();
             });
         }

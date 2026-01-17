@@ -27,7 +27,7 @@ css_files:
                     <div class="demo-label">Basic Accordion</div>
                     <div class="demo-action">
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='[["cardView", ".nds-accordion", "accordionStyle"],["noBg", ".demo-container", "containerBg"]]'>
+                            data-toggler='[["nds-card nds-stroke nds-shadow", ".nds-accordion", "accordionStyle"],["noBg", ".demo-container", "containerBg"]]'>
                             <span class="label">Card View</span>
                         </button>
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
@@ -131,7 +131,7 @@ css_files:
                         </div>
                     </div>
                 </div>
-                <div class="nds-tabs nds-code withDivider">
+                <div class="nds-tabs nds-code nds-divided">
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -196,7 +196,7 @@ css_files:
                     <div class="demo-label">Accordion with Leading Icons</div>
                     <div class="demo-action">
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='[["cardView", ".nds-accordion", "accordionStyle"],["noBg", ".demo-container", "containerBg"]]'>
+                            data-toggler='[["nds-card nds-stroke nds-shadow", ".nds-accordion", "accordionStyle"],["noBg", ".demo-container", "containerBg"]]'>
                             <span class="label">Card View</span>
                         </button>
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
@@ -301,7 +301,7 @@ css_files:
                         </div>
                     </div>
                 </div>
-                <div class="nds-tabs nds-code withDivider">
+                <div class="nds-tabs nds-code nds-divided">
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -544,7 +544,9 @@ document.addEventListener('nds:accordion:hidden', (e) => {
                 <h3>Configuration Options</h3>
                 <ul>
                     <li><code>.always-open</code> class - Allow multiple panels open simultaneously</li>
-                    <li><code>.cardView</code> class - Apply card styling with borders and shadows</li>
+                    <li><code>.nds-card</code> class - Apply card background styling</li>
+                    <li><code>.nds-stroke</code> class - Add border around accordion</li>
+                    <li><code>.nds-shadow</code> class - Apply shadow effect</li>
                     <li><code>aria-expanded="true"</code> - Set initial open state for specific panels</li>
                     <li><code>--nds-transition-speed</code> - CSS custom property to control animation speed</li>
                 </ul>

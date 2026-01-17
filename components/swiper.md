@@ -92,7 +92,7 @@ direction: ltr
                         </div>
                     </div>
                 </div>
-                <div class="nds-tabs nds-code withDivider">
+                <div class="nds-tabs nds-code nds-divided">
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -192,7 +192,7 @@ direction: ltr
                         </div>
                     </div>
                 </div>
-                <div class="nds-tabs nds-code withDivider">
+                <div class="nds-tabs nds-code nds-divided">
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -317,7 +317,7 @@ direction: ltr
                         </div>
                     </div>
                 </div>
-                <div class="nds-tabs nds-code withDivider">
+                <div class="nds-tabs nds-code nds-divided">
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -442,7 +442,7 @@ direction: ltr
                         </div>
                     </div>
                 </div>
-                <div class="nds-tabs nds-code withDivider">
+                <div class="nds-tabs nds-code nds-divided">
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"

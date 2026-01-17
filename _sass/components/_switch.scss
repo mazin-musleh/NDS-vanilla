@@ -89,6 +89,13 @@
 
     &.rowView {
         flex-direction: row;
+        flex-wrap: wrap;
+
+        // Force feedback to new line in row layout
+        > .nds-feedback {
+            flex-basis: 100%;
+            width: 100%;
+        }
     }
 }
 

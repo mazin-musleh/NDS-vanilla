@@ -7,6 +7,96 @@
 @use '../mixins' as *;
 
 // ==============================================
+// RESPONSIVE TABLE WRAPPER
+// ==============================================
+
+.nds-table-wrapper {
+    --_max-width: var(--max-width, 100%);
+    position: relative;
+    width: 100%;
+    max-width: var(--_max-width);
+    overflow-x: auto;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
+    display: block;
+
+    // Table inside should also respect max-width
+    .nds-table {
+        --_min-width: var(--min-width, 100%);
+        min-width: var(--_min-width);
+        display: table; // Ensure table doesn't collapse
+    }
+}
+
+// When table needs scrolling (determined by JS)
+.nds-table-wrapper.nds-scroll {
+    // Gradient mask on both sides (RTL - fade on both left and right)
+    mask-image: linear-gradient(to right,
+            rgba(0, 0, 0, 1) 0%,
+            rgba(0, 0, 0, 1) 92%,
+            rgba(0, 0, 0, 0.5) 97%,
+            rgba(0, 0, 0, 0) 100%),
+        linear-gradient(to left,
+            rgba(0, 0, 0, 1) 0%,
+            rgba(0, 0, 0, 1) 92%,
+            rgba(0, 0, 0, 0.5) 97%,
+            rgba(0, 0, 0, 0) 100%);
+    mask-composite: intersect;
+
+    // When at start, hide left mask (RTL - hide right side)
+    &.scrolled-start {
+        mask-image: linear-gradient(to right,
+                rgba(0, 0, 0, 0) 0%,
+                rgba(0, 0, 0, 0.5) 3%,
+                rgba(0, 0, 0, 1) 8%,
+                rgba(0, 0, 0, 1) 100%);
+    }
+
+    // When scrolled to the end, hide right mask (RTL - hide left side)
+    &.scrolled-end {
+        mask-image: linear-gradient(to left,
+                rgba(0, 0, 0, 0) 0%,
+                rgba(0, 0, 0, 0.5) 3%,
+                rgba(0, 0, 0, 1) 8%,
+                rgba(0, 0, 0, 1) 100%);
+        padding-inline-end: 2px;
+    }
+
+    // Adjust gradient direction for LTR
+    @include ltr {
+        // Both sides (LTR - fade on both left and right)
+        mask-image: linear-gradient(to right,
+                rgba(0, 0, 0, 1) 0%,
+                rgba(0, 0, 0, 1) 92%,
+                rgba(0, 0, 0, 0.5) 97%,
+                rgba(0, 0, 0, 0) 100%),
+            linear-gradient(to left,
+                rgba(0, 0, 0, 1) 0%,
+                rgba(0, 0, 0, 1) 92%,
+                rgba(0, 0, 0, 0.5) 97%,
+                rgba(0, 0, 0, 0) 100%);
+
+        // When at start, hide left mask
+        &.scrolled-start {
+            mask-image: linear-gradient(to left,
+                    rgba(0, 0, 0, 0) 0%,
+                    rgba(0, 0, 0, 0.5) 3%,
+                    rgba(0, 0, 0, 1) 8%,
+                    rgba(0, 0, 0, 1) 100%);
+        }
+
+        // When at end, hide right mask
+        &.scrolled-end {
+            mask-image: linear-gradient(to right,
+                    rgba(0, 0, 0, 0) 0%,
+                    rgba(0, 0, 0, 0.5) 3%,
+                    rgba(0, 0, 0, 1) 8%,
+                    rgba(0, 0, 0, 1) 100%);
+        }
+    }
+}
+
+// ==============================================
 // BASE TABLE STYLES
 // ==============================================
 
@@ -16,7 +106,11 @@
     border: 1px solid var(--table-cell-border);
     border-radius: var(--radius-md);
     overflow: clip;
+    max-width: unset !important;
 
+    &.nds-center * {
+        text-align: center;
+    }
 
     // Row styles
     tr {
@@ -101,6 +195,7 @@
 // ==============================================
 
 .nds-table.nds-compact {
+
     th,
     thead th,
     thead td {
@@ -116,6 +211,7 @@
     }
 
     @include mobile {
+
         th,
         thead th,
         thead td,
@@ -165,15 +261,14 @@
                 color: var(--colors-neutral-500);
             }
 
-            &.nds-btn{
+            &.nds-btn {
                 border-radius: 0;
             }
 
         }
 
-        th.sortable
+        th.sortable // Sorted states
 
-        // Sorted states
         &.sorted-asc .sort-header .sort-icon {
             color: var(--colors-primary-sa-flag-600-primary);
         }
@@ -189,6 +284,7 @@
 // ==============================================
 
 .nds-table {
+
     // Remove default focus outline on table cells
     th,
     td {
@@ -202,6 +298,7 @@
     // Focus styles only for interactive elements within cells
     th:focus-within,
     td:focus-within {
+
         // Only apply focus styles to interactive elements, not the cell itself
         button:focus,
         input:focus,
@@ -237,6 +334,7 @@
     0% {
         opacity: 0.5;
     }
+
     100% {
         opacity: 1;
     }

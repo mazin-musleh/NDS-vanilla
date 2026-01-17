@@ -1,0 +1,117 @@
+/**
+* NDS Definition List - SCSS Version
+* Component for displaying term-definition pairs with icons
+*/
+
+@use '../mixins' as *;
+
+// ==============================================
+// BASE DEFINITION LIST STYLES
+// ==============================================
+
+.nds-definition-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+
+    &.tableView {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        height: 100%;
+    }
+
+}
+
+// ==============================================
+// DEFINITION ITEM
+// ==============================================
+
+.nds-definition-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    text-align: start;
+}
+
+.nds-definition-list.tableView {
+    .nds-definition-item {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: subgrid;
+        gap: var(--spacing-xl);
+    }
+}
+
+// ==============================================
+// DEFINITION TERM (dt)
+// ==============================================
+
+dt {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: var(--nds-text-clamp-lg-FS);
+    color: var(--text-primary-paragraph);
+    margin: 0;
+
+    .icon {
+        color: var(--text-primary);
+    }
+
+
+    .label {
+        flex: 1;
+        font-weight: 600;
+        line-height: normal;
+    }
+}
+
+// ==============================================
+// DEFINITION DESCRIPTION (dd)
+// ==============================================
+
+dd {
+    display: flex;
+    align-items: center;
+    color: var(--text-secondary-paragraph);
+
+    .nds-definition-list:not(.tableView) .nds-definition-item:has(> dt .icon) & {
+        padding-inline-start: calc(var(--spacing-sm) + var(--nds-text-lg-FS));
+    }
+}
+
+// ==============================================
+// DIVIDED VARIANT
+// ==============================================
+
+.nds-definition-list.nds-divided {
+
+    // For non-tableView variant
+    &:not(.tableView) .nds-definition-item {
+        padding-bottom: var(--spacing-lg);
+        border-bottom: 1px solid var(--border-neutral-secondary);
+
+        &:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+    }
+
+    // For tableView variant (already has borders, just ensure consistency)
+    &.tableView {
+        gap: 0;
+
+        .nds-definition-item {
+            padding: var(--spacing-md) 0;
+            border-bottom: 1px solid var(--border-neutral-secondary);
+
+            &:last-child {
+                border-bottom: none;
+            }
+        }
+    }
+}
+
+// ==============================================
+// RESPONSIVE BEHAVIOR
+// ==============================================

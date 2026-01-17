@@ -70,7 +70,7 @@ direction: ltr
               </div>
             </div>
           </div>
-          <div class="nds-tabs nds-code withDivider">
+          <div class="nds-tabs nds-code nds-divided">
             <div class="nds-tab-list-container">
               <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -200,7 +200,7 @@ direction: ltr
               </fieldset>
             </div>
           </div>
-          <div class="nds-tabs nds-code withDivider">
+          <div class="nds-tabs nds-code nds-divided">
             <div class="nds-tab-list-container">
               <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -273,7 +273,210 @@ direction: ltr
           </div>
         </div>
 
+        <!-- Checkbox Group Validation -->
+        <div class="nds-demo-card">
+          <div class="demo-header">
+            <div class="demo-label">Group Validation</div>
+            <div class="demo-action">
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='["rowView", ".nds-check-group", "layoutToggle"]'>
+                <span class="label">RowView</span>
+              </button>
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                <span class="label">Remove bg</span>
+              </button>
+            </div>
+          </div>
+          <div class="demo-container">
+            <div class="state-demo">
+              <fieldset class="nds-check-group" id="demo-group-validation" data-min-checked="2" data-max-checked="4">
+                <legend class="label">Select 2-4 interests</legend>
+                  <div class="nds-form-container nds-check-container">
+                    <div class="nds-form-header">
+                      <label for="demo-valid-checkbox1">
+                        <span class="label">Technology</span>
+                      </label>
+                    </div>
+                    <div class="nds-form-control">
+                      <input type="checkbox" id="demo-valid-checkbox1" name="valid-interests" value="technology" class="nds-check">
+                    </div>
+                  </div>
+                  <div class="nds-form-container nds-check-container">
+                    <div class="nds-form-header">
+                      <label for="demo-valid-checkbox2">
+                        <span class="label">Sports</span>
+                      </label>
+                    </div>
+                    <div class="nds-form-control">
+                      <input type="checkbox" id="demo-valid-checkbox2" name="valid-interests" value="sports" class="nds-check">
+                    </div>
+                  </div>
+                  <div class="nds-form-container nds-check-container">
+                    <div class="nds-form-header">
+                      <label for="demo-valid-checkbox3">
+                        <span class="label">Entertainment</span>
+                      </label>
+                    </div>
+                    <div class="nds-form-control">
+                      <input type="checkbox" id="demo-valid-checkbox3" name="valid-interests" value="entertainment" class="nds-check">
+                    </div>
+                  </div>
+                  <div class="nds-form-container nds-check-container">
+                    <div class="nds-form-header">
+                      <label for="demo-valid-checkbox4">
+                        <span class="label">Education</span>
+                      </label>
+                    </div>
+                    <div class="nds-form-control">
+                      <input type="checkbox" id="demo-valid-checkbox4" name="valid-interests" value="education" class="nds-check">
+                    </div>
+                  </div>
+                  <div class="nds-form-container nds-check-container">
+                    <div class="nds-form-header">
+                      <label for="demo-valid-checkbox5">
+                        <span class="label">Travel</span>
+                      </label>
+                    </div>
+                    <div class="nds-form-control">
+                      <input type="checkbox" id="demo-valid-checkbox5" name="valid-interests" value="travel" class="nds-check">
+                    </div>
+                  </div>
+                  <div class="nds-form-container nds-check-container">
+                    <div class="nds-form-header">
+                      <label for="demo-valid-checkbox6">
+                        <span class="label">Food</span>
+                      </label>
+                    </div>
+                    <div class="nds-form-control">
+                      <input type="checkbox" id="demo-valid-checkbox6" name="valid-interests" value="food" class="nds-check">
+                    </div>
+                  </div>
+                  <!-- Group-level feedback -->
+                  <span class="nds-feedback">
+                    <span class="nds-feedback-icon nds-outline nds-sm">
+                      <i class="hgi hgi-solid icon"></i>
+                    </span>
+                    <span class="msg">Select between 2 and 4 options</span>
+                  </span>
+              </fieldset>
+              <div style="margin-top: var(--spacing-lg);">
+                <button class="nds-btn nds-primary nds-sm" id="validate-group-btn">
+                  <span class="label">Validate Group</span>
+                </button>
+                <button class="nds-btn nds-subtle nds-sm" id="clear-group-btn">
+                  <span class="label">Clear Status</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="nds-tabs nds-code nds-divided">
+            <div class="nds-tab-list-container">
+              <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                  aria-controls="panel-checkbox-validation-1" id="tab-checkbox-validation-1">
+                  <span class="nds-tab-label">HTML</span>
+                </button>
+                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                  aria-controls="panel-checkbox-validation-2" id="tab-checkbox-validation-2">
+                  <span class="nds-tab-label">JavaScript</span>
+                </button>
+                <button class="nds-btn nds-subtle nds-tab showMore"><i
+                    class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                </button>
+              </nav>
+            </div>
+            <div class="nds-tab-content">
+              <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-checkbox-validation-1"
+                aria-labelledby="tab-checkbox-validation-1">
+                <div class="nds-code-action">
+                  <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                    <i class="hgi hgi-stroke hgi-copy-01"></i>
+                  </button>
+                </div>
+                <div class="nds-expandable-content">
+                  <code class="lang-html code">
+<fieldset class="nds-check-group" data-min-checked="2" data-max-checked="4">
+  <legend class="label">Select 2-4 interests</legend>
+  <div class="nds-form-container nds-check-container">
+    <div class="nds-form-header">
+      <label for="checkbox1">
+        <span class="label">Technology</span>
+      </label>
+    </div>
+    <div class="nds-form-control">
+      <input type="checkbox" id="checkbox1" name="interests" value="technology" class="nds-check">
+    </div>
+  </div>
+  <!-- More checkboxes... -->
+
+  <!-- Group-level feedback (shown when validation fails) -->
+  <span class="nds-feedback">
+    <span class="nds-feedback-icon nds-outline nds-sm">
+      <i class="hgi hgi-solid icon"></i>
+    </span>
+    <span class="msg">Select between 2 and 4 options</span>
+  </span>
+</fieldset>
+                  </code>
+                </div>
+              </div>
+              <div class="nds-tab-panel code-example nds-expandable hidden" role="tabpanel" id="panel-checkbox-validation-2"
+                aria-labelledby="tab-checkbox-validation-2">
+                <div class="nds-code-action">
+                  <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                    <i class="hgi hgi-stroke hgi-copy-01"></i>
+                  </button>
+                </div>
+                <div class="nds-expandable-content">
+                  <code class="lang-javascript code">
+// Validate checkbox group
+var group = document.querySelector('.nds-check-group');
+var result = NDS.Forms.validateCheckboxGroup(group);
+
+// result = { valid: false, checked: 1, min: 2, max: 4, message: '...' }
+
+if (!result.valid) {
+  console.log(result.message);
+}
+
+// Manual validation without showing message
+var result = NDS.Forms.validateCheckboxGroup(group, { showMessage: false });
+
+// Clear validation status
+NDS.Forms.clearStatus(group);
+
+// Custom error message (via data attribute)
+// <div class="nds-check-group" data-min-checked="2" data-error-message="Please select at least 2 interests">
+                  </code>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
 </section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Group Validation Demo
+  var validateBtn = document.getElementById('validate-group-btn');
+  var clearBtn = document.getElementById('clear-group-btn');
+  var group = document.getElementById('demo-group-validation');
+
+  if (validateBtn && group) {
+    validateBtn.addEventListener('click', function() {
+      NDS.Forms.validateCheckboxGroup(group);
+    });
+  }
+
+  if (clearBtn && group) {
+    clearBtn.addEventListener('click', function() {
+      NDS.Forms.clearStatus(group);
+    });
+  }
+});
+</script>
