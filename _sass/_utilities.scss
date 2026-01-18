@@ -72,7 +72,7 @@ $container-breakpoints: (
   $col-token-selector: '> :is([class^="col-"], [class*=" col-"])';
 
   --grid-col: var(--max-col, auto-fit);
-  display: grid;
+  display: grid !important;
   grid-template-columns: repeat(var(--grid-col, 12), minmax(var(--col-width, 0px), 1fr));
   gap: var(--gap, var(--spacing-2xl));
   justify-items: var(--justify, stretch);
@@ -103,10 +103,15 @@ $container-breakpoints: (
     --col-width: 0 !important;
     --grid-col: 12;
   }
+
+  &.nds-center{
+    --justify: center;
+  }
 }
 
 /* Column spans (1…12) - Mobile first (base) with sm aliases */
 @for $i from 1 through 12 {
+
   .col-#{$i},
   .col-sm-#{$i} {
     grid-column: span #{$i};
@@ -231,6 +236,7 @@ $container-breakpoints: (
 // Responsive center alignment (mobile-first, cascades upward)
 @each $breakpoint, $query in $breakpoints-range {
   @media #{$query} {
+
     .nds-center-#{$breakpoint},
     .nds-center-#{$breakpoint}>* {
       text-align: center !important;
