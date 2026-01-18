@@ -108,6 +108,12 @@
     }
   }
 
+  &.nds-center {
+    .nds-tab-list {
+      justify-content: center;
+    }
+  }
+
 }
 
 // ==============================================
@@ -390,7 +396,7 @@ section>.nds-full-width {
         margin-bottom: unset;
       } */
 
-      .nds-tab-content:not(.nds-card) {
+      .nds-tab-content:not(.nds-card, :has(.nds-full-width)) {
         padding-inline: var(--nds-viewport-padding);
       }
 
