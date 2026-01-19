@@ -2,6 +2,40 @@
     'use strict';
 
     /**
+     * Helper to get current date in Saudi Arabia timezone (GMT+3)
+     * Returns a Date object representing Saudi time
+     */
+    function getSaudiDateObject() {
+        // Get current date/time components in Saudi Arabia timezone
+        var now = new Date();
+        var saudiTimeStr = now.toLocaleString('en-US', {
+            timeZone: 'Asia/Riyadh',
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+        });
+
+        // Parse the string to create a Date object
+        // Format: "MM/DD/YYYY, HH:mm:ss"
+        var parts = saudiTimeStr.split(/, /);
+        var dateParts = parts[0].split('/');
+        var timeParts = parts[1].split(':');
+
+        return new Date(
+            parseInt(dateParts[2]), // year
+            parseInt(dateParts[0]) - 1, // month (0-indexed)
+            parseInt(dateParts[1]), // day
+            parseInt(timeParts[0]), // hour
+            parseInt(timeParts[1]), // minute
+            parseInt(timeParts[2])  // second
+        );
+    }
+
+    /**
      * Creates a unified Hijri date object structure
      * @param {number} day - Day of the month (1-30)
      * @param {number} month - Month of the year (1-12)
@@ -23,11 +57,11 @@
      */
     function normalizeHijriDate(hijriObj) {
         if (!hijriObj) return null;
-        
+
         var day = hijriObj.day || hijriObj.d || hijriObj.hDay;
         var month = hijriObj.month || hijriObj.m || hijriObj.hMonth;
         var year = hijriObj.year || hijriObj.y || hijriObj.hYear;
-        
+
         return createHijriDate(day, month, year);
     }
 
@@ -82,7 +116,7 @@
                 };
             },
             getToday: function () {
-                return new Date();
+                return getSaudiDateObject();
             },
             isSameDate: function (date1, date2) {
                 return date1.getTime() === date2.getTime();
@@ -283,8 +317,13 @@
 
                 var daysDifference = targetHijriDays - todayHijriDays;
 
-                // Apply the same difference to today's Gregorian date
-                var result = new Date(todaysGregorian);
+                // Create result date at noon to avoid timezone issues with weekday calculation
+                var result = new Date(
+                    todaysGregorian.getFullYear(),
+                    todaysGregorian.getMonth(),
+                    todaysGregorian.getDate(),
+                    12, 0, 0
+                );
                 result.setDate(result.getDate() + daysDifference);
 
                 return result;
@@ -298,17 +337,13 @@
              * @returns {Object} Hijri date object with day, month, year properties
              */
             gregorianToHijriUsingReference: function(gDate, todaysHijri, todaysGregorian) {
-                // Normalize both dates to midnight for accurate day calculation
-                var targetDate = new Date(gDate.getFullYear(), gDate.getMonth(), gDate.getDate());
-                var todayDate = new Date(todaysGregorian.getFullYear(), todaysGregorian.getMonth(), todaysGregorian.getDate());
+                // Create dates at noon to avoid timezone boundary issues
+                var targetDate = new Date(gDate.getFullYear(), gDate.getMonth(), gDate.getDate(), 12, 0, 0);
+                var todayDate = new Date(todaysGregorian.getFullYear(), todaysGregorian.getMonth(), todaysGregorian.getDate(), 12, 0, 0);
 
-                // Calculate difference in days between target date and today's date
+                // Calculate difference in days and add to today's Hijri date
                 var daysDifference = Math.round((targetDate.getTime() - todayDate.getTime()) / (1000 * 60 * 60 * 24));
-
-                // Add the difference to today's Hijri date
-                var result = this.addDaysToHijriDate(todaysHijri, daysDifference);
-
-                return result;
+                return this.addDaysToHijriDate(todaysHijri, daysDifference);
             },
 
             /**
@@ -406,16 +441,17 @@
                 var a = jd + 32044;
                 var b = Math.floor((4 * a + 3) / 146097);
                 var c = a - Math.floor((146097 * b) / 4);
-                
+
                 var d = Math.floor((4 * c + 3) / 1461);
                 var e = c - Math.floor((1461 * d) / 4);
                 var m = Math.floor((5 * e + 2) / 153);
-                
+
                 var day = e - Math.floor((153 * m + 2) / 5) + 1;
                 var month = m + 3 - 12 * Math.floor(m / 10);
                 var year = 100 * b + d - 4800 + Math.floor(m / 10);
-                
-                return new Date(year, month - 1, day);
+
+                // Create date at noon Saudi time to avoid timezone issues with day-of-week
+                return new Date(year, month - 1, day, 12, 0, 0);
             },
 
             julianToHijri: function (jd) {
@@ -475,7 +511,7 @@
             getToday: function () {
                 // Don't call getHijriDate here - just return a regular Date
                 // The calendar instance will handle Hijri conversion as needed
-                return new Date();
+                return getSaudiDateObject();
             },
             isSameDate: function (date1, date2) {
                 return date1.getTime() === date2.getTime();
@@ -700,7 +736,7 @@
         // Initialize calendar state
         initializeState: function () {
             return {
-                currentDate: new Date(),
+                currentDate: getSaudiDateObject(),
                 selectedDate: null,
                 rangeStart: null,
                 rangeEnd: null,
@@ -835,7 +871,7 @@
                         date._hijriYear === todaysHijriDate.year;
                 }
             }
-            var today = new Date();
+            var today = getSaudiDateObject();
             return this.isSameDay(date, today);
         },
 
@@ -853,7 +889,7 @@
 
                             // Store accurate reference data globally for conversions
                             window._accurateTodaysHijriDate = hijriData;
-                            window._accurateTodaysGregorianDate = new Date();
+                            window._accurateTodaysGregorianDate = getSaudiDateObject();
 
                             // Save to currentDate for getCurrentHijriDate to use
                             self.state.currentDate._hijriDay = hijriData.day;
@@ -869,7 +905,7 @@
                 }
 
                 // Return math fallback for initial render
-                var today = new Date();
+                var today = getSaudiDateObject();
                 this._cachedTodaysHijriDate = CalendarConfig.hijri.gregorianToHijri(today);
             }
 
@@ -1017,71 +1053,77 @@
             this.state.calendarType = this.detectCalendarType();
             this.state.isInitialized = true;
 
-            this.parseInitialValue();
-            this.setupCalendarUI();
-            this.bindCalendarEvents();
-            this.setupLanguageObserver();
-
-            // Get accurate Hijri date for all calendars (needed for accurate conversions)
-            if (typeof getHijriDate === 'function') {
-                if (this.state.calendarType === 'hijri') {
-                    this.initializeHijriCalendar();
-                } else {
-                    // For Gregorian calendar, fetch accurate Hijri date in background for conversions
-                    this.fetchAccurateHijriReference();
-                    this.render();
-                }
+            // Get accurate Hijri date FIRST before parsing initial values
+            // This ensures accurate conversions when parsing dates
+            if (typeof getHijriDate === 'function' && this.state.calendarType === 'hijri') {
+                this.initializeHijriCalendarWithParsing();
             } else {
+                // For Gregorian calendar or when getHijriDate is unavailable
+                this.parseInitialValue();
+                this.setupCalendarUI();
+                this.bindCalendarEvents();
+                this.setupLanguageObserver();
+
+                if (typeof getHijriDate === 'function') {
+                    this.fetchAccurateHijriReference();
+                }
                 this.render();
             }
         },
 
+        initializeHijriCalendarWithParsing: function () {
+            var self = this;
+            getHijriDate(false, true).then(function(hijriData) {
+                self.storeAccurateHijriData(hijriData);
+                self.completeCalendarSetup();
+            }).catch(function() {
+                self.completeCalendarSetup();
+            });
+        },
+
         initializeHijriCalendar: function () {
             var self = this;
-
             getHijriDate(false, true).then(function(hijriData) {
-                if (hijriData && hijriData.day && hijriData.month && hijriData.year) {
-                    // Save accurate data
-                    self._cachedTodaysHijriDate = hijriData;
-
-                    // Store accurate reference data globally for conversions
-                    window._accurateTodaysHijriDate = hijriData;
-                    window._accurateTodaysGregorianDate = new Date();
-
-                    self.state.currentDate._hijriDay = hijriData.day;
-                    self.state.currentDate._hijriMonth = hijriData.month;
-                    self.state.currentDate._hijriYear = hijriData.year;
-
-                    // Render once with accurate data
-                    self.render();
+                self.storeAccurateHijriData(hijriData);
+                if (self.state.selectedDate || self.state.rangeStart) {
+                    self.updateInput();
                 }
-            }).catch(function(e) {
-                // Fallback to normal render
+                self.render();
+            }).catch(function() {
                 self.render();
             });
         },
 
         fetchAccurateHijriReference: function () {
             var self = this;
-
-            // Fetch accurate Hijri date in background for Gregorian-to-Hijri conversions
             getHijriDate(false, true).then(function(hijriData) {
-                if (hijriData && hijriData.day && hijriData.month && hijriData.year) {
-                    // Save accurate data
-                    self._cachedTodaysHijriDate = hijriData;
-
-                    // Store accurate reference data globally for conversions
-                    window._accurateTodaysHijriDate = hijriData;
-                    window._accurateTodaysGregorianDate = new Date();
-
-                    // Update input with corrected converted date if a date is already selected
-                    if (self.state.selectedDate || self.state.rangeStart) {
-                        self.updateInput();
-                    }
+                self.storeAccurateHijriData(hijriData);
+                if (self.state.selectedDate || self.state.rangeStart) {
+                    self.updateInput();
                 }
-            }).catch(function(e) {
-                // Silent fail - fallback conversions will be used
-            });
+            }).catch(function() {});
+        },
+
+        // Helper to store accurate Hijri data and set global reference
+        storeAccurateHijriData: function(hijriData) {
+            if (hijriData && hijriData.day && hijriData.month && hijriData.year) {
+                this._cachedTodaysHijriDate = hijriData;
+                window._accurateTodaysHijriDate = hijriData;
+                window._accurateTodaysGregorianDate = getSaudiDateObject();
+
+                this.state.currentDate._hijriDay = hijriData.day;
+                this.state.currentDate._hijriMonth = hijriData.month;
+                this.state.currentDate._hijriYear = hijriData.year;
+            }
+        },
+
+        // Helper to complete calendar setup after Hijri data fetch
+        completeCalendarSetup: function() {
+            this.parseInitialValue();
+            this.setupCalendarUI();
+            this.bindCalendarEvents();
+            this.setupLanguageObserver();
+            this.render();
         },
 
 
@@ -1159,11 +1201,10 @@
                     var endDate = calendar.parseDate(rangeParts[1].trim());
 
                     if (startDate && endDate) {
-                        this.state.currentDate = new Date(startDate);
+                        this.state.currentDate = startDate;
                         this.state.rangeStart = startDate;
                         this.state.rangeEnd = endDate;
-                        
-                        // Set converted date in dataset for initial range value
+
                         var convertedStart = this.getConvertedDate(startDate);
                         var convertedEnd = this.getConvertedDate(endDate);
                         if (convertedStart && convertedEnd) {
@@ -1177,16 +1218,9 @@
             // Handle single date format
             var parsedDate = calendar.parseDate(inputValue);
             if (parsedDate) {
-                this.state.currentDate = new Date(parsedDate);
-                // Preserve Hijri metadata on currentDate
-                if (parsedDate._hijriDay) {
-                    this.state.currentDate._hijriDay = parsedDate._hijriDay;
-                    this.state.currentDate._hijriMonth = parsedDate._hijriMonth;
-                    this.state.currentDate._hijriYear = parsedDate._hijriYear;
-                }
+                this.state.currentDate = parsedDate;
                 this.state.selectedDate = parsedDate;
-                
-                // Set converted date in dataset for initial value
+
                 var convertedValue = this.getConvertedDate(parsedDate);
                 if (convertedValue) {
                     this.elements.input.dataset.convertedDate = convertedValue;
@@ -1484,8 +1518,6 @@
 
         // Calendar date generation
         generateCalendarDates: function (calendarData) {
-            var self = this;
-
             if (this.state.calendarType === 'hijri') {
                 this.generateHijriCalendarDates(calendarData);
             } else {
@@ -1693,7 +1725,7 @@
         },
 
         selectToday: function () {
-            var today = new Date();
+            var today = getSaudiDateObject();
 
             // For Hijri calendar, use accurate API data
             if (this.state.calendarType === 'hijri') {
@@ -1744,8 +1776,6 @@
 
         // Range selection logic
         handleRangeSelection: function (clickedDate) {
-            var self = this;
-            
             function copyDateWithHijriData(sourceDate) {
                 var newDate = new Date(sourceDate);
                 if (sourceDate._hijriDay) {
@@ -1805,18 +1835,25 @@
             if (!date) return '';
 
             if (this.state.calendarType === 'hijri') {
-                // Currently showing Hijri, convert to Gregorian
+                // Convert Hijri to Gregorian
+                if (date._hijriDay && date._hijriMonth && date._hijriYear &&
+                    window._accurateTodaysHijriDate && window._accurateTodaysGregorianDate) {
+                    // Use accurate reference conversion
+                    var accurateGregorian = CalendarConfig.hijri.convertUsingReference(
+                        date._hijriYear, date._hijriMonth, date._hijriDay,
+                        window._accurateTodaysHijriDate, window._accurateTodaysGregorianDate
+                    );
+                    return CalendarConfig.gregorian.formatDate(accurateGregorian);
+                }
+                // Fallback to stored Gregorian date
                 return CalendarConfig.gregorian.formatDate(date);
             } else {
-                // Currently showing Gregorian, convert to Hijri
+                // Convert Gregorian to Hijri
                 var hijriData = CalendarConfig.hijri.gregorianToHijri(date);
-                
-                // Create a date with Hijri metadata for formatting
                 var tempDate = new Date(date);
                 tempDate._hijriDay = hijriData.day;
                 tempDate._hijriMonth = hijriData.month;
                 tempDate._hijriYear = hijriData.year;
-                
                 return CalendarConfig.hijri.formatDate(tempDate);
             }
         },
@@ -1967,7 +2004,7 @@
                 endYear = useCurrentYearAsLast ? todayHijriYear : todayHijriYear + yearRangeAfter;
             } else {
                 // For Gregorian calendar, use today's year as reference
-                var todayYear = new Date().getFullYear();
+                var todayYear = getSaudiDateObject().getFullYear();
                 startYear = todayYear - yearRangeBefore;
                 endYear = useCurrentYearAsLast ? todayYear : todayYear + yearRangeAfter;
             }

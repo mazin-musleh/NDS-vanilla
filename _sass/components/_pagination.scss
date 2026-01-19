@@ -11,6 +11,10 @@
 
 .nds-pagination-nav {
   width: 100%;
+
+  &:not(:has(>.nds-pagination)) {
+    display: none;
+  }
 }
 
 .nds-pagination {

@@ -185,7 +185,7 @@ main {
 
             @include desktop(min) {
 
-                margin-inline: 0 var(--spacing-xl);
+                margin-inline: 0 var(--nds-viewport-padding);
             }
 
             section:not(.nds-hero-section, .nds-ghost) {
@@ -202,7 +202,7 @@ main {
         @include desktop(min) {
             .nds-sideMenu {
                 margin-block: var(--spacing-xl);
-                margin-inline: var(--spacing-xl) 0;
+                margin-inline: var(--nds-viewport-padding) 0;
             }
         }
 

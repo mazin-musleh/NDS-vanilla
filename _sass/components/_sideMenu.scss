@@ -34,9 +34,9 @@
 .nds-sideMenu>nav.nds-drawer {
     --drawer-btn-height: 48px;
     // Max height accounts for: nav height + sticky top offset + bottom padding
-    --_max-height: calc(100svh - var(--nds-nav-height) - var(--spacing-xl) - var(--spacing-xl));
+    --_max-height: calc(100svh - var(--nds-nav-height) - var(--spacing-xl));
     position: sticky;
-    top: calc(var(--nds-nav-height) + var(--spacing-xl));
+    top: calc(var(--nds-nav-height) + var(--spacing-md));
     width: 100%;
 
     .nds-drawer-list ul li > .nds-btn {

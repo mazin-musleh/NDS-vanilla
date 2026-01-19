@@ -218,7 +218,7 @@
 // Auto-constrained when has scroll container
 .nds-drawer:has(.nds-drawer-scroll) {
     position: relative;
-    max-height: var(--_max-height);
+    max-height: var(--_max-height); 
 }
 
 .nds-drawer-scroll {
