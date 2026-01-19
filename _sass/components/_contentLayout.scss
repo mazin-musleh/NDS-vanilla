@@ -394,21 +394,14 @@ main {
 }
 
 .nds-section-title {
-    font-size: var(--nds-display-clamp-md-FS, 36px);
-    line-height: var(--nds-display-clamp-md-LH, 44px);
+    font-size: var(--nds-display-clamp-sm-FS, 30px);
+    line-height: var(--nds-display-clamp-sm-LH, 38px);
     letter-spacing: -0.02rem;
     font-weight: bold;
     color: var(--text-display, #1f2a37);
 
     &:has(+ *) {
-        margin-bottom: var(--nds-display-clamp-md-MB, 11px);
-    }
-
-    .contentLayout.cardView & {
-        font-size: var(--nds-display-clamp-sm-FS, 30px);
-        line-height: var(--nds-display-clamp-sm-LH, 38px);
         margin-bottom: var(--nds-display-clamp-sm-MB, 9.5px);
-
     }
 }
 
@@ -501,4 +494,12 @@ main {
             display: block;
         }
     }
+}
+
+.nds-content-section.nds-404{
+
+    .nds-grid{
+        row-gap: var(--spacing-6xl);
+    }
+
 }

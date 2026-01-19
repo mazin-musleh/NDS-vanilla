@@ -28,6 +28,47 @@
             this.init();
         }
 
+        // Get all focusable elements in the menu (inputs + items) in DOM order
+        getFocusableElements() {
+            const focusable = [];
+
+            // Walk through direct children of the menu in order
+            const walkElement = (element) => {
+                // Skip if not an element node
+                if (element.nodeType !== 1) return;
+
+                // Check if this element itself is focusable
+                const tagName = element.tagName;
+                const isFocusableInput = (tagName === 'INPUT' || tagName === 'TEXTAREA') &&
+                                        element.type !== 'hidden' &&
+                                        !element.disabled;
+                const isFocusableButton = (tagName === 'BUTTON' || tagName === 'A') &&
+                                         element.classList.contains('nds-dropmenu-item') &&
+                                         !element.disabled;
+
+                // Skip elements inside form-action
+                const isInsideFormAction = element.closest('.nds-form-action');
+
+                if (!isInsideFormAction) {
+                    if (isFocusableInput) {
+                        focusable.push(element);
+                    } else if (isFocusableButton) {
+                        focusable.push(element);
+                        // Don't traverse children of focusable buttons
+                        return;
+                    }
+                }
+
+                // Traverse children
+                Array.from(element.children).forEach(child => walkElement(child));
+            };
+
+            // Start walking from menu's direct children
+            Array.from(this.menu.children).forEach(child => walkElement(child));
+
+            return focusable;
+        }
+
         init() {
             this.setupAria();
             this.setupEventListeners();
@@ -50,8 +91,12 @@
                 this.menu.setAttribute('aria-hidden', 'true');
             }
 
-            // Set role for menu items
+            // Set role for menu items (but not form controls)
             this.items.forEach(item => {
+                // Don't set menuitem role on form controls
+                if (item.classList.contains('nds-form-control')) {
+                    return;
+                }
                 if (!item.hasAttribute('role')) {
                     item.setAttribute('role', 'menuitem');
                 }
@@ -76,7 +121,24 @@
 
             // Keyboard navigation - scoped to dropmenu element
             this.trigger.addEventListener('keydown', (e) => this.handleTriggerKeydown(e));
-            this.menu.addEventListener('keydown', (e) => this.handleMenuKeydown(e));
+
+            // Use event delegation for menu keyboard navigation (better performance)
+            this.menu.addEventListener('keydown', (e) => {
+                const target = e.target;
+                const isInput = target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA');
+
+                // For inputs, handle Tab and Alt+Arrow specially
+                if (isInput) {
+                    if (e.key === 'Tab' || (e.altKey && (e.key === 'ArrowDown' || e.key === 'ArrowUp'))) {
+                        // Mark that this event should be handled
+                        this.handleMenuKeydown(e);
+                        return;
+                    }
+                }
+
+                // Handle all other keyboard events
+                this.handleMenuKeydown(e);
+            });
 
             // Close on Escape key - scoped to dropmenu element only
             this.dropmenu.addEventListener('keydown', (e) => {
@@ -104,63 +166,126 @@
         }
 
         handleTriggerKeydown(e) {
+            const focusableElements = this.getFocusableElements();
+
             switch (e.key) {
                 case 'Enter':
                 case ' ':
                     e.preventDefault();
                     this.toggle();
-                    if (this.isOpen && this.items.length > 0) {
-                        this.items[0].focus();
+                    if (this.isOpen && focusableElements.length > 0) {
+                        focusableElements[0].focus();
                     }
                     break;
                 case 'ArrowDown':
                     e.preventDefault();
                     this.open();
-                    if (this.items.length > 0) {
-                        this.items[0].focus();
+                    if (focusableElements.length > 0) {
+                        focusableElements[0].focus();
                     }
                     break;
                 case 'ArrowUp':
                     e.preventDefault();
                     this.open();
-                    if (this.items.length > 0) {
-                        this.items[this.items.length - 1].focus();
+                    if (focusableElements.length > 0) {
+                        focusableElements[focusableElements.length - 1].focus();
                     }
                     break;
             }
         }
 
         handleMenuKeydown(e) {
-            const currentIndex = this.items.indexOf(document.activeElement);
+            const focusableElements = this.getFocusableElements();
+            let currentIndex = focusableElements.indexOf(document.activeElement);
+            const activeElement = document.activeElement;
+            const isInput = activeElement && (activeElement.tagName === 'INPUT' || activeElement.tagName === 'TEXTAREA');
+
+            // If current element not found in list, try to find closest parent that is
+            if (currentIndex === -1 && activeElement) {
+                const parentItem = activeElement.closest('.nds-dropmenu-item');
+                if (parentItem) {
+                    currentIndex = focusableElements.indexOf(parentItem);
+                }
+            }
+
+            // If still not found, default to -1 to handle as "before first element"
+            if (currentIndex === -1) {
+                currentIndex = -1;
+            }
 
             switch (e.key) {
                 case 'ArrowDown':
-                    e.preventDefault();
-                    if (currentIndex < this.items.length - 1) {
-                        this.items[currentIndex + 1].focus();
+                    // In inputs, only navigate if Alt is pressed
+                    if (isInput) {
+                        if (!e.altKey) {
+                            return; // Let input handle normally
+                        }
+                        e.preventDefault();
                     } else {
-                        this.items[0].focus(); // Loop to first
+                        e.preventDefault();
+                    }
+
+                    if (currentIndex === -1 || currentIndex >= focusableElements.length - 1) {
+                        focusableElements[0]?.focus(); // Loop to first
+                    } else {
+                        focusableElements[currentIndex + 1]?.focus();
                     }
                     break;
+
                 case 'ArrowUp':
-                    e.preventDefault();
-                    if (currentIndex > 0) {
-                        this.items[currentIndex - 1].focus();
+                    // In inputs, only navigate if Alt is pressed
+                    if (isInput) {
+                        if (!e.altKey) {
+                            return; // Let input handle normally
+                        }
+                        e.preventDefault();
                     } else {
-                        this.items[this.items.length - 1].focus(); // Loop to last
+                        e.preventDefault();
+                    }
+
+                    if (currentIndex <= 0) {
+                        focusableElements[focusableElements.length - 1]?.focus(); // Loop to last
+                    } else {
+                        focusableElements[currentIndex - 1]?.focus();
                     }
                     break;
+
                 case 'Home':
+                    if (isInput && !e.ctrlKey) return; // Let input handle Home key unless Ctrl is pressed
                     e.preventDefault();
-                    this.items[0].focus();
+                    focusableElements[0]?.focus();
                     break;
+
                 case 'End':
+                    if (isInput && !e.ctrlKey) return; // Let input handle End key unless Ctrl is pressed
                     e.preventDefault();
-                    this.items[this.items.length - 1].focus();
+                    focusableElements[focusableElements.length - 1]?.focus();
                     break;
+
                 case 'Tab':
-                    // Allow tab but close menu
-                    this.close();
+                    // Always handle Tab to navigate between elements
+                    e.preventDefault();
+                    if (e.shiftKey) {
+                        // Tab backwards
+                        if (currentIndex > 0) {
+                            focusableElements[currentIndex - 1]?.focus();
+                        } else {
+                            // Close menu and return focus to trigger
+                            this.close();
+                            this.trigger.focus();
+                        }
+                    } else {
+                        // Tab forwards
+                        if (currentIndex === -1) {
+                            // Not in list, focus first element
+                            focusableElements[0]?.focus();
+                        } else if (currentIndex < focusableElements.length - 1) {
+                            focusableElements[currentIndex + 1]?.focus();
+                        } else {
+                            // Close menu
+                            this.close();
+                        }
+                    }
                     break;
             }
         }

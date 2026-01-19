@@ -41,12 +41,38 @@ body {
 }
 
 hr {
+    --_divider: var(--divider, var(--spacing-xs));
     opacity: .10;
     border: 0;
     border-top: 1px solid;
-    margin: 4px 0;
+    margin: var(--_divider) 0;
     color: inherit;
     width: 100%;
+
+    &.nds-md {
+        --divider: var(--spacing-md);
+    }
+
+    &.nds-lg {
+        --divider: var(--spacing-lg);
+    }
+
+    &.nds-xl {
+        --divider: var(--spacing-xl);
+    }
+
+    &.nds-2xl {
+        --divider: var(--spacing-2xl);
+    }
+
+    &.nds-3xl {
+        --divider: var(--spacing-3xl);
+    }
+
+    &.nds-4xl {
+        --divider: var(--spacing-4xl);
+    }
+
 }
 
 h1,
@@ -193,6 +219,7 @@ button,
 }
 
 .nds-expandable.nds-expand {
+
     &:has(>.nds-expandable-content),
     &>*:has(>.nds-expandable-content) {
         overflow: hidden;
