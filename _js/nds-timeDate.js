@@ -2,14 +2,21 @@
 (() => {
     'use strict';
 
+    // Helper to get Saudi Arabia date (GMT+3)
+    function getSaudiDate() {
+        return new Date().toLocaleDateString('en-CA', {
+            timeZone: 'Asia/Riyadh'
+        });
+    }
+
     // Simple cache helper with date validation
     function getCache(key) {
         try {
             const data = localStorage.getItem(`nds_${key}`);
             if (data) {
                 const parsed = JSON.parse(data);
-                // Check if cache is still valid by timestamp AND date
-                const today = new Date().toISOString().slice(0, 10);
+                // Check if cache is still valid by timestamp AND date (Saudi Arabia time)
+                const today = getSaudiDate();
                 if (Date.now() < parsed.expires && parsed.date === today) {
                     return parsed.value;
                 }
@@ -22,18 +29,18 @@
 
     function setCache(key, value, minutes) {
         try {
-            const today = new Date().toISOString().slice(0, 10);
+            const today = getSaudiDate();
             localStorage.setItem(`nds_${key}`, JSON.stringify({
                 value,
                 expires: Date.now() + (minutes * 60 * 1000),
-                date: today // Store the date when cache was created
+                date: today // Store the date when cache was created (Saudi Arabia time)
             }));
         } catch {}
     }
 
     // Add this function to clear specific cache
   function clearHijriCache(date = null) {
-      const targetDate = date || new Date().toISOString().slice(0, 10);
+      const targetDate = date || getSaudiDate();
       localStorage.removeItem(`nds_hijri_ar_${targetDate}`);
       localStorage.removeItem(`nds_hijri_en_${targetDate}`);
       localStorage.removeItem(`nds_hijri_data_${targetDate}`);
@@ -41,7 +48,7 @@
 
     // Hijri date with efficient dual-language caching
     async function getHijriDate(isArabic, returnStructured = false) {
-        const today = new Date().toISOString().slice(0, 10);
+        const today = getSaudiDate();
         const arabicKey = `hijri_ar_${today}`;
         const englishKey = `hijri_en_${today}`;
         const dataKey = `hijri_data_${today}`;
@@ -117,7 +124,7 @@
         if (!el) return;
 
         const isArabic = document.documentElement.lang?.startsWith('ar');
-        const today = new Date().toISOString().slice(0, 10);
+        const today = getSaudiDate();
         const type = el.dataset?.calendar || (isArabic ? 'hijri' : 'gregorian');
         const cacheKey = `date_${type}_${isArabic}_${today}`;
 

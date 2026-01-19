@@ -58,25 +58,6 @@
     }
 
     function showSubmenu(listItem, button, submenu) {
-        // Capture container height BEFORE expansion
-        const drawer = listItem.closest(CONFIG.selectors.drawer);
-        const sideMenu = drawer?.closest('.nds-sideMenu');
-        const sideMenuSibling = sideMenu?.nextElementSibling;
-
-        // Calculate available space and set max-height immediately
-        let containerHeight = null;
-        if (drawer && sideMenuSibling) {
-            const drawerRect = drawer.getBoundingClientRect();
-            const siblingRect = sideMenuSibling.getBoundingClientRect();
-
-            // Calculate actual available space from drawer top to sibling bottom
-            const siblingBottom = siblingRect.top + siblingRect.height;
-            const availableSpace = siblingBottom - drawerRect.top - 8;
-            containerHeight = availableSpace;
-
-            drawer.style.setProperty('--_max-height', `${availableSpace}px`);
-        }
-
         submenu.classList.add(CONFIG.classes.show, CONFIG.classes.opening);
         listItem.classList.add(CONFIG.classes.open);
         button.setAttribute('aria-expanded', 'true');
@@ -87,7 +68,7 @@
             submenu.classList.remove(CONFIG.classes.opening);
             submenu.classList.add(CONFIG.classes.opened);
             submenu.style.height = '';
-            dispatchDrawerEvent(listItem, 'shown', { containerHeight });
+            dispatchDrawerEvent(listItem, 'shown');
         };
 
         submenu.addEventListener('transitionend', cleanup);
@@ -148,99 +129,6 @@
                 }
             });
         });
-    }
-
-    // ==============================================
-    // DYNAMIC MAX-HEIGHT CALCULATION
-    // ==============================================
-
-    function needsDynamicHeight(drawer) {
-        if (!drawer.querySelector(CONFIG.selectors.scroll)) return false;
-        return drawer.classList.contains('nds-full-height') || drawer.closest('.nds-sideMenu');
-    }
-
-    function updateMaxHeight(drawer, containerHeight = null) {
-        const scrollContainer = drawer.querySelector(CONFIG.selectors.scroll);
-        if (!scrollContainer) return;
-
-        const drawerRect = drawer.getBoundingClientRect();
-        const viewportHeight = window.innerHeight;
-        const visibleTop = Math.max(0, drawerRect.top);
-
-        let parentBottom = viewportHeight;
-        const parent = drawer.parentElement;
-        if (parent) {
-            const parentRect = parent.getBoundingClientRect();
-            parentBottom = Math.min(viewportHeight, parentRect.top + parent.clientHeight);
-        }
-
-        let availableHeight = parentBottom - visibleTop - 16;
-
-        // If containerHeight was passed and availableHeight exceeds it, constrain to container
-        if (containerHeight !== null && availableHeight > containerHeight) {
-            availableHeight = containerHeight;
-        }
-
-        if (availableHeight < 100) return;
-
-        const list = scrollContainer.querySelector(CONFIG.selectors.list);
-        const contentHeight = list ? list.scrollHeight : scrollContainer.scrollHeight;
-
-        if (contentHeight > availableHeight) {
-            drawer.style.setProperty('--_max-height', `${availableHeight}px`);
-        } else {
-            drawer.style.removeProperty('--_max-height');
-        }
-    }
-
-    function initDynamicHeight(drawer) {
-        if (!needsDynamicHeight(drawer)) return;
-
-        updateMaxHeight(drawer);
-
-        let ticking = false;
-        const handleUpdate = () => {
-            if (ticking) return;
-            ticking = true;
-            requestAnimationFrame(() => {
-                updateMaxHeight(drawer);
-                ticking = false;
-            });
-        };
-
-        const handleDrawerChange = (event) => {
-            const containerHeight = event?.detail?.containerHeight || null;
-            requestAnimationFrame(() => {
-                updateMaxHeight(drawer, containerHeight);
-                checkOverflow(drawer);
-            });
-        };
-
-        // Scroll listener (still needed for sticky positioning)
-        window.addEventListener('scroll', handleUpdate, { passive: true });
-        drawer._scrollHandler = handleUpdate;
-
-        // Use ResizeObserver for resize detection
-        if (window.ResizeObserver) {
-            drawer._heightResizeObserver = new ResizeObserver(() => {
-                handleUpdate();
-            });
-            // Observe the drawer itself for size changes
-            drawer._heightResizeObserver.observe(drawer);
-            // Also observe parent container
-            if (drawer.parentElement) {
-                drawer._heightResizeObserver.observe(drawer.parentElement);
-            }
-        } else {
-            // Fallback to window resize for older browsers
-            window.addEventListener('resize', handleUpdate, { passive: true });
-            drawer._resizeHandler = handleUpdate;
-        }
-
-        // Drawer state change listeners
-        drawer.addEventListener('nds:drawer:shown', handleDrawerChange);
-        drawer.addEventListener('nds:drawer:hidden', handleDrawerChange);
-        drawer._drawerChangeHandler = handleDrawerChange;
     }
 
     // ==============================================
@@ -340,7 +228,6 @@
 
         initToggles(drawer);
         initActiveStates(drawer);
-        initDynamicHeight(drawer);
         initHasMore(drawer);
 
         drawer._ndsDrawerInitialized = true;
@@ -360,30 +247,6 @@
             delete drawer._resizeObserver;
         }
 
-        // Clean up height ResizeObserver
-        if (drawer._heightResizeObserver) {
-            drawer._heightResizeObserver.disconnect();
-            delete drawer._heightResizeObserver;
-        }
-
-        // Clean up scroll listener
-        if (drawer._scrollHandler) {
-            window.removeEventListener('scroll', drawer._scrollHandler);
-            delete drawer._scrollHandler;
-        }
-
-        // Clean up resize listener (fallback for older browsers)
-        if (drawer._resizeHandler) {
-            window.removeEventListener('resize', drawer._resizeHandler);
-            delete drawer._resizeHandler;
-        }
-
-        // Clean up drawer change listeners
-        if (drawer._drawerChangeHandler) {
-            drawer.removeEventListener('nds:drawer:shown', drawer._drawerChangeHandler);
-            drawer.removeEventListener('nds:drawer:hidden', drawer._drawerChangeHandler);
-            delete drawer._drawerChangeHandler;
-        }
         delete drawer._ndsDrawerInitialized;
     }
 

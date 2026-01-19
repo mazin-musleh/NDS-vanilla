@@ -1,11 +1,11 @@
 ---
 layout: page
-title: "د. محمد أحمد السالم"
+title: "أعضاء هيئة التدريس"
 lang: ar
 direction: rtl
 breadcrumb: ["أعضاء هيئة التدريس"]
-hero_title: "د. محمد أحمد السالم"
-hero_description: "أستاذ مشارك - كلية علوم الحاسب"
+hero_title: "أعضاء هيئة التدريس"
+hero_description: "قائمة أعضاء هيئة التدريس في كلية الحاسب"
 layout_class: cardView
 sidemenu: college-sidemenu
 ---
