@@ -15,18 +15,6 @@
   display: inline-block;
 
   // ==============================================
-  // DROPMENU TRIGGER BUTTON
-  // ==============================================
-
-  &-trigger {
-    // Uses nds-btn nds-subtle classes from _buttons.scss
-    // Additional dropdown-specific styles
-    &[aria-expanded="true"] {
-      background-color: var(--button-background-subtle-pressed, #F2F4F7);
-    }
-  }
-
-  // ==============================================
   // DROPDOWN MENU CONTAINER
   // ==============================================
 
@@ -82,10 +70,6 @@
   &.open {
     .nds-dropmenu-menu {
       display: block;
-    }
-
-    .nds-dropmenu-trigger[aria-expanded="true"] {
-      background-color: var(--button-background-subtle-pressed, #F2F4F7);
     }
   }
 
@@ -150,9 +134,17 @@
 
   @include mobile {
     &-menu {
-      min-width: 140px;
-      max-width: calc(100vw - 32px);
+      max-width: calc(100vw - var(--nds-viewport-padding) * 4);
     }
+  }
+
+  // ==============================================
+  // FORM CONTROL INSIDE DROPDOWN
+  // ==============================================
+
+  &-menu .nds-form-control {
+    min-width: unset;
+    width: 100%;
   }
 }
 

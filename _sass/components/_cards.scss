@@ -60,7 +60,7 @@
   }
 
   &.nds-center {
-    :is(.nds-card-header, .nds-card-content, .nds-card-text, .nds-card-tags, .nds-card-actions) {
+    :is(.nds-card-header, .nds-card-content, .nds-card-text > *, .nds-card-tags, .nds-card-actions) {
       align-items: center !important;
       justify-content: center !important;
       text-align: center !important;
@@ -80,7 +80,7 @@
     width: 100%;
   }
 
-  .nds-card-image {
+  .nds-card-image:not(.nds-avatar) {
     width: 100%;
     height: 100%;
     aspect-ratio: var(--img-ratio, 2 / 1);
@@ -120,7 +120,6 @@
 
 
     .nds-card-title {
-      --_card-truncate: 2;
       font-size: var(--nds-text-lg-FS);
       line-height: var(--nds-text-lg-LH);
       font-weight: 700;
@@ -130,7 +129,6 @@
     }
 
     .nds-card-subtitle {
-      --_card-truncate: 2;
       font-size: var(--nds-text-md-FS);
       line-height: var(--nds-text-md-LH);
       font-weight: 600;
@@ -141,7 +139,6 @@
 
 
     .nds-card-description {
-      --_card-truncate: 2;
       font-size: var(--nds-text-md-FS);
       line-height: var(--nds-text-md-LH);
       font-weight: 400;
@@ -328,23 +325,8 @@
 .nds-card.nds-user {
   max-width: var(--card-width, 224px);
 
-  :is(.nds-card-header, .nds-card-tags, .nds-card-actions) {
-    align-items: center;
-    justify-content: center;
-  }
-
-  .nds-card-content {
-    align-items: center;
-  }
-
-  .nds-card-text {
-    align-items: center;
-    text-align: center;
-  }
-
   .nds-card-tags {
     min-height: 48px;
-    align-content: flex-start;
   }
 }
 

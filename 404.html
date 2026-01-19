@@ -1,25 +1,24 @@
 ---
 permalink: /404.html
-layout: page
+layout: empty
+title: "Page not found"
 ---
 
-<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
-
-<div class="container">
-  <h1>404</h1>
-
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<section id="404" class="nds-404 nds-content-section">
+  <div class="nds-section-head nds-grid nds-center">
+      <div class="nds-section-image col-12">
+          <img src="{{ 'assets/img/404.svg' | relative_url }}" width="458" height="324" alt="حدث خطأ 404">
+      </div>
+      <div class="nds-section-text col-12">
+          <h2 class="nds-section-title">حدث خطأ</h2>
+          <p class="nds-section-description">
+              عذراً، لم نستطع إيجاد الصفحة التي تبحث عنها
+          </p>
+      </div>
+      <div class="nds-section-action col-12">
+          <button class="nds-btn nds-primary nds-center">
+              <span class="label">العودة للرئيسية</span>
+          </button>
+      </div>
+  </div>
+</section>

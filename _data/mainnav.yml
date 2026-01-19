@@ -115,7 +115,7 @@ secondary_nav:
   - label: "Login"
     icon: "hgi-user"
     custom_class: "login iconOnly"
-    button_style: "nds-nav-link nds-btn nds-subtle nds-avatar nds-lg nds-indicator"
+    button_style: "nds-nav-link nds-btn nds-subtle nds-lg nds-indicator"
     has_dropdown: true
     dropdown_class: "widthFit"
     items:
