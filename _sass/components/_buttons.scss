@@ -514,6 +514,54 @@
   }
 
   // ==============================================
+  // PROGRESS STATES
+  // ==============================================
+
+  &.nds-progress {
+    position: relative;
+
+    .nds-progress-circle {
+      display: block;
+      position: absolute;
+      inset: 0;
+      margin: auto;
+      pointer-events: none;
+
+      // Inherit button colors
+      --pc-bg-stroke: var(--_btn-loading-track, var(--alpha-black-10));
+      --pc-bar-stroke: var(--_btn-color);
+      --pc-size: calc(var(--btn-size) - 8px);
+
+      // Hide text/percentage display
+      .progress-info {
+        display: none !important;
+      }
+
+      // Progress circle SVG
+      svg circle.progress-bar {
+        // Static progress value (default)
+        stroke-dashoffset: calc(var(--progress-circumference, 62.83) - (var(--progress-circumference, 62.83) * min(var(--progress-value, 0), 100) / 100));
+        transition: stroke-dashoffset 0.3s ease;
+      }
+    }
+
+    // Animated countdown when duration is set
+    &:not(.nds-progress-static) .nds-progress-circle {
+      svg circle.progress-bar {
+        // Override static value with animation
+        animation: button-progress-countdown linear forwards;
+        animation-duration: var(--progress-duration, 4000ms);
+      }
+    }
+
+    // On-color variant adjustments
+    &.nds-oncolor .nds-progress-circle {
+      --pc-bg-stroke: var(--alpha-white-20);
+      --pc-bar-stroke: var(--text-oncolor-primary);
+    }
+  }
+
+  // ==============================================
   // NOTIFICATION BADGE
   // ==============================================
 
@@ -579,6 +627,19 @@
     &:is(:hover, :focus, .nds-active) {
       z-index: 2;
     }
+  }
+}
+
+// ==============================================
+// BUTTON PROGRESS ANIMATION
+// ==============================================
+
+@keyframes button-progress-countdown {
+  from {
+    stroke-dashoffset: 62.83;
+  }
+  to {
+    stroke-dashoffset: 0;
   }
 }
 

@@ -313,3 +313,40 @@
     }
   }
 }
+
+// ==============================================
+// TOAST NOTIFICATIONS
+// ==============================================
+
+.nds-alert.nds-toast {
+  position: fixed;
+  z-index: 9999;
+  inset-block-start: calc(var(--nds-nav-height) + var(--spacing-md));
+  inset-inline-end: max(var(--nds-viewport-padding), calc((100vw - var(--nds-content-MaxWidth, 1280px)) / 2));
+  width: fit-content;
+  min-width: 300px;
+  max-width: 600px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+
+  @include mobile {
+    inset-inline: var(--nds-viewport-padding);
+    min-width: auto;
+    max-width: none;
+    width: auto;
+  }
+
+  &[data-toast-state="show"] {
+    opacity: 1;
+  }
+
+  &[data-toast-state="hide"] {
+    opacity: 0;
+  }
+
+  // Bottom position
+  &[data-position="bottom"] {
+    inset-block-start: auto;
+    inset-block-end: var(--nds-viewport-padding);
+  }
+}

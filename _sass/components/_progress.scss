@@ -11,20 +11,20 @@
 // ==============================================
 
 .nds-progress-circle {
-  --pc-size: 64px;
-  --progress-value: 0; // Default progress value (0-100)
-  --progress-circumference: 62.83; // 2πr where r=10
+  --_pc-size: var(--pc-size, 64px);
+  --_progress-value: var(--progress-value, 0); // Default progress value (0-100)
+  --_progress-circumference: var(--progress-circumference, 62.83); // 2πr where r=10
 
-  @include progress-circle-base(var(--pc-size), -90deg);
-  @include progress-circle-text(var(--pc-size));
+  @include progress-circle-base(var(--_pc-size), -90deg);
+  @include progress-circle-text(var(--_pc-size));
 
   // CSS counter for automatic number display (clamped to 100)
-  counter-reset: progress-counter min(var(--progress-value), 100);
+  counter-reset: progress-counter min(var(--_progress-value), 100);
 
   // Dynamic progress using CSS custom property
   svg circle.progress-bar {
-    stroke-dasharray: var(--progress-circumference) !important;
-    stroke-dashoffset: calc(var(--progress-circumference) - (var(--progress-circumference) * min(var(--progress-value), 100) / 100));
+    stroke-dasharray: var(--_progress-circumference) !important;
+    stroke-dashoffset: calc(var(--_progress-circumference) - (var(--_progress-circumference) * min(var(--progress-value), 100) / 100));
     transition: stroke-dashoffset 0.3s ease !important;
   }
 
@@ -34,11 +34,11 @@
     &::before {
       content: counter(progress-counter);
       // Restore proper sizing for the counter
-      font-size: clamp(10px, calc(var(--pc-size) * 0.15), 36px) !important;
+      font-size: clamp(10px, calc(var(--_pc-size) * 0.15), 36px) !important;
       font-weight: 700 !important;
       line-height: normal;
       color: var(--text-primary-paragraph);
-      letter-spacing: clamp(0rem, calc(var(--pc-size) * -0.0006), -0.072rem);
+      letter-spacing: clamp(0rem, calc(var(--_pc-size) * -0.0006), -0.072rem);
     }
   }
 
@@ -120,15 +120,15 @@
 // ==============================================
 
 .nds-progress-bar {
-  --pb-height: 8px;
-  --progress-value: 0; // Default progress value (0-100)
+  --_pb-height: var(--pb-height, 8px);
+  --_progress-value: var(--progress-value, 0); // Default progress value (0-100)
 
   // Auto-update percentage from progress bar's custom property (clamped to 100)
-  counter-reset: progress-counter min(var(--progress-value), 100);
+  counter-reset: progress-counter min(var(--_progress-value), 100);
 
 
   width: 100%;
-  height: var(--pb-height);
+  height: var(--_pb-height);
   background-color: var(--background-neutral-100);
   border-radius: var(--radius-full);
   position: relative;
@@ -137,8 +137,8 @@
 
   .nds-progress-header {
     position: absolute;
-    margin-top: calc((var(--pb-height) + var(--spacing-2xl) + var(--pb-height)/10) * -1);
-    padding: 0 calc(var(--pb-height)/2);
+    margin-top: calc((var(--_pb-height) + var(--spacing-2xl) + var(--_pb-height)/10) * -1);
+    padding: 0 calc(var(--_pb-height)/2);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -255,7 +255,7 @@
         transparent 75%,
         transparent);
         
-    background-size: var(--pb-height) var(--pb-height);
+    background-size: var(--_pb-height) var(--_pb-height);
   }
 
   &.nds-striped.nds-oncolor .progress-fill{
@@ -281,7 +281,7 @@
 
 @keyframes progress-stripes {
   0% {
-    background-position: var(--pb-height) 0;
+    background-position: var(--_pb-height) 0;
   }
 
   100% {
@@ -295,6 +295,6 @@
   }
 
   100% {
-    background-position: var(--pb-height) 0;
+    background-position: var(--_pb-height) 0;
   }
 }
