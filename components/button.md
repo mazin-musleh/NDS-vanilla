@@ -1707,3 +1707,248 @@ direction: ltr
         </div>
     </div>
 </section>
+
+<!-- Button Progress States -->
+<section id="buttonProgress" class="nds-content-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Button Progress States</h2>
+            <p class="nds-section-description">Buttons can show circular progress indicators using the progress-circle
+                component. Supports both animated countdown (--progress-duration) and static percentage
+                (--progress-value)</p>
+        </div>
+        <div class="nds-section-content">
+            <div class="tag-showcase">
+                <!-- Progress Buttons -->
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Animated Progress (Duration)</div>
+                        <div class="demo-action">
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-sm", ".nds-progress", "progressSize"]'>
+                                <span class="label">SM</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-md", ".nds-progress", "progressSize"]'>
+                                <span class="label">MD</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-lg", ".nds-progress", "progressSize"]'>
+                                <span class="label">LG</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-circle", ".nds-progress", "progressCircle"]'>
+                                <span class="label">Circle</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-action-btn"
+                                data-action="reset-progress-duration">
+                                <span class="label">Reset Duration</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                                <span class="label">Remove bg</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="button-row">
+                            <button class="nds-btn nds-primary nds-icon-only nds-progress nds-md"
+                                style="--progress-duration: 4000ms;" aria-label="Close">
+                                <i class="hgi hgi-stroke hgi-cancel-01"></i>
+                                <div class="nds-progress-circle" hidden>
+                                    <svg width="100%" height="100%" viewBox="0 0 24 24">
+                                        <circle class="progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2">
+                                        </circle>
+                                        <circle class="progress-bar" cx="12" cy="12" r="10" fill="none" stroke-width="2"
+                                            stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round">
+                                        </circle>
+                                    </svg>
+                                </div>
+                            </button>
+                            <button class="nds-btn nds-subtle nds-icon-only nds-progress nds-md"
+                                style="--progress-duration: 5000ms;" aria-label="Close">
+                                <i class="hgi hgi-stroke hgi-cancel-01"></i>
+                                <div class="nds-progress-circle" hidden>
+                                    <svg width="100%" height="100%" viewBox="0 0 24 24">
+                                        <circle class="progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2">
+                                        </circle>
+                                        <circle class="progress-bar" cx="12" cy="12" r="10" fill="none" stroke-width="2"
+                                            stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round">
+                                        </circle>
+                                    </svg>
+                                </div>
+                            </button>
+                            <button class="nds-btn nds-neutral nds-icon-only nds-progress nds-md"
+                                style="--progress-duration: 6000ms;" aria-label="Delete">
+                                <i class="hgi hgi-stroke hgi-trash-01"></i>
+                                <div class="nds-progress-circle" hidden>
+                                    <svg width="100%" height="100%" viewBox="0 0 24 24">
+                                        <circle class="progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2">
+                                        </circle>
+                                        <circle class="progress-bar" cx="12" cy="12" r="10" fill="none" stroke-width="2"
+                                            stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round">
+                                        </circle>
+                                    </svg>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="nds-tabs nds-code nds-divided">
+                        <div class="nds-tab-list-container">
+                            <nav class="nds-tab-list-container oneRowContent" role="tablist"
+                                aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-progress-bar-1" id="tab-progress-bar-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                            </nav>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-progress-bar-1"
+                                aria-labelledby="tab-progress-bar-1">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <code class="lang-html code">
+<!-- Progress button with circle indicator -->
+<button class="nds-btn nds-primary nds-icon-only nds-progress"
+        style="--progress-duration: 4000ms;"
+        aria-label="Close">
+  <i class="hgi hgi-stroke hgi-cancel-01"></i>
+  <div class="nds-progress-circle" hidden>
+    <svg width="100%" height="100%" viewBox="0 0 24 24">
+      <circle class="progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2"></circle>
+      <circle class="progress-bar" cx="12" cy="12" r="10" fill="none" stroke-width="2"
+              stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round"></circle>
+    </svg>
+  </div>
+</button>
+                                </code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Static Progress Value -->
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Static Progress (Value)</div>
+                        <div class="demo-action">
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-sm", ".nds-progress-static", "progressStaticSize"]'>
+                                <span class="label">SM</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-md", ".nds-progress-static", "progressStaticSize"]'>
+                                <span class="label">MD</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-lg", ".nds-progress-static", "progressStaticSize"]'>
+                                <span class="label">LG</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-circle", ".nds-progress-static", "progressStaticCircle"]'>
+                                <span class="label">Circle</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-action-btn"
+                                data-action="random-progress-value">
+                                <span class="label">Random Value</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                                <span class="label">Remove bg</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="button-row">
+                            <button class="nds-btn nds-primary nds-icon-only nds-progress nds-progress-static nds-md"
+                                style="--progress-value: 25;" aria-label="Upload">
+                                <i class="hgi hgi-stroke hgi-upload-02"></i>
+                                <div class="nds-progress-circle" hidden>
+                                    <svg width="100%" height="100%" viewBox="0 0 24 24">
+                                        <circle class="progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2">
+                                        </circle>
+                                        <circle class="progress-bar" cx="12" cy="12" r="10" fill="none" stroke-width="2"
+                                            stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round">
+                                        </circle>
+                                    </svg>
+                                </div>
+                            </button>
+                            <button class="nds-btn nds-subtle nds-icon-only nds-progress nds-progress-static nds-md"
+                                style="--progress-value: 50;" aria-label="Download">
+                                <i class="hgi hgi-stroke hgi-download-02"></i>
+                                <div class="nds-progress-circle" hidden>
+                                    <svg width="100%" height="100%" viewBox="0 0 24 24">
+                                        <circle class="progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2">
+                                        </circle>
+                                        <circle class="progress-bar" cx="12" cy="12" r="10" fill="none" stroke-width="2"
+                                            stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round">
+                                        </circle>
+                                    </svg>
+                                </div>
+                            </button>
+                            <button class="nds-btn nds-neutral nds-icon-only nds-progress nds-progress-static nds-md"
+                                style="--progress-value: 75;" aria-label="Processing">
+                                <i class="hgi hgi-stroke hgi-refresh-ccw-02"></i>
+                                <div class="nds-progress-circle" hidden>
+                                    <svg width="100%" height="100%" viewBox="0 0 24 24">
+                                        <circle class="progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2">
+                                        </circle>
+                                        <circle class="progress-bar" cx="12" cy="12" r="10" fill="none" stroke-width="2"
+                                            stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round">
+                                        </circle>
+                                    </svg>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="nds-tabs nds-code nds-divided">
+                        <div class="nds-tab-list-container">
+                            <nav class="nds-tab-list-container oneRowContent" role="tablist"
+                                aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-progress-value-1" id="tab-progress-value-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                            </nav>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-progress-value-1"
+                                aria-labelledby="tab-progress-value-1">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <code class="lang-html code">
+<!-- Progress button with static value (25%) -->
+<button class="nds-btn nds-primary nds-icon-only nds-progress"
+        style="--progress-value: 25;"
+        aria-label="Upload">
+  <i class="hgi hgi-stroke hgi-upload-02"></i>
+  <div class="nds-progress-circle" hidden>
+    <svg width="100%" height="100%" viewBox="0 0 24 24">
+      <circle class="progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2"></circle>
+      <circle class="progress-bar" cx="12" cy="12" r="10" fill="none" stroke-width="2"
+              stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round"></circle>
+    </svg>
+  </div>
+</button>
+
+<!-- Update progress dynamically with JavaScript -->
+<script>
+    const button = document.querySelector('.nds-progress');
+    button.style.setProperty('--progress-value', 50); // Update to 50%
+</script>
+                                </code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

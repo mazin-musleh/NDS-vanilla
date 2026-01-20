@@ -324,7 +324,74 @@
                             }
                         }, 100);
                     }
-                    
+
+                    // Special handling for toast variant changes: update data-status attribute and title
+                    if (type === 'toastVariant' && targetElement.classList.contains('nds-alert')) {
+                        // Determine current variant
+                        let currentVariant = 'success';
+                        if (targetElement.classList.contains('nds-warning')) currentVariant = 'warning';
+                        else if (targetElement.classList.contains('nds-error')) currentVariant = 'error';
+                        else if (targetElement.classList.contains('nds-info')) currentVariant = 'info';
+                        else if (targetElement.classList.contains('nds-success')) currentVariant = 'success';
+
+                        // Update data-status attribute on feedback icon
+                        const feedbackIcon = targetElement.querySelector('[data-status]');
+                        if (feedbackIcon) {
+                            feedbackIcon.setAttribute('data-status', currentVariant);
+                            // Update code example for the attribute change
+                            updateCodeExampleForAttributes(demoCard, feedbackIcon, ['data-status']);
+                        }
+
+                        // Update title text to match variant
+                        const titleElement = targetElement.querySelector('.nds-alert-title');
+                        if (titleElement) {
+                            const capitalizedVariant = currentVariant.charAt(0).toUpperCase() + currentVariant.slice(1);
+                            titleElement.textContent = capitalizedVariant;
+
+                            // Update code example to reflect the title change
+                            const codeElement = demoCard.querySelector('.code-example code');
+                            if (codeElement) {
+                                const hiddenCopy = getHiddenCodeCopy(codeElement);
+                                if (hiddenCopy) {
+                                    let updatedCode = hiddenCopy.textContent;
+                                    // Update the title text in the code
+                                    updatedCode = updatedCode.replace(
+                                        /(<h4 class="nds-alert-title">)[^<]+(<\/h4>)/,
+                                        `$1${capitalizedVariant}$2`
+                                    );
+                                    updateCodeFromHiddenCopy(codeElement, updatedCode);
+                                }
+                            }
+                        }
+
+                        // Update description text to match variant
+                        const descElement = targetElement.querySelector('.nds-alert-description');
+                        if (descElement) {
+                            const messages = {
+                                success: 'Changes saved successfully!',
+                                warning: 'Your session will expire soon.',
+                                error: 'Failed to complete the action.',
+                                info: 'New update available for download.'
+                            };
+                            descElement.textContent = messages[currentVariant];
+
+                            // Update code example to reflect the description change
+                            const codeElement = demoCard.querySelector('.code-example code');
+                            if (codeElement) {
+                                const hiddenCopy = getHiddenCodeCopy(codeElement);
+                                if (hiddenCopy) {
+                                    let updatedCode = hiddenCopy.textContent;
+                                    // Update the description text in the code
+                                    updatedCode = updatedCode.replace(
+                                        /(<p class="nds-alert-description">)[^<]+(<\/p>)/,
+                                        `$1${messages[currentVariant]}$2`
+                                    );
+                                    updateCodeFromHiddenCopy(codeElement, updatedCode);
+                                }
+                            }
+                        }
+                    }
+
                     // Handle code updates for specific class changes
                     updateCodeExampleForClasses(demoCard, targetElement, classArray);
                 }
@@ -996,21 +1063,184 @@
 
     // Demo action buttons functionality
     function initializeDemoActionButtons() {
-        
+
         // Event delegation for demo action buttons
         document.addEventListener('click', function(e) {
             const actionBtn = e.target.closest('.demo-action-btn');
             if (actionBtn) {
                 e.preventDefault();
                 const action = actionBtn.getAttribute('data-action');
-                
+
                 if (action === 'populate-demo-files') {
                     populateDemoFiles(actionBtn);
+                }
+                else if (action === 'reset-progress-duration') {
+                    resetProgressDuration(actionBtn);
+                }
+                else if (action === 'random-progress-value') {
+                    randomProgressValue(actionBtn);
+                }
+                else if (action === 'toast-show') {
+                    showToastFromCode(actionBtn);
+                }
+                else if (action === 'alert-create') {
+                    createDemoAlert(actionBtn);
+                }
+                else if (action.startsWith('toast-')) {
+                    createToast(action, actionBtn);
                 }
             }
         });
     }
-    
+
+    // Reset progress duration animation
+    function resetProgressDuration(button) {
+        const demoCard = button.closest('.nds-demo-card');
+        if (!demoCard) return;
+
+        const progressButtons = demoCard.querySelectorAll('.nds-progress:not(.nds-progress-static)');
+        progressButtons.forEach(btn => {
+            // Force re-trigger animation by removing and re-adding the progress class
+            btn.classList.remove('nds-progress');
+            setTimeout(() => {
+                btn.classList.add('nds-progress');
+            }, 10);
+        });
+    }
+
+    // Set random progress values
+    function randomProgressValue(button) {
+        const demoCard = button.closest('.nds-demo-card');
+        if (!demoCard) return;
+
+        const progressButtons = demoCard.querySelectorAll('.nds-progress-static');
+        progressButtons.forEach(btn => {
+            // Generate random value between 0 and 100
+            const randomValue = Math.floor(Math.random() * 101);
+            btn.style.setProperty('--progress-value', randomValue);
+        });
+    }
+
+    // Show toast from HTML code example
+    function showToastFromCode(button) {
+        const demoCard = button.closest('.nds-demo-card');
+        if (!demoCard) {
+            return;
+        }
+
+        // Find the hidden alert element that contains the current state
+        const hiddenAlert = demoCard.querySelector('.demo-container .nds-alert');
+        if (!hiddenAlert) {
+            return;
+        }
+
+        // Detect variant from the hidden element's classes
+        let variant = 'success'; // default
+        if (hiddenAlert.classList.contains('nds-warning')) variant = 'warning';
+        else if (hiddenAlert.classList.contains('nds-error')) variant = 'error';
+        else if (hiddenAlert.classList.contains('nds-info')) variant = 'info';
+        else if (hiddenAlert.classList.contains('nds-success')) variant = 'success';
+
+        // Get position from data attribute
+        const position = hiddenAlert.getAttribute('data-position') || 'top';
+
+        // Check if color variant is enabled
+        const hasColor = hiddenAlert.classList.contains('nds-color');
+
+        const messages = {
+            success: 'Changes saved successfully!',
+            warning: 'Your session will expire soon.',
+            error: 'Failed to complete the action.',
+            info: 'New update available for download.'
+        };
+
+        if (window.NDSAlert) {
+            window.NDSAlert.create({
+                variant: variant,
+                title: variant.charAt(0).toUpperCase() + variant.slice(1),
+                description: messages[variant],
+                toast: true,
+                position: position,
+                duration: 4000,
+                shadow: true,
+                color: hasColor,
+                closable: true
+            });
+        }
+    }
+
+    // Create programmatic alert from demo
+    function createDemoAlert(button) {
+        // Find the hidden alert element that tracks the toggle state
+        const demoCard = button.closest('.nds-demo-card');
+        if (!demoCard) {
+            return;
+        }
+
+        const hiddenAlert = demoCard.querySelector('.nds-demo-alert');
+        if (!hiddenAlert) {
+            return;
+        }
+
+        // Detect variant from the hidden element's classes
+        let variant = 'success'; // default
+        if (hiddenAlert.classList.contains('nds-warning')) variant = 'warning';
+        else if (hiddenAlert.classList.contains('nds-error')) variant = 'error';
+        else if (hiddenAlert.classList.contains('nds-info')) variant = 'info';
+        else if (hiddenAlert.classList.contains('nds-neutral')) variant = 'neutral';
+        else if (hiddenAlert.classList.contains('nds-success')) variant = 'success';
+
+        const messages = {
+            success: 'Operation completed successfully!',
+            warning: 'Please review your changes before proceeding.',
+            error: 'An error occurred. Please try again.',
+            info: 'This is an informational message.',
+            neutral: 'This is a neutral notification.'
+        };
+
+        if (window.NDSAlert) {
+            window.NDSAlert.create({
+                variant: variant,
+                title: variant.charAt(0).toUpperCase() + variant.slice(1),
+                description: messages[variant],
+                target: '#demo-alert-container',
+                prepend: true
+            });
+        }
+    }
+
+    // Create toast notification
+    function createToast(action, button) {
+        // Parse action: 'toast-{variant}'
+        const parts = action.split('-');
+        const variant = parts[1]; // success, warning, error, info
+
+        // Read position from demo card toggle state (default: 'top')
+        const demoCard = button.closest('.nds-demo-card');
+        const demoContainer = demoCard ? demoCard.querySelector('.demo-container') : null;
+        const position = demoContainer ? demoContainer.getAttribute('data-toast-position') || 'top' : 'top';
+
+        const messages = {
+            success: 'Changes saved successfully!',
+            warning: 'Your session will expire soon.',
+            error: 'Failed to complete the action.',
+            info: 'New update available for download.'
+        };
+
+        if (window.NDSAlert) {
+            window.NDSAlert.create({
+                variant: variant,
+                title: variant.charAt(0).toUpperCase() + variant.slice(1),
+                description: messages[variant],
+                toast: true,
+                position: position,
+                duration: 4000,
+                shadow: true,
+                closable: true
+            });
+        }
+    }
+
     function populateDemoFiles(button) {
         
         // Find the file upload container in the same demo card
