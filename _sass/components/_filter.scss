@@ -1,0 +1,14 @@
+/**
+ * NDS Filter Component - SCSS
+ * Filtration system styles for filtering card items
+ */
+
+@use '../mixins' as *;
+
+// ==============================================
+// FILTER CONTAINER IN DROPMENU
+// ==============================================
+
+.nds-filter.nds-dropmenu-menu {
+    padding: var(--spacing-lg);
+}

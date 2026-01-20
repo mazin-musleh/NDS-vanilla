@@ -35,8 +35,8 @@
       href: "#"
 
 - label: "أعضاء هيئة التدريس"
-  url: "#"
-  href: "#"
+  url: "/faculty"
+  href: "/faculty-list.html"
 
 - label: "البرامج الأكاديمية"
   has_sub: true
@@ -49,7 +49,7 @@
       href: "#"
     - label: "برامج البكالوريوس"
       url: "/program"
-      href: "/program.html"
+      href: "/program-list.html"
 
 - label: "اتصل بنا"
   url: "#"

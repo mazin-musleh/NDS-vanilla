@@ -5,8 +5,9 @@
     <div class="nds-section-content nds-content-container">
         <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
             <ol class="nds-breadcrumb">
+                {% assign home_text = 'الرئيسية' %}{% if page.lang == 'en' %}{% assign home_text = 'Home' %}{% endif %}
                 <li><a href="{{ page.breadcrumb_root_url | default: '/' | relative_url }}">{{ page.breadcrumb_root |
-                        default: 'Home' }}</a></li>
+                        default: home_text }}</a></li>
                 {% if page.breadcrumb %}
                 {% for crumb in page.breadcrumb %}
                 <li><a href="{% if crumb.first %}{{ crumb[1] | relative_url }}{% else %}#{% endif %}">{% if crumb.first

@@ -61,8 +61,8 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-avatar nds-lg nds-initials">
-                                <span class="initials">AB</span>
+                            <div class="nds-avatar nds-lg">
+                                <span class="label">AB</span>
                             </div>
                         </div>
                     </div>
@@ -83,8 +83,8 @@ direction: ltr
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
-                                <code class="lang-html code"><div class="nds-avatar nds-lg nds-initials">
-  <span class="initials">AB</span>
+                                <code class="lang-html code"><div class="nds-avatar nds-lg">
+  <span class="label">AB</span>
 </div></code>
                             </div>
                         </div>
@@ -135,7 +135,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-avatar nds-lg nds-icon">
+                            <div class="nds-avatar nds-lg">
                                 <i class="hgi hgi-stroke hgi-user"></i>
                             </div>
                         </div>
@@ -157,7 +157,7 @@ direction: ltr
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
-                                <code class="lang-html code"><div class="nds-avatar nds-lg nds-icon">
+                                <code class="lang-html code"><div class="nds-avatar nds-lg">
   <i class="hgi hgi-stroke hgi-user"></i>
 </div></code>
                             </div>
@@ -213,7 +213,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-avatar nds-lg nds-image">
+                            <div class="nds-avatar nds-lg">
                                 <img src="{{ 'assets/img/avatar1.png' | relative_url }}" alt="User Avatar">
                             </div>
                         </div>
@@ -235,7 +235,7 @@ direction: ltr
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
-                                <code class="lang-html code"><div class="nds-avatar nds-lg nds-image">
+                                <code class="lang-html code"><div class="nds-avatar nds-lg">
   <img src="path/to/avatar.jpg" alt="User Avatar">
 </div></code>
                             </div>
@@ -301,7 +301,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <a href="/user/profile" class="nds-avatar nds-lg nds-icon">
+                            <a href="/user/profile" class="nds-avatar nds-lg">
                                 <i class="hgi hgi-stroke hgi-user"></i>
                             </a>
                         </div>
@@ -324,7 +324,7 @@ direction: ltr
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-                                    <a href="/user/profile" class="nds-avatar nds-lg nds-icon">
+                                    <a href="/user/profile" class="nds-avatar nds-lg">
                                         <i class="hgi hgi-stroke hgi-user"></i>
                                     </a>
                                 </code>
@@ -377,7 +377,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <button type="button" class="nds-avatar nds-lg nds-icon" aria-label="Open user menu">
+                            <button type="button" class="nds-avatar nds-lg" aria-label="Open user menu">
                                 <i class="hgi hgi-stroke hgi-user"></i>
                             </button>
                         </div>
@@ -399,7 +399,7 @@ direction: ltr
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
-                                <code class="lang-html code"><button type="button" class="nds-avatar nds-lg nds-icon" aria-label="Open user menu">
+                                <code class="lang-html code"><button type="button" class="nds-avatar nds-lg" aria-label="Open user menu">
   <i class="hgi hgi-stroke hgi-user"></i>
 </button></code>
                             </div>
@@ -465,23 +465,23 @@ direction: ltr
                     <div class="demo-container">
                         <div class="state-demo">
                             <div class="nds-avatar-group nds-stacked nds-md">
-                                <div class="nds-avatar nds-image">
+                                <div class="nds-avatar">
                                     <img src="{{ 'assets/img/avatar1.png' | relative_url }}" alt="User 1">
                                 </div>
-                                <div class="nds-avatar nds-image">
+                                <div class="nds-avatar">
                                     <img src="{{ 'assets/img/avatar2.png' | relative_url }}" alt="User 2">
                                 </div>
-                                <div class="nds-avatar nds-image">
+                                <div class="nds-avatar">
                                     <img src="{{ 'assets/img/avatar3.png' | relative_url }}" alt="User 3">
                                 </div>
-                                <div class="nds-avatar nds-image">
+                                <div class="nds-avatar">
                                     <img src="{{ 'assets/img/avatar4.png' | relative_url }}" alt="User 4">
                                 </div>
-                                <div class="nds-avatar nds-image">
+                                <div class="nds-avatar">
                                     <img src="{{ 'assets/img/avatar5.png' | relative_url }}" alt="User 5">
                                 </div>
-                                <div class="nds-avatar nds-lg nds-initials">
-                                    <span class="initials">+99</span>
+                                <div class="nds-avatar nds-lg">
+                                    <span class="label">+99</span>
                                 </div>
                             </div>
                         </div>
@@ -505,23 +505,23 @@ direction: ltr
                                 </div>
                                 <code class="lang-html code"><!-- Stacked Avatar Group -->
 <div class="nds-avatar-group nds-stacked nds-md">
-  <div class="nds-avatar nds-image">
+  <div class="nds-avatar">
     <img src="path/to/avatar1.jpg" alt="User 1">
   </div>
-  <div class="nds-avatar nds-image">
+  <div class="nds-avatar">
     <img src="path/to/avatar2.jpg" alt="User 2">
   </div>
-  <div class="nds-avatar nds-image">
+  <div class="nds-avatar">
     <img src="path/to/avatar3.jpg" alt="User 3">
   </div>
-  <div class="nds-avatar nds-image">
+  <div class="nds-avatar">
     <img src="path/to/avatar4.jpg" alt="User 4">
   </div>
-  <div class="nds-avatar nds-image">
+  <div class="nds-avatar">
     <img src="path/to/avatar5.jpg" alt="User 5">
   </div>
-  <div class="nds-avatar nds-initials">
-    <span class="initials">+99</span>
+  <div class="nds-avatar">
+    <span class="label">+99</span>
   </div>
 </div>
 </code>

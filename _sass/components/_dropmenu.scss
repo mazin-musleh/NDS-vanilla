@@ -51,10 +51,13 @@
   // -item class used for JavaScript targeting
 
   &-item {
-    // Ensures items use full width and left-align content
-    width: 100%;
+    // Ensures items use full width and start-align content
     justify-content: flex-start;
     text-decoration: none;
+
+    &:not(.nds-action) {
+      width: 100%;
+    }
 
     // When used as link (anchor tag)
     &:link,
@@ -149,11 +152,11 @@
 }
 
 
-  // ==============================================
-  // Share Page Dropdown
-  // ==============================================
+// ==============================================
+// Share Page Dropdown
+// ==============================================
 
-#nds-sharePage-dropdown.nds-dropmenu-menu{
+#nds-sharePage-dropdown.nds-dropmenu-menu {
   min-width: 160px;
 }
 
@@ -167,6 +170,7 @@
     opacity: 0;
     transform: translateY(-8px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
