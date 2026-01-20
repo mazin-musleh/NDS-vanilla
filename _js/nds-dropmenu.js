@@ -315,25 +315,42 @@
             // Remove any previous auto-adjustments
             this.dropmenu.classList.remove('top', 'align-left', 'align-right');
 
-            // Get menu and viewport dimensions
+            // Get menu and trigger dimensions
             const menuRect = this.menu.getBoundingClientRect();
             const triggerRect = this.trigger.getBoundingClientRect();
-            const viewportWidth = window.innerWidth;
-            const viewportHeight = window.innerHeight;
             const edgePadding = 16;
+
+            // Find the content layout container as boundary
+            const contentLayout = this.dropmenu.closest('.contentLayout');
+            let boundaryRect;
+
+            if (contentLayout) {
+                // Use contentLayout bounds
+                boundaryRect = contentLayout.getBoundingClientRect();
+            } else {
+                // Fallback to viewport
+                boundaryRect = {
+                    left: 0,
+                    right: window.innerWidth,
+                    top: 0,
+                    bottom: window.innerHeight,
+                    width: window.innerWidth,
+                    height: window.innerHeight
+                };
+            }
 
             // ==============================================
             // HORIZONTAL POSITIONING
             // ==============================================
             // Check if menu is too close to edges (with padding threshold)
-            // Use 2x padding on right to account for menu extending beyond trigger
-            const tooCloseLeft = menuRect.left < edgePadding;
-            const tooCloseRight = menuRect.right > (viewportWidth - edgePadding * 2);
+            // Use boundary edges instead of viewport
+            const tooCloseLeft = menuRect.left < (boundaryRect.left + edgePadding);
+            const tooCloseRight = menuRect.right > (boundaryRect.right - edgePadding * 2);
 
             if (tooCloseLeft && tooCloseRight) {
-                // Menu wider than viewport - align to side with more space
-                const spaceLeft = menuRect.left;
-                const spaceRight = viewportWidth - menuRect.right;
+                // Menu wider than container - align to side with more space
+                const spaceLeft = menuRect.left - boundaryRect.left;
+                const spaceRight = boundaryRect.right - menuRect.right;
                 this.dropmenu.classList.add(spaceRight > spaceLeft ? 'align-right' : 'align-left');
             } else if (tooCloseLeft) {
                 this.dropmenu.classList.add('align-left');
@@ -344,9 +361,9 @@
             // ==============================================
             // VERTICAL POSITIONING
             // ==============================================
-            const spaceBelow = viewportHeight - menuRect.bottom;
+            const spaceBelow = boundaryRect.bottom - menuRect.bottom;
             if (spaceBelow < 0) {
-                const spaceAbove = triggerRect.top;
+                const spaceAbove = triggerRect.top - boundaryRect.top;
                 if (spaceAbove > Math.abs(spaceBelow)) {
                     this.dropmenu.classList.add('top');
                 }

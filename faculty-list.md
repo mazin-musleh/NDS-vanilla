@@ -12,17 +12,16 @@ sidemenu: college-sidemenu
 
 <section id="facultyList" class="nds-content-section">
     <div class="nds-section-head">
-        <h2 class="nds-section-title">أعضاء هيئة التدريس</h2>
-        <p class="nds-section-description">أستاذ مشارك</p>
         <div class="nds-section-action">
             <div class="nds-dropmenu">
                 <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
                     <i class="hgi hgi-stroke hgi-filter icon"></i>
                     <span class="label">تصفية</span>
                 </button>
-                <div class="nds-dropmenu-menu" style="min-width: 300px;">
+                <div class="nds-filter nds-dropmenu-menu" data-filter-target="faculty_list_content"
+                    style="min-width: 300px;">
                     <!-- Search Input -->
-                    <div class="nds-form-control nds-dropmenu-item" data-no-auto-close>
+                    <div class="nds-form-control nds-dropmenu-item" data-filter="search" data-no-auto-close>
                         <i class="hgi hgi-stroke hgi-search-01 icon"></i>
                         <input type="text" placeholder="بحث..." class="nds-search-input">
                         <div class="nds-form-action">
@@ -34,23 +33,52 @@ sidemenu: college-sidemenu
                             </button>
                         </div>
                     </div>
-                    <hr class="nds-dropmenu-divider">
+                    <hr class="nds-dropmenu-divider nds-lg">
                     <!-- Filter Options -->
-                    <button class="nds-btn nds-subtle nds-dropmenu-item">
-                        <span class="label">جميع الأعضاء</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item">
-                        <span class="label">أستاذ</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item">
-                        <span class="label">أستاذ مشارك</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item">
-                        <span class="label">أستاذ مساعد</span>
-                    </button>
-                    <hr class="nds-dropmenu-divider">
-                    <button class="nds-btn nds-subtle nds-dropmenu-item">
-                        <i class="hgi hgi-stroke hgi-refresh-ccw-02"></i>
+                    <fieldset class="nds-dropmenu-item nds-check-group" data-filter="tags" data-no-auto-close>
+                        <legend class="label">Search by tags</legend>
+                        <div class="nds-form-container nds-check-container">
+                            <div class="nds-form-header">
+                                <label for="checkbox1">
+                                    <span class="label">tag1</span>
+                                </label>
+                            </div>
+                            <div class="nds-form-control">
+                                <input type="checkbox" id="filter-tag1" name="filter-tag1" value="tag1"
+                                    class="nds-check">
+                            </div>
+                        </div>
+                        <div class="nds-form-container nds-check-container">
+                            <div class="nds-form-header">
+                                <label for="checkbox1">
+                                    <span class="label">tag2</span>
+                                </label>
+                            </div>
+                            <div class="nds-form-control">
+                                <input type="checkbox" id="filter-tag2" name="filter-tag1" value="tag2"
+                                    class="nds-check">
+                            </div>
+                        </div>
+                        <div class="nds-form-container nds-check-container">
+                            <div class="nds-form-header">
+                                <label for="checkbox1">
+                                    <span class="label">tag3</span>
+                                </label>
+                            </div>
+                            <div class="nds-form-control">
+                                <input type="checkbox" id="filter-tag1" name="filter-tag3" value="tag3"
+                                    class="nds-check">
+                            </div>
+                        </div>
+                        <span class="nds-feedback show">
+                            <span class="nds-feedback-icon nds-outline nds-sm">
+                                <i class="hgi hgi-solid icon"></i>
+                            </span>
+                            <span class="msg"></span>
+                        </span>
+                    </fieldset>
+                    <hr class="nds-dropmenu-divider nds-lg">
+                    <button class="nds-btn nds-secondary nds-dropmenu-item nds-action" data-filter-action="clear">
                         <span class="label">إعادة تعيين</span>
                     </button>
                 </div>
@@ -58,10 +86,13 @@ sidemenu: college-sidemenu
         </div>
     </div>
     <div class="nds-section-content">
-        <div class="nds-pagination-content nds-grid" style="--per-page: 12; --max-col: 3; --mid-col: 3; --min-col: 2;">
-            <a href="#" class="pagination-item nds-card nds-stroke nds-user nds-center">
+        <div id="faculty_list_content" class="nds-pagination-content nds-grid"
+            style="--per-page: 12; --max-col: 3; --mid-col: 3; --min-col: 2;">
+            <!-- Card 1 - Male -->
+            <a href="{{ 'faculty.html' | relative_url }}"
+                class="pagination-item nds-card nds-stroke nds-user nds-center">
                 <div class="nds-card-header">
-                    <div class="nds-card-image nds-avatar nds-2xl nds-image nds-image-border">
+                    <div class="nds-card-image nds-avatar nds-2xl nds-image-border">
                         <img src="{{ 'assets/img/avatar3.png' | relative_url }}" width="158" height="158"
                             alt="صورة عضو هيئة التدريس" loading="lazy">
                     </div>
@@ -70,10 +101,414 @@ sidemenu: college-sidemenu
                     <div class="nds-card-text">
                         <h3 class="nds-card-title nds-truncate">د. محمد أحمد السالم</h3>
                         <span class="nds-card-subtitle nds-truncate">رئيس قسم</span>
-                        <p class="nds-card-description nds-truncate">
-                            قسم علوم الحاسب
-                            الآلي
-                        </p>
+                        <p class="nds-card-description nds-truncate">قسم علوم الحاسب الآلي</p>
+                    </div>
+                    <div class="nds-card-tags">
+                        <span class="nds-tag nds-info nds-sm">
+                            <span class="label">tag1</span>
+                        </span>
+                    </div>
+                </div>
+            </a>
+            <!-- Card 2 - Male -->
+            <a href="{{ 'faculty.html' | relative_url }}"
+                class="pagination-item nds-card nds-stroke nds-user nds-center">
+                <div class="nds-card-header">
+                    <div class="nds-card-image nds-avatar nds-2xl">
+                        <i class="hgi hgi-stroke hgi-user"></i>
+                    </div>
+                </div>
+                <div class="nds-card-content">
+                    <div class="nds-card-text">
+                        <h3 class="nds-card-title nds-truncate">د. عبدالله خالد العمري</h3>
+                        <span class="nds-card-subtitle nds-truncate">أستاذ مشارك</span>
+                        <p class="nds-card-description nds-truncate">قسم نظم المعلومات</p>
+                    </div>
+                    <div class="nds-card-tags">
+                        <span class="nds-tag nds-neutral nds-sm">
+                            <span class="label">tag2</span>
+                        </span>
+                    </div>
+                </div>
+            </a>
+            <!-- Card 3 - Female -->
+            <a href="{{ 'faculty.html' | relative_url }}"
+                class="pagination-item nds-card nds-stroke nds-user nds-center">
+                <div class="nds-card-header">
+                    <div class="nds-card-image nds-avatar nds-2xl nds-image-border">
+                        <img src="{{ 'assets/img/avatar2.png' | relative_url }}" width="158" height="158"
+                            alt="صورة عضو هيئة التدريس" loading="lazy">
+                    </div>
+                </div>
+                <div class="nds-card-content">
+                    <div class="nds-card-text">
+                        <h3 class="nds-card-title nds-truncate">د. فاطمة سعيد الزهراني</h3>
+                        <span class="nds-card-subtitle nds-truncate">أستاذ مساعد</span>
+                        <p class="nds-card-description nds-truncate">قسم هندسة البرمجيات</p>
+                    </div>
+                    <div class="nds-card-tags">
+                        <span class="nds-tag nds-success nds-sm">
+                            <span class="label">tag3</span>
+                        </span>
+                    </div>
+                </div>
+            </a>
+            <!-- Card 4 - Male -->
+            <a href="{{ 'faculty.html' | relative_url }}"
+                class="pagination-item nds-card nds-stroke nds-user nds-center">
+                <div class="nds-card-header">
+                    <div class="nds-card-image nds-avatar nds-2xl">
+                        <i class="hgi hgi-stroke hgi-user"></i>
+                    </div>
+                </div>
+                <div class="nds-card-content">
+                    <div class="nds-card-text">
+                        <h3 class="nds-card-title nds-truncate">د. أحمد محمد القحطاني</h3>
+                        <span class="nds-card-subtitle nds-truncate">أستاذ</span>
+                        <p class="nds-card-description nds-truncate">قسم علوم الحاسب الآلي</p>
+                    </div>
+                    <div class="nds-card-tags">
+                        <span class="nds-tag nds-info nds-sm">
+                            <span class="label">tag1</span>
+                        </span>
+                    </div>
+                </div>
+            </a>
+            <!-- Card 5 - Female -->
+            <a href="{{ 'faculty.html' | relative_url }}"
+                class="pagination-item nds-card nds-stroke nds-user nds-center">
+                <div class="nds-card-header">
+                    <div class="nds-card-image nds-avatar nds-2xl nds-image-border">
+                        <img src="{{ 'assets/img/avatar4.png' | relative_url }}" width="158" height="158"
+                            alt="صورة عضو هيئة التدريس" loading="lazy">
+                    </div>
+                </div>
+                <div class="nds-card-content">
+                    <div class="nds-card-text">
+                        <h3 class="nds-card-title nds-truncate">د. نورة عبدالرحمن الشهري</h3>
+                        <span class="nds-card-subtitle nds-truncate">أستاذ مشارك</span>
+                        <p class="nds-card-description nds-truncate">قسم الذكاء الاصطناعي</p>
+                    </div>
+                    <div class="nds-card-tags">
+                        <span class="nds-tag nds-neutral nds-sm">
+                            <span class="label">tag2</span>
+                        </span>
+                    </div>
+                </div>
+            </a>
+            <!-- Card 6 - Male -->
+            <a href="{{ 'faculty.html' | relative_url }}"
+                class="pagination-item nds-card nds-stroke nds-user nds-center">
+                <div class="nds-card-header">
+                    <div class="nds-card-image nds-avatar nds-2xl">
+                        <i class="hgi hgi-stroke hgi-user"></i>
+                    </div>
+                </div>
+                <div class="nds-card-content">
+                    <div class="nds-card-text">
+                        <h3 class="nds-card-title nds-truncate">د. خالد ياسر الغامدي</h3>
+                        <span class="nds-card-subtitle nds-truncate">محاضر</span>
+                        <p class="nds-card-description nds-truncate">قسم نظم المعلومات</p>
+                    </div>
+                    <div class="nds-card-tags">
+                        <span class="nds-tag nds-success nds-sm">
+                            <span class="label">tag3</span>
+                        </span>
+                    </div>
+                </div>
+            </a>
+            <!-- Card 7 - Female -->
+            <a href="{{ 'faculty.html' | relative_url }}"
+                class="pagination-item nds-card nds-stroke nds-user nds-center">
+                <div class="nds-card-header">
+                    <div class="nds-card-image nds-avatar nds-2xl nds-image-border">
+                        <img src="{{ 'assets/img/avatar5.png' | relative_url }}" width="158" height="158"
+                            alt="صورة عضو هيئة التدريس" loading="lazy">
+                    </div>
+                </div>
+                <div class="nds-card-content">
+                    <div class="nds-card-text">
+                        <h3 class="nds-card-title nds-truncate">د. سارة حسن المالكي</h3>
+                        <span class="nds-card-subtitle nds-truncate">أستاذ مساعد</span>
+                        <p class="nds-card-description nds-truncate">قسم هندسة البرمجيات</p>
+                    </div>
+                    <div class="nds-card-tags">
+                        <span class="nds-tag nds-info nds-sm">
+                            <span class="label">tag1</span>
+                        </span>
+                    </div>
+                </div>
+            </a>
+            <!-- Card 8 - Male -->
+            <a href="{{ 'faculty.html' | relative_url }}"
+                class="pagination-item nds-card nds-stroke nds-user nds-center">
+                <div class="nds-card-header">
+                    <div class="nds-card-image nds-avatar nds-2xl">
+                        <i class="hgi hgi-stroke hgi-user"></i>
+                    </div>
+                </div>
+                <div class="nds-card-content">
+                    <div class="nds-card-text">
+                        <h3 class="nds-card-title nds-truncate">د. ياسر فهد الدوسري</h3>
+                        <span class="nds-card-subtitle nds-truncate">أستاذ</span>
+                        <p class="nds-card-description nds-truncate">قسم علوم الحاسب الآلي</p>
+                    </div>
+                    <div class="nds-card-tags">
+                        <span class="nds-tag nds-neutral nds-sm">
+                            <span class="label">tag2</span>
+                        </span>
+                    </div>
+                </div>
+            </a>
+            <!-- Card 9 - Female -->
+            <a href="{{ 'faculty.html' | relative_url }}"
+                class="pagination-item nds-card nds-stroke nds-user nds-center">
+                <div class="nds-card-header">
+                    <div class="nds-card-image nds-avatar nds-2xl">
+                        <i class="hgi hgi-stroke hgi-user"></i>
+                    </div>
+                </div>
+                <div class="nds-card-content">
+                    <div class="nds-card-text">
+                        <h3 class="nds-card-title nds-truncate">د. هند ناصر العتيبي</h3>
+                        <span class="nds-card-subtitle nds-truncate">أستاذ مشارك</span>
+                        <p class="nds-card-description nds-truncate">قسم الذكاء الاصطناعي</p>
+                    </div>
+                    <div class="nds-card-tags">
+                        <span class="nds-tag nds-success nds-sm">
+                            <span class="label">tag3</span>
+                        </span>
+                    </div>
+                </div>
+            </a>
+            <!-- Card 10 - Male -->
+            <a href="{{ 'faculty.html' | relative_url }}"
+                class="pagination-item nds-card nds-stroke nds-user nds-center">
+                <div class="nds-card-header">
+                    <div class="nds-card-image nds-avatar nds-2xl">
+                        <i class="hgi hgi-stroke hgi-user"></i>
+                    </div>
+                </div>
+                <div class="nds-card-content">
+                    <div class="nds-card-text">
+                        <h3 class="nds-card-title nds-truncate">د. تركي سلمان الحربي</h3>
+                        <span class="nds-card-subtitle nds-truncate">محاضر</span>
+                        <p class="nds-card-description nds-truncate">قسم نظم المعلومات</p>
+                    </div>
+                    <div class="nds-card-tags">
+                        <span class="nds-tag nds-info nds-sm">
+                            <span class="label">tag1</span>
+                        </span>
+                    </div>
+                </div>
+            </a>
+            <!-- Card 11 - Female -->
+            <a href="{{ 'faculty.html' | relative_url }}"
+                class="pagination-item nds-card nds-stroke nds-user nds-center">
+                <div class="nds-card-header">
+                    <div class="nds-card-image nds-avatar nds-2xl">
+                        <i class="hgi hgi-stroke hgi-user"></i>
+                    </div>
+                </div>
+                <div class="nds-card-content">
+                    <div class="nds-card-text">
+                        <h3 class="nds-card-title nds-truncate">د. ريم محمود الشمري</h3>
+                        <span class="nds-card-subtitle nds-truncate">أستاذ مساعد</span>
+                        <p class="nds-card-description nds-truncate">قسم هندسة البرمجيات</p>
+                    </div>
+                    <div class="nds-card-tags">
+                        <span class="nds-tag nds-neutral nds-sm">
+                            <span class="label">tag2</span>
+                        </span>
+                    </div>
+                </div>
+            </a>
+            <!-- Card 12 - Male -->
+            <a href="{{ 'faculty.html' | relative_url }}"
+                class="pagination-item nds-card nds-stroke nds-user nds-center">
+                <div class="nds-card-header">
+                    <div class="nds-card-image nds-avatar nds-2xl">
+                        <i class="hgi hgi-stroke hgi-user"></i>
+                    </div>
+                </div>
+                <div class="nds-card-content">
+                    <div class="nds-card-text">
+                        <h3 class="nds-card-title nds-truncate">د. بندر عادل المطيري</h3>
+                        <span class="nds-card-subtitle nds-truncate">أستاذ</span>
+                        <p class="nds-card-description nds-truncate">قسم علوم الحاسب الآلي</p>
+                    </div>
+                    <div class="nds-card-tags">
+                        <span class="nds-tag nds-success nds-sm">
+                            <span class="label">tag3</span>
+                        </span>
+                    </div>
+                </div>
+            </a>
+            <!-- Card 13 - Female -->
+            <a href="{{ 'faculty.html' | relative_url }}"
+                class="pagination-item nds-card nds-stroke nds-user nds-center">
+                <div class="nds-card-header">
+                    <div class="nds-card-image nds-avatar nds-2xl">
+                        <i class="hgi hgi-stroke hgi-user"></i>
+                    </div>
+                </div>
+                <div class="nds-card-content">
+                    <div class="nds-card-text">
+                        <h3 class="nds-card-title nds-truncate">د. لمى خليل السبيعي</h3>
+                        <span class="nds-card-subtitle nds-truncate">أستاذ مشارك</span>
+                        <p class="nds-card-description nds-truncate">قسم الذكاء الاصطناعي</p>
+                    </div>
+                    <div class="nds-card-tags">
+                        <span class="nds-tag nds-info nds-sm">
+                            <span class="label">tag1</span>
+                        </span>
+                    </div>
+                </div>
+            </a>
+            <!-- Card 14 - Male -->
+            <a href="{{ 'faculty.html' | relative_url }}"
+                class="pagination-item nds-card nds-stroke nds-user nds-center">
+                <div class="nds-card-header">
+                    <div class="nds-card-image nds-avatar nds-2xl">
+                        <i class="hgi hgi-stroke hgi-user"></i>
+                    </div>
+                </div>
+                <div class="nds-card-content">
+                    <div class="nds-card-text">
+                        <h3 class="nds-card-title nds-truncate">د. صالح إبراهيم الراشد</h3>
+                        <span class="nds-card-subtitle nds-truncate">محاضر</span>
+                        <p class="nds-card-description nds-truncate">قسم نظم المعلومات</p>
+                    </div>
+                    <div class="nds-card-tags">
+                        <span class="nds-tag nds-neutral nds-sm">
+                            <span class="label">tag2</span>
+                        </span>
+                    </div>
+                </div>
+            </a>
+            <!-- Card 15 - Female -->
+            <a href="{{ 'faculty.html' | relative_url }}"
+                class="pagination-item nds-card nds-stroke nds-user nds-center">
+                <div class="nds-card-header">
+                    <div class="nds-card-image nds-avatar nds-2xl">
+                        <i class="hgi hgi-stroke hgi-user"></i>
+                    </div>
+                </div>
+                <div class="nds-card-content">
+                    <div class="nds-card-text">
+                        <h3 class="nds-card-title nds-truncate">د. منى عبدالعزيز النجار</h3>
+                        <span class="nds-card-subtitle nds-truncate">أستاذ مساعد</span>
+                        <p class="nds-card-description nds-truncate">قسم هندسة البرمجيات</p>
+                    </div>
+                    <div class="nds-card-tags">
+                        <span class="nds-tag nds-success nds-sm">
+                            <span class="label">tag3</span>
+                        </span>
+                    </div>
+                </div>
+            </a>
+            <!-- Card 16 - Male -->
+            <a href="{{ 'faculty.html' | relative_url }}"
+                class="pagination-item nds-card nds-stroke nds-user nds-center">
+                <div class="nds-card-header">
+                    <div class="nds-card-image nds-avatar nds-2xl">
+                        <i class="hgi hgi-stroke hgi-user"></i>
+                    </div>
+                </div>
+                <div class="nds-card-content">
+                    <div class="nds-card-text">
+                        <h3 class="nds-card-title nds-truncate">د. عمر سعد الجهني</h3>
+                        <span class="nds-card-subtitle nds-truncate">أستاذ</span>
+                        <p class="nds-card-description nds-truncate">قسم علوم الحاسب الآلي</p>
+                    </div>
+                    <div class="nds-card-tags">
+                        <span class="nds-tag nds-info nds-sm">
+                            <span class="label">tag1</span>
+                        </span>
+                    </div>
+                </div>
+            </a>
+            <!-- Card 17 - Female -->
+            <a href="{{ 'faculty.html' | relative_url }}"
+                class="pagination-item nds-card nds-stroke nds-user nds-center">
+                <div class="nds-card-header">
+                    <div class="nds-card-image nds-avatar nds-2xl">
+                        <i class="hgi hgi-stroke hgi-user"></i>
+                    </div>
+                </div>
+                <div class="nds-card-content">
+                    <div class="nds-card-text">
+                        <h3 class="nds-card-title nds-truncate">د. غادة فيصل البقمي</h3>
+                        <span class="nds-card-subtitle nds-truncate">أستاذ مشارك</span>
+                        <p class="nds-card-description nds-truncate">قسم الذكاء الاصطناعي</p>
+                    </div>
+                    <div class="nds-card-tags">
+                        <span class="nds-tag nds-neutral nds-sm">
+                            <span class="label">tag2</span>
+                        </span>
+                    </div>
+                </div>
+            </a>
+            <!-- Card 18 - Male -->
+            <a href="{{ 'faculty.html' | relative_url }}"
+                class="pagination-item nds-card nds-stroke nds-user nds-center">
+                <div class="nds-card-header">
+                    <div class="nds-card-image nds-avatar nds-2xl">
+                        <i class="hgi hgi-stroke hgi-user"></i>
+                    </div>
+                </div>
+                <div class="nds-card-content">
+                    <div class="nds-card-text">
+                        <h3 class="nds-card-title nds-truncate">د. زياد حمد الهاجري</h3>
+                        <span class="nds-card-subtitle nds-truncate">محاضر</span>
+                        <p class="nds-card-description nds-truncate">قسم نظم المعلومات</p>
+                    </div>
+                    <div class="nds-card-tags">
+                        <span class="nds-tag nds-success nds-sm">
+                            <span class="label">tag3</span>
+                        </span>
+                    </div>
+                </div>
+            </a>
+            <!-- Card 19 - Female -->
+            <a href="{{ 'faculty.html' | relative_url }}"
+                class="pagination-item nds-card nds-stroke nds-user nds-center">
+                <div class="nds-card-header">
+                    <div class="nds-card-image nds-avatar nds-2xl">
+                        <i class="hgi hgi-stroke hgi-user"></i>
+                    </div>
+                </div>
+                <div class="nds-card-content">
+                    <div class="nds-card-text">
+                        <h3 class="nds-card-title nds-truncate">د. دانة راشد العنزي</h3>
+                        <span class="nds-card-subtitle nds-truncate">أستاذ مساعد</span>
+                        <p class="nds-card-description nds-truncate">قسم هندسة البرمجيات</p>
+                    </div>
+                    <div class="nds-card-tags">
+                        <span class="nds-tag nds-info nds-sm">
+                            <span class="label">tag1</span>
+                        </span>
+                    </div>
+                </div>
+            </a>
+            <!-- Card 20 - Male -->
+            <a href="{{ 'faculty.html' | relative_url }}"
+                class="pagination-item nds-card nds-stroke nds-user nds-center">
+                <div class="nds-card-header">
+                    <div class="nds-card-image nds-avatar nds-2xl">
+                        <i class="hgi hgi-stroke hgi-user"></i>
+                    </div>
+                </div>
+                <div class="nds-card-content">
+                    <div class="nds-card-text">
+                        <h3 class="nds-card-title nds-truncate">د. مشعل جابر الشريف</h3>
+                        <span class="nds-card-subtitle nds-truncate">أستاذ</span>
+                        <p class="nds-card-description nds-truncate">قسم الذكاء الاصطناعي</p>
+                    </div>
+                    <div class="nds-card-tags">
+                        <span class="nds-tag nds-neutral nds-sm">
+                            <span class="label">tag2</span>
+                        </span>
                     </div>
                 </div>
             </a>

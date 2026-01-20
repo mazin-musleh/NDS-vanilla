@@ -179,6 +179,18 @@
             selector: '.nds-modal-backdrop, .nds-modal',
             init: () => window.NDSModal?.init?.(),
         },
+        {
+            name: 'alert',
+            priority: 29,
+            selector: '.nds-alert',
+            init: () => window.NDSAlert?.init?.(),
+        },
+        {
+            name: 'filter',
+            priority: 30,
+            selector: '.nds-filter',
+            init: () => window.NDSFilter?.init?.(),
+        },
     ];
 
     function initializeNDS() {

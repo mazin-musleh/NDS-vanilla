@@ -569,12 +569,111 @@
         }
     });
 
+    // Refresh auto-pagination for a specific content container (used by filters)
+    function refreshAutoPagination(contentContainer) {
+        if (!contentContainer) return;
+
+        // Find the pagination nav associated with this content container
+        const paginationNav = contentContainer.parentElement?.querySelector('.nds-auto-pagination');
+        if (!paginationNav) return;
+
+        // Get only visible (non-filtered) items
+        const allItems = Array.from(contentContainer.querySelectorAll('.pagination-item'));
+        const visibleItems = allItems.filter(item => !item.hasAttribute('data-filtered') && !item.classList.contains('nds-filtered-out'));
+
+        const perPage = parseInt(getComputedStyle(contentContainer).getPropertyValue('--per-page')) || 5;
+        const totalPages = Math.ceil(visibleItems.length / perPage);
+
+        // If no pagination needed (0 or 1 page), hide pagination and show all visible items
+        if (totalPages <= 1) {
+            visibleItems.forEach(item => item.classList.add('active'));
+            paginationNav.innerHTML = '';
+            paginationNav.style.display = 'none';
+            return;
+        }
+
+        // Show pagination
+        paginationNav.style.display = '';
+
+        // Generate pagination HTML
+        const paginationHTML = generatePaginationHTML(totalPages, 1);
+        paginationNav.innerHTML = paginationHTML;
+
+        // Show first page items
+        showPageFiltered(visibleItems, 1, perPage);
+
+        // Initialize pagination component
+        new NDSPagination(paginationNav);
+
+        // Store for click handler closure
+        const finalPerPage = perPage;
+        const finalTotalPages = totalPages;
+
+        // Add click handlers
+        const newPagination = paginationNav.querySelector('.nds-pagination');
+        newPagination.addEventListener('click', (e) => {
+            // Re-get visible items in case filter changed
+            const currentVisibleItems = Array.from(contentContainer.querySelectorAll('.pagination-item'))
+                .filter(item => !item.hasAttribute('data-filtered') && !item.classList.contains('nds-filtered-out'));
+
+            // Check for page buttons/links
+            const pageElement = e.target.closest('.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) button, .nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) a, .nds-dropmenu-item');
+
+            if (pageElement) {
+                if (pageElement.tagName.toLowerCase() === 'a') {
+                    e.preventDefault();
+                }
+
+                const pageNumber = parseInt(pageElement.querySelector('.label')?.textContent || pageElement.textContent);
+                if (pageNumber) {
+                    goToPageFiltered(newPagination, currentVisibleItems, pageNumber, finalPerPage, finalTotalPages);
+                }
+            } else {
+                const prevElement = e.target.closest('.nds-pagination-prev button, .nds-pagination-prev a');
+                const nextElement = e.target.closest('.nds-pagination-next button, .nds-pagination-next a');
+                const currentPage = getCurrentPage(newPagination);
+
+                if (prevElement) {
+                    e.preventDefault();
+                    if (currentPage > 1) {
+                        goToPageFiltered(newPagination, currentVisibleItems, currentPage - 1, finalPerPage, finalTotalPages);
+                    }
+                } else if (nextElement) {
+                    e.preventDefault();
+                    if (currentPage < finalTotalPages) {
+                        goToPageFiltered(newPagination, currentVisibleItems, currentPage + 1, finalPerPage, finalTotalPages);
+                    }
+                }
+            }
+        });
+    }
+
+    function showPageFiltered(visibleItems, pageNumber, perPage) {
+        const start = (pageNumber - 1) * perPage;
+        const end = start + perPage;
+
+        visibleItems.forEach((item, index) => {
+            if (index >= start && index < end) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
+        });
+    }
+
+    function goToPageFiltered(pagination, visibleItems, pageNumber, perPage, totalPages) {
+        setActivePage(pagination, pageNumber);
+        updatePrevNextStates(pagination, pageNumber, 1, totalPages);
+        showPageFiltered(visibleItems, pageNumber, perPage);
+    }
+
     // Expose global API for unified init system
     if (typeof window !== 'undefined') {
         window.NDSPagination = {
             init: initializePagination,
             initAuto: initializeAutoPagination,
-            create: (container) => new NDSPagination(container)
+            create: (container) => new NDSPagination(container),
+            refresh: refreshAutoPagination
         };
     }
 
