@@ -55,10 +55,6 @@
     justify-content: flex-start;
     text-decoration: none;
 
-    &:not(.nds-action) {
-      width: 100%;
-    }
-
     // When used as link (anchor tag)
     &:link,
     &:visited {
@@ -148,6 +144,17 @@
   &-menu .nds-form-control {
     min-width: unset;
     width: 100%;
+  }
+
+
+  &-action {
+    .nds-btn {
+      width: 100%;
+      .label {
+        width: 100%;
+        text-align: center;
+      }
+    }
   }
 }
 

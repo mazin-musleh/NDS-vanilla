@@ -40,8 +40,8 @@ layout_class: cardView
                     </div>
                     <div class="demo-container">
                         <div class="state-demo success-alert-demo">
-                            <div class="nds-alert nds-card nds-success">
-                                <span class="nds-feedback nds-alert-icon" data-status="success">
+                            <div class="nds-alert nds-card" data-status="success">
+                                <span class="nds-feedback nds-alert-icon">
                                     <span class="nds-feedback-icon nds-outline">
                                         <i class="hgi hgi-solid icon"></i>
                                     </span>
@@ -75,8 +75,8 @@ layout_class: cardView
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-<div class="nds-alert nds-card nds-success">
-  <span class="nds-feedback nds-alert-icon" data-status="success">
+<div class="nds-alert nds-card" data-status="success">
+  <span class="nds-feedback nds-alert-icon">
     <span class="nds-feedback-icon nds-outline">
       <i class="hgi hgi-solid icon"></i>
     </span>
@@ -116,8 +116,8 @@ layout_class: cardView
                     </div>
                     <div class="demo-container">
                         <div class="state-demo info-alert-demo">
-                            <div class="nds-alert nds-card nds-info">
-                                <span class="nds-feedback nds-alert-icon" data-status="info">
+                            <div class="nds-alert nds-card" data-status="info">
+                                <span class="nds-feedback nds-alert-icon">
                                     <span class="nds-feedback-icon nds-outline">
                                         <i class="hgi hgi-solid icon"></i>
                                     </span>
@@ -152,8 +152,8 @@ layout_class: cardView
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-<div class="nds-alert nds-card nds-info">
-  <span class="nds-feedback nds-alert-icon" data-status="info">
+<div class="nds-alert nds-card" data-status="info">
+  <span class="nds-feedback nds-alert-icon">
     <span class="nds-feedback-icon nds-outline">
       <i class="hgi hgi-solid icon"></i>
     </span>
@@ -193,8 +193,8 @@ layout_class: cardView
                     </div>
                     <div class="demo-container">
                         <div class="state-demo warning-alert-demo">
-                            <div class="nds-alert nds-card nds-warning">
-                                <span class="nds-feedback nds-alert-icon" data-status="warning">
+                            <div class="nds-alert nds-card" data-status="warning">
+                                <span class="nds-feedback nds-alert-icon">
                                     <span class="nds-feedback-icon nds-outline">
                                         <i class="hgi hgi-solid icon"></i>
                                     </span>
@@ -228,8 +228,8 @@ layout_class: cardView
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-<div class="nds-alert nds-card nds-warning">
-  <span class="nds-feedback nds-alert-icon" data-status="warning">
+<div class="nds-alert nds-card" data-status="warning">
+  <span class="nds-feedback nds-alert-icon">
     <span class="nds-feedback-icon nds-outline">
       <i class="hgi hgi-solid icon"></i>
     </span>
@@ -269,8 +269,8 @@ layout_class: cardView
                     </div>
                     <div class="demo-container">
                         <div class="state-demo error-alert-demo">
-                            <div class="nds-alert nds-card nds-error">
-                                <span class="nds-feedback nds-alert-icon" data-status="error">
+                            <div class="nds-alert nds-card" data-status="error">
+                                <span class="nds-feedback nds-alert-icon">
                                     <span class="nds-feedback-icon nds-outline">
                                         <i class="hgi hgi-solid icon"></i>
                                     </span>
@@ -305,8 +305,8 @@ layout_class: cardView
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-<div class="nds-alert nds-card nds-error">
-  <span class="nds-feedback nds-alert-icon" data-status="error">
+<div class="nds-alert nds-card" data-status="error">
+  <span class="nds-feedback nds-alert-icon">
     <span class="nds-feedback-icon nds-outline">
       <i class="hgi hgi-solid icon"></i>
     </span>
@@ -358,8 +358,8 @@ layout_class: cardView
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-alert nds-card nds-info">
-                                <span class="nds-feedback nds-alert-icon" data-status="info">
+                            <div class="nds-alert nds-card" data-status="info">
+                                <span class="nds-feedback nds-alert-icon">
                                     <span class="nds-feedback-icon nds-outline">
                                         <i class="hgi hgi-solid icon"></i>
                                     </span>
@@ -402,8 +402,8 @@ layout_class: cardView
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-<div class="nds-alert nds-card nds-info">
-  <span class="nds-feedback nds-alert-icon" data-status="info">
+<div class="nds-alert nds-card" data-status="info">
+  <span class="nds-feedback nds-alert-icon">
     <span class="nds-feedback-icon nds-outline">
       <i class="hgi hgi-solid icon"></i>
     </span>
@@ -464,8 +464,8 @@ layout_class: cardView
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-alert nds-card nds-neutral">
-                                <span class="nds-feedback nds-alert-icon" data-status="neutral">
+                            <div class="nds-alert nds-card" data-status="neutral">
+                                <span class="nds-feedback nds-alert-icon">
                                     <span class="nds-feedback-icon nds-outline">
                                         <i class="hgi hgi-solid icon"></i>
                                     </span>
@@ -499,8 +499,8 @@ layout_class: cardView
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-<div class="nds-alert nds-card nds-neutral">
-  <span class="nds-feedback nds-alert-icon" data-status="neutral">
+<div class="nds-alert nds-card" data-status="neutral">
+  <span class="nds-feedback nds-alert-icon">
     <span class="nds-feedback-icon nds-outline">
       <i class="hgi hgi-solid icon"></i>
     </span>
@@ -535,44 +535,40 @@ layout_class: cardView
                     <div class="demo-header">
                         <div class="demo-label">Dynamic Alert Demo</div>
                         <div class="demo-action">
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected" data-toggler='["nds-success", ".nds-demo-alert", "alertVariant"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
+                                data-toggler='["data-status=success", ".nds-demo-alert", "alertVariant", "attr"]'>
                                 <span class="label">Success</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn" data-toggler='["nds-warning", ".nds-demo-alert", "alertVariant"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["data-status=warning", ".nds-demo-alert", "alertVariant", "attr"]'>
                                 <span class="label">Warning</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn" data-toggler='["nds-error", ".nds-demo-alert", "alertVariant"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["data-status=error", ".nds-demo-alert", "alertVariant", "attr"]'>
                                 <span class="label">Error</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn" data-toggler='["nds-info", ".nds-demo-alert", "alertVariant"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["data-status=info", ".nds-demo-alert", "alertVariant", "attr"]'>
                                 <span class="label">Info</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn" data-toggler='["nds-neutral", ".nds-demo-alert", "alertVariant"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["data-status=neutral", ".nds-demo-alert", "alertVariant", "attr"]'>
                                 <span class="label">Neutral</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-color", ".nds-demo-alert", "alertColor"]'>
+                                <span class="label">Color</span>
                             </button>
                         </div>
                     </div>
                     <div class="demo-container">
-                        <div class="state-demo" style="display: flex; flex-direction: column; align-items: center; gap: var(--spacing-lg); padding: var(--spacing-2xl);">
-                            <!-- Hidden alert element for toggle tracking -->
-                            <div class="nds-alert nds-card nds-success nds-demo-alert" role="alert" style="position: static; opacity: 1; visibility: hidden; height: 0; overflow: hidden;">
-                                <span class="nds-feedback nds-alert-icon" data-status="success">
-                                    <span class="nds-feedback-icon nds-outline">
-                                        <i class="hgi hgi-solid icon"></i>
-                                    </span>
-                                </span>
-                                <div class="nds-alert-content">
-                                    <h4 class="nds-alert-title">Success</h4>
-                                    <p class="nds-alert-description">Operation completed successfully!</p>
-                                </div>
-                                <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close" aria-label="Close">
-                                    <i class="hgi hgi-stroke hgi-cancel-01"></i>
-                                </button>
-                            </div>
+                        <div class="state-demo"
+                            style="display: flex; flex-direction: column; align-items: center; gap: var(--spacing-lg); padding: var(--spacing-2xl);">
                             <button class="nds-btn nds-primary nds-lg demo-action-btn" data-action="alert-create">
                                 <span class="label">Create Alert</span>
                             </button>
-                            <button class="nds-btn nds-subtle nds-md" onclick="NDSAlert.dismissAll('#demo-alert-container')">
+                            <button class="nds-btn nds-subtle nds-md"
+                                onclick="NDSAlert.dismissAll('#demo-alert-container')">
                                 <span class="label">Clear All</span>
                             </button>
                             <div id="demo-alert-container" class="nds-alert-container" style="width:100%;"></div>
@@ -599,20 +595,22 @@ layout_class: cardView
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
-                                <code class="lang-html code">&lt;div class="nds-alert nds-card nds-success" role="alert"&gt;
-    &lt;span class="nds-feedback nds-alert-icon" data-status="success"&gt;
-        &lt;span class="nds-feedback-icon nds-outline"&gt;
-            &lt;i class="hgi hgi-solid icon"&gt;&lt;/i&gt;
-        &lt;/span&gt;
-    &lt;/span&gt;
-    &lt;div class="nds-alert-content"&gt;
-        &lt;h4 class="nds-alert-title"&gt;Success&lt;/h4&gt;
-        &lt;p class="nds-alert-description"&gt;Operation completed successfully!&lt;/p&gt;
-    &lt;/div&gt;
-    &lt;button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close" aria-label="Close"&gt;
-        &lt;i class="hgi hgi-stroke hgi-cancel-01"&gt;&lt;/i&gt;
-    &lt;/button&gt;
-&lt;/div&gt;</code>
+                                <code class="lang-html code">
+<div class="nds-alert nds-card" data-status="success" role="alert">
+    <span class="nds-feedback nds-alert-icon">
+        <span class="nds-feedback-icon nds-outline">
+            <i class="hgi hgi-solid icon"></i>
+        </span>
+    </span>
+    <div class="nds-alert-content">
+        <h4 class="nds-alert-title">Success</h4>
+        <p class="nds-alert-description">Operation completed successfully!</p>
+    </div>
+    <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close" aria-label="Close">
+        <i class="hgi hgi-stroke hgi-cancel-01"></i>
+    </button>
+</div>
+                                </code>
                             </div>
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-programmatic-js"
                                 aria-labelledby="tab-programmatic-js" hidden>
@@ -621,53 +619,14 @@ layout_class: cardView
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
-                                <code class="lang-javascript code">// Success alert
-NDSAlert.create({
+                                <code class="lang-javascript code">NDSAlert.create({
     variant: 'success',
     title: 'Success',
     description: 'Operation completed successfully!',
-    target: '#demo-alert-container',
+    target: '#alert-container',
+    color: false,
     prepend: true
-});
-
-// Warning alert
-NDSAlert.create({
-    variant: 'warning',
-    title: 'Warning',
-    description: 'Please review your changes before proceeding.',
-    target: '#demo-alert-container',
-    prepend: true
-});
-
-// Error alert
-NDSAlert.create({
-    variant: 'error',
-    title: 'Error',
-    description: 'An error occurred. Please try again.',
-    target: '#demo-alert-container',
-    prepend: true
-});
-
-// Info alert
-NDSAlert.create({
-    variant: 'info',
-    title: 'Info',
-    description: 'This is an informational message.',
-    target: '#demo-alert-container',
-    prepend: true
-});
-
-// Neutral alert
-NDSAlert.create({
-    variant: 'neutral',
-    title: 'Neutral',
-    description: 'This is a neutral notification.',
-    target: '#demo-alert-container',
-    prepend: true
-});
-
-// Dismiss all alerts
-NDSAlert.dismissAll('#demo-alert-container');</code>
+});</code>
                             </div>
                         </div>
                     </div>
@@ -682,7 +641,8 @@ NDSAlert.dismissAll('#demo-alert-container');</code>
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Toast Notifications</h2>
-            <p class="nds-section-description">Floating notifications that appear at the top or bottom of the viewport</p>
+            <p class="nds-section-description">Floating notifications that appear at the top or bottom of the viewport
+            </p>
         </div>
         <div class="nds-section-content">
             <div class="tag-showcase">
@@ -690,53 +650,40 @@ NDSAlert.dismissAll('#demo-alert-container');</code>
                     <div class="demo-header">
                         <div class="demo-label">Toast Demo</div>
                         <div class="demo-action">
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected" data-toggler='["nds-success", ".nds-alert", "toastVariant"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
+                                data-toggler='["data-status=success", ".nds-alert", "toastVariant", "attr"]'>
                                 <span class="label">Success</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn" data-toggler='["nds-warning", ".nds-alert", "toastVariant"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["data-status=warning", ".nds-alert", "toastVariant", "attr"]'>
                                 <span class="label">Warning</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn" data-toggler='["nds-error", ".nds-alert", "toastVariant"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["data-status=error", ".nds-alert", "toastVariant", "attr"]'>
                                 <span class="label">Error</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn" data-toggler='["nds-info", ".nds-alert", "toastVariant"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["data-status=info", ".nds-alert", "toastVariant", "attr"]'>
                                 <span class="label">Info</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn" data-toggler='["data-position=bottom", ".nds-alert", "toastPosition", "attr"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["data-position=bottom", ".nds-alert", "toastPosition", "attr"]'>
                                 <span class="label">Bottom</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn" data-toggler='["nds-color", ".nds-alert", "toastColor"]'>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-color", ".nds-alert", "toastColor"]'>
                                 <span class="label">Color</span>
                             </button>
                         </div>
                     </div>
                     <div class="demo-container">
-                        <div class="state-demo" style="display: flex; flex-direction: column; align-items: center; gap: var(--spacing-lg); padding: var(--spacing-2xl);">
-                            <!-- Hidden alert element for toggle tracking -->
-                            <div class="nds-alert nds-card nds-success nds-toast nds-shadow" role="alert" data-position="top" data-toast-state="show" style="position: static; opacity: 1; visibility: hidden; height: 0; overflow: hidden;">
-                                <span class="nds-feedback nds-alert-icon" data-status="success">
-                                    <span class="nds-feedback-icon nds-outline">
-                                        <i class="hgi hgi-solid icon"></i>
-                                    </span>
-                                </span>
-                                <div class="nds-alert-content">
-                                    <h4 class="nds-alert-title">Success</h4>
-                                    <p class="nds-alert-description">Changes saved successfully!</p>
-                                </div>
-                                <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close nds-progress" aria-label="Close" style="--progress-duration: 4000ms;">
-                                    <i class="hgi hgi-stroke hgi-cancel-01"></i>
-                                    <div class="nds-progress-circle">
-                                        <svg width="100%" height="100%" viewBox="0 0 24 24">
-                                            <circle class="progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2"></circle>
-                                            <circle class="progress-bar" cx="12" cy="12" r="10" fill="none" stroke-width="2" stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round"></circle>
-                                        </svg>
-                                    </div>
-                                </button>
-                            </div>
+                        <div class="state-demo"
+                            style="display: flex; flex-direction: column; align-items: center; gap: var(--spacing-lg); padding: var(--spacing-2xl);">
                             <button class="nds-btn nds-primary nds-lg demo-action-btn" data-action="toast-show">
                                 <span class="label">Show Toast</span>
                             </button>
-                            <p style="text-align: center; color: var(--text-subdued); margin: 0;">Toggle variant and position above, then click the button to preview</p>
+                            <p style="text-align: center; color: var(--text-subdued); margin: 0;">Toggle variant and
+                                position above, then click the button to preview</p>
                         </div>
                     </div>
                     <div class="nds-tabs nds-code nds-divided">
@@ -760,20 +707,28 @@ NDSAlert.dismissAll('#demo-alert-container');</code>
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
-                                <code class="lang-html code">&lt;div class="nds-alert nds-card nds-success nds-toast nds-shadow" role="alert" data-position="top" data-toast-state="show"&gt;
-    &lt;span class="nds-feedback nds-alert-icon" data-status="success"&gt;
-        &lt;span class="nds-feedback-icon nds-outline"&gt;
-            &lt;i class="hgi hgi-solid icon"&gt;&lt;/i&gt;
-        &lt;/span&gt;
-    &lt;/span&gt;
-    &lt;div class="nds-alert-content"&gt;
-        &lt;h4 class="nds-alert-title"&gt;Success&lt;/h4&gt;
-        &lt;p class="nds-alert-description"&gt;Changes saved successfully!&lt;/p&gt;
-    &lt;/div&gt;
-    &lt;button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close" aria-label="Close"&gt;
-        &lt;i class="hgi hgi-stroke hgi-cancel-01"&gt;&lt;/i&gt;
-    &lt;/button&gt;
-&lt;/div&gt;</code>
+                                <code class="lang-html code">
+                                    <div class="nds-alert nds-card nds-toast nds-shadow"  data-status="success" role="alert" data-position="top" data-toast-state="show" hidden>
+                                        <span class="nds-feedback nds-alert-icon">
+                                            <span class="nds-feedback-icon nds-outline">
+                                                <i class="hgi hgi-solid icon"></i>
+                                            </span>
+                                        </span>
+                                        <div class="nds-alert-content">
+                                            <h4 class="nds-alert-title">Success</h4>
+                                            <p class="nds-alert-description">Changes saved successfully!</p>
+                                        </div>
+                                        <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close nds-progress" aria-label="Close" style="--progress-duration: 4000ms;">
+                                            <i class="hgi hgi-stroke hgi-cancel-01"></i>
+                                            <div class="nds-progress-circle">
+                                                <svg width="100%" height="100%" viewBox="0 0 24 24">
+                                                    <circle class="progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2"></circle>
+                                                    <circle class="progress-bar" cx="12" cy="12" r="10" fill="none" stroke-width="2" stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round"></circle>
+                                                </svg>
+                                            </div>
+                                        </button>
+                                    </div>
+                                </code>
                             </div>
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-toast-js"
                                 aria-labelledby="tab-toast-js" hidden>
@@ -782,49 +737,15 @@ NDSAlert.dismissAll('#demo-alert-container');</code>
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
-                                <code class="lang-javascript code">// Success toast at top (default)
-NDSAlert.create({
+                                <code class="lang-javascript code">NDSAlert.create({
     variant: 'success',
+    title: 'Success',
     description: 'Changes saved successfully!',
     toast: true,
-    duration: 4000
-});
-
-// Warning toast at top
-NDSAlert.create({
-    variant: 'warning',
-    description: 'Your session will expire soon.',
-    toast: true,
-    duration: 4000
-});
-
-// Error toast at bottom
-NDSAlert.create({
-    variant: 'error',
-    description: 'Failed to complete the action.',
-    toast: true,
-    position: 'bottom',
-    duration: 4000
-});
-
-// Info toast at bottom
-NDSAlert.create({
-    variant: 'info',
-    description: 'New update available for download.',
-    toast: true,
-    position: 'bottom',
-    duration: 4000
-});
-
-// Toast with title and custom options
-NDSAlert.create({
-    variant: 'success',
-    title: 'Upload Complete',
-    description: 'Your file has been uploaded successfully.',
-    toast: true,
     position: 'top',
-    duration: 5000,
-    shadow: true
+    duration: 4000,
+    shadow: true,
+    color: false
 });</code>
                             </div>
                         </div>
@@ -1120,7 +1041,9 @@ NDSAlert.create({
 
             <h3>Toast Notifications</h3>
 
-            <p>Use the <strong>toast</strong> option to display alerts as floating toast notifications. Toasts are fixed-positioned, centered horizontally, and appear below the navigation bar at the top or at the bottom of the viewport. They can auto-dismiss after a specified duration.</p>
+            <p>Use the <strong>toast</strong> option to display alerts as floating toast notifications. Toasts are
+                fixed-positioned, centered horizontally, and appear below the navigation bar at the top or at the bottom
+                of the viewport. They can auto-dismiss after a specified duration.</p>
 
             <div class="nds-code nds-expandable">
                 <div class="nds-code-action">
@@ -1171,7 +1094,8 @@ NDSAlert.create({
             <h3>Dismissing Alerts</h3>
 
             <p>Use <strong>NDSAlert.dismiss()</strong> to remove a single alert, or
-                <strong>NDSAlert.dismissAll()</strong> to remove all alerts within a container.</p>
+                <strong>NDSAlert.dismissAll()</strong> to remove all alerts within a container.
+            </p>
 
             <div class="nds-code nds-expandable">
                 <div class="nds-code-action">
@@ -1272,4 +1196,3 @@ async function handleFormSubmit(form) {
         </div>
     </div>
 </section>
-

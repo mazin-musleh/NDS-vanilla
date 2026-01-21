@@ -18,16 +18,18 @@
     font-weight: 500;
     gap: var(--spacing-sm);
 
-    // Show when status is set
-    &[data-status] {
+    // Show when status is set (on self or parent)
+    &[data-status],
+    [data-status] & {
         display: flex;
     }
 
     // ==============================================
-    // STATUS-BASED STYLING
+    // STATUS-BASED STYLING (from self or parent)
     // ==============================================
 
-    &[data-status="error"] {
+    &[data-status="error"],
+    [data-status="error"] & {
         color: var(--text-error);
 
         .nds-feedback-icon {
@@ -37,7 +39,8 @@
         }
     }
 
-    &[data-status="success"] {
+    &[data-status="success"],
+    [data-status="success"] & {
         color: var(--text-success);
 
         .nds-feedback-icon {
@@ -47,7 +50,8 @@
         }
     }
 
-    &[data-status="warning"] {
+    &[data-status="warning"],
+    [data-status="warning"] & {
         color: var(--text-warning);
 
         .nds-feedback-icon {
@@ -57,7 +61,8 @@
         }
     }
 
-    &[data-status="info"] {
+    &[data-status="info"],
+    [data-status="info"] & {
         color: var(--text-info);
 
         .nds-feedback-icon {
@@ -67,9 +72,8 @@
         }
     }
 
-    // Neutral/default (no status or explicit neutral)
-    &:not([data-status]),
-    &[data-status="neutral"] {
+    &[data-status="neutral"],
+    [data-status="neutral"] & {
         .nds-feedback-icon {
             --feedback-bg: var(--icon-neutral);
             --feedback-color: var(--icon-neutral);
@@ -189,35 +193,40 @@
     }
 
     // ==============================================
-    // ICON CONTENT BY STATUS (auto-set via parent)
+    // ICON CONTENT BY STATUS (auto-set via self or parent)
     // ==============================================
 
     // Success icon
     [data-status="success"] & .icon:before,
+    &[data-status="success"] .icon:before,
     &.nds-icon-success .icon:before {
         content: "䂇";
     }
 
     // Info icon
     [data-status="info"] & .icon:before,
+    &[data-status="info"] .icon:before,
     &.nds-icon-info .icon:before {
         content: "䢵";
     }
 
     // Warning icon
     [data-status="warning"] & .icon:before,
+    &[data-status="warning"] .icon:before,
     &.nds-icon-alert .icon:before {
         content: "㬿";
     }
 
     // Error icon
     [data-status="error"] & .icon:before,
+    &[data-status="error"] .icon:before,
     &.nds-icon-error .icon:before {
         content: "㿃";
     }
 
     // Neutral icon
     [data-status="neutral"] & .icon:before,
+    &[data-status="neutral"] .icon:before,
     &.nds-icon-neutral .icon:before {
         content: "䞭";
     }

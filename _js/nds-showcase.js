@@ -325,71 +325,9 @@
                         }, 100);
                     }
 
-                    // Special handling for toast variant changes: update data-status attribute and title
-                    if (type === 'toastVariant' && targetElement.classList.contains('nds-alert')) {
-                        // Determine current variant
-                        let currentVariant = 'success';
-                        if (targetElement.classList.contains('nds-warning')) currentVariant = 'warning';
-                        else if (targetElement.classList.contains('nds-error')) currentVariant = 'error';
-                        else if (targetElement.classList.contains('nds-info')) currentVariant = 'info';
-                        else if (targetElement.classList.contains('nds-success')) currentVariant = 'success';
-
-                        // Update data-status attribute on feedback icon
-                        const feedbackIcon = targetElement.querySelector('[data-status]');
-                        if (feedbackIcon) {
-                            feedbackIcon.setAttribute('data-status', currentVariant);
-                            // Update code example for the attribute change
-                            updateCodeExampleForAttributes(demoCard, feedbackIcon, ['data-status']);
-                        }
-
-                        // Update title text to match variant
-                        const titleElement = targetElement.querySelector('.nds-alert-title');
-                        if (titleElement) {
-                            const capitalizedVariant = currentVariant.charAt(0).toUpperCase() + currentVariant.slice(1);
-                            titleElement.textContent = capitalizedVariant;
-
-                            // Update code example to reflect the title change
-                            const codeElement = demoCard.querySelector('.code-example code');
-                            if (codeElement) {
-                                const hiddenCopy = getHiddenCodeCopy(codeElement);
-                                if (hiddenCopy) {
-                                    let updatedCode = hiddenCopy.textContent;
-                                    // Update the title text in the code
-                                    updatedCode = updatedCode.replace(
-                                        /(<h4 class="nds-alert-title">)[^<]+(<\/h4>)/,
-                                        `$1${capitalizedVariant}$2`
-                                    );
-                                    updateCodeFromHiddenCopy(codeElement, updatedCode);
-                                }
-                            }
-                        }
-
-                        // Update description text to match variant
-                        const descElement = targetElement.querySelector('.nds-alert-description');
-                        if (descElement) {
-                            const messages = {
-                                success: 'Changes saved successfully!',
-                                warning: 'Your session will expire soon.',
-                                error: 'Failed to complete the action.',
-                                info: 'New update available for download.'
-                            };
-                            descElement.textContent = messages[currentVariant];
-
-                            // Update code example to reflect the description change
-                            const codeElement = demoCard.querySelector('.code-example code');
-                            if (codeElement) {
-                                const hiddenCopy = getHiddenCodeCopy(codeElement);
-                                if (hiddenCopy) {
-                                    let updatedCode = hiddenCopy.textContent;
-                                    // Update the description text in the code
-                                    updatedCode = updatedCode.replace(
-                                        /(<p class="nds-alert-description">)[^<]+(<\/p>)/,
-                                        `$1${messages[currentVariant]}$2`
-                                    );
-                                    updateCodeFromHiddenCopy(codeElement, updatedCode);
-                                }
-                            }
-                        }
+                    // Special handling for nds-color class on alerts: update JS code example
+                    if (classArray.includes('nds-color') && targetElement.classList.contains('nds-alert')) {
+                        updateAlertColorInJsCode(targetElement, demoCard);
                     }
 
                     // Handle code updates for specific class changes
@@ -619,7 +557,10 @@
                 
                 // Now toggle the clicked button
                 button.classList.toggle('selected');
-                
+
+                // Update alert/toast code examples directly from toggle states
+                updateAlertCodeFromToggles(demoCard, buttonTypes[0]);
+
             } catch (e) {
                 // Fallback: just toggle the button
                 button.classList.toggle('selected');
@@ -630,18 +571,132 @@
         }
     }
 
+    // Update alert/toast code examples directly from toggle button states
+    function updateAlertCodeFromToggles(demoCard, toggleType) {
+        // Only handle alert-related toggles
+        if (!toggleType || !['alertVariant', 'toastVariant', 'toastPosition', 'toastColor', 'alertColor'].includes(toggleType)) {
+            return;
+        }
+
+        const isToast = toggleType.startsWith('toast');
+
+        // Get current state from selected toggle buttons
+        const variantType = isToast ? 'toastVariant' : 'alertVariant';
+        let variant = 'success';
+        const variantToggle = demoCard.querySelector(`[data-toggler*="${variantType}"].selected`);
+        if (variantToggle) {
+            try {
+                const data = JSON.parse(variantToggle.getAttribute('data-toggler'));
+                variant = data[0].split('=')[1] || 'success';
+            } catch (e) {}
+        }
+
+        // Get position (toast only)
+        let position = 'top';
+        if (isToast) {
+            const positionToggle = demoCard.querySelector('[data-toggler*="toastPosition"].selected');
+            if (positionToggle) {
+                position = 'bottom';
+            }
+        }
+
+        // Get color
+        const colorType = isToast ? 'toastColor' : 'alertColor';
+        const colorToggle = demoCard.querySelector(`[data-toggler*="${colorType}"].selected`);
+        const hasColor = !!colorToggle;
+
+        const capitalizedVariant = variant.charAt(0).toUpperCase() + variant.slice(1);
+
+        // Messages
+        const alertMessages = {
+            success: 'Operation completed successfully!',
+            warning: 'Please review your changes before proceeding.',
+            error: 'An error occurred. Please try again.',
+            info: 'This is an informational message.',
+            neutral: 'This is a neutral notification.'
+        };
+        const toastMessages = {
+            success: 'Changes saved successfully!',
+            warning: 'Your session will expire soon.',
+            error: 'Failed to complete the action.',
+            info: 'New update available for download.'
+        };
+        const messages = isToast ? toastMessages : alertMessages;
+
+        // Update JS code example
+        const jsCodeElement = demoCard.querySelector('.code-example code.lang-javascript, .code-example code[class*="javascript"]');
+        if (jsCodeElement) {
+            const hiddenCopy = getHiddenCodeCopy(jsCodeElement);
+            if (hiddenCopy) {
+                let updatedCode = hiddenCopy.textContent;
+
+                // Update variant
+                updatedCode = updatedCode.replace(/variant:\s*['"][^'"]+['"]/, `variant: '${variant}'`);
+                // Update title
+                updatedCode = updatedCode.replace(/title:\s*['"][^'"]+['"]/, `title: '${capitalizedVariant}'`);
+                // Update description
+                if (messages[variant]) {
+                    updatedCode = updatedCode.replace(/description:\s*['"][^'"]+['"]/, `description: '${messages[variant]}'`);
+                }
+                // Update color
+                updatedCode = updatedCode.replace(/color:\s*(true|false)/, `color: ${hasColor}`);
+                // Update position (toast only)
+                if (isToast) {
+                    updatedCode = updatedCode.replace(/position:\s*['"][^'"]+['"]/, `position: '${position}'`);
+                }
+
+                updateCodeFromHiddenCopy(jsCodeElement, updatedCode);
+            }
+        }
+
+        // Update HTML code example
+        const htmlCodeElement = demoCard.querySelector('.code-example code.lang-html, .code-example code[class*="html"]');
+        if (htmlCodeElement) {
+            const hiddenCopy = getHiddenCodeCopy(htmlCodeElement);
+            if (hiddenCopy) {
+                let updatedCode = hiddenCopy.textContent;
+
+                // Update data-status
+                updatedCode = updatedCode.replace(/data-status="[^"]*"/, `data-status="${variant}"`);
+
+                // Update title
+                updatedCode = updatedCode.replace(/(<h4 class="nds-alert-title">)[^<]+(<\/h4>)/, `$1${capitalizedVariant}$2`);
+
+                // Update description
+                if (messages[variant]) {
+                    updatedCode = updatedCode.replace(/(<p class="nds-alert-description">)[^<]+(<\/p>)/, `$1${messages[variant]}$2`);
+                }
+
+                // Toggle nds-color class
+                if (hasColor && !updatedCode.includes('nds-color')) {
+                    updatedCode = updatedCode.replace(/class="nds-alert nds-card/, 'class="nds-alert nds-card nds-color');
+                } else if (!hasColor) {
+                    updatedCode = updatedCode.replace(/ nds-color/, '');
+                }
+
+                // Toast-specific updates
+                if (isToast) {
+                    // Update data-position
+                    updatedCode = updatedCode.replace(/data-position="[^"]*"/, `data-position="${position}"`);
+                }
+
+                updateCodeFromHiddenCopy(htmlCodeElement, updatedCode);
+            }
+        }
+    }
+
     // Handle attribute toggling for target element
     function handleAttributeToggling(targetElement, attributeString, demoCard) {
         // Parse attribute string format: "attr1=value1 attr2=value2" or "attr1 attr2" (for boolean attributes)
         const attributePairs = attributeString.trim().split(/\s+/);
-        
+
         attributePairs.forEach(attrPair => {
             if (!attrPair) return;
-            
+
             const [attrName, attrValue] = attrPair.split('=');
-            
+
             if (attrValue !== undefined) {
-                // Attribute with value: toggle between value and empty/null
+                // Attribute with value: toggle between value and removing
                 if (targetElement.getAttribute(attrName) === attrValue) {
                     targetElement.removeAttribute(attrName);
                 } else {
@@ -655,11 +710,170 @@
                     targetElement.setAttribute(attrName, '');
                 }
             }
-            
+
+            // Special handling for data-status variant changes
+            if (attrName === 'data-status' && targetElement.classList.contains('nds-alert')) {
+                const currentStatus = targetElement.getAttribute('data-status');
+                if (currentStatus) {
+                    updateAlertVariantContent(targetElement, currentStatus, demoCard);
+                }
+            }
+
+            // Special handling for data-position changes
+            if (attrName === 'data-position' && targetElement.classList.contains('nds-alert')) {
+                updateAlertPositionInJsCode(targetElement, demoCard);
+            }
         });
-        
+
         // Update code example for attribute changes
         updateCodeExampleForAttributes(demoCard, targetElement, attributePairs);
+    }
+
+    // Update alert content and code examples when variant changes
+    function updateAlertVariantContent(alertElement, variant, demoCard) {
+        const capitalizedVariant = variant.charAt(0).toUpperCase() + variant.slice(1);
+
+        // Messages for different variants
+        const alertMessages = {
+            success: 'Operation completed successfully!',
+            warning: 'Please review your changes before proceeding.',
+            error: 'An error occurred. Please try again.',
+            info: 'This is an informational message.',
+            neutral: 'This is a neutral notification.'
+        };
+
+        const toastMessages = {
+            success: 'Changes saved successfully!',
+            warning: 'Your session will expire soon.',
+            error: 'Failed to complete the action.',
+            info: 'New update available for download.'
+        };
+
+        // Determine if this is a toast or regular alert
+        const isToast = alertElement.classList.contains('nds-toast');
+        const messages = isToast ? toastMessages : alertMessages;
+
+        // Update title text
+        const titleElement = alertElement.querySelector('.nds-alert-title');
+        if (titleElement) {
+            titleElement.textContent = capitalizedVariant;
+        }
+
+        // Update description text
+        const descElement = alertElement.querySelector('.nds-alert-description');
+        if (descElement && messages[variant]) {
+            descElement.textContent = messages[variant];
+        }
+
+        // Update HTML code example
+        const htmlCodeElement = demoCard.querySelector('.code-example code.lang-html, .code-example code[class*="html"]');
+        if (htmlCodeElement) {
+            const hiddenCopy = getHiddenCodeCopy(htmlCodeElement);
+            if (hiddenCopy) {
+                let updatedCode = hiddenCopy.textContent;
+                // Update title
+                updatedCode = updatedCode.replace(
+                    /(<h4 class="nds-alert-title">)[^<]+(<\/h4>)/,
+                    `$1${capitalizedVariant}$2`
+                );
+                // Update description
+                if (messages[variant]) {
+                    updatedCode = updatedCode.replace(
+                        /(<p class="nds-alert-description">)[^<]+(<\/p>)/,
+                        `$1${messages[variant]}$2`
+                    );
+                }
+                updateCodeFromHiddenCopy(htmlCodeElement, updatedCode);
+            }
+        }
+
+        // Update JS code example with all current options
+        updateAlertJsCodeExample(alertElement, demoCard, variant, capitalizedVariant, messages[variant]);
+    }
+
+    // Update JS code example with all current alert options
+    function updateAlertJsCodeExample(alertElement, demoCard, variant, title, description) {
+        const jsCodeElement = demoCard.querySelector('.code-example code.lang-javascript, .code-example code[class*="javascript"]');
+        if (!jsCodeElement) return;
+
+        const hiddenCopy = getHiddenCodeCopy(jsCodeElement);
+        if (!hiddenCopy) return;
+
+        let updatedCode = hiddenCopy.textContent;
+
+        // Update variant
+        updatedCode = updatedCode.replace(
+            /variant:\s*['"][^'"]+['"]/,
+            `variant: '${variant}'`
+        );
+
+        // Update title
+        updatedCode = updatedCode.replace(
+            /title:\s*['"][^'"]+['"]/,
+            `title: '${title}'`
+        );
+
+        // Update description
+        if (description) {
+            updatedCode = updatedCode.replace(
+                /description:\s*['"][^'"]+['"]/,
+                `description: '${description}'`
+            );
+        }
+
+        // Update position if present in code
+        const position = alertElement.getAttribute('data-position') || 'top';
+        updatedCode = updatedCode.replace(
+            /position:\s*['"][^'"]+['"]/,
+            `position: '${position}'`
+        );
+
+        // Update color if present in code
+        const hasColor = alertElement.classList.contains('nds-color');
+        updatedCode = updatedCode.replace(
+            /color:\s*(true|false)/,
+            `color: ${hasColor}`
+        );
+
+        updateCodeFromHiddenCopy(jsCodeElement, updatedCode);
+    }
+
+    // Update JS code for position changes
+    function updateAlertPositionInJsCode(alertElement, demoCard) {
+        const jsCodeElement = demoCard.querySelector('.code-example code.lang-javascript, .code-example code[class*="javascript"]');
+        if (!jsCodeElement) return;
+
+        const hiddenCopy = getHiddenCodeCopy(jsCodeElement);
+        if (!hiddenCopy) return;
+
+        let updatedCode = hiddenCopy.textContent;
+        const position = alertElement.getAttribute('data-position') || 'top';
+
+        updatedCode = updatedCode.replace(
+            /position:\s*['"][^'"]+['"]/,
+            `position: '${position}'`
+        );
+
+        updateCodeFromHiddenCopy(jsCodeElement, updatedCode);
+    }
+
+    // Update JS code for color changes
+    function updateAlertColorInJsCode(alertElement, demoCard) {
+        const jsCodeElement = demoCard.querySelector('.code-example code.lang-javascript, .code-example code[class*="javascript"]');
+        if (!jsCodeElement) return;
+
+        const hiddenCopy = getHiddenCodeCopy(jsCodeElement);
+        if (!hiddenCopy) return;
+
+        let updatedCode = hiddenCopy.textContent;
+        const hasColor = alertElement.classList.contains('nds-color');
+
+        updatedCode = updatedCode.replace(
+            /color:\s*(true|false)/,
+            `color: ${hasColor}`
+        );
+
+        updateCodeFromHiddenCopy(jsCodeElement, updatedCode);
     }
 
     // Handle content toggling (append/prepend) for target element
@@ -717,10 +931,12 @@
         const firstClass = Array.from(changedElement.classList)[0];
         
         if (!firstClass) return;
-        
-        // Find the element in the code by tag and first class, handling both regular and self-closing tags
+
+        // Find the element in the code by tag and exact class match
+        // Class must be after " or space, and followed by space or "
+        const escapedClass = firstClass.replace(/[-[\]/{}()*+?.\\^$|]/g, "\\$&");
         const elementRegex = new RegExp(
-            `<${tagName}([^>]*class="[^"]*\\b${firstClass.replace(/[-[\]/{}()*+?.\\^$|]/g, "\\$&")}\\b[^"]*"[^>]*?)(\\s*\\/?)>`,
+            `<${tagName}([^>]*class="(?:[^"]*\\s)?${escapedClass}(?:\\s[^"]*)?"[^>]*?)(\\s*\\/?)>`,
             'gi'
         );
         
@@ -1081,13 +1297,10 @@
                     randomProgressValue(actionBtn);
                 }
                 else if (action === 'toast-show') {
-                    showToastFromCode(actionBtn);
+                    createAlertFromDemo(actionBtn, true);
                 }
                 else if (action === 'alert-create') {
-                    createDemoAlert(actionBtn);
-                }
-                else if (action.startsWith('toast-')) {
-                    createToast(action, actionBtn);
+                    createAlertFromDemo(actionBtn, false);
                 }
             }
         });
@@ -1121,123 +1334,72 @@
         });
     }
 
-    // Show toast from HTML code example
-    function showToastFromCode(button) {
+    // Create alert or toast from demo toggle states
+    function createAlertFromDemo(button, isToast) {
         const demoCard = button.closest('.nds-demo-card');
-        if (!demoCard) {
-            return;
+        if (!demoCard) return;
+
+        // Determine toggle type prefixes based on alert type
+        const variantType = isToast ? 'toastVariant' : 'alertVariant';
+        const colorType = isToast ? 'toastColor' : 'alertColor';
+
+        // Get variant from selected toggle button
+        let variant = 'success';
+        const variantToggle = demoCard.querySelector(`[data-toggler*="${variantType}"].selected`);
+        if (variantToggle) {
+            try {
+                const toggleData = JSON.parse(variantToggle.getAttribute('data-toggler'));
+                variant = toggleData[0].split('=')[1] || 'success';
+            } catch (e) {}
         }
 
-        // Find the hidden alert element that contains the current state
-        const hiddenAlert = demoCard.querySelector('.demo-container .nds-alert');
-        if (!hiddenAlert) {
-            return;
+        // Get color from toggle button
+        const colorToggle = demoCard.querySelector(`[data-toggler*="${colorType}"].selected`);
+        const hasColor = !!colorToggle;
+
+        // Get position (toast only)
+        let position = 'top';
+        if (isToast) {
+            const positionToggle = demoCard.querySelector('[data-toggler*="toastPosition"].selected');
+            if (positionToggle) position = 'bottom';
         }
 
-        // Detect variant from the hidden element's classes
-        let variant = 'success'; // default
-        if (hiddenAlert.classList.contains('nds-warning')) variant = 'warning';
-        else if (hiddenAlert.classList.contains('nds-error')) variant = 'error';
-        else if (hiddenAlert.classList.contains('nds-info')) variant = 'info';
-        else if (hiddenAlert.classList.contains('nds-success')) variant = 'success';
-
-        // Get position from data attribute
-        const position = hiddenAlert.getAttribute('data-position') || 'top';
-
-        // Check if color variant is enabled
-        const hasColor = hiddenAlert.classList.contains('nds-color');
-
-        const messages = {
-            success: 'Changes saved successfully!',
-            warning: 'Your session will expire soon.',
-            error: 'Failed to complete the action.',
-            info: 'New update available for download.'
-        };
-
-        if (window.NDSAlert) {
-            window.NDSAlert.create({
-                variant: variant,
-                title: variant.charAt(0).toUpperCase() + variant.slice(1),
-                description: messages[variant],
-                toast: true,
-                position: position,
-                duration: 4000,
-                shadow: true,
-                color: hasColor,
-                closable: true
-            });
-        }
-    }
-
-    // Create programmatic alert from demo
-    function createDemoAlert(button) {
-        // Find the hidden alert element that tracks the toggle state
-        const demoCard = button.closest('.nds-demo-card');
-        if (!demoCard) {
-            return;
-        }
-
-        const hiddenAlert = demoCard.querySelector('.nds-demo-alert');
-        if (!hiddenAlert) {
-            return;
-        }
-
-        // Detect variant from the hidden element's classes
-        let variant = 'success'; // default
-        if (hiddenAlert.classList.contains('nds-warning')) variant = 'warning';
-        else if (hiddenAlert.classList.contains('nds-error')) variant = 'error';
-        else if (hiddenAlert.classList.contains('nds-info')) variant = 'info';
-        else if (hiddenAlert.classList.contains('nds-neutral')) variant = 'neutral';
-        else if (hiddenAlert.classList.contains('nds-success')) variant = 'success';
-
-        const messages = {
+        // Messages
+        const alertMessages = {
             success: 'Operation completed successfully!',
             warning: 'Please review your changes before proceeding.',
             error: 'An error occurred. Please try again.',
             info: 'This is an informational message.',
             neutral: 'This is a neutral notification.'
         };
-
-        if (window.NDSAlert) {
-            window.NDSAlert.create({
-                variant: variant,
-                title: variant.charAt(0).toUpperCase() + variant.slice(1),
-                description: messages[variant],
-                target: '#demo-alert-container',
-                prepend: true
-            });
-        }
-    }
-
-    // Create toast notification
-    function createToast(action, button) {
-        // Parse action: 'toast-{variant}'
-        const parts = action.split('-');
-        const variant = parts[1]; // success, warning, error, info
-
-        // Read position from demo card toggle state (default: 'top')
-        const demoCard = button.closest('.nds-demo-card');
-        const demoContainer = demoCard ? demoCard.querySelector('.demo-container') : null;
-        const position = demoContainer ? demoContainer.getAttribute('data-toast-position') || 'top' : 'top';
-
-        const messages = {
+        const toastMessages = {
             success: 'Changes saved successfully!',
             warning: 'Your session will expire soon.',
             error: 'Failed to complete the action.',
             info: 'New update available for download.'
         };
+        const messages = isToast ? toastMessages : alertMessages;
 
         if (window.NDSAlert) {
-            window.NDSAlert.create({
+            const options = {
                 variant: variant,
                 title: variant.charAt(0).toUpperCase() + variant.slice(1),
                 description: messages[variant],
-                toast: true,
-                position: position,
-                duration: 4000,
-                shadow: true,
-                closable: true
-            });
+                color: hasColor
+            };
+
+            if (isToast) {
+                options.toast = true;
+                options.position = position;
+                options.duration = 4000;
+                options.shadow = true;
+                options.closable = true;
+            } else {
+                options.target = '#demo-alert-container';
+                options.prepend = true;
+            }
+
+            window.NDSAlert.create(options);
         }
     }
 

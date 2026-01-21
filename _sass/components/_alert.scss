@@ -130,11 +130,11 @@
   }
 
   // ==============================================
-  // COLOR VARIANTS
+  // COLOR VARIANTS (using data-status attribute)
   // ==============================================
 
   // Success variant
-  &.nds-success {
+  &[data-status="success"] {
 
     &:before {
       background-color: var(--background-success);
@@ -156,7 +156,7 @@
   }
 
   // Info variant
-  &.nds-info {
+  &[data-status="info"] {
 
     &:before {
       background-color: var(--background-info);
@@ -178,7 +178,7 @@
   }
 
   // Warning variant
-  &.nds-warning {
+  &[data-status="warning"] {
 
     &:before {
       background-color: var(--background-warning);
@@ -200,7 +200,7 @@
   }
 
   // Error variant
-  &.nds-error {
+  &[data-status="error"] {
 
     &:before {
       background-color: var(--background-error);
@@ -230,7 +230,7 @@
   &.nds-solid {
     border: none;
 
-    &.nds-success {
+    &[data-status="success"] {
       background-color: var(--featuredicons-icon-success);
 
       .nds-alert-title,
@@ -239,7 +239,7 @@
       }
     }
 
-    &.nds-info {
+    &[data-status="info"] {
       background-color: var(--featuredicons-icon-info);
 
       .nds-alert-title,
@@ -248,7 +248,7 @@
       }
     }
 
-    &.nds-warning {
+    &[data-status="warning"] {
       background-color: var(--featuredicons-icon-warning);
 
       .nds-alert-title,
@@ -257,7 +257,7 @@
       }
     }
 
-    &.nds-error {
+    &[data-status="error"] {
       background-color: var(--featuredicons-icon-error);
 
       .nds-alert-title,
@@ -266,7 +266,7 @@
       }
     }
 
-    &.nds-brand {
+    &[data-status="brand"] {
       background-color: var(--featuredicons-icon-primary);
 
       .nds-alert-title,
