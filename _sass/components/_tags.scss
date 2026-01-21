@@ -150,7 +150,7 @@
     }
   }
 
-  &:is(.nds-warning, .nds-orange) {
+  &:is(.nds-warning, .nds-orange, .nds-yellow) {
     --tag-bg: var(--tag-background-warning-light);
     --tag-text: var(--tag-text-warning);
     --tag-border: var(--tag-border-warning-light);

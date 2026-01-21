@@ -78,16 +78,23 @@ sidemenu: college-sidemenu
                         </span>
                     </fieldset>
                     <hr class="nds-dropmenu-divider nds-lg">
-                    <button class="nds-btn nds-secondary nds-dropmenu-item nds-action" data-filter-action="clear">
-                        <span class="label">إعادة تعيين</span>
-                    </button>
+                    <div class="nds-dropmenu-action nds-grid">
+                        <button class="nds-btn nds-secondary nds-dropmenu-item" type="button" data-filter-action="clear"
+                            data-no-auto-close>
+                            <span class="label">إعادة تعيين</span>
+                        </button>
+                        <button class="nds-btn nds-primary nds-dropmenu-item nds-dropmenu-item" type="button"
+                            data-filter-action="apply">
+                            <span class="label">تصفية</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="nds-section-content">
         <div id="faculty_list_content" class="nds-pagination-content nds-grid"
-            style="--per-page: 12; --max-col: 3; --mid-col: 3; --min-col: 2;">
+            style="--per-page: 12; --max-col: 3; --mid-col: 3; --min-col: 1;">
             <!-- Card 1 - Male -->
             <a href="{{ 'faculty.html' | relative_url }}"
                 class="pagination-item nds-card nds-stroke nds-user nds-center">

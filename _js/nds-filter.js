@@ -16,20 +16,12 @@
         constructor(filterContainer) {
             this.filterContainer = filterContainer;
             this.targetId = filterContainer.getAttribute('data-filter-target');
-            this.targetContainer = document.getElementById(this.targetId);
+            this.targetContainer = this.targetId ? document.getElementById(this.targetId) : null;
 
-            if (!this.targetContainer) {
-                console.warn(`NDS Filter: Target container #${this.targetId} not found`);
-                return;
-            }
-
-            // Get all filterable items
-            this.items = Array.from(this.targetContainer.querySelectorAll('.nds-card'));
-
-            if (this.items.length === 0) {
-                console.warn('NDS Filter: No .nds-card items found in target container');
-                return;
-            }
+            // Get all filterable items (empty array if no target)
+            this.items = this.targetContainer
+                ? Array.from(this.targetContainer.querySelectorAll('.nds-card'))
+                : [];
 
             // Filter criteria storage
             this.criteria = {
@@ -47,6 +39,78 @@
             this.setupFilterElements();
             this.setupResetButton();
             this.setupActionButtons();
+            this.applyUrlParams();
+        }
+
+        // ==============================================
+        // URL PARAMETERS
+        // ==============================================
+
+        sanitizeInput(str) {
+            if (!str) return '';
+            // Remove HTML tags and limit length
+            return str
+                .replace(/<[^>]*>/g, '')
+                .replace(/[<>"'&]/g, '')
+                .substring(0, 100);
+        }
+
+        applyUrlParams() {
+            const params = new URLSearchParams(window.location.search);
+            let hasParams = false;
+
+            // Apply search param (sanitized, max 100 chars)
+            const searchParam = params.get('search');
+            if (searchParam && this.searchInput) {
+                const sanitized = this.sanitizeInput(searchParam);
+                this.searchInput.value = sanitized;
+                this.criteria.search = sanitized.trim().toLowerCase();
+                // Show clear button
+                if (this.clearBtn) {
+                    this.clearBtn.classList.remove('hidden');
+                }
+                hasParams = true;
+            }
+
+            // Apply tags param (comma-separated, sanitized)
+            const tagsParam = params.get('tags');
+            if (tagsParam && this.tagCheckboxes) {
+                const tags = tagsParam.split(',').map(t => this.sanitizeInput(t).trim().toLowerCase());
+                this.tagCheckboxes.forEach(checkbox => {
+                    if (tags.includes(checkbox.value.toLowerCase())) {
+                        checkbox.checked = true;
+                    }
+                });
+                this.updateTagsCriteria();
+                hasParams = true;
+            }
+
+            // Update apply button label and auto-apply if has params
+            if (hasParams) {
+                this.updateApplyButtonLabel();
+                this.applyFilters();
+            }
+        }
+
+        updateUrlParams() {
+            const params = new URLSearchParams();
+
+            // Add search param
+            if (this.criteria.search) {
+                params.set('search', this.criteria.search);
+            }
+
+            // Add tags param
+            if (this.criteria.tags.length > 0) {
+                params.set('tags', this.criteria.tags.join(','));
+            }
+
+            // Update URL without reload
+            const newUrl = params.toString()
+                ? `${window.location.pathname}?${params.toString()}`
+                : window.location.pathname;
+
+            window.history.replaceState({}, '', newUrl);
         }
 
         setupActionButtons() {
@@ -57,7 +121,24 @@
                 const action = button.getAttribute('data-filter-action');
 
                 switch (action) {
+                    case 'apply':
+                        // Store reference to apply button and its original label
+                        this.applyButton = button;
+                        const labelEl = button.querySelector('.label');
+                        this.applyButtonBaseLabel = labelEl ? labelEl.textContent : 'Apply';
+
+                        button.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            this.applyFilters();
+                        });
+                        break;
                     case 'clear':
+                        button.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            this.clear();
+                        });
+                        break;
                     case 'reset':
                         button.addEventListener('click', (e) => {
                             e.preventDefault();
@@ -66,6 +147,26 @@
                         break;
                 }
             });
+        }
+
+        getActiveFilterCount() {
+            let count = 0;
+            if (this.criteria.search) count++;
+            if (this.criteria.tags.length > 0) count += this.criteria.tags.length;
+            return count;
+        }
+
+        updateApplyButtonLabel() {
+            if (!this.applyButton) return;
+
+            const count = this.getActiveFilterCount();
+            const labelEl = this.applyButton.querySelector('.label');
+
+            if (labelEl) {
+                labelEl.textContent = count > 0
+                    ? `${this.applyButtonBaseLabel} (${count})`
+                    : this.applyButtonBaseLabel;
+            }
         }
 
         setupFilterElements() {
@@ -114,37 +215,29 @@
             const clearBtn = element.querySelector('.clear, [aria-label*="مسح"], [aria-label*="clear"]');
             this.clearBtn = clearBtn;
 
-            // Input event with debounce
+            // Update criteria on input (no auto-apply)
             searchInput.addEventListener('input', (e) => {
-                clearTimeout(this.searchDebounceTimer);
-                clearTimeout(this.loadingTimer);
+                this.criteria.search = e.target.value.trim().toLowerCase();
+                if (clearBtn) {
+                    this.updateClearButtonVisibility(searchInput, clearBtn);
+                }
+                this.updateApplyButtonLabel();
+            });
 
-                this.searchDebounceTimer = setTimeout(() => {
-                    // Show loading state on clear button after 300ms debounce
-                    if (clearBtn) clearBtn.classList.add('nds-loading');
-
-                    this.criteria.search = e.target.value.trim().toLowerCase();
+            // Apply filter on Enter key
+            searchInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
                     this.applyFilters();
-
-                    // Remove clear button loading state 500ms after filter complete
-                    this.loadingTimer = setTimeout(() => {
-                        if (clearBtn) clearBtn.classList.remove('nds-loading');
-                    }, 500);
-                }, 300);
+                }
             });
 
             if (clearBtn) {
                 clearBtn.addEventListener('click', () => {
                     searchInput.value = '';
                     this.criteria.search = '';
-                    this.applyFilters();
                     this.updateClearButtonVisibility(searchInput, clearBtn);
-                    clearBtn.classList.remove('nds-loading');
-                });
-
-                // Show/hide clear button based on input
-                searchInput.addEventListener('input', () => {
-                    this.updateClearButtonVisibility(searchInput, clearBtn);
+                    this.updateApplyButtonLabel();
                 });
             }
         }
@@ -175,7 +268,7 @@
             checkboxes.forEach(checkbox => {
                 checkbox.addEventListener('change', () => {
                     this.updateTagsCriteria();
-                    this.applyFilters();
+                    this.updateApplyButtonLabel();
                 });
             });
         }
@@ -218,6 +311,9 @@
             // Show/hide no results alert
             this.updateNoResultsAlert(visibleCount);
 
+            // Update URL params
+            this.updateUrlParams();
+
             // Remove target loading state 500ms after filter complete
             clearTimeout(this.targetLoadingTimer);
             this.targetLoadingTimer = setTimeout(() => {
@@ -226,6 +322,8 @@
         }
 
         updateNoResultsAlert(visibleCount) {
+            if (!this.targetContainer) return;
+
             const alertId = `nds-filter-no-results-${this.targetId}`;
 
             if (visibleCount === 0) {
@@ -366,8 +464,8 @@
             }
         }
 
-        reset() {
-            // Reset search
+        clear() {
+            // Clear search input only
             if (this.searchInput) {
                 this.searchInput.value = '';
                 this.criteria.search = '';
@@ -379,13 +477,24 @@
                 }
             }
 
-            // Reset tags
+            // Clear tags checkboxes only
             if (this.tagCheckboxes) {
                 this.tagCheckboxes.forEach(checkbox => {
                     checkbox.checked = false;
                 });
                 this.criteria.tags = [];
             }
+
+            // Update apply button label
+            this.updateApplyButtonLabel();
+
+            // Dispatch clear event
+            this.dispatchClearEvent();
+        }
+
+        reset() {
+            // Clear all inputs
+            this.clear();
 
             // Show all items
             this.items.forEach(item => this.showItem(item));
@@ -396,6 +505,9 @@
             if (existingAlert && window.NDSAlert) {
                 NDSAlert.dismiss(existingAlert);
             }
+
+            // Clear URL params
+            this.updateUrlParams();
 
             // Dispatch reset event
             this.dispatchResetEvent();
@@ -435,11 +547,24 @@
             this.filterContainer.dispatchEvent(event);
         }
 
+        dispatchClearEvent() {
+            const event = new CustomEvent('nds:filter:clear', {
+                detail: {
+                    filter: this
+                },
+                bubbles: true
+            });
+
+            this.filterContainer.dispatchEvent(event);
+        }
+
         // ==============================================
         // PAGINATION INTEGRATION
         // ==============================================
 
         updatePagination() {
+            if (!this.targetContainer) return;
+
             // Check if pagination exists for target container
             if (window.NDSPagination && window.NDSPagination.refresh) {
                 // Find pagination associated with this container
