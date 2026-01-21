@@ -210,7 +210,7 @@ $container-breakpoints: (
   flex: none;
 }
 
-.nds-truncate {
+.nds-truncate:not([hidden]){
   --_truncate: var(--truncate,1);
   overflow: hidden;
   display: -webkit-box !important;
@@ -266,7 +266,6 @@ $container-breakpoints: (
  * Uses !important to override any display property (flex, grid, block, etc.)
  * Supports both hidden attribute and .hidden class for legacy compatibility
  */
-[hidden],
 .hidden {
   display: none;
 }

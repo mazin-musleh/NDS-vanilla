@@ -1795,7 +1795,7 @@ direction: ltr
                     </div>
                     <div class="nds-tabs nds-code nds-divided">
                         <div class="nds-tab-list-container">
-                            <nav class="nds-tab-list-container oneRowContent" role="tablist"
+                            <nav class="nds-tab-list oneRowContent" role="tablist"
                                 aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                     aria-controls="panel-progress-bar-1" id="tab-progress-bar-1">
@@ -1907,7 +1907,7 @@ direction: ltr
                     </div>
                     <div class="nds-tabs nds-code nds-divided">
                         <div class="nds-tab-list-container">
-                            <nav class="nds-tab-list-container oneRowContent" role="tablist"
+                            <nav class="nds-tab-list oneRowContent" role="tablist"
                                 aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                     aria-controls="panel-progress-value-1" id="tab-progress-value-1">
