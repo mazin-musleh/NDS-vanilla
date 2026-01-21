@@ -427,13 +427,11 @@
                 this.wrapper.classList.add('nds-scroll');
                 this.wrapper.classList.add('scrolled-start'); // Start at the beginning
                 this.needsScroll = true;
-                console.log(`NDS Responsive Table: Scroll enabled (content: ${wrapperScrollWidth}px > wrapper: ${wrapperClientWidth}px)`);
             } else {
                 this.wrapper.classList.remove('nds-scroll');
                 this.wrapper.classList.remove('scrolled-start');
                 this.wrapper.classList.remove('scrolled-end');
                 this.needsScroll = false;
-                console.log(`NDS Responsive Table: No scroll needed (content: ${wrapperScrollWidth}px <= wrapper: ${wrapperClientWidth}px)`);
             }
         }
 

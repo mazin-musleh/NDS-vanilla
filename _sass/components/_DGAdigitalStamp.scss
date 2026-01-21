@@ -9,8 +9,6 @@
     line-height: normal;
 }
 
-
-
 .nds-topbar .dga-tab {
     z-index: 10;
     cursor: pointer;
@@ -22,43 +20,26 @@
     gap: var(--spacing-xs);
 }
 
-
 .nds-topbar .dga-tab {
     .flag {
         width: 20px;
         margin-inline-end: 4px;
     }
 
-    &>.bigScreenText {
-        display: none;
-    }
-
-    &>.smallScreenText {
-        display: none;
-    }
 }
 
-@include large-desktop(min) {
-    .nds-topbar .dga-tab>.bigScreenText {
-        display: inline-block;
-    }
-
+@include desktop(min) {
     .nds-topbar .dga-tab>.smallScreenText {
-        display: none !important;
+        display: none!important;
     }
 }
 
-@include desktop(max) {
+@include tablet(max) {
     .nds-topbar .dga-tab>.bigScreenText {
-        display: none !important;
-    }
-
-    .nds-topbar .dga-tab>.smallScreenText {
-        display: inline-block;
+        display: none!important;
     }
 
 }
-
 
 
 #dgaDigitalStamp {

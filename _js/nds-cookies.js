@@ -28,22 +28,24 @@
         ndsSetCookieConsent('accepted');
         ndsEnableAllCookies();
         ndsCookiesClosePopup();
-        
-        // Get message from data attribute or use default
+
+        // Get message and title from data attributes or use defaults
         const acceptBtn = document.getElementById('ndsCookiesAcceptBtn');
+        const title = acceptBtn?.dataset.acceptTitle || 'Accepted';
         const message = acceptBtn?.dataset.acceptMessage || 'Cookies have been accepted';
-        ndsShowMessage(message);
+        ndsShowMessage(message, 'success', title);
     }
 
     function ndsDeclineCookies() {
         ndsSetCookieConsent('declined');
         ndsDisableNonEssentialCookies();
         ndsCookiesClosePopup();
-        
-        // Get message from data attribute or use default
+
+        // Get message and title from data attributes or use defaults
         const declineBtn = document.getElementById('ndsCookiesDeclineBtn');
+        const title = declineBtn?.dataset.declineTitle || 'Declined';
         const message = declineBtn?.dataset.declineMessage || 'Optional cookies have been declined';
-        ndsShowMessage(message);
+        ndsShowMessage(message, 'info', title);
     }
 
     function ndsEnableAllCookies() {
@@ -90,15 +92,22 @@
         popup.classList.add('cookie-popup-hidden');
     }
 
-    function ndsShowMessage(message) {
-        const messageDiv = document.createElement('div');
-        messageDiv.className = 'cookie-popup-message';
-        messageDiv.textContent = message;
-        document.body.appendChild(messageDiv);
-
-        setTimeout(() => {
-            messageDiv.remove();
-        }, 3000);
+    function ndsShowMessage(message, variant = 'success', title = '') {
+        // Use NDSAlert toast API for notifications
+        if (typeof window.NDSAlert !== 'undefined') {
+            window.NDSAlert.create({
+                variant: variant,
+                title: title,
+                description: message,
+                toast: true,
+                position: 'bottom',
+                duration: 4000,
+                closable: true
+            });
+        } else {
+            // Fallback if NDSAlert is not loaded yet
+            console.log('[NDS Cookies]', title, message);
+        }
     }
 
 

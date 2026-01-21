@@ -14,7 +14,7 @@
 // ==============================================
 
 .nds-btn {
-  
+
   @include btn-base;
 
   // Apply internal properties
@@ -43,7 +43,7 @@
   }
 
   &:is(.active, .selected, [data-state="selected"]),
-  :is(.show, .open, .active) > & {
+  :is(.show, .open, .active)>& {
     background-color: var(--_btn-bg-selected);
     border-color: var(--_btn-border-selected);
   }
@@ -275,6 +275,9 @@
       --btn-bg-disabled: var(--button-background-transparent-default);
       --btn-color: var(--text-error);
       --btn-border: var(--border-error-light);
+      --btn-border-hover: var(--border-error-light);
+      --btn-border-active: var(--border-error-light);
+      --btn-border-selected: var(--border-error-light);
       --btn-border-disabled: var(--border-neutral-secondary);
       --btn-loading-color: var(--button-background-danger-primary-default);
     }
@@ -343,6 +346,9 @@
       --btn-color: var(--button-label-danger-primary-default-oncolor);
       --btn-color-hover: var(--button-background-danger-primary-hovered);
       --btn-border: var(--border-error-light);
+      --btn-border-hover: var(--border-error-light);
+      --btn-border-active: var(--border-error-light);
+      --btn-border-selected: var(--border-error-light);
       --btn-border-disabled: var(--border-neutral-secondary);
       --btn-loading-color: var(--colors-base-white);
       --btn-loading-track: var(--alpha-white-20);
@@ -404,7 +410,7 @@
     }
 
     &:is(:active, .selected, :focus-visible, [aria-selected="true"], [data-state="selected"], [data-state="active"], [data-state="focused"])::before,
-    :is(.show, .open, .active) > &::before {
+    :is(.show, .open, .active)>&::before {
       background-color: var(--_btn-indicator-selected);
     }
   }
@@ -438,7 +444,7 @@
     }
 
     &:is(.selected, .expanded, .open, [aria-expanded="true"])::after,
-    :is(.show, .open, .active) > &::after {
+    :is(.show, .open, .active)>&::after {
       transform: rotate(180deg);
     }
   }
@@ -483,10 +489,21 @@
       width: fit-content;
       padding: 0 var(--spacing-lg);
 
-      &.nds-sm { padding: 0 var(--spacing-sm); }
-      &.nds-md { padding: 0 var(--spacing-md); }
-      &.nds-lg { padding: 0 var(--spacing-lg); }
-      &.nds-xl { padding: 0 var(--spacing-xl); }
+      &.nds-sm {
+        padding: 0 var(--spacing-sm);
+      }
+
+      &.nds-md {
+        padding: 0 var(--spacing-md);
+      }
+
+      &.nds-lg {
+        padding: 0 var(--spacing-lg);
+      }
+
+      &.nds-xl {
+        padding: 0 var(--spacing-xl);
+      }
     }
 
     &.nds-circle {
@@ -610,7 +627,7 @@
       border-inline-end-width: 0;
     }
 
-    & + .nds-btn {
+    &+.nds-btn {
       border-inline-start-width: 1px;
     }
 
@@ -638,6 +655,7 @@
   from {
     stroke-dashoffset: 62.83;
   }
+
   to {
     stroke-dashoffset: 0;
   }
@@ -658,6 +676,7 @@
 }
 
 @include reduced-motion {
+
   .nds-btn,
   .nds-btn::after {
     transition: none;
