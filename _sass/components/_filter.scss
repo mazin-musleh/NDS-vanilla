@@ -9,6 +9,39 @@
 // FILTER CONTAINER IN DROPMENU
 // ==============================================
 
-.nds-filter.nds-dropmenu-menu {
-    padding: var(--spacing-lg);
+.nds-filter {
+    display: flex;
+    gap: var(--spacing-2xl);
+    width: 100%;
+    align-items: flex-start;
+    flex-wrap: wrap;
+
+    &.nds-section-action {
+        position: relative !important;
+    }
+
+    .nds-search-box {
+        padding: 0;
+        margin-inline-start: 0;
+        flex: 1;
+    }
+    .nds-filter-applied:not([hidden]) {
+        flex: 1 1 100%;
+        display: flex;
+        justify-content: flex-end;
+        gap: var(--spacing-md);
+    }
+    .nds-dropmenu {
+        text-align: end;
+
+        @include mobile{
+            width: 100%;
+        }
+        .nds-dropmenu-menu {
+            padding: var(--spacing-lg);
+        }
+
+    }
+
+
 }

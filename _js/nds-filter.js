@@ -1,12 +1,27 @@
 /**
  * NDS Filter Component
- * Filtration system for filtering card items based on search, tags, and other criteria
+ * Flexible filtration system for filtering card items based on search and dynamic criteria
  *
  * Usage:
  * - Add .nds-filter with data-filter-target="targetContainerId" to filter container
- * - Add data-filter="search" to search input containers (searches .nds-card-text)
- * - Add data-filter="tags" to tag filter containers (filters .nds-card-tags)
- * - Future: data-filter="rating", data-filter="price", etc.
+ * - Add data-filter="search" to search input containers
+ * - Add data-filter="[name]" to any element in cards to mark filterable content
+ * - Add data-filter="[name]" data-filter-type="checkbox|radio" to auto-generate filter inputs
+ *
+ * Dynamic Filter Names:
+ * - Use any name: data-filter="tags", data-filter="role", data-filter="department"
+ * - Multiple filters can be used together
+ * - Each filter name creates its own criteria group
+ *
+ * Auto-generate Filter Inputs:
+ * - data-filter-type="checkbox" - Multiple selections (OR logic)
+ * - data-filter-type="radio" - Single selection
+ * - data-filter-legend="Title" - Sets the fieldset legend
+ * - data-filter-variant="nds-primary" - Adds class to inputs
+ *
+ * Search Behavior:
+ * - Inside dropmenu: requires Apply button click
+ * - Outside dropmenu: applies on Enter key or search button click
  */
 
 (function() {
@@ -23,14 +38,20 @@
                 ? Array.from(this.targetContainer.querySelectorAll('.nds-card'))
                 : [];
 
-            // Filter criteria storage
+            // Filter criteria storage - dynamic structure
             this.criteria = {
                 search: '',
-                tags: []
+                filters: {}  // { filterName: [selectedValues] }
             };
 
-            // Debounce timer for search
-            this.searchDebounceTimer = null;
+            // Filter inputs storage - dynamic structure
+            this.filterInputs = {};  // { filterName: { inputs: [], type: 'checkbox'|'radio' } }
+
+            // Search inputs storage
+            this.searchInputs = {
+                direct: null,
+                dropmenu: null
+            };
 
             this.init();
         }
@@ -48,7 +69,6 @@
 
         sanitizeInput(str) {
             if (!str) return '';
-            // Remove HTML tags and limit length
             return str
                 .replace(/<[^>]*>/g, '')
                 .replace(/[<>"'&]/g, '')
@@ -59,33 +79,49 @@
             const params = new URLSearchParams(window.location.search);
             let hasParams = false;
 
-            // Apply search param (sanitized, max 100 chars)
+            // Apply search param
             const searchParam = params.get('search');
-            if (searchParam && this.searchInput) {
+            if (searchParam) {
                 const sanitized = this.sanitizeInput(searchParam);
-                this.searchInput.value = sanitized;
                 this.criteria.search = sanitized.trim().toLowerCase();
-                // Show clear button
-                if (this.clearBtn) {
-                    this.clearBtn.classList.remove('hidden');
-                }
-                hasParams = true;
-            }
 
-            // Apply tags param (comma-separated, sanitized)
-            const tagsParam = params.get('tags');
-            if (tagsParam && this.tagCheckboxes) {
-                const tags = tagsParam.split(',').map(t => this.sanitizeInput(t).trim().toLowerCase());
-                this.tagCheckboxes.forEach(checkbox => {
-                    if (tags.includes(checkbox.value.toLowerCase())) {
-                        checkbox.checked = true;
+                if (this.searchInputs.direct) {
+                    this.searchInputs.direct.input.value = sanitized;
+                    if (this.searchInputs.direct.clearBtn) {
+                        this.searchInputs.direct.clearBtn.classList.remove('hidden');
                     }
-                });
-                this.updateTagsCriteria();
+                }
+
+                if (this.searchInputs.dropmenu) {
+                    this.searchInputs.dropmenu.input.value = sanitized;
+                    if (this.searchInputs.dropmenu.clearBtn) {
+                        this.searchInputs.dropmenu.clearBtn.classList.remove('hidden');
+                    }
+                }
+
                 hasParams = true;
             }
 
-            // Update apply button label and auto-apply if has params
+            // Apply dynamic filter params
+            for (const [key, value] of params.entries()) {
+                if (key === 'search') continue;
+
+                // Check if we have inputs for this filter
+                if (this.filterInputs[key]) {
+                    const values = value.split(',').map(v => this.sanitizeInput(v).trim().toLowerCase());
+                    const filterData = this.filterInputs[key];
+
+                    filterData.inputs.forEach(input => {
+                        if (values.includes(input.value.toLowerCase())) {
+                            input.checked = true;
+                        }
+                    });
+
+                    this.updateFilterCriteria(key);
+                    hasParams = true;
+                }
+            }
+
             if (hasParams) {
                 this.updateApplyButtonLabel();
                 this.applyFilters();
@@ -100,12 +136,13 @@
                 params.set('search', this.criteria.search);
             }
 
-            // Add tags param
-            if (this.criteria.tags.length > 0) {
-                params.set('tags', this.criteria.tags.join(','));
+            // Add dynamic filter params
+            for (const [filterName, values] of Object.entries(this.criteria.filters)) {
+                if (values.length > 0) {
+                    params.set(filterName, values.join(','));
+                }
             }
 
-            // Update URL without reload
             const newUrl = params.toString()
                 ? `${window.location.pathname}?${params.toString()}`
                 : window.location.pathname;
@@ -114,7 +151,6 @@
         }
 
         setupActionButtons() {
-            // Find all action buttons with data-filter-action attribute
             const actionButtons = this.filterContainer.querySelectorAll('[data-filter-action]');
 
             actionButtons.forEach(button => {
@@ -122,13 +158,22 @@
 
                 switch (action) {
                     case 'apply':
-                        // Store reference to apply button and its original label
                         this.applyButton = button;
                         const labelEl = button.querySelector('.label');
                         this.applyButtonBaseLabel = labelEl ? labelEl.textContent : 'Apply';
 
                         button.addEventListener('click', (e) => {
                             e.preventDefault();
+                            if (this.searchInputs.dropmenu) {
+                                this.criteria.search = this.searchInputs.dropmenu.input.value.trim().toLowerCase();
+                                if (this.searchInputs.direct) {
+                                    this.searchInputs.direct.input.value = this.searchInputs.dropmenu.input.value;
+                                    this.updateClearButtonVisibility(
+                                        this.searchInputs.direct.input,
+                                        this.searchInputs.direct.clearBtn
+                                    );
+                                }
+                            }
                             this.applyFilters();
                         });
                         break;
@@ -136,7 +181,7 @@
                         button.addEventListener('click', (e) => {
                             e.preventDefault();
                             e.stopPropagation();
-                            this.clear();
+                            this.clearDropmenuFilters();
                         });
                         break;
                     case 'reset':
@@ -151,8 +196,20 @@
 
         getActiveFilterCount() {
             let count = 0;
-            if (this.criteria.search) count++;
-            if (this.criteria.tags.length > 0) count += this.criteria.tags.length;
+            if (this.searchInputs.dropmenu && this.searchInputs.dropmenu.input.value.trim()) {
+                count++;
+            }
+            for (const values of Object.values(this.criteria.filters)) {
+                count += values.length;
+            }
+            return count;
+        }
+
+        getAppliedFilterCount() {
+            let count = 0;
+            for (const values of Object.values(this.criteria.filters)) {
+                count += values.length;
+            }
             return count;
         }
 
@@ -169,31 +226,173 @@
             }
         }
 
+        updateFilterButtonLabel() {
+            const filterBtn = this.filterContainer.querySelector(
+                '.nds-dropmenu-trigger, [data-filter-btn], .filter-btn'
+            );
+
+            if (!filterBtn) return;
+
+            if (!this.filterButtonBaseLabel) {
+                const labelEl = filterBtn.querySelector('.label');
+                this.filterButtonBaseLabel = labelEl ? labelEl.textContent : '';
+            }
+
+            const count = this.getAppliedFilterCount();
+            const labelEl = filterBtn.querySelector('.label');
+
+            if (labelEl && this.filterButtonBaseLabel) {
+                labelEl.textContent = count > 0
+                    ? `${this.filterButtonBaseLabel} (${count})`
+                    : this.filterButtonBaseLabel;
+            }
+
+            if (count > 0) {
+                filterBtn.classList.add('has-filters');
+            } else {
+                filterBtn.classList.remove('has-filters');
+            }
+        }
+
+        updateAppliedChips() {
+            const appliedContainer = this.filterContainer.querySelector('.nds-filter-applied');
+            if (!appliedContainer) return;
+
+            appliedContainer.innerHTML = '';
+
+            const hasFilters = this.criteria.search ||
+                Object.values(this.criteria.filters).some(arr => arr.length > 0);
+
+            if (!hasFilters) {
+                appliedContainer.setAttribute('hidden', '');
+                return;
+            }
+
+            appliedContainer.removeAttribute('hidden');
+
+            // Add search chip
+            if (this.criteria.search) {
+                const searchChip = this.createFilterChip('search', this.criteria.search, () => {
+                    this.removeSearchFilter();
+                });
+                appliedContainer.appendChild(searchChip);
+            }
+
+            // Add chips for all dynamic filters
+            for (const [filterName, values] of Object.entries(this.criteria.filters)) {
+                values.forEach(value => {
+                    const chip = this.createFilterChip(filterName, value, () => {
+                        this.removeFilterValue(filterName, value);
+                    });
+                    appliedContainer.appendChild(chip);
+                });
+            }
+        }
+
+        createFilterChip(type, value, onRemove) {
+            const chip = document.createElement('button');
+            chip.className = 'nds-chip nds-neutral nds-lg';
+            chip.setAttribute('type', 'button');
+            chip.setAttribute('data-filter-type', type);
+            chip.setAttribute('data-filter-value', value);
+
+            const icon = document.createElement('i');
+            icon.className = 'hgi hgi-stroke hgi-cancel-01 icon';
+
+            const label = document.createElement('span');
+            label.className = 'label';
+            label.textContent = value;
+
+            chip.appendChild(icon);
+            chip.appendChild(label);
+
+            chip.addEventListener('click', (e) => {
+                e.preventDefault();
+                onRemove();
+            });
+
+            return chip;
+        }
+
+        removeSearchFilter() {
+            this.criteria.search = '';
+
+            if (this.searchInputs.direct) {
+                this.searchInputs.direct.input.value = '';
+                this.updateClearButtonVisibility(
+                    this.searchInputs.direct.input,
+                    this.searchInputs.direct.clearBtn
+                );
+            }
+
+            if (this.searchInputs.dropmenu) {
+                this.searchInputs.dropmenu.input.value = '';
+                this.updateClearButtonVisibility(
+                    this.searchInputs.dropmenu.input,
+                    this.searchInputs.dropmenu.clearBtn
+                );
+                this.updateApplyButtonLabel();
+            }
+
+            this.applyFilters();
+        }
+
+        removeFilterValue(filterName, value) {
+            const filterData = this.filterInputs[filterName];
+            if (!filterData) return;
+
+            filterData.inputs.forEach(input => {
+                if (input.value.toLowerCase() === value.toLowerCase()) {
+                    input.checked = false;
+                }
+            });
+
+            this.updateFilterCriteria(filterName);
+            this.updateApplyButtonLabel();
+            this.applyFilters();
+        }
+
         setupFilterElements() {
-            // Find all filter elements within the filter container
             const filterElements = this.filterContainer.querySelectorAll('[data-filter]');
 
             filterElements.forEach(element => {
-                const filterType = element.getAttribute('data-filter');
+                const filterName = element.getAttribute('data-filter');
+                const filterType = element.getAttribute('data-filter-type');
 
-                switch (filterType) {
-                    case 'search':
-                        this.setupSearchFilter(element);
-                        break;
-                    case 'tags':
-                        this.setupTagsFilter(element);
-                        break;
-                    // Future filter types can be added here
-                    // case 'rating':
-                    //     this.setupRatingFilter(element);
-                    //     break;
-                    // case 'price':
-                    //     this.setupPriceFilter(element);
-                    //     break;
-                    default:
-                        console.warn(`NDS Filter: Unknown filter type "${filterType}"`);
+                if (filterName === 'search') {
+                    this.setupSearchFilter(element);
+                } else if (filterType === 'checkbox' || filterType === 'radio') {
+                    // Auto-generate filter inputs
+                    this.setupDynamicFilter(element, filterName, filterType);
+                } else if (element.querySelectorAll('input[type="checkbox"], input[type="radio"]').length > 0) {
+                    // Manual filter inputs
+                    this.setupManualFilter(element, filterName);
                 }
+                // Elements without filter-type in cards are just data markers, not filter UI
             });
+
+            // Auto-detect direct search input
+            if (!this.searchInputs.direct) {
+                const allSearchInputs = this.filterContainer.querySelectorAll(
+                    'input.nds-search-input, input[name="search"], input[type="search"]'
+                );
+
+                for (const input of allSearchInputs) {
+                    if (!input.closest('.nds-dropmenu-menu')) {
+                        const wrapper = input.closest('.nds-form-control') || input.parentElement;
+                        const clearBtn = wrapper?.querySelector('.clear, [aria-label*="مسح"], [aria-label*="clear"]');
+
+                        this.searchInputs.direct = {
+                            input: input,
+                            clearBtn: clearBtn,
+                            element: wrapper || input
+                        };
+
+                        this.setupDirectSearch(input, clearBtn);
+                        break;
+                    }
+                }
+            }
         }
 
         // ==============================================
@@ -201,33 +400,57 @@
         // ==============================================
 
         setupSearchFilter(element) {
-            const searchInput = element.querySelector('input[type="text"], input[type="search"], .nds-search-input');
+            let searchInput;
+            if (element.matches('input')) {
+                searchInput = element;
+            } else {
+                searchInput = element.querySelector(
+                    'input.nds-search-input, ' +
+                    'input[name="search"], ' +
+                    'input[type="search"], ' +
+                    'input[type="text"]'
+                );
+            }
 
             if (!searchInput) {
-                console.warn('NDS Filter: No search input found in search filter element');
+                console.warn('NDS Filter: No search input found in search filter element', element);
                 return;
             }
 
-            // Store reference
-            this.searchInput = searchInput;
+            const isInsideDropmenu = element.closest('.nds-dropmenu-menu') !== null;
+            const searchContainer = element.matches('input') ? element.parentElement : element;
+            const clearBtn = searchContainer.querySelector('.clear, [aria-label*="مسح"], [aria-label*="clear"]');
 
-            // Clear button functionality
-            const clearBtn = element.querySelector('.clear, [aria-label*="مسح"], [aria-label*="clear"]');
-            this.clearBtn = clearBtn;
+            const searchRef = { input: searchInput, clearBtn: clearBtn, element: element };
 
-            // Update criteria on input (no auto-apply)
-            searchInput.addEventListener('input', (e) => {
-                this.criteria.search = e.target.value.trim().toLowerCase();
+            if (isInsideDropmenu) {
+                this.searchInputs.dropmenu = searchRef;
+                this.setupDropmenuSearch(searchInput, clearBtn);
+            } else {
+                this.searchInputs.direct = searchRef;
+                this.setupDirectSearch(searchInput, clearBtn);
+            }
+        }
+
+        setupDropmenuSearch(searchInput, clearBtn) {
+            searchInput.addEventListener('input', () => {
                 if (clearBtn) {
                     this.updateClearButtonVisibility(searchInput, clearBtn);
                 }
                 this.updateApplyButtonLabel();
             });
 
-            // Apply filter on Enter key
             searchInput.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter') {
                     e.preventDefault();
+                    this.criteria.search = searchInput.value.trim().toLowerCase();
+                    if (this.searchInputs.direct) {
+                        this.searchInputs.direct.input.value = searchInput.value;
+                        this.updateClearButtonVisibility(
+                            this.searchInputs.direct.input,
+                            this.searchInputs.direct.clearBtn
+                        );
+                    }
                     this.applyFilters();
                 }
             });
@@ -235,14 +458,73 @@
             if (clearBtn) {
                 clearBtn.addEventListener('click', () => {
                     searchInput.value = '';
-                    this.criteria.search = '';
                     this.updateClearButtonVisibility(searchInput, clearBtn);
                     this.updateApplyButtonLabel();
                 });
             }
         }
 
+        setupDirectSearch(searchInput, clearBtn) {
+            const searchContainer = searchInput.closest('.nds-search-box, .nds-form-control')?.parentElement ||
+                                   searchInput.closest('.nds-search-content')?.parentElement ||
+                                   searchInput.parentElement;
+            const searchBtn = searchContainer?.querySelector(
+                'button.nds-search-btn, button[type="submit"], button:has(.hgi-search-01)'
+            );
+
+            searchInput.addEventListener('input', () => {
+                if (clearBtn) {
+                    this.updateClearButtonVisibility(searchInput, clearBtn);
+                }
+            });
+
+            searchInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    this.applyDirectSearch(searchInput);
+                }
+            });
+
+            if (searchBtn) {
+                searchBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.applyDirectSearch(searchInput);
+                });
+            }
+
+            if (clearBtn) {
+                clearBtn.addEventListener('click', () => {
+                    searchInput.value = '';
+                    this.criteria.search = '';
+                    this.updateClearButtonVisibility(searchInput, clearBtn);
+                    if (this.searchInputs.dropmenu) {
+                        this.searchInputs.dropmenu.input.value = '';
+                        this.updateClearButtonVisibility(
+                            this.searchInputs.dropmenu.input,
+                            this.searchInputs.dropmenu.clearBtn
+                        );
+                        this.updateApplyButtonLabel();
+                    }
+                    this.applyFilters();
+                });
+            }
+        }
+
+        applyDirectSearch(searchInput) {
+            this.criteria.search = searchInput.value.trim().toLowerCase();
+            if (this.searchInputs.dropmenu) {
+                this.searchInputs.dropmenu.input.value = searchInput.value;
+                this.updateClearButtonVisibility(
+                    this.searchInputs.dropmenu.input,
+                    this.searchInputs.dropmenu.clearBtn
+                );
+                this.updateApplyButtonLabel();
+            }
+            this.applyFilters();
+        }
+
         updateClearButtonVisibility(input, clearBtn) {
+            if (!clearBtn) return;
             if (input.value.trim()) {
                 clearBtn.classList.remove('hidden');
             } else {
@@ -251,34 +533,198 @@
         }
 
         // ==============================================
-        // TAGS FILTER
+        // DYNAMIC FILTER (AUTO-GENERATED)
         // ==============================================
 
-        setupTagsFilter(element) {
-            const checkboxes = element.querySelectorAll('input[type="checkbox"]');
+        setupDynamicFilter(element, filterName, inputType) {
+            // Generate filter inputs from card data
+            this.generateFilterInputs(element, filterName, inputType);
 
-            if (checkboxes.length === 0) {
-                console.warn('NDS Filter: No checkboxes found in tags filter element');
+            // Setup the filter after generation
+            this.setupManualFilter(element, filterName);
+        }
+
+        setupManualFilter(element, filterName) {
+            const inputs = element.querySelectorAll('input[type="checkbox"], input[type="radio"]');
+
+            if (inputs.length === 0) {
+                console.warn(`NDS Filter: No inputs found for filter "${filterName}"`);
                 return;
             }
 
-            // Store reference
-            this.tagCheckboxes = checkboxes;
+            const inputType = inputs[0].type;
 
-            checkboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', () => {
-                    this.updateTagsCriteria();
+            // Initialize criteria for this filter
+            if (!this.criteria.filters[filterName]) {
+                this.criteria.filters[filterName] = [];
+            }
+
+            // Store reference
+            this.filterInputs[filterName] = {
+                inputs: inputs,
+                type: inputType,
+                element: element
+            };
+
+            inputs.forEach(input => {
+                input.addEventListener('change', () => {
+                    this.updateFilterCriteria(filterName);
                     this.updateApplyButtonLabel();
                 });
             });
         }
 
-        updateTagsCriteria() {
-            if (!this.tagCheckboxes) return;
+        // ==============================================
+        // AUTO-GENERATION
+        // ==============================================
 
-            this.criteria.tags = Array.from(this.tagCheckboxes)
-                .filter(checkbox => checkbox.checked)
-                .map(checkbox => checkbox.value.toLowerCase());
+        collectFilterValues(filterName) {
+            const values = new Set();
+
+            this.items.forEach(card => {
+                const filterElements = card.querySelectorAll(`[data-filter="${filterName}"]`);
+
+                if (filterElements.length > 0) {
+                    filterElements.forEach(el => {
+                        const value = el.textContent.trim();
+                        if (value) {
+                            values.add(value);
+                        }
+                    });
+                } else if (filterName === 'tags') {
+                    // Fallback for tags: traditional .nds-card-tags structure
+                    const cardTags = card.querySelector('.nds-card-tags');
+                    if (cardTags) {
+                        const tagElements = cardTags.querySelectorAll('.nds-tag .label');
+                        tagElements.forEach(el => {
+                            const value = el.textContent.trim();
+                            if (value) {
+                                values.add(value);
+                            }
+                        });
+                    }
+                }
+            });
+
+            return Array.from(values).sort((a, b) => a.localeCompare(b, 'ar'));
+        }
+
+        generateFilterInputs(container, filterName, inputType) {
+            const values = this.collectFilterValues(filterName);
+
+            if (values.length === 0) {
+                console.warn(`NDS Filter: No values found for filter "${filterName}"`);
+                return;
+            }
+
+            const legendText = container.getAttribute('data-filter-legend') || '';
+            const variant = container.getAttribute('data-filter-variant') || '';
+
+            // Create the wrapper structure
+            let wrapper = container;
+            let fieldset;
+
+            // Check if container should be wrapped in nds-dropmenu-item
+            const isInDropmenu = container.closest('.nds-dropmenu-menu') !== null;
+
+            if (container.tagName === 'FIELDSET') {
+                fieldset = container;
+                // Add nds-dropmenu-item if in dropmenu and not already has it
+                if (isInDropmenu && !fieldset.classList.contains('nds-dropmenu-item')) {
+                    fieldset.classList.add('nds-dropmenu-item');
+                }
+                // Clear existing content
+                const existingLegend = fieldset.querySelector('legend');
+                fieldset.innerHTML = '';
+                if (existingLegend || legendText) {
+                    const legend = document.createElement('legend');
+                    legend.className = 'label';
+                    legend.textContent = legendText || (existingLegend ? existingLegend.textContent : '');
+                    fieldset.appendChild(legend);
+                }
+            } else {
+                // Create fieldset inside container
+                fieldset = document.createElement('fieldset');
+                fieldset.className = 'nds-check-group';
+                if (isInDropmenu) {
+                    fieldset.classList.add('nds-dropmenu-item');
+                }
+                if (legendText) {
+                    const legend = document.createElement('legend');
+                    legend.className = 'label';
+                    legend.textContent = legendText;
+                    fieldset.appendChild(legend);
+                }
+                container.innerHTML = '';
+                container.appendChild(fieldset);
+            }
+
+            // Add nds-check-group class
+            if (!fieldset.classList.contains('nds-check-group')) {
+                fieldset.classList.add('nds-check-group');
+            }
+
+            // Add data-no-auto-close if in dropmenu
+            if (isInDropmenu) {
+                fieldset.setAttribute('data-no-auto-close', '');
+            }
+
+            // Determine input class based on type
+            const inputClass = inputType === 'radio' ? 'nds-radio' : 'nds-check';
+            const groupName = `filter-${filterName}-${this.generateId()}`;
+
+            // Generate input for each unique value
+            values.forEach((value, index) => {
+                const id = `${groupName}-${index}`;
+
+                const formContainer = document.createElement('div');
+                formContainer.className = 'nds-form-container nds-check-container';
+
+                const formHeader = document.createElement('div');
+                formHeader.className = 'nds-form-header';
+
+                const label = document.createElement('label');
+                label.setAttribute('for', id);
+
+                const labelSpan = document.createElement('span');
+                labelSpan.className = 'label';
+                labelSpan.textContent = value;
+
+                label.appendChild(labelSpan);
+                formHeader.appendChild(label);
+
+                const formControl = document.createElement('div');
+                formControl.className = 'nds-form-control';
+
+                const input = document.createElement('input');
+                input.type = inputType;
+                input.id = id;
+                input.name = inputType === 'radio' ? groupName : `filter-${filterName}`;
+                input.value = value;
+                input.className = inputClass;
+                if (variant) {
+                    input.classList.add(variant);
+                }
+
+                formControl.appendChild(input);
+
+                formContainer.appendChild(formHeader);
+                formContainer.appendChild(formControl);
+                fieldset.appendChild(formContainer);
+            });
+        }
+
+        generateId() {
+            return Math.random().toString(36).substring(2, 9);
+        }
+
+        updateFilterCriteria(filterName) {
+            const filterData = this.filterInputs[filterName];
+            if (!filterData) return;
+
+            this.criteria.filters[filterName] = Array.from(filterData.inputs)
+                .filter(input => input.checked)
+                .map(input => input.value.toLowerCase());
         }
 
         // ==============================================
@@ -286,7 +732,6 @@
         // ==============================================
 
         applyFilters() {
-            // Show loading state on target container
             if (this.targetContainer) this.targetContainer.classList.add('nds-loading');
 
             let visibleCount = 0;
@@ -302,19 +747,13 @@
                 }
             });
 
-            // Dispatch filter change event
             this.dispatchFilterEvent(visibleCount);
-
-            // Trigger pagination update if exists
             this.updatePagination();
-
-            // Show/hide no results alert
             this.updateNoResultsAlert(visibleCount);
-
-            // Update URL params
             this.updateUrlParams();
+            this.updateFilterButtonLabel();
+            this.updateAppliedChips();
 
-            // Remove target loading state 500ms after filter complete
             clearTimeout(this.targetLoadingTimer);
             this.targetLoadingTimer = setTimeout(() => {
                 if (this.targetContainer) this.targetContainer.classList.remove('nds-loading');
@@ -327,7 +766,6 @@
             const alertId = `nds-filter-no-results-${this.targetId}`;
 
             if (visibleCount === 0) {
-                // Show no results alert if not already shown
                 if (!document.getElementById(alertId) && window.NDSAlert) {
                     const isArabic = document.documentElement.lang === 'ar';
                     const self = this;
@@ -348,7 +786,6 @@
                     });
                 }
             } else {
-                // Dismiss no results alert
                 const existingAlert = document.getElementById(alertId);
                 if (existingAlert) {
                     NDSAlert.dismiss(existingAlert);
@@ -362,9 +799,11 @@
                 return false;
             }
 
-            // Check tags criteria
-            if (this.criteria.tags.length > 0 && !this.itemMatchesTags(item)) {
-                return false;
+            // Check all dynamic filter criteria
+            for (const [filterName, selectedValues] of Object.entries(this.criteria.filters)) {
+                if (selectedValues.length > 0 && !this.itemMatchesFilter(item, filterName, selectedValues)) {
+                    return false;
+                }
             }
 
             return true;
@@ -374,38 +813,10 @@
             const searchText = this.criteria.search;
             if (!searchText) return true;
 
-            // Search in card text content
-            const cardText = item.querySelector('.nds-card-text');
-            if (cardText) {
-                const textContent = cardText.textContent.toLowerCase();
+            const cardContent = item.querySelector('.nds-card-content');
+            if (cardContent) {
+                const textContent = cardContent.textContent.toLowerCase();
                 if (textContent.includes(searchText)) {
-                    return true;
-                }
-            }
-
-            // Also search in card title specifically
-            const cardTitle = item.querySelector('.nds-card-title');
-            if (cardTitle) {
-                const titleContent = cardTitle.textContent.toLowerCase();
-                if (titleContent.includes(searchText)) {
-                    return true;
-                }
-            }
-
-            // Search in card subtitle
-            const cardSubtitle = item.querySelector('.nds-card-subtitle');
-            if (cardSubtitle) {
-                const subtitleContent = cardSubtitle.textContent.toLowerCase();
-                if (subtitleContent.includes(searchText)) {
-                    return true;
-                }
-            }
-
-            // Search in card description
-            const cardDescription = item.querySelector('.nds-card-description');
-            if (cardDescription) {
-                const descContent = cardDescription.textContent.toLowerCase();
-                if (descContent.includes(searchText)) {
                     return true;
                 }
             }
@@ -413,19 +824,36 @@
             return false;
         }
 
-        itemMatchesTags(item) {
-            const selectedTags = this.criteria.tags;
-            if (selectedTags.length === 0) return true;
+        itemMatchesFilter(item, filterName, selectedValues) {
+            if (selectedValues.length === 0) return true;
 
-            // Get tags from card
-            const cardTags = item.querySelector('.nds-card-tags');
-            if (!cardTags) return false;
+            // Look for elements with data-filter attribute
+            const filterElements = item.querySelectorAll(`[data-filter="${filterName}"]`);
 
-            const tagElements = cardTags.querySelectorAll('.nds-tag .label');
-            const itemTags = Array.from(tagElements).map(tag => tag.textContent.trim().toLowerCase());
+            let itemValues = [];
 
-            // Check if item has ANY of the selected tags (OR logic for tags)
-            return selectedTags.some(selectedTag => itemTags.includes(selectedTag));
+            if (filterElements.length > 0) {
+                itemValues = Array.from(filterElements).map(el => el.textContent.trim().toLowerCase());
+            } else if (filterName === 'tags') {
+                // Fallback for tags: traditional .nds-card-tags structure
+                const cardTags = item.querySelector('.nds-card-tags');
+                if (!cardTags) return false;
+
+                const tagElements = cardTags.querySelectorAll('.nds-tag .label');
+                itemValues = Array.from(tagElements).map(tag => tag.textContent.trim().toLowerCase());
+            }
+
+            if (itemValues.length === 0) return false;
+
+            // Check filter type for logic (radio = AND, checkbox = OR)
+            const filterData = this.filterInputs[filterName];
+            if (filterData && filterData.type === 'radio') {
+                // Radio: item must match the single selected value
+                return selectedValues.some(val => itemValues.includes(val));
+            } else {
+                // Checkbox: item must match ANY of the selected values (OR logic)
+                return selectedValues.some(val => itemValues.includes(val));
+            }
         }
 
         // ==============================================
@@ -449,10 +877,7 @@
         // ==============================================
 
         setupResetButton() {
-            // Find reset button (usually has refresh icon or reset text)
             const resetBtn = this.filterContainer.querySelector('[class*="refresh"], button:has(.hgi-refresh)');
-
-            // Also try to find by icon class
             const resetByIcon = this.filterContainer.querySelector('.hgi-refresh-ccw-02, .hgi-refresh');
             const resetButton = resetBtn || (resetByIcon ? resetByIcon.closest('button') : null);
 
@@ -464,56 +889,70 @@
             }
         }
 
-        clear() {
-            // Clear search input only
-            if (this.searchInput) {
-                this.searchInput.value = '';
-                this.criteria.search = '';
-
-                // Update clear button visibility
-                const clearBtn = this.searchInput.closest('[data-filter="search"]')?.querySelector('.clear');
-                if (clearBtn) {
-                    clearBtn.classList.add('hidden');
+        clearDropmenuFilters() {
+            if (this.searchInputs.dropmenu) {
+                this.searchInputs.dropmenu.input.value = '';
+                if (this.searchInputs.dropmenu.clearBtn) {
+                    this.searchInputs.dropmenu.clearBtn.classList.add('hidden');
                 }
             }
 
-            // Clear tags checkboxes only
-            if (this.tagCheckboxes) {
-                this.tagCheckboxes.forEach(checkbox => {
-                    checkbox.checked = false;
+            // Clear all filter inputs
+            for (const [filterName, filterData] of Object.entries(this.filterInputs)) {
+                filterData.inputs.forEach(input => {
+                    input.checked = false;
                 });
-                this.criteria.tags = [];
+                this.criteria.filters[filterName] = [];
             }
 
-            // Update apply button label
             this.updateApplyButtonLabel();
+            this.dispatchClearEvent();
+        }
 
-            // Dispatch clear event
+        clear() {
+            if (this.searchInputs.direct) {
+                this.searchInputs.direct.input.value = '';
+                if (this.searchInputs.direct.clearBtn) {
+                    this.searchInputs.direct.clearBtn.classList.add('hidden');
+                }
+            }
+
+            if (this.searchInputs.dropmenu) {
+                this.searchInputs.dropmenu.input.value = '';
+                if (this.searchInputs.dropmenu.clearBtn) {
+                    this.searchInputs.dropmenu.clearBtn.classList.add('hidden');
+                }
+            }
+
+            this.criteria.search = '';
+
+            // Clear all filter inputs
+            for (const [filterName, filterData] of Object.entries(this.filterInputs)) {
+                filterData.inputs.forEach(input => {
+                    input.checked = false;
+                });
+                this.criteria.filters[filterName] = [];
+            }
+
+            this.updateApplyButtonLabel();
             this.dispatchClearEvent();
         }
 
         reset() {
-            // Clear all inputs
             this.clear();
-
-            // Show all items
             this.items.forEach(item => this.showItem(item));
 
-            // Dismiss no results alert
             const alertId = `nds-filter-no-results-${this.targetId}`;
             const existingAlert = document.getElementById(alertId);
             if (existingAlert && window.NDSAlert) {
                 NDSAlert.dismiss(existingAlert);
             }
 
-            // Clear URL params
             this.updateUrlParams();
-
-            // Dispatch reset event
             this.dispatchResetEvent();
-
-            // Update pagination
             this.updatePagination();
+            this.updateFilterButtonLabel();
+            this.updateAppliedChips();
         }
 
         // ==============================================
@@ -565,12 +1004,9 @@
         updatePagination() {
             if (!this.targetContainer) return;
 
-            // Check if pagination exists for target container
             if (window.NDSPagination && window.NDSPagination.refresh) {
-                // Find pagination associated with this container
                 const paginationNav = this.targetContainer.parentElement?.querySelector('.nds-pagination-nav, .nds-auto-pagination');
                 if (paginationNav) {
-                    // Trigger pagination refresh
                     setTimeout(() => {
                         window.NDSPagination.refresh(this.targetContainer);
                     }, 50);
@@ -591,38 +1027,53 @@
         }
 
         getCriteria() {
-            return { ...this.criteria };
+            return { ...this.criteria, filters: { ...this.criteria.filters } };
         }
 
         setSearchValue(value) {
-            if (this.searchInput) {
-                this.searchInput.value = value;
-                this.criteria.search = value.trim().toLowerCase();
-                this.applyFilters();
+            this.criteria.search = value.trim().toLowerCase();
+
+            if (this.searchInputs.direct) {
+                this.searchInputs.direct.input.value = value;
+                this.updateClearButtonVisibility(
+                    this.searchInputs.direct.input,
+                    this.searchInputs.direct.clearBtn
+                );
             }
+
+            if (this.searchInputs.dropmenu) {
+                this.searchInputs.dropmenu.input.value = value;
+                this.updateClearButtonVisibility(
+                    this.searchInputs.dropmenu.input,
+                    this.searchInputs.dropmenu.clearBtn
+                );
+            }
+
+            this.updateApplyButtonLabel();
+            this.applyFilters();
         }
 
+        setFilterValues(filterName, values) {
+            const filterData = this.filterInputs[filterName];
+            if (!filterData) return;
+
+            const valuesLower = values.map(v => v.toLowerCase());
+            filterData.inputs.forEach(input => {
+                input.checked = valuesLower.includes(input.value.toLowerCase());
+            });
+
+            this.updateFilterCriteria(filterName);
+            this.updateApplyButtonLabel();
+            this.applyFilters();
+        }
+
+        // Legacy API for backward compatibility
         setSelectedTags(tags) {
-            if (this.tagCheckboxes) {
-                const tagsLower = tags.map(t => t.toLowerCase());
-                this.tagCheckboxes.forEach(checkbox => {
-                    checkbox.checked = tagsLower.includes(checkbox.value.toLowerCase());
-                });
-                this.updateTagsCriteria();
-                this.applyFilters();
-            }
+            this.setFilterValues('tags', tags);
         }
 
         destroy() {
-            // Clear debounce timer
-            if (this.searchDebounceTimer) {
-                clearTimeout(this.searchDebounceTimer);
-            }
-
-            // Show all items
             this.items.forEach(item => this.showItem(item));
-
-            // Remove initialized attribute
             this.filterContainer.removeAttribute('data-nds-filter-initialized');
         }
     }
@@ -635,12 +1086,10 @@
         const filterContainers = document.querySelectorAll('.nds-filter');
 
         filterContainers.forEach(container => {
-            // Skip if already initialized
             if (container.hasAttribute('data-nds-filter-initialized')) {
                 return;
             }
 
-            // Skip elements inside code examples
             if (container.closest('code, .code-example')) {
                 return;
             }
@@ -665,7 +1114,6 @@
             reinit: reinitializeFilters,
             create: (container) => new NDSFilter(container),
 
-            // Get filter instance for a specific container
             getInstance: (container) => {
                 if (typeof container === 'string') {
                     container = document.querySelector(container);
@@ -673,7 +1121,6 @@
                 return container?.ndsFilterInstance || null;
             },
 
-            // Get filter instance by target ID
             getByTarget: (targetId) => {
                 const filterContainer = document.querySelector(`.nds-filter[data-filter-target="${targetId}"]`);
                 return filterContainer?.ndsFilterInstance || null;
@@ -681,7 +1128,6 @@
         };
     }
 
-    // Export for modules
     if (typeof module !== 'undefined' && module.exports) {
         module.exports = NDSFilter;
     }
@@ -690,60 +1136,152 @@
 })();
 
 /**
- * Usage Examples:
+ * ==============================================
+ * USAGE EXAMPLES
+ * ==============================================
  *
- * HTML Structure:
- * <div class="nds-filter" data-filter-target="myCardList">
- *     <div data-filter="search">
+ * BASIC STRUCTURE
+ * ---------------
+ * <div class="nds-filter" data-filter-target="cardList">
+ *     <div class="nds-dropmenu">
+ *         <button class="nds-btn nds-neutral nds-dropmenu-trigger">
+ *             <span class="label">Filter</span>
+ *         </button>
+ *         <div class="nds-dropmenu-menu">
+ *             <!-- Filter content here -->
+ *             <button data-filter-action="apply">Apply</button>
+ *         </div>
+ *     </div>
+ * </div>
+ *
+ * MARKING FILTERABLE CONTENT IN CARDS
+ * ------------------------------------
+ * Add data-filter="[name]" to any element inside cards:
+ *
+ * <div id="cardList">
+ *     <div class="nds-card">
+ *         <h3>John Doe</h3>
+ *         <span data-filter="role">Manager</span>
+ *         <span data-filter="department">Engineering</span>
+ *         <span data-filter="tags">Active</span>
+ *     </div>
+ * </div>
+ *
+ * AUTO-GENERATE FILTER CHECKBOXES
+ * --------------------------------
+ * Use data-filter-type="checkbox" for multiple selection (OR logic):
+ *
+ * <div class="nds-dropmenu-menu">
+ *     <div data-filter="role"
+ *          data-filter-type="checkbox"
+ *          data-filter-legend="Filter by Role">
+ *     </div>
+ *     <div data-filter="department"
+ *          data-filter-type="checkbox"
+ *          data-filter-legend="Filter by Department">
+ *     </div>
+ * </div>
+ *
+ * AUTO-GENERATE FILTER RADIO BUTTONS
+ * -----------------------------------
+ * Use data-filter-type="radio" for single selection:
+ *
+ * <div class="nds-dropmenu-menu">
+ *     <div data-filter="status"
+ *          data-filter-type="radio"
+ *          data-filter-legend="Filter by Status">
+ *     </div>
+ * </div>
+ *
+ * COMPLETE EXAMPLE
+ * -----------------
+ * <div class="nds-filter" data-filter-target="employeeList">
+ *     <!-- Search -->
+ *     <div class="nds-search-box">
  *         <input type="text" class="nds-search-input" placeholder="Search...">
  *     </div>
- *     <fieldset data-filter="tags">
- *         <input type="checkbox" value="tag1"> Tag 1
- *         <input type="checkbox" value="tag2"> Tag 2
- *     </fieldset>
+ *
+ *     <!-- Filter Dropdown -->
+ *     <div class="nds-dropmenu">
+ *         <button class="nds-btn nds-neutral nds-dropmenu-trigger">
+ *             <span class="label">تصفية</span>
+ *         </button>
+ *         <div class="nds-dropmenu-menu" style="min-width: 300px;">
+ *             <!-- Auto-generated role filter (checkbox) -->
+ *             <div data-filter="role"
+ *                  data-filter-type="checkbox"
+ *                  data-filter-legend="الوظيفة">
+ *             </div>
+ *
+ *             <!-- Auto-generated department filter (radio) -->
+ *             <div data-filter="department"
+ *                  data-filter-type="radio"
+ *                  data-filter-legend="القسم">
+ *             </div>
+ *
+ *             <hr class="nds-dropmenu-divider">
+ *             <div class="nds-dropmenu-action nds-grid">
+ *                 <button class="nds-btn nds-secondary" data-filter-action="clear">
+ *                     <span class="label">إعادة تعيين</span>
+ *                 </button>
+ *                 <button class="nds-btn nds-primary" data-filter-action="apply">
+ *                     <span class="label">تصفية</span>
+ *                 </button>
+ *             </div>
+ *         </div>
+ *     </div>
+ *
+ *     <!-- Applied filter chips -->
+ *     <div class="nds-filter-applied" hidden></div>
  * </div>
  *
- * <div id="myCardList">
+ * <!-- Cards with filterable data -->
+ * <div id="employeeList">
  *     <div class="nds-card">
- *         <div class="nds-card-text">
- *             <h3 class="nds-card-title">Card Title</h3>
- *             <p class="nds-card-description">Card description text</p>
+ *         <div class="nds-card-content">
+ *             <h3>أحمد محمد</h3>
+ *             <span class="nds-tag" data-filter="role">مدير</span>
+ *             <span class="nds-badge" data-filter="department">الهندسة</span>
  *         </div>
- *         <div class="nds-card-tags">
- *             <span class="nds-tag"><span class="label">tag1</span></span>
+ *     </div>
+ *     <div class="nds-card">
+ *         <div class="nds-card-content">
+ *             <h3>سارة أحمد</h3>
+ *             <span class="nds-tag" data-filter="role">مطور</span>
+ *             <span class="nds-badge" data-filter="department">التسويق</span>
  *         </div>
  *     </div>
  * </div>
  *
- * JavaScript API:
+ * OPTIONAL ATTRIBUTES
+ * --------------------
+ * data-filter-legend="Title"     - Sets the fieldset legend text
+ * data-filter-variant="nds-..."  - Adds class to generated inputs
  *
- * // Get filter instance
- * const filter = NDSFilter.getByTarget('myCardList');
+ * URL PARAMETERS
+ * ---------------
+ * Filters are automatically synced to URL:
+ * ?search=term&role=manager,developer&department=engineering
  *
- * // Programmatically set search
+ * JAVASCRIPT API
+ * ---------------
+ * const filter = NDSFilter.getByTarget('employeeList');
+ *
+ * // Set filter values programmatically
+ * filter.setFilterValues('role', ['Manager', 'Developer']);
+ * filter.setFilterValues('department', ['Engineering']);
  * filter.setSearchValue('john');
  *
- * // Programmatically set tags
- * filter.setSelectedTags(['tag1', 'tag2']);
+ * // Get current criteria
+ * const criteria = filter.getCriteria();
+ * // Returns: { search: '', filters: { role: [], department: [] } }
  *
  * // Reset all filters
  * filter.reset();
  *
- * // Get current criteria
- * const criteria = filter.getCriteria();
- *
- * // Get visible/hidden items
- * const visible = filter.getVisibleItems();
- * const hidden = filter.getHiddenItems();
- *
- * // Listen for filter changes
+ * // Listen for changes
  * document.addEventListener('nds:filter:change', (e) => {
- *     console.log('Visible items:', e.detail.visibleItems);
- *     console.log('Criteria:', e.detail.criteria);
- * });
- *
- * // Listen for filter reset
- * document.addEventListener('nds:filter:reset', (e) => {
- *     console.log('Filter was reset');
+ *     console.log(e.detail.criteria);
+ *     console.log(e.detail.visibleItems);
  * });
  */
