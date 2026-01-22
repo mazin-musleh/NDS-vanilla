@@ -9,7 +9,7 @@
 // BASE CARD STYLES
 // ==============================================
 
-.nds-card {
+.nds-card:not([hidden]) {
   // Internal custom properties with external fallbacks
   --_card-bg: var(--card-bg, var(--background-card));
   --_card-bg-hover: var(--card-bg-hover, var(--background-neutral-50));

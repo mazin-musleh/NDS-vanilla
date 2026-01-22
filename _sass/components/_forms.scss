@@ -102,7 +102,8 @@ fieldset {
     &>legend,
     >legend>.label {
         padding: 0;
-        margin-bottom: var(--spacing-lg);
+        margin-bottom: var(--spacing-xl);
+        font-size: var(--nds-text-lg-FS);
         font-weight: 500;
         line-height: 1;
     }
