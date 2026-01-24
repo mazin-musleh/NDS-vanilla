@@ -77,7 +77,7 @@
         overflow-x: clip;
     }
 
-    >.nds-nav-container {
+    >.nds-nav-container:not([hidden]) {
         display: flex;
         align-items: center;
         justify-content: space-between;

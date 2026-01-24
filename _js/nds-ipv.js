@@ -441,7 +441,7 @@
         document.body.insertAdjacentHTML('beforeend', overlayHTML);
     }
 
-    // Initialization function (called by nds-init.js)
+    // Initialization function (called by nds-loader.js)
     function initializeIPV() {
         // Create overlay markup automatically
         createOverlayMarkup();
@@ -466,5 +466,5 @@
         };
     }
 
-    // Note: Initialization now handled by nds-init.js unified system
+    // Note: Initialization now handled by nds-loader.js unified system
 })();

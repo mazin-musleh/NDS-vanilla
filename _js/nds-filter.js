@@ -88,14 +88,14 @@
                 if (this.searchInputs.direct) {
                     this.searchInputs.direct.input.value = sanitized;
                     if (this.searchInputs.direct.clearBtn) {
-                        this.searchInputs.direct.clearBtn.classList.remove('hidden');
+                        this.searchInputs.direct.clearBtn.hidden = false;
                     }
                 }
 
                 if (this.searchInputs.dropmenu) {
                     this.searchInputs.dropmenu.input.value = sanitized;
                     if (this.searchInputs.dropmenu.clearBtn) {
-                        this.searchInputs.dropmenu.clearBtn.classList.remove('hidden');
+                        this.searchInputs.dropmenu.clearBtn.hidden = false;
                     }
                 }
 
@@ -526,9 +526,9 @@
         updateClearButtonVisibility(input, clearBtn) {
             if (!clearBtn) return;
             if (input.value.trim()) {
-                clearBtn.classList.remove('hidden');
+                clearBtn.hidden = false;
             } else {
-                clearBtn.classList.add('hidden');
+                clearBtn.hidden = true;
             }
         }
 
@@ -732,6 +732,27 @@
         // ==============================================
 
         applyFilters() {
+            // Check if there are any active criteria
+            const hasSearch = this.criteria.search && this.criteria.search.trim() !== '';
+            const hasFilters = Object.values(this.criteria.filters).some(arr => arr.length > 0);
+            const hasCriteria = hasSearch || hasFilters;
+
+            // If no criteria, show all items and update UI
+            if (!hasCriteria) {
+                // Remove any filter-related attributes/classes from all items
+                this.items.forEach(item => {
+                    item.removeAttribute('data-filtered');
+                    item.classList.remove('nds-filtered-out');
+                    item.style.display = '';
+                });
+
+                this.updateUrlParams();
+                this.updateFilterButtonLabel();
+                this.updateAppliedChips();
+                this.updatePagination();
+                return;
+            }
+
             if (this.targetContainer) this.targetContainer.classList.add('nds-loading');
 
             let visibleCount = 0;
@@ -893,7 +914,7 @@
             if (this.searchInputs.dropmenu) {
                 this.searchInputs.dropmenu.input.value = '';
                 if (this.searchInputs.dropmenu.clearBtn) {
-                    this.searchInputs.dropmenu.clearBtn.classList.add('hidden');
+                    this.searchInputs.dropmenu.clearBtn.hidden = true;
                 }
             }
 
@@ -907,20 +928,23 @@
 
             this.updateApplyButtonLabel();
             this.dispatchClearEvent();
+
+            // Apply the cleared filters to show all items and update pagination
+            this.applyFilters();
         }
 
         clear() {
             if (this.searchInputs.direct) {
                 this.searchInputs.direct.input.value = '';
                 if (this.searchInputs.direct.clearBtn) {
-                    this.searchInputs.direct.clearBtn.classList.add('hidden');
+                    this.searchInputs.direct.clearBtn.hidden = true;
                 }
             }
 
             if (this.searchInputs.dropmenu) {
                 this.searchInputs.dropmenu.input.value = '';
                 if (this.searchInputs.dropmenu.clearBtn) {
-                    this.searchInputs.dropmenu.clearBtn.classList.add('hidden');
+                    this.searchInputs.dropmenu.clearBtn.hidden = true;
                 }
             }
 
@@ -1132,7 +1156,7 @@
         module.exports = NDSFilter;
     }
 
-    // Note: Initialization handled by nds-init.js unified system
+    // Note: Initialization handled by nds-loader.js unified system
 })();
 
 /**

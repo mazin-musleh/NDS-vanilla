@@ -92,7 +92,7 @@ direction: ltr
                         </div>
                     </div>
                 </div>
-                <div class="nds-tabs nds-code nds-divided">
+                <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -192,7 +192,7 @@ direction: ltr
                         </div>
                     </div>
                 </div>
-                <div class="nds-tabs nds-code nds-divided">
+                <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -255,7 +255,7 @@ direction: ltr
                 </div>
                 <div class="demo-container">
                     <div class="state-demo">
-                        <div class="nds-swiper" slides-max="4" slides-mid="3" slides-min="1" peek="0">
+                        <div class="nds-swiper" hidden slides-max="4" slides-mid="3" slides-min="1" peek="0">
                             <div class="nds-swiper-wrapper">
                                 <div class="nds-swiper-slide">
                                     <div class="nds-card nds-stroke nds-shadow">
@@ -317,7 +317,7 @@ direction: ltr
                         </div>
                     </div>
                 </div>
-                <div class="nds-tabs nds-code nds-divided">
+                <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -382,7 +382,7 @@ direction: ltr
                 </div>
                 <div class="demo-container">
                     <div class="state-demo">
-                        <div class="nds-swiper" slides-max="3" slides-mid="2" slides-min="1" peek="40">
+                        <div class="nds-swiper" hidden slides-max="3" slides-mid="2" slides-min="1" peek="40">
                             <div class="nds-swiper-wrapper">
                                 <div class="nds-swiper-slide">
                                     <div class="nds-card nds-stroke nds-shadow">
@@ -442,7 +442,7 @@ direction: ltr
                         </div>
                     </div>
                 </div>
-                <div class="nds-tabs nds-code nds-divided">
+                <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"

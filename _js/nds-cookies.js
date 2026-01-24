@@ -157,5 +157,5 @@
         init: initializeCookies
     };
 
-    // Note: Full initialization now handled by nds-init.js unified system
+    // Note: Full initialization now handled by nds-loader.js unified system
 })();

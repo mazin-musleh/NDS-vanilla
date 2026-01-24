@@ -54,7 +54,7 @@ direction: ltr
                 <div class="nds-form-control">
                   <input type="text" id="demo-textInput" class="nds-input" placeholder="Enter text..." value="">
                   <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle clear hidden" type="button" aria-label="Clear input">
+                    <button class="nds-btn nds-subtle clear" type="button" aria-label="Clear input" hidden>
                       <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
                     </button>
                   </div>
@@ -68,7 +68,7 @@ direction: ltr
               </div>
             </div>
           </div>
-          <div class="nds-tabs nds-code nds-divided">
+          <div class="nds-tabs nds-code nds-divided" hidden>
             <div class="nds-tab-list-container">
               <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -99,7 +99,7 @@ direction: ltr
                     <div class="nds-form-control">
                       <input type="text" id="textInput" class="nds-input" placeholder="Enter text..." value="">
                       <div class="nds-form-action">
-                        <button class="nds-btn nds-subtle clear hidden" type="button" aria-label="Clear input">
+                        <button class="nds-btn nds-subtle clear" type="button" aria-label="Clear input" hidden>
                           <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
                         </button>
                       </div>
@@ -159,7 +159,7 @@ direction: ltr
                     <button class="nds-btn nds-subtle voiceInput" type="button" aria-label="Voice input">
                       <i class="hgi hgi-stroke hgi-mic-01 icon"></i>
                     </button>
-                    <button class="nds-btn nds-subtle clear hidden" type="button" aria-label="Clear search">
+                    <button class="nds-btn nds-subtle clear" type="button" aria-label="Clear search" hidden>
                       <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
                     </button>
                   </div>
@@ -175,7 +175,7 @@ direction: ltr
               </div>
             </div>
           </div>
-          <div class="nds-tabs nds-code nds-divided">
+          <div class="nds-tabs nds-code nds-divided" hidden>
             <div class="nds-tab-list-container">
               <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -210,7 +210,7 @@ direction: ltr
                         <button class="nds-btn nds-subtle voiceInput" type="button" aria-label="Voice input">
                           <i class="hgi hgi-stroke hgi-mic-01 icon"></i>
                         </button>
-                        <button class="nds-btn nds-subtle clear hidden" type="button" aria-label="Clear search">
+                        <button class="nds-btn nds-subtle clear" type="button" aria-label="Clear search" hidden>
                           <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
                         </button>
                       </div>
@@ -266,7 +266,7 @@ direction: ltr
                   <i class="hgi hgi-stroke hgi-mail-01 icon"></i>
                   <input type="email" id="demo-emailInput" class="nds-input" placeholder="Enter email address...">
                   <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle clear hidden" type="button" aria-label="Clear email">
+                    <button class="nds-btn nds-subtle clear" type="button" aria-label="Clear email" hidden>
                       <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
                     </button>
                   </div>
@@ -282,7 +282,7 @@ direction: ltr
               </div>
             </div>
           </div>
-          <div class="nds-tabs nds-code nds-divided">
+          <div class="nds-tabs nds-code nds-divided" hidden>
             <div class="nds-tab-list-container">
               <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -314,7 +314,7 @@ direction: ltr
                       <i class="hgi hgi-stroke hgi-mail-01 icon"></i>
                       <input type="email" id="emailInput" class="nds-input" placeholder="Enter email address...">
                       <div class="nds-form-action">
-                        <button class="nds-btn nds-subtle clear hidden" type="button" aria-label="Clear email">
+                        <button class="nds-btn nds-subtle clear" type="button" aria-label="Clear email" hidden>
                           <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
                         </button>
                       </div>
@@ -374,7 +374,7 @@ direction: ltr
                   </div>
                   <input type="password" id="demo-passwordInput" class="nds-input" placeholder="Enter password...">
                   <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle clear hidden" type="button" aria-label="Clear password">
+                    <button class="nds-btn nds-subtle clear" type="button" aria-label="Clear password" hidden>
                       <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
                     </button>
                   </div>
@@ -390,7 +390,7 @@ direction: ltr
               </div>
             </div>
           </div>
-          <div class="nds-tabs nds-code nds-divided">
+          <div class="nds-tabs nds-code nds-divided" hidden>
             <div class="nds-tab-list-container">
               <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -426,7 +426,7 @@ direction: ltr
                       </div>
                       <input type="password" id="passwordInput" class="nds-input" placeholder="Enter password...">
                       <div class="nds-form-action">
-                        <button class="nds-btn nds-subtle clear hidden" type="button" aria-label="Clear password">
+                        <button class="nds-btn nds-subtle clear" type="button" aria-label="Clear password" hidden>
                           <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
                         </button>
                       </div>
@@ -493,7 +493,7 @@ direction: ltr
               </div>
             </div>
           </div>
-          <div class="nds-tabs nds-code nds-divided">
+          <div class="nds-tabs nds-code nds-divided" hidden>
             <div class="nds-tab-list-container">
               <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -577,7 +577,7 @@ direction: ltr
                   <input type="hidden" name="selectValue" class="nds-select-value">
 
                   <!-- Custom Dropdown Menu -->
-                  <div class="nds-select-dropdown hidden">
+                  <div class="nds-select-dropdown" hidden>
                     <div class="select-options">
                       <button type="button" class="nds-btn nds-subtle select-option" data-value="">
                         <span class="option-text">Choose an option...</span>
@@ -605,7 +605,7 @@ direction: ltr
               </div>
             </div>
           </div>
-          <div class="nds-tabs nds-code nds-divided">
+          <div class="nds-tabs nds-code nds-divided" hidden>
             <div class="nds-tab-list-container">
               <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -638,7 +638,7 @@ direction: ltr
                       <input type="hidden" name="selectValue" class="nds-select-value">
                       
                       <!-- Custom Dropdown Menu -->
-                      <div class="nds-select-dropdown hidden">
+                      <div class="nds-select-dropdown" hidden>
                         <div class="select-options">
                           <button type="button" class="nds-btn nds-subtle select-option" data-value="">
                             <span class="option-text">Choose an option...</span>
@@ -712,7 +712,7 @@ direction: ltr
                   <input type="text" id="status-demo-input" class="nds-input"
                     placeholder="Type here to auto-clear status...">
                   <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle clear hidden" type="button" aria-label="Clear input">
+                    <button class="nds-btn nds-subtle clear" type="button" aria-label="Clear input" hidden>
                       <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
                     </button>
                   </div>
@@ -726,7 +726,7 @@ direction: ltr
               </div>
             </div>
           </div>
-          <div class="nds-tabs nds-code nds-divided">
+          <div class="nds-tabs nds-code nds-divided" hidden>
             <div class="nds-tab-list-container">
               <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"

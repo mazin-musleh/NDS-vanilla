@@ -57,8 +57,8 @@ columns:
         icon: "hgi-linkedin-02"
         label: "Follow National Design System on LinkedIn"
 
+  - heading: "Mobile App"
     mobile_apps:
-      heading: "Mobile App"
       apps:
         - url: "#"
           label: "Apple App Store"

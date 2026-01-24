@@ -622,6 +622,6 @@
     // Mark file upload script as loaded
     window.NDS.Forms.FileUpload._loaded = true;
 
-    // Note: Initialization now handled by nds-init.js unified system
+    // Note: Initialization now handled by nds-loader.js unified system
 
 })();

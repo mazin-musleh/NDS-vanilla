@@ -39,7 +39,7 @@
     top: calc(var(--nds-nav-height) + var(--spacing-md));
     width: 100%;
 
-    .nds-drawer-list ul li > .nds-btn {
+    .nds-drawer-list ul li>.nds-btn {
         --drawer-btn-height: 40px;
     }
 }
@@ -74,7 +74,6 @@
         border-top: 0;
         border-bottom: 0;
         transform: translateX(calc(100%));
-        transition: transform var(--nds-transition);
     }
 
     .nds-sideMenu.open {
@@ -106,7 +105,6 @@
     #sideMenuToggle i {
         font-size: 1.5rem;
         color: var(--text-oncolor-primary);
-        transition: all 0.05s ease;
         transform: scale(-1);
         font-weight: 600;
     }

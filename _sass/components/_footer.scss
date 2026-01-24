@@ -9,117 +9,67 @@
     color: var(--text-oncolor-primary, #fff);
     padding: var(--spacing-4xl) 0;
     margin-top: auto;
-
-    .nds-footer-content {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 2rem;
-        margin-bottom: 2rem;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .nds-footer-column {
-        margin-bottom: 1rem;
-    }
 }
 
 /* ========================================
-   FOOTER HEADINGS AND LINKS
+   FOOTER CONTENT COLUMNS
    ======================================== */
 
-.nds-footer-heading {
-    font-size: 1rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-    color: var(--text-oncolor-primary, #fff);
-}
+.nds-footer-content {
+    display: block;
+    margin-bottom: var(--spacing-4xl);
+    column-count: 4;
+    column-gap: var(--spacing-4xl);
 
-.nds-footer-links-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-
-    >li {
-        padding: 4px 0;
-    }
-
-    .nds-btn{
-        justify-content: start;
-    }
-
-    a {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        font-size: 0.9rem;
-
-        i {
-            font-size: 1rem;
-            opacity: 0.8;
-        }
+    > li {
+        break-inside: avoid;
+        page-break-inside: avoid;
     }
 }
 
 /* ========================================
-   FOOTER SOCIAL ICONS
+   FOOTER SOCIAL AND MOBILE APP ITEMS
+   ======================================== */
+
+.nds-footer-social-item,
+.nds-footer-app-item {
+    break-inside: avoid;
+    break-after: avoid; // Prevent column break after this item
+}
+
+/* ========================================
+   FOOTER SOCIAL WRAPPER
+   ======================================== */
+
+.nds-footer-social-wrapper,
+.nds-footer-apps-wrapper {
+    list-style: none !important;
+    padding: 0;
+    margin: 0;
+}
+
+/* ========================================
+   FOOTER SOCIAL ICONS (within drawer)
    ======================================== */
 
 .nds-footer-social-icons {
     display: flex;
     gap: var(--spacing-md, 16px);
-    margin: 8px 16px 32px 16px;
+    margin: var(--spacing-md) 0;
     flex-wrap: wrap;
     justify-content: flex-start;
-
-    .nds-footer-social-icon {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 32px;
-        height: 32px;
-        border: 1px solid #fff;
-        border-radius: 4px;
-        padding: 4px;
-        color: var(--text-oncolor-primary, #fff);
-        text-decoration: none;
-
-        &:hover {
-            background-color: var(--background-white, #fff);
-            color: var(--text-primary);
-        }
-
-        i {
-            font-size: 16px;
-        }
-    }
 }
 
 /* ========================================
-   FOOTER MOBILE APP ICONS
+   FOOTER MOBILE APP ICONS (within drawer)
    ======================================== */
 
-/* Mobile App Icons */
 .nds-footer-mobile-app-icons {
     display: flex;
     gap: var(--spacing-md, 16px);
-    margin: 8px 16px 32px 16px;
+    margin: var(--spacing-md) 0;
     flex-wrap: wrap;
     justify-content: flex-start;
-}
-
-.nds-footer-app-icon {
-    transition: all 0.3s ease;
-
-    svg {
-        color: var(--text-oncolor-primary, #fff);
-    }
-
-    &:hover svg {
-        fill: var(--background-white, #fff);
-        color: #161616;
-    }
 }
 
 /* ========================================
@@ -189,25 +139,16 @@
    RESPONSIVE FOOTER STYLES
    ======================================== */
 
-/* Responsive Design */
-@include desktop(max) {
-    .nds-footer {
-        .nds-footer-content {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
-        }
+
+@include tablet(max) {
+    .nds-footer-content {
+        column-count: 2;
     }
 }
 
 @include mobile {
     .nds-footer {
         padding: 2rem 0 1rem;
-
-        .nds-footer-content {
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-            text-align: center;
-        }
 
         .nds-footer-bottom {
             justify-content: center;
@@ -231,7 +172,10 @@
         .nds-footer-social-icons,
         .nds-footer-mobile-app-icons {
             justify-content: center;
-            margin: 8px 0 32px 0;
         }
+    }
+
+    .nds-footer-content {
+        column-count: 1;
     }
 }

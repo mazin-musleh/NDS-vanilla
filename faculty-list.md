@@ -8,11 +8,12 @@ hero_title: "أعضاء هيئة التدريس"
 hero_description: "قائمة أعضاء هيئة التدريس في كلية الحاسب"
 layout_class: cardView
 sidemenu: college-sidemenu
+exclude_showcase: true
 ---
 
 <section id="facultyList" class="nds-content-section">
     <div class="nds-section-head">
-        <div class="nds-section-action nds-filter" data-filter-target="faculty_list_content">
+        <div class="nds-section-action nds-filter" data-filter-target="faculty_list_content" hidden>
             <!-- Direct Search -->
             <div class="nds-search-box">
                 <div class="nds-search-content">
@@ -23,7 +24,7 @@ sidemenu: college-sidemenu
                             <button class="nds-btn nds-subtle voiceInput" type="button" aria-label="إدخال صوتي">
                                 <i class="hgi hgi-stroke hgi-mic-01 icon"></i>
                             </button>
-                            <button class="nds-btn nds-subtle clear hidden" type="button" aria-label="مسح البحث">
+                            <button class="nds-btn nds-subtle clear" hidden type="button" aria-label="مسح البحث">
                                 <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
                             </button>
                         </div>
@@ -36,11 +37,11 @@ sidemenu: college-sidemenu
             </div>
             <!-- Filter Dropmenu -->
             <div class="nds-dropmenu">
-                <button class="nds-btn nds-neutral nds-menu-btn nds-dropmenu-trigger">
+                <button class="nds-filter-btn nds-btn nds-neutral nds-menu-btn nds-dropmenu-trigger">
                     <i class="hgi hgi-stroke hgi-filter icon"></i>
                     <span class="label">تصفية</span>
                 </button>
-                <div class="nds-dropmenu-menu" style="min-width: 300px;">
+                <div class="nds-dropmenu-menu" style="min-width: 300px;" hidden>
                     <!-- Filter Options -->
                     <div class="nds-dropmenu-item" data-filter-legend="القسم" data-filter="college"
                         data-filter-type="checkbox" data-no-auto-close>
@@ -63,13 +64,13 @@ sidemenu: college-sidemenu
     </div>
     <div class="nds-section-content">
         <div id="faculty_list_content" class="nds-pagination-content nds-grid"
-            style="--per-page: 12; --max-col: 3; --mid-col: 3; --min-col: 1;">
+            style="--per-page: 12; --max-col: 3; --mid-col: 3; --min-col: 1;" hidden>
             <!-- Card 1 - Male -->
             <a href="{{ 'faculty.html' | relative_url }}"
                 class="pagination-item nds-card nds-stroke nds-user nds-center">
                 <div class="nds-card-header">
                     <div class="nds-card-image nds-avatar nds-2xl nds-image-border">
-                        <img src="{{ 'assets/img/avatar3.png' | relative_url }}" width="158" height="158"
+                        <img src="{{ 'assets/img/avatar3.png' | relative_url }}" width="92" height="92"
                             alt="صورة عضو هيئة التدريس" loading="lazy">
                     </div>
                 </div>
@@ -102,7 +103,7 @@ sidemenu: college-sidemenu
                 class="pagination-item nds-card nds-stroke nds-user nds-center">
                 <div class="nds-card-header">
                     <div class="nds-card-image nds-avatar nds-2xl nds-image-border">
-                        <img src="{{ 'assets/img/avatar2.png' | relative_url }}" width="158" height="158"
+                        <img src="{{ 'assets/img/avatar2.png' | relative_url }}" width="92" height="92"
                             alt="صورة عضو هيئة التدريس" loading="lazy">
                     </div>
                 </div>
@@ -135,7 +136,7 @@ sidemenu: college-sidemenu
                 class="pagination-item nds-card nds-stroke nds-user nds-center">
                 <div class="nds-card-header">
                     <div class="nds-card-image nds-avatar nds-2xl nds-image-border">
-                        <img src="{{ 'assets/img/avatar4.png' | relative_url }}" width="158" height="158"
+                        <img src="{{ 'assets/img/avatar4.png' | relative_url }}" width="92" height="92"
                             alt="صورة عضو هيئة التدريس" loading="lazy">
                     </div>
                 </div>
@@ -168,7 +169,7 @@ sidemenu: college-sidemenu
                 class="pagination-item nds-card nds-stroke nds-user nds-center">
                 <div class="nds-card-header">
                     <div class="nds-card-image nds-avatar nds-2xl nds-image-border">
-                        <img src="{{ 'assets/img/avatar5.png' | relative_url }}" width="158" height="158"
+                        <img src="{{ 'assets/img/avatar5.png' | relative_url }}" width="92" height="92"
                             alt="صورة عضو هيئة التدريس" loading="lazy">
                     </div>
                 </div>

@@ -143,7 +143,7 @@
         }
     }
 
-    // Initialization function (called by nds-init.js)
+    // Initialization function (called by nds-loader.js)
     function initializePagination() {
         const paginationContainers = document.querySelectorAll('.nds-pagination-nav, .nds-pagination');
 
@@ -312,6 +312,9 @@
             // Get items
             const items = Array.from(contentContainer.querySelectorAll('.pagination-item'));
 
+            // Hide all items initially to prevent CLS (Cumulative Layout Shift)
+            items.forEach(item => item.hidden = true);
+
             // Store last perPage to detect changes
             let lastPerPage = parseInt(getComputedStyle(contentContainer).getPropertyValue('--per-page')) || 5;
 
@@ -324,9 +327,9 @@
                 const pagination = paginationNav.querySelector('.nds-pagination');
                 const currentPage = pagination ? getCurrentPage(pagination) : 1;
 
-                // If no pagination needed, show all items as active
+                // If no pagination needed, show all items
                 if (totalPages <= 1) {
-                    items.forEach(item => item.classList.add('active'));
+                    items.forEach(item => item.hidden = false);
                     paginationNav.innerHTML = '';
                     return;
                 }
@@ -459,9 +462,9 @@
 
         items.forEach((item, index) => {
             if (index >= start && index < end) {
-                item.classList.add('active');
+                item.hidden = false;
             } else {
-                item.classList.remove('active');
+                item.hidden = true;
             }
         });
     }
@@ -586,7 +589,7 @@
 
         // If no pagination needed (0 or 1 page), hide pagination and show all visible items
         if (totalPages <= 1) {
-            visibleItems.forEach(item => item.classList.add('active'));
+            visibleItems.forEach(item => item.hidden = false);
             paginationNav.innerHTML = '';
             paginationNav.style.display = 'none';
             return;
@@ -654,9 +657,9 @@
 
         visibleItems.forEach((item, index) => {
             if (index >= start && index < end) {
-                item.classList.add('active');
+                item.hidden = false;
             } else {
-                item.classList.remove('active');
+                item.hidden = true;
             }
         });
     }
@@ -677,5 +680,5 @@
         };
     }
 
-    // Note: Initialization now handled by nds-init.js unified system
+    // Note: Initialization now handled by nds-loader.js unified system
 })();

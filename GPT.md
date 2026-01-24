@@ -54,7 +54,7 @@ Key configs:
   - Watch mode available: `ruby _plugins/js_processor.rb watch`
 - Pages include the bundle from `_layouts/default.html`
 
-### Unified Initialization (`_js/nds-init.js`)
+### Unified Initialization (`_js/nds-loader.js`)
 
 The site uses a single orchestrator to initialize components based on DOM presence.
 
@@ -83,7 +83,7 @@ Registry entries have shape:
 When adding a component:
 
 1) Expose a global with an `init()` (idempotent) in its source file, e.g. `window.NDSTooltip = { init() { … } }`.
-2) Add an entry in `_js/nds-init.js` with a sensible `priority` and `selector`.
+2) Add an entry in `_js/nds-loader.js` with a sensible `priority` and `selector`.
 3) Avoid separate `DOMContentLoaded` listeners or scattered timeouts in component files; let the orchestrator control order and batching.
 4) Keep `init()` safe to run multiple times; prefer feature-detection and guard flags where appropriate.
 
@@ -141,7 +141,7 @@ Data syntax examples:
 ## Conventions & Quality
 
 - JavaScript: vanilla ES6+, optional chaining allowed; keep modules strict and expose clean globals under `window.NDS*`
-- Initialization: no per-file DOMContentLoaded; rely on `_js/nds-init.js`
+- Initialization: no per-file DOMContentLoaded; rely on `_js/nds-loader.js`
 - Accessibility: ensure ARIA roles and keyboard support in interactive components
 - Performance: avoid repeated DOM queries; the init system already batches lookups
 - Logging: keep logs concise; use the orchestrator’s config flags to toggle
@@ -171,7 +171,7 @@ Typography & Icons:
 Add a JS component:
 
 1) Create `_js/nds-yourFeature.js` and expose `window.NDSYourFeature.init()`
-2) Register it in `_js/nds-init.js` with selector/priority
+2) Register it in `_js/nds-loader.js` with selector/priority
 3) Rebuild bundle: `ruby _plugins/js_processor.rb`
 
 Add a component page:

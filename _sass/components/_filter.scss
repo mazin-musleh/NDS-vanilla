@@ -24,24 +24,68 @@
         padding: 0;
         margin-inline-start: 0;
         flex: 1;
+        max-width: unset;
+
+        @include mobile{
+         .nds-search-content{
+            gap: var(--spacing-sm);
+         }
+        }
     }
+
     .nds-filter-applied:not([hidden]) {
         flex: 1 1 100%;
         display: flex;
-        justify-content: flex-end;
+        flex-wrap: wrap;
         gap: var(--spacing-md);
     }
-    .nds-dropmenu {
-        text-align: end;
 
-        @include mobile{
-            width: 100%;
-        }
+    .nds-dropmenu {
+
         .nds-dropmenu-menu {
             padding: var(--spacing-lg);
         }
 
     }
 
+    @include mobile {
 
+        column-gap: var(--spacing-md);
+
+        .nds-search-btn>.label,
+        .nds-filter-btn>.label {
+            display: none;
+        }
+
+    }
+
+    .nds-form-control{
+        min-width: unset;
+    }
+
+
+}
+
+.nds-search-box {
+    display: flex;
+    gap: var(--spacing-lg);
+    max-width: 800px;
+    margin: 0 auto;
+    justify-content: center;
+    padding: var(--spacing-lg);
+    align-items: flex-start;
+    flex-direction: column;
+
+    .nds-search-content {
+        display: flex;
+        gap: var(--spacing-lg);
+        width: 100%;
+    }
+
+    .nds-dropdown-title {
+        font-size: var(--nds-text-clamp-lg-FS);
+        line-height: var(--nds-text-clamp-lg-LH);
+        color: var(--text-primary);
+        font-weight: 500;
+    }
 }

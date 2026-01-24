@@ -28,7 +28,7 @@ direction: ltr
                 </div>
                 <div class="demo-container">
                     <div class="state-demo">
-                        <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
+                        <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb" hidden>
                             <ol class="nds-breadcrumb">
                                 <li><a href="/">Home</a></li>
                                 <li><a href="#">Components</a></li>
@@ -37,7 +37,7 @@ direction: ltr
                         </nav>
                     </div>
                 </div>
-                <div class="nds-tabs nds-code nds-divided">
+                <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -80,7 +80,7 @@ direction: ltr
                 </div>
                 <div class="demo-container">
                     <div class="state-demo">
-                        <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
+                        <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb" hidden>
                             <ol class="nds-breadcrumb">
                                 <li><a href="/">Home</a></li>
                                 <li aria-current="page">Components</li>
@@ -88,7 +88,7 @@ direction: ltr
                         </nav>
                     </div>
                 </div>
-                <div class="nds-tabs nds-code nds-divided">
+                <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -142,7 +142,7 @@ direction: ltr
                 </div>
                 <div class="demo-container">
                     <div class="state-demo">
-                        <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
+                        <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb" hidden>
                             <ol class="nds-breadcrumb">
                                 <li><a href="/">Home</a></li>
                                 <li><a href="#">Components</a></li>
@@ -152,7 +152,7 @@ direction: ltr
                         </nav>
                     </div>
                 </div>
-                <div class="nds-tabs nds-code nds-divided">
+                <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -207,7 +207,7 @@ direction: ltr
                 </div>
                 <div class="demo-container">
                     <div class="state-demo">
-                        <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
+                        <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb" hidden>
                             <ol class="nds-breadcrumb">
                                 <li><a href="/">Home</a></li>
                                 <li><a href="#">Services</a></li>
@@ -220,7 +220,7 @@ direction: ltr
                         </nav>
                     </div>
                 </div>
-                <div class="nds-tabs nds-code nds-divided">
+                <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"

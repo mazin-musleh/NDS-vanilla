@@ -3,78 +3,61 @@
     'use strict';
 
     // Component registry with dependencies and selectors
+    // Priority is automatically assigned based on array order (first = highest priority)
+    // To change initialization order, simply reorder components in this array
     const COMPONENTS = [
         {
             name: 'navigation',
-            priority: 1,
             selector: '.nds-main-nav',
             init: () => window.NDSNavController?.init?.(),
-            // universal: true
         },
         {
             name: 'forms',
-            priority: 2,
             selector: '.nds-form-control',
             init: () => window.NDS?.Forms?.init?.(),
-            // universal: true // Always initialize
         },
         {
             name: 'tabs',
-            priority: 3,
             selector: '.nds-tabs',
             init: () => window.NDSTabs?.init?.(),
         },
         {
             name: 'tables',
-            priority: 4,
             selector: '.nds-table',
             init: () => window.NDSTables?.init?.(),
         },
         {
             name: 'accordion',
-            priority: 5,
             selector: '.nds-accordion',
             init: () => window.NDSAccordion?.init?.(),
         },
         {
             name: 'stepper',
-            priority: 6,
             selector: '.nds-stepper',
             init: () => window.NDSStepper?.init?.(),
         },
         {
             name: 'swiper',
-            priority: 7,
             selector: '.nds-swiper',
             init: () => window.NDSSwiper?.init?.(),
         },
         {
             name: 'fileUpload',
-            priority: 8,
             selector: '.nds-file-upload',
             init: () => window.NDS?.Forms?.FileUpload?.init?.(),
         },
-/*         {
-            name: 'oneRowContent',
-            priority: 9,
-            selector: '.oneRowContent',
-            init: () => window.NDSOneRowContent?.initializeRowScroll?.(),
-        }, */
         {
             name: 'sideMenu',
-            priority: 10,
             selector: '.wSideMenu',
             init: () => window.NDSSideMenu?.init?.(),
         },
         {
             name: 'drawer',
-            priority: 11,
             selector: '.nds-drawer',
             init: () => window.NDSDrawer?.init?.(),
         },
         {
             name: 'numbers',
-            priority: 12,
             selector: '.nds-number-format, .nds-counter-value',
             init: () => {
                 // Run both formatting and counter setup regardless of return values
@@ -84,114 +67,104 @@
         },
         {
             name: 'code',
-            priority: 13,
             selector: 'code',
             init: () => window.NDSCode?.init?.(),
         },
         {
             name: 'showcase',
-            priority: 14,
             selector: '.nds-demo-card, .demo-toggle-btn',
             init: () => window.NDSShowcase?.init?.(),
         },
         {
             name: 'share',
-            priority: 15,
             selector: '#nds-sharePageBtn',
             init: () => window.NDSShare?.init?.(),
         },
         {
             name: 'calendar',
-            priority: 16,
             selector: '.nds-date-input',
             init: () => window.NDSCalendar?.init?.(),
         },
         {
             name: 'cityWeather',
-            priority: 17,
             selector: '#nds-weatherInfo, #nds-cityName',
             init: () => window.NDSCityWeather?.init?.(),
         },
         {
             name: 'timeDate',
-            priority: 18,
             selector: '#nds-date, #nds-realTimeClock',
             init: () => window.NDSTimeDate?.init?.(),
         },
         {
             name: 'fontLoading',
-            priority: 19,
             selector: null,
             init: () => window.NDSFontLoading?.init?.(),
             universal: true,
         },
         {
             name: 'cookies',
-            priority: 20,
             selector: '#ndsCookiesAcceptBtn',
             init: () => window.NDSCookies?.init?.(),
         },
         {
             name: 'rating',
-            priority: 21,
             selector: '.nds-rating',
             init: () => window.NDSRating?.initializeRatings?.(),
         },
         {
             name: 'expandable',
-            priority: 22,
             selector: '.nds-expandable',
             init: () => window.NDSExpandable?.init?.(),
         },
         {
             name: 'breadcrumb',
-            priority: 23,
             selector: '.nds-breadcrumb-nav',
             init: () => window.NDSBreadcrumb?.init?.(),
         },
         {
             name: 'dropmenu',
-            priority: 24,
             selector: '.nds-dropmenu',
             init: () => window.NDSDropmenu?.init?.(),
         },
         {
             name: 'pagination',
-            priority: 25,
             selector: '.nds-pagination-nav, .nds-pagination',
             init: () => window.NDSPagination?.init?.(),
         },
         {
             name: 'autoPagination',
-            priority: 26,
             selector: '.nds-auto-pagination',
             init: () => window.NDSPagination?.initAuto?.(),
         },
         {
             name: 'ipv',
-            priority: 27,
             selector: '.nds-ipv-thumbnail',
             init: () => window.NDSImagePopupViewer?.init?.(),
         },
         {
             name: 'modal',
-            priority: 28,
             selector: '.nds-modal-backdrop, .nds-modal',
             init: () => window.NDSModal?.init?.(),
         },
         {
             name: 'alert',
-            priority: 29,
             selector: '.nds-alert',
             init: () => window.NDSAlert?.init?.(),
         },
         {
             name: 'filter',
-            priority: 30,
             selector: '.nds-filter',
             init: () => window.NDSFilter?.init?.(),
         },
-    ];
+        {
+            name: 'userFeedback',
+            selector: '.nds-user-feedback',
+            init: () => window.NDSUserFeedback?.init?.(),
+        },
+    ].map((component, index) => ({
+        ...component,
+        priority: index + 1  // Auto-assign priority based on array order
+    }));
 
     function initializeNDS() {
         if (CONFIG.disableAll === true) {
@@ -260,6 +233,9 @@
         let index = 0;
         function initNext() {
             if (index >= toInitialize.length) {
+                // All components initialized - now batch remove hidden attributes
+                batchRemoveHidden();
+
                 if (CONFIG.enableTiming) {
                     const endTime = performance.now();
                     console.log(
@@ -289,12 +265,56 @@
             }
         }
 
+        // Batch removal of hidden attributes - single reflow instead of multiple
+        function batchRemoveHidden() {
+            const batchStart = performance.now();
+
+            requestAnimationFrame(() => {
+                const collectStart = performance.now();
+
+                // Collect all NDS components with hidden attribute
+                const hiddenElements = document.querySelectorAll(
+                    '[hidden].nds-tabs, ' +
+                    '[hidden].nds-drawer, ' +
+                    '[hidden].nds-breadcrumb-nav, ' +
+                    '[hidden].nds-user-feedback, ' +
+                    '[hidden].nds-dropmenu-menu, ' +
+                    '[hidden].nds-nav-container, ' +
+                    '[hidden].nds-swiper, ' +
+                    '[hidden].nds-swiper-slide, ' +
+                    '[hidden].nds-pagination-content, ' +
+                    '[hidden].nds-footer '
+                );
+
+                const collectEnd = performance.now();
+                const removeStart = performance.now();
+
+                // Remove all hidden attributes in one batch - triggers single reflow
+                hiddenElements.forEach(el => el.removeAttribute('hidden'));
+
+                const removeEnd = performance.now();
+                const batchEnd = performance.now();
+
+                // Performance logging
+                if (CONFIG.enableTiming && hiddenElements.length > 0) {
+                    console.group(`[NDS:Performance] Batch Reveal (${hiddenElements.length} elements)`);
+                    console.log(`  Collection time: ${(collectEnd - collectStart).toFixed(2)}ms`);
+                    console.log(`  Removal time: ${(removeEnd - removeStart).toFixed(2)}ms`);
+                    console.log(`  Total batch time: ${(batchEnd - batchStart).toFixed(2)}ms`);
+                    console.groupEnd();
+                } else if (CONFIG.enableLogging && hiddenElements.length > 0) {
+                    console.log(`[NDS] Revealed ${hiddenElements.length} hidden components in ${(batchEnd - batchStart).toFixed(2)}ms`);
+                }
+            });
+        }
+
         // Start initialization chain
         requestAnimationFrame(initNext);
     }
 
     // Configuration options
     // Merge defaults with optional global/window overrides and HTML data-attributes
+    // To enable performance monitoring, set window.NDSInitConfig = { enableTiming: true, enableLogging: true }
     const rootEl = document.documentElement;
     const attrAutoInit = rootEl?.getAttribute('data-nds-auto-init');
     const attrDisableAll = rootEl?.getAttribute('data-nds-disable-all');
@@ -302,8 +322,8 @@
 
     const CONFIG = {
         staggerDelay: 3, // ms between component initializations
-        enableLogging: false,
-        enableTiming: false,
+        enableLogging: GLOBAL.enableLogging ?? false,
+        enableTiming: GLOBAL.enableTiming ?? false,
         // When false, prevents automatic initialization on DOM ready
         autoInitialize: GLOBAL.autoInitialize ?? (attrAutoInit != null ? attrAutoInit !== 'false' : true),
         // When true, disables initializing any component (manual calls still respected if caller overrides)

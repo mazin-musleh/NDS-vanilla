@@ -128,7 +128,7 @@
     function initializeSideMenu() {
         const accMenu = document.querySelector(".nds-sideMenu");
         if (!accMenu) return;
-        
+
         // Skip elements inside code examples
         if (accMenu.closest('code, .code-example')) {
             return;
@@ -139,6 +139,9 @@
         const toggleBtn = setupMenuToggle(accMenu);
         setupClickOutside(accMenu, toggleBtn);
         setupKeyboardEvents(accMenu);
+
+        // Add transition after initialization to prevent animation on page load
+        accMenu.style.transition = 'transform var(--nds-transition)';
     }
 
     // CRITICAL: Expose global API immediately (called by unified init system)
@@ -149,5 +152,5 @@
         };
     }
 
-    // Note: Initialization now handled by nds-init.js unified system
+    // Note: Initialization now handled by nds-loader.js unified system
 })();

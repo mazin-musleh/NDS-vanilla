@@ -15,6 +15,7 @@
     // Internal custom properties with external fallbacks
     --_gap: var(--drawer-gap, 0px);
     --_indent: var(--drawer-indent, var(--spacing-md));
+    --_divider: var(--drawer-divider, var(--alpha-black-10));
     --_indicator-width: var(--drawer-indicator-width, 5px);
     --_indicator: var(--drawer-indicator, var(--colors-neutral-300));
     --_indicator-active: var(--drawer-indicator-active, var(--colors-primary-sa-flag-600-primary));
@@ -25,8 +26,11 @@
     --_transition: var(--drawer-transition, var(--nds-transition));
     --_max-height: var(--drawer-max-height, 400px);
 
-    display: flex;
-    flex-direction: column;
+    &:not([hidden]) {
+        display: flex;
+        flex-direction: column;
+    }
+
     width: 100%;
 
     /* Scrollbar Hiding */
@@ -37,6 +41,10 @@
     * {
         scrollbar-width: none;
         -ms-overflow-style: none;
+    }
+
+    &.nds-oncolor{
+         --drawer-divider: var(--alpha-white-10);
     }
 
 }
@@ -72,8 +80,8 @@
     // Button/link styling within drawer
     >.nds-btn {
         --btn-height: var(--drawer-btn-height);
+        --btn-width: 100%;
         --btn-gap: var(--drawer-btn-gap, var(--spacing-md));
-        width: 100%;
         justify-content: flex-start;
         min-height: fit-content;
 
@@ -107,6 +115,28 @@
 }
 
 // ==============================================
+// ALWAYS OPEN STATE
+// ==============================================
+
+.nds-drawer[data-state="always-open"] {
+    // Hide arrow icons in always-open mode
+    .nds-drawer-list > li > .nds-btn {
+        .hgi-arrow-left-01 {
+            display: none;
+        }
+
+        // Hide pseudo-element arrows (for menu buttons)
+        &.nds-menu-btn::after {
+            display: none;
+        }
+
+        // Make button non-interactive visually
+        pointer-events: none;
+        cursor: default;
+    }
+}
+
+// ==============================================
 // ACTIVE STATE
 // ==============================================
 
@@ -116,8 +146,6 @@
     --icon-bg-color: var(--colors-primary-sa-flag-50);
 
     >.nds-btn {
-
-
         &.nds-indicator::before {
             opacity: 1;
             background-color: var(--_indicator-active);
@@ -176,12 +204,14 @@
     }
 }
 
-// Animation states - height set by JS during show/opening/closing
-.nds-drawer-list>li>ul.show {
+// Animation states - height set by JS during opening/closing
+.nds-drawer-list>li>ul[data-state="opening"],
+.nds-drawer-list>li>ul[data-state="opened"],
+.nds-drawer-list>li>ul[data-state="closing"] {
     display: unset;
 }
 
-.nds-drawer-list>li>ul.opened {
+.nds-drawer-list>li>ul[data-state="opened"] {
     height: auto;
 }
 
@@ -218,7 +248,7 @@
 // Auto-constrained when has scroll container
 .nds-drawer:has(.nds-drawer-scroll) {
     position: relative;
-    max-height: var(--_max-height); 
+    max-height: var(--_max-height);
 }
 
 .nds-drawer-scroll {
@@ -233,10 +263,10 @@
     }
 }
 
-.nds-drawer-more {
+.nds-drawer .nds-drawer-more {
     width: 100%;
     background: var(--background-surface, var(--background-white));
-    border-top: 1px solid var(--border-neutral-secondary);
+    border-top: 1px solid var(--_divider);
     justify-content: center;
 
     // Hidden by default
@@ -263,10 +293,26 @@
 
 .nds-drawer.nds-divided {
     .nds-drawer-list>li {
-        border-bottom: 1px solid var(--border-neutral-secondary);
+        border-bottom: 1px solid var(--_divider);
 
         &:last-child {
             border-bottom: none;
+        }
+    }
+
+    // When always open, move border to button instead of li
+    &[data-state="always-open"] {
+        .nds-drawer-list > li {
+            border-bottom: none;
+
+            > .nds-btn {
+                border-bottom: 1px solid var(--_divider);
+            }
+
+            // Remove border only if it's the only child (no siblings)
+            &:only-child > .nds-btn {
+                border-bottom: none;
+            }
         }
     }
 }
@@ -276,9 +322,9 @@
 // FIT MODE
 // ==============================================
 
-.nds-grid
-.nds-drawer.nds-fit {
-    --drawer-btn-height:100%;
+.nds-grid .nds-drawer.nds-fit {
+    --drawer-btn-height: 100%;
+
     .nds-drawer-list {
         height: 100%;
 

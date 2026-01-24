@@ -229,7 +229,7 @@ NDSRating.enableRating = function(element) {
   element.ndsRating.enable();
 };
 
-// Expose to window for nds-init.js
+// Expose to window for nds-loader.js
 window.NDSRating = window.NDSRating || {};
 window.NDSRating.initializeRatings = initializeRatings;
 

@@ -33,7 +33,7 @@ direction: ltr
                                 <i class="hgi hgi-stroke hgi-menu-01"></i>
                                 <span class="label">Actions</span>
                             </button>
-                            <div class="nds-dropmenu-menu">
+                            <div class="nds-dropmenu-menu" hidden>
                                 <button class="nds-btn nds-subtle nds-dropmenu-item">
                                     <i class="hgi hgi-stroke hgi-edit-02"></i>
                                     <span class="label">Edit</span>
@@ -55,7 +55,7 @@ direction: ltr
                         </div>
                     </div>
                 </div>
-                <div class="nds-tabs nds-code nds-divided">
+                <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -78,7 +78,7 @@ direction: ltr
                                     <i class="hgi hgi-stroke hgi-menu-01"></i>
                                     <span class="label">Actions</span>
                                   </button>
-                                  <div class="nds-dropmenu-menu">
+                                  <div class="nds-dropmenu-menu" hidden>
                                     <button class="nds-btn nds-subtle nds-dropmenu-item">
                                       <i class="hgi hgi-stroke hgi-edit-02"></i>
                                       <span class="label">Edit</span>
@@ -120,7 +120,7 @@ direction: ltr
                             <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                                 <span class="label">Options</span>
                             </button>
-                            <div class="nds-dropmenu-menu">
+                            <div class="nds-dropmenu-menu" hidden>
                                 <button class="nds-btn nds-subtle nds-dropmenu-item">
                                     <span class="label">Option 1</span>
                                 </button>
@@ -134,7 +134,7 @@ direction: ltr
                         </div>
                     </div>
                 </div>
-                <div class="nds-tabs nds-code nds-divided">
+                <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -156,7 +156,7 @@ direction: ltr
                                     <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                                         <span class="label">Options</span>
                                     </button>
-                                    <div class="nds-dropmenu-menu">
+                                    <div class="nds-dropmenu-menu" hidden>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item">
                                             <span class="label">Option 1</span>
                                         </button>
@@ -202,7 +202,7 @@ direction: ltr
                                 <span class="label">Account</span>
                                 <i class="hgi hgi-stroke hgi-user-circle"></i>
                             </button>
-                            <div class="nds-dropmenu-menu">
+                            <div class="nds-dropmenu-menu" hidden>
                                 <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
                                     <i class="hgi hgi-stroke hgi-user-01"></i>
                                     <span class="label">Profile</span>
@@ -224,7 +224,7 @@ direction: ltr
                         </div>
                     </div>
                 </div>
-                <div class="nds-tabs nds-code nds-divided">
+                <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -247,7 +247,7 @@ direction: ltr
                                     <span class="label">Account</span>
                                     <i class="hgi hgi-stroke hgi-user-circle"></i>
                                   </button>
-                                  <div class="nds-dropmenu-menu">
+                                  <div class="nds-dropmenu-menu" hidden>
                                     <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
                                       <i class="hgi hgi-stroke hgi-user-01"></i>
                                       <span class="label">Profile</span>
@@ -288,7 +288,7 @@ direction: ltr
                 <div class="demo-header">
                     <div class="demo-label">Required Classes</div>
                 </div>
-                <div class="nds-tabs nds-code nds-divided">
+                <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -420,7 +420,7 @@ Data Attributes:
                         </div>
                     </div>
                 </div>
-                <div class="nds-tabs nds-code nds-divided">
+                <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"

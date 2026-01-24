@@ -518,7 +518,7 @@
             // Show/hide clear button
             var clearButton = formControl.querySelector('.clear');
             if (clearButton && input.type !== 'radio' && input.type !== 'checkbox') {
-                clearButton.classList.toggle('hidden', !hasValue);
+                clearButton.toggleAttribute('hidden', !hasValue);
             }
 
             if (skipValidation) return;
@@ -734,7 +734,7 @@
 
             function updateOpenState() {
                 formControl.classList.toggle('open', isOpen);
-                dropdown.classList.toggle('hidden', !isOpen);
+                dropdown.toggleAttribute('hidden', !isOpen);
 
                 if (isOpen) {
                     updateSelectedOptions();

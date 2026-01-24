@@ -22,11 +22,11 @@
             <p class="nds-section-description">{{ page.hero_description | default: site.hero_description }}</p>
             {% unless page.hide_share_page %}
             <div id="nds-sharePage" class="nds-dropmenu">
-                <button id="nds-sharePageBtn" class="nds-btn nds-subtle nds-dropmenu-trigger nds-md">
+                <button id="nds-sharePageBtn" class="nds-btn nds-subtle nds-dropmenu-trigger nds-md" aria-label="Share Page">
                     <i class="hgi hgi-stroke hgi-share-01 icon"></i>
                     <span class="label">Share Page</span>
                 </button>
-                <div id="nds-sharePage-dropdown" class="nds-dropmenu-menu">
+                <div id="nds-sharePage-dropdown" class="nds-dropmenu-menu" hidden>
                     <button class="nds-btn nds-subtle nds-dropmenu-item share-x" type="button" aria-label="Share on X">
                         <i class="hgi hgi-stroke hgi-new-twitter icon"></i>
                         <span class="label">X</span>
@@ -71,7 +71,7 @@
     <div class="nds-swiper nds-hero nds-full-width" style="--total: {{ hero_sliders | size }}">
         <div class="nds-swiper-wrapper">
             {% for slide in hero_sliders %}
-            <div class="nds-swiper-slide nds-content-grid">
+            <div class="nds-swiper-slide nds-content-grid"{% unless forloop.first %} hidden{% endunless %}>
                 <div class="nds-hero-image-wrapper nds-full-width"
                     style="--overlay:{{ slide.overlay | default: 0.7 }}; position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
                     {% if forloop.first %}
