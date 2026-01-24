@@ -2,7 +2,7 @@
     <button id="sideMenuToggle" class="sideMenuToggle" aria-label="Sidebar Menu">
         <i class="hgi hgi-stroke hgi-menu-02"></i>
     </button>
-    <nav class="nds-drawer nds-divided nds-full-height">
+    <nav class="nds-drawer nds-divided nds-full-height" hidden>
         {% assign sidemenu_data_file = page.sidemenu | default: site.sidemenu | default: "sidemenu" %}
         {% assign sidemenu_items = site.data[sidemenu_data_file] %}
         <div class="nds-drawer-scroll">

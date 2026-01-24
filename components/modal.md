@@ -96,7 +96,7 @@ direction: ltr
 
 
                 </div>
-                <div class="nds-tabs nds-code nds-divided">
+                <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -219,7 +219,7 @@ direction: ltr
                 <div class="guideline-item">
                     <h3>JavaScript Integration</h3>
                     <ul>
-                        <li><strong>Automatic initialization:</strong> Modals initialize automatically via nds-init.js
+                        <li><strong>Automatic initialization:</strong> Modals initialize automatically via nds-loader.js
                         </li>
                         <li><strong>Programmatic control:</strong> Use <code>window.NDSModal.open('modal-id')</code>
                         </li>

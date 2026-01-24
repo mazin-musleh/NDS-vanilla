@@ -140,7 +140,7 @@
         module.exports = NDSBreadcrumb;
     }
 
-    // Note: Initialization now handled by nds-init.js unified system
+    // Note: Initialization now handled by nds-loader.js unified system
 })();
 
 /**

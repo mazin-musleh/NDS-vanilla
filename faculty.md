@@ -8,12 +8,14 @@ hero_title: "د. محمد أحمد السالم"
 hero_description: "أستاذ مشارك - كلية علوم الحاسب"
 layout_class: cardView
 sidemenu: college-sidemenu
+exclude_showcase: true
 ---
 
 <section id="facultyInfo" class="nds-content-section nds-user">
     <div class="nds-section-head">
         <div class="nds-section-image faculty-avatar nds-avatar nds-3xl nds-image nds-image-border">
-            <img src="{{ 'assets/img/avatar3.png' | relative_url }}" alt="صورة عضو هيئة التدريس" loading="lazy">
+            <img src="{{ 'assets/img/avatar3.png' | relative_url }}" width="112" height="112"
+                alt="صورة عضو هيئة التدريس" fetchpriority="high">
         </div>
         <div class="nds-section-text">
             <h2 class="nds-section-title">د. محمد أحمد السالم</h2>
@@ -21,29 +23,29 @@ sidemenu: college-sidemenu
         </div>
     </div>
     <div class="nds-section-content">
-        <dl class="nds-definition-list nds-grid" style="--max-col:4;--mid-col:2;--min-col:2;">
-            <div class="nds-definition-item nds-card nds-stroke">
+        <dl class="nds-definition-list tableView nds-divided" style="--max-col:4;--mid-col:2;--min-col:2;">
+            <div class="nds-definition-item">
                 <dt>
                     <i class="hgi hgi-stroke hgi-school icon"></i>
                     <span class="label">الكلية</span>
                 </dt>
                 <dd>كلية علوم الحاسب والمعلومات</dd>
             </div>
-            <div class="nds-definition-item nds-card nds-stroke">
+            <div class="nds-definition-item">
                 <dt>
                     <i class="hgi hgi-stroke hgi-building-02 icon"></i>
                     <span class="label">القسم</span>
                 </dt>
                 <dd>قسم علوم الحاسب</dd>
             </div>
-            <div class="nds-definition-item nds-card nds-stroke">
+            <div class="nds-definition-item">
                 <dt>
                     <i class="hgi hgi-stroke hgi-book-open-02 icon"></i>
                     <span class="label">التخصص العام</span>
                 </dt>
                 <dd>علوم الحاسب</dd>
             </div>
-            <div class="nds-definition-item nds-card nds-stroke">
+            <div class="nds-definition-item">
                 <dt>
                     <i class="hgi hgi-stroke hgi-book-02 icon"></i>
                     <span class="label">التخصص المحدد</span>

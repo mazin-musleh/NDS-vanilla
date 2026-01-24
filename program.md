@@ -8,6 +8,7 @@ lang: ar
 direction: rtl
 layout_class: cardView
 sidemenu: college-sidemenu
+exclude_showcase: true
 ---
 
 <!--Section 1: عن البرنامج -Expandable Content -->
@@ -101,8 +102,8 @@ sidemenu: college-sidemenu
                             <span class="label">توصيف البرنامج</span>
                         </dt>
                         <dd>
-                            <a class="nds-btn nds-secondary-outline nds-md" href="#" target="_blank"><i
-                                    class="hgi hgi-stroke hgi-pdf-01 icon"></i>
+                            <a class="nds-btn nds-secondary-outline nds-md" href="#" target="_blank"
+                                aria-label="تحميل توصيف البرنامج"><i class="hgi hgi-stroke hgi-pdf-01 icon"></i>
                             </a>
                         </dd>
                     </div>
@@ -306,7 +307,8 @@ sidemenu: college-sidemenu
                                 <td>الرابعة</td>
                                 <td>الفصل الدراسي #2</td>
                                 <td>
-                                    <a class="nds-btn nds-secondary-outline" href="#" target="_blank">
+                                    <a class="nds-btn nds-secondary-outline" href="#" target="_blank"
+                                        aria-label="تحميل توصيف المقرر">
                                         <i class="hgi hgi-stroke hgi-pdf-01 icon"></i>
                                     </a>
                                 </td>
@@ -319,7 +321,8 @@ sidemenu: college-sidemenu
                                 <td>الأولى</td>
                                 <td>الفصل الدراسي #1</td>
                                 <td>
-                                    <a class="nds-btn nds-secondary-outline" href="#" target="_blank">
+                                    <a class="nds-btn nds-secondary-outline" href="#" target="_blank"
+                                        aria-label="تحميل توصيف المقرر">
                                         <i class="hgi hgi-stroke hgi-pdf-01 icon"></i>
                                     </a>
                                 </td>
@@ -332,7 +335,8 @@ sidemenu: college-sidemenu
                                 <td>الأولى</td>
                                 <td>الفصل الدراسي #2</td>
                                 <td>
-                                    <a class="nds-btn nds-secondary-outline" href="#" target="_blank">
+                                    <a class="nds-btn nds-secondary-outline" href="#" target="_blank"
+                                        aria-label="تحميل توصيف المقرر">
                                         <i class="hgi hgi-stroke hgi-pdf-01 icon"></i>
                                     </a>
                                 </td>
@@ -345,7 +349,8 @@ sidemenu: college-sidemenu
                                 <td>الثانية</td>
                                 <td>الفصل الدراسي #1</td>
                                 <td>
-                                    <a class="nds-btn nds-secondary-outline" href="#" target="_blank">
+                                    <a class="nds-btn nds-secondary-outline" href="#" target="_blank"
+                                        aria-label="تحميل توصيف المقرر">
                                         <i class="hgi hgi-stroke hgi-pdf-01 icon"></i>
                                     </a>
                                 </td>
@@ -358,7 +363,8 @@ sidemenu: college-sidemenu
                                 <td>الثانية</td>
                                 <td>الفصل الدراسي #2</td>
                                 <td>
-                                    <a class="nds-btn nds-secondary-outline" href="#" target="_blank">
+                                    <a class="nds-btn nds-secondary-outline" href="#" target="_blank"
+                                        aria-label="تحميل توصيف المقرر">
                                         <i class="hgi hgi-stroke hgi-pdf-01 icon"></i>
                                     </a>
                                 </td>
@@ -371,7 +377,8 @@ sidemenu: college-sidemenu
                                 <td>الثالثة</td>
                                 <td>الفصل الدراسي #1</td>
                                 <td>
-                                    <a class="nds-btn nds-secondary-outline" href="#" target="_blank">
+                                    <a class="nds-btn nds-secondary-outline" href="#" target="_blank"
+                                        aria-label="تحميل توصيف المقرر">
                                         <i class="hgi hgi-stroke hgi-pdf-01 icon"></i>
                                     </a>
                                 </td>
@@ -384,7 +391,8 @@ sidemenu: college-sidemenu
                                 <td>الرابعة</td>
                                 <td>الفصل الدراسي #1</td>
                                 <td>
-                                    <a class="nds-btn nds-secondary-outline" href="#" target="_blank">
+                                    <a class="nds-btn nds-secondary-outline" href="#" target="_blank"
+                                        aria-label="تحميل توصيف المقرر">
                                         <i class="hgi hgi-stroke hgi-pdf-01 icon"></i>
                                     </a>
                                 </td>
@@ -398,7 +406,8 @@ sidemenu: college-sidemenu
                                 <td>الثالثة</td>
                                 <td>الفصل الدراسي #1</td>
                                 <td>
-                                    <a class="nds-btn nds-secondary-outline" href="#" target="_blank">
+                                    <a class="nds-btn nds-secondary-outline" href="#" target="_blank"
+                                        aria-label="تحميل توصيف المقرر">
                                         <i class="hgi hgi-stroke hgi-pdf-01 icon"></i>
                                     </a>
                                 </td>
@@ -411,7 +420,8 @@ sidemenu: college-sidemenu
                                 <td>الثانية</td>
                                 <td>الفصل الدراسي #1</td>
                                 <td>
-                                    <a class="nds-btn nds-secondary-outline" href="#" target="_blank">
+                                    <a class="nds-btn nds-secondary-outline" href="#" target="_blank"
+                                        aria-label="تحميل توصيف المقرر">
                                         <i class="hgi hgi-stroke hgi-pdf-01 icon"></i>
                                     </a>
                                 </td>
@@ -424,7 +434,8 @@ sidemenu: college-sidemenu
                                 <td>الرابعة</td>
                                 <td>الفصل الدراسي #1</td>
                                 <td>
-                                    <a class="nds-btn nds-secondary-outline" href="#" target="_blank">
+                                    <a class="nds-btn nds-secondary-outline" href="#" target="_blank"
+                                        aria-label="تحميل توصيف المقرر">
                                         <i class="hgi hgi-stroke hgi-pdf-01 icon"></i>
                                     </a>
                                 </td>
@@ -437,7 +448,8 @@ sidemenu: college-sidemenu
                                 <td>الرابعة</td>
                                 <td>الفصل الدراسي #2</td>
                                 <td>
-                                    <a class="nds-btn nds-secondary-outline" href="#" target="_blank">
+                                    <a class="nds-btn nds-secondary-outline" href="#" target="_blank"
+                                        aria-label="تحميل توصيف المقرر">
                                         <i class="hgi hgi-stroke hgi-pdf-01 icon"></i>
                                     </a>
                                 </td>
@@ -450,7 +462,8 @@ sidemenu: college-sidemenu
                                 <td>الأولى</td>
                                 <td>الفصل الدراسي #2</td>
                                 <td>
-                                    <a class="nds-btn nds-secondary-outline" href="#" target="_blank">
+                                    <a class="nds-btn nds-secondary-outline" href="#" target="_blank"
+                                        aria-label="تحميل توصيف المقرر">
                                         <i class="hgi hgi-stroke hgi-pdf-01 icon"></i>
                                     </a>
                                 </td>
@@ -463,7 +476,8 @@ sidemenu: college-sidemenu
                                 <td>الثالثة</td>
                                 <td>الفصل الدراسي #1</td>
                                 <td>
-                                    <a class="nds-btn nds-secondary-outline" href="#" target="_blank">
+                                    <a class="nds-btn nds-secondary-outline" href="#" target="_blank"
+                                        aria-label="تحميل توصيف المقرر">
                                         <i class="hgi hgi-stroke hgi-pdf-01 icon"></i>
                                     </a>
                                 </td>
@@ -477,7 +491,8 @@ sidemenu: college-sidemenu
                                 <td>الرابعة</td>
                                 <td>الفصل الدراسي #1</td>
                                 <td>
-                                    <a class="nds-btn nds-secondary-outline" href="#" target="_blank">
+                                    <a class="nds-btn nds-secondary-outline" href="#" target="_blank"
+                                        aria-label="تحميل توصيف المقرر">
                                         <i class="hgi hgi-stroke hgi-pdf-01 icon"></i>
                                     </a>
                                 </td>
@@ -490,7 +505,8 @@ sidemenu: college-sidemenu
                                 <td>الثانية</td>
                                 <td>الفصل الدراسي #2</td>
                                 <td>
-                                    <a class="nds-btn nds-secondary-outline" href="#" target="_blank">
+                                    <a class="nds-btn nds-secondary-outline" href="#" target="_blank"
+                                        aria-label="تحميل توصيف المقرر">
                                         <i class="hgi hgi-stroke hgi-pdf-01 icon"></i>
                                     </a>
                                 </td>
@@ -503,7 +519,8 @@ sidemenu: college-sidemenu
                                 <td>الرابعة</td>
                                 <td>الفصل الدراسي #2</td>
                                 <td>
-                                    <a class="nds-btn nds-secondary-outline" href="#" target="_blank">
+                                    <a class="nds-btn nds-secondary-outline" href="#" target="_blank"
+                                        aria-label="تحميل توصيف المقرر">
                                         <i class="hgi hgi-stroke hgi-pdf-01 icon"></i>
                                     </a>
                                 </td>

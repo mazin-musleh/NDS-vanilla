@@ -187,12 +187,16 @@ textarea {
   --loading-size: var(--_btn-space) !important;
   --loading-border: max(2px, calc(var(--_btn-space) / 12)) !important;
 
-  display: inline-flex;
-  align-items: center;
-  gap: var(--_btn-gap);
+  &:not([hidden]) {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--_btn-gap);
+  }
+
   border: 1px solid transparent;
   border-radius: var(--radius-sm);
-  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-family: 'IBM Plex Sans Arabic',
+  sans-serif;
   font-weight: 500;
   text-decoration: none;
   cursor: pointer;
@@ -388,20 +392,20 @@ textarea {
 
 
 @mixin reset-section-style {
-    background-color: unset !important;
-    box-shadow: unset !important;
-    border: unset !important;
+  background-color: unset !important;
+  box-shadow: unset !important;
+  border: unset !important;
 }
 
 @mixin section-variant($background, $title-color, $description-color) {
-    background-color: $background !important;
-    color: var(--text-oncolor-primary);
+  background-color: $background !important;
+  color: var(--text-oncolor-primary);
 
-    .nds-section-title {
-        color: $title-color;
-    }
+  .nds-section-title {
+    color: $title-color;
+  }
 
-    .nds-section-description {
-        color: $description-color;
-    }
+  .nds-section-description {
+    color: $description-color;
+  }
 }

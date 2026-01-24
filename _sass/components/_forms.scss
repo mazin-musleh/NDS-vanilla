@@ -326,10 +326,6 @@ fieldset {
         max-height: 200px;
         overflow-y: auto;
 
-        &.hidden {
-            display: none;
-        }
-
         .select-options {
             display: flex;
             flex-direction: column;
@@ -358,7 +354,7 @@ fieldset {
             margin-inline-start: calc(var(--spacing-md) * -1);
         }
 
-        >* {
+        >*:not([hidden]) {
             --nds-input-size: 38px;
             --btn-height: var(--nds-input-size);
             position: relative;
@@ -369,7 +365,7 @@ fieldset {
             justify-content: center;
             color: var(--text-default, #161616);
 
-            &:not(:first-child, .hidden)::before {
+            &:not(:first-child)::before {
                 content: '';
                 width: 1px;
                 background-color: var(--border-neutral-primary);
@@ -390,29 +386,4 @@ fieldset {
 
 .toggle-password.show i::before {
     content: "䔅";
-}
-
-
-.nds-search-box {
-    display: flex;
-    gap: var(--spacing-lg);
-    max-width: 800px;
-    margin: 0 auto;
-    justify-content: center;
-    padding: var(--spacing-lg);
-    align-items: flex-start;
-    flex-direction: column;
-
-    .nds-search-content {
-        display: flex;
-        gap: var(--spacing-lg);
-        width: 100%;
-    }
-
-    .nds-dropdown-title {
-        font-size: var(--nds-text-clamp-lg-FS);
-        line-height: var(--nds-text-clamp-lg-LH);
-        color: var(--text-primary);
-        font-weight: 500;
-    }
 }

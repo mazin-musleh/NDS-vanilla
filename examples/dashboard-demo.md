@@ -329,7 +329,7 @@ direction: ltr
             </p>
         </div>
         <div class="nds-section-content">
-            <div class="nds-tabs" id="communityTabs">
+            <div class="nds-tabs" id="communityTabs" hidden>
                 <div class="nds-tab-list-container">
                     <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Community navigation">
                         <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"

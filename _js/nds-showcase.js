@@ -39,7 +39,7 @@
         };
     }
 
-    // Note: Initialization now handled by nds-init.js unified system
+    // Note: Initialization now handled by nds-loader.js unified system
     // EXCEPTION: Language switcher must run on ALL pages (not just demo pages)
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initializeDirectionSwitcher);

@@ -1,0 +1,53 @@
+---
+# Critical CSS for NDS (National Design System)
+# This file contains above-the-fold styles for faster initial page render
+# Includes: hero, breadcrumb, contentLayout
+---
+/*!
+ * National Design System - Critical CSS
+ * Generated on: {{ site.time | date: '%Y-%m-%d %H:%M:%S' }}
+ * Author: {{ site.author }}
+ * Profile: {{ site.author_profile }}
+ */
+
+// Import critical variables only (essential design tokens)
+@use 'variables-critical';
+
+// Import mixins - Required for responsive design
+@use 'mixins' as *;
+
+// Import fonts - Required for proper text rendering
+@use 'fonts';
+
+// Import CSS reset - Essential normalization
+@use 'reset';
+
+// Import base styles - Essential for initial render
+@use 'base';
+
+// ====================================================================
+// CRITICAL ABOVE-THE-FOLD COMPONENTS
+// ====================================================================
+// These components are loaded first for optimal perceived performance
+
+// Navigation components - Visible on page load
+@use 'components/sideMenu';
+/* @use 'components/drawer'; */
+
+// Avatar - Used in navigation and user profile areas
+/* @use 'components/avatar'; */
+
+// Buttons - Essential interactive elements used throughout
+/* @use 'components/buttons'; */
+
+// Breadcrumb navigation - Important for page context
+@use 'components/breadcrumb';
+
+// Content layout - Main content structure
+@use 'components/contentLayout';
+
+// Hero section - First visual element on most pages
+@use 'components/hero';
+
+// Grid system - Essential layout grid
+@use 'grid';

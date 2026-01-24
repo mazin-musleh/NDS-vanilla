@@ -28,6 +28,7 @@
     max-width: var(--nds-content-MaxWidth);
     margin: auto;
 
+
     // ==============================================
     // HERO TITLE
     // ==============================================
@@ -85,14 +86,14 @@
     .nds-section-content {
 
       .nds-section-title {
-        font-size: var(--nds-display-clamp-md-FS, 30px);
-        line-height: var(--nds-display-clamp-md-LH, 38px);
-        margin-bottom: var(--nds-display-clamp-md-MB, 9.5px);
+        font-size: var(--nds-display-clamp-sm-FS, 30px);
+        line-height: var(--nds-display-clamp-sm-LH, 38px);
+        margin-bottom: var(--nds-display-clamp-sm-MB, 9.5px);
       }
 
       .nds-section-description {
-        font-size: var(--nds-text-clamp-xl-FS, 20px);
-        line-height: var(--nds-text-clamp-xl-LH, 28px);
+        font-size: var(--nds-text-clamp-lg-FS, 16px);
+        line-height: var(--nds-text-clamp-lg-LH, 24px);
       }
     }
   }

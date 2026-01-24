@@ -7,10 +7,6 @@
    BREADCRUMB BASE STYLES
    ======================================== */
 
-.nds-hero-section.sub .nds-breadcrumb-nav {
-    display: unset;
-}
-
 .nds-breadcrumb-nav {
     margin-bottom: 10px;
 }
@@ -60,16 +56,21 @@ body.hgi-loaded .nds-breadcrumb li:not(:last-child)::after {
     }
 }
 
+.nds-breadcrumb li::after {
+    content: '';
+    min-width: 24px;
+}
+
 /* ========================================
    BREADCRUMB LINK STYLES
    ======================================== */
 
-.nds-breadcrumb>li > a {
+.nds-breadcrumb>li>a {
     text-decoration: none;
     color: var(--text-default);
 }
 
-.nds-breadcrumb>li > a:hover {
+.nds-breadcrumb>li>a:hover {
     color: var(--colors-neutral-400, #9DA4AE);
 }
 

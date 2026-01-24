@@ -119,12 +119,26 @@
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach((entry) => {
                     if (entry.isIntersecting && entry.intersectionRatio > 0) {
+                        // Remove hidden attribute from container when swiper becomes visible
+                        if (this.container && this.container.hasAttribute('hidden')) {
+                            this.container.removeAttribute('hidden');
+                        }
+
                         // Only apply once until window resize
                         if (!this.peekStylesApplied) {
                             setTimeout(() => {
                                 this.updatePeekStyles();
                                 this.updateState();
                                 this.peekStylesApplied = true;
+
+                                // Remove hidden attribute from all slides after layout is stable
+                                setTimeout(() => {
+                                    this.slides.forEach(slide => {
+                                        if (slide.hasAttribute('hidden')) {
+                                            slide.removeAttribute('hidden');
+                                        }
+                                    });
+                                }, 200);
                             }, 50);
                         }
                     }

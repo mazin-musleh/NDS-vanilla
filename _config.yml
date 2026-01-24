@@ -1,14 +1,14 @@
 title: National Design System
 description: The National Design System provides comprehensive design guidelines, components, and resources for creating consistent and accessible digital experiences across government services in Saudi Arabia.
-baseurl: ""
+baseurl: "/_site"
 
 # Jekyll server settings
 port: 4002
 
 # Brand Logo
 brandLogo: assets/img/dga-logo.svg
-headerBrandW: 48
-headerBrandH: 48
+headerBrandW: 132
+headerBrandH: 42
 
 # Brand Name
 #brandName: "National Design System" #comment this to remove text from brand

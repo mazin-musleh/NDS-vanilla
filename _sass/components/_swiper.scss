@@ -21,15 +21,6 @@
     width: 100%;
     direction: inherit;
 
-    // Hide until JavaScript sets --swiper-slides to prevent flash of wrong layout
-    // Don't hide hero swipers (above the fold content)
-    &:not([data-swiper-initialized]):not(.nds-hero) {
-        display: none;
-    }
-
-    &:not([data-swiper-initialized]).nds-hero:not(:first-child) {
-        display: none;
-    }
 }
 
 // ==============================================

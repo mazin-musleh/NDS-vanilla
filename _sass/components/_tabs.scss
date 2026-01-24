@@ -18,8 +18,11 @@
 
 /* Base Tab Container */
 .nds-tabs {
-  display: flex;
-  flex-direction: column;
+  &:not([hidden]) {
+    display: flex;
+    flex-direction: column;
+  }
+
   --btn-indicator-size: 3px;
 
   /* Vertical Tab Layout */

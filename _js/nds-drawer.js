@@ -1,6 +1,7 @@
 /**
  * NDS Drawer Component
- * Handles expand/collapse of nested menus and hasMore overflow detection
+ * Handles expand/collapse of nested menus with responsive state control
+ * Uses data-state for state management and data-open-on for breakpoint control
  */
 
 (function () {
@@ -13,20 +14,95 @@
             scroll: '.nds-drawer-scroll',
             moreBtn: '.nds-drawer-more'
         },
-        classes: {
+        states: {
             open: 'open',
-            active: 'active',
-            hasMore: 'hasMore',
-            atEnd: 'atEnd',
-            show: 'show',
             opening: 'opening',
             opened: 'opened',
-            closing: 'closing'
+            closing: 'closing',
+            closed: ''
+        },
+        classes: {
+            active: 'active',
+            hasMore: 'hasMore',
+            atEnd: 'atEnd'
+        },
+        breakpoints: {
+            mobile: '(max-width: 599px)',
+            tablet: '(min-width: 600px)',
+            desktop: '(min-width: 960px)',
+            'large-desktop': '(min-width: 1280px)'
         },
         scrollThreshold: 20,
         scrollAmount: 0.8,
         transitionDuration: 250
     };
+
+    // ==============================================
+    // RESPONSIVE STATE HELPERS
+    // ==============================================
+
+    function checkBreakpoint(breakpoint) {
+        if (breakpoint === 'always') return true;
+        if (breakpoint === 'never') return false;
+
+        const mediaQuery = CONFIG.breakpoints[breakpoint];
+        return mediaQuery ? window.matchMedia(mediaQuery).matches : false;
+    }
+
+    function getOpenOnValue(item, drawer) {
+        // Item-level override takes priority
+        if (item.hasAttribute('data-open-on')) {
+            return item.getAttribute('data-open-on');
+        }
+
+        // Drawer-level default
+        if (drawer.hasAttribute('data-open-on')) {
+            return drawer.getAttribute('data-open-on');
+        }
+
+        // Fallback: check if item has 'open' class (backward compatibility)
+        if (item.classList.contains('open')) {
+            return 'always';
+        }
+
+        return 'never';
+    }
+
+    function shouldItemBeOpen(item, drawer) {
+        const openOn = getOpenOnValue(item, drawer);
+        return checkBreakpoint(openOn);
+    }
+
+    function getAlwaysOpenOnValue(drawer) {
+        return drawer.getAttribute('data-always-open-on') || null;
+    }
+
+    function shouldBeAlwaysOpen(drawer) {
+        const alwaysOpenOn = getAlwaysOpenOnValue(drawer);
+        if (!alwaysOpenOn) return false;
+        return checkBreakpoint(alwaysOpenOn);
+    }
+
+    // ==============================================
+    // STATE MANAGEMENT
+    // ==============================================
+
+    function setState(element, state) {
+        if (state) {
+            element.setAttribute('data-state', state);
+        } else {
+            element.removeAttribute('data-state');
+        }
+    }
+
+    function getState(element) {
+        return element.getAttribute('data-state') || '';
+    }
+
+    function isOpen(listItem) {
+        const state = getState(listItem);
+        return state === CONFIG.states.open || state === CONFIG.states.opened || state === CONFIG.states.opening;
+    }
 
     // ==============================================
     // EXPAND/COLLAPSE FUNCTIONALITY
@@ -39,13 +115,13 @@
         const submenu = listItem.querySelector(':scope > ul');
         if (!submenu) return;
 
-        if (listItem.classList.contains(CONFIG.classes.open)) {
+        if (isOpen(listItem)) {
             hideSubmenu(listItem, button, submenu);
         } else {
             // Accordion: close siblings
             const parentList = listItem.parentElement;
             if (parentList) {
-                parentList.querySelectorAll(':scope > li.open').forEach(sibling => {
+                parentList.querySelectorAll(':scope > li[data-state="open"], :scope > li[data-state="opened"], :scope > li[data-state="opening"]').forEach(sibling => {
                     if (sibling !== listItem) {
                         const btn = sibling.querySelector(':scope > .nds-btn');
                         const sub = sibling.querySelector(':scope > ul');
@@ -58,44 +134,42 @@
     }
 
     function showSubmenu(listItem, button, submenu) {
-        submenu.classList.add(CONFIG.classes.show, CONFIG.classes.opening);
-        listItem.classList.add(CONFIG.classes.open);
+        setState(submenu, CONFIG.states.opening);
+        setState(listItem, CONFIG.states.open);
         button.setAttribute('aria-expanded', 'true');
         submenu.style.height = submenu.scrollHeight + 'px';
 
         const cleanup = () => {
             submenu.removeEventListener('transitionend', cleanup);
-            submenu.classList.remove(CONFIG.classes.opening);
-            submenu.classList.add(CONFIG.classes.opened);
+            setState(submenu, CONFIG.states.opened);
             submenu.style.height = '';
             dispatchDrawerEvent(listItem, 'shown');
         };
 
         submenu.addEventListener('transitionend', cleanup);
         setTimeout(() => {
-            if (submenu.classList.contains(CONFIG.classes.opening)) cleanup();
+            if (getState(submenu) === CONFIG.states.opening) cleanup();
         }, CONFIG.transitionDuration + 50);
     }
 
     function hideSubmenu(listItem, button, submenu) {
         submenu.style.height = submenu.scrollHeight + 'px';
         submenu.offsetHeight; // Force reflow
-        submenu.classList.remove(CONFIG.classes.opened);
-        submenu.classList.add(CONFIG.classes.closing);
+        setState(submenu, CONFIG.states.closing);
         submenu.style.height = '0px';
-        listItem.classList.remove(CONFIG.classes.open);
+        setState(listItem, CONFIG.states.closed);
         button.setAttribute('aria-expanded', 'false');
 
         const cleanup = () => {
             submenu.removeEventListener('transitionend', cleanup);
-            submenu.classList.remove(CONFIG.classes.closing, CONFIG.classes.show);
+            setState(submenu, CONFIG.states.closed);
             submenu.style.height = '';
             dispatchDrawerEvent(listItem, 'hidden');
         };
 
         submenu.addEventListener('transitionend', cleanup);
         setTimeout(() => {
-            if (submenu.classList.contains(CONFIG.classes.closing)) cleanup();
+            if (getState(submenu) === CONFIG.states.closing) cleanup();
         }, CONFIG.transitionDuration + 50);
     }
 
@@ -107,6 +181,42 @@
         }));
     }
 
+    // ==============================================
+    // RESPONSIVE STATE INITIALIZATION
+    // ==============================================
+
+    function initResponsiveState(drawer) {
+        const isAlwaysOpen = shouldBeAlwaysOpen(drawer);
+
+        drawer.querySelectorAll('.nds-drawer-list > li').forEach(item => {
+            const submenu = item.querySelector(':scope > ul');
+            if (!submenu) return;
+
+            const button = item.querySelector(':scope > .nds-btn');
+            if (!button) return;
+
+            // Check if should be open (either always-open or conditional)
+            const shouldBeOpen = isAlwaysOpen || shouldItemBeOpen(item, drawer);
+
+            if (shouldBeOpen) {
+                setState(item, CONFIG.states.open);
+                setState(submenu, CONFIG.states.opened);
+                button.setAttribute('aria-expanded', 'true');
+            } else {
+                setState(item, CONFIG.states.closed);
+                setState(submenu, CONFIG.states.closed);
+                button.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        // Set always-open state on drawer for CSS targeting
+        if (isAlwaysOpen) {
+            drawer.setAttribute('data-state', 'always-open');
+        } else {
+            drawer.removeAttribute('data-state');
+        }
+    }
+
     function initToggles(drawer) {
         drawer.querySelectorAll('.nds-drawer-list > li').forEach(li => {
             const submenu = li.querySelector(':scope > ul');
@@ -115,14 +225,12 @@
             const button = li.querySelector(':scope > .nds-btn');
             if (!button) return;
 
-            const isOpen = li.classList.contains(CONFIG.classes.open);
-            button.setAttribute('aria-expanded', isOpen);
-
-            if (isOpen) {
-                submenu.classList.add(CONFIG.classes.show, CONFIG.classes.opened);
-            }
-
             button.addEventListener('click', (e) => {
+                // Don't toggle if drawer is in always-open mode
+                if (drawer.getAttribute('data-state') === 'always-open') {
+                    return;
+                }
+
                 if (button.tagName === 'BUTTON' || button.getAttribute('href') === '#') {
                     e.preventDefault();
                     toggleSubmenu(button);
@@ -205,18 +313,25 @@
             let parent = activeItem.closest('ul')?.closest('li');
 
             while (parent && drawer.contains(parent)) {
-                if (!parent.classList.contains(CONFIG.classes.open)) {
-                    parent.classList.add(CONFIG.classes.open);
-
+                if (!isOpen(parent)) {
                     const btn = parent.querySelector(':scope > .nds-btn');
-                    if (btn) btn.setAttribute('aria-expanded', 'true');
-
                     const submenu = parent.querySelector(':scope > ul');
-                    if (submenu) submenu.classList.add(CONFIG.classes.show, CONFIG.classes.opened);
+
+                    setState(parent, CONFIG.states.open);
+                    if (btn) btn.setAttribute('aria-expanded', 'true');
+                    if (submenu) setState(submenu, CONFIG.states.opened);
                 }
                 parent = parent.closest('ul')?.closest('li');
             }
         });
+    }
+
+    // ==============================================
+    // RESIZE HANDLER FOR RESPONSIVE STATE
+    // ==============================================
+
+    function handleResize(drawer) {
+        initResponsiveState(drawer);
     }
 
     // ==============================================
@@ -226,9 +341,17 @@
     function initDrawer(drawer) {
         if (drawer._ndsDrawerInitialized) return;
 
+        initResponsiveState(drawer);
         initToggles(drawer);
         initActiveStates(drawer);
         initHasMore(drawer);
+
+        // Add resize listener for responsive state updates
+        if (drawer.hasAttribute('data-open-on') || drawer.hasAttribute('data-always-open-on') || drawer.querySelector('[data-open-on]')) {
+            const resizeHandler = () => handleResize(drawer);
+            window.addEventListener('resize', resizeHandler);
+            drawer._resizeHandler = resizeHandler;
+        }
 
         drawer._ndsDrawerInitialized = true;
     }
@@ -245,6 +368,12 @@
         if (drawer._resizeObserver) {
             drawer._resizeObserver.disconnect();
             delete drawer._resizeObserver;
+        }
+
+        // Clean up resize handler
+        if (drawer._resizeHandler) {
+            window.removeEventListener('resize', drawer._resizeHandler);
+            delete drawer._resizeHandler;
         }
 
         delete drawer._ndsDrawerInitialized;

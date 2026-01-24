@@ -9,7 +9,7 @@
 // BASE CARD STYLES
 // ==============================================
 
-.nds-card:not([hidden]) {
+.nds-card {
   // Internal custom properties with external fallbacks
   --_card-bg: var(--card-bg, var(--background-card));
   --_card-bg-hover: var(--card-bg-hover, var(--background-neutral-50));
@@ -31,12 +31,16 @@
   border: 1px solid transparent;
   border-radius: var(--components-card-radius);
   padding: var(--_card-padding);
-  display: flex;
-  flex-direction: column;
-  gap: var(--_card-gap);
   width: var(--card-width, 100%);
   max-width: var(--card-width, 100%);
   position: relative;
+
+  // Display properties only for standard cards (cards with nds-card-* children)
+  &:not([hidden]):has([class*='nds-card-']) {
+    display: flex;
+    flex-direction: column;
+    gap: var(--_card-gap);
+  }
 
   // Shadow variant
   &.nds-shadow {
@@ -59,7 +63,8 @@
     outline-offset: -2px;
   }
 
-  &.nds-center {
+  &.nds-center,
+  &.nds-statistic {
     :is(.nds-card-header, .nds-card-content, .nds-card-text > *, .nds-card-tags, .nds-card-actions) {
       align-items: center !important;
       justify-content: center !important;
@@ -88,14 +93,14 @@
     overflow: clip;
 
     img {
-      width: 100%;
-      height: 100%;
+      max-width: 100%;
+      height: auto;
       object-fit: cover;
       object-position: var(--img-pos-x, 50%) var(--img-pos-y, 50%);
     }
   }
 
-  &:not(.nds-center) .nds-card-featured-icon {
+  &:not(.nds-center, .nds-statistic) .nds-card-featured-icon {
     align-self: flex-start;
   }
 

@@ -47,7 +47,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <nav class="nds-drawer nds-md">
+                            <nav class="nds-drawer nds-md" hidden>
                                 <ul class="nds-drawer-list">
                                     <li class="active">
                                         <a href="#" class="nds-btn nds-subtle nds-indicator">
@@ -114,7 +114,7 @@ direction: ltr
                             </nav>
                         </div>
                     </div>
-                    <div class="nds-tabs nds-code nds-divided">
+                    <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -188,6 +188,132 @@ direction: ltr
                     </div>
                 </div>
 
+                <!-- Responsive State Control Demo -->
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Responsive State Control (Always Open on Tablet+)</div>
+                        <div class="demo-action">
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                                <span class="label">Remove bg</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <nav class="nds-drawer nds-divided nds-md" data-always-open-on="tablet" hidden>
+                                <ul class="nds-drawer-list">
+                                    <li>
+                                        <button class="nds-btn nds-transparent nds-menu-btn nds-indicator">
+                                            <span class="nds-featured-icon nds-brand nds-sm">
+                                                <i class="hgi hgi-stroke hgi-layout-grid-02 icon"></i>
+                                            </span>
+                                            <span class="label">Components</span>
+                                        </button>
+                                        <ul>
+                                            <li>
+                                                <a href="#" class="nds-btn nds-transparent nds-indicator">
+                                                    <span class="label">Buttons</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="nds-btn nds-transparent nds-indicator">
+                                                    <span class="label">Forms</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <button class="nds-btn nds-transparent nds-menu-btn nds-indicator">
+                                            <span class="nds-featured-icon nds-brand nds-sm">
+                                                <i class="hgi hgi-stroke hgi-book-open-01 icon"></i>
+                                            </span>
+                                            <span class="label">Guidelines</span>
+                                        </button>
+                                        <ul>
+                                            <li>
+                                                <a href="#" class="nds-btn nds-transparent nds-indicator">
+                                                    <span class="label">Typography</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="nds-btn nds-transparent nds-indicator">
+                                                    <span class="label">Colors</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </nav>
+                            <p class="nds-text-sm" style="margin-top: var(--spacing-lg); opacity: 0.7;">
+                                <strong>Note:</strong> Resize your browser to see responsive behavior. On tablet+ (≥600px), menus are permanently open without arrows. On mobile (&lt;600px), menus are collapsible with toggle arrows.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tab-list-container">
+                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-responsive-1" id="tab-responsive-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                            </nav>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example" role="tabpanel"
+                                id="panel-responsive-1" aria-labelledby="tab-responsive-1">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <code class="lang-html code">
+<!-- Responsive drawer: always open on tablet+, collapsible on mobile -->
+<nav class="nds-drawer nds-divided" data-always-open-on="tablet">
+    <ul class="nds-drawer-list">
+        <li>
+            <button class="nds-btn nds-transparent nds-menu-btn nds-indicator">
+                <span class="nds-featured-icon nds-brand nds-sm">
+                    <i class="hgi hgi-stroke hgi-layout-grid-02 icon"></i>
+                </span>
+                <span class="label">Components</span>
+            </button>
+            <ul>
+                <li>
+                    <a href="#" class="nds-btn nds-transparent nds-indicator">
+                        <span class="label">Buttons</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nds-btn nds-transparent nds-indicator">
+                        <span class="label">Forms</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <button class="nds-btn nds-transparent nds-menu-btn nds-indicator">
+                <span class="nds-featured-icon nds-brand nds-sm">
+                    <i class="hgi hgi-stroke hgi-book-open-01 icon"></i>
+                </span>
+                <span class="label">Guidelines</span>
+            </button>
+            <ul>
+                <li>
+                    <a href="#" class="nds-btn nds-transparent nds-indicator">
+                        <span class="label">Typography</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+                                </code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Constrained with hasMore -->
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -201,7 +327,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <nav class="nds-drawer nds-divided" style="--drawer-max-height: 200px;">
+                            <nav class="nds-drawer nds-divided" style="--drawer-max-height: 200px;" hidden>
                                 <div class="nds-drawer-scroll">
                                     <ul class="nds-drawer-list">
                                         <li>
@@ -277,7 +403,7 @@ direction: ltr
                             </nav>
                         </div>
                     </div>
-                    <div class="nds-tabs nds-code nds-divided">
+                    <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -335,7 +461,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <nav class="nds-drawer nds-divided" style="--drawer-truncate: 2;">
+                            <nav class="nds-drawer nds-divided" style="--drawer-truncate: 2;" hidden>
                                 <ul class="nds-drawer-list">
                                     <li>
                                         <button class="nds-btn nds-subtle nds-indicator">
@@ -377,7 +503,7 @@ direction: ltr
                             </nav>
                         </div>
                     </div>
-                    <div class="nds-tabs nds-code nds-divided">
+                    <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -436,7 +562,7 @@ direction: ltr
                             <div class="nds-grid" style="--gap: var(--spacing-4xl);">
                                 <div class="ads-col col-sm-12 col-lg-6">
                                     <h4>Latest Updates</h4>
-                                    <nav class="nds-drawer nds-divided nds-fit nds-card nds-stroke"
+                                    <nav class="nds-drawer nds-divided nds-fit nds-card nds-stroke" hidden
                                         style="--drawer-max-height:100%; --drawer-truncate:2;">
                                         <div class="nds-drawer-scroll">
                                             <ul class="nds-drawer-list">
@@ -509,7 +635,7 @@ direction: ltr
                                 </div>
                                 <div class="importantlinks-col col-sm-12 col-lg-6">
                                     <h4>Quick Links</h4>
-                                    <nav class="nds-drawer nds-divided nds-fit nds-card nds-stroke"
+                                    <nav class="nds-drawer nds-divided nds-fit nds-card nds-stroke" hidden
                                         style="--drawer-max-height:100%; --drawer-truncate:2;">
                                         <div class="nds-drawer-scroll">
                                             <ul class="nds-drawer-list">
@@ -577,7 +703,7 @@ direction: ltr
                             </div>
                         </div>
                     </div>
-                    <div class="nds-tabs nds-code nds-divided">
+                    <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -600,7 +726,7 @@ direction: ltr
 <div class="nds-grid" style="--gap: var(--spacing-4xl);">
     <div class="col-sm-12 col-lg-6">
         <h4>Latest Updates</h4>
-        <nav class="nds-drawer nds-divided nds-fit nds-card nds-stroke"
+        <nav class="nds-drawer nds-divided nds-fit nds-card nds-stroke" hidden
             style="--drawer-max-height:100%; --drawer-truncate:2;">
             <div class="nds-drawer-scroll">
                 <ul class="nds-drawer-list">
@@ -625,7 +751,7 @@ direction: ltr
     </div>
     <div class="col-sm-12 col-lg-6">
         <h4>Quick Links</h4>
-        <nav class="nds-drawer nds-divided nds-fit nds-card nds-stroke"
+        <nav class="nds-drawer nds-divided nds-fit nds-card nds-stroke" hidden
             style="--drawer-max-height:100%; --drawer-truncate:2;">
             <div class="nds-drawer-scroll">
                 <ul class="nds-drawer-list">
@@ -687,6 +813,90 @@ direction: ltr
 
             <p>Create nested menus by placing a <strong>&lt;ul&gt;</strong> element inside any list item. The nested list should contain the same button structure as the parent level. When users click items with nested menus, the submenu smoothly expands using CSS grid animations. The component implements accordion behavior by default, automatically closing sibling menus when a new menu opens. This prevents multiple expanded sections from cluttering the interface. Add <strong>aria-expanded</strong> attributes to parent buttons for accessibility, which the component automatically manages during interactions.</p>
 
+            <h3>Responsive State Control</h3>
+
+            <p>The drawer component supports responsive state control through <strong>data-open-on</strong> and <strong>data-always-open-on</strong> attributes, allowing drawers to adapt their behavior at different breakpoints. These attributes use a cascade pattern where drawer-level settings apply to all items unless overridden at the item level.</p>
+
+            <h4>data-open-on Attribute</h4>
+
+            <p>Use <strong>data-open-on</strong> to specify when drawer items should be expanded by default. The attribute accepts breakpoint values: <strong>mobile</strong>, <strong>tablet</strong>, <strong>desktop</strong>, <strong>large-desktop</strong>, <strong>always</strong>, or <strong>never</strong>. When the viewport matches the specified breakpoint, the drawer items automatically open. Users can still toggle items closed or open as needed - this only controls the default state.</p>
+
+            <div class="nds-code nds-expandable">
+                <div class="nds-code-action">
+                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                    </button>
+                </div>
+                <code class="lang-html nds-expandable-content line-numbers">
+<!-- Drawer-level: opens on tablet and larger -->
+<nav class="nds-drawer" data-open-on="tablet">
+    <ul class="nds-drawer-list">
+        <li>
+            <button class="nds-btn nds-subtle nds-menu-btn">
+                <span class="label">Menu Item</span>
+            </button>
+            <ul>
+                <li><a href="#" class="nds-btn nds-subtle">Submenu Item</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+
+<!-- Item-level override: specific item opens only on desktop -->
+<nav class="nds-drawer" data-open-on="tablet">
+    <ul class="nds-drawer-list">
+        <li data-open-on="desktop">
+            <!-- This item opens only on desktop, overriding drawer-level setting -->
+        </li>
+    </ul>
+</nav>
+                </code>
+            </div>
+
+            <h4>data-always-open-on Attribute</h4>
+
+            <p>The <strong>data-always-open-on</strong> attribute creates permanently expanded, non-interactive drawers at specified breakpoints. When active, drawer items remain open, toggle arrows are hidden, and clicking buttons has no effect. This transforms the drawer into a static navigation list, ideal for footer menus or sidebar navigation that should be fully visible on larger screens but collapsible on mobile.</p>
+
+            <div class="nds-code nds-expandable">
+                <div class="nds-code-action">
+                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                    </button>
+                </div>
+                <code class="lang-html nds-expandable-content line-numbers">
+<!-- Always open on tablet+, collapsible on mobile -->
+<nav class="nds-drawer nds-divided" data-always-open-on="tablet">
+    <ul class="nds-drawer-list">
+        <li>
+            <button class="nds-btn nds-transparent nds-menu-btn">
+                <span class="label">Navigation Section</span>
+            </button>
+            <ul>
+                <li><a href="#" class="nds-btn nds-transparent">Link 1</a></li>
+                <li><a href="#" class="nds-btn nds-transparent">Link 2</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+                </code>
+            </div>
+
+            <h4>Available Breakpoints</h4>
+
+            <p>Both attributes support these breakpoint values:</p>
+            <ul>
+                <li><strong>mobile</strong> - max-width: 599px</li>
+                <li><strong>tablet</strong> - min-width: 600px</li>
+                <li><strong>desktop</strong> - min-width: 960px</li>
+                <li><strong>large-desktop</strong> - min-width: 1280px</li>
+                <li><strong>always</strong> - All viewport sizes</li>
+                <li><strong>never</strong> - Never open by default (explicit closed state)</li>
+            </ul>
+
+            <h4>State Management with data-state</h4>
+
+            <p>The drawer component uses the <strong>data-state</strong> attribute to manage expansion states internally. States include <strong>open</strong>, <strong>opening</strong>, <strong>opened</strong>, <strong>closing</strong>, and <strong>closed</strong> (empty). The component also sets <strong>data-state="always-open"</strong> on the drawer container when <strong>data-always-open-on</strong> is active. These states drive the CSS animations and can be used for custom styling or JavaScript integration.</p>
+
             <h3>Constrained Mode with Show More</h3>
 
             <p>For drawers with many items or limited vertical space, wrap the <strong>.nds-drawer-list</strong> in a <strong>.nds-drawer-scroll</strong> container and add a <strong>.nds-drawer-more</strong> button at the bottom. Set the maximum height using the <strong>--drawer-max-height</strong> CSS custom property. The component automatically detects overflow and displays the "Show more" button when content exceeds the height limit. When scrolled to the bottom, the button icon rotates and clicking it scrolls back to the top, allowing users to easily navigate long lists.</p>
@@ -727,7 +937,7 @@ direction: ltr
 <!-- Fit mode in grid layout -->
 <div class="nds-grid" style="--gap: var(--spacing-4xl);">
     <div class="col-sm-12 col-lg-6">
-        <nav class="nds-drawer nds-divided nds-fit nds-card nds-stroke">
+        <nav class="nds-drawer nds-divided nds-fit nds-card nds-stroke" hidden>
             <div class="nds-drawer-scroll">
                 <ul class="nds-drawer-list">
                     <!-- items -->
@@ -736,7 +946,7 @@ direction: ltr
         </nav>
     </div>
     <div class="col-sm-12 col-lg-6">
-        <nav class="nds-drawer nds-divided nds-fit nds-card nds-stroke">
+        <nav class="nds-drawer nds-divided nds-fit nds-card nds-stroke" hidden>
             <!-- second drawer -->
         </nav>
     </div>
@@ -764,7 +974,7 @@ direction: ltr
 
             <h3>JavaScript API</h3>
 
-            <p>The drawer component provides a global <strong>NDSDrawer</strong> object with methods for programmatic control. Use <strong>NDSDrawer.init()</strong> or <strong>NDSDrawer.reinit()</strong> to initialize all drawer components on the page. For individual control, pass a drawer element to <strong>NDSDrawer.initDrawer(element)</strong>. The <strong>toggle(button)</strong> method expands or collapses a submenu when passed the parent button element. Call <strong>checkOverflow(drawer)</strong> to manually recalculate overflow states and show/hide the "Show more" button.</p>
+            <p>The drawer component provides a global <strong>NDSDrawer</strong> object with methods for programmatic control. Use <strong>NDSDrawer.init()</strong> or <strong>NDSDrawer.reinit()</strong> to initialize all drawer components on the page. For individual control, pass a drawer element to <strong>NDSDrawer.initDrawer(element)</strong>. The <strong>toggle(button)</strong> method expands or collapses a submenu when passed the parent button element. Call <strong>checkOverflow(drawer)</strong> to manually recalculate overflow states and show/hide the "Show more" button. The component automatically handles responsive state updates when <strong>data-open-on</strong> or <strong>data-always-open-on</strong> attributes are present, adding window resize listeners as needed.</p>
 
             <div class="nds-code nds-expandable">
                 <div class="nds-code-action">
@@ -776,19 +986,22 @@ direction: ltr
 // Initialize all drawers
 NDSDrawer.init();
 
-// Initialize specific drawer
+// Initialize specific drawer (handles responsive states automatically)
 const drawer = document.querySelector('.nds-drawer');
 NDSDrawer.initDrawer(drawer);
 
-// Toggle submenu
+// Toggle submenu (does nothing if drawer is in always-open mode)
 const button = drawer.querySelector('.nds-menu-btn');
 NDSDrawer.toggle(button);
 
 // Check overflow state
 NDSDrawer.checkOverflow(drawer);
 
-// Destroy drawer instance
+// Destroy drawer instance (removes all event listeners and observers)
 NDSDrawer.destroy(drawer);
+
+// Reinitialize all drawers (useful after DOM changes)
+NDSDrawer.reinit();
                 </code>
             </div>
 
@@ -833,12 +1046,31 @@ document.addEventListener('nds:drawer:hidden', (e) => {
     --drawer-max-height: 400px;
     --drawer-truncate: 2;
 }
+
+/* Custom styles for always-open state */
+.nds-drawer[data-state="always-open"] {
+    /* Arrows are automatically hidden */
+    /* Buttons are non-interactive */
+}
+
+/* Custom styles for different expansion states */
+.nds-drawer-list > li[data-state="opening"] {
+    /* Submenu is expanding */
+}
+
+.nds-drawer-list > li[data-state="opened"] {
+    /* Submenu is fully open */
+}
+
+.nds-drawer-list > li[data-state="closing"] {
+    /* Submenu is collapsing */
+}
                 </code>
             </div>
 
             <h3>Automatic Initialization</h3>
 
-            <p>The drawer component automatically initializes on DOMContentLoaded by finding all elements with the <strong>.nds-drawer</strong> class, excluding those inside code examples. Each drawer is marked with <strong>_ndsDrawerInitialized</strong> property to prevent double initialization. The component sets up event listeners for menu toggles, scroll handlers for overflow detection, and resize observers to maintain proper sizing. This automatic setup ensures drawers work immediately without manual JavaScript initialization in most cases.</p>
+            <p>The drawer component automatically initializes on DOMContentLoaded by finding all elements with the <strong>.nds-drawer</strong> class, excluding those inside code examples. Each drawer is marked with <strong>_ndsDrawerInitialized</strong> property to prevent double initialization. The component sets up event listeners for menu toggles, scroll handlers for overflow detection, and resize observers to maintain proper sizing. When <strong>data-open-on</strong> or <strong>data-always-open-on</strong> attributes are present, the component automatically adds window resize listeners to update states responsively. This automatic setup ensures drawers work immediately without manual JavaScript initialization in most cases.</p>
 
             <h3>Performance Optimizations</h3>
 

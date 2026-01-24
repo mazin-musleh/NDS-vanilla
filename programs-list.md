@@ -8,12 +8,13 @@ hero_title: "البرامج الأكاديمية"
 hero_description: "قائمة البرامج الأكاديمية المتاحة في الجامعة"
 layout_class: cardView
 sidemenu: college-sidemenu
+exclude_showcase: true
 ---
 
 <section id="programsList" class="nds-content-section">
     <div class="nds-section-head">
 
-        <div class="nds-section-action nds-filter" data-filter-target="programs_list_content">
+        <div class="nds-section-action nds-filter" data-filter-target="programs_list_content" hidden>
             <div class="nds-search-box">
                 <div class="nds-search-content">
                     <div class="nds-form-control">
@@ -23,11 +24,14 @@ sidemenu: college-sidemenu
                         <div class="nds-form-action">
                             <button class="nds-btn nds-subtle voiceInput"><i
                                     class="hgi hgi-stroke hgi-mic-01 icon"></i></button>
-                            <button class="nds-btn nds-subtle clear hidden"><i
+                            <button class="nds-btn nds-subtle clear" hidden><i
                                     class="hgi hgi-stroke hgi-cancel-01 icon"></i></button>
                         </div>
                     </div>
-                    <button class="nds-btn nds-primary" type="submit"><span class="label">بحث</span></button>
+                    <button class="nds-btn nds-primary nds-search-btn" type="button">
+                        <i class="hgi hgi-stroke hgi-search-01 icon"></i>
+                        <span class="label">بحث</span>
+                    </button>
                 </div>
             </div>
             <div class="nds-dropmenu">
@@ -35,7 +39,7 @@ sidemenu: college-sidemenu
                     <i class="hgi hgi-stroke hgi-filter icon"></i>
                     <span class="label">تصفية</span>
                 </button>
-                <div class="nds-dropmenu-menu" style="min-width: 300px;">
+                <div class="nds-dropmenu-menu" style="min-width: 300px;" hidden>
                     <!-- Filter by Program Type -->
                     <div class="nds-dropmenu-item" data-filter="tags" data-filter-legend="نوع البرنامج"
                         data-filter-type="checkbox" data-no-auto-close></div>
@@ -61,7 +65,7 @@ sidemenu: college-sidemenu
         </div>
     </div>
     <div class="nds-section-content">
-        <div id="programs_list_content" class="nds-pagination-content nds-grid"
+        <div id="programs_list_content" class="nds-pagination-content nds-grid" hidden
             style="--per-page: 12; --max-col: 3; --mid-col: 2; --min-col: 1;">
 
             <!-- Program 1 - بكالوريوس -->

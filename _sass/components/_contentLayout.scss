@@ -13,12 +13,13 @@
     --nds-breakout-max-width: calc(var(--nds-content-MaxWidth) + var(--nds-viewport-padding));
     --nds-breakout-size: calc((var(--nds-breakout-max-width) - var(--nds-content-MaxWidth)) / 2);
     width: 100%;
-    display: grid !important;
-    row-gap: var(--gap, 0);
-    grid-template-columns:
-        [full-width-start] minmax(var(--nds-viewport-padding), 1fr) [breakout-start] minmax(0, var(--nds-breakout-size)) [content-start] min(100% - (var(--nds-viewport-padding) * 2),
-            var(--nds-content-MaxWidth)) [content-end] minmax(0, var(--nds-breakout-size)) [breakout-end] minmax(var(--nds-viewport-padding), 1fr) [full-width-end];
-
+    &:not([hidden]){
+        display: grid;
+        row-gap: var(--gap, 0);
+        grid-template-columns:
+            [full-width-start] minmax(var(--nds-viewport-padding), 1fr) [breakout-start] minmax(0, var(--nds-breakout-size)) [content-start] min(100% - (var(--nds-viewport-padding) * 2),
+                var(--nds-content-MaxWidth)) [content-end] minmax(0, var(--nds-breakout-size)) [breakout-end] minmax(var(--nds-viewport-padding), 1fr) [full-width-end];
+    }
     &> :not(.nds-breakout, .nds-full-width) {
         grid-column: content;
     }
@@ -301,7 +302,7 @@ main {
 }
 
 .nds-content-section {
-    background-color: var(--background-white);
+    background-color: var(--background-white, #fff);
 
     &.nds-blue {
         @include section-variant(var(--colors-blue-950),
@@ -395,14 +396,14 @@ main {
 }
 
 .nds-section-title {
-    font-size: var(--nds-display-clamp-sm-FS, 30px);
-    line-height: var(--nds-display-clamp-sm-LH, 38px);
+    font-size: var(--nds-display-clamp-xs-FS, 30px);
+    line-height: var(--nds-display-clamp-xs-LH, 38px);
     letter-spacing: -0.02rem;
     font-weight: bold;
     color: var(--text-display, #1f2a37);
 
     &:has(+ *:not(.nds-section-action)) {
-        margin-bottom: var(--nds-display-clamp-sm-MB, 9.5px);
+        margin-bottom: var(--nds-display-clamp-xs-MB, 9.5px);
     }
     @include tablet(max) {
         &:has(+ .nds-section-action) {
@@ -466,7 +467,6 @@ main {
     ul,
     ol {
         margin-block-end: 1rem;
-        text-align: justify;
     }
 
     p:last-child,

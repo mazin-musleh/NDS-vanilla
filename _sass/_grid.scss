@@ -1,0 +1,90 @@
+// ==============================================
+// NDS GRID SYSTEM
+// ==============================================
+@use './mixins' as *;
+
+// Bootstrap naming with NDS breakpoint values
+$breakpoints-responsive: (
+  md: '(min-width: 600px)',
+  // Tablet
+  lg: '(min-width: 960px)',
+  // Desktop
+  xl: '(min-width: 1280px)' // Large Desktop
+);
+
+.nds-grid {
+  $col-token-selector: '> :is([class^="col-"], [class*=" col-"])';
+
+  --grid-col: var(--max-col, auto-fit);
+
+  &:not([hidden]) {
+    display: grid !important;
+  }
+
+  grid-template-columns: repeat(var(--grid-col, 12), minmax(var(--col-width, 0px), 1fr));
+  gap: var(--gap, var(--spacing-2xl));
+  row-gap: var(--row-gap, var(--spacing-2xl));
+  justify-items: var(--justify, stretch);
+  align-items: var(--align, center);
+  width: 100%;
+
+  >* {
+    max-width: 100% !important;
+    min-width: 0; // prevent overflow in grid
+    height: 100%;
+  }
+
+  @include tablet {
+    &:not(:has(#{$col-token-selector})) {
+      --grid-col: var(--mid-col, auto-fit);
+      gap: max(8px, calc(var(--gap, var(--spacing-2xl)) / 2));
+      row-gap: max(8px, calc(var(--row-gap, var(--spacing-2xl)) / 2));
+    }
+  }
+
+  @include mobile {
+    &:not(:has(#{$col-token-selector})) {
+      --grid-col: var(--min-col, auto-fit);
+      gap: max(8px, calc(var(--gap, var(--spacing-2xl)) / 2));
+      row-gap: max(8px, calc(var(--row-gap, var(--spacing-2xl)) / 2));
+    }
+  }
+
+  &:has(#{$col-token-selector}) {
+    --col-width: 0 !important;
+    --grid-col: 12;
+  }
+
+  &.nds-center {
+    --justify: center;
+  }
+}
+
+/* Column spans (1…12) - Mobile first (base) with sm aliases */
+@for $i from 1 through 12 {
+
+  .col-#{$i},
+  .col-sm-#{$i} {
+    grid-column: span #{$i};
+  }
+}
+
+.col-full,
+.col-sm-full {
+  grid-column: 1 / -1;
+}
+
+/* Generate responsive column spans using responsive breakpoints only (excludes sm) */
+@each $breakpoint, $query in $breakpoints-responsive {
+  @media #{$query} {
+    @for $i from 1 through 12 {
+      .col-#{$breakpoint}-#{$i} {
+        grid-column: span #{$i};
+      }
+    }
+
+    .col-#{$breakpoint}-full {
+      grid-column: 1 / -1;
+    }
+  }
+}

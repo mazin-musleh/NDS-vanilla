@@ -8,9 +8,9 @@
  * Author: {{ site.author }}
  * Profile: {{ site.author_profile }}
  */
-@use 'fonts';
+/* @use 'fonts'; */ /* Moved to critical CSS */
 
-// Import variables (CSS custom properties)
+// Import variables (CSS custom properties) - Loaded in main CSS for all components
 @use 'variables';
 
 // Import mixins
@@ -19,11 +19,10 @@
 // Import animations
 @use 'animations';
 
-// Import base styles
-@use 'base';
+/* @use 'base'; */ /* Moved to critical CSS */
 
-@use 'components/avatar';
-@use 'components/buttons';
+@use 'components/avatar';  /* Moved to critical CSS */
+@use 'components/buttons'; /* Moved to critical CSS */
 @use 'components/cards';
 @use 'components/modal';
 @use 'components/checkbox';
@@ -43,7 +42,7 @@
 @use 'components/tabs';
 @use 'components/nav';
 @use 'components/DGAdigitalStamp';
-@use 'components/breadcrumb';
+/* @use 'components/breadcrumb'; */ /* Moved to critical CSS */
 /* @use 'components/oneRowContent'; */
 @use 'components/forms';
 @use 'components/ipv';
@@ -53,10 +52,10 @@
 @use 'components/rating';
 @use 'components/upload';
 @use 'components/code';
-@use 'components/sideMenu';
-@use 'components/drawer';
-@use 'components/contentLayout';
-@use 'components/hero';
+/* @use 'components/sideMenu'; */ /* Moved to critical CSS */
+@use 'components/drawer';  /* Moved to critical CSS */
+/* @use 'components/contentLayout'; */ /* Moved to critical CSS */
+/* @use 'components/hero'; */ /* Moved to critical CSS */
 @use 'components/user-feedback.scss';
 @use 'components/footer';
 @use 'components/cookie';
