@@ -103,7 +103,7 @@
         line-height: var(--nds-text-lg-LH);
     }
 
-    .msg {
+    .nds-feedback-message {
         flex: 1;
     }
 }
@@ -172,6 +172,7 @@
     // ICON STYLE VARIANTS
     // ==============================================
 
+    .nds-outline>&,
     &.nds-outline {
         background-color: transparent;
 
@@ -188,6 +189,7 @@
         }
     }
 
+    .nds-ring>&,
     &.nds-ring {
         box-shadow: 0 0 0 4px var(--_feedback-ring);
     }

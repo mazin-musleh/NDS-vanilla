@@ -193,25 +193,57 @@
 
             // Handle standalone feedback
             if (container.classList.contains('nds-feedback')) {
-                return this._setFeedbackStatus(container, status, message);
-            }
-
-            var feedbackElement = container.querySelector('.nds-feedback');
-            var msgElement = feedbackElement ? feedbackElement.querySelector('.msg') : null;
-
-            // Store original message
-            if (msgElement && !container.hasAttribute('data-original-message')) {
-                container.setAttribute('data-original-message', msgElement.textContent || '');
+                // For standalone feedback, just update data attributes
+                if (status) {
+                    container.setAttribute('data-status', status);
+                    if (message) {
+                        var msgElement = container.querySelector('.nds-feedback-message');
+                        if (msgElement) {
+                            msgElement.textContent = message;
+                        }
+                    }
+                }
+                return true;
             }
 
             if (status) {
+                // Set status on container
                 container.setAttribute('data-status', status);
-                if (feedbackElement) {
-                    feedbackElement.setAttribute('data-status', status);
-                }
-                if (message && msgElement) {
+                if (message) {
                     container.setAttribute('data-message', message);
-                    msgElement.textContent = message;
+                }
+
+                // Create feedback using NDSFeedback API
+                if (window.NDSFeedback && message) {
+                    // Dynamic target selection using data-feedback-target attribute
+                    // 1. Check for data-feedback-target with selector value on container
+                    // 2. Look for child element with data-feedback-target attribute (boolean)
+                    // 3. Default to container itself
+                    var targetSelector = container.getAttribute('data-feedback-target');
+                    var target = container; // Default to container
+
+                    if (targetSelector) {
+                        // Container has data-feedback-target with selector value
+                        var foundTarget = container.querySelector(targetSelector);
+                        if (foundTarget) {
+                            target = foundTarget;
+                        }
+                    } else {
+                        // Look for child element with data-feedback-target attribute (no value)
+                        var markedTarget = container.querySelector('[data-feedback-target]');
+                        if (markedTarget) {
+                            target = markedTarget;
+                        }
+                    }
+
+                    window.NDSFeedback.create({
+                        message: message,
+                        status: status,
+                        target: target,
+                        position: 'append',
+                        size: 'sm',
+                        style: 'outline'
+                    });
                 }
 
                 // Accessibility
@@ -235,27 +267,21 @@
             if (!element) return false;
 
             if (element.classList.contains('nds-feedback')) {
-                return this._setFeedbackStatus(element, null, null);
+                // For standalone feedback, just remove data attributes
+                element.removeAttribute('data-status');
+                return true;
             }
 
             var container = this._findContainer(element);
             if (!container) return false;
 
-            // Restore original message
-            var msgElement = container.querySelector('.nds-feedback .msg');
-            var originalMessage = container.getAttribute('data-original-message');
-            if (msgElement && originalMessage !== null) {
-                msgElement.textContent = originalMessage;
-            }
-
             // Remove status attributes
             container.removeAttribute('data-status');
             container.removeAttribute('data-message');
-            container.removeAttribute('data-original-message');
 
-            var feedbackElement = container.querySelector('.nds-feedback');
-            if (feedbackElement) {
-                feedbackElement.removeAttribute('data-status');
+            // Dismiss all feedback in container using NDSFeedback API
+            if (window.NDSFeedback) {
+                window.NDSFeedback.dismissAll(container);
             }
 
             // Clear accessibility
@@ -288,34 +314,6 @@
             return (element.matches && element.matches(selectors))
                 ? element
                 : element.closest(selectors);
-        },
-
-        _setFeedbackStatus: function(feedback, status, message) {
-            if (!feedback) return false;
-
-            var msgElement = feedback.querySelector('.msg');
-
-            if (!feedback.hasAttribute('data-original-message') && msgElement) {
-                feedback.setAttribute('data-original-message', msgElement.textContent || '');
-            }
-
-            if (status) {
-                feedback.setAttribute('data-status', status);
-                if (message && msgElement) {
-                    feedback.setAttribute('data-message', message);
-                    msgElement.textContent = message;
-                }
-            } else {
-                feedback.removeAttribute('data-status');
-                feedback.removeAttribute('data-message');
-                var original = feedback.getAttribute('data-original-message');
-                if (msgElement && original !== null) {
-                    msgElement.textContent = original;
-                }
-                feedback.removeAttribute('data-original-message');
-            }
-
-            return true;
         }
     };
 

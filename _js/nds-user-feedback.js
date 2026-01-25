@@ -1,6 +1,19 @@
 /**
  * NDS User Feedback Component
  * Handles user feedback interaction flow using data attributes
+ *
+ * Dependencies:
+ * - nds-feedback.js (NDSFeedback API for displaying feedback messages)
+ * - nds-forms.js (optional, for form validation)
+ *
+ * Language Detection:
+ * Automatically detects page language from <html lang="..."> or <body lang="..."> attribute
+ * - Arabic (default): 'تم استلام ملاحظتك!' / 'حدث خطأ، يرجى المحاولة مرة أخرى'
+ * - English: 'Your feedback is submitted!' / 'An error occurred, please try again'
+ *
+ * Data Attributes:
+ * - data-success-message: Custom success message (overrides language defaults)
+ * - data-error-message: Custom error message (overrides language defaults)
  */
 
 window.NDSUserFeedback = (() => {
@@ -41,18 +54,56 @@ window.NDSUserFeedback = (() => {
                 if (submitEl) submitEl.removeAttribute('hidden');
             }
 
-            // Show status state with success/error
+            // Show status state with success/error using NDSFeedback API
             function showStatus(status = 'success') {
                 // Set data-state to status (UI state)
                 feedbackComponent.setAttribute('data-state', 'status');
-                // Set data-status for success/error
-                feedbackComponent.setAttribute('data-status', status);
 
-                // Show status, hide others
-                if (statusEl) statusEl.removeAttribute('hidden');
-                if (closeButton) closeButton.setAttribute('hidden', '');
-                if (detailsEl) detailsEl.setAttribute('hidden', '');
-                if (submitEl) submitEl.setAttribute('hidden', '');
+                // Detect page language
+                const pageLang = document.documentElement.lang || document.body.getAttribute('lang') || 'ar';
+                const isEnglish = pageLang.toLowerCase().startsWith('en');
+
+                // Get custom message from data attribute or use language-specific defaults
+                const defaultSuccessMessage = isEnglish ? 'Your feedback is submitted!' : 'تم استلام ملاحظتك!';
+                const defaultErrorMessage = isEnglish ? 'An error occurred, please try again' : 'حدث خطأ، يرجى المحاولة مرة أخرى';
+
+                const successMessage = feedbackComponent.getAttribute('data-success-message') || defaultSuccessMessage;
+                const errorMessage = feedbackComponent.getAttribute('data-error-message') || defaultErrorMessage;
+                const message = status === 'success' ? successMessage : errorMessage;
+
+                // Create feedback message using NDSFeedback API
+                if (window.NDSFeedback && statusEl) {
+                    // Clear any existing feedback in status element
+                    window.NDSFeedback.dismissAll(statusEl);
+
+                    // Create new feedback message
+                    window.NDSFeedback.create({
+                        message: message,
+                        status: status,
+                        target: statusEl,
+                        position: 'append',
+                        size: 'md',
+                        style: '',
+                        onDismiss: () => {
+                            // Reset feedback when dismissed
+                            resetFeedback();
+                        }
+                    });
+
+                    // Show status element, hide others
+                    if (statusEl) statusEl.removeAttribute('hidden');
+                    if (closeButton) closeButton.setAttribute('hidden', '');
+                    if (detailsEl) detailsEl.setAttribute('hidden', '');
+                    if (submitEl) submitEl.setAttribute('hidden', '');
+                } else {
+                    // Fallback if NDSFeedback is not available
+                    console.warn('NDSFeedback API not available');
+                    feedbackComponent.setAttribute('data-status', status);
+                    if (statusEl) statusEl.removeAttribute('hidden');
+                    if (closeButton) closeButton.setAttribute('hidden', '');
+                    if (detailsEl) detailsEl.setAttribute('hidden', '');
+                    if (submitEl) submitEl.setAttribute('hidden', '');
+                }
             }
 
             // Reset to initial state (overview)
@@ -61,6 +112,11 @@ window.NDSUserFeedback = (() => {
                 feedbackComponent.removeAttribute('data-state');
                 feedbackComponent.removeAttribute('data-status');
                 feedbackComponent.removeAttribute('data-answer');
+
+                // Dismiss any feedback messages created by NDSFeedback API
+                if (window.NDSFeedback && statusEl) {
+                    window.NDSFeedback.dismissAll(statusEl);
+                }
 
                 // Restore hidden attributes
                 if (statusEl) statusEl.setAttribute('hidden', '');
