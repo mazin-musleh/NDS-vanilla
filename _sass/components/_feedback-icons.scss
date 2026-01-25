@@ -19,8 +19,8 @@
     gap: var(--spacing-sm);
 
     // Show when status is set (on self or parent)
-    &[data-status],
-    [data-status] & {
+    &[data-status]:not([hidden]),
+    [data-status] &:not([hidden]) {
         display: flex;
     }
 

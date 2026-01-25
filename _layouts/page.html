@@ -13,10 +13,10 @@ layout: default
         <section id="user-feedback" class="nds-user-feedback-section nds-content-section">
             <div class="nds-section-content">
                 <form class="nds-form" action="/submit" method="POST">
-                    <div class="nds-user-feedback">
+                    <div class="nds-user-feedback" >
                         <div class="nds-user-feedback-overview">
                             <span class="nds-user-feedback-question">Was this page useful?</span>
-                            <span class="nds-user-feedback-status nds-feedback nds-md" data-status="success">
+                            <span class="nds-user-feedback-status nds-feedback nds-md"  hidden>
                                 <span class="nds-feedback-icon nds-outline">
                                     <i class="hgi hgi-solid icon"></i>
                                 </span>
@@ -32,7 +32,7 @@ layout: default
                             </div>
                             <span class="nds-user-feedback-statistic">60% of users said Yes from 2843 Feedbacks</span>
                             <button type="button" class="nds-user-feedback-close nds-btn nds-secondary-outline nds-md"
-                                aria-label="Close feedback">
+                                aria-label="Close feedback" hidden>
                                 <span class="label">Close</span>
                                 <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
                             </button>
@@ -206,7 +206,7 @@ layout: default
                                 </div>
                             </div>
                         </div>
-                        <div class="nds-user-feedback-submit">
+                        <div class="nds-user-feedback-submit" hidden>
                             <span class="nds-user-feedback-agreement">For more information you may review <a
                                     href="#">e-participation statement</a> and <a href="#">rules of
                                     engagement.</a></span>

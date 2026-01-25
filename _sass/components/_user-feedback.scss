@@ -1,98 +1,62 @@
 @use '../mixins' as *;
 
 .nds-user-feedback {
-
     display: flex;
     flex-direction: column;
     gap: var(--spacing-4xl);
 
-    // ==============================================
-    // COMPONENT STATES - Default visibility
-    // ==============================================
-
-    // Hidden by default
-    .nds-user-feedback-status,
-    .nds-user-feedback-close,
-    .nds-user-feedback-details,
-    .nds-user-feedback-submit {
-        display: none;
-    }
-
     // Visible by default
-    .nds-user-feedback-question,
-    .nds-user-feedback-answer-btn,
-    .nds-user-feedback-statistic {
+    &-question,
+    &-answer-btn,
+    &-statistic {
         display: flex;
     }
 
-    // ==============================================
-    // STATE: Details (when Yes/No clicked)
-    // ==============================================
+    // Hidden via [hidden] attr - show when visible
+    &-status:not([hidden]),
+    &-details:not([hidden]),
+    &-submit:not([hidden]),
+    &-close:not([hidden]) {
+        display: flex;
+    }
 
-    &[data-status="details"] {
-        .nds-user-feedback-details {
-            display: flex;
+    &-close:not([hidden]) {
+        @include mobile {
+            order: -1;
+            align-self: end;
         }
+    }
 
-        .nds-user-feedback-submit {
-            display: flex;
-        }
+    // STATE: Details
+    &[data-state="details"] {
 
-        .nds-user-feedback-close {
-            display: flex;
-
-            @include mobile {
-                order: -1;
-                align-self: end;
-            }
-        }
-
-        .nds-user-feedback-statistic {
-            display: none;
-        }
-
-        // Hide both fieldsets by default in details state
+        .nds-user-feedback-statistic,
         .why-yes,
         .why-no {
             display: none;
         }
 
-        // Show yes reasons when answered yes
-        &[data-answer="yes"] .why-yes {
-            display: flex;
-        }
-
-        // Show no reasons when answered no
+        &[data-answer="yes"] .why-yes,
         &[data-answer="no"] .why-no {
             display: flex;
         }
     }
 
-    // ==============================================
-    // STATE: Success (after submit)
-    // ==============================================
-
-    &[data-status="success"] {
+    // STATE: Status
+    &[data-state="status"] {
 
         .nds-user-feedback-question,
-        .nds-user-feedback-answer-btn,
-        .nds-user-feedback-details,
-        .nds-user-feedback-submit,
-        .nds-user-feedback-close {
+        .nds-user-feedback-answer-btn {
             display: none;
         }
 
-        .nds-user-feedback-status,
         .nds-user-feedback-statistic {
             display: flex;
         }
     }
 
-    // ==============================================
-    // COMPONENT STRUCTURE STYLES
-    // ==============================================
-
-    .nds-user-feedback-overview {
+    // Structure
+    &-overview {
         display: flex;
         gap: var(--spacing-xl);
         align-items: center;
@@ -115,10 +79,9 @@
         .nds-user-feedback-statistic {
             font-size: var(--nds-text-sm-FS);
         }
-
     }
 
-    .nds-user-feedback-details {
+    &-details {
         gap: var(--spacing-4xl);
 
         @include mobile {
@@ -137,10 +100,9 @@
             flex: 1 1 40%;
             width: 100%;
         }
-
     }
 
-    .nds-user-feedback-submit {
+    &-submit {
         align-items: center;
         justify-content: space-between;
         gap: var(--spacing-4xl);

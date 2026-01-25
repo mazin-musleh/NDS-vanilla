@@ -18,10 +18,15 @@ window.NDSUserFeedback = (() => {
             const closeButton = feedbackComponent.querySelector('.nds-user-feedback-close');
             const submitButton = feedbackComponent.querySelector('.nds-user-feedback-submit-btn');
 
+            // Cache DOM elements
+            const statusEl = feedbackComponent.querySelector('.nds-user-feedback-status');
+            const detailsEl = feedbackComponent.querySelector('.nds-user-feedback-details');
+            const submitEl = feedbackComponent.querySelector('.nds-user-feedback-submit');
+
             // Show details section based on answer
             function showDetails(answer) {
-                // Set data-status attribute to details
-                feedbackComponent.setAttribute('data-status', 'details');
+                // Set data-state to details (UI state)
+                feedbackComponent.setAttribute('data-state', 'details');
 
                 // Set data-answer attribute based on answer
                 if (answer === 'Yes') {
@@ -29,19 +34,39 @@ window.NDSUserFeedback = (() => {
                 } else if (answer === 'No') {
                     feedbackComponent.setAttribute('data-answer', 'no');
                 }
+
+                // Remove hidden from elements that should be visible
+                if (closeButton) closeButton.removeAttribute('hidden');
+                if (detailsEl) detailsEl.removeAttribute('hidden');
+                if (submitEl) submitEl.removeAttribute('hidden');
             }
 
-            // Show success state
-            function showSuccess() {
-                // Set data-status attribute to success
-                feedbackComponent.setAttribute('data-status', 'success');
+            // Show status state with success/error
+            function showStatus(status = 'success') {
+                // Set data-state to status (UI state)
+                feedbackComponent.setAttribute('data-state', 'status');
+                // Set data-status for success/error
+                feedbackComponent.setAttribute('data-status', status);
+
+                // Show status, hide others
+                if (statusEl) statusEl.removeAttribute('hidden');
+                if (closeButton) closeButton.setAttribute('hidden', '');
+                if (detailsEl) detailsEl.setAttribute('hidden', '');
+                if (submitEl) submitEl.setAttribute('hidden', '');
             }
 
-            // Reset to initial state
+            // Reset to initial state (overview)
             function resetFeedback() {
                 // Remove data attributes
+                feedbackComponent.removeAttribute('data-state');
                 feedbackComponent.removeAttribute('data-status');
                 feedbackComponent.removeAttribute('data-answer');
+
+                // Restore hidden attributes
+                if (statusEl) statusEl.setAttribute('hidden', '');
+                if (closeButton) closeButton.setAttribute('hidden', '');
+                if (detailsEl) detailsEl.setAttribute('hidden', '');
+                if (submitEl) submitEl.setAttribute('hidden', '');
 
                 // Reset checkboxes
                 const checkboxes = feedbackComponent.querySelectorAll('input[type="checkbox"]');
@@ -89,7 +114,7 @@ window.NDSUserFeedback = (() => {
                         }
                     }
 
-                    showSuccess();
+                    showStatus('success');
                 });
             }
 
