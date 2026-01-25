@@ -304,6 +304,24 @@ main {
 .nds-content-section {
     background-color: var(--background-white, #fff);
 
+    /* Section title and description overridable tokens */
+    --_section-title-FS: var(--section-title-FS, var(--nds-display-clamp-md-FS, clamp(24px, 3vw, 36px)));
+    --_section-title-LH: var(--section-title-LH, var(--nds-display-clamp-md-LH, clamp(30px, 3.67vw, 44px)));
+    --_section-title-MB: var(--section-title-MB, var(--nds-display-clamp-md-MB, clamp(7.5px, 0.9175vw, 11px)));
+    --_section-description-FS: var(--section-description-FS, var(--nds-text-clamp-lg-FS, clamp(16px, 1.5vw, 18px)));
+    --_section-description-LH: var(--section-description-LH, var(--nds-text-clamp-lg-LH, clamp(24px, 2.17vw, 26px)));
+    --_section-description-MB: var(--section-description-MB, var(--spacing-2xl, 20px));
+
+    /* Smaller sizes for cardView layout */
+    .contentLayout.cardView & {
+        --_section-title-FS: var(--section-title-FS, var(--nds-display-clamp-sm-FS, clamp(20px, 2.5vw, 30px)));
+        --_section-title-LH: var(--section-title-LH, var(--nds-display-clamp-sm-LH, clamp(26px, 3.17vw, 38px)));
+        --_section-title-MB: var(--section-title-MB, var(--nds-display-clamp-sm-MB, clamp(6.5px, 0.7925vw, 9.5px)));
+        --_section-description-FS: var(--section-description-FS, var(--nds-text-clamp-md-FS, clamp(14px, 1.33vw, 16px)));
+        --_section-description-LH: var(--section-description-LH, var(--nds-text-clamp-md-LH, clamp(22px, 2vw, 24px)));
+        --_section-description-MB: var(--section-description-MB, var(--spacing-xl, 16px));
+    }
+
     &.nds-blue {
         @include section-variant(var(--colors-blue-950),
             var(--text-secondary),
@@ -396,14 +414,14 @@ main {
 }
 
 .nds-section-title {
-    font-size: var(--nds-display-clamp-xs-FS, 30px);
-    line-height: var(--nds-display-clamp-xs-LH, 38px);
+    font-size: var(--_section-title-FS);
+    line-height: var(--_section-title-LH);
     letter-spacing: -0.02rem;
     font-weight: bold;
     color: var(--text-display, #1f2a37);
 
     &:has(+ *:not(.nds-section-action)) {
-        margin-bottom: var(--nds-display-clamp-xs-MB, 9.5px);
+        margin-bottom: var(--_section-title-MB);
     }
     @include tablet(max) {
         &:has(+ .nds-section-action) {
@@ -413,15 +431,15 @@ main {
 }
 
 .nds-section-description {
-    font-size: var(--nds-text-clamp-lg-FS, 18px);
-    line-height: var(--nds-text-clamp-lg-LH, 26px);
+    font-size: var(--_section-description-FS);
+    line-height: var(--_section-description-LH);
     color: var(--text-default, #161616);
     margin-top: 0;
     margin-block-start: 0;
     max-width: var(--maxwidth-paragraph-max-width, 720px);
 
     &:has(+ *:not(.nds-section-action)) {
-        margin-bottom: var(--spacing-2xl, 24px);
+        margin-bottom: var(--_section-description-MB);
     }
 
     @include tablet(max) {
