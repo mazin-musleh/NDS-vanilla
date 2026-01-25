@@ -26,9 +26,17 @@
         }
     }
 
-    // Required field indicator
-    &.nds-required {
+    // Required field indicator (using data-required attribute)
+    &[data-required] {
+        .nds-form-header .label::after,
+        >.label::after {
+            content: " *";
+            color: var(--controls-control-text-error, #dc2626);
+        }
+    }
 
+    // Legacy class support (deprecated)
+    &.nds-required {
         .nds-form-header .label::after,
         >.label::after {
             content: " *";
@@ -75,6 +83,56 @@
             background-color: var(--form-field-border-info);
         }
     }
+
+    // ==============================================
+    // FORM CONTAINER STATE (data-state attribute)
+    // ==============================================
+
+    // Focus state
+    &[data-state~="focus"] .nds-form-control {
+        &::before {
+            width: 100%;
+        }
+
+        box-shadow: var(--shadow-md);
+
+        &,
+        ::-webkit-input-placeholder {
+            color: var(--form-field-text-focused);
+        }
+    }
+
+    // Active state
+    &[data-state~="active"] .nds-form-control {
+        &::before {
+            width: 50%;
+        }
+
+        background-color: var(--form-field-background-darker);
+        box-shadow: var(--shadow-md);
+
+        &,
+        ::-webkit-input-placeholder {
+            color: var(--form-field-text-pressed);
+        }
+    }
+
+    // Disabled state
+    &[data-state~="disabled"] .nds-form-control {
+        background-color: var(--background-disabled) !important;
+        color: var(--text-default-disabled) !important;
+        border-color: var(--border-disabled) !important;
+        pointer-events: none;
+        user-select: none;
+
+        ::-webkit-input-placeholder {
+            color: var(--text-default-disabled) !important;
+        }
+
+        .nds-form-action {
+            display: none;
+        }
+    }
 }
 
 .label+.info {
@@ -104,7 +162,8 @@ fieldset {
         line-height: 1;
     }
 
-    // Auto-add required indicator when group has data-min-checked or nds-required class
+    // Auto-add required indicator when group has data-required, data-min-checked, or nds-required class
+    &[data-required],
     &[data-min-checked],
     &.nds-required {
 
@@ -165,6 +224,7 @@ fieldset {
         z-index: 2;
     }
 
+    // Legacy class support (deprecated)
     &.nds-focus,
     &.focus {
         &::before {
@@ -177,13 +237,10 @@ fieldset {
         ::-webkit-input-placeholder {
             color: var(--form-field-text-focused);
         }
-
-
     }
 
     &.nds-active,
     &.active {
-
         &::before {
             width: 50%;
         }
@@ -195,16 +252,6 @@ fieldset {
         ::-webkit-input-placeholder {
             color: var(--form-field-text-pressed);
         }
-    }
-
-    &.nds-error,
-    &.error {
-
-        &::before {
-            background-color: var(--form-field-border-error);
-        }
-
-        border-color: var(--form-field-border-error);
     }
 
     &.nds-disabled,

@@ -303,6 +303,9 @@
                 if (operationType === 'attr') {
                     // Handle attribute toggling
                     handleAttributeToggling(targetElement, classNamesOrAttrs, demoCard);
+                } else if (operationType === 'data-state') {
+                    // Handle data-state attribute toggling (space-separated values like classes)
+                    handleDataStateToggling(targetElement, classNamesOrAttrs);
                 } else if (operationType === 'content-prepend' || operationType === 'content-append') {
                     // Handle content toggling (append/prepend)
                     handleContentToggling(targetElement, classNamesOrAttrs, operationType);
@@ -513,10 +516,13 @@
                                         if (deselectionTargetElements.length) {
                                             deselectionTargetElements.forEach(targetElement => {
                                                 const otherButtonType = otherTypes[0]; // We know it's single type
-                                                
+
                                                 if (deselectionOperationType === 'attr') {
                                                     // Handle attribute deselection - toggle attributes back to original state
                                                     handleAttributeToggling(targetElement, classNamesOrAttrs, demoCard);
+                                                } else if (deselectionOperationType === 'data-state') {
+                                                    // Handle data-state deselection - toggle states back to original state
+                                                    handleDataStateToggling(targetElement, classNamesOrAttrs);
                                                 } else if (deselectionOperationType === 'content-prepend' || deselectionOperationType === 'content-append') {
                                                     // Handle content deselection - toggle content back to original state
                                                     handleContentToggling(targetElement, classNamesOrAttrs, deselectionOperationType);
@@ -794,6 +800,7 @@
             if (!attrPair) return;
 
             const [attrName, attrValue] = attrPair.split('=');
+            const isAdding = !targetElement.hasAttribute(attrName);
 
             if (attrValue !== undefined) {
                 // Attribute with value: toggle between value and removing
@@ -809,6 +816,28 @@
                 } else {
                     targetElement.setAttribute(attrName, '');
                 }
+            }
+
+            // Special handling for data-required attribute - also toggle required on inputs
+            // Note: For radio groups, we DON'T add required to individual radios
+            if (attrName === 'data-required') {
+                const isRadioGroup = targetElement.classList.contains('nds-radio-group');
+
+                if (isRadioGroup) {
+                    // For radio groups, don't add required to individual radios
+                    // The group is validated as a whole, not individual radios
+                    return;
+                }
+
+                // For other containers (form-container, check-group, switch-group)
+                const inputs = targetElement.querySelectorAll('input, textarea, select');
+                inputs.forEach(input => {
+                    if (isAdding) {
+                        input.setAttribute('required', '');
+                    } else {
+                        input.removeAttribute('required');
+                    }
+                });
             }
 
             // Special handling for data-status variant changes
@@ -827,6 +856,51 @@
 
         // Update code example for attribute changes
         updateCodeExampleForAttributes(demoCard, targetElement, attributePairs);
+    }
+
+    // Handle data-state attribute toggling (space-separated values)
+    function handleDataStateToggling(targetElement, statesString) {
+        // Parse state string format: "focus active disabled"
+        const states = statesString.trim().split(/\s+/);
+
+        // Get current data-state value
+        const currentDataState = targetElement.getAttribute('data-state') || '';
+        let currentStates = currentDataState.split(' ').filter(s => s.length > 0);
+
+        states.forEach(state => {
+            if (!state) return;
+
+            const stateIndex = currentStates.indexOf(state);
+            const isAdding = stateIndex === -1;
+
+            if (stateIndex !== -1) {
+                // State exists, remove it
+                currentStates.splice(stateIndex, 1);
+            } else {
+                // State doesn't exist, add it
+                currentStates.push(state);
+            }
+
+            // Special handling for disabled state - also toggle the input's disabled attribute
+            if (state === 'disabled') {
+                // Find all inputs within this container
+                const inputs = targetElement.querySelectorAll('input, textarea, select');
+                inputs.forEach(input => {
+                    if (isAdding) {
+                        input.setAttribute('disabled', '');
+                    } else {
+                        input.removeAttribute('disabled');
+                    }
+                });
+            }
+        });
+
+        // Update the attribute
+        if (currentStates.length > 0) {
+            targetElement.setAttribute('data-state', currentStates.join(' '));
+        } else {
+            targetElement.removeAttribute('data-state');
+        }
     }
 
     // Update alert content and code examples when variant changes

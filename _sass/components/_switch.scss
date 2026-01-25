@@ -97,6 +97,71 @@
             width: 100%;
         }
     }
+
+    // ==============================================
+    // REQUIRED INDICATOR (data-required attribute)
+    // ==============================================
+
+    // Auto-add required indicator when group has data-required, data-min-checked, or nds-required class
+    &[data-required],
+    &[data-min-checked],
+    &.nds-required {
+        > .label::after {
+            content: " *";
+            color: var(--controls-control-text-error, #dc2626);
+        }
+    }
+
+    // ==============================================
+    // GROUP STATE (data-state attribute)
+    // ==============================================
+
+    // Disabled state - disable all switches in group
+    &[data-state~="disabled"] {
+        opacity: 0.5;
+        pointer-events: none;
+
+        .nds-form-container {
+            pointer-events: none;
+        }
+    }
+
+    // ==============================================
+    // GROUP VALIDATION (data-status attribute)
+    // ==============================================
+
+    // Show feedback when group has status
+    &[data-status] > .nds-feedback {
+        display: flex;
+    }
+
+    // Error state
+    &[data-status="error"] {
+        > .nds-feedback {
+            color: var(--text-error);
+        }
+    }
+
+    // Success state
+    &[data-status="success"] {
+        > .nds-feedback {
+            color: var(--text-success);
+        }
+    }
+
+    // Warning state
+    &[data-status="warning"] {
+        > .nds-feedback {
+            color: var(--text-warning);
+        }
+    }
+
+    // Info state
+    &[data-status="info"] {
+        > .nds-feedback {
+            color: var(--text-info);
+        }
+    }
 }
 
 // ==============================================

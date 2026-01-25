@@ -26,15 +26,15 @@ direction: ltr
             <div class="demo-label">Text Input</div>
             <div class="demo-action">
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["nds-required", ".nds-form-container", "requiredClass"]'>
+                data-toggler='["data-required", ".nds-form-container", "requiredToggle", "attr"]'>
                 <span class="label">Required</span>
               </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["error", ".nds-form-control", "errorToggle"]'>
-                <span class="label">Error</span>
+                data-toggler='["focus", ".nds-form-container", "dataStateToggle", "data-state"]'>
+                <span class="label">Focus</span>
               </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["disabled", "#demo-textInput", "stateToggle", "attr"]'>
+                data-toggler='["disabled", ".nds-form-container", "dataStateToggle", "data-state"]'>
                 <span class="label">Disabled</span>
               </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
@@ -45,7 +45,7 @@ direction: ltr
           </div>
           <div class="demo-container">
             <div class="state-demo">
-              <div class="nds-form-container nds-required">
+              <div class="nds-form-container" data-required>
                 <div class="nds-form-header">
                   <label for="demo-textInput">
                     <span class="label">Text Input</span>
@@ -114,15 +114,15 @@ direction: ltr
             <div class="demo-label">Search Input</div>
             <div class="demo-action">
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["nds-required", ".nds-form-container", "requiredClass"]'>
+                data-toggler='["data-required", ".nds-form-container", "requiredToggle", "attr"]'>
                 <span class="label">Required</span>
               </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["error", ".nds-form-control", "errorToggle"]'>
-                <span class="label">Error</span>
+                data-toggler='["focus", ".nds-form-container", "dataStateToggle", "data-state"]'>
+                <span class="label">Focus</span>
               </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["disabled", "#demo-searchInput", "stateToggle", "attr"]'>
+                data-toggler='["disabled", ".nds-form-container", "dataStateToggle", "data-state"]'>
                 <span class="label">Disabled</span>
               </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
@@ -211,15 +211,15 @@ direction: ltr
             <div class="demo-label">Email Input</div>
             <div class="demo-action">
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["nds-required", ".nds-form-container", "requiredClass"]'>
+                data-toggler='["data-required", ".nds-form-container", "requiredToggle", "attr"]'>
                 <span class="label">Required</span>
               </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["error", ".nds-form-control", "errorToggle"]'>
-                <span class="label">Error</span>
+                data-toggler='["focus", ".nds-form-container", "dataStateToggle", "data-state"]'>
+                <span class="label">Focus</span>
               </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["disabled", "#demo-emailInput", "stateToggle", "attr"]'>
+                data-toggler='["disabled", ".nds-form-container", "dataStateToggle", "data-state"]'>
                 <span class="label">Disabled</span>
               </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
@@ -301,15 +301,15 @@ direction: ltr
             <div class="demo-label">Password Input</div>
             <div class="demo-action">
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["nds-required", ".nds-form-container", "requiredClass"]'>
+                data-toggler='["data-required", ".nds-form-container", "requiredToggle", "attr"]'>
                 <span class="label">Required</span>
               </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["error", ".nds-form-control", "errorToggle"]'>
-                <span class="label">Error</span>
+                data-toggler='["focus", ".nds-form-container", "dataStateToggle", "data-state"]'>
+                <span class="label">Focus</span>
               </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["disabled", "#demo-passwordInput", "stateToggle", "attr"]'>
+                data-toggler='["disabled", ".nds-form-container", "dataStateToggle", "data-state"]'>
                 <span class="label">Disabled</span>
               </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
@@ -399,15 +399,15 @@ direction: ltr
             <div class="demo-label">Textarea</div>
             <div class="demo-action">
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["nds-required", ".nds-form-container", "requiredClass"]'>
+                data-toggler='["data-required", ".nds-form-container", "requiredToggle", "attr"]'>
                 <span class="label">Required</span>
               </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["error", ".nds-form-control", "errorToggle"]'>
-                <span class="label">Error</span>
+                data-toggler='["focus", ".nds-form-container", "dataStateToggle", "data-state"]'>
+                <span class="label">Focus</span>
               </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["disabled", "#textareaInput", "stateToggle", "attr"]'>
+                data-toggler='["disabled", ".nds-form-container", "dataStateToggle", "data-state"]'>
                 <span class="label">Disabled</span>
               </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
@@ -478,15 +478,15 @@ direction: ltr
             <div class="demo-label">Select Dropdown</div>
             <div class="demo-action">
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["nds-required", ".nds-form-container", "requiredClass"]'>
+                data-toggler='["data-required", ".nds-form-container", "requiredToggle", "attr"]'>
                 <span class="label">Required</span>
               </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["error", ".nds-form-control", "errorToggle"]'>
-                <span class="label">Error</span>
+                data-toggler='["focus", ".nds-form-container", "dataStateToggle", "data-state"]'>
+                <span class="label">Focus</span>
               </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["disabled", "#demo-selectInput", "stateToggle", "attr"]'>
+                data-toggler='["disabled", ".nds-form-container", "dataStateToggle", "data-state"]'>
                 <span class="label">Disabled</span>
               </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"

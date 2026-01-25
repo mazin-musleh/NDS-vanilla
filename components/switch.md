@@ -123,6 +123,14 @@ direction: ltr
             <div class="demo-label">Switch Group</div>
             <div class="demo-action">
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='["data-required", ".nds-switch-group", "requiredToggle", "attr"]'>
+                <span class="label">Required</span>
+              </button>
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='["disabled", ".nds-switch-group", "disabledToggle", "data-state"]'>
+                <span class="label">Disabled</span>
+              </button>
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["nds-lg", ".nds-switch-container", "sizeToggle"]'>
                 <span class="label">LG</span>
               </button>
@@ -133,10 +141,6 @@ direction: ltr
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["nds-sm", ".nds-switch-container", "sizeToggle"]'>
                 <span class="label">SM</span>
-              </button>
-              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["disabled", "input.nds-switch-input", "stateToggle", "attr"]'>
-                <span class="label">Disabled</span>
               </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["rowView", ".nds-switch-group", "layoutToggle"]'>
