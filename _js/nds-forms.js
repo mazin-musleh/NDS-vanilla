@@ -1282,20 +1282,12 @@
         if (!group) return;
 
         // Handle data-required attribute - propagate to inputs
-        // Note: For radio groups, we DON'T add required to individual radios
-        // because the group is validated as a whole, not individual radios
-        if (group.hasAttribute('data-required')) {
-            var isRadioGroup = group.classList.contains('nds-radio-group');
-
-            if (!isRadioGroup) {
-                // Only add required to checkboxes and switches, not radios in a radio group
-                var inputs = group.querySelectorAll('input[type="checkbox"], .nds-switch-input');
-                inputs.forEach(function(input) {
-                    if (!input.hasAttribute('required')) {
-                        input.setAttribute('required', '');
-                    }
-                });
-            }
+        // Note: For groups (radio, checkbox, switch), we DON'T add required to individual inputs
+        // because the group is validated as a whole, not individual inputs
+        // This prevents HTML5 validation from showing errors on each individual input
+        if (group.hasAttribute('data-required') || group.hasAttribute('data-min-checked')) {
+            // Groups are validated as a whole - don't add required to individual inputs
+            // This applies to all group types: radio-group, check-group, switch-group
         }
 
         // Handle data-state disabled - propagate to inputs

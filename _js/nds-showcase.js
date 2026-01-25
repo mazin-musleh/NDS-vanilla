@@ -819,17 +819,20 @@
             }
 
             // Special handling for data-required attribute - also toggle required on inputs
-            // Note: For radio groups, we DON'T add required to individual radios
+            // Note: For groups (radio-group, check-group, switch-group), we DON'T add required to individual inputs
             if (attrName === 'data-required') {
-                const isRadioGroup = targetElement.classList.contains('nds-radio-group');
+                const isGroup = targetElement.classList.contains('nds-radio-group')
+                             || targetElement.classList.contains('nds-check-group')
+                             || targetElement.classList.contains('nds-switch-group');
 
-                if (isRadioGroup) {
-                    // For radio groups, don't add required to individual radios
-                    // The group is validated as a whole, not individual radios
+                if (isGroup) {
+                    // For groups, don't add required to individual inputs
+                    // The group is validated as a whole, not individual inputs
+                    // This prevents HTML5 validation from showing errors on each input
                     return;
                 }
 
-                // For other containers (form-container, check-group, switch-group)
+                // For individual form containers (nds-form-container)
                 const inputs = targetElement.querySelectorAll('input, textarea, select');
                 inputs.forEach(input => {
                     if (isAdding) {
