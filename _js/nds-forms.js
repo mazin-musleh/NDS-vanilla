@@ -367,7 +367,10 @@
             var checkboxes = group.querySelectorAll('input[type="checkbox"]');
             var checkedCount = Array.from(checkboxes).filter(function(cb) { return cb.checked; }).length;
 
-            var minChecked = parseInt(group.getAttribute('data-min-checked') || '0', 10);
+            // If data-required is set without data-min-checked, require at least 1
+            var hasDataRequired = group.hasAttribute('data-required');
+            var defaultMin = hasDataRequired ? 1 : 0;
+            var minChecked = parseInt(group.getAttribute('data-min-checked') || defaultMin, 10);
             var maxChecked = parseInt(group.getAttribute('data-max-checked') || checkboxes.length, 10);
 
             var isValid = checkedCount >= minChecked && checkedCount <= maxChecked;
@@ -404,7 +407,7 @@
             var radios = group.querySelectorAll('input[type="radio"]');
             var isSelected = Array.from(radios).some(function(r) { return r.checked; });
 
-            var isRequired = group.classList.contains('nds-required');
+            var isRequired = group.hasAttribute('data-required') || group.classList.contains('nds-required');
             var isValid = !isRequired || isSelected;
             var message = '';
             var isArabic = Utils.isArabic();
@@ -434,8 +437,30 @@
             var errors = [];
             var firstInvalidInput = null;
 
+            // Helper function to check if an element is visible
+            function isVisible(element) {
+                if (!element) return false;
+                // Check for hidden attribute on the element or any parent
+                var current = element;
+                while (current && current !== form) {
+                    if (current.hasAttribute('hidden') || current.hidden) {
+                        return false;
+                    }
+                    // Check computed style for display: none
+                    var style = window.getComputedStyle(current);
+                    if (style.display === 'none') {
+                        return false;
+                    }
+                    current = current.parentElement;
+                }
+                return true;
+            }
+
             // Validate form containers
             form.querySelectorAll('.nds-form-container').forEach(function(container) {
+                // Skip hidden containers
+                if (!isVisible(container)) return;
+
                 var input = container.querySelector('input, textarea, select');
                 if (!input || input.disabled) return;
 
@@ -455,7 +480,10 @@
             });
 
             // Validate checkbox groups
-            form.querySelectorAll('.nds-check-group[data-min-checked], .nds-check-group[data-max-checked]').forEach(function(group) {
+            form.querySelectorAll('.nds-check-group[data-min-checked], .nds-check-group[data-max-checked], .nds-check-group[data-required]').forEach(function(group) {
+                // Skip hidden groups
+                if (!isVisible(group)) return;
+
                 var result = Validator.validateCheckboxGroup(group, { showMessage: options.showMessages });
                 if (!result.valid) {
                     invalidFields.push(group);
@@ -469,7 +497,10 @@
             });
 
             // Validate radio groups
-            form.querySelectorAll('.nds-radio-group.nds-required').forEach(function(group) {
+            form.querySelectorAll('.nds-radio-group[data-required], .nds-radio-group.nds-required').forEach(function(group) {
+                // Skip hidden groups
+                if (!isVisible(group)) return;
+
                 var result = Validator.validateRadioGroup(group, { showMessage: options.showMessages });
                 if (!result.valid) {
                     invalidFields.push(group);
@@ -505,13 +536,38 @@
     // FORM STATE MANAGEMENT
     // ==============================================
     var FormState = {
+        updateDataState: function(container, stateName, add) {
+            if (!container) return;
+
+            var currentState = container.getAttribute('data-state') || '';
+            var states = currentState.split(' ').filter(function(s) { return s.length > 0; });
+            var stateIndex = states.indexOf(stateName);
+
+            if (add && stateIndex === -1) {
+                states.push(stateName);
+            } else if (!add && stateIndex !== -1) {
+                states.splice(stateIndex, 1);
+            }
+
+            if (states.length > 0) {
+                container.setAttribute('data-state', states.join(' '));
+            } else {
+                container.removeAttribute('data-state');
+            }
+        },
+
         update: function(input, formControl, skipValidation) {
             var hasValue = (input.type === 'checkbox' || input.type === 'radio')
                 ? input.checked
                 : input.value.trim() !== '';
 
-            formControl.classList.toggle('filled', hasValue);
-            formControl.classList.toggle('disabled', input.disabled);
+            var formContainer = formControl.closest('.nds-form-container');
+
+            // Update data-state on container
+            if (formContainer) {
+                FormState.updateDataState(formContainer, 'filled', hasValue);
+                FormState.updateDataState(formContainer, 'disabled', input.disabled);
+            }
 
             // Show/hide clear button
             var clearButton = formControl.querySelector('.clear');
@@ -529,10 +585,7 @@
                 input.setCustomValidity('');
             }
 
-            formControl.classList.toggle('error', isInvalid);
-
             // Update error message
-            var formContainer = formControl.closest('.nds-form-container');
             if (!formContainer) return;
 
             if (isInvalid) {
@@ -571,30 +624,42 @@
             if (input._ndsInitialized) return;
             input._ndsInitialized = true;
 
-            // Auto-add required attribute
+            // Auto-add required attribute to input if container has data-required attribute
             var formContainer = formControl.closest('.nds-form-container');
+            if (formContainer && formContainer.hasAttribute('data-required') && !input.hasAttribute('required')) {
+                input.setAttribute('required', '');
+            }
+            // Legacy: also check for nds-required class
             if (formContainer && formContainer.classList.contains('nds-required') && !input.hasAttribute('required')) {
                 input.setAttribute('required', '');
             }
 
-            // Mouse interaction
+            // Mouse interaction - use data-state on container
             input.addEventListener('mousedown', function() {
-                formControl.classList.add('active');
+                if (formContainer) {
+                    FormState.updateDataState(formContainer, 'active', true);
+                }
             });
 
             ['mouseup', 'mouseleave'].forEach(function(event) {
                 input.addEventListener(event, function() {
-                    formControl.classList.remove('active');
+                    if (formContainer) {
+                        FormState.updateDataState(formContainer, 'active', false);
+                    }
                 });
             });
 
-            // Focus states
+            // Focus states - use data-state on container
             input.addEventListener('focus', function() {
-                formControl.classList.add('focus');
+                if (formContainer) {
+                    FormState.updateDataState(formContainer, 'focus', true);
+                }
             });
 
             input.addEventListener('blur', function() {
-                formControl.classList.remove('focus');
+                if (formContainer) {
+                    FormState.updateDataState(formContainer, 'focus', false);
+                }
                 FormState.update(input, formControl);
             });
 
@@ -1082,15 +1147,21 @@
                 if (!switchInput || !switchTrack || switchTrack._switchInitialized) return;
                 switchTrack._switchInitialized = true;
 
+                var formContainer = formControl.closest('.nds-form-container');
+
                 switchTrack.addEventListener('mousedown', function() {
                     if (!switchInput.disabled && !switchElement.classList.contains('disabled')) {
-                        formControl.classList.add('active');
+                        if (formContainer) {
+                            FormState.updateDataState(formContainer, 'active', true);
+                        }
                     }
                 });
 
                 ['mouseup', 'mouseleave'].forEach(function(event) {
                     switchTrack.addEventListener(event, function() {
-                        formControl.classList.remove('active');
+                        if (formContainer) {
+                            FormState.updateDataState(formContainer, 'active', false);
+                        }
                     });
                 });
 
@@ -1179,7 +1250,7 @@
         var checkboxes = group.querySelectorAll('input[type="checkbox"]');
         checkboxes.forEach(function(checkbox) {
             checkbox.addEventListener('change', function() {
-                if (group.hasAttribute('data-min-checked') || group.hasAttribute('data-max-checked')) {
+                if (group.hasAttribute('data-min-checked') || group.hasAttribute('data-max-checked') || group.hasAttribute('data-required')) {
                     if (group.hasAttribute('data-status')) {
                         Validator.validateCheckboxGroup(group);
                     }
@@ -1195,13 +1266,46 @@
         var radios = group.querySelectorAll('input[type="radio"]');
         radios.forEach(function(radio) {
             radio.addEventListener('change', function() {
-                if (group.classList.contains('nds-required')) {
+                if (group.hasAttribute('data-required') || group.classList.contains('nds-required')) {
                     if (group.hasAttribute('data-status')) {
                         Validator.validateRadioGroup(group);
                     }
                 }
             });
         });
+    }
+
+    // ==============================================
+    // GROUP STATE MANAGEMENT
+    // ==============================================
+    function initGroupState(group) {
+        if (!group) return;
+
+        // Handle data-required attribute - propagate to inputs
+        // Note: For radio groups, we DON'T add required to individual radios
+        // because the group is validated as a whole, not individual radios
+        if (group.hasAttribute('data-required')) {
+            var isRadioGroup = group.classList.contains('nds-radio-group');
+
+            if (!isRadioGroup) {
+                // Only add required to checkboxes and switches, not radios in a radio group
+                var inputs = group.querySelectorAll('input[type="checkbox"], .nds-switch-input');
+                inputs.forEach(function(input) {
+                    if (!input.hasAttribute('required')) {
+                        input.setAttribute('required', '');
+                    }
+                });
+            }
+        }
+
+        // Handle data-state disabled - propagate to inputs
+        var dataState = group.getAttribute('data-state') || '';
+        if (dataState.split(' ').indexOf('disabled') !== -1) {
+            var inputs = group.querySelectorAll('input[type="radio"], input[type="checkbox"], .nds-switch-input');
+            inputs.forEach(function(input) {
+                input.setAttribute('disabled', '');
+            });
+        }
     }
 
     // ==============================================
@@ -1423,9 +1527,10 @@
             }
         });
 
-        // Initialize checkbox/radio groups
-        container.querySelectorAll('.nds-check-group[data-min-checked], .nds-check-group[data-max-checked]').forEach(initCheckboxGroupValidation);
-        container.querySelectorAll('.nds-radio-group.nds-required').forEach(initRadioGroupValidation);
+        // Initialize checkbox/radio/switch groups
+        container.querySelectorAll('.nds-check-group, .nds-radio-group, .nds-switch-group').forEach(initGroupState);
+        container.querySelectorAll('.nds-check-group[data-min-checked], .nds-check-group[data-max-checked], .nds-check-group[data-required]').forEach(initCheckboxGroupValidation);
+        container.querySelectorAll('.nds-radio-group[data-required], .nds-radio-group.nds-required').forEach(initRadioGroupValidation);
 
         // Initialize forms
         var forms = container.classList && container.classList.contains('nds-form')

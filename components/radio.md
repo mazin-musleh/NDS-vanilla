@@ -112,6 +112,14 @@ direction: ltr
             <div class="demo-label">Radio Button Group</div>
             <div class="demo-action">
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='["data-required", ".nds-radio-group", "requiredToggle", "attr"]'>
+                <span class="label">Required</span>
+              </button>
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='["disabled", ".nds-radio-group", "disabledToggle", "data-state"]'>
+                <span class="label">Disabled</span>
+              </button>
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["nds-lg", ".nds-radio-container", "sizeToggle"]'>
                 <span class="label">LG</span>
               </button>
@@ -122,14 +130,6 @@ direction: ltr
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
                 data-toggler='["nds-sm", ".nds-radio-container", "sizeToggle"]'>
                 <span class="label">SM</span>
-              </button>
-              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["disabled", "input[type=radio]", "stateToggle", "attr"]'>
-                <span class="label">Disabled</span>
-              </button>
-              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["nds-required", ".nds-radio-group", "required"]'>
-                <span class="label">Required</span>
               </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["rowView", ".nds-radio-group", "layoutToggle"]'>
@@ -269,8 +269,12 @@ direction: ltr
             <div class="demo-label">Group Validation</div>
             <div class="demo-action">
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["nds-required", ".nds-radio-group", "required"]'>
+                data-toggler='["data-required", ".nds-radio-group", "requiredToggle", "attr"]'>
                 <span class="label">Required</span>
+              </button>
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='["disabled", ".nds-radio-group", "disabledToggle", "data-state"]'>
+                <span class="label">Disabled</span>
               </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["rowView", ".nds-radio-group", "layoutToggle"]'>
@@ -284,7 +288,7 @@ direction: ltr
           </div>
           <div class="demo-container">
             <div class="state-demo">
-              <fieldset class="nds-radio-group nds-required" id="demo-radio-validation">
+              <fieldset class="nds-radio-group" data-required id="demo-radio-validation">
                 <legend class="label">Select your subscription plan (required)</legend>
                 <div class="nds-form-container nds-radio-container">
                   <div class="nds-form-header">
