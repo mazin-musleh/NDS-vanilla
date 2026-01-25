@@ -16,11 +16,8 @@ layout: default
                     <div class="nds-user-feedback" >
                         <div class="nds-user-feedback-overview">
                             <span class="nds-user-feedback-question">Was this page useful?</span>
-                            <span class="nds-user-feedback-status nds-feedback nds-md"  hidden>
-                                <span class="nds-feedback-icon nds-outline">
-                                    <i class="hgi hgi-solid icon"></i>
-                                </span>
-                                <span class="msg">Your feedback is submitted!</span>
+                            <span class="nds-user-feedback-status" hidden>
+                                <!-- Feedback message will be dynamically created by NDSFeedback API -->
                             </span>
                             <div class="nds-user-feedback-answer-btn ">
                                 <button type="button" class="nds-btn nds-primary nds-md" data-answer="Yes" aria-label="Yes">
@@ -89,12 +86,7 @@ layout: default
                                                 class="nds-check">
                                         </div>
                                     </div>
-                                    <span class="nds-feedback">
-                                        <span class="nds-feedback-icon nds-outline nds-sm">
-                                            <i class="hgi hgi-solid icon"></i>
-                                        </span>
-                                        <span class="msg"></span>
-                                    </span>
+                                    <div class="nds-form-footer" data-feedback-target hidden></div>
                                 </fieldset>
                                 <fieldset class="nds-check-group why-no nds-required">
                                     <legend>
@@ -145,12 +137,7 @@ layout: default
                                                 class="nds-check">
                                         </div>
                                     </div>
-                                    <span class="nds-feedback">
-                                        <span class="nds-feedback-icon nds-outline nds-sm">
-                                            <i class="hgi hgi-solid icon"></i>
-                                        </span>
-                                        <span class="msg"></span>
-                                    </span>
+                                    <div class="nds-form-footer" data-feedback-target hidden></div>
                                 </fieldset>
                                 <fieldset class="nds-radio-group rowView nds-required gender">
                                     <legend class="label">I'm</legend>
@@ -176,12 +163,7 @@ layout: default
                                                 class="nds-radio">
                                         </div>
                                     </div>
-                                    <span class="nds-feedback">
-                                        <span class="nds-feedback-icon nds-outline nds-sm">
-                                            <i class="hgi hgi-solid icon"></i>
-                                        </span>
-                                        <span class="msg"></span>
-                                    </span>
+                                    <div class="nds-form-footer" data-feedback-target hidden></div>
                                 </fieldset>
                             </div>
                             <div class="nds-user-feedback-comment">
@@ -195,14 +177,7 @@ layout: default
                                         <textarea id="feedback-comment" name="comment" class="nds-textarea"
                                             placeholder="Enter your message..." rows="4"></textarea>
                                     </div>
-                                    <div class="nds-form-footer">
-                                        <span class="nds-feedback">
-                                            <span class="nds-feedback-icon nds-outline nds-sm">
-                                                <i class="hgi hgi-solid icon"></i>
-                                            </span>
-                                            <span class="msg"></span>
-                                        </span>
-                                    </div>
+                                    <div class="nds-form-footer" data-feedback-target hidden></div>
                                 </div>
                             </div>
                         </div>

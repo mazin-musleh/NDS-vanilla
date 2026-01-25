@@ -59,12 +59,7 @@ direction: ltr
                     </button>
                   </div>
                 </div>
-                <span class="nds-feedback">
-                  <span class="nds-feedback-icon nds-neutral nds-info nds-outline nds-sm">
-                    <i class="hgi hgi-solid icon"></i>
-                  </span>
-                  <span class="msg">More Info</span>
-                </span>
+                <div class="nds-form-footer" data-feedback-target hidden></div>
               </div>
             </div>
           </div>
@@ -90,7 +85,7 @@ direction: ltr
                 </div>
                 <div class="nds-expandable-content">
                   <code class="lang-html code">
-                  <div class="nds-form-container">
+                  <div class="nds-form-container" id="textInput-container">
                     <div class="nds-form-header">
                       <label for="textInput">
                         <span class="label">Text Input</span>
@@ -104,14 +99,7 @@ direction: ltr
                         </button>
                       </div>
                     </div>
-                    <div class="nds-form-footer">
-                      <span class="nds-feedback">
-                        <span class="nds-feedback-icon nds-outline nds-sm">
-                          <i class="hgi hgi-solid icon"></i>
-                        </span>
-                        <span class="msg"></span>
-                      </span>
-                    </div>
+                    <div class="nds-form-footer" data-feedback-target hidden></div>
                   </div>
                     </code>
                 </div>
@@ -164,14 +152,7 @@ direction: ltr
                     </button>
                   </div>
                 </div>
-                <div class="nds-form-footer">
-                  <span class="nds-feedback">
-                    <span class="nds-feedback-icon nds-outline nds-sm">
-                      <i class="hgi hgi-solid icon"></i>
-                    </span>
-                    <span class="msg"></span>
-                  </span>
-                </div>
+                <div class="nds-form-footer" data-feedback-target hidden></div>
               </div>
             </div>
           </div>
@@ -215,14 +196,7 @@ direction: ltr
                         </button>
                       </div>
                     </div>
-                    <div class="nds-form-footer">
-                      <span class="nds-feedback">
-                        <span class="nds-feedback-icon nds-outline nds-sm">
-                          <i class="hgi hgi-solid icon"></i>
-                        </span>
-                        <span class="msg"></span>
-                      </span>
-                    </div>
+                    <div class="nds-form-footer" data-feedback-target hidden></div>
                   </div>
                     </code>
                 </div>
@@ -271,14 +245,7 @@ direction: ltr
                     </button>
                   </div>
                 </div>
-                <div class="nds-form-footer">
-                  <span class="nds-feedback">
-                    <span class="nds-feedback-icon nds-outline nds-sm">
-                      <i class="hgi hgi-solid icon"></i>
-                    </span>
-                    <span class="msg"></span>
-                  </span>
-                </div>
+                <div class="nds-form-footer" data-feedback-target hidden></div>
               </div>
             </div>
           </div>
@@ -319,14 +286,7 @@ direction: ltr
                         </button>
                       </div>
                     </div>
-                    <div class="nds-form-footer">
-                      <span class="nds-feedback">
-                        <span class="nds-feedback-icon nds-outline nds-sm">
-                          <i class="hgi hgi-solid icon"></i>
-                        </span>
-                        <span class="msg"></span>
-                      </span>
-                    </div>
+                    <div class="nds-form-footer" data-feedback-target hidden></div>
                   </div>
                     </code>
                 </div>
@@ -379,14 +339,7 @@ direction: ltr
                     </button>
                   </div>
                 </div>
-                <div class="nds-form-footer">
-                  <span class="nds-feedback">
-                    <span class="nds-feedback-icon nds-outline nds-sm">
-                      <i class="hgi hgi-solid icon"></i>
-                    </span>
-                    <span class="msg"></span>
-                  </span>
-                </div>
+                <div class="nds-form-footer" data-feedback-target hidden></div>
               </div>
             </div>
           </div>
@@ -431,14 +384,7 @@ direction: ltr
                         </button>
                       </div>
                     </div>
-                    <div class="nds-form-footer">
-                      <span class="nds-feedback">
-                        <span class="nds-feedback-icon nds-outline nds-sm">
-                          <i class="hgi hgi-solid icon"></i>
-                        </span>
-                        <span class="msg"></span>
-                      </span>
-                    </div>
+                    <div class="nds-form-footer" data-feedback-target hidden></div>
                   </div>
                     </code>
                 </div>
@@ -482,14 +428,7 @@ direction: ltr
                   <textarea id="textareaInput" class="nds-textarea" placeholder="Enter your message..."
                     rows="4"></textarea>
                 </div>
-                <div class="nds-form-footer">
-                  <span class="nds-feedback">
-                    <span class="nds-feedback-icon nds-outline nds-sm">
-                      <i class="hgi hgi-solid icon"></i>
-                    </span>
-                    <span class="msg"></span>
-                  </span>
-                </div>
+                <div class="nds-form-footer" data-feedback-target hidden></div>
               </div>
             </div>
           </div>
@@ -524,14 +463,7 @@ direction: ltr
                     <div class="nds-form-control">
                       <textarea id="textareaInput" class="nds-textarea" placeholder="Enter your message..." rows="4"></textarea>
                     </div>
-                    <div class="nds-form-footer">
-                      <span class="nds-feedback">
-                        <span class="nds-feedback-icon nds-outline nds-sm">
-                          <i class="hgi hgi-solid icon"></i>
-                        </span>
-                        <span class="msg"></span>
-                      </span>
-                    </div>
+                    <div class="nds-form-footer" data-feedback-target hidden></div>
                   </div>
                     </code>
                 </div>
@@ -594,14 +526,7 @@ direction: ltr
                     </div>
                   </div>
                 </div>
-                <div class="nds-form-footer">
-                  <span class="nds-feedback">
-                    <span class="nds-feedback-icon nds-outline nds-sm">
-                      <i class="hgi hgi-solid icon"></i>
-                    </span>
-                    <span class="msg"></span>
-                  </span>
-                </div>
+                <div class="nds-form-footer" data-feedback-target hidden></div>
               </div>
             </div>
           </div>
@@ -636,7 +561,7 @@ direction: ltr
                     <div class="nds-form-control">
                       <input type="text" id="selectInput" class="nds-input nds-select-input" placeholder="Choose an option..." readonly>
                       <input type="hidden" name="selectValue" class="nds-select-value">
-                      
+
                       <!-- Custom Dropdown Menu -->
                       <div class="nds-select-dropdown" hidden>
                         <div class="select-options">
@@ -655,14 +580,7 @@ direction: ltr
                         </div>
                       </div>
                     </div>
-                    <div class="nds-form-footer">
-                      <span class="nds-feedback">
-                        <span class="nds-feedback-icon nds-outline nds-sm">
-                          <i class="hgi hgi-solid icon"></i>
-                        </span>
-                        <span class="msg"></span>
-                      </span>
-                    </div>
+                    <div class="nds-form-footer" data-feedback-target hidden></div>
                   </div>
                     </code>
                 </div>
@@ -717,12 +635,7 @@ direction: ltr
                     </button>
                   </div>
                 </div>
-                <span class="nds-feedback">
-                  <span class="nds-feedback-icon nds-outline nds-sm">
-                    <i class="hgi hgi-solid icon"></i>
-                  </span>
-                  <span class="msg">Helper text appears here</span>
-                </span>
+                <div class="nds-form-footer" data-feedback-target hidden></div>
               </div>
             </div>
           </div>
@@ -762,12 +675,7 @@ direction: ltr
   <div class="nds-form-control">
     <input type="text" id="my-input" placeholder="Enter value...">
   </div>
-  <span class="nds-feedback">
-    <span class="nds-feedback-icon nds-outline nds-sm">
-      <i class="hgi hgi-solid icon"></i>
-    </span>
-    <span class="msg">Helper text</span>
-  </span>
+  <div class="nds-form-footer" data-feedback-target hidden></div>
 </div>
                   </code>
                 </div>
@@ -805,8 +713,169 @@ element.addEventListener('nds:statusChange', function(e) {
           </div>
         </div>
 
+        <!-- Permanent Feedback Demo -->
+        <div class="nds-demo-card">
+          <div class="demo-header">
+            <div class="demo-label">Permanent Feedback (Tips & Hints)</div>
+            <div class="demo-action">
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn" id="permanent-error-btn">
+                <span class="label">Show Error</span>
+              </button>
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn" id="permanent-clear-btn">
+                <span class="label">Clear Error</span>
+              </button>
+            </div>
+          </div>
+          <div class="demo-container">
+            <div class="state-demo">
+              <div class="nds-form-container" id="permanent-demo-container">
+                <div class="nds-form-header">
+                  <label for="permanent-demo-input">
+                    <span class="label">Username</span>
+                    <span class="info">Permanent tip shows again after error is cleared</span>
+                  </label>
+                </div>
+                <div class="nds-form-control">
+                  <input type="text" id="permanent-demo-input" class="nds-input" placeholder="Enter username...">
+                  <div class="nds-form-action">
+                    <button class="nds-btn nds-subtle clear" type="button" aria-label="Clear input" hidden>
+                      <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="nds-form-footer" data-feedback-target>
+                  <span class="nds-feedback nds-sm" data-status="info" data-permanent>
+                    <span class="nds-feedback-icon">
+                      <i class="hgi hgi-solid icon"></i>
+                    </span>
+                    <span class="nds-feedback-message">Use 3-20 characters, letters and numbers only</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="nds-tabs nds-code nds-divided" hidden>
+            <div class="nds-tab-list-container">
+              <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                  aria-controls="panel-permanent-html" id="tab-permanent-html">
+                  <span class="nds-tab-label">HTML</span>
+                </button>
+                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                  aria-controls="panel-permanent-js" id="tab-permanent-js">
+                  <span class="nds-tab-label">JavaScript</span>
+                </button>
+                <button class="nds-btn nds-subtle nds-tab showMore"><i
+                    class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                </button>
+              </nav>
+            </div>
+            <div class="nds-tab-content">
+              <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-permanent-html"
+                aria-labelledby="tab-permanent-html">
+                <div class="nds-code-action">
+                  <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                    <i class="hgi hgi-stroke hgi-copy-01"></i>
+                  </button>
+                </div>
+                <div class="nds-expandable-content">
+                  <code class="lang-html code">
+<div class="nds-form-container">
+  <div class="nds-form-header">
+    <label for="username">
+      <span class="label">Username</span>
+    </label>
+  </div>
+  <div class="nds-form-control">
+    <input type="text" id="username" class="nds-input" placeholder="Enter username...">
+  </div>
+  <div class="nds-form-footer" data-feedback-target>
+    <!-- Permanent feedback with data-permanent attribute -->
+    <!-- This will be hidden when validation errors appear, then restored when cleared -->
+    <span class="nds-feedback nds-sm" data-status="info" data-permanent>
+      <span class="nds-feedback-icon">
+        <i class="hgi hgi-solid icon"></i>
+      </span>
+      <span class="nds-feedback-message">Use 3-20 characters, letters and numbers only</span>
+    </span>
+  </div>
+</div>
+                  </code>
+                </div>
+              </div>
+              <div class="nds-tab-panel code-example nds-expandable hidden" role="tabpanel" id="panel-permanent-js"
+                aria-labelledby="tab-permanent-js">
+                <div class="nds-code-action">
+                  <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                    <i class="hgi hgi-stroke hgi-copy-01"></i>
+                  </button>
+                </div>
+                <div class="nds-expandable-content">
+                  <code class="lang-javascript code">
+// Show validation error
+// Permanent feedback (data-permanent) will be automatically hidden
+NDS.Forms.setStatus('#username', 'error', 'Username is required');
+
+// Or using NDSFeedback directly:
+NDSFeedback.create({
+    message: 'Username is required',
+    status: 'error',
+    target: container,
+    style: 'outline',
+    size: 'sm'
+});
+// Permanent feedback with data-permanent is hidden automatically
+
+// Clear validation error
+// Permanent feedback will be automatically restored
+NDS.Forms.clearStatus('#username');
+
+// Or dismiss the feedback:
+NDSFeedback.dismiss(errorFeedback);
+// Permanent feedback is restored automatically
+                  </code>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- add new demo card here -->
       </div>
     </div>
   </div>
 </section>
+
+<script>
+  // Permanent feedback demo interactions
+  (function () {
+    const permanentErrorBtn = document.getElementById('permanent-error-btn');
+    const permanentClearBtn = document.getElementById('permanent-clear-btn');
+    const permanentContainer = document.getElementById('permanent-demo-container');
+
+    if (permanentErrorBtn && permanentClearBtn && permanentContainer) {
+      let currentFeedback = null;
+
+      permanentErrorBtn.addEventListener('click', function () {
+        // Show error - permanent feedback will be hidden automatically
+        currentFeedback = window.NDSFeedback.create({
+          message: 'Username is required',
+          status: 'error',
+          target: permanentContainer,
+          style: 'outline',
+          size: 'sm'
+        });
+        permanentContainer.setAttribute('data-status', 'error');
+      });
+
+      permanentClearBtn.addEventListener('click', function () {
+        // Dismiss error - permanent feedback will be restored automatically
+        if (currentFeedback) {
+          window.NDSFeedback.dismiss(currentFeedback);
+          currentFeedback = null;
+        }
+        permanentContainer.removeAttribute('data-status');
+      });
+    }
+  })();
+</script>

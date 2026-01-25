@@ -561,6 +561,9 @@
                 // Update alert/toast code examples directly from toggle states
                 updateAlertCodeFromToggles(demoCard, buttonTypes[0]);
 
+                // Update feedback code examples directly from toggle states
+                updateFeedbackCodeFromToggles(demoCard, buttonTypes[0]);
+
             } catch (e) {
                 // Fallback: just toggle the button
                 button.classList.toggle('selected');
@@ -679,6 +682,103 @@
                     // Update data-position
                     updatedCode = updatedCode.replace(/data-position="[^"]*"/, `data-position="${position}"`);
                 }
+
+                updateCodeFromHiddenCopy(htmlCodeElement, updatedCode);
+            }
+        }
+    }
+
+    // Update feedback code examples directly from toggle button states
+    function updateFeedbackCodeFromToggles(demoCard, toggleType) {
+        // Only handle feedback-related toggles
+        if (!toggleType || !['iconVariant', 'iconSize'].includes(toggleType)) {
+            return;
+        }
+
+        // Find the actual feedback element to read current classes
+        const feedbackElement = demoCard.querySelector('.demo-container .nds-feedback');
+        if (!feedbackElement) return;
+
+        // Get current icon style from selected toggle button (ring, outline, or '')
+        let iconStyle = '';
+        const ringToggle = demoCard.querySelector('[data-toggler*="nds-ring"][data-toggler*="iconVariant"].selected');
+        const outlineToggle = demoCard.querySelector('[data-toggler*="nds-outline"][data-toggler*="iconVariant"].selected');
+        if (ringToggle) {
+            iconStyle = 'ring';
+        } else if (outlineToggle) {
+            iconStyle = 'outline';
+        }
+
+        // Get current icon size from selected toggle button (sm, md, lg)
+        // If no size toggle is selected, read from the actual element
+        let iconSize = 'md'; // default
+        const smToggle = demoCard.querySelector('[data-toggler*="nds-sm"][data-toggler*="iconSize"].selected');
+        const mdToggle = demoCard.querySelector('[data-toggler*="nds-md"][data-toggler*="iconSize"].selected');
+        const lgToggle = demoCard.querySelector('[data-toggler*="nds-lg"][data-toggler*="iconSize"].selected');
+        if (smToggle) {
+            iconSize = 'sm';
+        } else if (mdToggle) {
+            iconSize = 'md';
+        } else if (lgToggle) {
+            iconSize = 'lg';
+        } else {
+            // No size toggle selected - read from element's current classes
+            if (feedbackElement.classList.contains('nds-sm')) {
+                iconSize = 'sm';
+            } else if (feedbackElement.classList.contains('nds-lg')) {
+                iconSize = 'lg';
+            } else {
+                iconSize = 'md'; // default
+            }
+        }
+
+        // Update JS code example
+        const jsCodeElement = demoCard.querySelector('.code-example code.lang-javascript, .code-example code[class*="javascript"]');
+        if (jsCodeElement) {
+            const hiddenCopy = getHiddenCodeCopy(jsCodeElement);
+            if (hiddenCopy) {
+                let updatedCode = hiddenCopy.textContent;
+
+                // Update style parameter
+                updatedCode = updatedCode.replace(/style:\s*['"][^'"]*['"]/, `style: '${iconStyle}'`);
+
+                // Update size parameter
+                updatedCode = updatedCode.replace(/size:\s*['"][^'"]*['"]/, `size: '${iconSize}'`);
+
+                updateCodeFromHiddenCopy(jsCodeElement, updatedCode);
+            }
+        }
+
+        // Update HTML code example
+        const htmlCodeElement = demoCard.querySelector('.code-example code.lang-html, .code-example code[class*="html"]');
+        if (htmlCodeElement) {
+            const hiddenCopy = getHiddenCodeCopy(htmlCodeElement);
+            if (hiddenCopy) {
+                let updatedCode = hiddenCopy.textContent;
+
+                // Update class on .nds-feedback element to include/exclude iconStyle and iconSize
+                // Pattern: <span class="nds-feedback [nds-ring|nds-outline] [nds-sm|nds-md|nds-lg]" ...>
+                updatedCode = updatedCode.replace(
+                    /(<span class="nds-feedback)([^"]*)"([^>]*data-status="[^"]*")/,
+                    function(match, prefix, currentClasses, rest) {
+                        // Remove existing icon style and size classes
+                        let classes = currentClasses.replace(/\s*nds-ring/g, '')
+                                                   .replace(/\s*nds-outline/g, '')
+                                                   .replace(/\s*nds-sm/g, '')
+                                                   .replace(/\s*nds-md/g, '')
+                                                   .replace(/\s*nds-lg/g, '');
+
+                        // Add current icon style with nds- prefix if not empty
+                        if (iconStyle) {
+                            classes += ' nds-' + iconStyle;
+                        }
+
+                        // Add current icon size with nds- prefix
+                        classes += ' nds-' + iconSize;
+
+                        return prefix + classes + '"' + rest;
+                    }
+                );
 
                 updateCodeFromHiddenCopy(htmlCodeElement, updatedCode);
             }
