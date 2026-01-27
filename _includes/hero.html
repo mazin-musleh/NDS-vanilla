@@ -2,7 +2,7 @@
 {% if hero_type == 'sub' %}
 <section class="nds-hero-section sub {{ page.hero_style }}" aria-label="قسم العرض الرئيسي"
     style="--hero_image: url('{{ page.hero_image_sub | default: site.hero_image_sub | relative_url }}');">
-    <div class="nds-section-content nds-content-container">
+    <div class="nds-section-content">
         <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
             <ol class="nds-breadcrumb">
                 {% assign home_text = 'الرئيسية' %}{% if page.lang == 'en' %}{% assign home_text = 'Home' %}{% endif %}

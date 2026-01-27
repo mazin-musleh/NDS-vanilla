@@ -94,6 +94,7 @@
 
     img {
       max-width: 100%;
+      width: 100%;
       height: auto;
       object-fit: cover;
       object-position: var(--img-pos-x, 50%) var(--img-pos-y, 50%);

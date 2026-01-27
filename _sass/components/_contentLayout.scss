@@ -13,13 +13,15 @@
     --nds-breakout-max-width: calc(var(--nds-content-MaxWidth) + var(--nds-viewport-padding));
     --nds-breakout-size: calc((var(--nds-breakout-max-width) - var(--nds-content-MaxWidth)) / 2);
     width: 100%;
-    &:not([hidden]){
+
+    &:not([hidden]) {
         display: grid;
         row-gap: var(--gap, 0);
         grid-template-columns:
             [full-width-start] minmax(var(--nds-viewport-padding), 1fr) [breakout-start] minmax(0, var(--nds-breakout-size)) [content-start] min(100% - (var(--nds-viewport-padding) * 2),
                 var(--nds-content-MaxWidth)) [content-end] minmax(0, var(--nds-breakout-size)) [breakout-end] minmax(var(--nds-viewport-padding), 1fr) [full-width-end];
     }
+
     &> :not(.nds-breakout, .nds-full-width) {
         grid-column: content;
     }
@@ -146,7 +148,7 @@ main {
             section {
                 width: 100%;
                 min-width: 300px;
-                box-shadow: var(--shadow-md);
+                --section-shadow: var(--shadow-md);
 
                 @include tablet(max) {
                     &:first-child {
@@ -190,8 +192,8 @@ main {
             }
 
             section:not(.nds-hero-section, .nds-ghost) {
-                box-shadow: var(--shadow-md);
-                border-radius: var(--radius-md);
+                --section-shadow: var(--shadow-md);
+                --section-border-radius: var(--radius-md);
                 padding: var(--nds-viewport-padding) 0;
 
                 @include tablet(max) {
@@ -260,8 +262,8 @@ main {
 
     .contentLayout:not(.cardView) .mainContent section:not(.nds-hero-section, .nds-user-feedback-section) {
         height: 100% !important;
-        box-shadow: unset !important;
-        border-radius: unset !important;
+        --section-shadow: none;
+        --section-border-radius: 0;
     }
 }
 
@@ -302,7 +304,16 @@ main {
 }
 
 .nds-content-section {
-    background-color: var(--background-white, #fff);
+    /* Section background, shadow, and border overridable tokens */
+    --_section-bg: var(--section-bg, var(--background-white, #fff));
+    --_section-shadow: var(--section-shadow, none);
+    --_section-border: var(--section-border, none);
+    --_section-border-radius: var(--section-border-radius, 0);
+
+    background-color: var(--_section-bg);
+    box-shadow: var(--_section-shadow);
+    border: var(--_section-border);
+    border-radius: var(--_section-border-radius);
 
     /* Section title and description overridable tokens */
     --_section-title-FS: var(--section-title-FS, var(--nds-display-clamp-md-FS, clamp(24px, 3vw, 36px)));
@@ -340,6 +351,7 @@ main {
             var(--text-oncolor-secondary));
     }
 
+    &.nds-ghost,
     &.noBg {
         @include reset-section-style;
     }
@@ -423,6 +435,7 @@ main {
     &:has(+ *:not(.nds-section-action)) {
         margin-bottom: var(--_section-title-MB);
     }
+
     @include tablet(max) {
         &:has(+ .nds-section-action) {
             margin-bottom: var(--spacing-2xl, 24px);
@@ -503,7 +516,7 @@ main {
     article,
     .nds-block-content,
     .nds-block-item {
-        
+
         p {
             color: var(--text-primary-paragraph);
         }

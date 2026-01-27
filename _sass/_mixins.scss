@@ -392,13 +392,14 @@ textarea {
 
 
 @mixin reset-section-style {
-  background-color: unset !important;
-  box-shadow: unset !important;
-  border: unset !important;
+  --_section-bg: transparent;
+  --_section-shadow: none;
+  --_section-border: none;
+  --_section-border-radius: 0;
 }
 
 @mixin section-variant($background, $title-color, $description-color) {
-  background-color: $background !important;
+  --section-bg: #{$background};
   color: var(--text-oncolor-primary);
 
   .nds-section-title {

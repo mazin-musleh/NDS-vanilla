@@ -89,7 +89,7 @@
 
   /* Tabs with divider styling */
   &.nds-divided {
-    .nds-tab-list-container::after {
+    .nds-tab-list::after {
       content: '';
       position: absolute;
       bottom: 0;
@@ -114,6 +114,8 @@
   &.nds-center {
     .nds-tab-list {
       justify-content: center;
+      width: fit-content;
+      margin: auto;
     }
   }
 

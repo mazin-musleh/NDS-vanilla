@@ -238,7 +238,7 @@
         -moz-osx-font-smoothing: grayscale;
         position: relative;
         opacity: 0;
-        display: inline-flex;
+        display: flex;
         width: var(--nds-input-size);
         height: var(--nds-input-size);
         font-size: calc(var(--nds-input-size) - 4px);
