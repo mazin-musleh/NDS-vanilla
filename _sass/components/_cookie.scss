@@ -7,7 +7,7 @@
    COOKIE POPUP BASE STYLES
    ======================================== */
 
-.cookie-popup {
+.nds-cookie-popup:not([hidden]) {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -19,47 +19,23 @@
     padding: 24px;
     z-index: 1000;
     display: none;
-}
-
-.cookie-popup-show {
     display: block;
     animation: slideUp var(--nds-transition);
 }
 
-/* ========================================
-   COOKIE POPUP ANIMATIONS
-   ======================================== */
-
-
-/* ========================================
-   COOKIE POPUP MESSAGE STYLES
-   ======================================== */
-
-.cookie-popup-message {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: var(--background-primary);
-    color: white;
-    padding: 12px 24px;
-    border-radius: var(--radius-md);
-    z-index: 1001;
-    animation: fadeIn var(--nds-transition);
-}
 
 /* ========================================
    COOKIE POPUP HEADER STYLES
    ======================================== */
 
-.cookie-popup-header {
+.nds-cookie-popup-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: var(--spacing-lg);
 }
 
-.cookie-popup-title {
+.nds-cookie-popup-title {
     font-size: var(--nds-text-clamp-xl-FS);
     line-height: var(--nds-text-clamp-xl-LH);
     font-weight: 600;
@@ -69,13 +45,13 @@
     gap: var(--spacing-md);
 }
 
-.cookie-popup-icon {
+.nds-cookie-popup-icon {
     width: 40px;
     height: 40px;
     color: #666;
 }
 
-.cookie-popup-close {
+.nds-cookie-popup-close {
     background: none;
     border: none;
     font-size: var(--nds-display-clamp-md-FS);
@@ -87,7 +63,7 @@
     transition: color 0.2s;
 }
 
-.cookie-popup-close:hover {
+.nds-cookie-popup-close:hover {
     color: #333;
 }
 
@@ -95,32 +71,28 @@
    COOKIE POPUP CONTENT STYLES
    ======================================== */
 
-.cookie-popup-content {
+.nds-cookie-popup-content {
     margin-bottom: 20px;
 }
 
-.cookie-popup-links {
+.nds-cookie-popup-links {
     display: flex;
     gap: var(--spacing-lg);
     margin-bottom: 20px;
 }
 
-.cookie-popup-links a {
+.nds-cookie-popup-links a {
     color: var(--text-primary);
     text-decoration: none;
 }
 
-.cookie-popup-links a:hover {
+.nds-cookie-popup-links a:hover {
     color: var(--text-default);
     text-decoration: underline;
 }
 
-.cookie-popup-actions {
+.nds-cookie-popup-actions {
     display: flex;
     flex-direction: column;
     gap: 12px;
-}
-
-.cookie-popup-hidden {
-    animation: slideDown var(--nds-transition) forwards;
 }

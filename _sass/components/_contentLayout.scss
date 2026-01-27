@@ -114,7 +114,7 @@ main {
 
     &:not(.wSideMenu) {
         .mainContent {
-            section:not(.nds-hero-section) {
+            section:not(.nds-hero-section, .nds-user-feedback-section) {
                 @include desktop(min) {
                     padding: var(--spacing-7xl) 0;
                 }

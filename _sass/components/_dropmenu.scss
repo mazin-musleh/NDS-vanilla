@@ -54,6 +54,7 @@
     // Ensures items use full width and start-align content
     justify-content: flex-start;
     text-decoration: none;
+    width: 100%;
 
     // When used as link (anchor tag)
     &:link,

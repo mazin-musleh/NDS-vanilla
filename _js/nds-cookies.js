@@ -1,3 +1,23 @@
+/**
+ * NDS Cookie Management System
+ *
+ * Cookie Categories:
+ *
+ * 1. ESSENTIAL/FUNCTIONAL COOKIES (No consent required):
+ *    - cookieConsent: Stores user's cookie preference
+ *    - nds-feedback_*: User feedback submission status per page
+ *    These cookies are necessary for the website to function properly
+ *
+ * 2. ANALYTICS COOKIES (Consent required):
+ *    - _ga, _gid, _gat: Google Analytics tracking
+ *    - _fbp, _fbc: Facebook Pixel tracking
+ *    These are disabled when user declines cookies
+ *
+ * Usage:
+ * - Essential cookies can be set anytime using NDSCookies.set()
+ * - Analytics cookies are controlled by consent state
+ * - Check consent with NDSCookies.getConsent()
+ */
 // Cookie Management
 (() => {
     'use strict';
@@ -8,16 +28,17 @@
     function ndsSetCookie(name, value, days) {
         const expires = new Date();
         expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
-        document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
+        document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/;SameSite=Lax`;
     }
 
     function ndsGetCookie(name) {
-        const nameEQ = name + "=";
-        const ca = document.cookie.split(';');
-        for (let i = 0; i < ca.length; i++) {
-            let c = ca[i];
-            while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-            if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+        const cookiePrefix = name + "=";
+        const cookieArray = document.cookie.split(';');
+        for (let i = 0; i < cookieArray.length; i++) {
+            let cookie = cookieArray[i].trim();
+            if (cookie.indexOf(cookiePrefix) === 0) {
+                return cookie.substring(cookiePrefix.length);
+            }
         }
         return null;
     }
@@ -29,10 +50,16 @@
         ndsEnableAllCookies();
         ndsCookiesClosePopup();
 
-        // Get message and title from data attributes or use defaults
+        // Detect page language
+        const pageLang = document.documentElement.lang || document.body.getAttribute('lang') || 'ar';
+        const isEnglish = pageLang.toLowerCase().startsWith('en');
+
+        // Get message and title from data attributes or use language-specific defaults
         const acceptBtn = document.getElementById('ndsCookiesAcceptBtn');
-        const title = acceptBtn?.dataset.acceptTitle || 'Accepted';
-        const message = acceptBtn?.dataset.acceptMessage || 'Cookies have been accepted';
+        const defaultTitle = isEnglish ? 'Accepted' : 'تم القبول';
+        const defaultMessage = isEnglish ? 'Cookies have been accepted' : 'تم قبول ملفات تعريف الارتباط';
+        const title = acceptBtn?.dataset.acceptTitle || defaultTitle;
+        const message = acceptBtn?.dataset.acceptMessage || defaultMessage;
         ndsShowMessage(message, 'success', title);
     }
 
@@ -41,10 +68,16 @@
         ndsDisableNonEssentialCookies();
         ndsCookiesClosePopup();
 
-        // Get message and title from data attributes or use defaults
+        // Detect page language
+        const pageLang = document.documentElement.lang || document.body.getAttribute('lang') || 'ar';
+        const isEnglish = pageLang.toLowerCase().startsWith('en');
+
+        // Get message and title from data attributes or use language-specific defaults
         const declineBtn = document.getElementById('ndsCookiesDeclineBtn');
-        const title = declineBtn?.dataset.declineTitle || 'Declined';
-        const message = declineBtn?.dataset.declineMessage || 'Optional cookies have been declined';
+        const defaultTitle = isEnglish ? 'Declined' : 'تم الرفض';
+        const defaultMessage = isEnglish ? 'Optional cookies have been declined' : 'تم رفض ملفات تعريف الارتباط الاختيارية';
+        const title = declineBtn?.dataset.declineTitle || defaultTitle;
+        const message = declineBtn?.dataset.declineMessage || defaultMessage;
         ndsShowMessage(message, 'info', title);
     }
 
@@ -57,8 +90,47 @@
         }
     }
 
+    // Cache tracking IDs to avoid repeated DOM searches
+    let cachedTrackingIds = null;
+
+    function getGATrackingIds() {
+        if (cachedTrackingIds) return cachedTrackingIds;
+
+        let gaTrackingIds = [];
+
+        // Check window.GA_TRACKING_ID (string or array)
+        if (window.GA_TRACKING_ID) {
+            if (Array.isArray(window.GA_TRACKING_ID)) {
+                gaTrackingIds = window.GA_TRACKING_ID;
+            } else {
+                gaTrackingIds = [window.GA_TRACKING_ID];
+            }
+        }
+
+        // Check data-ga-tracking-id attributes (multiple elements supported)
+        const elementsWithTrackingId = document.querySelectorAll('[data-ga-tracking-id]');
+        elementsWithTrackingId.forEach(el => {
+            const id = el.dataset.gaTrackingId;
+            if (id && !gaTrackingIds.includes(id)) {
+                gaTrackingIds.push(id);
+            }
+        });
+
+        cachedTrackingIds = gaTrackingIds;
+        return gaTrackingIds;
+    }
+
     function ndsDisableNonEssentialCookies() {
-        window['ga-disable-GA_TRACKING_ID'] = true;
+        // Disable Google Analytics if tracking ID(s) configured
+        // Note: This must run on every page load because window['ga-disable-X'] flag
+        // is in-memory only and doesn't persist across page refreshes
+        const gaTrackingIds = getGATrackingIds();
+
+        // Disable all found tracking IDs
+        gaTrackingIds.forEach(trackingId => {
+            window['ga-disable-' + trackingId] = true;
+        });
+
         ndsClearNonEssentialCookies();
 
         if (typeof gtag !== 'undefined') {
@@ -84,12 +156,16 @@
 
     function ndsShowPopup() {
         const popup = document.getElementById('ndsCookiesPopup');
-        popup.classList.add('cookie-popup-show');
+        if (popup) {
+            popup.removeAttribute('hidden');
+        }
     }
 
     function ndsCookiesClosePopup() {
         const popup = document.getElementById('ndsCookiesPopup');
-        popup.classList.add('cookie-popup-hidden');
+        if (popup) {
+            popup.setAttribute('hidden', '');
+        }
     }
 
     function ndsShowMessage(message, variant = 'success', title = '') {
@@ -112,13 +188,8 @@
 
 
     function initializeCookies() {
-        // CRITICAL: Check consent immediately for privacy compliance
-        const consent = ndsGetCookieConsent();
-        if (consent === 'accepted') {
-            ndsEnableAllCookies();
-        } else if (consent === 'declined') {
-            ndsDisableNonEssentialCookies();
-        }
+        // Note: Consent is already checked on script load (lines 167-173)
+        // This function only handles UI setup and event listeners
 
         // UI setup and popup display
         const acceptBtn = document.getElementById('ndsCookiesAcceptBtn');
@@ -137,6 +208,7 @@
         }
 
         // Show popup after delay if no consent
+        const consent = ndsGetCookieConsent();
         if (!consent) {
             setTimeout(() => {
                 ndsShowPopup();
@@ -152,9 +224,13 @@
         ndsDisableNonEssentialCookies();
     }
 
-    // Expose initialization function for unified system
+    // Expose initialization function and utilities for unified system
     window.NDSCookies = {
-        init: initializeCookies
+        init: initializeCookies,
+        set: ndsSetCookie,
+        get: ndsGetCookie,
+        delete: ndsDeleteCookie,
+        getConsent: ndsGetCookieConsent
     };
 
     // Note: Full initialization now handled by nds-loader.js unified system

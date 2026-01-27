@@ -61,13 +61,19 @@
     backdrop.style.display = 'flex';
     backdrop.offsetHeight; // Force reflow
 
+    const modal = backdrop.querySelector('.nds-modal');
+
+    // Remove hidden attribute from modal
+    if (modal) {
+      modal.removeAttribute('hidden');
+    }
+
     // Trigger animation
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         backdrop.classList.add('nds-modal-open');
         backdrop.setAttribute('aria-modal', 'true');
 
-        const modal = backdrop.querySelector('.nds-modal');
         if (modal) {
           modal.setAttribute('aria-hidden', 'false');
           modal.dispatchEvent(new CustomEvent('nds-modal-opened', { bubbles: true }));
@@ -107,11 +113,15 @@
       modal.dispatchEvent(new CustomEvent('nds-modal-closed', { bubbles: true }));
     }
 
-    // Reset display after animation
+    // Reset display and add hidden attribute after animation
     const backdrop = activeModal;
     setTimeout(() => {
       if (!backdrop.classList.contains('nds-modal-open')) {
         backdrop.style.display = '';
+        // Add hidden attribute back to modal
+        if (modal) {
+          modal.setAttribute('hidden', '');
+        }
       }
     }, 300);
 

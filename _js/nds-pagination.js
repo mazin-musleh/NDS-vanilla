@@ -485,6 +485,43 @@
         return 1;
     }
 
+    // Helper function to scroll to the top of the content list
+    function scrollToContent(pagination) {
+        // Calculate nav height dynamically from the nav element
+        const nav = document.getElementById('ndsMainNav');
+        const scrollOffset = (nav ? nav.offsetHeight : 72) + 40; // Add 40px spacing
+
+        // Find the pagination navigation container
+        const paginationNav = pagination.closest('.nds-pagination-nav, .nds-auto-pagination');
+
+        if (paginationNav) {
+            // For auto-pagination, find the content container (previous sibling)
+            const contentContainer = paginationNav.previousElementSibling;
+            let targetElement = null;
+
+            if (contentContainer && contentContainer.classList.contains('nds-pagination-content')) {
+                targetElement = contentContainer;
+            } else if (paginationNav.previousElementSibling) {
+                // Fallback: scroll to any previous sibling element
+                targetElement = paginationNav.previousElementSibling;
+            } else {
+                // If no content container found, scroll to pagination nav itself
+                targetElement = paginationNav;
+            }
+
+            if (targetElement) {
+                // Calculate the scroll position with offset for sticky nav
+                const elementTop = targetElement.getBoundingClientRect().top + window.pageYOffset;
+                const scrollPosition = elementTop - scrollOffset;
+
+                window.scrollTo({ top: scrollPosition, behavior: 'smooth' });
+            }
+        } else {
+            // Manual pagination: scroll to top of the page with offset for sticky nav
+            window.scrollTo({ top: scrollOffset, behavior: 'smooth' });
+        }
+    }
+
     function goToPage(pagination, items, pageNumber, perPage, totalPages) {
         // Set active page with aria-current
         setActivePage(pagination, pageNumber);
@@ -494,6 +531,9 @@
 
         // Show page items
         showPage(items, pageNumber, perPage);
+
+        // Scroll to top of content
+        scrollToContent(pagination);
     }
 
     // Global click handler for manual pagination (not auto-pagination)
@@ -551,6 +591,9 @@
 
             updatePrevNextStates(pagination, targetPageNum, minPage, maxPage);
 
+            // Scroll to top of content
+            scrollToContent(pagination);
+
             return;
         }
 
@@ -568,6 +611,9 @@
                 const maxPage = Math.max(...pageNumbers);
 
                 updatePrevNextStates(pagination, clickedPageNum, minPage, maxPage);
+
+                // Scroll to top of content
+                scrollToContent(pagination);
             }
         }
     });
@@ -668,6 +714,9 @@
         setActivePage(pagination, pageNumber);
         updatePrevNextStates(pagination, pageNumber, 1, totalPages);
         showPageFiltered(visibleItems, pageNumber, perPage);
+
+        // Scroll to top of content
+        scrollToContent(pagination);
     }
 
     // Expose global API for unified init system
