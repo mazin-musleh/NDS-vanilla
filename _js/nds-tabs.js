@@ -78,14 +78,17 @@
                 return false;
             }
 
-            // Calculate total width of tab children (excluding showMore button)
-            const containerWidth = this.tabList.clientWidth;
+            // Use the nearest stable ancestor's width as available space
+            // This prevents infinite toggle loops when tabList or its container has fit-content width
+            const listContainer = this.tabList.closest('.nds-tab-list-container');
+            const stableAncestor = listContainer ? listContainer.parentElement : this.tabList.parentElement;
+            const availableWidth = stableAncestor ? stableAncestor.clientWidth : this.tabList.clientWidth;
             const children = Array.from(this.tabList.children);
             const contentWidth = children
                 .filter(child => !child.classList.contains('showMore'))
                 .reduce((total, child) => total + child.offsetWidth, 0);
 
-            return contentWidth > containerWidth;
+            return contentWidth > availableWidth;
         }
 
         updateScrollIndicators() {
