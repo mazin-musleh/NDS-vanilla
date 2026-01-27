@@ -140,10 +140,10 @@
 </footer>
 
 <!-- Cookie Popup -->
-<div class="cookie-popup" id="ndsCookiesPopup">
-    <div class="cookie-popup-header">
-        <div class="cookie-popup-title">
-            <svg class="cookie-popup-icon" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none"
+<div class="nds-cookie-popup" id="ndsCookiesPopup" hidden>
+    <div class="nds-cookie-popup-header">
+        <div class="nds-cookie-popup-title">
+            <svg class="nds-cookie-popup-icon" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none"
                 viewBox="0 0 40 40">
                 <path fill="#F3FCF6" d="M0 20C0 8.954 8.954 0 20 0s20 8.954 20 20-8.954 20-20 20S0 31.046 0 20"></path>
                 <path fill="#067647"
@@ -155,24 +155,24 @@
             </svg>
             <span id="ndsCookiesTitle">Cookies</span>
         </div>
-        <button id="ndsCookiesCloseBtn" class="cookie-popup-close">×</button>
+        <button id="ndsCookiesCloseBtn" class="nds-cookie-popup-close">×</button>
     </div>
 
-    <div class="cookie-popup-content">
+    <div class="nds-cookie-popup-content">
         <span id="ndsCookiesContent">This website uses cookies to ensure ease of use and provide an enhanced browsing
             experience. By continuing to browse this site, you acknowledge and accept the use of cookies.</span>
     </div>
 
-    <div class="cookie-popup-links">
+    <div class="nds-cookie-popup-links">
         <a href="{{ '/terms-and-conditions' | relative_url }}" id="ndsCookiesTermsLink">Terms & Conditions</a>
         <span>|</span>
         <a href="{{ '/privacy-policy' | relative_url }}" id="ndsCookiesPrivacyLink">Privacy Policy</a>
     </div>
 
-    <div class="cookie-popup-actions">
+    <div class="nds-cookie-popup-actions">
         <button class="nds-btn nds-primary nds-full" id="ndsCookiesAcceptBtn"
-            data-accept-message="Cookies have been accepted"><span class="label">Accept</span></button>
+            data-accept-title="Accepted" data-accept-message="Cookies have been accepted"><span class="label">Accept</span></button>
         <button class="nds-btn nds-secondary nds-full" id="ndsCookiesDeclineBtn"
-            data-decline-message="Optional cookies have been declined"><span class="label">Decline</span></button>
+             data-accept-title="Declined" data-decline-message="Optional cookies have been declined"><span class="label">Decline</span></button>
     </div>
 </div>

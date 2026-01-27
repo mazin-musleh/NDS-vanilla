@@ -45,7 +45,7 @@ direction: ltr
                         <!-- Demo Modal -->
                         <div class="nds-modal-backdrop" id="modal-basic-demo">
                             <div class="nds-modal nds-card nds-stroke" role="dialog" aria-labelledby="modal-basic-title"
-                                aria-hidden="true">
+                                aria-hidden="true" hidden>
                                 <div class="nds-card-header">
                                     <span class="nds-featured-icon nds-neutral nds-circle">
                                         <i class="hgi hgi-stroke hgi-information-circle icon"></i>
@@ -122,7 +122,7 @@ direction: ltr
 
                                     <!-- Modal Backdrop -->
                                     <div class="nds-modal-backdrop" id="modal-example">
-                                        <div class="nds-modal nds-card nds-stroke" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
+                                        <div class="nds-modal nds-card nds-stroke" role="dialog" aria-labelledby="modal-title" aria-hidden="true" hidden>
                                             <!-- Card Header with Close Button -->
                                             <div class="nds-card-header">
                                                 <span class="nds-featured-icon nds-neutral nds-circle">

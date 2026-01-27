@@ -4,12 +4,28 @@
  *
  * Dependencies:
  * - nds-feedback.js (NDSFeedback API for displaying feedback messages)
+ * - nds-cookies.js (for persisting feedback submission status)
  * - nds-forms.js (optional, for form validation)
  *
  * Language Detection:
  * Automatically detects page language from <html lang="..."> or <body lang="..."> attribute
  * - Arabic (default): 'تم استلام ملاحظتك!' / 'حدث خطأ، يرجى المحاولة مرة أخرى'
  * - English: 'Your feedback is submitted!' / 'An error occurred, please try again'
+ *
+ * Cookie Persistence:
+ * Saves feedback submission status to cookies (365 days) based on page path
+ * Automatically restores and displays success status when user returns to the page
+ *
+ * Cookie Category: ESSENTIAL/FUNCTIONAL
+ * Feedback cookies are classified as essential functional cookies and do NOT require user consent.
+ * They are necessary for:
+ * - Preventing duplicate feedback submissions
+ * - Maintaining form state across page visits
+ * - Improving user experience by showing submission status
+ * - Storing only minimal, non-personal data (page path + "submitted" status)
+ *
+ * Cookie Format: nds-feedback_{encoded_page_path} = "submitted"
+ * Example: nds-feedback_components_buttons = "submitted"
  *
  * Data Attributes:
  * - data-success-message: Custom success message (overrides language defaults)
@@ -18,6 +34,33 @@
 
 window.NDSUserFeedback = (() => {
     'use strict';
+
+    // Helper function to generate cookie name for current page
+    function getFeedbackCookieName() {
+        const pagePath = window.location.pathname;
+        // Encode path to safe cookie name format
+        const encodedPath = pagePath.replace(/\//g, '_').replace(/\./g, '-');
+        return 'nds-feedback' + encodedPath;
+    }
+
+    // Save feedback status to cookie
+    // NOTE: These are ESSENTIAL/FUNCTIONAL cookies - no consent check required
+    // They prevent duplicate submissions and maintain form state
+    function saveFeedbackStatus(status = 'submitted') {
+        if (window.NDSCookies && window.NDSCookies.set) {
+            const cookieName = getFeedbackCookieName();
+            window.NDSCookies.set(cookieName, status, 365); // Save for 365 days
+        }
+    }
+
+    // Get feedback status from cookie
+    function getFeedbackStatus() {
+        if (window.NDSCookies && window.NDSCookies.get) {
+            const cookieName = getFeedbackCookieName();
+            return window.NDSCookies.get(cookieName);
+        }
+        return null;
+    }
 
     function init() {
         const feedbackComponents = document.querySelectorAll('.nds-user-feedback');
@@ -35,6 +78,16 @@ window.NDSUserFeedback = (() => {
             const statusEl = feedbackComponent.querySelector('.nds-user-feedback-status');
             const detailsEl = feedbackComponent.querySelector('.nds-user-feedback-details');
             const submitEl = feedbackComponent.querySelector('.nds-user-feedback-submit');
+
+            // Check if user already submitted feedback for this page
+            const savedStatus = getFeedbackStatus();
+            if (savedStatus === 'submitted') {
+                // User already submitted feedback, show success status
+                showStatus('success');
+                // Mark as initialized
+                feedbackComponent.setAttribute('data-nds-user-feedback-initialized', 'true');
+                return; // Don't initialize interaction handlers
+            }
 
             // Show details section based on answer
             function showDetails(answer) {
@@ -103,6 +156,11 @@ window.NDSUserFeedback = (() => {
                     if (closeButton) closeButton.setAttribute('hidden', '');
                     if (detailsEl) detailsEl.setAttribute('hidden', '');
                     if (submitEl) submitEl.setAttribute('hidden', '');
+                }
+
+                // Save feedback status to cookie if success
+                if (status === 'success') {
+                    saveFeedbackStatus('submitted');
                 }
             }
 
