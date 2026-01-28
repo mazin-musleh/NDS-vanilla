@@ -143,7 +143,6 @@ main {
         .mainContent {
             /* column-gap: var(--spacing-lg);
             row-gap: var(--spacing-5xl); */
-            height: fit-content;
 
             section {
                 width: 100%;
@@ -256,12 +255,8 @@ main {
         padding-right: var(--nds-viewport-padding);
     }
 
-    .contentLayout .mainContent {
-        height: 100% !important;
-    }
 
     .contentLayout:not(.cardView) .mainContent section:not(.nds-hero-section, .nds-user-feedback-section) {
-        height: 100% !important;
         --section-shadow: none;
         --section-border-radius: 0;
     }

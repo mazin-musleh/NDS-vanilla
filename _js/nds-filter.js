@@ -53,6 +53,14 @@
                 dropmenu: null
             };
 
+            // Form submission mode detection
+            this.isFormMode = filterContainer.tagName === 'FORM' &&
+                              filterContainer.hasAttribute('data-filter-submit');
+            this.isAjaxMode = this.isFormMode && filterContainer.hasAttribute('data-ajax');
+
+            // Hidden inputs container for form mode
+            this.hiddenInputsContainer = null;
+
             this.init();
         }
 
@@ -61,6 +69,284 @@
             this.setupResetButton();
             this.setupActionButtons();
             this.applyUrlParams();
+
+            // Setup form submission mode
+            if (this.isFormMode) {
+                this.setupFormSubmission();
+            }
+        }
+
+        // ==============================================
+        // FORM SUBMISSION MODE
+        // ==============================================
+
+        /**
+         * Setup form submission handlers
+         */
+        setupFormSubmission() {
+            // Create hidden inputs container
+            this.hiddenInputsContainer = document.createElement('div');
+            this.hiddenInputsContainer.className = 'nds-filter-hidden-inputs';
+            this.hiddenInputsContainer.style.display = 'none';
+            this.filterContainer.appendChild(this.hiddenInputsContainer);
+
+            // Handle form submission
+            this.filterContainer.addEventListener('submit', (e) => {
+                if (this.isAjaxMode) {
+                    e.preventDefault();
+                    this.handleAjaxSubmit();
+                } else {
+                    this.handleFormSubmit(e);
+                }
+            });
+        }
+
+        /**
+         * Handle standard form submission
+         */
+        handleFormSubmit(e) {
+            // Validate form if NDS.Forms is available
+            if (window.NDS && window.NDS.Forms && window.NDS.Forms.validateForm) {
+                const result = NDS.Forms.validateForm(this.filterContainer, {
+                    showMessages: true,
+                    focusFirst: true
+                });
+
+                if (!result.valid) {
+                    e.preventDefault();
+                    this.filterContainer.dispatchEvent(new CustomEvent('nds:formInvalid', {
+                        detail: { invalidFields: result.invalidFields, errors: result.errors }
+                    }));
+                    return;
+                }
+            }
+
+            // Dispatch preventable event
+            const submitEvent = new CustomEvent('nds:filterFormSubmit', {
+                detail: {
+                    criteria: this.criteria,
+                    form: this.filterContainer
+                },
+                cancelable: true
+            });
+
+            const shouldContinue = this.filterContainer.dispatchEvent(submitEvent);
+
+            if (!shouldContinue) {
+                e.preventDefault();
+                return;
+            }
+
+            // Update hidden inputs before submission
+            this.updateHiddenInputs();
+
+            // Set submitting state
+            this.filterContainer.setAttribute('data-state', 'submitting');
+
+            // Dispatch valid event
+            this.filterContainer.dispatchEvent(new CustomEvent('nds:formValid', {
+                detail: {}
+            }));
+        }
+
+        /**
+         * Handle AJAX form submission
+         */
+        handleAjaxSubmit() {
+            // Update hidden inputs
+            this.updateHiddenInputs();
+
+            // Dispatch preventable AJAX submit event
+            const ajaxEvent = new CustomEvent('nds:filterFormAjax', {
+                detail: {
+                    criteria: this.criteria,
+                    form: this.filterContainer,
+                    hiddenInputsContainer: this.hiddenInputsContainer
+                },
+                cancelable: true
+            });
+
+            const shouldContinue = this.filterContainer.dispatchEvent(ajaxEvent);
+
+            if (!shouldContinue) {
+                return;
+            }
+
+            // Set submitting state
+            this.filterContainer.setAttribute('data-state', 'submitting');
+            this.filterContainer.removeAttribute('data-status');
+
+            // Add loading class to target container (similar to client-side filter)
+            if (this.targetContainer) {
+                this.targetContainer.classList.add('nds-loading');
+            }
+
+            // Build request URL and options
+            const method = this.filterContainer.method.toUpperCase() || 'GET';
+            const action = this.filterContainer.action || window.location.href;
+            let url = action;
+            let options = {
+                method: method,
+                headers: {}
+            };
+
+            // Collect form data
+            const formData = new FormData(this.filterContainer);
+
+            if (method === 'GET') {
+                // Build query string from form data
+                const params = new URLSearchParams(formData);
+                url = action + (action.includes('?') ? '&' : '?') + params.toString();
+            } else {
+                // POST/PUT - send FormData in body
+                options.body = formData;
+            }
+
+            // Send AJAX request
+            fetch(url, options)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    }
+                    return response.text();
+                })
+                .then(html => {
+                    let contentToInject = html;
+
+                    // If we have a target container, try to extract matching content from full page
+                    if (this.targetContainer && this.targetId) {
+                        // Parse the HTML response
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, 'text/html');
+
+                        // Try to find the target container in the response
+                        const targetInResponse = doc.getElementById(this.targetId);
+
+                        if (targetInResponse) {
+                            // Clone the entire target container (preserves all attributes, classes, styles)
+                            const newContainer = targetInResponse.cloneNode(true);
+
+                            // Replace the old container with the new one
+                            this.targetContainer.replaceWith(newContainer);
+
+                            // Update reference to point to the new container
+                            this.targetContainer = newContainer;
+
+                            // Remove hidden attributes and display:none styles
+                            this.targetContainer.removeAttribute('hidden');
+                            if (this.targetContainer.style.display === 'none') {
+                                this.targetContainer.style.display = '';
+                            }
+
+                            // Store innerHTML for event dispatch
+                            contentToInject = newContainer.innerHTML;
+                        } else {
+                            // Target container not found in response - empty the current container (neutral state)
+                            console.warn(`[NDS Filter AJAX] Target container #${this.targetId} not found in server response. Emptying target container.`);
+
+                            // Empty content
+                            this.targetContainer.innerHTML = '';
+
+                            // Remove all attributes except id, then add hidden
+                            const id = this.targetContainer.id;
+                            while (this.targetContainer.attributes.length > 0) {
+                                this.targetContainer.removeAttribute(this.targetContainer.attributes[0].name);
+                            }
+                            this.targetContainer.id = id;
+                            this.targetContainer.setAttribute('hidden', '');
+
+                            contentToInject = '';
+                        }
+                    }
+
+                    // Remove loading class from target container
+                    if (this.targetContainer) {
+                        this.targetContainer.classList.remove('nds-loading');
+                    }
+
+                    // Set success state
+                    this.filterContainer.setAttribute('data-status', 'success');
+                    this.filterContainer.removeAttribute('data-state');
+
+                    // Dispatch complete event
+                    this.filterContainer.dispatchEvent(new CustomEvent('nds:filterFormComplete', {
+                        detail: {
+                            success: true,
+                            html: contentToInject,
+                            fullHtml: html,
+                            form: this.filterContainer
+                        }
+                    }));
+
+                    // Clear success state after 3 seconds
+                    setTimeout(() => {
+                        this.filterContainer.removeAttribute('data-status');
+                    }, 3000);
+                })
+                .catch(error => {
+                    console.error('Filter AJAX submission failed:', error);
+
+                    // Remove loading class from target container
+                    if (this.targetContainer) {
+                        this.targetContainer.classList.remove('nds-loading');
+                    }
+
+                    // Set error state
+                    this.filterContainer.setAttribute('data-status', 'error');
+                    this.filterContainer.removeAttribute('data-state');
+
+                    // Dispatch error event
+                    this.filterContainer.dispatchEvent(new CustomEvent('nds:filterFormError', {
+                        detail: {
+                            error: error.message,
+                            form: this.filterContainer
+                        }
+                    }));
+
+                    // Clear error state after 5 seconds
+                    setTimeout(() => {
+                        this.filterContainer.removeAttribute('data-status');
+                    }, 5000);
+                });
+        }
+
+        /**
+         * Get the custom name for search input or return default
+         */
+        getSearchInputName() {
+            // Check direct search input first
+            if (this.searchInputs.direct && this.searchInputs.direct.input.name) {
+                return this.searchInputs.direct.input.name;
+            }
+
+            // Check dropmenu search input
+            if (this.searchInputs.dropmenu && this.searchInputs.dropmenu.input.name) {
+                return this.searchInputs.dropmenu.input.name;
+            }
+
+            // Default to 'search'
+            return 'search';
+        }
+
+        /**
+         * Update hidden inputs for form submission
+         * In form mode, we don't create hidden inputs since the actual form inputs
+         * (search input, checkboxes) already have the correct 'name' attributes
+         * and will be submitted by the browser automatically.
+         */
+        updateHiddenInputs() {
+            // No hidden inputs needed in form mode
+            // The browser will submit the actual form inputs (search, checkboxes, radios)
+            // based on their 'name' attributes
+            return;
+        }
+
+        /**
+         * Clear hidden inputs (no-op in current implementation)
+         */
+        clearHiddenInputs() {
+            // No hidden inputs to clear - form inputs are cleared directly
+            return;
         }
 
         // ==============================================
@@ -79,8 +365,16 @@
             const params = new URLSearchParams(window.location.search);
             let hasParams = false;
 
-            // Apply search param
-            const searchParam = params.get('search');
+            // Get the custom search param name
+            const searchParamName = this.getSearchInputName();
+
+            // Apply search param (try custom name first, then fallback to 'search')
+            let searchParam = params.get(searchParamName);
+            if (!searchParam && searchParamName !== 'search') {
+                // Fallback to 'search' for backward compatibility
+                searchParam = params.get('search');
+            }
+
             if (searchParam) {
                 const sanitized = this.sanitizeInput(searchParam);
                 this.criteria.search = sanitized.trim().toLowerCase();
@@ -104,7 +398,7 @@
 
             // Apply dynamic filter params
             for (const [key, value] of params.entries()) {
-                if (key === 'search') continue;
+                if (key === searchParamName || key === 'search') continue;
 
                 // Check if we have inputs for this filter
                 if (this.filterInputs[key]) {
@@ -131,9 +425,10 @@
         updateUrlParams() {
             const params = new URLSearchParams();
 
-            // Add search param
+            // Add search param with custom name
             if (this.criteria.search) {
-                params.set('search', this.criteria.search);
+                const searchParamName = this.getSearchInputName();
+                params.set(searchParamName, this.criteria.search);
             }
 
             // Add dynamic filter params
@@ -162,8 +457,13 @@
                         const labelEl = button.querySelector('.label');
                         this.applyButtonBaseLabel = labelEl ? labelEl.textContent : 'Apply';
 
+                        // Change button type to submit if in form mode
+                        if (this.isFormMode && button.type !== 'submit') {
+                            button.type = 'submit';
+                        }
+
                         button.addEventListener('click', (e) => {
-                            e.preventDefault();
+                            // Update search criteria from dropmenu input
                             if (this.searchInputs.dropmenu) {
                                 this.criteria.search = this.searchInputs.dropmenu.input.value.trim().toLowerCase();
                                 if (this.searchInputs.direct) {
@@ -174,6 +474,17 @@
                                     );
                                 }
                             }
+
+                            // In form mode, let form submission handle it
+                            if (this.isFormMode) {
+                                // Update hidden inputs before form submission
+                                this.updateHiddenInputs();
+                                // Don't prevent default - let form submit
+                                return;
+                            }
+
+                            // Standard client-side filtering mode
+                            e.preventDefault();
                             this.applyFilters();
                         });
                         break;
@@ -334,7 +645,12 @@
                 this.updateApplyButtonLabel();
             }
 
-            this.applyFilters();
+            // In AJAX mode, resubmit form to get updated results
+            if (this.isAjaxMode) {
+                this.submitForm();
+            } else {
+                this.applyFilters();
+            }
         }
 
         removeFilterValue(filterName, value) {
@@ -349,7 +665,13 @@
 
             this.updateFilterCriteria(filterName);
             this.updateApplyButtonLabel();
-            this.applyFilters();
+
+            // In AJAX mode, resubmit form to get updated results
+            if (this.isAjaxMode) {
+                this.submitForm();
+            } else {
+                this.applyFilters();
+            }
         }
 
         setupFilterElements() {
@@ -443,6 +765,7 @@
             searchInput.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter') {
                     e.preventDefault();
+
                     this.criteria.search = searchInput.value.trim().toLowerCase();
                     if (this.searchInputs.direct) {
                         this.searchInputs.direct.input.value = searchInput.value;
@@ -451,6 +774,14 @@
                             this.searchInputs.direct.clearBtn
                         );
                     }
+
+                    // In form mode, submit the form
+                    if (this.isFormMode) {
+                        this.submitForm();
+                        return;
+                    }
+
+                    // Client-side mode: apply filters
                     this.applyFilters();
                 }
             });
@@ -481,6 +812,8 @@
             searchInput.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter') {
                     e.preventDefault();
+
+                    // Centralized logic: applyDirectSearch → applyFilters (handles both modes)
                     this.applyDirectSearch(searchInput);
                 }
             });
@@ -520,7 +853,37 @@
                 );
                 this.updateApplyButtonLabel();
             }
+
+            // In form mode, submit the form directly
+            if (this.isFormMode) {
+                this.submitForm();
+                return;
+            }
+
+            // Client-side mode: apply filters
             this.applyFilters();
+        }
+
+        /**
+         * Submit the form (only called from user actions, not programmatically)
+         */
+        submitForm() {
+            // AJAX mode needs state updates because page doesn't refresh
+            // GET/POST modes don't need updates because page will refresh
+            if (this.isAjaxMode) {
+                this.updateHiddenInputs();
+                this.updateUrlParams();
+                this.updateFilterButtonLabel();
+                this.updateAppliedChips();
+            }
+
+            // Trigger form submission
+            if (this.filterContainer.requestSubmit) {
+                this.filterContainer.requestSubmit();
+            } else {
+                // Fallback for older browsers
+                this.filterContainer.submit();
+            }
         }
 
         updateClearButtonVisibility(input, clearBtn) {
@@ -559,11 +922,15 @@
                 this.criteria.filters[filterName] = [];
             }
 
+            // Get custom name from data-filter-name attribute if present
+            const customName = element.getAttribute('data-filter-name');
+
             // Store reference
             this.filterInputs[filterName] = {
                 inputs: inputs,
                 type: inputType,
-                element: element
+                element: element,
+                customName: customName  // Store custom name if provided
             };
 
             inputs.forEach(input => {
@@ -610,10 +977,17 @@
         }
 
         generateFilterInputs(container, filterName, inputType) {
+            // Skip auto-generation in form submission mode
+            if (this.isFormMode) {
+                console.warn(`NDS Filter: Auto-generation not supported in form submission mode. Use manual filter inputs for filter "${filterName}".`);
+                return;
+            }
+
+            // Auto-collect values from cards
             const values = this.collectFilterValues(filterName);
 
             if (values.length === 0) {
-                console.warn(`NDS Filter: No values found for filter "${filterName}"`);
+                console.warn(`NDS Filter: No values found for filter "${filterName}". No cards with data-filter="${filterName}" found.`);
                 return;
             }
 
@@ -732,6 +1106,16 @@
         // ==============================================
 
         applyFilters() {
+            // In form mode, just update state (don't submit form programmatically)
+            // Form submission only happens from explicit user actions via submitForm()
+            if (this.isFormMode) {
+                this.updateHiddenInputs();
+                this.updateUrlParams();
+                this.updateFilterButtonLabel();
+                this.updateAppliedChips();
+                return;
+            }
+
             // Check if there are any active criteria
             const hasSearch = this.criteria.search && this.criteria.search.trim() !== '';
             const hasFilters = Object.values(this.criteria.filters).some(arr => arr.length > 0);
@@ -745,6 +1129,11 @@
                     item.classList.remove('nds-filtered-out');
                     item.style.display = '';
                 });
+
+                // Update hidden inputs if in form mode
+                if (this.isFormMode) {
+                    this.clearHiddenInputs();
+                }
 
                 this.updateUrlParams();
                 this.updateFilterButtonLabel();
@@ -774,6 +1163,11 @@
             this.updateUrlParams();
             this.updateFilterButtonLabel();
             this.updateAppliedChips();
+
+            // Update hidden inputs if in form mode
+            if (this.isFormMode) {
+                this.updateHiddenInputs();
+            }
 
             clearTimeout(this.targetLoadingTimer);
             this.targetLoadingTimer = setTimeout(() => {
@@ -958,6 +1352,13 @@
                 this.criteria.filters[filterName] = [];
             }
 
+            // Clear hidden inputs and form state if in form mode
+            if (this.isFormMode) {
+                this.clearHiddenInputs();
+                this.filterContainer.removeAttribute('data-state');
+                this.filterContainer.removeAttribute('data-status');
+            }
+
             this.updateApplyButtonLabel();
             this.dispatchClearEvent();
         }
@@ -1052,6 +1453,39 @@
 
         getCriteria() {
             return { ...this.criteria, filters: { ...this.criteria.filters } };
+        }
+
+        /**
+         * Refresh items list and regenerate filters
+         * Only works for client-side filtering (not form submission mode)
+         */
+        refresh() {
+            if (this.isFormMode) {
+                console.warn('NDS Filter: refresh() not supported in form submission mode. Use manual filter inputs.');
+                return;
+            }
+
+            // Update items list
+            this.items = this.targetContainer
+                ? Array.from(this.targetContainer.querySelectorAll('.nds-card'))
+                : [];
+
+            // Regenerate auto-generated filters
+            const filterElements = this.filterContainer.querySelectorAll('[data-filter-type]');
+            filterElements.forEach(element => {
+                const filterName = element.getAttribute('data-filter');
+                const filterType = element.getAttribute('data-filter-type');
+
+                // Clear existing inputs first
+                element.innerHTML = '';
+
+                // Regenerate
+                this.generateFilterInputs(element, filterName, filterType);
+                this.setupManualFilter(element, filterName);
+            });
+
+            // Reapply current filters
+            this.applyFilters();
         }
 
         setSearchValue(value) {

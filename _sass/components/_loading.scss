@@ -21,6 +21,7 @@
 
   &:not(.nds-btn) {
     overflow: hidden;
+    max-height: 400px !important;
 
     &::before {
       content: '';
