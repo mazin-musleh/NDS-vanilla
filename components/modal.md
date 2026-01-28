@@ -50,7 +50,7 @@ direction: ltr
                                     <span class="nds-featured-icon nds-neutral nds-circle">
                                         <i class="hgi hgi-stroke hgi-information-circle icon"></i>
                                     </span>
-                                    <button class="nds-modal-close nds-btn nds-subtle" aria-label="Close modal">
+                                    <button class="nds-close nds-modal-close nds-btn nds-subtle" aria-label="Close modal">
                                         <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
                                     </button>
                                 </div>
@@ -128,7 +128,7 @@ direction: ltr
                                                 <span class="nds-featured-icon nds-neutral nds-circle">
                                                     <i class="hgi hgi-stroke hgi-information-circle icon"></i>
                                                 </span>
-                                                <button class="nds-modal-close nds-btn nds-subtle" aria-label="Close modal">
+                                                <button class="nds-close nds-modal-close nds-btn nds-subtle" aria-label="Close modal">
                                                     <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
                                                 </button>
                                             </div>

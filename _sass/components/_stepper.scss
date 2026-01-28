@@ -13,6 +13,7 @@
 .nds-stepper {
     --stepper-size: 32px;
     --stepper-gap: var(--progressindicator-progress-indicator-gap);
+    --_content-gap: var(--gap, var(--spacing-xl));
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -115,10 +116,10 @@
                 transform: translateX(calc(50% - var(--stepper-size) / 2));
             }
 
-            
+
         }
 
-        &:last-child .nds-stepper-base{
+        &:last-child .nds-stepper-base {
             margin-inline: auto;
         }
 
@@ -197,7 +198,13 @@
 .nds-stepper-content {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-sm);
+    gap: var(--_content-gap);
+}
+
+.nds-stepper-text {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
 }
 
 .nds-stepper-title {
@@ -212,6 +219,16 @@
     font-weight: 400;
     color: var(--stepper-text-secondary);
     margin: 0;
+}
+
+.nds-stepper-action {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+
+    .nds-btn {
+        flex: 1;
+    }
 }
 
 // ==============================================
@@ -390,7 +407,7 @@
 .nds-stepper.nds-radial {
     --pc-size: 64px;
     --stepper-gap: calc(var(--pc-size)/8);
-    --content-gap: 0;
+
     /* calc(var(--pc-size)/16); */
     align-items: center;
 
@@ -422,7 +439,8 @@
     }
 
     .nds-stepper-content {
-        gap: var(--content-gap);
+        --content-gap: 0;
+        width: 100%;
 
         .nds-stepper-title {
             font-size: calc(var(--pc-size)/4);
@@ -436,6 +454,7 @@
     .progress-circle {
         --pc-bg-stroke: var(--background-neutral-100);
         --pc-bar-stroke: var(--button-background-primary-default);
+        align-self: flex-start;
 
         @include progress-circle-base(var(--pc-size), -90deg);
 

@@ -83,6 +83,11 @@
     flex-direction: column;
     gap: var(--_card-gap);
     width: 100%;
+
+    &:has(.nds-close) {
+      flex-direction: row;
+      justify-content: space-between;
+    }
   }
 
   .nds-card-image:not(.nds-avatar) {

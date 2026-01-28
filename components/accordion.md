@@ -31,7 +31,7 @@ css_files:
                             <span class="label">Card View</span>
                         </button>
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='["always-open", ".nds-accordion", "accordionBehavior"]'>
+                            data-toggler='["data-state=always-open", ".nds-accordion", "accordionBehavior", "attr"]'>
                             <span class="label">Always Open</span>
                         </button>
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
@@ -200,7 +200,7 @@ css_files:
                             <span class="label">Card View</span>
                         </button>
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='["always-open", ".nds-accordion", "accordionBehavior"]'>
+                            data-toggler='["data-state=always-open", ".nds-accordion", "accordionBehavior", "attr"]'>
                             <span class="label">Always Open</span>
                         </button>
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
@@ -543,7 +543,7 @@ document.addEventListener('nds:accordion:hidden', (e) => {
 
                 <h3>Configuration Options</h3>
                 <ul>
-                    <li><code>.always-open</code> class - Allow multiple panels open simultaneously</li>
+                    <li><code>data-state="always-open"</code> attribute - Allow multiple panels open simultaneously</li>
                     <li><code>.nds-card</code> class - Apply card background styling</li>
                     <li><code>.nds-stroke</code> class - Add border around accordion</li>
                     <li><code>.nds-shadow</code> class - Apply shadow effect</li>
