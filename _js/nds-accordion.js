@@ -29,7 +29,7 @@
         }
 
         get isAlwaysOpen() {
-            return this.accordionContainer.classList.contains('always-open');
+            return this.accordionContainer.getAttribute('data-state') === 'always-open';
         }
 
         getTransitionDuration() {

@@ -304,8 +304,10 @@
  *       <div class="nds-stepper-circle" data-step-text="1"></div>
  *     </div>
  *     <div class="nds-stepper-content">
- *       <span class="nds-stepper-title">Step Title</span>
- *       <span class="nds-stepper-description">Step description</span>
+ *       <div class="nds-stepper-text">
+ *         <span class="nds-stepper-title">Step Title</span>
+ *         <span class="nds-stepper-description">Step description</span>
+ *       </div>
  *     </div>
  *   </div>
  * </div>
