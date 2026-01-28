@@ -62,9 +62,48 @@
     .nds-form-control{
         min-width: unset;
     }
-
-
 }
+
+// ==============================================
+// FORM SUBMISSION MODE
+// ==============================================
+
+.nds-filter[data-filter-submit] {
+    // Submitting state
+    &[data-state~="submitting"] {
+        opacity: 0.7;
+        pointer-events: none;
+        cursor: wait;
+
+        .nds-btn {
+            pointer-events: none;
+        }
+    }
+
+    // Success state
+    &[data-status="success"] {
+        .nds-search-input,
+        .nds-form-control input {
+            border-color: var(--border-success);
+        }
+    }
+
+    // Error state
+    &[data-status="error"] {
+        .nds-search-input,
+        .nds-form-control input {
+            border-color: var(--border-error);
+        }
+    }
+
+    // Hidden inputs container (should always be hidden)
+    .nds-filter-hidden-inputs {
+        display: none !important;
+        visibility: hidden !important;
+    }
+}
+
+
 
 .nds-search-box {
     display: flex;
