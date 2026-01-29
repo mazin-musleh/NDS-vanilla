@@ -23,9 +23,9 @@
   position: relative;
   width: var(--nds-icon-size);
   height: var(--nds-icon-size);
-  font-size: calc(var(--nds-icon-size) / 2);
+  font-size: calc(var(--nds-icon-size) / 2)!important;
   padding: calc(var(--nds-icon-size) / 4);
-  line-height: calc(var(--nds-icon-size) / 2);
+  line-height: calc(var(--nds-icon-size) / 2)!important;
   border: unset;
   background-color: var(--featuredicons-bg-color);
   color: var(--featuredicons-icon-color);

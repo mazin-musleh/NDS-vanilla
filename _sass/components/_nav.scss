@@ -73,7 +73,7 @@
     z-index: 1000;
     transform: translateY(0);
 
-    &:not(:has(.nds-collapse .nds-dropdown.show), :has(.nds-collapse.show)) {
+    &:not(:has(.nds-collapse .nds-dropdown.show), :has(.nds-collapse.show), :has(.nds-nav-minimal .nds-dropdown.show)) {
         overflow-x: clip;
     }
 
