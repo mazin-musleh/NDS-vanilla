@@ -11,10 +11,27 @@ component library for creating consistent digital experiences.
 ## Common Commands
 
 ### Development Server
+
+**IMPORTANT**: When the user asks to start the development server, use the standard Jekyll command.
+
 ```bash
 bundle exec jekyll serve
 ```
-Starts local development server with live reload at localhost:4000
+
+**Automatic Network Info Display:**
+The `server_info.rb` plugin automatically:
+- ✅ Detects local IP address (e.g., 192.168.1.18)
+- ✅ Displays network access URL (http://[IP]:4002)
+- ✅ Shows mobile-friendly instructions
+- ✅ Works with ANY start method
+
+**Alternative start commands:**
+```bash
+npm start           # Uses npm script
+npm run dev        # Alternative
+```
+
+All commands automatically display network information for mobile testing!
 
 ### Build for Production
 ```bash
@@ -610,3 +627,29 @@ direction: ltr
     - **Use `@include ltr` mixin ONLY for special cases**: transforms, gradients, or other properties that logical properties don't cover.
     - Never write RTL-specific code in mixins - RTL is the default, write base styles for RTL and override with `@include ltr` only when needed.
     - add this mcp server when needed "claude mcp add --transport sse figma http://127.0.0.1:3845/sse"
+
+    ## Automated Development Workflow
+
+    **When user requests to start/run the development server**, use standard Jekyll command:
+    ```bash
+    bundle exec jekyll serve
+    # or
+    npm start
+    ```
+
+    **Automatic Network Info Display:**
+    The `server_info.rb` plugin automatically provides:
+    - Auto-detected local IP address for mobile testing
+    - Network access URLs displayed clearly
+    - Server runs on port 4002 with host 0.0.0.0
+
+    **Mobile Testing Context:**
+    - Plugin auto-detects and displays IP (e.g., 192.168.1.18)
+    - Mobile URL shown automatically: `http://[IP]:4002`
+    - Displays reminder about same Wi-Fi network requirement
+
+    **Available Start Commands:**
+    - `bundle exec jekyll serve` - Standard Jekyll command (recommended)
+    - `npm start` / `npm run dev` - NPM shortcuts
+
+    Network information displays automatically with any start method!

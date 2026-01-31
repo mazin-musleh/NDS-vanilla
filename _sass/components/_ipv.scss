@@ -200,7 +200,7 @@
 .nds-ipv-zoom-info {
   position: absolute;
   inset-block-end: 20px;
-  inset-inline-start: 50%;
+  left: 50%;
   transform: translateX(-50%);
   background: rgba(0, 0, 0, 0.7);
   color: white;
@@ -218,7 +218,7 @@
 .nds-ipv-image-counter {
   position: absolute;
   inset-block-start: 20px;
-  inset-inline-start: 50%;
+  left: 50%;
   transform: translateX(-50%);
   background: rgba(0, 0, 0, 0.7);
   color: white;

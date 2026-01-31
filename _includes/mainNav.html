@@ -15,16 +15,19 @@
         </a>
         <ul class="nds-nav-minimal">
             <li class="nds-mainNav-toggler nds-nav-item" data-toggle="navbar">
-                <span class="nds-nav-link nds-btn nds-subtle nds-indicator">
+                <button class="nds-nav-link nds-btn nds-subtle nds-indicator"
+                        aria-label="Toggle navigation menu"
+                        aria-expanded="false"
+                        aria-controls="ndsNavCollapse">
                     <i class="hgi hgi-stroke hgi-menu-01 icon"></i>
-                </span>
+                </button>
             </li>
         </ul>
 
         {% assign nav_data_file = page.mainnav | default: site.mainnav | default: "mainnav" %}
         {% assign nav_data = site.data[nav_data_file] %}
 
-        <div class="nds-collapse" id="ndsNavCollapse">
+        <div class="nds-collapse" id="ndsNavCollapse" hidden>
             <div class="nds-collapse-content">
             {% if nav_data.primary_nav and nav_data.primary_nav.size > 0 %}
             <ul class="nds-nav-primary">
@@ -99,7 +102,7 @@
                                 {% if item.dropdown_type == 'search' %}
                                     {% comment %} Special Search Dropdown {% endcomment %}
                                     <div class="nds-content-container">
-                                        <div class="nds-search-box">
+                                        <div class="nds-form-container nds-search-box">
                                             <div class="nds-search-content">
                                                 <div class="nds-form-control">
                                                     <i class="hgi hgi-stroke hgi-search-01 icon"></i>

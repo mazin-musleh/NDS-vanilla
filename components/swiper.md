@@ -6,7 +6,7 @@ hero_description: "A responsive carousel/slider component with CSS scroll-snap, 
 navigation"
 breadcrumb: ["Components"]
 lang: en
-direction: ltr
+direction: rtl
 ---
 
 <!-- Basic Swiper Demo -->

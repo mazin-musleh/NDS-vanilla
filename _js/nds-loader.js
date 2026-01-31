@@ -273,6 +273,7 @@
                 const collectStart = performance.now();
 
                 // Collect all NDS components with hidden attribute
+                // Note: .nds-swiper-slide excluded - swiper controls slide visibility to prevent CLS
                 const hiddenElements = document.querySelectorAll(
                     '[hidden].nds-tabs, ' +
                     '[hidden].nds-drawer, ' +
@@ -281,7 +282,6 @@
                     '[hidden].nds-dropmenu-menu, ' +
                     '[hidden].nds-nav-container, ' +
                     '[hidden].nds-swiper, ' +
-                    '[hidden].nds-swiper-slide, ' +
                     '[hidden].nds-pagination-content, ' +
                     '[hidden].nds-footer '
                 );

@@ -134,7 +134,7 @@
     color: var(--_feedback-color);
 
     // Icon background for solid icons
-    body.hgi-loaded & i {
+    body[data-font-loaded*="hgi-solid-rounded"] & i {
         position: relative;
         z-index: 1;
 

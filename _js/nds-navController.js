@@ -255,9 +255,11 @@
             if (!DOM.collapse) return;
 
             const collapseContent = DOM.collapse.querySelector('.nds-collapse-content');
+            const toggleButton = DOM.toggler?.querySelector('button[aria-controls="ndsNavCollapse"]');
 
             if (open) {
                 DOM.toggler?.classList.add('active');
+                toggleButton?.setAttribute('aria-expanded', 'true');
 
                 animate.run(DOM.collapse, true, {
                     getMenu: () => state.isMinimal ? (collapseContent || DOM.collapse) : null,
@@ -271,6 +273,7 @@
                 });
             } else {
                 DOM.toggler?.classList.remove('active');
+                toggleButton?.setAttribute('aria-expanded', 'false');
                 const closeDelay = state.reducedMotion ? 0 : dropdown.closeAll();
 
                 afterDelay(closeDelay, () => {
@@ -310,6 +313,15 @@
     };
 
     // ==============================================
+    // HELPER FUNCTIONS
+    // ==============================================
+    function removeCollapseHidden() {
+        if (DOM.collapse?.hasAttribute('hidden')) {
+            DOM.collapse.removeAttribute('hidden');
+        }
+    }
+
+    // ==============================================
     // OVERFLOW DETECTION
     // ==============================================
     const overflow = {
@@ -347,16 +359,25 @@
                 const maxH = parseFloat(primaryStyle.maxHeight);
 
                 if (isFinite(maxH) && maxH > 0) {
-                    hasOverflow = DOM.primary.scrollHeight > maxH;
+                    // Add 2px buffer to prevent hasMore from showing due to rounding errors
+                    hasOverflow = DOM.primary.scrollHeight > maxH + 2;
                 }
             } else {
                 // Desktop mode: check horizontal overflow
                 hasOverflow = DOM.primary.scrollWidth > DOM.primary.clientWidth;
             }
 
+            // Remove hidden from collapse after primary nav settles (first check only)
+            if (!this._initialCheckDone) {
+                this._initialCheckDone = true;
+                    // No overflow: still wait briefly to ensure layout has rendered
+                    setTimeout(() => removeCollapseHidden(), 200);
+            }
+
             if (hasOverflow === wasOverflowing) return;
 
             DOM.primary.classList.toggle('hasMore', hasOverflow);
+
             if (!hasOverflow) {
                 DOM.primary.classList.remove('atEnd');
             } else {
@@ -946,6 +967,14 @@
         updateNavMaxWidth();
         setupInteractions();
         checkTogglerVisibility();
+
+        // If no primary nav, remove hidden immediately (no layout to settle)
+        if (!DOM.primary) {
+            removeCollapseHidden();
+        } else {
+            // Fallback: ensure hidden is removed even if overflow check doesn't fire
+            setTimeout(() => removeCollapseHidden(), 500);
+        }
 
         // Recalculate after icon font loads
         if (typeof window.waitForFontFile === 'function') {
