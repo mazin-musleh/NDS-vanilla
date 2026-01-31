@@ -187,10 +187,12 @@ textarea {
   --loading-size: var(--_btn-space) !important;
   --loading-border: max(2px, calc(var(--_btn-space) / 12)) !important;
 
-  &:not([hidden]) {
     display: inline-flex;
     align-items: center;
     gap: var(--_btn-gap);
+
+  &[hidden]{
+    display: none;
   }
 
   border: 1px solid transparent;

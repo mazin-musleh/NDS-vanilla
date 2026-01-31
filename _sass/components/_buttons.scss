@@ -159,6 +159,11 @@
     --btn-color-hover: var(--button-background-primary-hovered);
     --btn-loading-color: var(--colors-primary-sa-flag-600-primary);
 
+    &.nds-color {
+      --btn-color: var(--button-background-primary-default);
+      --btn-color-hover: var(--text-default);
+    }
+
     &:is(.selected, [data-state="selected"]) {
       color: var(--button-background-primary-selected);
     }
@@ -166,6 +171,7 @@
     &:is(:active, [data-state="active"]) {
       color: var(--button-background-primary-pressed);
     }
+
   }
 
   // Button group border handling
@@ -419,7 +425,7 @@
   // MENU BUTTON
   // ==============================================
 
-  body.hgi-loaded &.nds-menu-btn::after {
+  body[data-font-loaded*="hgi-stroke-rounded"] &.nds-menu-btn::after {
     opacity: 1;
   }
 
@@ -447,6 +453,63 @@
     :is(.show, .open, .active)>&::after {
       transform: rotate(180deg);
     }
+  }
+
+  // ==============================================
+  // DIRECTIONAL NAVIGATION BUTTONS (NEXT/PREV/UP/DOWN)
+  // ==============================================
+
+  body[data-font-loaded*="hgi-stroke-rounded"] &:is(.nds-next, .nds-prev, .nds-up, .nds-down)::after {
+    opacity: 1;
+  }
+
+  &:is(.nds-next, .nds-prev, .nds-up, .nds-down) {
+    &::after {
+      content: "㯭";
+      font-family: "hgi-stroke-rounded" !important;
+      font-style: normal;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      position: relative;
+      opacity: 0;
+      transition: transform 0.1s ease;
+      display: inline-flex;
+      width: var(--_btn-icon-size);
+      height: var(--_btn-icon-size);
+      font-size: var(--_btn-icon-size);
+      line-height: var(--_btn-icon-size);
+      justify-content: center;
+      align-content: center;
+      align-items: center;
+    }
+  }
+
+  &.nds-next::after {
+    transform: rotate(90deg);
+
+    @include ltr {
+      transform: rotate(-90deg);
+    }
+  }
+
+  &.nds-prev {
+    flex-direction: row-reverse;
+
+    &::after {
+      transform: rotate(-90deg);
+
+      @include ltr {
+        transform: rotate(90deg);
+      }
+    }
+  }
+
+  &.nds-up::after {
+    transform: rotate(180deg);
+  }
+
+  &.nds-down::after {
+    transform: rotate(0deg);
   }
 
   // ==============================================

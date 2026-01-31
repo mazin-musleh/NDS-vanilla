@@ -61,12 +61,19 @@
 
         /* ===== MAIN CONTENT ===== */
 
-        i.hgi {
+        /* Hide icons until their specific fonts are loaded */
+        i.hgi-stroke,
+        i.hgi-solid {
             opacity: 0;
         }
 
-        /* Only apply when body confirms icon font is loaded */
-        body.hgi-loaded i.hgi {
+        /* Show stroke icons when hgi-stroke-rounded is loaded */
+        body[data-font-loaded*="hgi-stroke-rounded"] i.hgi-stroke {
+            opacity: 1;
+        }
+
+        /* Show solid icons when hgi-solid-rounded is loaded */
+        body[data-font-loaded*="hgi-solid-rounded"] i.hgi-solid {
             opacity: 1;
         }
 
@@ -294,17 +301,17 @@
 
 
     <!-- Critical CSS - Load with deferred loading -->
-    <link rel="preload" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver=1.001" as="style"
+    <link rel="preload" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver=1.003" as="style"
         onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
-        <link rel="stylesheet" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver=1.001">
+        <link rel="stylesheet" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver=1.003">
     </noscript>
 
     <!-- Main CSS - Load with deferred loading for below-the-fold content -->
-    <link rel="preload" href="{{ 'assets/css/nds-main.min.css' | relative_url }}?ver=1.056" as="style"
+    <link rel="preload" href="{{ 'assets/css/nds-main.min.css' | relative_url }}?ver=1.058" as="style"
         onload="this.onload=null;this.rel='stylesheet';loadDeferredAssets()">
     <noscript>
-        <link rel="stylesheet" href="{{ 'assets/css/nds-main.min.css' | relative_url }}?ver=1.056">
+        <link rel="stylesheet" href="{{ 'assets/css/nds-main.min.css' | relative_url }}?ver=1.058">
     </noscript>
 
 

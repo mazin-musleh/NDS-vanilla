@@ -81,6 +81,7 @@ main {
         min-width: 300px;
         display: flex;
         flex-wrap: wrap;
+        align-content: flex-start;
 
         section:not(.nds-hero-section) {
             width: 100%;

@@ -37,6 +37,7 @@
         transitionDuration: 250
     };
 
+
     // ==============================================
     // RESPONSIVE STATE HELPERS
     // ==============================================
@@ -331,6 +332,15 @@
     // ==============================================
 
     function handleResize(drawer) {
+        const currentWidth = window.innerWidth;
+        const previousWidth = drawer._previousWidth || currentWidth;
+
+        // Ignore height-only changes (mobile address bar show/hide)
+        if (currentWidth === previousWidth) {
+            return;
+        }
+
+        drawer._previousWidth = currentWidth;
         initResponsiveState(drawer);
     }
 
@@ -345,6 +355,9 @@
         initToggles(drawer);
         initActiveStates(drawer);
         initHasMore(drawer);
+
+        // Store initial window width to detect width-only changes
+        drawer._previousWidth = window.innerWidth;
 
         // Add resize listener for responsive state updates
         if (drawer.hasAttribute('data-open-on') || drawer.hasAttribute('data-always-open-on') || drawer.querySelector('[data-open-on]')) {
@@ -376,6 +389,8 @@
             delete drawer._resizeHandler;
         }
 
+        // Clean up stored width
+        delete drawer._previousWidth;
         delete drawer._ndsDrawerInitialized;
     }
 

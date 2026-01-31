@@ -107,6 +107,7 @@
         color: var(--text-oncolor-primary);
         transform: scale(-1);
         font-weight: 600;
+        margin: auto;
     }
 
     @include ltr {

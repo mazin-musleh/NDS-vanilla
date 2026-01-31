@@ -30,7 +30,7 @@
    ======================================== */
 
 /* Arrow separator */
-.hgi-loaded .nds-breadcrumb li:not(:last-child)::after {
+.nds-breadcrumb li:not(:last-child)::after {
     content: "㰍";
     color: var(--colors-neutral-400, #9DA4AE);
     font-family: "hgi-stroke-rounded" !important;
@@ -45,7 +45,7 @@
     text-align: center;
 }
 
-body.hgi-loaded .nds-breadcrumb li:not(:last-child)::after {
+body[data-font-loaded*="hgi-stroke-rounded"] .nds-breadcrumb li:not(:last-child)::after {
     opacity: 1;
 }
 

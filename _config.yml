@@ -4,6 +4,7 @@ baseurl: "/_site"
 
 # Jekyll server settings
 port: 4002
+host: 0.0.0.0  # Allow network access for mobile testing
 
 # Brand Logo
 brandLogo: assets/img/dga-logo.svg
@@ -76,6 +77,7 @@ exclude:
   - .jekyll-cache
   - CLAUDE.md
   - GPT.md
+  - DEVELOPMENT.md
   - package.json
   - package-lock.json
   - notes.txt

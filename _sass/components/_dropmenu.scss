@@ -11,6 +11,8 @@
 // ==============================================
 
 .nds-dropmenu {
+  --_menu-padding: var(--menu-padding, var(--spacing-sm, 8px));
+
   position: relative;
   display: inline-block;
 
@@ -25,7 +27,7 @@
     right: 0;
     min-width: 150px;
     margin-top: 4px;
-    padding: var(--spacing-sm, 8px);
+    padding: var(--_menu-padding);
     list-style: none;
     background-color: var(--colors-neutral-white, #FFFFFF);
     border: 1px solid var(--colors-neutral-200, #EAECF0);
@@ -41,6 +43,9 @@
     // Open state
     &[aria-hidden="false"] {
       display: block;
+      max-height: 400px;
+      overflow: hidden;
+      overflow-y: auto;
     }
   }
 
@@ -149,8 +154,18 @@
 
 
   &-action {
+
+    position: sticky;
+    bottom: calc(var(--_menu-padding) * -1);
+    background-color: inherit;
+    z-index: 2;
+    isolation: isolate;
+    padding-block: var(--_menu-padding);
+    margin-bottom: calc(var(--_menu-padding) * -1);
+
     .nds-btn {
       width: 100%;
+
       .label {
         width: 100%;
         text-align: center;

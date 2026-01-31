@@ -23,6 +23,36 @@
         return document.documentElement.dir === 'rtl';
     }
 
+    function isIOS() {
+        // Detect iPhone, iPad, iPod
+        return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+               // Detect iPadOS (reports as Mac but has touch)
+               (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    }
+
+    function fixSrcsetSpaces(srcsetValue) {
+        if (!srcsetValue) return srcsetValue;
+
+        // Split by comma to get individual candidates
+        return srcsetValue.split(',').map(candidate => {
+            const trimmed = candidate.trim();
+            // Split by space to separate URL from descriptor (e.g., "600w")
+            const lastSpaceIndex = trimmed.lastIndexOf(' ');
+
+            if (lastSpaceIndex === -1) {
+                // No descriptor, just encode the URL
+                return trimmed.replace(/ /g, '%20');
+            }
+
+            // Separate URL and descriptor
+            const url = trimmed.substring(0, lastSpaceIndex);
+            const descriptor = trimmed.substring(lastSpaceIndex + 1);
+
+            // Encode spaces in URL, keep descriptor as-is
+            return url.replace(/ /g, '%20') + ' ' + descriptor;
+        }).join(', ');
+    }
+
     // ==============================================
     // MAIN CLASS
     // ==============================================
@@ -39,6 +69,8 @@
             this.navigation = container.querySelector('.nds-swiper-navigation');
             this.prevBtn = container.querySelector('.nds-swiper-button-prev');
             this.nextBtn = container.querySelector('.nds-swiper-button-next');
+
+            this.isHero = container.classList.contains('nds-hero');
 
             if (!this.wrapper || this.slides.length === 0) {
                 console.warn('NDS Swiper: No wrapper or slides found');
@@ -127,18 +159,42 @@
                         // Only apply once until window resize
                         if (!this.peekStylesApplied) {
                             setTimeout(() => {
-                                this.updatePeekStyles();
-                                this.updateState();
-                                this.peekStylesApplied = true;
+                                // iOS Safari RTL fix: Remove hidden slides and lock scroll position
+                                // Only runs on iOS devices with hidden slides in RTL mode
+                                const hasHiddenSlides = this.isHero && this.slides.some(slide => slide.hasAttribute('hidden'));
 
-                                // Remove hidden attribute from all slides after layout is stable
-                                setTimeout(() => {
+                                if (hasHiddenSlides && isIOS() && isRTL()) {
+                                    // Disable smooth scroll to prevent animation
+                                    const originalBehavior = getComputedStyle(this.wrapper).scrollBehavior;
+                                    this.wrapper.style.scrollBehavior = 'auto';
+
+                                    // Remove hidden from all slides
                                     this.slides.forEach(slide => {
                                         if (slide.hasAttribute('hidden')) {
                                             slide.removeAttribute('hidden');
                                         }
                                     });
-                                }, 200);
+
+                                    // IMMEDIATELY set scrollLeft to 0 before iOS Safari reflows
+                                    this.wrapper.scrollLeft = 0;
+
+                                    // Force synchronous layout to lock in the position
+                                    void this.wrapper.offsetHeight;
+
+                                    // Restore scroll behavior
+                                    this.wrapper.style.scrollBehavior = originalBehavior;
+                                } else if (hasHiddenSlides) {
+                                    // Non-iOS or non-RTL: Just remove hidden normally without the fix
+                                    this.slides.forEach(slide => {
+                                        if (slide.hasAttribute('hidden')) {
+                                            slide.removeAttribute('hidden');
+                                        }
+                                    });
+                                }
+
+                                this.updatePeekStyles();
+                                this.updateState();
+                                this.peekStylesApplied = true;
                             }, 50);
                         }
                     }
@@ -258,17 +314,35 @@
         // ==============================================
 
         setupNavigation() {
-            if (this.prevBtn) {
-                this.prevBtn.addEventListener('click', (e) => {
+            // Helper to handle navigation action
+            const handleNav = (btn, action) => {
+                // Use mousedown for immediate response on press
+                btn.addEventListener('mousedown', (e) => {
+                    if (e.button !== 0) return; // Only left mouse button
                     e.preventDefault();
-                    this.prev();
+                    action();
                 });
+
+                // Use touchstart for immediate response on touch devices
+                btn.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    action();
+                }, { passive: false });
+
+                // Keep keyboard support (Enter/Space keys trigger click naturally)
+                btn.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        action();
+                    }
+                });
+            };
+
+            if (this.prevBtn) {
+                handleNav(this.prevBtn, () => this.prev());
             }
             if (this.nextBtn) {
-                this.nextBtn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    this.next();
-                });
+                handleNav(this.nextBtn, () => this.next());
             }
         }
 
@@ -371,14 +445,38 @@
             // Re-enable overflow on wrapper
             this.wrapper.style.overflow = '';
 
+            // Helper to handle navigation action (same as in setupNavigation)
+            const handleNav = (btn, action) => {
+                // Use mousedown for immediate response on press
+                btn.addEventListener('mousedown', (e) => {
+                    if (e.button !== 0) return; // Only left mouse button
+                    e.preventDefault();
+                    action();
+                });
+
+                // Use touchstart for immediate response on touch devices
+                btn.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    action();
+                }, { passive: false });
+
+                // Keep keyboard support (Enter/Space keys trigger click naturally)
+                btn.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        action();
+                    }
+                });
+            };
+
             for (let i = 0; i < pageCount; i++) {
                 const bullet = document.createElement('button');
                 bullet.className = 'nds-swiper-pagination-bullet';
                 bullet.type = 'button';
                 bullet.setAttribute('aria-label', `Go to slide ${i + 1}`);
 
-                bullet.addEventListener('click', (e) => {
-                    e.preventDefault();
+                // Apply handleNav for immediate response on dots
+                handleNav(bullet, () => {
                     const targetIndex = i * this.slidesPerView;
                     this.goTo(targetIndex);
                 });
@@ -482,7 +580,8 @@
                                 delete img.dataset.src;
                             }
                             if (img.dataset.srcset) {
-                                img.srcset = img.dataset.srcset;
+                                // Encode spaces in srcset URLs before setting
+                                img.srcset = fixSrcsetSpaces(img.dataset.srcset);
                                 delete img.dataset.srcset;
                             }
                         });
@@ -585,6 +684,19 @@
     // ==============================================
 
     function initializeComponents() {
+        // First, fix any existing srcset attributes with spaces
+        document.querySelectorAll('img[srcset]').forEach(img => {
+            const srcset = img.getAttribute('srcset');
+            if (srcset && srcset.includes(' ') && !srcset.includes('%20')) {
+                // Check if it needs encoding (has spaces but not already encoded)
+                const fixed = fixSrcsetSpaces(srcset);
+                if (fixed !== srcset) {
+                    img.setAttribute('srcset', fixed);
+                }
+            }
+        });
+
+        // Then initialize swipers
         const swipers = document.querySelectorAll('.nds-swiper');
         swipers.forEach(swiper => {
             if (swiper.closest('code, .code-example')) return;

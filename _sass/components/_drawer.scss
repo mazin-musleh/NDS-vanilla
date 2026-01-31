@@ -14,7 +14,7 @@
 .nds-drawer {
     // Internal custom properties with external fallbacks
     --_gap: var(--drawer-gap, 0px);
-    --_indent: var(--drawer-indent, var(--spacing-md));
+    --_indent: var(--drawer-indent, calc(var(--_btn-padding, var(--spacing-md)) * 2));
     --_divider: var(--drawer-divider, var(--alpha-black-10));
     --_indicator-width: var(--drawer-indicator-width, 5px);
     --_indicator: var(--drawer-indicator, var(--colors-neutral-300));
@@ -43,8 +43,8 @@
         -ms-overflow-style: none;
     }
 
-    &.nds-oncolor{
-         --drawer-divider: var(--alpha-white-10);
+    &.nds-oncolor {
+        --drawer-divider: var(--alpha-white-10);
     }
 
 }
@@ -79,7 +79,7 @@
 
     // Button/link styling within drawer
     >.nds-btn {
-        --btn-height: var(--drawer-btn-height);
+        --btn-height: var(--drawer-btn-height, 'fit-content');
         --btn-width: 100%;
         --btn-gap: var(--drawer-btn-gap, var(--spacing-md));
         justify-content: flex-start;
@@ -119,8 +119,9 @@
 // ==============================================
 
 .nds-drawer[data-state="always-open"] {
+
     // Hide arrow icons in always-open mode
-    .nds-drawer-list > li > .nds-btn {
+    .nds-drawer-list>li>.nds-btn {
         .hgi-arrow-left-01 {
             display: none;
         }
@@ -188,18 +189,27 @@
         position: relative;
 
         &:first-child {
-            padding-top: var(--spacing-md);
+            padding-block-start: var(--spacing-md);
         }
 
         &:last-child {
-            padding-bottom: var(--spacing-md);
+            padding-block-end: var(--spacing-md);
         }
 
-        .nds-btn.nds-indicator::before {
-            --btn-indicator-size: var(--_indicator-width);
-            height: var(--btn-indicator-size);
-            display: block !important;
-            background-color: var(--_indicator);
+        // Increased specificity to avoid !important
+        .nds-btn {
+            font-weight: 400;
+
+            &.nds-indicator {
+                padding-inline-start: calc(var(--_btn-padding) * 1.5);
+
+                &::before {
+                    --btn-indicator-size: var(--_indicator-width);
+                    height: var(--btn-indicator-size);
+                    display: block;
+                    background-color: var(--_indicator);
+                }
+            }
         }
     }
 }
@@ -225,7 +235,6 @@
     --_btn-padding: var(--spacing-xs) var(--spacing-sm);
     --_font-size: var(--nds-text-sm-FS);
     --_line-height: var(--nds-text-sm-LH);
-    /* --_gap: 2px; */
     --_indent: var(--spacing-lg);
     --_indicator-width: 2px;
 }
@@ -235,7 +244,6 @@
     --_btn-padding: var(--spacing-md) var(--spacing-lg);
     --_font-size: var(--nds-text-lg-FS);
     --_line-height: var(--nds-text-lg-LH);
-    /*  --_gap: var(--spacing-sm); */
     --_indent: var(--spacing-2xl);
     --_indicator-width: 4px;
 }
@@ -263,28 +271,30 @@
     }
 }
 
-.nds-drawer .nds-drawer-more {
-    width: 100%;
-    background: var(--background-surface, var(--background-white));
-    border-top: 1px solid var(--_divider);
-    justify-content: center;
+// ==============================================
+// MORE BUTTON (Scroll indicator)
+// ==============================================
 
-    // Hidden by default
+.nds-drawer-more {
+    width: 100% !important;
+    background: var(--background-surface, var(--background-white));
+    border-block-start: 1px solid var(--_divider);
+    justify-content: center;
     display: none;
 
-    .hasMore & {
-        display: flex;
-        width: 100%;
+    i {
+        transition: transform var(--_transition);
     }
+}
 
-    & i {
-        transition: transform 0.1s ease;
-    }
+// Show more button when drawer has scrollable content
+.nds-drawer.hasMore .nds-drawer-more {
+    display: flex;
+}
 
-    // Rotate icon when at end
-    .atEnd & i {
-        transform: rotate(180deg);
-    }
+// Rotate icon when scrolled to end
+.nds-drawer.atEnd .nds-drawer-more i {
+    transform: rotate(180deg);
 }
 
 // ==============================================
@@ -293,25 +303,25 @@
 
 .nds-drawer.nds-divided {
     .nds-drawer-list>li {
-        border-bottom: 1px solid var(--_divider);
+        border-block-end: 1px solid var(--_divider);
 
         &:last-child {
-            border-bottom: none;
+            border-block-end: none;
         }
     }
 
     // When always open, move border to button instead of li
     &[data-state="always-open"] {
-        .nds-drawer-list > li {
-            border-bottom: none;
+        .nds-drawer-list>li {
+            border-block-end: none;
 
-            > .nds-btn {
-                border-bottom: 1px solid var(--_divider);
+            >.nds-btn {
+                border-block-end: 1px solid var(--_divider);
             }
 
             // Remove border only if it's the only child (no siblings)
-            &:only-child > .nds-btn {
-                border-bottom: none;
+            &:only-child>.nds-btn {
+                border-block-end: none;
             }
         }
     }
@@ -331,7 +341,6 @@
         >li {
             height: 100%;
         }
-
     }
 }
 

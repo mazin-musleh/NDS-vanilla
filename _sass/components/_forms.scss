@@ -310,7 +310,7 @@ fieldset {
             height: 100%;
         }
 
-        body.hgi-loaded &::after {
+        body[data-font-loaded*="hgi-stroke-rounded"] &::after {
             opacity: 1;
         }
 
