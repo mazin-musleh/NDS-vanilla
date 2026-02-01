@@ -17,7 +17,6 @@
         states: {
             open: 'open',
             opening: 'opening',
-            opened: 'opened',
             closing: 'closing',
             closed: ''
         },
@@ -102,7 +101,7 @@
 
     function isOpen(listItem) {
         const state = getState(listItem);
-        return state === CONFIG.states.open || state === CONFIG.states.opened || state === CONFIG.states.opening;
+        return state === CONFIG.states.open || state === CONFIG.states.opening;
     }
 
     // ==============================================
@@ -122,7 +121,7 @@
             // Accordion: close siblings
             const parentList = listItem.parentElement;
             if (parentList) {
-                parentList.querySelectorAll(':scope > li[data-state="open"], :scope > li[data-state="opened"], :scope > li[data-state="opening"]').forEach(sibling => {
+                parentList.querySelectorAll(':scope > li[data-state="open"], :scope > li[data-state="opening"]').forEach(sibling => {
                     if (sibling !== listItem) {
                         const btn = sibling.querySelector(':scope > .nds-btn');
                         const sub = sibling.querySelector(':scope > ul');
@@ -136,13 +135,14 @@
 
     function showSubmenu(listItem, button, submenu) {
         setState(submenu, CONFIG.states.opening);
-        setState(listItem, CONFIG.states.open);
+        setState(listItem, CONFIG.states.opening);
         button.setAttribute('aria-expanded', 'true');
         submenu.style.height = submenu.scrollHeight + 'px';
 
         const cleanup = () => {
             submenu.removeEventListener('transitionend', cleanup);
-            setState(submenu, CONFIG.states.opened);
+            setState(submenu, CONFIG.states.open);
+            setState(listItem, CONFIG.states.open);
             submenu.style.height = '';
             dispatchDrawerEvent(listItem, 'shown');
         };
@@ -201,7 +201,7 @@
 
             if (shouldBeOpen) {
                 setState(item, CONFIG.states.open);
-                setState(submenu, CONFIG.states.opened);
+                setState(submenu, CONFIG.states.open);
                 button.setAttribute('aria-expanded', 'true');
             } else {
                 setState(item, CONFIG.states.closed);
@@ -320,7 +320,7 @@
 
                     setState(parent, CONFIG.states.open);
                     if (btn) btn.setAttribute('aria-expanded', 'true');
-                    if (submenu) setState(submenu, CONFIG.states.opened);
+                    if (submenu) setState(submenu, CONFIG.states.open);
                 }
                 parent = parent.closest('ul')?.closest('li');
             }

@@ -299,6 +299,23 @@
         imagesizes="100vw" fetchpriority="high">
     {% endif %}
 
+    <!-- Define deferred assets loader BEFORE any links that call it -->
+    <script>
+        function loadDeferredAssets() {
+            // Load icon font CSS
+            var iconLink = document.createElement('link');
+            iconLink.rel = 'stylesheet';
+            iconLink.href = '{{ "assets/css/hgi-rounded-stroke-solid-min.css?ver=1.001" | relative_url }}';
+            document.head.appendChild(iconLink);
+
+            // Load favicon
+            var favicon = document.createElement('link');
+            favicon.rel = 'icon';
+            favicon.type = 'image/svg+xml';
+            favicon.href = '{{ "assets/img/favicon.svg" | relative_url }}';
+            document.head.appendChild(favicon);
+        }
+    </script>
 
     <!-- Critical CSS - Load with deferred loading -->
     <link rel="preload" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver=1.003" as="style"
@@ -326,23 +343,6 @@
     {% endfor %}
     {% endif %}
 
-    <!-- Deferred assets loaded after main CSS finishes -->
-    <script>
-        function loadDeferredAssets() {
-            // Load icon font CSS
-            var iconLink = document.createElement('link');
-            iconLink.rel = 'stylesheet';
-            iconLink.href = '{{ "assets/css/hgi-rounded-stroke-solid-min.css?ver=1.001" | relative_url }}';
-            document.head.appendChild(iconLink);
-
-            // Load favicon
-            var favicon = document.createElement('link');
-            favicon.rel = 'icon';
-            favicon.type = 'image/svg+xml';
-            favicon.href = '{{ "assets/img/favicon.svg" | relative_url }}';
-            document.head.appendChild(favicon);
-        }
-    </script>
     <noscript>
         <link rel="stylesheet" href="{{ 'assets/css/hgi-rounded-stroke-solid-min.css' | relative_url }}">
         <link rel="icon" type="image/svg+xml" href="{{ 'assets/img/favicon.svg' | relative_url }}">

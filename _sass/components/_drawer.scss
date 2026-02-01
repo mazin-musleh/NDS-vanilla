@@ -216,12 +216,12 @@
 
 // Animation states - height set by JS during opening/closing
 .nds-drawer-list>li>ul[data-state="opening"],
-.nds-drawer-list>li>ul[data-state="opened"],
+.nds-drawer-list>li>ul[data-state="open"],
 .nds-drawer-list>li>ul[data-state="closing"] {
     display: unset;
 }
 
-.nds-drawer-list>li>ul[data-state="opened"] {
+.nds-drawer-list>li>ul[data-state="open"] {
     height: auto;
 }
 

@@ -1,6 +1,7 @@
 <aside class="nds-sideMenu" aria-label="Sidebar">
-    <button id="sideMenuToggle" class="sideMenuToggle" aria-label="Sidebar Menu">
+    <button id="sideMenuToggle" class="sideMenuToggle nds-btn nds-subtle nds-indicator" aria-label="Sidebar Menu">
         <i class="hgi hgi-stroke hgi-menu-02"></i>
+        <span class="label nds-truncate" hidden>Side menu</span>
     </button>
     <nav class="nds-drawer nds-divided nds-full-height" hidden>
         {% assign sidemenu_data_file = page.sidemenu | default: site.sidemenu | default: "sidemenu" %}
@@ -18,7 +19,7 @@
                             {% endif %}
                         {% endfor %}
 
-                        <li{% if has_active_child %} class="open"{% endif %}>
+                        <li{% if has_active_child %} data-state="open"{% endif %}>
                             <button class="nds-btn nds-subtle nds-menu-btn nds-indicator" aria-expanded="{{ has_active_child }}"><span class="label">{{ item.label }}</span></button>
                             <ul>
                                 {% for child in item.children %}
