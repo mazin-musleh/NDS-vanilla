@@ -82,12 +82,32 @@ main {
         display: flex;
         flex-wrap: wrap;
         align-content: flex-start;
+        position: relative;
+
+        &::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-color: rgb(0 0 0 / 0%);
+            backdrop-filter: blur(0px);
+            z-index: 998;
+            pointer-events: none;
+            transition: background-color var(--nds-transition), backdrop-filter var(--nds-transition);
+        }
 
         section:not(.nds-hero-section) {
             width: 100%;
             min-width: 300px;
             height: fit-content;
             padding: var(--spacing-5xl) 0;
+        }
+    }
+
+    // Backdrop for main content when side menu is open (both slider and topSubMenu modes)
+    &[data-state="backdrop"] {
+        .mainContent::before {
+            background-color: var(--colors-alpha-alpha-black-60);
+            backdrop-filter: blur(4px);
         }
     }
 
@@ -183,7 +203,7 @@ main {
 
         .mainContent {
 
-            margin-block: var(--spacing-xl);
+            padding-block: var(--spacing-xl);
             gap: var(--spacing-4xl);
 
             @include desktop(min) {

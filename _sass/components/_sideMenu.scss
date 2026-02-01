@@ -10,6 +10,7 @@
    ======================================== */
 
 .nds-sideMenu {
+    --drawer-max-height: calc(100svh - var(--nds-nav-height) - var(--spacing-xl));
     width: var(--nds-sideMenu-width);
     min-width: var(--nds-sideMenu-width);
     background-color: var(--background-white);
@@ -34,7 +35,7 @@
 .nds-sideMenu>nav.nds-drawer {
     --drawer-btn-height: 48px;
     // Max height accounts for: nav height + sticky top offset + bottom padding
-    --_max-height: calc(100svh - var(--nds-nav-height) - var(--spacing-xl));
+
     position: sticky;
     top: calc(var(--nds-nav-height) + var(--spacing-md));
     width: 100%;
@@ -74,9 +75,11 @@
         border-top: 0;
         border-bottom: 0;
         transform: translateX(calc(100%));
+        transition: transform var(--nds-transition);
     }
 
-    .nds-sideMenu.open {
+    // Slider mode: only uses 'open' state (no opening/closing)
+    .nds-sideMenu[data-state="open"] {
         transform: translateX(0px) !important;
     }
 
@@ -86,8 +89,7 @@
 
     /* Side Menu Toggle Button */
     #sideMenuToggle {
-        width: 40px;
-        height: 40px;
+        --btn-size: 40px;
         background-color: var(--button-background-primary-default);
         border: unset;
         outline: none;
@@ -95,10 +97,9 @@
         position: sticky;
         right: 0;
         display: flex;
-        flex-direction: column;
         justify-content: center;
         top: calc(var(--nds-nav-height) + var(--spacing-md));
-        transform: translateX(calc((var(--nds-sideMenu-width) - var(--spacing-md)) * -1));
+        transform: translate(calc((var(--nds-sideMenu-width) - var(--spacing-md)) * -1), 20svh);
         box-shadow: var(--shadow-md);
     }
 
@@ -134,5 +135,93 @@
         .nds-sideMenu li.redirect.external>a::after {
             transform: scale(-1);
         }
+    }
+}
+
+@include tablet(max) {
+    .contentLayout.topSubMenu {
+        flex-direction: column;
+        gap: 0 !important;
+
+        .nds-sideMenu {
+            position: sticky;
+            top: calc(var(--nds-nav-height));
+            --nds-sideMenu-width: 100%;
+            --drawer-max-height: 50svh;
+            --side-menu-toggle-height: 40px;
+            background-color: unset;
+            overflow: clip;
+            height: var(--side-menu-toggle-height);
+            min-height: 40px;
+            padding: 0;
+            border-radius: 0;
+            transform: translateX(0px) !important;
+
+            #sideMenuToggle {
+                --btn-width: 100%;
+                background-color: var(--background-white);
+                border-radius: 0;
+                position: relative;
+                top: unset;
+                transform: unset;
+                z-index: 3;
+
+                .label[hidden] {
+                    visibility: hidden;
+                    display: block;
+                }
+
+                i {
+                    color: unset
+                }
+            }
+
+            .nds-drawer {
+                top: calc(var(--nds-nav-height));
+                background-color: var(--background-white);
+                box-shadow: var(--shadow-md);
+                padding: var(--spacing-md);
+                padding-top: var(--side-menu-toggle-height);
+                z-index: 2;
+                border-radius: 0 0 var(--radius-md) var(--radius-md);
+                transform: translateY(-110%);
+                transition: transform var(--nds-transition);
+            }
+
+            // Opening state
+            .nds-drawer[data-state="opening"] {
+                transform: translateY(-100%);
+            }
+
+            // Open state
+            .nds-drawer[data-state="open"] {
+                transform: translateY(0);
+            }
+
+            // Closing state
+            .nds-drawer[data-state="closing"] {
+                transform: translateY(-100%);
+            }
+
+            // Backdrop effect when sideMenu is open or closing (matches modal backdrop)
+            &[data-state="open"],
+            &[data-state="closing"] {
+                position: absolute;
+                top: 0;
+                height: 100%;
+                box-shadow: unset;
+                padding: 0;
+                border-radius: 0;
+                margin-bottom: 1rem;
+
+                #sideMenuToggle {
+                    position: sticky;
+                    top: calc(var(--nds-nav-height));
+                }
+
+            }
+
+        }
+
     }
 }

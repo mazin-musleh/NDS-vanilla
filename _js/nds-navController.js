@@ -104,7 +104,7 @@
             if (!el) return false;
             const r = el.getBoundingClientRect();
             return x >= r.left - buffer && x <= r.right + buffer &&
-                   y >= r.top - buffer && y <= r.bottom + buffer;
+                y >= r.top - buffer && y <= r.bottom + buffer;
         });
     };
 
@@ -357,21 +357,42 @@
                 // Minimal mode: check if primary nav exceeds its own maxHeight
                 const primaryStyle = getComputedStyle(DOM.primary);
                 const maxH = parseFloat(primaryStyle.maxHeight);
+                const scrollHeight = DOM.primary.scrollHeight;
+
+                // Skip check if element hasn't been laid out yet
+                if (scrollHeight === 0) {
+                    this.schedule('low', 50);
+                    return;
+                }
 
                 if (isFinite(maxH) && maxH > 0) {
                     // Add 2px buffer to prevent hasMore from showing due to rounding errors
-                    hasOverflow = DOM.primary.scrollHeight > maxH + 2;
+                    hasOverflow = scrollHeight > maxH + 2;
                 }
             } else {
                 // Desktop mode: check horizontal overflow
-                hasOverflow = DOM.primary.scrollWidth > DOM.primary.clientWidth;
+                const scrollWidth = DOM.primary.scrollWidth;
+                const clientWidth = DOM.primary.clientWidth;
+
+                // Skip check if element hasn't been laid out yet (both dimensions are 0)
+                if (scrollWidth === 0 && clientWidth === 0) {
+                    this.schedule('low', 50);
+                    return;
+                }
+
+                hasOverflow = scrollWidth > clientWidth;
             }
 
             // Remove hidden from collapse after primary nav settles (first check only)
             if (!this._initialCheckDone) {
                 this._initialCheckDone = true;
+                if (hasOverflow) {
+                    // Has overflow: wait longer for layout to settle
+                    setTimeout(() => removeCollapseHidden(), 500);
+                } else {
                     // No overflow: still wait briefly to ensure layout has rendered
-                    setTimeout(() => removeCollapseHidden(), 200);
+                    setTimeout(() => removeCollapseHidden(), 100);
+                }
             }
 
             if (hasOverflow === wasOverflowing) return;
@@ -493,7 +514,7 @@
         ).length;
 
         const show = (pStyle?.display !== 'none' && pCount > 0) ||
-                     (sStyle?.display !== 'none' && sCount > 0);
+            (sStyle?.display !== 'none' && sCount > 0);
 
         DOM.toggler.style.display = show ? '' : 'none';
     }
@@ -727,7 +748,7 @@
             const menu = dd.querySelector('.nds-dropdown-menu');
             if (isOutside(x, y, [dd, menu].filter(Boolean), buffer)) {
                 const needsRecalc = (dd.closest('.nds-nav-primary') || dd.closest('.nds-nav-secondary')) &&
-                                    DOM.collapse?.classList.contains('show');
+                    DOM.collapse?.classList.contains('show');
                 dropdown.toggle(dd, false);
                 if (needsRecalc) {
                     afterDelay(state.getDuration(menu), updatePositions);
@@ -973,7 +994,7 @@
             removeCollapseHidden();
         } else {
             // Fallback: ensure hidden is removed even if overflow check doesn't fire
-            setTimeout(() => removeCollapseHidden(), 500);
+            setTimeout(() => removeCollapseHidden(), 2000);
         }
 
         // Recalculate after icon font loads
@@ -994,7 +1015,7 @@
         const mql = window.matchMedia?.('(prefers-reduced-motion: reduce)');
         mql?.addEventListener?.('change', (e) => { state.reducedMotion = !!e.matches; });
         mql?.addListener?.((e) => { state.reducedMotion = !!e.matches; }); // Safari fallback
-    } catch {}
+    } catch { }
 
     // Expose public API
     Object.assign(window, { toggleNavbar, toggleDropdown, toggleDGA });

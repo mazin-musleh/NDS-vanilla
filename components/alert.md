@@ -6,7 +6,7 @@ hero_description: Alert notifications for displaying important messages, warning
 breadcrumb: ["Components"]
 lang: en
 direction: ltr
-layout_class: cardView
+layout_class: cardView topSubMenu
 ---
 
 <!-- Alert Overview -->

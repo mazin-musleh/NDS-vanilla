@@ -6,7 +6,7 @@ direction: rtl
 breadcrumb: ["أعضاء هيئة التدريس"]
 hero_title: "د. محمد أحمد السالم"
 hero_description: "أستاذ مشارك - كلية علوم الحاسب"
-layout_class: cardView
+layout_class: cardView topSubMenu
 sidemenu: college-sidemenu
 exclude_showcase: true
 ---

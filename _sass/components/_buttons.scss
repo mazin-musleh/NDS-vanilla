@@ -25,6 +25,7 @@
   .label {
     text-align: start;
     line-height: normal;
+    flex: 1;
   }
 
   // ==============================================
@@ -449,8 +450,8 @@
       align-items: center;
     }
 
-    &:is(.selected, .expanded, .open, [aria-expanded="true"])::after,
-    :is(.show, .open, .active)>&::after {
+    &:is(.selected, .expanded, [data-state="opening"], [data-state="open"], [aria-expanded="true"])::after,
+    :is(.show, [data-state="opening"], [data-state="open"], .active)>&::after {
       transform: rotate(180deg);
     }
   }
