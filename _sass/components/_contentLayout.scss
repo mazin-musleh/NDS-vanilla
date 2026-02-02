@@ -105,6 +105,12 @@ main {
 
     // Backdrop for main content when side menu is open (both slider and topSubMenu modes)
     &[data-state="backdrop"] {
+
+        .mainContent {
+            pointer-events: none;
+            user-select: none;
+        }
+
         .mainContent::before {
             background-color: var(--colors-alpha-alpha-black-60);
             backdrop-filter: blur(4px);

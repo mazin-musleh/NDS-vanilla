@@ -287,11 +287,11 @@ textarea {
     .selected,
     :focus-visible,
     [aria-selected="true"],
-    [data-state="open"],
-    [data-state="selected"],
-    [data-state="active"],
-    [data-state="focused"])::before,
-  :is(.show, .open, .active)>&::before {
+    [data-state~="open"],
+    [data-state~="selected"],
+    [data-state~="active"],
+    [data-state~="focused"])::before,
+  :is(.show, .open, .active, [data-state~="open"])>&::before {
     background-color: $selected-color;
   }
 }
