@@ -129,8 +129,75 @@
         });
     }
 
+    // Helper: Open menu for both modes
+    const openMenu = (accMenu, animationTarget, toggleBtn, contentLayout, isTopMode) => {
+        // Set backdrop and toggle button state for all modes
+        if (contentLayout) addState(contentLayout, 'backdrop');
+        if (toggleBtn) addState(toggleBtn, 'open');
+
+        if (isTopMode) {
+            // Top mode: animate drawer
+            addState(accMenu, 'open');
+            addState(animationTarget, 'open', 'opening');
+        } else {
+            // Slider mode: animate menu, remove peek
+            addState(animationTarget, 'open', 'opening');
+            accMenu.classList.remove('nds-peek');
+        }
+
+        const handleTransitionEnd = () => {
+            removeState(animationTarget, 'opening');
+            animationTarget.removeEventListener('transitionend', handleTransitionEnd);
+        };
+        animationTarget.addEventListener('transitionend', handleTransitionEnd);
+    };
+
+    // Helper: Close menu for both modes
+    const closeMenu = (accMenu, animationTarget, toggleBtn, contentLayout, isTopMode) => {
+        // Both modes now use closing animation for consistent state cycle
+        if (isTopMode) {
+            addState(accMenu, 'closing');
+        }
+
+        addState(animationTarget, 'closing');
+
+        let transitionCompleted = false;
+
+        const cleanup = () => {
+            if (transitionCompleted) return;
+            transitionCompleted = true;
+
+            clearState(animationTarget);
+            if (isTopMode) {
+                clearState(accMenu);
+            } else {
+                // Slider mode: restore peek class after animation
+                accMenu.classList.add('nds-peek');
+            }
+            if (toggleBtn) clearState(toggleBtn);
+            if (contentLayout) clearState(contentLayout);
+            animationTarget.removeEventListener('transitionend', handleTransitionEnd);
+        };
+
+        const handleTransitionEnd = (e) => {
+            // Only handle transitions on the animation target itself
+            if (e && e.target !== animationTarget) return;
+            cleanup();
+        };
+
+        animationTarget.addEventListener('transitionend', handleTransitionEnd);
+
+        // Fallback timeout in case transition doesn't fire (300ms = default transition duration)
+        setTimeout(() => {
+            if (!transitionCompleted) {
+                cleanup();
+            }
+        }, 300);
+    };
+
     function setupMenuToggle(accMenu) {
         const toggleBtn = document.getElementById("sideMenuToggle");
+
         if (toggleBtn) {
             toggleBtn.addEventListener("click", (e) => {
                 e.stopPropagation();
@@ -140,56 +207,9 @@
                 const contentLayout = accMenu.closest('.contentLayout');
 
                 if (!isOpen) {
-                    // Set backdrop state on contentLayout for both modes
-                    if (contentLayout) {
-                        addState(contentLayout, 'backdrop');
-                    }
-
-                    if (isTopMode) {
-                        // Drawer mode: use full animation cycle (open + opening → open)
-                        addState(accMenu, 'open');
-                        addState(animationTarget, 'open', 'opening');
-                        addState(toggleBtn, 'open');
-
-                        const handleTransitionEnd = () => {
-                            removeState(animationTarget, 'opening');
-                            animationTarget.removeEventListener('transitionend', handleTransitionEnd);
-                        };
-                        animationTarget.addEventListener('transitionend', handleTransitionEnd);
-                    } else {
-                        // Slider mode: open with opening state
-                        addState(animationTarget, 'open', 'opening');
-
-                        const handleTransitionEnd = () => {
-                            removeState(animationTarget, 'opening');
-                            animationTarget.removeEventListener('transitionend', handleTransitionEnd);
-                        };
-                        animationTarget.addEventListener('transitionend', handleTransitionEnd);
-                    }
+                    openMenu(accMenu, animationTarget, toggleBtn, contentLayout, isTopMode);
                 } else {
-                    if (isTopMode) {
-                        // Drawer mode: use closing animation (open + closing coexist)
-                        addState(accMenu, 'closing');
-                        addState(animationTarget, 'closing');
-
-                        const handleTransitionEnd = () => {
-                            clearState(animationTarget);
-                            clearState(accMenu);
-                            clearState(toggleBtn);
-                            if (contentLayout) {
-                                clearState(contentLayout);
-                            }
-                            animationTarget.removeEventListener('transitionend', handleTransitionEnd);
-                        };
-                        animationTarget.addEventListener('transitionend', handleTransitionEnd);
-                    } else {
-                        // Slider mode: directly remove state and backdrop
-                        clearState(animationTarget);
-                        clearState(toggleBtn);
-                        if (contentLayout) {
-                            clearState(contentLayout);
-                        }
-                    }
+                    closeMenu(accMenu, animationTarget, toggleBtn, contentLayout, isTopMode);
                 }
             });
         }
@@ -200,6 +220,7 @@
         document.addEventListener("click", function (e) {
             const isTopMode = isTopSubMenuMode(accMenu);
             const animationTarget = getAnimationTarget(accMenu);
+            const contentLayout = accMenu.closest('.contentLayout');
 
             if (!hasState(animationTarget, 'open')) return;
 
@@ -215,22 +236,8 @@
                 if (drawer && drawer.contains(e.target)) {
                     return;
                 }
-                // Click is on backdrop or outside, close with animation (open + closing coexist)
-                addState(accMenu, 'closing');
-                addState(animationTarget, 'closing');
-
-                const contentLayout = accMenu.closest('.contentLayout');
-
-                const handleTransitionEnd = () => {
-                    clearState(animationTarget);
-                    clearState(accMenu);
-                    if (toggleBtn) clearState(toggleBtn);
-                    if (contentLayout) {
-                        clearState(contentLayout);
-                    }
-                    animationTarget.removeEventListener('transitionend', handleTransitionEnd);
-                };
-                animationTarget.addEventListener('transitionend', handleTransitionEnd);
+                // Close menu using helper
+                closeMenu(accMenu, animationTarget, toggleBtn, contentLayout, isTopMode);
                 return;
             }
 
@@ -253,50 +260,25 @@
             );
 
             if (!inSafeZone) {
-                // Slider mode: directly remove state and backdrop
-                clearState(animationTarget);
-                if (toggleBtn) clearState(toggleBtn);
-                const contentLayout = accMenu.closest('.contentLayout');
-                if (contentLayout) {
-                    clearState(contentLayout);
-                }
+                // Close menu using helper
+                closeMenu(accMenu, animationTarget, toggleBtn, contentLayout, isTopMode);
             }
         });
     }
 
     function setupKeyboardEvents(accMenu) {
         document.addEventListener("keydown", function (e) {
+            if (e.key !== "Escape") return;
+
             const isTopMode = isTopSubMenuMode(accMenu);
             const animationTarget = getAnimationTarget(accMenu);
 
-            if (e.key === "Escape" && hasState(animationTarget, 'open')) {
+            if (hasState(animationTarget, 'open')) {
                 const contentLayout = accMenu.closest('.contentLayout');
-
                 const toggleBtn = document.getElementById("sideMenuToggle");
 
-                if (isTopMode) {
-                    // Drawer mode: use closing animation (open + closing coexist)
-                    addState(accMenu, 'closing');
-                    addState(animationTarget, 'closing');
-
-                    const handleTransitionEnd = () => {
-                        clearState(animationTarget);
-                        clearState(accMenu);
-                        if (toggleBtn) clearState(toggleBtn);
-                        if (contentLayout) {
-                            clearState(contentLayout);
-                        }
-                        animationTarget.removeEventListener('transitionend', handleTransitionEnd);
-                    };
-                    animationTarget.addEventListener('transitionend', handleTransitionEnd);
-                } else {
-                    // Slider mode: directly remove state and backdrop
-                    clearState(animationTarget);
-                    if (toggleBtn) clearState(toggleBtn);
-                    if (contentLayout) {
-                        clearState(contentLayout);
-                    }
-                }
+                // Close menu using helper
+                closeMenu(accMenu, animationTarget, toggleBtn, contentLayout, isTopMode);
             }
         });
     }
@@ -325,11 +307,66 @@
             toggleBtn.classList.add('nds-menu-btn', 'nds-subtle', 'nds-indicator');
             toggleBtn.classList.remove('nds-primary');
         } else {
-            // Regular mode: keep label hidden, remove menu-btn class, use primary style
+            // Slider mode: keep label hidden, use primary style, keep indicator
             labelSpan.setAttribute('hidden', '');
-            toggleBtn.classList.add('nds-primary');
-            toggleBtn.classList.remove('nds-menu-btn', 'nds-subtle', 'nds-indicator');
+            toggleBtn.classList.add('nds-primary', 'nds-indicator');
+            toggleBtn.classList.remove('nds-menu-btn', 'nds-subtle');
         }
+    }
+
+    function setupScrollPeek() {
+        const toggleBtn = document.getElementById("sideMenuToggle");
+        if (!toggleBtn) return;
+
+        // Only run if nds-peek class exists on init
+        if (!toggleBtn.classList.contains('nds-peek')) return;
+
+        // Toggle peek on page load for 1500ms
+        toggleBtn.classList.remove('nds-peek');
+        setTimeout(() => {
+            toggleBtn.classList.add('nds-peek');
+        }, 1500);
+
+        let proximityTicking = false;
+        const proximityThreshold = 80; // Distance from button to toggle peek
+
+        const handleProximity = (clientX, clientY) => {
+            const rect = toggleBtn.getBoundingClientRect();
+            const buttonCenterX = rect.left + rect.width / 2;
+            const buttonCenterY = rect.top + rect.height / 2;
+
+            // Calculate distance from cursor/touch to button center
+            const distance = Math.sqrt(
+                Math.pow(clientX - buttonCenterX, 2) +
+                Math.pow(clientY - buttonCenterY, 2)
+            );
+
+            // Toggle peek based on 150px proximity: hide when near, show when far
+            if (distance <= proximityThreshold) {
+                toggleBtn.classList.remove('nds-peek');
+            } else {
+                toggleBtn.classList.add('nds-peek');
+            }
+
+            proximityTicking = false;
+        };
+
+        // Mouse move listener with RAF throttling
+        window.addEventListener('mousemove', (e) => {
+            if (!proximityTicking) {
+                proximityTicking = true;
+                requestAnimationFrame(() => handleProximity(e.clientX, e.clientY));
+            }
+        }, { passive: true });
+
+        // Touch move listener with RAF throttling
+        window.addEventListener('touchmove', (e) => {
+            if (!proximityTicking && e.touches.length > 0) {
+                proximityTicking = true;
+                const touch = e.touches[0];
+                requestAnimationFrame(() => handleProximity(touch.clientX, touch.clientY));
+            }
+        }, { passive: true });
     }
 
     function initializeSideMenu() {
@@ -347,9 +384,24 @@
         setupClickOutside(accMenu, toggleBtn);
         setupKeyboardEvents(accMenu);
         updateToggleLabel(accMenu);
+        setupScrollPeek();
 
-        // Add transition after initialization to prevent animation on page load
-        accMenu.style.transition = 'transform var(--nds-transition)';
+        // Close menu when window width changes
+        let previousWidth = window.innerWidth;
+        window.addEventListener('resize', () => {
+            const currentWidth = window.innerWidth;
+            if (currentWidth !== previousWidth) {
+                previousWidth = currentWidth;
+
+                const isTopMode = isTopSubMenuMode(accMenu);
+                const animationTarget = getAnimationTarget(accMenu);
+                const contentLayout = accMenu.closest('.contentLayout');
+
+                if (hasState(animationTarget, 'open')) {
+                    closeMenu(accMenu, animationTarget, toggleBtn, contentLayout, isTopMode);
+                }
+            }
+        });
     }
 
     // CRITICAL: Expose global API immediately (called by unified init system)
