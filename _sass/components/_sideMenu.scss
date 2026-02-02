@@ -25,6 +25,7 @@
 }
 
 #sideMenuToggle {
+    --btn-gap: var(--spacing-md);
     display: none;
 }
 
@@ -71,7 +72,7 @@
         position: absolute;
         z-index: 999;
         height: 100%;
-        border-radius: 0;
+        border-radius: 0 !important;
         border-top: 0;
         border-bottom: 0;
         transform: translateX(calc(100%));
@@ -79,7 +80,7 @@
     }
 
     // Slider mode: only uses 'open' state (no opening/closing)
-    .nds-sideMenu[data-state="open"] {
+    .nds-sideMenu[data-state~="open"] {
         transform: translateX(0px) !important;
     }
 
@@ -90,7 +91,6 @@
     /* Side Menu Toggle Button */
     #sideMenuToggle {
         --btn-size: 40px;
-        background-color: var(--button-background-primary-default);
         border: unset;
         outline: none;
         border-radius: var(--radius-sm) 0 0 var(--radius-sm);
@@ -126,7 +126,7 @@
         #sideMenuToggle {
             right: unset;
             left: 0;
-            transform: translateX(calc(var(--nds-sideMenu-width) - var(--spacing-md)));
+            transform: translate(calc(var(--nds-sideMenu-width) - var(--spacing-md)), 20svh);
             border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
         }
     }
@@ -151,7 +151,7 @@
             --side-menu-toggle-height: 40px;
             background-color: unset;
             overflow: clip;
-            height: var(--side-menu-toggle-height);
+            height: var(--nds-sideMenu-toggle-height);
             min-height: 40px;
             padding: 0;
             border-radius: 0;
@@ -159,7 +159,11 @@
 
             #sideMenuToggle {
                 --btn-width: 100%;
-                background-color: var(--background-white);
+                --btn-bg: var(--background-white);
+                --btn-height: var(--nds-sideMenu-toggle-height);
+                max-width: var(--nds-content-MaxWidth, 1280px);
+                margin: 0 auto;
+                padding: 0 var(--nds-viewport-padding, 32px);
                 border-radius: 0;
                 position: relative;
                 top: unset;
@@ -172,7 +176,7 @@
                 }
 
                 i {
-                    color: unset
+                    color: var(--text-primary);
                 }
             }
 
@@ -181,31 +185,31 @@
                 background-color: var(--background-white);
                 box-shadow: var(--shadow-md);
                 padding: var(--spacing-md);
-                padding-top: var(--side-menu-toggle-height);
+                padding-top: var(--nds-sideMenu-toggle-height);
                 z-index: 2;
                 border-radius: 0 0 var(--radius-md) var(--radius-md);
                 transform: translateY(-110%);
                 transition: transform var(--nds-transition);
             }
 
-            // Opening state
-            .nds-drawer[data-state="opening"] {
+            // Opening state (coexists with open)
+            .nds-drawer[data-state~="opening"] {
                 transform: translateY(-100%);
             }
 
             // Open state
-            .nds-drawer[data-state="open"] {
+            .nds-drawer[data-state~="open"] {
                 transform: translateY(0);
             }
 
-            // Closing state
-            .nds-drawer[data-state="closing"] {
+            // Closing state overrides open (coexists with open)
+            .nds-drawer[data-state~="closing"] {
                 transform: translateY(-100%);
             }
 
             // Backdrop effect when sideMenu is open or closing (matches modal backdrop)
-            &[data-state="open"],
-            &[data-state="closing"] {
+            &[data-state~="open"],
+            &[data-state~="closing"] {
                 position: absolute;
                 top: 0;
                 height: 100%;
@@ -221,6 +225,11 @@
 
             }
 
+        }
+
+        // Add padding-top to mainContent when drawer is open
+        .nds-sideMenu[data-state~="open"] ~ .mainContent {
+            padding-top: calc(var(--nds-sideMenu-toggle-height) + 16px);
         }
 
     }

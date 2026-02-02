@@ -43,7 +43,7 @@
     border-color: var(--_btn-border-active);
   }
 
-  &:is(.active, .selected, [data-state="selected"]),
+  &:is(.active, .selected, [data-state="selected"], [data-state~="open"]),
   :is(.show, .open, .active)>& {
     background-color: var(--_btn-bg-selected);
     border-color: var(--_btn-border-selected);
@@ -165,7 +165,7 @@
       --btn-color-hover: var(--text-default);
     }
 
-    &:is(.selected, [data-state="selected"]) {
+    &:is(.selected, [data-state="selected"], [data-state~="open"]) {
       color: var(--button-background-primary-selected);
     }
 
@@ -244,7 +244,7 @@
       --btn-loading-color: var(--text-oncolor-primary);
       --btn-loading-track: var(--alpha-white-20);
 
-      &:is(.selected, [data-state="selected"], :active, [data-state="active"]) {
+      &:is(.selected, [data-state="selected"], [data-state~="open"], :active, [data-state="active"]) {
         color: var(--button-label-transparent-pressed-on-color);
       }
     }
@@ -309,7 +309,7 @@
       --btn-color-hover: var(--button-background-danger-primary-hovered);
       --btn-loading-color: var(--button-background-danger-primary-default);
 
-      &:is(.selected, [data-state="selected"]) {
+      &:is(.selected, [data-state="selected"], [data-state~="open"]) {
         color: var(--button-background-danger-primary-selected);
       }
 
@@ -360,7 +360,7 @@
       --btn-loading-color: var(--colors-base-white);
       --btn-loading-track: var(--alpha-white-20);
 
-      &:is(.selected, [data-state="selected"]) {
+      &:is(.selected, [data-state="selected"], [data-state~="open"]) {
         color: var(--button-background-danger-primary-selected);
       }
 
@@ -380,7 +380,7 @@
       --btn-loading-color: var(--colors-base-white);
       --btn-loading-track: var(--alpha-white-20);
 
-      &:is(.selected, [data-state="selected"]) {
+      &:is(.selected, [data-state="selected"], [data-state~="open"]) {
         color: var(--button-background-danger-primary-selected);
       }
 
@@ -395,7 +395,7 @@
       --btn-loading-color: var(--colors-base-white);
       --btn-loading-track: var(--alpha-white-20);
 
-      &:is(.selected, [data-state="selected"]) {
+      &:is(.selected, [data-state="selected"], [data-state~="open"]) {
         color: var(--button-label-danger-primary-selected-oncolor);
       }
 
@@ -416,8 +416,8 @@
       background-color: var(--_btn-indicator-color);
     }
 
-    &:is(:active, .selected, :focus-visible, [aria-selected="true"], [data-state="selected"], [data-state="active"], [data-state="focused"])::before,
-    :is(.show, .open, .active)>&::before {
+    &:is(:active, .selected, :focus-visible, [aria-selected="true"], [data-state~="open"], [data-state~="selected"], [data-state~="active"], [data-state~="focused"])::before,
+    :is(.show, .open, .active, [data-state~="open"])>&::before {
       background-color: var(--_btn-indicator-selected);
     }
   }
@@ -450,8 +450,8 @@
       align-items: center;
     }
 
-    &:is(.selected, .expanded, [data-state="opening"], [data-state="open"], [aria-expanded="true"])::after,
-    :is(.show, [data-state="opening"], [data-state="open"], .active)>&::after {
+    &:is(.selected, .expanded, [data-state~="opening"], [data-state~="open"], [aria-expanded="true"])::after,
+    :is(.show, [data-state~="opening"], [data-state~="open"], .active)>&::after {
       transform: rotate(180deg);
     }
   }

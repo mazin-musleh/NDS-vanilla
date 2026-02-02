@@ -21,20 +21,35 @@
         return accMenu;
     };
 
-    // Set data-state for element
-    const setState = (element, state) => {
+    // State management helpers for space-separated data-state values
+    const addState = (element, ...states) => {
         if (!element) return;
-        if (state === null || state === '') {
+        const current = new Set((element.getAttribute('data-state') || '').split(/\s+/).filter(Boolean));
+        states.forEach(s => current.add(s));
+        element.setAttribute('data-state', [...current].join(' '));
+    };
+
+    const removeState = (element, ...states) => {
+        if (!element) return;
+        const current = new Set((element.getAttribute('data-state') || '').split(/\s+/).filter(Boolean));
+        states.forEach(s => current.delete(s));
+        if (current.size === 0) {
             element.removeAttribute('data-state');
         } else {
-            element.setAttribute('data-state', state);
+            element.setAttribute('data-state', [...current].join(' '));
         }
     };
 
-    // Get current data-state
-    const getState = (element) => {
-        if (!element) return null;
-        return element.getAttribute('data-state');
+    const hasState = (element, state) => {
+        if (!element) return false;
+        const current = (element.getAttribute('data-state') || '').split(/\s+/);
+        return current.includes(state);
+    };
+
+    // Clear all states
+    const clearState = (element) => {
+        if (!element) return;
+        element.removeAttribute('data-state');
     };
 
     function initializeActiveStates(accMenu) {
@@ -42,7 +57,7 @@
             let current = activeItem;
             while (current && current !== accMenu) {
                 if (current.classList.contains("has-sub")) {
-                    setState(current, 'open');
+                    addState(current, 'open');
                 }
                 current = current.parentElement.closest("li");
             }
@@ -59,8 +74,7 @@
             const submenu = li.querySelector(":scope > ul");
             if (!submenu) return;
 
-            const currentState = getState(li);
-            const isOpen = currentState === 'open';
+            const isOpen = hasState(li, 'open');
             anchor.setAttribute('aria-expanded', !isOpen);
 
             if (!isOpen) {
@@ -69,47 +83,46 @@
 
                 siblings.forEach(sibling => {
                     const siblingSub = sibling.querySelector(":scope > ul");
-                    const siblingState = getState(sibling);
-                    if (siblingState === 'open' && siblingSub) {
+                    if (hasState(sibling, 'open') && siblingSub) {
                         const siblingAnchor = sibling.querySelector(":scope > a");
                         if (siblingAnchor) {
                             siblingAnchor.setAttribute('aria-expanded', 'false');
                         }
 
-                        // Set closing state
-                        setState(sibling, 'closing');
+                        // Set closing state (open + closing coexist)
+                        addState(sibling, 'closing');
                         siblingSub.style.height = siblingSub.scrollHeight + "px";
                         siblingSub.offsetHeight;
                         siblingSub.style.height = "0px";
 
                         setTimeout(() => {
-                            setState(sibling, null);
+                            clearState(sibling);
                             siblingSub.style.height = "";
                         }, 250);
                     }
                 });
 
-                // Open current item with opening state
-                setState(li, 'opening');
+                // Open current item with opening state (open + opening coexist)
+                addState(li, 'open', 'opening');
                 submenu.style.height = "0px";
                 submenu.offsetHeight;
                 submenu.style.height = submenu.scrollHeight + "px";
 
                 submenu.addEventListener("transitionend", function handler() {
-                    setState(li, 'open');
+                    removeState(li, 'opening');
                     submenu.style.height = "";
                     submenu.removeEventListener("transitionend", handler);
                 });
 
             } else {
-                // Close current item with closing state
-                setState(li, 'closing');
+                // Close current item with closing state (open + closing coexist)
+                addState(li, 'closing');
                 submenu.style.height = submenu.scrollHeight + "px";
                 submenu.offsetHeight;
                 submenu.style.height = "0px";
 
                 setTimeout(() => {
-                    setState(li, null);
+                    clearState(li);
                     submenu.style.height = "";
                 }, 250);
             }
@@ -123,72 +136,58 @@
                 e.stopPropagation();
                 const isTopMode = isTopSubMenuMode(accMenu);
                 const animationTarget = getAnimationTarget(accMenu);
-                const currentState = getState(animationTarget);
-                const isOpen = currentState === 'open';
+                const isOpen = hasState(animationTarget, 'open');
                 const contentLayout = accMenu.closest('.contentLayout');
-                const mainContent = contentLayout?.querySelector('.mainContent');
 
                 if (!isOpen) {
                     // Set backdrop state on contentLayout for both modes
                     if (contentLayout) {
-                        setState(contentLayout, 'backdrop');
+                        addState(contentLayout, 'backdrop');
                     }
 
                     if (isTopMode) {
-                        // Drawer mode: use full animation cycle (opening → open)
-                        setState(accMenu, 'open'); // Set state on sideMenu for backdrop
-                        setState(animationTarget, 'opening');
+                        // Drawer mode: use full animation cycle (open + opening → open)
+                        addState(accMenu, 'open');
+                        addState(animationTarget, 'open', 'opening');
+                        addState(toggleBtn, 'open');
 
-                        // Add padding-top to mainContent (toggle outer height + 16px)
-                        if (mainContent && toggleBtn) {
-                            const toggleHeight = toggleBtn.offsetHeight;
-                            mainContent.style.paddingTop = `${toggleHeight + 16}px`;
-                        }
-
-                        // Wait for next frame to trigger animation
-                        requestAnimationFrame(() => {
-                            requestAnimationFrame(() => {
-                                setState(animationTarget, 'open');
-                            });
-                        });
-
-                        // Listen for transition end to finalize state
                         const handleTransitionEnd = () => {
-                            if (getState(animationTarget) === 'open') {
-                                setState(animationTarget, 'open');
-                            }
+                            removeState(animationTarget, 'opening');
                             animationTarget.removeEventListener('transitionend', handleTransitionEnd);
                         };
                         animationTarget.addEventListener('transitionend', handleTransitionEnd);
                     } else {
-                        // Slider mode: directly set open state
-                        setState(animationTarget, 'open');
+                        // Slider mode: open with opening state
+                        addState(animationTarget, 'open', 'opening');
+
+                        const handleTransitionEnd = () => {
+                            removeState(animationTarget, 'opening');
+                            animationTarget.removeEventListener('transitionend', handleTransitionEnd);
+                        };
+                        animationTarget.addEventListener('transitionend', handleTransitionEnd);
                     }
                 } else {
                     if (isTopMode) {
-                        // Drawer mode: use closing animation
-                        setState(accMenu, 'closing'); // Set closing state on sideMenu for backdrop fade
-                        setState(animationTarget, 'closing');
+                        // Drawer mode: use closing animation (open + closing coexist)
+                        addState(accMenu, 'closing');
+                        addState(animationTarget, 'closing');
 
                         const handleTransitionEnd = () => {
-                            setState(animationTarget, null);
-                            setState(accMenu, null);
-                            // Remove backdrop state after animation
+                            clearState(animationTarget);
+                            clearState(accMenu);
+                            clearState(toggleBtn);
                             if (contentLayout) {
-                                setState(contentLayout, null);
-                            }
-                            // Remove padding-top from mainContent
-                            if (mainContent) {
-                                mainContent.style.paddingTop = '';
+                                clearState(contentLayout);
                             }
                             animationTarget.removeEventListener('transitionend', handleTransitionEnd);
                         };
                         animationTarget.addEventListener('transitionend', handleTransitionEnd);
                     } else {
                         // Slider mode: directly remove state and backdrop
-                        setState(animationTarget, null);
+                        clearState(animationTarget);
+                        clearState(toggleBtn);
                         if (contentLayout) {
-                            setState(contentLayout, null);
+                            clearState(contentLayout);
                         }
                     }
                 }
@@ -201,9 +200,8 @@
         document.addEventListener("click", function (e) {
             const isTopMode = isTopSubMenuMode(accMenu);
             const animationTarget = getAnimationTarget(accMenu);
-            const currentState = getState(animationTarget);
 
-            if (currentState !== 'open') return;
+            if (!hasState(animationTarget, 'open')) return;
 
             // Skip if clicked on toggle button
             if (toggleBtn && toggleBtn.contains(e.target)) {
@@ -217,23 +215,18 @@
                 if (drawer && drawer.contains(e.target)) {
                     return;
                 }
-                // Click is on backdrop or outside, close with animation
-                setState(accMenu, 'closing'); // Set closing state on sideMenu for backdrop fade
-                setState(animationTarget, 'closing');
+                // Click is on backdrop or outside, close with animation (open + closing coexist)
+                addState(accMenu, 'closing');
+                addState(animationTarget, 'closing');
 
                 const contentLayout = accMenu.closest('.contentLayout');
-                const mainContent = contentLayout?.querySelector('.mainContent');
 
                 const handleTransitionEnd = () => {
-                    setState(animationTarget, null);
-                    setState(accMenu, null);
-                    // Remove backdrop state after animation
+                    clearState(animationTarget);
+                    clearState(accMenu);
+                    if (toggleBtn) clearState(toggleBtn);
                     if (contentLayout) {
-                        setState(contentLayout, null);
-                    }
-                    // Remove padding-top from mainContent
-                    if (mainContent) {
-                        mainContent.style.paddingTop = '';
+                        clearState(contentLayout);
                     }
                     animationTarget.removeEventListener('transitionend', handleTransitionEnd);
                 };
@@ -261,10 +254,11 @@
 
             if (!inSafeZone) {
                 // Slider mode: directly remove state and backdrop
-                setState(animationTarget, null);
+                clearState(animationTarget);
+                if (toggleBtn) clearState(toggleBtn);
                 const contentLayout = accMenu.closest('.contentLayout');
                 if (contentLayout) {
-                    setState(contentLayout, null);
+                    clearState(contentLayout);
                 }
             }
         });
@@ -274,36 +268,33 @@
         document.addEventListener("keydown", function (e) {
             const isTopMode = isTopSubMenuMode(accMenu);
             const animationTarget = getAnimationTarget(accMenu);
-            const currentState = getState(animationTarget);
 
-            if (e.key === "Escape" && currentState === 'open') {
+            if (e.key === "Escape" && hasState(animationTarget, 'open')) {
                 const contentLayout = accMenu.closest('.contentLayout');
-                const mainContent = contentLayout?.querySelector('.mainContent');
+
+                const toggleBtn = document.getElementById("sideMenuToggle");
 
                 if (isTopMode) {
-                    // Drawer mode: use closing animation
-                    setState(accMenu, 'closing'); // Set closing state on sideMenu for backdrop fade
-                    setState(animationTarget, 'closing');
+                    // Drawer mode: use closing animation (open + closing coexist)
+                    addState(accMenu, 'closing');
+                    addState(animationTarget, 'closing');
 
                     const handleTransitionEnd = () => {
-                        setState(animationTarget, null);
-                        setState(accMenu, null);
-                        // Remove backdrop state after animation
+                        clearState(animationTarget);
+                        clearState(accMenu);
+                        if (toggleBtn) clearState(toggleBtn);
                         if (contentLayout) {
-                            setState(contentLayout, null);
-                        }
-                        // Remove padding-top from mainContent
-                        if (mainContent) {
-                            mainContent.style.paddingTop = '';
+                            clearState(contentLayout);
                         }
                         animationTarget.removeEventListener('transitionend', handleTransitionEnd);
                     };
                     animationTarget.addEventListener('transitionend', handleTransitionEnd);
                 } else {
                     // Slider mode: directly remove state and backdrop
-                    setState(animationTarget, null);
+                    clearState(animationTarget);
+                    if (toggleBtn) clearState(toggleBtn);
                     if (contentLayout) {
-                        setState(contentLayout, null);
+                        clearState(contentLayout);
                     }
                 }
             }
@@ -329,13 +320,15 @@
         }
 
         if (isTopMode) {
-            // TopSubMenu mode: show label and add menu-btn class
+            // TopSubMenu mode: show label, add menu-btn class, use subtle style
             labelSpan.removeAttribute('hidden');
-            toggleBtn.classList.add('nds-menu-btn');
+            toggleBtn.classList.add('nds-menu-btn', 'nds-subtle', 'nds-indicator');
+            toggleBtn.classList.remove('nds-primary');
         } else {
-            // Regular mode: keep label hidden and remove menu-btn class
+            // Regular mode: keep label hidden, remove menu-btn class, use primary style
             labelSpan.setAttribute('hidden', '');
-            toggleBtn.classList.remove('nds-menu-btn');
+            toggleBtn.classList.add('nds-primary');
+            toggleBtn.classList.remove('nds-menu-btn', 'nds-subtle', 'nds-indicator');
         }
     }
 

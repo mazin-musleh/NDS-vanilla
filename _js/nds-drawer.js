@@ -137,6 +137,7 @@
         setState(submenu, CONFIG.states.opening);
         setState(listItem, CONFIG.states.opening);
         button.setAttribute('aria-expanded', 'true');
+        setState(button, CONFIG.states.open);
         submenu.style.height = submenu.scrollHeight + 'px';
 
         const cleanup = () => {
@@ -160,6 +161,7 @@
         submenu.style.height = '0px';
         setState(listItem, CONFIG.states.closed);
         button.setAttribute('aria-expanded', 'false');
+        button.removeAttribute('data-state');
 
         const cleanup = () => {
             submenu.removeEventListener('transitionend', cleanup);
@@ -203,10 +205,12 @@
                 setState(item, CONFIG.states.open);
                 setState(submenu, CONFIG.states.open);
                 button.setAttribute('aria-expanded', 'true');
+                setState(button, CONFIG.states.open);
             } else {
                 setState(item, CONFIG.states.closed);
                 setState(submenu, CONFIG.states.closed);
                 button.setAttribute('aria-expanded', 'false');
+                button.removeAttribute('data-state');
             }
         });
 
@@ -319,7 +323,10 @@
                     const submenu = parent.querySelector(':scope > ul');
 
                     setState(parent, CONFIG.states.open);
-                    if (btn) btn.setAttribute('aria-expanded', 'true');
+                    if (btn) {
+                        btn.setAttribute('aria-expanded', 'true');
+                        setState(btn, CONFIG.states.open);
+                    }
                     if (submenu) setState(submenu, CONFIG.states.open);
                 }
                 parent = parent.closest('ul')?.closest('li');

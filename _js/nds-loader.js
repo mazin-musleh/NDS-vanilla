@@ -47,7 +47,7 @@
             init: () => window.NDS?.Forms?.FileUpload?.init?.(),
         },
         {
-            name: 'sideMenu',
+            name: 'sidemenu',
             selector: '.wSideMenu',
             init: () => window.NDSSideMenu?.init?.(),
         },
