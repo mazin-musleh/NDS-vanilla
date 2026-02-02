@@ -276,6 +276,7 @@
 // ==============================================
 
 .nds-drawer-more {
+    --btn-height: var(--drawer-btn-height);
     width: 100% !important;
     background: var(--background-surface, var(--background-white));
     border-block-start: 1px solid var(--_divider);

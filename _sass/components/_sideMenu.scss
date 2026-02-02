@@ -11,6 +11,8 @@
 
 .nds-sideMenu {
     --drawer-max-height: calc(100svh - var(--nds-nav-height) - var(--spacing-xl));
+    --btn-width: 40px;
+    --_toggle-height: var(--toggle-height, 40px);
     width: var(--nds-sideMenu-width);
     min-width: var(--nds-sideMenu-width);
     background-color: var(--background-white);
@@ -25,8 +27,12 @@
 }
 
 #sideMenuToggle {
-    --btn-gap: var(--spacing-md);
+    --_toggle-transform: var(--toggle-transform, unset);
+    --_toggle-pos: var(--toggle-pos, 10svh);
     display: none;
+    transform: var(--_toggle-transform);
+    transition: transform var(--nds-transition);
+    
 }
 
 /* ========================================
@@ -75,17 +81,41 @@
         border-radius: 0 !important;
         border-top: 0;
         border-bottom: 0;
-        transform: translateX(calc(100%));
-        transition: transform var(--nds-transition);
+        
     }
 
-    // Slider mode: only uses 'open' state (no opening/closing)
-    .nds-sideMenu[data-state~="open"] {
-        transform: translateX(0px) !important;
+    // ========================================
+    // SLIDER MODE STATES - Horizontal sliding (tablet/mobile)
+    // ========================================
+    .contentLayout:not(.topSubMenu) .nds-sideMenu {
+
+        // RTL: slide out to the right
+            transform: translateX(100%);
+            @include ltr {
+                // LTR: slide out to the left
+                transform: translateX(-100%);
+            }
+
+        // Open state: slide in to on-screen position
+        &[data-state~="open"] {
+            transform: translateX(0px)!important;
+            transition: transform var(--nds-transition);
+        }
+
+        // Closing state: slide back to off-screen position
+        &[data-state~="closing"] {
+            // RTL: slide out to the right
+            transform: translateX(100%)!important;
+            transition: transform var(--nds-transition);
+            @include ltr {
+                // LTR: slide out to the left
+                transform: translateX(-100%)!important;
+            }
+        }
     }
 
     .nds-sideMenu>nav.nds-drawer {
-        margin-top: -40px !important;
+        margin-top: calc(var(--_toggle-height) * -1) !important;
     }
 
     /* Side Menu Toggle Button */
@@ -99,21 +129,22 @@
         display: flex;
         justify-content: center;
         top: calc(var(--nds-nav-height) + var(--spacing-md));
-        transform: translate(calc((var(--nds-sideMenu-width) - var(--spacing-md)) * -1), 20svh);
+        --toggle-transform: translate(calc((var(--nds-sideMenu-width) - var(--spacing-md)) * -1), var(--_toggle-pos));
         box-shadow: var(--shadow-md);
+
     }
 
     #sideMenuToggle i {
         font-size: 1.5rem;
         color: var(--text-oncolor-primary);
-        transform: scale(-1);
+        scale: -1;
         font-weight: 600;
         margin: auto;
     }
 
     @include ltr {
         #sideMenuToggle i {
-            transform: scale(1);
+            scale: 1;
         }
     }
 
@@ -126,14 +157,75 @@
         #sideMenuToggle {
             right: unset;
             left: 0;
-            transform: translate(calc(var(--nds-sideMenu-width) - var(--spacing-md)), 20svh);
+            --toggle-transform: translate(calc(var(--nds-sideMenu-width) - var(--spacing-md)), var(--_toggle-pos));
             border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
         }
     }
 
     @include ltr {
         .nds-sideMenu li.redirect.external>a::after {
-            transform: scale(-1);
+            scale: -1;
+        }
+    }
+
+
+    .contentLayout:not(.topSubMenu) .nds-sideMenu {
+
+        --btn-height: 72px;
+        --toggle-height: var(--btn-height);
+
+        & #sideMenuToggle {
+            --btn-indicator-size: 3px;
+            @include btn-indicator('v');
+            
+
+
+            &::before {
+                inset-inline-start: auto;
+                inset-inline-end: 0;
+                --btn-indicator-color: var(--background-primary-400);
+                background-color: var(--btn-indicator-color);
+            }
+
+            &:hover::before {
+                --btn-indicator-color: var(--background-primary-400);
+            }
+
+            &.nds-peek {
+
+
+                
+
+                body[data-font-loaded*="hgi-stroke-rounded"] i {
+                    opacity: 1;
+                    transition: opacity var(--nds-transition);
+                }
+
+
+                &:not([data-state="open"]) {
+                    --toggle-transform: translate(calc((var(--nds-sideMenu-width) - var(--spacing-md) - var(--btn-width)/1.5) * -1), var(--_toggle-pos));
+                    --btn-indicator-size: 5px;
+
+                    @include ltr {
+                        --toggle-transform: translate(calc(var(--nds-sideMenu-width) - var(--spacing-md) - var(--btn-width)/1.5), var(--_toggle-pos));
+                    }
+
+                    .label {
+                        height: 100%;
+                        width: 40px;
+                        opacity: 0;
+                        display: block;
+                        position: absolute;
+                        inset-inline-end: -20px;
+                    }
+
+                    i {
+                        opacity: 0;
+                    }
+
+
+                }
+            }
         }
     }
 }
@@ -142,16 +234,16 @@
     .contentLayout.topSubMenu {
         flex-direction: column;
         gap: 0 !important;
+        --btn-gap: var(--spacing-md);
 
         .nds-sideMenu {
             position: sticky;
             top: calc(var(--nds-nav-height));
             --nds-sideMenu-width: 100%;
             --drawer-max-height: 50svh;
-            --side-menu-toggle-height: 40px;
             background-color: unset;
             overflow: clip;
-            height: var(--nds-sideMenu-toggle-height);
+            height: var(--_toggle-height);
             min-height: 40px;
             padding: 0;
             border-radius: 0;
@@ -160,14 +252,15 @@
             #sideMenuToggle {
                 --btn-width: 100%;
                 --btn-bg: var(--background-white);
-                --btn-height: var(--nds-sideMenu-toggle-height);
+                --btn-height: var(--_toggle-height);
+                --btn-indicator-size: 3px;
                 max-width: var(--nds-content-MaxWidth, 1280px);
                 margin: 0 auto;
                 padding: 0 var(--nds-viewport-padding, 32px);
                 border-radius: 0;
                 position: relative;
                 top: unset;
-                transform: unset;
+                --toggle-transform: unset;
                 z-index: 3;
 
                 .label[hidden] {
@@ -178,6 +271,7 @@
                 i {
                     color: var(--text-primary);
                 }
+
             }
 
             .nds-drawer {
@@ -185,7 +279,7 @@
                 background-color: var(--background-white);
                 box-shadow: var(--shadow-md);
                 padding: var(--spacing-md);
-                padding-top: var(--nds-sideMenu-toggle-height);
+                padding-top: var(--_toggle-height);
                 z-index: 2;
                 border-radius: 0 0 var(--radius-md) var(--radius-md);
                 transform: translateY(-110%);
@@ -228,8 +322,8 @@
         }
 
         // Add padding-top to mainContent when drawer is open
-        .nds-sideMenu[data-state~="open"] ~ .mainContent {
-            padding-top: calc(var(--nds-sideMenu-toggle-height) + 16px);
+        .nds-sideMenu[data-state~="open"]~.mainContent {
+            padding-top: calc(var(--_toggle-height) + 16px);
         }
 
     }

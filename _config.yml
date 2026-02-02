@@ -8,8 +8,8 @@ host: 0.0.0.0  # Allow network access for mobile testing
 
 # Brand Logo
 brandLogo: assets/img/dga-logo.svg
-headerBrandW: 132
-headerBrandH: 42
+headerBrandW: 150
+headerBrandH: 48
 
 # Brand Name
 #brandName: "National Design System" #comment this to remove text from brand
