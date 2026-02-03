@@ -328,7 +328,7 @@
         }, 1500);
 
         let proximityTicking = false;
-        const proximityThreshold = 80; // Distance from button to toggle peek
+        const proximityThreshold = 60; // Distance from button to toggle peek
 
         const handleProximity = (clientX, clientY) => {
             const rect = toggleBtn.getBoundingClientRect();

@@ -450,6 +450,15 @@ body:not(.minimal) .nds-main-nav {
 
     /* Show More Button Styles */
     .nds-nav-primary.hasMore {
+        // Both sides masked (scrolled to middle)
+        /* mask-image: linear-gradient(to right,
+                rgba(0, 0, 0, 0) 0%,
+                rgba(0, 0, 0, 0.5) 3%,
+                rgb(0, 0, 0) 8%,
+                rgb(0, 0, 0) 92%,
+                rgba(0, 0, 0, 0.5) 97%,
+                rgba(0, 0, 0, 0) 100%); */
+
         .showMore {
             inset-inline-end: 0;
             transform: translateX(0);
@@ -460,21 +469,39 @@ body:not(.minimal) .nds-main-nav {
             }
         }
 
-        &.atEnd .showMore i {
-            transform: rotate(270deg);
+        // At start: only mask inline-end (left in RTL)
+        &.atStart {
+           /*  mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 3%, rgb(0, 0, 0) 8%, rgb(0, 0, 0) 100%); */
         }
 
-        &::before {
-            position: sticky;
-            right: var(--spacing-xs);
-            width: 4px;
-            display: block;
-            height: var(--nds-nav-height);
-            content: '';
-            min-width: 4px;
-            background-color: var(--background-white);
-            z-index: 9999;
-            transform: translateX(4px);
+        // At end: only mask inline-start (right in RTL)
+        &.atEnd {
+            /* mask-image: linear-gradient(to left, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 3%, rgb(0, 0, 0) 8%, rgb(0, 0, 0) 100%); */
+
+            .showMore i {
+                transform: rotate(270deg);
+            }
+        }
+
+        @include ltr {
+            // Both sides masked (scrolled to middle)
+            /* mask-image: linear-gradient(to right,
+                    rgba(0, 0, 0, 0) 0%,
+                    rgba(0, 0, 0, 0.5) 3%,
+                    rgb(0, 0, 0) 8%,
+                    rgb(0, 0, 0) 92%,
+                    rgba(0, 0, 0, 0.5) 97%,
+                    rgba(0, 0, 0, 0) 100%); */
+
+            // At start: only mask inline-end (right in LTR)
+            &.atStart {
+               /*  mask-image: linear-gradient(to left, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 3%, rgb(0, 0, 0) 8%, rgb(0, 0, 0) 100%); */
+            }
+
+            // At end: only mask inline-start (left in LTR)
+            &.atEnd {
+                /* mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 3%, rgb(0, 0, 0) 8%, rgb(0, 0, 0) 100%); */
+            }
         }
     }
 
@@ -727,6 +754,14 @@ body.minimal .nds-main-nav {
     /* Show More Button */
     .nds-nav-primary.hasMore {
         margin-bottom: calc(var(--nds-minimal-nav-item-height) + var(--spacing-md));
+        // Both sides masked (scrolled to middle)
+        mask-image: linear-gradient(to bottom,
+                rgba(0, 0, 0, 0) 0%,
+                rgba(0, 0, 0, 0.5) 3%,
+                rgb(0, 0, 0) 8%,
+                rgb(0, 0, 0) 92%,
+                rgba(0, 0, 0, 0.5) 97%,
+                rgba(0, 0, 0, 0) 100%);
 
         .showMore {
             opacity: 1;
@@ -739,8 +774,18 @@ body.minimal .nds-main-nav {
             }
         }
 
-        &.atEnd .showMore i {
-            transform: rotate(180deg);
+        // At start: only mask bottom
+        &.atStart {
+            mask-image: linear-gradient(to bottom, rgb(0, 0, 0) 0%, rgb(0, 0, 0) 92%, rgba(0, 0, 0, 0.5) 97%, rgba(0, 0, 0, 0) 100%);
+        }
+
+        // At end: only mask top
+        &.atEnd {
+            mask-image: linear-gradient(to top, rgb(0, 0, 0) 0%, rgb(0, 0, 0) 92%, rgba(0, 0, 0, 0.5) 97%, rgba(0, 0, 0, 0) 100%);
+
+            .showMore i {
+                transform: rotate(180deg);
+            }
         }
     }
 
