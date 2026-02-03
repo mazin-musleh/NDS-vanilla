@@ -143,7 +143,7 @@
         },
         {
             name: 'modal',
-            selector: '.nds-modal-backdrop, .nds-modal',
+            selector: '.nds-modal',
             init: () => window.NDSModal?.init?.(),
         },
         {

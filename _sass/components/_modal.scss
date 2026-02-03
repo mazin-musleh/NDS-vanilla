@@ -15,71 +15,48 @@
 @use '../mixins' as *;
 
 // ==============================================
-// MODAL BACKDROP/OVERLAY
-// ==============================================
-
-.nds-modal-backdrop {
-  position: fixed;
-  inset-block-start: 0;
-  inset-inline-start: 0;
-  width: 100%;
-  height: 100%;
-  background-color: var(--colors-alpha-alpha-black-60);
-  backdrop-filter: blur(4px);
-  z-index: 1100;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: var(--spacing-xl);
-  overflow-y: hidden;
-
-  // Initial state - hidden
-  opacity: 0;
-  transition: opacity 0.3s ease;
-
-  // When modal is open
-  &.nds-modal-open {
-    opacity: 1;
-
-    @include mobile {
-      align-items: flex-end;
-    }
-  }
-
-  @include mobile {
-    padding: 0;
-  }
-}
-
-// ==============================================
 // MODAL CONTAINER (extends card)
 // ==============================================
 
+// Note: Backdrop styles moved to _backdrop.scss
+// Modal now uses the unified NDSBackdrop API
+
 .nds-modal {
-  position: relative;
+  position: fixed;
+  inset: 0;
   z-index: 1101;
-  max-height: 90dvh;
+  max-height: 80dvh;
+  height: fit-content;
+  margin: auto;
   overflow: visible;
-  transition: transform 0.3s ease;
+  transition: transform var(--nds-transition), opacity var(--nds-transition);
+  opacity: 1;
 
   // Extend card component styles
   &.nds-card {
     max-width: 600px;
-    width: 100%;
+    width: calc(100% - var(--spacing-xl) * 2);
     overflow-y: auto;
 
-    // Desktop: default state - no transform
+    // Desktop: centered with margin auto
     transform: translateY(0);
+
+    // Closing state - fade out on desktop
+    &[data-state="closing"] {
+      opacity: 0;
+    }
 
     // Mobile: bottom sheet animation
     @include mobile {
-      position: absolute;
-      inset-block-end: 0px;
-      // Initial state - off screen at bottom
-      transform: translateY(100%);
+      width: 100%;
       max-width: 100%;
+      margin: 0;
+      inset: auto 0 0 0;
       border-radius: var(--components-card-radius) var(--components-card-radius) 0 0;
       min-height: 256px;
+      // Initial state - off screen at bottom
+      transform: translateY(100%);
+      opacity: 1;
 
       .nds-card-actions {
         flex-direction: column;
@@ -94,9 +71,14 @@
         }
       }
 
-      // When modal is open - slide up to top
-      .nds-modal-open & {
+      // When modal is shown - slide up
+      &[data-state="open"] {
         transform: translateY(0);
+      }
+
+      // When closing - slide back down
+      &[data-state="closing"] {
+        transform: translateY(100%);
       }
     }
   }
@@ -128,33 +110,16 @@
 }
 
 // ==============================================
-// BODY SCROLL LOCK
-// ==============================================
-
-body.nds-modal-active {
-  overflow: hidden;
-
-  @include mobile {
-    position: fixed;
-    width: 100%;
-    inset-inline-start: 0;
-  }
-}
-
-// ==============================================
 // ACCESSIBILITY
 // ==============================================
+
+// Note: Body scroll lock moved to _backdrop.scss (body[data-state="backdrop"])
 
 // Focus trap styles
 .nds-modal[role="dialog"] {
   &:focus {
     outline: none;
   }
-}
-
-// Backdrop click target
-.nds-modal-backdrop {
-  cursor: pointer;
 }
 
 .nds-modal {

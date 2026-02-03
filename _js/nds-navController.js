@@ -261,6 +261,14 @@
                 DOM.toggler?.classList.add('active');
                 toggleButton?.setAttribute('aria-expanded', 'true');
 
+                // Show backdrop in minimal mode
+                if (state.isMinimal && window.NDSBackdrop) {
+                    window.NDSBackdrop.show({
+                        zIndex: 999,
+                        onClick: () => toggleNavbar()
+                    });
+                }
+
                 animate.run(DOM.collapse, true, {
                     getMenu: () => state.isMinimal ? (collapseContent || DOM.collapse) : null,
                     onStart: () => {
@@ -275,6 +283,11 @@
                 DOM.toggler?.classList.remove('active');
                 toggleButton?.setAttribute('aria-expanded', 'false');
                 const closeDelay = state.reducedMotion ? 0 : dropdown.closeAll();
+
+                // Hide backdrop in minimal mode
+                if (state.isMinimal && window.NDSBackdrop) {
+                    window.NDSBackdrop.hide();
+                }
 
                 afterDelay(closeDelay, () => {
                     animate.run(DOM.collapse, false, {
