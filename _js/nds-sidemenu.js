@@ -131,8 +131,17 @@
 
     // Helper: Open menu for both modes
     const openMenu = (accMenu, animationTarget, toggleBtn, contentLayout, isTopMode) => {
-        // Set backdrop and toggle button state for all modes
-        if (contentLayout) addState(contentLayout, 'backdrop');
+        // Show backdrop and set toggle button state for all modes
+        if (window.NDSBackdrop) {
+            window.NDSBackdrop.show({
+                zIndex: 997,
+                onClick: () => {
+                    if (hasState(animationTarget, 'open')) {
+                        closeMenu(accMenu, animationTarget, toggleBtn, contentLayout, isTopMode);
+                    }
+                }
+            });
+        }
         if (toggleBtn) addState(toggleBtn, 'open');
 
         if (isTopMode) {
@@ -175,7 +184,8 @@
                 accMenu.classList.add('nds-peek');
             }
             if (toggleBtn) clearState(toggleBtn);
-            if (contentLayout) clearState(contentLayout);
+            // Hide backdrop using API
+            if (window.NDSBackdrop) window.NDSBackdrop.hide();
             animationTarget.removeEventListener('transitionend', handleTransitionEnd);
         };
 

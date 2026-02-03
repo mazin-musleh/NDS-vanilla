@@ -22,6 +22,7 @@
 /* @use 'base'; */ /* Moved to critical CSS */
 
 @use 'components/avatar';  /* Moved to critical CSS */
+@use 'components/backdrop';
 @use 'components/buttons'; /* Moved to critical CSS */
 @use 'components/cards';
 @use 'components/modal';

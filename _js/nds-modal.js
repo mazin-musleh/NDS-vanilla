@@ -1,6 +1,6 @@
 /**
  * NDS Modal Component
- * Simple modal dialog with backdrop overlay
+ * Simple modal dialog with backdrop overlay using unified NDSBackdrop API
  *
  * Usage:
  * 1. Button trigger: <button data-modal-target="myModal">Open</button>
@@ -13,7 +13,6 @@
 
   // State
   let activeModal = null;
-  let scrollY = 0;
 
   /**
    * Simple focus trap handler
@@ -46,45 +45,43 @@
    * Open modal by ID or element
    */
   function open(target) {
-    const backdrop = typeof target === 'string'
+    // Get modal element
+    const modal = typeof target === 'string'
       ? document.getElementById(target)
-      : target.closest?.('.nds-modal-backdrop') || target;
+      : target;
 
-    if (!backdrop) return;
+    if (!modal || !modal.classList.contains('nds-modal')) return;
 
-    // Store scroll position and lock body
-    scrollY = window.pageYOffset;
-    document.body.style.top = `-${scrollY}px`;
-    document.body.classList.add('nds-modal-active');
-
-    // Show backdrop
-    backdrop.style.display = 'flex';
-    backdrop.offsetHeight; // Force reflow
-
-    const modal = backdrop.querySelector('.nds-modal');
-
-    // Remove hidden attribute from modal
-    if (modal) {
-      modal.removeAttribute('hidden');
+    // Close existing modal if any
+    if (activeModal) {
+      close();
     }
 
-    // Trigger animation
+    // Show backdrop
+    window.NDSBackdrop.show({
+      zIndex: 1100,
+      onClick: () => close()
+    });
+
+    // Show modal
+    modal.removeAttribute('hidden');
+    modal.setAttribute('aria-hidden', 'false');
+
+    // Force reflow to ensure initial state is painted before transition
+    modal.offsetHeight;
+
+    // Use requestAnimationFrame to trigger animation
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        backdrop.classList.add('nds-modal-open');
-        backdrop.setAttribute('aria-modal', 'true');
-
-        if (modal) {
-          modal.setAttribute('aria-hidden', 'false');
-          modal.dispatchEvent(new CustomEvent('nds-modal-opened', { bubbles: true }));
-        }
-
-        // Enable focus trap
-        document.addEventListener('keydown', trapFocus);
+        modal.setAttribute('data-state', 'open');
+        modal.dispatchEvent(new CustomEvent('nds-modal-opened', { bubbles: true }));
       });
     });
 
-    activeModal = backdrop;
+    // Enable focus trap
+    document.addEventListener('keydown', trapFocus);
+
+    activeModal = modal;
   }
 
   /**
@@ -93,36 +90,28 @@
   function close() {
     if (!activeModal) return;
 
-    const modal = activeModal.querySelector('.nds-modal');
+    const modal = activeModal;
 
     // Disable focus trap
     document.removeEventListener('keydown', trapFocus);
 
-    // Remove animation class
-    activeModal.classList.remove('nds-modal-open');
-    document.body.classList.remove('nds-modal-active');
-    document.body.style.top = '';
-
-    // Restore scroll
-    window.scrollTo(0, scrollY);
-
-    // Update ARIA
-    activeModal.setAttribute('aria-modal', 'false');
-    if (modal) {
-      modal.setAttribute('aria-hidden', 'true');
-      modal.dispatchEvent(new CustomEvent('nds-modal-closed', { bubbles: true }));
+    // Blur any focused element inside the modal to prevent aria-hidden warning
+    if (document.activeElement && modal.contains(document.activeElement)) {
+      document.activeElement.blur();
     }
 
-    // Reset display and add hidden attribute after animation
-    const backdrop = activeModal;
+    // Trigger closing animation
+    modal.setAttribute('data-state', 'closing');
+    modal.setAttribute('aria-hidden', 'true');
+
+    // Hide backdrop
+    window.NDSBackdrop.hide();
+
+    // Hide modal after animation
     setTimeout(() => {
-      if (!backdrop.classList.contains('nds-modal-open')) {
-        backdrop.style.display = '';
-        // Add hidden attribute back to modal
-        if (modal) {
-          modal.setAttribute('hidden', '');
-        }
-      }
+      modal.setAttribute('hidden', '');
+      modal.removeAttribute('data-state');
+      modal.dispatchEvent(new CustomEvent('nds-modal-closed', { bubbles: true }));
     }, 300);
 
     activeModal = null;
@@ -133,6 +122,12 @@
    */
   function init() {
     if (document.body.hasAttribute('data-nds-modal-initialized')) return;
+
+    // Ensure NDSBackdrop is available
+    if (!window.NDSBackdrop) {
+      console.error('NDSModal requires NDSBackdrop API. Please include nds-backdrop.js first.');
+      return;
+    }
 
     // Trigger buttons
     document.addEventListener('click', (e) => {
@@ -152,14 +147,7 @@
       }
     });
 
-    // Backdrop clicks
-    document.addEventListener('click', (e) => {
-      if (e.target.classList.contains('nds-modal-backdrop')) {
-        close();
-      }
-    });
-
-    // ESC key
+    // ESC key handling is now in backdrop, but keep this for additional modal-specific behavior
     document.addEventListener('keydown', (e) => {
       if ((e.key === 'Escape' || e.key === 'Esc') && activeModal) {
         e.preventDefault();

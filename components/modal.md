@@ -43,9 +43,8 @@ direction: ltr
                             <span class="label">Open Modal</span>
                         </button>
                         <!-- Demo Modal -->
-                        <div class="nds-modal-backdrop" id="modal-basic-demo">
-                            <div class="nds-modal nds-card nds-stroke" role="dialog" aria-labelledby="modal-basic-title"
-                                aria-hidden="true" hidden>
+                        <div id="modal-basic-demo" class="nds-modal nds-card nds-stroke" role="dialog" aria-labelledby="modal-basic-title"
+                            aria-hidden="true" hidden>
                                 <div class="nds-card-header">
                                     <span class="nds-featured-icon nds-neutral nds-circle">
                                         <i class="hgi hgi-stroke hgi-information-circle icon"></i>
@@ -91,7 +90,6 @@ direction: ltr
                                     </button>
                                 </div>
                             </div>
-                        </div>
                     </div>
 
 
@@ -120,9 +118,8 @@ direction: ltr
                                         <span class="label">Open Modal</span>
                                     </button>
 
-                                    <!-- Modal Backdrop -->
-                                    <div class="nds-modal-backdrop" id="modal-example">
-                                        <div class="nds-modal nds-card nds-stroke" role="dialog" aria-labelledby="modal-title" aria-hidden="true" hidden>
+                                    <!-- Modal Dialog -->
+                                    <div id="modal-example" class="nds-modal nds-card nds-stroke" role="dialog" aria-labelledby="modal-title" aria-hidden="true" hidden>
                                             <!-- Card Header with Close Button -->
                                             <div class="nds-card-header">
                                                 <span class="nds-featured-icon nds-neutral nds-circle">
@@ -148,7 +145,6 @@ direction: ltr
                                                     <span class="label">Cancel</span>
                                                 </button>
                                             </div>
-                                        </div>
                                     </div>
                                 </code>
                             </div>
