@@ -346,7 +346,7 @@
 
             // In minimal mode, only check overflow when nav is open
             if (state.isMinimal && !DOM.collapse?.classList.contains('show')) {
-                DOM.primary.classList.remove('hasMore', 'atEnd');
+                DOM.primary.classList.remove('hasMore', 'atStart', 'atEnd');
                 return;
             }
 
@@ -400,7 +400,7 @@
             DOM.primary.classList.toggle('hasMore', hasOverflow);
 
             if (!hasOverflow) {
-                DOM.primary.classList.remove('atEnd');
+                DOM.primary.classList.remove('atStart', 'atEnd');
             } else {
                 requestAnimationFrame(() => this.checkEnd());
             }
@@ -409,15 +409,18 @@
         checkEnd() {
             if (!DOM.primary?.classList.contains('hasMore')) return;
 
-            let atEnd;
+            let atStart, atEnd;
             if (state.isMinimal) {
                 const { scrollTop, scrollHeight, clientHeight } = DOM.primary;
+                atStart = scrollTop <= 1;
                 atEnd = scrollTop + clientHeight >= scrollHeight - 1;
             } else {
                 const { scrollLeft, scrollWidth, clientWidth } = DOM.primary;
                 const max = scrollWidth - clientWidth;
+                atStart = Math.abs(scrollLeft) <= 2;
                 atEnd = max <= 1 || Math.abs(scrollLeft) >= max - 2;
             }
+            DOM.primary.classList.toggle('atStart', atStart);
             DOM.primary.classList.toggle('atEnd', atEnd);
         }
     };

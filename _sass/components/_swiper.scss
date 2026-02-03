@@ -195,6 +195,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap; 
     gap: var(--spacing-lg);
 }
 
@@ -227,6 +228,7 @@
     justify-content: space-between;
     margin-inline: calc(var(--nds-viewport-padding) + var(--spacing-xl));
     margin-top: var(--spacing-md);
+    gap: var(--spacing-xl);
 
     .nds-swiper-buttons {
         display: flex;

@@ -12,7 +12,7 @@
 .nds-sideMenu {
     --drawer-max-height: calc(100svh - var(--nds-nav-height) - var(--spacing-xl));
     --btn-width: 40px;
-    --_toggle-height: var(--toggle-height, 40px);
+    --_toggle-height: var(--toggle-height, var(--nds-sideMenu-toggle-height));
     width: var(--nds-sideMenu-width);
     min-width: var(--nds-sideMenu-width);
     background-color: var(--background-white);
@@ -30,9 +30,6 @@
     --_toggle-transform: var(--toggle-transform, unset);
     --_toggle-pos: var(--toggle-pos, 10svh);
     display: none;
-    transform: var(--_toggle-transform);
-    transition: transform var(--nds-transition);
-    
 }
 
 /* ========================================
@@ -81,7 +78,7 @@
         border-radius: 0 !important;
         border-top: 0;
         border-bottom: 0;
-        
+
     }
 
     // ========================================
@@ -90,26 +87,28 @@
     .contentLayout:not(.topSubMenu) .nds-sideMenu {
 
         // RTL: slide out to the right
-            transform: translateX(100%);
-            @include ltr {
-                // LTR: slide out to the left
-                transform: translateX(-100%);
-            }
+        transform: translateX(100%);
+
+        @include ltr {
+            // LTR: slide out to the left
+            transform: translateX(-100%);
+        }
 
         // Open state: slide in to on-screen position
         &[data-state~="open"] {
-            transform: translateX(0px)!important;
+            transform: translateX(0px) !important;
             transition: transform var(--nds-transition);
         }
 
         // Closing state: slide back to off-screen position
         &[data-state~="closing"] {
             // RTL: slide out to the right
-            transform: translateX(100%)!important;
+            transform: translateX(100%) !important;
             transition: transform var(--nds-transition);
+
             @include ltr {
                 // LTR: slide out to the left
-                transform: translateX(-100%)!important;
+                transform: translateX(-100%) !important;
             }
         }
     }
@@ -175,9 +174,12 @@
         --toggle-height: var(--btn-height);
 
         & #sideMenuToggle {
+
+            transform: var(--_toggle-transform);
+            transition: transform var(--nds-transition);
             --btn-indicator-size: 3px;
             @include btn-indicator('v');
-            
+
 
 
             &::before {
@@ -194,7 +196,7 @@
             &.nds-peek {
 
 
-                
+
 
                 body[data-font-loaded*="hgi-stroke-rounded"] i {
                     opacity: 1;
@@ -216,7 +218,6 @@
                         opacity: 0;
                         display: block;
                         position: absolute;
-                        inset-inline-end: -20px;
                     }
 
                     i {
@@ -252,8 +253,8 @@
             #sideMenuToggle {
                 --btn-width: 100%;
                 --btn-bg: var(--background-white);
-                --btn-height: var(--_toggle-height);
                 --btn-indicator-size: 3px;
+                --btn-height: var(--_toggle-height);
                 max-width: var(--nds-content-MaxWidth, 1280px);
                 margin: 0 auto;
                 padding: 0 var(--nds-viewport-padding, 32px);
