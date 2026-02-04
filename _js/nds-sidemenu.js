@@ -53,7 +53,7 @@
     };
 
     function initializeActiveStates(accMenu) {
-        accMenu.querySelectorAll("li.active").forEach(activeItem => {
+        accMenu.querySelectorAll('li[data-state~="active"]').forEach(activeItem => {
             let current = activeItem;
             while (current && current !== accMenu) {
                 if (current.classList.contains("has-sub")) {
@@ -129,26 +129,41 @@
         });
     }
 
-    // Set --drawer-max-height to full viewport height minus visible header
-    const updateDrawerMaxHeight = (accMenu) => {
+    // Set --drawer-max-height to full viewport height minus visible header content
+    // Only applies to slider side menu mode, not top mode
+    const updateDrawerMaxHeight = (accMenu, isTopMode) => {
+        // Only update for slider mode (not top mode)
+        if (isTopMode) return;
+
         const drawer = accMenu.querySelector('.nds-drawer');
         if (!drawer) return;
 
         const nav = document.getElementById('ndsMainNav');
-        const visibleHeader = nav ? Math.max(0, nav.getBoundingClientRect().bottom) : 0;
+        const topbar = document.querySelector('.nds-topbar');
+
+        const navBottom = nav ? Math.max(0, nav.getBoundingClientRect().bottom) : 0;
+        const topbarBottom = topbar ? Math.max(0, topbar.getBoundingClientRect().bottom) : 0;
+
+        // Take the maximum bottom position of header elements
+        const visibleHeader = Math.max(navBottom, topbarBottom);
+
+        // Set top padding to match visible header height
+        accMenu.style.paddingTop = visibleHeader + 'px';
+
+        // Set drawer max height accounting for visible header
         const availableHeight = window.innerHeight - visibleHeader;
         drawer.style.setProperty('--drawer-max-height', Math.max(availableHeight, 100) + 'px');
     };
 
     // Helper: Open menu for both modes
     const openMenu = (accMenu, animationTarget, toggleBtn, contentLayout, isTopMode) => {
-        // Set drawer max height based on available space
-        updateDrawerMaxHeight(accMenu);
+        // Set drawer max height based on available space (slider mode only)
+        updateDrawerMaxHeight(accMenu, isTopMode);
 
         // Show backdrop and set toggle button state for all modes
         if (window.NDSBackdrop) {
             window.NDSBackdrop.show({
-                zIndex: 997,
+                zIndex: isTopMode ? 997 : 998, // Top mode: 997, Slide menu: 998
                 onClick: () => {
                     if (hasState(animationTarget, 'open')) {
                         closeMenu(accMenu, animationTarget, toggleBtn, contentLayout, isTopMode);
@@ -198,9 +213,10 @@
                 accMenu.classList.add('nds-peek');
             }
             if (toggleBtn) clearState(toggleBtn);
-            // Clear dynamic drawer max height
+            // Clear dynamic drawer max height and padding (slider mode only)
             const drawer = accMenu.querySelector('.nds-drawer');
             if (drawer) drawer.style.removeProperty('--drawer-max-height');
+            if (!isTopMode) accMenu.style.removeProperty('padding-top');
             // Hide backdrop using API
             if (window.NDSBackdrop) window.NDSBackdrop.hide();
             animationTarget.removeEventListener('transitionend', handleTransitionEnd);
@@ -320,7 +336,7 @@
         const isTopMode = isTopSubMenuMode(accMenu);
 
         // Find active item, or use first item as fallback
-        const activeItem = accMenu.querySelector('li.active .nds-btn .label');
+        const activeItem = accMenu.querySelector('li[data-state~="active"] .nds-btn .label');
         const firstItem = accMenu.querySelector('.nds-drawer-list > li .nds-btn .label');
         const menuLabel = activeItem || firstItem;
 
@@ -412,6 +428,9 @@
         setupKeyboardEvents(accMenu);
         updateToggleLabel(accMenu);
         setupScrollPeek();
+
+        // Remove hidden attribute from trigger on init (drawer handled by loader)
+        if (toggleBtn) toggleBtn.removeAttribute('hidden');
 
         // Close menu when window width changes
         let previousWidth = window.innerWidth;

@@ -116,22 +116,20 @@
         }
     }
 
-    .nds-sideMenu>nav.nds-drawer {
-        margin-top: calc(var(--_toggle-height) * -1) !important;
-    }
+
 
     /* Side Menu Toggle Button */
-    #sideMenuToggle {
+    #sideMenuToggle:not([hidden]) {
         --btn-size: 40px;
         border: unset;
         outline: none;
         border-radius: var(--radius-sm) 0 0 var(--radius-sm);
-        position: sticky;
+        position: fixed;
         right: 0;
         display: flex;
         justify-content: center;
         top: calc(var(--nds-nav-height) + var(--spacing-md));
-        --toggle-transform: translate(calc((var(--nds-sideMenu-width) - var(--spacing-md)) * -1), var(--_toggle-pos));
+        --toggle-transform: translate(calc((var(--nds-sideMenu-width)) * -1), var(--_toggle-pos));
         box-shadow: var(--shadow-md);
 
     }
@@ -159,7 +157,7 @@
         #sideMenuToggle {
             right: unset;
             left: 0;
-            --toggle-transform: translate(calc(var(--nds-sideMenu-width) - var(--spacing-md)), var(--_toggle-pos));
+            --toggle-transform: translate(calc(var(--nds-sideMenu-width)), var(--_toggle-pos));
             border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
         }
     }
@@ -208,11 +206,11 @@
 
 
                 &:not([data-state="open"]) {
-                    --toggle-transform: translate(calc((var(--nds-sideMenu-width) - var(--spacing-md) - var(--btn-width)/1.5) * -1), var(--_toggle-pos));
+                    --toggle-transform: translate(calc((var(--nds-sideMenu-width) - var(--btn-width)/1.5) * -1), var(--_toggle-pos));
                     --btn-indicator-size: 5px;
 
                     @include ltr {
-                        --toggle-transform: translate(calc(var(--nds-sideMenu-width) - var(--spacing-md) - var(--btn-width)/1.5), var(--_toggle-pos));
+                        --toggle-transform: translate(calc(var(--nds-sideMenu-width)  - var(--btn-width)/1.5), var(--_toggle-pos));
                     }
 
                     .label {
@@ -283,7 +281,6 @@
                 background-color: var(--background-white);
                 box-shadow: var(--shadow-md);
                 padding: var(--spacing-md);
-                padding-top: var(--_toggle-height);
                 z-index: 2;
                 border-radius: 0 0 var(--radius-md) var(--radius-md);
                 transform: translateY(-110%);

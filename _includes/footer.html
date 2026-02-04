@@ -5,13 +5,13 @@
 
     <div class="nds-section-wrapper">
         {% if footer_data.columns and footer_data.columns.size > 0 %}
-        <nav class="nds-footer-drawer nds-drawer nds-divided nds-oncolor nds-md" data-always-open-on="tablet">
+        <nav class="nds-footer-drawer nds-drawer nds-divided nds-oncolor" data-always-open-on="tablet">
             <ul class="nds-drawer-list nds-footer-content">
                 {% for column in footer_data.columns %}
                 {% if column.mobile_apps %}
                 <!-- Mobile App section -->
                 <li class="nds-footer-app-item">
-                    <button class="nds-btn nds-transparent nds-oncolor nds-menu-btn">
+                    <button class="list-header nds-btn nds-transparent nds-oncolor nds-menu-btn">
                         <span class="label">{{ column.heading }}</span>
                     </button>
                     <ul>
@@ -54,7 +54,7 @@
                 {% else %}
                 <!-- Combined column: supports links, social_icons, or both -->
                 <li {% if column.social_icons %}class="nds-footer-contact-item"{% endif %}>
-                    <button class="nds-btn nds-transparent nds-oncolor nds-menu-btn">
+                    <button class="list-header nds-btn nds-transparent nds-oncolor nds-menu-btn">
                         <span class="label">{{ column.heading }}</span>
                     </button>
                     <ul>
@@ -65,7 +65,7 @@
                             {% unless link.url contains "http" or link.url contains "mailto:" or link.url contains "tel:" or link.url contains "#" %}
                             {% assign url_output = link.url | relative_url %}
                             {% endunless %}
-                            <a class="nds-btn nds-transparent nds-oncolor nds-indicator nds-md" href="{{ url_output }}" {% if link.target %} target="{{ link.target }}" {% endif %}>
+                            <a class="nds-btn nds-transparent nds-oncolor nds-indicator" href="{{ url_output }}" {% if link.target %} target="{{ link.target }}" {% endif %}>
                                 {% if link.icon %}<i class="hgi hgi-stroke {{ link.icon }} icon"></i>{% endif %}
                                 <span class="label">{{ link.label }}</span>
                             </a>
@@ -76,7 +76,7 @@
                         <li class="nds-footer-social-wrapper">
                             <div class="nds-footer-social-icons">
                                 {% for social in column.social_icons %}
-                                <a class="nds-btn nds-secondary-outline nds-oncolor nds-md nds-icon-only"
+                                <a class="nds-btn nds-secondary-outline nds-oncolor nds-icon-only"
                                     href="{{ social.url }}" target="_blank" aria-label="{{ social.label }}">
                                     <i class="hgi hgi-stroke {{ social.icon }}"></i>
                                 </a>
@@ -102,7 +102,7 @@
                     {% unless link.url contains "http" or link.url contains "mailto:" or link.url contains "#" %}
                     {% assign url_output = link.url | relative_url %}
                     {% endunless %}
-                    <a class="nds-btn nds-transparent nds-oncolor nds-md" href="{{ url_output }}"><span class="label">{{
+                    <a class="nds-btn nds-transparent nds-oncolor" href="{{ url_output }}"><span class="label">{{
                             link.label }}</span></a>
                     {% unless forloop.last %}<span class="nds-footer-separator">|</span>{% endunless %}
                     {% endfor %}
