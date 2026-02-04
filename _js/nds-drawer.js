@@ -21,7 +21,6 @@
             closed: ''
         },
         classes: {
-            active: 'active',
             hasMore: 'hasMore',
             atEnd: 'atEnd'
         },
@@ -314,7 +313,7 @@
     // ==============================================
 
     function initActiveStates(drawer) {
-        drawer.querySelectorAll(`.${CONFIG.classes.active}`).forEach(activeItem => {
+        drawer.querySelectorAll('li[data-state~="active"]').forEach(activeItem => {
             let parent = activeItem.closest('ul')?.closest('li');
 
             while (parent && drawer.contains(parent)) {

@@ -12,6 +12,7 @@
   let currentConfig = null;
   let scrollY = 0;
   let isActive = false;
+  let activeCount = 0; // Track how many components are using the backdrop
 
   /**
    * Initialize backdrop element (created once)
@@ -64,13 +65,8 @@
   function show(config = {}) {
     initBackdrop();
 
-    // If already active, close it first
-    if (isActive) {
-      hide();
-    }
-
     // Set config defaults
-    currentConfig = {
+    const newConfig = {
       zIndex: config.zIndex || 1100,
       onClick: config.onClick || null,
       onShow: config.onShow || null,
@@ -79,6 +75,36 @@
       escapeClose: config.escapeClose !== false,
       clickToClose: config.clickToClose !== false
     };
+
+    // If already active, just update the configuration
+    if (isActive) {
+      // Increment counter for new component using backdrop
+      activeCount++;
+
+      // Remove old event listeners
+      backdropElement.removeEventListener('click', handleClick);
+      document.removeEventListener('keydown', handleEscape);
+
+      // Update config
+      currentConfig = newConfig;
+
+      // Re-apply styles with new config
+      applyStyles(currentConfig);
+
+      // Re-attach event listeners with new config
+      if (currentConfig.clickToClose) {
+        backdropElement.addEventListener('click', handleClick);
+      }
+      if (currentConfig.escapeClose) {
+        document.addEventListener('keydown', handleEscape);
+      }
+
+      return;
+    }
+
+    // First time showing - set up everything
+    currentConfig = newConfig;
+    activeCount = 1; // Initialize counter
 
     // Prevent body scroll
     if (currentConfig.preventScroll) {
@@ -121,6 +147,14 @@
   function hide() {
     if (!isActive || !backdropElement) return;
 
+    // Decrement counter
+    activeCount--;
+
+    // If other components are still using the backdrop, don't hide it
+    if (activeCount > 0) {
+      return;
+    }
+
     // Remove event listeners
     backdropElement.removeEventListener('click', handleClick);
     document.removeEventListener('keydown', handleEscape);
@@ -148,6 +182,7 @@
       }
 
       currentConfig = null;
+      activeCount = 0; // Reset counter
     }, 300); // Match CSS transition
   }
 
