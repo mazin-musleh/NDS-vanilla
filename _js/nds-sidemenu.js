@@ -129,8 +129,22 @@
         });
     }
 
+    // Set --drawer-max-height to full viewport height minus visible header
+    const updateDrawerMaxHeight = (accMenu) => {
+        const drawer = accMenu.querySelector('.nds-drawer');
+        if (!drawer) return;
+
+        const nav = document.getElementById('ndsMainNav');
+        const visibleHeader = nav ? Math.max(0, nav.getBoundingClientRect().bottom) : 0;
+        const availableHeight = window.innerHeight - visibleHeader;
+        drawer.style.setProperty('--drawer-max-height', Math.max(availableHeight, 100) + 'px');
+    };
+
     // Helper: Open menu for both modes
     const openMenu = (accMenu, animationTarget, toggleBtn, contentLayout, isTopMode) => {
+        // Set drawer max height based on available space
+        updateDrawerMaxHeight(accMenu);
+
         // Show backdrop and set toggle button state for all modes
         if (window.NDSBackdrop) {
             window.NDSBackdrop.show({
@@ -184,6 +198,9 @@
                 accMenu.classList.add('nds-peek');
             }
             if (toggleBtn) clearState(toggleBtn);
+            // Clear dynamic drawer max height
+            const drawer = accMenu.querySelector('.nds-drawer');
+            if (drawer) drawer.style.removeProperty('--drawer-max-height');
             // Hide backdrop using API
             if (window.NDSBackdrop) window.NDSBackdrop.hide();
             animationTarget.removeEventListener('transitionend', handleTransitionEnd);
