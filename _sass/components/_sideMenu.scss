@@ -28,7 +28,7 @@
 
 #sideMenuToggle {
     --_toggle-transform: var(--toggle-transform, unset);
-    --_toggle-pos: var(--toggle-pos, 10svh);
+    --_toggle-pos: var(--toggle-pos, 40svh);
     display: none;
 }
 
@@ -85,6 +85,9 @@
     // SLIDER MODE STATES - Horizontal sliding (tablet/mobile)
     // ========================================
     .contentLayout:not(.topSubMenu) .nds-sideMenu {
+        position: fixed;
+        top: 0;
+        bottom: 0;
 
         // RTL: slide out to the right
         transform: translateX(100%);
