@@ -1,0 +1,16 @@
+# Default hero action buttons
+# Pages can override by setting `heroaction: "heroaction-custom"` in front matter
+# to load _data/heroaction-custom.yml, or define `hero_actions` inline.
+#
+# Fields:
+#   label:          Button text (required)
+#   url:            Link URL (required)
+#   style:          Button variant class (default: nds-primary)
+#   icon:           HGI icon name, e.g. "hgi-plus-sign" (optional)
+#   icon_position:  "leading" or "trailing" (default: leading)
+#   aria_label:     Custom aria-label (optional)
+#   target:         Link target, e.g. "_blank" (optional)
+
+# - label: "Start"
+#   url: "/university/announcement"
+#   style: "nds-primary"

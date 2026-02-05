@@ -57,11 +57,11 @@
             gap: var(--gap, var(--spacing-6xl));
         }
 
-        &:not(.nds-horizontal) .nds-section-head:not(.nds-center)>.nds-section-action {
+        /* &:not(.nds-horizontal) .nds-section-head:not(.nds-center)>.nds-section-action {
             position: absolute;
             top: 0;
             inset-inline-end: 0;
-        }
+        } */
     }
 
 
@@ -254,7 +254,7 @@ main {
    ======================================== */
 
 @include tablet(max) {
-    .contentLayout .mainContent .content-section .container {
+    .contentLayout .mainContent .nds-content-section .container {
         padding-left: var(--nds-viewport-padding);
         padding-right: var(--nds-viewport-padding);
     }
@@ -302,6 +302,17 @@ main {
     }
 }
 
+.nds-content-section,
+.nds-hero-section {
+    /* Section title and description overridable tokens */
+    --_section-title-FS: var(--section-title-FS, var(--nds-display-clamp-md-FS, clamp(24px, 3vw, 36px)));
+    --_section-title-LH: var(--section-title-LH, var(--nds-display-clamp-md-LH, clamp(30px, 3.67vw, 44px)));
+    --_section-title-MB: var(--section-title-MB, var(--nds-display-clamp-md-MB, clamp(7.5px, 0.9175vw, 11px)));
+    --_section-description-FS: var(--section-description-FS, var(--nds-text-clamp-lg-FS, clamp(16px, 1.5vw, 18px)));
+    --_section-description-LH: var(--section-description-LH, var(--nds-text-clamp-lg-LH, clamp(24px, 2.17vw, 26px)));
+    --_section-description-MB: var(--section-description-MB, var(--spacing-2xl, 20px));
+}
+
 .nds-content-section {
     /* Section background, shadow, and border overridable tokens */
     --_section-bg: var(--section-bg, var(--background-white, #fff));
@@ -313,14 +324,6 @@ main {
     box-shadow: var(--_section-shadow);
     border: var(--_section-border);
     border-radius: var(--_section-border-radius);
-
-    /* Section title and description overridable tokens */
-    --_section-title-FS: var(--section-title-FS, var(--nds-display-clamp-md-FS, clamp(24px, 3vw, 36px)));
-    --_section-title-LH: var(--section-title-LH, var(--nds-display-clamp-md-LH, clamp(30px, 3.67vw, 44px)));
-    --_section-title-MB: var(--section-title-MB, var(--nds-display-clamp-md-MB, clamp(7.5px, 0.9175vw, 11px)));
-    --_section-description-FS: var(--section-description-FS, var(--nds-text-clamp-lg-FS, clamp(16px, 1.5vw, 18px)));
-    --_section-description-LH: var(--section-description-LH, var(--nds-text-clamp-lg-LH, clamp(24px, 2.17vw, 26px)));
-    --_section-description-MB: var(--section-description-MB, var(--spacing-2xl, 20px));
 
     /* Smaller sizes for cardView layout */
     .contentLayout.cardView & {
@@ -383,6 +386,9 @@ main {
 
 
 .nds-section-head {
+    display: grid !important;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto 1fr;
     position: relative;
     min-height: 40px;
 
@@ -425,6 +431,8 @@ main {
 }
 
 .nds-section-title {
+    grid-column: 1;
+    grid-row: 1;
     font-size: var(--_section-title-FS);
     line-height: var(--_section-title-LH);
     letter-spacing: -0.02rem;
@@ -443,6 +451,8 @@ main {
 }
 
 .nds-section-description {
+    grid-column: 1;
+    grid-row: 2;
     font-size: var(--_section-description-FS);
     line-height: var(--_section-description-LH);
     color: var(--text-default, #161616);
@@ -461,6 +471,31 @@ main {
     }
 }
 
+.nds-section-action {
+    grid-column: 2;
+    grid-row: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: var(--spacing-sm);
+
+    @include desktop(min) {
+        >.nds-btn {
+            --btn-width: 100%;
+
+            .label {
+                text-align: center;
+            }
+        }
+    }
+
+    @include tablet(max) {
+        flex-direction: row;
+        grid-column: 1;
+        grid-row: unset;
+    }
+}
 
 
 .nds-readMore {
@@ -546,5 +581,10 @@ main {
     .nds-grid {
         row-gap: var(--spacing-6xl);
     }
+
+    .nds-section-action {
+        grid-row: unset;
+    }
+
 
 }
