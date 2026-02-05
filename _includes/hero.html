@@ -2,27 +2,41 @@
 {% if hero_type == 'sub' %}
 <section class="nds-hero-section sub {{ page.hero_style }}" aria-label="قسم العرض الرئيسي"
     style="--hero_image: url('{{ page.hero_image_sub | default: site.hero_image_sub | relative_url }}');">
-    <div class="nds-section-content">
-        <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
-            <ol class="nds-breadcrumb">
-                {% assign home_text = 'الرئيسية' %}{% if page.lang == 'en' %}{% assign home_text = 'Home' %}{% endif %}
-                <li><a href="{{ page.breadcrumb_root_url | default: '/' | relative_url }}">{{ page.breadcrumb_root |
-                        default: home_text }}</a></li>
-                {% if page.breadcrumb %}
-                {% for crumb in page.breadcrumb %}
-                <li><a href="{% if crumb.first %}{{ crumb[1] | relative_url }}{% else %}#{% endif %}">{% if crumb.first
-                        %}{{ crumb[0] }}{% else %}{{ crumb }}{% endif %}</a></li>
-                {% endfor %}
-                {% endif %}
-                <li aria-current="page">{{ page.title }}</li>
-            </ol>
-        </nav>
-        <div class="nds-shareablePage">
-            <h1 class="nds-section-title">{{ page.hero_title | default: site.hero_title }}</h1>
-            <p class="nds-section-description">{{ page.hero_description | default: site.hero_description }}</p>
+    <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb" hidden>
+        <ol class="nds-breadcrumb">
+            {% assign home_text = 'الرئيسية' %}{% if page.lang == 'en' %}{% assign home_text = 'Home' %}{% endif %}
+            <li><a href="{{ page.breadcrumb_root_url | default: '/' | relative_url }}">{{ page.breadcrumb_root |
+                    default: home_text }}</a></li>
+            {% if page.breadcrumb %}
+            {% for crumb in page.breadcrumb %}
+            <li><a href="{% if crumb.first %}{{ crumb[1] | relative_url }}{% else %}#{% endif %}">{% if crumb.first
+                    %}{{ crumb[0] }}{% else %}{{ crumb }}{% endif %}</a></li>
+            {% endfor %}
+            {% endif %}
+            <li aria-current="page">{{ page.title }}</li>
+        </ol>
+    </nav>
+    <div class="nds-section-head">
+        <h1 class="nds-section-title">{{ page.hero_title | default: site.hero_title }}</h1>
+        <p class="nds-section-description">{{ page.hero_description | default: site.hero_description }}</p>
+        <div class="nds-section-action">
+            {% if page.hero_actions %}
+            {% assign hero_actions = page.hero_actions %}
+            {% else %}
+            {% assign hero_action_file = page.heroaction | default: "heroaction" %}
+            {% assign hero_actions = site.data[hero_action_file] %}
+            {% endif %}
+            {% for action in hero_actions %}
+            <a class="nds-btn {{ action.style | default: 'nds-primary' }}" href="{{ action.url | relative_url }}"{% if action.aria_label %} aria-label="{{ action.aria_label }}"{% endif %}{% if action.target %} target="{{ action.target }}"{% endif %}>
+                {% if action.icon and action.icon_position != "trailing" %}<i class="hgi hgi-stroke {{ action.icon }} icon"></i>{% endif %}
+                <span class="label">{{ action.label }}</span>
+                {% if action.icon and action.icon_position == "trailing" %}<i class="hgi hgi-stroke {{ action.icon }} icon"></i>{% endif %}
+            </a>
+            {% endfor %}
             {% unless page.hide_share_page %}
             <div id="nds-sharePage" class="nds-dropmenu">
-                <button id="nds-sharePageBtn" class="nds-btn nds-subtle nds-dropmenu-trigger nds-md" aria-label="Share Page">
+                <button id="nds-sharePageBtn" class="nds-btn nds-secondary-outline nds-dropmenu-trigger"
+                    aria-label="Share Page">
                     <i class="hgi hgi-stroke hgi-share-01 icon"></i>
                     <span class="label">Share Page</span>
                 </button>
@@ -54,40 +68,36 @@
 </section>
 {% else %}
 {% comment %}
-    Determine hero sliders source:
-    1. Use page.hero_sliders if custom slides defined in page front matter
-    2. Use page.herosliders to specify which data file to load (e.g., "herosliders-about")
-    3. Fall back to site.herosliders config (default: "herosliders")
-    4. Load from site.data[hero_file_name]
+Determine hero sliders source:
+1. Use page.hero_sliders if custom slides defined in page front matter
+2. Use page.herosliders to specify which data file to load (e.g., "herosliders-about")
+3. Fall back to site.herosliders config (default: "herosliders")
+4. Load from site.data[hero_file_name]
 {% endcomment %}
 {% if page.hero_sliders %}
-    {% assign hero_sliders = page.hero_sliders %}
+{% assign hero_sliders = page.hero_sliders %}
 {% else %}
-    {% assign hero_file_name = page.herosliders | default: site.herosliders | default: "herosliders" %}
-    {% assign hero_sliders = site.data[hero_file_name] %}
+{% assign hero_file_name = page.herosliders | default: site.herosliders | default: "herosliders" %}
+{% assign hero_sliders = site.data[hero_file_name] %}
 {% endif %}
 
 <section class="nds-hero-section" aria-label="قسم العرض الرئيسي">
     <div class="nds-swiper nds-hero nds-full-width" style="--total: {{ hero_sliders | size }}">
         <div class="nds-swiper-wrapper">
             {% for slide in hero_sliders %}
-            <div class="nds-swiper-slide nds-content-grid"{% unless forloop.first %} hidden{% endunless %}>
+            <div class="nds-swiper-slide nds-content-grid" {% unless forloop.first %} hidden{% endunless %}>
                 <div class="nds-hero-image-wrapper nds-full-width"
                     style="--overlay:{{ slide.overlay | default: 0.7 }}; position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
                     {% if forloop.first %}
                     <img src="{{ slide.src_small | default: slide.src | relative_url }}"
                         srcset="{{ slide.src_small | default: slide.src | relative_url }} 600w, {{ slide.src | relative_url }} 1200w"
-                        sizes="100vw"
-                        class="nds-hero-image"
-                        alt=""
+                        sizes="100vw" class="nds-hero-image" alt=""
                         style="width: 100%; height: 100%; object-fit: cover; object-position: {{ slide.position | default: 'center center' }}; display: block;"
                         fetchpriority="high">
                     {% else %}
                     <img data-src="{{ slide.src_small | default: slide.src | relative_url }}"
                         data-srcset="{{ slide.src_small | default: slide.src | relative_url }} 600w, {{ slide.src | relative_url }} 1200w"
-                        sizes="100vw"
-                        class="nds-hero-image nds-swiper-lazy"
-                        alt=""
+                        sizes="100vw" class="nds-hero-image nds-swiper-lazy" alt=""
                         style="width: 100%; height: 100%; object-fit: cover; object-position: {{ slide.position | default: 'center center' }}; display: block;">
                     {% endif %}
                 </div>
@@ -106,8 +116,8 @@
         <div class="nds-swiper-pagination"></div>
         <button class="nds-btn nds-subtle nds-oncolor nds-icon-only nds-swiper-button-prev"
             aria-label="Previous slide"><i class="hgi hgi-stroke hgi-arrow-right-01 icon"></i></button>
-        <button class="nds-btn nds-subtle nds-oncolor nds-icon-only nds-swiper-button-next"
-            aria-label="Next slide"><i class="hgi hgi-stroke hgi-arrow-left-01 icon"></i></button>
+        <button class="nds-btn nds-subtle nds-oncolor nds-icon-only nds-swiper-button-next" aria-label="Next slide"><i
+                class="hgi hgi-stroke hgi-arrow-left-01 icon"></i></button>
     </div>
 </section>
 {% endif %}

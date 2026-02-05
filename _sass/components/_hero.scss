@@ -11,13 +11,82 @@
 
 .nds-hero-section {
   z-index: 998;
+
+  /* Hero uses larger title/description sizes via public section tokens */
+  --section-title-FS: var(--nds-display-clamp-lg-FS, 48px);
+  --section-title-LH: var(--nds-display-clamp-lg-LH, 60px);
+  --section-title-MB: var(--nds-display-clamp-lg-MB, 15px);
+  --section-description-FS: var(--nds-text-clamp-xl-FS, 20px);
+  --section-description-LH: var(--nds-text-clamp-xl-LH, 28px);
+
   img {
     pointer-events: none;
   }
 
+
   // ==============================================
   // HERO CONTENT CONTAINER
   // ==============================================
+
+  .nds-section-head {
+    /* height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+    max-width: var(--nds-content-MaxWidth);
+    margin: auto; */
+
+    .nds-section-title {
+      position: relative;
+    }
+
+    // ==============================================
+    // SHAREABLE PAGE FUNCTIONALITY
+    // ==============================================
+
+    &:has(.nds-section-action) {
+      /* display: block; */
+      width: 100%;
+      position: relative;
+
+   /*    .nds-section-title {
+        width: calc(100% - 160px);
+
+        @include tablet(max) {
+          width: calc(100% - 75px);
+        }
+      } */
+
+      #nds-sharePage {
+        display: block;
+/*         position: absolute;
+        top: 0;
+        inset-inline-end: 0; */
+      }
+    }
+  }
+
+  // ==============================================
+  // SUB VARIANT STYLES
+  // ==============================================
+
+  &.sub {
+    --section-title-FS: var(--nds-display-clamp-md-FS, 30px);
+    --section-title-LH: var(--nds-display-clamp-md-LH, 38px);
+    --section-title-MB: var(--nds-display-clamp-md-MB, 9.5px);
+    --section-description-FS: var(--nds-text-clamp-lg-FS, 16px);
+    --section-description-LH: var(--nds-text-clamp-lg-LH, 24px);
+  }
+
+  &.sub.flat {
+    .nds-section-head {
+      .nds-section-description {
+        color: var(--text-primary-paragraph);
+      }
+    }
+  }
 
   .nds-section-content {
     height: 100%;
@@ -28,85 +97,10 @@
     justify-content: center;
     max-width: var(--nds-content-MaxWidth);
     margin: auto;
-
-
-    // ==============================================
-    // HERO TITLE
-    // ==============================================
-
-    .nds-section-title {
-      font-size: var(--nds-display-clamp-lg-FS, 48px);
-      line-height: var(--nds-display-clamp-lg-LH, 60px);
-      margin-bottom: var(--nds-display-clamp-lg-MB, 15px);
-      letter-spacing: -0.02rem;
-      font-weight: 700;
-      position: relative;
-    }
-
-    // ==============================================
-    // HERO DESCRIPTION
-    // ==============================================
-
-    .nds-section-description {
-      font-size: var(--nds-text-clamp-xl-FS, 20px);
-      line-height: var(--nds-text-clamp-xl-LH, 28px);
-      max-width: var(--maxwidth-paragraph-max-width, 720px);
-    }
-
-    // ==============================================
-    // SHAREABLE PAGE FUNCTIONALITY
-    // ==============================================
-
-    .nds-shareablePage {
-      display: block;
-      width: 100%;
-      position: relative;
-
-      .nds-section-title {
-        width: calc(100% - 160px);
-
-        @include tablet(max) {
-          width: calc(100% - 75px);
-        }
-      }
-
-      #nds-sharePage {
-        display: block;
-        position: absolute;
-        top: 0;
-        inset-inline-end: 0;
-      }
-    }
-  }
-
-  // ==============================================
-  // SUB VARIANT STYLES
-  // ==============================================
-
-  &.sub {
-    .nds-section-content {
-
-      .nds-section-title {
-        font-size: var(--nds-display-clamp-sm-FS, 30px);
-        line-height: var(--nds-display-clamp-sm-LH, 38px);
-        margin-bottom: var(--nds-display-clamp-sm-MB, 9.5px);
-      }
-
-      .nds-section-description {
-        font-size: var(--nds-text-clamp-lg-FS, 16px);
-        line-height: var(--nds-text-clamp-lg-LH, 24px);
-      }
-    }
-  }
-
-  &.sub.flat {
-    .nds-section-content {
-      .nds-section-description {
-        color: var(--text-primary-paragraph);
-      }
-    }
   }
 }
+
+
 
 
 
@@ -119,12 +113,12 @@
 #nds-sharePage {
 
   // Share button styling
-  &Btn {
+  /* &Btn {
     background-color: var(--background-white, #fff);
     border: 1px solid var(--colors-neutral-300, #d2d6db);
     border-radius: var(--radius-md, 8px);
     box-shadow: var(--shadow-md);
-  }
+  }  */
 
   // Copied state for copy link button
   .nds-dropmenu-menu .copied {
@@ -146,10 +140,10 @@
 // RESPONSIVE BEHAVIOR
 // ==============================================
 
-@include tablet(max) {
+/* @include tablet(max) {
   #nds-sharePageBtn {
     .label {
       display: none;
     }
   }
-}
+}  */

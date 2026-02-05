@@ -114,7 +114,7 @@
 
 
         .nds-topbar>*,
-        .nds-hero-section .nds-section-content,
+        .nds-hero-section :is(.nds-section-head, .nds-section-content),
         .nds-footer {
             display: none;
         }
@@ -145,7 +145,7 @@
         /* Hero Section Base Styles */
         .nds-hero-section {
             width: 100%;
-            background-color: var(--background-sa-flag);
+            background-color: var(--background-sa-flag,#074c30);
             position: relative;
             background-position: 50% 50%;
         }
