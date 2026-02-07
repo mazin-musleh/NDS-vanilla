@@ -85,19 +85,24 @@
             this.init();
         }
 
-        setInitialSlidesPerView() {
-            // Read slides count directly from attributes and set CSS variable immediately
-            const width = window.innerWidth;
+        // ==============================================
+        // BREAKPOINT CALCULATION
+        // ==============================================
+
+        calculateSlidesPerView(width) {
             const max = parseInt(this.container.getAttribute('slides-max')) || 1;
             const mid = parseInt(this.container.getAttribute('slides-mid')) || 1;
             const min = parseInt(this.container.getAttribute('slides-min')) || 1;
 
-            let initial = min;
-            if (width >= 1280) {
-                initial = max;
-            } else if (width > 600) {
-                initial = mid;
-            }
+            if (width >= 960) return max;
+            if (width > 600) return mid;
+            return min;
+        }
+
+        setInitialSlidesPerView() {
+            // Read slides count directly from attributes and set CSS variable immediately
+            const width = window.innerWidth;
+            const initial = this.calculateSlidesPerView(width);
 
             // Set both CSS variable and instance property to prevent CLS
             this.container.style.setProperty('--slides', initial);
@@ -217,17 +222,9 @@
 
         updateSlidesPerView() {
             const width = window.innerWidth;
-            const max = parseInt(this.container.getAttribute('slides-max')) || 1;
-            const mid = parseInt(this.container.getAttribute('slides-mid')) || 1;
-            const min = parseInt(this.container.getAttribute('slides-min')) || 1;
             const peek = parseInt(this.container.getAttribute('peek')) || 0;
 
-            let newSlidesPerView = min;
-            if (width >= 1280) {
-                newSlidesPerView = max;
-            } else if (width > 600) {
-                newSlidesPerView = mid;
-            }
+            const newSlidesPerView = this.calculateSlidesPerView(width);
 
             // Only update if changed (prevents unnecessary recalculation during init)
             if (newSlidesPerView !== this.slidesPerView) {

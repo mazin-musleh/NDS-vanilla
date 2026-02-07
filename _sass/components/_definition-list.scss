@@ -10,6 +10,8 @@
 // ==============================================
 
 .nds-definition-list {
+    --_dl-icon-size: var(--dl-icon-size, 16px);
+    --_dl-icon-gap: var(--dl-icon-gap, var(--spacing-sm));
     display: flex;
     flex-direction: column;
     gap: var(--spacing-lg);
@@ -18,6 +20,11 @@
         display: grid;
         grid-template-columns: auto 1fr;
         height: 100%;
+
+        dd {
+            display: flex;
+            align-items: center;
+        }
     }
 
 }
@@ -49,7 +56,7 @@
 dt {
     display: flex;
     align-items: center;
-    gap: var(--spacing-sm);
+    gap: var(--_dl-icon-gap);
     font-size: var(--nds-text-clamp-lg-FS);
     color: var(--text-primary-paragraph);
     margin: 0;
@@ -57,6 +64,9 @@ dt {
     .icon {
         color: var(--text-primary);
         min-width: var(--nds-text-clamp-lg-FS);
+        width: var(--_dl-icon-size);
+        height: var(--_dl-icon-size);
+        font-size: var(--_dl-icon-size);
     }
 
 
@@ -72,12 +82,10 @@ dt {
 // ==============================================
 
 dd {
-    display: flex;
-    align-items: center;
     color: var(--text-secondary-paragraph);
 
     .nds-definition-list:not(.tableView) .nds-definition-item:has(> dt .icon) & {
-        padding-inline-start: calc(var(--spacing-sm) + var(--nds-text-lg-FS));
+        padding-inline-start: calc(var(--_dl-icon-size) + var(--_dl-icon-gap) + 2px);
     }
 }
 

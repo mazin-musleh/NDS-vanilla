@@ -12,12 +12,14 @@
         dgaDigitalStamp: document.querySelector('#dgaDigitalStamp'),
 
         get collapse() { return this.nav?.querySelector('#ndsNavCollapse'); },
+        get collapseContent() { return this.nav?.querySelector('.nds-collapse-content'); },
         get container() { return this.nav?.querySelector('.nds-nav-container'); },
         get primary() { return this.nav?.querySelector('.nds-nav-primary'); },
         get secondary() { return this.nav?.querySelector('.nds-nav-secondary'); },
         get minimal() { return this.nav?.querySelector('.nds-nav-minimal'); },
         get toggler() { return this.nav?.querySelector('.nds-mainNav-toggler'); },
-        get brand() { return this.nav?.querySelector('.nds-brand'); }
+        get brand() { return this.nav?.querySelector('.nds-brand'); },
+        get showMore() { return this.collapseContent?.querySelector('.showMore'); }
     };
 
     // ==============================================
@@ -387,13 +389,22 @@
                 const scrollWidth = DOM.primary.scrollWidth;
                 const clientWidth = DOM.primary.clientWidth;
 
+                console.log('Nav Overflow Check:', {
+                    scrollWidth,
+                    clientWidth,
+                    wasOverflowing
+                });
+
                 // Skip check if element hasn't been laid out yet (both dimensions are 0)
                 if (scrollWidth === 0 && clientWidth === 0) {
                     this.schedule('low', 50);
                     return;
                 }
 
+                // Simple check: does content overflow container?
+                // Don't subtract button width - flexbox handles layout
                 hasOverflow = scrollWidth > clientWidth;
+                console.log('Result:', { hasOverflow, willToggle: hasOverflow !== wasOverflowing });
             }
 
             // Remove hidden from collapse after primary nav settles (first check only)
@@ -411,6 +422,11 @@
             if (hasOverflow === wasOverflowing) return;
 
             DOM.primary.classList.toggle('hasMore', hasOverflow);
+
+            // Update max-width to account for showMore button
+            if (!state.isMinimal) {
+                updateNavMaxWidth();
+            }
 
             if (!hasOverflow) {
                 DOM.primary.classList.remove('atStart', 'atEnd');
@@ -483,9 +499,12 @@
             gap = parseFloat(containerStyles.gap || containerStyles.columnGap || 0) || 0;
         }
 
+        // Get showMore button width if visible
+        const showMoreW = DOM.showMore && DOM.primary?.classList.contains('hasMore') ? DOM.showMore.offsetWidth : 0;
+
         const constraint = Math.min(navW, containerW || 1280);
         const visibleCount = childStyles.filter(s => s.display !== 'none').length;
-        const used = brandW + secW + minW + padding + (gap * Math.max(0, visibleCount - 1));
+        const used = brandW + secW + minW + showMoreW + padding + (gap * Math.max(0, visibleCount - 1));
         const available = constraint - used;
         const newMax = available > 0 ? `${available}px` : '';
 
@@ -814,9 +833,11 @@
         if (!DOM.primary) return;
 
         // Show More button click
-        DOM.primary.addEventListener('click', (e) => {
+        // Button is now outside .nds-nav-primary, listen on parent container
+        const clickTarget = DOM.collapseContent || DOM.primary;
+        clickTarget.addEventListener('click', (e) => {
             const showMore = e.target.closest('.nds-nav-item.showMore');
-            if (!showMore || !DOM.primary.contains(showMore)) return;
+            if (!showMore) return;
 
             e.preventDefault();
             e.stopPropagation();

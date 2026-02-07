@@ -12,15 +12,17 @@
 .nds-hero-section {
   z-index: 998;
 
-  /* Hero uses larger title/description sizes via public section tokens */
-  --section-title-FS: var(--nds-display-clamp-lg-FS, 48px);
-  --section-title-LH: var(--nds-display-clamp-lg-LH, 60px);
-  --section-title-MB: var(--nds-display-clamp-lg-MB, 15px);
-  --section-description-FS: var(--nds-text-clamp-xl-FS, 20px);
-  --section-description-LH: var(--nds-text-clamp-xl-LH, 28px);
+  &:not(.sub) {
+    /* Hero uses larger title/description sizes via public section tokens */
+    --section-title-FS: var(--nds-display-clamp-lg-FS, 48px);
+    --section-title-LH: var(--nds-display-clamp-lg-LH, 60px);
+    --section-title-MB: var(--nds-display-clamp-lg-MB, 15px);
+    --section-description-FS: var(--nds-text-clamp-xl-FS, 20px);
+    --section-description-LH: var(--nds-text-clamp-xl-LH, 28px);
 
-  img {
-    pointer-events: none;
+    img {
+      pointer-events: none;
+    }
   }
 
 
@@ -29,14 +31,7 @@
   // ==============================================
 
   .nds-section-head {
-    /* height: 100%;
-    width: 100%;
-    display: flex;
-    align-items: flex-start;
-    flex-direction: column;
-    justify-content: center;
-    max-width: var(--nds-content-MaxWidth);
-    margin: auto; */
+    visibility: visible;
 
     .nds-section-title {
       position: relative;
@@ -47,23 +42,19 @@
     // ==============================================
 
     &:has(.nds-section-action) {
-      /* display: block; */
       width: 100%;
       position: relative;
 
-   /*    .nds-section-title {
-        width: calc(100% - 160px);
-
-        @include tablet(max) {
-          width: calc(100% - 75px);
+      /* .SLA,#nds-sharePageBtn{
+        --btn-size: 32px;
+        @include tablet(max){
+           --btn-height: 40px;
+           --btn-size: 40px;
         }
       } */
 
       #nds-sharePage {
         display: block;
-/*         position: absolute;
-        top: 0;
-        inset-inline-end: 0; */
       }
     }
   }
@@ -73,17 +64,27 @@
   // ==============================================
 
   &.sub {
-    --section-title-FS: var(--nds-display-clamp-md-FS, 30px);
-    --section-title-LH: var(--nds-display-clamp-md-LH, 38px);
-    --section-title-MB: var(--nds-display-clamp-md-MB, 9.5px);
-    --section-description-FS: var(--nds-text-clamp-lg-FS, 16px);
-    --section-description-LH: var(--nds-text-clamp-lg-LH, 24px);
+    --section-title-FS: var(--nds-display-clamp-md-FS, 36px);
+    --section-title-LH: var(--nds-display-clamp-md-LH, 44px);
+    --section-title-MB: var(--nds-display-clamp-md-MB, 11px);
   }
 
   &.sub.flat {
     .nds-section-head {
       .nds-section-description {
         color: var(--text-primary-paragraph);
+      }
+    }
+  }
+
+  &.sub.aside {
+
+    .nds-breadcrumb-nav,
+    .nds-section-head {
+      width: calc(100% - var(--nds-sideInfo-width) - var(--spacing-xl));
+
+      @include tablet(max) {
+        width: 100%
       }
     }
   }
@@ -97,8 +98,10 @@
     justify-content: center;
     max-width: var(--nds-content-MaxWidth);
     margin: auto;
+    visibility: visible;
   }
 }
+
 
 
 

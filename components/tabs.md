@@ -86,10 +86,10 @@ direction: ltr
                                     aria-controls="panel-settings" id="tab-settings" tabindex="-1">
                                     <span class="label">Settings</span>
                                 </button>
-                                <button class="nds-btn nds-subtle nds-tab showMore"><i
-                                        class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
-                                </button>
                             </nav>
+                            <button class="nds-btn nds-subtle nds-tab showMore"><i
+                                    class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                            </button>
                         </div>
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel" role="tabpanel" id="panel-home" aria-labelledby="tab-home"
@@ -112,8 +112,8 @@ direction: ltr
                                     <li>Support Services</li>
                                 </ul>
                             </div>
-                            <div class="nds-tab-panel" role="tabpanel" id="panel-about"
-                                aria-labelledby="tab-about" aria-hidden="true" tabindex="-1" hidden>
+                            <div class="nds-tab-panel" role="tabpanel" id="panel-about" aria-labelledby="tab-about"
+                                aria-hidden="true" tabindex="-1" hidden>
                                 <h3>About Us</h3>
                                 <p>The National Design System is part of Saudi Arabia's digital transformation
                                     initiative, providing consistent and accessible user experiences across all
@@ -121,8 +121,8 @@ direction: ltr
                                 <p>Our mission is to create unified, user-friendly interfaces that serve citizens
                                     efficiently and effectively.</p>
                             </div>
-                            <div class="nds-tab-panel" role="tabpanel" id="panel-contact"
-                                aria-labelledby="tab-contact" aria-hidden="true" tabindex="-1" hidden>
+                            <div class="nds-tab-panel" role="tabpanel" id="panel-contact" aria-labelledby="tab-contact"
+                                aria-hidden="true" tabindex="-1" hidden>
                                 <h3>Contact Information</h3>
                                 <p>Get in touch with us through the following channels:</p>
                                 <div class="contact-info">
@@ -131,8 +131,8 @@ direction: ltr
                                     <p><strong>Address:</strong> National Design System, Riyadh, Saudi Arabia</p>
                                 </div>
                             </div>
-                            <div class="nds-tab-panel" role="tabpanel" id="panel-support"
-                                aria-labelledby="tab-support" aria-hidden="true" tabindex="-1" hidden>
+                            <div class="nds-tab-panel" role="tabpanel" id="panel-support" aria-labelledby="tab-support"
+                                aria-hidden="true" tabindex="-1" hidden>
                                 <h3>Support Center</h3>
                                 <p>Find help and assistance with our comprehensive support resources.</p>
                                 <ul>
@@ -156,8 +156,8 @@ direction: ltr
                                 <p>Learn how to implement and customize components according to government standards.
                                 </p>
                             </div>
-                            <div class="nds-tab-panel" role="tabpanel" id="panel-news"
-                                aria-labelledby="tab-news" aria-hidden="true" tabindex="-1" hidden>
+                            <div class="nds-tab-panel" role="tabpanel" id="panel-news" aria-labelledby="tab-news"
+                                aria-hidden="true" tabindex="-1" hidden>
                                 <h3>Latest News</h3>
                                 <p>Stay updated with the latest announcements and updates from the design system team.
                                 </p>
@@ -186,10 +186,10 @@ direction: ltr
                                 aria-controls="panel-1" id="tab-1">
                                 <span class="label">HTML</span>
                             </button>
-                            <button class="nds-btn nds-subtle nds-tab showMore"><i
-                                    class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
-                            </button>
                         </nav>
+                        <button class="nds-btn nds-subtle nds-tab showMore"><i
+                                class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                        </button>
                     </div>
                     <div class="nds-tab-content">
                         <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-1"
@@ -212,10 +212,10 @@ direction: ltr
                                             aria-controls="panel-2" id="tab-2" tabindex="-1">
                                             <span class="label">Tab 2</span>
                                         </button>
+                                        </nav>
                                         <button class="nds-btn nds-subtle nds-tab showMore">
                                             <i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                         </button>
-                                        </nav>
                                     </div>
                                     <div class="nds-tab-content">
                                         <div class="nds-tab-panel" role="tabpanel" id="panel-1"
@@ -277,10 +277,10 @@ direction: ltr
                                     <i class="hgi hgi-stroke hgi-settings-01"></i>
                                     <span class="label">Settings</span>
                                 </button>
-                                <button class="nds-btn nds-subtle nds-tab showMore"><i
-                                        class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
-                                </button>
                             </nav>
+                            <button class="nds-btn nds-subtle nds-tab showMore"><i
+                                    class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                            </button>
                         </div>
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel" role="tabpanel" id="panel-dashboard"
@@ -510,10 +510,10 @@ direction: ltr
                                 aria-controls="panel-icons-1" id="tab-icons-1">
                                 <span class="label">HTML</span>
                             </button>
-                            <button class="nds-btn nds-subtle nds-tab showMore"><i
-                                    class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
-                            </button>
                         </nav>
+                        <button class="nds-btn nds-subtle nds-tab showMore"><i
+                                class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                        </button>
                     </div>
                     <div class="nds-tab-content">
                         <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-icons-1"
@@ -543,10 +543,10 @@ direction: ltr
                                             <i class="hgi hgi-stroke hgi-settings-01"></i>
                                             <span class="label">Settings</span>
                                         </button>
+                                        </nav>
                                         <button class="nds-btn nds-subtle nds-tab showMore">
                                             <i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                         </button>
-                                        </nav>
                                     </div>
                                     <div class="nds-tab-content">
                                         <div class="nds-tab-panel" role="tabpanel" id="panel-1"
@@ -701,7 +701,8 @@ direction: ltr
                 <dl class="nds-definition-list tableView">
                     <div class="nds-definition-item">
                         <dt><span class="label">Horizontal Tabs</span></dt>
-                        <dd>Left/Right arrows for navigation (reversed in RTL). Up/Down also work but Left/Right is primary.</dd>
+                        <dd>Left/Right arrows for navigation (reversed in RTL). Up/Down also work but Left/Right is
+                            primary.</dd>
                     </div>
                     <div class="nds-definition-item">
                         <dt><span class="label">Vertical Tabs</span></dt>

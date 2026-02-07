@@ -17,7 +17,7 @@ exclude_showcase: true
         <p><strong>No client-side filtering</strong> - no cards are hidden with display:none</p>
 
         <!-- Form Mode Filter with GET Method (Server-side filtering only) -->
-        <form class="nds-section-action nds-filter" data-filter-submit data-filter-target="test_results" method="GET"
+        <form class="nds-section-search nds-filter" data-filter-submit data-filter-target="test_results" method="GET"
             action="#">
             <!-- Direct Search with custom name -->
             <div class="nds-search-box">

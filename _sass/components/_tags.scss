@@ -33,6 +33,17 @@
   color: var(--_text);
   border: 1px solid var(--_border);
 
+  .label{
+    --_truncate: var(--truncate, 1);
+    overflow: hidden;
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: var(--_truncate);
+    line-clamp: var(--_truncate);
+    text-overflow: ellipsis;
+    white-space: wrap;
+  }
+
   // ==============================================
   // SIZE VARIATIONS
   // ==============================================
@@ -221,18 +232,14 @@
     border-radius: 999px;
 
     .label {
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      gap: var(--spacing-xs);
-
       &::before {
         content: "";
-        display: block;
+        display: inline-block;
         width: 10px;
         height: 10px;
         border-radius: 50%;
         background-color: var(--_icon);
+        margin-inline-end: var(--spacing-md);
       }
     }
   }

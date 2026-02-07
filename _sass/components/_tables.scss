@@ -12,6 +12,10 @@
 
 .nds-table-wrapper {
     --_max-width: var(--max-width, 100%);
+
+    // Gradient mask custom properties
+    --mask-fade-distance: 48px;
+
     position: relative;
     width: 100%;
     max-width: var(--_max-width);
@@ -30,68 +34,37 @@
 
 // When table needs scrolling (determined by JS)
 .nds-table-wrapper.nds-scroll {
-    // Gradient mask on both sides (RTL - fade on both left and right)
-    mask-image: linear-gradient(to right,
-            rgba(0, 0, 0, 1) 0%,
-            rgba(0, 0, 0, 1) 92%,
-            rgba(0, 0, 0, 0.5) 97%,
-            rgba(0, 0, 0, 0) 100%),
-        linear-gradient(to left,
-            rgba(0, 0, 0, 1) 0%,
-            rgba(0, 0, 0, 1) 92%,
-            rgba(0, 0, 0, 0.5) 97%,
-            rgba(0, 0, 0, 0) 100%);
-    mask-composite: intersect;
+    // Both sides masked (scrolled to middle) - RTL default
+    mask-image:
+        linear-gradient(to right, transparent 0%, black var(--mask-fade-distance)),
+        linear-gradient(to left, transparent 0%, black var(--mask-fade-distance));
 
-    // When at start, hide left mask (RTL - hide right side)
+    // When at start, only mask inline-end (left in RTL, right in LTR)
     &.scrolled-start {
-        mask-image: linear-gradient(to right,
-                rgba(0, 0, 0, 0) 0%,
-                rgba(0, 0, 0, 0.5) 3%,
-                rgba(0, 0, 0, 1) 8%,
-                rgba(0, 0, 0, 1) 100%);
+        mask-image: linear-gradient(to right, transparent 0%, black var(--mask-fade-distance));
     }
 
-    // When scrolled to the end, hide right mask (RTL - hide left side)
+    // When scrolled to the end, only mask inline-start (right in RTL, left in LTR)
     &.scrolled-end {
-        mask-image: linear-gradient(to left,
-                rgba(0, 0, 0, 0) 0%,
-                rgba(0, 0, 0, 0.5) 3%,
-                rgba(0, 0, 0, 1) 8%,
-                rgba(0, 0, 0, 1) 100%);
+        mask-image: linear-gradient(to left, transparent 0%, black var(--mask-fade-distance));
         padding-inline-end: 2px;
     }
 
     // Adjust gradient direction for LTR
     @include ltr {
-        // Both sides (LTR - fade on both left and right)
-        mask-image: linear-gradient(to right,
-                rgba(0, 0, 0, 1) 0%,
-                rgba(0, 0, 0, 1) 92%,
-                rgba(0, 0, 0, 0.5) 97%,
-                rgba(0, 0, 0, 0) 100%),
-            linear-gradient(to left,
-                rgba(0, 0, 0, 1) 0%,
-                rgba(0, 0, 0, 1) 92%,
-                rgba(0, 0, 0, 0.5) 97%,
-                rgba(0, 0, 0, 0) 100%);
+        // Both sides masked (scrolled to middle) - LTR
+        mask-image:
+            linear-gradient(to right, transparent 0%, black var(--mask-fade-distance)),
+            linear-gradient(to left, transparent 0%, black var(--mask-fade-distance));
 
-        // When at start, hide left mask
+        // When at start, only mask inline-end (right in LTR)
         &.scrolled-start {
-            mask-image: linear-gradient(to left,
-                    rgba(0, 0, 0, 0) 0%,
-                    rgba(0, 0, 0, 0.5) 3%,
-                    rgba(0, 0, 0, 1) 8%,
-                    rgba(0, 0, 0, 1) 100%);
+            mask-image: linear-gradient(to left, transparent 0%, black var(--mask-fade-distance));
         }
 
-        // When at end, hide right mask
+        // When at end, only mask inline-start (left in LTR)
         &.scrolled-end {
-            mask-image: linear-gradient(to right,
-                    rgba(0, 0, 0, 0) 0%,
-                    rgba(0, 0, 0, 0.5) 3%,
-                    rgba(0, 0, 0, 1) 8%,
-                    rgba(0, 0, 0, 1) 100%);
+            mask-image: linear-gradient(to right, transparent 0%, black var(--mask-fade-distance));
         }
     }
 }

@@ -217,17 +217,17 @@
     }
 
     /* Show More Navigation */
-    .nds-nav-primary {
-        &:not(.hasMore) .showMore {
-            display: none;
-        }
+    .nds-collapse-content {
 
         .showMore {
-            position: sticky;
             background-color: var(--nds-nav-background-color);
-            z-index: 999999;
             color: var(--text-default);
             transition: opacity var(--nds-transition);
+            flex-shrink: 0;
+
+            * {
+                justify-content: center;
+            }
 
             /* Scope icon font to the icon only */
             i {
@@ -237,14 +237,9 @@
             }
         }
 
-        &.hasMore {
-            .showMore {
-                display: block;
-
-                * {
-                    justify-content: center;
-                }
-            }
+        /* Hide when NO overflow (no .hasMore class) */
+        .nds-nav-primary:not(.hasMore)~.showMore {
+            display: none;
         }
     }
 }
@@ -422,7 +417,7 @@ body:not(.minimal) .nds-main-nav {
         display: flex !important;
         width: 100%;
 
-        &[hidden]{
+        &[hidden] {
             visibility: hidden;
         }
 
@@ -448,59 +443,33 @@ body:not(.minimal) .nds-main-nav {
         }
     }
 
-    /* Show More Button Styles */
-    .nds-nav-primary.hasMore {
-        // Both sides masked (scrolled to middle)
-        /* mask-image: linear-gradient(to right,
-                rgba(0, 0, 0, 0) 0%,
-                rgba(0, 0, 0, 0.5) 3%,
-                rgb(0, 0, 0) 8%,
-                rgb(0, 0, 0) 92%,
-                rgba(0, 0, 0, 0.5) 97%,
-                rgba(0, 0, 0, 0) 100%); */
+    /* Show More Button Styles - using sibling selector */
+    .nds-collapse-content {
+        .nds-nav-primary.hasMore {
+            ~.showMore {
+                transform: translateX(0);
 
-        .showMore {
-            inset-inline-end: 0;
-            transform: translateX(0);
-
-            i {
-                transform: rotate(90deg);
-                transition: transform 0.1s ease;
-            }
-        }
-
-        // At start: only mask inline-end (left in RTL)
-        &.atStart {
-           /*  mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 3%, rgb(0, 0, 0) 8%, rgb(0, 0, 0) 100%); */
-        }
-
-        // At end: only mask inline-start (right in RTL)
-        &.atEnd {
-            /* mask-image: linear-gradient(to left, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 3%, rgb(0, 0, 0) 8%, rgb(0, 0, 0) 100%); */
-
-            .showMore i {
-                transform: rotate(270deg);
-            }
-        }
-
-        @include ltr {
-            // Both sides masked (scrolled to middle)
-            /* mask-image: linear-gradient(to right,
-                    rgba(0, 0, 0, 0) 0%,
-                    rgba(0, 0, 0, 0.5) 3%,
-                    rgb(0, 0, 0) 8%,
-                    rgb(0, 0, 0) 92%,
-                    rgba(0, 0, 0, 0.5) 97%,
-                    rgba(0, 0, 0, 0) 100%); */
-
-            // At start: only mask inline-end (right in LTR)
-            &.atStart {
-               /*  mask-image: linear-gradient(to left, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 3%, rgb(0, 0, 0) 8%, rgb(0, 0, 0) 100%); */
+                i {
+                    transform: rotate(90deg);
+                    transition: transform 0.1s ease;
+                }
             }
 
-            // At end: only mask inline-start (left in LTR)
+            // At end: icon rotation
             &.atEnd {
-                /* mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 3%, rgb(0, 0, 0) 8%, rgb(0, 0, 0) 100%); */
+                ~.showMore i {
+                    transform: rotate(270deg);
+                }
+            }
+
+            @include ltr {
+
+                // At end: icon rotation for LTR
+                &.atEnd {
+                    ~.showMore i {
+                        transform: rotate(90deg);
+                    }
+                }
             }
         }
     }
@@ -530,26 +499,23 @@ body:not(.minimal) .nds-main-nav {
 /* RTL/LTR Support for Desktop/Tablet */
 @include ltr {
     body:not(.minimal) .nds-main-nav {
-        .nds-nav-primary.hasMore {
-            .showMore {
-
-                i {
+        .nds-collapse-content {
+            .nds-nav-primary.hasMore {
+                ~.showMore i {
                     transform: rotate(270deg);
                 }
-            }
 
-            &.atEnd .showMore i {
-                transform: rotate(90deg);
-            }
+                &.atEnd~.showMore i {
+                    transform: rotate(90deg);
+                }
 
-            &::before {
-                inset-inline-start: var(--spacing-xs);
-                transform: translateX(-4px);
+                &::before {
+                    inset-inline-start: var(--spacing-xs);
+                    transform: translateX(-4px);
+                }
             }
         }
-
     }
-
 }
 
 
@@ -685,26 +651,11 @@ body.minimal .nds-main-nav {
                 margin: 0 var(--spacing-xl);
             }
 
-            &:last-child,
-            &:nth-last-child(2) {
+            &:last-child {
                 border-bottom: none;
+                margin-bottom: var(--spacing-md);
             }
 
-            &.showMore {
-                bottom: var(--nds-nav-height);
-                box-shadow: 0px -4px 8px 0px rgba(0, 0, 0, 0.08);
-                position: fixed;
-                inset-inline: 0;
-                z-index: 2;
-                display: flex !important;
-                opacity: 0;
-                visibility: hidden;
-                transition: opacity 0.1s, visibility 0.1s;
-            }
-
-            &.showMore .nds-nav-link {
-                justify-content: center;
-            }
         }
 
         .nds-nav-link {
@@ -752,40 +703,47 @@ body.minimal .nds-main-nav {
 
 
     /* Show More Button */
-    .nds-nav-primary.hasMore {
-        margin-bottom: calc(var(--nds-minimal-nav-item-height) + var(--spacing-md));
-        // Both sides masked (scrolled to middle)
-        /* mask-image: linear-gradient(to bottom,
-                rgba(0, 0, 0, 0) 0%,
-                rgba(0, 0, 0, 0.5) 3%,
-                rgb(0, 0, 0) 8%,
-                rgb(0, 0, 0) 92%,
-                rgba(0, 0, 0, 0.5) 97%,
-                rgba(0, 0, 0, 0) 100%); */
+    .nds-collapse-content {
+        .nds-nav-primary.hasMore {
+             margin-bottom: calc(var(--nds-minimal-nav-item-height));
+            ~.showMore {
+                opacity: 1;
+                visibility: visible;
 
-        .showMore {
-            opacity: 1;
-            visibility: visible;
+                /* Above nav items */
 
-            /* Above nav items */
+                i {
+                    transition: transform 0.1s ease;
+                }
+            }
 
-            i {
-                transition: transform 0.1s ease;
+            // At end: icon rotation
+            &.atEnd {
+                ~.showMore i {
+                    transform: rotate(180deg);
+                }
             }
         }
+    }
 
-        // At start: only mask bottom
-        &.atStart {
-           /*  mask-image: linear-gradient(to bottom, rgb(0, 0, 0) 0%, rgb(0, 0, 0) 92%, rgba(0, 0, 0, 0.5) 97%, rgba(0, 0, 0, 0) 100%); */
-        }
+    .showMore {
+        border-bottom: none;
+        bottom: var(--nds-nav-height);
+        box-shadow: 0px -4px 8px 0px rgba(0, 0, 0, .08);
+        position: fixed;
+        inset-inline: 0;
+        z-index: 2;
+        display: flex !important;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity .1s, visibility .1s;
 
-        // At end: only mask top
-        &.atEnd {
-           /*  mask-image: linear-gradient(to top, rgb(0, 0, 0) 0%, rgb(0, 0, 0) 92%, rgba(0, 0, 0, 0.5) 97%, rgba(0, 0, 0, 0) 100%); */
-
-            .showMore i {
-                transform: rotate(180deg);
-            }
+        .nds-nav-link {
+            --btn-height: var(--nds-minimal-nav-item-height);
+            width: 100%;
+            align-items: center;
+            justify-content: start;
+            @include btn-indicator('v');
         }
     }
 

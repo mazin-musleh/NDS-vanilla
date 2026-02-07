@@ -82,26 +82,30 @@ h4 {
     font-size: var(--nds-display-clamp-xs-FS);
     line-height: var(--nds-display-clamp-xs-FS);
     margin-bottom: var(--nds-display-clamp-xs-MB);
-} 
+}
 
-p{
+p {
     text-wrap: pretty;
 }
 
 ul,
 ol {
-    padding-inline-start: 40px;
+    padding-inline-start: 20px;
     line-height: 1.5;
 }
 
-nav {
+// Increase padding for lists when mixed with other content types
+:not(ul):not(ol)~ul,
+:not(ul):not(ol)~ol {
+    padding-inline-start: 40px;
+}
 
-    ul,
-    ol {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
+// Override for nav (must come after to take precedence)
+nav ul,
+nav ol {
+    list-style: none;
+    padding: 0 !important;
+    margin: 0;
 }
 
 a {

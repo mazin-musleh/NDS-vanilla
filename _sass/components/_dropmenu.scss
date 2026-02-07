@@ -34,6 +34,11 @@
     border-radius: var(--radius-md, 8px);
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
+    // Transition for smooth opening/closing animations
+    transition: opacity 0.15s ease-out, transform 0.15s ease-out;
+    opacity: 1;
+    transform: translateY(0);
+
     // RTL/LTR positioning
     @include ltr {
       left: 0;
@@ -61,6 +66,13 @@
     text-decoration: none;
     width: 100%;
 
+    &:not(.nds-btn)>.label {
+      font-size: var(--nds-text-lg-FS);
+      font-weight: 500;
+      margin-bottom: var(--spacing-md);
+      display: flex;
+    }
+
     // When used as link (anchor tag)
     &:link,
     &:visited {
@@ -72,9 +84,28 @@
   // OPEN STATE
   // ==============================================
 
-  &.open {
+  // Only 'open' state controls display
+  &[data-state~="open"] {
     .nds-dropmenu-menu {
       display: block;
+    }
+  }
+
+  // Opening animation - fade in and slide down
+  // open + opening states coexist
+  &[data-state~="open"][data-state~="opening"] {
+    .nds-dropmenu-menu {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+  }
+
+  // Closing animation - fade out and slide up
+  // open + closing states coexist
+  &[data-state~="open"][data-state~="closing"] {
+    .nds-dropmenu-menu {
+      opacity: 0;
+      transform: translateY(-8px);
     }
   }
 
@@ -83,7 +114,7 @@
   // ==============================================
 
   // Top positioning (dropdown opens upward)
-  &.top {
+  &[data-position-vertical="top"] {
     .nds-dropmenu-menu {
       bottom: 100%;
       top: auto;
@@ -93,7 +124,7 @@
   }
 
   // Left alignment - forces left:0 (overrides any default)
-  &.align-left {
+  &[data-position-horizontal="left"] {
     .nds-dropmenu-menu {
       left: 0 !important;
       right: auto !important;
@@ -101,7 +132,7 @@
   }
 
   // Right alignment - forces right:0 (overrides any default)
-  &.align-right {
+  &[data-position-horizontal="right"] {
     .nds-dropmenu-menu {
       left: auto !important;
       right: 0 !important;
@@ -109,7 +140,7 @@
   }
 
   // Center alignment
-  &.align-center {
+  &[data-position-horizontal="center"] {
     .nds-dropmenu-menu {
       left: 50%;
       right: auto;
@@ -184,29 +215,12 @@
 }
 
 // ==============================================
-// ACCESSIBILITY & ANIMATION
+// ACCESSIBILITY
 // ==============================================
-
-// Fade in animation
-@keyframes nds-dropmenu-fadein {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.nds-dropmenu-menu[aria-hidden="false"] {
-  animation: nds-dropmenu-fadein 0.15s ease-out;
-}
 
 // Respect reduced motion preference
 @media (prefers-reduced-motion: reduce) {
-  .nds-dropmenu-menu[aria-hidden="false"] {
-    animation: none;
+  .nds-dropmenu-menu {
+    transition: none;
   }
 }

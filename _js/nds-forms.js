@@ -1443,9 +1443,9 @@
                                 needsInit = true;
                             }
 
-                            if (node.classList && node.classList.contains('nds-autoFill')) {
+                            if (node.classList && node.classList.contains('nds-auto-fill')) {
                                 needsAutoFillInit = true;
-                            } else if (node.querySelectorAll && node.querySelectorAll('.nds-autoFill').length > 0) {
+                            } else if (node.querySelectorAll && node.querySelectorAll('.nds-auto-fill').length > 0) {
                                 needsAutoFillInit = true;
                             }
 
@@ -1502,9 +1502,9 @@
         });
 
         // Initialize auto-fill containers
-        var autoFillContainers = container.classList && container.classList.contains('nds-autoFill')
+        var autoFillContainers = container.classList && container.classList.contains('nds-auto-fill')
             ? [container]
-            : Array.from(container.querySelectorAll('.nds-autoFill'));
+            : Array.from(container.querySelectorAll('.nds-auto-fill'));
 
         autoFillContainers.forEach(initAutoFillContainer);
 
@@ -1540,7 +1540,7 @@
     }
 
     function initInputAutoFill() {
-        document.querySelectorAll('.nds-autoFill[data-target]').forEach(initAutoFillContainer);
+        document.querySelectorAll('.nds-auto-fill[data-target]').forEach(initAutoFillContainer);
     }
 
     function initializeAllForms() {

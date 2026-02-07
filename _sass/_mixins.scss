@@ -11,26 +11,26 @@
 
 // Responsive breakpoints - accepts 'min', 'max', or no parameter for range
 @mixin mobile {
-  @media (max-width: 599px) {
+  @media (max-width: 600px) {
     @content;
   }
 }
 
 @mixin tablet($break: null) {
   @if $break =='min' {
-    @media (min-width: 600px) {
+    @media (min-width: 601px) {
       @content;
     }
   }
 
   @else if $break =='max' {
-    @media (max-width: 959px) {
+    @media (max-width: 960px) {
       @content;
     }
   }
 
   @else {
-    @media (min-width: 600px) and (max-width: 959px) {
+    @media (min-width: 601px) and (max-width: 960px) {
       @content;
     }
   }
@@ -38,19 +38,19 @@
 
 @mixin desktop($break: null) {
   @if $break =='min' {
-    @media (min-width: 960px) {
+    @media (min-width: 961px) {
       @content;
     }
   }
 
   @else if $break =='max' {
-    @media (max-width: 1279px) {
+    @media (max-width: 1280px) {
       @content;
     }
   }
 
   @else {
-    @media (min-width: 960px) and (max-width: 1279px) {
+    @media (min-width: 961px) and (max-width: 1280px) {
       @content;
     }
   }
@@ -187,20 +187,16 @@ textarea {
   --loading-size: var(--_btn-space) !important;
   --loading-border: max(2px, calc(var(--_btn-space) / 12)) !important;
 
-    display: inline-flex;
-    align-items: center;
-    gap: var(--_btn-gap);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--_btn-gap);
 
-  &[hidden]{
+  &[hidden] {
     display: none;
   }
 
   border: 1px solid transparent;
   border-radius: var(--radius-sm);
-  font-family: 'IBM Plex Sans Arabic',
-  sans-serif;
-  font-weight: 500;
-  text-decoration: none;
   cursor: pointer;
   user-select: none;
   white-space: nowrap;
@@ -218,8 +214,13 @@ textarea {
   padding-inline: var(--_btn-padding);
   padding-block: calc(var(--_btn-padding) / 2);
 
-  font-size: var(--_btn-FS);
-  line-height: 1;
+  >.label,
+  i {
+    font-weight: 500;
+    text-decoration: none;
+    font-size: var(--_btn-FS);
+    line-height: 1;
+  }
 }
 
 // Button disabled state

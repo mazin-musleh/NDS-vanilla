@@ -34,6 +34,21 @@
   }
 }
 
+
+.nds-btn .nds-rating .nds-rating-star {
+  cursor: pointer;
+}
+
+.nds-rating-dropmenu {
+  --menu-padding: var(--spacing-2xl);
+
+  .nds-dropmenu-menu {
+    .nds-rating {
+      margin-block: var(--spacing-2xl);
+    }
+  }
+}
+
 // ==============================================
 // STAR STATES
 // ==============================================
@@ -70,7 +85,8 @@
       mask-composite: intersect;
       -webkit-mask-composite: source-in;
       z-index: 1;
-      @include ltr{
+
+      @include ltr {
         transform: scaleX(-1);
       }
     }
@@ -154,8 +170,9 @@
       display: none;
     }
   }
+
   &:active .nds-rating-star:after {
-      display: none;
+    display: none;
   }
 
   .nds-rating-star {
