@@ -28,6 +28,7 @@
 
     // Required field indicator (using data-required attribute)
     &[data-required] {
+
         .nds-form-header .label::after,
         >.label::after {
             content: " *";
@@ -37,6 +38,7 @@
 
     // Legacy class support (deprecated)
     &.nds-required {
+
         .nds-form-header .label::after,
         >.label::after {
             content: " *";
@@ -119,14 +121,14 @@
 
     // Disabled state
     &[data-state~="disabled"] .nds-form-control {
-        background-color: var(--background-disabled) !important;
-        color: var(--text-default-disabled) !important;
-        border-color: var(--border-disabled) !important;
+        background-color: var(--background-disabled);
+        color: var(--text-default-disabled);
+        border-color: var(--border-disabled);
         pointer-events: none;
         user-select: none;
 
         ::-webkit-input-placeholder {
-            color: var(--text-default-disabled) !important;
+            color: var(--text-default-disabled);
         }
 
         .nds-form-action {

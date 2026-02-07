@@ -13,7 +13,7 @@ exclude_showcase: true
 
 <section id="facultyList" class="nds-content-section">
     <div class="nds-section-head">
-        <div class="nds-section-action nds-filter" data-filter-target="faculty_list_content" hidden>
+        <div class="nds-section-search nds-filter" data-filter-target="faculty_list_content" hidden>
             <!-- Direct Search -->
             <div class="nds-search-box">
                 <div class="nds-search-content">

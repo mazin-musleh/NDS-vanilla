@@ -7,6 +7,36 @@
 (function() {
     'use strict';
 
+    // State management helpers for space-separated data-state values
+    const addState = (element, ...states) => {
+        if (!element) return;
+        const current = new Set((element.getAttribute('data-state') || '').split(/\s+/).filter(Boolean));
+        states.forEach(s => current.add(s));
+        element.setAttribute('data-state', [...current].join(' '));
+    };
+
+    const removeState = (element, ...states) => {
+        if (!element) return;
+        const current = new Set((element.getAttribute('data-state') || '').split(/\s+/).filter(Boolean));
+        states.forEach(s => current.delete(s));
+        if (current.size === 0) {
+            element.removeAttribute('data-state');
+        } else {
+            element.setAttribute('data-state', [...current].join(' '));
+        }
+    };
+
+    const hasState = (element, state) => {
+        if (!element) return false;
+        const current = (element.getAttribute('data-state') || '').split(/\s+/);
+        return current.includes(state);
+    };
+
+    const clearState = (element) => {
+        if (!element) return;
+        element.removeAttribute('data-state');
+    };
+
     class NDSDropmenu {
         constructor(dropmenuElement) {
             this.dropmenu = dropmenuElement;
@@ -208,11 +238,6 @@
                 }
             }
 
-            // If still not found, default to -1 to handle as "before first element"
-            if (currentIndex === -1) {
-                currentIndex = -1;
-            }
-
             switch (e.key) {
                 case 'ArrowDown':
                     // In inputs, only navigate if Alt is pressed
@@ -300,12 +325,24 @@
 
         open() {
             this.isOpen = true;
-            this.dropmenu.classList.add('open');
+            // Set both 'open' and 'opening' states to display menu at starting position (opacity: 0)
+            addState(this.dropmenu, 'open', 'opening');
+            addState(this.trigger, 'open');
             this.trigger.setAttribute('aria-expanded', 'true');
             this.menu.setAttribute('aria-hidden', 'false');
 
-            // Adjust position based on available space
-            requestAnimationFrame(() => this.adjustPosition());
+            // Force reflow to ensure menu is rendered at starting position before measuring
+            this.menu.offsetHeight;
+
+            // Adjust position in next frame, then animate
+            requestAnimationFrame(() => {
+                this.adjustPosition();
+
+                // Remove 'opening' state to trigger transition to fully open
+                requestAnimationFrame(() => {
+                    removeState(this.dropmenu, 'opening');
+                });
+            });
 
             // Dispatch custom event
             this.dispatchEvent('nds:dropmenu:opened');
@@ -313,71 +350,84 @@
 
         adjustPosition() {
             // Remove any previous auto-adjustments
-            this.dropmenu.classList.remove('top', 'align-left', 'align-right');
+            this.dropmenu.removeAttribute('data-position-vertical');
+            this.dropmenu.removeAttribute('data-position-horizontal');
 
             // Get menu and trigger dimensions
             const menuRect = this.menu.getBoundingClientRect();
             const triggerRect = this.trigger.getBoundingClientRect();
-            const edgePadding = 16;
 
-            // Find the content layout container as boundary
-            const contentLayout = this.dropmenu.closest('.contentLayout');
-            let boundaryRect;
-
-            if (contentLayout) {
-                // Use contentLayout bounds
-                boundaryRect = contentLayout.getBoundingClientRect();
-            } else {
-                // Fallback to viewport
-                boundaryRect = {
-                    left: 0,
-                    right: window.innerWidth,
-                    top: 0,
-                    bottom: window.innerHeight,
-                    width: window.innerWidth,
-                    height: window.innerHeight
-                };
-            }
+            // Cache viewport dimensions
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
 
             // ==============================================
             // HORIZONTAL POSITIONING
             // ==============================================
-            // Check if menu is too close to edges (with padding threshold)
-            // Use boundary edges instead of viewport
-            const tooCloseLeft = menuRect.left < (boundaryRect.left + edgePadding);
-            const tooCloseRight = menuRect.right > (boundaryRect.right - edgePadding * 2);
+            // Simple rule: Always open toward the center of viewport
+            // Universal logic (works for both RTL and LTR):
+            // - left: Menu's left edge aligns with trigger → extends RIGHT
+            // - right: Menu's right edge aligns with trigger → extends LEFT
+            const viewportCenter = viewportWidth / 2;
+            const triggerCenter = (triggerRect.left + triggerRect.right) / 2;
 
-            if (tooCloseLeft && tooCloseRight) {
-                // Menu wider than container - align to side with more space
-                const spaceLeft = menuRect.left - boundaryRect.left;
-                const spaceRight = boundaryRect.right - menuRect.right;
-                this.dropmenu.classList.add(spaceRight > spaceLeft ? 'align-right' : 'align-left');
-            } else if (tooCloseLeft) {
-                this.dropmenu.classList.add('align-left');
-            } else if (tooCloseRight) {
-                this.dropmenu.classList.add('align-right');
+            if (triggerCenter < viewportCenter) {
+                // Trigger on left half → Open RIGHT toward center
+                this.dropmenu.setAttribute('data-position-horizontal', 'left');
+            } else {
+                // Trigger on right half → Open LEFT toward center
+                this.dropmenu.setAttribute('data-position-horizontal', 'right');
             }
 
             // ==============================================
             // VERTICAL POSITIONING
             // ==============================================
-            const spaceBelow = boundaryRect.bottom - menuRect.bottom;
-            if (spaceBelow < 0) {
-                const spaceAbove = triggerRect.top - boundaryRect.top;
-                if (spaceAbove > Math.abs(spaceBelow)) {
-                    this.dropmenu.classList.add('top');
-                }
+            // Always use viewport for vertical positioning to ensure menu stays visible
+            const spaceBelow = viewportHeight - menuRect.bottom;
+            const spaceAbove = triggerRect.top;
+
+            // If menu overflows below viewport, check if more space above
+            if (spaceBelow < 0 && spaceAbove > Math.abs(spaceBelow)) {
+                this.dropmenu.setAttribute('data-position-vertical', 'top');
             }
         }
 
         close() {
             this.isOpen = false;
-            this.dropmenu.classList.remove('open');
+            // Add 'closing' state while keeping 'open' for animation
+            addState(this.dropmenu, 'closing');
             this.trigger.setAttribute('aria-expanded', 'false');
-            this.menu.setAttribute('aria-hidden', 'true');
 
-            // Dispatch custom event
-            this.dispatchEvent('nds:dropmenu:closed');
+            let transitionCompleted = false;
+
+            const cleanup = () => {
+                if (transitionCompleted) return;
+                transitionCompleted = true;
+
+                // Clear all states after closing animation
+                clearState(this.dropmenu);
+                clearState(this.trigger);
+                this.menu.setAttribute('aria-hidden', 'true');
+                this.menu.removeEventListener('transitionend', handleTransitionEnd);
+
+                // Dispatch custom event
+                this.dispatchEvent('nds:dropmenu:closed');
+            };
+
+            const handleTransitionEnd = (e) => {
+                // Only handle transitions on the menu itself
+                if (e && e.target !== this.menu) return;
+                cleanup();
+            };
+
+            this.menu.addEventListener('transitionend', handleTransitionEnd);
+
+            // Fallback timeout in case transition doesn't fire (200ms = animation duration)
+            setTimeout(() => {
+                if (!transitionCompleted) {
+                    cleanup();
+                }
+            }, 200);
         }
 
         dispatchEvent(eventName) {

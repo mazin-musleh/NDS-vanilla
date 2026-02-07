@@ -55,6 +55,19 @@
     color: var(--text-default-disabled);
   }
 
+  .label {
+    --_truncate: var(--truncate, 1);
+    overflow: hidden;
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: var(--_truncate);
+    line-clamp: var(--_truncate);
+    text-overflow: ellipsis;
+    padding-inline: var(--spacing-xxs);
+    text-align: start;
+    max-width: 160px;
+  }
+
   // ==============================================
   // CHIP SIZES
   // ==============================================
@@ -69,7 +82,7 @@
   &.nds-sm {
     --chip-size: 20px;
     padding: var(--spacing-xs) var(--spacing-md);
-    font-size: var(--nds-text-xxs-FS);
+    font-size: var(--nds-text-xs-FS);
   }
 
   &.nds-lg {
@@ -200,12 +213,9 @@
   }
 }
 
-// ==============================================
-// RESPONSIVE BEHAVIOR
-// ==============================================
-
-@include mobile {
-  .nds-group {
-    gap: var(--spacing-sm);
-  }
+.nds-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  align-items: center;
 }

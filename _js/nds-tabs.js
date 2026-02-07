@@ -83,6 +83,8 @@
             const listContainer = this.tabList.closest('.nds-tab-list-container');
             const stableAncestor = listContainer ? listContainer.parentElement : this.tabList.parentElement;
             const availableWidth = stableAncestor ? stableAncestor.clientWidth : this.tabList.clientWidth;
+
+            // Don't subtract button width - flexbox handles layout
             const children = Array.from(this.tabList.children);
             const contentWidth = children
                 .filter(child => !child.classList.contains('showMore'))
@@ -158,7 +160,8 @@
             });
 
             // ShowMore button click handler
-            const showMoreBtn = this.tabList.querySelector('.showMore');
+            // Button is now outside .nds-tab-list, query from parent container
+            const showMoreBtn = this.tabList.parentElement.querySelector('.showMore');
             if (showMoreBtn) {
                 showMoreBtn.addEventListener('click', (e) => {
                     if (!this.needsScroll()) return;

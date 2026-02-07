@@ -52,6 +52,11 @@
             init: () => window.NDSSideMenu?.init?.(),
         },
         {
+            name: 'sideInfo',
+            selector: '.nds-sideInfo',
+            init: () => window.NDSSideInfo?.init?.(),
+        },
+        {
             name: 'drawer',
             selector: '.nds-drawer',
             init: () => window.NDSDrawer?.init?.(),
@@ -283,7 +288,8 @@
                     '[hidden].nds-nav-container, ' +
                     '[hidden].nds-swiper, ' +
                     '[hidden].nds-pagination-content, ' +
-                    '[hidden].nds-footer '
+                    '[hidden].nds-footer, ' +
+                    '[hidden].nds-sideInfo '
                 );
 
                 const collectEnd = performance.now();

@@ -1,8 +1,8 @@
-# Default hero configuration
-# Pages can override by setting `heroaction: "heroaction-custom"` in front matter
-# to load _data/heroaction-custom.yml, or define `hero_actions` and `hero_tags` inline.
+# Hero configuration for service pages
+# Pages can override by setting `heroaction: "heroaction-service"` in front matter
+# to load this file.
 #
-# Tags Fields (optional):
+# Tags Fields:
 #   label:          Tag text (required)
 #   style:          Tag variant class: nds-neutral, nds-success, nds-danger, nds-warning, nds-primary, nds-info (default: nds-neutral)
 #   icon:           HGI icon name, e.g. "hgi-star-01" (optional)
@@ -17,17 +17,21 @@
 #   aria_label:     Custom aria-label (optional)
 #   target:         Link target, e.g. "_blank" (optional)
 
-# Example with tags:
-# tags:
-#   - label: "New Feature"
-#     style: "nds-success"
-#     icon: "hgi-star-01"
-#
-# actions:
-#   - label: "Start"
-#     url: "/university/announcement"
-#     style: "nds-primary"
+tags:
+  - label: "Administration and Finance System (ERP)"
+    style: "nds-blue"
+    #icon: "hgi-government"
+  - label: "Most Used"
+    style: "nds-green"
+    #icon: "hgi-checkmark-circle-02"
 
-# Default: No tags, no actions (empty)
-# Note: For backward compatibility, if no 'actions' key is present,
-# the entire file content is treated as actions array
+actions:
+  - label: "Get Started"
+    url: "/university/announcement"
+    style: "nds-primary"
+    #icon: hgi-play
+
+  #- label: "Service Level Agreement"
+  #  url: "/university/announcement"
+   # style: "nds-secondary-outline SLA"
+    #icon: hgi-link-02

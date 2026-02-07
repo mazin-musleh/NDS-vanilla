@@ -25,7 +25,6 @@
   .label {
     text-align: start;
     line-height: normal;
-    flex: 1;
   }
 
   // ==============================================
@@ -43,8 +42,8 @@
     border-color: var(--_btn-border-active);
   }
 
-  &:is(.active, .selected, [data-state="selected"], [data-state~="open"], [data-state~="active"]),
-  :is(.show, .open, .active, [data-state="selected"], [data-state~="open"], [data-state~="active"])>& {
+  &:is(.active, .selected, [data-state="selected"], [data-state~="open"], [data-state~="active"])/* ,
+  :is(.show, .open, .active, [data-state="selected"], [data-state~="open"], [data-state~="active"])>& */ {
     background-color: var(--_btn-bg-selected);
     border-color: var(--_btn-border-selected);
   }
@@ -416,8 +415,8 @@
       background-color: var(--_btn-indicator-color);
     }
 
-    &:is(:active, .selected, :focus-visible, [aria-selected="true"], [data-state~="open"], [data-state~="selected"], [data-state~="active"], [data-state~="focused"])::before,
-    :is(.show, .open, .active, [data-state~="open"], [data-state~="selected"], [data-state~="active"], [data-state~="focused"])>&::before {
+    &:is(:active, .selected, :focus-visible, [aria-selected="true"], [data-state~="open"], [data-state~="selected"], [data-state~="active"], [data-state~="focused"])::before/* ,
+    :is(.show, .open, .active, [data-state~="open"], [data-state~="selected"], [data-state~="active"], [data-state~="focused"])>&::before */ {
       background-color: var(--_btn-indicator-selected);
     }
   }

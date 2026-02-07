@@ -23,6 +23,9 @@
     flex-direction: column;
   }
 
+  // Gradient mask custom properties
+  --mask-fade-distance: 48px;
+
   --btn-indicator-size: 3px;
 
   /* Vertical Tab Layout */
@@ -39,6 +42,11 @@
       position: sticky;
       z-index: 2;
       top: var(--nds-nav-height);
+    }
+
+    /* Never show showMore in vertical tabs */
+    .showMore {
+      display: none !important;
     }
 
     .nds-tab {
@@ -89,7 +97,7 @@
 
   /* Tabs with divider styling */
   &.nds-divided {
-    .nds-tab-list::after {
+    .nds-tab-list-container::after {
       content: '';
       position: absolute;
       bottom: 0;
@@ -128,6 +136,12 @@
 /* Tab List Container */
 .nds-tab-list-container {
   position: relative;
+
+  /* Use flexbox for horizontal tabs to naturally position showMore button */
+  .nds-tabs:not(.nds-vertical) & {
+    display: flex;
+    align-items: stretch;
+  }
 }
 
 /* Base Tab List */
@@ -203,10 +217,7 @@
 
   /* Show more button styling */
   &.showMore {
-    display: none;
-    border-radius: 0;
     min-width: var(--btn-size);
-    /* box-shadow: 4px 0px 0px 4px var(--nds-nav-background-color); */
   }
 
   /* Tab disabled state */
@@ -242,39 +253,78 @@
       }
     }
 
-    /* Show showMore when overflow detected */
-    &.hasMore>.showMore {
-      display: flex;
-      position: sticky;
-      background-color: var(--background-white);
-      z-index: 2;
-      transition: opacity var(--nds-transition);
-      transform: translateX(0);
-      margin-inline-start: var(--spacing-md);
-      inset-inline-end: 0;
+    /* Hide scrollbar in webkit browsers */
+    &::-webkit-scrollbar {
+      display: none;
     }
 
-    /* Icon rotation for showMore button */
-    &.hasMore>.showMore i {
-      transition: transform 0.1s ease;
+    /* Mask effects for overflow indication */
+    &.hasMore {
+      // Both sides masked (scrolled to middle) - RTL default
+      mask-image:
+        linear-gradient(to right, transparent 0%, black var(--mask-fade-distance)),
+        linear-gradient(to left, transparent 0%, black var(--mask-fade-distance));
+
+      // At start: only mask inline-end (left in RTL)
+      &.atStart {
+        mask-image: linear-gradient(to right, transparent 0%, black var(--mask-fade-distance));
+      }
+
+      // At end: only mask inline-start (right in RTL)
+      &.atEnd {
+        mask-image: linear-gradient(to left, transparent 0%, black var(--mask-fade-distance));
+      }
 
       @include ltr {
-        transform: rotate(180deg);
+        // Both sides masked (scrolled to middle) - LTR
+        mask-image:
+          linear-gradient(to right, transparent 0%, black var(--mask-fade-distance)),
+          linear-gradient(to left, transparent 0%, black var(--mask-fade-distance));
+
+        // At start: only mask inline-end (right in LTR)
+        &.atStart {
+          mask-image: linear-gradient(to left, transparent 0%, black var(--mask-fade-distance));
+        }
+
+        // At end: only mask inline-start (left in LTR)
+        &.atEnd {
+          mask-image: linear-gradient(to right, transparent 0%, black var(--mask-fade-distance));
+        }
+      }
+    }
+  }
+
+  /* Show showMore when overflow detected */
+  /* Button is now OUTSIDE .nds-tab-list, flexbox handles positioning */
+  .nds-tab-list-container {
+
+    .showMore {
+      z-index: 2;
+      transition: opacity var(--nds-transition);
+      flex-shrink: 0;
+
+      /* Icon rotation */
+      i {
+        transition: transform 0.1s ease;
+
+        @include ltr {
+          transform: rotate(180deg);
+        }
       }
     }
 
+    /* Hide when NO overflow (no .hasMore class) */
+    .nds-tab-list:not(.hasMore) ~ .showMore {
+      display: none;
+    }
+
     /* Rotate icon when at end of scroll */
-    &.hasMore.atEnd>.showMore i {
+    .nds-tab-list.atEnd ~ .showMore i {
       transform: rotate(180deg);
 
       @include ltr {
         transform: rotate(0deg) !important;
       }
-    }
-
-    /* Hide scrollbar in webkit browsers */
-    &::-webkit-scrollbar {
-      display: none;
     }
   }
 }
@@ -407,10 +457,10 @@ section>.nds-full-width {
 
       .nds-tab-list {
         padding-inline: var(--nds-viewport-padding);
+      }
 
-        .showMore {
-          display: none !important;
-        }
+      .nds-tab-list-container .showMore {
+        display: none !important;
       }
     }
   }

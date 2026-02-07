@@ -26,6 +26,9 @@
     --_transition: var(--drawer-transition, var(--nds-transition));
     --_max-height: var(--drawer-max-height, 400px);
 
+    // Gradient mask custom properties
+    --mask-fade-distance: 48px;
+
     &:not([hidden]) {
         display: flex;
         flex-direction: column;
@@ -267,7 +270,7 @@
 
     // Fade effect at bottom when scrollable
     .hasMore:not(.atEnd) & {
-        mask-image: linear-gradient(to bottom, black calc(100% - 48px), transparent 100%);
+        mask-image: linear-gradient(to bottom, black calc(100% - var(--mask-fade-distance)), transparent 100%);
     }
 }
 

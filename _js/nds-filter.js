@@ -16,6 +16,7 @@
  * Auto-generate Filter Inputs:
  * - data-filter-type="checkbox" - Multiple selections (OR logic)
  * - data-filter-type="radio" - Single selection
+ * - data-filter-type="switch" - Toggle switches (OR logic, same as checkbox)
  * - data-filter-legend="Title" - Sets the fieldset legend
  * - data-filter-variant="nds-primary" - Adds class to inputs
  *
@@ -68,12 +69,20 @@
             this.setupFilterElements();
             this.setupResetButton();
             this.setupActionButtons();
+            this.setupChipStyle();
             this.applyUrlParams();
 
             // Setup form submission mode
             if (this.isFormMode) {
                 this.setupFormSubmission();
             }
+        }
+
+        setupChipStyle() {
+            // Get chip classes from data-chip-class attribute on .nds-filter-applied
+            const appliedContainer = this.filterContainer.querySelector('.nds-filter-applied');
+            const chipClass = appliedContainer?.getAttribute('data-chip-class') || 'nds-primary nds-lg';
+            this.chipClass = chipClass;
         }
 
         // ==============================================
@@ -569,24 +578,40 @@
             const appliedContainer = this.filterContainer.querySelector('.nds-filter-applied');
             if (!appliedContainer) return;
 
-            appliedContainer.innerHTML = '';
+            // Find chips container inside applied container
+            const chipsContainer = appliedContainer.querySelector('.nds-chips');
+            if (!chipsContainer) return;
+
+            // Find auto-fill container (optional)
+            const autoFillContainer = this.filterContainer.querySelector('.nds-auto-fill');
+
+            // Clear chips container
+            chipsContainer.innerHTML = '';
 
             const hasFilters = this.criteria.search ||
                 Object.values(this.criteria.filters).some(arr => arr.length > 0);
 
             if (!hasFilters) {
                 appliedContainer.setAttribute('hidden', '');
+                // Show auto-fill when no filters
+                if (autoFillContainer) {
+                    autoFillContainer.removeAttribute('hidden');
+                }
                 return;
             }
 
             appliedContainer.removeAttribute('hidden');
+            // Hide auto-fill when filters are applied
+            if (autoFillContainer) {
+                autoFillContainer.setAttribute('hidden', '');
+            }
 
             // Add search chip
             if (this.criteria.search) {
                 const searchChip = this.createFilterChip('search', this.criteria.search, () => {
                     this.removeSearchFilter();
                 });
-                appliedContainer.appendChild(searchChip);
+                chipsContainer.appendChild(searchChip);
             }
 
             // Add chips for all dynamic filters
@@ -595,14 +620,14 @@
                     const chip = this.createFilterChip(filterName, value, () => {
                         this.removeFilterValue(filterName, value);
                     });
-                    appliedContainer.appendChild(chip);
+                    chipsContainer.appendChild(chip);
                 });
             }
         }
 
         createFilterChip(type, value, onRemove) {
             const chip = document.createElement('button');
-            chip.className = 'nds-chip nds-neutral nds-lg';
+            chip.className = `nds-chip ${this.chipClass || 'nds-primary nds-lg'}`;
             chip.setAttribute('type', 'button');
             chip.setAttribute('data-filter-type', type);
             chip.setAttribute('data-filter-value', value);
@@ -683,10 +708,10 @@
 
                 if (filterName === 'search') {
                     this.setupSearchFilter(element);
-                } else if (filterType === 'checkbox' || filterType === 'radio') {
+                } else if (filterType === 'checkbox' || filterType === 'radio' || filterType === 'switch') {
                     // Auto-generate filter inputs
                     this.setupDynamicFilter(element, filterName, filterType);
-                } else if (element.querySelectorAll('input[type="checkbox"], input[type="radio"]').length > 0) {
+                } else if (element.querySelectorAll('input[type="checkbox"], input[type="radio"], .nds-switch-input').length > 0) {
                     // Manual filter inputs
                     this.setupManualFilter(element, filterName);
                 }
@@ -908,14 +933,21 @@
         }
 
         setupManualFilter(element, filterName) {
-            const inputs = element.querySelectorAll('input[type="checkbox"], input[type="radio"]');
+            const inputs = element.querySelectorAll('input[type="checkbox"], input[type="radio"], .nds-switch-input');
 
             if (inputs.length === 0) {
                 console.warn(`NDS Filter: No inputs found for filter "${filterName}"`);
                 return;
             }
 
-            const inputType = inputs[0].type;
+            // Determine input type (switch inputs are checkboxes but treated specially)
+            const firstInput = inputs[0];
+            let inputType;
+            if (firstInput.classList.contains('nds-switch-input')) {
+                inputType = 'switch';
+            } else {
+                inputType = firstInput.type;
+            }
 
             // Initialize criteria for this filter
             if (!this.criteria.filters[filterName]) {
@@ -1043,8 +1075,7 @@
                 fieldset.setAttribute('data-no-auto-close', '');
             }
 
-            // Determine input class based on type
-            const inputClass = inputType === 'radio' ? 'nds-radio' : 'nds-check';
+            // Determine input class and structure based on type
             const groupName = `filter-${filterName}-${this.generateId()}`;
 
             // Generate input for each unique value
@@ -1052,7 +1083,9 @@
                 const id = `${groupName}-${index}`;
 
                 const formContainer = document.createElement('div');
-                formContainer.className = 'nds-form-container nds-check-container';
+                formContainer.className = inputType === 'switch'
+                    ? 'nds-form-container nds-switch-container'
+                    : 'nds-form-container nds-check-container';
 
                 const formHeader = document.createElement('div');
                 formHeader.className = 'nds-form-header';
@@ -1070,17 +1103,46 @@
                 const formControl = document.createElement('div');
                 formControl.className = 'nds-form-control';
 
-                const input = document.createElement('input');
-                input.type = inputType;
-                input.id = id;
-                input.name = inputType === 'radio' ? groupName : `filter-${filterName}`;
-                input.value = value;
-                input.className = inputClass;
-                if (variant) {
-                    input.classList.add(variant);
-                }
+                if (inputType === 'switch') {
+                    // Create switch structure
+                    const switchWrapper = document.createElement('div');
+                    switchWrapper.className = 'nds-switch';
+                    if (variant) {
+                        switchWrapper.classList.add(variant);
+                    }
 
-                formControl.appendChild(input);
+                    const input = document.createElement('input');
+                    input.type = 'checkbox';
+                    input.id = id;
+                    input.name = `filter-${filterName}`;
+                    input.value = value;
+                    input.className = 'nds-switch-input';
+
+                    const track = document.createElement('div');
+                    track.className = 'nds-switch-track';
+
+                    const thumb = document.createElement('div');
+                    thumb.className = 'nds-switch-thumb';
+
+                    track.appendChild(thumb);
+                    switchWrapper.appendChild(input);
+                    switchWrapper.appendChild(track);
+                    formControl.appendChild(switchWrapper);
+                } else {
+                    // Create checkbox or radio
+                    const inputClass = inputType === 'radio' ? 'nds-radio' : 'nds-check';
+                    const input = document.createElement('input');
+                    input.type = inputType;
+                    input.id = id;
+                    input.name = inputType === 'radio' ? groupName : `filter-${filterName}`;
+                    input.value = value;
+                    input.className = inputClass;
+                    if (variant) {
+                        input.classList.add(variant);
+                    }
+
+                    formControl.appendChild(input);
+                }
 
                 formContainer.appendChild(formHeader);
                 formContainer.appendChild(formControl);
@@ -1648,6 +1710,17 @@
  *     <div data-filter="status"
  *          data-filter-type="radio"
  *          data-filter-legend="Filter by Status">
+ *     </div>
+ * </div>
+ *
+ * AUTO-GENERATE FILTER SWITCHES
+ * ------------------------------
+ * Use data-filter-type="switch" for toggle switches (OR logic):
+ *
+ * <div class="nds-dropmenu-menu">
+ *     <div data-filter="features"
+ *          data-filter-type="switch"
+ *          data-filter-legend="Filter by Features">
  *     </div>
  * </div>
  *

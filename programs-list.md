@@ -13,8 +13,7 @@ exclude_showcase: true
 
 <section id="programsList" class="nds-content-section">
     <div class="nds-section-head">
-
-        <div class="nds-section-action nds-filter" data-filter-target="programs_list_content" hidden>
+        <div class="nds-section-search nds-filter" data-filter-target="programs_list_content" hidden>
             <div class="nds-search-box">
                 <div class="nds-search-content">
                     <div class="nds-form-control">

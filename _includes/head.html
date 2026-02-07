@@ -15,6 +15,7 @@
             --nds-minimal-nav-item-height: 40px;
             --nds-sideMenu-width: 260px;
             --nds-sideMenu-toggle-height: 56px;
+            --nds-sideInfo-width: 400px;
             --nds-minimal-nav-bp: 768px;
             --nds-dropdown-safeZone: 24px;
             --nds-content-MaxWidth: 1280px;
@@ -108,15 +109,16 @@
             z-index: 1000;
         }
 
+        .nds-topbar>*,
         #dgaDigitalStamp {
             display: none;
         }
 
 
-        .nds-topbar>*,
+
         .nds-hero-section :is(.nds-section-head, .nds-section-content),
         .nds-footer {
-            display: none;
+            visibility: hidden;
         }
 
         .contentLayout {
@@ -129,12 +131,13 @@
         [hidden].nds-drawer,
         [hidden].nds-swiper,
         [hidden].nds-breadcrumb-nav,
+        [hidden].nds-sideInfo,
         [hidden].nds-user-feedback,
         [hidden].nds-footer {
             display: block;
             visibility: hidden;
             overflow-x: hidden;
-            max-width: 300px;
+            max-width: 100%;
         }
 
         .nds-breadcrumb,
@@ -145,7 +148,7 @@
         /* Hero Section Base Styles */
         .nds-hero-section {
             width: 100%;
-            background-color: var(--background-sa-flag,#074c30);
+            background-color: var(--background-sa-flag, #074c30);
             position: relative;
             background-position: 50% 50%;
         }
@@ -255,6 +258,7 @@
             color: var(--text-oncolor-primary, #fff);
             overflow: hidden;
             height: 100%;
+            width: 100%;
         }
 
         .nds-swiper-wrapper {
@@ -323,17 +327,17 @@
     </script>
 
     <!-- Critical CSS - Load with deferred loading -->
-    <link rel="preload" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver=1.003" as="style"
+    <link rel="preload" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver=1.008" as="style"
         onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
-        <link rel="stylesheet" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver=1.003">
+        <link rel="stylesheet" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver=1.008">
     </noscript>
 
     <!-- Main CSS - Load with deferred loading for below-the-fold content -->
-    <link rel="preload" href="{{ 'assets/css/nds-main.min.css' | relative_url }}?ver=1.058" as="style"
+    <link rel="preload" href="{{ 'assets/css/nds-main.min.css' | relative_url }}?ver=1.064" as="style"
         onload="this.onload=null;this.rel='stylesheet';loadDeferredAssets()">
     <noscript>
-        <link rel="stylesheet" href="{{ 'assets/css/nds-main.min.css' | relative_url }}?ver=1.058">
+        <link rel="stylesheet" href="{{ 'assets/css/nds-main.min.css' | relative_url }}?ver=1.064">
     </noscript>
 
 

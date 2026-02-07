@@ -14,7 +14,8 @@
     --switch-width: 48px;
     --switch-height: 24px;
     --thumb-size: 16px;
-    --thumb-left: 4px;
+    --thumb-offset: 4px;
+
     display: flex;
     gap: var(--spacing-lg);
     flex-direction: row-reverse;
@@ -22,38 +23,35 @@
     flex-wrap: nowrap;
     justify-content: flex-end;
 
-    &>.nds-form-header .label {
+    // Label styling
+    .nds-form-header .label {
         color: var(--text-display);
         font-size: var(--nds-text-md-FS);
-        line-height: calc(var(--nds-input-size) + 4px) !important;
+        line-height: calc(var(--nds-input-size) + 4px);
         font-weight: 500;
-        height: calc(var(--nds-input-size) + 4px) !important;
+        height: calc(var(--nds-input-size) + 4px);
     }
 
-    &.nds-sm * {
+    // Size variants
+    &.nds-sm {
         --nds-input-size: 16px;
         --switch-width: 36px;
         --switch-height: 18px;
         --thumb-size: 12px;
-        --thumb-left: 2px;
-    }
-
-    &.nds-lg * {
-        --nds-input-size: 24px;
-        --switch-width: 56px;
-        --switch-height: 28px;
-        --thumb-size: 20px;
-        --thumb-left: 4px;
-    }
-
-    &.nds-sm {
+        --thumb-offset: 2px;
         gap: var(--spacing-md);
     }
 
     &.nds-lg {
+        --nds-input-size: 24px;
+        --switch-width: 56px;
+        --switch-height: 28px;
+        --thumb-size: 20px;
+        --thumb-offset: 4px;
         gap: var(--spacing-xl);
     }
 
+    // Form control reset
     .nds-form-control {
         min-width: unset;
         min-height: unset;
@@ -63,12 +61,12 @@
         border: 0;
         border-radius: var(--radius-sm);
         box-shadow: unset;
-        background-color: unset !important;
+        background-color: transparent !important;
 
         &.focused:focus-visible {
-            outline: 2px solid var(--colors-base-black) !important;
-            outline-offset: -2px !important;
-            box-shadow: inset 0 0 0 3px var(--colors-base-white) !important;
+            outline: 2px solid var(--colors-base-black);
+            outline-offset: -2px;
+            box-shadow: inset 0 0 0 3px var(--colors-base-white);
         }
 
         &::before {
@@ -82,85 +80,56 @@
 // ==============================================
 
 .nds-switch-group {
-    row-gap: var(--spacing-xl);
-    column-gap: var(--spacing-6xl);
     display: flex;
     flex-direction: column;
+    row-gap: var(--spacing-xl);
+    column-gap: var(--spacing-6xl);
 
     &.rowView {
         flex-direction: row;
         flex-wrap: wrap;
 
-        // Force feedback to new line in row layout
-        > .nds-feedback {
+        .nds-feedback {
             flex-basis: 100%;
             width: 100%;
         }
     }
 
-    // ==============================================
-    // REQUIRED INDICATOR (data-required attribute)
-    // ==============================================
-
-    // Auto-add required indicator when group has data-required, data-min-checked, or nds-required class
+    // Required indicator
     &[data-required],
     &[data-min-checked],
     &.nds-required {
-        > .label::after {
+        >.label::after {
             content: " *";
-            color: var(--controls-control-text-error, #dc2626);
+            color: var(--controls-control-text-error);
         }
     }
 
-    // ==============================================
-    // GROUP STATE (data-state attribute)
-    // ==============================================
-
-    // Disabled state - disable all switches in group
+    // Disabled state
     &[data-state~="disabled"] {
         opacity: 0.5;
         pointer-events: none;
-
-        .nds-form-container {
-            pointer-events: none;
-        }
     }
 
-    // ==============================================
-    // GROUP VALIDATION (data-status attribute)
-    // ==============================================
-
-    // Show feedback when group has status
-    &[data-status] > .nds-feedback {
+    // Validation feedback
+    &[data-status]>.nds-feedback {
         display: flex;
     }
 
-    // Error state
-    &[data-status="error"] {
-        > .nds-feedback {
-            color: var(--text-error);
-        }
+    &[data-status="error"]>.nds-feedback {
+        color: var(--text-error);
     }
 
-    // Success state
-    &[data-status="success"] {
-        > .nds-feedback {
-            color: var(--text-success);
-        }
+    &[data-status="success"]>.nds-feedback {
+        color: var(--text-success);
     }
 
-    // Warning state
-    &[data-status="warning"] {
-        > .nds-feedback {
-            color: var(--text-warning);
-        }
+    &[data-status="warning"]>.nds-feedback {
+        color: var(--text-warning);
     }
 
-    // Info state
-    &[data-status="info"] {
-        > .nds-feedback {
-            color: var(--text-info);
-        }
+    &[data-status="info"]>.nds-feedback {
+        color: var(--text-info);
     }
 }
 
@@ -169,8 +138,6 @@
 // ==============================================
 
 .nds-switch {
-
-
     position: relative;
     display: inline-block;
     width: var(--switch-width);
@@ -178,23 +145,26 @@
     user-select: none;
 
     // Ripple effect on hover
-    &:not(:disabled)::before {
+    &::before {
         content: '';
         position: absolute;
-        width: calc(var(--switch-width));
-        height: calc(var(--switch-height));
-        bottom: 50%;
-        left: 50%;
+        inset-inline-start: 50%;
+        inset-block-start: 50%;
+        width: var(--switch-width);
+        height: var(--switch-height);
         border-radius: 9999px;
-        transform: translate(-50%, 50%);
+        transform: translate(50%, -50%);
         background-color: var(--controls-control-ripple-effect);
-        transition: width var(--nds-transition), height var(--nds-transition);
+        transition: var(--nds-transition);
         z-index: 1;
         pointer-events: none;
-        user-select: none;
+
+        @include ltr {
+            transform: translate(-50%, -50%);
+        }
     }
 
-    &:not(:disabled):hover::before {
+    &:hover::before {
         width: calc(var(--switch-width) + var(--spacing-lg));
         height: calc(var(--switch-height) + var(--spacing-lg));
     }
@@ -209,14 +179,20 @@
         width: 0;
         height: 0;
         margin: 0;
-
-        &:not(:disabled) {
-            cursor: pointer;
-        }
+        cursor: pointer;
 
         &:focus+.nds-switch-track {
             outline: 2px solid var(--colors-base-black);
             outline-offset: 2px;
+        }
+
+        &:disabled {
+            cursor: not-allowed;
+
+            &+.nds-switch-track {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
         }
     }
 
@@ -229,34 +205,42 @@
         inset: 0;
         cursor: pointer;
         background-color: var(--background-white);
-        border-radius: 9999px;
         border: 1px solid var(--controls-control-neutral-checked);
+        border-radius: 9999px;
         z-index: 2;
+    }
 
-        &:hover:not([disabled]) {
-            border-color: var(--controls-control-hovered, #5A6169);
+    // ==============================================
+    // SWITCH THUMB
+    // ==============================================
 
-            .nds-switch-thumb {
-                background-color: var(--controls-control-hovered, #5A6169);
-            }
-        }
+    .nds-switch-thumb {
+        position: absolute;
+        inset-block-start: 50%;
+        inset-inline-start: var(--thumb-offset);
+        width: var(--thumb-size);
+        height: var(--thumb-size);
+        background-color: var(--controls-control-neutral-checked);
+        border-radius: 9999px;
+        transform: translateY(-50%);
+        box-shadow: var(--shadow-sm);
+        transition: all 0.1s ease;
+    }
 
-        // ==============================================
-        // SWITCH THUMB
-        // ==============================================
+    // ==============================================
+    // ACTIVE STATE (PRESSED)
+    // ==============================================
 
-        .nds-switch-thumb {
-            position: absolute;
-            top: 50%;
-            left: var(--thumb-left);
-            width: var(--thumb-size);
-            height: var(--thumb-size);
-            background-color: var(--controls-control-neutral-checked);
-            border-radius: 9999px;
-            transform: translate(0px, -50%);
-            box-shadow: var(--shadow-sm);
-            transition: all 0.1s ease;
-        }
+    .nds-switch-track:active .nds-switch-thumb {
+        width: calc(var(--thumb-size) + 6px);
+    }
+
+    // ==============================================
+    // HOVER STATE (UNCHECKED)
+    // ==============================================
+
+    .nds-switch-input:not(:disabled):not(:checked)+.nds-switch-track:hover {
+        border-color: var(--controls-control-hovered);
     }
 
     // ==============================================
@@ -264,24 +248,20 @@
     // ==============================================
 
     .nds-switch-input:checked+.nds-switch-track {
-        background-color: var(--controls-control-primary-checked, #0D121C);
-        border-color: var(--controls-control-primary-checked, #0D121C);
-
-        &:hover:not([disabled]) {
-            background-color: var(--controls-control-primary-hovered);
-            border-color: var(--controls-control-primary-hovered);
-        }
+        background-color: var(--controls-control-primary-checked);
+        border-color: var(--controls-control-primary-checked);
 
         .nds-switch-thumb {
             background-color: var(--colors-base-white);
-            left: unset;
-            right: var(--thumb-left);
-
-            @include ltr {
-                left: calc(var(--switch-width) - var(--thumb-size) - var(--thumb-left) *2);
-                right: unset;
-            }
+            inset-inline-start: unset;
+            inset-inline-end: var(--thumb-offset);
         }
+    }
+
+    // Checked hover state
+    .nds-switch-input:not(:disabled):checked+.nds-switch-track:hover {
+        background-color: var(--controls-control-primary-hovered);
+        border-color: var(--controls-control-primary-hovered);
     }
 
     // ==============================================
@@ -291,41 +271,22 @@
     &.nds-neutral .nds-switch-input:checked+.nds-switch-track {
         background-color: var(--controls-control-neutral-checked);
         border-color: var(--controls-control-neutral-checked);
+    }
 
-        &:hover:not([disabled]) {
-            background-color: var(--controls-control-neutral-hovered);
-            border-color: var(--controls-control-neutral-hovered);
-        }
+    // Neutral checked hover state
+    &.nds-neutral .nds-switch-input:not(:disabled):checked+.nds-switch-track:hover {
+        background-color: var(--controls-control-neutral-hovered);
+        border-color: var(--controls-control-neutral-hovered);
     }
 
     // ==============================================
     // DISABLED STATE
     // ==============================================
 
-    .nds-switch-input:disabled+.nds-switch-track,
     &.disabled .nds-switch-track {
         opacity: 0.5;
         cursor: not-allowed;
-
-        .nds-switch-thumb {
-            cursor: not-allowed;
-        }
     }
-
-    // ==============================================
-    // ACTIVE STATE (DURING PRESS)
-    // ==============================================
-
-    .active & .nds-switch-thumb {
-        width: calc(var(--thumb-size) + 6px) !important;
-    }
-
-    .filled & .nds-switch-thumb {
-        right: var(--thumb-left) !important;
-        left: unset !important;
-    }
-
-
 }
 
 // ==============================================
@@ -333,13 +294,8 @@
 // ==============================================
 
 @include mobile {
-    .nds-switch-container {
-        // Mobile-specific adjustments
+    .nds-form-container.nds-switch-container {
         gap: var(--spacing-sm);
-
-        &.nds-md {
-            gap: var(--spacing-md);
-        }
 
         &.nds-lg {
             gap: var(--spacing-lg);
@@ -349,9 +305,5 @@
     .nds-switch-group {
         row-gap: var(--spacing-lg);
         column-gap: var(--spacing-4xl);
-
-        &.rowView {
-            flex-wrap: wrap;
-        }
     }
 }
