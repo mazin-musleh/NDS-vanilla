@@ -132,6 +132,11 @@
             init: () => window.NDSDropmenu?.init?.(),
         },
         {
+            name: 'autocomplete',
+            selector: '.nds-form-container[data-url]',
+            init: () => window.NDSAutocomplete?.init?.(),
+        },
+        {
             name: 'pagination',
             selector: '.nds-pagination-nav, .nds-pagination',
             init: () => window.NDSPagination?.init?.(),

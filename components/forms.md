@@ -840,7 +840,103 @@ NDSFeedback.dismiss(errorFeedback);
           </div>
         </div>
 
-        <!-- add new demo card here -->
+        <!-- Autocomplete Input -->
+        <div class="nds-demo-card">
+          <div class="demo-header">
+            <div class="demo-label">Autocomplete Input</div>
+            <div class="demo-action">
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='["data-required", ".nds-form-container", "requiredToggle", "attr"]'>
+                <span class="label">Required</span>
+              </button>
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='["focus", ".nds-form-container", "dataStateToggle", "data-state"]'>
+                <span class="label">Focus</span>
+              </button>
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='["disabled", ".nds-form-container", "dataStateToggle", "data-state"]'>
+                <span class="label">Disabled</span>
+              </button>
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                <span class="label">Remove bg</span>
+              </button>
+            </div>
+          </div>
+          <div class="demo-container">
+            <div class="state-demo">
+              <div class="nds-form-container"
+                   data-url="{{ '/assets/data/autocomplete-demo.json' | relative_url }}"
+                   data-name="Title"
+                   data-query-param="q">
+                <div class="nds-form-header">
+                  <label for="demo-autocompleteInput">
+                    <span class="label">Search Services</span>
+                  </label>
+                </div>
+                <div class="nds-form-control">
+                  <i class="hgi hgi-stroke hgi-search-01 icon"></i>
+                  <input type="text" id="demo-autocompleteInput" autocomplete="on"
+                    placeholder="Type to search services...">
+                  <div class="nds-form-action">
+                    <button class="nds-btn nds-subtle clear" type="button" aria-label="Clear input" hidden>
+                      <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="nds-form-footer" data-feedback-target hidden></div>
+              </div>
+            </div>
+          </div>
+          <div class="nds-tabs nds-code nds-divided" hidden>
+            <div class="nds-tab-list-container">
+              <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                  aria-controls="panel-autocomplete-1" id="tab-autocomplete-1">
+                  <span class="nds-tab-label">HTML</span>
+                </button>
+                <button class="nds-btn nds-subtle nds-tab showMore"><i
+                    class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                </button>
+              </nav>
+            </div>
+            <div class="nds-tab-content">
+              <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-autocomplete-1"
+                aria-labelledby="tab-autocomplete-1">
+                <div class="nds-code-action">
+                  <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                    <i class="hgi hgi-stroke hgi-copy-01"></i>
+                  </button>
+                </div>
+                <div class="nds-expandable-content">
+                  <code class="lang-html code">
+<div class="nds-form-container"
+     data-url="/api/services"
+     data-name="Title">
+  <div class="nds-form-header">
+    <label for="service-search">
+      <span class="label">Search Services</span>
+    </label>
+  </div>
+  <div class="nds-form-control">
+    <i class="hgi hgi-stroke hgi-search-01 icon"></i>
+    <input type="text" id="service-search" autocomplete="on"
+      placeholder="Type to search services...">
+    <div class="nds-form-action">
+      <button class="nds-btn nds-subtle clear" type="button"
+        aria-label="Clear input" hidden>
+        <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
+      </button>
+    </div>
+  </div>
+  <div class="nds-form-footer" data-feedback-target hidden></div>
+</div>
+                  </code>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

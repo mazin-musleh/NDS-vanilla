@@ -10,7 +10,8 @@
 // NDS LOADING COMPONENT
 // ==============================================
 
-.nds-loading {
+.nds-loading,
+[data-state="loading"] {
   --loading-size: 32px;
   --loading-border: 3px;
   --loading-color: var(--background-primary);
@@ -69,68 +70,69 @@
   &.nds-oncolor::before {
     background-color: var(--alpha-black-50);
   }
-}
 
-// ==============================================
-// SIZE VARIANTS
-// xxs: 20px, xs: 24px, sm: 28px, md: 32px (default), lg: 36px, xl: 40px, 2xl: 44px
-// ==============================================
+  // ==============================================
+  // SIZE VARIANTS
+  // xxs: 20px, xs: 24px, sm: 28px, md: 32px (default), lg: 36px, xl: 40px, 2xl: 44px
+  // ==============================================
 
-// XXS - 20px
-.nds-loading.nds-xxs {
-  --loading-size: 20px;
-  --loading-border: 2px;
-}
+  // XXS - 20px
+  &.nds-xxs {
+    --loading-size: 20px;
+    --loading-border: 2px;
+  }
 
-// XS - 24px
-.nds-loading.nds-xs {
-  --loading-size: 24px;
-  --loading-border: 2px;
-}
+  // XS - 24px
+  &.nds-xs {
+    --loading-size: 24px;
+    --loading-border: 2px;
+  }
 
-// SM - 28px
-.nds-loading.nds-sm {
-  --loading-size: 28px;
-  --loading-border: 2px;
-}
+  // SM - 28px
+  &.nds-sm {
+    --loading-size: 28px;
+    --loading-border: 2px;
+  }
 
-// MD - 32px (default)
-.nds-loading.nds-md {
-  --loading-size: 32px;
-  --loading-border: 3px;
-}
+  // MD - 32px (default)
+  &.nds-md {
+    --loading-size: 32px;
+    --loading-border: 3px;
+  }
 
-// LG - 36px
-.nds-loading.nds-lg {
-  --loading-size: 36px;
-  --loading-border: 3px;
-}
+  // LG - 36px
+  &.nds-lg {
+    --loading-size: 36px;
+    --loading-border: 3px;
+  }
 
-// XL - 40px
-.nds-loading.nds-xl {
-  --loading-size: 40px;
-  --loading-border: 4px;
-}
+  // XL - 40px
+  &.nds-xl {
+    --loading-size: 40px;
+    --loading-border: 4px;
+  }
 
-// 2XL - 44px
-.nds-loading.nds-2xl {
-  --loading-size: 44px;
-  --loading-border: 4px;
-}
+  // 2XL - 44px
+  &.nds-2xl {
+    --loading-size: 44px;
+    --loading-border: 4px;
+  }
 
-// ==============================================
-// COLOR VARIANTS
-// ==============================================
+  // ==============================================
+  // COLOR VARIANTS
+  // ==============================================
 
-// Primary (green spinner)
-.nds-loading.nds-neutral {
-  --loading-color: var(--background-black);
-  --loading-track: var(--alpha-black-10);
-}
+  // Primary (green spinner)
+  &.nds-neutral {
+    --loading-color: var(--background-black);
+    --loading-track: var(--alpha-black-10);
+  }
 
-// On dark backgrounds
-.nds-loading.nds-oncolor,
-.nds-loading.nds-dark {
-  --loading-color: var(--colors-base-white);
-  --loading-track: var(--alpha-white-20);
+  // On dark backgrounds
+  &.nds-oncolor,
+  &.nds-dark {
+    --loading-color: var(--colors-base-white);
+    --loading-track: var(--alpha-white-20);
+  }
+
 }

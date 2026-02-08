@@ -24,6 +24,7 @@
         initializeDemoToggleButtons();
         initializeDirectionSwitcher();
         initializeFakeFileUpload();
+        initializeAutocompleteDemoData();
         initializeDemoActionButtons();
     }
 
@@ -1452,6 +1453,49 @@
                 }, 2000); // 2 second processing delay
             }
         }, interval);
+    }
+
+    // Simulated server search for autocomplete demo
+    // Pre-fetches autocomplete-demo.json, then intercepts subsequent fetches to filter by query
+    function initializeAutocompleteDemoData() {
+        // Find autocomplete demo containers
+        var demoContainer = document.querySelector('.nds-demo-card .nds-form-container[data-url*="autocomplete-demo"]');
+        if (!demoContainer) return;
+
+        var dataUrl = demoContainer.getAttribute('data-url');
+        var nameField = demoContainer.getAttribute('data-name') || 'Title';
+        var queryParam = demoContainer.getAttribute('data-query-param') || 'q';
+        var demoData = null;
+
+        // Pre-fetch the full dataset
+        fetch(dataUrl).then(function(res) { return res.json(); }).then(function(data) {
+            demoData = Array.isArray(data) ? data : [];
+        });
+
+        // Intercept subsequent fetches to simulate server-side search
+        var originalFetch = window.fetch;
+        window.fetch = function(url) {
+            if (demoData && typeof url === 'string' && url.includes('autocomplete-demo')) {
+                var queryMatch = url.match(new RegExp('[?&]' + queryParam + '=([^&]*)'));
+                var query = queryMatch ? decodeURIComponent(queryMatch[1]) : '';
+
+                var filtered = query
+                    ? demoData.filter(function(item) {
+                        return String(item[nameField] || '').toLowerCase().includes(query.toLowerCase());
+                    })
+                    : demoData;
+
+                return new Promise(function(resolve) {
+                    setTimeout(function() {
+                        resolve(new Response(JSON.stringify(filtered), {
+                            status: 200,
+                            headers: { 'Content-Type': 'application/json' }
+                        }));
+                    }, 150 + Math.random() * 350);
+                });
+            }
+            return originalFetch.apply(this, arguments);
+        };
     }
 
     // Demo action buttons functionality
