@@ -1,23 +1,26 @@
 /**
- * NDS Dropmenu Component - SCSS Version
- * Unified dropdown menu component for consistent dropdown patterns
- * Based on share page dropdown pattern with subtle button style
+ * NDS Dropmenu Component
+ * Dropdown menu with direction-aware positioning, boundary detection,
+ * and smooth directional animations
  */
 
 @use '../mixins' as *;
 
 // ==============================================
-// BASE DROPMENU COMPONENT
+// 1. CONFIGURATION
 // ==============================================
 
 .nds-dropmenu {
   --_menu-padding: var(--menu-padding, var(--spacing-sm, 8px));
+  --_dropmenu-offset: var(--spacing-xs, 4px);
+  --_dropmenu-slide: calc(var(--dropmenu-slide, 8px) * -1);
+  --_dropmenu-min-width: 150px;
 
   position: relative;
   display: inline-flex;
 
   // ==============================================
-  // DROPDOWN MENU CONTAINER
+  // 2. MENU CONTAINER
   // ==============================================
 
   &-menu {
@@ -25,9 +28,8 @@
     position: absolute;
     z-index: 900;
     top: 100%;
-    right: 0;
-    min-width: 150px;
-    margin-top: 4px;
+    min-width: var(--_dropmenu-min-width);
+    margin-top: var(--_dropmenu-offset);
     padding: var(--_menu-padding);
     list-style: none;
     background-color: var(--colors-neutral-white, #FFFFFF);
@@ -35,34 +37,18 @@
     border-radius: var(--radius-md, 8px);
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
-    // Transition for smooth opening/closing animations
-    transition: opacity 0.15s ease-out, transform 0.15s ease-out;
+    // Animation base
+    transition: opacity var(--nds-transition),
+      transform var(--nds-transition);
     opacity: 1;
     transform: translateY(0);
-
-    // RTL/LTR positioning
-    @include ltr {
-      left: 0;
-      right: unset;
-    }
-
-    // Open state
-    &[aria-hidden="false"] {
-      display: block;
-      max-height: 400px;
-      overflow: hidden;
-      overflow-y: auto;
-    }
   }
 
   // ==============================================
-  // DROPDOWN MENU ITEMS
+  // 3. MENU ITEMS
   // ==============================================
-  // Items inherit from .nds-btn.nds-subtle styling
-  // -item class used for JavaScript targeting
 
   &-item {
-    // Ensures items use full width and start-align content
     justify-content: flex-start;
     text-decoration: none;
     width: 100%;
@@ -74,7 +60,6 @@
       display: flex;
     }
 
-    // When used as link (anchor tag)
     &:link,
     &:visited {
       text-decoration: none;
@@ -82,111 +67,77 @@
   }
 
   // ==============================================
-  // OPEN STATE
+  // 4. STATES & ANIMATIONS
   // ==============================================
 
-  // Only 'open' state controls display
-  &[data-state~="open"] {
-    .nds-dropmenu-menu {
-      display: block;
-    }
+  // Open state → display: block (first to add, last to remove)
+  &[data-state~="open"] .nds-dropmenu-menu {
+    display: block;
+    max-height: 400px;
+    overflow: hidden;
+    overflow-y: auto;
   }
 
-  // Opening animation - fade in and slide down
-  // open + opening states coexist
-  &[data-state~="open"][data-state~="opening"] {
-    .nds-dropmenu-menu {
-      opacity: 0;
-      transform: translateY(-8px);
-    }
-  }
-
-  // Closing animation - fade out and slide up
-  // open + closing states coexist
-  &[data-state~="open"][data-state~="closing"] {
-    .nds-dropmenu-menu {
-      opacity: 0;
-      transform: translateY(-8px);
-    }
-  }
-
-  // ==============================================
-  // POSITION VARIANTS
-  // ==============================================
-
-  // Top positioning (dropdown opens upward)
+  // Reverse slide direction when opening upward
   &[data-position-vertical="top"] {
-    .nds-dropmenu-menu {
-      bottom: 100%;
-      top: auto;
-      margin-top: 0;
-      margin-bottom: 4px;
-    }
+    --_dropmenu-slide: var(--dropmenu-slide, 8px);
   }
 
-  // Left alignment - forces left:0 (overrides any default)
-  &[data-position-horizontal="left"] {
-    .nds-dropmenu-menu {
-      left: 0 !important;
-      right: auto !important;
-    }
-  }
-
-  // Right alignment - forces right:0 (overrides any default)
-  &[data-position-horizontal="right"] {
-    .nds-dropmenu-menu {
-      left: auto !important;
-      right: 0 !important;
-    }
-  }
-
-  // Center alignment
-  &[data-position-horizontal="center"] {
-    .nds-dropmenu-menu {
-      left: 50%;
-      right: auto;
-      transform: translateX(-50%);
-    }
+  // Opening/closing animation (direction set by --_dropmenu-slide)
+  &[data-state~="opening"] .nds-dropmenu-menu,
+  &[data-state~="closing"] .nds-dropmenu-menu {
+    opacity: 0;
+    transform: translateY(var(--_dropmenu-slide));
   }
 
   // ==============================================
-  // SIZE VARIANTS
+  // 5. POSITION VARIANTS (JS-calculated, direction-aware)
   // ==============================================
 
-  &.wide {
-    .nds-dropmenu-menu {
-      min-width: 200px;
-    }
+  // Vertical: open upward
+  &[data-position-vertical="top"] .nds-dropmenu-menu {
+    bottom: 100%;
+    top: auto;
+    margin-top: 0;
+    margin-bottom: var(--_dropmenu-offset);
   }
 
-  &.narrow {
-    .nds-dropmenu-menu {
-      min-width: 120px;
-    }
+  // Horizontal: left edge aligns with trigger → extends right
+  &[data-position-horizontal="left"] .nds-dropmenu-menu {
+    left: 0;
+    right: auto;
+  }
+
+  // Horizontal: right edge aligns with trigger → extends left
+  &[data-position-horizontal="right"] .nds-dropmenu-menu {
+    right: 0;
+    left: auto;
   }
 
   // ==============================================
-  // RESPONSIVE BEHAVIOR
+  // 6. SIZE VARIANTS
   // ==============================================
 
-  @include mobile {
-    &-menu {
-      max-width: calc(100vw - var(--nds-viewport-padding) * 4);
-    }
+  &.wide .nds-dropmenu-menu {
+    min-width: 200px;
+  }
+
+  &.narrow .nds-dropmenu-menu {
+    min-width: 120px;
   }
 
   // ==============================================
-  // FORM CONTROL INSIDE DROPDOWN
+  // 7. INNER COMPONENTS
   // ==============================================
 
+  // Form controls inside dropdown
   &-menu .nds-form-control {
     min-width: unset;
     width: 100%;
   }
 
-
+  // Sticky action footer
   &-action {
-
     position: sticky;
     bottom: calc(var(--_menu-padding) * -1);
     background-color: inherit;
@@ -204,11 +155,20 @@
       }
     }
   }
+
+  // ==============================================
+  // 8. RESPONSIVE
+  // ==============================================
+
+  @include mobile {
+    &-menu {
+      max-width: calc(100vw - var(--nds-viewport-padding) * 4);
+    }
+  }
 }
 
-
 // ==============================================
-// Share Page Dropdown
+// 9. OVERRIDES
 // ==============================================
 
 #nds-sharePage-dropdown.nds-dropmenu-menu {
@@ -216,10 +176,9 @@
 }
 
 // ==============================================
-// ACCESSIBILITY
+// 10. ACCESSIBILITY
 // ==============================================
 
-// Respect reduced motion preference
 @media (prefers-reduced-motion: reduce) {
   .nds-dropmenu-menu {
     transition: none;
