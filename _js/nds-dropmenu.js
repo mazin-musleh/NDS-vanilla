@@ -1,48 +1,48 @@
 /**
  * NDS Dropmenu Component
  * Unified dropdown menu functionality with accessibility support
- * Handles click outside, keyboard navigation, and ARIA attributes
+ * Handles click outside, keyboard navigation, ARIA attributes,
+ * direction-aware positioning, and boundary detection
  */
 
 (function() {
     'use strict';
 
-    // State management helpers for space-separated data-state values
+    // ==============================================
+    // STATE MANAGEMENT HELPERS
+    // ==============================================
+
+    const parseStates = (el) =>
+        new Set((el.getAttribute('data-state') || '').split(/\s+/).filter(Boolean));
+
     const addState = (element, ...states) => {
         if (!element) return;
-        const current = new Set((element.getAttribute('data-state') || '').split(/\s+/).filter(Boolean));
+        const current = parseStates(element);
         states.forEach(s => current.add(s));
         element.setAttribute('data-state', [...current].join(' '));
     };
 
     const removeState = (element, ...states) => {
         if (!element) return;
-        const current = new Set((element.getAttribute('data-state') || '').split(/\s+/).filter(Boolean));
+        const current = parseStates(element);
         states.forEach(s => current.delete(s));
-        if (current.size === 0) {
-            element.removeAttribute('data-state');
-        } else {
-            element.setAttribute('data-state', [...current].join(' '));
-        }
-    };
-
-    const hasState = (element, state) => {
-        if (!element) return false;
-        const current = (element.getAttribute('data-state') || '').split(/\s+/);
-        return current.includes(state);
+        current.size ? element.setAttribute('data-state', [...current].join(' '))
+                     : element.removeAttribute('data-state');
     };
 
     const clearState = (element) => {
-        if (!element) return;
-        element.removeAttribute('data-state');
+        if (element) element.removeAttribute('data-state');
     };
+
+    // ==============================================
+    // DROPMENU CLASS
+    // ==============================================
 
     class NDSDropmenu {
         constructor(dropmenuElement) {
             this.dropmenu = dropmenuElement;
-            this.trigger = this.dropmenu.querySelector('.nds-dropmenu-trigger');
-            this.menu = this.dropmenu.querySelector('.nds-dropmenu-menu');
-            this.items = Array.from(this.menu?.querySelectorAll('.nds-dropmenu-item') || []);
+            this.trigger = dropmenuElement.querySelector('.nds-dropmenu-trigger');
+            this.menu = dropmenuElement.querySelector('.nds-dropmenu-menu');
             this.isOpen = false;
 
             if (!this.trigger || !this.menu) {
@@ -50,264 +50,232 @@
                 return;
             }
 
-            // Check if already initialized to prevent duplicate listeners
-            if (this.dropmenu.hasAttribute('data-nds-dropmenu-initialized')) {
-                return;
-            }
+            if (dropmenuElement.hasAttribute('data-nds-dropmenu-initialized')) return;
+
+            // Cache references
+            this.contentLayout = dropmenuElement.closest('.contentLayout')
+                || document.querySelector('.contentLayout');
+            this.isRTL = getComputedStyle(dropmenuElement).direction === 'rtl';
 
             this.init();
         }
 
-        // Get all focusable elements in the menu (inputs + items) in DOM order
+        // ==============================================
+        // UTILITY METHODS
+        // ==============================================
+
+        /** Check if an element is a text input */
+        isInputElement(el) {
+            return el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA');
+        }
+
+        /** Get all focusable elements in the menu in DOM order */
         getFocusableElements() {
             const focusable = [];
 
-            // Walk through direct children of the menu in order
-            const walkElement = (element) => {
-                // Skip if not an element node
-                if (element.nodeType !== 1) return;
+            const walk = (el) => {
+                if (el.nodeType !== 1) return;
 
-                // Check if this element itself is focusable
-                const tagName = element.tagName;
-                const isFocusableInput = (tagName === 'INPUT' || tagName === 'TEXTAREA') &&
-                                        element.type !== 'hidden' &&
-                                        !element.disabled;
-                const isFocusableButton = (tagName === 'BUTTON' || tagName === 'A') &&
-                                         element.classList.contains('nds-dropmenu-item') &&
-                                         !element.disabled;
+                const tag = el.tagName;
+                const isInput = (tag === 'INPUT' || tag === 'TEXTAREA')
+                    && el.type !== 'hidden' && !el.disabled;
+                const isItem = (tag === 'BUTTON' || tag === 'A')
+                    && el.classList.contains('nds-dropmenu-item') && !el.disabled;
 
-                // Skip elements inside form-action
-                const isInsideFormAction = element.closest('.nds-form-action');
-
-                if (!isInsideFormAction) {
-                    if (isFocusableInput) {
-                        focusable.push(element);
-                    } else if (isFocusableButton) {
-                        focusable.push(element);
-                        // Don't traverse children of focusable buttons
-                        return;
+                if (!el.closest('.nds-form-action')) {
+                    if (isInput || isItem) {
+                        focusable.push(el);
+                        if (isItem) return; // Don't traverse children of items
                     }
                 }
 
-                // Traverse children
-                Array.from(element.children).forEach(child => walkElement(child));
+                Array.from(el.children).forEach(walk);
             };
 
-            // Start walking from menu's direct children
-            Array.from(this.menu.children).forEach(child => walkElement(child));
-
+            Array.from(this.menu.children).forEach(walk);
             return focusable;
         }
+
+        /**
+         * Navigate through focusable elements with wrapping
+         * @param {Element[]} elements - Focusable elements
+         * @param {number} currentIndex - Current focused index
+         * @param {number} direction - 1 for next, -1 for previous
+         */
+        navigateToIndex(elements, currentIndex, direction) {
+            if (!elements.length) return;
+
+            let nextIndex;
+            if (direction === 1) {
+                nextIndex = (currentIndex === -1 || currentIndex >= elements.length - 1)
+                    ? 0 : currentIndex + 1;
+            } else {
+                nextIndex = (currentIndex <= 0)
+                    ? elements.length - 1 : currentIndex - 1;
+            }
+
+            elements[nextIndex]?.focus();
+        }
+
+        /** Resolve the current focus index within focusable elements */
+        resolveCurrentIndex(elements) {
+            const active = document.activeElement;
+            let index = elements.indexOf(active);
+
+            // If not found, check if active is inside a menu item
+            if (index === -1 && active) {
+                const parent = active.closest('.nds-dropmenu-item');
+                if (parent) index = elements.indexOf(parent);
+            }
+
+            return index;
+        }
+
+        // ==============================================
+        // INITIALIZATION
+        // ==============================================
 
         init() {
             this.setupAria();
             this.setupEventListeners();
-            // Mark as initialized to prevent duplicate initialization
             this.dropmenu.setAttribute('data-nds-dropmenu-initialized', 'true');
         }
 
         setupAria() {
-            // Set initial ARIA attributes
-            if (!this.trigger.hasAttribute('aria-expanded')) {
-                this.trigger.setAttribute('aria-expanded', 'false');
-            }
-            if (!this.trigger.hasAttribute('aria-haspopup')) {
-                this.trigger.setAttribute('aria-haspopup', 'true');
-            }
-            if (!this.menu.hasAttribute('role')) {
-                this.menu.setAttribute('role', 'menu');
-            }
-            if (!this.menu.hasAttribute('aria-hidden')) {
-                this.menu.setAttribute('aria-hidden', 'true');
-            }
+            const setDefault = (el, attr, val) => {
+                if (!el.hasAttribute(attr)) el.setAttribute(attr, val);
+            };
 
-            // Set role for menu items (but not form controls)
-            this.items.forEach(item => {
-                // Don't set menuitem role on form controls
-                if (item.classList.contains('nds-form-control')) {
-                    return;
-                }
-                if (!item.hasAttribute('role')) {
-                    item.setAttribute('role', 'menuitem');
+            setDefault(this.trigger, 'aria-expanded', 'false');
+            setDefault(this.trigger, 'aria-haspopup', 'true');
+            setDefault(this.menu, 'role', 'menu');
+            setDefault(this.menu, 'aria-hidden', 'true');
+
+            // Set role for menu items (skip form controls)
+            this.menu.querySelectorAll('.nds-dropmenu-item').forEach(item => {
+                if (!item.classList.contains('nds-form-control')) {
+                    setDefault(item, 'role', 'menuitem');
                 }
             });
         }
 
+        // ==============================================
+        // EVENT LISTENERS
+        // ==============================================
+
         setupEventListeners() {
-            // Toggle on trigger click
+            // Trigger click
             this.trigger.addEventListener('click', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 this.toggle();
             });
 
-            // Close on outside click - scoped to document but checked per instance
+            // Outside click
             this.handleOutsideClick = (e) => {
-                if (this.isOpen && !this.dropmenu.contains(e.target)) {
-                    this.close();
-                }
+                if (this.isOpen && !this.dropmenu.contains(e.target)) this.close();
             };
             document.addEventListener('click', this.handleOutsideClick);
 
-            // Keyboard navigation - scoped to dropmenu element
+            // Trigger keyboard
             this.trigger.addEventListener('keydown', (e) => this.handleTriggerKeydown(e));
 
-            // Use event delegation for menu keyboard navigation (better performance)
+            // Menu keyboard (event delegation)
             this.menu.addEventListener('keydown', (e) => {
-                const target = e.target;
-                const isInput = target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA');
-
-                // For inputs, handle Tab and Alt+Arrow specially
-                if (isInput) {
-                    if (e.key === 'Tab' || (e.altKey && (e.key === 'ArrowDown' || e.key === 'ArrowUp'))) {
-                        // Mark that this event should be handled
-                        this.handleMenuKeydown(e);
-                        return;
-                    }
+                // For inputs: only handle Tab and Alt+Arrow
+                if (this.isInputElement(e.target)) {
+                    const isNavKey = e.key === 'Tab'
+                        || (e.altKey && (e.key === 'ArrowDown' || e.key === 'ArrowUp'));
+                    if (!isNavKey) return;
                 }
-
-                // Handle all other keyboard events
                 this.handleMenuKeydown(e);
             });
 
-            // Close on Escape key - scoped to dropmenu element only
+            // Escape (scoped to dropmenu)
             this.dropmenu.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape' && this.isOpen) {
-                    e.stopPropagation(); // Prevent other dropmenus from also closing
+                    e.stopPropagation();
                     this.close();
                     this.trigger.focus();
                 }
             });
 
-            // Close on item click
-            this.items.forEach(item => {
-                item.addEventListener('click', (e) => {
-                    // Check if item has data-no-auto-close attribute
-                    if (item.hasAttribute('data-no-auto-close')) {
-                        // Don't auto-close, let the item handle closing manually
-                        return;
-                    }
-
-                    // Allow event to propagate for custom handlers
-                    // Close menu after a short delay to allow handlers to execute
+            // Item click auto-close
+            this.menu.addEventListener('click', (e) => {
+                const item = e.target.closest('.nds-dropmenu-item');
+                if (item && !item.hasAttribute('data-no-auto-close')) {
                     setTimeout(() => this.close(), 100);
-                });
+                }
             });
         }
 
+        // ==============================================
+        // KEYBOARD HANDLERS
+        // ==============================================
+
         handleTriggerKeydown(e) {
-            const focusableElements = this.getFocusableElements();
+            const elements = this.getFocusableElements();
 
             switch (e.key) {
                 case 'Enter':
                 case ' ':
                     e.preventDefault();
                     this.toggle();
-                    if (this.isOpen && focusableElements.length > 0) {
-                        focusableElements[0].focus();
-                    }
+                    if (this.isOpen && elements.length) elements[0].focus();
                     break;
                 case 'ArrowDown':
                     e.preventDefault();
                     this.open();
-                    if (focusableElements.length > 0) {
-                        focusableElements[0].focus();
-                    }
+                    if (elements.length) elements[0].focus();
                     break;
                 case 'ArrowUp':
                     e.preventDefault();
                     this.open();
-                    if (focusableElements.length > 0) {
-                        focusableElements[focusableElements.length - 1].focus();
-                    }
+                    if (elements.length) elements[elements.length - 1].focus();
                     break;
             }
         }
 
         handleMenuKeydown(e) {
-            const focusableElements = this.getFocusableElements();
-            let currentIndex = focusableElements.indexOf(document.activeElement);
-            const activeElement = document.activeElement;
-            const isInput = activeElement && (activeElement.tagName === 'INPUT' || activeElement.tagName === 'TEXTAREA');
-
-            // If current element not found in list, try to find closest parent that is
-            if (currentIndex === -1 && activeElement) {
-                const parentItem = activeElement.closest('.nds-dropmenu-item');
-                if (parentItem) {
-                    currentIndex = focusableElements.indexOf(parentItem);
-                }
-            }
+            const elements = this.getFocusableElements();
+            const currentIndex = this.resolveCurrentIndex(elements);
+            const isInput = this.isInputElement(document.activeElement);
 
             switch (e.key) {
                 case 'ArrowDown':
-                    // In inputs, only navigate if Alt is pressed
-                    if (isInput) {
-                        if (!e.altKey) {
-                            return; // Let input handle normally
-                        }
-                        e.preventDefault();
-                    } else {
-                        e.preventDefault();
-                    }
-
-                    if (currentIndex === -1 || currentIndex >= focusableElements.length - 1) {
-                        focusableElements[0]?.focus(); // Loop to first
-                    } else {
-                        focusableElements[currentIndex + 1]?.focus();
-                    }
+                case 'ArrowUp': {
+                    // In inputs, require Alt key for navigation
+                    if (isInput && !e.altKey) return;
+                    e.preventDefault();
+                    const dir = e.key === 'ArrowDown' ? 1 : -1;
+                    this.navigateToIndex(elements, currentIndex, dir);
                     break;
-
-                case 'ArrowUp':
-                    // In inputs, only navigate if Alt is pressed
-                    if (isInput) {
-                        if (!e.altKey) {
-                            return; // Let input handle normally
-                        }
-                        e.preventDefault();
-                    } else {
-                        e.preventDefault();
-                    }
-
-                    if (currentIndex <= 0) {
-                        focusableElements[focusableElements.length - 1]?.focus(); // Loop to last
-                    } else {
-                        focusableElements[currentIndex - 1]?.focus();
-                    }
-                    break;
-
+                }
                 case 'Home':
-                    if (isInput && !e.ctrlKey) return; // Let input handle Home key unless Ctrl is pressed
+                    if (isInput && !e.ctrlKey) return;
                     e.preventDefault();
-                    focusableElements[0]?.focus();
+                    elements[0]?.focus();
                     break;
-
                 case 'End':
-                    if (isInput && !e.ctrlKey) return; // Let input handle End key unless Ctrl is pressed
+                    if (isInput && !e.ctrlKey) return;
                     e.preventDefault();
-                    focusableElements[focusableElements.length - 1]?.focus();
+                    elements[elements.length - 1]?.focus();
                     break;
-
                 case 'Tab':
-                    // Always handle Tab to navigate between elements
                     e.preventDefault();
                     if (e.shiftKey) {
-                        // Tab backwards
                         if (currentIndex > 0) {
-                            focusableElements[currentIndex - 1]?.focus();
+                            elements[currentIndex - 1]?.focus();
                         } else {
-                            // Close menu and return focus to trigger
                             this.close();
                             this.trigger.focus();
                         }
                     } else {
-                        // Tab forwards
                         if (currentIndex === -1) {
-                            // Not in list, focus first element
-                            focusableElements[0]?.focus();
-                        } else if (currentIndex < focusableElements.length - 1) {
-                            focusableElements[currentIndex + 1]?.focus();
+                            elements[0]?.focus();
+                        } else if (currentIndex < elements.length - 1) {
+                            elements[currentIndex + 1]?.focus();
                         } else {
-                            // Close menu
                             this.close();
                         }
                     }
@@ -315,130 +283,121 @@
             }
         }
 
+        // ==============================================
+        // OPEN / CLOSE / TOGGLE
+        // ==============================================
+
         toggle() {
-            if (this.isOpen) {
-                this.close();
-            } else {
-                this.open();
-            }
+            this.isOpen ? this.close() : this.open();
         }
 
         open() {
             this.isOpen = true;
-            // Set both 'open' and 'opening' states to display menu at starting position (opacity: 0)
+
+            // Step 1: Set vertical position (only needs trigger rect, no menu)
+            this.adjustVerticalPosition();
+
+            // Step 2: 'open' + 'opening' → display: block at opacity 0
             addState(this.dropmenu, 'open', 'opening');
             addState(this.trigger, 'open');
             this.trigger.setAttribute('aria-expanded', 'true');
             this.menu.setAttribute('aria-hidden', 'false');
 
-            // Force reflow to ensure menu is rendered at starting position before measuring
-            this.menu.offsetHeight;
+            // Step 3: Set horizontal position (needs menu width)
+            this.adjustHorizontalPosition();
 
-            // Adjust position in next frame, then animate
+            // Step 4: Next frame → remove 'opening' → transition fires
             requestAnimationFrame(() => {
-                this.adjustPosition();
-
-                // Remove 'opening' state to trigger transition to fully open
-                requestAnimationFrame(() => {
-                    removeState(this.dropmenu, 'opening');
-                });
+                removeState(this.dropmenu, 'opening');
             });
 
-            // Dispatch custom event
-            this.dispatchEvent('nds:dropmenu:opened');
-        }
-
-        adjustPosition() {
-            // Remove any previous auto-adjustments
-            this.dropmenu.removeAttribute('data-position-vertical');
-            this.dropmenu.removeAttribute('data-position-horizontal');
-
-            // Get menu and trigger dimensions
-            const menuRect = this.menu.getBoundingClientRect();
-            const triggerRect = this.trigger.getBoundingClientRect();
-
-            // Cache viewport dimensions
-            const viewportWidth = window.innerWidth;
-            const viewportHeight = window.innerHeight;
-
-            // ==============================================
-            // HORIZONTAL POSITIONING
-            // ==============================================
-            // Simple rule: Always open toward the center of viewport
-            // Universal logic (works for both RTL and LTR):
-            // - left: Menu's left edge aligns with trigger → extends RIGHT
-            // - right: Menu's right edge aligns with trigger → extends LEFT
-            const viewportCenter = viewportWidth / 2;
-            const triggerCenter = (triggerRect.left + triggerRect.right) / 2;
-
-            if (triggerCenter < viewportCenter) {
-                // Trigger on left half → Open RIGHT toward center
-                this.dropmenu.setAttribute('data-position-horizontal', 'left');
-            } else {
-                // Trigger on right half → Open LEFT toward center
-                this.dropmenu.setAttribute('data-position-horizontal', 'right');
-            }
-
-            // ==============================================
-            // VERTICAL POSITIONING
-            // ==============================================
-            // Always use viewport for vertical positioning to ensure menu stays visible
-            const spaceBelow = viewportHeight - menuRect.bottom;
-            const spaceAbove = triggerRect.top;
-
-            // If menu overflows below viewport, check if more space above
-            if (spaceBelow < 0 && spaceAbove > Math.abs(spaceBelow)) {
-                this.dropmenu.setAttribute('data-position-vertical', 'top');
-            }
+            this.emitEvent('nds:dropmenu:opened');
         }
 
         close() {
             this.isOpen = false;
 
-            // Move focus out of menu before closing to prevent aria-hidden warning
-            // Only move focus if it's currently inside the menu
+            // Move focus out before hiding to prevent aria-hidden warning
             if (this.menu.contains(document.activeElement)) {
                 this.trigger.focus();
             }
 
-            // Add 'closing' state while keeping 'open' for animation
             addState(this.dropmenu, 'closing');
             this.trigger.setAttribute('aria-expanded', 'false');
 
-            let transitionCompleted = false;
-
+            let done = false;
             const cleanup = () => {
-                if (transitionCompleted) return;
-                transitionCompleted = true;
+                if (done) return;
+                done = true;
 
-                // Clear all states after closing animation
                 clearState(this.dropmenu);
                 clearState(this.trigger);
+                this.dropmenu.removeAttribute('data-position-vertical');
+                this.dropmenu.removeAttribute('data-position-horizontal');
                 this.menu.setAttribute('aria-hidden', 'true');
-                this.menu.removeEventListener('transitionend', handleTransitionEnd);
-
-                // Dispatch custom event
-                this.dispatchEvent('nds:dropmenu:closed');
+                this.menu.removeEventListener('transitionend', onEnd);
+                this.emitEvent('nds:dropmenu:closed');
             };
 
-            const handleTransitionEnd = (e) => {
-                // Only handle transitions on the menu itself
-                if (e && e.target !== this.menu) return;
-                cleanup();
+            const onEnd = (e) => {
+                if (e.target === this.menu) cleanup();
             };
 
-            this.menu.addEventListener('transitionend', handleTransitionEnd);
-
-            // Fallback timeout in case transition doesn't fire (200ms = animation duration)
-            setTimeout(() => {
-                if (!transitionCompleted) {
-                    cleanup();
-                }
-            }, 200);
+            this.menu.addEventListener('transitionend', onEnd);
+            setTimeout(cleanup, 200); // Fallback
         }
 
-        dispatchEvent(eventName) {
-            const event = new CustomEvent(eventName, {
+        // ==============================================
+        // POSITION CALCULATION
+        // ==============================================
+
+        /** Vertical position — only needs trigger rect, runs before state */
+        adjustVerticalPosition() {
+            this.dropmenu.removeAttribute('data-position-vertical');
+
+            const triggerRect = this.trigger.getBoundingClientRect();
+            const vh = window.innerHeight;
+            const cr = this.contentLayout?.getBoundingClientRect();
+            const boundsTop = Math.max(cr?.top ?? 0, 0);
+            const boundsBottom = Math.min(cr?.bottom ?? vh, vh);
+
+            const spaceBelow = boundsBottom - triggerRect.bottom;
+            const spaceAbove = triggerRect.top - boundsTop;
+
+            if (spaceBelow < spaceAbove && spaceBelow < 200) {
+                this.dropmenu.setAttribute('data-position-vertical', 'top');
+            }
+        }
+
+        /** Horizontal position — needs menu width, runs after display:block */
+        adjustHorizontalPosition() {
+            this.dropmenu.removeAttribute('data-position-horizontal');
+
+            const menuRect = this.menu.getBoundingClientRect();
+            const triggerRect = this.trigger.getBoundingClientRect();
+            const vw = window.innerWidth;
+            const cr = this.contentLayout?.getBoundingClientRect();
+            const boundsLeft = Math.max(cr?.left ?? 0, 0);
+            const boundsRight = Math.min(cr?.right ?? vw, vw);
+
+            const menuWidth = menuRect.width;
+            let hPos = this.isRTL ? 'right' : 'left';
+
+            if (hPos === 'left') {
+                if ((triggerRect.left + menuWidth) > boundsRight) hPos = 'right';
+            } else {
+                if ((triggerRect.right - menuWidth) < boundsLeft) hPos = 'left';
+            }
+
+            this.dropmenu.setAttribute('data-position-horizontal', hPos);
+        }
+
+        // ==============================================
+        // EVENTS & CLEANUP
+        // ==============================================
+
+        emitEvent(name) {
+            this.dropmenu.dispatchEvent(new CustomEvent(name, {
                 detail: {
                     dropmenu: this.dropmenu,
                     trigger: this.trigger,
@@ -446,103 +405,41 @@
                     isOpen: this.isOpen
                 },
                 bubbles: true
-            });
-            this.dropmenu.dispatchEvent(event);
+            }));
         }
 
-        // Public API
         destroy() {
-            // Remove document-level event listeners
             if (this.handleOutsideClick) {
                 document.removeEventListener('click', this.handleOutsideClick);
             }
-
-            // Remove event listeners by cloning elements
-            const newDropmenu = this.dropmenu.cloneNode(true);
-            this.dropmenu.replaceWith(newDropmenu);
+            const clone = this.dropmenu.cloneNode(true);
+            this.dropmenu.replaceWith(clone);
         }
     }
 
-    // Auto-initialize dropmenus on page load
+    // ==============================================
+    // AUTO-INITIALIZATION
+    // ==============================================
+
     function initializeDropmenus() {
-        const dropmenus = document.querySelectorAll('.nds-dropmenu');
+        document.querySelectorAll('.nds-dropmenu').forEach(el => {
+            if (el.closest('code, .code-example')) return;
+            if (el.hasAttribute('data-nds-dropmenu-initialized')) return;
 
-        dropmenus.forEach(dropmenu => {
-            // Skip elements inside code examples
-            if (dropmenu.closest('code, .code-example')) {
-                return;
-            }
-
-            if (!dropmenu.hasAttribute('data-nds-dropmenu-initialized')) {
-                const dropmenuInstance = new NDSDropmenu(dropmenu);
-                dropmenu.ndsDropmenuInstance = dropmenuInstance;
-                // Attribute set by constructor's init() method
-            }
+            el.ndsDropmenuInstance = new NDSDropmenu(el);
         });
     }
 
-    // Re-initialize when new content is added
-    function reinitializeDropmenus() {
-        initializeDropmenus();
-    }
-
-    // CRITICAL: Expose global API immediately (called by unified init system)
+    // Expose global API (called by nds-loader.js unified system)
     if (typeof window !== 'undefined') {
         window.NDSDropmenu = {
             init: initializeDropmenus,
-            reinit: reinitializeDropmenus,
+            reinit: initializeDropmenus,
             create: (element) => new NDSDropmenu(element)
         };
     }
 
-    // Export for modules
     if (typeof module !== 'undefined' && module.exports) {
         module.exports = NDSDropmenu;
     }
-
-    // Note: Initialization now handled by nds-loader.js unified system
 })();
-
-/**
- * Usage Examples:
- *
- * // Auto-initialization (happens automatically)
- * // Just add the HTML structure with .nds-dropmenu class
- *
- * // HTML Structure:
- * <div class="nds-dropmenu">
- *   <button class="nds-btn nds-subtle nds-dropmenu-trigger">
- *     <span class="label">Menu</span>
- *   </button>
- *   <div class="nds-dropmenu-menu">
- *     <button class="nds-btn nds-subtle nds-dropmenu-item">
- *       <i class="hgi hgi-stroke hgi-icon"></i>
- *       <span class="label">Item 1</span>
- *     </button>
- *     <button class="nds-btn nds-subtle nds-dropmenu-item">Item 2</button>
- *     <hr class="nds-dropmenu-divider">
- *     <button class="nds-btn nds-subtle nds-dropmenu-item nds-destructive">Delete</button>
- *   </div>
- * </div>
- *
- * // Manual initialization
- * const dropmenuElement = document.querySelector('.nds-dropmenu');
- * const dropmenuInstance = NDSDropmenu.create(dropmenuElement);
- *
- * // Programmatic control
- * dropmenuInstance.open();
- * dropmenuInstance.close();
- * dropmenuInstance.toggle();
- *
- * // Listen for events
- * document.addEventListener('nds:dropmenu:opened', (e) => {
- *     console.log('Dropmenu opened:', e.detail.dropmenu);
- * });
- *
- * document.addEventListener('nds:dropmenu:closed', (e) => {
- *     console.log('Dropmenu closed:', e.detail.dropmenu);
- * });
- *
- * // Reinitialize after dynamic content changes
- * NDSDropmenu.reinit();
- */
