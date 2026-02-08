@@ -20,15 +20,15 @@
                         {% endfor %}
 
                         <li{% if has_active_child %} data-state="open"{% endif %}>
-                            <button class="nds-btn nds-subtle nds-menu-btn nds-indicator" aria-expanded="{{ has_active_child }}"><span class="label">{{ item.label }}</span></button>
+                            <button class="nds-btn nds-subtle nds-menu-btn nds-indicator"{% if has_active_child %} data-state="open"{% endif %} aria-expanded="{{ has_active_child }}"><span class="label">{{ item.label }}</span></button>
                             <ul>
                                 {% for child in item.children %}
-                                    <li{% if page.url == child.href %} data-state="active"{% endif %}><a class="nds-btn nds-subtle nds-indicator" href="{{ child.href | relative_url }}"><span class="label">{{ child.label }}</span></a></li>
+                                    <li{% if page.url == child.href %} data-state="active"{% endif %}><a class="nds-btn nds-subtle nds-indicator"{% if page.url == child.href %} data-state="active"{% endif %} href="{{ child.href | relative_url }}"><span class="label">{{ child.label }}</span></a></li>
                                 {% endfor %}
                             </ul>
                         </li>
                     {% else %}
-                        <li{% if page.url == item.href %} data-state="active"{% endif %}><a class="nds-btn nds-subtle nds-indicator" href="{{ item.href | relative_url }}"><span class="label">{{ item.label }}</span></a></li>
+                        <li{% if page.url == item.href %} data-state="active"{% endif %}><a class="nds-btn nds-subtle nds-indicator"{% if page.url == item.href %} data-state="active"{% endif %} href="{{ item.href | relative_url }}"><span class="label">{{ item.label }}</span></a></li>
                     {% endif %}
                 {% endfor %}
             </ul>

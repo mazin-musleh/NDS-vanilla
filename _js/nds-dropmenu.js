@@ -394,6 +394,13 @@
 
         close() {
             this.isOpen = false;
+
+            // Move focus out of menu before closing to prevent aria-hidden warning
+            // Only move focus if it's currently inside the menu
+            if (this.menu.contains(document.activeElement)) {
+                this.trigger.focus();
+            }
+
             // Add 'closing' state while keeping 'open' for animation
             addState(this.dropmenu, 'closing');
             this.trigger.setAttribute('aria-expanded', 'false');

@@ -10,7 +10,9 @@
 // ==============================================
 
 .nds-pagination-nav {
+  --_pagination-margin-top: var(--pagination-margin-top, var(--spacing-2xl));
   width: 100%;
+  margin: var(--_pagination-margin-top);
 
   &:not(:has(>.nds-pagination)) {
     display: none;
@@ -166,10 +168,6 @@
 
 // Pagination items visibility is controlled by the hidden attribute in JavaScript
 // No CSS needed - hidden attribute provides native display: none behavior
-
-.nds-auto-pagination {
-  margin-top: 24px;
-}
 
 .nds-pagination-ellipsis .nds-dropmenu-trigger.active::after {
   content: '...';
