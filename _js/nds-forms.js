@@ -554,6 +554,24 @@
             } else {
                 container.removeAttribute('data-state');
             }
+
+            // Propagate loading state to clear button
+            if (stateName === 'loading') {
+                var formControl = container.classList.contains('nds-form-control')
+                    ? container
+                    : container.querySelector('.nds-form-control');
+                if (formControl) {
+                    var clearBtn = formControl.querySelector('.nds-form-action .clear');
+                    if (clearBtn) {
+                        if (add) {
+                            clearBtn.removeAttribute('hidden');
+                            FormState.updateDataState(clearBtn, 'loading', true);
+                        } else {
+                            FormState.updateDataState(clearBtn, 'loading', false);
+                        }
+                    }
+                }
+            }
         },
 
         update: function(input, formControl, skipValidation) {
@@ -659,8 +677,22 @@
             input.addEventListener('blur', function() {
                 if (formContainer) {
                     FormState.updateDataState(formContainer, 'focus', false);
+                    FormState.updateDataState(formContainer, 'typing', false);
                 }
                 FormState.update(input, formControl);
+            });
+
+            // Typing state - indicates real user input
+            input.addEventListener('keydown', function() {
+                if (formContainer) {
+                    FormState.updateDataState(formContainer, 'typing', true);
+                }
+            });
+
+            input.addEventListener('paste', function() {
+                if (formContainer) {
+                    FormState.updateDataState(formContainer, 'typing', true);
+                }
             });
 
             // Input changes - clear errors but don't validate while typing

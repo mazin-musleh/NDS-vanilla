@@ -1,0 +1,50 @@
+/**
+ * NDS Autocomplete Component
+ * Styles for the dynamically-appended dropdown menu on form inputs
+ * Base dropmenu styles (display, animation, positioning) inherited via
+ * .nds-dropmenu + .nds-dropmenu-menu classes added by JS at init
+ */
+
+@use '../mixins' as *;
+
+// ==============================================
+// AUTOCOMPLETE MENU OVERRIDES
+// ==============================================
+
+.nds-form-container {
+
+    // Menu spans full input width
+    .nds-autocomplete-menu {
+        left: 0;
+        right: 0;
+        min-width: 100%;
+        max-height: 300px;
+        overflow-y: auto;
+    }
+
+    // ==============================================
+    // HIGHLIGHT & EMPTY STATE
+    // ==============================================
+
+    .nds-autocomplete-menu .nds-dropmenu-item mark {
+        background-color: var(--colors-primary-sa-flag-100);
+        color: inherit;
+        padding: 0;
+        border-radius: 2px;
+    }
+
+    .nds-autocomplete-menu .nds-dropmenu-item.active {
+        background-color: var(--colors-neutral-100, #F2F4F7);
+    }
+
+}
+
+// ==============================================
+// RESPONSIVE
+// ==============================================
+
+@include mobile {
+    .nds-autocomplete-menu {
+        max-height: 200px;
+    }
+}

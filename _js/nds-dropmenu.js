@@ -30,10 +30,6 @@
                      : element.removeAttribute('data-state');
     };
 
-    const clearState = (element) => {
-        if (element) element.removeAttribute('data-state');
-    };
-
     // ==============================================
     // DROPMENU CLASS
     // ==============================================
@@ -330,8 +326,8 @@
                 if (done) return;
                 done = true;
 
-                clearState(this.dropmenu);
-                clearState(this.trigger);
+                removeState(this.dropmenu, 'open', 'opening', 'closing');
+                removeState(this.trigger, 'open');
                 this.dropmenu.removeAttribute('data-position-vertical');
                 this.dropmenu.removeAttribute('data-position-horizontal');
                 this.menu.setAttribute('aria-hidden', 'true');
