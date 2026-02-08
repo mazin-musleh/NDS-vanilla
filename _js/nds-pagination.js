@@ -103,8 +103,8 @@
                     menuItem.setAttribute('aria-label', element.getAttribute('aria-label') || `Page ${element.textContent}`);
 
                     // Preserve active state and aria-current from original element
-                    if (element.classList.contains('active')) {
-                        menuItem.classList.add('active');
+                    if (element.hasAttribute('data-state') && element.getAttribute('data-state').includes('active')) {
+                        menuItem.setAttribute('data-state', 'active');
                     }
                     if (element.hasAttribute('aria-current')) {
                         menuItem.setAttribute('aria-current', element.getAttribute('aria-current'));
@@ -188,7 +188,7 @@
     function setActivePage(pagination, pageNumber) {
         // Remove active from all items (including dropdown items and ellipsis trigger)
         pagination.querySelectorAll('.nds-pagination-item button, .nds-pagination-item a, .nds-dropmenu-item, .nds-dropmenu-trigger').forEach(el => {
-            el.classList.remove('active');
+            el.removeAttribute('data-state');
             el.removeAttribute('aria-current');
         });
 
@@ -204,7 +204,7 @@
         pagination.querySelectorAll('.nds-pagination-item button, .nds-pagination-item a, .nds-dropmenu-item').forEach(element => {
             const elementPageNumber = parseInt(element.querySelector('.label')?.textContent || element.textContent);
             if (elementPageNumber === pageNumber) {
-                element.classList.add('active');
+                element.setAttribute('data-state', 'active');
                 element.setAttribute('aria-current', 'page');
 
                 // Check if this element is inside a dropdown
@@ -218,7 +218,7 @@
 
         // Add active to ellipsis button and show active page number if active page is inside dropdown
         if (activeInDropdown && ellipsisTrigger) {
-            ellipsisTrigger.classList.add('active');
+            ellipsisTrigger.setAttribute('data-state', 'active');
             const ellipsisLabel = ellipsisTrigger.querySelector('.label');
             if (ellipsisLabel) {
                 ellipsisLabel.textContent = pageNumber;
@@ -433,11 +433,11 @@
 
         // Page numbers
         for (let i = 1; i <= totalPages; i++) {
-            const isActive = i === activePage ? ' active' : '';
+            const activeAttr = i === activePage ? ' data-state="active"' : '';
             const ariaCurrent = i === activePage ? ' aria-current="page"' : '';
             html += `
             <li class="nds-pagination-item page_${i}">
-                <button type="button" class="nds-btn nds-subtle nds-indicator${isActive}"${ariaCurrent} aria-label="Page ${i}">
+                <button type="button" class="nds-btn nds-subtle nds-indicator"${activeAttr}${ariaCurrent} aria-label="Page ${i}">
                     <span class="label">${i}</span>
                 </button>
             </li>`;

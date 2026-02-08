@@ -175,9 +175,9 @@ textarea {
   --_btn-height: var(--btn-height, var(--_btn-size));
   --_btn-width: var(--btn-width, unset);
   --_btn-gap: var(--btn-gap, var(--spacing-xs));
+  --_btn-padding: var(--btn-padding, calc(var(--_btn-size) * 0.375 - 3px));
 
   /* Formula-based sizing */
-  --_btn-padding: calc(var(--_btn-size) * 0.375 - 3px);
   --_btn-FS: calc(var(--_btn-size) * 0.2 + 8px);
   --_btn-icon-size: calc(var(--_btn-size) / 2);
 

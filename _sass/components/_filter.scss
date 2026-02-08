@@ -9,6 +9,15 @@
 // FILTER CONTAINER IN DROPMENU
 // ==============================================
 
+.nds-auto-fill {
+    > .label {
+        font-size: var(--nds-text-clamp-lg-FS);
+        line-height: var(--nds-text-clamp-lg-LH);
+        color: var(--text-primary);
+        font-weight: 500;
+    }
+}
+
 .nds-filter {
     display: flex;
     gap: var(--spacing-2xl);
@@ -45,6 +54,7 @@
         >.label {
             font-size: var(--nds-text-lg-FS);
             font-weight: 500;
+            color: var(--text-default);
         }
     }
 
@@ -162,10 +172,4 @@
         width: 100%;
     }
 
-    .nds-dropdown-title {
-        font-size: var(--nds-text-clamp-lg-FS);
-        line-height: var(--nds-text-clamp-lg-LH);
-        color: var(--text-primary);
-        font-weight: 500;
-    }
 }

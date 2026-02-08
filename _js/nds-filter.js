@@ -192,7 +192,13 @@
 
             // Build request URL and options
             const method = this.filterContainer.method.toUpperCase() || 'GET';
-            const action = this.filterContainer.action || window.location.href;
+            let action = this.filterContainer.action || window.location.href;
+
+            // Handle # or empty action - use current page URL without hash
+            if (!action || action === '#' || action.endsWith('#')) {
+                action = window.location.origin + window.location.pathname;
+            }
+
             let url = action;
             let options = {
                 method: method,
@@ -241,6 +247,9 @@
                             // Update reference to point to the new container
                             this.targetContainer = newContainer;
 
+                            // Update items reference to new elements
+                            this.items = Array.from(this.targetContainer.querySelectorAll('.nds-card'));
+
                             // Remove hidden attributes and display:none styles
                             this.targetContainer.removeAttribute('hidden');
                             if (this.targetContainer.style.display === 'none') {
@@ -276,6 +285,11 @@
                     // Set success state
                     this.filterContainer.setAttribute('data-status', 'success');
                     this.filterContainer.removeAttribute('data-state');
+
+                    // Update UI elements
+                    this.updateUrlParams();
+                    this.updateFilterButtonLabel();
+                    this.updateAppliedChips();
 
                     // Dispatch complete event
                     this.filterContainer.dispatchEvent(new CustomEvent('nds:filterFormComplete', {
@@ -863,7 +877,13 @@
                         );
                         this.updateApplyButtonLabel();
                     }
-                    this.applyFilters();
+
+                    // In AJAX mode, resubmit form to get updated results
+                    if (this.isAjaxMode) {
+                        this.submitForm();
+                    } else {
+                        this.applyFilters();
+                    }
                 });
             }
         }
@@ -893,6 +913,11 @@
          * Submit the form (only called from user actions, not programmatically)
          */
         submitForm() {
+            // Dismiss any feedback in filter container
+            if (window.NDSFeedback) {
+                NDSFeedback.dismissAll(this.filterContainer);
+            }
+
             // AJAX mode needs state updates because page doesn't refresh
             // GET/POST modes don't need updates because page will refresh
             if (this.isAjaxMode) {
@@ -1168,6 +1193,11 @@
         // ==============================================
 
         applyFilters() {
+            // Dismiss any feedback in filter container
+            if (window.NDSFeedback) {
+                NDSFeedback.dismissAll(this.filterContainer);
+            }
+
             // In form mode, just update state (don't submit form programmatically)
             // Form submission only happens from explicit user actions via submitForm()
             if (this.isFormMode) {
@@ -1195,6 +1225,13 @@
                 // Update hidden inputs if in form mode
                 if (this.isFormMode) {
                     this.clearHiddenInputs();
+                }
+
+                // Dismiss no-results alert if exists
+                const alertId = `nds-filter-no-results-${this.targetId}`;
+                const existingAlert = document.getElementById(alertId);
+                if (existingAlert && window.NDSAlert) {
+                    NDSAlert.dismiss(existingAlert);
                 }
 
                 this.updateUrlParams();
@@ -1433,6 +1470,11 @@
             const existingAlert = document.getElementById(alertId);
             if (existingAlert && window.NDSAlert) {
                 NDSAlert.dismiss(existingAlert);
+            }
+
+            // Dismiss any feedback in filter container
+            if (window.NDSFeedback) {
+                NDSFeedback.dismissAll(this.filterContainer);
             }
 
             this.updateUrlParams();

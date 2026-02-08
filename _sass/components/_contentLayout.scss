@@ -142,7 +142,7 @@ main {
         }
     }
 
-    &:is(.wSideMenu, .wSideInfo) {
+    &:is(.wSideMenu) {
         .mainContent {
             /* column-gap: var(--spacing-lg);
             row-gap: var(--spacing-5xl); */
@@ -273,7 +273,7 @@ main {
 .contentLayout {
 
     // Without side menu - always reset
-    &:not(.wSideMenu, .wSideInfo, .cardView) .mainContent {
+    &:not(.wSideMenu, .cardView) .mainContent {
         .nds-content-section:not(.nds-user-feedback-section):nth-of-type(even) {
             @include reset-section-style;
         }
@@ -286,7 +286,7 @@ main {
     }
 
     // With side menu - reset only on tablet and below
-    &:not(.cardView):is(.wSideMenu, .wSideInfo) .mainContent {
+    &:not(.cardView):is(.wSideMenu) .mainContent {
         @include tablet(max) {
             .nds-content-section:not(.nds-user-feedback-section):nth-of-type(even) {
                 @include reset-section-style;
@@ -348,6 +348,12 @@ main {
             var(--text-secondary),
             var(--text-oncolor-secondary));
     }
+    &.nds-brand {
+        @include section-variant(var(--background-brand-light),
+            var(--text-default),
+            var(--text-default));
+    }
+    
 
     &.nds-ghost,
     &.noBg {
@@ -487,6 +493,8 @@ main {
     font-size: var(--nds-text-clamp-sm-FS);
     align-items: flex-end;
     line-height: 1;
+    --btn-padding: var(--spacing-xs);
+    --btn-height: 24px;
 
 }
 

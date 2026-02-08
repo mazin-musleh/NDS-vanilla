@@ -14,7 +14,7 @@
   --_menu-padding: var(--menu-padding, var(--spacing-sm, 8px));
 
   position: relative;
-  display: inline-block;
+  display: inline-flex;
 
   // ==============================================
   // DROPDOWN MENU CONTAINER
@@ -24,6 +24,7 @@
     display: none;
     position: absolute;
     z-index: 900;
+    top: 100%;
     right: 0;
     min-width: 150px;
     margin-top: 4px;

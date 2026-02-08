@@ -389,12 +389,6 @@
                 const scrollWidth = DOM.primary.scrollWidth;
                 const clientWidth = DOM.primary.clientWidth;
 
-                console.log('Nav Overflow Check:', {
-                    scrollWidth,
-                    clientWidth,
-                    wasOverflowing
-                });
-
                 // Skip check if element hasn't been laid out yet (both dimensions are 0)
                 if (scrollWidth === 0 && clientWidth === 0) {
                     this.schedule('low', 50);
@@ -404,7 +398,6 @@
                 // Simple check: does content overflow container?
                 // Don't subtract button width - flexbox handles layout
                 hasOverflow = scrollWidth > clientWidth;
-                console.log('Result:', { hasOverflow, willToggle: hasOverflow !== wasOverflowing });
             }
 
             // Remove hidden from collapse after primary nav settles (first check only)

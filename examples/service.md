@@ -114,7 +114,8 @@ hideSidemenu: true
                         <i class="hgi hgi-stroke hgi-book-open-01 icon"></i>
                         <span class="label">User guide</span>
                     </dt>
-                    <dd><a href="#user-guide" class="nds-btn nds-secondary"><span class="label">Download User Guide</span></a></dd>
+                    <dd><a href="#user-guide" class="nds-btn nds-secondary"><span class="label">Download User
+                                Guide</span></a></dd>
                 </div>
                 <div class="nds-definition-item">
                     <dt>
@@ -122,9 +123,9 @@ hideSidemenu: true
                         <span class="label">Service Level</span>
                     </dt>
                     <dd><a href="#user-guide" class="nds-btn nds-transparent nds-color">
-                        <span class="label">Service Level Agreement</span>
-                        <i class="hgi hgi-stroke hgi-link-square-02 icon"></i>
-                    </a>
+                            <span class="label">Service Level Agreement</span>
+                            <i class="hgi hgi-stroke hgi-link-square-02 icon"></i>
+                        </a>
                     </dd>
                 </div>
                 <div class="nds-definition-item">
@@ -132,9 +133,168 @@ hideSidemenu: true
                         <i class="hgi hgi-stroke hgi-headphones icon"></i>
                         <span class="label">Customer Service</span>
                     </dt>
-                    <dd>Unified Tel: <a href="tel:19996" class="nds-btn nds-transparent nds-color"><span class="label">19996</span></a><br>Ext: 1234<br>Email: <a href="mailto:support@services.gov.sa" class="nds-btn nds-transparent nds-color"><span class="label">support@services.gov.sa</span></a></dd>
+                    <dd>Unified Tel: <a href="tel:19996" class="nds-btn nds-transparent nds-color"><span
+                                class="label">19996</span></a><br>Ext: 1234<br>Email: <a
+                            href="mailto:support@services.gov.sa" class="nds-btn nds-transparent nds-color"><span
+                                class="label">support@services.gov.sa</span></a></dd>
                 </div>
             </dl>
         </aside>
+    </div>
+</section>
+<section id="relatedServices" class="nds-content-section nds-brand">
+
+    <div class="nds-section-head">
+        <h2 class="nds-section-title">Related Services</h2>
+        <p class="nds-section-description">Explore other government digital services that may be relevant to you.</p>
+    </div>
+    <div class="nds-section-content nds-full-width">
+        <div class="nds-swiper" slides-max="4" slides-mid="2" slides-min="1" peek="40" hidden>
+            <div class="nds-swiper-wrapper">
+                <div class="nds-swiper-slide">
+                    <a href="{{ 'service.html' }}" class="nds-card nds-stroke">
+                        <div class="nds-card-header">
+                            <div class="nds-card-featured-icon">
+                                <span class="nds-featured-icon nds-circle nds-xl">
+                                    <i class="hgi hgi-stroke hgi-user-id-verification icon"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <h3 class="nds-card-title nds-truncate">Identity Verification</h3>
+                                <span class="nds-card-description nds-truncate">Verify your national identity and obtain
+                                    digital certificates for government transactions</span>
+                            </div>
+                            <div class="nds-card-tags">
+                                <span class="nds-tag nds-blue nds-sm"><span class="label">Identity System</span></span>
+                                <span class="nds-tag nds-green nds-sm"><span class="label">Most Used</span></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="nds-swiper-slide">
+                    <a href="{{ 'service.html' }}" class="nds-card nds-stroke">
+                        <div class="nds-card-header">
+                            <div class="nds-card-featured-icon">
+                                <span class="nds-featured-icon nds-circle nds-xl">
+                                    <i class="hgi hgi-stroke hgi-passport icon"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <h3 class="nds-card-title nds-truncate">Passport Renewal</h3>
+                                <span class="nds-card-description nds-truncate">Renew your passport online with
+                                    expedited processing and home delivery options</span>
+                            </div>
+                            <div class="nds-card-tags">
+                                <span class="nds-tag nds-blue nds-sm"><span class="label">Identity System</span></span>
+                                <span class="nds-tag nds-green nds-sm"><span class="label">Most Used</span></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="nds-swiper-slide">
+                    <a href="{{ 'service.html' }}" class="nds-card nds-stroke">
+                        <div class="nds-card-header">
+                            <div class="nds-card-featured-icon">
+                                <span class="nds-featured-icon nds-circle nds-xl">
+                                    <i class="hgi hgi-stroke hgi-driving-license icon"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <h3 class="nds-card-title nds-truncate">Driver's License Services</h3>
+                                <span class="nds-card-description nds-truncate">Apply for new license, renew existing
+                                    license, or update your driving information</span>
+                            </div>
+                            <div class="nds-card-tags">
+                                <span class="nds-tag nds-blue nds-sm"><span class="label">Transport System</span></span>
+                                <span class="nds-tag nds-green nds-sm"><span class="label">Most Used</span></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="nds-swiper-slide">
+                    <a href="{{ 'service.html' }}" class="nds-card nds-stroke">
+                        <div class="nds-card-header">
+                            <div class="nds-card-featured-icon">
+                                <span class="nds-featured-icon nds-circle nds-xl">
+                                    <i class="hgi hgi-stroke hgi-health-insurance icon"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <h3 class="nds-card-title nds-truncate">Health Insurance Enrollment</h3>
+                                <span class="nds-card-description nds-truncate">Enroll in government health insurance
+                                    plans and manage your coverage</span>
+                            </div>
+                            <div class="nds-card-tags">
+                                <span class="nds-tag nds-blue nds-sm"><span class="label">Healthcare
+                                        System</span></span>
+                                <span class="nds-tag nds-green nds-sm"><span class="label">Most Used</span></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="nds-swiper-slide">
+                    <a href="{{ 'service.html' }}" class="nds-card nds-stroke">
+                        <div class="nds-card-header">
+                            <div class="nds-card-featured-icon">
+                                <span class="nds-featured-icon nds-circle nds-xl">
+                                    <i class="hgi hgi-stroke hgi-store-01 icon"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <h3 class="nds-card-title nds-truncate">Business License Application</h3>
+                                <span class="nds-card-description nds-truncate">Apply for commercial licenses and
+                                    business permits for new ventures</span>
+                            </div>
+                            <div class="nds-card-tags">
+                                <span class="nds-tag nds-blue nds-sm"><span class="label">Commerce System</span></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="nds-swiper-slide">
+                    <a href="{{ 'service.html' }}" class="nds-card nds-stroke">
+                        <div class="nds-card-header">
+                            <div class="nds-card-featured-icon">
+                                <span class="nds-featured-icon nds-circle nds-xl">
+                                    <i class="hgi hgi-stroke hgi-graduation-cap icon"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <h3 class="nds-card-title nds-truncate">School Enrollment</h3>
+                                <span class="nds-card-description nds-truncate">Enroll children in public schools and
+                                    manage educational records</span>
+                            </div>
+                            <div class="nds-card-tags">
+                                <span class="nds-tag nds-blue nds-sm"><span class="label">Education System</span></span>
+                                <span class="nds-tag nds-green nds-sm"><span class="label">Most Used</span></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="nds-swiper-navigation">
+                <div class="nds-swiper-buttons">
+                    <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-swiper-button-prev"
+                        type="button" aria-label="Previous slide"><i
+                            class="hgi hgi-stroke hgi-arrow-right-01 icon"></i></button>
+                    <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-swiper-button-next"
+                        type="button" aria-label="Next slide"><i
+                            class="hgi hgi-stroke hgi-arrow-left-01 icon"></i></button>
+                </div>
+                <div class="nds-swiper-pagination"></div>
+            </div>
+        </div>
     </div>
 </section>

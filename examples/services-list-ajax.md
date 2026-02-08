@@ -13,7 +13,8 @@ exclude_showcase: false
 
 <section id="servicesList" class="nds-content-section">
     <div class="nds-section-head">
-        <div class="nds-section-search nds-filter" data-filter-target="services_list_content" hidden>
+        <form class="nds-section-search nds-filter" data-filter-target="services_list_content" data-ajax
+            data-filter-submit method="GET" action="#" hidden>
             <div class="nds-form-container nds-search-box">
                 <div class="nds-search-content">
                     <div class="nds-form-control">
@@ -57,12 +58,133 @@ exclude_showcase: false
                 </button>
                 <div class="nds-dropmenu-menu" style="min-width: 300px;" hidden>
                     <!-- Filter by Most Used -->
-                    <div class="nds-dropmenu-item" data-filter="most-used" data-filter-legend="Most Used"
-                        data-filter-type="switch" data-no-auto-close></div>
-                    <hr class="nds-dropmenu-divider nds-lg">
+                    <div class="nds-dropmenu-item" data-filter="most-used" data-no-auto-close role="menuitem">
+                        <div class="nds-form-container nds-switch-container" data-state="filled">
+                            <div class="nds-form-header"><label for="filter-most-used">
+                                    <span class="label">Most Used</span>
+                                </label>
+                            </div>
+                            <div class="nds-form-control">
+                                <div class="nds-switch"><input type="checkbox" id="filter-most-used"
+                                        name="filter-most-used" value="Most Used" class="nds-switch-input">
+                                    <div class="nds-switch-track">
+                                        <div class="nds-switch-thumb"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="nds-divider nds-lg">
                     <!-- Filter by System -->
-                    <div class="nds-dropmenu-item" data-filter="system" data-filter-legend="System"
-                        data-filter-type="checkbox" data-no-auto-close></div>
+                    <fieldset class="nds-check-group nds-dropmenu-item" data-filter="system" data-no-auto-close>
+                        <legend class="label">System</legend>
+                        <div class="nds-form-container nds-check-container">
+                            <div class="nds-form-header">
+                                <label for="sys-identity"><span class="label">Identity System</span></label>
+                            </div>
+                            <div class="nds-form-control">
+                                <input type="checkbox" id="sys-identity" name="system" value="Identity System"
+                                    class="nds-check">
+                            </div>
+                        </div>
+                        <div class="nds-form-container nds-check-container">
+                            <div class="nds-form-header">
+                                <label for="sys-transport"><span class="label">Transport System</span></label>
+                            </div>
+                            <div class="nds-form-control">
+                                <input type="checkbox" id="sys-transport" name="system" value="Transport System"
+                                    class="nds-check">
+                            </div>
+                        </div>
+                        <div class="nds-form-container nds-check-container">
+                            <div class="nds-form-header">
+                                <label for="sys-civil"><span class="label">Civil Records System</span></label>
+                            </div>
+                            <div class="nds-form-control">
+                                <input type="checkbox" id="sys-civil" name="system" value="Civil Records System"
+                                    class="nds-check">
+                            </div>
+                        </div>
+                        <div class="nds-form-container nds-check-container">
+                            <div class="nds-form-header">
+                                <label for="sys-healthcare"><span class="label">Healthcare System</span></label>
+                            </div>
+                            <div class="nds-form-control">
+                                <input type="checkbox" id="sys-healthcare" name="system" value="Healthcare System"
+                                    class="nds-check">
+                            </div>
+                        </div>
+                        <div class="nds-form-container nds-check-container">
+                            <div class="nds-form-header">
+                                <label for="sys-commerce"><span class="label">Commerce System</span></label>
+                            </div>
+                            <div class="nds-form-control">
+                                <input type="checkbox" id="sys-commerce" name="system" value="Commerce System"
+                                    class="nds-check">
+                            </div>
+                        </div>
+                        <div class="nds-form-container nds-check-container">
+                            <div class="nds-form-header">
+                                <label for="sys-realestate"><span class="label">Real Estate System</span></label>
+                            </div>
+                            <div class="nds-form-control">
+                                <input type="checkbox" id="sys-realestate" name="system" value="Real Estate System"
+                                    class="nds-check">
+                            </div>
+                        </div>
+                        <div class="nds-form-container nds-check-container">
+                            <div class="nds-form-header">
+                                <label for="sys-tax"><span class="label">Tax System</span></label>
+                            </div>
+                            <div class="nds-form-control">
+                                <input type="checkbox" id="sys-tax" name="system" value="Tax System" class="nds-check">
+                            </div>
+                        </div>
+                        <div class="nds-form-container nds-check-container">
+                            <div class="nds-form-header">
+                                <label for="sys-education"><span class="label">Education System</span></label>
+                            </div>
+                            <div class="nds-form-control">
+                                <input type="checkbox" id="sys-education" name="system" value="Education System"
+                                    class="nds-check">
+                            </div>
+                        </div>
+                        <div class="nds-form-container nds-check-container">
+                            <div class="nds-form-header">
+                                <label for="sys-immigration"><span class="label">Immigration System</span></label>
+                            </div>
+                            <div class="nds-form-control">
+                                <input type="checkbox" id="sys-immigration" name="system" value="Immigration System"
+                                    class="nds-check">
+                            </div>
+                        </div>
+                        <div class="nds-form-container nds-check-container">
+                            <div class="nds-form-header">
+                                <label for="sys-justice"><span class="label">Justice System</span></label>
+                            </div>
+                            <div class="nds-form-control">
+                                <input type="checkbox" id="sys-justice" name="system" value="Justice System"
+                                    class="nds-check">
+                            </div>
+                        </div>
+                        <div class="nds-form-container nds-check-container">
+                            <div class="nds-form-header">
+                                <label for="sys-hr"><span class="label">HR System</span></label>
+                            </div>
+                            <div class="nds-form-control">
+                                <input type="checkbox" id="sys-hr" name="system" value="HR System" class="nds-check">
+                            </div>
+                        </div>
+                        <div class="nds-form-container nds-check-container">
+                            <div class="nds-form-header">
+                                <label for="sys-social"><span class="label">Social Security System</span></label>
+                            </div>
+                            <div class="nds-form-control">
+                                <input type="checkbox" id="sys-social" name="system" value="Social Security System"
+                                    class="nds-check">
+                            </div>
+                        </div>
+                    </fieldset>
                     <hr class="nds-dropmenu-divider nds-lg">
                     <div class="nds-dropmenu-action nds-grid">
                         <button class="nds-btn nds-secondary nds-dropmenu-item" type="button" data-filter-action="clear"
@@ -79,7 +201,7 @@ exclude_showcase: false
                 <span class="label">Applied Filters:</span>
                 <div class="nds-chips"></div>
             </div>
-        </div>
+        </form>
     </div>
     <div class="nds-section-content">
         <div id="services_list_content" class="nds-pagination-content nds-grid" hidden
@@ -573,6 +695,42 @@ exclude_showcase: false
             </a>
 
         </div>
-        <nav class="nds-pagination-nav nds-auto-pagination" aria-label="Pagination"></nav>
+        <nav class="nds-pagination-nav" aria-label="Pagination">
+            <ul class="nds-pagination">
+                <li class="nds-pagination-item nds-pagination-prev">
+                    <a href="#" class="nds-btn nds-subtle nds-prev nds-icon-only" aria-label="Previous page">
+                    </a>
+                </li>
+                <li class="nds-pagination-item">
+                    <a href="#" class="nds-btn nds-subtle nds-indicator" aria-label="Page 1" aria-current="page">
+                        <span class="label">1</span>
+                    </a>
+                </li>
+                <li class="nds-pagination-item">
+                    <a href="#" class="nds-btn nds-subtle nds-indicator" aria-label="Page 2">
+                        <span class="label">2</span>
+                    </a>
+                </li>
+                <li class="nds-pagination-item">
+                    <a href="#" class="nds-btn nds-subtle nds-indicator" aria-label="Page 3">
+                        <span class="label">3</span>
+                    </a>
+                </li>
+                <li class="nds-pagination-item">
+                    <a href="#" class="nds-btn nds-subtle nds-indicator" aria-label="Page 4">
+                        <span class="label">4</span>
+                    </a>
+                </li>
+                <li class="nds-pagination-item">
+                    <a href="#" class="nds-btn nds-subtle nds-indicator" aria-label="Page 5">
+                        <span class="label">5</span>
+                    </a>
+                </li>
+                <li class="nds-pagination-item nds-pagination-next">
+                    <a href="#" class="nds-btn nds-subtle nds-next nds-icon-only" aria-label="Next page">
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </div>
 </section>
