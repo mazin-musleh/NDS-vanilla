@@ -4,12 +4,12 @@ layout: default
 
 {% include hero.html hero_type="sub" %}
 
-<div class="contentLayout {% if page.hideSidemenu != true %}wSideMenu {% endif %}{{ page.layout_class }}">
+<div class="nds-content-layout {% if page.hideSidemenu != true %}wSideMenu {% endif %}{{ page.layout_class }}">
     {% if page.hideSidemenu != true %}
         {% include sideMenu.html %}
     {% endif %}
 
-    <div class="mainContent">
+    <div class="nds-main-content">
         {{ content }}
 
         {% include user-feedback.html %}

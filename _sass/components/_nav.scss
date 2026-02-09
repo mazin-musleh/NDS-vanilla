@@ -26,12 +26,12 @@
         width: 100%;
     }
 
-    .infoContainer {
+    .nds-topbar-info {
         display: flex;
         gap: var(--spacing-xl);
     }
 
-    .textIcon {
+    .nds-text-icon {
         height: 40px;
         min-width: 40px;
 
@@ -48,11 +48,11 @@
         }
     }
 
-    .generalInfo .textIcon svg {
+    .generalInfo .nds-text-icon svg {
         color: var(--icon-default, #384250);
     }
 
-    button.textIcon:hover {
+    button.nds-text-icon:hover {
         background-color: var(--background-neutral-200);
     }
 }
@@ -414,7 +414,7 @@
    DESKTOP/TABLET LAYOUT (non-minimal)
    ======================================== */
 
-body:not(.minimal) .nds-main-nav {
+body:not(.nds-minimal) .nds-main-nav {
 
     .nds-mainNav-toggler {
         display: none !important;
@@ -505,7 +505,7 @@ body:not(.minimal) .nds-main-nav {
 
 /* RTL/LTR Support for Desktop/Tablet */
 @include ltr {
-    body:not(.minimal) .nds-main-nav {
+    body:not(.nds-minimal) .nds-main-nav {
         .nds-collapse-content {
             .nds-nav-primary.hasMore {
                 ~.showMore i {
@@ -562,7 +562,7 @@ body:not(.minimal) .nds-main-nav {
     }
 
     .nds-topbar {
-        .infoContainer {
+        .nds-topbar-info {
 
             >#nds-cityName,
             >#nds-date {
@@ -585,10 +585,10 @@ body:not(.minimal) .nds-main-nav {
 }
 
 /* ========================================
-   MOBILE LAYOUT (body.minimal)
+   MOBILE LAYOUT (body.nds-minimal)
    ======================================== */
 
-body.minimal .nds-main-nav {
+body.nds-minimal .nds-main-nav {
     .nds-mainNav-toggler {
         display: flex;
 
@@ -822,7 +822,7 @@ body.minimal .nds-main-nav {
 
 /* Small Mobile Screens */
 @include mobile {
-    .nds-topbar .infoContainer:not(.dga-tab) {
+    .nds-topbar .nds-topbar-info:not(.nds-digitalStamp-tab) {
         display: none;
     }
 

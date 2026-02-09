@@ -49,8 +49,8 @@
             if (dropmenuElement.hasAttribute('data-nds-dropmenu-initialized')) return;
 
             // Cache references
-            this.contentLayout = dropmenuElement.closest('.contentLayout')
-                || document.querySelector('.contentLayout');
+            this.contentLayout = dropmenuElement.closest('.nds-content-layout')
+                || document.querySelector('.nds-content-layout');
             this.isRTL = getComputedStyle(dropmenuElement).direction === 'rtl';
 
             this.init();

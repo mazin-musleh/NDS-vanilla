@@ -7,9 +7,9 @@
         return cssValue ? parseInt(cssValue, 10) : 40;
     };
 
-    // Check if parent .contentLayout has .topSubMenu variant
+    // Check if parent .nds-content-layout has .topSubMenu variant
     const isTopSubMenuMode = (accMenu) => {
-        const contentLayout = accMenu.closest('.contentLayout');
+        const contentLayout = accMenu.closest('.nds-content-layout');
         return contentLayout && contentLayout.classList.contains('topSubMenu');
     };
 
@@ -247,7 +247,7 @@
                 const isTopMode = isTopSubMenuMode(accMenu);
                 const animationTarget = getAnimationTarget(accMenu);
                 const isOpen = hasState(animationTarget, 'open');
-                const contentLayout = accMenu.closest('.contentLayout');
+                const contentLayout = accMenu.closest('.nds-content-layout');
 
                 if (!isOpen) {
                     openMenu(accMenu, animationTarget, toggleBtn, contentLayout, isTopMode);
@@ -263,7 +263,7 @@
         document.addEventListener("click", function (e) {
             const isTopMode = isTopSubMenuMode(accMenu);
             const animationTarget = getAnimationTarget(accMenu);
-            const contentLayout = accMenu.closest('.contentLayout');
+            const contentLayout = accMenu.closest('.nds-content-layout');
 
             if (!hasState(animationTarget, 'open')) return;
 
@@ -317,7 +317,7 @@
             const animationTarget = getAnimationTarget(accMenu);
 
             if (hasState(animationTarget, 'open')) {
-                const contentLayout = accMenu.closest('.contentLayout');
+                const contentLayout = accMenu.closest('.nds-content-layout');
                 const toggleBtn = document.getElementById("sideMenuToggle");
 
                 // Close menu using helper
@@ -441,7 +441,7 @@
 
                 const isTopMode = isTopSubMenuMode(accMenu);
                 const animationTarget = getAnimationTarget(accMenu);
-                const contentLayout = accMenu.closest('.contentLayout');
+                const contentLayout = accMenu.closest('.nds-content-layout');
 
                 if (hasState(animationTarget, 'open')) {
                     closeMenu(accMenu, animationTarget, toggleBtn, contentLayout, isTopMode);
