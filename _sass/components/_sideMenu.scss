@@ -22,7 +22,7 @@
     z-index: 2;
 }
 
-.contentLayout.cardView .nds-sideMenu {
+.nds-content-layout.cardView .nds-sideMenu {
     border-radius: var(--radius-md);
 }
 
@@ -84,7 +84,7 @@
     // ========================================
     // SLIDER MODE STATES - Horizontal sliding (tablet/mobile)
     // ========================================
-    .contentLayout:not(.topSubMenu) .nds-sideMenu {
+    .nds-content-layout:not(.topSubMenu) .nds-sideMenu {
         position: fixed;
         top: 0;
         bottom: 0;
@@ -169,7 +169,7 @@
     }
 
 
-    .contentLayout:not(.topSubMenu) .nds-sideMenu {
+    .nds-content-layout:not(.topSubMenu) .nds-sideMenu {
 
         --btn-height: 72px;
         --toggle-height: var(--btn-height);
@@ -233,7 +233,7 @@
 }
 
 @include tablet(max) {
-    .contentLayout.topSubMenu {
+    .nds-content-layout.topSubMenu {
         flex-direction: column;
         gap: 0 !important;
         --btn-gap: var(--spacing-md);
@@ -323,7 +323,7 @@
         }
 
         // Add padding-top to mainContent when drawer is open
-        .nds-sideMenu[data-state~="open"]~.mainContent {
+        .nds-sideMenu[data-state~="open"]~.nds-main-content {
             padding-top: calc(var(--_toggle-height) + 16px);
         }
 

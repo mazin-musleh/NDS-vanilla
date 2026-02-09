@@ -7,9 +7,9 @@
     // ==============================================
     const DOM = {
         nav: document.getElementById('ndsMainNav'),
-        dgaTab: document.querySelector('.dga-tab'),
+        dgaTab: document.querySelector('.nds-digitalStamp-tab'),
         topbar: document.querySelector('.nds-topbar'),
-        dgaDigitalStamp: document.querySelector('#dgaDigitalStamp'),
+        dgaDigitalStamp: document.querySelector('#nds-digitalStamp'),
 
         get collapse() { return this.nav?.querySelector('#ndsNavCollapse'); },
         get collapseContent() { return this.nav?.querySelector('.nds-collapse-content'); },
@@ -537,10 +537,10 @@
 
     function updateBodyClass() {
         const should = state.isMinimal;
-        const is = document.body.classList.contains('minimal');
+        const is = document.body.classList.contains('nds-minimal');
 
         if (should !== is) {
-            document.body.classList.toggle('minimal', should);
+            document.body.classList.toggle('nds-minimal', should);
             state.invalidateCache();
             managePABPlacement();
             return true;

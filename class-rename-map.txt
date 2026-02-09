@@ -1,0 +1,33 @@
+NDS Class Rename Map
+====================
+
+Content Layout (contentLayout → nds-content-layout)
+----------------------------------------------------
+.contentLayout          → .nds-content-layout
+.mainContent            → .nds-main-content
+
+DGA Digital Stamp (_DGAdigitalStamp.scss)
+-----------------------------------------
+#dgaVerify-text                     → #nds-digitalStamp-verify-text
+.dga-tab                            → .nds-digitalStamp-tab
+#dgaDigitalStamp                    → #nds-digitalStamp
+.saudi-security-notices-container   → .nds-digitalStamp-notices
+.saudi-gov-security-card            → .nds-digitalStamp-card
+.saudi-gov-security-register        → .nds-digitalStamp-register
+.saudi-security-icon-wrapper        → .nds-digitalStamp-icon
+.saudi-notice-content-block         → .nds-digitalStamp-content
+.saudi-notice-primary-heading       → .nds-digitalStamp-heading
+.saudi-notice-description-text      → .nds-digitalStamp-description
+.saudi-domain-highlight-text        → .nds-digitalStamp-highlight
+.registration-number                → .nds-digitalStamp-registration
+
+Topbar Utilities
+----------------
+.textIcon               → .nds-text-icon
+.infoContainer          → .nds-topbar-info
+.smallScreenText        → .nds-digitalStamp-sm-text
+.bigScreenText          → .nds-digitalStamp-lg-text
+
+Body / Layout
+-------------
+body.minimal            → body.nds-minimal
