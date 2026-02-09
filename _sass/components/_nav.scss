@@ -190,6 +190,7 @@
                 display: none;
             }
         }
+
     }
 
     /* Navigation Links */
@@ -198,6 +199,10 @@
         --btn-height: var(--nds-nav-height);
         font-size: var(--nds-text-clamp-lg-FS);
         line-height: var(--nds-text-clamp-lg-LH);
+
+        .nds-avatar {
+            --avatar-size: calc(var(--nds-nav-height) - 40px);
+        }
     }
 
     /* Accessible focus styles */
@@ -313,7 +318,6 @@
 
 
     .nds-dropdown-item {
-        color: var(--text-default);
         text-decoration: none;
         justify-content: start;
 
@@ -326,7 +330,7 @@
 
 .nds-dropdown-menu {
 
-    .nds-dropdown-item{
+    .nds-dropdown-item {
         width: 100%;
     }
 
@@ -610,7 +614,9 @@ body.minimal .nds-main-nav {
             transition: transform var(--nds-transition);
             border-radius: 0 0 var(--radius-lg) var(--radius-lg);
 
-
+            &:has(.nds-nav-secondary .nds-dropdown[data-state~="open"]) .nds-nav-primary {
+                max-height: 20svh;
+            }
         }
 
         &[data-state~="open"] {
@@ -643,7 +649,7 @@ body.minimal .nds-main-nav {
         gap: 0;
         width: 100%;
         max-height: 50svh;
-        transition: margin-bottom 0.1s;
+        transition: max-height var(--nds-transition), margin-bottom 0.1s;
 
         .nds-nav-item {
             &:not(.showMore) {
@@ -695,6 +701,7 @@ body.minimal .nds-main-nav {
         .nds-dropdown[data-state~="closing"] .nds-dropdown-menu {
             grid-template-rows: 0fr;
         }
+
     }
 
     .nds-nav-item {
@@ -705,7 +712,8 @@ body.minimal .nds-main-nav {
     /* Show More Button */
     .nds-collapse-content {
         .nds-nav-primary.hasMore {
-             margin-bottom: calc(var(--nds-minimal-nav-item-height));
+            margin-bottom: calc(var(--nds-minimal-nav-item-height));
+
             ~.showMore {
                 opacity: 1;
                 visibility: visible;
@@ -780,7 +788,7 @@ body.minimal .nds-main-nav {
             inset-inline: 0;
             z-index: 1002;
             /* Above all navigation */
-            max-height: 40svh;
+            max-height: 45svh;
             overflow-y: clip;
 
             .nds-dropdown-content {

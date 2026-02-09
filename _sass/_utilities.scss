@@ -175,6 +175,48 @@ $breakpoints-range: (
   aspect-ratio: 1 / 1;
 }
 
+
+.nds-expandable {
+    position: relative;
+
+    // Gradient mask custom properties
+    --mask-fade-percentage: 35%; // Fade last 35% of content
+
+    // Default constrained state to prevent CLS
+    .nds-expandable-content {
+        overflow-y: hidden;
+        max-height: var(--max-height, 300px);
+    }
+}
+
+.nds-expandable.nds-expand {
+
+    &:has(>.nds-expandable-content),
+    &>*:has(>.nds-expandable-content) {
+        overflow: hidden;
+    }
+
+    .nds-expandable-content {
+        mask-image: linear-gradient(180deg, black calc(100% - var(--mask-fade-percentage)), transparent 100%);
+    }
+
+    .nds-expand-btn {
+        position: absolute;
+        bottom: 0;
+        z-index: 6;
+        inset-inline-end: 0;
+    }
+
+    &.nds-expanded {
+        .nds-expandable-content {
+            max-height: 100%;
+            padding-bottom: var(--spacing-4xl);
+            mask-image: none;
+            -webkit-mask-image: none;
+        }
+    }
+}
+
 // ==============================================
 // VISIBILITY UTILITIES
 // ==============================================
