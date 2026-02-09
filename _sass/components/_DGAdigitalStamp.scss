@@ -51,12 +51,14 @@
     grid-template-rows: 0fr;
     overflow: clip;
 
-    &.show {
+    &[data-state~="open"] {
         display: grid;
+        grid-template-rows: 1fr;
     }
 
-    &:is(.opening, .opened) {
-        grid-template-rows: 1fr;
+    &[data-state~="opening"],
+    &[data-state~="closing"] {
+        grid-template-rows: 0fr;
     }
 
     >* {
