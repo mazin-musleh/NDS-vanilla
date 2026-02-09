@@ -23,6 +23,29 @@
     };
 
     // ==============================================
+    // STATE MANAGEMENT HELPERS
+    // ==============================================
+    const parseStates = (el) =>
+        new Set((el?.getAttribute('data-state') || '').split(/\s+/).filter(Boolean));
+
+    const hasState = (el, s) => el ? parseStates(el).has(s) : false;
+
+    const addState = (element, ...states) => {
+        if (!element) return;
+        const current = parseStates(element);
+        states.forEach(s => current.add(s));
+        element.setAttribute('data-state', [...current].join(' '));
+    };
+
+    const removeState = (element, ...states) => {
+        if (!element) return;
+        const current = parseStates(element);
+        states.forEach(s => current.delete(s));
+        current.size ? element.setAttribute('data-state', [...current].join(' '))
+                     : element.removeAttribute('data-state');
+    };
+
+    // ==============================================
     // STATE MANAGEMENT
     // ==============================================
     const state = {
@@ -154,27 +177,26 @@
             };
 
             if (open) {
-                element.classList.add('show');
-                element.classList.remove('closing', 'opened');
+                addState(element, 'open', 'opening');
+                removeState(element, 'closing', 'opened');
                 onStart?.();
 
                 requestAnimationFrame(() => requestAnimationFrame(() => {
-                    element.classList.add('opening');
+                    removeState(element, 'opening');
                 }));
 
                 afterDelay(duration, () => {
-                    element.classList.remove('opening');
-                    element.classList.add('opened');
+                    addState(element, 'opened');
                     finish();
                 });
             } else {
-                element.classList.add('closing');
-                element.classList.remove('opened');
+                addState(element, 'closing');
+                removeState(element, 'opened');
 
                 onStart?.();
 
                 afterDelay(duration, () => {
-                    element.classList.remove('show', 'closing');
+                    removeState(element, 'open', 'opening', 'closing');
                     finish();
                 });
             }
@@ -204,7 +226,7 @@
     // ==============================================
     const dropdown = {
         closeAll(except = null) {
-            const open = document.querySelectorAll('#ndsMainNav .nds-dropdown.show');
+            const open = document.querySelectorAll('#ndsMainNav .nds-dropdown[data-state~="open"]');
             let maxDuration = 0;
             open.forEach(dd => {
                 if (dd !== except) {
@@ -260,7 +282,7 @@
             const toggleButton = DOM.toggler?.querySelector('button[aria-controls="ndsNavCollapse"]');
 
             if (open) {
-                DOM.toggler?.classList.add('active');
+                addState(DOM.toggler, 'open');
                 toggleButton?.setAttribute('aria-expanded', 'true');
 
                 // Show backdrop in minimal mode
@@ -282,7 +304,7 @@
                     }
                 });
             } else {
-                DOM.toggler?.classList.remove('active');
+                removeState(DOM.toggler, 'open');
                 toggleButton?.setAttribute('aria-expanded', 'false');
                 const closeDelay = state.reducedMotion ? 0 : dropdown.closeAll();
 
@@ -311,7 +333,7 @@
         toggle() {
             if (!DOM.topbar || !DOM.dgaDigitalStamp) return;
 
-            const isOpen = DOM.dgaDigitalStamp.classList.contains('show');
+            const isOpen = hasState(DOM.dgaDigitalStamp, 'open');
 
             animate.run(DOM.dgaDigitalStamp, !isOpen, {
                 getMenu: () => DOM.dgaDigitalStamp,
@@ -360,7 +382,7 @@
             if (!DOM.primary) return;
 
             // In minimal mode, only check overflow when nav is open
-            if (state.isMinimal && !DOM.collapse?.classList.contains('show')) {
+            if (state.isMinimal && !hasState(DOM.collapse, 'open')) {
                 DOM.primary.classList.remove('hasMore', 'atStart', 'atEnd');
                 return;
             }
@@ -451,13 +473,13 @@
     // LAYOUT UPDATES
     // ==============================================
     function updatePositions() {
-        const isOpen = DOM.collapse?.classList.contains('show');
-        const isClosing = DOM.collapse?.classList.contains('closing');
+        const isOpen = hasState(DOM.collapse, 'open');
+        const isClosing = hasState(DOM.collapse, 'closing');
 
         if (!state.isMinimal || !isOpen || isClosing) {
             if (!state.isMinimal && DOM.secondary) {
                 DOM.secondary.style.cssText = '';
-                DOM.secondary.classList.remove('closing');
+                removeState(DOM.secondary, 'closing');
             }
             return;
         }
@@ -603,7 +625,7 @@
         const dd = event.target.closest('.nds-dropdown');
         if (!dd) return;
 
-        const isOpen = dd.classList.contains('show');
+        const isOpen = hasState(dd, 'open');
         const menu = dd.querySelector('.nds-dropdown-menu');
         const content = menu?.querySelector('.nds-dropdown-content');
         const isInMinimal = dd.closest('.nds-nav-minimal');
@@ -622,7 +644,7 @@
         // If closing, allow
         if (isOpen) {
             dropdown.toggle(dd, false);
-            if (isInPrimary && DOM.collapse?.classList.contains('show')) {
+            if (isInPrimary && hasState(DOM.collapse, 'open')) {
                 afterDelay(duration, updatePositions);
             }
             return;
@@ -639,7 +661,7 @@
             }
 
             dropdown.toggle(dd, true);
-            if (isInPrimary && DOM.collapse?.classList.contains('show')) {
+            if (isInPrimary && hasState(DOM.collapse, 'open')) {
                 afterDelay(duration * 0.1, updatePositions);
             }
         };
@@ -648,7 +670,7 @@
         if (isInMinimal && state.isMinimal) {
             let delay = 0;
 
-            if (DOM.collapse?.classList.contains('show')) {
+            if (hasState(DOM.collapse, 'open')) {
                 // Get navbar close duration (includes dropdowns + collapse)
                 const dropdownCloseDelay = state.reducedMotion ? 0 : dropdown.closeAll();
                 const collapseContent = DOM.collapse?.querySelector('.nds-collapse-content');
@@ -663,13 +685,13 @@
                 delay = Math.max(delay, closeDelay);
             }
 
-            if (DOM.dgaDigitalStamp?.classList.contains('show')) {
+            if (hasState(DOM.dgaDigitalStamp, 'open')) {
                 dga.toggle();
                 delay = Math.max(delay, duration);
             }
 
             afterDelay(delay, open);
-        } else if (!state.isMinimal && DOM.dgaDigitalStamp?.classList.contains('show')) {
+        } else if (!state.isMinimal && hasState(DOM.dgaDigitalStamp, 'open')) {
             toggleDGA();
             afterDelay(duration, () => afterDelay(closeDelay, open));
         } else {
@@ -683,17 +705,17 @@
             return;
         }
 
-        const isOpen = DOM.collapse?.classList.contains('show');
+        const isOpen = hasState(DOM.collapse, 'open');
         const collapseContent = DOM.collapse?.querySelector('.nds-collapse-content');
         // Always read duration from content wrapper since transition is on .nds-collapse-content
         const duration = state.getDuration(collapseContent || DOM.collapse);
 
         if (!isOpen) {
-            const minimalDropdowns = document.querySelectorAll('.nds-nav-minimal .nds-dropdown.show');
+            const minimalDropdowns = document.querySelectorAll('.nds-nav-minimal .nds-dropdown[data-state~="open"]');
             if (minimalDropdowns.length) {
                 minimalDropdowns.forEach(d => dropdown.toggle(d, false));
                 afterDelay(duration, () => {
-                    if (DOM.dgaDigitalStamp?.classList.contains('show')) {
+                    if (hasState(DOM.dgaDigitalStamp, 'open')) {
                         toggleDGA();
                         afterDelay(duration, () => navbar.toggle(true));
                     } else {
@@ -704,7 +726,7 @@
             }
         }
 
-        if (DOM.dgaDigitalStamp?.classList.contains('show')) {
+        if (hasState(DOM.dgaDigitalStamp, 'open')) {
             toggleDGA();
             afterDelay(duration, () => navbar.toggle(!isOpen));
         } else {
@@ -716,11 +738,11 @@
         const collapseContent = DOM.collapse?.querySelector('.nds-collapse-content');
         const duration = state.getDuration(collapseContent || DOM.collapse);
 
-        if (DOM.collapse?.classList.contains('show')) {
+        if (hasState(DOM.collapse, 'open')) {
             navbar.toggle(false);
             afterDelay(duration * 1.2 + 50, () => dga.toggle());
         } else {
-            const openDropdowns = document.querySelectorAll('.nds-dropdown.show');
+            const openDropdowns = document.querySelectorAll('.nds-dropdown[data-state~="open"]');
             if (openDropdowns.length) {
                 const firstDropdown = openDropdowns[0];
                 const menu = firstDropdown.querySelector('.nds-dropdown-menu');
@@ -749,18 +771,18 @@
         const buffer = state.css.safeZone;
 
         // Close DGA if click outside
-        if (DOM.dgaDigitalStamp?.classList.contains('show')) {
+        if (hasState(DOM.dgaDigitalStamp, 'open')) {
             if (isOutside(x, y, [DOM.dgaTab, DOM.dgaDigitalStamp], buffer)) {
                 toggleDGA();
             }
         }
 
         // Close navbar if click outside
-        if (DOM.toggler && DOM.collapse?.classList.contains('show')) {
+        if (DOM.toggler && hasState(DOM.collapse, 'open')) {
             const elements = [DOM.collapse, DOM.toggler];
 
             if (state.isMinimal) {
-                DOM.collapse?.querySelectorAll('.nds-nav-secondary .nds-dropdown.show .nds-dropdown-menu')
+                DOM.collapse?.querySelectorAll('.nds-nav-secondary .nds-dropdown[data-state~="open"] .nds-dropdown-menu')
                     .forEach(m => { if (!m.closest('.nds-nav-minimal')) elements.push(m); });
             }
 
@@ -770,13 +792,13 @@
         }
 
         // Close dropdowns if click outside
-        document.querySelectorAll('#ndsMainNav .nds-dropdown.show').forEach(dd => {
-            if (dd.classList.contains('closing')) return;
+        document.querySelectorAll('#ndsMainNav .nds-dropdown[data-state~="open"]').forEach(dd => {
+            if (hasState(dd, 'closing')) return;
 
             const menu = dd.querySelector('.nds-dropdown-menu');
             if (isOutside(x, y, [dd, menu].filter(Boolean), buffer)) {
                 const needsRecalc = (dd.closest('.nds-nav-primary') || dd.closest('.nds-nav-secondary')) &&
-                    DOM.collapse?.classList.contains('show');
+                    hasState(DOM.collapse, 'open');
                 dropdown.toggle(dd, false);
                 if (needsRecalc) {
                     afterDelay(state.getDuration(menu), updatePositions);
@@ -799,14 +821,14 @@
             updateNavMaxWidth();
 
             if (modeChanged || widthChanged) {
-                document.querySelectorAll('.nds-dropdown.show').forEach(dd => dropdown.toggle(dd, false));
+                document.querySelectorAll('.nds-dropdown[data-state~="open"]').forEach(dd => dropdown.toggle(dd, false));
 
-                if (DOM.dgaDigitalStamp?.classList.contains('show')) {
+                if (hasState(DOM.dgaDigitalStamp, 'open')) {
                     dga.toggle();
                 }
 
                 // Close navbar and backdrop on resize/mode change
-                if (DOM.collapse?.classList.contains('show') && (modeChanged || widthChanged)) {
+                if (hasState(DOM.collapse, 'open') && (modeChanged || widthChanged)) {
                     // Hide backdrop directly since state.isMinimal may have changed
                     if (window.NDSBackdrop) window.NDSBackdrop.hide();
                     navbar.toggle(false);
@@ -814,7 +836,7 @@
                 }
             }
 
-            if (DOM.collapse?.classList.contains('show') && !DOM.collapse?.classList.contains('closing')) {
+            if (hasState(DOM.collapse, 'open') && !hasState(DOM.collapse, 'closing')) {
                 updatePositions();
             }
 
@@ -853,14 +875,14 @@
 
         // Scroll handling
         const onScroll = throttle(() => {
-            if (state.isMinimal && !DOM.collapse?.classList.contains('show')) return;
+            if (state.isMinimal && !hasState(DOM.collapse, 'open')) return;
             overflow.checkEnd();
         }, 32);
         DOM.primary.addEventListener('scroll', onScroll, { passive: true });
 
         if ('onscrollend' in DOM.primary) {
             DOM.primary.addEventListener('scrollend', () => {
-                if (state.isMinimal && !DOM.collapse?.classList.contains('show')) return;
+                if (state.isMinimal && !hasState(DOM.collapse, 'open')) return;
                 setTimeout(() => overflow.checkEnd(), 10);
             });
         }
@@ -1014,7 +1036,7 @@
         managePABPlacement();
         DOM.dgaTab?.addEventListener('click', toggleDGA);
 
-        if (DOM.collapse?.classList.contains('show')) {
+        if (hasState(DOM.collapse, 'open')) {
             updatePositions();
         }
 
