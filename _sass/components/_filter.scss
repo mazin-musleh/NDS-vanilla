@@ -10,7 +10,11 @@
 // ==============================================
 
 .nds-auto-fill {
-    > .label {
+    display: flex;
+    gap: var(--spacing-md);
+    flex-direction: column;
+
+    >.label {
         font-size: var(--nds-text-clamp-lg-FS);
         line-height: var(--nds-text-clamp-lg-LH);
         color: var(--text-primary);
@@ -45,8 +49,8 @@
 
     .nds-auto-fill:not([hidden]) {
         flex: 1 1 100%;
-        display: flex;
         flex-wrap: wrap;
+        flex-direction: row;
         gap: var(--spacing-md);
         min-width: 0;
         align-items: center;

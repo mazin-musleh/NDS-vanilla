@@ -1,12 +1,13 @@
 ---
 layout: page
-layout_class: wSideInfo service
-title: Digital Service Portal
+layout_class: wSideInfo
+title: Government Digital Service
 hero_style: "aside"
 hero_title: Government Digital Service
 hero_description: A comprehensive digital service platform showcasing National Design System components for government services delivery.
 breadcrumb:
 - ["Examples", "/examples"]
+- ["Services List", "/examples/services-list"]
 lang: en
 direction: ltr
 heroaction: heroaction-service
