@@ -42,19 +42,23 @@ exclude_showcase: true
                     <span class="label">تصفية</span>
                 </button>
                 <div class="nds-dropmenu-menu" style="min-width: 300px;" hidden>
-                    <!-- Filter Options -->
-                    <div class="nds-dropmenu-item" data-filter-legend="القسم" data-filter="college"
-                        data-filter-type="checkbox" data-no-auto-close>
+                    <div class="nds-dropmenu-scroll">
+                        <!-- Filter Options -->
+                        <div class="nds-dropmenu-item" data-filter-legend="القسم" data-filter="college"
+                            data-filter-type="checkbox" data-no-auto-close>
+                        </div>
                     </div>
-                    <hr class="nds-dropmenu-divider nds-lg">
-                    <div class="nds-dropmenu-action nds-grid">
-                        <button class="nds-btn nds-secondary nds-dropmenu-item" type="button" data-filter-action="clear"
-                            data-no-auto-close>
-                            <span class="label">إعادة تعيين</span>
-                        </button>
-                        <button class="nds-btn nds-primary nds-dropmenu-item" type="button" data-filter-action="apply">
-                            <span class="label">تصفية</span>
-                        </button>
+                    <div class="nds-dropmenu-footer">
+                        <hr class="nds-dropmenu-divider nds-lg">
+                        <div class="nds-dropmenu-action nds-grid">
+                            <button class="nds-btn nds-secondary nds-dropmenu-item" type="button" data-filter-action="clear"
+                                data-no-auto-close>
+                                <span class="label">إعادة تعيين</span>
+                            </button>
+                            <button class="nds-btn nds-primary nds-dropmenu-item" type="button" data-filter-action="apply">
+                                <span class="label">تصفية</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

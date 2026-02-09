@@ -46,6 +46,7 @@ exclude_showcase: true
                     <span class="label">تصفية</span>
                 </button>
                 <div class="nds-dropmenu-menu" style="min-width: 300px;" hidden>
+                    <div class="nds-dropmenu-scroll">
                     <!-- Manual filter inputs (form mode doesn't support auto-generation) -->
                     <fieldset class="nds-check-group nds-dropmenu-item" data-filter="department" data-no-auto-close>
                         <legend class="label">القسم</legend>
@@ -82,15 +83,18 @@ exclude_showcase: true
                     </fieldset>
                     <p style="font-size: 12px; padding: 0 16px; color: #666;">Simple: name="department" matches
                         data-filter="department" in cards</p>
-                    <hr class="nds-dropmenu-divider nds-lg">
-                    <div class="nds-dropmenu-action nds-grid">
-                        <button class="nds-btn nds-secondary nds-dropmenu-item" type="button" data-filter-action="clear"
-                            data-no-auto-close>
-                            <span class="label">إعادة تعيين</span>
-                        </button>
-                        <button class="nds-btn nds-primary nds-dropmenu-item" type="submit">
-                            <span class="label">تصفية</span>
-                        </button>
+                    </div>
+                    <div class="nds-dropmenu-footer">
+                        <hr class="nds-dropmenu-divider nds-lg">
+                        <div class="nds-dropmenu-action nds-grid">
+                            <button class="nds-btn nds-secondary nds-dropmenu-item" type="button" data-filter-action="clear"
+                                data-no-auto-close>
+                                <span class="label">إعادة تعيين</span>
+                            </button>
+                            <button class="nds-btn nds-primary nds-dropmenu-item" type="submit">
+                                <span class="label">تصفية</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -195,6 +199,7 @@ exclude_showcase: true
                     <span class="label">تصفية</span>
                 </button>
                 <div class="nds-dropmenu-menu" style="min-width: 300px;" hidden>
+                    <div class="nds-dropmenu-scroll">
                     <!-- Manual filter inputs without custom name (uses default) -->
                     <fieldset class="nds-check-group nds-dropmenu-item" data-filter="category" data-no-auto-close>
                         <legend class="label">التصنيف</legend>
@@ -221,15 +226,18 @@ exclude_showcase: true
                     </fieldset>
                     <p style="font-size: 12px; padding: 0 16px; color: #666;">Simplified: name="category" (matches
                         data-filter)</p>
-                    <hr class="nds-dropmenu-divider nds-lg">
-                    <div class="nds-dropmenu-action nds-grid">
-                        <button class="nds-btn nds-secondary nds-dropmenu-item" type="button" data-filter-action="clear"
-                            data-no-auto-close>
-                            <span class="label">إعادة تعيين</span>
-                        </button>
-                        <button class="nds-btn nds-primary nds-dropmenu-item" type="submit">
-                            <span class="label">إرسال POST</span>
-                        </button>
+                    </div>
+                    <div class="nds-dropmenu-footer">
+                        <hr class="nds-dropmenu-divider nds-lg">
+                        <div class="nds-dropmenu-action nds-grid">
+                            <button class="nds-btn nds-secondary nds-dropmenu-item" type="button" data-filter-action="clear"
+                                data-no-auto-close>
+                                <span class="label">إعادة تعيين</span>
+                            </button>
+                            <button class="nds-btn nds-primary nds-dropmenu-item" type="submit">
+                                <span class="label">إرسال POST</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -469,6 +477,7 @@ exclude_showcase: true
                     <span class="label">تصفية</span>
                 </button>
                 <div class="nds-dropmenu-menu" style="min-width: 300px;" hidden>
+                    <div class="nds-dropmenu-scroll">
                     <!-- Manual filter inputs -->
                     <fieldset class="nds-check-group nds-dropmenu-item" data-filter="status" data-no-auto-close>
                         <legend class="label">الحالة</legend>
@@ -503,15 +512,18 @@ exclude_showcase: true
                             </div>
                         </div>
                     </fieldset>
-                    <hr class="nds-dropmenu-divider nds-lg">
-                    <div class="nds-dropmenu-action nds-grid">
-                        <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
-                            data-filter-action="clear">
-                            <span class="label">إعادة تعيين</span>
-                        </button>
-                        <button class="nds-btn nds-primary nds-dropmenu-item" type="submit">
-                            <span class="label">تصفية</span>
-                        </button>
+                    </div>
+                    <div class="nds-dropmenu-footer">
+                        <hr class="nds-dropmenu-divider nds-lg">
+                        <div class="nds-dropmenu-action nds-grid">
+                            <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
+                                data-filter-action="clear">
+                                <span class="label">إعادة تعيين</span>
+                            </button>
+                            <button class="nds-btn nds-primary nds-dropmenu-item" type="submit">
+                                <span class="label">تصفية</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

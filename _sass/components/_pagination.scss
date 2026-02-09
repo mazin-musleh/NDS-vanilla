@@ -65,7 +65,7 @@
 
 
     // Active state
-    &:is([aria-current="page"], .active) {
+    &:is([aria-current="page"], [data-state~="active"]) {
       font-weight: 600;
       color: var(--button-label-primary-default);
 
@@ -169,7 +169,7 @@
 // Pagination items visibility is controlled by the hidden attribute in JavaScript
 // No CSS needed - hidden attribute provides native display: none behavior
 
-.nds-pagination-ellipsis .nds-dropmenu-trigger.active::after {
+.nds-pagination-ellipsis .nds-dropmenu-trigger[data-state~="active"]::after {
   content: '...';
   display: block;
   position: absolute;

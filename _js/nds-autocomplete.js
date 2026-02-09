@@ -106,8 +106,14 @@
             var menuId = 'nds-ac-' + (this.input.id || Math.random().toString(36).substring(2, 11));
             menu.id = menuId;
 
+            // Scrollable container for items
+            var scroll = document.createElement('div');
+            scroll.className = 'nds-dropmenu-scroll';
+            menu.appendChild(scroll);
+
             this.container.appendChild(menu);
             this.menu = menu;
+            this.scroll = scroll;
             this.menuId = menuId;
 
             // Initialize NDSDropmenu on the container
@@ -175,7 +181,7 @@
 
             // Clear button — extends existing forms clear behavior
             if (this.clearBtn) {
-                this._onClear = () => this.handleClear();
+                this._onClear = (e) => { e.stopPropagation(); this.handleClear(); };
                 this.clearBtn.addEventListener('click', this._onClear);
             }
 
@@ -283,7 +289,7 @@
         // ==============================================
 
         renderResults(data, query) {
-            this.menu.innerHTML = '';
+            this.scroll.innerHTML = '';
             this.activeIndex = -1;
 
             if (!data || data.length === 0) {
@@ -314,7 +320,7 @@
                     this.selectItem(item);
                 });
 
-                this.menu.appendChild(btn);
+                this.scroll.appendChild(btn);
             });
 
             this.open();

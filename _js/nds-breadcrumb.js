@@ -75,6 +75,10 @@
             menu.className = 'nds-dropmenu-menu';
             menu.setAttribute('aria-hidden', 'true');
 
+            const scroll = document.createElement('div');
+            scroll.className = 'nds-dropmenu-scroll';
+            menu.appendChild(scroll);
+
             // Add hidden items to dropdown menu
             hiddenItems.forEach(item => {
                 const link = item.querySelector('a');
@@ -83,7 +87,7 @@
                     menuItem.href = link.href;
                     menuItem.className = 'nds-btn nds-subtle nds-dropmenu-item';
                     menuItem.textContent = link.textContent;
-                    menu.appendChild(menuItem);
+                    scroll.appendChild(menuItem);
                 }
             });
 

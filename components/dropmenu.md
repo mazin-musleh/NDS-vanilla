@@ -34,23 +34,25 @@ direction: ltr
                                 <span class="label">Actions</span>
                             </button>
                             <div class="nds-dropmenu-menu" hidden>
-                                <button class="nds-btn nds-subtle nds-dropmenu-item">
-                                    <i class="hgi hgi-stroke hgi-edit-02"></i>
-                                    <span class="label">Edit</span>
-                                </button>
-                                <button class="nds-btn nds-subtle nds-dropmenu-item">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                    <span class="label">Duplicate</span>
-                                </button>
-                                <button class="nds-btn nds-subtle nds-dropmenu-item">
-                                    <i class="hgi hgi-stroke hgi-share-01"></i>
-                                    <span class="label">Share</span>
-                                </button>
-                                <hr class="nds-dropmenu-divider">
-                                <button class="nds-btn nds-subtle nds-dropmenu-item nds-destructive">
-                                    <i class="hgi hgi-stroke hgi-delete-02"></i>
-                                    <span class="label">Delete</span>
-                                </button>
+                                <div class="nds-dropmenu-scroll">
+                                    <button class="nds-btn nds-subtle nds-dropmenu-item">
+                                        <i class="hgi hgi-stroke hgi-edit-02"></i>
+                                        <span class="label">Edit</span>
+                                    </button>
+                                    <button class="nds-btn nds-subtle nds-dropmenu-item">
+                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        <span class="label">Duplicate</span>
+                                    </button>
+                                    <button class="nds-btn nds-subtle nds-dropmenu-item">
+                                        <i class="hgi hgi-stroke hgi-share-01"></i>
+                                        <span class="label">Share</span>
+                                    </button>
+                                    <hr class="nds-dropmenu-divider">
+                                    <button class="nds-btn nds-subtle nds-dropmenu-item nds-destructive">
+                                        <i class="hgi hgi-stroke hgi-delete-02"></i>
+                                        <span class="label">Delete</span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -79,23 +81,25 @@ direction: ltr
                                     <span class="label">Actions</span>
                                   </button>
                                   <div class="nds-dropmenu-menu" hidden>
-                                    <button class="nds-btn nds-subtle nds-dropmenu-item">
-                                      <i class="hgi hgi-stroke hgi-edit-02"></i>
-                                      <span class="label">Edit</span>
-                                    </button>
-                                    <button class="nds-btn nds-subtle nds-dropmenu-item">
-                                      <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                      <span class="label">Duplicate</span>
-                                    </button>
-                                    <button class="nds-btn nds-subtle nds-dropmenu-item">
-                                      <i class="hgi hgi-stroke hgi-share-01"></i>
-                                      <span class="label">Share</span>
-                                    </button>
-                                    <hr class="nds-dropmenu-divider">
-                                    <button class="nds-btn nds-subtle nds-dropmenu-item nds-destructive">
-                                      <i class="hgi hgi-stroke hgi-delete-02"></i>
-                                      <span class="label">Delete</span>
-                                    </button>
+                                    <div class="nds-dropmenu-scroll">
+                                      <button class="nds-btn nds-subtle nds-dropmenu-item">
+                                        <i class="hgi hgi-stroke hgi-edit-02"></i>
+                                        <span class="label">Edit</span>
+                                      </button>
+                                      <button class="nds-btn nds-subtle nds-dropmenu-item">
+                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        <span class="label">Duplicate</span>
+                                      </button>
+                                      <button class="nds-btn nds-subtle nds-dropmenu-item">
+                                        <i class="hgi hgi-stroke hgi-share-01"></i>
+                                        <span class="label">Share</span>
+                                      </button>
+                                      <hr class="nds-dropmenu-divider">
+                                      <button class="nds-btn nds-subtle nds-dropmenu-item nds-destructive">
+                                        <i class="hgi hgi-stroke hgi-delete-02"></i>
+                                        <span class="label">Delete</span>
+                                      </button>
+                                    </div>
                                   </div>
                                 </div>
                             </code>
@@ -121,15 +125,17 @@ direction: ltr
                                 <span class="label">Options</span>
                             </button>
                             <div class="nds-dropmenu-menu" hidden>
-                                <button class="nds-btn nds-subtle nds-dropmenu-item">
-                                    <span class="label">Option 1</span>
-                                </button>
-                                <button class="nds-btn nds-subtle nds-dropmenu-item">
-                                    <span class="label">Option 2</span>
-                                </button>
-                                <button class="nds-btn nds-subtle nds-dropmenu-item">
-                                    <span class="label">Option 3</span>
-                                </button>
+                                <div class="nds-dropmenu-scroll">
+                                    <button class="nds-btn nds-subtle nds-dropmenu-item">
+                                        <span class="label">Option 1</span>
+                                    </button>
+                                    <button class="nds-btn nds-subtle nds-dropmenu-item">
+                                        <span class="label">Option 2</span>
+                                    </button>
+                                    <button class="nds-btn nds-subtle nds-dropmenu-item">
+                                        <span class="label">Option 3</span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -157,15 +163,17 @@ direction: ltr
                                         <span class="label">Options</span>
                                     </button>
                                     <div class="nds-dropmenu-menu" hidden>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item">
-                                            <span class="label">Option 1</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item">
-                                            <span class="label">Option 2</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item">
-                                            <span class="label">Option 3</span>
-                                        </button>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item">
+                                                <span class="label">Option 1</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item">
+                                                <span class="label">Option 2</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item">
+                                                <span class="label">Option 3</span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </code>
@@ -203,23 +211,25 @@ direction: ltr
                                 <i class="hgi hgi-stroke hgi-user-circle"></i>
                             </button>
                             <div class="nds-dropmenu-menu" hidden>
-                                <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
-                                    <i class="hgi hgi-stroke hgi-user-01"></i>
-                                    <span class="label">Profile</span>
-                                </a>
-                                <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
-                                    <i class="hgi hgi-stroke hgi-settings-01"></i>
-                                    <span class="label">Settings</span>
-                                </a>
-                                <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
-                                    <i class="hgi hgi-stroke hgi-help-circle"></i>
-                                    <span class="label">Help</span>
-                                </a>
-                                <hr class="nds-dropmenu-divider">
-                                <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
-                                    <i class="hgi hgi-stroke hgi-log-out-01"></i>
-                                    <span class="label">Sign out</span>
-                                </a>
+                                <div class="nds-dropmenu-scroll">
+                                    <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
+                                        <i class="hgi hgi-stroke hgi-user-01"></i>
+                                        <span class="label">Profile</span>
+                                    </a>
+                                    <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
+                                        <i class="hgi hgi-stroke hgi-settings-01"></i>
+                                        <span class="label">Settings</span>
+                                    </a>
+                                    <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
+                                        <i class="hgi hgi-stroke hgi-help-circle"></i>
+                                        <span class="label">Help</span>
+                                    </a>
+                                    <hr class="nds-dropmenu-divider">
+                                    <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
+                                        <i class="hgi hgi-stroke hgi-log-out-01"></i>
+                                        <span class="label">Sign out</span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -248,23 +258,25 @@ direction: ltr
                                     <i class="hgi hgi-stroke hgi-user-circle"></i>
                                   </button>
                                   <div class="nds-dropmenu-menu" hidden>
-                                    <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
-                                      <i class="hgi hgi-stroke hgi-user-01"></i>
-                                      <span class="label">Profile</span>
-                                    </a>
-                                    <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
-                                      <i class="hgi hgi-stroke hgi-settings-01"></i>
-                                      <span class="label">Settings</span>
-                                    </a>
-                                    <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
-                                      <i class="hgi hgi-stroke hgi-help-circle"></i>
-                                      <span class="label">Help</span>
-                                    </a>
-                                    <hr class="nds-dropmenu-divider">
-                                    <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
-                                      <i class="hgi hgi-stroke hgi-log-out-01"></i>
-                                      <span class="label">Sign out</span>
-                                    </a>
+                                    <div class="nds-dropmenu-scroll">
+                                      <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
+                                        <i class="hgi hgi-stroke hgi-user-01"></i>
+                                        <span class="label">Profile</span>
+                                      </a>
+                                      <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
+                                        <i class="hgi hgi-stroke hgi-settings-01"></i>
+                                        <span class="label">Settings</span>
+                                      </a>
+                                      <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
+                                        <i class="hgi hgi-stroke hgi-help-circle"></i>
+                                        <span class="label">Help</span>
+                                      </a>
+                                      <hr class="nds-dropmenu-divider">
+                                      <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
+                                        <i class="hgi hgi-stroke hgi-log-out-01"></i>
+                                        <span class="label">Sign out</span>
+                                      </a>
+                                    </div>
                                   </div>
                                 </div>
                             </code>
@@ -307,9 +319,12 @@ Required Classes:
 • .nds-dropmenu-trigger - Button to open/close menu
   └─ Use with .nds-btn .nds-subtle for standard styling
 • .nds-dropmenu-menu - Dropdown menu container
+• .nds-dropmenu-scroll - Scrollable container for menu items
 • .nds-dropmenu-item - Individual menu items (button or anchor)
   └─ Use with .nds-btn .nds-subtle for standard button styling
 • .nds-dropmenu-divider - Horizontal divider (hr element)
+• .nds-dropmenu-footer - Footer container for action buttons
+  └─ Contains divider + .nds-dropmenu-action
 
 Optional Modifiers:
 
@@ -361,6 +376,7 @@ Data Attributes:
                                 <span class="label">Filter</span>
                             </button>
                             <div class="nds-filter nds-dropmenu-menu" style="min-width: 300px;">
+                                <div class="nds-dropmenu-scroll">
                                 <!-- Search Input -->
                                 <div class="nds-form-control nds-dropmenu-item" data-filter="search" data-no-auto-close>
                                     <i class="hgi hgi-stroke hgi-search-01 icon"></i>
@@ -406,15 +422,18 @@ Data Attributes:
                                         </div>
                                     </div>
                                 </fieldset>
-                                <hr class="nds-dropmenu-divider nds-lg">
-                                <!-- Action Buttons -->
-                                <div class="nds-dropmenu-action nds-grid">
-                                    <button class="nds-btn nds-secondary nds-dropmenu-item" type="button" data-filter-action="clear" data-no-auto-close>
-                                        <span class="label">Clear</span>
-                                    </button>
-                                    <button class="nds-btn nds-primary nds-dropmenu-item" type="button" data-filter-action="apply">
-                                        <span class="label">Apply</span>
-                                    </button>
+                                </div>
+                                <div class="nds-dropmenu-footer">
+                                    <hr class="nds-dropmenu-divider nds-lg">
+                                    <!-- Action Buttons -->
+                                    <div class="nds-dropmenu-action nds-grid">
+                                        <button class="nds-btn nds-secondary nds-dropmenu-item" type="button" data-filter-action="clear" data-no-auto-close>
+                                            <span class="label">Clear</span>
+                                        </button>
+                                        <button class="nds-btn nds-primary nds-dropmenu-item" type="button" data-filter-action="apply">
+                                            <span class="label">Apply</span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -444,48 +463,52 @@ Data Attributes:
     <span class="label">Filter</span>
   </button>
   <div class="nds-filter nds-dropmenu-menu" data-filter-target="target-container-id" style="min-width: 300px;">
-    <!-- Search Input -->
-    <div class="nds-form-control nds-dropmenu-item" data-filter="search" data-no-auto-close>
-      <i class="hgi hgi-stroke hgi-search-01 icon"></i>
-      <input type="text" placeholder="Search..." class="nds-search-input">
-      <div class="nds-form-action">
-        <button class="nds-btn nds-subtle clear hidden" type="button" aria-label="Clear search">
-          <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
+    <div class="nds-dropmenu-scroll">
+      <!-- Search Input -->
+      <div class="nds-form-control nds-dropmenu-item" data-filter="search" data-no-auto-close>
+        <i class="hgi hgi-stroke hgi-search-01 icon"></i>
+        <input type="text" placeholder="Search..." class="nds-search-input">
+        <div class="nds-form-action">
+          <button class="nds-btn nds-subtle clear hidden" type="button" aria-label="Clear search">
+            <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
+          </button>
+        </div>
+      </div>
+      <hr class="nds-dropmenu-divider nds-lg">
+      <!-- Filter Options -->
+      <fieldset class="nds-dropmenu-item nds-check-group" data-filter="tags" data-no-auto-close>
+        <legend class="label">Filter by category</legend>
+        <div class="nds-form-container nds-check-container">
+          <div class="nds-form-header">
+            <label for="cat1"><span class="label">Category 1</span></label>
+          </div>
+          <div class="nds-form-control">
+            <input type="checkbox" id="cat1" name="cat" value="category1" class="nds-check">
+          </div>
+        </div>
+        <div class="nds-form-container nds-check-container">
+          <div class="nds-form-header">
+            <label for="cat2"><span class="label">Category 2</span></label>
+          </div>
+          <div class="nds-form-control">
+            <input type="checkbox" id="cat2" name="cat" value="category2" class="nds-check">
+          </div>
+        </div>
+      </fieldset>
+    </div>
+    <div class="nds-dropmenu-footer">
+      <hr class="nds-dropmenu-divider nds-lg">
+      <!-- Action Buttons -->
+      <div class="nds-dropmenu-action nds-grid">
+        <!-- Clear: keeps menu open (data-no-auto-close) -->
+        <button class="nds-btn nds-secondary nds-dropmenu-item" data-filter-action="clear" data-no-auto-close>
+          <span class="label">Clear</span>
+        </button>
+        <!-- Apply: closes menu (no data-no-auto-close) -->
+        <button class="nds-btn nds-primary nds-dropmenu-item" data-filter-action="apply">
+          <span class="label">Apply</span>
         </button>
       </div>
-    </div>
-    <hr class="nds-dropmenu-divider nds-lg">
-    <!-- Filter Options -->
-    <fieldset class="nds-dropmenu-item nds-check-group" data-filter="tags" data-no-auto-close>
-      <legend class="label">Filter by category</legend>
-      <div class="nds-form-container nds-check-container">
-        <div class="nds-form-header">
-          <label for="cat1"><span class="label">Category 1</span></label>
-        </div>
-        <div class="nds-form-control">
-          <input type="checkbox" id="cat1" name="cat" value="category1" class="nds-check">
-        </div>
-      </div>
-      <div class="nds-form-container nds-check-container">
-        <div class="nds-form-header">
-          <label for="cat2"><span class="label">Category 2</span></label>
-        </div>
-        <div class="nds-form-control">
-          <input type="checkbox" id="cat2" name="cat" value="category2" class="nds-check">
-        </div>
-      </div>
-    </fieldset>
-    <hr class="nds-dropmenu-divider nds-lg">
-    <!-- Action Buttons -->
-    <div class="nds-dropmenu-action nds-grid">
-      <!-- Clear: keeps menu open (data-no-auto-close) -->
-      <button class="nds-btn nds-secondary nds-dropmenu-item" data-filter-action="clear" data-no-auto-close>
-        <span class="label">Clear</span>
-      </button>
-      <!-- Apply: closes menu (no data-no-auto-close) -->
-      <button class="nds-btn nds-primary nds-dropmenu-item" data-filter-action="apply">
-        <span class="label">Apply</span>
-      </button>
     </div>
   </div>
 </div>
