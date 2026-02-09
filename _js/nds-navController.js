@@ -250,12 +250,17 @@
         toggle(el, open) {
             const menu = el.querySelector('.nds-dropdown-menu');
             const content = menu?.querySelector('.nds-dropdown-content');
+            const navLink = el.querySelector('.nds-nav-link');
             const isInMinimal = el.closest('.nds-nav-minimal');
             const isInPrimary = el.closest('.nds-nav-primary');
             // Primary uses height, secondary and minimal nav use content transform
             const needsHeight = state.isMinimal && isInPrimary;
 
             const animationTarget = isInMinimal ? (content || menu) : (needsHeight ? menu : (content || menu));
+
+            // Set active state on nav-link
+            if (open) addState(navLink, 'active');
+            else removeState(navLink, 'active');
 
             animate.run(el, open, {
                 getMenu: () => animationTarget,
@@ -820,16 +825,15 @@
             const modeChanged = updateBodyClass();
             updateNavMaxWidth();
 
-            if (modeChanged || widthChanged) {
+            if (modeChanged) {
                 document.querySelectorAll('.nds-dropdown[data-state~="open"]').forEach(dd => dropdown.toggle(dd, false));
 
                 if (hasState(DOM.dgaDigitalStamp, 'open')) {
                     dga.toggle();
                 }
 
-                // Close navbar and backdrop on resize/mode change
-                if (hasState(DOM.collapse, 'open') && (modeChanged || widthChanged)) {
-                    // Hide backdrop directly since state.isMinimal may have changed
+                // Close navbar and backdrop on mode change
+                if (hasState(DOM.collapse, 'open')) {
                     if (window.NDSBackdrop) window.NDSBackdrop.hide();
                     navbar.toggle(false);
                     return;
