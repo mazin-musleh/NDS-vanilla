@@ -57,22 +57,27 @@ exclude_showcase: false
                     <span class="label">Filter</span>
                 </button>
                 <div class="nds-dropmenu-menu" style="min-width: 300px;" hidden>
-                    <!-- Filter by Most Used -->
-                    <div class="nds-dropmenu-item" data-filter="most-used" data-filter-legend="Most Used"
-                        data-filter-type="switch" data-no-auto-close></div>
-                    <hr class="nds-dropmenu-divider nds-lg">
-                    <!-- Filter by System -->
-                    <div class="nds-dropmenu-item" data-filter="system" data-filter-legend="System"
-                        data-filter-type="checkbox" data-no-auto-close></div>
-                    <hr class="nds-dropmenu-divider nds-lg">
-                    <div class="nds-dropmenu-action nds-grid">
-                        <button class="nds-btn nds-secondary nds-dropmenu-item" type="button" data-filter-action="clear"
-                            data-no-auto-close>
-                            <span class="label">Reset</span>
-                        </button>
-                        <button class="nds-btn nds-primary nds-dropmenu-item" type="button" data-filter-action="apply">
-                            <span class="label">Filter</span>
-                        </button>
+                    <div class="nds-dropmenu-scroll">
+                        <!-- Filter by Most Used -->
+                        <div class="nds-dropmenu-item" data-filter="most-used" data-filter-legend="Most Used"
+                            data-filter-type="switch" data-no-auto-close></div>
+                        <hr class="nds-dropmenu-divider nds-lg">
+                        <!-- Filter by System -->
+                        <div class="nds-dropmenu-item" data-filter="system" data-filter-legend="System"
+                            data-filter-type="checkbox" data-no-auto-close></div>
+                    </div>
+                    <div class="nds-dropmenu-footer">
+                        <hr class="nds-dropmenu-divider nds-lg">
+                        <div class="nds-dropmenu-action nds-grid">
+                            <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
+                                data-filter-action="clear" data-no-auto-close>
+                                <span class="label">Reset</span>
+                            </button>
+                            <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
+                                data-filter-action="apply">
+                                <span class="label">Filter</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

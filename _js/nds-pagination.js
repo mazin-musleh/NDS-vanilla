@@ -91,6 +91,10 @@
             menu.className = 'nds-dropmenu-menu';
             menu.setAttribute('aria-hidden', 'true');
 
+            const scroll = document.createElement('div');
+            scroll.className = 'nds-dropmenu-scroll';
+            menu.appendChild(scroll);
+
             // Add hidden items to dropdown menu
             hiddenItems.forEach(item => {
                 // Support both button and anchor elements
@@ -127,7 +131,7 @@
                         }
                     }
 
-                    menu.appendChild(menuItem);
+                    scroll.appendChild(menuItem);
                 }
             });
 

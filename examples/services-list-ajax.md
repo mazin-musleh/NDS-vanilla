@@ -57,6 +57,7 @@ exclude_showcase: false
                     <span class="label">Filter</span>
                 </button>
                 <div class="nds-dropmenu-menu" style="min-width: 300px;" hidden>
+                    <div class="nds-dropmenu-scroll">
                     <!-- Filter by Most Used -->
                     <div class="nds-dropmenu-item" data-filter="most-used" data-no-auto-close role="menuitem">
                         <div class="nds-form-container nds-switch-container" data-state="filled">
@@ -185,15 +186,18 @@ exclude_showcase: false
                             </div>
                         </div>
                     </fieldset>
-                    <hr class="nds-dropmenu-divider nds-lg">
-                    <div class="nds-dropmenu-action nds-grid">
-                        <button class="nds-btn nds-secondary nds-dropmenu-item" type="button" data-filter-action="clear"
-                            data-no-auto-close>
-                            <span class="label">Reset</span>
-                        </button>
-                        <button class="nds-btn nds-primary nds-dropmenu-item" type="button" data-filter-action="apply">
-                            <span class="label">Filter</span>
-                        </button>
+                    </div>
+                    <div class="nds-dropmenu-footer">
+                        <hr class="nds-dropmenu-divider nds-lg">
+                        <div class="nds-dropmenu-action nds-grid">
+                            <button class="nds-btn nds-secondary nds-dropmenu-item" type="button" data-filter-action="clear"
+                                data-no-auto-close>
+                                <span class="label">Reset</span>
+                            </button>
+                            <button class="nds-btn nds-primary nds-dropmenu-item" type="button" data-filter-action="apply">
+                                <span class="label">Filter</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

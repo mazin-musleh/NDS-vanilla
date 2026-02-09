@@ -19,6 +19,12 @@
   position: relative;
   display: inline-flex;
 
+  &-scroll {
+    overflow: hidden;
+    overflow-y: auto;
+    max-height: 400px;
+  }
+
   // ==============================================
   // 2. MENU CONTAINER
   // ==============================================
@@ -73,9 +79,6 @@
   // Open state → display: block (first to add, last to remove)
   &[data-state~="open"] .nds-dropmenu-menu {
     display: block;
-    max-height: 400px;
-    overflow: hidden;
-    overflow-y: auto;
   }
 
   // Reverse slide direction when opening upward
@@ -138,13 +141,6 @@
 
   // Sticky action footer
   &-action {
-    position: sticky;
-    bottom: calc(var(--_menu-padding) * -1);
-    background-color: inherit;
-    z-index: 2;
-    isolation: isolate;
-    padding-block: var(--_menu-padding);
-    margin-bottom: calc(var(--_menu-padding) * -1);
 
     .nds-btn {
       width: 100%;

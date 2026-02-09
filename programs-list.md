@@ -39,22 +39,26 @@ exclude_showcase: true
                     <span class="label">تصفية</span>
                 </button>
                 <div class="nds-dropmenu-menu" style="min-width: 300px;" hidden>
-                    <!-- Filter by Program Type -->
-                    <div class="nds-dropmenu-item" data-filter="tags" data-filter-legend="نوع البرنامج"
-                        data-filter-type="checkbox" data-no-auto-close></div>
-                    <hr class="nds-dropmenu-divider nds-lg">
-                    <!-- Filter by College -->
-                    <div class="nds-dropmenu-item" data-filter="college" data-filter-legend="الكلية"
-                        data-filter-type="checkbox" data-no-auto-close></div>
-                    <hr class="nds-dropmenu-divider nds-lg">
-                    <div class="nds-dropmenu-action nds-grid">
-                        <button class="nds-btn nds-secondary nds-dropmenu-item" type="button" data-filter-action="clear"
-                            data-no-auto-close>
-                            <span class="label">إعادة تعيين</span>
-                        </button>
-                        <button class="nds-btn nds-primary nds-dropmenu-item" type="button" data-filter-action="apply">
-                            <span class="label">تصفية</span>
-                        </button>
+                    <div class="nds-dropmenu-scroll">
+                        <!-- Filter by Program Type -->
+                        <div class="nds-dropmenu-item" data-filter="tags" data-filter-legend="نوع البرنامج"
+                            data-filter-type="checkbox" data-no-auto-close></div>
+                        <hr class="nds-dropmenu-divider nds-lg">
+                        <!-- Filter by College -->
+                        <div class="nds-dropmenu-item" data-filter="college" data-filter-legend="الكلية"
+                            data-filter-type="checkbox" data-no-auto-close></div>
+                    </div>
+                    <div class="nds-dropmenu-footer">
+                        <hr class="nds-dropmenu-divider nds-lg">
+                        <div class="nds-dropmenu-action nds-grid">
+                            <button class="nds-btn nds-secondary nds-dropmenu-item" type="button" data-filter-action="clear"
+                                data-no-auto-close>
+                                <span class="label">إعادة تعيين</span>
+                            </button>
+                            <button class="nds-btn nds-primary nds-dropmenu-item" type="button" data-filter-action="apply">
+                                <span class="label">تصفية</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
