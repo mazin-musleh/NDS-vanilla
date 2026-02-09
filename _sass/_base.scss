@@ -32,43 +32,59 @@ button,
     direction: ltr !important;
 }
 
-.nds-expandable {
-    position: relative;
-
-    // Gradient mask custom properties
-    --mask-fade-percentage: 35%; // Fade last 35% of content
-
-    // Default constrained state to prevent CLS
-    .nds-expandable-content {
-        overflow-y: hidden;
-        max-height: var(--max-height, 300px);
-    }
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
 
-.nds-expandable.nds-expand {
+.nds-user-card {
+    .nds-user-info {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-xs);
+        padding: var(--spacing-md);
+        text-align: start;
 
-    &:has(>.nds-expandable-content),
-    &>*:has(>.nds-expandable-content) {
-        overflow: hidden;
-    }
-
-    .nds-expandable-content {
-        mask-image: linear-gradient(180deg, black calc(100% - var(--mask-fade-percentage)), transparent 100%);
-    }
-
-    .nds-expand-btn {
-        position: absolute;
-        bottom: 0;
-        z-index: 6;
-        inset-inline-end: 0;
-    }
-
-    &.nds-expanded {
-        .nds-expandable-content {
-            max-height: 100%;
-            padding-bottom: var(--spacing-4xl);
-            mask-image: none;
-            -webkit-mask-image: none;
+        &.nds-center {
+            align-items: center;
+            text-align: center;
         }
+
+        .nds-user-name {
+            font-size: var(--nds-text-md-FS);
+            line-height: var(--nds-text-md-LH);
+            font-weight: 600;
+            color: var(--text-primary-paragraph);
+        }
+
+        .nds-user-role {
+            font-size: var(--nds-text-sm-FS);
+            line-height: var(--nds-text-sm-LH);
+            color: var(--text-secondary-paragraph);
+        }
+
+        .nds-user-email {
+            font-size: var(--nds-text-sm-FS);
+            line-height: var(--nds-text-sm-LH);
+            color: var(--text-secondary-paragraph);
+        }
+
+    }
+
+    .nds-user-action {
+        display: flex;
+        flex-wrap: wrap;
+
+        >.nds-btn {
+            --btn-width: fit-content;
+        }
+
     }
 }

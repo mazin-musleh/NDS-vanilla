@@ -12,6 +12,7 @@
 // ==============================================
 
 .nds-avatar {
+  --_avatar-size: var(--avatar-size, 40px);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -72,13 +73,12 @@
 // Medium - 40px (default)
 .nds-avatar.nds-md,
 .nds-avatar {
-  --avatar-size: 40px;
-  width: var(--avatar-size);
-  height: var(--avatar-size);
-  font-size: calc(var(--avatar-size) / 3);
+  width: var(--_avatar-size);
+  height: var(--_avatar-size);
+  font-size: calc(var(--_avatar-size) / 3);
 
   i {
-    font-size: calc(var(--avatar-size) / 2);
+    font-size: calc(var(---_avatar-size) / 2);
   }
 
   &.nds-btn {
@@ -149,30 +149,29 @@
 // ==============================================
 
 .nds-avatar-group {
-
-  --avatar-gap: 6px;
+--_avatar-gap: var(--avatar-gap, 6px);
   display: flex;
   align-items: center;
-  gap: var(--avatar-gap, 6px);
+  gap: var(--_avatar-gap, 6px);
 
   // Stacked variant - avatars overlap
   &.nds-stacked {
-    --stacked-gap: calc(var(--avatar-gap, 6px) * 2);
+    --_stacked-gap: calc(var(--_avatar-gap) * 2);
     gap: 0;
-    padding-left: var(--stacked-gap);
+    padding-left: var(--_stacked-gap);
 
     .nds-avatar {
       --avatar-size: 40px;
-      margin-left: calc(var(--stacked-gap) * -1);
+      margin-left: calc(var(--_stacked-gap) * -1);
     }
 
     @include ltr {
       padding-left: unset;
-      padding-right: var(--stacked-gap);
+      padding-right: var(--_stacked-gap);
 
       .nds-avatar {
         margin-left: unset;
-        margin-right: calc(var(--stacked-gap) * -1);
+        margin-right: calc(var(--_stacked-gap) * -1);
       }
     }
   }
