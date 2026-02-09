@@ -115,8 +115,11 @@ hideSidemenu: true
                         <i class="hgi hgi-stroke hgi-book-open-01 icon"></i>
                         <span class="label">User guide</span>
                     </dt>
-                    <dd><a href="#user-guide" class="nds-btn nds-secondary"><span class="label">Download User
-                                Guide</span></a></dd>
+                    <dd>
+                        <a href="#user-guide" class="nds-btn nds-secondary nds-md">
+                            <span class="label">Download User Guide</span>
+                        </a>
+                    </dd>
                 </div>
                 <div class="nds-definition-item">
                     <dt>
