@@ -286,8 +286,8 @@
                 toggleButton?.setAttribute('aria-expanded', 'false');
                 const closeDelay = state.reducedMotion ? 0 : dropdown.closeAll();
 
-                // Hide backdrop in minimal mode
-                if (state.isMinimal && window.NDSBackdrop) {
+                // Always hide backdrop when closing navbar
+                if (window.NDSBackdrop) {
                     window.NDSBackdrop.hide();
                 }
 
@@ -805,7 +805,10 @@
                     dga.toggle();
                 }
 
-                if (state.isMinimal && DOM.collapse?.classList.contains('show') && widthChanged) {
+                // Close navbar and backdrop on resize/mode change
+                if (DOM.collapse?.classList.contains('show') && (modeChanged || widthChanged)) {
+                    // Hide backdrop directly since state.isMinimal may have changed
+                    if (window.NDSBackdrop) window.NDSBackdrop.hide();
                     navbar.toggle(false);
                     return;
                 }

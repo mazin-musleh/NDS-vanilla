@@ -489,7 +489,7 @@
     function scrollToContent(pagination) {
         // Calculate nav height dynamically from the nav element
         const nav = document.getElementById('ndsMainNav');
-        const scrollOffset = (nav ? nav.offsetHeight : 72) + 40; // Add 40px spacing
+        const scrollOffset = (nav ? nav.offsetHeight : 72) + 200; // Add 40px spacing
 
         // Find the pagination navigation container
         const paginationNav = pagination.closest('.nds-pagination-nav, .nds-auto-pagination');

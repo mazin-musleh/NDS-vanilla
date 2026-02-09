@@ -3,7 +3,8 @@ layout: page
 title: "Government Services"
 lang: en
 direction: ltr
-breadcrumb: ["Government Services"]
+breadcrumb:
+- ["Examples", "/examples"]
 hero_title: "Government Services"
 hero_description: "Browse all available government digital services"
 layout_class:
