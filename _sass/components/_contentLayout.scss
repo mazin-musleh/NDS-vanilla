@@ -655,6 +655,7 @@ main {
         position: sticky;
         top: calc(var(--nds-nav-height) + var(--spacing-md) + var(--nds-sideInfo-top) * -1);
         transform: translateY(calc(var(--nds-sideInfo-top, -180px) + var(--spacing-3xl)));
+        transition: transform var(--nds-transition);
         z-index: 998;
         margin-bottom: calc(var(--nds-sideInfo-top, -180px) + var(--spacing-3xl));
         height: fit-content;

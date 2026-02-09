@@ -330,6 +330,8 @@
                 removeState(this.trigger, 'open');
                 this.dropmenu.removeAttribute('data-position-vertical');
                 this.dropmenu.removeAttribute('data-position-horizontal');
+                this.menu.style.top = '';
+                this.menu.style.bottom = '';
                 this.menu.setAttribute('aria-hidden', 'true');
                 this.menu.removeEventListener('transitionend', onEnd);
                 this.emitEvent('nds:dropmenu:closed');
@@ -347,11 +349,14 @@
         // POSITION CALCULATION
         // ==============================================
 
-        /** Vertical position — only needs trigger rect, runs before state */
+        /** Vertical position — uses trigger height for precise placement */
         adjustVerticalPosition() {
             this.dropmenu.removeAttribute('data-position-vertical');
+            this.menu.style.top = '';
+            this.menu.style.bottom = '';
 
             const triggerRect = this.trigger.getBoundingClientRect();
+            const triggerHeight = this.trigger.offsetHeight;
             const vh = window.innerHeight;
             const cr = this.contentLayout?.getBoundingClientRect();
             const boundsTop = Math.max(cr?.top ?? 0, 0);
@@ -362,6 +367,9 @@
 
             if (spaceBelow < spaceAbove && spaceBelow < 200) {
                 this.dropmenu.setAttribute('data-position-vertical', 'top');
+                this.menu.style.bottom = triggerHeight + 'px';
+            } else {
+                this.menu.style.top = triggerHeight + 'px';
             }
         }
 

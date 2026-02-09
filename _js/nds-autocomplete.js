@@ -196,15 +196,11 @@
             // Sync aria-expanded when dropmenu opens/closes
             this.container.addEventListener('nds:dropmenu:opened', () => {
                 this.input.setAttribute('aria-expanded', 'true');
-                if (this.container.getAttribute('data-position-vertical') === 'top') {
-                    this.menu.style.bottom = this.formControl.offsetHeight + 'px';
-                }
             });
             this.container.addEventListener('nds:dropmenu:closed', () => {
                 this.input.setAttribute('aria-expanded', 'false');
                 this.input.removeAttribute('aria-activedescendant');
                 this.activeIndex = -1;
-                this.menu.style.bottom = '';
             });
         }
 
