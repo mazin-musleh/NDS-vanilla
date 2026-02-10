@@ -571,6 +571,13 @@ direction: ltr
     - `nds-main.min.js` - Core site functionality (bundled from multiple components)
     - `nds-showcase.min.js` - Component showcase demonstrations
 
+    ### Baseurl Cleaner
+    Removes `/_site` baseurl prefix from all HTML files in `_site/`, making paths relative based on file depth (e.g. `../assets/` for subdirectories). Use when deploying to a root domain or sharing `_site/` output where the baseurl path is not needed.
+    ```bash
+    ruby _plugins/baseurl_cleaner.rb          # Process files
+    ruby _plugins/baseurl_cleaner.rb dry      # Dry run - preview changes
+    ```
+
     ## Files to Ignore
 
     - **NEVER read** `assets/css/hgi-stroke-rounded.css` - this is a large icon font file that should not be analyzed
