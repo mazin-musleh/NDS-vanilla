@@ -1459,7 +1459,7 @@
     // Pre-fetches autocomplete-demo.json, then intercepts subsequent fetches to filter by query
     function initializeAutocompleteDemoData() {
         // Find autocomplete demo containers
-        var demoContainer = document.querySelector('.nds-demo-card .nds-form-container[data-url*="autocomplete-demo"]');
+        var demoContainer = document.querySelector('.nds-form-container[data-url*="autocomplete-demo"]');
         if (!demoContainer) return;
 
         var dataUrl = demoContainer.getAttribute('data-url');

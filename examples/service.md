@@ -153,140 +153,41 @@ hideSidemenu: true
         <p class="nds-section-description">Explore other government digital services that may be relevant to you.</p>
     </div>
     <div class="nds-section-content nds-full-width">
-        <div class="nds-swiper" slides-max="4" slides-mid="2" slides-min="1" peek="40" hidden>
+        <div class="nds-swiper" slides-max="3" slides-mid="2" slides-min="1" peek="40" hidden>
             <div class="nds-swiper-wrapper">
+                {% for service in site.data.services limit:6 %}
                 <div class="nds-swiper-slide">
-                    <a href="{{ 'service.html' }}" class="nds-card nds-stroke">
+                    <div class="nds-card nds-stroke">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
                                 <span class="nds-featured-icon nds-circle nds-xl">
-                                    <i class="hgi hgi-stroke hgi-user-id-verification icon"></i>
+                                    {{ service.icon }}
                                 </span>
                             </div>
                         </div>
                         <div class="nds-card-content">
                             <div class="nds-card-text">
-                                <h3 class="nds-card-title nds-truncate">Identity Verification</h3>
-                                <span class="nds-card-description nds-truncate">Verify your national identity and obtain
-                                    digital certificates for government transactions</span>
+                                <h3 class="nds-card-title nds-truncate">{{ service.title }}</h3>
+                                <span class="nds-card-description nds-truncate">{{ service.description }}</span>
                             </div>
                             <div class="nds-card-tags">
-                                <span class="nds-tag nds-blue nds-sm"><span class="label">Identity System</span></span>
+                                <span class="nds-tag nds-blue nds-sm"><span class="label">{{ service.system }}</span></span>
+                                {% if service.most_used %}
                                 <span class="nds-tag nds-green nds-sm"><span class="label">Most Used</span></span>
+                                {% endif %}
                             </div>
                         </div>
-                    </a>
+                        <div class="nds-card-actions">
+                            <a href="{{ service.url }}" class="nds-btn nds-secondary-outline nds-lg" aria-label="Service Details">
+                                <span class="label">Details</span>
+                            </a>
+                            <a href="{{ service.url }}" class="nds-btn nds-primary nds-lg nds-trail-icon" aria-label="Get Started">
+                                <span class="label">Get Started</span>
+                            </a>
+                        </div>
+                    </div>
                 </div>
-                <div class="nds-swiper-slide">
-                    <a href="{{ 'service.html' }}" class="nds-card nds-stroke">
-                        <div class="nds-card-header">
-                            <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon nds-circle nds-xl">
-                                    <i class="hgi hgi-stroke hgi-passport icon"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="nds-card-content">
-                            <div class="nds-card-text">
-                                <h3 class="nds-card-title nds-truncate">Passport Renewal</h3>
-                                <span class="nds-card-description nds-truncate">Renew your passport online with
-                                    expedited processing and home delivery options</span>
-                            </div>
-                            <div class="nds-card-tags">
-                                <span class="nds-tag nds-blue nds-sm"><span class="label">Identity System</span></span>
-                                <span class="nds-tag nds-green nds-sm"><span class="label">Most Used</span></span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="nds-swiper-slide">
-                    <a href="{{ 'service.html' }}" class="nds-card nds-stroke">
-                        <div class="nds-card-header">
-                            <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon nds-circle nds-xl">
-                                    <i class="hgi hgi-stroke hgi-driving-license icon"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="nds-card-content">
-                            <div class="nds-card-text">
-                                <h3 class="nds-card-title nds-truncate">Driver's License Services</h3>
-                                <span class="nds-card-description nds-truncate">Apply for new license, renew existing
-                                    license, or update your driving information</span>
-                            </div>
-                            <div class="nds-card-tags">
-                                <span class="nds-tag nds-blue nds-sm"><span class="label">Transport System</span></span>
-                                <span class="nds-tag nds-green nds-sm"><span class="label">Most Used</span></span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="nds-swiper-slide">
-                    <a href="{{ 'service.html' }}" class="nds-card nds-stroke">
-                        <div class="nds-card-header">
-                            <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon nds-circle nds-xl">
-                                    <i class="hgi hgi-stroke hgi-health-insurance icon"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="nds-card-content">
-                            <div class="nds-card-text">
-                                <h3 class="nds-card-title nds-truncate">Health Insurance Enrollment</h3>
-                                <span class="nds-card-description nds-truncate">Enroll in government health insurance
-                                    plans and manage your coverage</span>
-                            </div>
-                            <div class="nds-card-tags">
-                                <span class="nds-tag nds-blue nds-sm"><span class="label">Healthcare
-                                        System</span></span>
-                                <span class="nds-tag nds-green nds-sm"><span class="label">Most Used</span></span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="nds-swiper-slide">
-                    <a href="{{ 'service.html' }}" class="nds-card nds-stroke">
-                        <div class="nds-card-header">
-                            <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon nds-circle nds-xl">
-                                    <i class="hgi hgi-stroke hgi-store-01 icon"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="nds-card-content">
-                            <div class="nds-card-text">
-                                <h3 class="nds-card-title nds-truncate">Business License Application</h3>
-                                <span class="nds-card-description nds-truncate">Apply for commercial licenses and
-                                    business permits for new ventures</span>
-                            </div>
-                            <div class="nds-card-tags">
-                                <span class="nds-tag nds-blue nds-sm"><span class="label">Commerce System</span></span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="nds-swiper-slide">
-                    <a href="{{ 'service.html' }}" class="nds-card nds-stroke">
-                        <div class="nds-card-header">
-                            <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon nds-circle nds-xl">
-                                    <i class="hgi hgi-stroke hgi-graduation-cap icon"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="nds-card-content">
-                            <div class="nds-card-text">
-                                <h3 class="nds-card-title nds-truncate">School Enrollment</h3>
-                                <span class="nds-card-description nds-truncate">Enroll children in public schools and
-                                    manage educational records</span>
-                            </div>
-                            <div class="nds-card-tags">
-                                <span class="nds-tag nds-blue nds-sm"><span class="label">Education System</span></span>
-                                <span class="nds-tag nds-green nds-sm"><span class="label">Most Used</span></span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+                {% endfor %}
             </div>
             <div class="nds-swiper-navigation">
                 <div class="nds-swiper-buttons">
