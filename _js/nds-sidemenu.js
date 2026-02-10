@@ -160,10 +160,33 @@
         // Set drawer max height based on available space (slider mode only)
         updateDrawerMaxHeight(accMenu, isTopMode);
 
+        // Top mode: scroll page past hero section to make room for menu (only if hero is in viewport)
+        if (isTopMode) {
+            const heroSection = document.querySelector('.nds-hero-section');
+            if (heroSection) {
+                const heroRect = heroSection.getBoundingClientRect();
+                // Only scroll if hero bottom is still visible in viewport
+                if (heroRect.bottom > 0) {
+                    const heroBottom = heroRect.bottom + window.scrollY;
+                    window.scrollTo({ top: heroBottom, behavior: 'smooth' });
+
+                    // Lock scroll after smooth scroll finishes
+                    const lockScroll = () => {
+                        window.removeEventListener('scrollend', lockScroll);
+                        const scrollY = window.pageYOffset;
+                        document.body.style.top = `-${scrollY}px`;
+                        document.body.setAttribute('data-state', 'backdrop');
+                    };
+                    window.addEventListener('scrollend', lockScroll);
+                }
+            }
+        }
+
         // Show backdrop and set toggle button state for all modes
         if (window.NDSBackdrop) {
             window.NDSBackdrop.show({
                 zIndex: isTopMode ? 997 : 998, // Top mode: 997, Slide menu: 998
+                preventScroll: !isTopMode, // Disable scroll lock for top mode (allows smooth scroll)
                 onClick: () => {
                     if (hasState(animationTarget, 'open')) {
                         closeMenu(accMenu, animationTarget, toggleBtn, contentLayout, isTopMode);
@@ -217,6 +240,13 @@
             const drawer = accMenu.querySelector('.nds-drawer');
             if (drawer) drawer.style.removeProperty('--drawer-max-height');
             if (!isTopMode) accMenu.style.removeProperty('padding-top');
+            // Unlock manual scroll lock (top mode applies this after smooth scroll)
+            if (isTopMode && document.body.style.top) {
+                const scrollY = parseInt(document.body.style.top, 10) * -1;
+                document.body.style.top = '';
+                document.body.removeAttribute('data-state');
+                window.scrollTo(0, scrollY);
+            }
             // Hide backdrop using API
             if (window.NDSBackdrop) window.NDSBackdrop.hide();
             animationTarget.removeEventListener('transitionend', handleTransitionEnd);

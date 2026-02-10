@@ -18,7 +18,8 @@
             open: 'open',
             opening: 'opening',
             closing: 'closing',
-            closed: ''
+            closed: '',
+            active: 'active'
         },
         classes: {
             hasMore: 'hasMore',
@@ -136,7 +137,7 @@
         setState(submenu, CONFIG.states.opening);
         setState(listItem, CONFIG.states.opening);
         button.setAttribute('aria-expanded', 'true');
-        setState(button, CONFIG.states.open);
+        setState(button, CONFIG.states.active);
         submenu.style.height = submenu.scrollHeight + 'px';
 
         const cleanup = () => {
@@ -204,7 +205,7 @@
                 setState(item, CONFIG.states.open);
                 setState(submenu, CONFIG.states.open);
                 button.setAttribute('aria-expanded', 'true');
-                setState(button, CONFIG.states.open);
+                setState(button, CONFIG.states.active);
             } else {
                 setState(item, CONFIG.states.closed);
                 setState(submenu, CONFIG.states.closed);
@@ -324,7 +325,7 @@
                     setState(parent, CONFIG.states.open);
                     if (btn) {
                         btn.setAttribute('aria-expanded', 'true');
-                        setState(btn, CONFIG.states.open);
+                        setState(btn, CONFIG.states.active);
                     }
                     if (submenu) setState(submenu, CONFIG.states.open);
                 }

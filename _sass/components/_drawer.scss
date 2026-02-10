@@ -14,7 +14,7 @@
 .nds-drawer {
     // Internal custom properties with external fallbacks
     --_gap: var(--drawer-gap, 0px);
-    --_indent: var(--drawer-indent, calc(var(--_btn-padding, var(--spacing-md)) * 2));
+    --_indent: var(--drawer-indent, calc(var(--_btn-padding, var(--spacing-md))));
     --_divider: var(--drawer-divider, var(--alpha-black-10));
     --_indicator-width: var(--drawer-indicator-width, 5px);
     --_indicator: var(--drawer-indicator, var(--colors-neutral-300));
@@ -144,7 +144,7 @@
 // ACTIVE STATE
 // ==============================================
 
-.nds-drawer-list>li.active {
+.nds-drawer-list>li[data-state~="active"] {
     // Update featured icon colors
     --icon-color: var(--_indicator-active);
     --icon-bg-color: var(--colors-primary-sa-flag-50);
@@ -158,7 +158,7 @@
 }
 
 // Nested active item
-.nds-drawer-list ul li.active>.nds-btn {
+.nds-drawer-list ul li[data-state~="active"]>.nds-btn {
     color: var(--_indicator-active);
 }
 
@@ -183,7 +183,7 @@
     height: 0;
     overflow: clip;
     transition: height var(--_transition);
-    padding-inline-start: var(--_indent);
+    margin-inline-start: var(--_indent);
 
     // Submenu items with list markers (like sidemenu)
     >li {
@@ -211,6 +211,7 @@
                     height: var(--btn-indicator-size);
                     display: block;
                     background-color: var(--_indicator);
+                    inset-inline-start: var(--spacing-xs);
                 }
             }
         }
