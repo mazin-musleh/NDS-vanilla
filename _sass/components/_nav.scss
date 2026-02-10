@@ -17,9 +17,6 @@
     align-items: flex-end;
     /* Fallback for older browsers */
     overflow-y: clip;
-}
-
-.nds-topbar {
     .nds-topbar-content {
         display: flex;
         justify-content: space-between;
@@ -73,7 +70,18 @@
     z-index: 1000;
     transform: translateY(0);
 
-    &:not(:has(.nds-collapse .nds-dropdown[data-state~="open"]), :has(.nds-collapse[data-state~="open"]), :has(.nds-nav-minimal .nds-dropdown[data-state~="open"])) {
+    // Clip horizontal overflow to prevent scroll bleed, but only when
+    // nothing is open. Open dropdowns/collapse panels need overflow
+    // visible so their content can extend beyond the nav boundary.
+    // Three open-state sources:
+    //   1. .nds-collapse .nds-dropdown — desktop dropdown
+    //   2. .nds-collapse — mobile hamburger panel
+    //   3. .nds-nav-minimal .nds-dropdown — minimal nav dropdown
+    &:not(
+        :has(.nds-collapse .nds-dropdown[data-state~="open"]),
+        :has(.nds-collapse[data-state~="open"]),
+        :has(.nds-nav-minimal .nds-dropdown[data-state~="open"])
+    ) {
         overflow-x: clip;
     }
 
@@ -90,8 +98,7 @@
             position: fixed;
             height: var(--nds-nav-height);
             background-color: var(--nds-nav-background-color);
-            left: 0;
-            right: 0;
+            inset-inline: 0;
         }
     }
 
@@ -211,14 +218,13 @@
         outline-offset: 2px;
     }
 
-    /* Scrollbar Hiding */
-    ::-webkit-scrollbar {
-        display: none;
-    }
-
-    * {
+    /* Scrollbar Hiding - scoped to scrollable nav */
+    .nds-nav-primary {
         scrollbar-width: none;
-        -ms-overflow-style: none;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
     }
 
     /* Show More Navigation */
@@ -277,7 +283,6 @@
                 padding-bottom: var(--spacing-2xl);
                 width: 100%;
 
-
                 @include mobile {
                     padding-top: 0;
                     padding-bottom: 0;
@@ -285,8 +290,6 @@
             }
         }
     }
-
-
 
     &[data-state~="open"] .nds-dropdown-menu {
         display: flex;
@@ -315,29 +318,26 @@
         transform: translateY(-100%);
     }
 
-
-
     .nds-dropdown-item {
         text-decoration: none;
         justify-content: start;
+        width: 100%;
 
         &:last-child {
             border-bottom: none;
         }
     }
-}
 
-
-.nds-dropdown-menu {
-
-    .nds-dropdown-item {
-        width: 100%;
+    .nds-dropdown-menu .nds-column {
+        padding: var(--spacing-lg);
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-md);
     }
 
     /* Dropdown Columns Grid */
     .nds-dropdown-columns {
         &.columnView {
-
             column-count: 4;
             column-gap: var(--spacing-2xl);
 
@@ -358,56 +358,38 @@
             padding: 0;
             margin: 0;
         }
-    }
-}
 
-/* Dropdown Row List */
-.nds-dropdown-columns {
+        .nds-list {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: column;
+            column-gap: var(--spacing-2xl);
 
-    .nds-list {
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: column;
-        column-gap: var(--spacing-2xl);
+            &.nds-multi-column-list {
+                display: block;
+                column-count: 3;
+                column-gap: 2rem;
+                list-style: none;
+                padding: 0;
+                margin: 0;
 
-        &.nds-multi-column-list {
-            display: block;
-            column-count: 3;
-            column-gap: 2rem;
-            list-style: none;
-            padding: 0;
-            margin: 0;
-
-            * {
-                display: flex;
-                white-space: nowrap;
+                * {
+                    display: flex;
+                    white-space: nowrap;
+                }
             }
         }
 
-    }
-
-    &.nds-rowList {
-        .nds-list {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-evenly;
-            flex-wrap: wrap;
-            column-gap: var(--spacing-2xl);
+        &.nds-rowList {
+            .nds-list {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-evenly;
+                flex-wrap: wrap;
+                column-gap: var(--spacing-2xl);
+            }
         }
     }
-}
-
-
-
-.nds-dropdown .nds-dropdown-menu .nds-column {
-    padding: var(--spacing-lg);
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-md);
-}
-
-.nds-dropdown .nds-dropdown-menu.widthFit .nds-column {
-    padding: var(--spacing-lg);
 }
 
 /* ========================================
@@ -417,7 +399,7 @@
 body:not(.nds-minimal) .nds-main-nav {
 
     .nds-mainNav-toggler {
-        display: none !important;
+        display: none;
     }
 
     .nds-collapse {
@@ -441,7 +423,6 @@ body:not(.nds-minimal) .nds-main-nav {
         width: 100%;
         touch-action: pan-x;
         -webkit-overflow-scrolling: touch;
-        -ms-overflow-style: none;
         scrollbar-width: none;
 
         >* {
@@ -470,12 +451,12 @@ body:not(.nds-minimal) .nds-main-nav {
             }
 
             @include ltr {
+                ~.showMore i {
+                    transform: rotate(270deg);
+                }
 
-                // At end: icon rotation for LTR
-                &.atEnd {
-                    ~.showMore i {
-                        transform: rotate(90deg);
-                    }
+                &.atEnd ~.showMore i {
+                    transform: rotate(90deg);
                 }
             }
         }
@@ -499,28 +480,6 @@ body:not(.nds-minimal) .nds-main-nav {
         >.nds-dropdown-content {
             max-height: 60svh;
             overflow-y: auto;
-        }
-    }
-}
-
-/* RTL/LTR Support for Desktop/Tablet */
-@include ltr {
-    body:not(.nds-minimal) .nds-main-nav {
-        .nds-collapse-content {
-            .nds-nav-primary.hasMore {
-                ~.showMore i {
-                    transform: rotate(270deg);
-                }
-
-                &.atEnd~.showMore i {
-                    transform: rotate(90deg);
-                }
-
-                &::before {
-                    inset-inline-start: var(--spacing-xs);
-                    transform: translateX(-4px);
-                }
-            }
         }
     }
 }
@@ -640,6 +599,16 @@ body.nds-minimal .nds-main-nav {
         }
     }
 
+    /* Shared nav-link styles for primary nav and showMore */
+    .nds-nav-primary .nds-nav-link,
+    .showMore .nds-nav-link {
+        --btn-height: var(--nds-minimal-nav-item-height);
+        width: 100%;
+        align-items: center;
+        justify-content: start;
+        @include btn-indicator('v');
+    }
+
     /* Primary Navigation */
     .nds-nav-primary {
         position: relative;
@@ -661,14 +630,6 @@ body.nds-minimal .nds-main-nav {
                 margin-bottom: var(--spacing-md);
             }
 
-        }
-
-        .nds-nav-link {
-            --btn-height: var(--nds-minimal-nav-item-height);
-            width: 100%;
-            align-items: center;
-            justify-content: start;
-            @include btn-indicator('v');
         }
 
         .nds-dropdown-menu {
@@ -708,7 +669,6 @@ body.nds-minimal .nds-main-nav {
         border-bottom: 1px solid var(--border-neutral-secondary);
     }
 
-
     /* Show More Button */
     .nds-collapse-content {
         .nds-nav-primary.hasMore {
@@ -745,14 +705,6 @@ body.nds-minimal .nds-main-nav {
         opacity: 0;
         visibility: hidden;
         transition: opacity .1s, visibility .1s;
-
-        .nds-nav-link {
-            --btn-height: var(--nds-minimal-nav-item-height);
-            width: 100%;
-            align-items: center;
-            justify-content: start;
-            @include btn-indicator('v');
-        }
     }
 
     /* Secondary Navigation */
@@ -772,7 +724,6 @@ body.nds-minimal .nds-main-nav {
             border-radius: 0 0 var(--radius-lg) var(--radius-lg);
             transition: border-radius var(--nds-transition);
         }
-
 
         .nds-nav-item {
             border-bottom: none;
@@ -837,8 +788,7 @@ body.nds-minimal .nds-main-nav {
 }
 
 /* Respect reduced motion preferences */
-@media (prefers-reduced-motion: reduce) {
-
+@include reduced-motion {
     .nds-main-nav .nds-dropdown-menu,
     .nds-main-nav .nds-collapse,
     .nds-main-nav .nds-nav-primary .showMore i {
