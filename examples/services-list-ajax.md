@@ -226,7 +226,7 @@ exclude_showcase: false
                     </div>
                 </div>
                 <div class="nds-card-content">
-                    <div class="nds-card-text">
+                    <div class="nds-card-text" style="--truncate: 2;">
                         <h3 class="nds-card-title nds-truncate">{{ service.title }}</h3>
                         <span class="nds-card-description nds-truncate">{{ service.description }}</span>
                     </div>
@@ -242,10 +242,12 @@ exclude_showcase: false
                     </div>
                 </div>
                 <div class="nds-card-actions">
-                    <a href="{{ service.url }}" class="nds-btn nds-secondary-outline nds-lg" aria-label="Service Details">
+                    <a href="{{ service.url }}" class="nds-btn nds-secondary-outline nds-lg"
+                        aria-label="Service Details">
                         <span class="label">Details</span>
                     </a>
-                    <a href="{{ service.url }}" class="nds-btn nds-primary nds-lg nds-trail-icon" aria-label="Get Started">
+                    <a href="{{ service.url }}" class="nds-btn nds-primary nds-lg nds-trail-icon"
+                        aria-label="Get Started">
                         <span class="label">Get Started</span>
                     </a>
                 </div>

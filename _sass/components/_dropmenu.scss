@@ -23,6 +23,7 @@
     overflow: hidden;
     overflow-y: auto;
     max-height: 400px;
+      fieldset{padding-bottom: 8px;}
   }
 
   // ==============================================
@@ -57,13 +58,6 @@
     justify-content: flex-start;
     text-decoration: none;
     width: 100%;
-
-    &:not(.nds-btn)>.label {
-      font-size: var(--nds-text-lg-FS);
-      font-weight: 500;
-      margin-bottom: var(--spacing-md);
-      display: flex;
-    }
 
     &:link,
     &:visited {
