@@ -53,11 +53,6 @@
    MENU ITEM ICONS (::after)
    ======================================== */
 
-.hgi-loaded .nds-sideMenu nav li.gridView>a:after,
-.hgi-loaded .nds-sideMenu nav li.redirect.external>a:after {
-    content: '㭫';
-}
-
 .hgi-loaded .nds-sideMenu nav li.redirect.external>a:after {
     content: "䊔";
 }
@@ -78,7 +73,6 @@
         border-radius: 0 !important;
         border-top: 0;
         border-bottom: 0;
-
     }
 
     // ========================================
@@ -116,8 +110,6 @@
         }
     }
 
-
-
     /* Side Menu Toggle Button */
     #sideMenuToggle:not([hidden]) {
         --btn-size: 40px;
@@ -131,7 +123,6 @@
         top: calc(var(--nds-nav-height) + var(--spacing-md));
         --toggle-transform: translate(calc((var(--nds-sideMenu-width)) * -1), var(--_toggle-pos));
         box-shadow: var(--shadow-md);
-
     }
 
     #sideMenuToggle i {
@@ -142,14 +133,12 @@
         margin: auto;
     }
 
+    /* LTR Support */
     @include ltr {
         #sideMenuToggle i {
             scale: 1;
         }
-    }
 
-    /* LTR Support */
-    @include ltr {
         .nds-sideMenu {
             transform: translateX(-100%);
         }
@@ -160,14 +149,11 @@
             --toggle-transform: translate(calc(var(--nds-sideMenu-width)), var(--_toggle-pos));
             border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
         }
-    }
 
-    @include ltr {
         .nds-sideMenu li.redirect.external>a::after {
             scale: -1;
         }
     }
-
 
     .nds-content-layout:not(.topSubMenu) .nds-sideMenu {
 
@@ -181,8 +167,6 @@
             --btn-indicator-size: 3px;
             @include btn-indicator('v');
 
-
-
             &::before {
                 inset-inline-start: auto;
                 inset-inline-end: 0;
@@ -195,22 +179,17 @@
             }
 
             &.nds-peek {
-
-
-
-
                 body[data-font-loaded*="hgi-stroke-rounded"] i {
                     opacity: 1;
                     transition: opacity var(--nds-transition);
                 }
-
 
                 &:not([data-state="open"]) {
                     --toggle-transform: translate(calc((var(--nds-sideMenu-width) - var(--btn-width)/1.5) * -1), var(--_toggle-pos));
                     --btn-indicator-size: 5px;
 
                     @include ltr {
-                        --toggle-transform: translate(calc(var(--nds-sideMenu-width)  - var(--btn-width)/1.5), var(--_toggle-pos));
+                        --toggle-transform: translate(calc(var(--nds-sideMenu-width) - var(--btn-width)/1.5), var(--_toggle-pos));
                     }
 
                     .label {
@@ -224,15 +203,14 @@
                     i {
                         opacity: 0;
                     }
-
-
                 }
             }
         }
     }
-}
 
-@include tablet(max) {
+    // ========================================
+    // TOP SUBMENU MODE - Vertical dropdown (tablet/mobile)
+    // ========================================
     .nds-content-layout.topSubMenu {
         flex-direction: column;
         gap: 0 !important;
@@ -265,15 +243,17 @@
                 --toggle-transform: unset;
                 z-index: 3;
 
-                .label[hidden] {
-                    visibility: hidden;
-                    display: block;
+                .label {
+                    &[hidden] {
+                        visibility: hidden;
+                        display: block;
+                    }
+                    flex: 1;
                 }
 
                 i {
                     color: var(--text-primary);
                 }
-
             }
 
             .nds-drawer {
@@ -317,15 +297,12 @@
                     position: sticky;
                     top: calc(var(--nds-nav-height));
                 }
-
             }
-
         }
 
         // Add padding-top to mainContent when drawer is open
         .nds-sideMenu[data-state~="open"]~.nds-main-content {
             padding-top: calc(var(--_toggle-height) + 16px);
         }
-
     }
 }
