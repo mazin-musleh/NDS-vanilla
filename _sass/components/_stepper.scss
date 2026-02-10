@@ -267,7 +267,7 @@
             color: var(--colors-base-white);
         }
 
-        .hgi-loaded &::before {
+        body[data-font-loaded*="hgi-solid-rounded"] &::before {
             opacity: 1;
         }
     }

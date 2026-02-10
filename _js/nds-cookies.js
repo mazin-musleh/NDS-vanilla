@@ -22,16 +22,36 @@
 (() => {
     'use strict';
 
+    // Use localStorage fallback when opened as local file (file:// protocol)
+    const isLocalFile = window.location.protocol === 'file:';
+
     const ndsGetCookieConsent = () => ndsGetCookie('cookieConsent');
     const ndsSetCookieConsent = (value) => ndsSetCookie('cookieConsent', value, 365);
 
     function ndsSetCookie(name, value, days) {
+        if (isLocalFile) {
+            const item = { value, expires: Date.now() + (days * 86400000) };
+            localStorage.setItem('nds_' + name, JSON.stringify(item));
+            return;
+        }
         const expires = new Date();
         expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
         document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/;SameSite=Lax`;
     }
 
     function ndsGetCookie(name) {
+        if (isLocalFile) {
+            const raw = localStorage.getItem('nds_' + name);
+            if (!raw) return null;
+            try {
+                const item = JSON.parse(raw);
+                if (item.expires && Date.now() > item.expires) {
+                    localStorage.removeItem('nds_' + name);
+                    return null;
+                }
+                return item.value;
+            } catch (e) { return null; }
+        }
         const cookiePrefix = name + "=";
         const cookieArray = document.cookie.split(';');
         for (let i = 0; i < cookieArray.length; i++) {
@@ -150,6 +170,10 @@
     }
 
     function ndsDeleteCookie(name) {
+        if (isLocalFile) {
+            localStorage.removeItem('nds_' + name);
+            return;
+        }
         document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
         document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=' + window.location.hostname;
     }

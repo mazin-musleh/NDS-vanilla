@@ -9,29 +9,42 @@
 #   ruby _plugins/baseurl_cleaner.rb dry      # Dry run - show changes without modifying files
 #
 # WHAT IT DOES:
-#   1. Scans all .html, .css, .js, .xml, .json files in _site/
-#   2. Replaces href="/_site/" (root link) with href="/"
-#   3. Replaces all other /_site/ references with relative paths
-#      e.g. /_site/assets/img/logo.svg -> assets/img/logo.svg
+#   1. Scans all .html files in _site/
+#   2. Reads baseurl from _config.yml (supports both set and empty baseurl)
+#   3. Replaces root links (href="/baseurl/" or href="/") with href="index.html"
+#   4. Replaces baseurl prefix with relative path based on file depth
+#      Root files:  /baseurl/assets/img/logo.svg -> assets/img/logo.svg
+#      Depth 1:     /baseurl/assets/img/logo.svg -> ../assets/img/logo.svg
+#      Depth 2:     /baseurl/assets/img/logo.svg -> ../../assets/img/logo.svg
 #
 # REQUIREMENTS:
 #   - Ruby (standard library only)
 #
 
 require 'fileutils'
+require 'yaml'
 
 class BaseurlCleaner
-  BASEURL = "/_site"
-
   # File extensions to process
-  FILE_EXTENSIONS = %w[.html .css .js .xml .json .svg .txt].freeze
+  FILE_EXTENSIONS = %w[.html].freeze
 
   def initialize(dry_run: false)
     @dry_run = dry_run
     @site_dir = File.join(Dir.pwd, '_site')
+    @baseurl = read_baseurl
     @files_processed = 0
     @files_modified = 0
     @total_replacements = 0
+  end
+
+  def read_baseurl
+    config_path = File.join(Dir.pwd, '_config.yml')
+    unless File.exist?(config_path)
+      puts "\n  ❌ _config.yml not found.\n\n"
+      exit 1
+    end
+    config = YAML.safe_load(File.read(config_path))
+    config['baseurl'].to_s.chomp('/')
   end
 
   def run
@@ -40,12 +53,13 @@ class BaseurlCleaner
       return
     end
 
+    label = @baseurl.empty? ? "'/'" : "'#{@baseurl}/'"
     puts ""
     puts "  ╔══════════════════════════════════════════════════════╗"
     puts "  ║         NDS Baseurl Cleaner                         ║"
-    puts "  ║         Removing '#{BASEURL}' prefix from _site/    ║"
+    puts "  ║         Removing #{label} prefix from _site/".ljust(57) + "║"
     if @dry_run
-      puts "  ║         🔍 DRY RUN - No files will be modified      ║"
+      puts "  ║         DRY RUN - No files will be modified".ljust(57) + "║"
     end
     puts "  ╚══════════════════════════════════════════════════════╝"
     puts ""
@@ -79,20 +93,47 @@ class BaseurlCleaner
     content = File.read(file_path, encoding: 'UTF-8')
     original_content = content.dup
 
+    # Calculate directory depth relative to _site/
+    relative_path = file_path.sub(@site_dir + File::SEPARATOR, '').sub(@site_dir, '')
+    depth = File.dirname(relative_path).split(File::SEPARATOR).reject { |p| p == '.' }.length
+    prefix = depth > 0 ? ('../' * depth) : ''
+
     replacements = 0
 
-    # 1. Replace standalone baseurl links: href="/_site/" or href='/_site/'
-    #    These are root/home links -> replace with "/"
-    content.gsub!(%r{(href\s*=\s*["'])#{Regexp.escape(BASEURL)}/(["'])}) do
+    # 1. Replace root/home links -> href="index.html" (with ../ based on depth)
+    #    With baseurl:    href="/_site/" -> href="index.html" or href="../index.html"
+    #    Without baseurl: href="/"       -> href="index.html" or href="../index.html"
+    root_pattern = @baseurl.empty? ? %r{(href\s*=\s*["'])/(["'])} : %r{(href\s*=\s*["'])#{Regexp.escape(@baseurl)}/(["'])}
+    content.gsub!(root_pattern) do
       replacements += 1
-      "#{$1}/#{$2}"
+      "#{$1}#{prefix}index.html#{$2}"
     end
 
-    # 2. Replace all remaining /_site/ prefixes with relative paths
-    #    e.g. /_site/assets/img/logo.svg -> assets/img/logo.svg
-    content.gsub!(%r{#{Regexp.escape(BASEURL)}/}) do
+    # 2. Replace baseurl prefix with relative path based on depth
+    #    Matches: href, src, srcset, data-*, imagesrcset
+    #    Skips protocol URLs (http://, https://, //)
+    content.gsub!(%r{((?:href|src|srcset|data-[\w-]+|imagesrcset)\s*=\s*["'])#{Regexp.escape(@baseurl)}/(?!/)}) do
       replacements += 1
-      "/"
+      "#{$1}#{prefix}"
+    end
+
+    # 2b. Replace additional URLs inside srcset/data-srcset/imagesrcset (comma-separated)
+    #     e.g. srcset="/img/a.webp 600w, /img/b.webp 1200w" - second URL after comma
+    content.gsub!(%r{(,\s*)#{Regexp.escape(@baseurl)}/(?!/)}) do
+      replacements += 1
+      "#{$1}#{prefix}"
+    end
+
+    # 3. Replace JS-assigned paths: .href = '/...', .src = '/...'
+    content.gsub!(%r{(\.(href|src)\s*=\s*['"])#{Regexp.escape(@baseurl)}/(?!/)}) do
+      replacements += 1
+      "#{$1}#{prefix}"
+    end
+
+    # 4. Replace CSS url() paths: url(/assets/...), url('/assets/...'), url("/assets/...")
+    content.gsub!(%r{(url\(\s*['"]?)#{Regexp.escape(@baseurl)}/(?!/)}) do
+      replacements += 1
+      "#{$1}#{prefix}"
     end
 
     if content != original_content
