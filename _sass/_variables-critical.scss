@@ -5,7 +5,11 @@
     // CRITICAL VARIABLES - ABOVE THE FOLD ONLY
     // ==============================================
 
-    --nds-nav-background-color: #fff;
+    --nds-nav-background-color: var(--colors-base-white,#fff);
+    --nds-nav-dropmenu-background-color: var(--nds-nav-background-color,#fff);
+    --nds-nav-color: var(--text-default);
+    --nds-nav-dropmenu-color: var(--text-default);
+    --nds-nav-dropmenu-title-color: var(--text-primary);
     --nds-viewport-padding: var(--nds-viewport-base-padding);
 
     // Transitions (critical for all interactions)

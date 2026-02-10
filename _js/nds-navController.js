@@ -66,7 +66,7 @@
                     minimalBp: parseInt(styles.getPropertyValue('--nds-minimal-nav-bp')) || 768,
                     speed: (parseFloat(styles.getPropertyValue('--nds-transition-speed')) || 0.2) * 1000,
                     isRTL: root.dir === 'rtl' || styles.direction === 'rtl',
-                    safeZone: parseInt(styles.getPropertyValue('--nds-dropdown-safeZone')) || 40
+                    safeZone: parseInt(styles.getPropertyValue('--nds-dropdown-safeZone')) || 24
                 };
             }
             return this._css;
