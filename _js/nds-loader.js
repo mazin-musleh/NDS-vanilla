@@ -77,7 +77,7 @@
         },
         {
             name: 'showcase',
-            selector: '.nds-demo-card, .demo-toggle-btn',
+            selector: '.nds-demo-card, .demo-toggle-btn, .nds-demo-showcase',
             init: () => window.NDSShowcase?.init?.(),
         },
         {
