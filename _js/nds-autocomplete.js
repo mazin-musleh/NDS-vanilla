@@ -111,7 +111,7 @@
             scroll.className = 'nds-dropmenu-scroll';
             menu.appendChild(scroll);
 
-            this.container.appendChild(menu);
+            this.formControl.appendChild(menu);
             this.menu = menu;
             this.scroll = scroll;
             this.menuId = menuId;

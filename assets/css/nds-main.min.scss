@@ -64,6 +64,9 @@
 @use 'components/loading';
 @use 'components/definition-list';
 
+// Grid system - Moved from critical CSS
+@use 'grid';
+
 // Import utilities
 @use 'utilities';
 
