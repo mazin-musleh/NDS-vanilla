@@ -46,7 +46,7 @@
   &.nds-xs {
     --pc-size: 24px;
 
-    .progress-info .progress-symbol,.progress-info .progress-text {
+    .progress-info :is(.progress-symbol, .progress-text) {
       display: none;
     }
   }

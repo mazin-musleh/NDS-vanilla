@@ -58,8 +58,7 @@
     /* ===== MAIN CONTENT ===== */
 
     /* Hide icons until their specific fonts are loaded */
-    i.hgi-stroke,
-    i.hgi-solid {
+    i:is(.hgi-stroke, .hgi-solid) {
         opacity: 0;
     }
 
@@ -117,13 +116,7 @@
 
     /* Override hidden attribute for NDS components to prevent CLS */
     /* Elements are invisible but still reserve layout space */
-    [hidden].nds-tabs,
-    [hidden].nds-drawer,
-    [hidden].nds-swiper,
-    [hidden].nds-breadcrumb-nav,
-    [hidden].nds-sideInfo,
-    [hidden].nds-user-feedback,
-    [hidden].nds-footer {
+    [hidden]:is(.nds-tabs, .nds-drawer, .nds-swiper, .nds-breadcrumb-nav, .nds-sideInfo, .nds-user-feedback, .nds-footer) {
         display: block;
         visibility: hidden;
         overflow-x: hidden;
@@ -256,8 +249,7 @@
         display: flex;
     }
 
-    .nds-swiper.nds-hero .nds-section-title,
-    .nds-swiper.nds-hero .nds-section-description {
+    .nds-swiper.nds-hero :is(.nds-section-title, .nds-section-description) {
         color: var(--text-oncolor-primary, #fff);
     }
 

@@ -95,9 +95,7 @@
     }
 
     // Header styles
-    th,
-    thead th,
-    thead td {
+    :is(th, thead td) {
         background-color: var(--table-background-header);
         color: var(--table-text-head);
         font-weight: 600;
@@ -169,15 +167,7 @@
 
 .nds-table.nds-compact {
 
-    th,
-    thead th,
-    thead td {
-        padding: var(--spacing-1) var(--spacing-3);
-        font-size: var(--nds-text-sm-FS);
-        line-height: var(--nds-text-sm-LH);
-    }
-
-    td {
+    :is(th, td) {
         padding: var(--spacing-1) var(--spacing-3);
         font-size: var(--nds-text-sm-FS);
         line-height: var(--nds-text-sm-LH);
@@ -185,10 +175,7 @@
 
     @include mobile {
 
-        th,
-        thead th,
-        thead td,
-        td {
+        :is(th, td) {
             padding: var(--spacing-0-5) var(--spacing-2);
             font-size: var(--nds-text-xs-FS);
             line-height: var(--nds-text-xs-LH);
@@ -259,8 +246,7 @@
 .nds-table {
 
     // Remove default focus outline on table cells
-    th,
-    td {
+    :is(th, td) {
         outline: none;
 
         &:focus {
@@ -269,13 +255,10 @@
     }
 
     // Focus styles only for interactive elements within cells
-    th:focus-within,
-    td:focus-within {
+    :is(th, td):focus-within {
 
         // Only apply focus styles to interactive elements, not the cell itself
-        button:focus,
-        input:focus,
-        a:focus {
+        :is(button, input, a):focus {
             outline: 2px solid var(--colors-primary-sa-flag-600-primary);
             outline-offset: -2px;
         }
@@ -335,8 +318,7 @@
     }
 
     // Checkbox column should have consistent width
-    th:has(.nds-check-container),
-    td:has(.nds-check-container) {
+    :is(th, td):has(.nds-check-container) {
         width: 40px;
         text-align: center;
 

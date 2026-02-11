@@ -109,8 +109,7 @@
   .nds-dropmenu-menu {
     min-width: 60px;
     max-height: 300px;
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow: hidden auto;
   }
 
   // Dropdown menu items
@@ -148,13 +147,7 @@
     font-size: var(--nds-text-sm-FS);
   }
 
-  &.nds-lg .nds-pagination-item .nds-btn {
-    min-width: 48px;
-    height: 48px;
-    font-size: var(--nds-text-lg-FS);
-  }
-
-  &.nds-lg .nds-pagination-ellipsis {
+  &.nds-lg :is(.nds-pagination-item .nds-btn, .nds-pagination-ellipsis) {
     min-width: 48px;
     height: 48px;
     font-size: var(--nds-text-lg-FS);

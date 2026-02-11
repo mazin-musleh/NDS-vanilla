@@ -81,8 +81,7 @@
             overflow: hidden;
         }
 
-        &.show:not(.closing),
-        &.opening {
+        &:is(.show:not(.closing), .opening) {
             grid-template-rows: 1fr;
         }
 

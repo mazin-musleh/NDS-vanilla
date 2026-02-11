@@ -54,7 +54,8 @@
     background-color: var(--_btn-bg-disabled);
     color: var(--_btn-color-disabled);
     border-color: var(--_btn-border-disabled);
-    @include btn-disabled;
+    cursor: not-allowed;
+    pointer-events: none;
   }
 
   &:is(.focus, :focus-visible) {
@@ -65,8 +66,8 @@
   // BUTTON SIZES
   // ==============================================
 
-  &,
-  &.nds-lg {
+  // nds-lg is the default size — no explicit .nds-lg class needed
+  & {
     --btn-size: 40px;
     --btn-indicator-size: 3px;
   }
@@ -186,6 +187,8 @@
   // ==============================================
 
   &.nds-oncolor {
+    --btn-color-disabled: var(--text-default-oncolor-disabled);
+
     &:is(.nds-primary, .nds-neutral) {
       --btn-bg: var(--button-background-oncolor-default);
       --btn-bg-hover: var(--button-background-oncolor-hovered);
@@ -193,7 +196,6 @@
       --btn-bg-selected: var(--button-background-oncolor-selected);
       --btn-bg-disabled: var(--button-background-disabled-on-color);
       --btn-color: var(--text-default);
-      --btn-color-disabled: var(--text-default-oncolor-disabled);
       --btn-loading-color: var(--text-default);
 
       &:is(.focus, :focus-visible) {
@@ -208,7 +210,6 @@
       --btn-bg-selected: var(--button-background-transparent-selected);
       --btn-bg-disabled: var(--button-background-disabled-on-color);
       --btn-color: var(--text-oncolor-primary);
-      --btn-color-disabled: var(--text-default-oncolor-disabled);
       --btn-loading-color: var(--text-oncolor-primary);
       --btn-loading-track: var(--alpha-white-20);
     }
@@ -220,7 +221,6 @@
       --btn-bg-selected: var(--button-background-transparent-selected);
       --btn-bg-disabled: var(--button-background-transparent-default);
       --btn-color: var(--colors-base-white);
-      --btn-color-disabled: var(--text-default-oncolor-disabled);
       --btn-border: var(--border-white-40);
       --btn-loading-color: var(--colors-base-white);
       --btn-loading-track: var(--alpha-white-20);
@@ -233,7 +233,6 @@
       --btn-bg-selected: var(--button-background-transparent-selected);
       --btn-bg-disabled: transparent;
       --btn-color: var(--text-oncolor-primary);
-      --btn-color-disabled: var(--text-default-oncolor-disabled);
       --btn-loading-color: var(--text-oncolor-primary);
       --btn-loading-track: var(--alpha-white-20);
     }
@@ -241,7 +240,6 @@
     &.nds-transparent {
       --btn-color: var(--text-oncolor-primary);
       --btn-color-hover: var(--button-label-transparent-hovered-on-color);
-      --btn-color-disabled: var(--text-default-oncolor-disabled);
       --btn-loading-color: var(--text-oncolor-primary);
       --btn-loading-track: var(--alpha-white-20);
 
@@ -325,14 +323,15 @@
   // ==============================================
 
   &.nds-oncolor.nds-destructive {
+    --btn-loading-color: var(--colors-base-white);
+    --btn-loading-track: var(--alpha-white-20);
+
     &.nds-primary {
       --btn-bg: var(--button-background-danger-primary-default);
       --btn-bg-hover: var(--button-background-danger-primary-hovered);
       --btn-bg-active: var(--button-background-danger-primary-pressed);
       --btn-bg-selected: var(--button-background-danger-primary-selected);
       --btn-color: var(--text-oncolor-primary);
-      --btn-loading-color: var(--colors-base-white);
-      --btn-loading-track: var(--alpha-white-20);
     }
 
     &.nds-secondary {
@@ -341,8 +340,6 @@
       --btn-bg-active: var(--button-background-danger-secondary-pressed);
       --btn-bg-selected: var(--button-background-danger-secondary-selected);
       --btn-color: var(--button-background-danger-primary-default);
-      --btn-loading-color: var(--colors-base-white);
-      --btn-loading-track: var(--alpha-white-20);
     }
 
     &.nds-secondary-outline {
@@ -358,8 +355,6 @@
       --btn-border-active: var(--border-error-light);
       --btn-border-selected: var(--border-error-light);
       --btn-border-disabled: var(--border-neutral-secondary);
-      --btn-loading-color: var(--colors-base-white);
-      --btn-loading-track: var(--alpha-white-20);
 
       &:is(.selected, [data-state="selected"], [data-state~="open"]) {
         color: var(--button-background-danger-primary-selected);
@@ -378,8 +373,6 @@
       --btn-bg-disabled: transparent;
       --btn-color: var(--button-label-danger-primary-default-oncolor);
       --btn-color-hover: var(--button-background-danger-primary-hovered);
-      --btn-loading-color: var(--colors-base-white);
-      --btn-loading-track: var(--alpha-white-20);
 
       &:is(.selected, [data-state="selected"], [data-state~="open"]) {
         color: var(--button-background-danger-primary-selected);
@@ -393,8 +386,6 @@
     &.nds-transparent {
       --btn-color: var(--button-label-danger-primary-default-oncolor);
       --btn-color-hover: var(--button-label-danger-primary-hovered-oncolor);
-      --btn-loading-color: var(--colors-base-white);
-      --btn-loading-track: var(--alpha-white-20);
 
       &:is(.selected, [data-state="selected"], [data-state~="open"]) {
         color: var(--button-label-danger-primary-selected-oncolor);
@@ -430,62 +421,39 @@
   // MENU BUTTON
   // ==============================================
 
-  body[data-font-loaded*="hgi-stroke-rounded"] &.nds-menu-btn::after {
+  // ==============================================
+  // ICON PSEUDO-ELEMENT BUTTONS (MENU, DIRECTIONAL)
+  // ==============================================
+
+  body[data-font-loaded*="hgi-stroke-rounded"] &:is(.nds-menu-btn, .nds-next, .nds-prev, .nds-up, .nds-down)::after {
     opacity: 1;
+  }
+
+  &:is(.nds-menu-btn, .nds-next, .nds-prev, .nds-up, .nds-down) {
+    &::after {
+      content: "㯭";
+      font-family: "hgi-stroke-rounded" !important;
+      font-style: normal;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      position: relative;
+      opacity: 0;
+      transition: transform 0.1s ease;
+      display: inline-flex;
+      width: var(--_btn-icon-size);
+      height: var(--_btn-icon-size);
+      font-size: var(--_btn-icon-size);
+      line-height: var(--_btn-icon-size);
+      justify-content: center;
+      align-content: center;
+      align-items: center;
+    }
   }
 
   &.nds-menu-btn {
-    &::after {
-      content: "㯭";
-      font-family: "hgi-stroke-rounded" !important;
-      font-style: normal;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      position: relative;
-      opacity: 0;
-      transition: transform 0.1s ease;
-      display: inline-flex;
-      width: var(--_btn-icon-size);
-      height: var(--_btn-icon-size);
-      font-size: var(--_btn-icon-size);
-      line-height: var(--_btn-icon-size);
-      justify-content: center;
-      align-content: center;
-      align-items: center;
-    }
-
     &:is(.selected, .expanded, [data-state~="opening"], [data-state~="open"], [aria-expanded="true"])::after,
     :is(.show, [data-state~="opening"], [data-state~="open"], .active)>&::after {
       transform: rotate(180deg);
-    }
-  }
-
-  // ==============================================
-  // DIRECTIONAL NAVIGATION BUTTONS (NEXT/PREV/UP/DOWN)
-  // ==============================================
-
-  body[data-font-loaded*="hgi-stroke-rounded"] &:is(.nds-next, .nds-prev, .nds-up, .nds-down)::after {
-    opacity: 1;
-  }
-
-  &:is(.nds-next, .nds-prev, .nds-up, .nds-down) {
-    &::after {
-      content: "㯭";
-      font-family: "hgi-stroke-rounded" !important;
-      font-style: normal;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      position: relative;
-      opacity: 0;
-      transition: transform 0.1s ease;
-      display: inline-flex;
-      width: var(--_btn-icon-size);
-      height: var(--_btn-icon-size);
-      font-size: var(--_btn-icon-size);
-      line-height: var(--_btn-icon-size);
-      justify-content: center;
-      align-content: center;
-      align-items: center;
     }
   }
 

@@ -91,8 +91,7 @@
     // ==============================================
 
     // Auto-add required indicator when group has data-required or nds-required class
-    &[data-required],
-    &.nds-required {
+    &:is([data-required], .nds-required) {
         > .label::after {
             content: " *";
             color: var(--controls-control-text-error, #dc2626);

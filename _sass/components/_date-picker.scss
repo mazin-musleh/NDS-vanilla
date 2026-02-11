@@ -125,8 +125,7 @@
         }
     }
 
-    .month-dropdown-wrapper,
-    .year-dropdown-wrapper {
+    :is(.month-dropdown-wrapper, .year-dropdown-wrapper) {
         position: relative;
         display: inline-block;
 
@@ -141,8 +140,7 @@
         }
     }
 
-    .month-dropdown-menu,
-    .year-dropdown-menu {
+    :is(.month-dropdown-menu, .year-dropdown-menu) {
         display: none;
         position: absolute;
         z-index: 999;
@@ -165,8 +163,7 @@
         }
     }
 
-    .month-dropdown-menu,
-    .year-dropdown-menu {
+    :is(.month-dropdown-menu, .year-dropdown-menu) {
         @include ltr {
             left: 0;
             right: unset;
@@ -265,8 +262,7 @@
             // DATE RANGE STYLES
             // ==============================================
 
-            &.range-start,
-            &.range-end {
+            &:is(.range-start, .range-end) {
                 background-color: var(--form-datecell-background-default);
                 color: var(--text-oncolor-primary);
 
@@ -345,8 +341,7 @@
         border-top: 1px solid var(--colors-neutral-300, #d2d6db);
         gap: var(--spacing-2xl);
 
-        & .calendar-action-start,
-        & .calendar-action-end {
+        :is(.calendar-action-start, .calendar-action-end) {
             display: flex;
             gap: var(--spacing-md);
         }

@@ -28,9 +28,8 @@
 // ==============================================
 
 .nds-swiper-wrapper {
-    display: flex;
+    // display: flex & height: 100% in critical-css.html
     width: 100%;
-    height: 100%;
 
     //display: grid;
     //grid-template-columns: repeat(var(--swiper-total), calc((100% - var(--swiper-peek, 0px) - (var(--swiper-gap, 0px) * (var(--swiper-slides, 1) - 1))) / var(--swiper-slides, 1)));
@@ -130,8 +129,7 @@
 // NAVIGATION BUTTONS
 // ==============================================
 
-.nds-swiper-button-prev,
-.nds-swiper-button-next {
+:is(.nds-swiper-button-prev, .nds-swiper-button-next) {
     user-select: none;
 
     .nds-swiper.nds-hero & {
@@ -235,9 +233,7 @@
         gap: var(--spacing-md);
     }
 
-    .nds-swiper-button-prev,
-    .nds-swiper-button-next,
-    .nds-swiper-pagination {
+    :is(.nds-swiper-button-prev, .nds-swiper-button-next, .nds-swiper-pagination) {
         inset-inline: 0 !important;
         margin-block: 0 !important;
         margin-inline: 0 !important;
@@ -249,11 +245,9 @@
 // ON-COLOR VARIANTS (dark backgrounds)
 // ==============================================
 
-.nds-swiper.nds-oncolor,
-.nds-swiper.nds-hero,
+.nds-swiper:is(.nds-oncolor, .nds-hero),
 .nds-oncolor {
-    .nds-section-title,
-    .nds-section-description{
+    :is(.nds-section-title, .nds-section-description) {
         color: var(--text-oncolor-primary, #fff);
     }
     .nds-swiper-pagination-bullet {
@@ -272,8 +266,7 @@
 // ==============================================
 
 .nds-swiper.nds-hero {
-    width: 100%;
-    height: 100%;
+    // width, height, position, z-index in critical-css.html
 
     // Hero swiper has no gap between slides
     .nds-swiper-wrapper {
@@ -293,16 +286,13 @@
         inset-inline-end: var(--spacing-lg);
     }
 
-    .nds-swiper-button-prev,
-    .nds-swiper-button-next {
+    :is(.nds-swiper-button-prev, .nds-swiper-button-next) {
         --btn-size: 48px;
         visibility: hidden;
     }
 
     &:hover {
-
-        .nds-swiper-button-prev,
-        .nds-swiper-button-next {
+        :is(.nds-swiper-button-prev, .nds-swiper-button-next) {
             visibility: visible;
         }
     }

@@ -59,8 +59,7 @@
     text-decoration: none;
     width: 100%;
 
-    &:link,
-    &:visited {
+    &:is(:link, :visited) {
       text-decoration: none;
     }
   }
@@ -80,8 +79,7 @@
   }
 
   // Opening/closing animation (direction set by --_dropmenu-slide)
-  &[data-state~="opening"] .nds-dropmenu-menu,
-  &[data-state~="closing"] .nds-dropmenu-menu {
+  &:is([data-state~="opening"], [data-state~="closing"]) .nds-dropmenu-menu {
     opacity: 0;
     transform: translateY(var(--_dropmenu-slide));
   }

@@ -160,8 +160,7 @@
    ======================================== */
 
 @include desktop(min) {
-    .nds-content-section.nds-horizontal>.nds-section-wrapper,
-    .nds-hero-section.nds-horizontal>.nds-section-wrapper {
+    :is(.nds-content-section, .nds-hero-section).nds-horizontal>.nds-section-wrapper {
         display: grid;
         grid-template-columns: auto 1fr;
         align-items: center;

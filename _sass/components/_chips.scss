@@ -41,13 +41,11 @@
     border-radius: 999px;
   }
 
-  &:focus-visible,
-  &[data-state="focused"] {
+  &:is(:focus-visible, [data-state="focused"]) {
     @include btn-focus;
   }
 
-  &:disabled,
-  &[data-state="disabled"] {
+  &:is(:disabled, [data-state="disabled"]) {
     opacity: 0.5;
     cursor: not-allowed;
     pointer-events: none;

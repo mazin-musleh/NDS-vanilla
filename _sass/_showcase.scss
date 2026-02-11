@@ -62,8 +62,7 @@
 // ==============================================
 
 /* Showcase Containers */
-.state-demo,
-.button-row {
+:is(.state-demo, .button-row) {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -81,8 +80,7 @@
 /* Demo Container Backgrounds */
 .demo-container {
 
-  &.green-bg,
-  &.dark-bg {
+  &:is(.green-bg, .dark-bg) {
     background-color: var(--background-sa-flag);
   }
 
@@ -146,17 +144,14 @@
     font-size: var(--nds-text-sm-FS);
   }
 
-  .state-demo,
-  .button-row {
+  :is(.state-demo, .button-row) {
     gap: var(--spacing-sm);
   }
 
   .button-showcase {
     gap: var(--spacing-lg);
 
-    &.green-bg,
-    &.black-bg,
-    &.dark-bg {
+    &:is(.green-bg, .black-bg, .dark-bg) {
       padding: var(--spacing-lg);
     }
   }
@@ -169,8 +164,7 @@
 /* RTL Support */
 html[dir="rtl"] {
 
-  .demo-header,
-  .demo-action {
+  :is(.demo-header, .demo-action) {
     direction: rtl;
   }
 }

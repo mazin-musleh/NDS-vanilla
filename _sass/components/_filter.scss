@@ -103,8 +103,7 @@
 
         &.nds-section-search {
 
-            .nds-search-btn>.label,
-            .nds-filter-btn>.label {
+            :is(.nds-search-btn, .nds-filter-btn)>.label {
                 display: none;
             }
         }
@@ -136,8 +135,7 @@
     // Success state
     &[data-status="success"] {
 
-        .nds-search-input,
-        .nds-form-control input {
+        :is(.nds-search-input, .nds-form-control input) {
             border-color: var(--border-success);
         }
     }
@@ -145,8 +143,7 @@
     // Error state
     &[data-status="error"] {
 
-        .nds-search-input,
-        .nds-form-control input {
+        :is(.nds-search-input, .nds-form-control input) {
             border-color: var(--border-error);
         }
     }

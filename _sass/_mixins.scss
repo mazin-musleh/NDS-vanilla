@@ -81,8 +81,7 @@
   @at-root {
     @each $selector in & {
 
-      html[dir="ltr"] #{$selector},
-      .ltr #{$selector} {
+      :is(html[dir="ltr"], .ltr) #{$selector} {
         @content;
       }
     }
@@ -197,8 +196,7 @@ textarea {
 
   border: 1px solid transparent;
   border-radius: var(--radius-sm);
-  cursor: pointer;
-  user-select: none;
+  // cursor & user-select set in _base.scss for all interactive elements
   white-space: nowrap;
   position: relative;
   box-sizing: border-box;
@@ -221,12 +219,6 @@ textarea {
     font-size: var(--_btn-FS);
     /* line-height: 1; */
   }
-}
-
-// Button disabled state
-@mixin btn-disabled {
-  cursor: not-allowed;
-  pointer-events: none;
 }
 
 // ==============================================
@@ -368,8 +360,7 @@ textarea {
       letter-spacing: clamp(0rem, calc(var(--pc-size, #{$size}) * -0.0006), -0.072rem) !important;
     }
 
-    .progress-number,
-    .progress-symbol {
+    :is(.progress-number, .progress-symbol) {
       font-size: clamp(10px, calc(var(--pc-size, #{$size}) * 0.15), 36px) !important;
       font-weight: 700 !important;
       line-height: normal;
@@ -396,10 +387,10 @@ textarea {
 
 
 @mixin reset-section-style {
-  --_section-bg: transparent;
-  --_section-shadow: none;
-  --_section-border: none;
-  --_section-border-radius: 0;
+  --section-bg: transparent;
+  --section-shadow: none;
+  --section-border: none;
+  --section-border-radius: 0;
 }
 
 @mixin section-variant($background, $title-color, $description-color) {

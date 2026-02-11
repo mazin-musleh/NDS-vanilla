@@ -68,9 +68,7 @@
 
   &.sub.aside {
 
-    .nds-breadcrumb-nav,
-    .nds-section-wrapper,
-    .nds-section-head {
+    :is(.nds-breadcrumb-nav, .nds-section-wrapper, .nds-section-head) {
       width: calc(100% - var(--nds-sideInfo-width) - var(--spacing-xl));
 
       @include tablet(max) {

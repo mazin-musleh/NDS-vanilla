@@ -70,13 +70,11 @@ $breakpoints-range: (
 // Base flex direction classes (mobile-first) with sm aliases
 // Primary directions: row and col (most common)
 // Pattern: .flex-{direction}-{size} - Size comes last
-.flex-row,
-.flex-row-sm {
+:is(.flex-row, .flex-row-sm) {
   flex-direction: row;
 }
 
-.flex-col,
-.flex-col-sm {
+:is(.flex-col, .flex-col-sm) {
   flex-direction: column;
 }
 

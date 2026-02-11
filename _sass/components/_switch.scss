@@ -96,9 +96,7 @@
     }
 
     // Required indicator
-    &[data-required],
-    &[data-min-checked],
-    &.nds-required {
+    &:is([data-required], [data-min-checked], .nds-required) {
         >.label::after {
             content: " *";
             color: var(--controls-control-text-error);

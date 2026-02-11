@@ -15,10 +15,24 @@
     --_section-border: var(--section-border, none);
     --_section-border-radius: var(--section-border-radius, 0);
 
+    /* Section spacing overridable tokens */
+    --_section-padding-block: var(--section-padding-block, var(--spacing-5xl));
+    --_section-padding-block-start: var(--section-padding-block-start, var(--_section-padding-block));
+    --_section-padding-block-end: var(--section-padding-block-end, var(--_section-padding-block));
+    --_section-margin-block-start: var(--section-margin-block-start, 0);
+    --_section-margin-block-end: var(--section-margin-block-end, 0);
+
     background-color: var(--_section-bg);
     box-shadow: var(--_section-shadow);
     border: var(--_section-border);
     border-radius: var(--_section-border-radius);
+    width: 100%;
+    height: fit-content;
+    padding-block-start: var(--_section-padding-block-start);
+    padding-block-end: var(--_section-padding-block-end);
+    padding-inline: 0;
+    margin-block-start: var(--_section-margin-block-start);
+    margin-block-end: var(--_section-margin-block-end);
 
     &.nds-blue {
         @include section-variant(var(--colors-blue-950),
@@ -44,8 +58,7 @@
             var(--text-default));
     }
 
-    &.nds-ghost,
-    &.noBg {
+    &:is(.nds-ghost, .noBg) {
         @include reset-section-style;
     }
 }
@@ -54,8 +67,7 @@
    SHARED SECTION TOKENS
    ======================================== */
 
-.nds-content-section,
-.nds-hero-section {
+:is(.nds-content-section, .nds-hero-section) {
     /* Section title and description overridable tokens */
     --_section-title-FS: var(--section-title-FS, var(--nds-display-clamp-md-FS, clamp(24px, 3vw, 36px)));
     --_section-title-LH: var(--section-title-LH, var(--nds-display-clamp-md-LH, clamp(30px, 3.67vw, 44px)));

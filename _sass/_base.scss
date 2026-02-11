@@ -6,23 +6,14 @@
    INTERACTIVE ELEMENTS
    ======================================== */
 
-button,
-.button,
-.btn,
-.nds-btn,
-.nds-nav-link,
-[role="button"],
-[role="tab"] {
+:is(button, .button, .btn, .nds-btn, .nds-nav-link, [role="button"], [role="tab"]) {
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
     -webkit-touch-callout: none;
 }
 
-button,
-.button,
-.btn,
-.nds-btn {
+:is(button, .button, .btn, .nds-btn) {
     background-color: transparent;
     border: none;
     cursor: pointer;
@@ -64,13 +55,7 @@ button,
             color: var(--text-primary-paragraph);
         }
 
-        .nds-user-role {
-            font-size: var(--nds-text-sm-FS);
-            line-height: var(--nds-text-sm-LH);
-            color: var(--text-secondary-paragraph);
-        }
-
-        .nds-user-email {
+        :is(.nds-user-role, .nds-user-email) {
             font-size: var(--nds-text-sm-FS);
             line-height: var(--nds-text-sm-LH);
             color: var(--text-secondary-paragraph);

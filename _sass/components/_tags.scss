@@ -15,20 +15,24 @@
   --_text: var(--tag-text, var(--tag-text-neutral));
   --_border: var(--tag-border, var(--border-neutral-secondary));
   --_icon: var(--tag-icon, var(--tag-icon-neutral));
+  --_tag-height: var(--tag-height, 32px);
+  --_tag-fs: var(--tag-fs, var(--nds-text-md-FS));
+  --_tag-padding-inline: var(--tag-padding-inline, var(--spacing-lg));
+  --_tag-dot-size: var(--tag-dot-size, 10px);
 
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--spacing-xs);
   font-weight: 500;
-  font-size: var(--nds-text-md-FS);
-  line-height: 32px;
-  height: 32px;
+  font-size: var(--_tag-fs);
+  line-height: var(--_tag-height);
+  height: var(--_tag-height);
   min-width: fit-content;
   white-space: nowrap;
   border-radius: var(--radius-sm);
   position: relative;
-  padding: var(--spacing-none) var(--spacing-lg);
+  padding: var(--spacing-none) var(--_tag-padding-inline);
   background-color: var(--_bg);
   color: var(--_text);
   border: 1px solid var(--_border);
@@ -49,22 +53,16 @@
   // ==============================================
 
   &.nds-sm {
-    padding: var(--spacing-none) var(--spacing-md);
-    font-size: var(--nds-text-sm-FS);
-    height: 24px;
-    line-height: 24px;
-
-    &.nds-status .label::before {
-      width: 8px;
-      height: 8px;
-    }
+    --tag-height: 24px;
+    --tag-fs: var(--nds-text-sm-FS);
+    --tag-padding-inline: var(--spacing-md);
+    --tag-dot-size: 8px;
   }
 
   &.nds-xs {
-    padding: var(--spacing-none) var(--spacing-md);
-    font-size: var(--nds-text-xs-FS);
-    height: 20px;
-    line-height: 20px;
+    --tag-height: 20px;
+    --tag-fs: var(--nds-text-xs-FS);
+    --tag-padding-inline: var(--spacing-md);
   }
 
   // ==============================================
@@ -81,19 +79,12 @@
 
   &.nds-icon-only {
     aspect-ratio: 1;
+    width: var(--_tag-height);
     padding: var(--spacing-none) var(--spacing-xxs);
     justify-content: center;
 
     .label {
       display: none;
-    }
-
-    &.nds-btn-sm {
-      width: 24px;
-    }
-
-    &.nds-btn-xs {
-      width: 20px;
     }
   }
 
@@ -235,8 +226,8 @@
       &::before {
         content: "";
         display: inline-block;
-        width: 10px;
-        height: 10px;
+        width: var(--_tag-dot-size);
+        height: var(--_tag-dot-size);
         border-radius: 50%;
         background-color: var(--_icon);
         margin-inline-end: var(--spacing-md);

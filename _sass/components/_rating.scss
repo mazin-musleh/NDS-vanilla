@@ -11,6 +11,13 @@
 // ==============================================
 
 .nds-rating {
+  /* --- Rating custom properties --- */
+  --_star-size: var(--star-size, 32px);
+  --_star-color: var(--star-color, var(--rating-star-normal-default));
+  --_star-selected: var(--star-selected, var(--rating-star-selected-default));
+  --_star-pressed: var(--star-pressed, var(--rating-star-pressed-default));
+  --_star-hovered: var(--star-hovered, var(--rating-star-hovered-default));
+
   display: flex;
   align-items: flex-start;
   font-family: 'IBM Plex Sans Arabic', sans-serif;
@@ -23,6 +30,9 @@
   justify-content: center;
   flex-shrink: 0;
   cursor: default;
+  width: var(--_star-size);
+  height: var(--_star-size);
+  color: var(--_star-color);
 
   // Exact Figma star shape using SVG path
   &::before {
@@ -32,8 +42,42 @@
     background-color: currentColor;
     mask: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='42' height='40' viewBox='0 0 42 40' fill='none'%3e%3cpath d='M19.1839 1.93733C19.8987 0.387582 22.1013 0.387586 22.8161 1.93733L27.3024 11.6635C27.5937 12.2952 28.1923 12.73 28.883 12.8119L39.5195 14.0731C41.2143 14.274 41.8949 16.3688 40.6419 17.5275L32.7781 24.7998C32.2674 25.272 32.0388 25.9757 32.1744 26.6579L34.2618 37.1636C34.5944 38.8375 32.8125 40.1321 31.3233 39.2985L21.9769 34.0668C21.3699 33.7271 20.6301 33.7271 20.0231 34.0668L10.6767 39.2985C9.1875 40.1321 7.40558 38.8375 7.73819 37.1636L9.82565 26.6579C9.96121 25.9757 9.73257 25.272 9.2219 24.7998L1.35805 17.5275C0.105054 16.3688 0.78569 14.274 2.48048 14.0731L13.117 12.8119C13.8077 12.73 14.4063 12.2952 14.6976 11.6635L19.1839 1.93733Z' fill='black'/%3e%3c/svg%3e") no-repeat center / contain;
   }
-}
 
+  // Selected state (filled)
+  &.selected {
+    color: var(--_star-selected);
+  }
+
+  // Pressed state
+  &.pressed {
+    color: var(--_star-pressed);
+  }
+
+  // Half state
+  &.half {
+    color: var(--_star-color);
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--_star-selected);
+      mask:
+        url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='42' height='40' viewBox='0 0 42 40' fill='none'%3e%3cpath d='M19.1839 1.93733C19.8987 0.387582 22.1013 0.387586 22.8161 1.93733L27.3024 11.6635C27.5937 12.2952 28.1923 12.73 28.883 12.8119L39.5195 14.0731C41.2143 14.274 41.8949 16.3688 40.6419 17.5275L32.7781 24.7998C32.2674 25.272 32.0388 25.9757 32.1744 26.6579L34.2618 37.1636C34.5944 38.8375 32.8125 40.1321 31.3233 39.2985L21.9769 34.0668C21.3699 33.7271 20.6301 33.7271 20.0231 34.0668L10.6767 39.2985C9.1875 40.1321 7.40558 38.8375 7.73819 37.1636L9.82565 26.6579C9.96121 25.9757 9.73257 25.272 9.2219 24.7998L1.35805 17.5275C0.105054 16.3688 0.78569 14.274 2.48048 14.0731L13.117 12.8119C13.8077 12.73 14.4063 12.2952 14.6976 11.6635L19.1839 1.93733Z' fill='black'/%3e%3c/svg%3e") no-repeat center / contain,
+        linear-gradient(to left, black 50%, transparent 50%);
+      mask-composite: intersect;
+      -webkit-mask-composite: source-in;
+      z-index: 1;
+
+      @include ltr {
+        transform: scaleX(-1);
+      }
+    }
+  }
+}
 
 .nds-btn .nds-rating .nds-rating-star {
   cursor: pointer;
@@ -50,80 +94,13 @@
 }
 
 // ==============================================
-// STAR STATES
-// ==============================================
-
-.nds-rating-star {
-  // Default (normal/empty) state
-  color: var(--rating-star-normal-default);
-
-  // Selected state (filled)
-  &.selected {
-    color: var(--rating-star-selected-default);
-  }
-
-  // Pressed state
-  &.pressed {
-    color: var(--rating-star-pressed-default);
-  }
-
-  // Half state
-  &.half {
-    color: var(--rating-star-normal-default);
-
-    &::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: var(--rating-star-selected-default);
-      mask:
-        url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='42' height='40' viewBox='0 0 42 40' fill='none'%3e%3cpath d='M19.1839 1.93733C19.8987 0.387582 22.1013 0.387586 22.8161 1.93733L27.3024 11.6635C27.5937 12.2952 28.1923 12.73 28.883 12.8119L39.5195 14.0731C41.2143 14.274 41.8949 16.3688 40.6419 17.5275L32.7781 24.7998C32.2674 25.272 32.0388 25.9757 32.1744 26.6579L34.2618 37.1636C34.5944 38.8375 32.8125 40.1321 31.3233 39.2985L21.9769 34.0668C21.3699 33.7271 20.6301 33.7271 20.0231 34.0668L10.6767 39.2985C9.1875 40.1321 7.40558 38.8375 7.73819 37.1636L9.82565 26.6579C9.96121 25.9757 9.73257 25.272 9.2219 24.7998L1.35805 17.5275C0.105054 16.3688 0.78569 14.274 2.48048 14.0731L13.117 12.8119C13.8077 12.73 14.4063 12.2952 14.6976 11.6635L19.1839 1.93733Z' fill='black'/%3e%3c/svg%3e") no-repeat center / contain,
-        linear-gradient(to left, black 50%, transparent 50%);
-      mask-composite: intersect;
-      -webkit-mask-composite: source-in;
-      z-index: 1;
-
-      @include ltr {
-        transform: scaleX(-1);
-      }
-    }
-  }
-}
-
-// ==============================================
 // COMPONENT SIZES (following Figma specs)
 // ==============================================
 
-.nds-rating.nds-md,
 .nds-rating {
-  .nds-rating-star {
-    width: 32px;
-    height: 32px;
-  }
-}
-
-.nds-rating.nds-xs {
-  .nds-rating-star {
-    width: 16px;
-    height: 16px;
-  }
-}
-
-.nds-rating.nds-sm {
-  .nds-rating-star {
-    width: 24px;
-    height: 24px;
-  }
-}
-
-.nds-rating.nds-lg {
-  .nds-rating-star {
-    width: 48px;
-    height: 48px;
-  }
+  &.nds-xs { --star-size: 16px; }
+  &.nds-sm { --star-size: 24px; }
+  &.nds-lg { --star-size: 48px; }
 }
 
 // ==============================================
@@ -131,31 +108,15 @@
 // ==============================================
 
 .nds-rating.nds-brand {
-  .nds-rating-star {
-    // Normal state
-    color: var(--rating-star-normal-brand);
+  --star-color: var(--rating-star-normal-brand);
+  --star-selected: var(--rating-star-selected-brand);
+  --star-pressed: var(--rating-star-pressed-brand);
+  --star-hovered: var(--rating-star-hovered-brand);
 
-    &:hover {
-      color: var(--rating-star-hovered-brand);
-    }
-
-    // Selected state
-    &.selected {
-      color: var(--rating-star-selected-brand);
-    }
-
-    // Pressed state
-    &.pressed {
-      color: var(--rating-star-pressed-brand);
-    }
-
-    // Half state
-    &.half::after {
-      background-color: var(--rating-star-selected-brand);
-    }
+  .nds-rating-star:hover {
+    color: var(--_star-hovered);
   }
 }
-
 
 // ==============================================
 // INTERACTIVE STATES (for clickable ratings)
@@ -164,7 +125,7 @@
 .nds-rating.interactive {
 
   &:hover .nds-rating-star {
-    color: var(--rating-star-normal-default);
+    color: var(--_star-color);
 
     &:after {
       display: none;
@@ -182,16 +143,15 @@
     padding: 0;
 
     &.preview {
-      color: var(--rating-star-selected-default);
+      color: var(--_star-selected);
     }
 
     &:hover {
-      color: var(--rating-star-hovered-default);
+      color: var(--_star-hovered);
     }
 
-
     &:active {
-      color: var(--rating-star-pressed-default);
+      color: var(--_star-pressed);
     }
 
     &:focus-visible {
@@ -201,21 +161,9 @@
     }
   }
 
-  // Brand variant preview
-  &.nds-brand {
-    .nds-rating-star.preview {
-      color: var(--rating-star-selected-brand);
-    }
-
-    .nds-rating-star:hover {
-      color: var(--rating-star-hovered-brand);
-    }
-
-    // Pressed state
-    &.pressed {
-      color: var(--rating-star-pressed-brand);
-    }
-
+  // Container-level pressed for brand (preserved from original)
+  &.nds-brand.pressed {
+    color: var(--_star-pressed);
   }
 }
 
@@ -225,9 +173,9 @@
 
 @include mobile {
   .nds-rating.nds-lg {
+    --star-size: 40px;
+
     .nds-rating-star {
-      width: 40px;
-      height: 40px;
       font-size: 32px;
     }
   }

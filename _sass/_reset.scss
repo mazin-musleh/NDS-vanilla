@@ -60,12 +60,7 @@ hr {
 
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+:is(h1, h2, h3, h4, h5, h6) {
     font-weight: 600;
     font-size: var(--nds-display-clamp-xs-FS);
     line-height: var(--nds-display-clamp-xs-FS);
@@ -77,32 +72,22 @@ h6 {
     }
 }
 
-h3,
-h4 {
-    font-size: var(--nds-display-clamp-xs-FS);
-    line-height: var(--nds-display-clamp-xs-FS);
-    margin-bottom: var(--nds-display-clamp-xs-MB);
-}
-
 p {
     text-wrap: pretty;
 }
 
-ul,
-ol {
+:is(ul, ol) {
     padding-inline-start: 20px;
     line-height: 1.5;
 }
 
 // Increase padding for lists when mixed with other content types
-:not(ul):not(ol)~ul,
-:not(ul):not(ol)~ol {
+:not(ul):not(ol)~:is(ul, ol) {
     padding-inline-start: 40px;
 }
 
 // Override for nav (must come after to take precedence)
-nav ul,
-nav ol {
+nav :is(ul, ol) {
     list-style: none;
     padding: 0 !important;
     margin: 0;
@@ -113,11 +98,7 @@ a {
     text-decoration: inherit;
 }
 
-button,
-input,
-optgroup,
-select,
-textarea {
+:is(button, input, optgroup, select, textarea) {
     font-family: inherit;
     font-size: 100%;
     line-height: 1.15;
@@ -139,9 +120,7 @@ button {
     background-color: transparent;
 }
 
-input,
-textarea,
-select {
+:is(input, textarea, select) {
     outline: none;
     background: transparent;
 }
