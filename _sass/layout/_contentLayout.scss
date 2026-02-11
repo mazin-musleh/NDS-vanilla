@@ -56,6 +56,7 @@ main {
     position: relative;
     min-height: 400px;
     display: flex;
+    --_section-padding-block: var(--spacing-5xl);
 
     .nds-main-content {
         width: 100%;
@@ -69,7 +70,7 @@ main {
             width: 100%;
             min-width: 300px;
             height: fit-content;
-            padding: var(--spacing-5xl) 0;
+            padding: var(--_section-padding-block) 0;
         }
     }
 
@@ -103,13 +104,16 @@ main {
     }
 
     &:not(.wSideMenu, .wSideInfo) {
-        .nds-main-content {
-            section:not(.nds-hero-section, .nds-user-feedback-section) {
-                @include desktop(min) {
-                    padding: var(--spacing-7xl) 0;
-                }
-            }
+        @include desktop(min) {
+            --_section-padding-block: var(--spacing-7xl);
+        }
 
+        // User feedback keeps base padding on desktop
+        &:not(.cardView) .nds-user-feedback-section {
+            --_section-padding-block: var(--spacing-5xl);
+        }
+
+        .nds-main-content {
             section.noBg {
                 margin-top: var(--spacing-5xl);
             }
@@ -143,6 +147,7 @@ main {
     }
 
     &.cardView {
+        --_section-padding-block: var(--nds-viewport-padding);
         gap: var(--spacing-xl);
 
         .nds-main-content {
@@ -156,10 +161,32 @@ main {
             section:not(.nds-hero-section, .nds-ghost) {
                 --section-shadow: var(--shadow-md);
                 --section-border-radius: var(--radius-md);
-                padding: var(--nds-viewport-padding) 0;
 
                 @include tablet(max) {
                     margin-inline: var(--nds-viewport-padding) !important;
+                }
+            }
+        }
+
+        /* Smaller title sizes for cardView */
+        .nds-content-section {
+            --section-title-FS: var(--nds-display-clamp-sm-FS, 30px);
+            --section-title-LH: var(--nds-display-clamp-sm-LH, 38px);
+            --section-title-MB: var(--nds-display-clamp-sm-MB, 9.5px);
+        }
+
+        .nds-content-section.nds-ghost {
+            --_section-padding-block: 0;
+            @include reset-section-style;
+
+            @include tablet(max) {
+                >* {
+                    grid-column: full-width;
+
+                    &:has(>.nds-section-content>.nds-card),
+                    &.nds-section-content:has(>.nds-card) {
+                        grid-column: content;
+                    }
                 }
             }
         }
@@ -189,7 +216,10 @@ main {
             section {
                 width: 100%;
                 min-width: 300px;
-                --section-shadow: var(--shadow-md);
+
+                @include desktop(min) {
+                    --section-shadow: var(--shadow-md);
+                }
 
                 @include tablet(max) {
                     &:first-child {
@@ -214,10 +244,43 @@ main {
             width: 100%;
         }
     }
+
+    /* ========================================
+       5. SECTION STRIPING
+       Alternating background reset patterns
+       ======================================== */
+
+    // Without side menu - always reset
+    &:not(.wSideMenu, .cardView) .nds-main-content {
+        .nds-content-section:not(.nds-user-feedback-section):nth-of-type(even) {
+            @include reset-section-style;
+        }
+
+        &:has(>.nds-hero-section) {
+            .nds-content-section:nth-of-type(odd) {
+                @include reset-section-style;
+            }
+        }
+    }
+
+    // With side menu - reset only on tablet and below
+    &:not(.cardView):is(.wSideMenu) .nds-main-content {
+        @include tablet(max) {
+            .nds-content-section:not(.nds-user-feedback-section):nth-of-type(even) {
+                @include reset-section-style;
+            }
+
+            &:has(>.nds-hero-section) {
+                .nds-content-section:nth-of-type(odd) {
+                    @include reset-section-style;
+                }
+            }
+        }
+    }
 }
 
 /* ========================================
-   5. CONTENT CONTAINER
+   6. CONTENT CONTAINER
    .nds-content-container utility
    ======================================== */
 
@@ -227,14 +290,3 @@ main {
     padding: 0 var(--nds-viewport-padding, 32px);
 }
 
-/* ========================================
-   6. RESPONSIVE OVERRIDES
-   Mobile/tablet adjustments
-   ======================================== */
-
-@include tablet(max) {
-    .nds-content-layout:not(.cardView) .nds-main-content section:not(.nds-hero-section, .nds-user-feedback-section) {
-        --section-shadow: none;
-        --section-border-radius: 0;
-    }
-}
