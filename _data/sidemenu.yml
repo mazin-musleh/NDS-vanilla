@@ -113,6 +113,13 @@
       url: "/components/upload"
       href: "/components/upload.html"
 
+- label: "Layout"
+  has_sub: true
+  children:
+    - label: "Section"
+      url: "/layout/section"
+      href: "/layout/section.html"
+
 - label: "Utilities"
   has_sub: true
   children:

@@ -1,0 +1,236 @@
+/* ========================================
+   SECTION LAYOUT - Layout Context Overrides
+   ======================================== */
+
+@use '../mixins' as *;
+
+/* ========================================
+   SECTION WRAPPER
+   ======================================== */
+
+.nds-section-wrapper {
+    --_section-col-gap: var(--section-col-gap, var(--spacing-xl, 16px));
+    --_section-row-gap: var(--section-row-gap, var(--spacing-xl, 16px));
+    container-type: inline-size;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: var(--_section-col-gap);
+    row-gap: var(--_section-row-gap);
+    visibility: visible;
+
+    &:not(:last-child) {
+        margin-bottom: var(--spacing-4xl, 32px);
+    }
+
+    .nds-content-layout.cardView &:not(:last-child) {
+        margin-bottom: var(--spacing-2xl, 20px);
+    }
+
+    .nds-section-head {
+        flex: 1;
+        margin-bottom: 0;
+    }
+
+    .nds-section-action {
+        align-items: self-start;
+        align-self: self-start;
+    }
+
+    .nds-section-content {
+        flex: 1 1 100%;
+        min-width: 0;
+    }
+
+    @container (max-width: 768px) {
+        .nds-section-action {
+            flex: 1 0 100%;
+            flex-direction: row;
+        }
+    }
+
+    @container (min-width: 769px) {
+        .nds-section-action {
+            align-items: stretch;
+            --btn-width: 100%;
+
+            >.nds-btn {
+                .label {
+                    text-align: center;
+                }
+            }
+        }
+
+    }
+}
+
+/* ========================================
+   CARD VIEW LAYOUT OVERRIDES
+   ======================================== */
+
+.nds-content-section {
+
+    /* Smaller sizes for cardView layout */
+    .nds-content-layout.cardView & {
+        --section-title-FS: var(--nds-display-clamp-sm-FS, 30px);
+        --section-title-LH: var(--nds-display-clamp-sm-LH, 38px);
+        --section-title-MB: var(--nds-display-clamp-sm-MB, 9.5px);
+    }
+
+    .nds-content-layout:is(.cardView) &.nds-ghost {
+
+        @include reset-section-style;
+        padding-block: 0 !important;
+
+        @include tablet(max) {
+            >* {
+                grid-column: full-width;
+
+                &:has(> .nds-section-content >.nds-card),
+                &.nds-section-content:has(>.nds-card) {
+                    grid-column: content;
+                }
+            }
+        }
+    }
+}
+
+/* ========================================
+   404 SECTION
+   ======================================== */
+
+.nds-content-section.nds-404 {
+
+    .nds-grid {
+        row-gap: var(--spacing-6xl);
+    }
+
+    .nds-section-action {
+        grid-row: unset;
+    }
+}
+
+/* ========================================
+   SIDE INFO SECTION
+   ======================================== */
+
+.nds-sideInfo-section {
+    .nds-section-content {
+        display: flex;
+        gap: var(--spacing-xl);
+
+        @include tablet(max) {
+            flex-direction: column;
+        }
+    }
+
+    .nds-info-content {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        min-width: 0; // Allow flex item to shrink below content size
+    }
+
+    .nds-sideInfo {
+        --card-padding: var(--spacing-4xl);
+        width: var(--nds-sideInfo-width);
+        position: sticky;
+        top: calc(var(--nds-nav-height) + var(--spacing-md) + var(--nds-sideInfo-top) * -1);
+        transform: translateY(calc(var(--nds-sideInfo-top, -180px) + var(--spacing-3xl)));
+        transition: transform var(--nds-transition);
+        z-index: 998;
+        margin-bottom: calc(var(--nds-sideInfo-top, -180px) + var(--spacing-3xl));
+        height: fit-content;
+
+        @include tablet(max) {
+            top: unset;
+            transform: translateY(0px);
+            --nds-sideInfo-width: 100%;
+            margin-bottom: unset;
+            padding-inline: var(--spacing-xl);
+        }
+
+        .nds-definition-list {
+            --dl-icon-size: 24px;
+            --dl-icon-gap: var(--spacing-md);
+            gap: var(--spacing-xl);
+
+            dt {
+                font-size: var(--nds-text-md-FS);
+            }
+
+            dd {
+                .nds-btn.nds-transparent {
+                    padding: 0;
+                    --btn-height: fit-content;
+                }
+            }
+        }
+    }
+}
+
+/* ========================================
+   LAST EDIT
+   ======================================== */
+
+.nds-last-edit {
+    font-size: var(--nds-text-clamp-md-FS);
+    text-align: end;
+    height: 24px;
+    display: block;
+    margin-top: calc((24px + var(--spacing-md)) * -1);
+    grid-column: content;
+    width: 100%;
+    max-width: var(--nds-content-MaxWidth, 1280px);
+    margin-inline: auto;
+    padding: 0 var(--nds-viewport-padding, 32px);
+}
+
+/* ========================================
+   HORIZONTAL SECTION LAYOUT
+   ======================================== */
+
+@include desktop(min) {
+    .nds-content-section.nds-horizontal>.nds-section-wrapper,
+    .nds-hero-section.nds-horizontal>.nds-section-wrapper {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        align-items: center;
+        gap: var(--gap, var(--spacing-6xl));
+    }
+}
+
+/* ========================================
+   SECTION STRIPING PATTERNS
+   ======================================== */
+
+.nds-content-layout {
+
+    // Without side menu - always reset
+    &:not(.wSideMenu, .cardView) .nds-main-content {
+        .nds-content-section:not(.nds-user-feedback-section):nth-of-type(even) {
+            @include reset-section-style;
+        }
+
+        &:has(>.nds-hero-section) {
+            .nds-content-section:nth-of-type(odd) {
+                @include reset-section-style;
+            }
+        }
+    }
+
+    // With side menu - reset only on tablet and below
+    &:not(.cardView):is(.wSideMenu) .nds-main-content {
+        @include tablet(max) {
+            .nds-content-section:not(.nds-user-feedback-section):nth-of-type(even) {
+                @include reset-section-style;
+            }
+
+            &:has(>.nds-hero-section) {
+                .nds-content-section:nth-of-type(odd) {
+                    @include reset-section-style;
+                }
+            }
+        }
+    }
+}

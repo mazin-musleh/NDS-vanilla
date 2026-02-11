@@ -1,0 +1,240 @@
+/* ========================================
+   1. CONTENT GRID SYSTEM
+   Shared grid + column routing for
+   .nds-content-grid, .nds-hero-section,
+   .nds-content-section
+   ======================================== */
+
+@use '../mixins' as *;
+
+.nds-content-grid,
+.nds-hero-section,
+.nds-content-section {
+    --nds-breakout-max-width: calc(var(--nds-content-MaxWidth) + var(--nds-viewport-padding));
+    --nds-breakout-size: calc((var(--nds-breakout-max-width) - var(--nds-content-MaxWidth)) / 2);
+    width: 100%;
+
+    &:not([hidden]) {
+        display: grid;
+        row-gap: var(--gap, 0);
+        grid-template-columns:
+            [full-width-start] minmax(var(--nds-viewport-padding), 1fr) [breakout-start] minmax(0, var(--nds-breakout-size)) [content-start] min(100% - (var(--nds-viewport-padding) * 2),
+                var(--nds-content-MaxWidth)) [content-end] minmax(0, var(--nds-breakout-size)) [breakout-end] minmax(var(--nds-viewport-padding), 1fr) [full-width-end];
+    }
+
+    &> :not(.nds-full-width) {
+        grid-column: content;
+    }
+
+    &>.nds-full-width,
+    &>:has(>.nds-full-width),
+    .nds-content-layout:is(.cardView) &.nds-ghost>* {
+        grid-column: full-width;
+    }
+
+    &>.nds-grid {
+        grid-column: content;
+    }
+}
+
+.nds-content-section>.nds-full-width.nds-section-content {
+    width: 100%;
+    max-width: var(--nds-content-MaxWidth);
+    margin-inline: auto;
+}
+
+/* ========================================
+   2. CONTENT LAYOUT BASE
+   .nds-content-layout + .nds-main-content
+   ======================================== */
+
+main {
+    height: 100%;
+}
+
+.nds-content-layout {
+    position: relative;
+    min-height: 400px;
+    display: flex;
+
+    .nds-main-content {
+        width: 100%;
+        min-width: 300px;
+        display: flex;
+        flex-wrap: wrap;
+        align-content: flex-start;
+        position: relative;
+
+        section:not(.nds-hero-section) {
+            width: 100%;
+            min-width: 300px;
+            height: fit-content;
+            padding: var(--spacing-5xl) 0;
+        }
+    }
+
+    // Note: Backdrop for side menu moved to unified NDSBackdrop API (_backdrop.scss)
+
+    /* ========================================
+       3. LAYOUT MODIFIERS
+       .nds-middle, .toEdge, .post, .cardView
+       ======================================== */
+
+    &.nds-middle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100dvh;
+
+        &.nds-content-container {
+            padding: var(--nds-viewport-padding, 32px);
+        }
+
+        .nds-main-content {
+            justify-content: center;
+        }
+    }
+
+    &.toEdge {
+        --nds-content-MaxWidth: 100%;
+        padding: 0;
+        gap: 0;
+        height: 100%;
+    }
+
+    &:not(.wSideMenu, .wSideInfo) {
+        .nds-main-content {
+            section:not(.nds-hero-section, .nds-user-feedback-section) {
+                @include desktop(min) {
+                    padding: var(--spacing-7xl) 0;
+                }
+            }
+
+            section.noBg {
+                margin-top: var(--spacing-5xl);
+            }
+
+            section.noBg:first-of-type {
+                margin-top: 0;
+            }
+
+            /* Add margin-bottom only when next element doesn't have .noBg class */
+            section.noBg:not(:has(+ .noBg)) {
+                margin-bottom: var(--spacing-5xl);
+            }
+        }
+
+        >aside {
+            display: none !important;
+        }
+    }
+
+    &.toEdge:is(.wSideMenu, .wSideInfo) .nds-main-content {
+        padding: 0;
+        row-gap: 0;
+    }
+
+    &.post .nds-main-content section:first-of-type {
+        padding-top: 0;
+
+        .nds-section-content {
+            margin-top: 0;
+        }
+    }
+
+    &.cardView {
+        gap: var(--spacing-xl);
+
+        .nds-main-content {
+            padding-block: var(--spacing-xl);
+            gap: var(--spacing-4xl);
+
+            @include desktop(min) {
+                margin-inline: 0 var(--nds-viewport-padding);
+            }
+
+            section:not(.nds-hero-section, .nds-ghost) {
+                --section-shadow: var(--shadow-md);
+                --section-border-radius: var(--radius-md);
+                padding: var(--nds-viewport-padding) 0;
+
+                @include tablet(max) {
+                    margin-inline: var(--nds-viewport-padding) !important;
+                }
+            }
+        }
+
+        @include desktop(min) {
+            .nds-sideMenu {
+                margin-block: var(--spacing-xl);
+                margin-inline: var(--nds-viewport-padding) 0;
+            }
+        }
+
+        @include large-desktop(min) {
+            .nds-main-content,
+            .nds-sideMenu {
+                margin-inline: 0;
+            }
+        }
+    }
+
+    /* ========================================
+       4. SIDE MENU LAYOUT
+       .wSideMenu rules
+       ======================================== */
+
+    &:is(.wSideMenu) {
+        .nds-main-content {
+            section {
+                width: 100%;
+                min-width: 300px;
+                --section-shadow: var(--shadow-md);
+
+                @include tablet(max) {
+                    &:first-child {
+                        padding-top: var(--spacing-4xl);
+                    }
+
+                    &:first-child:is(.nds-hero-section) {
+                        padding-top: var(--spacing-6xl);
+                    }
+                }
+            }
+        }
+    }
+
+    @include desktop(min) {
+        &:is(.wSideMenu):not(.toEdge) {
+            max-width: var(--nds-content-MaxWidth);
+            margin-inline: auto;
+        }
+
+        &:is(.wSideMenu) .nds-main-content {
+            width: 100%;
+        }
+    }
+}
+
+/* ========================================
+   5. CONTENT CONTAINER
+   .nds-content-container utility
+   ======================================== */
+
+.nds-content-container {
+    max-width: var(--nds-content-MaxWidth, 1280px);
+    margin: 0 auto;
+    padding: 0 var(--nds-viewport-padding, 32px);
+}
+
+/* ========================================
+   6. RESPONSIVE OVERRIDES
+   Mobile/tablet adjustments
+   ======================================== */
+
+@include tablet(max) {
+    .nds-content-layout:not(.cardView) .nds-main-content section:not(.nds-hero-section, .nds-user-feedback-section) {
+        --section-shadow: none;
+        --section-border-radius: 0;
+    }
+}

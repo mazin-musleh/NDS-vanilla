@@ -17,11 +17,11 @@ direction: ltr
             <p class="nds-section-description">
                 أهم الإعلانات التي تهم جميع منسوبي الجامعة
             </p>
-            <div class="nds-section-action">
-                <button class="nds-btn nds-secondary-outline nds-oncolor nds-center">
-                    <span class="label">عرض الكل</span>
-                </button>
-            </div>
+        </div>
+        <div class="nds-section-action">
+            <button class="nds-btn nds-secondary-outline nds-oncolor nds-center">
+                <span class="label">عرض الكل</span>
+            </button>
         </div>
         <div class="nds-section-content">
             <div class="nds-card nds-stroke">
@@ -105,11 +105,11 @@ direction: ltr
 </section>
 
 <section id="404" class="nds-404-section nds-content-section">
-    <div class="nds-section-head nds-grid nds-center" style="--gap: var(--spacing-xl);">
+    <div class="nds-grid nds-center" style="--gap: var(--spacing-xl);">
         <div class="nds-section-image col-12">
             <img src="{{ 'assets/img/404.svg' | relative_url }}" alt="حدث خطأ 404" loading="lazy">
         </div>
-        <div class="nds-section-text col-12">
+        <div class="nds-section-head col-12">
             <h2 class="nds-section-title">حدث خطأ</h2>
             <p class="nds-section-description">
                 عذراً، لم نستطع إيجاد الصفحة التي تبحث عنها
