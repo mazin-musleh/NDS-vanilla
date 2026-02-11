@@ -26,18 +26,8 @@
         }
     }
 
-    // Required field indicator (using data-required attribute)
-    &[data-required] {
-
-        .nds-form-header .label::after,
-        >.label::after {
-            content: " *";
-            color: var(--controls-control-text-error, #dc2626);
-        }
-    }
-
-    // Legacy class support (deprecated)
-    &.nds-required {
+    // Required field indicator (using data-required attribute or legacy class)
+    &:is([data-required], .nds-required) {
 
         .nds-form-header .label::after,
         >.label::after {
@@ -165,9 +155,7 @@ fieldset {
     }
 
     // Auto-add required indicator when group has data-required, data-min-checked, or nds-required class
-    &[data-required],
-    &[data-min-checked],
-    &.nds-required {
+    &:is([data-required], [data-min-checked], .nds-required) {
 
         >legend>.label::after,
         >.label::after {
@@ -227,8 +215,7 @@ fieldset {
     }
 
     // Legacy class support (deprecated)
-    &.nds-focus,
-    &.focus {
+    &:is(.nds-focus, .focus) {
         &::before {
             width: 100%;
         }
@@ -241,8 +228,7 @@ fieldset {
         }
     }
 
-    &.nds-active,
-    &.active {
+    &:is(.nds-active, .active) {
         &::before {
             width: 50%;
         }
@@ -256,8 +242,7 @@ fieldset {
         }
     }
 
-    &.nds-disabled,
-    &.disabled {
+    &:is(.nds-disabled, .disabled) {
         background-color: var(--background-disabled) !important;
         color: var(--text-default-disabled) !important;
         border-color: var(--border-disabled) !important;

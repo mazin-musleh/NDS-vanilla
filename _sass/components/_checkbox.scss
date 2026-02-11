@@ -96,9 +96,7 @@
     // ==============================================
 
     // Auto-add required indicator when group has data-required, data-min-checked, or nds-required class
-    &[data-required],
-    &[data-min-checked],
-    &.nds-required {
+    &:is([data-required], [data-min-checked], .nds-required) {
         > .label::after {
             content: " *";
             color: var(--controls-control-text-error, #dc2626);
@@ -303,8 +301,7 @@
     // INDETERMINATE STATE
     // ==============================================
 
-    &.indeterminate::after,
-    &:indeterminate::after {
+    &:is(.indeterminate, :indeterminate)::after {
         content: "儣" !important;
     }
 

@@ -298,11 +298,7 @@
         }
     }
 
-    .nds-stepper-title {
-        color: var(--stepper-text-tertiary);
-    }
-
-    .nds-stepper-description {
+    :is(.nds-stepper-title, .nds-stepper-description) {
         color: var(--stepper-text-tertiary);
     }
 }

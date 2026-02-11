@@ -63,14 +63,12 @@ $breakpoints-responsive: (
 /* Column spans (1…12) - Mobile first (base) with sm aliases */
 @for $i from 1 through 12 {
 
-  .col-#{$i},
-  .col-sm-#{$i} {
+  :is(.col-#{$i}, .col-sm-#{$i}) {
     grid-column: span #{$i};
   }
 }
 
-.col-full,
-.col-sm-full {
+:is(.col-full, .col-sm-full) {
   grid-column: 1 / -1;
 }
 

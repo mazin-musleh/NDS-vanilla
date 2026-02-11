@@ -66,8 +66,7 @@
   }
 
   // Dark overlay
-  &.nds-dark::before,
-  &.nds-oncolor::before {
+  &:is(.nds-dark, .nds-oncolor)::before {
     background-color: var(--alpha-black-50);
   }
 
@@ -129,8 +128,7 @@
   }
 
   // On dark backgrounds
-  &.nds-oncolor,
-  &.nds-dark {
+  &:is(.nds-oncolor, .nds-dark) {
     --loading-color: var(--colors-base-white);
     --loading-track: var(--alpha-white-20);
   }

@@ -256,108 +256,27 @@
 
 // General syntax highlighting
 code.highlighted {
-
-  .syntax-tag,
-  .syntax-attr,
-  .syntax-value,
-  .syntax-comment,
-  .syntax-selector,
-  .syntax-property,
-  .syntax-keyword,
-  .syntax-string,
-  .syntax-number,
-  .syntax-literal,
-  .syntax-builtin,
-  .syntax-function,
-  .syntax-method,
-  .syntax-parameter,
-  .syntax-class,
-  .syntax-operator,
-  .syntax-template,
-  .syntax-regex {
-    transition: none; // Disable transitions for syntax elements
+  :is(.syntax-tag, .syntax-attr, .syntax-value, .syntax-comment, .syntax-selector,
+    .syntax-property, .syntax-keyword, .syntax-string, .syntax-number, .syntax-literal,
+    .syntax-builtin, .syntax-function, .syntax-method, .syntax-parameter, .syntax-class,
+    .syntax-operator, .syntax-template, .syntax-regex) {
+    transition: none;
   }
 }
 
 // Dark theme syntax highlighting (keep current colors)
 code.dark {
-  .syntax-tag {
-    color: #e06c75; // Red for HTML tags (current)
-    font-weight: 600;
-  }
+  :is(.syntax-tag, .syntax-selector) { color: #e06c75; font-weight: 600; } // Red
+  :is(.syntax-attr, .syntax-number) { color: #d19a66; } // Orange
+  :is(.syntax-value, .syntax-string, .syntax-template) { color: #98c379; } // Green
+  :is(.syntax-property, .syntax-function, .syntax-method) { color: #61afef; } // Blue
+  :is(.syntax-keyword, .syntax-regex) { color: #c678dd; } // Purple
+  :is(.syntax-literal, .syntax-operator) { color: #56b6c2; } // Cyan
+  :is(.syntax-builtin, .syntax-class) { color: #e5c07b; font-weight: 600; } // Yellow
+  .syntax-comment { color: #5c6370; font-style: italic; } // Gray
+  .syntax-parameter { color: #abb2bf; } // Light gray
 
-  .syntax-attr {
-    color: #d19a66; // Orange for attributes (current)
-  }
-
-  .syntax-value {
-    color: #98c379; // Green for attribute values (current)
-  }
-
-  .syntax-comment {
-    color: #5c6370; // Gray for comments (current)
-    font-style: italic;
-  }
-
-  .syntax-selector {
-    color: #e06c75; // Red for CSS selectors (current)
-    font-weight: 600;
-  }
-
-  .syntax-property {
-    color: #61afef; // Blue for CSS properties (current)
-  }
-
-  .syntax-keyword {
-    color: #c678dd; // Purple for keywords (current)
-    font-weight: 600;
-  }
-
-  .syntax-string {
-    color: #98c379; // Green for strings (current)
-  }
-
-  .syntax-number {
-    color: #d19a66; // Orange for numbers
-  }
-
-  .syntax-literal {
-    color: #56b6c2; // Cyan for literals
-  }
-
-  .syntax-builtin {
-    color: #e5c07b; // Yellow for built-in objects
-    font-weight: 600;
-  }
-
-  .syntax-function {
-    color: #61afef; // Blue for function names
-  }
-
-  .syntax-method {
-    color: #61afef; // Blue for method calls
-  }
-
-  .syntax-parameter {
-    color: #abb2bf; // Light gray for parameters
-  }
-
-  .syntax-class {
-    color: #e5c07b; // Yellow for class names
-    font-weight: 600;
-  }
-
-  .syntax-operator {
-    color: #56b6c2; // Cyan for operators
-  }
-
-  .syntax-template {
-    color: #98c379; // Green for template literals
-  }
-
-  .syntax-regex {
-    color: #c678dd; // Purple for regular expressions
-  }
+  .syntax-keyword { font-weight: 600; }
 }
 
 

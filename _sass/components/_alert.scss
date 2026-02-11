@@ -231,49 +231,20 @@
   &.nds-solid {
     border: none;
 
-    &[data-status="success"] {
-      background-color: var(--featuredicons-icon-success);
+    &[data-status="success"] { background-color: var(--featuredicons-icon-success); }
+    &[data-status="info"] { background-color: var(--featuredicons-icon-info); }
+    &[data-status="warning"] { background-color: var(--featuredicons-icon-warning); }
+    &[data-status="error"] { background-color: var(--featuredicons-icon-error); }
+    &[data-status="brand"] { background-color: var(--featuredicons-icon-primary); }
 
-      .nds-alert-title,
-      .nds-alert-description {
+    &:is([data-status="success"], [data-status="info"], [data-status="error"], [data-status="brand"]) {
+      :is(.nds-alert-title, .nds-alert-description) {
         color: var(--text-oncolor-primary);
       }
     }
 
-    &[data-status="info"] {
-      background-color: var(--featuredicons-icon-info);
-
-      .nds-alert-title,
-      .nds-alert-description {
-        color: var(--text-oncolor-primary);
-      }
-    }
-
-    &[data-status="warning"] {
-      background-color: var(--featuredicons-icon-warning);
-
-      .nds-alert-title,
-      .nds-alert-description {
-        color: var(--text-display);
-      }
-    }
-
-    &[data-status="error"] {
-      background-color: var(--featuredicons-icon-error);
-
-      .nds-alert-title,
-      .nds-alert-description {
-        color: var(--text-oncolor-primary);
-      }
-    }
-
-    &[data-status="brand"] {
-      background-color: var(--featuredicons-icon-primary);
-
-      .nds-alert-title,
-      .nds-alert-description {
-        color: var(--text-oncolor-primary);
-      }
+    &[data-status="warning"] :is(.nds-alert-title, .nds-alert-description) {
+      color: var(--text-display);
     }
   }
 

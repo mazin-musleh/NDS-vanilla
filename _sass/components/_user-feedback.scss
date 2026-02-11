@@ -30,9 +30,7 @@
     // STATE: Details
     &[data-state="details"] {
 
-        .nds-user-feedback-statistic,
-        .why-yes,
-        .why-no {
+        :is(.nds-user-feedback-statistic, .why-yes, .why-no) {
             display: none;
         }
 
@@ -45,8 +43,7 @@
     // STATE: Status
     &[data-state="status"] {
 
-        .nds-user-feedback-question,
-        .nds-user-feedback-answer-btn {
+        :is(.nds-user-feedback-question, .nds-user-feedback-answer-btn) {
             display: none;
         }
 

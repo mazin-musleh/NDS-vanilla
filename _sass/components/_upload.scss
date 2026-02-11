@@ -34,8 +34,7 @@
                     color: var(--icon-success);
                 }
 
-                .upload-text,
-                .upload-hint {
+                :is(.upload-text, .upload-hint) {
                     color: var(--text-success);
                 }
 

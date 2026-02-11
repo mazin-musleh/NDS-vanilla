@@ -35,8 +35,7 @@
    FOOTER SOCIAL AND MOBILE APP ITEMS
    ======================================== */
 
-.nds-footer-social-item,
-.nds-footer-app-item {
+:is(.nds-footer-social-item, .nds-footer-app-item) {
     break-inside: avoid;
     break-after: avoid; // Prevent column break after this item
 }
@@ -45,8 +44,7 @@
    FOOTER SOCIAL WRAPPER
    ======================================== */
 
-.nds-footer-social-wrapper,
-.nds-footer-apps-wrapper {
+:is(.nds-footer-social-wrapper, .nds-footer-apps-wrapper) {
     list-style: none !important;
     padding: 0;
     margin: 0;
@@ -173,8 +171,7 @@
             justify-content: center;
         }
 
-        .nds-footer-social-icons,
-        .nds-footer-mobile-app-icons {
+        :is(.nds-footer-social-icons, .nds-footer-mobile-app-icons) {
             justify-content: center;
         }
     }

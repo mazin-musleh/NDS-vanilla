@@ -63,8 +63,7 @@
     outline-offset: -2px;
   }
 
-  &.nds-center,
-  &.nds-statistic {
+  &:is(.nds-center, .nds-statistic) {
     :is(.nds-card-header, .nds-card-content, .nds-card-text > *, .nds-card-tags, .nds-card-actions) {
       align-items: center !important;
       justify-content: center !important;

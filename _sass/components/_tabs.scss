@@ -156,8 +156,7 @@
   position: relative;
 
   /* Centered Tab List */
-  &.nds-center,
-  &.center {
+  &:is(.nds-center, .center) {
     justify-content: flex-start;
     width: fit-content;
     margin: 0 auto;
@@ -206,8 +205,7 @@
     filter: drop-shadow(0 0 .02em currentColor);
   }
 
-  &:hover::before,
-  &:active::before {
+  &:is(:hover, :active)::before {
     background-color: var(--border-black);
   }
 
@@ -378,8 +376,7 @@
 /* Reduced Motion Accessibility */
 @include reduced-motion {
 
-  .nds-tab,
-  .nds-tab-panel {
+  :is(.nds-tab, .nds-tab-panel) {
     transition: none;
     animation: none;
   }
@@ -433,8 +430,7 @@
   }
 }
 
-.nds-tab-content.nds-card,
-.nds-tab-panel.nds-card {
+:is(.nds-tab-content, .nds-tab-panel).nds-card {
   margin-block-start: var(--spacing-xl);
 }
 
