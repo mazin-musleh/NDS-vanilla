@@ -1,5 +1,6 @@
 /* ========================================
-   SECTION LAYOUT - Layout Context Overrides
+   SECTION LAYOUT - Independent Overrides
+   Section wrapper, 404, sideInfo, last-edit, horizontal
    ======================================== */
 
 @use '../mixins' as *;
@@ -57,38 +58,6 @@
             >.nds-btn {
                 .label {
                     text-align: center;
-                }
-            }
-        }
-
-    }
-}
-
-/* ========================================
-   CARD VIEW LAYOUT OVERRIDES
-   ======================================== */
-
-.nds-content-section {
-
-    /* Smaller sizes for cardView layout */
-    .nds-content-layout.cardView & {
-        --section-title-FS: var(--nds-display-clamp-sm-FS, 30px);
-        --section-title-LH: var(--nds-display-clamp-sm-LH, 38px);
-        --section-title-MB: var(--nds-display-clamp-sm-MB, 9.5px);
-    }
-
-    .nds-content-layout:is(.cardView) &.nds-ghost {
-
-        @include reset-section-style;
-        padding-block: 0 !important;
-
-        @include tablet(max) {
-            >* {
-                grid-column: full-width;
-
-                &:has(> .nds-section-content >.nds-card),
-                &.nds-section-content:has(>.nds-card) {
-                    grid-column: content;
                 }
             }
         }
@@ -197,40 +166,5 @@
         grid-template-columns: auto 1fr;
         align-items: center;
         gap: var(--gap, var(--spacing-6xl));
-    }
-}
-
-/* ========================================
-   SECTION STRIPING PATTERNS
-   ======================================== */
-
-.nds-content-layout {
-
-    // Without side menu - always reset
-    &:not(.wSideMenu, .cardView) .nds-main-content {
-        .nds-content-section:not(.nds-user-feedback-section):nth-of-type(even) {
-            @include reset-section-style;
-        }
-
-        &:has(>.nds-hero-section) {
-            .nds-content-section:nth-of-type(odd) {
-                @include reset-section-style;
-            }
-        }
-    }
-
-    // With side menu - reset only on tablet and below
-    &:not(.cardView):is(.wSideMenu) .nds-main-content {
-        @include tablet(max) {
-            .nds-content-section:not(.nds-user-feedback-section):nth-of-type(even) {
-                @include reset-section-style;
-            }
-
-            &:has(>.nds-hero-section) {
-                .nds-content-section:nth-of-type(odd) {
-                    @include reset-section-style;
-                }
-            }
-        }
     }
 }
