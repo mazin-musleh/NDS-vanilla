@@ -1,662 +1,155 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-
 ## Project Overview
 
-This is the **National Design System for Saudi Arabia** - a Jekyll-based static site that documents and showcases a
-comprehensive design system for government digital services. The site serves as both documentation and a living
-component library for creating consistent digital experiences.
+**National Design System for Saudi Arabia** — Jekyll 4.4.1 static site documenting a government design system.
+RTL (Arabic) by default, with LTR (English) support. Font: IBM Plex Sans Arabic. Icons: HGI Stroke Rounded.
 
-## Common Commands
-
-### Development Server
-
-**IMPORTANT**: When the user asks to start the development server, use the standard Jekyll command.
+## Commands
 
 ```bash
-bundle exec jekyll serve
+bundle exec jekyll serve      # Dev server (port 4002, auto-displays network IP for mobile testing)
+npm start                     # Alternative
+bundle exec jekyll build      # Production build → _site/
+ruby _plugins/js_processor.rb # REQUIRED after any _js/ changes (bundles & minifies → assets/js/*.min.js)
+ruby _plugins/baseurl_cleaner.rb      # Strip /_site baseurl prefix for root-domain deploys
+ruby _plugins/baseurl_cleaner.rb dry  # Dry run
 ```
 
-**Automatic Network Info Display:**
-The `server_info.rb` plugin automatically:
-- ✅ Detects local IP address (e.g., 192.168.1.18)
-- ✅ Displays network access URL (http://[IP]:4002)
-- ✅ Shows mobile-friendly instructions
-- ✅ Works with ANY start method
+## Key Directories
 
-**Alternative start commands:**
-```bash
-npm start           # Uses npm script
-npm run dev        # Alternative
+- `_layouts/` — Page templates | `_includes/` — Reusable HTML components
+- `_sass/` — SCSS source (`_variables.scss` tokens, `_base.scss` foundations, `_mixins.scss`, `components/`)
+- `assets/` — CSS, fonts, images, JS | `_js/` — JS source files (process before deploy)
+- `_data/sidemenu.yml` — Side navigation config | `_site/` — Generated output (gitignored)
+
+## Files to Ignore
+
+- **NEVER read** `assets/css/hgi-stroke-rounded.css` (large icon font)
+- **NEVER read** any `.min.js` or `.min.css` files (minified output)
+
+## RTL/LTR Support (CRITICAL)
+
+**RTL is the default.** There is NO `@include rtl` mixin. Write base styles for RTL.
+
+**Prefer CSS Logical Properties** — they auto-adapt to text direction:
+```scss
+// ✅ GOOD — automatic RTL/LTR
+margin-inline-start: var(--spacing-md);  padding-inline: var(--spacing-sm);
+border-inline-start: 1px solid;          text-align: start;
+inset-inline-start: 0;
+
+// ❌ AVOID — physical properties need manual LTR overrides
+margin-left: var(--spacing-md);  text-align: right;
 ```
 
-All commands automatically display network information for mobile testing!
-
-### Build for Production
-```bash
-bundle exec jekyll build
+**Use `@include ltr` ONLY** for transforms, gradients, or properties logical props don't cover:
+```scss
+.nds-component {
+    transform: translateX(10px); // RTL default
+    @include ltr { transform: translateX(-10px); }
+}
 ```
-Generates static site files in `_site/` directory
 
-### Dependency Management
-```bash
-bundle install
+## SCSS Standards
+
+**Every component file must start with:**
+```scss
+@use '../mixins' as *;
 ```
-Installs Ruby gem dependencies from Gemfile
 
-```bash
-bundle update
+**Responsive mixins** (`_sass/_mixins.scss`):
+- `@include mobile` (max: 599px) | `@include tablet(min|max)` (600–959px)
+- `@include desktop(min|max)` (960–1279px) | `@include large-desktop(min|max)` (1280px+)
+- `@include ltr` — LTR overrides only (see above)
+
+**Standard component structure:**
+```scss
+@use '../mixins' as *;
+.nds-component { /* base styles, logical properties */ }
+.nds-sm { }  .nds-md, .nds-component { }  .nds-lg { }  // Sizes
+.nds-primary { }  .nds-neutral { }                       // Variants
+@include mobile { .nds-component { } }                    // Responsive
 ```
-Updates gems to latest compatible versions
 
-## Architecture
+## Design Tokens (CRITICAL)
 
-### Jekyll Site Structure
-- **Jekyll 4.4.1** static site generator
-- **Ruby-based** with Gemfile dependency management
-- **Multi-language support** with Arabic (RTL) and English (LTR) layouts
-- **Component-based design** with reusable HTML snippets
+**Token hierarchy** — always prefer higher levels:
+1. **Component tokens**: `--{component}-{property}-{variant}-{state}` (e.g. `--button-background-primary-default`)
+2. **Semantic tokens**: `--background-{variant}-{shade}`, `--border-{variant}-{state}`, `--text-{variant}-{state}`
+3. **Color tokens**: `--colors-*` — only referenced indirectly through component tokens
 
-### Key Directories
-- `_layouts/`: Jekyll page templates (default.html, home.html, page.html)
-- `_includes/`: Reusable HTML components (mainNav, footer, navigation)
-- `assets/`: Static assets including CSS, fonts, images, and JavaScript
-- `_site/`: Generated static site output (auto-generated by Jekyll)
+```scss
+// ✅ CORRECT
+background-color: var(--component-background-primary-default);
+&:hover { background-color: var(--component-background-primary-hovered); }
 
-### Design System Components
+// ❌ NEVER use hex colors or --colors-* tokens directly in components
+```
 
-#### SCSS Architecture
-- `_sass/_variables.scss`: Design tokens and CSS custom properties (spacing, colors, typography)
-- `_sass/_base.scss`: Base styles and global design system foundations
-- `_sass/components/_buttons.scss`: Comprehensive button component library with 6 variants:
-- Primary, Neutral, Secondary Solid, Secondary Outline, Subtle, Transparent
-- Multiple states: default, hover, active, disabled, loading
-- Size variations: small (24px), medium (32px), large (40px)
-- Icon support: leading icons, trailing icons, icon-only buttons
-- On-color variants for dark backgrounds
-- Destructive button styles for delete/cancel actions
+**Existing token patterns:**
+- Buttons: `--button-background-{variant}-{state}`, `--button-label-{variant}-{state}`
+- Tags: `--tag-background-{variant}`, `--tag-text-{variant}`, `--tag-border-{variant}`
+- Chips: `--chip-background-{variant}-{state}`, `--chip-text-{variant}-{state}`
 
-#### Typography & Icons
-- **IBM Plex Sans Arabic** as primary font family
-- **HGI Stroke Rounded** icon font system
-- **Responsive typography** with CSS custom properties
+**New component tokens** → add to `_variables.scss`, include all states: default, hovered, pressed, selected, focused, disabled. Add on-color variants for dark backgrounds.
 
-### Button Component Usage
-The NDS button system follows strict Figma specifications:
+**Typography:**
+- Font weight: use numbers directly (`400`, `500`, `600`, `700`) — never tokens or keywords
+- Font size: use `--nds-text-{xs|sm|md|lg|xl}-FS` and matching `-LH` for line-height
 
-**Basic Structure:**
+## Component HTML Patterns
+
+**Button structure:**
 ```html
 <button class="nds-btn nds-primary nds-lg">
+    <i class="hgi hgi-stroke hgi-plus-sign"></i>  <!-- optional icon -->
     <span class="label">Button Text</span>
 </button>
 ```
+- Trailing icon: add `nds-trail-icon` class
+- Dark backgrounds: add `nds-oncolor` | Destructive: add `nds-destructive`
+- Icon-only: include proper ARIA labels
 
-**With Icons:**
-```html
-<!-- Leading Icon -->
-<button class="nds-btn nds-primary nds-lg">
-    <i class="hgi hgi-stroke hgi-plus-sign"></i>
-    <span class="label">Add Item</span>
-</button>
-
-<!-- Trailing Icon -->
-<button class="nds-btn nds-secondary-solid nds-lg nds-trail-icon">
-    <i class="hgi hgi-stroke hgi-download-02"></i>
-    <span class="label">Download</span>
-</button>
-```
-
-### Component Demo Standards - Tags Pattern
-
-**IMPORTANT**: Use the Tags component (`components/tags.md`) as the BASE STANDARD for creating component documentation
-with interactive demos. This pattern uses demo action toggles instead of creating separate demo cards for each
-variation.
-
-**Standard Demo Structure with Toggles:**
-```html
-<div class="nds-demo-card">
-    <div class="demo-header">
-        <div class="demo-label">Primary Component</div>
-        <div class="demo-action">
-            <!-- State Toggles -->
-            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["selected", ".nds-component","componentState"]'>
-                <span class="label">Selected</span>
-            </button>
-
-            <!-- Style Toggles -->
-            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["nds-neutral", ".nds-component", "componentStyle"]'>
-                <span class="label">Neutral</span>
-            </button>
-
-            <!-- Icon Toggles -->
-            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["<i class=\"hgi hgi-stroke hgi-icon icon\"></i>", ".nds-component", "components", "content-prepend"]'>
-                <span class="label">Toggle Icon</span>
-            </button>
-
-            <!-- Size Toggles -->
-            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["nds-sm", ".nds-component", "componentSize"]'>
-                <span class="label">SM</span>
-            </button>
-            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["nds-lg", ".nds-component", "componentSize"]'>
-                <span class="label">LG</span>
-            </button>
-
-            <!-- Background Toggles -->
-            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                <span class="label">Remove bg</span>
-            </button>
-        </div>
-    </div>
-    <div class="demo-container">
-        <div class="state-demo">
-            <span class="nds-component nds-primary">
-                <span class="label">Component</span>
-            </span>
-        </div>
-    </div>
-    <!-- Code tabs section... -->
-</div>
-```
-
-**Demo Toggle Types:**
-- **State Toggles**: `"selected"`, `"pressed"`, `"focused"`, `"disabled"`
-- **Style Toggles**: `"nds-neutral"`, `"nds-primary"`, component style variations
-- **Size Toggles**: `"nds-sm"`, `"nds-md"`, `"nds-lg"`
-- **Icon Toggles**: Add/remove icons with HTML content injection
-- **Background Toggles**: `"noBg"`, `"darkBg"`, `"containerBg"` for testing on different backgrounds
-
-**Toggle Data Syntax:**
-- `data-toggler='["className", "targetSelector", "toggleGroup"]'` - Class toggle
-- `data-toggler='["htmlContent", "targetSelector", "toggleGroup", "content-prepend"]'` - Content injection
-- Toggle groups prevent conflicts between similar toggles (e.g., size toggles)
-
-### SCSS Component Creation Standards
-
-**ALWAYS include mixins import** at the top of new SCSS component files:
-```scss
-/**
-* NDS Component Name - SCSS Version
-* Component description and usage notes
-*/
-
-@use '../mixins' as *;
-
-// Component styles here...
-```
-
-**Required Mixins Usage:**
-- `@include mobile` - Mobile-first responsive design (max-width: 599px)
-- `@include tablet(min|max)` - Tablet breakpoints (600px-959px)
-- `@include desktop(min|max)` - Desktop breakpoints (960px-1279px)
-- `@include large-desktop(min|max)` - Large desktop (1280px+)
-- `@include ltr` - LTR (English) language override when needed (see RTL/LTR section below)
-
-**RTL/LTR Support - IMPORTANT:**
-
-This project is **RTL (Arabic) by default**. There is NO `@include rtl` mixin because RTL is the base behavior.
-
-**Use CSS Logical Properties (Preferred):**
-CSS logical properties automatically work with both RTL and LTR without needing mixins:
-
-```scss
-// ✅ GOOD - Use logical properties (works automatically for RTL/LTR)
-.nds-component {
-    margin-inline-start: var(--spacing-md);  // Adapts to text direction
-    margin-inline-end: var(--spacing-lg);    // Adapts to text direction
-    padding-inline: var(--spacing-sm);       // Adapts to text direction
-    border-inline-start: 1px solid;          // Adapts to text direction
-    text-align: start;                       // Adapts to text direction (right for RTL, left for LTR)
-}
-
-// ❌ AVOID - Physical properties require LTR overrides
-.nds-component {
-    margin-left: var(--spacing-md);   // Fixed to left side
-    margin-right: var(--spacing-lg);  // Fixed to right side
-    text-align: right;                // Fixed to right
-}
-```
-
-**Common CSS Logical Properties:**
-- `margin-inline-start` / `margin-inline-end` - Replaces margin-left/right
-- `padding-inline-start` / `padding-inline-end` - Replaces padding-left/right
-- `padding-inline` - Replaces padding left and right
-- `margin-inline` - Replaces margin left and right
-- `border-inline-start` / `border-inline-end` - Replaces border-left/right
-- `inset-inline-start` / `inset-inline-end` - Replaces left/right positioning
-- `text-align: start` / `text-align: end` - Adapts to text direction automatically
-
-**When to Use `@include ltr` Mixin:**
-Only use the `@include ltr` mixin for special cases where logical properties don't work:
-
-```scss
-.nds-component {
-    // Transforms need direction-specific values
-    transform: translateX(10px);  // RTL default: move right
-
-    @include ltr {
-        transform: translateX(-10px);  // LTR: move left
-    }
-
-    // Gradients with directional angles
-    background: linear-gradient(90deg, ...);  // RTL default
-
-    @include ltr {
-        background: linear-gradient(270deg, ...);  // LTR reversed
-    }
-}
-```
-
-**Standard SCSS Structure:**
-```scss
-@use '../mixins' as *;
-
-// ==============================================
-// BASE COMPONENT STYLES
-// ==============================================
-
-.nds-component {
-    // Base styles using CSS custom properties
-    font-family: 'IBM Plex Sans Arabic', sans-serif;
-    transition: var(--nds-transition);
-
-    // ✅ Prefer logical properties (automatic RTL/LTR)
-    padding-inline: var(--spacing-md);
-    margin-inline-start: var(--spacing-sm);
-    text-align: start;
-
-    // Only use ltr mixin for special cases (transforms, gradients, etc.)
-    @include ltr {
-        // Special LTR overrides when logical properties don't work
-    }
-}
-
-// ==============================================
-// COMPONENT SIZES
-// ==============================================
-
-.nds-sm { /* Small variant */ }
-.nds-md,
-.nds-component { /* Default/Medium variant */ }
-.nds-lg { /* Large variant */ }
-
-// ==============================================
-// COMPONENT VARIANTS
-// ==============================================
-
-.nds-primary { /* Primary style */ }
-.nds-neutral { /* Neutral style */ }
-
-// ==============================================
-// RESPONSIVE BEHAVIOR
-// ==============================================
-
-@include mobile {
-.nds-component {
-// Mobile-specific adjustments
-}
-}
-```
-
-### Design Token Usage Standards
-
-**CRITICAL**: Always use component-specific design tokens instead of direct color references. The design system follows
-a structured token hierarchy.
-
-**Token Hierarchy:**
-1. **Component Tokens** (Preferred) - Use these first
-2. **Semantic Tokens** - Fallback for general use
-3. **Color Tokens** - Only reference indirectly through component tokens
-
-**✅ CORRECT Token Usage:**
-```scss
-.nds-primary {
-// Use component-specific tokens
-background-color: var(--component-background-primary-default);
-color: var(--component-text-primary-default);
-
-&:hover {
-background-color: var(--component-background-primary-hovered);
-}
-}
-```
-
-**❌ AVOID Direct Color Usage:**
-```scss
-.nds-primary {
-// DON'T use direct colors
-background-color: #f3fcf6;
-color: #14573a;
-
-// DON'T use color tokens directly
-background-color: var(--colors-primary-sa-flag-50);
-}
-```
-
-**Existing Component Token Patterns:**
-- **Buttons**: `--button-background-{variant}-{state}`, `--button-label-{variant}-{state}`
-- **Tags**: `--tag-background-{variant}`, `--tag-text-{variant}`, `--tag-border-{variant}`
-- **Chips**: `--chip-background-{variant}-{state}`, `--chip-text-{variant}-{state}`
-
-**Token Structure Pattern:**
-```scss
-// Component tokens reference semantic/color tokens
---component-background-primary-default: var(--colors-primary-sa-flag-600-primary);
---component-background-primary-hovered: var(--colors-primary-sa-flag-700);
---component-text-primary-default: var(--colors-primary-sa-flag-800);
-```
-
-**When Creating New Component Tokens:**
-1. **Add to `_variables.scss`** following the existing pattern
-2. **Use semantic naming**: `--{component}-{property}-{variant}-{state}`
-3. **Reference existing color tokens**: Use `var(--colors-{color-name})` as values
-4. **Include all states**: default, hovered, pressed, selected, focused, disabled
-5. **Add on-color variants** for dark background usage
-
-**State-based Token Examples:**
-```scss
-// All interactive states should have tokens
---chip-background-primary-default: var(--colors-primary-sa-flag-50);
---chip-background-primary-hovered: var(--colors-primary-sa-flag-200);
---chip-background-primary-pressed: var(--colors-primary-sa-flag-900);
---chip-background-primary-selected: var(--colors-primary-sa-flag-600-primary);
---chip-background-primary-focused: var(--colors-primary-sa-flag-50);
-```
-
-**Fallback Token Usage:**
-If component-specific tokens don't exist, use these general semantic tokens:
-
-```scss
-.nds-new-component {
-// Use general semantic tokens as fallback
-background-color: var(--background-primary-50);
-border: 1px solid var(--border-primary-default);
-color: var(--text-primary-default);
-}
-```
-
-**General Token Categories:**
-- **Backgrounds**: `--background-{variant}-{shade}` (e.g., `--background-primary-50`)
-- **Borders**: `--border-{variant}-{state}` (e.g., `--border-primary-default`)
-- **Text Colors**: `--text-{variant}-{state}` (e.g., `--text-primary-default`)
-
-**Typography Standards:**
-
-**Font Weight - Use Direct Numbers:**
-```scss
-.nds-component {
-// ✅ ALWAYS use direct font-weight numbers
-font-weight: 400; // Regular
-font-weight: 500; // Medium
-font-weight: 600; // Semi-bold
-font-weight: 700; // Bold
-
-// ❌ DON'T use font-weight tokens or keywords
-font-weight: var(--font-weight-medium); // NO
-font-weight: medium; // NO
-}
-```
-
-**Font Size - Use NDS Text Tokens:**
-```scss
-.nds-component {
-// ✅ Use NDS text size tokens
-font-size: var(--nds-text-sm-FS);
-line-height: var(--nds-text-sm-LH);
-
-font-size: var(--nds-text-md-FS);
-line-height: var(--nds-text-md-LH);
-
-font-size: var(--nds-text-lg-FS);
-line-height: var(--nds-text-lg-LH);
-}
-```
-
-**Available NDS Text Tokens:**
-- `--nds-text-xs-FS` / `--nds-text-xs-LH` - Extra small text
-- `--nds-text-sm-FS` / `--nds-text-sm-LH` - Small text
-- `--nds-text-md-FS` / `--nds-text-md-LH` - Medium text (default)
-- `--nds-text-lg-FS` / `--nds-text-lg-LH` - Large text
-- `--nds-text-xl-FS` / `--nds-text-xl-LH` - Extra large text
-
-## Development Workflow
-
-### Adding New Components
-1. Create component styles in `_sass/components/_[component].scss`
-2. Add component documentation page (e.g., `components/[component].md`)
-3. Add component to side navigation in `_data/sidemenu.yml`
-4. Set proper breadcrumb in component page front matter
-5. Include component in `_includes/` if reusable across pages
-6. Follow existing naming conventions (`nds-` prefix)
-7. Import new component SCSS file in main stylesheet
-
-#### Navigation Setup
-**Side Menu (`_data/sidemenu.yml`):**
+**Multi-language front matter:**
 ```yaml
-- label: "Components"
-has_sub: true
-children:
-- label: "Component Name"
-url: "/components/component-name"
-href: "/components/component-name.html"
-```
-
-**Breadcrumb (component page front matter):**
-```yaml
-breadcrumb: ["Components", "Component Name"]
-```
-
-### SCSS Variables and Mixins
-All design tokens are defined in `_sass/_variables.scss`:
-- Spacing: `--spacing-xs`, `--spacing-sm`, `--spacing-md`, `--spacing-lg`
-- Colors: `--button-background-primary-default`, `--text-oncolor-primary`
-- Transitions: `--nds-transition`
-
-Responsive mixins are available in `_sass/_mixins.scss`:
-- `@include mobile` - max-width: 599px
-- `@include tablet(min|max)` - 600px-959px range or min/max only
-- `@include desktop(min|max)` - 960px-1279px range or min/max only
-- `@include large-desktop(min|max)` - min-width: 1280px or max control
-
-### Multi-language Support
-Pages support both Arabic (RTL) and English (LTR):
-```yaml
----
-layout: page
 lang: en
 direction: ltr
----
 ```
 
-## File Editing Conventions
+## Component Demo Standards
 
-### Page Structure
-- All content pages use Jekyll front matter with layout specification
-- Hero sections with configurable background images and positioning
-- Modular content sections with `.content-section` wrapper class
+**Use `components/tags.md` as the BASE STANDARD** for interactive demo pages. Use demo action toggles instead of separate demo cards per variation.
 
-### Component Implementation
-- Use class pattern: `nds-btn nds-{type} nds-{size}`
-- Always include `<span class="label">` for button text
-    - Add `nds-oncolor` for colored backgrounds
-    - Use `nds-destructive` for destructive actions
-    - Include proper ARIA labels for icon-only buttons
+**Toggle syntax:** `data-toggler='["value", "targetSelector", "toggleGroup"]'`
+- Class toggle: `'["selected", ".nds-tag", "tagState"]'`
+- Content injection: `'["<i class=\"hgi ...\"></i>", ".nds-tag", "icons", "content-prepend"]'`
+- Toggle groups prevent conflicts (e.g. only one size active)
 
-    ### Demo Card Structure
-    Use this HTML structure for component documentation pages:
+**Toggle categories:** State (`selected`, `disabled`), Style (`nds-neutral`), Size (`nds-sm`, `nds-lg`), Icon (content-prepend), Background (`noBg`, `darkBg`)
 
-    ```html
-    <div class="nds-demo-card">
-        <div class="demo-header">
-            <div class="demo-label">Component Name</div>
-            <div class="demo-action">
-                <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                    data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                    <span class="label">Remove bg</span>
-                </button>
-            </div>
-        </div>
-        <div class="demo-container">
-            <div class="state-demo">
-                <!-- Component variations go here -->
-            </div>
-        </div>
-        <div class="nds-tabs nds-code nds-divided">
-            <div class="nds-tab-list-container">
-                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                        aria-controls="panel-example-1" id="tab-example-1">
-                        <span class="nds-tab-label">HTML</span>
-                    </button>
-                </nav>
-            </div>
-            <div class="nds-tab-content">
-                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-example-1"
-                    aria-labelledby="tab-example-1">
-                    <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                            <i class="hgi hgi-stroke hgi-copy-01"></i>
-                        </button>
-                    </div>
-                    <code class="lang-html code">
-                    <!-- HTML code example here -->
-                </code>
-                </div>
-            </div>
-        </div>
-    </div>
-    ```
+**Demo card structure** — see `components/tags.md` for full reference. Key classes: `.nds-demo-card` > `.demo-header` + `.demo-container` > `.state-demo`, with `.nds-tabs.nds-code` for code examples.
 
-    **Demo Toggle Options:**
-    - `'["noBg", ".demo-container", "containerBg"]'` - Toggle background removal
-    - `'["darkBg", ".demo-container", "containerBg"]'` - Toggle dark background
-    - `'["nds-indicator", ".nds-demo", "indicator"]'` - Toggle button indicators
+## Adding New Components
 
-    **Demo Container Classes:**
-    - `.demo-container` - Main demo area
-    - `.state-demo` - Contains component state variations
-    - `.nds-demo-card` - Wrapper for each demo section
+1. Create `_sass/components/_[name].scss` (with `@use '../mixins' as *;`)
+2. Import in main stylesheet
+3. Add documentation page: `components/[name].md` with `breadcrumb: ["Components", "Name"]`
+4. Add to `_data/sidemenu.yml` under Components children
+5. Add to `_includes/` if reusable across pages
+6. Use `nds-` prefix for all class names
 
-    ### JavaScript Functionality
-    - `nds-navController.js`: Navigation and menu interactions
-    - `nds-extras.js`: Component-specific behaviors (button interactions, copy functionality)
-    - Inline scripts for component demonstrations (background switching, state management)
+## JavaScript
 
-    ### JavaScript Build Process
-    After updating files in `_js/` directory, run the build process to compress and minify:
-    ```bash
-    ruby _plugins/js_processor.rb
-    ```
+- Source: `_js/` directory → processed by `ruby _plugins/js_processor.rb` (Terser) → `assets/js/*.min.js`
+- **Always run the processor manually** after JS changes
+- Output bundles: `nds-main.min.js` (core), `nds-showcase.min.js` (demos)
 
-    **JavaScript Architecture:**
-    - **Source files**: `_js/` directory contains individual component JavaScript files
-    - **Processing**: `_plugins/js_processor.rb` bundles and minifies files using Terser
-    - **Output**: Compressed files saved to `assets/js/` as `.min.js` versions
-    - **Manual processing**: Always run the processor manually when JavaScript changes are made
+## Figma MCP Integration
 
-    **Available Components:**
-    - `nds-accordion.js`, `nds-tabs.js`, `nds-forms.js` - UI component interactions
-    - `nds-navController.js`, `nds-sideMenu.js` - Navigation functionality
-    - `nds-showcase.js` - Component demonstration features
-    - `nds-cookies.js`, `nds-share.js` - Utility functions
-    - `nds-cityWeather.js`, `nds-timeDate.js`, `nds-numbers.js` - Data display components
+MCP server: `claude mcp add --transport sse figma http://127.0.0.1:3845/sse`
 
-    **Bundle Output:**
-    - `nds-main.min.js` - Core site functionality (bundled from multiple components)
-    - `nds-showcase.min.js` - Component showcase demonstrations
+**Tools:** `mcp__figma__get_metadata` → `mcp__figma__get_code` / `mcp__figma__get_image` / `mcp__figma__get_variable_defs`
 
-    ### Baseurl Cleaner
-    Removes `/_site` baseurl prefix from all HTML files in `_site/`, making paths relative based on file depth (e.g. `../assets/` for subdirectories). Use when deploying to a root domain or sharing `_site/` output where the baseurl path is not needed.
-    ```bash
-    ruby _plugins/baseurl_cleaner.rb          # Process files
-    ruby _plugins/baseurl_cleaner.rb dry      # Dry run - preview changes
-    ```
-
-    ## Files to Ignore
-
-    - **NEVER read** `assets/css/hgi-stroke-rounded.css` - this is a large icon font file that should not be analyzed
-    - **NEVER read** any `.min.js` or `.min.css` files - these are minified/compressed files that should not be analyzed
-
-    ## Figma MCP Integration
-
-    This project has Figma MCP integration available. Use these tools to extract design components from Figma:
-
-    ### Available Figma Tools
-    - `mcp__figma__get_metadata`: Get basic node information (name, dimensions, position)
-    - `mcp__figma__get_code`: Get complete implementation code for a selected component
-    - `mcp__figma__get_image`: Get visual preview of the selected component
-    - `mcp__figma__get_variable_defs`: Get design tokens/variables for the component
-    - `mcp__figma__get_code_connect_map`: Get mapping between Figma components and codebase
-
-    ### Figma Workflow
-    1. **Always start with metadata** to understand what's selected:
-    ```
-    mcp__figma__get_metadata (no parameters for currently selected)
-    ```
-
-    2. **Get implementation details** for any component:
-    ```
-    mcp__figma__get_code with nodeId from metadata
-    ```
-
-    3. **Get visual context** to understand the design:
-    ```
-    mcp__figma__get_image with nodeId from metadata
-    ```
-
-    ### Framework Context
-    Always provide these parameters when using Figma tools:
-    - `clientFrameworks`: "jekyll"
-    - `clientLanguages`: "html,css,scss,javascript"
-
-    ### Implementation Notes
-    - Figma generates React/Tailwind code by default
-    - Convert to NDS Jekyll patterns using existing component conventions
-    - Follow NDS naming: `nds-[component]` with modifiers like `nds-[component]-[variant]`
-    - Use existing SCSS variables from `_sass/_variables.scss`
-    - Maintain RTL/LTR support with proper Arabic typography
-
-    ## Important Notes
-
-    - This is a **documentation site** for a design system, not a web application
-    - All button implementations must follow Figma specifications exactly
-    - The site showcases component variations, states, and usage examples
-    - Copy-to-clipboard functionality allows developers to copy component HTML
-    - Interactive demos show different button states and background scenarios
-    - **CRITICAL**: This project is **RTL (Arabic) by default**. There is NO `@include rtl` mixin.
-    - **Prefer CSS Logical Properties**: Use `margin-inline-start/end`, `padding-inline`, `text-align: start/end` which automatically adapt to RTL/LTR.
-    - **Use `@include ltr` mixin ONLY for special cases**: transforms, gradients, or other properties that logical properties don't cover.
-    - Never write RTL-specific code in mixins - RTL is the default, write base styles for RTL and override with `@include ltr` only when needed.
-    - add this mcp server when needed "claude mcp add --transport sse figma http://127.0.0.1:3845/sse"
-
-    ## Automated Development Workflow
-
-    **When user requests to start/run the development server**, use standard Jekyll command:
-    ```bash
-    bundle exec jekyll serve
-    # or
-    npm start
-    ```
-
-    **Automatic Network Info Display:**
-    The `server_info.rb` plugin automatically provides:
-    - Auto-detected local IP address for mobile testing
-    - Network access URLs displayed clearly
-    - Server runs on port 4002 with host 0.0.0.0
-
-    **Mobile Testing Context:**
-    - Plugin auto-detects and displays IP (e.g., 192.168.1.18)
-    - Mobile URL shown automatically: `http://[IP]:4002`
-    - Displays reminder about same Wi-Fi network requirement
-
-    **Available Start Commands:**
-    - `bundle exec jekyll serve` - Standard Jekyll command (recommended)
-    - `npm start` / `npm run dev` - NPM shortcuts
-
-    Network information displays automatically with any start method!
+Always pass `clientFrameworks: "jekyll"`, `clientLanguages: "html,css,scss,javascript"`.
+Figma outputs React/Tailwind — convert to NDS Jekyll patterns (`nds-` naming, existing SCSS variables, RTL support).

@@ -1,0 +1,237 @@
+/* ========================================
+   SECTION COMPONENT - Shared Base
+   ======================================== */
+
+@use '../mixins' as *;
+
+/* ========================================
+   CONTENT SECTION VISUAL TOKENS
+   ======================================== */
+
+.nds-content-section {
+    /* Section background, shadow, and border overridable tokens */
+    --_section-bg: var(--section-bg, var(--background-white, #fff));
+    --_section-shadow: var(--section-shadow, none);
+    --_section-border: var(--section-border, none);
+    --_section-border-radius: var(--section-border-radius, 0);
+
+    background-color: var(--_section-bg);
+    box-shadow: var(--_section-shadow);
+    border: var(--_section-border);
+    border-radius: var(--_section-border-radius);
+
+    &.nds-blue {
+        @include section-variant(var(--colors-blue-950),
+            var(--text-secondary),
+            var(--text-oncolor-secondary));
+    }
+
+    &.nds-green {
+        @include section-variant(var(--colors-green-900),
+            var(--text-oncolor-primary),
+            var(--text-oncolor-secondary));
+    }
+
+    &.nds-neutral {
+        @include section-variant(var(--colors-neutral-900),
+            var(--text-secondary),
+            var(--text-oncolor-secondary));
+    }
+
+    &.nds-brand {
+        @include section-variant(var(--background-brand-light),
+            var(--text-default),
+            var(--text-default));
+    }
+
+    &.nds-ghost,
+    &.noBg {
+        @include reset-section-style;
+    }
+}
+
+/* ========================================
+   SHARED SECTION TOKENS
+   ======================================== */
+
+.nds-content-section,
+.nds-hero-section {
+    /* Section title and description overridable tokens */
+    --_section-title-FS: var(--section-title-FS, var(--nds-display-clamp-md-FS, clamp(24px, 3vw, 36px)));
+    --_section-title-LH: var(--section-title-LH, var(--nds-display-clamp-md-LH, clamp(30px, 3.67vw, 44px)));
+    --_section-title-MB: var(--section-title-MB, var(--nds-display-clamp-md-MB, clamp(7.5px, 0.9175vw, 11px)));
+    --_section-description-FS: var(--section-description-FS, var(--nds-text-clamp-lg-FS, clamp(16px, 1.5vw, 18px)));
+    --_section-description-LH: var(--section-description-LH, var(--nds-text-clamp-lg-LH, clamp(24px, 2.17vw, 26px)));
+    --_section-description-MB: var(--section-description-MB, var(--spacing-2xl, 20px));
+}
+
+/* ========================================
+   SECTION HEAD
+   ======================================== */
+
+.nds-section-head {
+    position: relative;
+    column-gap: var(--spacing-xl);
+
+    &:has(~ .nds-section-content) {
+        margin-bottom: var(--spacing-4xl, 32px);
+    }
+
+    .nds-content-layout.cardView &:has(~ .nds-section-content) {
+        margin-bottom: var(--spacing-2xl, 20px);
+    }
+}
+
+/* ========================================
+   SECTION TITLE
+   ======================================== */
+
+.nds-section-title {
+    font-size: var(--_section-title-FS);
+    line-height: var(--_section-title-LH);
+    letter-spacing: -0.02rem;
+    font-weight: bold;
+    color: var(--text-display, #1f2a37);
+
+    &:not(:last-child) {
+        margin-bottom: var(--_section-title-MB);
+    }
+
+}
+
+/* ========================================
+   SECTION DESCRIPTION
+   ======================================== */
+
+.nds-section-description {
+    font-size: var(--_section-description-FS);
+    line-height: var(--_section-description-LH);
+    color: var(--text-default, #161616);
+    margin-block-start: 0;
+    max-width: var(--maxwidth-paragraph-max-width, 720px);
+
+    &:not(:last-child) {
+        margin-bottom: var(--_section-description-MB);
+    }
+}
+
+/* ========================================
+   SECTION META (TAGS, RATING)
+   ======================================== */
+
+.nds-section-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+}
+
+.nds-section-rating {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    font-size: var(--nds-text-clamp-sm-FS);
+    align-items: flex-end;
+    line-height: 1;
+    --btn-padding: var(--spacing-xs);
+    --btn-height: 24px;
+}
+
+.nds-section-meta {
+    display: flex;
+    column-gap: var(--spacing-xl);
+    flex-wrap: wrap;
+    margin-block-end: var(--spacing-md);
+    row-gap: var(--spacing-md);
+    align-items: center;
+}
+
+/* ========================================
+   SECTION ACTION
+   ======================================== */
+
+.nds-section-action {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: var(--spacing-sm);
+    visibility: visible;
+}
+
+/* ========================================
+   READ MORE
+   ======================================== */
+
+.nds-readMore {
+    margin: var(--spacing-xl, 20px) auto 0;
+    display: flex;
+}
+
+/* ========================================
+   SECTION CONTENT
+   ======================================== */
+
+.nds-section-content {
+
+    & :not(nav, .nds-drawer-scroll)>ul,
+    & :not(nav, .nds-drawer-scroll)>ol {
+
+        &.nds-divided li {
+            border-bottom: 1px solid var(--border-neutral-secondary);
+        }
+
+        li {
+            padding-block: var(--spacing-md);
+
+            &:first-child {
+                padding-block-start: 0;
+            }
+
+            &:last-child {
+                padding-block-end: 0;
+                border-bottom: none;
+            }
+        }
+    }
+
+    p,
+    ul,
+    ol {
+        margin-block-end: 1rem;
+    }
+
+    p:last-child,
+    ul:last-child,
+    ol:last-child {
+        margin-block-end: 0;
+    }
+
+    article,
+    .nds-block-content,
+    .nds-block-item {
+
+        p {
+            color: var(--text-primary-paragraph);
+            text-wrap: pretty;
+            text-align: justify;
+        }
+
+        &>img {
+            max-width: 80%;
+            margin: auto;
+            display: block;
+
+            @include tablet(max) {
+                max-width: 100%;
+            }
+        }
+
+        &>video {
+            max-height: 60vh;
+            width: auto;
+            margin: auto;
+            display: block;
+        }
+    }
+}

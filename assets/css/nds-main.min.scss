@@ -56,7 +56,7 @@
 @use 'components/code';
 /* @use 'components/sideMenu'; */ /* Moved to critical CSS */
 @use 'components/drawer';  /* Moved to critical CSS */
-/* @use 'components/contentLayout'; */ /* Moved to critical CSS */
+/* @use 'layout/contentLayout'; */ /* Moved to critical CSS */
 /* @use 'components/hero'; */ /* Moved to critical CSS */
 @use 'components/user-feedback.scss';
 @use 'components/footer';

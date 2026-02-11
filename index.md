@@ -16,15 +16,17 @@ direction: rtl
                 provides reusable components, design tokens, accessibility guidelines, and interaction patterns that
                 ensure consistency across all government digital touchpoints.</p>
         </div>
+        <div class="nds-section-action">
+            <button class="nds-btn nds-primary nds-loading">
+                <span class="label">Loading Button</span>
+            </button>
+        </div>
         <div class="nds-section-content">
             <a href="{{ '/components/button.html' | relative_url }}" class="nds-btn nds-primary"
                 aria-label="Explore Components">
                 <span class="label">Explore Components</span>
                 <i class="hgi hgi-stroke hgi-arrow-right" aria-hidden="true"></i>
             </a>
-            <button class="nds-btn nds-primary nds-loading">
-                <span class="label">Loading Button</span>
-            </button>
         </div>
     </div>
 </section>

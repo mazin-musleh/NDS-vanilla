@@ -43,8 +43,14 @@
 // Breadcrumb navigation - Important for page context
 @use 'components/breadcrumb';
 
-// Content layout - Main content structure
-@use 'components/contentLayout';
+// Section component - Shared section base (tokens, wrapper, head, title, desc, meta, action, content)
+@use 'components/section';
+
+// Content layout - Main content structure (grid, layout variants, striping)
+@use 'layout/contentLayout';
+
+// Section layout - Layout context overrides (cardView, 404, sideInfo, last-edit)
+@use 'layout/sectionLayout';
 
 // Hero section - First visual element on most pages
 @use 'components/hero';
