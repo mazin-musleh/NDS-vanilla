@@ -18,7 +18,6 @@
     align-items: center;
     column-gap: var(--_section-col-gap);
     row-gap: var(--_section-row-gap);
-    visibility: visible;
 
     &:not(:last-child) {
         margin-bottom: var(--spacing-4xl, 32px);

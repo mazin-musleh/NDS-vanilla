@@ -40,4 +40,5 @@ Desktop.ini
 
 # Backup files
 *.backup
+*.bak
 notes.txt
