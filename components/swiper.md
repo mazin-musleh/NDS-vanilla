@@ -142,7 +142,7 @@ direction: rtl
         <div class="nds-section-head">
             <h2 class="nds-section-title">Image Slider</h2>
             <p class="nds-section-description">Image slider with lazy loading for optimal performance. Uses
-                <code>data-src</code> pattern to defer image loading until slides approach the viewport.
+                data-src pattern to defer image loading until slides approach the viewport.
             </p>
         </div>
         <div class="nds-section-content">
@@ -366,7 +366,7 @@ direction: rtl
         <div class="nds-section-head">
             <h2 class="nds-section-title">Peek Mode</h2>
             <p class="nds-section-description">Show partial next/previous slides to indicate more content. Use the
-                <code>peek</code> attribute to set the visible amount in pixels.
+                peek attribute to set the visible amount in pixels.
             </p>
         </div>
         <div class="nds-section-content">
@@ -501,25 +501,25 @@ direction: rtl
                     </thead>
                     <tbody>
                         <tr>
-                            <td><code>slides-max</code></td>
+                            <td>slides-max</td>
                             <td>Number</td>
                             <td>1</td>
                             <td>Slides visible on large desktop (≥1280px)</td>
                         </tr>
                         <tr>
-                            <td><code>slides-mid</code></td>
+                            <td>slides-mid</td>
                             <td>Number</td>
                             <td>1</td>
                             <td>Slides visible on desktop (960px-1279px)</td>
                         </tr>
                         <tr>
-                            <td><code>slides-min</code></td>
+                            <td>slides-min</td>
                             <td>Number</td>
                             <td>1</td>
-                            <td>Slides visible on mobile/tablet (&lt;960px)</td>
+                            <td>Slides visible on mobile/tablet (<960px)</td>
                         </tr>
                         <tr>
-                            <td><code>peek</code></td>
+                            <td>peek</td>
                             <td>Number</td>
                             <td>0</td>
                             <td>Pixels of adjacent slides to show (peek effect)</td>
@@ -587,7 +587,7 @@ direction: rtl
                 <div class="nds-card-content">
                     <h3>Performance Tips</h3>
                     <ul>
-                        <li>Use <code>data-src</code> and <code>data-srcset</code> for lazy loading images (swiper will
+                        <li>Use data-src and data-srcset for lazy loading images (swiper will
                             load them as slides approach the viewport)</li>
                         <li>Use consistent slide heights to avoid layout shifts</li>
                         <li>Leverage CSS scroll-snap for smooth, hardware-accelerated scrolling</li>
@@ -595,14 +595,14 @@ direction: rtl
 
                     <h3>Accessibility</h3>
                     <ul>
-                        <li>Always include <code>aria-label</code> on navigation buttons</li>
+                        <li>Always include aria-label on navigation buttons</li>
                         <li>Provide meaningful content in each slide</li>
                         <li>Ensure sufficient color contrast for on-color variants</li>
                     </ul>
 
                     <h3>Responsive Design</h3>
                     <ul>
-                        <li>Use <code>slides-max</code>, <code>slides-mid</code>, <code>slides-min</code> for responsive
+                        <li>Use slides-max, slides-mid, slides-min for responsive
                             behavior</li>
                         <li>Test on multiple screen sizes and devices</li>
                         <li>Consider content width when setting slides per view</li>

@@ -308,9 +308,9 @@ Dropdown contains:
                 <div class="guideline-item">
                     <h3>Accessibility</h3>
                     <ul>
-                        <li>Use <code>&lt;nav&gt;</code> with <code>aria-label="Breadcrumb"</code></li>
-                        <li>Mark current page with <code>aria-current="page"</code></li>
-                        <li>Use <code>&lt;ol&gt;</code> for semantic ordered list</li>
+                        <li>Use <nav> with aria-label="Breadcrumb"</li>
+                        <li>Mark current page with aria-current="page"</li>
+                        <li>Use <ol> for semantic ordered list</li>
                         <li>Ensure links have sufficient color contrast</li>
                     </ul>
                 </div>

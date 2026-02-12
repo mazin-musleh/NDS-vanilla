@@ -196,9 +196,9 @@ direction: ltr
                 <div class="nds-guideline-item">
                     <h3>Structure</h3>
                     <ul>
-                        <li>Use <code>.nds-expandable</code> as the wrapper container</li>
-                        <li>Content must be inside <code>.nds-expandable-content</code></li>
-                        <li>Set custom height with <code>--max-height</code> CSS property</li>
+                        <li>Use .nds-expandable as the wrapper container</li>
+                        <li>Content must be inside .nds-expandable-content</li>
+                        <li>Set custom height with --max-height CSS property</li>
                         <li>Default height limit is 300px if not specified</li>
                     </ul>
                 </div>
@@ -216,7 +216,7 @@ direction: ltr
                 <div class="nds-guideline-item">
                     <h3>Accessibility</h3>
                     <ul>
-                        <li>Proper ARIA attributes (<code>aria-expanded</code>, <code>aria-label</code>)</li>
+                        <li>Proper ARIA attributes (aria-expanded, aria-label)</li>
                         <li>Keyboard navigation support</li>
                         <li>Clear visual indicators for expandable state</li>
                         <li>Semantic button structure</li>
@@ -226,7 +226,7 @@ direction: ltr
                 <div class="nds-guideline-item">
                     <h3>Customization</h3>
                     <ul>
-                        <li><code>--max-height</code>: Custom height limit (e.g., "200px")</li>
+                        <li>--max-height: Custom height limit (e.g., "200px")</li>
                         <li>JavaScript API for programmatic control</li>
                         <li>Custom events for expand/collapse states</li>
                         <li>Responsive behavior on window resize</li>
@@ -256,12 +256,14 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>
-                <code class="lang-javascript">// Manual initialization
+                <div class="nds-expandable-content">
+                    <code class="lang-javascript">// Manual initialization
 const expandableElement = document.querySelector('#myExpandable');
 const expandableInstance = NDSExpandable.create(expandableElement);
 
 // Reinitialize after dynamic content changes
 NDSExpandable.reinit();</code>
+                </div>
             </div>
 
             <h3>Programmatic Control</h3>
@@ -273,7 +275,8 @@ NDSExpandable.reinit();</code>
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>
-                <code class="lang-javascript">// Get expandable instance
+                <div class="nds-expandable-content">
+                    <code class="lang-javascript">// Get expandable instance
 const expandable = document.querySelector('.nds-expandable');
 const instance = expandable.ndsExpandableInstance;
 
@@ -287,6 +290,7 @@ instance.recheckHeight();    // Recheck content height
 const state = instance.getState();
 console.log('Is expanded:', state.isExpanded);
 console.log('Has button:', state.hasButton);</code>
+                </div>
             </div>
 
             <h3>Event Handling</h3>
@@ -298,7 +302,8 @@ console.log('Has button:', state.hasButton);</code>
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>
-                <code class="lang-javascript">// Listen for expandable events
+                <div class="nds-expandable-content">
+                    <code class="lang-javascript">// Listen for expandable events
 document.addEventListener('nds:expandable:expanded', (e) => {
     console.log('Content expanded:', e.detail);
     console.log('Container:', e.detail.container);
@@ -318,6 +323,7 @@ document.addEventListener('nds:expandable:collapsed', (e) => {
         'content_type': 'expandable'
     });
 });</code>
+                </div>
             </div>
 
         </div>

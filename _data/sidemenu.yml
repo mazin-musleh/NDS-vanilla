@@ -49,6 +49,9 @@
     - label: "Chips"
       url: "/components/chips"
       href: "/components/chips.html"
+    - label: "Code"
+      url: "/components/code"
+      href: "/components/code.html"
     - label: "Date Picker"
       url: "/components/date-picker"
       href: "/components/date-picker.html"
@@ -113,9 +116,28 @@
       url: "/components/upload"
       href: "/components/upload.html"
 
+- label: "UI Shell"
+  has_sub: true
+  children:
+    - label: "Header"
+      url: "/ui-shell/header"
+      href: "/ui-shell/header.html"
+    - label: "Side Nav"
+      url: "/ui-shell/side-nav"
+      href: "/ui-shell/side-nav.html"
+    - label: "Footer"
+      url: "/ui-shell/footer"
+      href: "/ui-shell/footer.html"
+
 - label: "Layout"
   has_sub: true
   children:
+    - label: "Content Grid"
+      url: "/layout/content-grid"
+      href: "/layout/content-grid.html"
+    - label: "Grid"
+      url: "/layout/grid"
+      href: "/layout/grid.html"
     - label: "Section"
       url: "/layout/section"
       href: "/layout/section.html"

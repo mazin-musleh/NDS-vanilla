@@ -70,10 +70,10 @@ direction: ltr
                   aria-controls="panel-text-input-1" id="tab-text-input-1">
                   <span class="nds-tab-label">HTML</span>
                 </button>
+              </nav>
                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                 </button>
-              </nav>
             </div>
             <div class="nds-tab-content">
               <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-text-input-1"
@@ -163,10 +163,10 @@ direction: ltr
                   aria-controls="panel-search-input-1" id="tab-search-input-1">
                   <span class="nds-tab-label">HTML</span>
                 </button>
+              </nav>
                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                 </button>
-              </nav>
             </div>
             <div class="nds-tab-content">
               <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-search-input-1"
@@ -256,10 +256,10 @@ direction: ltr
                   aria-controls="panel-email-input-1" id="tab-email-input-1">
                   <span class="nds-tab-label">HTML</span>
                 </button>
+              </nav>
                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                 </button>
-              </nav>
             </div>
             <div class="nds-tab-content">
               <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-email-input-1"
@@ -350,10 +350,10 @@ direction: ltr
                   aria-controls="panel-password-input-1" id="tab-password-input-1">
                   <span class="nds-tab-label">HTML</span>
                 </button>
+              </nav>
                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                 </button>
-              </nav>
             </div>
             <div class="nds-tab-content">
               <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-password-input-1"
@@ -439,10 +439,10 @@ direction: ltr
                   aria-controls="panel-textarea-1" id="tab-textarea-1">
                   <span class="nds-tab-label">HTML</span>
                 </button>
+              </nav>
                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                 </button>
-              </nav>
             </div>
             <div class="nds-tab-content">
               <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-textarea-1"
@@ -537,10 +537,10 @@ direction: ltr
                   aria-controls="panel-select-1" id="tab-select-1">
                   <span class="nds-tab-label">HTML</span>
                 </button>
+              </nav>
                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                 </button>
-              </nav>
             </div>
             <div class="nds-tab-content">
               <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-select-1"
@@ -650,10 +650,10 @@ direction: ltr
                   aria-controls="panel-status-api-js" id="tab-status-api-js">
                   <span class="nds-tab-label">JavaScript</span>
                 </button>
+              </nav>
                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                 </button>
-              </nav>
             </div>
             <div class="nds-tab-content">
               <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-status-api-html"
@@ -765,10 +765,10 @@ element.addEventListener('nds:statusChange', function(e) {
                   aria-controls="panel-permanent-js" id="tab-permanent-js">
                   <span class="nds-tab-label">JavaScript</span>
                 </button>
+              </nav>
                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                 </button>
-              </nav>
             </div>
             <div class="nds-tab-content">
               <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-permanent-html"
@@ -895,10 +895,10 @@ NDSFeedback.dismiss(errorFeedback);
                   aria-controls="panel-autocomplete-1" id="tab-autocomplete-1">
                   <span class="nds-tab-label">HTML</span>
                 </button>
+              </nav>
                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                 </button>
-              </nav>
             </div>
             <div class="nds-tab-content">
               <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-autocomplete-1"

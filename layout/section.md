@@ -21,7 +21,14 @@ direction: ltr
                     <div class="demo-label">Structure</div>
                 </div>
                 <div class="demo-container noBg">
-<code class="lang-html code">
+                    <div class="nds-code nds-expandable">
+                        <div class="nds-code-action">
+                            <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                <i class="hgi hgi-stroke hgi-copy-01"></i>
+                            </button>
+                        </div>
+                        <div class="nds-expandable-content">
+                            <code class="lang-html code">
 section.nds-content-section          (CSS Grid: full-width | breakout | content)
 ├── div.nds-section-wrapper          (Flex row + container queries)
 │   ├── div.nds-section-image        (optional)
@@ -32,7 +39,9 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
 │   ├── div.nds-section-action       (optional, auto width)
 │   └── div.nds-section-content      (full row below)
 └── div.nds-section-content.nds-full-width  (outside wrapper for breakout)
-</code>
+                            </code>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -50,11 +59,32 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
             <div class="nds-demo-card">
                 <div class="demo-header">
                     <div class="demo-label">Minimal Section</div>
+                    <div class="demo-action">
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-blue", ".nds-content-section", "sectionColor"]'>
+                            <span class="label">Blue</span>
+                        </button>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-green", ".nds-content-section", "sectionColor"]'>
+                            <span class="label">Green</span>
+                        </button>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-neutral", ".nds-content-section", "sectionColor"]'>
+                            <span class="label">Neutral</span>
+                        </button>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-brand", ".nds-content-section", "sectionColor"]'>
+                            <span class="label">Brand</span>
+                        </button>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-ghost", ".nds-content-section", "sectionColor"]'>
+                            <span class="label">Ghost</span>
+                        </button>
+                    </div>
                 </div>
                 <div class="demo-container">
                     <div class="state-demo">
-                        <!-- Live demo: Tier 1 section (nested demo) -->
-                        <section class="nds-content-section nds-ghost" style="padding:0;">
+                        <section class="nds-content-section">
                             <h2 class="nds-section-title">Section Title</h2>
                             <p class="nds-section-description">Section description goes here. Used for simple sections with only a title and content.</p>
                             <div class="nds-section-content">
@@ -79,13 +109,13 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                                 </button>
                             </div>
 <code class="lang-html code">
-&lt;section class="nds-content-section"&gt;
-    &lt;h2 class="nds-section-title"&gt;Section Title&lt;/h2&gt;
-    &lt;p class="nds-section-description"&gt;Description text.&lt;/p&gt;
-    &lt;div class="nds-section-content"&gt;
-        &lt;!-- Content here --&gt;
-    &lt;/div&gt;
-&lt;/section&gt;
+<section class="nds-content-section">
+    <h2 class="nds-section-title">Section Title</h2>
+    <p class="nds-section-description">Description text.</p>
+    <div class="nds-section-content">
+        <!-- Content here -->
+    </div>
+</section>
 </code>
                         </div>
                     </div>
@@ -106,10 +136,32 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
             <div class="nds-demo-card">
                 <div class="demo-header">
                     <div class="demo-label">Standard Section</div>
+                    <div class="demo-action">
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-blue", ".nds-content-section", "sectionColor"]'>
+                            <span class="label">Blue</span>
+                        </button>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-green", ".nds-content-section", "sectionColor"]'>
+                            <span class="label">Green</span>
+                        </button>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-neutral", ".nds-content-section", "sectionColor"]'>
+                            <span class="label">Neutral</span>
+                        </button>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-brand", ".nds-content-section", "sectionColor"]'>
+                            <span class="label">Brand</span>
+                        </button>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-ghost", ".nds-content-section", "sectionColor"]'>
+                            <span class="label">Ghost</span>
+                        </button>
+                    </div>
                 </div>
                 <div class="demo-container">
                     <div class="state-demo">
-                        <section class="nds-content-section nds-ghost" style="padding:0;">
+                        <section class="nds-content-section">
                             <div class="nds-section-wrapper">
                                 <div class="nds-section-head">
                                     <h2 class="nds-section-title">Section Title</h2>
@@ -138,17 +190,17 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                                 </button>
                             </div>
 <code class="lang-html code">
-&lt;section class="nds-content-section"&gt;
-    &lt;div class="nds-section-wrapper"&gt;
-        &lt;div class="nds-section-head"&gt;
-            &lt;h2 class="nds-section-title"&gt;Section Title&lt;/h2&gt;
-            &lt;p class="nds-section-description"&gt;Description text.&lt;/p&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-section-content"&gt;
-            &lt;!-- Content here --&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/section&gt;
+<section class="nds-content-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Section Title</h2>
+            <p class="nds-section-description">Description text.</p>
+        </div>
+        <div class="nds-section-content">
+            <!-- Content here -->
+        </div>
+    </div>
+</section>
 </code>
                         </div>
                     </div>
@@ -169,10 +221,32 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
             <div class="nds-demo-card">
                 <div class="demo-header">
                     <div class="demo-label">Section with Action</div>
+                    <div class="demo-action">
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-blue", ".nds-content-section", "sectionColor"]'>
+                            <span class="label">Blue</span>
+                        </button>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-green", ".nds-content-section", "sectionColor"]'>
+                            <span class="label">Green</span>
+                        </button>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-neutral", ".nds-content-section", "sectionColor"]'>
+                            <span class="label">Neutral</span>
+                        </button>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-brand", ".nds-content-section", "sectionColor"]'>
+                            <span class="label">Brand</span>
+                        </button>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-ghost", ".nds-content-section", "sectionColor"]'>
+                            <span class="label">Ghost</span>
+                        </button>
+                    </div>
                 </div>
                 <div class="demo-container">
                     <div class="state-demo">
-                        <section class="nds-content-section nds-ghost" style="padding:0;">
+                        <section class="nds-content-section">
                             <div class="nds-section-wrapper">
                                 <div class="nds-section-head">
                                     <h2 class="nds-section-title">Latest News</h2>
@@ -206,22 +280,22 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                                 </button>
                             </div>
 <code class="lang-html code">
-&lt;section class="nds-content-section"&gt;
-    &lt;div class="nds-section-wrapper"&gt;
-        &lt;div class="nds-section-head"&gt;
-            &lt;h2 class="nds-section-title"&gt;Latest News&lt;/h2&gt;
-            &lt;p class="nds-section-description"&gt;Description text.&lt;/p&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-section-action"&gt;
-            &lt;a href="#" class="nds-btn nds-primary"&gt;
-                &lt;span class="label"&gt;View All&lt;/span&gt;
-            &lt;/a&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-section-content"&gt;
-            &lt;!-- Content here --&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/section&gt;
+<section class="nds-content-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Latest News</h2>
+            <p class="nds-section-description">Description text.</p>
+        </div>
+        <div class="nds-section-action">
+            <a href="#" class="nds-btn nds-primary">
+                <span class="label">View All</span>
+            </a>
+        </div>
+        <div class="nds-section-content">
+            <!-- Content here -->
+        </div>
+    </div>
+</section>
 </code>
                         </div>
                     </div>
@@ -242,10 +316,32 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
             <div class="nds-demo-card">
                 <div class="demo-header">
                     <div class="demo-label">Section with Image</div>
+                    <div class="demo-action">
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-blue", ".nds-content-section", "sectionColor"]'>
+                            <span class="label">Blue</span>
+                        </button>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-green", ".nds-content-section", "sectionColor"]'>
+                            <span class="label">Green</span>
+                        </button>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-neutral", ".nds-content-section", "sectionColor"]'>
+                            <span class="label">Neutral</span>
+                        </button>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-brand", ".nds-content-section", "sectionColor"]'>
+                            <span class="label">Brand</span>
+                        </button>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-ghost", ".nds-content-section", "sectionColor"]'>
+                            <span class="label">Ghost</span>
+                        </button>
+                    </div>
                 </div>
                 <div class="demo-container">
                     <div class="state-demo">
-                        <section class="nds-content-section nds-ghost" style="padding:0;">
+                        <section class="nds-content-section">
                             <div class="nds-section-wrapper">
                                 <div class="nds-section-image">
                                     <div class="nds-avatar nds-xl">
@@ -284,25 +380,25 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                                 </button>
                             </div>
 <code class="lang-html code">
-&lt;section class="nds-content-section"&gt;
-    &lt;div class="nds-section-wrapper"&gt;
-        &lt;div class="nds-section-image"&gt;
-            &lt;img src="..." alt="..." /&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-section-head"&gt;
-            &lt;h2 class="nds-section-title"&gt;Section Title&lt;/h2&gt;
-            &lt;p class="nds-section-description"&gt;Description text.&lt;/p&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-section-action"&gt;
-            &lt;a href="#" class="nds-btn nds-primary"&gt;
-                &lt;span class="label"&gt;Action&lt;/span&gt;
-            &lt;/a&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-section-content"&gt;
-            &lt;!-- Content here --&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/section&gt;
+<section class="nds-content-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-image">
+            <img src="..." alt="..." />
+        </div>
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Section Title</h2>
+            <p class="nds-section-description">Description text.</p>
+        </div>
+        <div class="nds-section-action">
+            <a href="#" class="nds-btn nds-primary">
+                <span class="label">Action</span>
+            </a>
+        </div>
+        <div class="nds-section-content">
+            <!-- Content here -->
+        </div>
+    </div>
+</section>
 </code>
                         </div>
                     </div>
@@ -317,16 +413,38 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Tier 5 — Full-Width Content</h2>
-            <p class="nds-section-description">Content lives outside the wrapper and uses <code>.nds-full-width</code> to break out of the content column into edge-to-edge layout. Wrapper holds head + action only.</p>
+            <p class="nds-section-description">Content lives outside the wrapper and uses .nds-full-width to break out of the content column into edge-to-edge layout. Wrapper holds head + action only.</p>
         </div>
         <div class="nds-section-content">
             <div class="nds-demo-card">
                 <div class="demo-header">
                     <div class="demo-label">Full-Width Section</div>
+                    <div class="demo-action">
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-blue", ".nds-content-section", "sectionColor"]'>
+                            <span class="label">Blue</span>
+                        </button>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-green", ".nds-content-section", "sectionColor"]'>
+                            <span class="label">Green</span>
+                        </button>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-neutral", ".nds-content-section", "sectionColor"]'>
+                            <span class="label">Neutral</span>
+                        </button>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-brand", ".nds-content-section", "sectionColor"]'>
+                            <span class="label">Brand</span>
+                        </button>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-ghost", ".nds-content-section", "sectionColor"]'>
+                            <span class="label">Ghost</span>
+                        </button>
+                    </div>
                 </div>
                 <div class="demo-container">
                     <div class="state-demo">
-                        <section class="nds-content-section nds-ghost" style="padding:0;">
+                        <section class="nds-content-section">
                             <div class="nds-section-wrapper">
                                 <div class="nds-section-head">
                                     <h2 class="nds-section-title">Featured Services</h2>
@@ -338,8 +456,8 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                                     </a>
                                 </div>
                             </div>
-                            <div class="nds-section-content nds-full-width" style="background: var(--background-neutral-light); padding: var(--spacing-xl);">
-                                <p style="text-align:center;">Full-width content area (e.g., card carousel, swiper)</p>
+                            <div class="nds-section-content nds-full-width">
+                                <p>Full-width content area (e.g., card carousel, swiper)</p>
                             </div>
                         </section>
                     </div>
@@ -360,98 +478,22 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                                 </button>
                             </div>
 <code class="lang-html code">
-&lt;section class="nds-content-section"&gt;
-    &lt;div class="nds-section-wrapper"&gt;
-        &lt;div class="nds-section-head"&gt;
-            &lt;h2 class="nds-section-title"&gt;Section Title&lt;/h2&gt;
-            &lt;p class="nds-section-description"&gt;Description text.&lt;/p&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-section-action"&gt;
-            &lt;a href="#" class="nds-btn nds-primary"&gt;
-                &lt;span class="label"&gt;View All&lt;/span&gt;
-            &lt;/a&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class="nds-section-content nds-full-width"&gt;
-        &lt;!-- Full-width content (carousel, cards, etc.) --&gt;
-    &lt;/div&gt;
-&lt;/section&gt;
-</code>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Color Variants -->
-<section id="variants" class="nds-content-section">
+<section class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
-            <h2 class="nds-section-title">Color Variants</h2>
-            <p class="nds-section-description">Apply color classes directly on <code>.nds-content-section</code> for themed backgrounds.</p>
+            <h2 class="nds-section-title">Section Title</h2>
+            <p class="nds-section-description">Description text.</p>
         </div>
-        <div class="nds-section-content">
-            <div class="nds-demo-card">
-                <div class="demo-header">
-                    <div class="demo-label">Variants</div>
-                </div>
-                <div class="demo-container noBg">
-                    <div class="state-demo" style="flex-direction: column; gap: var(--spacing-xl);">
-                        <section class="nds-content-section" style="padding: var(--spacing-xl);">
-                            <h3 class="nds-section-title" style="font-size: var(--nds-text-lg-FS);">Default (White)</h3>
-                        </section>
-                        <section class="nds-content-section nds-blue" style="padding: var(--spacing-xl);">
-                            <h3 class="nds-section-title" style="font-size: var(--nds-text-lg-FS);">.nds-blue</h3>
-                        </section>
-                        <section class="nds-content-section nds-green" style="padding: var(--spacing-xl);">
-                            <h3 class="nds-section-title" style="font-size: var(--nds-text-lg-FS);">.nds-green</h3>
-                        </section>
-                        <section class="nds-content-section nds-neutral" style="padding: var(--spacing-xl);">
-                            <h3 class="nds-section-title" style="font-size: var(--nds-text-lg-FS);">.nds-neutral</h3>
-                        </section>
-                        <section class="nds-content-section nds-brand" style="padding: var(--spacing-xl);">
-                            <h3 class="nds-section-title" style="font-size: var(--nds-text-lg-FS);">.nds-brand</h3>
-                        </section>
-                        <section class="nds-content-section nds-ghost" style="padding: var(--spacing-xl); border: 1px dashed var(--border-neutral-secondary);">
-                            <h3 class="nds-section-title" style="font-size: var(--nds-text-lg-FS);">.nds-ghost / .noBg (transparent)</h3>
-                        </section>
-                    </div>
-                </div>
-                <div class="nds-tabs nds-code nds-divided" hidden>
-                    <div class="nds-tab-list-container">
-                        <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-variants" id="tab-variants">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                        </nav>
-                    </div>
-                    <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-variants" aria-labelledby="tab-variants">
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                </button>
-                            </div>
-<code class="lang-html code">
-&lt;!-- Default --&gt;
-&lt;section class="nds-content-section"&gt;...&lt;/section&gt;
-
-&lt;!-- Blue --&gt;
-&lt;section class="nds-content-section nds-blue"&gt;...&lt;/section&gt;
-
-&lt;!-- Green --&gt;
-&lt;section class="nds-content-section nds-green"&gt;...&lt;/section&gt;
-
-&lt;!-- Neutral --&gt;
-&lt;section class="nds-content-section nds-neutral"&gt;...&lt;/section&gt;
-
-&lt;!-- Brand --&gt;
-&lt;section class="nds-content-section nds-brand"&gt;...&lt;/section&gt;
-
-&lt;!-- Ghost (transparent) --&gt;
-&lt;section class="nds-content-section nds-ghost"&gt;...&lt;/section&gt;
+        <div class="nds-section-action">
+            <a href="#" class="nds-btn nds-primary">
+                <span class="label">View All</span>
+            </a>
+        </div>
+    </div>
+    <div class="nds-section-content nds-full-width">
+        <!-- Full-width content (carousel, cards, etc.) -->
+    </div>
+</section>
 </code>
                         </div>
                     </div>
@@ -466,7 +508,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Grid Columns</h2>
-            <p class="nds-section-description">Every section is a CSS Grid with named columns. Direct children are placed into <code>content</code>, <code>breakout</code>, or <code>full-width</code> tracks.</p>
+            <p class="nds-section-description">Every section is a CSS Grid with named columns. Direct children are placed into content, breakout, or full-width tracks.</p>
         </div>
         <div class="nds-section-content">
             <div class="nds-demo-card">
@@ -474,13 +516,22 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                     <div class="demo-label">Grid Placement</div>
                 </div>
                 <div class="demo-container noBg">
-<code class="lang-html code">
+                    <div class="nds-code nds-expandable">
+                        <div class="nds-code-action">
+                            <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                <i class="hgi hgi-stroke hgi-copy-01"></i>
+                            </button>
+                        </div>
+                        <div class="nds-expandable-content">
+                            <code class="lang-html code">
 [full-width] | [breakout] | [content] | [breakout] | [full-width]
 
 Default child         → grid-column: content
 .nds-breakout         → grid-column: breakout
 .nds-full-width       → grid-column: full-width
-</code>
+                            </code>
+                        </div>
+                    </div>
                 </div>
                 <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
@@ -498,14 +549,14 @@ Default child         → grid-column: content
                                 </button>
                             </div>
 <code class="lang-html code">
-&lt;!-- Default: content column --&gt;
-&lt;div class="nds-section-content"&gt;...&lt;/div&gt;
+<!-- Default: content column -->
+<div class="nds-section-content">...</div>
 
-&lt;!-- Wider: breakout column --&gt;
-&lt;div class="nds-section-content nds-breakout"&gt;...&lt;/div&gt;
+<!-- Wider: breakout column -->
+<div class="nds-section-content nds-breakout">...</div>
 
-&lt;!-- Edge-to-edge: full-width column --&gt;
-&lt;div class="nds-section-content nds-full-width"&gt;...&lt;/div&gt;
+<!-- Edge-to-edge: full-width column -->
+<div class="nds-section-content nds-full-width">...</div>
 </code>
                         </div>
                     </div>
@@ -537,18 +588,18 @@ Default child         → grid-column: content
                             </tr>
                         </thead>
                         <tbody>
-                            <tr><td><code>--section-bg</code></td><td>var(--background-white)</td><td>.nds-content-section</td></tr>
-                            <tr><td><code>--section-shadow</code></td><td>none</td><td>.nds-content-section</td></tr>
-                            <tr><td><code>--section-border</code></td><td>none</td><td>.nds-content-section</td></tr>
-                            <tr><td><code>--section-border-radius</code></td><td>0</td><td>.nds-content-section</td></tr>
-                            <tr><td><code>--section-title-FS</code></td><td>clamp(24px, 3vw, 36px)</td><td>.nds-content-section, .nds-hero-section</td></tr>
-                            <tr><td><code>--section-title-LH</code></td><td>clamp(30px, 3.67vw, 44px)</td><td>.nds-content-section, .nds-hero-section</td></tr>
-                            <tr><td><code>--section-title-MB</code></td><td>clamp(7.5px, 0.9175vw, 11px)</td><td>.nds-content-section, .nds-hero-section</td></tr>
-                            <tr><td><code>--section-description-FS</code></td><td>clamp(16px, 1.5vw, 18px)</td><td>.nds-content-section, .nds-hero-section</td></tr>
-                            <tr><td><code>--section-description-LH</code></td><td>clamp(24px, 2.17vw, 26px)</td><td>.nds-content-section, .nds-hero-section</td></tr>
-                            <tr><td><code>--section-description-MB</code></td><td>var(--spacing-2xl)</td><td>.nds-content-section, .nds-hero-section</td></tr>
-                            <tr><td><code>--section-col-gap</code></td><td>var(--spacing-xl)</td><td>.nds-section-wrapper</td></tr>
-                            <tr><td><code>--section-row-gap</code></td><td>var(--spacing-xl)</td><td>.nds-section-wrapper</td></tr>
+                            <tr><td>--section-bg</td><td>var(--background-white)</td><td>.nds-content-section</td></tr>
+                            <tr><td>--section-shadow</td><td>none</td><td>.nds-content-section</td></tr>
+                            <tr><td>--section-border</td><td>none</td><td>.nds-content-section</td></tr>
+                            <tr><td>--section-border-radius</td><td>0</td><td>.nds-content-section</td></tr>
+                            <tr><td>--section-title-FS</td><td>clamp(24px, 3vw, 36px)</td><td>.nds-content-section, .nds-hero-section</td></tr>
+                            <tr><td>--section-title-LH</td><td>clamp(30px, 3.67vw, 44px)</td><td>.nds-content-section, .nds-hero-section</td></tr>
+                            <tr><td>--section-title-MB</td><td>clamp(7.5px, 0.9175vw, 11px)</td><td>.nds-content-section, .nds-hero-section</td></tr>
+                            <tr><td>--section-description-FS</td><td>clamp(16px, 1.5vw, 18px)</td><td>.nds-content-section, .nds-hero-section</td></tr>
+                            <tr><td>--section-description-LH</td><td>clamp(24px, 2.17vw, 26px)</td><td>.nds-content-section, .nds-hero-section</td></tr>
+                            <tr><td>--section-description-MB</td><td>var(--spacing-2xl)</td><td>.nds-content-section, .nds-hero-section</td></tr>
+                            <tr><td>--section-col-gap</td><td>var(--spacing-xl)</td><td>.nds-section-wrapper</td></tr>
+                            <tr><td>--section-row-gap</td><td>var(--spacing-xl)</td><td>.nds-section-wrapper</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -562,16 +613,38 @@ Default child         → grid-column: content
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Horizontal Layout</h2>
-            <p class="nds-section-description">Add <code>.nds-horizontal</code> to a section to switch the wrapper from flex to a two-column grid layout on desktop (head left, content right).</p>
+            <p class="nds-section-description">Add .nds-horizontal to a section to switch the wrapper from flex to a two-column grid layout on desktop (head left, content right).</p>
         </div>
         <div class="nds-section-content">
             <div class="nds-demo-card">
                 <div class="demo-header">
                     <div class="demo-label">Horizontal</div>
+                    <div class="demo-action">
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-blue", ".nds-content-section", "sectionColor"]'>
+                            <span class="label">Blue</span>
+                        </button>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-green", ".nds-content-section", "sectionColor"]'>
+                            <span class="label">Green</span>
+                        </button>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-neutral", ".nds-content-section", "sectionColor"]'>
+                            <span class="label">Neutral</span>
+                        </button>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-brand", ".nds-content-section", "sectionColor"]'>
+                            <span class="label">Brand</span>
+                        </button>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-ghost", ".nds-content-section", "sectionColor"]'>
+                            <span class="label">Ghost</span>
+                        </button>
+                    </div>
                 </div>
                 <div class="demo-container">
                     <div class="state-demo">
-                        <section class="nds-content-section nds-horizontal nds-ghost" style="padding:0;">
+                        <section class="nds-content-section nds-horizontal">
                             <div class="nds-section-wrapper">
                                 <div class="nds-section-head">
                                     <h2 class="nds-section-title">Side by Side</h2>
@@ -600,17 +673,17 @@ Default child         → grid-column: content
                                 </button>
                             </div>
 <code class="lang-html code">
-&lt;section class="nds-content-section nds-horizontal"&gt;
-    &lt;div class="nds-section-wrapper"&gt;
-        &lt;div class="nds-section-head"&gt;
-            &lt;h2 class="nds-section-title"&gt;Title&lt;/h2&gt;
-            &lt;p class="nds-section-description"&gt;Description.&lt;/p&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-section-content"&gt;
-            &lt;!-- Content beside head on desktop --&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/section&gt;
+<section class="nds-content-section nds-horizontal">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Title</h2>
+            <p class="nds-section-description">Description.</p>
+        </div>
+        <div class="nds-section-content">
+            <!-- Content beside head on desktop -->
+        </div>
+    </div>
+</section>
 </code>
                         </div>
                     </div>
@@ -643,17 +716,17 @@ Default child         → grid-column: content
                         </thead>
                         <tbody>
                             <tr>
-                                <td><code>_sass/components/_section.scss</code></td>
+                                <td>_sass/components/_section.scss</td>
                                 <td>Component base</td>
                                 <td>Visual tokens, typography tokens, head, title, description, meta, action, content</td>
                             </tr>
                             <tr>
-                                <td><code>_sass/layout/_sectionLayout.scss</code></td>
+                                <td>_sass/layout/_sectionLayout.scss</td>
                                 <td>Layout overrides</td>
                                 <td>Wrapper (container queries), cardView, 404, sideInfo, horizontal, striping</td>
                             </tr>
                             <tr>
-                                <td><code>_sass/layout/_contentLayout.scss</code></td>
+                                <td>_sass/layout/_contentLayout.scss</td>
                                 <td>Page layout</td>
                                 <td>CSS Grid system, .nds-content-layout variants, side menu, mobile</td>
                             </tr>

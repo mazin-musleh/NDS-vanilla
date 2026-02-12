@@ -272,7 +272,7 @@ direction: ltr
                 <div class="nds-guideline-item">
                     <h3>Basic Usage</h3>
                     <ul>
-                        <li>Add <code>.nds-truncate</code> class to any text element</li>
+                        <li>Add .nds-truncate class to any text element</li>
                         <li>Default behavior truncates to 1 line</li>
                         <li>Automatically adds ellipsis (...) for overflow</li>
                         <li>Works with any HTML text element (p, span, div, h1-h6)</li>
@@ -282,9 +282,9 @@ direction: ltr
                 <div class="nds-guideline-item">
                     <h3>Multi-line Truncation</h3>
                     <ul>
-                        <li>Use <code>--truncate</code> CSS custom property</li>
-                        <li>Set any number: <code>style="--truncate: 3;"</code></li>
-                        <li>Uses modern <code>line-clamp</code> for better browser support</li>
+                        <li>Use --truncate CSS custom property</li>
+                        <li>Set any number: style="--truncate: 3;"</li>
+                        <li>Uses modern line-clamp for better browser support</li>
                         <li>Includes webkit prefix for older browsers</li>
                     </ul>
                 </div>
@@ -303,7 +303,7 @@ direction: ltr
                     <h3>Accessibility</h3>
                     <ul>
                         <li>Consider providing full text via tooltip or expand option</li>
-                        <li>Use <code>title</code> attribute for single-line truncation</li>
+                        <li>Use title attribute for single-line truncation</li>
                         <li>Ensure truncated content doesn't lose essential meaning</li>
                         <li>Test with screen readers for proper content exposure</li>
                     </ul>

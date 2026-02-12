@@ -1,5 +1,5 @@
 ---
-layout: dashboard
+layout: page
 body_class: fullWidth
 layout_class: nds-content-container toEdge
 title: Dashboard Demo

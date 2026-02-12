@@ -77,10 +77,10 @@ direction: ltr
                   aria-controls="panel-checkbox-single-1" id="tab-checkbox-single-1">
                   <span class="nds-tab-label">HTML</span>
                 </button>
+              </nav>
                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                 </button>
-              </nav>
             </div>
             <div class="nds-tab-content">
               <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-checkbox-single-1"
@@ -211,10 +211,10 @@ direction: ltr
                   aria-controls="panel-checkbox-group-1" id="tab-checkbox-group-1">
                   <span class="nds-tab-label">HTML</span>
                 </button>
+              </nav>
                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                 </button>
-              </nav>
             </div>
             <div class="nds-tab-content">
               <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-checkbox-group-1"
@@ -399,10 +399,10 @@ direction: ltr
                   aria-controls="panel-checkbox-validation-2" id="tab-checkbox-validation-2">
                   <span class="nds-tab-label">JavaScript</span>
                 </button>
+              </nav>
                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                 </button>
-              </nav>
             </div>
             <div class="nds-tab-content">
               <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-checkbox-validation-1"

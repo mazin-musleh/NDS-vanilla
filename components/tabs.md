@@ -277,7 +277,7 @@ direction: ltr
                                     <i class="hgi hgi-stroke hgi-settings-01"></i>
                                     <span class="label">Settings</span>
                                 </button>
-                            </nav>
+                        </nav>
                             <button class="nds-btn nds-subtle nds-tab showMore"><i
                                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                             </button>

@@ -119,7 +119,9 @@ direction: ltr
 
 ## Component Demo Standards
 
-**Use `components/tags.md` as the BASE STANDARD** for interactive demo pages. Use demo action toggles instead of separate demo cards per variation.
+**Use `components/alert.md` as the BASE STANDARD** for creating documentation pages. It is the best example of page structure, demo cards, and code examples.
+
+**Use `components/tags.md` as the reference** for interactive demo toggles. Use demo action toggles instead of separate demo cards per variation.
 
 **Toggle syntax:** `data-toggler='["value", "targetSelector", "toggleGroup"]'`
 - Class toggle: `'["selected", ".nds-tag", "tagState"]'`
@@ -127,6 +129,10 @@ direction: ltr
 - Toggle groups prevent conflicts (e.g. only one size active)
 
 **Toggle categories:** State (`selected`, `disabled`), Style (`nds-neutral`), Size (`nds-sm`, `nds-lg`), Icon (content-prepend), Background (`noBg`, `darkBg`)
+
+**NEVER use inline `<code>` tags** inside table cells or descriptions for small words. Only use `<code class="lang-html code">` blocks for actual copyable code examples.
+
+**Code examples use raw HTML** inside `.nds-code <code>` blocks — never use HTML entities (`&lt;`, `&gt;`). Write `<div>` not `&lt;div&gt;`. Entities are still needed outside code blocks (e.g. `&lt;nav&gt;` in text labels).
 
 **Demo card structure** — see `components/tags.md` for full reference. Key classes: `.nds-demo-card` > `.demo-header` + `.demo-container` > `.state-demo`, with `.nds-tabs.nds-code` for code examples.
 

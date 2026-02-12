@@ -211,10 +211,10 @@ exclude_showcase: true
                         aria-controls="panel-description" id="tab-description" tabindex="-1">
                         <span class="label">توصيف المقرر</span>
                     </button>
+                </nav>
                     <button class="nds-btn nds-subtle nds-tab showMore">
                         <i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                     </button>
-                </nav>
             </div>
             <div class="nds-tab-content">
                 <!--الأهداف Tab -->

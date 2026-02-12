@@ -544,7 +544,8 @@ Data Attributes:
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>
-                <code class="lang-javascript nds-expandable-content line-numbers">
+                <div class="nds-expandable-content">
+                    <code class="lang-javascript line-numbers">
 // Auto-initialization happens on page load
 
 // Reinitialize after adding new dropmenus dynamically
@@ -554,6 +555,7 @@ NDSDropmenu.reinit();
 const element = document.querySelector('.nds-dropmenu');
 const instance = NDSDropmenu.create(element);
                 </code>
+                </div>
             </div>
 
             <h3>Methods</h3>
@@ -569,19 +571,19 @@ const instance = NDSDropmenu.create(element);
                 </thead>
                 <tbody>
                     <tr>
-                        <td><code>open()</code></td>
+                        <td>open()</td>
                         <td>Opens the dropdown menu</td>
                     </tr>
                     <tr>
-                        <td><code>close()</code></td>
+                        <td>close()</td>
                         <td>Closes the dropdown menu</td>
                     </tr>
                     <tr>
-                        <td><code>toggle()</code></td>
+                        <td>toggle()</td>
                         <td>Toggles the dropdown menu open/closed state</td>
                     </tr>
                     <tr>
-                        <td><code>destroy()</code></td>
+                        <td>destroy()</td>
                         <td>Removes event listeners and cleans up the instance</td>
                     </tr>
                 </tbody>
@@ -593,7 +595,8 @@ const instance = NDSDropmenu.create(element);
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>
-                <code class="lang-javascript nds-expandable-content line-numbers">
+                <div class="nds-expandable-content">
+                    <code class="lang-javascript line-numbers">
 // Get the dropmenu instance
 const dropmenu = document.querySelector('.nds-dropmenu');
 const instance = dropmenu.ndsDropmenuInstance;
@@ -606,6 +609,7 @@ instance.toggle(); // Toggle open/close
 // Clean up when removing from DOM
 instance.destroy();
                 </code>
+                </div>
             </div>
 
             <h3>Events</h3>
@@ -622,12 +626,12 @@ instance.destroy();
                 </thead>
                 <tbody>
                     <tr>
-                        <td><code>nds:dropmenu:opened</code></td>
+                        <td>nds:dropmenu:opened</td>
                         <td>Fired when the menu opens</td>
                         <td>dropmenu, trigger, menu, isOpen</td>
                     </tr>
                     <tr>
-                        <td><code>nds:dropmenu:closed</code></td>
+                        <td>nds:dropmenu:closed</td>
                         <td>Fired when the menu closes</td>
                         <td>dropmenu, trigger, menu, isOpen</td>
                     </tr>
@@ -640,7 +644,8 @@ instance.destroy();
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>
-                <code class="lang-javascript nds-expandable-content line-numbers">
+                <div class="nds-expandable-content">
+                    <code class="lang-javascript line-numbers">
 // Listen for dropmenu events
 document.addEventListener('nds:dropmenu:opened', (e) => {
     console.log('Menu opened:', e.detail.dropmenu);
@@ -657,6 +662,7 @@ dropmenu.addEventListener('nds:dropmenu:opened', (e) => {
     // Handle this specific menu opening
 });
                 </code>
+                </div>
             </div>
 
             <h3>Data Attributes</h3>
@@ -671,12 +677,12 @@ dropmenu.addEventListener('nds:dropmenu:opened', (e) => {
                 </thead>
                 <tbody>
                     <tr>
-                        <td><code>data-no-auto-close</code></td>
+                        <td>data-no-auto-close</td>
                         <td>.nds-dropmenu-item or child elements</td>
                         <td>Prevents menu from closing when this item is clicked. Useful for filter checkboxes, settings toggles, or any interactive content that shouldn't dismiss the menu.</td>
                     </tr>
                     <tr>
-                        <td><code>data-nds-dropmenu-initialized</code></td>
+                        <td>data-nds-dropmenu-initialized</td>
                         <td>.nds-dropmenu</td>
                         <td>Automatically added after initialization. Prevents duplicate initialization.</td>
                     </tr>
@@ -696,31 +702,31 @@ dropmenu.addEventListener('nds:dropmenu:opened', (e) => {
                 </thead>
                 <tbody>
                     <tr>
-                        <td><code>Enter</code> / <code>Space</code></td>
+                        <td>Enter / Space</td>
                         <td>Toggle menu open/close (on trigger), activate item (in menu)</td>
                     </tr>
                     <tr>
-                        <td><code>Escape</code></td>
+                        <td>Escape</td>
                         <td>Close the menu and return focus to trigger</td>
                     </tr>
                     <tr>
-                        <td><code>Arrow Down</code></td>
+                        <td>Arrow Down</td>
                         <td>Open menu (on trigger), move to next item (in menu)</td>
                     </tr>
                     <tr>
-                        <td><code>Arrow Up</code></td>
+                        <td>Arrow Up</td>
                         <td>Open menu and focus last item (on trigger), move to previous item (in menu)</td>
                     </tr>
                     <tr>
-                        <td><code>Home</code></td>
+                        <td>Home</td>
                         <td>Move to first menu item</td>
                     </tr>
                     <tr>
-                        <td><code>End</code></td>
+                        <td>End</td>
                         <td>Move to last menu item</td>
                     </tr>
                     <tr>
-                        <td><code>Tab</code></td>
+                        <td>Tab</td>
                         <td>Navigate between focusable elements in the menu</td>
                     </tr>
                 </tbody>

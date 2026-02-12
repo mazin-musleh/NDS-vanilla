@@ -93,10 +93,10 @@ exclude_showcase: true
                         aria-controls="panel-contact" id="tab-contact" tabindex="-1">
                         <span class="label">التواصل</span>
                     </button>
+                </nav>
                     <button class="nds-btn nds-subtle nds-tab showMore">
                         <i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                     </button>
-                </nav>
             </div>
             <div class="nds-tab-content">
                 <!-- السيرة الذاتية Tab -->
