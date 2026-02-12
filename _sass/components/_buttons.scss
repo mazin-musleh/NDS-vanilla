@@ -425,9 +425,6 @@
   // ICON PSEUDO-ELEMENT BUTTONS (MENU, DIRECTIONAL)
   // ==============================================
 
-  body[data-font-loaded*="hgi-stroke-rounded"] &:is(.nds-menu-btn, .nds-next, .nds-prev, .nds-up, .nds-down)::after {
-    opacity: 1;
-  }
 
   &:is(.nds-menu-btn, .nds-next, .nds-prev, .nds-up, .nds-down) {
     &::after {
@@ -437,7 +434,6 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       position: relative;
-      opacity: 0;
       transition: transform 0.1s ease;
       display: inline-flex;
       width: var(--_btn-icon-size);

@@ -52,7 +52,7 @@ direction: ltr
                         <div class="state-demo">
                             <span class="nds-feedback nds-md" data-status="success">
                                 <span class="nds-feedback-icon">
-                                    <i class="hgi hgi-solid icon"></i>
+                                    <i class="hgi hgi-stroke icon"></i>
                                 </span>
                             </span>
                         </div>
@@ -81,7 +81,7 @@ direction: ltr
                                 <code class="lang-html code">
 <span class="nds-feedback nds-md" data-status="success">
   <span class="nds-feedback-icon">
-    <i class="hgi hgi-solid icon"></i>
+    <i class="hgi hgi-stroke icon"></i>
   </span>
 </span>
                                 </code>
@@ -139,7 +139,7 @@ direction: ltr
                         <div class="state-demo">
                             <span class="nds-feedback nds-md" data-status="info">
                                 <span class="nds-feedback-icon">
-                                    <i class="hgi hgi-solid icon"></i>
+                                    <i class="hgi hgi-stroke icon"></i>
                                 </span>
                             </span>
                         </div>
@@ -168,7 +168,7 @@ direction: ltr
                                 <code class="lang-html code">
 <span class="nds-feedback nds-md" data-status="info">
   <span class="nds-feedback-icon">
-    <i class="hgi hgi-solid icon"></i>
+    <i class="hgi hgi-stroke icon"></i>
   </span>
 </span>
                                 </code>
@@ -226,7 +226,7 @@ direction: ltr
                         <div class="state-demo">
                             <span class="nds-feedback nds-md" data-status="warning">
                                 <span class="nds-feedback-icon">
-                                    <i class="hgi hgi-solid icon"></i>
+                                    <i class="hgi hgi-stroke icon"></i>
                                 </span>
                             </span>
                         </div>
@@ -255,7 +255,7 @@ direction: ltr
                                 <code class="lang-html code">
 <span class="nds-feedback nds-md" data-status="warning">
   <span class="nds-feedback-icon">
-    <i class="hgi hgi-solid icon"></i>
+    <i class="hgi hgi-stroke icon"></i>
   </span>
 </span>
                                 </code>
@@ -313,7 +313,7 @@ direction: ltr
                         <div class="state-demo">
                             <span class="nds-feedback nds-md" data-status="error">
                                 <span class="nds-feedback-icon">
-                                    <i class="hgi hgi-solid icon"></i>
+                                    <i class="hgi hgi-stroke icon"></i>
                                 </span>
                             </span>
                         </div>
@@ -342,7 +342,7 @@ direction: ltr
                                 <code class="lang-html code">
 <span class="nds-feedback nds-md" data-status="error">
   <span class="nds-feedback-icon">
-    <i class="hgi hgi-solid icon"></i>
+    <i class="hgi hgi-stroke icon"></i>
   </span>
 </span>
                                 </code>
@@ -400,7 +400,7 @@ direction: ltr
                         <div class="state-demo">
                             <span class="nds-feedback nds-md" data-status="neutral">
                                 <span class="nds-feedback-icon">
-                                    <i class="hgi hgi-solid icon"></i>
+                                    <i class="hgi hgi-stroke icon"></i>
                                 </span>
                             </span>
                         </div>
@@ -429,7 +429,7 @@ direction: ltr
                                 <code class="lang-html code">
 <span class="nds-feedback nds-md" data-status="neutral">
   <span class="nds-feedback-icon">
-    <i class="hgi hgi-solid icon"></i>
+    <i class="hgi hgi-stroke icon"></i>
   </span>
 </span>
                                 </code>
@@ -489,7 +489,7 @@ direction: ltr
                         <div class="state-demo">
                             <span class="nds-feedback nds-outline nds-sm" data-status="error">
                                 <span class="nds-feedback-icon">
-                                    <i class="hgi hgi-solid icon"></i>
+                                    <i class="hgi hgi-stroke icon"></i>
                                 </span>
                                 <span class="nds-feedback-message">This field is required</span>
                             </span>
@@ -519,7 +519,7 @@ direction: ltr
                                 <code class="lang-html code">
 <span class="nds-feedback nds-outline nds-sm" data-status="error">
   <span class="nds-feedback-icon">
-    <i class="hgi hgi-solid icon"></i>
+    <i class="hgi hgi-stroke icon"></i>
   </span>
   <span class="nds-feedback-message">This field is required</span>
 </span>
@@ -567,7 +567,7 @@ direction: ltr
                         <div class="state-demo">
                             <span class="nds-feedback nds-outline nds-sm" data-status="success">
                                 <span class="nds-feedback-icon">
-                                    <i class="hgi hgi-solid icon"></i>
+                                    <i class="hgi hgi-stroke icon"></i>
                                 </span>
                                 <span class="nds-feedback-message">Form submitted successfully</span>
                             </span>
@@ -597,7 +597,7 @@ direction: ltr
                                 <code class="lang-html code">
 <span class="nds-feedback nds-outline nds-sm" data-status="success">
   <span class="nds-feedback-icon">
-    <i class="hgi hgi-solid icon"></i>
+    <i class="hgi hgi-stroke icon"></i>
   </span>
   <span class="nds-feedback-message">Form submitted successfully</span>
 </span>
@@ -645,7 +645,7 @@ direction: ltr
                         <div class="state-demo">
                             <span class="nds-feedback nds-outline nds-sm" data-status="warning">
                                 <span class="nds-feedback-icon">
-                                    <i class="hgi hgi-solid icon"></i>
+                                    <i class="hgi hgi-stroke icon"></i>
                                 </span>
                                 <span class="nds-feedback-message">This action cannot be undone</span>
                             </span>
@@ -675,7 +675,7 @@ direction: ltr
                                 <code class="lang-html code">
 <span class="nds-feedback nds-outline nds-sm" data-status="warning">
   <span class="nds-feedback-icon">
-    <i class="hgi hgi-solid icon"></i>
+    <i class="hgi hgi-stroke icon"></i>
   </span>
   <span class="nds-feedback-message">This action cannot be undone</span>
 </span>
@@ -723,7 +723,7 @@ direction: ltr
                         <div class="state-demo">
                             <span class="nds-feedback nds-outline nds-sm" data-status="info">
                                 <span class="nds-feedback-icon">
-                                    <i class="hgi hgi-solid icon"></i>
+                                    <i class="hgi hgi-stroke icon"></i>
                                 </span>
                                 <span class="nds-feedback-message">Additional information available</span>
                             </span>
@@ -753,7 +753,7 @@ direction: ltr
                                 <code class="lang-html code">
 <span class="nds-feedback nds-outline nds-sm" data-status="info">
   <span class="nds-feedback-icon">
-    <i class="hgi hgi-solid icon"></i>
+    <i class="hgi hgi-stroke icon"></i>
   </span>
   <span class="nds-feedback-message">Additional information available</span>
 </span>

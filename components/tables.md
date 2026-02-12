@@ -463,8 +463,10 @@ direction: ltr
                                         </span>
                                     </td>
                                     <td>
-                                        <span class="nds-feedback-icon nds-success">
-                                            <i class="hgi hgi-solid icon"></i>
+                                        <span class="nds-feedback" data-status="success">
+                                            <span class="nds-feedback-icon">
+                                                <i class="hgi hgi-stroke icon"></i>
+                                            </span>
                                         </span>
                                     </td>
                                 </tr>
@@ -482,8 +484,10 @@ direction: ltr
                                         </span>
                                     </td>
                                     <td>
-                                        <span class="nds-feedback-icon nds-warning">
-                                            <i class="hgi hgi-solid icon"></i>
+                                        <span class="nds-feedback" data-status="warning">
+                                            <span class="nds-feedback-icon">
+                                                <i class="hgi hgi-stroke icon"></i>
+                                            </span>
                                         </span>
                                     </td>
                                 </tr>
@@ -501,8 +505,10 @@ direction: ltr
                                         </span>
                                     </td>
                                     <td>
-                                        <span class="nds-feedback-icon nds-error">
-                                            <i class="hgi hgi-solid icon"></i>
+                                        <span class="nds-feedback" data-status="error">
+                                            <span class="nds-feedback-icon">
+                                                <i class="hgi hgi-stroke icon"></i>
+                                            </span>
                                         </span>
                                     </td>
                                 </tr>
@@ -520,8 +526,10 @@ direction: ltr
                                         </span>
                                     </td>
                                     <td>
-                                        <span class="nds-feedback-icon nds-info">
-                                            <i class="hgi hgi-solid icon"></i>
+                                        <span class="nds-feedback" data-status="info">
+                                            <span class="nds-feedback-icon">
+                                                <i class="hgi hgi-stroke icon"></i>
+                                            </span>
                                         </span>
                                     </td>
                                 </tr>
@@ -573,8 +581,10 @@ direction: ltr
                                         </span>
                                       </td>
                                       <td>
-                                        <span class="nds-feedback-icon nds-success">
-                                          <i class="hgi hgi-solid icon"></i>
+                                        <span class="nds-feedback" data-status="success">
+                                          <span class="nds-feedback-icon">
+                                            <i class="hgi hgi-stroke icon"></i>
+                                          </span>
                                         </span>
                                       </td>
                                     </tr>

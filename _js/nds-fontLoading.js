@@ -161,7 +161,7 @@
 
     function initializeFontLoading() {
         // Load multiple icon fonts
-        const fontsToLoad = ['hgi-stroke-rounded', 'hgi-solid-rounded'];
+        const fontsToLoad = ['hgi-stroke-rounded'/* , 'hgi-solid-rounded' */];
 
         fontsToLoad.forEach(fontName => {
             waitForFontFile(fontName, () => {

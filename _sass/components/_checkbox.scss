@@ -219,10 +219,6 @@
         z-index: 2;
     }
 
-    // Icon opacity fix for loaded state
-    body[data-font-loaded*="hgi-stroke-rounded"] &::after {
-        opacity: 1;
-    }
 
     // ==============================================
     // CHECKED STATE
@@ -235,7 +231,6 @@
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         position: relative;
-        opacity: 0;
         display: flex;
         width: var(--nds-input-size);
         height: var(--nds-input-size);

@@ -39,15 +39,11 @@
     -moz-osx-font-smoothing: grayscale;
     position: relative;
     font-weight: bold;
-    opacity: 0;
     line-height: 1;
     min-width: 24px;
     text-align: center;
 }
 
-body[data-font-loaded*="hgi-stroke-rounded"] .nds-breadcrumb li:not(:last-child)::after {
-    opacity: 1;
-}
 
 /* LTR Support - flip arrow direction */
 .nds-breadcrumb>li:not(:last-child)::after {

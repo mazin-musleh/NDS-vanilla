@@ -83,9 +83,9 @@
             }
 
             let html = `
-                <span class="nds-feedback nds-alert-icon">
-                    <span class="nds-feedback-icon nds-outline">
-                        <i class="hgi hgi-solid icon"></i>
+                <span class="nds-feedback nds-alert-icon nds-outline">
+                    <span class="nds-feedback-icon">
+                        <i class="hgi hgi-stroke icon"></i>
                     </span>
                 </span>
                 <div class="nds-alert-content">

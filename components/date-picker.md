@@ -65,9 +65,9 @@ direction: ltr
                     data-year-before="40" data-year-after="5">
                 </div>
                 <div class="nds-form-footer">
-                  <span class="nds-feedback">
-                    <span class="nds-feedback-icon nds-outline nds-sm">
-                      <i class="hgi hgi-solid icon"></i>
+                  <span class="nds-feedback nds-outline nds-sm">
+                    <span class="nds-feedback-icon">
+                      <i class="hgi hgi-stroke icon"></i>
                     </span>
                     <span class="msg"></span>
                   </span>
@@ -114,9 +114,9 @@ direction: ltr
                           data-year-before="40" data-year-after="5">
                       </div>
                       <div class="nds-form-footer">
-                        <span class="nds-feedback">
-                          <span class="nds-feedback-icon nds-outline nds-sm">
-                            <i class="hgi hgi-solid icon"></i>
+                        <span class="nds-feedback nds-outline nds-sm">
+                          <span class="nds-feedback-icon">
+                            <i class="hgi hgi-stroke icon"></i>
                           </span>
                           <span class="msg"></span>
                         </span>

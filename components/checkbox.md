@@ -165,9 +165,9 @@ direction: ltr
                       <label for="demo-checkbox2">
                         <span class="label">Sports</span>
                         <span class="info">Include all sports and fitness activities</span>
-                        <span class="nds-feedback error">
-                          <span class="nds-feedback-icon nds-error nds-outline nds-sm">
-                            <i class="hgi hgi-solid icon"></i>
+                        <span class="nds-feedback nds-outline nds-sm" data-status="error">
+                          <span class="nds-feedback-icon">
+                            <i class="hgi hgi-stroke icon"></i>
                           </span>
                           <span class="msg">Please select at least one interest</span>
                         </span>
@@ -371,9 +371,9 @@ direction: ltr
                   </div>
                 </div>
                 <!-- Group-level feedback -->
-                <span class="nds-feedback">
-                  <span class="nds-feedback-icon nds-outline nds-sm">
-                    <i class="hgi hgi-solid icon"></i>
+                <span class="nds-feedback nds-outline nds-sm">
+                  <span class="nds-feedback-icon">
+                    <i class="hgi hgi-stroke icon"></i>
                   </span>
                   <span class="msg">Select between 2 and 4 options</span>
                 </span>
@@ -429,9 +429,9 @@ direction: ltr
   <!-- More checkboxes... -->
 
   <!-- Group-level feedback (shown when validation fails) -->
-  <span class="nds-feedback">
-    <span class="nds-feedback-icon nds-outline nds-sm">
-      <i class="hgi hgi-solid icon"></i>
+  <span class="nds-feedback nds-outline nds-sm">
+    <span class="nds-feedback-icon">
+      <i class="hgi hgi-stroke icon"></i>
     </span>
     <span class="msg">Select between 2 and 4 options</span>
   </span>

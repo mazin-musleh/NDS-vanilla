@@ -78,8 +78,10 @@ direction: ltr
                 <!-- Hidden template for file items -->
                 <div class="file-item-template" style="display: none;">
                   <div class="file-item">
-                    <span class="nds-feedback-icon nds-success">
-                      <i class="hgi hgi-solid icon"></i>
+                    <span class="nds-feedback" data-status="success">
+                      <span class="nds-feedback-icon">
+                        <i class="hgi hgi-stroke icon"></i>
+                      </span>
                     </span>
 
                     <div class="nds-progress-circle nds-xs" style="display: none; --progress-value: 0;">
@@ -182,8 +184,10 @@ direction: ltr
                       <!-- Hidden template for file items -->
                       <div class="file-item-template" style="display: none;">
                         <div class="file-item">
-                          <span class="nds-feedback-icon nds-success">
-                            <i class="hgi hgi-solid icon"></i>
+                          <span class="nds-feedback" data-status="success">
+                            <span class="nds-feedback-icon">
+                              <i class="hgi hgi-stroke icon"></i>
+                            </span>
                           </span>
 
                           <div class="nds-progress-circle nds-xs" style="display: none; --progress-value: 0;">
