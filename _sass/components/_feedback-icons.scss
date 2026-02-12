@@ -134,11 +134,11 @@
     color: var(--_feedback-color);
 
     // Icon background for solid icons
-    body[data-font-loaded*="hgi-solid-rounded"] & i {
+    body[data-font-loaded*="hgi-stroke-rounded"] & i {
         position: relative;
         z-index: 1;
 
-        &:after {
+        /* &:after {
             content: '';
             position: absolute;
             display: block;
@@ -149,31 +149,21 @@
             z-index: -1;
             left: 50%;
             transform: translate(-50%, -50%);
-        }
-    }
-
-    // ==============================================
-    // ICON SIZES
-    // ==============================================
-
-    &.nds-sm {
-        --feedback-size: 16px;
-    }
-
-    &.nds-md {
-        --feedback-size: 24px;
-    }
-
-    &.nds-lg {
-        --feedback-size: 32px;
+        } */
     }
 
     // ==============================================
     // ICON STYLE VARIANTS
     // ==============================================
 
-    .nds-outline>&,
-    &.nds-outline {
+    .nds-feedback:not(.nds-outline)>& i {
+        &:before {
+            filter: brightness(0) invert(1);
+            clip-path: inset(25%);
+        }
+    }
+
+    .nds-feedback.nds-outline>& {
         background-color: transparent;
 
         &::before {
@@ -189,8 +179,7 @@
         }
     }
 
-    .nds-ring>&,
-    &.nds-ring {
+    .nds-feedback.nds-ring>& {
         box-shadow: 0 0 0 4px var(--_feedback-ring);
     }
 
@@ -199,32 +188,27 @@
     // ==============================================
 
     // Success icon
-    [data-status="success"] & .icon:before,
-    &:is([data-status="success"], .nds-icon-success) .icon:before {
+    [data-status="success"] & .icon:before {
         content: "䂇";
     }
 
     // Info icon
-    [data-status="info"] & .icon:before,
-    &:is([data-status="info"], .nds-icon-info) .icon:before {
+    [data-status="info"] & .icon:before {
         content: "䢵";
     }
 
     // Warning icon
-    [data-status="warning"] & .icon:before,
-    &:is([data-status="warning"], .nds-icon-alert) .icon:before {
+    [data-status="warning"] & .icon:before {
         content: "㬿";
     }
 
     // Error icon
-    [data-status="error"] & .icon:before,
-    &:is([data-status="error"], .nds-icon-error) .icon:before {
+    [data-status="error"] & .icon:before {
         content: "㿃";
     }
 
     // Neutral icon
-    [data-status="neutral"] & .icon:before,
-    &:is([data-status="neutral"], .nds-icon-neutral) .icon:before {
+    [data-status="neutral"] & .icon:before {
         content: "䞭";
     }
 }

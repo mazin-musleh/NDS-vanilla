@@ -746,7 +746,7 @@ element.addEventListener('nds:statusChange', function(e) {
                 <div class="nds-form-footer" data-feedback-target>
                   <span class="nds-feedback nds-sm" data-status="info" data-permanent>
                     <span class="nds-feedback-icon">
-                      <i class="hgi hgi-solid icon"></i>
+                      <i class="hgi hgi-stroke icon"></i>
                     </span>
                     <span class="nds-feedback-message">Use 3-20 characters, letters and numbers only</span>
                   </span>
@@ -794,7 +794,7 @@ element.addEventListener('nds:statusChange', function(e) {
     <!-- This will be hidden when validation errors appear, then restored when cleared -->
     <span class="nds-feedback nds-sm" data-status="info" data-permanent>
       <span class="nds-feedback-icon">
-        <i class="hgi hgi-solid icon"></i>
+        <i class="hgi hgi-stroke icon"></i>
       </span>
       <span class="nds-feedback-message">Use 3-20 characters, letters and numbers only</span>
     </span>

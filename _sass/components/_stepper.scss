@@ -256,7 +256,6 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             position: relative;
-            opacity: 0;
             display: inline-flex;
             justify-content: center;
             width: var(--stepper-size);
@@ -264,11 +263,8 @@
             font-size: calc(var(--stepper-size)/2);
             line-height: var(--stepper-size);
             font-weight: 600;
-            color: var(--colors-base-white);
-        }
-
-        body[data-font-loaded*="hgi-solid-rounded"] &::before {
-            opacity: 1;
+            filter: brightness(0) invert(1);
+            clip-path: inset(25%);
         }
     }
 }

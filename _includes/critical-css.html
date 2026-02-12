@@ -57,19 +57,26 @@
 
     /* ===== MAIN CONTENT ===== */
 
-    /* Hide icons until their specific fonts are loaded */
-    i:is(.hgi-stroke, .hgi-solid) {
+    /* Hide icon font elements until loaded */
+    i.hgi-stroke,
+    .nds-breadcrumb li:not(:last-child)::after,
+    .nds-btn:is(.nds-menu-btn, .nds-next, .nds-prev, .nds-up, .nds-down)::after,
+    .nds-form-control input[type="checkbox"]::after,
+    :is(.nds-select, .nds-date-picker) .nds-form-control::after,
+    .nds-step[data-step-state="completed"] .nds-stepper-circle::before {
         opacity: 0;
     }
 
-    /* Show stroke icons when hgi-stroke-rounded is loaded */
-    body[data-font-loaded*="hgi-stroke-rounded"] i.hgi-stroke {
-        opacity: 1;
-    }
-
-    /* Show solid icons when hgi-solid-rounded is loaded */
-    body[data-font-loaded*="hgi-solid-rounded"] i.hgi-solid {
-        opacity: 1;
+    /* Show icon font elements when loaded */
+    body[data-font-loaded*="hgi-stroke-rounded"] {
+        & i.hgi-stroke,
+        & .nds-breadcrumb li:not(:last-child)::after,
+        & .nds-btn:is(.nds-menu-btn, .nds-next, .nds-prev, .nds-up, .nds-down)::after,
+        & .nds-form-control input[type="checkbox"]::after,
+        & :is(.nds-select, .nds-date-picker) .nds-form-control::after,
+        & .nds-step[data-step-state="completed"] .nds-stepper-circle::before {
+            opacity: 1;
+        }
     }
 
     .nds-text-icon {

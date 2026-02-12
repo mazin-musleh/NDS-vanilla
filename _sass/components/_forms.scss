@@ -297,9 +297,6 @@ fieldset {
             height: 100%;
         }
 
-        body[data-font-loaded*="hgi-stroke-rounded"] &::after {
-            opacity: 1;
-        }
 
         &::after {
             content: "㯭";
@@ -310,7 +307,6 @@ fieldset {
             -moz-osx-font-smoothing: grayscale;
             position: absolute;
             left: var(--spacing-md);
-            opacity: 0;
             transition: transform 0.1s ease;
             display: inline-flex;
             width: 20px;

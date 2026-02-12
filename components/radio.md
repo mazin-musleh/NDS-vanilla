@@ -325,9 +325,9 @@ direction: ltr
                   </div>
                 </div>
                 <!-- Group-level feedback -->
-                <span class="nds-feedback">
-                  <span class="nds-feedback-icon nds-outline nds-sm">
-                    <i class="hgi hgi-solid icon"></i>
+                <span class="nds-feedback nds-outline nds-sm">
+                  <span class="nds-feedback-icon">
+                    <i class="hgi hgi-stroke icon"></i>
                   </span>
                   <span class="msg">Please select a subscription plan</span>
                 </span>
@@ -387,9 +387,9 @@ direction: ltr
   <!-- More radio buttons... -->
 
   <!-- Group-level feedback (shown when validation fails) -->
-  <span class="nds-feedback" data-status="error">
-    <span class="nds-feedback-icon nds-outline nds-sm">
-      <i class="hgi hgi-solid icon"></i>
+  <span class="nds-feedback nds-outline nds-sm" data-status="error">
+    <span class="nds-feedback-icon">
+      <i class="hgi hgi-stroke icon"></i>
     </span>
     <span class="msg">Please select a subscription plan</span>
   </span>

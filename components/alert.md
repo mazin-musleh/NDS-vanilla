@@ -41,9 +41,9 @@ layout_class: cardView topSubMenu
                     <div class="demo-container">
                         <div class="state-demo success-alert-demo">
                             <div class="nds-alert nds-card" data-status="success">
-                                <span class="nds-feedback nds-alert-icon">
-                                    <span class="nds-feedback-icon nds-outline">
-                                        <i class="hgi hgi-solid icon"></i>
+                                <span class="nds-feedback nds-alert-icon nds-outline">
+                                    <span class="nds-feedback-icon">
+                                        <i class="hgi hgi-stroke icon"></i>
                                     </span>
                                 </span>
                                 <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close"
@@ -76,9 +76,9 @@ layout_class: cardView topSubMenu
                                 </div>
                                 <code class="lang-html code">
 <div class="nds-alert nds-card" data-status="success">
-  <span class="nds-feedback nds-alert-icon">
-    <span class="nds-feedback-icon nds-outline">
-      <i class="hgi hgi-solid icon"></i>
+  <span class="nds-feedback nds-alert-icon nds-outline">
+    <span class="nds-feedback-icon">
+      <i class="hgi hgi-stroke icon"></i>
     </span>
   </span>
   <div class="nds-alert-content">
@@ -117,9 +117,9 @@ layout_class: cardView topSubMenu
                     <div class="demo-container">
                         <div class="state-demo info-alert-demo">
                             <div class="nds-alert nds-card" data-status="info">
-                                <span class="nds-feedback nds-alert-icon">
-                                    <span class="nds-feedback-icon nds-outline">
-                                        <i class="hgi hgi-solid icon"></i>
+                                <span class="nds-feedback nds-alert-icon nds-outline">
+                                    <span class="nds-feedback-icon">
+                                        <i class="hgi hgi-stroke icon"></i>
                                     </span>
                                 </span>
                                 <div class="nds-alert-content">
@@ -153,9 +153,9 @@ layout_class: cardView topSubMenu
                                 </div>
                                 <code class="lang-html code">
 <div class="nds-alert nds-card" data-status="info">
-  <span class="nds-feedback nds-alert-icon">
-    <span class="nds-feedback-icon nds-outline">
-      <i class="hgi hgi-solid icon"></i>
+  <span class="nds-feedback nds-alert-icon nds-outline">
+    <span class="nds-feedback-icon">
+      <i class="hgi hgi-stroke icon"></i>
     </span>
   </span>
   <div class="nds-alert-content">
@@ -194,9 +194,9 @@ layout_class: cardView topSubMenu
                     <div class="demo-container">
                         <div class="state-demo warning-alert-demo">
                             <div class="nds-alert nds-card" data-status="warning">
-                                <span class="nds-feedback nds-alert-icon">
-                                    <span class="nds-feedback-icon nds-outline">
-                                        <i class="hgi hgi-solid icon"></i>
+                                <span class="nds-feedback nds-alert-icon nds-outline">
+                                    <span class="nds-feedback-icon">
+                                        <i class="hgi hgi-stroke icon"></i>
                                     </span>
                                 </span>
                                 <div class="nds-alert-content">
@@ -229,9 +229,9 @@ layout_class: cardView topSubMenu
                                 </div>
                                 <code class="lang-html code">
 <div class="nds-alert nds-card" data-status="warning">
-  <span class="nds-feedback nds-alert-icon">
-    <span class="nds-feedback-icon nds-outline">
-      <i class="hgi hgi-solid icon"></i>
+  <span class="nds-feedback nds-alert-icon nds-outline">
+    <span class="nds-feedback-icon">
+      <i class="hgi hgi-stroke icon"></i>
     </span>
   </span>
   <div class="nds-alert-content">
@@ -270,9 +270,9 @@ layout_class: cardView topSubMenu
                     <div class="demo-container">
                         <div class="state-demo error-alert-demo">
                             <div class="nds-alert nds-card" data-status="error">
-                                <span class="nds-feedback nds-alert-icon">
-                                    <span class="nds-feedback-icon nds-outline">
-                                        <i class="hgi hgi-solid icon"></i>
+                                <span class="nds-feedback nds-alert-icon nds-outline">
+                                    <span class="nds-feedback-icon">
+                                        <i class="hgi hgi-stroke icon"></i>
                                     </span>
                                 </span>
                                 <div class="nds-alert-content">
@@ -306,9 +306,9 @@ layout_class: cardView topSubMenu
                                 </div>
                                 <code class="lang-html code">
 <div class="nds-alert nds-card" data-status="error">
-  <span class="nds-feedback nds-alert-icon">
-    <span class="nds-feedback-icon nds-outline">
-      <i class="hgi hgi-solid icon"></i>
+  <span class="nds-feedback nds-alert-icon nds-outline">
+    <span class="nds-feedback-icon">
+      <i class="hgi hgi-stroke icon"></i>
     </span>
   </span>
   <div class="nds-alert-content">
@@ -359,9 +359,9 @@ layout_class: cardView topSubMenu
                     <div class="demo-container">
                         <div class="state-demo">
                             <div class="nds-alert nds-card" data-status="info">
-                                <span class="nds-feedback nds-alert-icon">
-                                    <span class="nds-feedback-icon nds-outline">
-                                        <i class="hgi hgi-solid icon"></i>
+                                <span class="nds-feedback nds-alert-icon nds-outline">
+                                    <span class="nds-feedback-icon">
+                                        <i class="hgi hgi-stroke icon"></i>
                                     </span>
                                 </span>
                                 <div class="nds-alert-content">
@@ -403,9 +403,9 @@ layout_class: cardView topSubMenu
                                 </div>
                                 <code class="lang-html code">
 <div class="nds-alert nds-card" data-status="info">
-  <span class="nds-feedback nds-alert-icon">
-    <span class="nds-feedback-icon nds-outline">
-      <i class="hgi hgi-solid icon"></i>
+  <span class="nds-feedback nds-alert-icon nds-outline">
+    <span class="nds-feedback-icon">
+      <i class="hgi hgi-stroke icon"></i>
     </span>
   </span>
   <div class="nds-alert-content">
@@ -465,9 +465,9 @@ layout_class: cardView topSubMenu
                     <div class="demo-container">
                         <div class="state-demo">
                             <div class="nds-alert nds-card" data-status="neutral">
-                                <span class="nds-feedback nds-alert-icon">
-                                    <span class="nds-feedback-icon nds-outline">
-                                        <i class="hgi hgi-solid icon"></i>
+                                <span class="nds-feedback nds-alert-icon nds-outline">
+                                    <span class="nds-feedback-icon">
+                                        <i class="hgi hgi-stroke icon"></i>
                                     </span>
                                 </span>
                                 <div class="nds-alert-content">
@@ -500,9 +500,9 @@ layout_class: cardView topSubMenu
                                 </div>
                                 <code class="lang-html code">
 <div class="nds-alert nds-card" data-status="neutral">
-  <span class="nds-feedback nds-alert-icon">
-    <span class="nds-feedback-icon nds-outline">
-      <i class="hgi hgi-solid icon"></i>
+  <span class="nds-feedback nds-alert-icon nds-outline">
+    <span class="nds-feedback-icon">
+      <i class="hgi hgi-stroke icon"></i>
     </span>
   </span>
   <div class="nds-alert-content">
@@ -597,9 +597,9 @@ layout_class: cardView topSubMenu
                                 </div>
                                 <code class="lang-html code">
 <div class="nds-alert nds-card" data-status="success" role="alert">
-    <span class="nds-feedback nds-alert-icon">
-        <span class="nds-feedback-icon nds-outline">
-            <i class="hgi hgi-solid icon"></i>
+    <span class="nds-feedback nds-alert-icon nds-outline">
+        <span class="nds-feedback-icon">
+            <i class="hgi hgi-stroke icon"></i>
         </span>
     </span>
     <div class="nds-alert-content">
@@ -709,9 +709,9 @@ layout_class: cardView topSubMenu
                                 </div>
                                 <code class="lang-html code">
                                     <div class="nds-alert nds-card nds-toast nds-shadow"  data-status="success" role="alert" data-position="top" data-toast-state="show" hidden>
-                                        <span class="nds-feedback nds-alert-icon">
-                                            <span class="nds-feedback-icon nds-outline">
-                                                <i class="hgi hgi-solid icon"></i>
+                                        <span class="nds-feedback nds-alert-icon nds-outline">
+                                            <span class="nds-feedback-icon">
+                                                <i class="hgi hgi-stroke icon"></i>
                                             </span>
                                         </span>
                                         <div class="nds-alert-content">

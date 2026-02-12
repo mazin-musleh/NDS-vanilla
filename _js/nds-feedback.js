@@ -98,7 +98,7 @@
             if (showIcon) {
                 html += `
                     <span class="nds-feedback-icon">
-                        <i class="hgi hgi-solid icon"></i>
+                        <i class="hgi hgi-stroke icon"></i>
                     </span>
                 `;
             }
