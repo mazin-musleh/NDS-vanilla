@@ -16,7 +16,7 @@ direction: ltr
             <p class="nds-section-description">Card components for displaying content with integrated NDS components</p>
         </div>
         <div class="nds-section-content">
-            <div class="cards-showcase">
+            <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-label">Basic Card</div>

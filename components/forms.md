@@ -18,7 +18,7 @@ direction: ltr
       </p>
     </div>
     <div class="nds-section-content">
-      <div class="form-showcase">
+      <div class="nds-showcase">
 
         <!-- Text Input -->
         <div class="nds-demo-card">

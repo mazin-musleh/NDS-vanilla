@@ -16,7 +16,7 @@ direction: ltr
             <p class="nds-section-description">All tag styles available in the National Design System</p>
         </div>
         <div class="nds-section-content">
-            <div class="tag-showcase">
+            <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-label">Neutral Tag</div>
@@ -499,7 +499,7 @@ direction: ltr
             <p class="nds-section-description">Status tag variants with additional styling options</p>
         </div>
         <div class="nds-section-content">
-            <div class="tag-showcase">
+            <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-label">Neutral Status Tag</div>

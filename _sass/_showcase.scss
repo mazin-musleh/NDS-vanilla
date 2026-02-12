@@ -14,7 +14,6 @@
   background: var(--background-white);
   border: 1px solid var(--border-neutral-secondary);
   border-radius: var(--radius-md);
-  margin-bottom: var(--spacing-xl);
   box-shadow: var(--shadow-md);
   flex: 1 1 var(--nds-demo-card-width, 100%);
   min-width: 200px;
@@ -70,11 +69,10 @@
   align-items: center;
 }
 
-.button-showcase {
+.nds-showcase {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--spacing-xl);
-  margin-bottom: var(--spacing-xl);
+  gap: var(--spacing-4xl);
 }
 
 /* Demo Container Backgrounds */
@@ -148,7 +146,7 @@
     gap: var(--spacing-sm);
   }
 
-  .button-showcase {
+  .nds-showcase {
     gap: var(--spacing-lg);
 
     &:is(.green-bg, .black-bg, .dark-bg) {

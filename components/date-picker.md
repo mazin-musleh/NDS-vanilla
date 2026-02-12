@@ -19,7 +19,7 @@ direction: ltr
       </p>
     </div>
     <div class="nds-section-content">
-      <div class="date-picker-showcase">
+      <div class="nds-showcase">
 
         <!-- Custom Date Picker -->
         <div class="nds-demo-card">

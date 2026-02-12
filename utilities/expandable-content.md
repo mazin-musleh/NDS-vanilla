@@ -17,6 +17,7 @@ direction: ltr
                 specified height limits</p>
         </div>
         <div class="nds-section-content">
+            <div class="nds-showcase">
 
             <!-- Basic Expandable Example -->
             <div class="nds-demo-card">
@@ -180,6 +181,7 @@ direction: ltr
                 </div>
             </div>
 
+            </div>
         </div>
     </div>
 </section>

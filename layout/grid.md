@@ -16,6 +16,7 @@ direction: ltr
             <p class="nds-section-description">The .nds-grid class creates a responsive grid that auto-fits children into equal columns. Use --max-col to set the number of columns.</p>
         </div>
         <div class="nds-section-content">
+            <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
                     <div class="demo-label">Auto-fit Grid</div>
@@ -107,6 +108,7 @@ direction: ltr
                     </div>
                 </div>
             </div>
+            </div>
         </div>
     </div>
 </section>
@@ -119,6 +121,7 @@ direction: ltr
             <p class="nds-section-description">Use col-{n} classes to explicitly span columns in a 12-column grid. The grid automatically switches to 12 columns when column classes are detected.</p>
         </div>
         <div class="nds-section-content">
+            <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
                     <div class="demo-label">Column Spans</div>
@@ -127,23 +130,15 @@ direction: ltr
                     <div class="state-demo nds-grid-demo">
                         <div class="nds-grid">
                             <div class="col-12 nds-card nds-stroke">col-12</div>
-                        </div>
-                        <div class="nds-grid">
                             <div class="col-6 nds-card nds-stroke">col-6</div>
                             <div class="col-6 nds-card nds-stroke">col-6</div>
-                        </div>
-                        <div class="nds-grid">
                             <div class="col-4 nds-card nds-stroke">col-4</div>
                             <div class="col-4 nds-card nds-stroke">col-4</div>
                             <div class="col-4 nds-card nds-stroke">col-4</div>
-                        </div>
-                        <div class="nds-grid">
                             <div class="col-3 nds-card nds-stroke">col-3</div>
                             <div class="col-3 nds-card nds-stroke">col-3</div>
                             <div class="col-3 nds-card nds-stroke">col-3</div>
                             <div class="col-3 nds-card nds-stroke">col-3</div>
-                        </div>
-                        <div class="nds-grid">
                             <div class="col-8 nds-card nds-stroke">col-8</div>
                             <div class="col-4 nds-card nds-stroke">col-4</div>
                         </div>
@@ -166,24 +161,24 @@ direction: ltr
                             </div>
 <code class="lang-html code">
 <div class="nds-grid">
-    <div class="col-8">Main content</div>
-    <div class="col-4">Sidebar</div>
-</div>
-
-<div class="nds-grid">
+    <div class="col-12">Full width</div>
+    <div class="col-6">Half</div>
+    <div class="col-6">Half</div>
     <div class="col-4">One third</div>
     <div class="col-4">One third</div>
     <div class="col-4">One third</div>
-</div>
-
-<!-- Full row -->
-<div class="nds-grid">
-    <div class="col-full">Full row</div>
+    <div class="col-3">Quarter</div>
+    <div class="col-3">Quarter</div>
+    <div class="col-3">Quarter</div>
+    <div class="col-3">Quarter</div>
+    <div class="col-8">Two thirds</div>
+    <div class="col-4">One third</div>
 </div>
 </code>
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
         </div>
     </div>
@@ -197,6 +192,7 @@ direction: ltr
             <p class="nds-section-description">Use breakpoint-prefixed column classes to change spans at different screen sizes. Available prefixes: col-sm- (base), col-md- (600px+), col-lg- (960px+), col-xl- (1280px+).</p>
         </div>
         <div class="nds-section-content">
+            <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
                     <div class="demo-label">Responsive</div>
@@ -247,6 +243,7 @@ direction: ltr
                     </div>
                 </div>
             </div>
+            </div>
         </div>
     </div>
 </section>
@@ -259,6 +256,7 @@ direction: ltr
             <p class="nds-section-description">Without column classes, the grid uses auto-fit and adapts column count per breakpoint using --max-col, --mid-col, and --min-col tokens.</p>
         </div>
         <div class="nds-section-content">
+            <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
                     <div class="demo-label">Auto-fit Responsive</div>
@@ -301,6 +299,7 @@ direction: ltr
                     </div>
                 </div>
             </div>
+            </div>
         </div>
     </div>
 </section>
@@ -313,6 +312,7 @@ direction: ltr
             <p class="nds-section-description">The responsive column classes use the following breakpoints.</p>
         </div>
         <div class="nds-section-content">
+            <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
                     <div class="demo-label">Breakpoints</div>
@@ -335,6 +335,7 @@ direction: ltr
                     </table>
                 </div>
             </div>
+            </div>
         </div>
     </div>
 </section>
@@ -347,6 +348,7 @@ direction: ltr
             <p class="nds-section-description">Override these CSS custom properties on .nds-grid to customize gap, alignment, and column behavior.</p>
         </div>
         <div class="nds-section-content">
+            <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
                     <div class="demo-label">Tokens</div>
@@ -411,6 +413,7 @@ direction: ltr
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
         </div>
     </div>

@@ -16,6 +16,7 @@ direction: ltr
             <p class="nds-section-description">Standalone code blocks with copy button, used for API documentation and code snippets</p>
         </div>
         <div class="nds-section-content">
+            <div class="nds-showcase">
 
             <!-- Basic Direct Code Block -->
             <div class="nds-demo-card">
@@ -241,6 +242,7 @@ async function handleFormSubmit(form) {
                 </div>
             </div>
 
+            </div>
         </div>
     </div>
 </section>
@@ -253,6 +255,7 @@ async function handleFormSubmit(form) {
             <p class="nds-section-description">Code blocks with tab navigation for showing multiple languages or file types</p>
         </div>
         <div class="nds-section-content">
+            <div class="nds-showcase">
 
             <!-- Single Tab -->
             <div class="nds-demo-card">
@@ -523,6 +526,7 @@ NDSAlert.create({
                 </div>
             </div>
 
+            </div>
         </div>
     </div>
 </section>
@@ -535,6 +539,7 @@ NDSAlert.create({
             <p class="nds-section-description">Built-in syntax highlighting classes for HTML, CSS, and JavaScript</p>
         </div>
         <div class="nds-section-content">
+            <div class="nds-showcase">
 
             <!-- HTML Syntax -->
             <div class="nds-demo-card">
@@ -544,7 +549,7 @@ NDSAlert.create({
                 <div class="demo-container">
                     <div class="state-demo" style="display: grid; gap: var(--spacing-lg); padding: var(--spacing-lg);">
                         <div style="display: flex; align-items: center; gap: var(--spacing-md);">
-                            <span class="syntax-tag" style="font-family: monospace; font-weight: 600;"><div></span>
+                            <span class="syntax-tag" style="font-family: monospace; font-weight: 600;">&lt;div&gt;</span>
                             <span style="color: var(--text-subdued);">.syntax-tag — HTML tags</span>
                         </div>
                         <div style="display: flex; align-items: center; gap: var(--spacing-md);">
@@ -556,7 +561,7 @@ NDSAlert.create({
                             <span style="color: var(--text-subdued);">.syntax-value — Attribute values</span>
                         </div>
                         <div style="display: flex; align-items: center; gap: var(--spacing-md);">
-                            <span class="syntax-comment" style="font-family: monospace;"><!-- comment --></span>
+                            <span class="syntax-comment" style="font-family: monospace;">&lt;!-- comment --&gt;</span>
                             <span style="color: var(--text-subdued);">.syntax-comment — Comments</span>
                         </div>
                     </div>
@@ -625,6 +630,7 @@ NDSAlert.create({
                 </div>
             </div>
 
+            </div>
         </div>
     </div>
 </section>
@@ -637,6 +643,7 @@ NDSAlert.create({
             <p class="nds-section-description">Supported language identifiers for the code element</p>
         </div>
         <div class="nds-section-content">
+            <div class="nds-showcase">
 
             <div class="nds-demo-card">
                 <div class="demo-header">
@@ -674,6 +681,7 @@ NDSAlert.create({
                 </div>
             </div>
 
+            </div>
         </div>
     </div>
 </section>

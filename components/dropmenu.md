@@ -16,6 +16,7 @@ direction: ltr
             <p class="nds-section-description">Standard dropdown menu with multiple items</p>
         </div>
         <div class="nds-section-content">
+            <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
                     <div class="demo-label">Basic Dropmenu with Icons</div>
@@ -181,6 +182,7 @@ direction: ltr
                     </div>
                 </div>
             </div>
+            </div>
         </div>
     </div>
 </section>
@@ -193,6 +195,7 @@ direction: ltr
             <p class="nds-section-description">Dropdown menu using anchor tags for navigation</p>
         </div>
         <div class="nds-section-content">
+            <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
                     <div class="demo-label">Navigation Dropmenu</div>
@@ -284,6 +287,7 @@ direction: ltr
                     </div>
                 </div>
             </div>
+            </div>
         </div>
     </div>
 </section>
@@ -296,6 +300,7 @@ direction: ltr
             <p class="nds-section-description">Required classes and structure</p>
         </div>
         <div class="nds-section-content">
+            <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
                     <div class="demo-label">Required Classes</div>
@@ -346,6 +351,7 @@ Data Attributes:
                     </div>
                 </div>
             </div>
+            </div>
         </div>
     </div>
 </section>
@@ -358,6 +364,7 @@ Data Attributes:
             <p class="nds-section-description">Keep the menu open when clicking certain items using data-no-auto-close. Common use case: filter dropdowns with search, checkboxes, and action buttons.</p>
         </div>
         <div class="nds-section-content">
+            <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
                     <div class="demo-label">Filter Menu (No Auto-Close)</div>
@@ -516,6 +523,7 @@ Data Attributes:
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
         </div>
     </div>

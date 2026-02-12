@@ -16,7 +16,7 @@ direction: ltr
             <p class="nds-section-description">All featured icon styles available in the National Design System</p>
         </div>
         <div class="nds-section-content">
-            <div class="featured-icons-showcase">
+            <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-label">Brand Featured Icon</div>

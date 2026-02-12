@@ -16,7 +16,7 @@ direction: ltr
             <p class="nds-section-description">Interactive chip components with different styles and states</p>
         </div>
         <div class="nds-section-content">
-            <div class="chip-showcase">
+            <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-label">Primary Chip</div>

@@ -18,7 +18,7 @@ direction: ltr
       </p>
     </div>
     <div class="nds-section-content">
-      <div class="form-showcase">
+      <div class="nds-showcase">
 
         <!-- Single Checkbox -->
         <div class="nds-demo-card">

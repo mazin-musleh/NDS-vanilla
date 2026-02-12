@@ -16,7 +16,7 @@ direction: ltr
             <p class="nds-section-description">All button types available in the National Design System</p>
         </div>
         <div class="nds-section-content">
-            <div class="button-showcase">
+            <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-label">Primary Button</div>
@@ -376,7 +376,7 @@ direction: ltr
                 </div>
             </div>
 
-            <div class="button-showcase oncolor-buttons">
+            <div class="nds-showcase oncolor-buttons">
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-label">Primary Button On-Color</div>
@@ -728,7 +728,7 @@ direction: ltr
             <p class="nds-section-description">Buttons for destructive actions like delete and cancel</p>
         </div>
         <div class="nds-section-content">
-            <div class="button-showcase">
+            <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-label">Destructive Primary</div>
@@ -993,7 +993,7 @@ direction: ltr
             <!-- Background Switcher for On-Color Destructive Buttons -->
 
             <!-- On-Color Destructive Buttons with States -->
-            <div class="button-showcase">
+            <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-label">Destructive Primary On-Color</div>
@@ -1281,7 +1281,7 @@ direction: ltr
             <p class="nds-section-description">Buttons containing icons in different positions</p>
         </div>
         <div class="nds-section-content">
-            <div class="button-showcase">
+            <div class="nds-showcase">
                 <!-- Lead Icon -->
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -1445,7 +1445,7 @@ direction: ltr
             </p>
         </div>
         <div class="nds-section-content">
-            <div class="button-showcase">
+            <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-label">Default Large (40px)</div>
@@ -1560,7 +1560,7 @@ direction: ltr
             </p>
         </div>
         <div class="nds-section-content">
-            <div class="button-showcase">
+            <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-label">Button Group</div>
@@ -1641,7 +1641,7 @@ direction: ltr
             <p class="nds-section-description">Buttons in loading state with spinning indicator</p>
         </div>
         <div class="nds-section-content">
-            <div class="button-showcase">
+            <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-label">Loading States</div>
@@ -1722,7 +1722,7 @@ direction: ltr
                 (--progress-value)</p>
         </div>
         <div class="nds-section-content">
-            <div class="tag-showcase">
+            <div class="nds-showcase">
                 <!-- Progress Buttons -->
                 <div class="nds-demo-card">
                     <div class="demo-header">

@@ -17,6 +17,7 @@ direction: ltr
                 sections</p>
         </div>
         <div class="nds-section-content">
+            <div class="nds-showcase">
 
             <!-- Basic Tabs Example -->
             <div class="nds-demo-card">
@@ -570,6 +571,7 @@ direction: ltr
                 </div>
             </div>
 
+            </div>
         </div>
     </div>
 </section>

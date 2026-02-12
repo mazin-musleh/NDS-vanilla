@@ -17,6 +17,7 @@ direction: ltr
                 content</p>
         </div>
         <div class="nds-section-content">
+            <div class="nds-showcase">
 
             <!-- Single Line Truncate -->
             <div class="nds-demo-card">
@@ -256,6 +257,7 @@ direction: ltr
                 </div>
             </div>
 
+            </div>
         </div>
     </div>
 </section>
@@ -322,6 +324,7 @@ direction: ltr
             <p class="nds-section-description">The underlying CSS that powers the truncate utility</p>
         </div>
         <div class="nds-section-content">
+            <div class="nds-showcase">
 
             <div class="nds-demo-card">
                 <div class="demo-header">
@@ -358,6 +361,7 @@ direction: ltr
                 </div>
             </div>
 
+            </div>
         </div>
     </div>
 </section>

@@ -16,7 +16,7 @@ direction: ltr
             <p class="nds-section-description">Star rating components with different sizes, states, and styles</p>
         </div>
         <div class="nds-section-content">
-            <div class="rating-showcase">
+            <div class="nds-showcase">
                 <!-- Display-Only Rating Demo -->
                 <div class="nds-demo-card">
                     <div class="demo-header">
