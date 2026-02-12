@@ -16,7 +16,7 @@ direction: ltr
             <p class="nds-section-description">All Feedback icon styles available in the National Design System</p>
         </div>
         <div class="nds-section-content">
-            <div class="feedback-icons-showcase">
+            <div class="nds-showcase">
 
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -464,7 +464,7 @@ direction: ltr
             <p class="nds-section-description">Complete feedback components with icons and text messages</p>
         </div>
         <div class="nds-section-content">
-            <div class="feedback-messages-showcase">
+            <div class="nds-showcase">
 
                 <!-- Error Feedback Message -->
                 <div class="nds-demo-card">

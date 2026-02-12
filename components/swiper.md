@@ -18,6 +18,7 @@ direction: rtl
                 scroll-snap for smooth, performant sliding.</p>
         </div>
         <div class="nds-section-content">
+            <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
                     <div class="demo-label">Basic Slider</div>
@@ -132,6 +133,7 @@ direction: rtl
                     </div>
                 </div>
             </div>
+            </div>
         </div>
     </div>
 </section>
@@ -146,6 +148,7 @@ direction: rtl
             </p>
         </div>
         <div class="nds-section-content">
+            <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
                     <div class="demo-label">Image Slider</div>
@@ -230,6 +233,7 @@ direction: rtl
                     </div>
                 </div>
             </div>
+            </div>
         </div>
     </div>
 </section>
@@ -243,6 +247,7 @@ direction: rtl
                 large desktop, 3 on desktop, and 1 on mobile/tablet.</p>
         </div>
         <div class="nds-section-content">
+            <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
                     <div class="demo-label">Multiple Slides Per View</div>
@@ -356,6 +361,7 @@ direction: rtl
                     </div>
                 </div>
             </div>
+            </div>
         </div>
     </div>
 </section>
@@ -370,6 +376,7 @@ direction: rtl
             </p>
         </div>
         <div class="nds-section-content">
+            <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
                     <div class="demo-label">Peek Mode (40px)</div>
@@ -476,6 +483,7 @@ direction: rtl
                     </div>
                 </div>
             </div>
+            </div>
         </div>
     </div>
 </section>
@@ -516,7 +524,7 @@ direction: rtl
                             <td>slides-min</td>
                             <td>Number</td>
                             <td>1</td>
-                            <td>Slides visible on mobile/tablet (<960px)</td>
+                            <td>Slides visible on mobile/tablet (&lt;960px)</td>
                         </tr>
                         <tr>
                             <td>peek</td>

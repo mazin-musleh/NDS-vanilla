@@ -17,6 +17,7 @@ direction: ltr
                 image inspection</p>
         </div>
         <div class="nds-section-content">
+            <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
                     <div class="demo-label">Gallery Example</div>
@@ -71,19 +72,20 @@ direction: ltr
                                 </button>
                             </div>
                             <code class="lang-html code">
-<div class="nds-ipv-gallery">
-  <div class="nds-ipv-image-card">
-    <img src="thumbnail.jpg"
+&lt;div class="nds-ipv-gallery"&gt;
+  &lt;div class="nds-ipv-image-card"&gt;
+    &lt;img src="thumbnail.jpg"
          data-ipv-full="full-size.jpg"
          alt="Image Description"
-         class="nds-ipv-thumbnail">
-    <div class="nds-ipv-image-title">Image Title</div>
-  </div>
-</div>
+         class="nds-ipv-thumbnail"&gt;
+    &lt;div class="nds-ipv-image-title"&gt;Image Title&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
                             </code>
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
         </div>
     </div>

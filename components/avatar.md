@@ -16,7 +16,7 @@ direction: ltr
             <p class="nds-section-description">Avatars support three content types: initials, icons, and images</p>
         </div>
         <div class="nds-section-content">
-            <div class="avatar-showcase">
+            <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-label">Initials Avatar</div>
@@ -256,7 +256,7 @@ direction: ltr
                 use cases</p>
         </div>
         <div class="nds-section-content">
-            <div class="avatar-showcase">
+            <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-label">Avatar as Link (anchor tag)</div>
@@ -419,7 +419,7 @@ direction: ltr
             <p class="nds-section-description">Group multiple avatars together with stacked or spaced layouts</p>
         </div>
         <div class="nds-section-content">
-            <div class="avatar-showcase">
+            <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-label">Avatar Group</div>

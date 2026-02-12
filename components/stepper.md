@@ -17,7 +17,7 @@ direction: ltr
                 options</p>
         </div>
         <div class="nds-section-content">
-            <div class="stepper-showcase">
+            <div class="nds-showcase">
 
                 <!-- Horizontal Stepper -->
                 <div class="nds-demo-card">

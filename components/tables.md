@@ -16,6 +16,7 @@ direction: ltr
             <p class="nds-section-description">Standard table structure with header, body, and interactive states</p>
         </div>
         <div class="nds-section-content">
+            <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
                     <div class="demo-label">Data Table</div>
@@ -113,6 +114,7 @@ direction: ltr
                     </div>
                 </div>
             </div>
+            </div>
         </div>
     </div>
 </section>
@@ -125,6 +127,7 @@ direction: ltr
             <p class="nds-section-description">Space-efficient table design for dense data display</p>
         </div>
         <div class="nds-section-content">
+            <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
                     <div class="demo-label">Compact Data Table</div>
@@ -275,6 +278,7 @@ direction: ltr
                     </div>
                 </div>
             </div>
+            </div>
         </div>
     </div>
 </section>
@@ -287,6 +291,7 @@ direction: ltr
             <p class="nds-section-description">Interactive table with sorting capabilities and visual indicators</p>
         </div>
         <div class="nds-section-content">
+            <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
                     <div class="demo-label">Sortable Data Table</div>
@@ -414,6 +419,7 @@ direction: ltr
                     </div>
                 </div>
             </div>
+            </div>
         </div>
     </div>
 </section>
@@ -426,6 +432,7 @@ direction: ltr
             <p class="nds-section-description">Interactive table showcasing feedback status with feedback icons</p>
         </div>
         <div class="nds-section-content">
+            <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
                     <div class="demo-label">Feedback Status Table</div>
@@ -596,6 +603,7 @@ direction: ltr
                     </div>
                 </div>
             </div>
+            </div>
         </div>
     </div>
 </section>
@@ -608,6 +616,7 @@ direction: ltr
             <p class="nds-section-description">Data table with checkbox selection for bulk operations</p>
         </div>
         <div class="nds-section-content">
+            <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
                     <div class="demo-label">Selectable Data Table</div>
@@ -754,6 +763,7 @@ direction: ltr
                     </div>
                 </div>
             </div>
+            </div>
         </div>
     </div>
 </section>
@@ -766,6 +776,7 @@ direction: ltr
             <p class="nds-section-description">Table with horizontal scroll and gradient mask for overflow content</p>
         </div>
         <div class="nds-section-content">
+            <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
                     <div class="demo-label">Responsive Table with Max-Width</div>
@@ -884,6 +895,7 @@ direction: ltr
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
         </div>
     </div>

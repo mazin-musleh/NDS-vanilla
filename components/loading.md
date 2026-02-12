@@ -16,7 +16,7 @@ direction: ltr
             <p class="nds-section-description">Add .nds-loading to any element to show a centered loading spinner</p>
         </div>
         <div class="nds-section-content">
-            <div class="tag-showcase">
+            <div class="nds-showcase">
                 <!-- Default Loading -->
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -178,7 +178,7 @@ direction: ltr
             </p>
         </div>
         <div class="nds-section-content">
-            <div class="tag-showcase">
+            <div class="nds-showcase">
                 <!-- Light Overlay -->
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -271,7 +271,7 @@ direction: ltr
                 (28px), md (32px default), lg (36px), xl (40px), 2xl (44px)</p>
         </div>
         <div class="nds-section-content">
-            <div class="tag-showcase">
+            <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-label">All Sizes</div>

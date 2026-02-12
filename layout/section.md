@@ -16,6 +16,7 @@ direction: ltr
             <p class="nds-section-description">The section component uses a CSS Grid for column placement and a flex wrapper for grouping head, action, image, and content.</p>
         </div>
         <div class="nds-section-content">
+            <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
                     <div class="demo-label">Structure</div>
@@ -44,6 +45,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                     </div>
                 </div>
             </div>
+            </div>
         </div>
     </div>
 </section>
@@ -56,6 +58,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
             <p class="nds-section-description">Simplest usage: title, description, and content as direct children of the section grid. No wrapper needed.</p>
         </div>
         <div class="nds-section-content">
+            <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
                     <div class="demo-label">Minimal Section</div>
@@ -121,6 +124,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                     </div>
                 </div>
             </div>
+            </div>
         </div>
     </div>
 </section>
@@ -133,6 +137,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
             <p class="nds-section-description">Wrapper groups head and content with consistent gap spacing. Used for most sections.</p>
         </div>
         <div class="nds-section-content">
+            <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
                     <div class="demo-label">Standard Section</div>
@@ -206,6 +211,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                     </div>
                 </div>
             </div>
+            </div>
         </div>
     </div>
 </section>
@@ -218,6 +224,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
             <p class="nds-section-description">Action buttons sit beside the head on wide screens (≥769px) and drop to full-row below on narrow (≤768px). Uses container queries on the wrapper.</p>
         </div>
         <div class="nds-section-content">
+            <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
                     <div class="demo-label">Section with Action</div>
@@ -301,6 +308,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                     </div>
                 </div>
             </div>
+            </div>
         </div>
     </div>
 </section>
@@ -313,6 +321,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
             <p class="nds-section-description">Image, head, and action form a flex row. Content takes full row below.</p>
         </div>
         <div class="nds-section-content">
+            <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
                     <div class="demo-label">Section with Image</div>
@@ -404,6 +413,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                     </div>
                 </div>
             </div>
+            </div>
         </div>
     </div>
 </section>
@@ -416,6 +426,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
             <p class="nds-section-description">Content lives outside the wrapper and uses .nds-full-width to break out of the content column into edge-to-edge layout. Wrapper holds head + action only.</p>
         </div>
         <div class="nds-section-content">
+            <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
                     <div class="demo-label">Full-Width Section</div>
@@ -499,6 +510,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                     </div>
                 </div>
             </div>
+            </div>
         </div>
     </div>
 </section>
@@ -511,6 +523,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
             <p class="nds-section-description">Every section is a CSS Grid with named columns. Direct children are placed into content, breakout, or full-width tracks.</p>
         </div>
         <div class="nds-section-content">
+            <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
                     <div class="demo-label">Grid Placement</div>
@@ -562,6 +575,7 @@ Default child         → grid-column: content
                     </div>
                 </div>
             </div>
+            </div>
         </div>
     </div>
 </section>
@@ -574,6 +588,7 @@ Default child         → grid-column: content
             <p class="nds-section-description">Override CSS custom properties to customize section appearance without modifying the source.</p>
         </div>
         <div class="nds-section-content">
+            <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
                     <div class="demo-label">Visual Tokens</div>
@@ -604,6 +619,7 @@ Default child         → grid-column: content
                     </table>
                 </div>
             </div>
+            </div>
         </div>
     </div>
 </section>
@@ -616,6 +632,7 @@ Default child         → grid-column: content
             <p class="nds-section-description">Add .nds-horizontal to a section to switch the wrapper from flex to a two-column grid layout on desktop (head left, content right).</p>
         </div>
         <div class="nds-section-content">
+            <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
                     <div class="demo-label">Horizontal</div>
@@ -689,6 +706,7 @@ Default child         → grid-column: content
                     </div>
                 </div>
             </div>
+            </div>
         </div>
     </div>
 </section>
@@ -701,6 +719,7 @@ Default child         → grid-column: content
             <p class="nds-section-description">The section component is split across 3 focused SCSS files with clear separation of concerns.</p>
         </div>
         <div class="nds-section-content">
+            <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
                     <div class="demo-label">File Structure</div>
@@ -733,6 +752,7 @@ Default child         → grid-column: content
                         </tbody>
                     </table>
                 </div>
+            </div>
             </div>
         </div>
     </div>

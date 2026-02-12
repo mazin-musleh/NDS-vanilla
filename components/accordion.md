@@ -20,6 +20,7 @@ css_files:
                 space-efficient manner</p>
         </div>
         <div class="nds-section-content">
+            <div class="nds-showcase">
 
             <!-- Basic Accordion Example -->
             <div class="nds-demo-card">
@@ -347,6 +348,7 @@ css_files:
                 </div>
             </div>
 
+            </div>
         </div>
     </div>
 </section>

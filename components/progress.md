@@ -16,7 +16,7 @@ direction: ltr
       <p class="nds-section-description">Circular progress indicators with dynamic CSS custom properties</p>
     </div>
     <div class="nds-section-content">
-      <div class="progress-showcase">
+      <div class="nds-showcase">
 
         <!-- Progress Circle Sizes -->
         <div class="nds-demo-card">
@@ -140,7 +140,7 @@ direction: ltr
       <p class="nds-section-description">Linear progress bars with CSS custom properties</p>
     </div>
     <div class="nds-section-content">
-      <div class="progress-showcase">
+      <div class="nds-showcase">
 
         <!-- Progress Bar Sizes -->
         <div class="nds-demo-card">

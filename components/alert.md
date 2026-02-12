@@ -18,7 +18,7 @@ layout_class: cardView topSubMenu
                 message types</p>
         </div>
         <div class="nds-section-content">
-            <div class="tag-showcase">
+            <div class="nds-showcase">
                 <!-- Success Alert -->
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -337,7 +337,7 @@ layout_class: cardView topSubMenu
             <p class="nds-section-description">Alerts can include action buttons for user interaction</p>
         </div>
         <div class="nds-section-content">
-            <div class="tag-showcase">
+            <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-label">Alert with Actions</div>
@@ -442,7 +442,7 @@ layout_class: cardView topSubMenu
             <p class="nds-section-description">Additional color variants for general notifications</p>
         </div>
         <div class="nds-section-content">
-            <div class="tag-showcase">
+            <div class="nds-showcase">
                 <!-- Neutral Alert -->
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -530,7 +530,7 @@ layout_class: cardView topSubMenu
             <p class="nds-section-description">Create alerts dynamically using the JavaScript API</p>
         </div>
         <div class="nds-section-content">
-            <div class="tag-showcase">
+            <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-label">Dynamic Alert Demo</div>
@@ -645,7 +645,7 @@ layout_class: cardView topSubMenu
             </p>
         </div>
         <div class="nds-section-content">
-            <div class="tag-showcase">
+            <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-label">Toast Demo</div>

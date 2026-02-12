@@ -17,7 +17,7 @@ direction: ltr
         validation</p>
     </div>
     <div class="nds-section-content">
-      <div class="form-showcase">
+      <div class="nds-showcase">
 
         <div class="nds-demo-card">
           <div class="demo-header">

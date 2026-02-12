@@ -17,6 +17,7 @@ direction: ltr
                 button, and interactive features</p>
         </div>
         <div class="nds-section-content">
+            <div class="nds-showcase">
 
             <!-- Basic Modal Demo -->
             <div class="nds-demo-card">
@@ -153,6 +154,7 @@ direction: ltr
                 </div>
             </div>
 
+            </div>
         </div>
     </div>
 </section>

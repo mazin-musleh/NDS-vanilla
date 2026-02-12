@@ -16,6 +16,7 @@ direction: ltr
             <p class="nds-section-description">Standard breadcrumb navigation with multiple levels</p>
         </div>
         <div class="nds-section-content">
+            <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
                     <div class="demo-label">Three Level Breadcrumb</div>
@@ -117,6 +118,7 @@ direction: ltr
                     </div>
                 </div>
             </div>
+            </div>
         </div>
     </div>
 </section>
@@ -129,6 +131,7 @@ direction: ltr
             <p class="nds-section-description">Different breadcrumb levels and states</p>
         </div>
         <div class="nds-section-content">
+            <div class="nds-showcase">
 
             <div class="nds-demo-card">
                 <div class="demo-header">
@@ -182,6 +185,7 @@ direction: ltr
                     </div>
                 </div>
             </div>
+            </div>
         </div>
     </div>
 </section>
@@ -195,6 +199,7 @@ direction: ltr
             </p>
         </div>
         <div class="nds-section-content">
+            <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
                     <div class="demo-label">Auto-Collapsed Breadcrumb (7 Levels)</div>
@@ -283,6 +288,7 @@ Dropdown contains:
                 </div>
             </div>
 
+            </div>
         </div>
     </div>
 </section>
@@ -308,9 +314,9 @@ Dropdown contains:
                 <div class="guideline-item">
                     <h3>Accessibility</h3>
                     <ul>
-                        <li>Use <nav> with aria-label="Breadcrumb"</li>
+                        <li>Use &lt;nav&gt; with aria-label="Breadcrumb"</li>
                         <li>Mark current page with aria-current="page"</li>
-                        <li>Use <ol> for semantic ordered list</li>
+                        <li>Use &lt;ol&gt; for semantic ordered list</li>
                         <li>Ensure links have sufficient color contrast</li>
                     </ul>
                 </div>
