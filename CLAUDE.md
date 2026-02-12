@@ -139,6 +139,10 @@ direction: ltr
 5. Add to `_includes/` if reusable across pages
 6. Use `nds-` prefix for all class names
 
+## Git Commits
+
+- Do NOT add `Co-Authored-By` lines to commit messages
+
 ## JavaScript
 
 - Source: `_js/` directory → processed by `ruby _plugins/js_processor.rb` (Terser) → `assets/js/*.min.js`

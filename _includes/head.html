@@ -23,7 +23,7 @@
             // Load icon font CSS
             var iconLink = document.createElement('link');
             iconLink.rel = 'stylesheet';
-            iconLink.href = '{{ "assets/css/hgi-rounded-stroke-solid-min.css?ver=1.001" | relative_url }}';
+            iconLink.href = '{{ "assets/css/hgi-rounded-stroke-min.css?ver=1.001" | relative_url }}';
             document.head.appendChild(iconLink);
 
             // Load favicon
@@ -62,7 +62,7 @@
     {% endif %}
 
     <noscript>
-        <link rel="stylesheet" href="{{ 'assets/css/hgi-rounded-stroke-solid-min.css' | relative_url }}">
+        <link rel="stylesheet" href="{{ 'assets/css/hgi-rounded-stroke-min.css' | relative_url }}">
         <link rel="icon" type="image/svg+xml" href="{{ 'assets/img/favicon.svg' | relative_url }}">
     </noscript>
 </head>
