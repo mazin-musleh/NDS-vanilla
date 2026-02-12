@@ -138,10 +138,10 @@ css_files:
                                 aria-controls="panel-basic-1" id="tab-basic-1">
                                 <span class="nds-tab-label">HTML</span>
                             </button>
+                        </nav>
                             <button class="nds-btn nds-subtle nds-tab showMore"><i
                                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                             </button>
-                        </nav>
                     </div>
                     <div class="nds-tab-content">
                         <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-basic-1"
@@ -308,10 +308,10 @@ css_files:
                                 aria-controls="panel-icons-1" id="tab-icons-1">
                                 <span class="nds-tab-label">HTML</span>
                             </button>
+                        </nav>
                             <button class="nds-btn nds-subtle nds-tab showMore"><i
                                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                             </button>
-                        </nav>
                     </div>
                     <div class="nds-tab-content">
                         <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-icons-1"
@@ -362,12 +362,12 @@ css_files:
             <div class="accessibility-info">
                 <h3>Required Elements & ARIA Attributes</h3>
                 <ul>
-                    <li><code>&lt;button&gt;</code> - Clickable accordion trigger</li>
-                    <li><code>aria-expanded</code> - Indicates if accordion panel is open/closed</li>
-                    <li><code>aria-controls</code> - Links button to its collapsible panel</li>
-                    <li><code>aria-labelledby</code> - Links panel to its header button</li>
-                    <li><code>type="button"</code> - Prevents form submission if inside forms</li>
-                    <li><code>id</code> attributes - Required for proper ARIA relationships</li>
+                    <li>&lt;button&gt; - Clickable accordion trigger</li>
+                    <li>aria-expanded - Indicates if accordion panel is open/closed</li>
+                    <li>aria-controls - Links button to its collapsible panel</li>
+                    <li>aria-labelledby - Links panel to its header button</li>
+                    <li>type="button" - Prevents form submission if inside forms</li>
+                    <li>id attributes - Required for proper ARIA relationships</li>
                 </ul>
 
                 <h3>Keyboard Navigation</h3>
@@ -420,14 +420,14 @@ css_files:
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>
-                <div class="nds-expandable-content">
-                    <code class="lang-html">// Accordions initialize automatically on page load
+                    <div class="nds-expandable-content">
+                        <code class="lang-html">// Accordions initialize automatically on page load
     // Just add the HTML structure with .nds-accordion class
 
                         <div class="nds-accordion">
                         <div class="nds-accordion-item">
                             <h3 class="nds-accordion-header">
-                            <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" 
+                            <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn"
                                     aria-expanded="false" aria-controls="panel-1">
                                 <span class="nds-accordion-title">Panel Title</span>
                             </button>
@@ -442,7 +442,7 @@ css_files:
                         </div>
                         </div>
                     </code>
-                </div>
+                    </div>
             </div>
 
             <h3>Dynamic Content Handling</h3>
@@ -531,24 +531,24 @@ document.addEventListener('nds:accordion:hidden', (e) => {
                 <ul>
                     <li><strong>Automatic Initialization:</strong> All accordions initialize on page load automatically
                     </li>
-                    <li><strong>Dynamic Content Support:</strong> Call <code>NDSAccordion.reinit()</code> after adding
+                    <li><strong>Dynamic Content Support:</strong> Call NDSAccordion.reinit() after adding
                         new accordions</li>
                     <li><strong>Keyboard Navigation:</strong> Full ARIA-compliant keyboard support built-in</li>
-                    <li><strong>Animation Control:</strong> Respects <code>prefers-reduced-motion</code> user
+                    <li><strong>Animation Control:</strong> Respects prefers-reduced-motion user
                         preferences</li>
-                    <li><strong>Event System:</strong> Custom events for <code>shown</code> and <code>hidden</code>
+                    <li><strong>Event System:</strong> Custom events for shown and hidden
                         states</li>
                     <li><strong>Public API:</strong> Programmatic control methods for all accordion operations</li>
                 </ul>
 
                 <h3>Configuration Options</h3>
                 <ul>
-                    <li><code>data-state="always-open"</code> attribute - Allow multiple panels open simultaneously</li>
-                    <li><code>.nds-card</code> class - Apply card background styling</li>
-                    <li><code>.nds-stroke</code> class - Add border around accordion</li>
-                    <li><code>.nds-shadow</code> class - Apply shadow effect</li>
-                    <li><code>aria-expanded="true"</code> - Set initial open state for specific panels</li>
-                    <li><code>--nds-transition-speed</code> - CSS custom property to control animation speed</li>
+                    <li>data-state="always-open" attribute - Allow multiple panels open simultaneously</li>
+                    <li>.nds-card class - Apply card background styling</li>
+                    <li>.nds-stroke class - Add border around accordion</li>
+                    <li>.nds-shadow class - Apply shadow effect</li>
+                    <li>aria-expanded="true" - Set initial open state for specific panels</li>
+                    <li>--nds-transition-speed - CSS custom property to control animation speed</li>
                 </ul>
 
                 <h3>Browser Support</h3>

@@ -178,11 +178,11 @@ direction: ltr
                 <div class="guideline-item">
                     <h3>Modal Structure</h3>
                     <ul>
-                        <li><strong>Card Header:</strong> Use <code>.nds-card-header</code> for title and close button
+                        <li><strong>Card Header:</strong> Use .nds-card-header for title and close button
                         </li>
-                        <li><strong>Card Content:</strong> Place the main message inside <code>.nds-card-content</code>
+                        <li><strong>Card Content:</strong> Place the main message inside .nds-card-content
                         </li>
-                        <li><strong>Card Actions:</strong> Optional action area via <code>.nds-card-actions</code>
+                        <li><strong>Card Actions:</strong> Optional action area via .nds-card-actions
                         </li>
                         <li>Design sections to be scrollable when content exceeds viewport height</li>
                     </ul>
@@ -192,11 +192,11 @@ direction: ltr
                     <ul>
                         <li><strong>Focus trap:</strong> Focus cycles within the modal using Tab/Shift+Tab</li>
                         <li><strong>Keyboard support:</strong> ESC key closes the modal</li>
-                        <li><strong>ARIA attributes:</strong> Set <code>role="dialog"</code>,
-                            <code>aria-labelledby</code>, and <code>aria-hidden</code>
+                        <li><strong>ARIA attributes:</strong> Set role="dialog",
+                            aria-labelledby, and aria-hidden
                         </li>
                         <li><strong>Close button:</strong> Include visible close control with
-                            <code>aria-label="Close modal"</code>
+                            aria-label="Close modal"
                         </li>
                         <li><strong>Scroll preservation:</strong> Page scroll position maintained when modal
                             opens/closes</li>
@@ -217,11 +217,11 @@ direction: ltr
                     <ul>
                         <li><strong>Automatic initialization:</strong> Modals initialize automatically via nds-loader.js
                         </li>
-                        <li><strong>Programmatic control:</strong> Use <code>window.NDSModal.open('modal-id')</code>
+                        <li><strong>Programmatic control:</strong> Use window.NDSModal.open('modal-id')
                         </li>
-                        <li><strong>State checks:</strong> <code>window.NDSModal.isOpen()</code> returns boolean</li>
-                        <li><strong>Custom events:</strong> Listen to <code>nds-modal-opened</code> and
-                            <code>nds-modal-closed</code>
+                        <li><strong>State checks:</strong> window.NDSModal.isOpen() returns boolean</li>
+                        <li><strong>Custom events:</strong> Listen to nds-modal-opened and
+                            nds-modal-closed
                         </li>
                         <li><strong>Focus trap:</strong> Automatically enabled when modal opens</li>
                     </ul>
@@ -233,7 +233,8 @@ direction: ltr
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
-                        <code class="lang-javascript nds-expandable-content">
+                        <div class="nds-expandable-content">
+                            <code class="lang-javascript">
 // Open modal programmatically (by ID string)
 window.NDSModal.open('modal-id');
 
@@ -274,6 +275,7 @@ if (!localStorage.getItem('visited')) {
     localStorage.setItem('visited', 'true');
 }
                         </code>
+                        </div>
                     </div>
                 </div>
                 <div class="guideline-item">
@@ -338,8 +340,8 @@ if (!localStorage.getItem('visited')) {
                     <h3>Event System</h3>
                     <p>Custom events for integration:</p>
                     <ul>
-                        <li><code>nds-modal-opened</code> - Fires when modal opens</li>
-                        <li><code>nds-modal-closed</code> - Fires when modal closes</li>
+                        <li>nds-modal-opened - Fires when modal opens</li>
+                        <li>nds-modal-closed - Fires when modal closes</li>
                         <li>Events bubble up the DOM tree</li>
                         <li>Event detail includes modal element reference</li>
                         <li>Use for analytics, form resets, or custom behaviors</li>

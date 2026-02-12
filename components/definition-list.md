@@ -349,7 +349,7 @@ direction: ltr
 
             <h3>Component Structure</h3>
 
-            <p>The definition list component uses semantic HTML <strong>&lt;dl&gt;</strong> (definition list) elements with the <strong>.nds-definition-list</strong> class. Each term-definition pair is wrapped in a <strong>.nds-definition-item</strong> container. Terms use the <strong>&lt;dt&gt;</strong> (definition term) element containing an optional icon and a <strong>.label</strong> span. Definitions use the <strong>&lt;dd&gt;</strong> (definition description) element. This semantic structure ensures proper accessibility and screen reader support while providing flexibility for styling.</p>
+            <p>The definition list component uses semantic HTML <strong><dl></strong> (definition list) elements with the <strong>.nds-definition-list</strong> class. Each term-definition pair is wrapped in a <strong>.nds-definition-item</strong> container. Terms use the <strong><dt></strong> (definition term) element containing an optional icon and a <strong>.label</strong> span. Definitions use the <strong><dd></strong> (definition description) element. This semantic structure ensures proper accessibility and screen reader support while providing flexibility for styling.</p>
 
             <h3>Basic Layout</h3>
 
@@ -365,7 +365,8 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>
-                <code class="lang-html nds-expandable-content line-numbers">
+                <div class="nds-expandable-content">
+                    <code class="lang-html line-numbers">
 <!-- Table view layout -->
 <dl class="nds-definition-list tableView">
     <div class="nds-definition-item">
@@ -378,6 +379,7 @@ direction: ltr
     </div>
 </dl>
                 </code>
+                </div>
             </div>
 
             <h3>Divided Variant</h3>
@@ -390,7 +392,8 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>
-                <code class="lang-html nds-expandable-content line-numbers">
+                <div class="nds-expandable-content">
+                    <code class="lang-html line-numbers">
 <!-- Divided definition list -->
 <dl class="nds-definition-list nds-divided">
     <!-- items -->
@@ -401,6 +404,7 @@ direction: ltr
     <!-- items -->
 </dl>
                 </code>
+                </div>
             </div>
 
             <h3>Grid Layout with Cards</h3>
@@ -413,7 +417,8 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>
-                <code class="lang-html nds-expandable-content line-numbers">
+                <div class="nds-expandable-content">
+                    <code class="lang-html line-numbers">
 <!-- Grid layout with cards -->
 <dl class="nds-definition-list nds-grid" style="--max-col:4;--mid-col:2;--min-col:1;">
     <div class="nds-definition-item nds-card nds-stroke">
@@ -426,11 +431,12 @@ direction: ltr
     <!-- More items -->
 </dl>
                 </code>
+                </div>
             </div>
 
             <h3>Icons in Terms</h3>
 
-            <p>Add icons to terms by including an <strong>&lt;i&gt;</strong> element with icon classes before the label span. The component automatically styles icons with appropriate color and spacing. When icons are present in the default layout, the definition automatically adds left padding to align with the label text, creating a clean visual hierarchy. In table view, icons appear inline with the term label. Icons enhance scannability and provide visual cues for different types of information.</p>
+            <p>Add icons to terms by including an <strong><i></strong> element with icon classes before the label span. The component automatically styles icons with appropriate color and spacing. When icons are present in the default layout, the definition automatically adds left padding to align with the label text, creating a clean visual hierarchy. In table view, icons appear inline with the term label. Icons enhance scannability and provide visual cues for different types of information.</p>
 
             <div class="nds-code nds-expandable">
                 <div class="nds-code-action">
@@ -438,7 +444,8 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>
-                <code class="lang-html nds-expandable-content line-numbers">
+                <div class="nds-expandable-content">
+                    <code class="lang-html line-numbers">
 <!-- Definition list with icons -->
 <dl class="nds-definition-list">
     <div class="nds-definition-item">
@@ -450,6 +457,7 @@ direction: ltr
     </div>
 </dl>
                 </code>
+                </div>
             </div>
 
             <h3>Use Cases</h3>
@@ -462,7 +470,7 @@ direction: ltr
 
             <h3>Accessibility Features</h3>
 
-            <p>The component follows semantic HTML standards using native <strong>&lt;dl&gt;</strong>, <strong>&lt;dt&gt;</strong>, and <strong>&lt;dd&gt;</strong> elements that screen readers properly interpret. This structure provides implicit relationships between terms and definitions without requiring ARIA attributes. The use of semantic elements ensures better indexing by search engines and compatibility with assistive technologies. Color contrast meets WCAG guidelines with primary text on light backgrounds and appropriate secondary text colors for definitions.</p>
+            <p>The component follows semantic HTML standards using native <strong><dl></strong>, <strong><dt></strong>, and <strong><dd></strong> elements that screen readers properly interpret. This structure provides implicit relationships between terms and definitions without requiring ARIA attributes. The use of semantic elements ensures better indexing by search engines and compatibility with assistive technologies. Color contrast meets WCAG guidelines with primary text on light backgrounds and appropriate secondary text colors for definitions.</p>
 
             <h3>Responsive Behavior</h3>
 

@@ -53,10 +53,10 @@ direction: ltr
                                     aria-controls="panel-primary-1" id="tab-primary-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
+                            </nav>
                                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
-                            </nav>
                         </div>
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-primary-1"
@@ -112,10 +112,10 @@ direction: ltr
                                     aria-controls="panel-neutral-1" id="tab-neutral-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
+                            </nav>
                                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
-                            </nav>
                         </div>
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-neutral-1"
@@ -171,10 +171,10 @@ direction: ltr
                                     aria-controls="panel-secondary-1" id="tab-secondary-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
+                            </nav>
                                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
-                            </nav>
                         </div>
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-secondary-1"
@@ -230,10 +230,10 @@ direction: ltr
                                     aria-controls="panel-secondary-outline-1" id="tab-secondary-outline-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
+                            </nav>
                                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
-                            </nav>
                         </div>
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-secondary-outline-1"
@@ -289,10 +289,10 @@ direction: ltr
                                     aria-controls="panel-subtle-1" id="tab-subtle-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
+                            </nav>
                                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
-                            </nav>
                         </div>
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-subtle-1"
@@ -352,10 +352,10 @@ direction: ltr
                                     aria-controls="panel-transparent-1" id="tab-transparent-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
+                            </nav>
                                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
-                            </nav>
                         </div>
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-transparent-1"
@@ -411,10 +411,10 @@ direction: ltr
                                     aria-controls="panel-primary-oncolor-1" id="tab-primary-oncolor-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
+                            </nav>
                                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
-                            </nav>
                         </div>
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-primary-oncolor-1"
@@ -467,10 +467,10 @@ direction: ltr
                                     aria-controls="panel-neutral-oncolor-1" id="tab-neutral-oncolor-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
+                            </nav>
                                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
-                            </nav>
                         </div>
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-neutral-oncolor-1"
@@ -523,10 +523,10 @@ direction: ltr
                                     aria-controls="panel-secondary-oncolor-1" id="tab-secondary-oncolor-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
+                            </nav>
                                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
-                            </nav>
                         </div>
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-secondary-oncolor-1"
@@ -580,10 +580,10 @@ direction: ltr
                                     id="tab-secondary-outline-oncolor-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
+                            </nav>
                                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
-                            </nav>
                         </div>
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel"
@@ -637,10 +637,10 @@ direction: ltr
                                     aria-controls="panel-subtle-oncolor-1" id="tab-subtle-oncolor-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
+                            </nav>
                                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
-                            </nav>
                         </div>
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-subtle-oncolor-1"
@@ -693,10 +693,10 @@ direction: ltr
                                     aria-controls="panel-transparent-oncolor-1" id="tab-transparent-oncolor-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
+                            </nav>
                                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
-                            </nav>
                         </div>
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-transparent-oncolor-1"
@@ -758,10 +758,10 @@ direction: ltr
                                     aria-controls="panel-destructive-primary-1" id="tab-destructive-primary-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
+                            </nav>
                                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
-                            </nav>
                         </div>
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-destructive-primary-1"
@@ -810,10 +810,10 @@ direction: ltr
                                     aria-controls="panel-destructive-secondary-1" id="tab-destructive-secondary-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
+                            </nav>
                                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
-                            </nav>
                         </div>
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-destructive-secondary-1"
@@ -862,10 +862,10 @@ direction: ltr
                                     aria-controls="panel-destructive-outline-1" id="tab-destructive-outline-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
+                            </nav>
                                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
-                            </nav>
                         </div>
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-destructive-outline-1"
@@ -914,10 +914,10 @@ direction: ltr
                                     aria-controls="panel-destructive-subtle-1" id="tab-destructive-subtle-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
+                            </nav>
                                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
-                            </nav>
                         </div>
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-destructive-subtle-1"
@@ -966,10 +966,10 @@ direction: ltr
                                     aria-controls="panel-destructive-transparent-1" id="tab-destructive-transparent-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
+                            </nav>
                                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
-                            </nav>
                         </div>
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-destructive-transparent-1"
@@ -1025,10 +1025,10 @@ direction: ltr
                                     id="tab-destructive-primary-oncolor-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
+                            </nav>
                                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
-                            </nav>
                         </div>
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel"
@@ -1080,10 +1080,10 @@ direction: ltr
                                     id="tab-destructive-secondary-oncolor-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
+                            </nav>
                                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
-                            </nav>
                         </div>
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel"
@@ -1135,10 +1135,10 @@ direction: ltr
                                     id="tab-destructive-outline-oncolor-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
+                            </nav>
                                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
-                            </nav>
                         </div>
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel"
@@ -1190,10 +1190,10 @@ direction: ltr
                                     id="tab-destructive-subtle-oncolor-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
+                            </nav>
                                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
-                            </nav>
                         </div>
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel"
@@ -1245,10 +1245,10 @@ direction: ltr
                                     id="tab-destructive-transparent-oncolor-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
+                            </nav>
                                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
-                            </nav>
                         </div>
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel"
@@ -1306,10 +1306,10 @@ direction: ltr
                                     aria-controls="panel-icon-text-1" id="tab-icon-text-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
+                            </nav>
                                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
-                            </nav>
                         </div>
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-icon-text-1"
@@ -1357,10 +1357,10 @@ direction: ltr
                                     aria-controls="panel-icon-only-1" id="tab-icon-only-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
+                            </nav>
                                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
-                            </nav>
                         </div>
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-icon-only-1"
@@ -1408,10 +1408,10 @@ direction: ltr
                                     aria-controls="panel-menu-primary-1" id="tab-menu-primary-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
+                            </nav>
                                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
-                            </nav>
                         </div>
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-menu-primary-1"
@@ -1479,10 +1479,10 @@ direction: ltr
                                     aria-controls="panel-size-1" id="tab-size-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
+                            </nav>
                                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
-                            </nav>
                         </div>
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-size-1"
@@ -1522,10 +1522,10 @@ direction: ltr
                                     aria-controls="panel-full-width-1" id="tab-full-width-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
+                            </nav>
                                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
-                            </nav>
                         </div>
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-full-width-1"
@@ -1602,10 +1602,10 @@ direction: ltr
                                     aria-controls="panel-size-1" id="tab-size-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
+                            </nav>
                                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
-                            </nav>
                         </div>
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-size-1"
@@ -1685,10 +1685,10 @@ direction: ltr
                                     aria-controls="panel-loading-1" id="tab-loading-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
+                            </nav>
                                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
-                            </nav>
                         </div>
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-loading-1"

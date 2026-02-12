@@ -782,7 +782,8 @@ layout_class: cardView topSubMenu
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>
-                <code class="lang-javascript nds-expandable-content line-numbers">
+                <div class="nds-expandable-content">
+                    <code class="lang-javascript line-numbers">
 // Basic alert creation
 const alert = NDSAlert.create({
     variant: 'success',
@@ -808,6 +809,7 @@ NDSAlert.create({
     ]
 });
                 </code>
+                </div>
             </div>
 
             <h3>Options Reference</h3>
@@ -958,7 +960,8 @@ NDSAlert.create({
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>
-                <code class="lang-javascript nds-expandable-content line-numbers">
+                <div class="nds-expandable-content">
+                    <code class="lang-javascript line-numbers">
 // Alert with action buttons
 NDSAlert.create({
     variant: 'warning',
@@ -982,6 +985,7 @@ NDSAlert.create({
     ]
 });
                 </code>
+                </div>
             </div>
 
             <h3>Shorthand Methods</h3>
@@ -995,7 +999,8 @@ NDSAlert.create({
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>
-                <code class="lang-javascript nds-expandable-content line-numbers">
+                <div class="nds-expandable-content">
+                    <code class="lang-javascript line-numbers">
 // Basic alert creation
 NDSAlert.create({
     variant: 'success',
@@ -1037,6 +1042,7 @@ NDSAlert.create({
     prepend: true
 });
                 </code>
+                </div>
             </div>
 
             <h3>Toast Notifications</h3>
@@ -1051,7 +1057,8 @@ NDSAlert.create({
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>
-                <code class="lang-javascript nds-expandable-content line-numbers">
+                <div class="nds-expandable-content">
+                    <code class="lang-javascript line-numbers">
 // Basic toast at top (default)
 NDSAlert.create({
     variant: 'success',
@@ -1089,6 +1096,7 @@ NDSAlert.create({
     duration: 4000
 });
                 </code>
+                </div>
             </div>
 
             <h3>Dismissing Alerts</h3>
@@ -1103,7 +1111,8 @@ NDSAlert.create({
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>
-                <code class="lang-javascript nds-expandable-content line-numbers">
+                <div class="nds-expandable-content">
+                    <code class="lang-javascript line-numbers">
 // Dismiss a single alert by element
 const alert = NDSAlert.create({ ... });
 NDSAlert.dismiss(alert);
@@ -1117,6 +1126,7 @@ NDSAlert.dismissAll('#alert-container');
 // Dismiss all alerts on the page
 NDSAlert.dismissAll(document.body);
                 </code>
+                </div>
             </div>
 
             <h3>Initializing Existing Alerts</h3>
@@ -1131,11 +1141,13 @@ NDSAlert.dismissAll(document.body);
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>
-                <code class="lang-javascript nds-expandable-content line-numbers">
+                <div class="nds-expandable-content">
+                    <code class="lang-javascript line-numbers">
 // Re-initialize alerts after dynamic content load
 document.getElementById('container').innerHTML = alertHtml;
 NDSAlert.init();
                 </code>
+                </div>
             </div>
 
             <h3>Complete Example</h3>
@@ -1148,7 +1160,8 @@ NDSAlert.init();
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>
-                <code class="lang-javascript nds-expandable-content line-numbers">
+                <div class="nds-expandable-content">
+                    <code class="lang-javascript line-numbers">
 async function handleFormSubmit(form) {
     const alertContainer = document.getElementById('form-alerts');
 
@@ -1191,6 +1204,7 @@ async function handleFormSubmit(form) {
     }
 }
                 </code>
+                </div>
             </div>
 
         </div>

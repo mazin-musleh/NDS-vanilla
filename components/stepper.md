@@ -565,7 +565,8 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>
-                <code class="lang-javascript nds-expandable-content line-numbers">
+                <div class="nds-expandable-content">
+                    <code class="lang-javascript line-numbers">
 // Get stepper instance by ID
 const stepper = NDSStepper.get('my-stepper');
 
@@ -577,6 +578,7 @@ stepper.goTo(3);
 // Access current properties
 console.log(stepper.current, stepper.total, stepper.progress);
                 </code>
+                </div>
             </div>
 
             <h3>Global API Convenience Methods</h3>
@@ -589,12 +591,14 @@ console.log(stepper.current, stepper.total, stepper.progress);
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>
-                <code class="lang-javascript nds-expandable-content line-numbers">
+                <div class="nds-expandable-content">
+                    <code class="lang-javascript line-numbers">
 // Using global convenience methods
 NDSStepper.next('my-stepper');        // Calls instance.next() method
 NDSStepper.previous('my-stepper');    // Calls instance.previous() method
 NDSStepper.goTo('my-stepper', 3);     // Calls instance.goTo(3) method
                 </code>
+                </div>
             </div>
 
             <h3>Data Attribute Control</h3>
@@ -607,7 +611,8 @@ NDSStepper.goTo('my-stepper', 3);     // Calls instance.goTo(3) method
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>
-                <code class="lang-javascript nds-expandable-content line-numbers">
+                <div class="nds-expandable-content">
+                    <code class="lang-javascript line-numbers">
 // Direct DOM element data attribute manipulation
 const stepper = document.getElementById('my-stepper');
 stepper.dataset.current = '2'; // MutationObserver triggers automatic update
@@ -617,6 +622,7 @@ stepper.dataset.total = '5';   // Updates total steps count
 // - Access .progress, .current, .total properties
 // - Call navigation methods like next() or previous()
                 </code>
+                </div>
             </div>
 
             <h3>Control Buttons</h3>
@@ -629,7 +635,8 @@ stepper.dataset.total = '5';   // Updates total steps count
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>
-                <code class="lang-html nds-expandable-content line-numbers">
+                <div class="nds-expandable-content">
+                    <code class="lang-html line-numbers">
 <!-- Automatic targeting (inside stepper) -->
 <button data-stepper-control="next">Next Step</button>
 <button data-stepper-control="previous">Previous Step</button>
@@ -642,6 +649,7 @@ stepper.dataset.total = '5';   // Updates total steps count
     Go to Step 3
 </button>
                 </code>
+                </div>
             </div>
 
             <h3>Custom Events</h3>
@@ -654,13 +662,15 @@ stepper.dataset.total = '5';   // Updates total steps count
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>
-                <code class="lang-javascript nds-expandable-content line-numbers">
+                <div class="nds-expandable-content">
+                    <code class="lang-javascript line-numbers">
 document.addEventListener('nds:stepper:change', (e) => {
     console.log('Step:', e.detail.currentStep);
     console.log('Total:', e.detail.totalSteps);
     console.log('Progress:', e.detail.progressPercentage + '%');
 });
                 </code>
+                </div>
             </div>
 
             <h3>Linear vs Radial Behavior</h3>

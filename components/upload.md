@@ -133,10 +133,10 @@ direction: ltr
                   aria-controls="panel-file-upload-2" id="tab-file-upload-2">
                   <span class="nds-tab-label">Documentation</span>
                 </button>
+              </nav>
                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                 </button>
-              </nav>
             </div>
             <div class="nds-tab-content">
               <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-file-upload-1"
@@ -281,11 +281,11 @@ fileUpload.startUpload(fileId);
 
                 <p><strong>Configuration Options:</strong></p>
                 <ul>
-                  <li><code>data-upload-url</code>: Server endpoint for file uploads</li>
-                  <li><code>data-auto-upload</code>: Upload files automatically on selection (true/false)</li>
-                  <li><code>data-max-files</code>: Maximum number of files allowed (default: 10)</li>
-                  <li><code>data-max-file-size</code>: Maximum file size in bytes (default: 5MB)</li>
-                  <li><code>data-accepted-types</code>: Accepted file types (MIME types or extensions)</li>
+                  <li>data-upload-url: Server endpoint for file uploads</li>
+                  <li>data-auto-upload: Upload files automatically on selection (true/false)</li>
+                  <li>data-max-files: Maximum number of files allowed (default: 10)</li>
+                  <li>data-max-file-size: Maximum file size in bytes (default: 5MB)</li>
+                  <li>data-accepted-types: Accepted file types (MIME types or extensions)</li>
                 </ul>
 
                 <h3>Methods</h3>
@@ -482,10 +482,10 @@ uploadElement.addEventListener('uploadError', (e) => {
 
                 <p><strong>Available Events:</strong></p>
                 <ul>
-                  <li><code>filesSelected</code>: Fired when files are selected</li>
-                  <li><code>uploadProgress</code>: Upload progress update</li>
-                  <li><code>uploadComplete</code>: Upload completed successfully</li>
-                  <li><code>uploadError</code>: Upload failed or validation error</li>
+                  <li>filesSelected: Fired when files are selected</li>
+                  <li>uploadProgress: Upload progress update</li>
+                  <li>uploadComplete: Upload completed successfully</li>
+                  <li>uploadError: Upload failed or validation error</li>
                 </ul>
 
                 <h3>File Status Values</h3>

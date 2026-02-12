@@ -105,6 +105,8 @@
     // Line numbering styles
     &.line-numbers {
       counter-reset: line;
+      display: flex!important;
+      flex-direction: column!important;
 
       .code-line {
         display: block;

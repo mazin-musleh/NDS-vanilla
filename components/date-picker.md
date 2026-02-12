@@ -83,10 +83,10 @@ direction: ltr
                   aria-controls="panel-date-picker-1" id="tab-date-picker-1">
                   <span class="nds-tab-label">HTML</span>
                 </button>
+              </nav>
                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                 </button>
-              </nav>
             </div>
             <div class="nds-tab-content">
               <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-date-picker-1"

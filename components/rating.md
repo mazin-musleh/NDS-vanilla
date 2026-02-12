@@ -224,9 +224,9 @@ direction: ltr
                     <h3>Star States</h3>
                     <ul>
                         <li><strong>Normal:</strong> Default empty state (no additional class)</li>
-                        <li><strong>Selected:</strong> Add <code>selected</code> class for filled stars</li>
-                        <li><strong>Half:</strong> Add <code>half</code> class for partial ratings</li>
-                        <li><strong>Pressed:</strong> Add <code>pressed</code> class for interaction feedback</li>
+                        <li><strong>Selected:</strong> Add selected class for filled stars</li>
+                        <li><strong>Half:</strong> Add half class for partial ratings</li>
+                        <li><strong>Pressed:</strong> Add pressed class for interaction feedback</li>
                     </ul>
                 </div>
                 <div class="guideline-item">
@@ -235,19 +235,19 @@ direction: ltr
                         <li><strong>Whole numbers:</strong> 1, 2, 3, 4, 5 show exact number of filled stars</li>
                         <li><strong>Half stars:</strong> Displayed when decimal part is 0.3 or higher</li>
                         <li><strong>Examples:</strong></li>
-                        <li>• <code>3.2</code> → 3 stars (decimal &lt; 0.3)</li>
-                        <li>• <code>3.3</code> → 3.5 stars (decimal ≥ 0.3)</li>
-                        <li>• <code>1.8</code> → 1.5 stars (decimal ≥ 0.3)</li>
-                        <li>• <code>4.1</code> → 4 stars (decimal &lt; 0.3)</li>
+                        <li>• 3.2 → 3 stars (decimal < 0.3)</li>
+                        <li>• 3.3 → 3.5 stars (decimal ≥ 0.3)</li>
+                        <li>• 1.8 → 1.5 stars (decimal ≥ 0.3)</li>
+                        <li>• 4.1 → 4 stars (decimal < 0.3)</li>
                         <li><strong>Threshold:</strong> 0.3+ shows half star, below 0.3 rounds down</li>
                     </ul>
                 </div>
                 <div class="guideline-item">
                     <h3>Size Options</h3>
                     <ul>
-                        <li><strong>Small (24px):</strong> Use <code>nds-sm</code> for compact interfaces</li>
-                        <li><strong>Medium (32px):</strong> Use <code>nds-md</code> for standard displays (default)</li>
-                        <li><strong>Large (48px):</strong> Use <code>nds-lg</code> for emphasis and touch interfaces
+                        <li><strong>Small (24px):</strong> Use nds-sm for compact interfaces</li>
+                        <li><strong>Medium (32px):</strong> Use nds-md for standard displays (default)</li>
+                        <li><strong>Large (48px):</strong> Use nds-lg for emphasis and touch interfaces
                         </li>
                         <li>Mobile responsiveness automatically adjusts large ratings to 40px</li>
                     </ul>
@@ -256,7 +256,7 @@ direction: ltr
                     <h3>Style Variants</h3>
                     <ul>
                         <li><strong>Default:</strong> Golden yellow (#dba102) for general rating displays</li>
-                        <li><strong>Brand:</strong> Add <code>nds-brand</code> class for Saudi flag green variant</li>
+                        <li><strong>Brand:</strong> Add nds-brand class for Saudi flag green variant</li>
                         <li>Default style provides familiar rating experience</li>
                         <li>Brand style aligns with government/official contexts</li>
                     </ul>
@@ -264,12 +264,12 @@ direction: ltr
                 <div class="guideline-item">
                     <h3>Interactive Ratings</h3>
                     <ul>
-                        <li>Add <code>interactive</code> class for clickable rating controls</li>
+                        <li>Add interactive class for clickable rating controls</li>
                         <li>JavaScript automatically converts spans to buttons</li>
                         <li>Hover preview shows rating before selection</li>
                         <li>Includes scale effects and focus indicators</li>
                         <li>Full keyboard navigation (arrows, enter, space, home, end)</li>
-                        <li>Dispatches <code>ratingChange</code> events when value changes</li>
+                        <li>Dispatches ratingChange events when value changes</li>
                     </ul>
                 </div>
                 <div class="guideline-item">
@@ -277,11 +277,11 @@ direction: ltr
                     <ul>
                         <li><strong>Auto-initialization:</strong> Components initialize automatically</li>
                         <li><strong>Event handling:</strong>
-                            <code>element.addEventListener('ratingChange', callback)</code>
+                            element.addEventListener('ratingChange', callback)
                         </li>
-                        <li><strong>Get value:</strong> <code>element.ndsRating.getRating()</code></li>
-                        <li><strong>Set value:</strong> <code>element.ndsRating.setValue(3)</code></li>
-                        <li><strong>Disable/Enable:</strong> <code>element.ndsRating.setDisabled(true)</code></li>
+                        <li><strong>Get value:</strong> element.ndsRating.getRating()</li>
+                        <li><strong>Set value:</strong> element.ndsRating.setValue(3)</li>
+                        <li><strong>Disable/Enable:</strong> element.ndsRating.setDisabled(true)</li>
                         <li>Works with dynamically added content</li>
                     </ul>
 
@@ -292,7 +292,8 @@ direction: ltr
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
                             </button>
                         </div>
-                        <code class="lang-javascript nds-expandable-content">
+                        <div class="nds-expandable-content">
+                            <code class="lang-javascript">
 // Listen for rating change events
 document.addEventListener('ratingChange', (e) => {
     console.log('Rating changed to:', e.detail.rating);
@@ -316,6 +317,7 @@ ratingElement.ndsRating.setDisabled(false);
 const isDisabled = Math.random() > 0.5;
 ratingElement.ndsRating.setDisabled(isDisabled);
                         </code>
+                        </div>
                     </div>
                 </div>
                 <div class="guideline-item">
@@ -323,8 +325,8 @@ ratingElement.ndsRating.setDisabled(isDisabled);
                     <ul>
                         <li>Stars are created using pure CSS with Figma-accurate SVG shape</li>
                         <li>Use consistent star counts across your application (typically 5)</li>
-                        <li>Display-only ratings use <code>data-rating</code> attribute</li>
-                        <li>Interactive ratings start with <code>data-rating="0"</code></li>
+                        <li>Display-only ratings use data-rating attribute</li>
+                        <li>Interactive ratings start with data-rating="0"</li>
                         <li>Test ratings on different background colors</li>
                         <li>Ensure proper contrast ratios for accessibility</li>
                         <li>Component works seamlessly in RTL layouts</li>

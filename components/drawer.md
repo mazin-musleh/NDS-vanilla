@@ -246,7 +246,7 @@ direction: ltr
                                 </ul>
                             </nav>
                             <p class="nds-text-sm" style="margin-top: var(--spacing-lg); opacity: 0.7;">
-                                <strong>Note:</strong> Resize your browser to see responsive behavior. On tablet+ (≥600px), menus are permanently open without arrows. On mobile (&lt;600px), menus are collapsible with toggle arrows.
+                                <strong>Note:</strong> Resize your browser to see responsive behavior. On tablet+ (≥600px), menus are permanently open without arrows. On mobile (<600px), menus are collapsible with toggle arrows.
                             </p>
                         </div>
                     </div>
@@ -795,7 +795,7 @@ direction: ltr
 
             <h3>Component Structure</h3>
 
-            <p>The drawer component uses a simple semantic structure starting with the <strong>.nds-drawer</strong> container wrapped in a <strong>&lt;nav&gt;</strong> element. Inside, <strong>.nds-drawer-list</strong> holds the navigation items in a standard unordered list format. Each list item contains either an anchor link or a button with the <strong>.nds-btn.nds-subtle</strong> classes. For items with nested submenus, add a nested <strong>&lt;ul&gt;</strong> element directly inside the parent <strong>&lt;li&gt;</strong>. The component automatically detects nested lists using CSS <strong>:has()</strong> selector without requiring additional classes.</p>
+            <p>The drawer component uses a simple semantic structure starting with the <strong>.nds-drawer</strong> container wrapped in a <strong><nav></strong> element. Inside, <strong>.nds-drawer-list</strong> holds the navigation items in a standard unordered list format. Each list item contains either an anchor link or a button with the <strong>.nds-btn.nds-subtle</strong> classes. For items with nested submenus, add a nested <strong><ul></strong> element directly inside the parent <strong><li></strong>. The component automatically detects nested lists using CSS <strong>:has()</strong> selector without requiring additional classes.</p>
 
             <h3>Size Variants</h3>
 
@@ -811,7 +811,7 @@ direction: ltr
 
             <h3>Nested Menus and Accordion Behavior</h3>
 
-            <p>Create nested menus by placing a <strong>&lt;ul&gt;</strong> element inside any list item. The nested list should contain the same button structure as the parent level. When users click items with nested menus, the submenu smoothly expands using CSS grid animations. The component implements accordion behavior by default, automatically closing sibling menus when a new menu opens. This prevents multiple expanded sections from cluttering the interface. Add <strong>aria-expanded</strong> attributes to parent buttons for accessibility, which the component automatically manages during interactions.</p>
+            <p>Create nested menus by placing a <strong><ul></strong> element inside any list item. The nested list should contain the same button structure as the parent level. When users click items with nested menus, the submenu smoothly expands using CSS grid animations. The component implements accordion behavior by default, automatically closing sibling menus when a new menu opens. This prevents multiple expanded sections from cluttering the interface. Add <strong>aria-expanded</strong> attributes to parent buttons for accessibility, which the component automatically manages during interactions.</p>
 
             <h3>Responsive State Control</h3>
 
@@ -827,7 +827,8 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>
-                <code class="lang-html nds-expandable-content line-numbers">
+                <div class="nds-expandable-content">
+                    <code class="lang-html line-numbers">
 <!-- Drawer-level: opens on tablet and larger -->
 <nav class="nds-drawer" data-open-on="tablet">
     <ul class="nds-drawer-list">
@@ -851,6 +852,7 @@ direction: ltr
     </ul>
 </nav>
                 </code>
+                </div>
             </div>
 
             <h4>data-always-open-on Attribute</h4>
@@ -863,7 +865,8 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>
-                <code class="lang-html nds-expandable-content line-numbers">
+                <div class="nds-expandable-content">
+                    <code class="lang-html line-numbers">
 <!-- Always open on tablet+, collapsible on mobile -->
 <nav class="nds-drawer nds-divided" data-always-open-on="tablet">
     <ul class="nds-drawer-list">
@@ -879,6 +882,7 @@ direction: ltr
     </ul>
 </nav>
                 </code>
+                </div>
             </div>
 
             <h4>Available Breakpoints</h4>
@@ -907,7 +911,8 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>
-                <code class="lang-html nds-expandable-content line-numbers">
+                <div class="nds-expandable-content">
+                    <code class="lang-html line-numbers">
 <!-- Constrained drawer with show more -->
 <nav class="nds-drawer" style="--drawer-max-height: 300px;">
     <div class="nds-drawer-scroll">
@@ -921,6 +926,7 @@ direction: ltr
     </button>
 </nav>
                 </code>
+                </div>
             </div>
 
             <h3>Fit Mode for Grid Layouts</h3>
@@ -933,7 +939,8 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>
-                <code class="lang-html nds-expandable-content line-numbers">
+                <div class="nds-expandable-content">
+                    <code class="lang-html line-numbers">
 <!-- Fit mode in grid layout -->
 <div class="nds-grid" style="--gap: var(--spacing-4xl);">
     <div class="col-sm-12 col-lg-6">
@@ -952,6 +959,7 @@ direction: ltr
     </div>
 </div>
                 </code>
+                </div>
             </div>
 
             <h3>Label Truncation</h3>
@@ -964,12 +972,14 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>
-                <code class="lang-css nds-expandable-content line-numbers">
+                <div class="nds-expandable-content">
+                    <code class="lang-css line-numbers">
 /* Truncate labels to 2 lines */
 .nds-drawer {
     --drawer-truncate: 2;
 }
                 </code>
+                </div>
             </div>
 
             <h3>JavaScript API</h3>
@@ -982,7 +992,8 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>
-                <code class="lang-javascript nds-expandable-content line-numbers">
+                <div class="nds-expandable-content">
+                    <code class="lang-javascript line-numbers">
 // Initialize all drawers
 NDSDrawer.init();
 
@@ -1003,6 +1014,7 @@ NDSDrawer.destroy(drawer);
 // Reinitialize all drawers (useful after DOM changes)
 NDSDrawer.reinit();
                 </code>
+                </div>
             </div>
 
             <h3>Custom Events</h3>
@@ -1015,7 +1027,8 @@ NDSDrawer.reinit();
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>
-                <code class="lang-javascript nds-expandable-content line-numbers">
+                <div class="nds-expandable-content">
+                    <code class="lang-javascript line-numbers">
 document.addEventListener('nds:drawer:shown', (e) => {
     console.log('Menu opened:', e.detail.item);
     console.log('Drawer:', e.detail.drawer);
@@ -1025,6 +1038,7 @@ document.addEventListener('nds:drawer:hidden', (e) => {
     console.log('Menu closed:', e.detail.item);
 });
                 </code>
+                </div>
             </div>
 
             <h3>Customization with CSS Variables</h3>
@@ -1037,7 +1051,8 @@ document.addEventListener('nds:drawer:hidden', (e) => {
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                     </button>
                 </div>
-                <code class="lang-css nds-expandable-content line-numbers">
+                <div class="nds-expandable-content">
+                    <code class="lang-css line-numbers">
 .nds-drawer {
     --drawer-gap: var(--spacing-sm);
     --drawer-indent: var(--spacing-2xl);
@@ -1066,6 +1081,7 @@ document.addEventListener('nds:drawer:hidden', (e) => {
     /* Submenu is collapsing */
 }
                 </code>
+                </div>
             </div>
 
             <h3>Automatic Initialization</h3>
@@ -1078,7 +1094,7 @@ document.addEventListener('nds:drawer:hidden', (e) => {
 
             <h3>Accessibility Features</h3>
 
-            <p>The drawer component follows WCAG accessibility guidelines with proper semantic HTML and ARIA attributes. Navigation items use native <strong>&lt;a&gt;</strong> and <strong>&lt;button&gt;</strong> elements for keyboard accessibility. Parent buttons automatically receive <strong>aria-expanded</strong> attributes that update during interactions. The active state provides both visual and programmatic indication of the current location. Keyboard users can navigate through items using standard Tab key navigation and activate items with Enter or Space. The component maintains focus management during submenu expansions to provide a smooth screen reader experience.</p>
+            <p>The drawer component follows WCAG accessibility guidelines with proper semantic HTML and ARIA attributes. Navigation items use native <strong><a></strong> and <strong><button></strong> elements for keyboard accessibility. Parent buttons automatically receive <strong>aria-expanded</strong> attributes that update during interactions. The active state provides both visual and programmatic indication of the current location. Keyboard users can navigate through items using standard Tab key navigation and activate items with Enter or Space. The component maintains focus management during submenu expansions to provide a smooth screen reader experience.</p>
 
         </div>
     </div>

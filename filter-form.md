@@ -544,7 +544,7 @@ exclude_showcase: true
                     <li>No dependency on card data</li>
                 </ul>
                 <p><strong>Note:</strong> Auto-generation only works for client-side filtering
-                    (<code>&lt;div class="nds-filter"&gt;</code>)</p>
+                    (&lt;div class="nds-filter"&gt;)</p>
             </div>
         </div>
     </div>

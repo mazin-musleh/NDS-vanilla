@@ -71,15 +71,15 @@ direction: ltr
                                 </button>
                             </div>
                             <code class="lang-html code">
-&lt;div class="nds-ipv-gallery"&gt;
-  &lt;div class="nds-ipv-image-card"&gt;
-    &lt;img src="thumbnail.jpg"
+<div class="nds-ipv-gallery">
+  <div class="nds-ipv-image-card">
+    <img src="thumbnail.jpg"
          data-ipv-full="full-size.jpg"
          alt="Image Description"
-         class="nds-ipv-thumbnail"&gt;
-    &lt;div class="nds-ipv-image-title"&gt;Image Title&lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
+         class="nds-ipv-thumbnail">
+    <div class="nds-ipv-image-title">Image Title</div>
+  </div>
+</div>
                             </code>
                         </div>
                     </div>
@@ -173,8 +173,8 @@ direction: ltr
             <div class="nds-usage-panel">
                 <h3>Implementation</h3>
                 <ol>
-                    <li>Add the class <code>nds-ipv-thumbnail</code> to your thumbnail images</li>
-                    <li>Use <code>data-ipv-full</code> attribute for the full-size image URL</li>
+                    <li>Add the class nds-ipv-thumbnail to your thumbnail images</li>
+                    <li>Use data-ipv-full attribute for the full-size image URL</li>
                     <li>The popup overlay is automatically created by the JavaScript</li>
                     <li>No additional markup needed - just add the thumbnail class!</li>
                 </ol>

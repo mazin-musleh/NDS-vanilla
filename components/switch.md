@@ -79,10 +79,10 @@ direction: ltr
                   aria-controls="panel-switch-single-1" id="tab-switch-single-1">
                   <span class="nds-tab-label">HTML</span>
                 </button>
+              </nav>
                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                 </button>
-              </nav>
             </div>
             <div class="nds-tab-content">
               <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-switch-single-1"
@@ -216,10 +216,10 @@ direction: ltr
                   aria-controls="panel-switch-1" id="tab-switch-1">
                   <span class="nds-tab-label">HTML</span>
                 </button>
+              </nav>
                 <button class="nds-btn nds-subtle nds-tab showMore"><i
                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                 </button>
-              </nav>
             </div>
             <div class="nds-tab-content">
               <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-switch-1"
