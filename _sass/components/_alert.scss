@@ -66,17 +66,8 @@
 
   .nds-feedback-icon {
     --nds-icon-size: 20px;
-    border-radius: 50%;
-    display: flex;
-    width: 40px;
-    height: 40px;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--featuredicons-background-default-light);
-  }
-
-  .nds-alert-icon {
-    flex-shrink: 0;
+    width: calc(var(--nds-icon-size)*2);
+    height: calc(var(--nds-icon-size)*2);
   }
 
   // ==============================================
@@ -223,32 +214,6 @@
   }
 
   // ==============================================
-  // STYLE VARIANTS
-  // ==============================================
-
-
-  // Solid/filled variant with colored background
-  &.nds-solid {
-    border: none;
-
-    &[data-status="success"] { background-color: var(--featuredicons-icon-success); }
-    &[data-status="info"] { background-color: var(--featuredicons-icon-info); }
-    &[data-status="warning"] { background-color: var(--featuredicons-icon-warning); }
-    &[data-status="error"] { background-color: var(--featuredicons-icon-error); }
-    &[data-status="brand"] { background-color: var(--featuredicons-icon-primary); }
-
-    &:is([data-status="success"], [data-status="info"], [data-status="error"], [data-status="brand"]) {
-      :is(.nds-alert-title, .nds-alert-description) {
-        color: var(--text-oncolor-primary);
-      }
-    }
-
-    &[data-status="warning"] :is(.nds-alert-title, .nds-alert-description) {
-      color: var(--text-display);
-    }
-  }
-
-  // ==============================================
   // LAYOUT VARIANTS
   // ==============================================
 
@@ -287,22 +252,46 @@
 }
 
 // ==============================================
+// TOAST PLACEHOLDER CONTAINERS
+// ==============================================
+
+.nds-alert-placeholder {
+  position: fixed;
+  z-index: 9999;
+  inset-inline-end: max(var(--nds-viewport-padding), calc((100vw - var(--nds-content-MaxWidth, 1280px)) / 2));
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+  pointer-events: none;
+
+  @include mobile {
+    inset-inline: var(--nds-viewport-padding);
+  }
+
+  // Top position (default)
+  &[data-position="top"] {
+    inset-block-start: calc(var(--nds-nav-height) + var(--spacing-md));
+  }
+
+  // Bottom position
+  &[data-position="bottom"] {
+    inset-block-end: var(--nds-viewport-padding);
+  }
+}
+
+// ==============================================
 // TOAST NOTIFICATIONS
 // ==============================================
 
 .nds-alert.nds-toast {
-  position: fixed;
-  z-index: 9999;
-  inset-block-start: calc(var(--nds-nav-height) + var(--spacing-md));
-  inset-inline-end: max(var(--nds-viewport-padding), calc((100vw - var(--nds-content-MaxWidth, 1280px)) / 2));
   width: fit-content;
   min-width: 300px;
   max-width: 600px;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity var(--nds-transition);
+  pointer-events: auto;
 
   @include mobile {
-    inset-inline: var(--nds-viewport-padding);
     min-width: auto;
     max-width: none;
     width: auto;
@@ -314,11 +303,5 @@
 
   &[data-toast-state="hide"] {
     opacity: 0;
-  }
-
-  // Bottom position
-  &[data-position="bottom"] {
-    inset-block-start: auto;
-    inset-block-end: var(--nds-viewport-padding);
   }
 }

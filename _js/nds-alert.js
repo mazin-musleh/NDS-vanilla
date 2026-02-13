@@ -143,11 +143,15 @@
 
             // Insert into target or as toast
             if (toast) {
-                // Set position attribute
-                alert.setAttribute('data-position', position);
+                // Find or create the placeholder container for this position
+                const placeholder = this._getPlaceholder(position);
 
-                // Append to body
-                document.body.appendChild(alert);
+                // Top: prepend (newest first), Bottom: append (newest last)
+                if (position === 'bottom') {
+                    placeholder.appendChild(alert);
+                } else {
+                    placeholder.prepend(alert);
+                }
 
                 // Add entrance animation
                 setTimeout(() => alert.setAttribute('data-toast-state', 'show'), 10);
@@ -173,16 +177,41 @@
         },
 
         /**
+         * Get or create a toast placeholder container for the given position
+         */
+        _getPlaceholder(position) {
+            // Check for an existing placeholder (user-placed or auto-created)
+            let placeholder = document.querySelector(`.nds-alert-placeholder[data-position="${position}"]`);
+            if (placeholder) {
+                // Ensure it's visible
+                placeholder.removeAttribute('hidden');
+                return placeholder;
+            }
+
+            // Create one automatically
+            placeholder = document.createElement('div');
+            placeholder.className = 'nds-alert-placeholder';
+            placeholder.setAttribute('data-position', position);
+            document.body.appendChild(placeholder);
+            return placeholder;
+        },
+
+        /**
          * Dismiss an alert
          */
         dismiss(alert) {
             const el = typeof alert === 'string' ? document.querySelector(alert) : alert;
             if (el) {
+                const placeholder = el.closest('.nds-alert-placeholder');
+
                 // Add exit animation for toasts
                 if (el.classList.contains('nds-toast')) {
                     el.setAttribute('data-toast-state', 'hide');
                     setTimeout(() => {
                         el.remove();
+                        if (placeholder && !placeholder.children.length) {
+                            placeholder.remove();
+                        }
                     }, 300);
                 } else {
                     el.remove();
