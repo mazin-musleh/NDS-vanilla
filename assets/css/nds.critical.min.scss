@@ -44,7 +44,7 @@
 @use 'components/breadcrumb';
 
 // Section component - Shared section base (tokens, wrapper, head, title, desc, meta, action, content)
-@use 'components/section';
+@use 'layout/section';
 
 // Content layout - Main content structure (grid, layout variants, striping, section context overrides)
 @use 'layout/contentLayout';

@@ -98,7 +98,7 @@ exclude_showcase: true
                 <div class="nds-tab-panel nds-card nds-shadow" role="tabpanel" id="panel-cv" aria-labelledby="tab-cv"
                     tabindex="0">
                     <div class="nds-content-block">
-                        <h3>السيرة الذاتية</h3>
+                        <h3 class="nds-block-title">السيرة الذاتية</h3>
                         <p>الدكتور محمد أحمد السالم هو أستاذ مشارك في قسم علوم الحاسب بكلية علوم الحاسب والمعلومات.
                             يتمتع
                             بخبرة أكاديمية وبحثية تمتد لأكثر من 15 عاماً في مجال الذكاء الاصطناعي وتعلم الآلة.</p>
@@ -110,50 +110,57 @@ exclude_showcase: true
                 <!-- الإهتمامات البحثية Tab -->
                 <div class="nds-tab-panel nds-card nds-shadow" role="tabpanel" id="panel-research"
                     aria-labelledby="tab-research" aria-hidden="true" tabindex="-1" hidden>
-                    <h3>الإهتمامات البحثية</h3>
-                    <ul>
-                        <li>التعلم العميق والشبكات العصبية الاصطناعية</li>
-                        <li>معالجة اللغات الطبيعية للغة العربية</li>
-                        <li>رؤية الحاسب والتعرف على الصور</li>
-                        <li>تحليل البيانات الضخمة</li>
-                        <li>الأمن السيبراني والذكاء الاصطناعي</li>
-                        <li>إنترنت الأشياء والحوسبة الذكية</li>
-                    </ul>
+                    <div class="nds-content-block">
+                        <h3 class="nds-block-title">الإهتمامات البحثية</h3>
+                        <ul>
+                            <li>التعلم العميق والشبكات العصبية الاصطناعية</li>
+                            <li>معالجة اللغات الطبيعية للغة العربية</li>
+                            <li>رؤية الحاسب والتعرف على الصور</li>
+                            <li>تحليل البيانات الضخمة</li>
+                            <li>الأمن السيبراني والذكاء الاصطناعي</li>
+                            <li>إنترنت الأشياء والحوسبة الذكية</li>
+                        </ul>
+                    </div>
                 </div>
                 <!-- الأبحاث Tab -->
                 <div class="nds-tab-panel nds-card nds-shadow" role="tabpanel" id="panel-publications"
                     aria-labelledby="tab-publications" aria-hidden="true" tabindex="-1" hidden>
-                    <h3>الأبحاث المنشورة</h3>
-                    <ol>
-                        <li>نموذج تعلم عميق محسّن لمعالجة النصوص العربية - مجلة IEEE للذكاء الاصطناعي، 2024</li>
-                        <li>تطبيقات الشبكات العصبية في كشف التهديدات السيبرانية - مؤتمر الأمن السيبراني الدولي، 2023
-                        </li>
-                        <li>تحليل المشاعر في وسائل التواصل الاجتماعي باستخدام تعلم الآلة - المجلة العربية لتقنية
-                            المعلومات، 2023</li>
-                        <li>نظام ذكي للتعرف على الوجوه باستخدام التعلم التحويلي - مجلة رؤية الحاسب الدولية، 2022</li>
-                        <li>إطار عمل لتحليل البيانات الضخمة في المدن الذكية - مؤتمر إنترنت الأشياء، 2021</li>
-                        <li>تحسين أداء خوارزميات التعلم الآلي في البيئات السحابية - المجلة الدولية للحوسبة السحابية،
-                            2021</li>
-                    </ol>
+                    <div class="nds-content-block">
+                        <h3 class="nds-block-title">الأبحاث المنشورة</h3>
+                        <ol>
+                            <li>نموذج تعلم عميق محسّن لمعالجة النصوص العربية - مجلة IEEE للذكاء الاصطناعي، 2024</li>
+                            <li>تطبيقات الشبكات العصبية في كشف التهديدات السيبرانية - مؤتمر الأمن السيبراني الدولي، 2023
+                            </li>
+                            <li>تحليل المشاعر في وسائل التواصل الاجتماعي باستخدام تعلم الآلة - المجلة العربية لتقنية
+                                المعلومات، 2023</li>
+                            <li>نظام ذكي للتعرف على الوجوه باستخدام التعلم التحويلي - مجلة رؤية الحاسب الدولية، 2022</li>
+                            <li>إطار عمل لتحليل البيانات الضخمة في المدن الذكية - مؤتمر إنترنت الأشياء، 2021</li>
+                            <li>تحسين أداء خوارزميات التعلم الآلي في البيئات السحابية - المجلة الدولية للحوسبة السحابية،
+                                2021</li>
+                        </ol>
+                    </div>
                 </div>
                 <!-- الخبرات Tab -->
                 <div class="nds-tab-panel nds-card nds-shadow" role="tabpanel" id="panel-experiences"
                     aria-labelledby="tab-experiences" aria-hidden="true" tabindex="-1" hidden>
-                    <h3>الخبرات المهنية</h3>
-                    <ul>
-                        <li>أستاذ مشارك - قسم علوم الحاسب، كلية علوم الحاسب والمعلومات (2019 - حتى الآن)</li>
-                        <li>رئيس وحدة البحوث والابتكار - قسم علوم الحاسب (2021 - حتى الآن)</li>
-                        <li>أستاذ مساعد - قسم علوم الحاسب (2013 - 2019)</li>
-                        <li>باحث رئيسي - مركز التميز في تقنية المعلومات (2016 - 2020)</li>
-                        <li>مستشار تقني - شركة حلول الذكاء الاصطناعي المحدودة (2015 - 2018)</li>
-                        <li>محاضر - كلية علوم الحاسب (2010 - 2013)</li>
-                    </ul>
+                    <div class="nds-content-block">
+                        <h3 class="nds-block-title">الخبرات المهنية</h3>
+                        <ul>
+                            <li>أستاذ مشارك - قسم علوم الحاسب، كلية علوم الحاسب والمعلومات (2019 - حتى الآن)</li>
+                            <li>رئيس وحدة البحوث والابتكار - قسم علوم الحاسب (2021 - حتى الآن)</li>
+                            <li>أستاذ مساعد - قسم علوم الحاسب (2013 - 2019)</li>
+                            <li>باحث رئيسي - مركز التميز في تقنية المعلومات (2016 - 2020)</li>
+                            <li>مستشار تقني - شركة حلول الذكاء الاصطناعي المحدودة (2015 - 2018)</li>
+                            <li>محاضر - كلية علوم الحاسب (2010 - 2013)</li>
+                        </ul>
+                    </div>
                 </div>
                 <!-- التعليم Tab -->
                 <div class="nds-tab-panel nds-card nds-shadow" role="tabpanel" id="panel-education"
                     aria-labelledby="tab-education" aria-hidden="true" tabindex="-1" hidden>
-                    <h3>المؤهلات العلمية</h3>
-                    <dl class="nds-definition-list tableView">
+                    <div class="nds-content-block">
+                        <h3 class="nds-block-title">المؤهلات العلمية</h3>
+                        <dl class="nds-definition-list tableView">
                         <div class="nds-definition-item">
                             <dt><span class="label">الدكتوراه</span></dt>
                             <dd>علوم الحاسب (الذكاء الاصطناعي) - جامعة ستانفورد، الولايات المتحدة الأمريكية (2010)</dd>
@@ -166,30 +173,33 @@ exclude_showcase: true
                             <dt><span class="label">البكالوريوس</span></dt>
                             <dd>علوم الحاسب - جامعة الملك فهد للبترول والمعادن، المملكة العربية السعودية (2004)</dd>
                         </div>
-                    </dl>
+                        </dl>
+                    </div>
                 </div>
                 <!-- التواصل Tab -->
                 <div class="nds-tab-panel nds-card nds-shadow" role="tabpanel" id="panel-contact"
                     aria-labelledby="tab-contact" aria-hidden="true" tabindex="-1" hidden>
-                    <h3>معلومات التواصل</h3>
-                    <dl class="nds-definition-list tableView">
-                        <div class="nds-definition-item">
-                            <dt><span class="label">البريد الإلكتروني</span></dt>
-                            <dd>m.alsalem@university.edu.sa</dd>
-                        </div>
-                        <div class="nds-definition-item">
-                            <dt><span class="label">رقم المكتب</span></dt>
-                            <dd>مبنى علوم الحاسب - الدور الخامس - مكتب 523</dd>
-                        </div>
-                        <div class="nds-definition-item">
-                            <dt><span class="label">ساعات المكتب</span></dt>
-                            <dd>الأحد والثلاثاء والأربعاء: 9:00 صباحاً - 11:00 صباحاً</dd>
-                        </div>
-                        <div class="nds-definition-item">
-                            <dt><span class="label">الهاتف</span></dt>
-                            <dd>+966 11 987 6543 تحويلة 4251</dd>
-                        </div>
-                    </dl>
+                    <div class="nds-content-block">
+                        <h3 class="nds-block-title">معلومات التواصل</h3>
+                        <dl class="nds-definition-list tableView">
+                            <div class="nds-definition-item">
+                                <dt><span class="label">البريد الإلكتروني</span></dt>
+                                <dd>m.alsalem@university.edu.sa</dd>
+                            </div>
+                            <div class="nds-definition-item">
+                                <dt><span class="label">رقم المكتب</span></dt>
+                                <dd>مبنى علوم الحاسب - الدور الخامس - مكتب 523</dd>
+                            </div>
+                            <div class="nds-definition-item">
+                                <dt><span class="label">ساعات المكتب</span></dt>
+                                <dd>الأحد والثلاثاء والأربعاء: 9:00 صباحاً - 11:00 صباحاً</dd>
+                            </div>
+                            <div class="nds-definition-item">
+                                <dt><span class="label">الهاتف</span></dt>
+                                <dd>+966 11 987 6543 تحويلة 4251</dd>
+                            </div>
+                        </dl>
+                    </div>
                 </div>
             </div>
         </div>
