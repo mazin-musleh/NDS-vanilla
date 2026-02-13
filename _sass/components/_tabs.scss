@@ -136,6 +136,7 @@
 /* Tab List Container */
 .nds-tab-list-container {
   position: relative;
+  isolation: isolate;
 
   /* Use flexbox for horizontal tabs to naturally position showMore button */
   .nds-tabs:not(.nds-vertical) & {
