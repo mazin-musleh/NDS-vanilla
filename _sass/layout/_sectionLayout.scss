@@ -6,13 +6,46 @@
 @use '../mixins' as *;
 
 /* ========================================
+   CONTAINER QUERIES
+   ======================================== */
+
+:is(.nds-content-section, .nds-hero-section, .nds-content-grid) {
+    container-type: inline-size;
+    container-name: section;
+}
+
+.nds-section-wrapper {
+    container-type: inline-size;
+    container-name: section-wrapper;
+}
+
+.nds-section-head {
+    container-type: inline-size;
+    container-name: section-head;
+}
+
+.nds-section-content {
+    container-type: inline-size;
+    container-name: section-content;
+}
+
+.nds-content-block {
+    container-type: inline-size;
+    container-name: content-block;
+}
+
+.nds-block-item {
+    container-type: inline-size;
+    container-name: block-item;
+}
+
+/* ========================================
    SECTION WRAPPER
    ======================================== */
 
 .nds-section-wrapper {
     --_section-col-gap: var(--section-col-gap, var(--spacing-xl, 16px));
     --_section-row-gap: var(--section-row-gap, var(--spacing-xl, 16px));
-    container-type: inline-size;
     display: flex;
     flex-wrap: wrap;
     align-items: center;

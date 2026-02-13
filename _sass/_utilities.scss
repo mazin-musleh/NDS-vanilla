@@ -21,40 +21,6 @@ $spacers: (
 // Use only numeric spacers
 $all-spacers: $spacers;
 
-// Bootstrap naming with NDS breakpoint values
-// $breakpoints-all includes sm as an alias for base styles
-$breakpoints-all: (
-  sm: '(min-width: 0px)',
-  // Mobile (alias for base)
-  md: '(min-width: 600px)',
-  // Tablet
-  lg: '(min-width: 960px)',
-  // Desktop
-  xl: '(min-width: 1280px)' // Large Desktop
-);
-
-// $breakpoints-responsive excludes sm to avoid generating redundant classes
-// sm classes are added as aliases to base classes instead
-$breakpoints-responsive: (
-  md: '(min-width: 600px)',
-  // Tablet
-  lg: '(min-width: 960px)',
-  // Desktop
-  xl: '(min-width: 1280px)' // Large Desktop
-);
-
-// Range-based breakpoints for alignment utilities to prevent cascade conflicts
-// Each breakpoint is exclusive to allow proper responsive alignment switching
-$breakpoints-range: (
-  sm: '(max-width: 599px)',
-  // Mobile only (0-599px)
-  md: '(min-width: 600px) and (max-width: 959px)',
-  // Tablet only (600-959px)
-  lg: '(min-width: 960px) and (max-width: 1279px)',
-  // Desktop only (960-1279px)
-  xl: '(min-width: 1280px)' // Large desktop (1280px+)
-);
-
 // ==============================================
 // NDS FLEX UTILITY
 // ==============================================
