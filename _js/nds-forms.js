@@ -616,6 +616,22 @@
             }
         },
 
+        setIndeterminate: function(checkbox, value) {
+            if (!checkbox || checkbox.type !== 'checkbox') return;
+
+            checkbox.indeterminate = !!value;
+
+            var formContainer = checkbox.closest('.nds-form-container');
+            if (formContainer) {
+                FormState.updateDataState(formContainer, 'indeterminate', !!value);
+            }
+
+            checkbox.dispatchEvent(new CustomEvent('nds:indeterminateChange', {
+                detail: { indeterminate: !!value },
+                bubbles: true
+            }));
+        },
+
         updateRadioGroup: function(changedRadio) {
             if (changedRadio.type !== 'radio' || !changedRadio.name) return;
 
@@ -709,7 +725,18 @@
             input.addEventListener('change', function() {
                 FormState.update(input, formControl);
                 FormState.updateRadioGroup(input);
+
+                // Auto-clear indeterminate on user interaction
+                if (input.type === 'checkbox' && !input.indeterminate) {
+                    FormState.setIndeterminate(input, false);
+                }
             });
+
+            // Initialize indeterminate from class (migration from class-based approach)
+            if (input.type === 'checkbox' && input.classList.contains('indeterminate')) {
+                input.classList.remove('indeterminate');
+                FormState.setIndeterminate(input, true);
+            }
 
             // Initialize state
             FormState.update(input, formControl, true);
@@ -1597,6 +1624,9 @@
         setStatus: StatusManager.set.bind(StatusManager),
         clearStatus: StatusManager.clear.bind(StatusManager),
         getStatus: StatusManager.get.bind(StatusManager),
+
+        // Checkbox Indeterminate State
+        setIndeterminate: FormState.setIndeterminate.bind(FormState),
 
         // Checkbox Group Validation
         validateCheckboxGroup: Validator.validateCheckboxGroup.bind(Validator),

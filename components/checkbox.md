@@ -42,7 +42,7 @@ direction: ltr
                 <span class="label">Neutral</span>
               </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["indeterminate", ".nds-check", "stateToggle"]'>
+                data-toggler='["indeterminate", ".nds-check", "stateToggle", "prop"]'>
                 <span class="label">Indeterminate</span>
               </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
@@ -188,7 +188,7 @@ direction: ltr
                     </div>
                     <div class="nds-form-control">
                       <input type="checkbox" id="demo-checkbox3" name="interests" value="entertainment"
-                        class="nds-check indeterminate">
+                        class="nds-check">
                     </div>
                   </div>
                   <div class="nds-form-container nds-check-container">
@@ -259,7 +259,7 @@ direction: ltr
                       </label>
                     </div>
                     <div class="nds-form-control">
-                      <input type="checkbox" id="checkbox3" name="interests" value="entertainment" class="nds-check indeterminate">
+                      <input type="checkbox" id="checkbox3" name="interests" value="entertainment" class="nds-check">
                     </div>
                   </div>
                   <div class="nds-form-container nds-check-container">
