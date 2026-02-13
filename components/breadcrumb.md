@@ -38,6 +38,7 @@ direction: ltr
                         </nav>
                     </div>
                 </div>
+                <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -67,6 +68,7 @@ direction: ltr
                         </div>
                     </div>
                 </div>
+                </div>
             </div>
 
             <div class="nds-demo-card">
@@ -89,6 +91,7 @@ direction: ltr
                         </nav>
                     </div>
                 </div>
+                <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -116,6 +119,7 @@ direction: ltr
                             </code>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
             </div>
@@ -155,6 +159,7 @@ direction: ltr
                         </nav>
                     </div>
                 </div>
+                <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -183,6 +188,7 @@ direction: ltr
                             </code>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
             </div>
@@ -225,6 +231,7 @@ direction: ltr
                         </nav>
                     </div>
                 </div>
+                <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -286,6 +293,7 @@ Dropdown contains:
                         </div>
                     </div>
                 </div>
+                </div>
             </div>
 
             </div>
@@ -301,9 +309,8 @@ Dropdown contains:
             <p class="nds-section-description">Best practices for using breadcrumb navigation</p>
         </div>
         <div class="nds-section-content">
-            <div class="guidelines-grid">
-                <div class="guideline-item">
-                    <h3>When to Use</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">When to Use</h3>
                     <ul>
                         <li>Multi-level website navigation</li>
                         <li>Showing hierarchical page location</li>
@@ -311,8 +318,8 @@ Dropdown contains:
                         <li>Deep content structures (3+ levels)</li>
                     </ul>
                 </div>
-                <div class="guideline-item">
-                    <h3>Accessibility</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Accessibility</h3>
                     <ul>
                         <li>Use &lt;nav&gt; with aria-label="Breadcrumb"</li>
                         <li>Mark current page with aria-current="page"</li>
@@ -320,8 +327,8 @@ Dropdown contains:
                         <li>Ensure links have sufficient color contrast</li>
                     </ul>
                 </div>
-                <div class="guideline-item">
-                    <h3>Best Practices</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Best Practices</h3>
                     <ul>
                         <li>Always start with "Home" as first item</li>
                         <li>Current page should not be a link</li>
@@ -329,8 +336,8 @@ Dropdown contains:
                         <li>Keep breadcrumb trails relatively short (max 5-6 levels)</li>
                     </ul>
                 </div>
-                <div class="guideline-item">
-                    <h3>RTL/LTR Support</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">RTL/LTR Support</h3>
                     <ul>
                         <li>Arrow separators automatically flip in LTR layouts</li>
                         <li>Text direction adjusts based on language</li>
@@ -338,7 +345,6 @@ Dropdown contains:
                         <li>Properly handles Arabic and English content</li>
                     </ul>
                 </div>
-            </div>
         </div>
     </div>
 </section>

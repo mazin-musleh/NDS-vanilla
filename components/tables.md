@@ -71,6 +71,7 @@ direction: ltr
                         </table>
                     </div>
                 </div>
+                <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -112,6 +113,7 @@ direction: ltr
                             </div>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
             </div>
@@ -225,6 +227,7 @@ direction: ltr
                         </table>
                     </div>
                 </div>
+                <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -276,6 +279,7 @@ direction: ltr
                             </div>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
             </div>
@@ -361,6 +365,7 @@ direction: ltr
                         </table>
                     </div>
                 </div>
+                <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -417,6 +422,7 @@ direction: ltr
                             </div>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
             </div>
@@ -544,6 +550,7 @@ direction: ltr
                         </table>
                     </div>
                 </div>
+                <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -601,6 +608,7 @@ direction: ltr
                             </div>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
             </div>
@@ -706,6 +714,7 @@ direction: ltr
                         </table>
                     </div>
                 </div>
+                <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -761,6 +770,7 @@ direction: ltr
                             </div>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
             </div>
@@ -842,6 +852,7 @@ direction: ltr
                         </table>
                     </div>
                 </div>
+                <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -895,6 +906,7 @@ direction: ltr
                         </div>
                     </div>
                 </div>
+                </div>
             </div>
             </div>
         </div>
@@ -909,9 +921,8 @@ direction: ltr
             <p class="nds-section-description">Best practices for implementing table components</p>
         </div>
         <div class="nds-section-content">
-            <div class="guidelines-grid">
-                <div class="guideline-item">
-                    <h3>When to Use</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">When to Use</h3>
                     <ul>
                         <li>Displaying structured data</li>
                         <li>Comparing information across categories</li>
@@ -919,8 +930,8 @@ direction: ltr
                         <li>Administrative interfaces</li>
                     </ul>
                 </div>
-                <div class="guideline-item">
-                    <h3>Table Types</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Table Types</h3>
                     <ul>
                         <li><strong>Basic:</strong> Standard data presentation</li>
                         <li><strong>Compact:</strong> Dense data with reduced padding</li>
@@ -928,8 +939,8 @@ direction: ltr
                         <li><strong>Responsive:</strong> Mobile-friendly layouts</li>
                     </ul>
                 </div>
-                <div class="guideline-item">
-                    <h3>Accessibility</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Accessibility</h3>
                     <ul>
                         <li>Use proper table headers</li>
                         <li>Include aria-labels for sort buttons</li>
@@ -937,8 +948,8 @@ direction: ltr
                         <li>Maintain color contrast ratios</li>
                     </ul>
                 </div>
-                <div class="guideline-item">
-                    <h3>Performance</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Performance</h3>
                     <ul>
                         <li>Implement pagination for large datasets</li>
                         <li>Use virtual scrolling when needed</li>
@@ -946,7 +957,6 @@ direction: ltr
                         <li>Optimize for mobile devices</li>
                     </ul>
                 </div>
-            </div>
         </div>
     </div>
 </section>

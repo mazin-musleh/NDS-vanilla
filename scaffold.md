@@ -54,6 +54,7 @@ exclude_showcase: true
                         </tbody>
                     </table>
                 </div>
+                <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -79,6 +80,7 @@ direction: ltr
 </code>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
         </div>
@@ -170,6 +172,7 @@ direction: ltr
                         </tbody>
                     </table>
                 </div>
+                <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -195,6 +198,7 @@ heroaction: heroaction-service
 </code>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
         </div>
@@ -251,6 +255,7 @@ heroaction: heroaction-service
                         </tbody>
                     </table>
                 </div>
+                <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -292,6 +297,7 @@ hideSidemenu: true
                         </div>
                     </div>
                 </div>
+                </div>
             </div>
         </div>
     </div>
@@ -332,6 +338,7 @@ hideSidemenu: true
                         </tbody>
                     </table>
                 </div>
+                <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -367,6 +374,7 @@ body_class: fullWidth
 </code>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
         </div>
@@ -413,6 +421,7 @@ body_class: fullWidth
                         </tbody>
                     </table>
                 </div>
+                <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -439,6 +448,7 @@ custom_js:
 </code>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
         </div>
@@ -480,6 +490,7 @@ custom_js:
                         </tbody>
                     </table>
                 </div>
+                <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -503,6 +514,7 @@ hide_share_page: true
 </code>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
         </div>
@@ -554,6 +566,7 @@ hide_share_page: true
                         </tbody>
                     </table>
                 </div>
+                <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -586,6 +599,7 @@ breadcrumb: ["News"]
                         </div>
                     </div>
                 </div>
+                </div>
             </div>
         </div>
     </div>
@@ -604,6 +618,7 @@ breadcrumb: ["News"]
                     <div class="demo-label">Component Page</div>
                 </div>
                 <div class="demo-container noBg">
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -633,6 +648,7 @@ direction: ltr
                             </div>
                         </div>
                     </div>
+                    </div>
                 </div>
             </div>
 
@@ -641,6 +657,7 @@ direction: ltr
                     <div class="demo-label">Arabic Page (RTL)</div>
                 </div>
                 <div class="demo-container noBg">
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -670,6 +687,7 @@ direction: rtl
                             </div>
                         </div>
                     </div>
+                    </div>
                 </div>
             </div>
 
@@ -678,6 +696,7 @@ direction: rtl
                     <div class="demo-label">Minimal / Login</div>
                 </div>
                 <div class="demo-container noBg">
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -706,6 +725,7 @@ direction: ltr
                             </div>
                         </div>
                     </div>
+                    </div>
                 </div>
             </div>
 
@@ -714,6 +734,7 @@ direction: ltr
                     <div class="demo-label">Dashboard</div>
                 </div>
                 <div class="demo-container noBg">
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided">
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -745,6 +766,7 @@ exclude_showcase: true
 </code>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
             </div>

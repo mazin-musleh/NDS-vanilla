@@ -48,6 +48,7 @@ direction: ltr
                         </div>
                     </div>
                 </div>
+                <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -89,6 +90,7 @@ direction: ltr
                             </div>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
 
@@ -140,6 +142,7 @@ direction: ltr
                         </div>
                     </div>
                 </div>
+                <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -179,6 +182,7 @@ direction: ltr
                         </div>
                     </div>
                 </div>
+                </div>
             </div>
 
             </div>
@@ -193,10 +197,8 @@ direction: ltr
             <h2 class="nds-section-title">Usage Guidelines</h2>
         </div>
         <div class="nds-section-content">
-            <div class="nds-guidelines-grid">
-
-                <div class="nds-guideline-item">
-                    <h3>Structure</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Structure</h3>
                     <ul>
                         <li>Use .nds-expandable as the wrapper container</li>
                         <li>Content must be inside .nds-expandable-content</li>
@@ -205,8 +207,8 @@ direction: ltr
                     </ul>
                 </div>
 
-                <div class="nds-guideline-item">
-                    <h3>Behavior</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Behavior</h3>
                     <ul>
                         <li>Automatically detects when content exceeds height limit</li>
                         <li>Shows "Show More" button only when needed</li>
@@ -215,8 +217,8 @@ direction: ltr
                     </ul>
                 </div>
 
-                <div class="nds-guideline-item">
-                    <h3>Accessibility</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Accessibility</h3>
                     <ul>
                         <li>Proper ARIA attributes (aria-expanded, aria-label)</li>
                         <li>Keyboard navigation support</li>
@@ -225,8 +227,8 @@ direction: ltr
                     </ul>
                 </div>
 
-                <div class="nds-guideline-item">
-                    <h3>Customization</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Customization</h3>
                     <ul>
                         <li>--max-height: Custom height limit (e.g., "200px")</li>
                         <li>JavaScript API for programmatic control</li>
@@ -234,8 +236,6 @@ direction: ltr
                         <li>Responsive behavior on window resize</li>
                     </ul>
                 </div>
-
-            </div>
         </div>
     </div>
 </section>

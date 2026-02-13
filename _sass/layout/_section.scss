@@ -207,7 +207,7 @@
         }
     }
 
-    :is(p, ul, ol, .nds-content-block) {
+    :is(p, ul, ol, .nds-content-block, .nds-table-wrapper, .nds-table , .nds-tabs , .nds-code) {
         margin-block-end: 1rem;
 
         &:last-child {

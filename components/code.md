@@ -44,6 +44,7 @@ direction: ltr
                         </div>
                     </div>
                 </div>
+                <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -77,6 +78,7 @@ direction: ltr
                             </code>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
 
@@ -115,6 +117,7 @@ NDSAlert.create({
                         </div>
                     </div>
                 </div>
+                <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -148,6 +151,7 @@ NDSAlert.create({
                             </code>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
 
@@ -205,6 +209,7 @@ async function handleFormSubmit(form) {
                         </div>
                     </div>
                 </div>
+                <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -240,6 +245,7 @@ async function handleFormSubmit(form) {
                         </div>
                     </div>
                 </div>
+                </div>
             </div>
 
             </div>
@@ -264,6 +270,7 @@ async function handleFormSubmit(form) {
                 </div>
                 <div class="demo-container">
                     <div class="state-demo">
+                        <div class="demo-code">
                         <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container">
                                 <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -290,8 +297,10 @@ async function handleFormSubmit(form) {
                                 </div>
                             </div>
                         </div>
+                        </div>
                     </div>
                 </div>
+                <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -310,6 +319,7 @@ async function handleFormSubmit(form) {
                                 </button>
                             </div>
                             <code class="lang-html code">
+<div class="demo-code">
 <div class="nds-tabs nds-code nds-divided">
   <div class="nds-tab-list-container">
     <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -333,9 +343,11 @@ async function handleFormSubmit(form) {
     </div>
   </div>
 </div>
+</div>
                             </code>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
 
@@ -346,6 +358,7 @@ async function handleFormSubmit(form) {
                 </div>
                 <div class="demo-container">
                     <div class="state-demo">
+                        <div class="demo-code">
                         <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container">
                                 <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -419,8 +432,10 @@ NDSAlert.create({
                                 </div>
                             </div>
                         </div>
+                        </div>
                     </div>
                 </div>
+                <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -440,6 +455,7 @@ NDSAlert.create({
                             </div>
                             <div class="nds-expandable-content">
                                 <code class="lang-html code">
+<div class="demo-code">
 <div class="nds-tabs nds-code nds-divided">
   <div class="nds-tab-list-container">
     <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -478,10 +494,12 @@ NDSAlert.create({
     </div>
   </div>
 </div>
+</div>
                                 </code>
                             </div>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
 
@@ -498,6 +516,7 @@ NDSAlert.create({
                         </p>
                     </div>
                 </div>
+                <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -517,12 +536,15 @@ NDSAlert.create({
                             </div>
                             <code class="lang-html code">
 <!-- Inside a .nds-demo-card, add hidden attribute -->
+<div class="demo-code">
 <div class="nds-tabs nds-code nds-divided" hidden>
   <!-- Tab structure same as above -->
+</div>
 </div>
                             </code>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
 
@@ -589,10 +611,8 @@ NDSAlert.create({
             <h2 class="nds-section-title">Usage Guidelines</h2>
         </div>
         <div class="nds-section-content">
-            <div class="nds-guidelines-grid">
-
-                <div class="nds-guideline-item">
-                    <h3>Structure</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Structure</h3>
                     <ul>
                         <li>All code blocks must be wrapped in .nds-code.nds-expandable</li>
                         <li>Use .nds-code-action for the copy button container</li>
@@ -601,8 +621,8 @@ NDSAlert.create({
                     </ul>
                 </div>
 
-                <div class="nds-guideline-item">
-                    <h3>Direct vs Tabbed</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Direct vs Tabbed</h3>
                     <ul>
                         <li>Direct: .nds-code.nds-expandable > .nds-expandable-content > code</li>
                         <li>Tabbed: .nds-tabs.nds-code.nds-divided > .nds-tab-panel > code</li>
@@ -611,8 +631,8 @@ NDSAlert.create({
                     </ul>
                 </div>
 
-                <div class="nds-guideline-item">
-                    <h3>Features</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Features</h3>
                     <ul>
                         <li>Add line-numbers class for numbered lines</li>
                         <li>.nds-expandable enables auto show/hide for long code</li>
@@ -621,8 +641,8 @@ NDSAlert.create({
                     </ul>
                 </div>
 
-                <div class="nds-guideline-item">
-                    <h3>Best Practices</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Best Practices</h3>
                     <ul>
                         <li>Keep code examples concise and focused</li>
                         <li>Use expandable for code longer than ~15 lines</li>
@@ -630,8 +650,6 @@ NDSAlert.create({
                         <li>Ensure all panel IDs and tab IDs are unique per page</li>
                     </ul>
                 </div>
-
-            </div>
         </div>
     </div>
 </section>

@@ -69,6 +69,7 @@ direction: ltr
                             </button>
                         </div>
                     </div>
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -93,6 +94,7 @@ direction: ltr
                                 </code>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
 
@@ -148,6 +150,7 @@ direction: ltr
                             </button>
                         </div>
                     </div>
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -172,6 +175,7 @@ direction: ltr
                                 </code>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
 
@@ -227,6 +231,7 @@ direction: ltr
                             </button>
                         </div>
                     </div>
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -252,6 +257,7 @@ direction: ltr
                             </div>
                         </div>
                     </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -266,9 +272,8 @@ direction: ltr
             <p class="nds-section-description">Best practices for using chip components</p>
         </div>
         <div class="nds-section-content">
-            <div class="guidelines-grid">
-                <div class="guideline-item">
-                    <h3>When to Use</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">When to Use</h3>
                     <ul>
                         <li>Filtering and selection interfaces</li>
                         <li>Tagging and categorization</li>
@@ -277,8 +282,8 @@ direction: ltr
                         <li>Status indicators with interaction</li>
                     </ul>
                 </div>
-                <div class="guideline-item">
-                    <h3>Style Selection</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Style Selection</h3>
                     <ul>
                         <li><strong>Primary:</strong> Main categories and selected filters</li>
                         <li><strong>Neutral:</strong> Secondary categories and unselected items</li>
@@ -286,8 +291,8 @@ direction: ltr
                         <li><strong>Removable:</strong> User-added tags that can be deleted</li>
                     </ul>
                 </div>
-                <div class="guideline-item">
-                    <h3>Interaction States</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Interaction States</h3>
                     <ul>
                         <li><strong>Default:</strong> Normal chip appearance</li>
                         <li><strong>Hover:</strong> Mouse over interaction</li>
@@ -297,8 +302,8 @@ direction: ltr
                         <li><strong>Disabled:</strong> Non-interactive state</li>
                     </ul>
                 </div>
-                <div class="guideline-item">
-                    <h3>Accessibility</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Accessibility</h3>
                     <ul>
                         <li>Always include proper ARIA labels</li>
                         <li>Use semantic button elements for interactive chips</li>
@@ -307,7 +312,6 @@ direction: ltr
                         <li>Provide clear removal confirmation when needed</li>
                     </ul>
                 </div>
-            </div>
         </div>
     </div>
 </section>

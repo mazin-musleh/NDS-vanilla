@@ -114,6 +114,7 @@ direction: ltr
                             </nav>
                         </div>
                     </div>
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -186,6 +187,7 @@ direction: ltr
                             </div>
                         </div>
                     </div>
+                    </div>
                 </div>
 
                 <!-- Responsive State Control Demo -->
@@ -250,6 +252,7 @@ direction: ltr
                             </p>
                         </div>
                     </div>
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -311,6 +314,7 @@ direction: ltr
                                 </code>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
 
@@ -403,6 +407,7 @@ direction: ltr
                             </nav>
                         </div>
                     </div>
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -445,6 +450,7 @@ direction: ltr
                                 </div>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
 
@@ -503,6 +509,7 @@ direction: ltr
                             </nav>
                         </div>
                     </div>
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -543,6 +550,7 @@ direction: ltr
                                 </div>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
 
@@ -703,6 +711,7 @@ direction: ltr
                             </div>
                         </div>
                     </div>
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -776,6 +785,7 @@ direction: ltr
                                 </div>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
 

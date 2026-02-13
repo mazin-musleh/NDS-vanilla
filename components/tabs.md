@@ -180,6 +180,7 @@ direction: ltr
                         </div>
                     </div>
                 </div>
+                <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list" role="tablist" aria-label="Tab navigation">
@@ -233,6 +234,7 @@ direction: ltr
                             </div>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
 
@@ -504,6 +506,7 @@ direction: ltr
                         </div>
                     </div>
                 </div>
+                <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list" role="tablist" aria-label="Tab navigation">
@@ -569,6 +572,7 @@ direction: ltr
                         </div>
                     </div>
                 </div>
+                </div>
             </div>
 
             </div>
@@ -584,142 +588,145 @@ direction: ltr
             <p class="nds-section-description">Proper ARIA implementation for accessible tab navigation</p>
         </div>
         <div class="nds-section-content">
-            <div class="accessibility-info">
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">HTML Structure Requirements</h3>
+                    <dl class="nds-definition-list tableView">
+                        <div class="nds-definition-item">
+                            <dt><span class="label">&lt;nav&gt; element</span></dt>
+                            <dd>Semantic navigation wrapper for the tab list</dd>
+                        </div>
+                        <div class="nds-definition-item">
+                            <dt><span class="label">role="tablist"</span></dt>
+                            <dd>Applied to the nav element containing tab buttons</dd>
+                        </div>
+                        <div class="nds-definition-item">
+                            <dt><span class="label">role="tab"</span></dt>
+                            <dd>Applied to each individual tab button</dd>
+                        </div>
+                        <div class="nds-definition-item">
+                            <dt><span class="label">role="tabpanel"</span></dt>
+                            <dd>Applied to each content panel associated with a tab</dd>
+                        </div>
+                    </dl>
+                </div>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Tab Button Attributes</h3>
+                    <dl class="nds-definition-list tableView">
+                        <div class="nds-definition-item">
+                            <dt><span class="label">aria-selected="true"</span></dt>
+                            <dd>Marks the currently active tab (only one tab should have this)</dd>
+                        </div>
+                        <div class="nds-definition-item">
+                            <dt><span class="label">aria-selected="false"</span></dt>
+                            <dd>Applied to all inactive tabs</dd>
+                        </div>
+                        <div class="nds-definition-item">
+                            <dt><span class="label">aria-controls</span></dt>
+                            <dd>Links each tab to its corresponding panel ID</dd>
+                        </div>
+                        <div class="nds-definition-item">
+                            <dt><span class="label">aria-label</span></dt>
+                            <dd>Provides accessible name for the entire tab navigation</dd>
+                        </div>
+                        <div class="nds-definition-item">
+                            <dt><span class="label">tabindex="0"</span></dt>
+                            <dd>Applied to active tab to include it in keyboard tab order</dd>
+                        </div>
+                        <div class="nds-definition-item">
+                            <dt><span class="label">tabindex="-1"</span></dt>
+                            <dd>Applied to inactive tabs to remove them from keyboard tab order</dd>
+                        </div>
+                    </dl>
+                </div>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Tab Panel Visibility Pattern</h3>
+                    <p><strong>Hidden panels require three attributes:</strong></p>
+                    <dl class="nds-definition-list tableView">
+                        <div class="nds-definition-item">
+                            <dt><span class="label">aria-hidden="true"</span></dt>
+                            <dd>Informs screen readers that the content is hidden and should be ignored</dd>
+                        </div>
+                        <div class="nds-definition-item">
+                            <dt><span class="label">hidden</span></dt>
+                            <dd>Native HTML boolean attribute that applies display: none</dd>
+                        </div>
+                        <div class="nds-definition-item">
+                            <dt><span class="label">tabindex="-1"</span></dt>
+                            <dd>Removes hidden panel from keyboard tab order</dd>
+                        </div>
+                    </dl>
 
-                <h3>HTML Structure Requirements</h3>
-                <dl class="nds-definition-list tableView">
-                    <div class="nds-definition-item">
-                        <dt><span class="label">&lt;nav&gt; element</span></dt>
-                        <dd>Semantic navigation wrapper for the tab list</dd>
-                    </div>
-                    <div class="nds-definition-item">
-                        <dt><span class="label">role="tablist"</span></dt>
-                        <dd>Applied to the nav element containing tab buttons</dd>
-                    </div>
-                    <div class="nds-definition-item">
-                        <dt><span class="label">role="tab"</span></dt>
-                        <dd>Applied to each individual tab button</dd>
-                    </div>
-                    <div class="nds-definition-item">
-                        <dt><span class="label">role="tabpanel"</span></dt>
-                        <dd>Applied to each content panel associated with a tab</dd>
-                    </div>
-                </dl>
-
-                <h3>Tab Button Attributes</h3>
-                <dl class="nds-definition-list tableView">
-                    <div class="nds-definition-item">
-                        <dt><span class="label">aria-selected="true"</span></dt>
-                        <dd>Marks the currently active tab (only one tab should have this)</dd>
-                    </div>
-                    <div class="nds-definition-item">
-                        <dt><span class="label">aria-selected="false"</span></dt>
-                        <dd>Applied to all inactive tabs</dd>
-                    </div>
-                    <div class="nds-definition-item">
-                        <dt><span class="label">aria-controls</span></dt>
-                        <dd>Links each tab to its corresponding panel ID</dd>
-                    </div>
-                    <div class="nds-definition-item">
-                        <dt><span class="label">aria-label</span></dt>
-                        <dd>Provides accessible name for the entire tab navigation</dd>
-                    </div>
-                    <div class="nds-definition-item">
-                        <dt><span class="label">tabindex="0"</span></dt>
-                        <dd>Applied to active tab to include it in keyboard tab order</dd>
-                    </div>
-                    <div class="nds-definition-item">
-                        <dt><span class="label">tabindex="-1"</span></dt>
-                        <dd>Applied to inactive tabs to remove them from keyboard tab order</dd>
-                    </div>
-                </dl>
-
-                <h3>Tab Panel Visibility Pattern</h3>
-                <p><strong>Hidden panels require three attributes:</strong></p>
-                <dl class="nds-definition-list tableView">
-                    <div class="nds-definition-item">
-                        <dt><span class="label">aria-hidden="true"</span></dt>
-                        <dd>Informs screen readers that the content is hidden and should be ignored</dd>
-                    </div>
-                    <div class="nds-definition-item">
-                        <dt><span class="label">hidden</span></dt>
-                        <dd>Native HTML boolean attribute that applies display: none</dd>
-                    </div>
-                    <div class="nds-definition-item">
-                        <dt><span class="label">tabindex="-1"</span></dt>
-                        <dd>Removes hidden panel from keyboard tab order</dd>
-                    </div>
-                </dl>
-
-                <p><strong>Active panel attributes:</strong></p>
-                <dl class="nds-definition-list tableView">
-                    <div class="nds-definition-item">
-                        <dt><span class="label">No aria-hidden</span></dt>
-                        <dd>Omit the attribute entirely (don't use aria-hidden="false")</dd>
-                    </div>
-                    <div class="nds-definition-item">
-                        <dt><span class="label">No hidden</span></dt>
-                        <dd>Omit the hidden attribute to make the panel visible</dd>
-                    </div>
-                    <div class="nds-definition-item">
-                        <dt><span class="label">tabindex="0"</span></dt>
-                        <dd>Allows keyboard focus on the visible panel content</dd>
-                    </div>
-                    <div class="nds-definition-item">
-                        <dt><span class="label">aria-labelledby</span></dt>
-                        <dd>Links the panel back to its corresponding tab button ID</dd>
-                    </div>
-                </dl>
-
-                <h3>Keyboard Navigation</h3>
-                <dl class="nds-definition-list tableView">
-                    <div class="nds-definition-item">
-                        <dt><span class="label">Left/Right Arrow</span></dt>
-                        <dd>Navigate between horizontal tabs (automatically reversed in RTL)</dd>
-                    </div>
-                    <div class="nds-definition-item">
-                        <dt><span class="label">Up/Down Arrow</span></dt>
-                        <dd>Navigate between tabs (primary navigation for vertical tabs)</dd>
-                    </div>
-                    <div class="nds-definition-item">
-                        <dt><span class="label">Tab Key</span></dt>
-                        <dd>Move keyboard focus from tabs to the active panel content</dd>
-                    </div>
-                    <div class="nds-definition-item">
-                        <dt><span class="label">Enter / Space</span></dt>
-                        <dd>Activate the currently focused tab</dd>
-                    </div>
-                    <div class="nds-definition-item">
-                        <dt><span class="label">Home</span></dt>
-                        <dd>Jump to the first tab (respects RTL in horizontal layouts)</dd>
-                    </div>
-                    <div class="nds-definition-item">
-                        <dt><span class="label">End</span></dt>
-                        <dd>Jump to the last tab (respects RTL in horizontal layouts)</dd>
-                    </div>
-                </dl>
-
-                <h3>Layout-Specific Behavior</h3>
-                <dl class="nds-definition-list tableView">
-                    <div class="nds-definition-item">
-                        <dt><span class="label">Horizontal Tabs</span></dt>
-                        <dd>Left/Right arrows for navigation (reversed in RTL). Up/Down also work but Left/Right is
-                            primary.</dd>
-                    </div>
-                    <div class="nds-definition-item">
-                        <dt><span class="label">Vertical Tabs</span></dt>
-                        <dd>Up/Down arrows only. Left/Right arrows are disabled in vertical layout.</dd>
-                    </div>
-                    <div class="nds-definition-item">
-                        <dt><span class="label">RTL (Arabic)</span></dt>
-                        <dd>Horizontal tabs: arrow keys reversed for natural navigation. Vertical tabs: no change.</dd>
-                    </div>
-                    <div class="nds-definition-item">
-                        <dt><span class="label">Mobile Responsive</span></dt>
-                        <dd>Vertical tabs automatically become horizontal on small screens for better usability.</dd>
-                    </div>
-                </dl>
-            </div>
+                    <p><strong>Active panel attributes:</strong></p>
+                    <dl class="nds-definition-list tableView">
+                        <div class="nds-definition-item">
+                            <dt><span class="label">No aria-hidden</span></dt>
+                            <dd>Omit the attribute entirely (don't use aria-hidden="false")</dd>
+                        </div>
+                        <div class="nds-definition-item">
+                            <dt><span class="label">No hidden</span></dt>
+                            <dd>Omit the hidden attribute to make the panel visible</dd>
+                        </div>
+                        <div class="nds-definition-item">
+                            <dt><span class="label">tabindex="0"</span></dt>
+                            <dd>Allows keyboard focus on the visible panel content</dd>
+                        </div>
+                        <div class="nds-definition-item">
+                            <dt><span class="label">aria-labelledby</span></dt>
+                            <dd>Links the panel back to its corresponding tab button ID</dd>
+                        </div>
+                    </dl>
+                </div>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Keyboard Navigation</h3>
+                    <dl class="nds-definition-list tableView">
+                        <div class="nds-definition-item">
+                            <dt><span class="label">Left/Right Arrow</span></dt>
+                            <dd>Navigate between horizontal tabs (automatically reversed in RTL)</dd>
+                        </div>
+                        <div class="nds-definition-item">
+                            <dt><span class="label">Up/Down Arrow</span></dt>
+                            <dd>Navigate between tabs (primary navigation for vertical tabs)</dd>
+                        </div>
+                        <div class="nds-definition-item">
+                            <dt><span class="label">Tab Key</span></dt>
+                            <dd>Move keyboard focus from tabs to the active panel content</dd>
+                        </div>
+                        <div class="nds-definition-item">
+                            <dt><span class="label">Enter / Space</span></dt>
+                            <dd>Activate the currently focused tab</dd>
+                        </div>
+                        <div class="nds-definition-item">
+                            <dt><span class="label">Home</span></dt>
+                            <dd>Jump to the first tab (respects RTL in horizontal layouts)</dd>
+                        </div>
+                        <div class="nds-definition-item">
+                            <dt><span class="label">End</span></dt>
+                            <dd>Jump to the last tab (respects RTL in horizontal layouts)</dd>
+                        </div>
+                    </dl>
+                </div>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Layout-Specific Behavior</h3>
+                    <dl class="nds-definition-list tableView">
+                        <div class="nds-definition-item">
+                            <dt><span class="label">Horizontal Tabs</span></dt>
+                            <dd>Left/Right arrows for navigation (reversed in RTL). Up/Down also work but Left/Right is
+                                primary.</dd>
+                        </div>
+                        <div class="nds-definition-item">
+                            <dt><span class="label">Vertical Tabs</span></dt>
+                            <dd>Up/Down arrows only. Left/Right arrows are disabled in vertical layout.</dd>
+                        </div>
+                        <div class="nds-definition-item">
+                            <dt><span class="label">RTL (Arabic)</span></dt>
+                            <dd>Horizontal tabs: arrow keys reversed for natural navigation. Vertical tabs: no change.</dd>
+                        </div>
+                        <div class="nds-definition-item">
+                            <dt><span class="label">Mobile Responsive</span></dt>
+                            <dd>Vertical tabs automatically become horizontal on small screens for better usability.</dd>
+                        </div>
+                    </dl>
+                </div>
         </div>
     </div>
 </section>

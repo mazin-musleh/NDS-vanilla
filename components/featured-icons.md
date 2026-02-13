@@ -62,6 +62,7 @@ direction: ltr
                             </span>
                         </div>
                     </div>
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -86,6 +87,7 @@ direction: ltr
                                 </code>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
 
@@ -134,6 +136,7 @@ direction: ltr
                             </span>
                         </div>
                     </div>
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -158,6 +161,7 @@ direction: ltr
                                 </code>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
 
@@ -206,6 +210,7 @@ direction: ltr
                             </span>
                         </div>
                     </div>
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -230,6 +235,7 @@ direction: ltr
                                 </code>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
 
@@ -278,6 +284,7 @@ direction: ltr
                             </span>
                         </div>
                     </div>
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -302,6 +309,7 @@ direction: ltr
                                 </code>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
 
@@ -350,6 +358,7 @@ direction: ltr
                             </span>
                         </div>
                     </div>
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -374,6 +383,7 @@ direction: ltr
                                 </code>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
 
@@ -422,6 +432,7 @@ direction: ltr
                             </span>
                         </div>
                     </div>
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -447,6 +458,7 @@ direction: ltr
                             </div>
                         </div>
                     </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -462,9 +474,8 @@ direction: ltr
             <p class="nds-section-description">Best practices for using featured icon components</p>
         </div>
         <div class="nds-section-content">
-            <div class="guidelines-grid">
-                <div class="guideline-item">
-                    <h3>When to Use</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">When to Use</h3>
                     <ul>
                         <li>Highlighting key features or benefits</li>
                         <li>Drawing attention to important content</li>
@@ -473,8 +484,8 @@ direction: ltr
                         <li>Icon-based navigation elements</li>
                     </ul>
                 </div>
-                <div class="guideline-item">
-                    <h3>Color Selection</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Color Selection</h3>
                     <ul>
                         <li><strong>Brand:</strong> Primary actions and brand-related content</li>
                         <li><strong>Success:</strong> Positive outcomes and achievements</li>
@@ -484,16 +495,16 @@ direction: ltr
                         <li><strong>Neutral:</strong> General purpose and default states</li>
                     </ul>
                 </div>
-                <div class="guideline-item">
-                    <h3>Size Guidelines</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Size Guidelines</h3>
                     <ul>
                         <li><strong>Small (32px):</strong> Dense layouts and secondary features</li>
                         <li><strong>Medium (40px):</strong> Default size for most use cases</li>
                         <li><strong>Large (48px):</strong> Prominent features and hero sections</li>
                     </ul>
                 </div>
-                <div class="guideline-item">
-                    <h3>Accessibility</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Accessibility</h3>
                     <ul>
                         <li>Always include proper alt text for icon meaning</li>
                         <li>Ensure sufficient color contrast with backgrounds</li>
@@ -501,7 +512,6 @@ direction: ltr
                         <li>Use semantic HTML for interactive elements</li>
                     </ul>
                 </div>
-            </div>
         </div>
     </div>
 </section>
