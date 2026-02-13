@@ -39,6 +39,9 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
 │   │   └── p.nds-section-description
 │   ├── div.nds-section-action       (optional, auto width)
 │   └── div.nds-section-content      (full row below)
+│       └── div.nds-content-block    (optional content grouping)
+│           ├── h3.nds-block-title   (optional)
+│           └── p, ul, ol, img...    (direct content)
 └── div.nds-section-content.nds-full-width  (outside wrapper for breakout)
                             </code>
                         </div>
@@ -515,6 +518,77 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
     </div>
 </section>
 
+<!-- Content Block -->
+<section id="content-block" class="nds-content-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Content Block</h2>
+            <p class="nds-section-description">Group content inside a section using .nds-content-block. Add an optional .nds-block-title for titled blocks. Content goes directly inside — no extra wrappers needed.</p>
+        </div>
+        <div class="nds-section-content">
+            <div class="nds-showcase">
+            <div class="nds-demo-card">
+                <div class="demo-header">
+                    <div class="demo-label">Content Block with Title</div>
+                </div>
+                <div class="demo-container">
+                    <div class="state-demo">
+                        <section class="nds-content-section nds-ghost">
+                            <div class="nds-section-content">
+                                <div class="nds-content-block">
+                                    <h3 class="nds-block-title">Block Title</h3>
+                                    <p>First paragraph of content inside the block. Paragraphs, lists, and media get automatic styling when inside .nds-content-block.</p>
+                                    <p>Second paragraph to demonstrate spacing between content elements.</p>
+                                </div>
+                                <div class="nds-content-block">
+                                    <h3 class="nds-block-title">Another Block</h3>
+                                    <ul>
+                                        <li>List items work inside content blocks</li>
+                                        <li>With automatic padding and spacing</li>
+                                    </ul>
+                                </div>
+                                <div class="nds-content-block">
+                                    <p>Blocks without a title work too — the title is optional.</p>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <div class="nds-tabs nds-code nds-divided" hidden>
+                    <div class="nds-tab-list-container">
+                        <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                            <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-contentblock" id="tab-contentblock">
+                                <span class="nds-tab-label">HTML</span>
+                            </button>
+                        </nav>
+                    </div>
+                    <div class="nds-tab-content">
+                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-contentblock" aria-labelledby="tab-contentblock">
+                            <div class="nds-code-action">
+                                <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                </button>
+                            </div>
+<code class="lang-html code">
+<div class="nds-section-content">
+    <div class="nds-content-block">
+        <h3 class="nds-block-title">Block Title</h3>
+        <p>Content goes directly here.</p>
+    </div>
+    <div class="nds-content-block">
+        <p>Block without a title — title is optional.</p>
+    </div>
+</div>
+</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Grid Columns -->
 <section id="grid" class="nds-content-section">
     <div class="nds-section-wrapper">
@@ -615,6 +689,11 @@ Default child         → grid-column: content
                             <tr><td>--section-description-MB</td><td>var(--spacing-2xl)</td><td>.nds-content-section, .nds-hero-section</td></tr>
                             <tr><td>--section-col-gap</td><td>var(--spacing-xl)</td><td>.nds-section-wrapper</td></tr>
                             <tr><td>--section-row-gap</td><td>var(--spacing-xl)</td><td>.nds-section-wrapper</td></tr>
+                            <tr><td>--block-title-FS</td><td>var(--nds-text-xl-FS)</td><td>.nds-block-title</td></tr>
+                            <tr><td>--block-title-LH</td><td>var(--nds-text-xl-LH)</td><td>.nds-block-title</td></tr>
+                            <tr><td>--block-title-FW</td><td>600</td><td>.nds-block-title</td></tr>
+                            <tr><td>--block-title-MB</td><td>var(--spacing-lg)</td><td>.nds-block-title</td></tr>
+                            <tr><td>--block-title-color</td><td>var(--text-display)</td><td>.nds-block-title</td></tr>
                         </tbody>
                     </table>
                 </div>

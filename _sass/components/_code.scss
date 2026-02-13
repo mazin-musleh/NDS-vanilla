@@ -1,13 +1,13 @@
-/**
- * NDS Code Component
- * Code examples, syntax highlighting, and copy functionality
- */
+/* ========================================
+   CODE COMPONENT
+   Code examples, syntax highlighting, and copy functionality
+   ======================================== */
 
-@use './mixins' as *;
+@use '../mixins' as *;
 
-// ==============================================
-// CODE EXAMPLES AND SYNTAX
-// ==============================================
+/* ========================================
+   CODE BLOCK
+   ======================================== */
 
 .nds-code {
   margin: var(--spacing-xl);
@@ -16,6 +16,7 @@
   padding: 0;
   position: relative;
   overflow: clip;
+  width: 100%;
 
   .nds-tab-list {
     justify-content: flex-end;
@@ -26,14 +27,12 @@
   }
 
   &.nds-tabs .nds-tab {
-    /* border-radius: var(--radius-md) var(--radius-md) 0 0; */
     font-size: var(--nds-text-sm-FS);
   }
 
   .nds-tab-content {
     position: relative;
     min-height: unset;
-    /* border-radius: 0 0 var(--radius-md) var(--radius-md); */
   }
 
   .nds-tab-panel.code-example {
@@ -43,7 +42,7 @@
   .nds-code-action {
     position: absolute;
     top: 0;
-    right: 0;
+    inset-inline-end: 0;
     background-color: var(--alpha-white-70);
     z-index: 2;
 
@@ -66,24 +65,6 @@
     overflow-x: auto;
   }
 
-  .line-numbers code {
-    display: block;
-  }
-
-  .line-numbers code span {
-    display: block;
-    padding-left: 2em;
-    position: relative;
-  }
-
-  .line-numbers code span::before {
-    counter-increment: line;
-    content: counter(line);
-    position: absolute;
-    left: 0;
-    color: #888;
-  }
-
   code {
     font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
     font-size: var(--nds-text-sm-FS);
@@ -102,11 +83,11 @@
     background: transparent;
     border: none;
 
-    // Line numbering styles
     &.line-numbers {
       counter-reset: line;
-      display: flex!important;
-      flex-direction: column!important;
+      display: flex !important;
+      flex-direction: column !important;
+      padding-inline-end: var(--spacing-2xl);
 
       .code-line {
         display: block;
@@ -126,7 +107,6 @@
           pointer-events: none;
           position: relative;
           z-index: 2;
-
         }
 
         &::after {
@@ -144,167 +124,91 @@
           user-select: none;
           pointer-events: none;
           z-index: 1;
-
         }
-
-        /*  &:first-child::after {
-           border-radius: var(--radius-md) 0 0 0;
-        }
-
-        &:last-child::after {
-          border-radius: 0 0 0 var(--radius-md);
-        } */
-
       }
     }
-    &:not(.line-numbers){
 
-      .code-line:first-child{
+    &:not(.line-numbers) {
+      .code-line:first-child {
         margin-inline-start: var(--spacing-xl);
       }
-
     }
   }
 }
 
-// ==============================================
-// SYNTAX HIGHLIGHTING
-// ==============================================
+/* ========================================
+   SYNTAX HIGHLIGHTING TOKENS
+   ======================================== */
 
-// HTML/XML Syntax (default light theme colors)
-.syntax-tag {
-  color: #d73a49; // Darker red for HTML tags
+.nds-code {
+  --_syntax-red: var(--syntax-red, var(--colors-red-600));
+  --_syntax-orange: var(--syntax-orange, var(--colors-yellow-600));
+  --_syntax-green: var(--syntax-green, var(--colors-green-600));
+  --_syntax-blue: var(--syntax-blue, var(--colors-blue-600));
+  --_syntax-purple: var(--syntax-purple, var(--colors-tertiary-lavendar-500));
+  --_syntax-cyan: var(--syntax-cyan, #0086b3);
+  --_syntax-yellow: var(--syntax-yellow, var(--colors-yellow-600));
+  --_syntax-gray: var(--syntax-gray, var(--colors-neutral-500));
+  --_syntax-gray-dark: var(--syntax-gray-dark, var(--colors-neutral-600));
+}
+
+/* ========================================
+   SYNTAX HIGHLIGHTING - Light Theme
+   ======================================== */
+
+:is(.syntax-tag, .syntax-selector) {
+  color: var(--_syntax-red);
   font-weight: 600;
 }
 
-.syntax-attr {
-  color: #e36209; // Darker orange for attributes
+:is(.syntax-attr, .syntax-number) {
+  color: var(--_syntax-orange);
 }
 
-.syntax-value {
-  color: #22863a; // Darker green for attribute values
+:is(.syntax-value, .syntax-string, .syntax-template) {
+  color: var(--_syntax-green);
+}
+
+:is(.syntax-property, .syntax-function, .syntax-method) {
+  color: var(--_syntax-blue);
+}
+
+:is(.syntax-keyword, .syntax-regex) {
+  color: var(--_syntax-purple);
+  font-weight: 600;
+}
+
+:is(.syntax-literal, .syntax-operator) {
+  color: var(--_syntax-cyan);
+}
+
+:is(.syntax-builtin, .syntax-class) {
+  color: var(--_syntax-yellow);
+  font-weight: 600;
 }
 
 .syntax-comment {
-  color: #6a737d; // Medium gray for comments
+  color: var(--_syntax-gray);
   font-style: italic;
 }
 
-// CSS Syntax (default light theme colors)
-.syntax-selector {
-  color: #d73a49; // Darker red for CSS selectors
-  font-weight: 600;
-}
-
-.syntax-property {
-  color: #005cc5; // Darker blue for CSS properties
-}
-
-// JavaScript Syntax (default light theme colors)
-.syntax-keyword {
-  color: #6f42c1; // Darker purple for keywords
-  font-weight: 600;
-}
-
-.syntax-string {
-  color: #22863a; // Darker green for strings
-}
-
-.syntax-number {
-  color: #e36209; // Darker orange for numbers
-}
-
-.syntax-literal {
-  color: #0086b3; // Darker cyan for literals (true, false, null, undefined)
-}
-
-.syntax-builtin {
-  color: #795da3; // Darker yellow/purple for built-in objects (console, window, etc.)
-  font-weight: 600;
-}
-
-.syntax-function {
-  color: #005cc5; // Darker blue for function names
-}
-
-.syntax-method {
-  color: #005cc5; // Darker blue for method calls
-}
-
-.syntax-property {
-  color: #d73a49; // Darker red for properties
-}
-
 .syntax-parameter {
-  color: #586069; // Darker gray for parameters
-}
-
-.syntax-class {
-  color: #795da3; // Darker yellow/purple for class names
-  font-weight: 600;
-}
-
-.syntax-operator {
-  color: #0086b3; // Darker cyan for operators
-}
-
-.syntax-template {
-  color: #22863a; // Darker green for template literals
-}
-
-.syntax-regex {
-  color: #6f42c1; // Darker purple for regular expressions
-}
-
-// General syntax highlighting
-code.highlighted {
-  :is(.syntax-tag, .syntax-attr, .syntax-value, .syntax-comment, .syntax-selector,
-    .syntax-property, .syntax-keyword, .syntax-string, .syntax-number, .syntax-literal,
-    .syntax-builtin, .syntax-function, .syntax-method, .syntax-parameter, .syntax-class,
-    .syntax-operator, .syntax-template, .syntax-regex) {
-    transition: none;
-  }
-}
-
-// Dark theme syntax highlighting (keep current colors)
-code.dark {
-  :is(.syntax-tag, .syntax-selector) { color: #e06c75; font-weight: 600; } // Red
-  :is(.syntax-attr, .syntax-number) { color: #d19a66; } // Orange
-  :is(.syntax-value, .syntax-string, .syntax-template) { color: #98c379; } // Green
-  :is(.syntax-property, .syntax-function, .syntax-method) { color: #61afef; } // Blue
-  :is(.syntax-keyword, .syntax-regex) { color: #c678dd; } // Purple
-  :is(.syntax-literal, .syntax-operator) { color: #56b6c2; } // Cyan
-  :is(.syntax-builtin, .syntax-class) { color: #e5c07b; font-weight: 600; } // Yellow
-  .syntax-comment { color: #5c6370; font-style: italic; } // Gray
-  .syntax-parameter { color: #abb2bf; } // Light gray
-
-  .syntax-keyword { font-weight: 600; }
+  color: var(--_syntax-gray-dark);
 }
 
 
+/* ========================================
+   RESPONSIVE
+   ======================================== */
 
-// ==============================================
-// RESPONSIVE DESIGN
-// ==============================================
-
-// Mobile optimizations
 @include mobile {
-
-  .nds-code {
-
-    code {
-      font-size: var(--nds-text-xs-FS);
-    }
+  .nds-code code {
+    font-size: var(--nds-text-xs-FS);
   }
-
 }
 
-// Tablet optimizations  
 @include tablet {
-
-  .nds-code {
-    code {
-      font-size: var(--nds-text-sm-FS);
-    }
+  .nds-code code {
+    font-size: var(--nds-text-sm-FS);
   }
 }
