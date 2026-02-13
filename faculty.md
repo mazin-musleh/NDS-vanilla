@@ -23,11 +23,6 @@ exclude_showcase: true
                 <p class="nds-section-description">أستاذ مشارك</p>
             </div>
         </div>
-        <div class="nds-section-action">
-            <button class="nds-btn nds-primary nds-loading">
-                <span class="label">Loading Button</span>
-            </button>
-        </div>
 
         <div class="nds-section-content">
             <dl class="nds-definition-list tableView nds-divided" style="--max-col:4;--mid-col:2;--min-col:2;">
@@ -94,9 +89,9 @@ exclude_showcase: true
                         <span class="label">التواصل</span>
                     </button>
                 </nav>
-                    <button class="nds-btn nds-subtle nds-tab showMore">
-                        <i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
-                    </button>
+                <button class="nds-btn nds-subtle nds-tab showMore">
+                    <i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                </button>
             </div>
             <div class="nds-tab-content">
                 <!-- السيرة الذاتية Tab -->

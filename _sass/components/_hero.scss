@@ -68,14 +68,15 @@
 
   &.sub.aside {
 
-    :is(.nds-breadcrumb-nav, .nds-section-wrapper, .nds-section-head) {
-      width: calc(100% - var(--nds-sideInfo-width) - var(--spacing-xl));
-
-      @include tablet(max) {
-        width: 100%
+    @include desktop(min) {
+      :is(.nds-breadcrumb-nav, .nds-section-wrapper, .nds-section-head) {
+        width: calc(100% - var(--nds-sideInfo-width) - var(--spacing-xl));
       }
     }
+
+
   }
+
 
   .nds-section-content {
     height: 100%;
@@ -88,53 +89,38 @@
     margin: auto;
     visibility: visible;
   }
-}
 
 
 
+  // ==============================================
+  // SHARE PAGE COMPONENT
+  // ==============================================
+  // Uses unified nds-dropmenu component
+  // Share-specific adjustments only
 
+  #nds-sharePage {
 
-
-// ==============================================
-// SHARE PAGE COMPONENT
-// ==============================================
-// Uses unified nds-dropmenu component
-// Share-specific adjustments only
-
-#nds-sharePage {
-
-  // Share button styling
-  /* &Btn {
+    // Share button styling
+    /* &Btn {
     background-color: var(--background-white, #fff);
     border: 1px solid var(--colors-neutral-300, #d2d6db);
     border-radius: var(--radius-md, 8px);
     box-shadow: var(--shadow-md);
   }  */
 
-  // Copied state for copy link button
-  .nds-dropmenu-menu .copied {
-    background-color: var(--background-success-light);
-    color: var(--text-success);
+    // Copied state for copy link button
+    .nds-dropmenu-menu .copied {
+      background-color: var(--background-success-light);
+      color: var(--text-success);
 
-    .label {
-      white-space: nowrap;
+      .label {
+        white-space: nowrap;
+      }
     }
   }
-}
 
-// Icon change for copied state
-.hgi-loaded #nds-sharePage .nds-dropmenu-menu .copied i::before {
-  content: "䂇";
-}
-
-// ==============================================
-// RESPONSIVE BEHAVIOR
-// ==============================================
-
-/* @include tablet(max) {
-  #nds-sharePageBtn {
-    .label {
-      display: none;
-    }
+  // Icon change for copied state
+  .hgi-loaded #nds-sharePage .nds-dropmenu-menu .copied i::before {
+    content: "䂇";
   }
-}  */
+}

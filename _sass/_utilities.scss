@@ -100,6 +100,7 @@ $all-spacers: $spacers;
   line-clamp: var(--_truncate);
   text-overflow: ellipsis;
   white-space: wrap;
+  line-height: normal;
 }
 
 // ==============================================
@@ -110,9 +111,9 @@ $all-spacers: $spacers;
 // Note: Uses mobile-first approach. For start/end alignment, use text-align CSS property directly
 
 // Base center alignment class (applies to all screens unless overridden)
-.nds-center,
-.nds-center>* {
+.nds-center {
   text-align: center !important;
+  margin-inline: auto;
 }
 
 // Responsive center alignment (mobile-first, cascades upward)

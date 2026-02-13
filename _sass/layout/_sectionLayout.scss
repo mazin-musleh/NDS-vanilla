@@ -17,26 +17,31 @@
 .nds-section-wrapper {
     container-type: inline-size;
     container-name: section-wrapper;
+    width: 100%;
 }
 
 .nds-section-head {
     container-type: inline-size;
     container-name: section-head;
+    width: 100%;
 }
 
 .nds-section-content {
     container-type: inline-size;
     container-name: section-content;
+    width: 100%;
 }
 
 .nds-content-block {
     container-type: inline-size;
     container-name: content-block;
+    width: 100%;
 }
 
 .nds-block-item {
     container-type: inline-size;
     container-name: block-item;
+    width: 100%;
 }
 
 /* ========================================
@@ -106,11 +111,9 @@
         row-gap: var(--spacing-6xl);
     }
 
-    .nds-section-head{
+    *{
         text-align: center;
-    }
-    .nds-section-action {
-        grid-row: unset;
+        margin-inline: auto;
     }
 }
 
