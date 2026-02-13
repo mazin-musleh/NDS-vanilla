@@ -5,11 +5,45 @@
 
 @use "sass:math";
 @use "sass:map";
+
 // ==============================================
-// UTILITY MIXINS
+// BREAKPOINTS
 // ==============================================
 
-// Responsive breakpoints - accepts 'min', 'max', or no parameter for range
+// Container breakpoints (accounts for side menu + padding)
+$container-breakpoints: (
+  md: 480px,
+  lg: 720px,
+  xl: 960px
+);
+
+// Viewport breakpoints — all (includes sm as alias for base)
+$breakpoints-all: (
+  sm: '(min-width: 0px)',
+  md: '(min-width: 600px)',
+  lg: '(min-width: 960px)',
+  xl: '(min-width: 1280px)'
+);
+
+// Viewport breakpoints — responsive only (excludes sm to avoid redundant classes)
+$breakpoints-responsive: (
+  md: '(min-width: 600px)',
+  lg: '(min-width: 960px)',
+  xl: '(min-width: 1280px)'
+);
+
+// Viewport breakpoints — range-based (exclusive ranges for alignment utilities)
+$breakpoints-range: (
+  sm: '(max-width: 599px)',
+  md: '(min-width: 600px) and (max-width: 959px)',
+  lg: '(min-width: 960px) and (max-width: 1279px)',
+  xl: '(min-width: 1280px)'
+);
+
+// ==============================================
+// RESPONSIVE MIXINS
+// ==============================================
+
 @mixin mobile {
   @media (max-width: 600px) {
     @content;
@@ -76,7 +110,10 @@
   }
 }
 
-// RTL/LTR Support
+// ==============================================
+// RTL/LTR SUPPORT
+// ==============================================
+
 @mixin ltr {
   @at-root {
     @each $selector in & {
@@ -88,7 +125,10 @@
   }
 }
 
-// Accessibility mixins
+// ==============================================
+// ACCESSIBILITY MIXINS
+// ==============================================
+
 @mixin high-contrast {
   @media (prefers-contrast: high) {
     @content;
@@ -107,7 +147,10 @@
   }
 }
 
-// Reset WebKit/Firefox autofill visuals + typography
+// ==============================================
+// AUTOFILL RESET
+// ==============================================
+
 @mixin autofill-reset($bg: var(--form-field-background-default),
   $text: var(--form-field-text-focused),
   $border: var(--form-field-border-default)) {
@@ -124,7 +167,7 @@
     box-shadow: 0 0 0 1000px #{$bg} inset !important;
     background-clip: padding-box;
 
-    /* avoid “flash” on load in some WebKit builds */
+    /* avoid "flash" on load in some WebKit builds */
     transition: background-color 9999s ease-out, color 9999s ease-out;
   }
 
@@ -150,9 +193,7 @@ textarea {
 // BUTTON BASE MIXINS
 // ==============================================
 
-// Base button structure
 @mixin btn-base {
-  // Internal custom properties with external fallbacks
   --_btn-bg: var(--btn-bg, transparent);
   --_btn-bg-hover: var(--btn-bg-hover, var(--_btn-bg));
   --_btn-bg-active: var(--btn-bg-active, var(--_btn-bg));
@@ -176,11 +217,9 @@ textarea {
   --_btn-gap: var(--btn-gap, var(--spacing-xs));
   --_btn-padding: var(--btn-padding, calc(var(--_btn-size) * 0.375 - 3px));
 
-  /* Formula-based sizing */
   --_btn-FS: calc(var(--_btn-size) * 0.2 + 8px);
   --_btn-icon-size: calc(var(--_btn-size) / 2);
 
-  /* Indicator size (formula-only) */
   --btn-indicator-size: calc(var(--_btn-size) * 0.075);
   --_btn-space: calc(var(--_btn-size) - var(--_btn-padding) - 4px);
   --loading-size: var(--_btn-space) !important;
@@ -196,15 +235,12 @@ textarea {
 
   border: 1px solid transparent;
   border-radius: var(--radius-sm);
-  // cursor & user-select set in _base.scss for all interactive elements
   white-space: nowrap;
   position: relative;
   box-sizing: border-box;
   vertical-align: middle;
   justify-content: center;
 
-
-  /* Layout */
   height: var(--_btn-height);
   min-height: var(--_btn-height);
   width: var(--_btn-width, fit-content);
@@ -217,7 +253,6 @@ textarea {
     font-weight: 500;
     text-decoration: none;
     font-size: var(--_btn-FS);
-    /* line-height: 1; */
   }
 }
 
@@ -225,7 +260,6 @@ textarea {
 // BUTTON STATE MIXINS
 // ==============================================
 
-// Button focus styles
 @mixin btn-focus {
   outline: 2px solid var(--colors-base-black) !important;
   outline-offset: -2px !important;
@@ -239,10 +273,9 @@ textarea {
 }
 
 // ==============================================
-// COMPONENT-SPECIFIC MIXINS
+// BUTTON INDICATOR MIXINS
 // ==============================================
 
-// Button indicator mixin (tabs, navigation)
 @mixin btn-indicator($position: 'b', $size: var(--btn-indicator-size)) {
   &::before {
     content: '';
@@ -268,7 +301,6 @@ textarea {
   }
 }
 
-// Button indicator shared styles mixin
 @mixin btn-indicator-styles($hover-color: var(--background-neutral-400), $selected-color: var(--background-neutral-800), $position : 'b') {
   @include btn-indicator($position);
 
@@ -289,14 +321,11 @@ textarea {
   }
 }
 
-
 // ==============================================
 // PROGRESS CIRCLE MIXINS
 // ==============================================
 
-// Base progress circle structure with CSS custom properties
 @mixin progress-circle-base($size: 24px, $rotate: -90deg) {
-  // Internal custom properties with defaults
   --_pc-bg-stroke: var(--pc-bg-stroke, var(--background-neutral-100));
   --_pc-bar-stroke: var(--pc-bar-stroke, var(--button-background-primary-default));
 
@@ -346,7 +375,6 @@ textarea {
   }
 }
 
-// Progress circle text/info styling with dynamic font scaling
 @mixin progress-circle-text($size: 24px) {
   .progress-info {
     gap: clamp(0px, calc(var(--pc-size, #{$size}) * 0.04), 8px) !important;
@@ -372,10 +400,9 @@ textarea {
   }
 }
 
-// Progress circle animation mixin
 @mixin progress-circle-progress($percent: 0) {
   $circumference: 62.83; // 2πr where r=10
-  $clamped-percent: min($percent, 100); // Clamp to max 100
+  $clamped-percent: min($percent, 100);
   $offset: calc(#{$circumference} - (#{$circumference} * #{$clamped-percent} / 100));
 
   svg circle.progress-bar {
@@ -385,12 +412,15 @@ textarea {
   }
 }
 
+// ==============================================
+// SECTION MIXINS
+// ==============================================
 
 @mixin reset-section-style {
-  --section-bg: transparent;
-  --section-shadow: none;
-  --section-border: none;
-  --section-border-radius: 0;
+  --section-bg: transparent !important;
+  --section-shadow: none !important;
+  --section-border: none !important;
+  --section-border-radius: 0 !important;
 }
 
 @mixin section-variant($background, $title-color, $description-color) {

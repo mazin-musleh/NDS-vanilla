@@ -105,7 +105,7 @@
       background-color: var(--border-neutral-primary);
       display: block;
       height: var(--btn-indicator-size);
-      z-index: 1;
+      z-index: -1;
       border-radius: var(--radius-full);
     }
 
@@ -455,9 +455,7 @@ section>.nds-full-width {
         padding-inline: var(--nds-viewport-padding);
       }
 
-      .nds-tab-list-container .showMore {
-        display: none !important;
-      }
+
     }
   }
 }

@@ -110,69 +110,70 @@ exclude_showcase: true
                 </dl>
             </div>
 
-            <div class="program-overview-cards nds-block-item nds-grid col-sm-12 col-lg-6"
-                style="--max-col: 2;--min-col: 2;--col-width: 100px;--gap: 12px;">
-                <div class="nds-card nds-stroke nds-statistic">
-                    <div class="nds-card-header">
-                        <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-lg">
-                                <i class="hgi hgi-stroke hgi-clock-01 icon"></i>
-                            </span>
+            <div class="program-overview-cards nds-block-item nds-grid col-sm-12 col-lg-6">
+                <div class="nds-grid" style="--max-col: 4;--mid-col: 2;--min-col: 2;--col-width: 100px;--gap: 12px;">
+                    <div class="nds-card nds-stroke nds-statistic">
+                        <div class="nds-card-header">
+                            <div class="nds-card-featured-icon">
+                                <span class="nds-featured-icon nds-circle nds-lg">
+                                    <i class="hgi hgi-stroke hgi-clock-01 icon"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <span class="nds-card-number nds-counter-value nds-number-format nds-md"
+                                    data-target="180">0</span>
+                                <p class="nds-card-description">ساعة معتمدة</p>
+                            </div>
                         </div>
                     </div>
-                    <div class="nds-card-content">
-                        <div class="nds-card-text">
-                            <span class="nds-card-number nds-counter-value nds-number-format nds-md"
-                                data-target="180">0</span>
-                            <p class="nds-card-description">ساعة معتمدة</p>
+                    <div class="nds-card nds-stroke nds-statistic">
+                        <div class="nds-card-header">
+                            <div class="nds-card-featured-icon">
+                                <span class="nds-featured-icon nds-circle nds-lg">
+                                    <i class="hgi hgi-stroke hgi-certificate-01 icon"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <span class="nds-card-number nds-counter-value nds-number-format nds-md"
+                                    data-target="4">0</span>
+                                <p class="nds-card-description">سنوات</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="nds-card nds-stroke nds-statistic">
-                    <div class="nds-card-header">
-                        <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-lg">
-                                <i class="hgi hgi-stroke hgi-certificate-01 icon"></i>
-                            </span>
+                    <div class="nds-card nds-stroke nds-statistic">
+                        <div class="nds-card-header">
+                            <div class="nds-card-featured-icon">
+                                <span class="nds-featured-icon nds-circle nds-lg">
+                                    <i class="hgi hgi-stroke hgi-layers-01 icon"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <span class="nds-card-number nds-counter-value nds-number-format nds-md"
+                                    data-target="8">0</span>
+                                <p class="nds-card-description">مستويات</p>
+                            </div>
                         </div>
                     </div>
-                    <div class="nds-card-content">
-                        <div class="nds-card-text">
-                            <span class="nds-card-number nds-counter-value nds-number-format nds-md"
-                                data-target="4">0</span>
-                            <p class="nds-card-description">سنوات</p>
+                    <div class="nds-card nds-stroke nds-statistic">
+                        <div class="nds-card-header">
+                            <div class="nds-card-featured-icon">
+                                <span class="nds-featured-icon nds-circle nds-lg">
+                                    <i class="hgi hgi-stroke hgi-calendar-02 icon"></i>
+                                </span>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="nds-card nds-stroke nds-statistic">
-                    <div class="nds-card-header">
-                        <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-lg">
-                                <i class="hgi hgi-stroke hgi-layers-01 icon"></i>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="nds-card-content">
-                        <div class="nds-card-text">
-                            <span class="nds-card-number nds-counter-value nds-number-format nds-md"
-                                data-target="8">0</span>
-                            <p class="nds-card-description">مستويات</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="nds-card nds-stroke nds-statistic">
-                    <div class="nds-card-header">
-                        <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-lg">
-                                <i class="hgi hgi-stroke hgi-calendar-02 icon"></i>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="nds-card-content">
-                        <div class="nds-card-text">
-                            <span class="nds-card-number nds-counter-value nds-number-format nds-md"
-                                data-target="16">0</span>
-                            <p class="nds-card-description">إسبوع لكل مستوى</p>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <span class="nds-card-number nds-counter-value nds-number-format nds-md"
+                                    data-target="16">0</span>
+                                <p class="nds-card-description">إسبوع لكل مستوى</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -212,9 +213,9 @@ exclude_showcase: true
                         <span class="label">توصيف المقرر</span>
                     </button>
                 </nav>
-                    <button class="nds-btn nds-subtle nds-tab showMore">
-                        <i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
-                    </button>
+                <button class="nds-btn nds-subtle nds-tab showMore">
+                    <i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                </button>
             </div>
             <div class="nds-tab-content">
                 <!--الأهداف Tab -->

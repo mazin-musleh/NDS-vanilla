@@ -1,16 +1,8 @@
 // ==============================================
 // NDS GRID SYSTEM
 // ==============================================
+@use 'sass:map';
 @use './mixins' as *;
-
-// Bootstrap naming with NDS breakpoint values
-$breakpoints-responsive: (
-  md: '(min-width: 600px)',
-  // Tablet
-  lg: '(min-width: 960px)',
-  // Desktop
-  xl: '(min-width: 1280px)' // Large Desktop
-);
 
 .nds-grid {
   $col-token-selector: '> :is([class^="col-"], [class*=" col-"])';
@@ -19,13 +11,13 @@ $breakpoints-responsive: (
 
   &:not([hidden]) {
     display: grid !important;
+    grid-template-columns: repeat(var(--grid-col, 12), minmax(var(--col-width, 0px), 1fr));
   }
 
-  grid-template-columns: repeat(var(--grid-col, 12), minmax(var(--col-width, 0px), 1fr));
   gap: var(--gap, var(--spacing-2xl));
   row-gap: var(--row-gap, var(--spacing-2xl));
   justify-items: var(--justify, stretch);
-  align-items: var(--align, center);
+  align-items: var(--align, start);
   width: 100%;
 
   >* {
@@ -34,17 +26,17 @@ $breakpoints-responsive: (
     height: 100%;
   }
 
-  @include tablet {
+  @container (max-width: #{map.get($container-breakpoints, lg)}) {
     &:not(:has(#{$col-token-selector})) {
-      --grid-col: var(--mid-col, auto-fit);
+      --grid-col: var(--mid-col, var(--max-col, auto-fit));
       gap: max(8px, calc(var(--gap, var(--spacing-2xl)) / 2));
       row-gap: max(8px, calc(var(--row-gap, var(--spacing-2xl)) / 2));
     }
   }
 
-  @include mobile {
+  @container (max-width: #{map.get($container-breakpoints, md)}) {
     &:not(:has(#{$col-token-selector})) {
-      --grid-col: var(--min-col, auto-fit);
+      --grid-col: var(--min-col, var(--mid-col, var(--max-col, auto-fit)));
       gap: max(8px, calc(var(--gap, var(--spacing-2xl)) / 2));
       row-gap: max(8px, calc(var(--row-gap, var(--spacing-2xl)) / 2));
     }
@@ -72,9 +64,9 @@ $breakpoints-responsive: (
   grid-column: 1 / -1;
 }
 
-/* Generate responsive column spans using responsive breakpoints only (excludes sm) */
-@each $breakpoint, $query in $breakpoints-responsive {
-  @media #{$query} {
+/* Generate responsive column spans using container breakpoints (excludes sm) */
+@each $breakpoint, $width in $container-breakpoints {
+  @container (min-width: #{$width}) {
     @for $i from 1 through 12 {
       .col-#{$breakpoint}-#{$i} {
         grid-column: span #{$i};
