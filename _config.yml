@@ -81,3 +81,4 @@ exclude:
   - package.json
   - package-lock.json
   - notes.txt
+  - nul

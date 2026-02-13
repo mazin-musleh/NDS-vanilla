@@ -35,6 +35,7 @@ direction: ltr
                         </div>
                     </div>
                 </div>
+                <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -59,6 +60,7 @@ direction: ltr
                         </div>
                     </div>
                 </div>
+                </div>
             </div>
 
             <!-- Single Line with Max Width -->
@@ -77,6 +79,7 @@ direction: ltr
                         </div>
                     </div>
                 </div>
+                <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -101,6 +104,7 @@ direction: ltr
                         </div>
                     </div>
                 </div>
+                </div>
             </div>
 
             <!-- Multi-line Truncate -->
@@ -121,6 +125,7 @@ direction: ltr
                         </div>
                     </div>
                 </div>
+                <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -147,6 +152,7 @@ direction: ltr
                         </div>
                     </div>
                 </div>
+                </div>
             </div>
 
             <!-- Custom Line Count -->
@@ -168,6 +174,7 @@ direction: ltr
                         </div>
                     </div>
                 </div>
+                <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -194,6 +201,7 @@ direction: ltr
                             </code>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
 
@@ -225,6 +233,7 @@ direction: ltr
                         </div>
                     </div>
                 </div>
+                <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -255,6 +264,7 @@ direction: ltr
                         </div>
                     </div>
                 </div>
+                </div>
             </div>
 
             </div>
@@ -269,10 +279,8 @@ direction: ltr
             <h2 class="nds-section-title">Usage Guidelines</h2>
         </div>
         <div class="nds-section-content">
-            <div class="nds-guidelines-grid">
-
-                <div class="nds-guideline-item">
-                    <h3>Basic Usage</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Basic Usage</h3>
                     <ul>
                         <li>Add .nds-truncate class to any text element</li>
                         <li>Default behavior truncates to 1 line</li>
@@ -281,8 +289,8 @@ direction: ltr
                     </ul>
                 </div>
 
-                <div class="nds-guideline-item">
-                    <h3>Multi-line Truncation</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Multi-line Truncation</h3>
                     <ul>
                         <li>Use --truncate CSS custom property</li>
                         <li>Set any number: style="--truncate: 3;"</li>
@@ -291,8 +299,8 @@ direction: ltr
                     </ul>
                 </div>
 
-                <div class="nds-guideline-item">
-                    <h3>When to Use</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">When to Use</h3>
                     <ul>
                         <li>Card descriptions and summaries</li>
                         <li>Long titles in navigation menus</li>
@@ -301,8 +309,8 @@ direction: ltr
                     </ul>
                 </div>
 
-                <div class="nds-guideline-item">
-                    <h3>Accessibility</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Accessibility</h3>
                     <ul>
                         <li>Consider providing full text via tooltip or expand option</li>
                         <li>Use title attribute for single-line truncation</li>
@@ -310,8 +318,6 @@ direction: ltr
                         <li>Test with screen readers for proper content exposure</li>
                     </ul>
                 </div>
-
-            </div>
         </div>
     </div>
 </section>
@@ -375,11 +381,8 @@ direction: ltr
         </div>
         <div class="nds-section-content">
 
-            <div class="comparison-grid"
-                style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 24px;">
-
-                <div class="comparison-item">
-                    <h3>Use Truncate Text When:</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Use Truncate Text When:</h3>
                     <ul>
                         <li>Content is short to medium length</li>
                         <li>Preview/summary is sufficient</li>
@@ -389,8 +392,8 @@ direction: ltr
                     </ul>
                 </div>
 
-                <div class="comparison-item">
-                    <h3>Use Expandable Content When:</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Use Expandable Content When:</h3>
                     <ul>
                         <li>Content is long and important</li>
                         <li>Users need access to full content</li>
@@ -399,8 +402,6 @@ direction: ltr
                         <li>Reading experience matters</li>
                     </ul>
                 </div>
-
-            </div>
 
         </div>
     </div>

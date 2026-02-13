@@ -132,6 +132,7 @@ css_files:
                         </div>
                     </div>
                 </div>
+                <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -188,6 +189,7 @@ css_files:
                             </div>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
 
@@ -302,6 +304,7 @@ css_files:
                         </div>
                     </div>
                 </div>
+                <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -346,6 +349,7 @@ css_files:
                         </div>
                     </div>
                 </div>
+                </div>
             </div>
 
             </div>
@@ -361,43 +365,46 @@ css_files:
             <p class="nds-section-description">Proper ARIA implementation for accessible accordion navigation</p>
         </div>
         <div class="nds-section-content">
-            <div class="accessibility-info">
-                <h3>Required Elements & ARIA Attributes</h3>
-                <ul>
-                    <li>&lt;button&gt; - Clickable accordion trigger</li>
-                    <li>aria-expanded - Indicates if accordion panel is open/closed</li>
-                    <li>aria-controls - Links button to its collapsible panel</li>
-                    <li>aria-labelledby - Links panel to its header button</li>
-                    <li>type="button" - Prevents form submission if inside forms</li>
-                    <li>id attributes - Required for proper ARIA relationships</li>
-                </ul>
-
-                <h3>Keyboard Navigation</h3>
-                <ul>
-                    <li><kbd>Tab</kbd> - Move focus between accordion buttons</li>
-                    <li><kbd>Enter/Space</kbd> - Toggle focused accordion panel</li>
-                    <li><kbd>Home</kbd> - Move focus to first accordion button</li>
-                    <li><kbd>End</kbd> - Move focus to last accordion button</li>
-                    <li><kbd>Up/Down Arrow</kbd> - Navigate between accordion buttons (optional)</li>
-                </ul>
-
-                <h3>Behavior Modes</h3>
-                <ul>
-                    <li><strong>Default:</strong> Only one panel open at a time with flush styling (no borders/shadows)
-                    </li>
-                    <li><strong>Always Open:</strong> Multiple panels can be open simultaneously</li>
-                    <li><strong>Card View:</strong> Add borders, shadows, and rounded corners for card-like appearance
-                    </li>
-                </ul>
-
-                <h3>Best Practices</h3>
-                <ul>
-                    <li><strong>Semantic Headers:</strong> Use appropriate heading levels (h2, h3, etc.)</li>
-                    <li><strong>Descriptive Titles:</strong> Make accordion titles clear and meaningful</li>
-                    <li><strong>Loading States:</strong> Indicate when content is being loaded</li>
-                    <li><strong>Icon Consistency:</strong> Use consistent chevron/arrow icons for visual cues</li>
-                </ul>
-            </div>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Required Elements & ARIA Attributes</h3>
+                    <ul>
+                        <li>&lt;button&gt; - Clickable accordion trigger</li>
+                        <li>aria-expanded - Indicates if accordion panel is open/closed</li>
+                        <li>aria-controls - Links button to its collapsible panel</li>
+                        <li>aria-labelledby - Links panel to its header button</li>
+                        <li>type="button" - Prevents form submission if inside forms</li>
+                        <li>id attributes - Required for proper ARIA relationships</li>
+                    </ul>
+                </div>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Keyboard Navigation</h3>
+                    <ul>
+                        <li><kbd>Tab</kbd> - Move focus between accordion buttons</li>
+                        <li><kbd>Enter/Space</kbd> - Toggle focused accordion panel</li>
+                        <li><kbd>Home</kbd> - Move focus to first accordion button</li>
+                        <li><kbd>End</kbd> - Move focus to last accordion button</li>
+                        <li><kbd>Up/Down Arrow</kbd> - Navigate between accordion buttons (optional)</li>
+                    </ul>
+                </div>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Behavior Modes</h3>
+                    <ul>
+                        <li><strong>Default:</strong> Only one panel open at a time with flush styling (no borders/shadows)
+                        </li>
+                        <li><strong>Always Open:</strong> Multiple panels can be open simultaneously</li>
+                        <li><strong>Card View:</strong> Add borders, shadows, and rounded corners for card-like appearance
+                        </li>
+                    </ul>
+                </div>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Best Practices</h3>
+                    <ul>
+                        <li><strong>Semantic Headers:</strong> Use appropriate heading levels (h2, h3, etc.)</li>
+                        <li><strong>Descriptive Titles:</strong> Make accordion titles clear and meaningful</li>
+                        <li><strong>Loading States:</strong> Indicate when content is being loaded</li>
+                        <li><strong>Icon Consistency:</strong> Use consistent chevron/arrow icons for visual cues</li>
+                    </ul>
+                </div>
         </div>
     </div>
 </section>
@@ -528,39 +535,41 @@ document.addEventListener('nds:accordion:hidden', (e) => {
                 </div>
             </div>
 
-            <div class="accessibility-info">
-                <h3>JavaScript Features</h3>
-                <ul>
-                    <li><strong>Automatic Initialization:</strong> All accordions initialize on page load automatically
-                    </li>
-                    <li><strong>Dynamic Content Support:</strong> Call NDSAccordion.reinit() after adding
-                        new accordions</li>
-                    <li><strong>Keyboard Navigation:</strong> Full ARIA-compliant keyboard support built-in</li>
-                    <li><strong>Animation Control:</strong> Respects prefers-reduced-motion user
-                        preferences</li>
-                    <li><strong>Event System:</strong> Custom events for shown and hidden
-                        states</li>
-                    <li><strong>Public API:</strong> Programmatic control methods for all accordion operations</li>
-                </ul>
-
-                <h3>Configuration Options</h3>
-                <ul>
-                    <li>data-state="always-open" attribute - Allow multiple panels open simultaneously</li>
-                    <li>.nds-card class - Apply card background styling</li>
-                    <li>.nds-stroke class - Add border around accordion</li>
-                    <li>.nds-shadow class - Apply shadow effect</li>
-                    <li>aria-expanded="true" - Set initial open state for specific panels</li>
-                    <li>--nds-transition-speed - CSS custom property to control animation speed</li>
-                </ul>
-
-                <h3>Browser Support</h3>
-                <ul>
-                    <li><strong>Modern Browsers:</strong> Chrome 60+, Firefox 60+, Safari 12+, Edge 79+</li>
-                    <li><strong>Mobile:</strong> iOS Safari 12+, Chrome Mobile 60+</li>
-                    <li><strong>Accessibility:</strong> Compatible with all major screen readers</li>
-                    <li><strong>Performance:</strong> Optimized for smooth animations and minimal reflows</li>
-                </ul>
-            </div>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">JavaScript Features</h3>
+                    <ul>
+                        <li><strong>Automatic Initialization:</strong> All accordions initialize on page load automatically
+                        </li>
+                        <li><strong>Dynamic Content Support:</strong> Call NDSAccordion.reinit() after adding
+                            new accordions</li>
+                        <li><strong>Keyboard Navigation:</strong> Full ARIA-compliant keyboard support built-in</li>
+                        <li><strong>Animation Control:</strong> Respects prefers-reduced-motion user
+                            preferences</li>
+                        <li><strong>Event System:</strong> Custom events for shown and hidden
+                            states</li>
+                        <li><strong>Public API:</strong> Programmatic control methods for all accordion operations</li>
+                    </ul>
+                </div>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Configuration Options</h3>
+                    <ul>
+                        <li>data-state="always-open" attribute - Allow multiple panels open simultaneously</li>
+                        <li>.nds-card class - Apply card background styling</li>
+                        <li>.nds-stroke class - Add border around accordion</li>
+                        <li>.nds-shadow class - Apply shadow effect</li>
+                        <li>aria-expanded="true" - Set initial open state for specific panels</li>
+                        <li>--nds-transition-speed - CSS custom property to control animation speed</li>
+                    </ul>
+                </div>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Browser Support</h3>
+                    <ul>
+                        <li><strong>Modern Browsers:</strong> Chrome 60+, Firefox 60+, Safari 12+, Edge 79+</li>
+                        <li><strong>Mobile:</strong> iOS Safari 12+, Chrome Mobile 60+</li>
+                        <li><strong>Accessibility:</strong> Compatible with all major screen readers</li>
+                        <li><strong>Performance:</strong> Optimized for smooth animations and minimal reflows</li>
+                    </ul>
+                </div>
         </div>
     </div>
 </section>

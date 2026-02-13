@@ -59,6 +59,7 @@ direction: ltr
                             </div>
                         </div>
                     </div>
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -89,6 +90,7 @@ direction: ltr
                                 </div>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
 
@@ -164,6 +166,7 @@ direction: ltr
                             </div>
                         </div>
                     </div>
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -195,6 +198,7 @@ direction: ltr
                             </div>
                         </div>
                     </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -209,9 +213,8 @@ direction: ltr
             <p class="nds-section-description">Best practices for using rating components</p>
         </div>
         <div class="nds-section-content">
-            <div class="guidelines-grid">
-                <div class="guideline-item">
-                    <h3>When to Use</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">When to Use</h3>
                     <ul>
                         <li>User feedback and review systems</li>
                         <li>Quality indicators for products or services</li>
@@ -220,8 +223,8 @@ direction: ltr
                         <li>Content evaluation interfaces</li>
                     </ul>
                 </div>
-                <div class="guideline-item">
-                    <h3>Star States</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Star States</h3>
                     <ul>
                         <li><strong>Normal:</strong> Default empty state (no additional class)</li>
                         <li><strong>Selected:</strong> Add selected class for filled stars</li>
@@ -229,8 +232,8 @@ direction: ltr
                         <li><strong>Pressed:</strong> Add pressed class for interaction feedback</li>
                     </ul>
                 </div>
-                <div class="guideline-item">
-                    <h3>Decimal Rating Display</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Decimal Rating Display</h3>
                     <ul>
                         <li><strong>Whole numbers:</strong> 1, 2, 3, 4, 5 show exact number of filled stars</li>
                         <li><strong>Half stars:</strong> Displayed when decimal part is 0.3 or higher</li>
@@ -242,8 +245,8 @@ direction: ltr
                         <li><strong>Threshold:</strong> 0.3+ shows half star, below 0.3 rounds down</li>
                     </ul>
                 </div>
-                <div class="guideline-item">
-                    <h3>Size Options</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Size Options</h3>
                     <ul>
                         <li><strong>Small (24px):</strong> Use nds-sm for compact interfaces</li>
                         <li><strong>Medium (32px):</strong> Use nds-md for standard displays (default)</li>
@@ -252,8 +255,8 @@ direction: ltr
                         <li>Mobile responsiveness automatically adjusts large ratings to 40px</li>
                     </ul>
                 </div>
-                <div class="guideline-item">
-                    <h3>Style Variants</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Style Variants</h3>
                     <ul>
                         <li><strong>Default:</strong> Golden yellow (#dba102) for general rating displays</li>
                         <li><strong>Brand:</strong> Add nds-brand class for Saudi flag green variant</li>
@@ -261,8 +264,8 @@ direction: ltr
                         <li>Brand style aligns with government/official contexts</li>
                     </ul>
                 </div>
-                <div class="guideline-item">
-                    <h3>Interactive Ratings</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Interactive Ratings</h3>
                     <ul>
                         <li>Add interactive class for clickable rating controls</li>
                         <li>JavaScript automatically converts spans to buttons</li>
@@ -272,8 +275,8 @@ direction: ltr
                         <li>Dispatches ratingChange events when value changes</li>
                     </ul>
                 </div>
-                <div class="guideline-item">
-                    <h3>JavaScript Integration</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">JavaScript Integration</h3>
                     <ul>
                         <li><strong>Auto-initialization:</strong> Components initialize automatically</li>
                         <li><strong>Event handling:</strong>
@@ -320,8 +323,8 @@ ratingElement.ndsRating.setDisabled(isDisabled);
                         </div>
                     </div>
                 </div>
-                <div class="guideline-item">
-                    <h3>Implementation Best Practices</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Implementation Best Practices</h3>
                     <ul>
                         <li>Stars are created using pure CSS with Figma-accurate SVG shape</li>
                         <li>Use consistent star counts across your application (typically 5)</li>
@@ -332,7 +335,6 @@ ratingElement.ndsRating.setDisabled(isDisabled);
                         <li>Component works seamlessly in RTL layouts</li>
                     </ul>
                 </div>
-            </div>
         </div>
     </div>
 </section>

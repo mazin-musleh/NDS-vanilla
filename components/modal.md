@@ -95,6 +95,7 @@ direction: ltr
 
 
                 </div>
+                <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -152,6 +153,7 @@ direction: ltr
                         </div>
                     </div>
                 </div>
+                </div>
             </div>
 
             </div>
@@ -167,9 +169,8 @@ direction: ltr
             <p class="nds-section-description">Best practices for using modal components effectively</p>
         </div>
         <div class="nds-section-content">
-            <div class="guidelines-grid">
-                <div class="guideline-item">
-                    <h3>When to Use</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">When to Use</h3>
                     <ul>
                         <li>Require immediate user confirmation or decision</li>
                         <li>Present critical warnings or compliance notices</li>
@@ -177,8 +178,8 @@ direction: ltr
                         <li>Gate destructive or irreversible actions</li>
                     </ul>
                 </div>
-                <div class="guideline-item">
-                    <h3>Modal Structure</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Modal Structure</h3>
                     <ul>
                         <li><strong>Card Header:</strong> Use .nds-card-header for title and close button
                         </li>
@@ -189,8 +190,8 @@ direction: ltr
                         <li>Design sections to be scrollable when content exceeds viewport height</li>
                     </ul>
                 </div>
-                <div class="guideline-item">
-                    <h3>Accessibility</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Accessibility</h3>
                     <ul>
                         <li><strong>Focus trap:</strong> Focus cycles within the modal using Tab/Shift+Tab</li>
                         <li><strong>Keyboard support:</strong> ESC key closes the modal</li>
@@ -204,8 +205,8 @@ direction: ltr
                             opens/closes</li>
                     </ul>
                 </div>
-                <div class="guideline-item">
-                    <h3>Best Practices</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Best Practices</h3>
                     <ul>
                         <li>Keep titles clear and contextual to the required action</li>
                         <li>Limit content to a single focused message or task</li>
@@ -214,8 +215,8 @@ direction: ltr
                         <li>Avoid stacking modals or using them for non-critical notifications</li>
                     </ul>
                 </div>
-                <div class="guideline-item">
-                    <h3>JavaScript Integration</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">JavaScript Integration</h3>
                     <ul>
                         <li><strong>Automatic initialization:</strong> Modals initialize automatically via nds-loader.js
                         </li>
@@ -280,8 +281,8 @@ if (!localStorage.getItem('visited')) {
                         </div>
                     </div>
                 </div>
-                <div class="guideline-item">
-                    <h3>Mobile Behavior</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Mobile Behavior</h3>
                     <ul>
                         <li><strong>Bottom sheet:</strong> Modal slides up from bottom on mobile devices</li>
                         <li><strong>Animation:</strong> Smooth 300ms slide-up/slide-down transition</li>
@@ -291,7 +292,6 @@ if (!localStorage.getItem('visited')) {
                         <li><strong>Full-width actions:</strong> Action buttons expand to full width on mobile</li>
                     </ul>
                 </div>
-            </div>
         </div>
     </div>
 </section>
@@ -304,9 +304,8 @@ if (!localStorage.getItem('visited')) {
             <p class="nds-section-description">Built-in functionality and behaviors</p>
         </div>
         <div class="nds-section-content">
-            <div class="guidelines-grid">
-                <div class="guideline-item">
-                    <h3>Focus Trap</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Focus Trap</h3>
                     <p>Keyboard focus cycles within the modal when using Tab/Shift+Tab:</p>
                     <ul>
                         <li>Pressing Tab on last focusable element returns to first</li>
@@ -316,8 +315,8 @@ if (!localStorage.getItem('visited')) {
                         <li>Dynamically detects all focusable elements</li>
                     </ul>
                 </div>
-                <div class="guideline-item">
-                    <h3>Scroll Position Preservation</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Scroll Position Preservation</h3>
                     <p>The page scroll position is maintained when opening/closing modals:</p>
                     <ul>
                         <li>Scroll position saved before modal opens</li>
@@ -327,8 +326,8 @@ if (!localStorage.getItem('visited')) {
                         <li>Prevents jarring scroll jumps on mobile</li>
                     </ul>
                 </div>
-                <div class="guideline-item">
-                    <h3>Animation System</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Animation System</h3>
                     <p>Smooth animations for opening and closing:</p>
                     <ul>
                         <li><strong>Desktop:</strong> Backdrop fade-in/fade-out (300ms)</li>
@@ -338,8 +337,8 @@ if (!localStorage.getItem('visited')) {
                         <li>Display reset after animation completes</li>
                     </ul>
                 </div>
-                <div class="guideline-item">
-                    <h3>Event System</h3>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Event System</h3>
                     <p>Custom events for integration:</p>
                     <ul>
                         <li>nds-modal-opened - Fires when modal opens</li>
@@ -349,7 +348,6 @@ if (!localStorage.getItem('visited')) {
                         <li>Use for analytics, form resets, or custom behaviors</li>
                     </ul>
                 </div>
-            </div>
         </div>
     </div>
 </section>

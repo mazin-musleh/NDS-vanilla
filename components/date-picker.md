@@ -76,6 +76,7 @@ direction: ltr
 
             </div>
           </div>
+          <div class="demo-code">
           <div class="nds-tabs nds-code nds-divided" hidden>
             <div class="nds-tab-list-container">
               <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -127,6 +128,7 @@ direction: ltr
               </div>
             </div>
           </div>
+          </div>
         </div>
 
       </div>
@@ -142,9 +144,8 @@ direction: ltr
       <p class="nds-section-description">Best practices for implementing date picker components</p>
     </div>
     <div class="nds-section-content">
-      <div class="guidelines-grid">
-        <div class="guideline-item">
-          <h3>When to Use</h3>
+        <div class="nds-content-block">
+          <h3 class="nds-block-title">When to Use</h3>
           <ul>
             <li>Date selection in forms and applications</li>
             <li>Booking and scheduling interfaces</li>
@@ -153,8 +154,8 @@ direction: ltr
             <li>Historical date entry with flexible years</li>
           </ul>
         </div>
-        <div class="guideline-item">
-          <h3>Calendar Types</h3>
+        <div class="nds-content-block">
+          <h3 class="nds-block-title">Calendar Types</h3>
           <ul>
             <li><strong>Gregorian:</strong> Standard international calendar</li>
             <li><strong>Hijri:</strong> Islamic lunar calendar for Saudi Arabia</li>
@@ -162,8 +163,8 @@ direction: ltr
             <li><strong>API Integration:</strong> Accurate Hijri date conversion</li>
           </ul>
         </div>
-        <div class="guideline-item">
-          <h3>Date Range Features</h3>
+        <div class="nds-content-block">
+          <h3 class="nds-block-title">Date Range Features</h3>
           <ul>
             <li>Single date selection (default mode)</li>
             <li>Date range selection with visual indicators</li>
@@ -171,8 +172,8 @@ direction: ltr
             <li>Range validation and error handling</li>
           </ul>
         </div>
-        <div class="guideline-item">
-          <h3>Configuration Options</h3>
+        <div class="nds-content-block">
+          <h3 class="nds-block-title">Configuration Options</h3>
           <ul>
             <li><strong>data-year-before:</strong> Years to show before current</li>
             <li><strong>data-year-after:</strong> Years to show after current</li>
@@ -181,8 +182,8 @@ direction: ltr
             <li><strong>hijri class:</strong> Switch to Hijri calendar</li>
           </ul>
         </div>
-        <div class="guideline-item">
-          <h3>Accessibility</h3>
+        <div class="nds-content-block">
+          <h3 class="nds-block-title">Accessibility</h3>
           <ul>
             <li>Keyboard navigation support</li>
             <li>Screen reader compatible</li>
@@ -191,8 +192,8 @@ direction: ltr
             <li>Semantic button and input usage</li>
           </ul>
         </div>
-        <div class="guideline-item">
-          <h3>Mobile Considerations</h3>
+        <div class="nds-content-block">
+          <h3 class="nds-block-title">Mobile Considerations</h3>
           <ul>
             <li>Touch-friendly date selection</li>
             <li>Responsive calendar layout</li>
@@ -200,7 +201,6 @@ direction: ltr
             <li>Large tap targets for dates</li>
           </ul>
         </div>
-      </div>
     </div>
   </div>
 </section>

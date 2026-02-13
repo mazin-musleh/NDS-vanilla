@@ -57,6 +57,7 @@ layout_class: cardView topSubMenu
                             </div>
                         </div>
                     </div>
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -92,6 +93,7 @@ layout_class: cardView topSubMenu
                                 </code>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
 
@@ -134,6 +136,7 @@ layout_class: cardView topSubMenu
                             </div>
                         </div>
                     </div>
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -169,6 +172,7 @@ layout_class: cardView topSubMenu
                                 </code>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
 
@@ -210,6 +214,7 @@ layout_class: cardView topSubMenu
                             </div>
                         </div>
                     </div>
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -245,6 +250,7 @@ layout_class: cardView topSubMenu
                                 </code>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
 
@@ -287,6 +293,7 @@ layout_class: cardView topSubMenu
                             </div>
                         </div>
                     </div>
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -322,6 +329,7 @@ layout_class: cardView topSubMenu
                                 </code>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -384,6 +392,7 @@ layout_class: cardView topSubMenu
                             </div>
                         </div>
                     </div>
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -427,6 +436,7 @@ layout_class: cardView topSubMenu
                                 </code>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -481,6 +491,7 @@ layout_class: cardView topSubMenu
                             </div>
                         </div>
                     </div>
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -513,6 +524,7 @@ layout_class: cardView topSubMenu
                                 </code>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
 
@@ -574,6 +586,7 @@ layout_class: cardView topSubMenu
                             <div id="demo-alert-container" class="nds-alert-container" style="width:100%;"></div>
                         </div>
                     </div>
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -629,6 +642,7 @@ layout_class: cardView topSubMenu
 });</code>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -686,6 +700,7 @@ layout_class: cardView topSubMenu
                                 position above, then click the button to preview</p>
                         </div>
                     </div>
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -749,6 +764,7 @@ layout_class: cardView topSubMenu
 });</code>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
             </div>

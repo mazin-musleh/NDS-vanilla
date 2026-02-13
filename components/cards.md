@@ -95,6 +95,7 @@ direction: ltr
                             </div>
                         </div>
                     </div>
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -158,6 +159,7 @@ direction: ltr
                                 </div>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
 
@@ -256,6 +258,7 @@ direction: ltr
                             </div>
                         </div>
                     </div>
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -341,6 +344,7 @@ direction: ltr
                             </div>
                         </div>
                     </div>
+                    </div>
                 </div>
 
                 <div class="nds-demo-card">
@@ -388,6 +392,7 @@ direction: ltr
                             </div>
                         </div>
                     </div>
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -426,6 +431,7 @@ direction: ltr
                                 </div>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
 
@@ -493,6 +499,7 @@ direction: ltr
                             </div>
                         </div>
                     </div>
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -533,6 +540,7 @@ direction: ltr
                                 </div>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
 
@@ -644,6 +652,7 @@ direction: ltr
                         </div>
                     </div>
                 </div>
+                <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -686,6 +695,7 @@ direction: ltr
                         </div>
                     </div>
                 </div>
+                </div>
             </div>
         </div>
     </div>
@@ -699,25 +709,42 @@ direction: ltr
             <p class="nds-section-description">Best practices for using card components effectively</p>
         </div>
         <div class="nds-section-content">
-
-            ### When to Use Cards
-            - To display content in grid layouts
-            - To group related information together
-            - To create scannable and interactive interfaces
-            - To showcase products or services
-
-            ### Card Structure
-            - **Header**: Contains image and featured icon
-            - **Content**: Title, description and additional information
-            - **Meta**: Tags, ratings and secondary information
-            - **Actions**: Buttons and available actions
-
-            ### Accessibility
-            - Use proper HTML elements for headings and text
-            - Ensure alt text is provided for images
-            - Provide keyboard navigation for interactive elements
-            - Use ARIA labels for buttons and interactive elements
-
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">When to Use</h3>
+                    <ul>
+                        <li>Display content in grid or list layouts</li>
+                        <li>Group related information together</li>
+                        <li>Create scannable and interactive interfaces</li>
+                        <li>Showcase products, services, or features</li>
+                    </ul>
+                </div>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Card Structure</h3>
+                    <ul>
+                        <li><strong>.nds-card-header:</strong> Image, featured icon, or visual element</li>
+                        <li><strong>.nds-card-content:</strong> Title, description, and supporting text</li>
+                        <li><strong>.nds-card-tags:</strong> Tags, ratings, and metadata</li>
+                        <li><strong>.nds-card-actions:</strong> Buttons and interactive controls</li>
+                    </ul>
+                </div>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Variants</h3>
+                    <ul>
+                        <li><strong>.nds-stroke:</strong> Bordered card with subtle outline</li>
+                        <li><strong>.nds-shadow:</strong> Elevated card with drop shadow</li>
+                        <li><strong>.nds-ghost:</strong> Minimal card without visible container</li>
+                        <li><strong>.nds-cards-group:</strong> Grid wrapper with --max-col, --mid-col, --min-col custom properties</li>
+                    </ul>
+                </div>
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Accessibility</h3>
+                    <ul>
+                        <li>Use semantic heading levels (h3, h4) for card titles</li>
+                        <li>Provide alt text for all card images</li>
+                        <li>Ensure interactive elements have keyboard focus indicators</li>
+                        <li>Add aria-label to icon-only buttons and action links</li>
+                    </ul>
+                </div>
         </div>
     </div>
 </section>

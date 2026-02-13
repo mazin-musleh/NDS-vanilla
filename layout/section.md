@@ -620,6 +620,7 @@ Default child         → grid-column: content
                         </div>
                     </div>
                 </div>
+                <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -647,6 +648,7 @@ Default child         → grid-column: content
 </code>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
             </div>

@@ -63,6 +63,7 @@ direction: ltr
               </div>
             </div>
           </div>
+          <div class="demo-code">
           <div class="nds-tabs nds-code nds-divided" hidden>
             <div class="nds-tab-list-container">
               <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -105,6 +106,7 @@ direction: ltr
                 </div>
               </div>
             </div>
+          </div>
           </div>
         </div>
 
@@ -156,6 +158,7 @@ direction: ltr
               </div>
             </div>
           </div>
+          <div class="demo-code">
           <div class="nds-tabs nds-code nds-divided" hidden>
             <div class="nds-tab-list-container">
               <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -203,6 +206,7 @@ direction: ltr
               </div>
             </div>
           </div>
+          </div>
         </div>
 
         <!-- Email Input -->
@@ -249,6 +253,7 @@ direction: ltr
               </div>
             </div>
           </div>
+          <div class="demo-code">
           <div class="nds-tabs nds-code nds-divided" hidden>
             <div class="nds-tab-list-container">
               <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -292,6 +297,7 @@ direction: ltr
                 </div>
               </div>
             </div>
+          </div>
           </div>
         </div>
 
@@ -343,6 +349,7 @@ direction: ltr
               </div>
             </div>
           </div>
+          <div class="demo-code">
           <div class="nds-tabs nds-code nds-divided" hidden>
             <div class="nds-tab-list-container">
               <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -391,6 +398,7 @@ direction: ltr
               </div>
             </div>
           </div>
+          </div>
         </div>
 
         <!-- Textarea -->
@@ -432,6 +440,7 @@ direction: ltr
               </div>
             </div>
           </div>
+          <div class="demo-code">
           <div class="nds-tabs nds-code nds-divided" hidden>
             <div class="nds-tab-list-container">
               <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -469,6 +478,7 @@ direction: ltr
                 </div>
               </div>
             </div>
+          </div>
           </div>
         </div>
 
@@ -530,6 +540,7 @@ direction: ltr
               </div>
             </div>
           </div>
+          <div class="demo-code">
           <div class="nds-tabs nds-code nds-divided" hidden>
             <div class="nds-tab-list-container">
               <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -587,6 +598,7 @@ direction: ltr
               </div>
             </div>
           </div>
+          </div>
         </div>
 
 
@@ -639,6 +651,7 @@ direction: ltr
               </div>
             </div>
           </div>
+          <div class="demo-code">
           <div class="nds-tabs nds-code nds-divided" hidden>
             <div class="nds-tab-list-container">
               <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -711,6 +724,7 @@ element.addEventListener('nds:statusChange', function(e) {
               </div>
             </div>
           </div>
+          </div>
         </div>
 
         <!-- Permanent Feedback Demo -->
@@ -754,6 +768,7 @@ element.addEventListener('nds:statusChange', function(e) {
               </div>
             </div>
           </div>
+          <div class="demo-code">
           <div class="nds-tabs nds-code nds-divided" hidden>
             <div class="nds-tab-list-container">
               <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -838,6 +853,7 @@ NDSFeedback.dismiss(errorFeedback);
               </div>
             </div>
           </div>
+          </div>
         </div>
 
         <!-- Autocomplete Input -->
@@ -888,6 +904,7 @@ NDSFeedback.dismiss(errorFeedback);
               </div>
             </div>
           </div>
+          <div class="demo-code">
           <div class="nds-tabs nds-code nds-divided" hidden>
             <div class="nds-tab-list-container">
               <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -935,6 +952,7 @@ NDSFeedback.dismiss(errorFeedback);
                 </div>
               </div>
             </div>
+          </div>
           </div>
         </div>
       </div>

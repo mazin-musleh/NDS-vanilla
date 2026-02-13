@@ -16,7 +16,7 @@
   padding: 0;
   position: relative;
   overflow: clip;
-  width: 100%;
+  width: -webkit-fill-available;
 
   .nds-tab-list {
     justify-content: flex-end;

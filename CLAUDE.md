@@ -111,6 +111,20 @@ background-color: var(--component-background-primary-default);
 - Dark backgrounds: add `nds-oncolor` | Destructive: add `nds-destructive`
 - Icon-only: include proper ARIA labels
 
+**Section content block structure:**
+```html
+<div class="nds-section-content">
+    <div class="nds-content-block">
+        <h3 class="nds-block-title">Title</h3>
+        <p>Content goes directly here — no extra wrappers.</p>
+    </div>
+</div>
+```
+- `nds-content-block` groups content inside `nds-section-content` (paragraphs, lists, media get automatic styling)
+- `nds-block-title` is optional — blocks work without a title
+- Title tokens: `--block-title-FS`, `--block-title-LH`, `--block-title-FW`, `--block-title-MB`, `--block-title-color`
+- Use for guidelines, accessibility info, and any titled content sections — **do NOT use** `guidelines-grid`, `guideline-item`, `accessibility-info`, or `comparison-item`
+
 **Multi-language front matter:**
 ```yaml
 lang: en

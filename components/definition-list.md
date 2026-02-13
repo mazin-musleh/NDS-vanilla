@@ -85,6 +85,7 @@ direction: ltr
                             </dl>
                         </div>
                     </div>
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -147,6 +148,7 @@ direction: ltr
                             </div>
                         </div>
                     </div>
+                    </div>
                 </div>
 
                 <!-- Grid Layout Definition List -->
@@ -194,6 +196,7 @@ direction: ltr
                             </dl>
                         </div>
                     </div>
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -249,6 +252,7 @@ direction: ltr
                             </div>
                         </div>
                     </div>
+                    </div>
                 </div>
 
                 <!-- Without Icons -->
@@ -288,6 +292,7 @@ direction: ltr
                             </dl>
                         </div>
                     </div>
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -330,6 +335,7 @@ direction: ltr
                                 </div>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
 
