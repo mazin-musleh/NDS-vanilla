@@ -17,6 +17,7 @@
     align-items: flex-end;
     /* Fallback for older browsers */
     overflow-y: clip;
+
     .nds-topbar-content {
         display: flex;
         justify-content: space-between;
@@ -86,11 +87,9 @@
     //   1. .nds-collapse .nds-dropdown — desktop dropdown
     //   2. .nds-collapse — mobile hamburger panel
     //   3. .nds-nav-minimal .nds-dropdown — minimal nav dropdown
-    &:not(
-        :has(.nds-collapse .nds-dropdown[data-state~="open"]),
+    &:not( :has(.nds-collapse .nds-dropdown[data-state~="open"]),
         :has(.nds-collapse[data-state~="open"]),
-        :has(.nds-nav-minimal .nds-dropdown[data-state~="open"])
-    ) {
+        :has(.nds-nav-minimal .nds-dropdown[data-state~="open"])) {
         overflow-x: clip;
     }
 
@@ -325,7 +324,6 @@
     .nds-dropdown-item {
         text-decoration: none;
         justify-content: start;
-        width: 100%;
 
         &:last-child {
             border-bottom: none;
@@ -333,7 +331,7 @@
     }
 
     .nds-dropdown-menu .nds-column {
-        padding: var(--spacing-lg);
+        padding: var(--spacing-lg) 0;
         display: flex;
         flex-direction: column;
         gap: var(--spacing-md);
@@ -341,15 +339,6 @@
 
     /* Dropdown Columns Grid */
     .nds-dropdown-columns {
-        &.columnView {
-            column-count: 4;
-            column-gap: var(--spacing-2xl);
-
-            .nds-column {
-                break-inside: avoid;
-            }
-        }
-
         .nds-dropdown-title {
             font-size: var(--nds-text-clamp-lg-FS);
             line-height: var(--nds-text-clamp-lg-LH);
@@ -368,6 +357,7 @@
             flex-wrap: wrap;
             flex-direction: column;
             column-gap: var(--spacing-2xl);
+            padding: var(--spacing-lg) 0;
 
             &.nds-multi-column-list {
                 display: block;
@@ -393,6 +383,16 @@
                 column-gap: var(--spacing-2xl);
             }
         }
+    }
+}
+
+/* Dropdown Column View */
+.nds-dropdown-menu .nds-dropdown-columns.columnView {
+    column-count: 4;
+    column-gap: var(--spacing-2xl);
+
+    .nds-column {
+        break-inside: avoid;
     }
 }
 
@@ -459,7 +459,7 @@ body:not(.nds-minimal) .nds-main-nav {
                     transform: rotate(270deg);
                 }
 
-                &.atEnd ~.showMore i {
+                &.atEnd~.showMore i {
                     transform: rotate(90deg);
                 }
             }
@@ -651,6 +651,9 @@ body.nds-minimal .nds-main-nav {
                 transition: none;
                 max-height: unset;
                 overflow: unset !important;
+                .nds-dropdown-item {
+                    width: 100%;
+                }
             }
         }
 
@@ -788,6 +791,7 @@ body.nds-minimal .nds-main-nav {
 
 /* Respect reduced motion preferences */
 @include reduced-motion {
+
     .nds-main-nav .nds-dropdown-menu,
     .nds-main-nav .nds-collapse,
     .nds-main-nav .nds-nav-primary .showMore i {

@@ -1,0 +1,11 @@
+---
+# Showcase CSS for NDS (National Design System)
+# Demo cards, code examples, and component demonstrations
+# Only loaded on pages that use showcase components
+---
+/*!
+ * National Design System - Showcase
+ * Generated on: {{ site.time | date: '%Y-%m-%d %H:%M:%S' }}
+ */
+
+@use 'showcase';

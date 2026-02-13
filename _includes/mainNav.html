@@ -38,9 +38,8 @@
                         <a href="#" class="nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator"
                             data-toggle="dropdown"><span class="label">{{ item.label }}</span></a>
                         <div class="nds-dropdown-menu">
-                            <div class="nds-dropdown-content">
-                                <div
-                                    class="nds-content-container nds-dropdown-columns {% if item.dropdown_type == 'columnView' %}columnView{% elsif item.dropdown_type == 'rowList' %}nds-rowList{% endif %}">
+                            <div class="nds-dropdown-content nds-content-grid">
+                                <div  class="nds-dropdown-columns {% if item.dropdown_type == 'columnView' %}columnView{% elsif item.dropdown_type == 'rowList' %}nds-rowList{% endif %}">
                                     {% if item.columns %}
                                     {% for column in item.columns %}
                                     <div class="nds-column">

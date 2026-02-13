@@ -150,6 +150,10 @@ direction: ltr
 
 **Demo card structure** — see `components/tags.md` for full reference. Key classes: `.nds-demo-card` > `.demo-header` + `.demo-container` > `.state-demo`, with `.nds-tabs.nds-code` for code examples.
 
+## Creating New Pages
+
+**Use `standard.md` as the base template** — it contains all available front matter variables with example values and inline comments. Copy it and fill in your values.
+
 ## Adding New Components
 
 1. Create `_sass/components/_[name].scss` (with `@use '../mixins' as *;`)

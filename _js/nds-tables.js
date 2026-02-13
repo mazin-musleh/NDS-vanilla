@@ -303,8 +303,12 @@
                 checkbox.checked = checked;
             });
 
-            // Clear indeterminate state
-            this.selectAllCheckbox.indeterminate = false;
+            // Clear indeterminate state via forms API
+            if (window.NDS && window.NDS.Forms && window.NDS.Forms.setIndeterminate) {
+                window.NDS.Forms.setIndeterminate(this.selectAllCheckbox, false);
+            } else {
+                this.selectAllCheckbox.indeterminate = false;
+            }
 
             this.dispatchSelectionEvent();
         }
@@ -317,8 +321,13 @@
             // Set checked state based on count
             this.selectAllCheckbox.checked = checkedCount === totalCount;
 
-            // Set indeterminate state independently
-            this.selectAllCheckbox.indeterminate = checkedCount > 0 && checkedCount < totalCount;
+            // Set indeterminate state via forms API
+            var isIndeterminate = checkedCount > 0 && checkedCount < totalCount;
+            if (window.NDS && window.NDS.Forms && window.NDS.Forms.setIndeterminate) {
+                window.NDS.Forms.setIndeterminate(this.selectAllCheckbox, isIndeterminate);
+            } else {
+                this.selectAllCheckbox.indeterminate = isIndeterminate;
+            }
 
         }
 

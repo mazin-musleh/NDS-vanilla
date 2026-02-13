@@ -307,6 +307,9 @@
                 } else if (operationType === 'data-state') {
                     // Handle data-state attribute toggling (space-separated values like classes)
                     handleDataStateToggling(targetElement, classNamesOrAttrs);
+                } else if (operationType === 'prop') {
+                    // Handle native JS property toggling (e.g. indeterminate)
+                    handlePropertyToggling(targetElement, classNamesOrAttrs);
                 } else if (operationType === 'content-prepend' || operationType === 'content-append') {
                     // Handle content toggling (append/prepend)
                     handleContentToggling(targetElement, classNamesOrAttrs, operationType);
@@ -354,12 +357,12 @@
                 
                 if (Array.isArray(parsed) && parsed.length >= 2) {
                     if (typeof parsed[0] === 'string') {
-                        operations = [[parsed[0], parsed[1], parsed[2]]];
+                        operations = [[parsed[0], parsed[1], parsed[2], parsed[3]]];
                     } else {
                         operations = parsed;
                     }
                 }
-                
+
                 // Get unique types for this button
                 const buttonTypes = [...new Set(operations.map(([,, type]) => type || 'default'))];
                 
@@ -380,7 +383,7 @@
                                 
                                 if (Array.isArray(otherParsed) && otherParsed.length >= 2) {
                                     if (typeof otherParsed[0] === 'string') {
-                                        otherOperations = [[otherParsed[0], otherParsed[1], otherParsed[2]]];
+                                        otherOperations = [[otherParsed[0], otherParsed[1], otherParsed[2], otherParsed[3]]];
                                     } else {
                                         otherOperations = otherParsed;
                                     }
@@ -524,6 +527,9 @@
                                                 } else if (deselectionOperationType === 'data-state') {
                                                     // Handle data-state deselection - toggle states back to original state
                                                     handleDataStateToggling(targetElement, classNamesOrAttrs);
+                                                } else if (deselectionOperationType === 'prop') {
+                                                    // Handle property deselection - explicitly set to false (not toggle)
+                                                    handlePropertyDeselection(targetElement, classNamesOrAttrs);
                                                 } else if (deselectionOperationType === 'content-prepend' || deselectionOperationType === 'content-append') {
                                                     // Handle content deselection - toggle content back to original state
                                                     handleContentToggling(targetElement, classNamesOrAttrs, deselectionOperationType);
@@ -860,6 +866,37 @@
 
         // Update code example for attribute changes
         updateCodeExampleForAttributes(demoCard, targetElement, attributePairs);
+    }
+
+    // Handle native JS property toggling (boolean properties like indeterminate)
+    function handlePropertyToggling(targetElement, propsString) {
+        var props = propsString.trim().split(/\s+/);
+
+        props.forEach(function(prop) {
+            if (!prop) return;
+            var newValue = !targetElement[prop];
+            targetElement[prop] = newValue;
+
+            // Sync with forms system if available
+            if (prop === 'indeterminate' && window.NDS && window.NDS.Forms && window.NDS.Forms.setIndeterminate) {
+                window.NDS.Forms.setIndeterminate(targetElement, newValue);
+            }
+        });
+    }
+
+    // Handle property deselection - explicitly sets properties to false
+    function handlePropertyDeselection(targetElement, propsString) {
+        var props = propsString.trim().split(/\s+/);
+
+        props.forEach(function(prop) {
+            if (!prop) return;
+            targetElement[prop] = false;
+
+            // Sync with forms system if available
+            if (prop === 'indeterminate' && window.NDS && window.NDS.Forms && window.NDS.Forms.setIndeterminate) {
+                window.NDS.Forms.setIndeterminate(targetElement, false);
+            }
+        });
     }
 
     // Handle data-state attribute toggling (space-separated values)
