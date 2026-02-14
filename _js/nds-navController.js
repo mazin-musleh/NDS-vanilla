@@ -93,8 +93,7 @@
 
         // Clear caches when layout changes significantly
         invalidateCache() {
-            // Duration cache uses WeakMap, auto-cleans
-            // No other caches needed now
+            _containerLayoutCache = null;
         }
     };
 
@@ -114,14 +113,9 @@
     };
 
     // Batch read element widths to avoid forced reflows
-    const getWidths = (...elements) => {
-        const rects = elements.map(el => el?.getBoundingClientRect());
-        const styles = elements.map(el => el ? getComputedStyle(el) : null);
-        return elements.map((el, i) => {
-            if (!el) return 0;
-            return rects[i].width + parseFloat(styles[i].marginLeft || 0) + parseFloat(styles[i].marginRight || 0);
-        });
-    };
+    // Use offsetWidth (cheap, no getComputedStyle needed) — includes padding+border, excludes margin.
+    // Nav elements have margin handled by flex gap, so offsetWidth is sufficient.
+    const getWidths = (...elements) => elements.map(el => el?.offsetWidth || 0);
 
     // Check if click is outside elements with buffer zone
     const isOutside = (x, y, elements, buffer) => {
@@ -496,6 +490,9 @@
         }
     }
 
+    let _navMaxWidthLast = 0;
+    let _containerLayoutCache = null;
+
     function updateNavMaxWidth() {
         if (!DOM.primary || !DOM.nav) return;
 
@@ -505,25 +502,32 @@
             return;
         }
 
+        // Cheap pre-check: only recalculate if nav container width changed
         const container = DOM.container;
-        const [navW, brandW, secW, minW] = getWidths(DOM.nav, DOM.brand, DOM.secondary, DOM.minimal);
         const containerW = container?.offsetWidth || 0;
+        if (containerW === _navMaxWidthLast) return;
+        _navMaxWidthLast = containerW;
 
-        const containerStyles = container ? getComputedStyle(container) : null;
-        const children = container ? Array.from(container.children) : [];
-        const childStyles = children.map(c => getComputedStyle(c));
-
-        let padding = 0, gap = 0;
-        if (containerStyles) {
-            padding = parseFloat(containerStyles.paddingLeft || 0) + parseFloat(containerStyles.paddingRight || 0);
-            gap = parseFloat(containerStyles.gap || containerStyles.columnGap || 0) || 0;
-        }
-
-        // Get showMore button width if visible
+        const [navW, brandW, secW, minW] = getWidths(DOM.nav, DOM.brand, DOM.secondary, DOM.minimal);
         const showMoreW = DOM.showMore && DOM.primary?.classList.contains('hasMore') ? DOM.showMore.offsetWidth : 0;
 
+        // Cache container padding/gap/visibleCount — only changes on resize
+        if (!_containerLayoutCache || _containerLayoutCache.containerW !== containerW) {
+            const containerStyles = container ? getComputedStyle(container) : null;
+            const children = container ? Array.from(container.children) : [];
+
+            let padding = 0, gap = 0;
+            if (containerStyles) {
+                padding = parseFloat(containerStyles.paddingLeft || 0) + parseFloat(containerStyles.paddingRight || 0);
+                gap = parseFloat(containerStyles.gap || containerStyles.columnGap || 0) || 0;
+            }
+            const visibleCount = children.filter(c => c.offsetWidth > 0 || c.offsetHeight > 0).length;
+
+            _containerLayoutCache = { containerW, padding, gap, visibleCount };
+        }
+
+        const { padding, gap, visibleCount } = _containerLayoutCache;
         const constraint = Math.min(navW, containerW || 1280);
-        const visibleCount = childStyles.filter(s => s.display !== 'none').length;
         const used = brandW + secW + minW + showMoreW + padding + (gap * Math.max(0, visibleCount - 1));
         const available = constraint - used;
         const newMax = available > 0 ? `${available}px` : '';
@@ -844,7 +848,11 @@
                 updatePositions();
             }
 
-            checkTogglerVisibility();
+            // Only check toggler visibility when width/mode/nav items changed
+            if (widthChanged || modeChanged || state._navChanged) {
+                state._navChanged = false;
+                checkTogglerVisibility();
+            }
         });
     }
 
@@ -997,7 +1005,7 @@
                             .some(c => n.classList?.contains(c))
                     )
                 );
-                if (relevant) scheduleUpdate();
+                if (relevant) { state._navChanged = true; scheduleUpdate(); }
             }, 100));
 
             [DOM.primary, DOM.secondary].filter(Boolean).forEach(c =>
@@ -1017,8 +1025,9 @@
                     }
                     return false;
                 });
-                if (significant) {
+                if (significant && state._initDone) {
                     state.invalidateCache();
+                    _navMaxWidthLast = 0; // Reset cache to force recalc
                     scheduleUpdate();
                 }
             }, 100));
@@ -1044,9 +1053,14 @@
             updatePositions();
         }
 
-        updateNavMaxWidth();
         setupInteractions();
-        checkTogglerVisibility();
+
+        // Defer initial layout measurements to after first paint
+        state._initDone = false;
+        requestAnimationFrame(() => {
+            updateNavMaxWidth();
+            state._initDone = true;
+        });
 
         // If no primary nav, remove hidden immediately (no layout to settle)
         if (!DOM.primary) {
@@ -1062,7 +1076,8 @@
                 if (loaded) {
                     setTimeout(() => {
                         state.invalidateCache();
-                        updateNavMaxWidth();
+                        _navMaxWidthLast = 0; // Reset cache to force recalc
+                        scheduleUpdate();
                     }, 100);
                 }
             });

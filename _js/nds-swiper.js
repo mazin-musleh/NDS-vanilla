@@ -71,6 +71,7 @@
             this.nextBtn = container.querySelector('.nds-swiper-button-next');
 
             this.isHero = container.classList.contains('nds-hero');
+            this._cachedGap = null;
 
             if (!this.wrapper || this.slides.length === 0) {
                 console.warn('NDS Swiper: No wrapper or slides found');
@@ -97,6 +98,13 @@
             if (width >= 960) return max;
             if (width > 600) return mid;
             return min;
+        }
+
+        getGap() {
+            if (this._cachedGap === null) {
+                this._cachedGap = parseInt(getComputedStyle(this.container).getPropertyValue('--gap')) || 0;
+            }
+            return this._cachedGap;
         }
 
         setInitialSlidesPerView() {
@@ -236,7 +244,7 @@
             const pageCount = Math.ceil(this.slides.length / this.slidesPerView);
 
             // Get swiper gap
-            const gap = parseInt(getComputedStyle(this.container).getPropertyValue('--gap')) || 0;
+            const gap = this.getGap();
 
             // Set peek to 0 if no peek attr, only one page, otherwise add gap to peek
             const effectivePeek = (peek > 0 && pageCount > 1) ? peek + gap : 0;
@@ -286,6 +294,7 @@
 
         setupResize() {
             this.resizeHandler = debounce(() => {
+                this._cachedGap = null; // Invalidate gap cache on resize
                 const oldSlidesPerView = this.slidesPerView;
                 this.updateSlidesPerView();
 
@@ -362,7 +371,7 @@
 
             // Calculate absolute scroll position using slide dimensions
             const slideWidth = targetSlide.offsetWidth;
-            const gap = parseInt(getComputedStyle(this.container).getPropertyValue('--gap')) || 0;
+            const gap = this.getGap();
             const rtl = isRTL();
 
             // Calculate target scroll position
@@ -402,7 +411,7 @@
             // Use scroll position instead of getBoundingClientRect for each slide
             const scrollLeft = this.wrapper.scrollLeft;
             const slideWidth = this.slides[0].offsetWidth;
-            const gap = parseInt(getComputedStyle(this.container).getPropertyValue('--gap')) || 0;
+            const gap = this.getGap();
 
             // Calculate index from scroll position
             const rtl = isRTL();

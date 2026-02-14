@@ -1,0 +1,249 @@
+<!-- NDS Perf Monitor — inlined for earliest execution -->
+<script>
+(function () {
+    'use strict';
+
+    // ── Panel ────────────────────────────────────────────────────────
+    var panel = document.createElement('div');
+    panel.id = 'nds-perf';
+    panel.innerHTML = [
+        '<style>',
+        '#nds-perf{position:fixed;z-index:999999;font:11px/1.4 monospace;background:rgba(0,0,0,.9);color:#ccc;max-height:40vh;display:flex;flex-direction:column;touch-action:pan-y;user-select:text;-webkit-user-select:text;inset-inline:0;}',
+        '#nds-perf.bottom{inset-block-end:0;inset-block-start:auto;}',
+        '#nds-perf.top{inset-block-start:0;inset-block-end:auto;}',
+        '#nds-perf.hide #nds-perf-log{display:none;}',
+        '#nds-perf-bar{display:flex;align-items:center;gap:6px;padding:5px 10px;background:rgba(0,0,0,.95);flex-shrink:0;}',
+        '#nds-perf-bar span{white-space:nowrap;}',
+        '.pf{font-weight:bold;font-size:13px;min-width:52px;}',
+        '.pm{font-size:10px;padding:2px 5px;border-radius:3px;background:rgba(255,255,255,.08);}',
+        '.sp{flex:1;}',
+        '#nds-perf-btns{display:flex;gap:4px;padding:4px 10px;border-bottom:1px solid #333;flex-shrink:0;background:rgba(0,0,0,.95);}',
+        '#nds-perf-btns button{background:#333;color:#fff;border:none;border-radius:4px;padding:4px 8px;font:11px monospace;cursor:pointer;touch-action:manipulation;min-height:28px;}',
+        '#nds-perf-btns button:active{background:#555;}',
+        '#nds-perf-log{overflow-y:auto;padding:4px 10px 10px;flex:1;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;}',
+        '#nds-perf-log div{padding:2px 0;border-bottom:1px solid rgba(255,255,255,.05);word-break:break-all;}',
+        '.g{color:#4caf50;}.w{color:#ff9800;}.b{color:#f44336;}.i{color:#64b5f6;}.d{color:#777;}',
+        '</style>',
+        '<div id="nds-perf-bar">',
+        '  <span class="pf" id="pf-fps">-- FPS</span>',
+        '  <span class="pm" id="pf-dom">DOM --</span>',
+        '  <span class="pm" id="pf-mem"></span>',
+        '  <span class="sp"></span>',
+        '</div>',
+        '<div id="nds-perf-btns">',
+        '  <button id="pf-tog">Hide</button>',
+        '  <button id="pf-pos">&#8597;</button>',
+        '  <button id="pf-cpy">Copy</button>',
+        '  <button id="pf-cls">Clear</button>',
+        '  <button id="pf-x">X</button>',
+        '</div>',
+        '<div id="nds-perf-log"></div>'
+    ].join('');
+
+    panel.classList.add(localStorage._pfPos === 'top' ? 'top' : 'bottom');
+    if (localStorage._pfHide === '1') panel.classList.add('hide');
+
+    // ── Mount ────────────────────────────────────────────────────────
+    var pending = [];
+    var logEl, fpsEl, domEl, memEl;
+    var MAX = 200, logLines = [];
+
+    function mount() {
+        if (logEl) return;
+        if (!document.body) return;
+        document.body.appendChild(panel);
+        logEl = document.getElementById('nds-perf-log');
+        fpsEl = document.getElementById('pf-fps');
+        domEl = document.getElementById('pf-dom');
+        memEl = document.getElementById('pf-mem');
+
+        for (var i = 0; i < pending.length; i++) log(pending[i][0], pending[i][1]);
+        pending = [];
+
+        document.getElementById('pf-tog').addEventListener('click', function () {
+            var h = panel.classList.toggle('hide');
+            this.textContent = h ? 'Show' : 'Hide';
+            localStorage._pfHide = h ? '1' : '0';
+        });
+        if (localStorage._pfHide === '1') document.getElementById('pf-tog').textContent = 'Show';
+
+        document.getElementById('pf-pos').addEventListener('click', function () {
+            var t = panel.classList.toggle('top');
+            panel.classList.toggle('bottom', !t);
+            localStorage._pfPos = t ? 'top' : 'bottom';
+        });
+        document.getElementById('pf-x').addEventListener('click', function () {
+            if (window.__ndsPerf) window.__ndsPerf.stop();
+            panel.remove();
+        });
+        document.getElementById('pf-cpy').addEventListener('click', function () {
+            var text = logLines.join('\n');
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(function () { fb('Copied!'); }, function () { fb('Failed'); });
+            } else {
+                var ta = document.createElement('textarea');
+                ta.value = text; ta.style.cssText = 'position:fixed;opacity:0;';
+                document.body.appendChild(ta); ta.focus(); ta.select();
+                try { document.execCommand('copy'); fb('Copied!'); } catch (e) { fb('Failed'); }
+                document.body.removeChild(ta);
+            }
+            function fb(m) { var b = document.getElementById('pf-cpy'), o = b.textContent; b.textContent = m; setTimeout(function () { b.textContent = o; }, 1000); }
+        });
+        document.getElementById('pf-cls').addEventListener('click', function () {
+            logEl.innerHTML = ''; logLines = [];
+        });
+    }
+
+    if (document.body) mount(); else document.addEventListener('DOMContentLoaded', mount);
+
+    // ── Log ──────────────────────────────────────────────────────────
+    function log(text, cls) {
+        var t = '+' + (performance.now() / 1000).toFixed(2) + 's  ';
+        logLines.push(t + text);
+        if (logLines.length > MAX) logLines.shift();
+        if (!logEl) { pending.push([text, cls]); return; }
+        var el = document.createElement('div');
+        if (cls) el.className = cls;
+        el.textContent = t + text;
+        logEl.appendChild(el);
+        while (logEl.children.length > MAX) logEl.removeChild(logEl.firstChild);
+        if (logEl.scrollHeight - logEl.scrollTop - logEl.clientHeight < 60) logEl.scrollTop = logEl.scrollHeight;
+    }
+
+    // ── 1. FPS ───────────────────────────────────────────────────────
+    var frames = 0, lastT = performance.now(), minFps = Infinity, fpsH = [], curFps = 0;
+
+    function fpsLoop(now) {
+        frames++;
+        if (now - lastT >= 1000) {
+            curFps = Math.round((frames * 1000) / (now - lastT));
+            fpsH.push(curFps); if (fpsH.length > 60) fpsH.shift();
+            minFps = Math.min(minFps, curFps);
+            if (fpsEl) { fpsEl.textContent = curFps + ' FPS'; fpsEl.style.color = curFps >= 55 ? '#4caf50' : curFps >= 30 ? '#ff9800' : '#f44336'; }
+            if (curFps < 30) log('FPS DROP  ' + curFps + ' (min: ' + minFps + ')', 'b');
+            frames = 0; lastT = now;
+        }
+        rafId = requestAnimationFrame(fpsLoop);
+    }
+    var rafId = requestAnimationFrame(fpsLoop);
+
+    // ── 2. CLS ───────────────────────────────────────────────────────
+    var clsTotal = 0;
+    if (typeof PerformanceObserver !== 'undefined') {
+        try {
+            new PerformanceObserver(function (l) {
+                l.getEntries().forEach(function (e) {
+                    if (!e.hadRecentInput) {
+                        clsTotal += e.value;
+                        if (e.value > 0.05) {
+                            log('CLS  ' + e.value.toFixed(4) + '  (total: ' + clsTotal.toFixed(4) + ')', 'w');
+                            if (e.sources) e.sources.slice(0, 2).forEach(function (s) {
+                                if (s.node) log('  → ' + elKey(s.node), 'd');
+                            });
+                        }
+                    }
+                });
+            }).observe({ type: 'layout-shift', buffered: true });
+        } catch (e) { }
+    }
+
+    // ── 3. Reflow Detector ───────────────────────────────────────────
+    var reflowN = 0, elMap = {}, sample = 20;
+
+    function elKey(el) {
+        if (!el || !el.tagName) return 'window';
+        var t = el.tagName.toLowerCase(), c = el.className;
+        if (typeof c === 'string' && c) {
+            var cl = c.split(/\s+/).filter(function (x) {
+                return x && (x.indexOf('nds-') === 0 || x.indexOf('hgi') === 0 || x.indexOf('nav') === 0 || x.indexOf('side') === 0);
+            }).slice(0, 2);
+            if (cl.length) return t + '.' + cl.join('.');
+        }
+        return el.id ? t + '#' + el.id : t;
+    }
+
+    var _gcs = window.getComputedStyle;
+    window.getComputedStyle = function () {
+        reflowN++;
+        if (reflowN % sample === 0) { var k = elKey(arguments[0]) + ' [style]'; elMap[k] = (elMap[k] || 0) + 1; }
+        return _gcs.apply(this, arguments);
+    };
+    var _gbcr = Element.prototype.getBoundingClientRect;
+    Element.prototype.getBoundingClientRect = function () {
+        reflowN++;
+        if (reflowN % sample === 0) { var k = elKey(this) + ' [rect]'; elMap[k] = (elMap[k] || 0) + 1; }
+        return _gbcr.apply(this, arguments);
+    };
+
+    setInterval(function () {
+        if (reflowN > 30) {
+            log('REFLOWS  ' + reflowN + '/s', reflowN > 60 ? 'b' : 'w');
+            var keys = Object.keys(elMap).sort(function (a, b) { return elMap[b] - elMap[a]; });
+            for (var i = 0; i < Math.min(keys.length, 3); i++) {
+                log('  → ' + keys[i] + '  x' + (elMap[keys[i]] * sample), 'd');
+            }
+        }
+        elMap = {}; reflowN = 0;
+    }, 1000);
+
+    // ── 4. Slow Input (INP) ──────────────────────────────────────────
+    if (typeof PerformanceObserver !== 'undefined') {
+        try {
+            new PerformanceObserver(function (l) {
+                l.getEntries().forEach(function (e) {
+                    var d = Math.round(e.duration);
+                    if (d > 200) log('SLOW INPUT  ' + e.name + '  ' + d + 'ms', d > 500 ? 'b' : 'w');
+                });
+            }).observe({ type: 'event', buffered: true, durationThreshold: 100 });
+        } catch (e) { }
+    }
+
+    // ── 5. Scroll Jank ───────────────────────────────────────────────
+    var janks = 0, lastScrl = 0, idle = true, idleTmr, tchStart = 0, scrlLogged = false;
+
+    window.addEventListener('touchstart', function () { tchStart = performance.now(); scrlLogged = false; }, { passive: true });
+    window.addEventListener('wheel', function () { if (idle) { tchStart = performance.now(); scrlLogged = false; } }, { passive: true });
+
+    window.addEventListener('scroll', function () {
+        var now = performance.now();
+        if (idle && tchStart && !scrlLogged) {
+            var delay = now - tchStart; scrlLogged = true;
+            if (delay > 50) { janks++; log('SCROLL START  ' + Math.round(delay) + 'ms  (#' + janks + ')', delay > 150 ? 'b' : 'w'); }
+        }
+        if (!idle && lastScrl && now - lastScrl > 50) { janks++; log('SCROLL GAP  ' + Math.round(now - lastScrl) + 'ms  (#' + janks + ')', 'b'); }
+        idle = false; lastScrl = now;
+        clearTimeout(idleTmr);
+        idleTmr = setTimeout(function () { idle = true; lastScrl = tchStart = 0; }, 150);
+    }, { passive: true });
+
+    // ── Bar Metrics ──────────────────────────────────────────────────
+    setInterval(function () {
+        if (domEl) { var n = document.querySelectorAll('*').length; domEl.textContent = 'DOM ' + n; domEl.style.color = n > 3000 ? '#f44336' : n > 1500 ? '#ff9800' : '#ccc'; }
+        if (performance.memory && memEl) { memEl.textContent = (performance.memory.usedJSHeapSize / 1048576).toFixed(1) + 'MB'; }
+    }, 3000);
+
+    // ── API ──────────────────────────────────────────────────────────
+    window.__ndsPerf = {
+        summary: function () {
+            var avg = fpsH.length ? Math.round(fpsH.reduce(function (a, b) { return a + b; }, 0) / fpsH.length) : 'N/A';
+            log('═══ SUMMARY ═══', 'i');
+            log('  FPS avg:' + avg + '  min:' + (minFps === Infinity ? 'N/A' : minFps), 'i');
+            log('  Janks: ' + janks + '  CLS: ' + clsTotal.toFixed(4), 'i');
+            log('  DOM: ' + document.querySelectorAll('*').length, 'i');
+            log('════════════════', 'i');
+        },
+        reset: function () {
+            minFps = Infinity; fpsH = []; janks = 0; clsTotal = 0;
+            if (logEl) logEl.innerHTML = ''; logLines = [];
+            log('Reset', 'i');
+        },
+        stop: function () {
+            cancelAnimationFrame(rafId);
+            window.getComputedStyle = _gcs;
+            Element.prototype.getBoundingClientRect = _gbcr;
+        }
+    };
+
+    log('PAGE  ' + (document.title || location.pathname), 'i');
+})();
+</script>
