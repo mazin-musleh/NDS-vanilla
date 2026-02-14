@@ -55,7 +55,7 @@ direction: ltr
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
                             </nav>
-                                <button class="nds-btn nds-subtle nds-tab showMore"><i
+                                <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
                         </div>
@@ -116,7 +116,7 @@ direction: ltr
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
                             </nav>
-                                <button class="nds-btn nds-subtle nds-tab showMore"><i
+                                <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
                         </div>
@@ -177,7 +177,7 @@ direction: ltr
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
                             </nav>
-                                <button class="nds-btn nds-subtle nds-tab showMore"><i
+                                <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
                         </div>
@@ -238,7 +238,7 @@ direction: ltr
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
                             </nav>
-                                <button class="nds-btn nds-subtle nds-tab showMore"><i
+                                <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
                         </div>
@@ -299,7 +299,7 @@ direction: ltr
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
                             </nav>
-                                <button class="nds-btn nds-subtle nds-tab showMore"><i
+                                <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
                         </div>
@@ -364,7 +364,7 @@ direction: ltr
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
                             </nav>
-                                <button class="nds-btn nds-subtle nds-tab showMore"><i
+                                <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
                         </div>
@@ -425,7 +425,7 @@ direction: ltr
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
                             </nav>
-                                <button class="nds-btn nds-subtle nds-tab showMore"><i
+                                <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
                         </div>
@@ -483,7 +483,7 @@ direction: ltr
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
                             </nav>
-                                <button class="nds-btn nds-subtle nds-tab showMore"><i
+                                <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
                         </div>
@@ -541,7 +541,7 @@ direction: ltr
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
                             </nav>
-                                <button class="nds-btn nds-subtle nds-tab showMore"><i
+                                <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
                         </div>
@@ -600,7 +600,7 @@ direction: ltr
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
                             </nav>
-                                <button class="nds-btn nds-subtle nds-tab showMore"><i
+                                <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
                         </div>
@@ -659,7 +659,7 @@ direction: ltr
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
                             </nav>
-                                <button class="nds-btn nds-subtle nds-tab showMore"><i
+                                <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
                         </div>
@@ -717,7 +717,7 @@ direction: ltr
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
                             </nav>
-                                <button class="nds-btn nds-subtle nds-tab showMore"><i
+                                <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
                         </div>
@@ -784,7 +784,7 @@ direction: ltr
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
                             </nav>
-                                <button class="nds-btn nds-subtle nds-tab showMore"><i
+                                <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
                         </div>
@@ -838,7 +838,7 @@ direction: ltr
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
                             </nav>
-                                <button class="nds-btn nds-subtle nds-tab showMore"><i
+                                <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
                         </div>
@@ -892,7 +892,7 @@ direction: ltr
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
                             </nav>
-                                <button class="nds-btn nds-subtle nds-tab showMore"><i
+                                <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
                         </div>
@@ -946,7 +946,7 @@ direction: ltr
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
                             </nav>
-                                <button class="nds-btn nds-subtle nds-tab showMore"><i
+                                <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
                         </div>
@@ -1000,7 +1000,7 @@ direction: ltr
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
                             </nav>
-                                <button class="nds-btn nds-subtle nds-tab showMore"><i
+                                <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
                         </div>
@@ -1061,7 +1061,7 @@ direction: ltr
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
                             </nav>
-                                <button class="nds-btn nds-subtle nds-tab showMore"><i
+                                <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
                         </div>
@@ -1118,7 +1118,7 @@ direction: ltr
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
                             </nav>
-                                <button class="nds-btn nds-subtle nds-tab showMore"><i
+                                <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
                         </div>
@@ -1175,7 +1175,7 @@ direction: ltr
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
                             </nav>
-                                <button class="nds-btn nds-subtle nds-tab showMore"><i
+                                <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
                         </div>
@@ -1232,7 +1232,7 @@ direction: ltr
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
                             </nav>
-                                <button class="nds-btn nds-subtle nds-tab showMore"><i
+                                <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
                         </div>
@@ -1289,7 +1289,7 @@ direction: ltr
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
                             </nav>
-                                <button class="nds-btn nds-subtle nds-tab showMore"><i
+                                <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
                         </div>
@@ -1352,7 +1352,7 @@ direction: ltr
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
                             </nav>
-                                <button class="nds-btn nds-subtle nds-tab showMore"><i
+                                <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
                         </div>
@@ -1405,7 +1405,7 @@ direction: ltr
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
                             </nav>
-                                <button class="nds-btn nds-subtle nds-tab showMore"><i
+                                <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
                         </div>
@@ -1458,7 +1458,7 @@ direction: ltr
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
                             </nav>
-                                <button class="nds-btn nds-subtle nds-tab showMore"><i
+                                <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
                         </div>
@@ -1531,7 +1531,7 @@ direction: ltr
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
                             </nav>
-                                <button class="nds-btn nds-subtle nds-tab showMore"><i
+                                <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
                         </div>
@@ -1576,7 +1576,7 @@ direction: ltr
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
                             </nav>
-                                <button class="nds-btn nds-subtle nds-tab showMore"><i
+                                <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
                         </div>
@@ -1658,7 +1658,7 @@ direction: ltr
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
                             </nav>
-                                <button class="nds-btn nds-subtle nds-tab showMore"><i
+                                <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
                         </div>
@@ -1743,7 +1743,7 @@ direction: ltr
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
                             </nav>
-                                <button class="nds-btn nds-subtle nds-tab showMore"><i
+                                <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
                                         class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                 </button>
                         </div>
