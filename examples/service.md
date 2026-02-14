@@ -32,7 +32,7 @@ hideSidemenu: true
                             <span class="label">Required Documents</span>
                         </button>
                     </nav>
-                    <button class="nds-btn nds-subtle nds-tab showMore">
+                    <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more">
                         <i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                     </button>
                 </div>
@@ -102,7 +102,7 @@ hideSidemenu: true
                     </dt>
                     <dd>Arabic Language,English Language</dd>
                 </div>
-                <hr class="nds-divider">
+                <div class="nds-definition-item"><hr class="nds-divider"></div>
                 <div class="nds-definition-item">
                     <dt>
                         <i class="hgi hgi-stroke hgi-help-circle icon"></i>
