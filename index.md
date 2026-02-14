@@ -40,39 +40,34 @@ direction: rtl
                 accessibility, and developer experience.</p>
         </div>
         <div class="nds-section-content">
-            <div class="nds-capabilities-grid">
-                <div class="nds-capability-card">
-                    <i class="hgi hgi-stroke hgi-responsive nds-capability-icon"></i>
+            <div class="nds-grid" style="--max-col: 3; --mid-col: 2; --min-col: 1;">
+                <div class="nds-card nds-stroke">
+                    <i class="hgi hgi-stroke hgi-responsive"></i>
                     <h3>Responsive Design</h3>
-                    <p>Mobile-first components that adapt seamlessly across all devices and screen sizes with optimized
-                        breakpoints.</p>
+                    <p>Mobile-first components that adapt seamlessly across all devices and screen sizes with optimized breakpoints.</p>
                 </div>
-                <div class="nds-capability-card">
-                    <i class="hgi hgi-stroke hgi-language nds-capability-icon"></i>
+                <div class="nds-card nds-stroke">
+                    <i class="hgi hgi-stroke hgi-language"></i>
                     <h3>RTL/LTR Support</h3>
-                    <p>Native support for Arabic (RTL) and English (LTR) with automatic text direction and layout
-                        mirroring.</p>
+                    <p>Native support for Arabic (RTL) and English (LTR) with automatic text direction and layout mirroring.</p>
                 </div>
-                <div class="nds-capability-card">
-                    <i class="hgi hgi-stroke hgi-accessibility nds-capability-icon"></i>
+                <div class="nds-card nds-stroke">
+                    <i class="hgi hgi-stroke hgi-accessibility"></i>
                     <h3>Accessibility First</h3>
-                    <p>WCAG 2.1 AA compliant components with keyboard navigation, screen reader support, and semantic
-                        markup.</p>
+                    <p>WCAG 2.1 AA compliant components with keyboard navigation, screen reader support, and semantic markup.</p>
                 </div>
-                <div class="nds-capability-card">
-                    <i class="hgi hgi-stroke hgi-performance nds-capability-icon"></i>
+                <div class="nds-card nds-stroke">
+                    <i class="hgi hgi-stroke hgi-performance"></i>
                     <h3>Performance Optimized</h3>
-                    <p>Lightweight, tree-shakeable components with CSS custom properties and hardware-accelerated
-                        animations.</p>
+                    <p>Lightweight, tree-shakeable components with CSS custom properties and hardware-accelerated animations.</p>
                 </div>
-                <div class="nds-capability-card">
-                    <i class="hgi hgi-stroke hgi-theme nds-capability-icon"></i>
+                <div class="nds-card nds-stroke">
+                    <i class="hgi hgi-stroke hgi-theme"></i>
                     <h3>Theming System</h3>
-                    <p>Comprehensive design token system supporting light/dark modes and custom government agency
-                        branding.</p>
+                    <p>Comprehensive design token system supporting light/dark modes and custom government agency branding.</p>
                 </div>
-                <div class="nds-capability-card">
-                    <i class="hgi hgi-stroke hgi-development nds-capability-icon"></i>
+                <div class="nds-card nds-stroke">
+                    <i class="hgi hgi-stroke hgi-development"></i>
                     <h3>Developer Friendly</h3>
                     <p>Clear documentation, copy-paste code examples, and integration guides for popular frameworks.</p>
                 </div>
@@ -90,37 +85,37 @@ direction: rtl
                 maintainable design system.</p>
         </div>
         <div class="nds-section-content">
-            <div class="nds-tech-stack">
-                <div class="nds-tech-category">
-                    <h3>Frontend</h3>
-                    <ul class="nds-tech-list">
+            <div class="nds-grid" style="--max-col: 4; --mid-col: 2; --min-col: 1;">
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Frontend</h3>
+                    <ul>
                         <li>Jekyll 4.4.1 (Static Site Generation)</li>
                         <li>SCSS with CSS Custom Properties</li>
                         <li>Vanilla JavaScript (ES6+)</li>
                         <li>IBM Plex Sans Arabic Typography</li>
                     </ul>
                 </div>
-                <div class="nds-tech-category">
-                    <h3>Architecture</h3>
-                    <ul class="nds-tech-list">
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Architecture</h3>
+                    <ul>
                         <li>Component-Based Design</li>
                         <li>Design Token System</li>
                         <li>Responsive Breakpoint Strategy</li>
                         <li>Progressive Enhancement</li>
                     </ul>
                 </div>
-                <div class="nds-tech-category">
-                    <h3>Performance</h3>
-                    <ul class="nds-tech-list">
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Performance</h3>
+                    <ul>
                         <li>Hardware-Accelerated Animations</li>
                         <li>Optimized Asset Loading</li>
                         <li>Minimal JavaScript Footprint</li>
                         <li>CSS-First Approach</li>
                     </ul>
                 </div>
-                <div class="nds-tech-category">
-                    <h3>Quality</h3>
-                    <ul class="nds-tech-list">
+                <div class="nds-content-block">
+                    <h3 class="nds-block-title">Quality</h3>
+                    <ul>
                         <li>WCAG 2.1 AA Compliance</li>
                         <li>Cross-Browser Testing</li>
                         <li>Semantic HTML Structure</li>

@@ -10,11 +10,11 @@
 // BREAKPOINTS
 // ==============================================
 
-// Container breakpoints (accounts for side menu + padding)
-$container-breakpoints: (
-  md: 480px,
-  lg: 720px,
-  xl: 960px
+// Grid breakpoints (viewport-based)
+$grid-breakpoints: (
+  md: 600px,
+  lg: 960px,
+  xl: 1280px
 );
 
 // Viewport breakpoints — all (includes sm as alias for base)

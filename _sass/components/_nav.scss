@@ -293,6 +293,12 @@
                 }
             }
         }
+
+        &.widthFit {
+            .nds-dropdown-item {
+                --btn-width: 100%;
+            }
+        }
     }
 
     &[data-state~="open"] .nds-dropdown-menu {
@@ -485,6 +491,8 @@ body:not(.nds-minimal) .nds-main-nav {
             max-height: 60svh;
             overflow-y: auto;
         }
+
+
     }
 }
 
@@ -651,6 +659,7 @@ body.nds-minimal .nds-main-nav {
                 transition: none;
                 max-height: unset;
                 overflow: unset !important;
+
                 .nds-dropdown-item {
                     width: 100%;
                 }

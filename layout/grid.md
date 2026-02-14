@@ -2,7 +2,7 @@
 layout: page
 title: Grid
 hero_title: Grid System - National Design System
-hero_description: A container-aware 12-column grid system with auto-fit support, responsive column spans, and customizable gap and alignment tokens.
+hero_description: A responsive 12-column grid system with auto-fit support, responsive column spans, and customizable gap and alignment tokens.
 breadcrumb: ["Layout"]
 lang: en
 direction: ltr
@@ -204,7 +204,7 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Responsive Columns</h2>
-            <p class="nds-section-description">Use breakpoint-prefixed column classes to change spans based on container width. The grid uses container queries instead of viewport media queries, so columns respond to the actual available space (accounting for side menus, panels, etc.). Available prefixes: col-sm- (base), col-md- (480px+), col-lg- (720px+), col-xl- (960px+).</p>
+            <p class="nds-section-description">Use breakpoint-prefixed column classes to change spans at different viewport widths. Available prefixes: col-sm- (base), col-md- (600px+), col-lg- (960px+), col-xl- (1280px+).</p>
         </div>
         <div class="nds-section-content">
             <div class="nds-showcase">
@@ -272,7 +272,7 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Responsive Auto-fit</h2>
-            <p class="nds-section-description">Without column classes, the grid uses auto-fit mode and adapts column count based on container width using --max-col, --mid-col, and --min-col tokens. Each token cascades: if --mid-col is not set, it falls back to --max-col. If --min-col is not set, it falls back to --mid-col then --max-col.</p>
+            <p class="nds-section-description">Without column classes, the grid uses auto-fit mode and adapts column count based on viewport width using --max-col, --mid-col, and --min-col tokens. Each token cascades: if --mid-col is not set, it falls back to --max-col. If --min-col is not set, it falls back to --mid-col then --max-col.</p>
         </div>
         <div class="nds-section-content">
             <div class="nds-showcase">
@@ -338,21 +338,21 @@ direction: ltr
 <section id="breakpoints" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
-            <h2 class="nds-section-title">Container Breakpoints</h2>
-            <p class="nds-section-description">The grid uses container queries instead of viewport media queries. Breakpoints are based on the parent container width, not the browser window. This means the grid adapts to the actual available space — even when a side menu or panel reduces the content area.</p>
+            <h2 class="nds-section-title">Responsive Breakpoints</h2>
+            <p class="nds-section-description">The grid uses viewport media queries for responsive column spans and auto-fit behavior. Breakpoints align with the design system's standard responsive mixins.</p>
         </div>
         <div class="nds-section-content">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
-                        <div class="demo-label">Container Breakpoints</div>
+                        <div class="demo-label">Responsive Breakpoints</div>
                     </div>
                     <div class="demo-container noBg">
                         <table class="nds-table nds-responsive nds-striped" style="--min-width:500px;">
                             <thead>
                                 <tr>
                                     <th>Prefix</th>
-                                    <th>Container Width</th>
+                                    <th>Viewport Width</th>
                                     <th>Description</th>
                                 </tr>
                             </thead>
@@ -364,18 +364,18 @@ direction: ltr
                                 </tr>
                                 <tr>
                                     <td>col-md-</td>
-                                    <td>480px+</td>
-                                    <td>Medium containers</td>
+                                    <td>600px+</td>
+                                    <td>Medium viewports</td>
                                 </tr>
                                 <tr>
                                     <td>col-lg-</td>
-                                    <td>720px+</td>
-                                    <td>Large containers</td>
+                                    <td>960px+</td>
+                                    <td>Large viewports</td>
                                 </tr>
                                 <tr>
                                     <td>col-xl-</td>
-                                    <td>960px+</td>
-                                    <td>Extra-large containers</td>
+                                    <td>1280px+</td>
+                                    <td>Extra-large viewports</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -389,24 +389,24 @@ direction: ltr
                         <table class="nds-table nds-responsive nds-striped" style="--min-width:500px;">
                             <thead>
                                 <tr>
-                                    <th>Container Width</th>
+                                    <th>Viewport Width</th>
                                     <th>Active Token</th>
                                     <th>Fallback Chain</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>720px+</td>
+                                    <td>960px+</td>
                                     <td>--max-col</td>
                                     <td>auto-fit</td>
                                 </tr>
                                 <tr>
-                                    <td>480px – 720px</td>
+                                    <td>600px – 960px</td>
                                     <td>--mid-col</td>
                                     <td>--max-col &rarr; auto-fit</td>
                                 </tr>
                                 <tr>
-                                    <td>Below 480px</td>
+                                    <td>Below 600px</td>
                                     <td>--min-col</td>
                                     <td>--mid-col &rarr; --max-col &rarr; auto-fit</td>
                                 </tr>
@@ -445,17 +445,17 @@ direction: ltr
                                 <tr>
                                     <td>--max-col</td>
                                     <td>auto-fit</td>
-                                    <td>Column count at large container width (720px+). Also used as the base value when --mid-col and --min-col are not set</td>
+                                    <td>Column count at large viewport width (960px+). Also used as the base value when --mid-col and --min-col are not set</td>
                                 </tr>
                                 <tr>
                                     <td>--mid-col</td>
                                     <td>var(--max-col)</td>
-                                    <td>Column count at medium container width (480px–720px). Falls back to --max-col</td>
+                                    <td>Column count at medium viewport width (600px–960px). Falls back to --max-col</td>
                                 </tr>
                                 <tr>
                                     <td>--min-col</td>
                                     <td>var(--mid-col)</td>
-                                    <td>Column count at small container width (below 480px). Falls back to --mid-col then --max-col</td>
+                                    <td>Column count at small viewport width (below 600px). Falls back to --mid-col then --max-col</td>
                                 </tr>
                                 <tr>
                                     <td>--col-width</td>

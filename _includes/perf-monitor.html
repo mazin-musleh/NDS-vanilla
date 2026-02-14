@@ -221,16 +221,37 @@
         } catch (e) { }
     }
 
-    // ── 5. Long Tasks ───────────────────────────────────────────────
+    // ── 5. Long Tasks (LoAF with script attribution, fallback to longtask)
     if (typeof PerformanceObserver !== 'undefined') {
+        var loafOk = false;
         try {
             new PerformanceObserver(function (l) {
                 l.getEntries().forEach(function (e) {
                     var d = Math.round(e.duration);
-                    if (d > 100) log('LONG TASK  ' + d + 'ms', d > 200 ? 'b' : 'w');
+                    if (d < 100) return;
+                    var label = 'LONG TASK  ' + d + 'ms';
+                    if (e.scripts && e.scripts.length) {
+                        for (var i = 0; i < e.scripts.length; i++) {
+                            var s = e.scripts[i], src = s.sourceURL || '', fn = s.sourceFunctionName || '';
+                            if (src) { var p = src.split('/'); src = p[p.length - 1].split('?')[0]; }
+                            if (src || fn) label += '  → ' + (fn || '') + (fn && src ? ' ' : '') + (src ? '(' + src + ')' : '');
+                        }
+                    }
+                    log(label, d > 200 ? 'b' : 'w');
                 });
-            }).observe({ type: 'longtask', buffered: true });
+            }).observe({ type: 'long-animation-frame', buffered: true });
+            loafOk = true;
         } catch (e) { }
+        if (!loafOk) {
+            try {
+                new PerformanceObserver(function (l) {
+                    l.getEntries().forEach(function (e) {
+                        var d = Math.round(e.duration);
+                        if (d > 100) log('LONG TASK  ' + d + 'ms', d > 200 ? 'b' : 'w');
+                    });
+                }).observe({ type: 'longtask', buffered: true });
+            } catch (e) { }
+        }
     }
 
     // ── 6. Scroll Jank ──────────────────────────────────────────────
