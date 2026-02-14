@@ -402,9 +402,27 @@
 
         let proximityTicking = false;
         const proximityThreshold = 60; // Distance from button to toggle peek
+        let cachedRect = null;
+        let rectCacheTimer = null;
+
+        const invalidateRect = () => { cachedRect = null; };
+
+        const getButtonRect = () => {
+            if (!cachedRect) {
+                cachedRect = toggleBtn.getBoundingClientRect();
+                // Invalidate cache after 500ms or on scroll/resize
+                clearTimeout(rectCacheTimer);
+                rectCacheTimer = setTimeout(invalidateRect, 500);
+            }
+            return cachedRect;
+        };
+
+        // Invalidate cached rect on scroll/resize
+        window.addEventListener('scroll', invalidateRect, { passive: true });
+        window.addEventListener('resize', invalidateRect, { passive: true });
 
         const handleProximity = (clientX, clientY) => {
-            const rect = toggleBtn.getBoundingClientRect();
+            const rect = getButtonRect();
             const buttonCenterX = rect.left + rect.width / 2;
             const buttonCenterY = rect.top + rect.height / 2;
 
@@ -414,7 +432,7 @@
                 Math.pow(clientY - buttonCenterY, 2)
             );
 
-            // Toggle peek based on 150px proximity: hide when near, show when far
+            // Toggle peek based on proximity: hide when near, show when far
             if (distance <= proximityThreshold) {
                 toggleBtn.classList.remove('nds-peek');
             } else {
@@ -424,20 +442,11 @@
             proximityTicking = false;
         };
 
-        // Mouse move listener with RAF throttling
+        // Mouse move listener with RAF throttling (desktop only)
         window.addEventListener('mousemove', (e) => {
             if (!proximityTicking) {
                 proximityTicking = true;
                 requestAnimationFrame(() => handleProximity(e.clientX, e.clientY));
-            }
-        }, { passive: true });
-
-        // Touch move listener with RAF throttling
-        window.addEventListener('touchmove', (e) => {
-            if (!proximityTicking && e.touches.length > 0) {
-                proximityTicking = true;
-                const touch = e.touches[0];
-                requestAnimationFrame(() => handleProximity(touch.clientX, touch.clientY));
             }
         }, { passive: true });
     }
@@ -462,22 +471,26 @@
         // Remove hidden attribute from trigger on init (drawer handled by loader)
         if (toggleBtn) toggleBtn.removeAttribute('hidden');
 
-        // Close menu when window width changes
+        // Close menu when window width changes (debounced)
         let previousWidth = window.innerWidth;
+        let resizeTimer = null;
         window.addEventListener('resize', () => {
-            const currentWidth = window.innerWidth;
-            if (currentWidth !== previousWidth) {
-                previousWidth = currentWidth;
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                const currentWidth = window.innerWidth;
+                if (currentWidth !== previousWidth) {
+                    previousWidth = currentWidth;
 
-                const isTopMode = isTopSubMenuMode(accMenu);
-                const animationTarget = getAnimationTarget(accMenu);
-                const contentLayout = accMenu.closest('.nds-content-layout');
+                    const isTopMode = isTopSubMenuMode(accMenu);
+                    const animationTarget = getAnimationTarget(accMenu);
+                    const contentLayout = accMenu.closest('.nds-content-layout');
 
-                if (hasState(animationTarget, 'open')) {
-                    closeMenu(accMenu, animationTarget, toggleBtn, contentLayout, isTopMode);
+                    if (hasState(animationTarget, 'open')) {
+                        closeMenu(accMenu, animationTarget, toggleBtn, contentLayout, isTopMode);
+                    }
                 }
-            }
-        });
+            }, 150);
+        }, { passive: true });
     }
 
     // CRITICAL: Expose global API immediately (called by unified init system)

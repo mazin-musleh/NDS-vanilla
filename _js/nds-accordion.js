@@ -33,9 +33,12 @@
         }
 
         getTransitionDuration() {
-            return parseFloat(
-                getComputedStyle(document.documentElement).getPropertyValue('--nds-transition-speed')
-            ) * 1000 || 300;
+            if (this._transitionDuration === undefined) {
+                this._transitionDuration = parseFloat(
+                    getComputedStyle(document.documentElement).getPropertyValue('--nds-transition-speed')
+                ) * 1000 || 300;
+            }
+            return this._transitionDuration;
         }
 
         setupInitialState() {

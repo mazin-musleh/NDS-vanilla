@@ -295,9 +295,16 @@
                 window.addEventListener('resize', this.resizeHandler);
             }
 
-            // Scroll event listener for updating indicators
+            // Scroll event listener for updating indicators (RAF throttled)
+            let scrollTicking = false;
             this.tabList.addEventListener('scroll', () => {
-                this.updateScrollIndicators();
+                if (!scrollTicking) {
+                    scrollTicking = true;
+                    requestAnimationFrame(() => {
+                        this.updateScrollIndicators();
+                        scrollTicking = false;
+                    });
+                }
             }, { passive: true });
         }
 

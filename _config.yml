@@ -62,6 +62,9 @@ footerlogos: footerlogos
 herosliders: herosliders
 
 
+# Debug tools
+debug: false  # Set to true to enable perf monitor overlay
+
 # Plugins
 plugins: []
 

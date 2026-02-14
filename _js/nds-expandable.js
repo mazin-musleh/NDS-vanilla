@@ -64,9 +64,13 @@
         }
 
         getMaxHeight() {
-            const computedStyle = getComputedStyle(this.contentElement);
-            const maxHeightValue = computedStyle.getPropertyValue('--max-height') || '300px';
-            return parseInt(maxHeightValue);
+            // Cache the CSS custom property — it doesn't change at runtime
+            if (this._cachedMaxHeight === undefined) {
+                const computedStyle = getComputedStyle(this.contentElement);
+                const maxHeightValue = computedStyle.getPropertyValue('--max-height') || '300px';
+                this._cachedMaxHeight = parseInt(maxHeightValue);
+            }
+            return this._cachedMaxHeight;
         }
 
         addExpandButton() {
@@ -178,7 +182,7 @@
                 // Fallback to window resize for older browsers
                 window.addEventListener('resize', () => {
                     this.handleResize();
-                });
+                }, { passive: true });
             }
         }
 

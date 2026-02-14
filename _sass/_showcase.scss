@@ -54,7 +54,7 @@
 
 /* Demo Container */
 .demo-container,.demo-code {
-  padding: var(--spacing-4xl);
+  padding: var(--spacing-2xl);
 }
 
 // ==============================================
@@ -74,6 +74,10 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-4xl);
+  margin-bottom: var(--spacing-4xl);
+  &:last-child{
+    margin-bottom: 0;
+  }
 }
 
 /* Demo Container Backgrounds */
