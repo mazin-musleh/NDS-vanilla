@@ -602,9 +602,8 @@
 
     // Initialize with deferred non-critical features
     // CRITICAL: Expose global API immediately (called by unified init system)
-    window.NDS = window.NDS || {};
-    window.NDS.Forms = window.NDS.Forms || {};
-    window.NDS.Forms.FileUpload = {
+    NDS.Forms = NDS.Forms || {};
+    NDS.Forms.FileUpload = {
         initializeFileUploads: initializeFileUploads,
         initFileUpload: initFileUpload,
         getInstance: function(element) {

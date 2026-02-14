@@ -223,7 +223,39 @@
                 requestAnimationFrame(animate);
             }, { passive: false });
 
-            // Drag scroll functionality
+            // Drag scroll functionality — listeners added only during active drag
+            const handleMouseUp = () => {
+                this.dragState.active = false;
+                document.removeEventListener('mousemove', handleMouseMove);
+                document.removeEventListener('mouseup', handleMouseUp);
+                Object.assign(this.tabList.style, {
+                    cursor: '',
+                    userSelect: '',
+                    scrollBehavior: 'smooth'
+                });
+
+                if (this.dragState.hasDragged) {
+                    setTimeout(() => {
+                        this.dragState.hasDragged = false;
+                    }, 100);
+                }
+            };
+
+            const handleMouseMove = (e) => {
+                if (this.tabsContainer.classList.contains('nds-vertical')) {
+                    handleMouseUp();
+                    return;
+                }
+                e.preventDefault();
+
+                if (Math.abs(e.pageX - this.dragState.startX) > 3) {
+                    this.dragState.hasDragged = true;
+                }
+
+                this.tabList.scrollLeft = this.dragState.scrollLeft - (e.pageX - this.dragState.startX) * 1.0;
+                this.updateScrollIndicators();
+            };
+
             this.tabList.addEventListener('mousedown', (e) => {
                 if (this.tabsContainer.classList.contains('nds-vertical')) return;
                 if (!this.needsScroll()) return;
@@ -240,60 +272,15 @@
                     userSelect: 'none',
                     scrollBehavior: 'auto'
                 });
+
+                document.addEventListener('mousemove', handleMouseMove);
+                document.addEventListener('mouseup', handleMouseUp);
             });
 
-            const handleMouseUp = () => {
-                if (this.dragState.active) {
-                    this.dragState.active = false;
-                    Object.assign(this.tabList.style, {
-                        cursor: '',
-                        userSelect: '',
-                        scrollBehavior: 'smooth'
-                    });
-
-                    if (this.dragState.hasDragged) {
-                        setTimeout(() => {
-                            this.dragState.hasDragged = false;
-                        }, 100);
-                    }
-                }
-            };
-
-            const handleMouseMove = (e) => {
-                if (!this.dragState.active) return;
-                if (this.tabsContainer.classList.contains('nds-vertical')) {
-                    handleMouseUp();
-                    return;
-                }
-                e.preventDefault();
-
-                if (Math.abs(e.pageX - this.dragState.startX) > 3) {
-                    this.dragState.hasDragged = true;
-                }
-
-                this.tabList.scrollLeft = this.dragState.scrollLeft - (e.pageX - this.dragState.startX) * 1.0;
+            // Watch tab list for size changes
+            this._offResize = NDS.onElementResize(this.tabList, NDS.debounce(() => {
                 this.updateScrollIndicators();
-            };
-
-            document.addEventListener('mouseup', handleMouseUp);
-            document.addEventListener('mousemove', handleMouseMove);
-
-            // Use ResizeObserver for better element-specific size detection
-            if (window.ResizeObserver) {
-                this.resizeObserver = new ResizeObserver(() => {
-                    clearTimeout(this.resizeTimer);
-                    this.resizeTimer = setTimeout(() => {
-                        this.updateScrollIndicators();
-                    }, 100);
-                });
-                this.resizeObserver.observe(this.tabList);
-            } else {
-                // Fallback to window resize for older browsers
-                this.resizeHandler = () => {
-                    setTimeout(() => this.updateScrollIndicators(), 100);
-                };
-                window.addEventListener('resize', this.resizeHandler);
-            }
+            }, 100));
 
             // Scroll event listener for updating indicators (RAF throttled)
             let scrollTicking = false;
@@ -513,10 +500,10 @@
         }
 
         destroy() {
-            // Clean up ResizeObserver
-            if (this.resizeObserver) {
-                this.resizeObserver.disconnect();
-                this.resizeObserver = null;
+            // Clean up shared ResizeObserver
+            if (this._offResize) {
+                this._offResize();
+                this._offResize = null;
             }
 
             // Clean up resize timer

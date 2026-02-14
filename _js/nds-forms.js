@@ -732,33 +732,8 @@
                 }
             });
 
-            // Initialize indeterminate from class (migration from class-based approach)
-            if (input.type === 'checkbox' && input.classList.contains('indeterminate')) {
-                input.classList.remove('indeterminate');
-                FormState.setIndeterminate(input, true);
-            }
-
             // Initialize state
             FormState.update(input, formControl, true);
-
-            // Watch for attribute changes
-            if (window.MutationObserver) {
-                var observer = new MutationObserver(function(mutations) {
-                    mutations.forEach(function(mutation) {
-                        var attr = mutation.attributeName;
-                        if (attr === 'disabled' || attr === 'checked' || attr === 'value') {
-                            FormState.update(input, formControl);
-                            if (attr === 'checked') {
-                                FormState.updateRadioGroup(input);
-                            }
-                        }
-                    });
-                });
-                observer.observe(input, {
-                    attributes: true,
-                    attributeFilter: ['disabled', 'checked', 'value']
-                });
-            }
 
             // Property change detection for programmatic updates
             this._setupPropertyWatchers(input, formControl);
@@ -806,6 +781,19 @@
                         configurable: true
                     });
                 }
+
+                var disabledDescriptor = Object.getOwnPropertyDescriptor(proto, 'disabled');
+                if (disabledDescriptor && disabledDescriptor.set) {
+                    Object.defineProperty(input, 'disabled', {
+                        get: disabledDescriptor.get,
+                        set: function(val) {
+                            disabledDescriptor.set.call(this, val);
+                            FormState.update(this, formControl, true);
+                        },
+                        configurable: true
+                    });
+                }
+
             } catch (e) {
                 // Silent fail if property definition not supported
             }
@@ -1485,53 +1473,15 @@
             return;
         }
 
-        if (!window.MutationObserver) return;
-
-        var observer = new MutationObserver(function(mutations) {
-            var needsInit = false;
-            var needsAutoFillInit = false;
-            var needsFileUploadInit = false;
-
-            mutations.forEach(function(mutation) {
-                if (mutation.type === 'childList') {
-                    mutation.addedNodes.forEach(function(node) {
-                        if (node.nodeType === Node.ELEMENT_NODE) {
-                            if (node.classList && node.classList.contains('nds-form-control')) {
-                                needsInit = true;
-                            } else if (node.querySelectorAll && node.querySelectorAll('.nds-form-control').length > 0) {
-                                needsInit = true;
-                            }
-
-                            if (node.classList && node.classList.contains('nds-auto-fill')) {
-                                needsAutoFillInit = true;
-                            } else if (node.querySelectorAll && node.querySelectorAll('.nds-auto-fill').length > 0) {
-                                needsAutoFillInit = true;
-                            }
-
-                            if (node.classList && node.classList.contains('nds-file-upload')) {
-                                needsFileUploadInit = true;
-                            } else if (node.querySelectorAll && node.querySelectorAll('.nds-file-upload').length > 0) {
-                                needsFileUploadInit = true;
-                            }
-                        }
-                    });
-                }
-            });
-
-            if (needsInit) initFormControlClasses();
-            if (needsAutoFillInit) initInputAutoFill();
-            if (needsFileUploadInit && window.NDS && window.NDS.Forms && window.NDS.Forms.FileUpload) {
+        NDS.onDOMAdd('.nds-form-control', function() { initFormControlClasses(); });
+        NDS.onDOMAdd('.nds-auto-fill', function() { initInputAutoFill(); });
+        NDS.onDOMAdd('.nds-file-upload', function() {
+            if (window.NDS && window.NDS.Forms && window.NDS.Forms.FileUpload) {
                 window.NDS.Forms.FileUpload.initFileUpload();
             }
         });
 
-        observer.observe(document.body, {
-            childList: true,
-            subtree: true
-        });
-
-        if (!window.NDS.Forms) window.NDS.Forms = {};
-        window.NDS.Forms._dynamicObserver = observer;
+        NDS.Forms._dynamicObserver = true;
     }
 
     // ==============================================
@@ -1613,8 +1563,7 @@
     // ==============================================
     // PUBLIC API
     // ==============================================
-    window.NDS = window.NDS || {};
-    window.NDS.Forms = {
+    NDS.Forms = {
         // Core initialization
         init: initializeAllForms,
         initializeContainer: initializeContainer,

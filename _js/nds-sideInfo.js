@@ -11,14 +11,6 @@
     // UTILITIES
     // ==============================================
 
-    function debounce(fn, delay) {
-        let timeoutId;
-        return (...args) => {
-            clearTimeout(timeoutId);
-            timeoutId = setTimeout(() => fn(...args), delay);
-        };
-    }
-
     // ==============================================
     // MAIN CLASS
     // ==============================================
@@ -50,29 +42,17 @@
         }
 
         setupVisibilityObserver() {
-            // Use IntersectionObserver to detect when element becomes visible
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting && !this.isInitialized) {
-                        // Element is visible for the first time, calculate position
-                        this.updatePosition();
-                        this.isInitialized = true;
-                    }
-                });
-            }, {
-                root: null,
-                threshold: 0.01
-            });
-
-            observer.observe(this.sideInfo);
-            this.visibilityObserver = observer;
+            this._offVisibility = NDS.onIntersect(this.sideInfo, (entry) => {
+                if (entry.isIntersecting && !this.isInitialized) {
+                    this.updatePosition();
+                    this.isInitialized = true;
+                }
+            }, { threshold: 0.01 });
         }
 
         updatePosition() {
-            const width = window.innerWidth;
-
             // Early return for mobile/tablet with reset
-            if (width <= 958) {
+            if (window.innerWidth <= 958) {
                 this.sideInfo.style.removeProperty('--nds-sideInfo-top');
                 return;
             }
@@ -93,11 +73,9 @@
         }
 
         setupResize() {
-            this.resizeHandler = debounce(() => {
+            this._offResize = NDS.onResize(() => {
                 this.updatePosition();
-            }, 150);
-
-            window.addEventListener('resize', this.resizeHandler);
+            });
         }
 
         // ==============================================
@@ -108,9 +86,8 @@
             this.sideInfo.removeAttribute('data-sideinfo-initialized');
             this.sideInfo.style.removeProperty('--nds-sideInfo-top');
 
-            if (this.resizeHandler) {
-                window.removeEventListener('resize', this.resizeHandler);
-            }
+            if (this._offVisibility) this._offVisibility();
+            if (this._offResize) this._offResize();
         }
     }
 

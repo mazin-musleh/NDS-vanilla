@@ -166,24 +166,10 @@
         }
 
         setupEventListeners() {
-            // Use ResizeObserver for better element-specific size detection
-            if (window.ResizeObserver) {
-                this.resizeObserver = new ResizeObserver(entries => {
-                    // Debounce for performance (shorter delay since it's more targeted)
-                    clearTimeout(this.resizeTimer);
-                    this.resizeTimer = setTimeout(() => {
-                        this.checkContentHeight();
-                    }, 100);
-                });
-
-                // Observe the content element for size changes
-                this.resizeObserver.observe(this.contentElement);
-            } else {
-                // Fallback to window resize for older browsers
-                window.addEventListener('resize', () => {
-                    this.handleResize();
-                }, { passive: true });
-            }
+            // Watch content element for size changes
+            this._offResize = NDS.onElementResize(this.contentElement, NDS.debounce(() => {
+                this.checkContentHeight();
+            }, 100));
         }
 
         handleResize() {
@@ -241,10 +227,10 @@
         }
 
         destroy() {
-            // Clean up ResizeObserver
-            if (this.resizeObserver) {
-                this.resizeObserver.disconnect();
-                this.resizeObserver = null;
+            // Clean up shared ResizeObserver
+            if (this._offResize) {
+                this._offResize();
+                this._offResize = null;
             }
 
             // Remove button if it exists

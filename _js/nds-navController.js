@@ -100,11 +100,6 @@
     // ==============================================
     // UTILITY HELPERS
     // ==============================================
-    const debounce = (fn, ms) => {
-        let t;
-        return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
-    };
-
     const throttle = (fn, ms) => {
         let wait;
         return (...args) => {
@@ -934,27 +929,29 @@
             requestAnimationFrame(step);
         }, { passive: false });
 
-        // Drag scrolling
+        // Drag scrolling — listeners added only during active drag
         let drag = { active: false, startX: 0, scrollLeft: 0 };
+
+        const dragUp = () => {
+            drag.active = false;
+            document.removeEventListener('mousemove', dragMove);
+            document.removeEventListener('mouseup', dragUp);
+            Object.assign(DOM.primary.style, { cursor: '', userSelect: '', scrollBehavior: 'smooth' });
+        };
+
+        const dragMove = (e) => {
+            if (state.isMinimal) { dragUp(); return; }
+            e.preventDefault();
+            DOM.primary.scrollLeft = drag.scrollLeft - (e.pageX - drag.startX);
+        };
 
         DOM.primary.addEventListener('mousedown', (e) => {
             if (state.isMinimal || !DOM.primary.classList.contains('hasMore')) return;
             drag = { active: true, startX: e.pageX, scrollLeft: DOM.primary.scrollLeft };
             Object.assign(DOM.primary.style, { cursor: 'grabbing', userSelect: 'none', scrollBehavior: 'auto' });
             e.preventDefault();
-        });
-
-        document.addEventListener('mouseup', () => {
-            if (drag.active) {
-                drag.active = false;
-                Object.assign(DOM.primary.style, { cursor: '', userSelect: '', scrollBehavior: 'smooth' });
-            }
-        });
-
-        document.addEventListener('mousemove', (e) => {
-            if (!drag.active || state.isMinimal) return;
-            e.preventDefault();
-            DOM.primary.scrollLeft = drag.scrollLeft - (e.pageX - drag.startX);
+            document.addEventListener('mousemove', dragMove);
+            document.addEventListener('mouseup', dragUp);
         });
 
         // Dropdown hover tracking
@@ -967,19 +964,16 @@
         trackDropdowns();
 
         // Watch for new dropdown menus
-        if (typeof MutationObserver !== 'undefined' && DOM.nav) {
-            new MutationObserver(debounce(() => trackDropdowns(), 150))
-                .observe(DOM.nav, { childList: true, subtree: true });
-        }
+        const trackDD = NDS.debounce(() => trackDropdowns(), 150);
+        NDS.onDOMAdd('.nds-dropdown-menu', trackDD);
+        NDS.onDOMRemove('.nds-dropdown-menu', trackDD);
     }
 
     function setupEventListeners() {
-        const onResize = debounce(() => {
+        NDS.onResize(() => {
             state.invalidateCache();
             scheduleUpdate();
-        }, 150);
-
-        window.addEventListener('resize', onResize, { passive: true });
+        });
         window.addEventListener('orientationchange', () => {
             state.invalidateCache();
             setTimeout(scheduleUpdate, 150);
@@ -997,43 +991,25 @@
         });
 
         // Watch for nav item changes
-        if (typeof MutationObserver !== 'undefined') {
-            const obs = new MutationObserver(debounce((mutations) => {
-                const relevant = mutations.some(m =>
-                    m.type === 'childList' && [...m.addedNodes, ...m.removedNodes].some(n =>
-                        n.nodeType === 1 && ['nds-nav-item', 'nds-dropdown', 'nds-nav-primary', 'nds-nav-secondary']
-                            .some(c => n.classList?.contains(c))
-                    )
-                );
-                if (relevant) { state._navChanged = true; scheduleUpdate(); }
-            }, 100));
+        const navChanged = NDS.debounce(() => { state._navChanged = true; scheduleUpdate(); }, 100);
+        NDS.onDOMAdd('.nds-nav-item, .nds-dropdown', navChanged);
+        NDS.onDOMRemove('.nds-nav-item, .nds-dropdown', navChanged);
 
-            [DOM.primary, DOM.secondary].filter(Boolean).forEach(c =>
-                obs.observe(c, { childList: true, subtree: false })
-            );
-        }
-
-        // Watch for element resizes
-        if (typeof ResizeObserver !== 'undefined') {
-            const robs = new ResizeObserver(debounce((entries) => {
-                const significant = entries.some(e => {
-                    const { width, height } = e.contentRect;
-                    const last = e.target._lastSize;
-                    if (!last || Math.abs(width - last.w) > 5 || Math.abs(height - last.h) > 5) {
-                        e.target._lastSize = { w: width, h: height };
-                        return true;
-                    }
-                    return false;
-                });
-                if (significant && state._initDone) {
+        // Watch for element resizes (with significance threshold)
+        const navResizeHandler = NDS.debounce((entry) => {
+            const { width, height } = entry.contentRect;
+            const last = entry.target._lastSize;
+            if (!last || Math.abs(width - last.w) > 5 || Math.abs(height - last.h) > 5) {
+                entry.target._lastSize = { w: width, h: height };
+                if (state._initDone) {
                     state.invalidateCache();
-                    _navMaxWidthLast = 0; // Reset cache to force recalc
+                    _navMaxWidthLast = 0;
                     scheduleUpdate();
                 }
-            }, 100));
+            }
+        }, 100);
 
-            [DOM.nav, DOM.primary].filter(Boolean).forEach(el => robs.observe(el));
-        }
+        [DOM.nav, DOM.primary].filter(Boolean).forEach(el => NDS.onElementResize(el, navResizeHandler));
     }
 
     // ==============================================

@@ -485,43 +485,18 @@
                 }
             });
 
-            // Use ResizeObserver for better element-specific size detection
-            if (window.ResizeObserver) {
-                this.resizeObserver = new ResizeObserver(entries => {
-                    clearTimeout(this.resizeTimer);
-                    this.resizeTimer = setTimeout(() => {
-                        this.checkTableWidth();
-                    }, 100);
-                });
+            // Watch table and wrapper for size changes
+            const checkTable = NDS.debounce(() => this.checkTableWidth(), 100);
+            this._offResizeTable = NDS.onElementResize(this.table, checkTable);
+            this._offResizeWrapper = NDS.onElementResize(this.wrapper, checkTable);
 
-                this.resizeObserver.observe(this.table);
-                // Also observe wrapper for visibility changes
-                this.resizeObserver.observe(this.wrapper);
-            } else {
-                // Fallback to window resize
-                window.addEventListener('resize', () => {
-                    this.handleResize();
-                });
-            }
-
-            // Use IntersectionObserver to detect visibility changes (when tab becomes visible)
-            if (window.IntersectionObserver) {
-                this.intersectionObserver = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            // Table became visible, recheck width
-                            clearTimeout(this.visibilityTimer);
-                            this.visibilityTimer = setTimeout(() => {
-                                this.checkTableWidth();
-                            }, 150);
-                        }
-                    });
-                }, {
-                    threshold: 0.1
-                });
-
-                this.intersectionObserver.observe(this.wrapper);
-            }
+            // Detect visibility changes (when tab becomes visible)
+            this._offIntersect = NDS.onIntersect(this.wrapper, (entry) => {
+                if (entry.isIntersecting) {
+                    clearTimeout(this.visibilityTimer);
+                    this.visibilityTimer = setTimeout(() => this.checkTableWidth(), 150);
+                }
+            }, { threshold: 0.1 });
 
             // Tab change listener is now handled globally (see initializeTables function)
         }
@@ -538,15 +513,10 @@
         }
 
         destroy() {
-            if (this.resizeObserver) {
-                this.resizeObserver.disconnect();
-                this.resizeObserver = null;
-            }
+            if (this._offResizeTable) { this._offResizeTable(); this._offResizeTable = null; }
+            if (this._offResizeWrapper) { this._offResizeWrapper(); this._offResizeWrapper = null; }
 
-            if (this.intersectionObserver) {
-                this.intersectionObserver.disconnect();
-                this.intersectionObserver = null;
-            }
+            if (this._offIntersect) { this._offIntersect(); this._offIntersect = null; }
 
             if (this.resizeTimer) {
                 clearTimeout(this.resizeTimer);
