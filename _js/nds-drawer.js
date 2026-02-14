@@ -304,9 +304,7 @@
             moreBtn.addEventListener('click', () => scrollDrawer(drawer));
         }
 
-        const resizeObserver = new ResizeObserver(() => checkOverflow(drawer));
-        resizeObserver.observe(scrollContainer);
-        drawer._resizeObserver = resizeObserver;
+        drawer._offResizeObs = NDS.onElementResize(scrollContainer, () => checkOverflow(drawer));
     }
 
     // ==============================================
@@ -368,9 +366,7 @@
 
         // Add resize listener for responsive state updates
         if (drawer.hasAttribute('data-open-on') || drawer.hasAttribute('data-always-open-on') || drawer.querySelector('[data-open-on]')) {
-            const resizeHandler = () => handleResize(drawer);
-            window.addEventListener('resize', resizeHandler);
-            drawer._resizeHandler = resizeHandler;
+            drawer._offResize = NDS.onResize(() => handleResize(drawer));
         }
 
         drawer._ndsDrawerInitialized = true;
@@ -385,9 +381,9 @@
 
     function destroyDrawer(drawer) {
         // Clean up overflow ResizeObserver
-        if (drawer._resizeObserver) {
-            drawer._resizeObserver.disconnect();
-            delete drawer._resizeObserver;
+        if (drawer._offResizeObs) {
+            drawer._offResizeObs();
+            delete drawer._offResizeObs;
         }
 
         // Clean up resize handler

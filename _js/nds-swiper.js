@@ -11,14 +11,6 @@
     // UTILITIES
     // ==============================================
 
-    function debounce(fn, delay) {
-        let timeoutId;
-        return (...args) => {
-            clearTimeout(timeoutId);
-            timeoutId = setTimeout(() => fn(...args), delay);
-        };
-    }
-
     function isRTL() {
         return document.documentElement.dir === 'rtl';
     }
@@ -140,7 +132,7 @@
         setupContentObserver() {
             let lastScrollWidth = this.wrapper.scrollWidth;
 
-            const checkScrollWidth = debounce(() => {
+            const checkScrollWidth = NDS.debounce(() => {
                 const currentScrollWidth = this.wrapper.scrollWidth;
                 if (currentScrollWidth !== lastScrollWidth) {
                     lastScrollWidth = currentScrollWidth;
@@ -148,79 +140,46 @@
                 }
             }, 100);
 
-            const observer = new ResizeObserver(checkScrollWidth);
-            observer.observe(this.wrapper);
+            const off = NDS.onElementResize(this.wrapper, checkScrollWidth);
 
             // Disconnect after 500ms
-            setTimeout(() => observer.disconnect(), 500);
+            setTimeout(off, 500);
         }
 
         setupVisibilityObserver() {
             // Track if peek styles have been applied after becoming visible
             this.peekStylesApplied = false;
 
-            // Use IntersectionObserver to detect when swiper becomes visible
-            // This handles tabs, modals, accordions, and any hidden container
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting && entry.intersectionRatio > 0) {
-                        // Remove hidden attribute from container when swiper becomes visible
-                        if (this.container && this.container.hasAttribute('hidden')) {
-                            this.container.removeAttribute('hidden');
-                        }
-
-                        // Only apply once until window resize
-                        if (!this.peekStylesApplied) {
-                            setTimeout(() => {
-                                // iOS Safari RTL fix: Remove hidden slides and lock scroll position
-                                // Only runs on iOS devices with hidden slides in RTL mode
-                                const hasHiddenSlides = this.isHero && this.slides.some(slide => slide.hasAttribute('hidden'));
-
-                                if (hasHiddenSlides && isIOS() && isRTL()) {
-                                    // Disable smooth scroll to prevent animation
-                                    const originalBehavior = getComputedStyle(this.wrapper).scrollBehavior;
-                                    this.wrapper.style.scrollBehavior = 'auto';
-
-                                    // Remove hidden from all slides
-                                    this.slides.forEach(slide => {
-                                        if (slide.hasAttribute('hidden')) {
-                                            slide.removeAttribute('hidden');
-                                        }
-                                    });
-
-                                    // IMMEDIATELY set scrollLeft to 0 before iOS Safari reflows
-                                    this.wrapper.scrollLeft = 0;
-
-                                    // Force synchronous layout to lock in the position
-                                    void this.wrapper.offsetHeight;
-
-                                    // Restore scroll behavior
-                                    this.wrapper.style.scrollBehavior = originalBehavior;
-                                } else if (hasHiddenSlides) {
-                                    // Non-iOS or non-RTL: Just remove hidden normally without the fix
-                                    this.slides.forEach(slide => {
-                                        if (slide.hasAttribute('hidden')) {
-                                            slide.removeAttribute('hidden');
-                                        }
-                                    });
-                                }
-
-                                this.updatePeekStyles();
-                                this.updateState();
-                                this.peekStylesApplied = true;
-                            }, 50);
-                        }
+            // Shared viewport IO detects when swiper becomes visible
+            // Handles tabs, modals, accordions, and any hidden container
+            this._offVisibility = NDS.onIntersect(this.container, (entry) => {
+                if (entry.isIntersecting && entry.intersectionRatio > 0) {
+                    if (this.container && this.container.hasAttribute('hidden')) {
+                        this.container.removeAttribute('hidden');
                     }
-                });
-            }, {
-                root: null, // viewport
-                threshold: 0.01 // trigger when at least 1% is visible
-            });
 
-            observer.observe(this.container);
+                    if (!this.peekStylesApplied) {
+                        setTimeout(() => {
+                            const hasHiddenSlides = this.isHero && this.slides.some(slide => slide.hasAttribute('hidden'));
 
-            // Store observer for cleanup if needed
-            this.visibilityObserver = observer;
+                            if (hasHiddenSlides && isIOS() && isRTL()) {
+                                const originalBehavior = getComputedStyle(this.wrapper).scrollBehavior;
+                                this.wrapper.style.scrollBehavior = 'auto';
+                                this.slides.forEach(slide => { if (slide.hasAttribute('hidden')) slide.removeAttribute('hidden'); });
+                                this.wrapper.scrollLeft = 0;
+                                void this.wrapper.offsetHeight;
+                                this.wrapper.style.scrollBehavior = originalBehavior;
+                            } else if (hasHiddenSlides) {
+                                this.slides.forEach(slide => { if (slide.hasAttribute('hidden')) slide.removeAttribute('hidden'); });
+                            }
+
+                            this.updatePeekStyles();
+                            this.updateState();
+                            this.peekStylesApplied = true;
+                        }, 50);
+                    }
+                }
+            }, { threshold: 0.01 });
         }
 
 
@@ -293,7 +252,7 @@
         }
 
         setupResize() {
-            this.resizeHandler = debounce(() => {
+            this._offResize = NDS.onResize(() => {
                 this._cachedGap = null; // Invalidate gap cache on resize
                 const oldSlidesPerView = this.slidesPerView;
                 this.updateSlidesPerView();
@@ -310,9 +269,7 @@
 
                 // Reset visibility flag to allow update on next visibility
                 this.peekStylesApplied = false;
-            }, 150);
-
-            window.addEventListener('resize', this.resizeHandler);
+            });
         }
 
         // ==============================================
@@ -570,38 +527,26 @@
         // ==============================================
 
         setupLazyLoading() {
-            // Find slides with data-src images
             const lazySlides = this.slides.filter(slide =>
                 slide.querySelector('img[data-src], img[data-srcset]')
             );
 
             if (lazySlides.length === 0) return;
 
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
+            const offs = [];
+            lazySlides.forEach(slide => {
+                const off = NDS.onIntersect(slide, (entry) => {
                     if (entry.isIntersecting) {
                         entry.target.querySelectorAll('img[data-src], img[data-srcset]').forEach(img => {
-                            if (img.dataset.src) {
-                                img.src = img.dataset.src;
-                                delete img.dataset.src;
-                            }
-                            if (img.dataset.srcset) {
-                                // Encode spaces in srcset URLs before setting
-                                img.srcset = fixSrcsetSpaces(img.dataset.srcset);
-                                delete img.dataset.srcset;
-                            }
+                            if (img.dataset.src) { img.src = img.dataset.src; delete img.dataset.src; }
+                            if (img.dataset.srcset) { img.srcset = fixSrcsetSpaces(img.dataset.srcset); delete img.dataset.srcset; }
                         });
-                        observer.unobserve(entry.target);
+                        off();
                     }
-                });
-            }, {
-                root: null,
-                rootMargin: '200px',
-                threshold: 0
+                }, { rootMargin: '200px' });
+                offs.push(off);
             });
-
-            lazySlides.forEach(slide => observer.observe(slide));
-            this.lazyLoadObserver = observer;
+            this._offLazyLoad = offs;
         }
 
         // ==============================================
@@ -676,9 +621,8 @@
             if (this.pagination) {
                 this.pagination.innerHTML = '';
             }
-            if (this.lazyLoadObserver) {
-                this.lazyLoadObserver.disconnect();
-            }
+            if (this._offVisibility) { this._offVisibility(); this._offVisibility = null; }
+            if (this._offLazyLoad) { this._offLazyLoad.forEach(off => off()); this._offLazyLoad = null; }
             if (this.resizeHandler) {
                 window.removeEventListener('resize', this.resizeHandler);
             }

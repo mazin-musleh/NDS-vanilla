@@ -233,37 +233,11 @@ NDSRating.enableRating = function(element) {
 window.NDSRating = window.NDSRating || {};
 window.NDSRating.initializeRatings = initializeRatings;
 
-// Observer to watch for new elements
-const observer = new MutationObserver((mutations) => {
-  mutations.forEach((mutation) => {
-    // Handle new nodes being added
-    if (mutation.type === 'childList') {
-      mutation.addedNodes.forEach((node) => {
-        if (node.nodeType === Node.ELEMENT_NODE) {
-          // Check if the added node is a rating
-          if (node.classList && node.classList.contains('nds-rating')) {
-            if (!node.ndsRating) {
-              node.ndsRating = new NDSRating(node);
-            }
-          }
-          // Check for ratings within the added node
-          const ratings = node.querySelectorAll && node.querySelectorAll('.nds-rating');
-          if (ratings) {
-            ratings.forEach(rating => {
-              if (!rating.ndsRating) {
-                rating.ndsRating = new NDSRating(rating);
-              }
-            });
-          }
-        }
-      });
-    }
+// Watch for dynamically added ratings
+NDS.onDOMAdd('.nds-rating', (nodes) => {
+  nodes.forEach(node => {
+    if (!node.ndsRating) node.ndsRating = new NDSRating(node);
   });
-});
-
-observer.observe(document.body, {
-  childList: true,
-  subtree: true
 });
 
 // Export for module usage

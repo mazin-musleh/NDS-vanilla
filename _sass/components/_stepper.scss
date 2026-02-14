@@ -263,8 +263,6 @@
             font-size: calc(var(--stepper-size)/2);
             line-height: var(--stepper-size);
             font-weight: 600;
-            filter: brightness(0) invert(1);
-            clip-path: inset(25%);
         }
     }
 }

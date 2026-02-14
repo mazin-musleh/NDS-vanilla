@@ -2,8 +2,48 @@
 <script>
 (function () {
     'use strict';
+    if (window.__ndsPerf) return;
 
-    // ── Panel ────────────────────────────────────────────────────────
+    // ── Helpers ─────────────────────────────────────────────────────
+    var MAX = 200, logLines = [], pending = [];
+    var logEl, fpsEl, domEl, memEl;
+
+    function elKey(el) {
+        if (!el || !el.tagName) return 'window';
+        var tag = el.tagName.toLowerCase(), cn = el.className;
+        if (typeof cn === 'string' && cn) {
+            var cl = cn.split(/\s+/).filter(function (x) {
+                return x && (x.indexOf('nds-') === 0 || x.indexOf('hgi') === 0 || x.indexOf('nav') === 0 || x.indexOf('side') === 0);
+            }).slice(0, 2);
+            if (cl.length) return tag + '.' + cl.join('.');
+        }
+        return el.id ? tag + '#' + el.id : tag;
+    }
+
+    function caller() {
+        var lines = ((new Error()).stack || '').split('\n');
+        for (var i = 2; i < lines.length; i++) {
+            if (lines[i].indexOf('nds-perf') !== -1) continue;
+            var m = lines[i].match(/(?:at\s+)?(?:.*?\s+\()?(.+?):(\d+)(?::\d+)?\)?$/);
+            if (m) return m[1].split('/').pop().split('?')[0] + ':' + m[2];
+        }
+        return '?';
+    }
+
+    function log(text, cls) {
+        var ts = '+' + (performance.now() / 1000).toFixed(2) + 's  ';
+        if (!logEl) { pending.push([text, cls, ts]); return; }
+        logLines.push(ts + text);
+        if (logLines.length > MAX) logLines.shift();
+        var el = document.createElement('div');
+        if (cls) el.className = cls;
+        el.textContent = ts + text;
+        logEl.appendChild(el);
+        while (logEl.children.length > MAX) logEl.removeChild(logEl.firstChild);
+        if (logEl.scrollHeight - logEl.scrollTop - logEl.clientHeight < 60) logEl.scrollTop = logEl.scrollHeight;
+    }
+
+    // ── Panel UI ────────────────────────────────────────────────────
     var panel = document.createElement('div');
     panel.id = 'nds-perf';
     panel.innerHTML = [
@@ -43,41 +83,51 @@
     panel.classList.add(localStorage._pfPos === 'top' ? 'top' : 'bottom');
     if (localStorage._pfHide === '1') panel.classList.add('hide');
 
-    // ── Mount ────────────────────────────────────────────────────────
-    var pending = [];
-    var logEl, fpsEl, domEl, memEl;
-    var MAX = 200, logLines = [];
-
+    // ── Mount ───────────────────────────────────────────────────────
     function mount() {
-        if (logEl) return;
-        if (!document.body) return;
+        if (logEl || !document.body) return;
         document.body.appendChild(panel);
         logEl = document.getElementById('nds-perf-log');
         fpsEl = document.getElementById('pf-fps');
         domEl = document.getElementById('pf-dom');
         memEl = document.getElementById('pf-mem');
 
-        for (var i = 0; i < pending.length; i++) log(pending[i][0], pending[i][1]);
+        // Flush pending logs
+        for (var i = 0; i < pending.length; i++) {
+            var p = pending[i], ts = p[2];
+            logLines.push(ts + p[0]);
+            if (logLines.length > MAX) logLines.shift();
+            var el = document.createElement('div');
+            if (p[1]) el.className = p[1];
+            el.textContent = ts + p[0];
+            logEl.appendChild(el);
+        }
         pending = [];
 
-        document.getElementById('pf-tog').addEventListener('click', function () {
+        // Button handlers
+        var $ = document.getElementById.bind(document);
+
+        $('pf-tog').addEventListener('click', function () {
             var h = panel.classList.toggle('hide');
             this.textContent = h ? 'Show' : 'Hide';
             localStorage._pfHide = h ? '1' : '0';
         });
-        if (localStorage._pfHide === '1') document.getElementById('pf-tog').textContent = 'Show';
+        if (localStorage._pfHide === '1') $('pf-tog').textContent = 'Show';
 
-        document.getElementById('pf-pos').addEventListener('click', function () {
+        $('pf-pos').addEventListener('click', function () {
             var t = panel.classList.toggle('top');
             panel.classList.toggle('bottom', !t);
             localStorage._pfPos = t ? 'top' : 'bottom';
         });
-        document.getElementById('pf-x').addEventListener('click', function () {
+
+        $('pf-x').addEventListener('click', function () {
             if (window.__ndsPerf) window.__ndsPerf.stop();
             panel.remove();
         });
-        document.getElementById('pf-cpy').addEventListener('click', function () {
-            var text = logLines.join('\n');
+
+        $('pf-cpy').addEventListener('click', function () {
+            var bar = (domEl ? domEl.textContent : '') + (memEl && memEl.textContent ? '  ' + memEl.textContent : '');
+            var text = (logLines.length ? logLines[0] + '\n' + bar + '\n' : '') + logLines.slice(1).join('\n');
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(text).then(function () { fb('Copied!'); }, function () { fb('Failed'); });
             } else {
@@ -87,30 +137,15 @@
                 try { document.execCommand('copy'); fb('Copied!'); } catch (e) { fb('Failed'); }
                 document.body.removeChild(ta);
             }
-            function fb(m) { var b = document.getElementById('pf-cpy'), o = b.textContent; b.textContent = m; setTimeout(function () { b.textContent = o; }, 1000); }
+            function fb(m) { var b = $('pf-cpy'), o = b.textContent; b.textContent = m; setTimeout(function () { b.textContent = o; }, 1000); }
         });
-        document.getElementById('pf-cls').addEventListener('click', function () {
-            logEl.innerHTML = ''; logLines = [];
-        });
+
+        $('pf-cls').addEventListener('click', function () { logEl.innerHTML = ''; logLines = []; });
     }
 
     if (document.body) mount(); else document.addEventListener('DOMContentLoaded', mount);
 
-    // ── Log ──────────────────────────────────────────────────────────
-    function log(text, cls) {
-        var t = '+' + (performance.now() / 1000).toFixed(2) + 's  ';
-        logLines.push(t + text);
-        if (logLines.length > MAX) logLines.shift();
-        if (!logEl) { pending.push([text, cls]); return; }
-        var el = document.createElement('div');
-        if (cls) el.className = cls;
-        el.textContent = t + text;
-        logEl.appendChild(el);
-        while (logEl.children.length > MAX) logEl.removeChild(logEl.firstChild);
-        if (logEl.scrollHeight - logEl.scrollTop - logEl.clientHeight < 60) logEl.scrollTop = logEl.scrollHeight;
-    }
-
-    // ── 1. FPS ───────────────────────────────────────────────────────
+    // ── 1. FPS ──────────────────────────────────────────────────────
     var frames = 0, lastT = performance.now(), minFps = Infinity, fpsH = [], curFps = 0;
 
     function fpsLoop(now) {
@@ -127,7 +162,7 @@
     }
     var rafId = requestAnimationFrame(fpsLoop);
 
-    // ── 2. CLS ───────────────────────────────────────────────────────
+    // ── 2. CLS ──────────────────────────────────────────────────────
     var clsTotal = 0;
     if (typeof PerformanceObserver !== 'undefined') {
         try {
@@ -147,31 +182,20 @@
         } catch (e) { }
     }
 
-    // ── 3. Reflow Detector ───────────────────────────────────────────
-    var reflowN = 0, elMap = {}, sample = 20;
-
-    function elKey(el) {
-        if (!el || !el.tagName) return 'window';
-        var t = el.tagName.toLowerCase(), c = el.className;
-        if (typeof c === 'string' && c) {
-            var cl = c.split(/\s+/).filter(function (x) {
-                return x && (x.indexOf('nds-') === 0 || x.indexOf('hgi') === 0 || x.indexOf('nav') === 0 || x.indexOf('side') === 0);
-            }).slice(0, 2);
-            if (cl.length) return t + '.' + cl.join('.');
-        }
-        return el.id ? t + '#' + el.id : t;
-    }
+    // ── 3. Reflows ──────────────────────────────────────────────────
+    var reflowN = 0, elMap = {}, SAMPLE = 20;
 
     var _gcs = window.getComputedStyle;
     window.getComputedStyle = function () {
         reflowN++;
-        if (reflowN % sample === 0) { var k = elKey(arguments[0]) + ' [style]'; elMap[k] = (elMap[k] || 0) + 1; }
+        if (reflowN % SAMPLE === 0) { var k = elKey(arguments[0]) + ' [style]'; elMap[k] = (elMap[k] || 0) + 1; }
         return _gcs.apply(this, arguments);
     };
+
     var _gbcr = Element.prototype.getBoundingClientRect;
     Element.prototype.getBoundingClientRect = function () {
         reflowN++;
-        if (reflowN % sample === 0) { var k = elKey(this) + ' [rect]'; elMap[k] = (elMap[k] || 0) + 1; }
+        if (reflowN % SAMPLE === 0) { var k = elKey(this) + ' [rect]'; elMap[k] = (elMap[k] || 0) + 1; }
         return _gbcr.apply(this, arguments);
     };
 
@@ -179,14 +203,13 @@
         if (reflowN > 30) {
             log('REFLOWS  ' + reflowN + '/s', reflowN > 60 ? 'b' : 'w');
             var keys = Object.keys(elMap).sort(function (a, b) { return elMap[b] - elMap[a]; });
-            for (var i = 0; i < Math.min(keys.length, 3); i++) {
-                log('  → ' + keys[i] + '  x' + (elMap[keys[i]] * sample), 'd');
-            }
+            for (var i = 0; i < Math.min(keys.length, 3); i++)
+                log('  → ' + keys[i] + '  x' + (elMap[keys[i]] * SAMPLE), 'd');
         }
         elMap = {}; reflowN = 0;
     }, 1000);
 
-    // ── 4. Slow Input (INP) ──────────────────────────────────────────
+    // ── 4. Slow Input (INP) ─────────────────────────────────────────
     if (typeof PerformanceObserver !== 'undefined') {
         try {
             new PerformanceObserver(function (l) {
@@ -198,7 +221,19 @@
         } catch (e) { }
     }
 
-    // ── 5. Scroll Jank ───────────────────────────────────────────────
+    // ── 5. Long Tasks ───────────────────────────────────────────────
+    if (typeof PerformanceObserver !== 'undefined') {
+        try {
+            new PerformanceObserver(function (l) {
+                l.getEntries().forEach(function (e) {
+                    var d = Math.round(e.duration);
+                    if (d > 100) log('LONG TASK  ' + d + 'ms', d > 200 ? 'b' : 'w');
+                });
+            }).observe({ type: 'longtask', buffered: true });
+        } catch (e) { }
+    }
+
+    // ── 6. Scroll Jank ──────────────────────────────────────────────
     var janks = 0, lastScrl = 0, idle = true, idleTmr, tchStart = 0, scrlLogged = false;
 
     window.addEventListener('touchstart', function () { tchStart = performance.now(); scrlLogged = false; }, { passive: true });
@@ -216,13 +251,112 @@
         idleTmr = setTimeout(function () { idle = true; lastScrl = tchStart = 0; }, 150);
     }, { passive: true });
 
-    // ── Bar Metrics ──────────────────────────────────────────────────
+    // ── 7. Observer & Event Tracking ────────────────────────────────
+    var obsLog = {}, evtLog = {}, rId = 0, mId = 0, iId = 0;
+
+    // ResizeObserver
+    var _RO;
+    if (window.ResizeObserver) {
+        _RO = window.ResizeObserver;
+        window.ResizeObserver = function (cb) {
+            var src = caller(), id = 'R' + (++rId);
+            var inst = new _RO(function (entries, obs) {
+                var t0 = performance.now();
+                cb(entries, obs);
+                var dur = performance.now() - t0;
+                obsLog.resize = (obsLog.resize || 0) + 1;
+                if (dur > 5) log('RESIZE OBS  ' + Math.round(dur) + 'ms  → ' + (entries[0] ? elKey(entries[0].target) : '?') + '  ← ' + src, dur > 16 ? 'b' : 'w');
+            });
+            var _obs = inst.observe.bind(inst);
+            inst.observe = function (el) { log('OBSERVE Resize #' + id + '  → ' + elKey(el) + '  ← ' + src, 'd'); return _obs(el); };
+            return inst;
+        };
+        window.ResizeObserver.prototype = _RO.prototype;
+    }
+
+    // MutationObserver
+    var _MO = window.MutationObserver;
+    window.MutationObserver = function (cb) {
+        var src = caller(), id = 'M' + (++mId), target = null;
+        var inst = new _MO(function (mutations, obs) {
+            var real = mutations.filter(function (m) { return !panel.contains(m.target); });
+            if (!real.length) return cb(mutations, obs);
+            var t0 = performance.now();
+            cb(mutations, obs);
+            var dur = performance.now() - t0;
+            obsLog.mutation = (obsLog.mutation || 0) + 1;
+            if (dur > 5) log('MUTATION OBS  ' + Math.round(dur) + 'ms  (' + real.length + ' mutations)  → ' + (target ? elKey(target) : '?') + '  ← ' + src, dur > 16 ? 'b' : 'w');
+        });
+        var _obs = inst.observe.bind(inst);
+        inst.observe = function (el, o) { target = el; log('OBSERVE Mutation #' + id + '  → ' + elKey(el) + '  ← ' + src, 'd'); return _obs(el, o); };
+        return inst;
+    };
+    window.MutationObserver.prototype = _MO.prototype;
+
+    // IntersectionObserver
+    var _IO;
+    if (window.IntersectionObserver) {
+        _IO = window.IntersectionObserver;
+        window.IntersectionObserver = function (cb, opts) {
+            var src = caller(), id = 'I' + (++iId);
+            var inst = new _IO(function (entries, obs) {
+                var t0 = performance.now();
+                cb(entries, obs);
+                var dur = performance.now() - t0;
+                obsLog.intersection = (obsLog.intersection || 0) + 1;
+                if (dur > 5) log('INTERSECT OBS  ' + Math.round(dur) + 'ms  → ' + (entries[0] ? elKey(entries[0].target) : '?') + '  ← ' + src, dur > 16 ? 'b' : 'w');
+            }, opts);
+            var _obs = inst.observe.bind(inst);
+            inst.observe = function (el) { log('OBSERVE Intersect #' + id + '  → ' + elKey(el) + '  ← ' + src, 'd'); return _obs(el); };
+            return inst;
+        };
+        window.IntersectionObserver.prototype = _IO.prototype;
+    }
+
+    // High-frequency event listeners
+    var hotEvents = { scroll: 1, resize: 1, mousemove: 1, touchmove: 1, pointermove: 1 };
+    var _ael = EventTarget.prototype.addEventListener;
+    EventTarget.prototype.addEventListener = function (type) {
+        if (hotEvents[type]) {
+            evtLog[type] = (evtLog[type] || 0) + 1;
+            log('LISTEN ' + type + '  → ' + elKey(this) + '  ← ' + caller(), 'd');
+        }
+        return _ael.apply(this, arguments);
+    };
+
+    // Activity summary every 5s
     setInterval(function () {
-        if (domEl) { var n = document.querySelectorAll('*').length; domEl.textContent = 'DOM ' + n; domEl.style.color = n > 3000 ? '#f44336' : n > 1500 ? '#ff9800' : '#ccc'; }
-        if (performance.memory && memEl) { memEl.textContent = (performance.memory.usedJSHeapSize / 1048576).toFixed(1) + 'MB'; }
+        var oKeys = Object.keys(obsLog), eKeys = Object.keys(evtLog);
+        if (oKeys.length || eKeys.length) {
+            var parts = oKeys.map(function (k) { return k + ':' + obsLog[k]; });
+            parts = parts.concat(eKeys.map(function (k) { return 'on-' + k + ':' + evtLog[k]; }));
+            log('ACTIVITY  ' + parts.join('  '), 'd');
+            obsLog = {};
+        }
+    }, 5000);
+
+    // ── 8. DOM Depth ────────────────────────────────────────────────
+    window.addEventListener('load', function () {
+        var max = 0, deepEl = null;
+        (function walk(el, d) {
+            if (d > max) { max = d; deepEl = el; }
+            for (var ch = el.children, i = 0; i < ch.length; i++) walk(ch[i], d + 1);
+        })(document.body, 1);
+        log('DOM DEPTH  ' + max + '  → ' + (deepEl ? elKey(deepEl) : '?'), max > 32 ? 'b' : max > 20 ? 'w' : 'd');
+    });
+
+    // ── Bar Metrics ─────────────────────────────────────────────────
+    setInterval(function () {
+        if (domEl) {
+            var n = document.querySelectorAll('*').length;
+            domEl.textContent = 'DOM ' + n;
+            domEl.style.color = n > 3000 ? '#f44336' : n > 1500 ? '#ff9800' : '#ccc';
+        }
+        if (performance.memory && memEl)
+            memEl.textContent = (performance.memory.usedJSHeapSize / 1048576).toFixed(1) + 'MB';
     }, 3000);
 
-    // ── API ──────────────────────────────────────────────────────────
+    // ── API ─────────────────────────────────────────────────────────
     window.__ndsPerf = {
         summary: function () {
             var avg = fpsH.length ? Math.round(fpsH.reduce(function (a, b) { return a + b; }, 0) / fpsH.length) : 'N/A';
@@ -241,6 +375,10 @@
             cancelAnimationFrame(rafId);
             window.getComputedStyle = _gcs;
             Element.prototype.getBoundingClientRect = _gbcr;
+            if (_RO) window.ResizeObserver = _RO;
+            window.MutationObserver = _MO;
+            if (_IO) window.IntersectionObserver = _IO;
+            EventTarget.prototype.addEventListener = _ael;
         }
     };
 

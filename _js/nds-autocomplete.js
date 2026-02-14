@@ -33,15 +33,7 @@
 
     const DEBOUNCE_MS = 300;
 
-    function debounce(fn, delay) {
-        let timer;
-        return function () {
-            const context = this;
-            const args = arguments;
-            clearTimeout(timer);
-            timer = setTimeout(function () { fn.apply(context, args); }, delay);
-        };
-    }
+
 
     // ==============================================
     // AUTOCOMPLETE CLASS
@@ -134,7 +126,7 @@
 
         setupEventListeners() {
             // Debounced input handler
-            this._debouncedFetch = debounce((value) => {
+            this._debouncedFetch = NDS.debounce((value) => {
                 this.fetchResults(value);
             }, DEBOUNCE_MS);
 

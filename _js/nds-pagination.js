@@ -396,25 +396,14 @@
             // Initial pagination setup
             updatePagination();
 
-            // Add ResizeObserver to watch for --per-page changes with debouncing
-            let resizeTimeout;
-            const resizeObserver = new ResizeObserver(() => {
-                clearTimeout(resizeTimeout);
-                resizeTimeout = setTimeout(() => {
-                    const currentPerPage = parseInt(getComputedStyle(contentContainer).getPropertyValue('--per-page')) || 5;
-
-                    // Only update if --per-page actually changed
-                    if (currentPerPage !== lastPerPage) {
-                        lastPerPage = currentPerPage;
-                        updatePagination();
-                    }
-                }, 150);
-            });
-
-            resizeObserver.observe(contentContainer);
-
-            // Store observer reference for cleanup if needed
-            paginationNav._autoPaginationObserver = resizeObserver;
+            // Watch for --per-page changes on resize
+            NDS.onElementResize(contentContainer, NDS.debounce(() => {
+                const currentPerPage = parseInt(getComputedStyle(contentContainer).getPropertyValue('--per-page')) || 5;
+                if (currentPerPage !== lastPerPage) {
+                    lastPerPage = currentPerPage;
+                    updatePagination();
+                }
+            }, 150));
 
             paginationNav.setAttribute('data-nds-auto-pagination-initialized', 'true');
         });
