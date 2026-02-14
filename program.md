@@ -111,7 +111,7 @@ exclude_showcase: true
             </div>
 
             <div class="program-overview-cards nds-block-item nds-grid col-sm-12 col-lg-6">
-                <div class="nds-grid" style="--max-col: 4;--mid-col: 2;--min-col: 2;--col-width: 100px;--gap: 12px;">
+                <div class="nds-grid" style="--max-col: 2;--mid-col: 4;--min-col: 2;--col-width: 100px;--gap: 12px;">
                     <div class="nds-card nds-stroke nds-statistic">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">

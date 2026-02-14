@@ -1,7 +1,6 @@
 // ==============================================
 // NDS GRID SYSTEM
 // ==============================================
-@use 'sass:map';
 @use './mixins' as *;
 
 .nds-grid {
@@ -26,7 +25,7 @@
     height: 100%;
   }
 
-  @container (max-width: #{map.get($container-breakpoints, lg)}) {
+  @include tablet(max) {
     &:not(:has(#{$col-token-selector})) {
       --grid-col: var(--mid-col, var(--max-col, auto-fit));
       gap: max(8px, calc(var(--gap, var(--spacing-2xl)) / 2));
@@ -34,7 +33,7 @@
     }
   }
 
-  @container (max-width: #{map.get($container-breakpoints, md)}) {
+  @include mobile {
     &:not(:has(#{$col-token-selector})) {
       --grid-col: var(--min-col, var(--mid-col, var(--max-col, auto-fit)));
       gap: max(8px, calc(var(--gap, var(--spacing-2xl)) / 2));
@@ -64,9 +63,9 @@
   grid-column: 1 / -1;
 }
 
-/* Generate responsive column spans using container breakpoints (excludes sm) */
-@each $breakpoint, $width in $container-breakpoints {
-  @container (min-width: #{$width}) {
+/* Generate responsive column spans using viewport breakpoints (excludes sm) */
+@each $breakpoint, $width in $grid-breakpoints {
+  @media (min-width: #{$width}) {
     @for $i from 1 through 12 {
       .col-#{$breakpoint}-#{$i} {
         grid-column: span #{$i};

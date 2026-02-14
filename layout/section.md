@@ -31,7 +31,7 @@ direction: ltr
                         <div class="nds-expandable-content">
                             <code class="lang-html code">
 section.nds-content-section          (CSS Grid: full-width | breakout | content)
-├── div.nds-section-wrapper          (Flex row + container queries)
+├── div.nds-section-wrapper          (Flex row + responsive breakpoints)
 │   ├── div.nds-section-image        (optional)
 │   ├── div.nds-section-head         (flex:1 — title + desc + meta)
 │   │   ├── h2.nds-section-title
@@ -224,7 +224,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Tier 3 — With Action</h2>
-            <p class="nds-section-description">Action buttons sit beside the head on wide screens (≥769px) and drop to full-row below on narrow (≤768px). Uses container queries on the wrapper.</p>
+            <p class="nds-section-description">Action buttons sit beside the head on desktop and drop to full-row below on tablet and smaller.</p>
         </div>
         <div class="nds-section-content">
             <div class="nds-showcase">
@@ -823,7 +823,7 @@ Default child         → grid-column: content
                             <tr>
                                 <td>_sass/layout/_sectionLayout.scss</td>
                                 <td>Layout overrides</td>
-                                <td>Wrapper (container queries), cardView, 404, sideInfo, horizontal, striping</td>
+                                <td>Wrapper, cardView, 404, sideInfo, horizontal, striping</td>
                             </tr>
                             <tr>
                                 <td>_sass/layout/_contentLayout.scss</td>
