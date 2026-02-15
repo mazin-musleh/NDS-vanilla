@@ -60,7 +60,7 @@
     padding-inline: var(--swiper-padding);
 
     // Scroll padding for proper snap alignment with peek
-    scroll-padding-inline: max(var(--swiper-peek),var(--swiper-padding));
+    scroll-padding-inline: max(var(--swiper-peek), var(--swiper-padding));
 
 
     .nds-swiper:not(.nds-hero) & {
@@ -78,7 +78,7 @@
     // Slide width formula:
     // Available = 100% - (padding × 2) - peek
     // Slide = (Available - (gap × (slides - 1))) / slides
-     flex: 0 0 calc((100% - var(--swiper-peek) - (var(--swiper-gap) * (var(--swiper-slides, 1) - 1))) / var(--swiper-slides, 1));
+    flex: 0 0 calc((100% - var(--swiper-peek) - (var(--swiper-gap) * (var(--swiper-slides, 1) - 1))) / var(--swiper-slides, 1));
     min-width: 0;
     height: auto;
     position: relative;
@@ -114,7 +114,7 @@
         padding-inline-start: 2px;
     }
 
-    .nds-swiper:not(.nds-hero)  &:last-child {
+    .nds-swiper:not(.nds-hero) &:last-child {
         padding-inline-end: 2px;
     }
 
@@ -176,6 +176,13 @@
 
 .nds-swiper-pagination {
 
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-lg);
+
     .nds-swiper.nds-hero & {
         position: absolute;
         bottom: var(--spacing-lg);
@@ -189,12 +196,6 @@
         margin-inline-end: var(--nds-viewport-padding);
     }
 
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap; 
-    gap: var(--spacing-lg);
 }
 
 .nds-swiper-pagination-bullet {
@@ -250,6 +251,7 @@
     :is(.nds-section-title, .nds-section-description) {
         color: var(--text-oncolor-primary, #fff);
     }
+
     .nds-swiper-pagination-bullet {
         background-color: var(--swiper-pagination-bullet-oncolor-default);
         border-color: rgba(255, 255, 255, 0.3);
