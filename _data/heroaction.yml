@@ -1,33 +1,44 @@
-# Default hero configuration
-# Pages can override by setting `heroaction: "heroaction-custom"` in front matter
-# to load _data/heroaction-custom.yml, or define `hero_actions` and `hero_tags` inline.
+# Hero Action Data — tags & action buttons for the sub hero section
 #
-# Tags Fields (optional):
-#   label:          Tag text (required)
-#   style:          Tag variant class: nds-neutral, nds-success, nds-danger, nds-warning, nds-primary, nds-info (default: nds-neutral)
-#   icon:           HGI icon name, e.g. "hgi-star-01" (optional)
-#   modifiers:      Additional classes like "nds-outline", "nds-rounded", "nds-sm", "nds-xs" (optional)
+# Resolution order:
+#   1. page.hero_tags / page.hero_actions (inline front matter — highest priority)
+#   2. _data/{subsite}/heroaction.yml (if page.subsite is set)
+#   3. _data/heroaction.yml (this file — default fallback)
+#   Override the filename with `heroaction: "heroaction-custom"` in front matter.
 #
-# Action Buttons Fields:
-#   label:          Button text (required)
-#   url:            Link URL (required)
-#   style:          Button variant class (default: nds-primary)
-#   icon:           HGI icon name, e.g. "hgi-plus-sign" (optional)
-#   icon_position:  "leading" or "trailing" (default: leading)
-#   aria_label:     Custom aria-label (optional)
-#   target:         Link target, e.g. "_blank" (optional)
-
-# Example with tags:
+# Structure:
+#   tags:     (optional) array of tag badges shown below the hero title
+#   actions:  (optional) array of CTA buttons shown in the hero section
+#   If no `actions` key exists, the entire file is treated as an actions array (legacy).
+#
+# ─── Tag fields ───
+#   label:      (required) Tag text
+#   style:      Tag variant: nds-neutral | nds-green | nds-blue | nds-orange | nds-red | nds-primary (default: nds-neutral)
+#   icon:       HGI icon name, e.g. "hgi-star-01"
+#   modifiers:  Extra classes, e.g. "nds-outline nds-rounded"
+#
+# ─── Action fields ───
+#   label:          (required) Button text
+#   url:            (required) Link URL
+#   style:          Button variant (default: nds-primary)
+#   icon:           HGI icon name, e.g. "hgi-arrow-right-01"
+#   icon_position:  "trailing" to place icon after label (default: leading)
+#   aria_label:     Custom aria-label for accessibility
+#   target:         Link target, e.g. "_blank"
+#
+# ─── Example ───
 # tags:
-#   - label: "New Feature"
-#     style: "nds-success"
+#   - label: "New Service"
+#     style: "nds-green"
 #     icon: "hgi-star-01"
+#   - label: "Beta"
+#     style: "nds-orange"
 #
 # actions:
-#   - label: "Start"
-#     url: "/university/announcement"
+#   - label: "Get Started"
+#     url: "/services"
 #     style: "nds-primary"
-
-# Default: No tags, no actions (empty)
-# Note: For backward compatibility, if no 'actions' key is present,
-# the entire file content is treated as actions array
+#     icon: "hgi-arrow-right-01"
+#   - label: "Learn More"
+#     url: "/about"
+#     style: "nds-secondary-outline"

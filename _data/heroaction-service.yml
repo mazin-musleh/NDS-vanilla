@@ -1,21 +1,6 @@
 # Hero configuration for service pages
-# Pages can override by setting `heroaction: "heroaction-service"` in front matter
-# to load this file.
-#
-# Tags Fields:
-#   label:          Tag text (required)
-#   style:          Tag variant class: nds-neutral, nds-success, nds-danger, nds-warning, nds-primary, nds-info (default: nds-neutral)
-#   icon:           HGI icon name, e.g. "hgi-star-01" (optional)
-#   modifiers:      Additional classes like "nds-outline", "nds-rounded", "nds-sm", "nds-xs" (optional)
-#
-# Action Buttons Fields:
-#   label:          Button text (required)
-#   url:            Link URL (required)
-#   style:          Button variant class (default: nds-primary)
-#   icon:           HGI icon name, e.g. "hgi-plus-sign" (optional)
-#   icon_position:  "leading" or "trailing" (default: leading)
-#   aria_label:     Custom aria-label (optional)
-#   target:         Link target, e.g. "_blank" (optional)
+# Usage: set `heroaction: "heroaction-service"` in page front matter
+# See heroaction.yml for full field documentation
 
 tags:
   - label: "Administration and Finance System (ERP)"
@@ -33,5 +18,5 @@ actions:
 
   #- label: "Service Level Agreement"
   #  url: "/university/announcement"
-   # style: "nds-secondary-outline SLA"
-    #icon: hgi-link-02
+  #  style: "nds-secondary-outline SLA"
+  #  icon: hgi-link-02

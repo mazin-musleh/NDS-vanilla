@@ -1,7 +1,8 @@
 {% assign hero_type = include.hero_type | default: 'main' %}
 {% if hero_type == 'sub' %}
+{% assign hero_bg = page.hero_image | default: site.hero_image_sub %}
 <section class="nds-hero-section sub {{ page.hero_style }}" aria-label="قسم العرض الرئيسي"
-    style="--hero_image: url('{{ page.hero_image_sub | default: site.hero_image_sub | relative_url }}');">
+    {% if hero_bg %}style="--hero_image: url('{{ hero_bg | relative_url }}');"{% endif %}>
     <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb" hidden>
         <ol class="nds-breadcrumb">
             {% assign home_text = 'الرئيسية' %}{% if page.lang == 'en' %}{% assign home_text = 'Home' %}{% endif %}
@@ -24,7 +25,12 @@
             {% assign hero_tags = page.hero_tags %}
             {% else %}
             {% assign hero_action_file = page.heroaction | default: "heroaction" %}
-            {% assign hero_data = site.data[hero_action_file] %}
+            {% if page.subsite %}
+                {% assign scoped = site.data[page.subsite] %}
+                {% assign hero_data = scoped[hero_action_file] | default: site.data[hero_action_file] %}
+            {% else %}
+                {% assign hero_data = site.data[hero_action_file] %}
+            {% endif %}
             {% if hero_data.tags %}
             {% assign hero_tags = hero_data.tags %}
             {% endif %}
@@ -81,7 +87,12 @@
             {% assign hero_actions = page.hero_actions %}
             {% else %}
             {% assign hero_action_file = page.heroaction | default: "heroaction" %}
-            {% assign hero_data = site.data[hero_action_file] %}
+            {% if page.subsite %}
+                {% assign scoped = site.data[page.subsite] %}
+                {% assign hero_data = scoped[hero_action_file] | default: site.data[hero_action_file] %}
+            {% else %}
+                {% assign hero_data = site.data[hero_action_file] %}
+            {% endif %}
             {% if hero_data.actions %}
             {% assign hero_actions = hero_data.actions %}
             {% else %}
@@ -144,7 +155,12 @@ Determine hero sliders source:
 {% assign hero_sliders = page.hero_sliders %}
 {% else %}
 {% assign hero_file_name = page.herosliders | default: site.herosliders | default: "herosliders" %}
-{% assign hero_sliders = site.data[hero_file_name] %}
+{% if page.subsite %}
+    {% assign scoped = site.data[page.subsite] %}
+    {% assign hero_sliders = scoped[hero_file_name] | default: site.data[hero_file_name] %}
+{% else %}
+    {% assign hero_sliders = site.data[hero_file_name] %}
+{% endif %}
 {% endif %}
 
 <section class="nds-hero-section" aria-label="قسم العرض الرئيسي">
