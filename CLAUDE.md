@@ -8,7 +8,7 @@ RTL (Arabic) by default, with LTR (English) support. Font: IBM Plex Sans Arabic.
 ## Commands
 
 ```bash
-bundle exec jekyll serve      # Dev server (port 4002, auto-displays network IP for mobile testing)
+bundle exec jekyll serve      # Dev server (port 4002, auto-displays network IP)
 npm start                     # Alternative
 bundle exec jekyll build      # Production build → _site/
 ruby _plugins/js_processor.rb # REQUIRED after any _js/ changes (bundles & minifies → assets/js/*.min.js)
@@ -16,12 +16,34 @@ ruby _plugins/baseurl_cleaner.rb      # Strip /_site baseurl prefix for root-dom
 ruby _plugins/baseurl_cleaner.rb dry  # Dry run
 ```
 
-## Key Directories
+## Project Structure
 
-- `_layouts/` — Page templates | `_includes/` — Reusable HTML components
-- `_sass/` — SCSS source (`_variables.scss` tokens, `_base.scss` foundations, `_mixins.scss`, `components/`)
-- `assets/` — CSS, fonts, images, JS | `_js/` — JS source files (process before deploy)
-- `_data/sidemenu.yml` — Side navigation config | `_site/` — Generated output (gitignored)
+```
+_layouts/          Page templates (default, page, home, post, minimal, empty)
+_includes/         Reusable HTML components (hero, mainNav, sideMenu, footer, etc.)
+_sass/
+  _variables.scss  Design tokens (component, semantic, color)
+  _mixins.scss     Responsive, LTR, accessibility mixins
+  _base.scss       Foundations
+  _animations.scss Keyframe animations
+  components/      Component SCSS files
+  layout/          Layout SCSS files (contentLayout, section, sectionLayout)
+assets/
+  css/             Compiled CSS (nds.critical.min, nds-main.min, nds-showcase.min)
+  js/              Compiled JS (nds-main.min, nds-showcase.min)
+  fonts/           Web fonts
+  img/             Images
+_js/               JS source files (process with js_processor before deploy)
+_data/             Data files for site structure:
+  mainnav.yml        Main navigation + branding overrides
+  sidemenu.yml       Side navigation
+  footer.yml         Footer content
+  footerlogos.yml    Footer logos
+  herosliders.yml    Hero carousel slides
+  heroaction.yml     Hero tags & actions
+_plugins/          Build scripts (js_processor.rb, baseurl_cleaner.rb)
+_site/             Generated output (gitignored)
+```
 
 ## Files to Ignore
 
@@ -34,12 +56,12 @@ ruby _plugins/baseurl_cleaner.rb dry  # Dry run
 
 **Prefer CSS Logical Properties** — they auto-adapt to text direction:
 ```scss
-// ✅ GOOD — automatic RTL/LTR
+// GOOD — automatic RTL/LTR
 margin-inline-start: var(--spacing-md);  padding-inline: var(--spacing-sm);
 border-inline-start: 1px solid;          text-align: start;
 inset-inline-start: 0;
 
-// ❌ AVOID — physical properties need manual LTR overrides
+// AVOID — physical properties need manual LTR overrides
 margin-left: var(--spacing-md);  text-align: right;
 ```
 
@@ -59,9 +81,15 @@ margin-left: var(--spacing-md);  text-align: right;
 ```
 
 **Responsive mixins** (`_sass/_mixins.scss`):
-- `@include mobile` (max: 599px) | `@include tablet(min|max)` (600–959px)
-- `@include desktop(min|max)` (960–1279px) | `@include large-desktop(min|max)` (1280px+)
-- `@include ltr` — LTR overrides only (see above)
+- `@include mobile` — max: 600px
+- `@include tablet` — 601px–960px | `tablet(min)` — 601px+ | `tablet(max)` — max: 960px
+- `@include desktop` — 961px–1280px | `desktop(min)` — 961px+ | `desktop(max)` — max: 1280px
+- `@include large-desktop` — 1344px+ | `large-desktop(max)` — max: 1920px
+
+**Accessibility mixins:**
+- `@include high-contrast` — `prefers-contrast: high`
+- `@include reduced-motion` — `prefers-reduced-motion: reduce`
+- `@include print-media` — print styles
 
 **Standard component structure:**
 ```scss
@@ -80,11 +108,11 @@ margin-left: var(--spacing-md);  text-align: right;
 3. **Color tokens**: `--colors-*` — only referenced indirectly through component tokens
 
 ```scss
-// ✅ CORRECT
+// CORRECT
 background-color: var(--component-background-primary-default);
 &:hover { background-color: var(--component-background-primary-hovered); }
 
-// ❌ NEVER use hex colors or --colors-* tokens directly in components
+// NEVER use hex colors or --colors-* tokens directly in components
 ```
 
 **Existing token patterns:**
@@ -98,6 +126,69 @@ background-color: var(--component-background-primary-default);
 - Font weight: use numbers directly (`400`, `500`, `600`, `700`) — never tokens or keywords
 - Font size: use `--nds-text-{xs|sm|md|lg|xl}-FS` and matching `-LH` for line-height
 
+## Section & Grid Structure (CRITICAL)
+
+All page content is built from sections. Every section follows this nesting:
+
+```html
+<section class="nds-content-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Section Title</h2>
+            <p class="nds-section-description">Optional description.</p>
+        </div>
+        <div class="nds-section-action">
+            <!-- optional action buttons -->
+        </div>
+        <div class="nds-section-content">
+            <!-- all content goes here -->
+        </div>
+    </div>
+</section>
+```
+
+**Nesting rules:**
+- `nds-content-section` — grid container (auto-centers content, max-width `--nds-content-MaxWidth: 1280px`)
+- `nds-section-wrapper` — flex wrap container (`--section-col-gap`, `--section-row-gap`)
+- `nds-section-head` — title + description (flex: 1)
+- `nds-section-action` — buttons area (flex: 1, full-width on mobile)
+- `nds-section-content` — all content (flex: 1 1 100%). Children (p, ul, ol, tables, tabs, code) get automatic `margin-block-end: 1rem`
+
+**Section variants:**
+- `.nds-blue`, `.nds-green`, `.nds-neutral`, `.nds-brand` — color backgrounds
+- `.noBg` or `.nds-ghost` — remove background
+- `.nds-horizontal` — side-by-side layout (grid, desktop only)
+- Use `nds-full-width` on a direct child to break out to full viewport width
+
+**Content blocks** (for text, guidelines, docs inside `nds-section-content`):
+```html
+<div class="nds-content-block">
+    <h3 class="nds-block-title">Title</h3>
+    <p>Content goes directly here — no extra wrappers.</p>
+</div>
+```
+- `nds-block-title` is optional — blocks work without a title
+- Title tokens: `--block-title-FS`, `--block-title-LH`, `--block-title-FW`, `--block-title-MB`, `--block-title-color`
+- Use for guidelines, accessibility info, and any titled content sections — **do NOT use** `guidelines-grid`, `guideline-item`, `accessibility-info`, or `comparison-item`
+
+**Grid utility** (`nds-grid`) for multi-column layouts inside `nds-section-content`:
+```html
+<div class="nds-grid" style="--max-col: 3; --mid-col: 2; --min-col: 1;">
+    <div>Column 1</div>
+    <div>Column 2</div>
+    <div>Column 3</div>
+</div>
+```
+- Default: 12-column grid with `--gap: --spacing-2xl`
+- Custom properties: `--max-col` (desktop), `--mid-col` (tablet), `--min-col` (mobile)
+- Column span classes: `.col-1` through `.col-12`, `.col-full` (responsive: `.col-md-*`, `.col-lg-*`, `.col-xl-*`)
+
+**Layout modifiers** (set via `layout_class` front matter):
+- `cardView` — card styling on sections (shadow, border-radius, smaller padding/titles)
+- `topSubMenu` — sub-navigation above content
+- `nds-middle` — vertically centered content
+- `toEdge` — full-width, no max-width constraint
+
 ## Component HTML Patterns
 
 **Button structure:**
@@ -110,20 +201,6 @@ background-color: var(--component-background-primary-default);
 - Trailing icon: add `nds-trail-icon` class
 - Dark backgrounds: add `nds-oncolor` | Destructive: add `nds-destructive`
 - Icon-only: include proper ARIA labels
-
-**Section content block structure:**
-```html
-<div class="nds-section-content">
-    <div class="nds-content-block">
-        <h3 class="nds-block-title">Title</h3>
-        <p>Content goes directly here — no extra wrappers.</p>
-    </div>
-</div>
-```
-- `nds-content-block` groups content inside `nds-section-content` (paragraphs, lists, media get automatic styling)
-- `nds-block-title` is optional — blocks work without a title
-- Title tokens: `--block-title-FS`, `--block-title-LH`, `--block-title-FW`, `--block-title-MB`, `--block-title-color`
-- Use for guidelines, accessibility info, and any titled content sections — **do NOT use** `guidelines-grid`, `guideline-item`, `accessibility-info`, or `comparison-item`
 
 **Multi-language front matter:**
 ```yaml
@@ -152,13 +229,17 @@ direction: ltr
 
 ## Creating New Pages
 
-**Use `standard.md` as the base template** — it contains all available front matter variables with example values and inline comments. Copy it and fill in your values.
+**Two base templates** — copy the appropriate one and fill in your values:
+- `standard-page.md` — for regular pages (components, docs, utilities). Uses `page`/`post`/`empty`/`minimal` layouts with sub hero.
+- `subsite.md` — for subsite home pages (universities, ministries). Uses `home` layout with hero slider.
+
+**Subsite scoping:** Set `subsite: foldername` in front matter to auto-resolve data files from `_data/{foldername}/` (falls back to `_data/`). Branding lives in the mainnav data file, not page front matter.
 
 ## Adding New Components
 
 1. Create `_sass/components/_[name].scss` (with `@use '../mixins' as *;`)
-2. Import in main stylesheet
-3. Add documentation page: `components/[name].md` with `breadcrumb: ["Components", "Name"]`
+2. Add `@use 'components/[name]';` to `assets/css/nds-main.min.scss`
+3. Add documentation page: `components/[name].md` with `breadcrumb: ["Components"]`
 4. Add to `_data/sidemenu.yml` under Components children
 5. Add to `_includes/` if reusable across pages
 6. Use `nds-` prefix for all class names
@@ -171,7 +252,14 @@ direction: ltr
 
 - Source: `_js/` directory → processed by `ruby _plugins/js_processor.rb` (Terser) → `assets/js/*.min.js`
 - **Always run the processor manually** after JS changes
-- Output bundles: `nds-main.min.js` (core), `nds-showcase.min.js` (demos)
+- Bundles: `nds-main.min.js` (core — 34 files bundled), standalone files processed individually (e.g. `nds-showcase.min.js`)
+
+## CSS Architecture
+
+Three CSS layers loaded in order:
+1. `nds.critical.min.css` — Above-the-fold styles (fonts, base, hero, breadcrumb, sideMenu, contentLayout, buttons, avatar)
+2. `nds-main.min.css` — All remaining component styles
+3. `nds-showcase.min.css` — Demo/showcase styles (excluded with `exclude_showcase: true`)
 
 ## Figma MCP Integration
 

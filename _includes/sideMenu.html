@@ -5,7 +5,12 @@
     </button>
     <nav class="nds-drawer nds-divided nds-full-height" hidden>
         {% assign sidemenu_data_file = page.sidemenu | default: site.sidemenu | default: "sidemenu" %}
-        {% assign sidemenu_items = site.data[sidemenu_data_file] %}
+        {% if page.subsite %}
+            {% assign scoped = site.data[page.subsite] %}
+            {% assign sidemenu_items = scoped[sidemenu_data_file] | default: site.data[sidemenu_data_file] %}
+        {% else %}
+            {% assign sidemenu_items = site.data[sidemenu_data_file] %}
+        {% endif %}
         <div class="nds-drawer-scroll">
             <ul class="nds-drawer-list">
                 {% for item in sidemenu_items %}

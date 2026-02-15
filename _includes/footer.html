@@ -1,7 +1,12 @@
 <!-- _includes/footer.html -->
 <footer class="nds-footer nds-content-grid" hidden role="contentinfo" aria-label="Site Footer">
     {% assign footer_data_file = page.footer | default: site.footer | default: "footer" %}
-    {% assign footer_data = site.data[footer_data_file] %}
+    {% if page.subsite %}
+        {% assign scoped = site.data[page.subsite] %}
+        {% assign footer_data = scoped[footer_data_file] | default: site.data[footer_data_file] %}
+    {% else %}
+        {% assign footer_data = site.data[footer_data_file] %}
+    {% endif %}
 
     {% if footer_data.columns and footer_data.columns.size > 0 %}
     <nav class="nds-footer-drawer nds-drawer nds-divided nds-oncolor" data-always-open-on="tablet">
@@ -119,7 +124,12 @@
             </div>
         </div>
         {% assign footer_logos_file = page.footerlogos | default: site.footerlogos | default: "footerlogos" %}
-        {% assign footer_logos = site.data[footer_logos_file] %}
+        {% if page.subsite %}
+            {% assign scoped = site.data[page.subsite] %}
+            {% assign footer_logos = scoped[footer_logos_file] | default: site.data[footer_logos_file] %}
+        {% else %}
+            {% assign footer_logos = site.data[footer_logos_file] %}
+        {% endif %}
 
         {% if footer_logos and footer_logos.size > 0 %}
         <div class="nds-footer-logos">

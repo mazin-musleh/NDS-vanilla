@@ -7,8 +7,8 @@ animations"
 breadcrumb: ["Components"]
 lang: en
 direction: ltr
-css_files:
-- "assets/css/nds-accordion.css"
+custom_css:
+- assets/css/nds-accordion.css
 ---
 
 <!-- Accordion Examples Overview -->

@@ -1,3 +1,12 @@
+# Branding (overrides site-level defaults from _config.yml)
+# brandLogo: assets/img/custom-logo.svg
+# headerBrandW: 150
+# headerBrandH: 48
+# brandName: Custom Brand
+# brandNameColor: "#333"
+# brandSlogan: Custom Slogan
+# brandSloganColor: "#666"
+
 # Primary Navigation Items
 primary_nav:
   - label: "Item 1"
