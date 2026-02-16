@@ -2,9 +2,8 @@
 #
 # Resolution order:
 #   1. page.hero_tags / page.hero_actions (inline front matter — highest priority)
-#   2. _data/{subsite}/heroaction.yml (if page.subsite is set)
-#   3. _data/heroaction.yml (this file — default fallback)
-#   Override the filename with `heroaction: "heroaction-custom"` in front matter.
+#   2. _data/hero/{heroaction-value}.yml (set `heroaction: filename` in front matter)
+#   3. _data/hero/heroaction.yml (this file — default fallback)
 #
 # Structure:
 #   tags:     (optional) array of tag badges shown below the hero title

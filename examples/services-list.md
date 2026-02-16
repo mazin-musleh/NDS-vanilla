@@ -93,7 +93,7 @@ exclude_showcase: false
         <div id="services_list_content" class="nds-pagination-content nds-grid" hidden
             style="--per-page: 12; --max-col: 3; --mid-col: 2; --min-col: 1;">
 
-            {% for service in site.data.services %}
+            {% for service in site.data.content.services %}
             <div class="pagination-item nds-card nds-stroke">
                 <div class="nds-card-header">
                     <div class="nds-card-featured-icon">

@@ -34,13 +34,13 @@ assets/
   fonts/           Web fonts
   img/             Images
 _js/               JS source files (process with js_processor before deploy)
-_data/             Data files for site structure:
-  mainnav.yml        Main navigation + branding overrides
-  sidemenu.yml       Side navigation
-  footer.yml         Footer content
-  footerlogos.yml    Footer logos
-  herosliders.yml    Hero carousel slides
-  heroaction.yml     Hero tags & actions
+_data/             Data files organized by category:
+  mainnav/           Main navigation + branding overrides
+  sidemenu/          Side navigation menus
+  footer/            Footer content
+  footerlogos/       Footer logos
+  hero/              Hero sliders & hero actions
+  content/           Page content data (services, etc.)
 _plugins/          Build scripts (js_processor.rb, baseurl_cleaner.rb)
 _site/             Generated output (gitignored)
 ```
@@ -233,14 +233,14 @@ direction: ltr
 - `standard-page.md` — for regular pages (components, docs, utilities). Uses `page`/`post`/`empty`/`minimal` layouts with sub hero.
 - `subsite.md` — for subsite home pages (universities, ministries). Uses `home` layout with hero slider.
 
-**Subsite scoping:** Set `subsite: foldername` in front matter to auto-resolve data files from `_data/{foldername}/` (falls back to `_data/`). Branding lives in the mainnav data file, not page front matter.
+**Data overrides:** Pages specify which data file to use via front matter keys (`mainnav`, `sidemenu`, `footer`, `footerlogos`, `heroaction`, `herosliders`). Includes look up `site.data.{category}[key]` — e.g. `mainnav: mainnav-alumni` loads `_data/mainnav/mainnav-alumni.yml`. Defaults come from `_config.yml`.
 
 ## Adding New Components
 
 1. Create `_sass/components/_[name].scss` (with `@use '../mixins' as *;`)
 2. Add `@use 'components/[name]';` to `assets/css/nds-main.min.scss`
 3. Add documentation page: `components/[name].md` with `breadcrumb: ["Components"]`
-4. Add to `_data/sidemenu.yml` under Components children
+4. Add to `_data/sidemenu/sidemenu.yml` under Components children
 5. Add to `_includes/` if reusable across pages
 6. Use `nds-` prefix for all class names
 

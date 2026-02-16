@@ -25,12 +25,7 @@
             {% assign hero_tags = page.hero_tags %}
             {% else %}
             {% assign hero_action_file = page.heroaction | default: "heroaction" %}
-            {% if page.subsite %}
-                {% assign scoped = site.data[page.subsite] %}
-                {% assign hero_data = scoped[hero_action_file] | default: site.data[hero_action_file] %}
-            {% else %}
-                {% assign hero_data = site.data[hero_action_file] %}
-            {% endif %}
+            {% assign hero_data = site.data.hero[hero_action_file] %}
             {% if hero_data.tags %}
             {% assign hero_tags = hero_data.tags %}
             {% endif %}
@@ -87,12 +82,7 @@
             {% assign hero_actions = page.hero_actions %}
             {% else %}
             {% assign hero_action_file = page.heroaction | default: "heroaction" %}
-            {% if page.subsite %}
-                {% assign scoped = site.data[page.subsite] %}
-                {% assign hero_data = scoped[hero_action_file] | default: site.data[hero_action_file] %}
-            {% else %}
-                {% assign hero_data = site.data[hero_action_file] %}
-            {% endif %}
+            {% assign hero_data = site.data.hero[hero_action_file] %}
             {% if hero_data.actions %}
             {% assign hero_actions = hero_data.actions %}
             {% else %}
@@ -155,12 +145,7 @@ Determine hero sliders source:
 {% assign hero_sliders = page.hero_sliders %}
 {% else %}
 {% assign hero_file_name = page.herosliders | default: site.herosliders | default: "herosliders" %}
-{% if page.subsite %}
-    {% assign scoped = site.data[page.subsite] %}
-    {% assign hero_sliders = scoped[hero_file_name] | default: site.data[hero_file_name] %}
-{% else %}
-    {% assign hero_sliders = site.data[hero_file_name] %}
-{% endif %}
+{% assign hero_sliders = site.data.hero[hero_file_name] %}
 {% endif %}
 
 <section class="nds-hero-section" aria-label="قسم العرض الرئيسي">

@@ -1,12 +1,7 @@
 <nav class="nds-main-nav nds-content-grid" id="ndsMainNav" aria-label="Primary navigation">
     <div class="nds-nav-container">
         {% assign nav_data_file = page.mainnav | default: site.mainnav | default: "mainnav" %}
-        {% if page.subsite %}
-            {% assign scoped = site.data[page.subsite] %}
-            {% assign nav_data = scoped[nav_data_file] | default: site.data[nav_data_file] %}
-        {% else %}
-            {% assign nav_data = site.data[nav_data_file] %}
-        {% endif %}
+        {% assign nav_data = site.data.mainnav[nav_data_file] %}
 
         {% assign brand_logo = nav_data.brandLogo | default: site.brandLogo %}
         {% assign brand_width = nav_data.headerBrandW | default: site.headerBrandW %}

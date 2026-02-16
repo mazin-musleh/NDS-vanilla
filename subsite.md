@@ -5,17 +5,20 @@ title: Site Title
 lang: ar                    # en | ar
 direction: rtl              # ltr | rtl
 
-# === Subsite Scope ===
-# subsite: iu              # scopes data files to _data/iu/ (fallback: _data/)
-#                          # resolves: mainnav, sidemenu, footer, footerlogos, herosliders, heroaction
+# === Data Overrides ===
+# mainnav: mainnav            # loads _data/mainnav/{value}.yml (default: mainnav)
+# sidemenu: sidemenu          # loads _data/sidemenu/{value}.yml (default: sidemenu)
+# footer: footer              # loads _data/footer/{value}.yml (default: footer)
+# footerlogos: footerlogos    # loads _data/footerlogos/{value}.yml (default: footerlogos)
+# heroaction: heroaction      # loads _data/hero/{value}.yml (default: heroaction)
 
 # === Hero Slider (Main Hero) ===
 # Single hero slide (inline):
 # hero_image: assets/img/hero.webp
 # hero_image_small: assets/img/hero-sm.webp
 #
-# Multiple hero slides (data file — auto-resolved from subsite scope):
-# herosliders: herosliders   # or override: loads _data/{subsite}/herosliders.yml → _data/herosliders.yml
+# Multiple hero slides (data file):
+# herosliders: herosliders    # loads _data/hero/{value}.yml (default: herosliders)
 
 # === Site Overrides ===
 # siteTitle: Custom Site Title
