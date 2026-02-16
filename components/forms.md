@@ -64,28 +64,28 @@ direction: ltr
             </div>
           </div>
           <div class="demo-code">
-          <div class="nds-tabs nds-code nds-divided" hidden>
-            <div class="nds-tab-list-container">
-              <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                  aria-controls="panel-text-input-1" id="tab-text-input-1">
-                  <span class="nds-tab-label">HTML</span>
-                </button>
-              </nav>
+            <div class="nds-tabs nds-code nds-divided" hidden>
+              <div class="nds-tab-list-container">
+                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                  <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                    aria-controls="panel-text-input-1" id="tab-text-input-1">
+                    <span class="nds-tab-label">HTML</span>
+                  </button>
+                </nav>
                 <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                 </button>
-            </div>
-            <div class="nds-tab-content">
-              <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-text-input-1"
-                aria-labelledby="tab-text-input-1">
-                <div class="nds-code-action">
-                  <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                  </button>
-                </div>
-                <div class="nds-expandable-content">
-                  <code class="lang-html code">
+              </div>
+              <div class="nds-tab-content">
+                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-text-input-1"
+                  aria-labelledby="tab-text-input-1">
+                  <div class="nds-code-action">
+                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                      <i class="hgi hgi-stroke hgi-copy-01"></i>
+                    </button>
+                  </div>
+                  <div class="nds-expandable-content">
+                    <code class="lang-html code">
                   <div class="nds-form-container" id="textInput-container">
                     <div class="nds-form-header">
                       <label for="textInput">
@@ -103,10 +103,10 @@ direction: ltr
                     <div class="nds-form-footer" data-feedback-target hidden></div>
                   </div>
                     </code>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
           </div>
         </div>
 
@@ -159,28 +159,28 @@ direction: ltr
             </div>
           </div>
           <div class="demo-code">
-          <div class="nds-tabs nds-code nds-divided" hidden>
-            <div class="nds-tab-list-container">
-              <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                  aria-controls="panel-search-input-1" id="tab-search-input-1">
-                  <span class="nds-tab-label">HTML</span>
-                </button>
-              </nav>
+            <div class="nds-tabs nds-code nds-divided" hidden>
+              <div class="nds-tab-list-container">
+                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                  <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                    aria-controls="panel-search-input-1" id="tab-search-input-1">
+                    <span class="nds-tab-label">HTML</span>
+                  </button>
+                </nav>
                 <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                 </button>
-            </div>
-            <div class="nds-tab-content">
-              <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-search-input-1"
-                aria-labelledby="tab-search-input-1">
-                <div class="nds-code-action">
-                  <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                  </button>
-                </div>
-                <div class="nds-expandable-content">
-                  <code class="lang-html code">
+              </div>
+              <div class="nds-tab-content">
+                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-search-input-1"
+                  aria-labelledby="tab-search-input-1">
+                  <div class="nds-code-action">
+                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                      <i class="hgi hgi-stroke hgi-copy-01"></i>
+                    </button>
+                  </div>
+                  <div class="nds-expandable-content">
+                    <code class="lang-html code">
                   <div class="nds-form-container">
                     <div class="nds-form-header">
                       <label for="searchInput">
@@ -202,10 +202,10 @@ direction: ltr
                     <div class="nds-form-footer" data-feedback-target hidden></div>
                   </div>
                     </code>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
           </div>
         </div>
 
@@ -254,28 +254,28 @@ direction: ltr
             </div>
           </div>
           <div class="demo-code">
-          <div class="nds-tabs nds-code nds-divided" hidden>
-            <div class="nds-tab-list-container">
-              <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                  aria-controls="panel-email-input-1" id="tab-email-input-1">
-                  <span class="nds-tab-label">HTML</span>
-                </button>
-              </nav>
+            <div class="nds-tabs nds-code nds-divided" hidden>
+              <div class="nds-tab-list-container">
+                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                  <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                    aria-controls="panel-email-input-1" id="tab-email-input-1">
+                    <span class="nds-tab-label">HTML</span>
+                  </button>
+                </nav>
                 <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                 </button>
-            </div>
-            <div class="nds-tab-content">
-              <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-email-input-1"
-                aria-labelledby="tab-email-input-1">
-                <div class="nds-code-action">
-                  <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                  </button>
-                </div>
-                <div class="nds-expandable-content">
-                  <code class="lang-html code">
+              </div>
+              <div class="nds-tab-content">
+                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-email-input-1"
+                  aria-labelledby="tab-email-input-1">
+                  <div class="nds-code-action">
+                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                      <i class="hgi hgi-stroke hgi-copy-01"></i>
+                    </button>
+                  </div>
+                  <div class="nds-expandable-content">
+                    <code class="lang-html code">
                   <div class="nds-form-container">
                     <div class="nds-form-header">
                       <label for="emailInput">
@@ -294,10 +294,10 @@ direction: ltr
                     <div class="nds-form-footer" data-feedback-target hidden></div>
                   </div>
                     </code>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
           </div>
         </div>
 
@@ -350,28 +350,28 @@ direction: ltr
             </div>
           </div>
           <div class="demo-code">
-          <div class="nds-tabs nds-code nds-divided" hidden>
-            <div class="nds-tab-list-container">
-              <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                  aria-controls="panel-password-input-1" id="tab-password-input-1">
-                  <span class="nds-tab-label">HTML</span>
-                </button>
-              </nav>
+            <div class="nds-tabs nds-code nds-divided" hidden>
+              <div class="nds-tab-list-container">
+                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                  <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                    aria-controls="panel-password-input-1" id="tab-password-input-1">
+                    <span class="nds-tab-label">HTML</span>
+                  </button>
+                </nav>
                 <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                 </button>
-            </div>
-            <div class="nds-tab-content">
-              <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-password-input-1"
-                aria-labelledby="tab-password-input-1">
-                <div class="nds-code-action">
-                  <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                  </button>
-                </div>
-                <div class="nds-expandable-content">
-                  <code class="lang-html code">
+              </div>
+              <div class="nds-tab-content">
+                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-password-input-1"
+                  aria-labelledby="tab-password-input-1">
+                  <div class="nds-code-action">
+                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                      <i class="hgi hgi-stroke hgi-copy-01"></i>
+                    </button>
+                  </div>
+                  <div class="nds-expandable-content">
+                    <code class="lang-html code">
                   <div class="nds-form-container">
                     <div class="nds-form-header">
                       <label for="passwordInput">
@@ -394,10 +394,10 @@ direction: ltr
                     <div class="nds-form-footer" data-feedback-target hidden></div>
                   </div>
                     </code>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
           </div>
         </div>
 
@@ -441,28 +441,28 @@ direction: ltr
             </div>
           </div>
           <div class="demo-code">
-          <div class="nds-tabs nds-code nds-divided" hidden>
-            <div class="nds-tab-list-container">
-              <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                  aria-controls="panel-textarea-1" id="tab-textarea-1">
-                  <span class="nds-tab-label">HTML</span>
-                </button>
-              </nav>
+            <div class="nds-tabs nds-code nds-divided" hidden>
+              <div class="nds-tab-list-container">
+                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                  <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                    aria-controls="panel-textarea-1" id="tab-textarea-1">
+                    <span class="nds-tab-label">HTML</span>
+                  </button>
+                </nav>
                 <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                 </button>
-            </div>
-            <div class="nds-tab-content">
-              <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-textarea-1"
-                aria-labelledby="tab-textarea-1">
-                <div class="nds-code-action">
-                  <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                  </button>
-                </div>
-                <div class="nds-expandable-content">
-                  <code class="lang-html code">
+              </div>
+              <div class="nds-tab-content">
+                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-textarea-1"
+                  aria-labelledby="tab-textarea-1">
+                  <div class="nds-code-action">
+                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                      <i class="hgi hgi-stroke hgi-copy-01"></i>
+                    </button>
+                  </div>
+                  <div class="nds-expandable-content">
+                    <code class="lang-html code">
                   <div class="nds-form-container nds-textarea">
                     <div class="nds-form-header">
                       <label for="textareaInput">
@@ -475,10 +475,10 @@ direction: ltr
                     <div class="nds-form-footer" data-feedback-target hidden></div>
                   </div>
                     </code>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
           </div>
         </div>
 
@@ -541,29 +541,29 @@ direction: ltr
             </div>
           </div>
           <div class="demo-code">
-          <div class="nds-tabs nds-code nds-divided" hidden>
-            <div class="nds-tab-list-container">
-              <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                  aria-controls="panel-select-1" id="tab-select-1">
-                  <span class="nds-tab-label">HTML</span>
-                </button>
-              </nav>
+            <div class="nds-tabs nds-code nds-divided" hidden>
+              <div class="nds-tab-list-container">
+                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                  <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                    aria-controls="panel-select-1" id="tab-select-1">
+                    <span class="nds-tab-label">HTML</span>
+                  </button>
+                </nav>
                 <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                 </button>
-            </div>
-            <div class="nds-tab-content">
-              <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-select-1"
-                aria-labelledby="tab-select-1">
-                <div class="nds-code-action">
-                  <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                  </button>
-                </div>
-                <div class="nds-expandable-content">
-                  <code class="lang-html code">
-                  <div class="nds-form-container">
+              </div>
+              <div class="nds-tab-content">
+                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-select-1"
+                  aria-labelledby="tab-select-1">
+                  <div class="nds-code-action">
+                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                      <i class="hgi hgi-stroke hgi-copy-01"></i>
+                    </button>
+                  </div>
+                  <div class="nds-expandable-content">
+                    <code class="lang-html code">
+                  <div class="nds-form-container nds-select">
                     <div class="nds-form-header">
                       <label for="selectInput">
                         <span class="label">Select Dropdown</span>
@@ -594,10 +594,10 @@ direction: ltr
                     <div class="nds-form-footer" data-feedback-target hidden></div>
                   </div>
                     </code>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
           </div>
         </div>
 
@@ -652,32 +652,32 @@ direction: ltr
             </div>
           </div>
           <div class="demo-code">
-          <div class="nds-tabs nds-code nds-divided" hidden>
-            <div class="nds-tab-list-container">
-              <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                  aria-controls="panel-status-api-html" id="tab-status-api-html">
-                  <span class="nds-tab-label">HTML</span>
-                </button>
-                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
-                  aria-controls="panel-status-api-js" id="tab-status-api-js">
-                  <span class="nds-tab-label">JavaScript</span>
-                </button>
-              </nav>
+            <div class="nds-tabs nds-code nds-divided" hidden>
+              <div class="nds-tab-list-container">
+                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                  <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                    aria-controls="panel-status-api-html" id="tab-status-api-html">
+                    <span class="nds-tab-label">HTML</span>
+                  </button>
+                  <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                    aria-controls="panel-status-api-js" id="tab-status-api-js">
+                    <span class="nds-tab-label">JavaScript</span>
+                  </button>
+                </nav>
                 <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                 </button>
-            </div>
-            <div class="nds-tab-content">
-              <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-status-api-html"
-                aria-labelledby="tab-status-api-html">
-                <div class="nds-code-action">
-                  <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                  </button>
-                </div>
-                <div class="nds-expandable-content">
-                  <code class="lang-html code">
+              </div>
+              <div class="nds-tab-content">
+                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-status-api-html"
+                  aria-labelledby="tab-status-api-html">
+                  <div class="nds-code-action">
+                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                      <i class="hgi hgi-stroke hgi-copy-01"></i>
+                    </button>
+                  </div>
+                  <div class="nds-expandable-content">
+                    <code class="lang-html code">
 <!-- Form with feedback element -->
 <div class="nds-form-container" id="my-form">
   <div class="nds-form-header">
@@ -691,17 +691,17 @@ direction: ltr
   <div class="nds-form-footer" data-feedback-target hidden></div>
 </div>
                   </code>
+                  </div>
                 </div>
-              </div>
-              <div class="nds-tab-panel code-example nds-expandable hidden" role="tabpanel" id="panel-status-api-js"
-                aria-labelledby="tab-status-api-js">
-                <div class="nds-code-action">
-                  <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                  </button>
-                </div>
-                <div class="nds-expandable-content">
-                  <code class="lang-javascript code">
+                <div class="nds-tab-panel code-example nds-expandable hidden" role="tabpanel" id="panel-status-api-js"
+                  aria-labelledby="tab-status-api-js">
+                  <div class="nds-code-action">
+                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                      <i class="hgi hgi-stroke hgi-copy-01"></i>
+                    </button>
+                  </div>
+                  <div class="nds-expandable-content">
+                    <code class="lang-javascript code">
 // Set status with message
 NDS.Forms.setStatus(element, 'error', 'This field is required');
 NDS.Forms.setStatus(element, 'success', 'Looks good!');
@@ -720,10 +720,10 @@ element.addEventListener('nds:statusChange', function(e) {
     console.log(e.detail.status, e.detail.message);
 });
                   </code>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
           </div>
         </div>
 
@@ -769,32 +769,32 @@ element.addEventListener('nds:statusChange', function(e) {
             </div>
           </div>
           <div class="demo-code">
-          <div class="nds-tabs nds-code nds-divided" hidden>
-            <div class="nds-tab-list-container">
-              <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                  aria-controls="panel-permanent-html" id="tab-permanent-html">
-                  <span class="nds-tab-label">HTML</span>
-                </button>
-                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
-                  aria-controls="panel-permanent-js" id="tab-permanent-js">
-                  <span class="nds-tab-label">JavaScript</span>
-                </button>
-              </nav>
+            <div class="nds-tabs nds-code nds-divided" hidden>
+              <div class="nds-tab-list-container">
+                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                  <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                    aria-controls="panel-permanent-html" id="tab-permanent-html">
+                    <span class="nds-tab-label">HTML</span>
+                  </button>
+                  <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                    aria-controls="panel-permanent-js" id="tab-permanent-js">
+                    <span class="nds-tab-label">JavaScript</span>
+                  </button>
+                </nav>
                 <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                 </button>
-            </div>
-            <div class="nds-tab-content">
-              <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-permanent-html"
-                aria-labelledby="tab-permanent-html">
-                <div class="nds-code-action">
-                  <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                  </button>
-                </div>
-                <div class="nds-expandable-content">
-                  <code class="lang-html code">
+              </div>
+              <div class="nds-tab-content">
+                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-permanent-html"
+                  aria-labelledby="tab-permanent-html">
+                  <div class="nds-code-action">
+                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                      <i class="hgi hgi-stroke hgi-copy-01"></i>
+                    </button>
+                  </div>
+                  <div class="nds-expandable-content">
+                    <code class="lang-html code">
 <div class="nds-form-container">
   <div class="nds-form-header">
     <label for="username">
@@ -816,17 +816,17 @@ element.addEventListener('nds:statusChange', function(e) {
   </div>
 </div>
                   </code>
+                  </div>
                 </div>
-              </div>
-              <div class="nds-tab-panel code-example nds-expandable hidden" role="tabpanel" id="panel-permanent-js"
-                aria-labelledby="tab-permanent-js">
-                <div class="nds-code-action">
-                  <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                  </button>
-                </div>
-                <div class="nds-expandable-content">
-                  <code class="lang-javascript code">
+                <div class="nds-tab-panel code-example nds-expandable hidden" role="tabpanel" id="panel-permanent-js"
+                  aria-labelledby="tab-permanent-js">
+                  <div class="nds-code-action">
+                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                      <i class="hgi hgi-stroke hgi-copy-01"></i>
+                    </button>
+                  </div>
+                  <div class="nds-expandable-content">
+                    <code class="lang-javascript code">
 // Show validation error
 // Permanent feedback (data-permanent) will be automatically hidden
 NDS.Forms.setStatus('#username', 'error', 'Username is required');
@@ -849,10 +849,10 @@ NDS.Forms.clearStatus('#username');
 NDSFeedback.dismiss(errorFeedback);
 // Permanent feedback is restored automatically
                   </code>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
           </div>
         </div>
 
@@ -881,10 +881,8 @@ NDSFeedback.dismiss(errorFeedback);
           </div>
           <div class="demo-container">
             <div class="state-demo">
-              <div class="nds-form-container"
-                   data-url="{{ '/assets/data/autocomplete-demo.json' | relative_url }}"
-                   data-name="Title"
-                   data-query-param="q">
+              <div class="nds-form-container" data-url="{{ '/assets/data/autocomplete-demo.json' | relative_url }}"
+                data-name="Title" data-query-param="q">
                 <div class="nds-form-header">
                   <label for="demo-autocompleteInput">
                     <span class="label">Search Services</span>
@@ -905,28 +903,28 @@ NDSFeedback.dismiss(errorFeedback);
             </div>
           </div>
           <div class="demo-code">
-          <div class="nds-tabs nds-code nds-divided" hidden>
-            <div class="nds-tab-list-container">
-              <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                  aria-controls="panel-autocomplete-1" id="tab-autocomplete-1">
-                  <span class="nds-tab-label">HTML</span>
-                </button>
-              </nav>
+            <div class="nds-tabs nds-code nds-divided" hidden>
+              <div class="nds-tab-list-container">
+                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                  <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                    aria-controls="panel-autocomplete-1" id="tab-autocomplete-1">
+                    <span class="nds-tab-label">HTML</span>
+                  </button>
+                </nav>
                 <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                 </button>
-            </div>
-            <div class="nds-tab-content">
-              <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-autocomplete-1"
-                aria-labelledby="tab-autocomplete-1">
-                <div class="nds-code-action">
-                  <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                  </button>
-                </div>
-                <div class="nds-expandable-content">
-                  <code class="lang-html code">
+              </div>
+              <div class="nds-tab-content">
+                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-autocomplete-1"
+                  aria-labelledby="tab-autocomplete-1">
+                  <div class="nds-code-action">
+                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                      <i class="hgi hgi-stroke hgi-copy-01"></i>
+                    </button>
+                  </div>
+                  <div class="nds-expandable-content">
+                    <code class="lang-html code">
 <div class="nds-form-container"
      data-url="/api/services"
      data-name="Title">
@@ -949,10 +947,10 @@ NDSFeedback.dismiss(errorFeedback);
   <div class="nds-form-footer" data-feedback-target hidden></div>
 </div>
                   </code>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
           </div>
         </div>
       </div>

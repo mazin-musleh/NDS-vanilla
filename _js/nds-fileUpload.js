@@ -21,7 +21,9 @@
     }
 
     function initFileUpload(uploadContainer) {
-        
+        if (uploadContainer._ndsFileUploadInit) return;
+        uploadContainer._ndsFileUploadInit = true;
+
         const fileInput = uploadContainer.querySelector('input[type="file"]');
         const dropZone = uploadContainer.querySelector('.nds-form-control');
         const fileList = uploadContainer.querySelector('.file-list');

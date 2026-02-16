@@ -1475,9 +1475,11 @@
 
         NDS.onDOMAdd('.nds-form-control', function() { initFormControlClasses(); });
         NDS.onDOMAdd('.nds-auto-fill', function() { initInputAutoFill(); });
-        NDS.onDOMAdd('.nds-file-upload', function() {
+        NDS.onDOMAdd('.nds-file-upload', function(nodes) {
             if (window.NDS && window.NDS.Forms && window.NDS.Forms.FileUpload) {
-                window.NDS.Forms.FileUpload.initFileUpload();
+                nodes.forEach(function(el) {
+                    window.NDS.Forms.FileUpload.initFileUpload(el);
+                });
             }
         });
 
