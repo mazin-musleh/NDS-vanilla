@@ -74,6 +74,11 @@
     column-gap: var(--spacing-4xl);
     display: flex;
     flex-direction: column;
+    &:has(>.label){
+        .nds-form-container{
+            padding-inline-start: var(--spacing-sm);
+        }
+    }
 
     &.rowView {
         flex-direction: row;

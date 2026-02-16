@@ -11,8 +11,8 @@
             border: 2px dashed var(--border-neutral-primary) !important;
             border-radius: var(--radius-sm);
             background-color: var(--background-neutral-100);
-            box-shadow: unset;
-
+            
+        
 
             .upload-zone {
                 display: flex;
@@ -47,6 +47,8 @@
 
     &:not(.dropBox) {
         .nds-form-control {
+            min-width: 40px;
+            width: fit-content;
             .upload-zone {
                 display: none;
             }
@@ -74,6 +76,7 @@
         padding: 0;
         border: none;
         background: transparent;
+        box-shadow: unset;
 
         &::before,
         &::after {
@@ -137,9 +140,9 @@
         opacity: 0;
         width: 100%;
         height: 100%;
-        cursor: pointer;
         top: 0;
         left: 0;
+        pointer-events: none;
     }
 
     .file-list {
