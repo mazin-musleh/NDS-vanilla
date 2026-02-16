@@ -162,8 +162,11 @@
          * Handle AJAX form submission
          */
         handleAjaxSubmit() {
-            // Update hidden inputs
+            // Update hidden inputs, URL params, and UI state
             this.updateHiddenInputs();
+            this.updateUrlParams();
+            this.updateFilterButtonLabel();
+            this.updateAppliedChips();
 
             // Dispatch preventable AJAX submit event
             const ajaxEvent = new CustomEvent('nds:filterFormAjax', {
@@ -223,57 +226,67 @@
                     if (!response.ok) {
                         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                     }
-                    return response.text();
+
+                    // Detect response type from Content-Type header
+                    const contentType = response.headers.get('Content-Type') || '';
+                    const isJson = contentType.includes('application/json');
+
+                    return isJson
+                        ? response.json().then(data => ({ isJson: true, data }))
+                        : response.text().then(data => ({ isJson: false, data }));
                 })
-                .then(html => {
-                    let contentToInject = html;
+                .then(({ isJson, data }) => {
+                    let eventDetail = {
+                        success: true,
+                        form: this.filterContainer,
+                        isJson: isJson
+                    };
 
-                    // If we have a target container, try to extract matching content from full page
-                    if (this.targetContainer && this.targetId) {
-                        // Parse the HTML response
-                        const parser = new DOMParser();
-                        const doc = parser.parseFromString(html, 'text/html');
+                    if (isJson) {
+                        // JSON response — dispatch raw data via event for developer rendering
+                        eventDetail.data = data;
 
-                        // Try to find the target container in the response
-                        const targetInResponse = doc.getElementById(this.targetId);
-
-                        if (targetInResponse) {
-                            // Clone the entire target container (preserves all attributes, classes, styles)
-                            const newContainer = targetInResponse.cloneNode(true);
-
-                            // Replace the old container with the new one
-                            this.targetContainer.replaceWith(newContainer);
-
-                            // Update reference to point to the new container
-                            this.targetContainer = newContainer;
-
-                            // Update items reference to new elements
-                            this.items = Array.from(this.targetContainer.querySelectorAll('.nds-card'));
-
-                            // Remove hidden attributes and display:none styles
+                        if (this.targetContainer) {
                             this.targetContainer.removeAttribute('hidden');
                             if (this.targetContainer.style.display === 'none') {
                                 this.targetContainer.style.display = '';
                             }
+                        }
+                    } else {
+                        // HTML response — inject into target container
+                        eventDetail.html = data;
+                        eventDetail.fullHtml = data;
 
-                            // Store innerHTML for event dispatch
-                            contentToInject = newContainer.innerHTML;
-                        } else {
-                            // Target container not found in response - empty the current container (neutral state)
-                            console.warn(`[NDS Filter AJAX] Target container #${this.targetId} not found in server response. Emptying target container.`);
+                        if (this.targetContainer && this.targetId) {
+                            const parser = new DOMParser();
+                            const doc = parser.parseFromString(data, 'text/html');
+                            const targetInResponse = doc.getElementById(this.targetId);
 
-                            // Empty content
-                            this.targetContainer.innerHTML = '';
+                            if (targetInResponse) {
+                                const newContainer = targetInResponse.cloneNode(true);
+                                this.targetContainer.replaceWith(newContainer);
+                                this.targetContainer = newContainer;
+                                this.items = Array.from(this.targetContainer.querySelectorAll('.nds-card'));
 
-                            // Remove all attributes except id, then add hidden
-                            const id = this.targetContainer.id;
-                            while (this.targetContainer.attributes.length > 0) {
-                                this.targetContainer.removeAttribute(this.targetContainer.attributes[0].name);
+                                this.targetContainer.removeAttribute('hidden');
+                                if (this.targetContainer.style.display === 'none') {
+                                    this.targetContainer.style.display = '';
+                                }
+
+                                eventDetail.html = newContainer.innerHTML;
+                            } else {
+                                console.warn(`[NDS Filter AJAX] Target container #${this.targetId} not found in server response. Emptying target container.`);
+                                this.targetContainer.innerHTML = '';
+
+                                const id = this.targetContainer.id;
+                                while (this.targetContainer.attributes.length > 0) {
+                                    this.targetContainer.removeAttribute(this.targetContainer.attributes[0].name);
+                                }
+                                this.targetContainer.id = id;
+                                this.targetContainer.setAttribute('hidden', '');
+
+                                eventDetail.html = '';
                             }
-                            this.targetContainer.id = id;
-                            this.targetContainer.setAttribute('hidden', '');
-
-                            contentToInject = '';
                         }
                     }
 
@@ -293,12 +306,7 @@
 
                     // Dispatch complete event
                     this.filterContainer.dispatchEvent(new CustomEvent('nds:filterFormComplete', {
-                        detail: {
-                            success: true,
-                            html: contentToInject,
-                            fullHtml: html,
-                            form: this.filterContainer
-                        }
+                        detail: eventDetail
                     }));
 
                     // Clear success state after 3 seconds
@@ -425,11 +433,11 @@
 
                 // Check if we have inputs for this filter
                 if (this.filterInputs[key]) {
-                    const values = value.split(',').map(v => this.sanitizeInput(v).trim().toLowerCase());
+                    const values = value.split(',').map(v => this.sanitizeInput(v).trim());
                     const filterData = this.filterInputs[key];
 
                     filterData.inputs.forEach(input => {
-                        if (values.includes(input.value.toLowerCase())) {
+                        if (values.some(v => v.toLowerCase() === input.value.toLowerCase())) {
                             input.checked = true;
                         }
                     });
@@ -441,16 +449,36 @@
 
             if (hasParams) {
                 this.updateApplyButtonLabel();
-                this.applyFilters();
+
+                if (this.isFormMode) {
+                    // In form mode, only update UI — don't rewrite the URL we just read from
+                    this.updateHiddenInputs();
+                    this.updateFilterButtonLabel();
+                    this.updateAppliedChips();
+                } else {
+                    this.applyFilters();
+                }
             }
         }
 
         updateUrlParams() {
-            const params = new URLSearchParams();
+            // Preserve existing params not managed by this filter
+            const params = new URLSearchParams(window.location.search);
+            const searchParamName = this.getSearchInputName();
 
-            // Add search param with custom name
+            // Managed param keys: search + all known filter names
+            const managedKeys = new Set([searchParamName, 'search']);
+            for (const key of Object.keys(this.filterInputs)) {
+                managedKeys.add(key);
+            }
+
+            // Clear only managed params
+            for (const key of managedKeys) {
+                params.delete(key);
+            }
+
+            // Add search param
             if (this.criteria.search) {
-                const searchParamName = this.getSearchInputName();
                 params.set(searchParamName, this.criteria.search);
             }
 
@@ -631,15 +659,17 @@
             // Add chips for all dynamic filters
             for (const [filterName, values] of Object.entries(this.criteria.filters)) {
                 values.forEach(value => {
+                    const filterData = this.filterInputs[filterName];
+                    const displayLabel = filterData?.labels?.[value.toLowerCase()] || value;
                     const chip = this.createFilterChip(filterName, value, () => {
                         this.removeFilterValue(filterName, value);
-                    });
+                    }, displayLabel);
                     chipsContainer.appendChild(chip);
                 });
             }
         }
 
-        createFilterChip(type, value, onRemove) {
+        createFilterChip(type, value, onRemove, displayLabel) {
             const chip = document.createElement('button');
             chip.className = `nds-chip ${this.chipClass || 'nds-primary nds-lg'}`;
             chip.setAttribute('type', 'button');
@@ -651,7 +681,7 @@
 
             const label = document.createElement('span');
             label.className = 'label';
-            label.textContent = value;
+            label.textContent = displayLabel || value;
 
             chip.appendChild(icon);
             chip.appendChild(label);
@@ -918,14 +948,6 @@
                 NDSFeedback.dismissAll(this.filterContainer);
             }
 
-            // AJAX mode needs state updates because page doesn't refresh
-            // GET/POST modes don't need updates because page will refresh
-            if (this.isAjaxMode) {
-                this.updateHiddenInputs();
-                this.updateUrlParams();
-                this.updateFilterButtonLabel();
-                this.updateAppliedChips();
-            }
 
             // Trigger form submission
             if (this.filterContainer.requestSubmit) {
@@ -982,20 +1004,45 @@
             // Get custom name from data-filter-name attribute if present
             const customName = element.getAttribute('data-filter-name');
 
+            // Build value-to-label map (resolves display labels from associated <label> elements)
+            const labels = {};
+            inputs.forEach(input => {
+                const container = input.closest('.nds-form-container');
+                if (container) {
+                    const labelEl = container.querySelector('.nds-form-header .label');
+                    if (labelEl) {
+                        labels[input.value.toLowerCase()] = labelEl.textContent.trim();
+                    }
+                }
+            });
+
             // Store reference
             this.filterInputs[filterName] = {
                 inputs: inputs,
                 type: inputType,
                 element: element,
-                customName: customName  // Store custom name if provided
+                customName: customName,  // Store custom name if provided
+                labels: labels           // Store value-to-label map
             };
 
             inputs.forEach(input => {
+                if (input._ndsFilterBound) return;
+                input._ndsFilterBound = true;
                 input.addEventListener('change', () => {
                     this.updateFilterCriteria(filterName);
                     this.updateApplyButtonLabel();
                 });
             });
+
+            // Watch for dynamically added inputs (e.g. cascading filters)
+            if (!element._ndsFilterObserver && typeof NDS !== 'undefined' && NDS.onDOMAdd) {
+                element._ndsFilterObserver = true;
+                NDS.onDOMAdd('input[type="checkbox"], input[type="radio"], .nds-switch-input', (nodes) => {
+                    if (nodes.some(n => element.contains(n))) {
+                        this.setupManualFilter(element, filterName);
+                    }
+                });
+            }
         }
 
         // ==============================================
@@ -1184,8 +1231,8 @@
             if (!filterData) return;
 
             this.criteria.filters[filterName] = Array.from(filterData.inputs)
-                .filter(input => input.checked)
-                .map(input => input.value.toLowerCase());
+                .filter(input => input.checked && input.value !== '')
+                .map(input => input.value);
         }
 
         // ==============================================
@@ -1363,10 +1410,10 @@
             const filterData = this.filterInputs[filterName];
             if (filterData && filterData.type === 'radio') {
                 // Radio: item must match the single selected value
-                return selectedValues.some(val => itemValues.includes(val));
+                return selectedValues.some(val => itemValues.includes(val.toLowerCase()));
             } else {
                 // Checkbox: item must match ANY of the selected values (OR logic)
-                return selectedValues.some(val => itemValues.includes(val));
+                return selectedValues.some(val => itemValues.includes(val.toLowerCase()));
             }
         }
 
@@ -1857,4 +1904,61 @@
  *     console.log(e.detail.criteria);
  *     console.log(e.detail.visibleItems);
  * });
+ *
+ * AJAX FORM SUBMISSION
+ * ---------------------
+ * Add data-filter-submit and data-ajax to use AJAX instead of page navigation:
+ *
+ * <form class="nds-filter" data-filter-target="results"
+ *       data-filter-submit data-ajax
+ *       method="GET" action="https://api.example.com/search">
+ *     <div class="nds-search-box" data-url="https://api.example.com/search"
+ *          data-name="Title" data-query-param="searchKeyword">
+ *         <input type="text" class="nds-search-input" name="search">
+ *     </div>
+ *     <div class="nds-dropmenu">
+ *         <button class="nds-btn nds-neutral nds-dropmenu-trigger">
+ *             <span class="label">Filter</span>
+ *         </button>
+ *         <div class="nds-dropmenu-menu">
+ *             <fieldset data-filter="category">
+ *                 <legend class="label">Category</legend>
+ *                 <input type="radio" name="category" value="" checked> All
+ *                 <input type="radio" name="category" value="news"> News
+ *             </fieldset>
+ *             <button data-filter-action="apply">Apply</button>
+ *         </div>
+ *     </div>
+ *     <div class="nds-filter-applied" hidden></div>
+ * </form>
+ *
+ * <div id="results"></div>
+ *
+ * RESPONSE HANDLING:
+ * - HTML responses are auto-injected into the target container
+ * - JSON responses dispatch the raw data via event (developer handles rendering)
+ *
+ * // Listen for AJAX responses
+ * document.querySelector('.nds-filter').addEventListener('nds:filterFormComplete', (e) => {
+ *     const { success, isJson, data, html, form } = e.detail;
+ *
+ *     if (isJson) {
+ *         // JSON response — render data yourself
+ *         const container = document.getElementById('results');
+ *         container.innerHTML = '';
+ *         data.Records.forEach(item => {
+ *             const card = document.createElement('div');
+ *             card.className = 'nds-card';
+ *             card.innerHTML = `<h3>${item.Title}</h3><p>${item.Description}</p>`;
+ *             container.appendChild(card);
+ *         });
+ *     }
+ *     // HTML responses are already injected into the target container
+ * });
+ *
+ * AJAX EVENTS:
+ * - nds:filterFormSubmit  — Before any form submission
+ * - nds:filterFormAjax    — Before AJAX request (cancelable)
+ * - nds:filterFormComplete — AJAX response received { success, isJson, data?, html?, form }
+ * - nds:filterFormError   — AJAX error { error, form }
  */

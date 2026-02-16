@@ -366,6 +366,15 @@
                 item: itemData,
                 text: text
             });
+
+            // Auto-submit in search box context only
+            if (this.container.classList.contains('nds-search-box')) {
+                const searchBtn = this.container.querySelector('.nds-search-btn') ||
+                                  this.container.closest('.nds-search-content')?.querySelector('.nds-search-btn');
+                if (searchBtn) {
+                    searchBtn.click();
+                }
+            }
         }
 
         handleClear() {
