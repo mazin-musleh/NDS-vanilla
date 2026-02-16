@@ -20,8 +20,11 @@ breadcrumb: ["Components"]     # or: [["Parent", "/url"], "Child"]
 # breadcrumb_root_url: /       # override root URL
 # hideSidemenu: false          # hide side navigation (page layout only)
 
-# === Subsite Scope ===
-# subsite: iu              # scopes data files to _data/iu/ (fallback: _data/)
+# === Data Overrides ===
+# mainnav: mainnav            # loads _data/mainnav/{value}.yml (default: mainnav)
+# sidemenu: sidemenu          # loads _data/sidemenu/{value}.yml (default: sidemenu)
+# footer: footer              # loads _data/footer/{value}.yml (default: footer)
+# footerlogos: footerlogos    # loads _data/footerlogos/{value}.yml (default: footerlogos)
 
 # === Layout & Body ===
 # body_class: fullWidth

@@ -155,7 +155,7 @@ hideSidemenu: true
     <div class="nds-section-content nds-full-width">
         <div class="nds-swiper" slides-max="3" slides-mid="2" slides-min="1" peek="40" hidden>
             <div class="nds-swiper-wrapper">
-                {% for service in site.data.services limit:6 %}
+                {% for service in site.data.content.services limit:6 %}
                 <div class="nds-swiper-slide">
                     <div class="nds-card nds-stroke">
                         <div class="nds-card-header">
