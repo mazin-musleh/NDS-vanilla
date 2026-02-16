@@ -23,11 +23,19 @@
 }
 
 .nds-filter {
+    --dropmenu-min-width: 250px;
     display: flex;
     gap: var(--spacing-2xl);
     width: 100%;
-    align-items: flex-start;
+    margin-bottom: 1rem;
     flex-wrap: wrap;
+    align-items: flex-start;
+
+    &:is(.nds-section-action, .nds-section-search) {
+        align-items: flex-start;
+        
+
+    }
 
     &.nds-section-action {
         position: relative !important;
@@ -86,7 +94,7 @@
     }
 
     @include desktop(min) {
-        &:not(.nds-section-search) {
+        &.nds-section-action {
             flex-direction: row;
             justify-content: flex-end;
             max-width: 200px;

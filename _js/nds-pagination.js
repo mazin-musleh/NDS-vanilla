@@ -71,6 +71,20 @@
             if (dropmenuElement && window.NDSDropmenu) {
                 window.NDSDropmenu.create(dropmenuElement);
             }
+
+            // If active page is inside the dropdown, activate the ellipsis trigger
+            const activeDropdownItem = dropdownContainer.querySelector('.nds-dropmenu-item[aria-current="page"], .nds-dropmenu-item[data-state~="active"]');
+            if (activeDropdownItem) {
+                const trigger = dropdownContainer.querySelector('.nds-dropmenu-trigger');
+                if (trigger) {
+                    trigger.setAttribute('data-state', 'active');
+                    const triggerLabel = trigger.querySelector('.label');
+                    const activeLabel = activeDropdownItem.querySelector('.label');
+                    if (triggerLabel && activeLabel) {
+                        triggerLabel.textContent = activeLabel.textContent;
+                    }
+                }
+            }
         }
 
         createDropdown(hiddenItems) {
@@ -718,7 +732,19 @@
             init: initializePagination,
             initAuto: initializeAutoPagination,
             create: (container) => new NDSPagination(container),
-            refresh: refreshAutoPagination
+            refresh: refreshAutoPagination,
+            setPage: function(container, pageNumber) {
+                const pagination = container.querySelector('.nds-pagination') || container;
+                const allPages = Array.from(pagination.querySelectorAll(
+                    '.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) button, ' +
+                    '.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) a, ' +
+                    '.nds-dropmenu-item'
+                ));
+                const pageNumbers = allPages.map(el => parseInt(el.querySelector('.label')?.textContent || el.textContent)).filter(n => !isNaN(n));
+                if (pageNumbers.length === 0) return;
+                setActivePage(pagination, pageNumber);
+                updatePrevNextStates(pagination, pageNumber, Math.min(...pageNumbers), Math.max(...pageNumbers));
+            }
         };
     }
 

@@ -14,7 +14,7 @@
   --_menu-padding: var(--menu-padding, var(--spacing-sm, 8px));
   --_dropmenu-offset: var(--spacing-xs, 4px);
   --_dropmenu-slide: calc(var(--dropmenu-slide, 8px) * -1);
-  --_dropmenu-min-width: 150px;
+  --_dropmenu-min-width: var(--dropmenu-min-width, 150px);
 
   position: relative;
   display: inline-flex;
@@ -108,18 +108,6 @@
   }
 
   // ==============================================
-  // 6. SIZE VARIANTS
-  // ==============================================
-
-  &.wide .nds-dropmenu-menu {
-    min-width: 200px;
-  }
-
-  &.narrow .nds-dropmenu-menu {
-    min-width: 120px;
-  }
-
-  // ==============================================
   // 7. INNER COMPONENTS
   // ==============================================
 
@@ -151,14 +139,6 @@
       max-width: calc(100vw - var(--nds-viewport-padding) * 4);
     }
   }
-}
-
-// ==============================================
-// 9. OVERRIDES
-// ==============================================
-
-#nds-sharePage-dropdown.nds-dropmenu-menu {
-  min-width: 160px;
 }
 
 // ==============================================
