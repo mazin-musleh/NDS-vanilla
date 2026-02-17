@@ -288,6 +288,13 @@
         }
 
         open() {
+            // Close any other open dropmenus
+            document.querySelectorAll('.nds-dropmenu[data-state~="open"]').forEach(el => {
+                if (el !== this.dropmenu && el.ndsDropmenuInstance) {
+                    el.ndsDropmenuInstance.close();
+                }
+            });
+
             this.isOpen = true;
 
             // Step 1: Set vertical position (only needs trigger rect, no menu)

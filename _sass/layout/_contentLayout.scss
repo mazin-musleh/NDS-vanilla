@@ -177,6 +177,7 @@ main {
 
                 @include tablet(max) {
                     margin-inline: var(--nds-viewport-padding) !important;
+                    max-width: calc(100% - var(--nds-viewport-padding) * 2);
                 }
             }
         }

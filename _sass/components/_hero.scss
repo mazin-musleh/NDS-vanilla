@@ -10,6 +10,7 @@
 // ==============================================
 
 .nds-hero-section {
+  z-index: 996;
 
   &:not(.sub) {
     /* Hero uses larger title/description sizes via public section tokens */
