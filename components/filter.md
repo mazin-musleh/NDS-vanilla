@@ -1179,7 +1179,7 @@ NDSFilter.whenReady('.nds-filter', (instance) => {
                     </tr>
                     <tr>
                         <td>nds:filter:change</td>
-                        <td>Filters or search changed (client-side)</td>
+                        <td>Filters or search changed (fires in all modes)</td>
                         <td>{ criteria, totalItems, visibleItems, hiddenItems }</td>
                     </tr>
                     <tr>

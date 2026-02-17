@@ -77,7 +77,7 @@
 
     &:has(>.label){
         .nds-form-container{
-            padding-inline-start: var(--spacing-sm);
+            padding-inline-start: var(--spacing-md);
         }
     }
     &.rowView {

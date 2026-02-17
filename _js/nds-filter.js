@@ -168,6 +168,9 @@
             this.updateFilterButtonLabel();
             this.updateAppliedChips();
 
+            // Unified change event (fires in all modes)
+            this.dispatchFilterEvent();
+
             // Dispatch preventable AJAX submit event
             const ajaxEvent = new CustomEvent('nds:filterFormAjax', {
                 detail: {
@@ -469,18 +472,23 @@
             const value = params.get(filterName);
             if (!value) return;
 
+            // Re-scan the element for current inputs (handles async/dynamic content)
             const filterData = this.filterInputs[filterName];
             if (!filterData) return;
+            this.setupManualFilter(filterData.element, filterName);
 
+            const freshData = this.filterInputs[filterName];
             const values = value.split(',').map(v => this.sanitizeInput(v).trim());
 
-            filterData.inputs.forEach(input => {
+            freshData.inputs.forEach(input => {
                 if (values.some(v => v.toLowerCase() === input.value.toLowerCase())) {
                     input.checked = true;
                 }
             });
 
             this.updateFilterCriteria(filterName);
+
+            this.updateApplyButtonLabel();
 
             if (this.isFormMode) {
                 this.updateHiddenInputs();
@@ -560,7 +568,6 @@
                             if (this.isFormMode) {
                                 // Update hidden inputs before form submission
                                 this.updateHiddenInputs();
-                                // Don't prevent default - let form submit
                                 return;
                             }
 
@@ -620,7 +627,7 @@
 
         updateFilterButtonLabel() {
             const filterBtn = this.filterContainer.querySelector(
-                '.nds-dropmenu-trigger, [data-filter-btn], .filter-btn'
+                '.nds-filter-btn, [data-filter-btn], .filter-btn'
             );
 
             if (!filterBtn) return;
@@ -1284,6 +1291,7 @@
                 this.updateUrlParams();
                 this.updateFilterButtonLabel();
                 this.updateAppliedChips();
+                this.dispatchFilterEvent();
                 return;
             }
 
@@ -1579,13 +1587,14 @@
         // ==============================================
 
         dispatchFilterEvent(visibleCount) {
+            const hasCount = arguments.length > 0;
             const event = new CustomEvent('nds:filter:change', {
                 detail: {
                     filter: this,
                     criteria: { ...this.criteria },
-                    totalItems: this.items.length,
-                    visibleItems: visibleCount,
-                    hiddenItems: this.items.length - visibleCount
+                    totalItems: hasCount ? this.items.length : null,
+                    visibleItems: hasCount ? visibleCount : null,
+                    hiddenItems: hasCount ? this.items.length - visibleCount : null
                 },
                 bubbles: true
             });
