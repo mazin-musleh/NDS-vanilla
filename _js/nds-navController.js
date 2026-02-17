@@ -128,6 +128,42 @@
         else setTimeout(callback, duration);
     };
 
+    // Tracked delayed action for toggle functions — prevents stale callbacks
+    let _pendingToggleTimer = null;
+    const scheduleToggleAction = (duration, callback) => {
+        cancelToggleAction();
+        if (duration === 0) callback();
+        else _pendingToggleTimer = setTimeout(() => { _pendingToggleTimer = null; callback(); }, duration);
+    };
+    const cancelToggleAction = () => {
+        if (_pendingToggleTimer) { clearTimeout(_pendingToggleTimer); _pendingToggleTimer = null; }
+    };
+
+    // Nav backdrop ownership — prevents flicker during navbar↔dropdown transitions
+    let _navBackdropOwner = null; // 'navbar' | 'dropdown' | null
+
+    const showNavBackdrop = (owner, onClick) => {
+        if (!window.NDSBackdrop) return;
+        if (_navBackdropOwner === owner) return; // Already showing for this owner
+
+        const replacing = _navBackdropOwner !== null;
+        _navBackdropOwner = owner;
+
+        // show() increments count + updates config
+        window.NDSBackdrop.show({ zIndex: 999, onClick });
+
+        // If taking over from another owner, hide() decrements old count
+        // Net: count unchanged, config updated, no visual gap
+        if (replacing) window.NDSBackdrop.hide();
+    };
+
+    const hideNavBackdrop = (owner) => {
+        if (!window.NDSBackdrop) return;
+        if (_navBackdropOwner !== owner) return; // Not our backdrop
+        _navBackdropOwner = null;
+        window.NDSBackdrop.hide();
+    };
+
     // ==============================================
     // ANIMATION SYSTEM
     // ==============================================
@@ -204,9 +240,7 @@
 
         // Queue action if animation is in progress
         queue(type, event = null) {
-            if (!state.pendingAction) {
-                state.pendingAction = { type, event };
-            }
+            state.pendingAction = { type, event };
         }
     };
 
@@ -251,6 +285,14 @@
             if (open) addState(navLink, 'active');
             else removeState(navLink, 'active');
 
+            // Backdrop for minimal nav dropdowns
+            if (open && isInMinimal && state.isMinimal) {
+                showNavBackdrop('dropdown', () => {
+                    document.querySelectorAll('.nds-nav-minimal .nds-dropdown[data-state~="open"]')
+                        .forEach(d => dropdown.toggle(d, false));
+                });
+            }
+
             animate.run(el, open, {
                 getMenu: () => animationTarget,
                 needsHeight,
@@ -260,6 +302,14 @@
                 onComplete: () => {
                     if (!isInMinimal) updatePositions();
                     overflow.schedule('low', 100);
+
+                    // Hide backdrop after last minimal dropdown closes
+                    if (!open && isInMinimal && state.isMinimal) {
+                        const stillOpen = document.querySelectorAll('.nds-nav-minimal .nds-dropdown[data-state~="open"]');
+                        if (stillOpen.length === 0 && !hasState(DOM.collapse, 'open') && !_pendingToggleTimer) {
+                            hideNavBackdrop('dropdown');
+                        }
+                    }
                 }
             });
         }
@@ -280,10 +330,9 @@
                 toggleButton?.setAttribute('aria-expanded', 'true');
 
                 // Show backdrop in minimal mode
-                if (state.isMinimal && window.NDSBackdrop) {
-                    window.NDSBackdrop.show({
-                        zIndex: 999,
-                        onClick: () => toggleNavbar()
+                if (state.isMinimal) {
+                    showNavBackdrop('navbar', () => {
+                        if (hasState(DOM.collapse, 'open')) toggleNavbar();
                     });
                 }
 
@@ -302,10 +351,8 @@
                 toggleButton?.setAttribute('aria-expanded', 'false');
                 const closeDelay = state.reducedMotion ? 0 : dropdown.closeAll();
 
-                // Always hide backdrop when closing navbar
-                if (window.NDSBackdrop) {
-                    window.NDSBackdrop.hide();
-                }
+                // Hide backdrop when closing navbar (only if navbar owns it)
+                hideNavBackdrop('navbar');
 
                 afterDelay(closeDelay, () => {
                     animate.run(DOM.collapse, false, {
@@ -645,6 +692,9 @@
             return;
         }
 
+        // Cancel any pending delayed toggle action (prevents stale navbar opens)
+        if (isInMinimal) cancelToggleAction();
+
         // If closing, allow
         if (isOpen) {
             dropdown.toggle(dd, false);
@@ -675,6 +725,12 @@
             let delay = 0;
 
             if (hasState(DOM.collapse, 'open')) {
+                // Transfer backdrop from navbar → dropdown before closing navbar (prevents flicker)
+                showNavBackdrop('dropdown', () => {
+                    document.querySelectorAll('.nds-nav-minimal .nds-dropdown[data-state~="open"]')
+                        .forEach(d => dropdown.toggle(d, false));
+                });
+
                 // Get navbar close duration (includes dropdowns + collapse)
                 const dropdownCloseDelay = state.reducedMotion ? 0 : dropdown.closeAll();
                 const collapseContent = DOM.collapse?.querySelector('.nds-collapse-content');
@@ -694,7 +750,7 @@
                 delay = Math.max(delay, duration);
             }
 
-            afterDelay(delay, open);
+            scheduleToggleAction(delay, open);
         } else if (!state.isMinimal && hasState(DOM.dgaDigitalStamp, 'open')) {
             toggleDGA();
             afterDelay(duration, () => afterDelay(closeDelay, open));
@@ -709,6 +765,8 @@
             return;
         }
 
+        cancelToggleAction();
+
         const isOpen = hasState(DOM.collapse, 'open');
         const collapseContent = DOM.collapse?.querySelector('.nds-collapse-content');
         // Always read duration from content wrapper since transition is on .nds-collapse-content
@@ -717,11 +775,16 @@
         if (!isOpen) {
             const minimalDropdowns = document.querySelectorAll('.nds-nav-minimal .nds-dropdown[data-state~="open"]');
             if (minimalDropdowns.length) {
+                // Transfer backdrop from dropdown → navbar before closing dropdowns (prevents flicker)
+                showNavBackdrop('navbar', () => {
+                    if (hasState(DOM.collapse, 'open')) toggleNavbar();
+                });
+
                 minimalDropdowns.forEach(d => dropdown.toggle(d, false));
-                afterDelay(duration, () => {
+                scheduleToggleAction(duration, () => {
                     if (hasState(DOM.dgaDigitalStamp, 'open')) {
                         toggleDGA();
-                        afterDelay(duration, () => navbar.toggle(true));
+                        scheduleToggleAction(duration, () => navbar.toggle(true));
                     } else {
                         navbar.toggle(true);
                     }
@@ -732,7 +795,7 @@
 
         if (hasState(DOM.dgaDigitalStamp, 'open')) {
             toggleDGA();
-            afterDelay(duration, () => navbar.toggle(!isOpen));
+            scheduleToggleAction(duration, () => navbar.toggle(!isOpen));
         } else {
             navbar.toggle(!isOpen);
         }
@@ -833,9 +896,19 @@
 
                 // Close navbar and backdrop on mode change
                 if (hasState(DOM.collapse, 'open')) {
-                    if (window.NDSBackdrop) window.NDSBackdrop.hide();
+                    _navBackdropOwner = 'navbar'; // Ensure navbar.toggle(false) can clean up
+                    cancelToggleAction();
                     navbar.toggle(false);
                     return;
+                }
+
+                // Handle case where only dropdowns had backdrop (no collapse open)
+                if (_navBackdropOwner) {
+                    _navBackdropOwner = null;
+                    cancelToggleAction();
+                    if (window.NDSBackdrop && NDSBackdrop.isActive()) {
+                        window.NDSBackdrop.hide();
+                    }
                 }
             }
 
