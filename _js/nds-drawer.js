@@ -288,7 +288,11 @@
 
         const moreBtn = drawer.querySelector(CONFIG.selectors.moreBtn);
 
-        checkOverflow(drawer);
+        // Skip init-time overflow check for topSubMenu drawers (checked on open instead)
+        const isTopSubMenu = drawer.closest('.nds-content-layout.topSubMenu');
+        if (!isTopSubMenu) {
+            checkOverflow(drawer);
+        }
 
         let ticking = false;
         scrollContainer.addEventListener('scroll', () => {
@@ -304,7 +308,18 @@
             moreBtn.addEventListener('click', () => scrollDrawer(drawer));
         }
 
-        drawer._offResizeObs = NDS.onElementResize(scrollContainer, () => checkOverflow(drawer));
+        // Re-check overflow when submenus are shown/hidden (scrollHeight changes)
+        drawer.addEventListener('nds:drawer:shown', () => checkOverflow(drawer));
+        drawer.addEventListener('nds:drawer:hidden', () => checkOverflow(drawer));
+
+        // For topSubMenu: only run ResizeObserver overflow check when drawer is open
+        drawer._offResizeObs = NDS.onElementResize(scrollContainer, () => {
+            if (isTopSubMenu) {
+                const parentState = drawer.parentElement?.getAttribute('data-state');
+                if (parentState !== 'open') return;
+            }
+            checkOverflow(drawer);
+        });
     }
 
     // ==============================================

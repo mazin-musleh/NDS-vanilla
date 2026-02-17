@@ -160,25 +160,28 @@
         // Set drawer max height based on available space (slider mode only)
         updateDrawerMaxHeight(accMenu, isTopMode);
 
-        // Top mode: scroll page past hero section to make room for menu (only if hero is in viewport)
+        // Top mode: scroll past hero if visible, then lock scroll
         if (isTopMode) {
             const heroSection = document.querySelector('.nds-hero-section');
-            if (heroSection) {
-                const heroRect = heroSection.getBoundingClientRect();
-                // Only scroll if hero bottom is still visible in viewport
-                if (heroRect.bottom > 0) {
-                    const heroBottom = heroRect.bottom + window.scrollY;
-                    window.scrollTo({ top: heroBottom, behavior: 'smooth' });
+            const heroVisible = heroSection && heroSection.getBoundingClientRect().bottom > 0;
 
-                    // Lock scroll after smooth scroll finishes
-                    const lockScroll = () => {
-                        window.removeEventListener('scrollend', lockScroll);
-                        const scrollY = window.pageYOffset;
-                        document.body.style.top = `-${scrollY}px`;
-                        document.body.setAttribute('data-state', 'backdrop');
-                    };
-                    window.addEventListener('scrollend', lockScroll);
-                }
+            if (heroVisible) {
+                const heroBottom = heroSection.getBoundingClientRect().bottom + window.scrollY;
+                window.scrollTo({ top: heroBottom, behavior: 'smooth' });
+
+                // Lock scroll after smooth scroll finishes
+                const lockScroll = () => {
+                    window.removeEventListener('scrollend', lockScroll);
+                    const scrollY = window.pageYOffset;
+                    document.body.style.top = `-${scrollY}px`;
+                    document.body.setAttribute('data-state', 'backdrop');
+                };
+                window.addEventListener('scrollend', lockScroll);
+            } else {
+                // Hero not visible or no hero: lock scroll immediately
+                const scrollY = window.pageYOffset;
+                document.body.style.top = `-${scrollY}px`;
+                document.body.setAttribute('data-state', 'backdrop');
             }
         }
 
@@ -208,6 +211,10 @@
 
         const handleTransitionEnd = () => {
             removeState(animationTarget, 'opening');
+            // Top mode: check drawer overflow after it becomes visible
+            if (isTopMode && window.NDSDrawer) {
+                window.NDSDrawer.checkOverflow(animationTarget);
+            }
             animationTarget.removeEventListener('transitionend', handleTransitionEnd);
         };
         animationTarget.addEventListener('transitionend', handleTransitionEnd);
