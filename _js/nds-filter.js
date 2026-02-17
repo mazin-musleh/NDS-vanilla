@@ -461,6 +461,36 @@
             }
         }
 
+        /**
+         * Re-apply URL params for a specific filter after dynamic inputs are added
+         */
+        reapplyUrlParamsForFilter(filterName) {
+            const params = new URLSearchParams(window.location.search);
+            const value = params.get(filterName);
+            if (!value) return;
+
+            const filterData = this.filterInputs[filterName];
+            if (!filterData) return;
+
+            const values = value.split(',').map(v => this.sanitizeInput(v).trim());
+
+            filterData.inputs.forEach(input => {
+                if (values.some(v => v.toLowerCase() === input.value.toLowerCase())) {
+                    input.checked = true;
+                }
+            });
+
+            this.updateFilterCriteria(filterName);
+
+            if (this.isFormMode) {
+                this.updateHiddenInputs();
+                this.updateFilterButtonLabel();
+                this.updateAppliedChips();
+            } else {
+                this.applyFilters();
+            }
+        }
+
         updateUrlParams() {
             // Preserve existing params not managed by this filter
             const params = new URLSearchParams(window.location.search);
@@ -755,11 +785,13 @@
                 } else if (filterType === 'checkbox' || filterType === 'radio' || filterType === 'switch') {
                     // Auto-generate filter inputs
                     this.setupDynamicFilter(element, filterName, filterType);
-                } else if (element.querySelectorAll('input[type="checkbox"], input[type="radio"], .nds-switch-input').length > 0) {
-                    // Manual filter inputs
-                    this.setupManualFilter(element, filterName);
+                } else {
+                    // Skip data markers inside the target container (e.g. <span data-filter="x"> in cards)
+                    const isDataMarker = this.targetContainer && this.targetContainer.contains(element);
+                    if (!isDataMarker) {
+                        this.setupManualFilter(element, filterName);
+                    }
                 }
-                // Elements without filter-type in cards are just data markers, not filter UI
             });
 
             // Auto-detect direct search input
@@ -982,8 +1014,18 @@
         setupManualFilter(element, filterName) {
             const inputs = element.querySelectorAll('input[type="checkbox"], input[type="radio"], .nds-switch-input');
 
+            // Always set up the DOM observer, even with 0 inputs (handles cascading/async filters)
+            if (!element._ndsFilterObserver && typeof NDS !== 'undefined' && NDS.onDOMAdd) {
+                element._ndsFilterObserver = true;
+                NDS.onDOMAdd('input[type="checkbox"], input[type="radio"], .nds-switch-input', (nodes) => {
+                    if (nodes.some(n => element.contains(n))) {
+                        this.setupManualFilter(element, filterName);
+                        this.reapplyUrlParamsForFilter(filterName);
+                    }
+                });
+            }
+
             if (inputs.length === 0) {
-                console.warn(`NDS Filter: No inputs found for filter "${filterName}"`);
                 return;
             }
 
@@ -1033,16 +1075,6 @@
                     this.updateApplyButtonLabel();
                 });
             });
-
-            // Watch for dynamically added inputs (e.g. cascading filters)
-            if (!element._ndsFilterObserver && typeof NDS !== 'undefined' && NDS.onDOMAdd) {
-                element._ndsFilterObserver = true;
-                NDS.onDOMAdd('input[type="checkbox"], input[type="radio"], .nds-switch-input', (nodes) => {
-                    if (nodes.some(n => element.contains(n))) {
-                        this.setupManualFilter(element, filterName);
-                    }
-                });
-            }
         }
 
         // ==============================================
@@ -1469,8 +1501,12 @@
             this.updateApplyButtonLabel();
             this.dispatchClearEvent();
 
-            // Apply the cleared filters to show all items and update pagination
-            this.applyFilters();
+            // In AJAX mode, resubmit to re-fetch results with cleared filters
+            if (this.isAjaxMode) {
+                this.submitForm();
+            } else {
+                this.applyFilters();
+            }
         }
 
         clear() {
@@ -1524,8 +1560,15 @@
                 NDSFeedback.dismissAll(this.filterContainer);
             }
 
-            this.updateUrlParams();
             this.dispatchResetEvent();
+
+            // In AJAX mode, resubmit to re-fetch results with cleared criteria
+            if (this.isAjaxMode) {
+                this.submitForm();
+                return;
+            }
+
+            this.updateUrlParams();
             this.updatePagination();
             this.updateFilterButtonLabel();
             this.updateAppliedChips();
@@ -1706,6 +1749,10 @@
             const filterInstance = new NDSFilter(container);
             container.ndsFilterInstance = filterInstance;
             container.setAttribute('data-nds-filter-initialized', 'true');
+            container.dispatchEvent(new CustomEvent('nds:filter:ready', {
+                detail: filterInstance,
+                bubbles: true
+            }));
         });
     }
 
@@ -1733,6 +1780,30 @@
             getByTarget: (targetId) => {
                 const filterContainer = document.querySelector(`.nds-filter[data-filter-target="${targetId}"]`);
                 return filterContainer?.ndsFilterInstance || null;
+            },
+
+            /**
+             * Execute callback when a filter is ready, handling the race condition
+             * where the filter may already be initialized before the listener is added.
+             * @param {string|Element} container - Selector or element
+             * @param {Function} callback - Receives the filter instance
+             */
+            whenReady: (container, callback) => {
+                if (typeof container === 'string') {
+                    container = document.querySelector(container);
+                }
+                if (!container) return;
+
+                // Already initialized — call immediately
+                if (container.ndsFilterInstance) {
+                    callback(container.ndsFilterInstance);
+                    return;
+                }
+
+                // Not yet — wait for the event
+                container.addEventListener('nds:filter:ready', (e) => {
+                    callback(e.detail);
+                }, { once: true });
             }
         };
     }

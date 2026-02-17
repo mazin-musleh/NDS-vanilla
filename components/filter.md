@@ -978,6 +978,63 @@ layout_class: cardView topSubMenu
                         </div>
                     </div>
                 </div>
+
+                <!-- Custom AJAX Rendering -->
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Custom AJAX Rendering (preventDefault)</div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <div class="nds-content-block">
+                                <p>Use <strong>preventDefault()</strong> on the <strong>nds:filterFormAjax</strong> event
+                                    to fully control the AJAX request and rendering. The filter component still handles
+                                    UI updates (chips, count, URL params) before dispatching the event.</p>
+                                <p>All filter actions (apply, chip removal, reset, clear) fire through
+                                    <strong>nds:filterFormAjax</strong>, so you only need one event listener.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                        <div class="nds-tabs nds-code nds-divided" hidden>
+                            <div class="nds-tab-list-container">
+                                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                        aria-controls="panel-ajax-custom" id="tab-ajax-custom">
+                                        <span class="nds-tab-label">JavaScript</span>
+                                    </button>
+                                </nav>
+                            </div>
+                            <div class="nds-tab-content">
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-ajax-custom"
+                                    aria-labelledby="tab-ajax-custom">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-javascript code">
+// Intercept AJAX and handle fetching yourself
+// Covers: apply, chip removal, reset, and clear
+filterForm.addEventListener('nds:filterFormAjax', (e) => {
+    e.preventDefault();
+
+    // Build your own params from form inputs
+    const params = {};
+    const search = filterForm.querySelector('input[name="search"]');
+    if (search && search.value) params.q = search.value;
+
+    // Fetch from your API
+    fetch('/api/search', { method: 'POST', body: new URLSearchParams(params) })
+        .then(res => res.json())
+        .then(data => renderResults(data.Records));
+});
+                                    </code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -1008,6 +1065,12 @@ const filter = NDSFilter.getInstance(element);
 
 // By target container ID
 const filter = NDSFilter.getByTarget('cardList');
+
+// Wait for initialization (handles race conditions with deferred scripts)
+NDSFilter.whenReady('.nds-filter', (instance) => {
+    // instance is guaranteed ready
+    // fires immediately if already initialized, or waits for nds:filter:ready
+});
                     </code>
                 </div>
             </div>
@@ -1063,8 +1126,37 @@ const filter = NDSFilter.getByTarget('cardList');
                         <td>Submit the form (form submission mode only)</td>
                     </tr>
                     <tr>
+                        <td>reapplyUrlParamsForFilter(name)</td>
+                        <td>Re-apply URL params for a specific filter after dynamic inputs are added</td>
+                    </tr>
+                    <tr>
                         <td>destroy()</td>
                         <td>Show all items and remove initialization flag</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Static Methods</h3>
+
+            <table class="nds-table nds-responsive" style="--min-width:700px;">
+                <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>NDSFilter.getInstance(selector)</td>
+                        <td>Get filter instance by selector or element</td>
+                    </tr>
+                    <tr>
+                        <td>NDSFilter.getByTarget(targetId)</td>
+                        <td>Get filter instance by target container ID</td>
+                    </tr>
+                    <tr>
+                        <td>NDSFilter.whenReady(selector, callback)</td>
+                        <td>Execute callback when filter is initialized. Fires immediately if already ready, otherwise waits for <strong>nds:filter:ready</strong> event</td>
                     </tr>
                 </tbody>
             </table>
@@ -1080,6 +1172,11 @@ const filter = NDSFilter.getByTarget('cardList');
                     </tr>
                 </thead>
                 <tbody>
+                    <tr>
+                        <td>nds:filter:ready</td>
+                        <td>Filter component initialized and ready</td>
+                        <td>instance (the NDSFilter instance)</td>
+                    </tr>
                     <tr>
                         <td>nds:filter:change</td>
                         <td>Filters or search changed (client-side)</td>
@@ -1128,7 +1225,19 @@ const filter = NDSFilter.getByTarget('cardList');
                 </div>
                 <div class="nds-expandable-content">
                     <code class="lang-javascript line-numbers">
-// Listen for filter changes
+// Wait for filter to be ready (safe with deferred scripts)
+NDSFilter.whenReady('.nds-filter', (instance) => {
+    console.log('Filter ready:', instance);
+});
+
+// Or use the event directly
+document.querySelector('.nds-filter')
+  .addEventListener('nds:filter:ready', (e) => {
+    const instance = e.detail;
+    console.log('Filter initialized:', instance);
+  });
+
+// Listen for filter changes (client-side mode)
 document.querySelector('.nds-filter')
   .addEventListener('nds:filter:change', (e) => {
     console.log('Visible items:', e.detail.visibleItems);
@@ -1299,6 +1408,16 @@ filter.reset();
                 <p>URL format: <strong>?search=term&amp;department=engineering,design&amp;role=developer</strong></p>
                 <p>Multiple filter values are separated by commas. Parameter names match the
                     <strong>data-filter</strong> group names.</p>
+            </div>
+            <div class="nds-content-block">
+                <h3 class="nds-block-title">Dynamic Filter Inputs</h3>
+                <p>When filter inputs are added dynamically (e.g. cascading filters loaded via API), the component
+                    automatically detects new inputs and re-applies matching URL parameters. This means dynamically
+                    loaded filter options will be pre-selected from URL state without any extra code.</p>
+                <p>Filter groups can start completely empty and be populated later. For example, a
+                    <strong>data-filter="system"</strong> fieldset with no initial inputs will still be tracked.
+                    When inputs are added via an API response, the component picks them up automatically, binds change
+                    listeners, and re-applies any matching URL parameters.</p>
             </div>
         </div>
     </div>
