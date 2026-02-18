@@ -71,13 +71,12 @@
         ndsCookiesClosePopup();
 
         // Detect page language
-        const pageLang = document.documentElement.lang || document.body.getAttribute('lang') || 'ar';
-        const isEnglish = pageLang.toLowerCase().startsWith('en');
+        const isArabic = NDS.isArabic;
 
         // Get message and title from data attributes or use language-specific defaults
         const acceptBtn = document.getElementById('ndsCookiesAcceptBtn');
-        const defaultTitle = isEnglish ? 'Accepted' : 'تم القبول';
-        const defaultMessage = isEnglish ? 'Cookies have been accepted' : 'تم قبول ملفات تعريف الارتباط';
+        const defaultTitle = isArabic ? 'تم القبول' : 'Accepted';
+        const defaultMessage = isArabic ? 'تم قبول ملفات تعريف الارتباط' : 'Cookies have been accepted';
         const title = acceptBtn?.dataset.acceptTitle || defaultTitle;
         const message = acceptBtn?.dataset.acceptMessage || defaultMessage;
         ndsShowMessage(message, 'success', title);
@@ -89,13 +88,12 @@
         ndsCookiesClosePopup();
 
         // Detect page language
-        const pageLang = document.documentElement.lang || document.body.getAttribute('lang') || 'ar';
-        const isEnglish = pageLang.toLowerCase().startsWith('en');
+        const isArabic = NDS.isArabic;
 
         // Get message and title from data attributes or use language-specific defaults
         const declineBtn = document.getElementById('ndsCookiesDeclineBtn');
-        const defaultTitle = isEnglish ? 'Declined' : 'تم الرفض';
-        const defaultMessage = isEnglish ? 'Optional cookies have been declined' : 'تم رفض ملفات تعريف الارتباط الاختيارية';
+        const defaultTitle = isArabic ? 'تم الرفض' : 'Declined';
+        const defaultMessage = isArabic ? 'تم رفض ملفات تعريف الارتباط الاختيارية' : 'Optional cookies have been declined';
         const title = declineBtn?.dataset.declineTitle || defaultTitle;
         const message = declineBtn?.dataset.declineMessage || defaultMessage;
         ndsShowMessage(message, 'info', title);

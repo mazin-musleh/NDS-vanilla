@@ -31,7 +31,7 @@
 
         const lat = +(el.dataset.latitude || 24.7136);
         const lng = +(el.dataset.longitude || 46.6753);
-        const isArabic = document.documentElement.lang?.startsWith('ar');
+        const isArabic = NDS.isArabic;
         const arabicKey = `weather_ar_${lat}_${lng}`;
         const englishKey = `weather_en_${lat}_${lng}`;
 
@@ -119,7 +119,7 @@
 
         const lat = +(weatherEl.dataset.latitude || 24.7136);
         const lng = +(weatherEl.dataset.longitude || 46.6753);
-        const isArabic = document.documentElement.lang?.startsWith('ar');
+        const isArabic = NDS.isArabic;
         const lang = isArabic ? 'ar' : 'en';
         const cacheKey = `city_${lat}_${lng}_${lang}`;
 

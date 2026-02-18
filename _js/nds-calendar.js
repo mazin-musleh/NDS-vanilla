@@ -818,7 +818,7 @@
                 }
             }
             // Fallback to document language
-            return document.documentElement.lang === 'ar' ? 'ar' : 'en';
+            return NDS.isArabic ? 'ar' : 'en';
         },
 
         getCurrentCalendar: function () {

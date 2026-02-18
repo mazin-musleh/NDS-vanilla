@@ -14,7 +14,7 @@
     };
 
     function getLang() {
-        return document.documentElement.lang?.startsWith('ar') ? 'ar' : 'en';
+        return NDS.isArabic ? 'ar' : 'en';
     }
 
     class NDSExpandable {
