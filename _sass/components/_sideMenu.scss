@@ -220,7 +220,7 @@
             position: sticky;
             top: calc(var(--nds-nav-height));
             --nds-sideMenu-width: 100%;
-            --drawer-max-height: 50svh;
+            --drawer-max-height: 60svh;
             background-color: unset;
             overflow: clip;
             height: var(--_toggle-height);
@@ -248,6 +248,7 @@
                         visibility: hidden;
                         display: block;
                     }
+
                     flex: 1;
                 }
 
@@ -287,7 +288,7 @@
             &[data-state~="closing"] {
                 position: absolute;
                 top: 0;
-                height: 100%;
+                height: fit-content;
                 box-shadow: unset;
                 padding: 0;
                 border-radius: 0;
@@ -295,8 +296,12 @@
 
                 #sideMenuToggle {
                     position: sticky;
-                    top: calc(var(--nds-nav-height));
+                    top: var(--nds-nav-height);
                 }
+            }
+
+            .nds-drawer-scroll {
+                padding-top: var(--nds-nav-height);
             }
         }
 
