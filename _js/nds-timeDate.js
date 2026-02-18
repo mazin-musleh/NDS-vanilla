@@ -123,7 +123,7 @@
         const el = document.getElementById('nds-date');
         if (!el) return;
 
-        const isArabic = document.documentElement.lang?.startsWith('ar');
+        const isArabic = NDS.isArabic;
         const today = getSaudiDate();
         const type = el.dataset?.calendar || (isArabic ? 'hijri' : 'gregorian');
         const cacheKey = `date_${type}_${isArabic}_${today}`;

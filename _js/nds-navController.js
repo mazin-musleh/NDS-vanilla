@@ -285,10 +285,10 @@
             if (open) addState(navLink, 'active');
             else removeState(navLink, 'active');
 
-            // Backdrop for minimal nav dropdowns
-            if (open && isInMinimal && state.isMinimal) {
+            // Backdrop for nav dropdowns
+            if (open) {
                 showNavBackdrop('dropdown', () => {
-                    document.querySelectorAll('.nds-nav-minimal .nds-dropdown[data-state~="open"]')
+                    document.querySelectorAll('#ndsMainNav .nds-dropdown[data-state~="open"]')
                         .forEach(d => dropdown.toggle(d, false));
                 });
             }
@@ -303,9 +303,9 @@
                     if (!isInMinimal) updatePositions();
                     overflow.schedule('low', 100);
 
-                    // Hide backdrop after last minimal dropdown closes
-                    if (!open && isInMinimal && state.isMinimal) {
-                        const stillOpen = document.querySelectorAll('.nds-nav-minimal .nds-dropdown[data-state~="open"]');
+                    // Hide backdrop after last nav dropdown closes
+                    if (!open) {
+                        const stillOpen = document.querySelectorAll('#ndsMainNav .nds-dropdown[data-state~="open"]');
                         if (stillOpen.length === 0 && !hasState(DOM.collapse, 'open') && !_pendingToggleTimer) {
                             hideNavBackdrop('dropdown');
                         }
@@ -692,8 +692,8 @@
             return;
         }
 
-        // Cancel any pending delayed toggle action (prevents stale navbar opens)
-        if (isInMinimal) cancelToggleAction();
+        // Cancel any pending delayed toggle action (prevents stale opens)
+        cancelToggleAction();
 
         // If closing, allow
         if (isOpen) {
@@ -753,9 +753,9 @@
             scheduleToggleAction(delay, open);
         } else if (!state.isMinimal && hasState(DOM.dgaDigitalStamp, 'open')) {
             toggleDGA();
-            afterDelay(duration, () => afterDelay(closeDelay, open));
+            afterDelay(duration, () => scheduleToggleAction(closeDelay, open));
         } else {
-            afterDelay(closeDelay, open);
+            scheduleToggleAction(closeDelay, open);
         }
     }
 

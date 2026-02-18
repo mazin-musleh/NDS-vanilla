@@ -67,7 +67,6 @@
 
 @include tablet(max) {
     .nds-sideMenu {
-        position: absolute;
         z-index: 999;
         height: 100%;
         border-radius: 0 !important;
@@ -286,7 +285,7 @@
             // Backdrop effect when sideMenu is open or closing (matches modal backdrop)
             &[data-state~="open"],
             &[data-state~="closing"] {
-                position: absolute;
+
                 top: 0;
                 height: fit-content;
                 box-shadow: unset;

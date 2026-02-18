@@ -113,12 +113,11 @@ window.NDSUserFeedback = (() => {
                 feedbackComponent.setAttribute('data-state', 'status');
 
                 // Detect page language
-                const pageLang = document.documentElement.lang || document.body.getAttribute('lang') || 'ar';
-                const isEnglish = pageLang.toLowerCase().startsWith('en');
+                const isArabic = NDS.isArabic;
 
                 // Get custom message from data attribute or use language-specific defaults
-                const defaultSuccessMessage = isEnglish ? 'Your feedback is submitted!' : 'تم استلام ملاحظتك!';
-                const defaultErrorMessage = isEnglish ? 'An error occurred, please try again' : 'حدث خطأ، يرجى المحاولة مرة أخرى';
+                const defaultSuccessMessage = isArabic ? 'تم استلام ملاحظتك!' : 'Your feedback is submitted!';
+                const defaultErrorMessage = isArabic ? 'حدث خطأ، يرجى المحاولة مرة أخرى' : 'An error occurred, please try again';
 
                 const successMessage = feedbackComponent.getAttribute('data-success-message') || defaultSuccessMessage;
                 const errorMessage = feedbackComponent.getAttribute('data-error-message') || defaultErrorMessage;

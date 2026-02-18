@@ -73,9 +73,7 @@
             },
 
             getLanguage: function() {
-                var lang = document.documentElement.lang || 'ar';
-                var baseLang = lang.split('-')[0].toLowerCase();
-                return baseLang === 'en' ? 'en-US' : 'ar-SA';
+                return NDS.isArabic ? 'ar-SA' : 'en-US';
             },
 
             create: function(options) {
@@ -151,12 +149,11 @@
     // ==============================================
     var Utils = {
         getCurrentLanguage: function() {
-            var htmlLang = document.documentElement.lang || 'en';
-            return htmlLang.split('-')[0].toLowerCase();
+            return NDS.lang;
         },
 
         isArabic: function() {
-            return this.getCurrentLanguage() === 'ar';
+            return NDS.isArabic;
         },
 
         debounce: function(func, wait) {

@@ -1368,7 +1368,7 @@
 
             if (visibleCount === 0) {
                 if (!document.getElementById(alertId) && window.NDSAlert) {
-                    const isArabic = document.documentElement.lang === 'ar';
+                    const isArabic = NDS.isArabic;
                     const self = this;
                     NDSAlert.warning(isArabic ? 'لا توجد نتائج لمعايير التصفية الحالية' : 'No result for current filter criteria', {
                         target: this.targetContainer,
