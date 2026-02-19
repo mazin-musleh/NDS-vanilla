@@ -12,14 +12,7 @@
     // ==============================================
 
     function isRTL() {
-        return document.documentElement.dir === 'rtl';
-    }
-
-    function isIOS() {
-        // Detect iPhone, iPad, iPod
-        return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
-               // Detect iPadOS (reports as Mac but has touch)
-               (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        return NDS.isRTL;
     }
 
     function fixSrcsetSpaces(srcsetValue) {
@@ -162,20 +155,31 @@
                         setTimeout(() => {
                             const hasHiddenSlides = this.isHero && this.slides.some(slide => slide.hasAttribute('hidden'));
 
-                            if (hasHiddenSlides && isIOS() && isRTL()) {
-                                const originalBehavior = getComputedStyle(this.wrapper).scrollBehavior;
+                            if (hasHiddenSlides && isRTL()) {
+                                // WebKit RTL fix: keep scroll-behavior: auto through entire update
+                                // to prevent Safari/WebKit from jumping scroll position on reflow
                                 this.wrapper.style.scrollBehavior = 'auto';
+
                                 this.slides.forEach(slide => { if (slide.hasAttribute('hidden')) slide.removeAttribute('hidden'); });
                                 this.wrapper.scrollLeft = 0;
                                 void this.wrapper.offsetHeight;
-                                this.wrapper.style.scrollBehavior = originalBehavior;
-                            } else if (hasHiddenSlides) {
-                                this.slides.forEach(slide => { if (slide.hasAttribute('hidden')) slide.removeAttribute('hidden'); });
-                            }
 
-                            this.updatePeekStyles();
-                            this.updateState();
-                            this.peekStylesApplied = true;
+                                this.updatePeekStyles();
+                                this.updateState();
+                                this.peekStylesApplied = true;
+
+                                this.wrapper.scrollLeft = 0;
+                                void this.wrapper.offsetHeight;
+
+                                this.wrapper.style.scrollBehavior = '';
+                            } else {
+                                if (hasHiddenSlides) {
+                                    this.slides.forEach(slide => { if (slide.hasAttribute('hidden')) slide.removeAttribute('hidden'); });
+                                }
+                                this.updatePeekStyles();
+                                this.updateState();
+                                this.peekStylesApplied = true;
+                            }
                         }, 50);
                     }
                 }

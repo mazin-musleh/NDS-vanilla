@@ -51,7 +51,7 @@
             // Cache references
             this.contentLayout = dropmenuElement.closest('.nds-content-layout')
                 || document.querySelector('.nds-content-layout');
-            this.isRTL = getComputedStyle(dropmenuElement).direction === 'rtl';
+            this.isRTL = NDS.isRTL;
 
             this.init();
         }

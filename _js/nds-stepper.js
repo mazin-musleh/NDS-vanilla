@@ -111,7 +111,7 @@
             }
 
             if (this.progressText) {
-                const isRTL = document.documentElement.dir === 'rtl';
+                const isRTL = NDS.isRTL;
                 const displayCurrent = Math.min(this.currentStep, this.totalSteps);
                 this.progressText.innerHTML = isRTL ?
                     `${displayCurrent} / ${this.totalSteps}` :

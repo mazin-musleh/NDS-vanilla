@@ -4,13 +4,15 @@
 
     window.NDS = window.NDS || {};
 
-    // ── Language (cached) ───────────────────────────────────────────
+    // ── Language & Direction (cached) ────────────────────────────────
     // BCP 47: 'ar', 'ar-SA', 'ar-EG' → 'ar'  |  'en', 'en-US' → 'en'
     // Usage: NDS.lang  → 'ar' | 'en' | ...
     //        NDS.isArabic → true/false
+    //        NDS.isRTL → true/false
     const _lang = (document.documentElement.lang || 'en').split('-')[0].toLowerCase();
     NDS.lang = _lang;
     NDS.isArabic = _lang === 'ar';
+    NDS.isRTL = document.documentElement.dir === 'rtl';
 
     // ── Debounce ─────────────────────────────────────────────────────
     // Usage: const fn = NDS.debounce(handler, 150)

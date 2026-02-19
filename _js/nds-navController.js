@@ -65,7 +65,7 @@
                 this._css = {
                     minimalBp: parseInt(styles.getPropertyValue('--nds-minimal-nav-bp')) || 768,
                     speed: (parseFloat(styles.getPropertyValue('--nds-transition-speed')) || 0.2) * 1000,
-                    isRTL: root.dir === 'rtl' || styles.direction === 'rtl',
+                    isRTL: NDS.isRTL,
                     safeZone: parseInt(styles.getPropertyValue('--nds-dropdown-safeZone')) || 24
                 };
             }
@@ -285,8 +285,9 @@
             if (open) addState(navLink, 'active');
             else removeState(navLink, 'active');
 
-            // Backdrop for nav dropdowns
-            if (open) {
+            // Backdrop for nav dropdowns (skip if inside open collapse — navbar owns backdrop)
+            const collapseHandlesBackdrop = !isInMinimal && hasState(DOM.collapse, 'open');
+            if (open && !collapseHandlesBackdrop) {
                 showNavBackdrop('dropdown', () => {
                     document.querySelectorAll('#ndsMainNav .nds-dropdown[data-state~="open"]')
                         .forEach(d => dropdown.toggle(d, false));
@@ -303,8 +304,8 @@
                     if (!isInMinimal) updatePositions();
                     overflow.schedule('low', 100);
 
-                    // Hide backdrop after last nav dropdown closes
-                    if (!open) {
+                    // Hide backdrop after last nav dropdown closes (skip if collapse owns backdrop)
+                    if (!open && !collapseHandlesBackdrop) {
                         const stillOpen = document.querySelectorAll('#ndsMainNav .nds-dropdown[data-state~="open"]');
                         if (stillOpen.length === 0 && !hasState(DOM.collapse, 'open') && !_pendingToggleTimer) {
                             hideNavBackdrop('dropdown');
