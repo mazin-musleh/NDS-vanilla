@@ -108,7 +108,7 @@
             if (hasOverflow) {
                 const { scrollLeft, scrollWidth, clientWidth } = this.tabList;
                 const maxScroll = scrollWidth - clientWidth;
-                const isRTL = document.documentElement.dir === 'rtl';
+                const isRTL = NDS.isRTL;
 
                 let atStart, atEnd;
 
@@ -173,7 +173,7 @@
                         this.tabList.scrollTo({ left: 0, behavior: 'smooth' });
                     } else {
                         const scrollAmount = this.tabList.clientWidth * 0.8;
-                        const isRTL = document.documentElement.dir === 'rtl';
+                        const isRTL = NDS.isRTL;
                         const currentScroll = this.tabList.scrollLeft;
                         this.tabList.scrollTo({
                             left: isRTL ? currentScroll - scrollAmount : currentScroll + scrollAmount,
@@ -198,7 +198,7 @@
                 isScrolling = true;
                 this.tabList.style.scrollBehavior = 'auto';
 
-                const isRTL = document.documentElement.dir === 'rtl';
+                const isRTL = NDS.isRTL;
                 const scrollMultiplier = isRTL ? -0.8 : 0.8;
                 const scrollAmount = e.deltaY * scrollMultiplier;
                 const startScroll = this.tabList.scrollLeft;
@@ -336,9 +336,7 @@
             let targetIndex = currentIndex;
             
             // Check if we're in RTL mode
-            const isRTL = document.documentElement.dir === 'rtl' || 
-                         document.documentElement.getAttribute('dir') === 'rtl' ||
-                         getComputedStyle(document.documentElement).direction === 'rtl';
+            const isRTL = NDS.isRTL;
             
             // Check if this is a vertical tab layout
             const isVertical = this.tabsContainer.classList.contains('nds-vertical');
