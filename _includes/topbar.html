@@ -1,3 +1,26 @@
+<div class="nds-topbar nds-content-grid" role="region" aria-label="Top bar utilities">
+    <div class="nds-topbar-content">
+        <button class="nds-btn nds-menu-btn nds-topbar-info nds-digitalStamp-tab" role="button" aria-expanded="false"
+            aria-controls="nds-digitalStamp">
+            <img class="flag" src="{{ 'assets/icon/SAflag.min.svg' | relative_url }}" width="20" height="14"
+                loading="lazy" alt="Logo of Saudi Arabia Flag">
+            <span class="nds-digitalStamp-lg-text nds-truncate" id="big-screen-text">A government website registered with the
+                Digital Government
+                Authority.</span>
+            <span class="nds-digitalStamp-sm-text nds-truncate" id="small-screen-text">Government website registered with DGA</span>
+            <b id="nds-digitalStamp-verify-text">How you know?</b>
+        </button>
+        <div class="nds-topbar-info">
+            
+            <span id="nds-date" class="nds-text-icon" data-calendar="hijri"></span>
+            <span id="nds-realTimeClock" class="nds-text-icon"></span>
+            <span id="nds-cityName" class="nds-text-icon"></span>
+            <span id="nds-weatherInfo" class="nds-text-icon" data-latitude="{{ site.city_latitude | default: '24.7136' }}"
+                data-longitude="{{ site.city_longitude | default: '46.6753' }}"></span>
+                
+        </div>
+    </div>
+</div>
 <div id="nds-digitalStamp" role="region" aria-label="Digital government stamp">
     <div class="dga-content nds-content-grid">
         <div class="nds-digitalStamp-notices nds-grid">
@@ -35,32 +58,16 @@
             <div class="nds-digitalStamp-register col-12">
                 <img src="{{ 'assets/img/dga-logo-icon.svg' | relative_url }}" width="21" height="31"
                     alt="هيئة الحكومة الرقمية" loading="lazy">
-                <span id="register-text">مسجل لدى هيئة الحكومة الرقمية برقم:</span>
-                <a class="nds-digitalStamp-registration"
+                <div>
+                    <span id="register-text">
+                    مسجل لدى هيئة الحكومة الرقمية برقم:
+                    </span>
+                    <a class="nds-digitalStamp-registration"
                     href="{{ page.dga_registration_url | default: site.dga_registration_url }}" target="_blank">{{
                     page.dga_registration_number | default: site.dga_registration_number }}</a>
+                </div>
+                
             </div>
-        </div>
-    </div>
-</div>
-<div class="nds-topbar nds-content-grid" role="region" aria-label="Top bar utilities">
-    <div class="nds-topbar-content">
-        <button class="nds-btn nds-menu-btn nds-topbar-info nds-digitalStamp-tab" role="button" aria-expanded="false"
-            aria-controls="nds-digitalStamp">
-            <img class="flag" src="{{ 'assets/icon/SAflag.min.svg' | relative_url }}" width="20" height="14"
-                loading="lazy" alt="Logo of Saudi Arabia Flag">
-            <span class="nds-digitalStamp-lg-text nds-truncate" id="big-screen-text">A government website registered with the
-                Digital Government
-                Authority.</span>
-            <span class="nds-digitalStamp-sm-text nds-truncate" id="small-screen-text">Government website registered with DGA</span>
-            <b id="nds-digitalStamp-verify-text">How you know?</b>
-        </button>
-        <div class="nds-topbar-info">
-            <span id="nds-date" class="nds-text-icon" data-calendar="hijri"></span>
-            <span id="nds-realTimeClock" class="nds-text-icon"></span>
-            <span id="nds-cityName" class="nds-text-icon"></span>
-            <span id="nds-weatherInfo" class="nds-text-icon" data-latitude="{{ site.city_latitude | default: '24.7136' }}"
-                data-longitude="{{ site.city_longitude | default: '46.6753' }}"></span>
         </div>
     </div>
 </div>

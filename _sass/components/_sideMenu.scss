@@ -67,7 +67,7 @@
 
 @include tablet(max) {
     .nds-sideMenu {
-        z-index: 999;
+       
         height: 100%;
         border-radius: 0 !important;
         border-top: 0;
@@ -81,6 +81,7 @@
         position: fixed;
         top: 0;
         bottom: 0;
+        z-index: 999;
 
         // RTL: slide out to the right
         transform: translateX(100%);
@@ -227,6 +228,7 @@
             padding: 0;
             border-radius: 0;
             transform: translateX(0px) !important;
+            z-index: 899;
 
             #sideMenuToggle {
                 --btn-width: 100%;
@@ -285,7 +287,7 @@
             // Backdrop effect when sideMenu is open or closing (matches modal backdrop)
             &[data-state~="open"],
             &[data-state~="closing"] {
-
+                z-index: 998;
                 top: 0;
                 height: fit-content;
                 box-shadow: unset;

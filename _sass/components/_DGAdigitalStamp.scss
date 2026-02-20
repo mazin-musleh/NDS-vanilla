@@ -43,14 +43,13 @@
 
 #nds-digitalStamp {
     display: none;
-    background-color: var(--background-white);
+    background-color: var(--background-neutral-100, #f3f4f6);
     position: relative;
-    box-shadow: var(--shadow-md);
+    /* box-shadow: var(--shadow-md); */
     z-index: 1051;
     transition: grid-template-rows var(--nds-transition);
     grid-template-rows: 0fr;
     overflow: clip;
-
     &[data-state~="open"] {
         display: grid;
         grid-template-rows: 1fr;
@@ -68,43 +67,39 @@
 }
 
 .nds-digitalStamp-notices {
-    margin: var(--spacing-4xl) auto;
+    margin-block: var(--spacing-3xl) var(--spacing-2xl);
     display: flex;
     gap: var(--spacing-xl);
     flex-wrap: wrap;
 }
 
 .nds-digitalStamp-card {
-    background-color: var(--background-neutral-100);
-    border-radius: var(--radius-md);
     padding: var(--spacing-2xl);
     flex: 1;
     min-width: 300px;
     display: flex;
     align-items: flex-start;
     gap: var(--spacing-xl);
-    border: 1px solid var(--border-background-neutral);
-    transition: transform var(--nds-transition), box-shadow var(--nds-transition);
 }
 
 .nds-digitalStamp-register {
     width: 100%;
     margin: 0 auto;
-    background-color: var(--background-neutral-100);
+    background-color: var(--background-white);
     border-radius: var(--radius-md);
-    padding: var(--spacing-xl) var(--spacing-2xl);
-    border: 1px solid var(--border-background-neutral);
+    padding: var(--spacing-xl) var(--spacing-3xl);
     line-height: 24px;
-    text-align: center;
+    text-align: start;
     display: flex;
     gap: var(--spacing-sm);
     flex: 0 0 100%;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
 }
 
 .nds-digitalStamp-register>img {
-    height: 25px;
+    height: 30px;
+    margin-inline-end: var(--spacing-2xl);
 }
 
 .nds-digitalStamp-icon {
@@ -120,9 +115,9 @@
     flex-shrink: 0;
 
     @include tablet(max) {
-        width: var(--spacing-5xl);
-        height: var(--spacing-5xl);
-        font-size: 1.2rem;
+        width: var(--spacing-4xl);
+        height: var(--spacing-4xl);
+        font-size: 1rem;
     }
 
 }
@@ -149,9 +144,6 @@
 }
 
 @include mobile {
-    .nds-topbar .nds-digitalStamp-tab {
-        width: 100%;
-    }
 
     .nds-digitalStamp-notices {
         margin: var(--spacing-xl) auto;
@@ -160,7 +152,6 @@
     }
 
     .nds-digitalStamp-card {
-        text-align: center;
         padding: var(--spacing-xl);
         gap: var(--spacing-lg);
     }

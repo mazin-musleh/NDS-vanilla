@@ -25,12 +25,7 @@
             hasMore: 'hasMore',
             atEnd: 'atEnd'
         },
-        breakpoints: {
-            mobile: '(max-width: 599px)',
-            tablet: '(min-width: 600px)',
-            desktop: '(min-width: 960px)',
-            'large-desktop': '(min-width: 1280px)'
-        },
+        breakpoints: NDS.breakpoints,
         scrollThreshold: 20,
         scrollAmount: 0.8,
         transitionDuration: 250
@@ -288,9 +283,11 @@
 
         const moreBtn = drawer.querySelector(CONFIG.selectors.moreBtn);
 
-        // Skip init-time overflow check for topSubMenu drawers (checked on open instead)
+        // Skip init-time overflow check for topSubMenu drawers on mobile (checked on open instead)
+        // On desktop topSubMenu is inactive, so treat as a regular side menu
         const isTopSubMenu = drawer.closest('.nds-content-layout.topSubMenu');
-        if (!isTopSubMenu) {
+        const isDesktop = window.matchMedia(CONFIG.breakpoints.desktop).matches;
+        if (!isTopSubMenu || isDesktop) {
             checkOverflow(drawer);
         }
 
@@ -312,9 +309,9 @@
         drawer.addEventListener('nds:drawer:shown', () => checkOverflow(drawer));
         drawer.addEventListener('nds:drawer:hidden', () => checkOverflow(drawer));
 
-        // For topSubMenu: only run ResizeObserver overflow check when drawer is open
+        // For topSubMenu on mobile: only run ResizeObserver overflow check when drawer is open
         drawer._offResizeObs = NDS.onElementResize(scrollContainer, () => {
-            if (isTopSubMenu) {
+            if (isTopSubMenu && !window.matchMedia(CONFIG.breakpoints.desktop).matches) {
                 const parentState = drawer.parentElement?.getAttribute('data-state');
                 if (parentState !== 'open') return;
             }
