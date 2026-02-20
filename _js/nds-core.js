@@ -9,6 +9,18 @@
     // Usage: NDS.lang  → 'ar' | 'en' | ...
     //        NDS.isArabic → true/false
     //        NDS.isRTL → true/false
+    // ── Breakpoints (matches _mixins.scss) ─────────────────────────
+    // Usage: NDS.breakpoints.desktop → '(min-width: 960px)'
+    //        window.matchMedia(NDS.breakpoints.mobile).matches
+    NDS.breakpoints = {
+        mobile:          '(max-width: 599px)',
+        tablet:          '(min-width: 600px)',
+        'tablet-max':    '(max-width: 960px)',
+        desktop:         '(min-width: 960px)',
+        'desktop-max':   '(max-width: 1280px)',
+        'large-desktop': '(min-width: 1280px)'
+    };
+
     const _lang = (document.documentElement.lang || 'en').split('-')[0].toLowerCase();
     NDS.lang = _lang;
     NDS.isArabic = _lang === 'ar';

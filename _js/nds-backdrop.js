@@ -116,25 +116,29 @@
     // Apply inline styles
     applyStyles(currentConfig);
 
+    // Mark active synchronously so hide() can always clean up body state
+    isActive = true;
+
     // Show backdrop with animation
     backdropElement.style.display = 'block';
     backdropElement.offsetHeight; // Force reflow
 
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
+        if (!isActive) return; // Bail if hide() was called before rAF fired
+
         backdropElement.setAttribute('data-state', 'active');
-        isActive = true;
 
         // Attach event listeners
-        if (currentConfig.clickToClose) {
+        if (currentConfig?.clickToClose) {
           backdropElement.addEventListener('click', handleClick);
         }
-        if (currentConfig.escapeClose) {
+        if (currentConfig?.escapeClose) {
           document.addEventListener('keydown', handleEscape);
         }
 
         // Call onShow callback
-        if (currentConfig.onShow) {
+        if (currentConfig?.onShow) {
           currentConfig.onShow();
         }
       });
@@ -173,6 +177,8 @@
 
     // Hide after animation completes
     setTimeout(() => {
+      if (isActive) return; // show() was called again during fade-out
+
       // Reset display style after animation
       backdropElement.style.display = '';
 

@@ -27,6 +27,15 @@
         margin-bottom: var(--spacing-2xl, 20px);
     }
 
+    .nds-section-image {
+        .nds-avatar {
+            --avatar-size: 112px;
+            @include tablet(max) {
+                --avatar-size: 96px;
+            }
+        }
+    }
+
     .nds-section-head {
         flex: 1;
         margin-bottom: 0;
@@ -109,7 +118,7 @@
         margin-bottom: calc(var(--nds-sideInfo-top, -180px) + var(--spacing-3xl));
         height: fit-content;
 
-        @include desktop(min){
+        @include desktop(min) {
             z-index: 996;
         }
 

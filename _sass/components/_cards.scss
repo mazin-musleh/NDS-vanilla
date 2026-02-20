@@ -346,7 +346,7 @@
 // COLORED CARD VARIANTS
 // ==============================================
 
-.nds-card:not(.nds-oncolor) {
+/* .nds-card:not(.nds-oncolor) {
   &.nds-gold {
     --card-border-hover: var(--colors-secondary-gold-600);
     --card-border-active: var(--colors-secondary-gold-300);
@@ -394,13 +394,13 @@
       --card-border: var(--colors-tertiary-lavendar-200);
     }
   }
-}
+} */
 
 // ==============================================
 // ONCOLOR VARIANT (for dark backgrounds)
 // ==============================================
 
-.nds-card.nds-oncolor {
+/* .nds-card.nds-oncolor {
   --card-bg: var(--alpha-white-10);
   --card-bg-hover: var(--alpha-white-20);
   --card-border: var(--alpha-white-20);
@@ -413,7 +413,7 @@
   --icon-bg-color: var(--alpha-white-10);
   --icon-color: var(--featuredicons-icon-oncolor);
   --card-rating: var(--alpha-white-80);
-}
+} */
 
 
 // ==============================================
@@ -423,7 +423,11 @@
 .nds-card:is(a, button, .nds-interactive) {
   cursor: pointer;
 
-  &:is(:not(.nds-stroke), .nds-oncolor):hover {
+  /* &:is(:not(.nds-stroke), .nds-oncolor):hover {
+    background-color: var(--_card-bg-hover);
+  } */
+
+  &:hover {
     background-color: var(--_card-bg-hover);
   }
 
@@ -432,7 +436,7 @@
   }
 
   // Shadow variant interactive states
-  &.nds-shadow {
+/*   &.nds-shadow {
     &:hover {
       box-shadow: var(--shadow-lg);
     }
@@ -440,10 +444,10 @@
     &:active {
       box-shadow: var(--shadow-md);
     }
-  }
+  } */
 
   // Stroke variant interactive states
-  &.nds-stroke {
+/*   &.nds-stroke {
     &:hover {
       border-color: var(--_card-border-hover);
     }
@@ -451,14 +455,14 @@
     &:active {
       border-color: var(--_card-border-active);
     }
-  }
+  } */
 }
 
 // ==============================================
 // CARD GROUP
 // ==============================================
 
-.nds-cards-group {
+/* .nds-cards-group {
   display: grid;
   grid-template-columns: repeat(var(--max-col, 4), 1fr);
   gap: var(--spacing-2xl);
@@ -478,7 +482,7 @@
     grid-template-columns: repeat(var(--min-col, 2), 1fr);
     gap: var(--spacing-md);
   }
-}
+} */
 
 // ==============================================
 // RESPONSIVE BEHAVIOR

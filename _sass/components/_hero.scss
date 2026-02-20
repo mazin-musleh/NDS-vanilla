@@ -10,7 +10,7 @@
 // ==============================================
 
 .nds-hero-section {
-  z-index: 996;
+  
 
   &:not(.sub) {
     /* Hero uses larger title/description sizes via public section tokens */
@@ -120,7 +120,7 @@
   }
 
   // Icon change for copied state
-  .hgi-loaded #nds-sharePage .nds-dropmenu-menu .copied i::before {
+  #nds-sharePage .nds-dropmenu-menu .copied i::before {
     content: "䂇";
   }
 }
