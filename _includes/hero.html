@@ -1,6 +1,78 @@
 {% assign hero_type = include.hero_type | default: 'main' %}
 {% if hero_type == 'sub' %}
 {% assign hero_bg = page.hero_image | default: site.hero_image_sub %}
+{% comment %}
+── Load hero data (single load for tags, actions, float_actions) ──
+Resolution: page front matter → data file → defaults
+{% endcomment %}
+{% assign hero_action_file = page.heroaction | default: "heroaction" %}
+{% assign hero_data = site.data.hero[hero_action_file] %}
+{% comment %} ── Resolve tags ── {% endcomment %}
+{% if page.hero_tags %}{% assign hero_tags = page.hero_tags %}
+{% elsif hero_data.tags %}{% assign hero_tags = hero_data.tags %}{% endif %}
+{% comment %} ── Resolve float_actions (supports array or object with class/items) ── {% endcomment %}
+{% if page.hero_float_actions %}{% assign _raw_float = page.hero_float_actions %}
+{% elsif hero_data.float_actions %}{% assign _raw_float = hero_data.float_actions %}{% endif %}
+{% if _raw_float.items %}{% assign hero_float_actions = _raw_float.items %}{% assign hero_float_actions_class = _raw_float.class %}
+{% else %}{% assign hero_float_actions = _raw_float %}{% endif %}
+{% comment %} ── Resolve actions ── {% endcomment %}
+{% if page.hero_actions %}{% assign hero_actions = page.hero_actions %}
+{% elsif hero_data.actions %}{% assign hero_actions = hero_data.actions %}{% endif %}
+{% comment %}
+── Share placement logic ──
+1. "share" in actions array → standard action
+2. "share" in float_actions array → float action
+3. hide_share_page: true → hidden
+4. Neither → hidden (no share rendered)
+{% endcomment %}
+{% assign _share_in_action = false %}
+{% for item in hero_actions %}{% if item == "share" %}{% assign _share_in_action = true %}{% endif %}{% endfor %}
+{% assign _share_in_float = false %}
+{% for item in hero_float_actions %}{% if item == "share" %}{% assign _share_in_float = true %}{% endif %}{% endfor %}
+{% if page.hide_share_page %}{% assign share_placement = "hidden" %}
+{% elsif _share_in_action %}{% assign share_placement = "action" %}
+{% elsif _share_in_float %}{% assign share_placement = "float" %}
+{% else %}{% assign share_placement = "hidden" %}{% endif %}
+{% comment %} ── Capture share dropmenu HTML ── {% endcomment %}
+{% unless share_placement == "hidden" %}
+{% capture share_html %}
+            <div id="nds-sharePage" class="nds-dropmenu">
+                <button id="nds-sharePageBtn" class="nds-btn nds-secondary-outline nds-dropmenu-trigger"
+                    aria-label="Share Page">
+                    <i class="hgi hgi-stroke hgi-share-01 icon"></i>
+                    <span class="label">Share Page</span>
+                </button>
+                <div id="nds-sharePage-dropdown" class="nds-dropmenu-menu" hidden>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item share-x" type="button" aria-label="Share on X">
+                        <i class="hgi hgi-stroke hgi-new-twitter icon"></i>
+                        <span class="label">X</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item share-linkedin" type="button"
+                        aria-label="Share on LinkedIn">
+                        <i class="hgi hgi-stroke hgi-linkedin-02 icon"></i>
+                        <span class="label">LinkedIn</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item share-whatsapp" type="button"
+                        aria-label="Share on WhatsApp">
+                        <i class="hgi hgi-stroke hgi-whatsapp icon"></i>
+                        <span class="label">WhatsApp</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item share-copy" type="button" aria-label="Copy Link"
+                        data-copied-text="Link Copied!" data-no-auto-close>
+                        <i class="hgi hgi-stroke hgi-link-04 icon"></i>
+                        <span class="label">Copy Link</span>
+                    </button>
+                </div>
+            </div>
+{% endcapture %}
+{% endunless %}
+{% comment %} ── Determine if float/standard action divs are needed ── {% endcomment %}
+{% assign _has_float = false %}
+{% for item in hero_float_actions %}{% if item == "share" %}{% if share_placement == "float" %}{% assign _has_float = true %}{% endif %}
+{% else %}{% assign _has_float = true %}{% endif %}{% endfor %}
+{% assign _has_action = false %}
+{% for item in hero_actions %}{% unless item == "share" %}{% assign _has_action = true %}{% endunless %}{% endfor %}
+{% if share_placement == "action" %}{% assign _has_action = true %}{% endif %}
 <section class="nds-hero-section sub {{ page.hero_style }}" aria-label="قسم العرض الرئيسي"
     {% if hero_bg %}style="--hero_image: url('{{ hero_bg | relative_url }}');"{% endif %}>
     <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb" hidden>
@@ -19,17 +91,25 @@
     </nav>
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
+            {% comment %} ── Float action (must be first child of head) ── {% endcomment %}
+            {% if _has_float %}
+            <div class="nds-section-action{% if hero_float_actions_class %} {{ hero_float_actions_class }}{% endif %}">
+                {% for item in hero_float_actions %}
+                {% if item == "share" %}{% unless share_placement == "hidden" %}{{ share_html }}{% endunless %}
+                {% else %}
+                <a class="nds-btn {{ item.style | default: 'nds-secondary-outline' }}" href="{{ item.url | relative_url }}"
+                    aria-label="{{ item.aria_label | default: item.label }}"{% if item.target %} target="{{ item.target }}"{% endif %}>
+                    {% if item.icon and item.icon_position != "trailing" %}<i
+                        class="hgi hgi-stroke {{ item.icon }} icon"></i>{% endif %}
+                    <span class="label">{{ item.label }}</span>
+                    {% if item.icon and item.icon_position == "trailing" %}<i
+                        class="hgi hgi-stroke {{ item.icon }} icon"></i>{% endif %}
+                </a>
+                {% endif %}
+                {% endfor %}
+            </div>
+            {% endif %}
             <h1 class="nds-section-title">{{ page.hero_title | default: site.hero_title }}</h1>
-            {% comment %}Render hero tags if available{% endcomment %}
-            {% if page.hero_tags %}
-            {% assign hero_tags = page.hero_tags %}
-            {% else %}
-            {% assign hero_action_file = page.heroaction | default: "heroaction" %}
-            {% assign hero_data = site.data.hero[hero_action_file] %}
-            {% if hero_data.tags %}
-            {% assign hero_tags = hero_data.tags %}
-            {% endif %}
-            {% endif %}
             {% if hero_tags %}
             <div class="nds-section-meta">
                 <div class="nds-section-tags">
@@ -73,64 +153,27 @@
                     </div>
                 </div>
             </div>
-
             {% endif %}
             <p class="nds-section-description">{{ page.hero_description | default: site.hero_description }}</p>
         </div>
+        {% comment %} ── Standard action (sibling of head) ── {% endcomment %}
+        {% if _has_action %}
         <div class="nds-section-action">
-            {% if page.hero_actions %}
-            {% assign hero_actions = page.hero_actions %}
-            {% else %}
-            {% assign hero_action_file = page.heroaction | default: "heroaction" %}
-            {% assign hero_data = site.data.hero[hero_action_file] %}
-            {% if hero_data.actions %}
-            {% assign hero_actions = hero_data.actions %}
-            {% else %}
-            {% assign hero_actions = hero_data %}
-            {% endif %}
-            {% endif %}
             {% for action in hero_actions %}
-            <a class="nds-btn {{ action.style | default: 'nds-primary' }}" href="{{ action.url | relative_url }}" {% if
-                action.aria_label %} aria-label="{{ action.aria_label }}" {% endif %}{% if action.target %}
-                target="{{ action.target }}" {% endif %}>
+            {% if action == "share" %}{{ share_html }}
+            {% else %}
+            <a class="nds-btn {{ action.style | default: 'nds-primary' }}" href="{{ action.url | relative_url }}"
+                aria-label="{{ action.aria_label | default: action.label }}"{% if action.target %} target="{{ action.target }}"{% endif %}>
                 {% if action.icon and action.icon_position != "trailing" %}<i
                     class="hgi hgi-stroke {{ action.icon }} icon"></i>{% endif %}
                 <span class="label">{{ action.label }}</span>
                 {% if action.icon and action.icon_position == "trailing" %}<i
                     class="hgi hgi-stroke {{ action.icon }} icon"></i>{% endif %}
             </a>
+            {% endif %}
             {% endfor %}
-            {% unless page.hide_share_page %}
-            <div id="nds-sharePage" class="nds-dropmenu">
-                <button id="nds-sharePageBtn" class="nds-btn nds-secondary-outline nds-dropmenu-trigger"
-                    aria-label="Share Page">
-                    <i class="hgi hgi-stroke hgi-share-01 icon"></i>
-                    <span class="label">Share Page</span>
-                </button>
-                <div id="nds-sharePage-dropdown" class="nds-dropmenu-menu" hidden>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item share-x" type="button" aria-label="Share on X">
-                        <i class="hgi hgi-stroke hgi-new-twitter icon"></i>
-                        <span class="label">X</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item share-linkedin" type="button"
-                        aria-label="Share on LinkedIn">
-                        <i class="hgi hgi-stroke hgi-linkedin-02 icon"></i>
-                        <span class="label">LinkedIn</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item share-whatsapp" type="button"
-                        aria-label="Share on WhatsApp">
-                        <i class="hgi hgi-stroke hgi-whatsapp icon"></i>
-                        <span class="label">WhatsApp</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item share-copy" type="button" aria-label="Copy Link"
-                        data-copied-text="Link Copied!" data-no-auto-close>
-                        <i class="hgi hgi-stroke hgi-link-04 icon"></i>
-                        <span class="label">Copy Link</span>
-                    </button>
-                </div>
-            </div>
-            {% endunless %}
         </div>
+        {% endif %}
     </div>
 </section>
 {% else %}

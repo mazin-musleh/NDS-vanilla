@@ -10,13 +10,15 @@ tags:
     style: "nds-green"
     #icon: "hgi-checkmark-circle-02"
 
-actions:
-  - label: "Get Started"
-    url: "/university/announcement"
-    style: "nds-primary"
-    #icon: hgi-play
-
-  #- label: "Service Level Agreement"
-  #  url: "/university/announcement"
-  #  style: "nds-secondary-outline SLA"
-  #  icon: hgi-link-02
+float_actions:
+  class: nds-wrap
+  items:
+    - label: "Get Started"
+      url: "/university/announcement"
+      style: "nds-primary"
+      #icon: hgi-play
+    #- label: "Service Level Agreement"
+    #  url: "/university/announcement"
+    #  style: "nds-secondary-outline SLA"
+    #  icon: hgi-link-02
+    - share

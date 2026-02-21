@@ -235,6 +235,31 @@ direction: ltr
 
 **Data overrides:** Pages specify which data file to use via front matter keys (`mainnav`, `sidemenu`, `footer`, `footerlogos`, `heroaction`, `herosliders`). Includes look up `site.data.{category}[key]` — e.g. `mainnav: mainnav-alumni` loads `_data/mainnav/mainnav-alumni.yml`. Defaults come from `_config.yml`.
 
+**Hero actions** (`_data/hero/heroaction*.yml`) — controls hero section buttons and share placement:
+- `tags` — tag badges below the hero title
+- `actions` — standard CTA buttons (sibling of `nds-section-head`)
+- `float_actions` — float action buttons (first child of `nds-section-head`, floats inline-end)
+- `share` keyword in either array renders the share dropmenu at that position; omit to hide
+
+`float_actions` supports two formats:
+```yaml
+# Simple array
+float_actions:
+  - share
+
+# Object with class modifier
+float_actions:
+  class: "nds-minimal"
+  items:
+    - share
+    - label: "Bookmark"
+      url: "#"
+      icon: "hgi-bookmark-01"
+```
+Float action class modifiers: `nds-minimal` (hides labels on mobile, icon-only), `nds-wrap` (allow wrapping).
+
+Resolution: `page.hero_float_actions` → `hero_data.float_actions` → none. Same for `actions` and `tags`.
+
 ## Adding New Components
 
 1. Create `_sass/components/_[name].scss` (with `@use '../mixins' as *;`)

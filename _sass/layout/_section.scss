@@ -170,6 +170,8 @@
     align-items: center;
     gap: var(--spacing-sm);
     visibility: visible;
+    z-index: 990;
+    position: relative;
 }
 
 /* ========================================
