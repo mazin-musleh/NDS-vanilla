@@ -12,9 +12,22 @@
 @use '../mixins' as *;
 
 .nds-accordion {
+    --_accordion-header-padding: var(--accordion-header-padding, var(--accordion-lg-header-padding));
     display: flex;
     flex-direction: column;
     gap: 0;
+
+    &.nds-md {
+        --accordion-header-padding: var(--accordion-md-header-padding);
+    }
+
+    &.nds-sm {
+        --accordion-header-padding: var(--accordion-sm-header-padding);
+    }
+
+    &.nds-lg {
+        --accordion-header-padding: var(--accordion-lg-header-padding);
+    }
 
     /* Accordion Items */
     .nds-accordion-item {
@@ -33,34 +46,18 @@
 
     /* Accordion Buttons */
     .nds-accordion-btn {
+        --btn-bg: var(--button-background-transparent-default);
+        --btn-bg-hover: var(--button-background-neutral-default);
+        --btn-bg-active: var(--button-background-neutral-pressed);
+        --btn-bg-selected: var(--button-background-transparent-default);
+        --btn-height: fit-content;
         --nds-button-icon-size: 20px !important;
         justify-content: space-between;
         width: 100%;
         border-radius: 0 !important;
-        padding: var(--accordion-lg-header-padding, var(--spacing-lg)) !important;
+        padding: var(--_accordion-header-padding);
         font-size: var(--nds-text-md-FS);
         line-height: var(--nds-text-md-LH);
-
-        &.nds-menu {
-            gap: var(--accordion-lg-header-gap, var(--spacing-md));
-        }
-
-        &,
-        &.nds-md {
-            height: var(--spacing-6xl);
-        }
-
-        &.nds-sm {
-            height: var(--spacing-5xl);
-            font-size: var(--nds-text-sm-FS);
-            line-height: var(--nds-text-sm-LH);
-        }
-
-        &.nds-lg {
-            height: var(--spacing-7xl);
-            font-size: var(--nds-text-lg-FS);
-            line-height: var(--nds-text-lg-LH);
-        }
 
         .nds-accordion-title {
             display: block;
@@ -81,11 +78,12 @@
             overflow: hidden;
         }
 
-        &:is(.show:not(.closing), .opening) {
+        &[data-state~="open"],
+        &[data-state~="opening"] {
             grid-template-rows: 1fr;
         }
 
-        &:not(.show) .nds-accordion-content{
+        &:not([data-state]) .nds-accordion-content {
             display: none;
         }
 
