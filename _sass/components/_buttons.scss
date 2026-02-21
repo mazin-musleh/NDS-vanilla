@@ -30,27 +30,24 @@
   // BUTTON STATES
   // ==============================================
 
-  &:is(:hover, [data-state="hover"]) {
+  &:is(:hover, [data-state~="hover"]) {
     background-color: var(--_btn-bg-hover);
     color: var(--_btn-color-hover);
     border-color: var(--_btn-border-hover);
   }
 
-  &:is(:active, [data-state="active"]) {
-    background-color: var(--_btn-bg-active);
-    border-color: var(--_btn-border-active);
-  }
-
-  &:is(.active, .selected, [data-state="selected"], [data-state~="open"], [data-state~="active"])
-
-  /* ,
-  :is(.show, .open, .active, [data-state="selected"], [data-state~="open"], [data-state~="active"])>& */
-    {
+  &:is(.active, .selected, [data-state~="selected"], [data-state~="open"], [data-state~="active"]) {
     background-color: var(--_btn-bg-selected);
     border-color: var(--_btn-border-selected);
   }
 
-  &:is(:disabled, .disabled, [data-state="disabled"]) {
+  &:is(:active, [data-state~="pressed"]) {
+    background-color: var(--_btn-bg-active);
+    border-color: var(--_btn-border-active);
+  }
+
+
+  &:is(:disabled, .disabled, [data-state~="disabled"]) {
     background-color: var(--_btn-bg-disabled);
     color: var(--_btn-color-disabled);
     border-color: var(--_btn-border-disabled);
@@ -99,6 +96,7 @@
     --btn-bg-selected: var(--button-background-primary-selected);
     --btn-color: var(--text-oncolor-primary);
     --btn-indicator-color: var(--background-primary-400);
+    --btn-indicator-active: var(--background-primary-400);
     --btn-indicator-selected: var(--background-primary-400);
     --btn-loading-color: var(--text-oncolor-primary);
     --btn-loading-track: var(--alpha-white-20);
@@ -112,6 +110,7 @@
     --btn-bg-selected: var(--button-background-black-selected);
     --btn-color: var(--text-oncolor-primary);
     --btn-indicator-color: var(--background-primary-400);
+    --btn-indicator-active: var(--background-primary-400);
     --btn-indicator-selected: var(--background-primary-400);
     --btn-loading-color: var(--text-oncolor-primary);
     --btn-loading-track: var(--alpha-white-20);
@@ -143,20 +142,20 @@
 
   /* Subtle Button */
   &.nds-subtle {
-    --btn-bg: transparent;
+    --btn-bg: var(--button-background-transparent-default);
     --btn-bg-hover: var(--button-background-neutral-default);
     --btn-bg-active: var(--button-background-neutral-pressed);
     --btn-bg-selected: var(--button-background-neutral-selected);
-    --btn-bg-disabled: transparent;
+    --btn-bg-disabled: var(--button-background-neutral-default);
     --btn-color: var(--text-default);
   }
 
   /* Transparent Button */
   &.nds-transparent {
-    --btn-bg: transparent;
-    --btn-bg-hover: transparent;
-    --btn-bg-active: transparent;
-    --btn-bg-selected: transparent;
+    --btn-bg: var(--button-background-transparent-default);
+    --btn-bg-hover: var(--button-background-transparent-hovered);
+    --btn-bg-active: var(--button-background-transparent-pressed);
+    --btn-bg-selected: var(--button-background-transparent-selected);
     --btn-bg-disabled: transparent;
     --btn-color: var(--text-default);
     --btn-color-hover: var(--button-background-primary-hovered);
@@ -167,11 +166,11 @@
       --btn-color-hover: var(--text-default);
     }
 
-    &:is(.selected, [data-state="selected"], [data-state~="open"]) {
+    &:is(.selected, [data-state~="selected"], [data-state~="open"], [data-state~="active"]) {
       color: var(--button-background-primary-selected);
     }
 
-    &:is(:active, [data-state="active"]) {
+    &:is(:active, [data-state~="pressed"]) {
       color: var(--button-background-primary-pressed);
     }
 
@@ -188,6 +187,10 @@
 
   &.nds-oncolor {
     --btn-color-disabled: var(--text-default-oncolor-disabled);
+    --btn-indicator-color: var(--alpha-white-40);
+    --btn-indicator-active: var(--alpha-white-60);
+    --btn-indicator-selected: var(--background-white);
+
 
     &:is(.nds-primary, .nds-neutral) {
       --btn-bg: var(--button-background-oncolor-default);
@@ -238,12 +241,20 @@
     }
 
     &.nds-transparent {
+      --btn-bg: transparent;
+      --btn-bg-hover: transparent;
+      --btn-bg-active: transparent;
+      --btn-bg-selected: transparent;
       --btn-color: var(--text-oncolor-primary);
       --btn-color-hover: var(--button-label-transparent-hovered-on-color);
       --btn-loading-color: var(--text-oncolor-primary);
       --btn-loading-track: var(--alpha-white-20);
 
-      &:is(.selected, [data-state="selected"], [data-state~="open"], :active, [data-state="active"]) {
+      &:is(.selected, [data-state~="selected"], [data-state~="open"], [data-state~="active"]) {
+        color: var(--button-label-transparent-pressed-on-color);
+      }
+
+      &:is(:active, [data-state~="pressed"]) {
         color: var(--button-label-transparent-pressed-on-color);
       }
     }
@@ -308,11 +319,11 @@
       --btn-color-hover: var(--button-background-danger-primary-hovered);
       --btn-loading-color: var(--button-background-danger-primary-default);
 
-      &:is(.selected, [data-state="selected"], [data-state~="open"]) {
+      &:is(.selected, [data-state~="selected"], [data-state~="open"], [data-state~="active"]) {
         color: var(--button-background-danger-primary-selected);
       }
 
-      &:is(:active, [data-state="active"]) {
+      &:is(:active, [data-state~="pressed"]) {
         color: var(--button-background-danger-primary-pressed);
       }
     }
@@ -356,11 +367,11 @@
       --btn-border-selected: var(--border-error-light);
       --btn-border-disabled: var(--border-neutral-secondary);
 
-      &:is(.selected, [data-state="selected"], [data-state~="open"]) {
+      &:is(.selected, [data-state~="selected"], [data-state~="open"], [data-state~="active"]) {
         color: var(--button-background-danger-primary-selected);
       }
 
-      &:is(:active, [data-state="active"]) {
+      &:is(:active, [data-state~="pressed"]) {
         color: var(--button-background-danger-primary-pressed);
       }
     }
@@ -374,11 +385,11 @@
       --btn-color: var(--button-label-danger-primary-default-oncolor);
       --btn-color-hover: var(--button-background-danger-primary-hovered);
 
-      &:is(.selected, [data-state="selected"], [data-state~="open"]) {
+      &:is(.selected, [data-state~="selected"], [data-state~="open"], [data-state~="active"]) {
         color: var(--button-background-danger-primary-selected);
       }
 
-      &:is(:active, [data-state="active"]) {
+      &:is(:active, [data-state~="pressed"]) {
         color: var(--button-background-danger-primary-pressed);
       }
     }
@@ -387,11 +398,11 @@
       --btn-color: var(--button-label-danger-primary-default-oncolor);
       --btn-color-hover: var(--button-label-danger-primary-hovered-oncolor);
 
-      &:is(.selected, [data-state="selected"], [data-state~="open"]) {
+      &:is(.selected, [data-state~="selected"], [data-state~="open"], [data-state~="active"]) {
         color: var(--button-label-danger-primary-selected-oncolor);
       }
 
-      &:is(:active, [data-state="active"]) {
+      &:is(:active, [data-state~="pressed"]) {
         color: var(--button-label-danger-primary-pressed-oncolor);
       }
     }
@@ -404,17 +415,18 @@
   &.nds-indicator {
     @include btn-indicator;
 
-    &:is(:hover, [data-state="hover"])::before {
+    &:is(:hover, [data-state~="hover"])::before {
       background-color: var(--_btn-indicator-color);
     }
 
-    &:is(:active, .selected, :focus-visible, [aria-selected="true"], [data-state~="open"], [data-state~="selected"], [data-state~="active"], [data-state~="focused"])::before
-
-    /* ,
-    :is(.show, .open, .active, [data-state~="open"], [data-state~="selected"], [data-state~="active"], [data-state~="focused"])>&::before */
-      {
+    &:is(.selected, :focus-visible, [aria-selected="true"], [data-state~="open"], [data-state~="selected"], [data-state~="active"], [data-state~="focused"])::before {
       background-color: var(--_btn-indicator-selected);
     }
+
+    &:active::before {
+      background-color: var(--_btn-indicator-active);
+    }
+
   }
 
   // ==============================================
@@ -447,6 +459,7 @@
   }
 
   &.nds-menu-btn {
+
     &:is(.selected, .expanded, [data-state~="opening"], [data-state~="open"], [aria-expanded="true"])::after,
     :is(.show, [data-state~="opening"], [data-state~="open"], .active)>&::after {
       transform: rotate(180deg);
@@ -556,7 +569,7 @@
   // LOADING STATES
   // ==============================================
 
-  &:is(.nds-loading, .loading, [data-state="loading"]) {
+  &:is(.nds-loading, .loading, [data-state~="loading"]) {
     --loading-color: var(--_btn-loading-color);
     --loading-track: var(--_btn-loading-track);
     color: transparent !important;

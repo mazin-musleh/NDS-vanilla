@@ -189,6 +189,10 @@
             justify-content: center;
             margin: 0 var(--spacing-md);
 
+            > ::before {
+                background-color: var(--_btn-indicator-color);
+            }
+
         }
 
         >*:first-child {
@@ -210,6 +214,7 @@
         --btn-height: var(--nds-nav-height);
         font-size: var(--nds-text-clamp-lg-FS);
         line-height: var(--nds-text-clamp-lg-LH);
+
 
         .nds-avatar {
             --avatar-size: calc(var(--nds-nav-height) - 40px);
@@ -407,6 +412,27 @@
    ======================================== */
 
 body:not(.nds-minimal) .nds-main-nav {
+    .nds-nav-item {
+        .nds-nav-link {
+            &:is([data-state~="current"]) {
+                --btn-bg: var(--button-background-primary-default);
+                --btn-bg-hover: var(--button-background-primary-hovered);
+                --btn-bg-active: var(--button-background-primary-pressed);
+                --btn-bg-selected: var(--button-background-primary-default);
+                --btn-color: var(--text-oncolor-primary);
+                --btn-indicator-color: var(--background-primary-400);
+                --btn-indicator-active: var(--background-primary-400);
+                --btn-indicator-selected: var(--background-primary-400);
+                --btn-loading-color: var(--text-oncolor-primary);
+                --btn-loading-track: var(--alpha-white-20);
+
+                &::before {
+                    background-color: var(--_btn-indicator-color);
+                }
+
+            }
+        }
+    }
 
     .nds-mainNav-toggler {
         display: none;
@@ -558,6 +584,7 @@ body:not(.nds-minimal) .nds-main-nav {
    ======================================== */
 
 body.nds-minimal .nds-main-nav {
+
     .nds-mainNav-toggler {
         display: flex;
 
@@ -629,6 +656,13 @@ body.nds-minimal .nds-main-nav {
         transition: max-height var(--nds-transition), margin-bottom 0.1s;
 
         .nds-nav-item {
+            .nds-nav-link:is([data-state~="selected"], [data-state~="active"], [data-state~="current"]) {
+                --btn-bg: var(--button-background-transparent-default);
+                --btn-bg-selected: var(--button-background-transparent-default);
+                --btn-indicator-selected: var(--background-primary);
+
+            }
+
             &:not(.showMore) {
                 margin: 0 var(--spacing-xl);
             }

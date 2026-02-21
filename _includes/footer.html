@@ -10,7 +10,7 @@
             {% if column.mobile_apps %}
             <!-- Mobile App section -->
             <li class="nds-footer-app-item">
-                <button class="list-header nds-btn nds-oncolor nds-menu-btn">
+                <button class="list-header nds-btn nds-subtle nds-oncolor nds-menu-btn nds-indicator">
                     <span class="label">{{ column.heading }}</span>
                 </button>
                 <ul>
@@ -53,7 +53,7 @@
             {% else %}
             <!-- Combined column: supports links, social_icons, or both -->
             <li {% if column.social_icons %}class="nds-footer-contact-item" {% endif %}>
-                <button class="list-header nds-btn nds-oncolor nds-menu-btn">
+                <button class="list-header nds-btn nds-subtle nds-oncolor nds-menu-btn nds-indicator">
                     <span class="label">{{ column.heading }}</span>
                 </button>
                 <ul>
@@ -65,7 +65,7 @@
                         link.url contains "#" %}
                         {% assign url_output = link.url | relative_url %}
                         {% endunless %}
-                        <a class="nds-btn nds-transparent nds-oncolor nds-indicator" href="{{ url_output }}" {% if
+                        <a class="nds-btn nds-subtle nds-oncolor nds-indicator" href="{{ url_output }}" {% if
                             link.target %} target="{{ link.target }}" {% endif %}>
                             {% if link.icon %}<i class="hgi hgi-stroke {{ link.icon }} icon"></i>{% endif %}
                             <span class="label">{{ link.label }}</span>

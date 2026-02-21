@@ -37,8 +37,8 @@ direction: ltr
                                     class="label">Default</span></button>
                             <button class="nds-btn nds-primary" data-state="hover"><span
                                     class="label">Hover</span></button>
-                            <button class="nds-btn nds-primary" data-state="active"><span
-                                    class="label">Active</span></button>
+                            <button class="nds-btn nds-primary" data-state="pressed"><span
+                                    class="label">Pressed</span></button>
                             <button class="nds-btn nds-primary selected" data-state="selected"><span
                                     class="label">Selected</span></button>
                             <button class="nds-btn nds-primary focus" data-state="focused"><span
@@ -97,8 +97,8 @@ direction: ltr
                                     class="label">Default</span></button>
                             <button class="nds-btn nds-neutral nds-demo" data-state="hover"><span
                                     class="label">Hover</span></button>
-                            <button class="nds-btn nds-neutral nds-demo" data-state="active"><span
-                                    class="label">Active</span></button>
+                            <button class="nds-btn nds-neutral nds-demo" data-state="pressed"><span
+                                    class="label">Pressed</span></button>
                             <button class="nds-btn nds-neutral nds-demo selected" data-state="selected"><span
                                     class="label">Selected</span></button>
                             <button class="nds-btn nds-neutral nds-demo focus" data-state="focused"><span
@@ -158,8 +158,8 @@ direction: ltr
                                     class="label">Default</span></button>
                             <button class="nds-btn nds-secondary nds-demo" data-state="hover"><span
                                     class="label">Hover</span></button>
-                            <button class="nds-btn nds-secondary nds-demo" data-state="active"><span
-                                    class="label">Active</span></button>
+                            <button class="nds-btn nds-secondary nds-demo" data-state="pressed"><span
+                                    class="label">Pressed</span></button>
                             <button class="nds-btn nds-secondary nds-demo selected" data-state="selected"><span
                                     class="label">Selected</span></button>
                             <button class="nds-btn nds-secondary nds-demo focus" data-state="focused"><span
@@ -219,8 +219,8 @@ direction: ltr
                                     class="label">Default</span></button>
                             <button class="nds-btn nds-secondary-outline nds-demo" data-state="hover"><span
                                     class="label">Hover</span></button>
-                            <button class="nds-btn nds-secondary-outline nds-demo" data-state="active"><span
-                                    class="label">Active</span></button>
+                            <button class="nds-btn nds-secondary-outline nds-demo" data-state="pressed"><span
+                                    class="label">Pressed</span></button>
                             <button class="nds-btn nds-secondary-outline nds-demo selected" data-state="selected"><span
                                     class="label">Selected</span></button>
                             <button class="nds-btn nds-secondary-outline nds-demo focus" data-state="focused"><span
@@ -280,8 +280,8 @@ direction: ltr
                                     class="label">Default</span></button>
                             <button class="nds-btn nds-subtle nds-demo" data-state="hover"><span
                                     class="label">Hover</span></button>
-                            <button class="nds-btn nds-subtle nds-demo" data-state="active"><span
-                                    class="label">Active</span></button>
+                            <button class="nds-btn nds-subtle nds-demo" data-state="pressed"><span
+                                    class="label">Pressed</span></button>
                             <button class="nds-btn nds-subtle nds-demo selected" data-state="selected"><span
                                     class="label">Selected</span></button>
                             <button class="nds-btn nds-subtle nds-demo focus" data-state="focused"><span
@@ -345,8 +345,8 @@ direction: ltr
                                     class="label">Default</span></button>
                             <button class="nds-btn nds-transparent nds-demo" data-state="hover"><span
                                     class="label">Hover</span></button>
-                            <button class="nds-btn nds-transparent nds-demo" data-state="active"><span
-                                    class="label">Active</span></button>
+                            <button class="nds-btn nds-transparent nds-demo" data-state="pressed"><span
+                                    class="label">Pressed</span></button>
                             <button class="nds-btn nds-transparent nds-demo selected" data-state="selected"><span
                                     class="label">Selected</span></button>
                             <button class="nds-btn nds-transparent nds-demo focus" data-state="focused"><span
@@ -406,8 +406,8 @@ direction: ltr
                                     class="label">Default</span></button>
                             <button class="nds-btn nds-primary nds-oncolor nds-demo" data-state="hover"><span
                                     class="label">Hover</span></button>
-                            <button class="nds-btn nds-primary nds-oncolor nds-demo" data-state="active"><span
-                                    class="label">Active</span></button>
+                            <button class="nds-btn nds-primary nds-oncolor nds-demo" data-state="pressed"><span
+                                    class="label">Pressed</span></button>
                             <button class="nds-btn nds-primary nds-oncolor nds-demo selected"
                                 data-state="selected"><span class="label">Selected</span></button>
                             <button class="nds-btn nds-primary nds-oncolor nds-demo focus" data-state="focused"><span
@@ -464,8 +464,8 @@ direction: ltr
                                     class="label">Default</span></button>
                             <button class="nds-btn nds-neutral nds-oncolor nds-demo" data-state="hover"><span
                                     class="label">Hover</span></button>
-                            <button class="nds-btn nds-neutral nds-oncolor nds-demo" data-state="active"><span
-                                    class="label">Active</span></button>
+                            <button class="nds-btn nds-neutral nds-oncolor nds-demo" data-state="pressed"><span
+                                    class="label">Pressed</span></button>
                             <button class="nds-btn nds-neutral nds-oncolor nds-demo selected"
                                 data-state="selected"><span class="label">Selected</span></button>
                             <button class="nds-btn nds-neutral nds-oncolor nds-demo focus" data-state="focused"><span
@@ -522,8 +522,8 @@ direction: ltr
                                     class="label">Default</span></button>
                             <button class="nds-btn nds-secondary nds-oncolor nds-demo" data-state="hover"><span
                                     class="label">Hover</span></button>
-                            <button class="nds-btn nds-secondary nds-oncolor nds-demo" data-state="active"><span
-                                    class="label">Active</span></button>
+                            <button class="nds-btn nds-secondary nds-oncolor nds-demo" data-state="pressed"><span
+                                    class="label">Pressed</span></button>
                             <button class="nds-btn nds-secondary nds-oncolor nds-demo selected"
                                 data-state="selected"><span class="label">Selected</span></button>
                             <button class="nds-btn nds-secondary nds-oncolor nds-demo focus" data-state="focused"><span
@@ -580,8 +580,8 @@ direction: ltr
                                 data-state="default"><span class="label">Default</span></button>
                             <button class="nds-btn nds-secondary-outline nds-oncolor nds-demo" data-state="hover"><span
                                     class="label">Hover</span></button>
-                            <button class="nds-btn nds-secondary-outline nds-oncolor nds-demo" data-state="active"><span
-                                    class="label">Active</span></button>
+                            <button class="nds-btn nds-secondary-outline nds-oncolor nds-demo" data-state="pressed"><span
+                                    class="label">Pressed</span></button>
                             <button class="nds-btn nds-secondary-outline nds-oncolor nds-demo selected"
                                 data-state="selected"><span class="label">Selected</span></button>
                             <button class="nds-btn nds-secondary-outline nds-oncolor nds-demo focus"
@@ -640,8 +640,8 @@ direction: ltr
                                     class="label">Default</span></button>
                             <button class="nds-btn nds-subtle nds-oncolor nds-demo" data-state="hover"><span
                                     class="label">Hover</span></button>
-                            <button class="nds-btn nds-subtle nds-oncolor nds-demo" data-state="active"><span
-                                    class="label">Active</span></button>
+                            <button class="nds-btn nds-subtle nds-oncolor nds-demo" data-state="pressed"><span
+                                    class="label">Pressed</span></button>
                             <button class="nds-btn nds-subtle nds-oncolor nds-demo selected" data-state="selected"><span
                                     class="label">Selected</span></button>
                             <button class="nds-btn nds-subtle nds-oncolor nds-demo focus" data-state="focused"><span
@@ -698,8 +698,8 @@ direction: ltr
                                     class="label">Default</span></button>
                             <button class="nds-btn nds-transparent nds-oncolor nds-demo" data-state="hover"><span
                                     class="label">Hover</span></button>
-                            <button class="nds-btn nds-transparent nds-oncolor nds-demo" data-state="active"><span
-                                    class="label">Active</span></button>
+                            <button class="nds-btn nds-transparent nds-oncolor nds-demo" data-state="pressed"><span
+                                    class="label">Pressed</span></button>
                             <button class="nds-btn nds-transparent nds-oncolor nds-demo selected"
                                 data-state="selected"><span class="label">Selected</span></button>
                             <button class="nds-btn nds-transparent nds-oncolor nds-demo focus"
@@ -769,8 +769,8 @@ direction: ltr
                                     class="label">Default</span></button>
                             <button class="nds-btn nds-primary nds-destructive nds-demo" data-state="hover"><span
                                     class="label">Hover</span></button>
-                            <button class="nds-btn nds-primary nds-destructive nds-demo" data-state="active"><span
-                                    class="label">Active</span></button>
+                            <button class="nds-btn nds-primary nds-destructive nds-demo" data-state="pressed"><span
+                                    class="label">Pressed</span></button>
                             <button class="nds-btn nds-primary nds-destructive nds-demo focus"
                                 data-state="focused"><span class="label">Focused</span></button>
                         </div>
@@ -823,8 +823,8 @@ direction: ltr
                                     class="label">Default</span></button>
                             <button class="nds-btn nds-secondary nds-destructive nds-demo" data-state="hover"><span
                                     class="label">Hover</span></button>
-                            <button class="nds-btn nds-secondary nds-destructive nds-demo" data-state="active"><span
-                                    class="label">Active</span></button>
+                            <button class="nds-btn nds-secondary nds-destructive nds-demo" data-state="pressed"><span
+                                    class="label">Pressed</span></button>
                             <button class="nds-btn nds-secondary nds-destructive nds-demo focus"
                                 data-state="focused"><span class="label">Focused</span></button>
                         </div>
@@ -878,7 +878,7 @@ direction: ltr
                             <button class="nds-btn nds-secondary-outline nds-destructive nds-demo"
                                 data-state="hover"><span class="label">Hover</span></button>
                             <button class="nds-btn nds-secondary-outline nds-destructive nds-demo"
-                                data-state="active"><span class="label">Active</span></button>
+                                data-state="pressed"><span class="label">Pressed</span></button>
                             <button class="nds-btn nds-secondary-outline nds-destructive nds-demo focus"
                                 data-state="focused"><span class="label">Focused</span></button>
                         </div>
@@ -931,8 +931,8 @@ direction: ltr
                                     class="label">Default</span></button>
                             <button class="nds-btn nds-subtle nds-destructive nds-demo" data-state="hover"><span
                                     class="label">Hover</span></button>
-                            <button class="nds-btn nds-subtle nds-destructive nds-demo" data-state="active"><span
-                                    class="label">Active</span></button>
+                            <button class="nds-btn nds-subtle nds-destructive nds-demo" data-state="pressed"><span
+                                    class="label">Pressed</span></button>
                             <button class="nds-btn nds-subtle nds-destructive nds-demo focus" data-state="focused"><span
                                     class="label">Focused</span></button>
                         </div>
@@ -985,8 +985,8 @@ direction: ltr
                                     class="label">Default</span></button>
                             <button class="nds-btn nds-transparent nds-destructive nds-demo" data-state="hover"><span
                                     class="label">Hover</span></button>
-                            <button class="nds-btn nds-transparent nds-destructive nds-demo" data-state="active"><span
-                                    class="label">Active</span></button>
+                            <button class="nds-btn nds-transparent nds-destructive nds-demo" data-state="pressed"><span
+                                    class="label">Pressed</span></button>
                             <button class="nds-btn nds-transparent nds-destructive nds-demo focus"
                                 data-state="focused"><span class="label">Focused</span></button>
                         </div>
@@ -1046,7 +1046,7 @@ direction: ltr
                             <button class="nds-btn nds-primary nds-oncolor nds-destructive nds-demo"
                                 data-state="hover"><span class="label">Hover</span></button>
                             <button class="nds-btn nds-primary nds-oncolor nds-destructive nds-demo"
-                                data-state="active"><span class="label">Active</span></button>
+                                data-state="pressed"><span class="label">Pressed</span></button>
                             <button class="nds-btn nds-primary nds-oncolor nds-destructive nds-demo focus"
                                 data-state="focused"><span class="label">Focused</span></button>
                         </div>
@@ -1103,7 +1103,7 @@ direction: ltr
                             <button class="nds-btn nds-secondary nds-oncolor nds-destructive nds-demo"
                                 data-state="hover"><span class="label">Hover</span></button>
                             <button class="nds-btn nds-secondary nds-oncolor nds-destructive nds-demo"
-                                data-state="active"><span class="label">Active</span></button>
+                                data-state="pressed"><span class="label">Pressed</span></button>
                             <button class="nds-btn nds-secondary nds-oncolor nds-destructive nds-demo focus"
                                 data-state="focused"><span class="label">Focused</span></button>
                         </div>
@@ -1160,7 +1160,7 @@ direction: ltr
                             <button class="nds-btn nds-secondary-outline nds-oncolor nds-destructive nds-demo"
                                 data-state="hover"><span class="label">Hover</span></button>
                             <button class="nds-btn nds-secondary-outline nds-oncolor nds-destructive nds-demo"
-                                data-state="active"><span class="label">Active</span></button>
+                                data-state="pressed"><span class="label">Pressed</span></button>
                             <button class="nds-btn nds-secondary-outline nds-oncolor nds-destructive nds-demo focus"
                                 data-state="focused"><span class="label">Focused</span></button>
                         </div>
@@ -1217,7 +1217,7 @@ direction: ltr
                             <button class="nds-btn nds-subtle nds-oncolor nds-destructive nds-demo"
                                 data-state="hover"><span class="label">Hover</span></button>
                             <button class="nds-btn nds-subtle nds-oncolor nds-destructive nds-demo"
-                                data-state="active"><span class="label">Active</span></button>
+                                data-state="pressed"><span class="label">Pressed</span></button>
                             <button class="nds-btn nds-subtle nds-oncolor nds-destructive nds-demo focus"
                                 data-state="focused"><span class="label">Focused</span></button>
                         </div>
@@ -1274,7 +1274,7 @@ direction: ltr
                             <button class="nds-btn nds-transparent nds-oncolor nds-destructive nds-demo"
                                 data-state="hover"><span class="label">Hover</span></button>
                             <button class="nds-btn nds-transparent nds-oncolor nds-destructive nds-demo"
-                                data-state="active"><span class="label">Active</span></button>
+                                data-state="pressed"><span class="label">Pressed</span></button>
                             <button class="nds-btn nds-transparent nds-oncolor nds-destructive nds-demo focus"
                                 data-state="focused"><span class="label">Focused</span></button>
                         </div>
