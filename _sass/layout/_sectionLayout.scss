@@ -58,7 +58,7 @@
 
     // Mobile: standard action wraps to full row
     @include mobile {
-        > .nds-section-action:not(.nds-nowrap) {
+        >.nds-section-action {
             flex: 1 0 100%;
             flex-direction: row;
             --btn-width: unset;
@@ -73,14 +73,14 @@
    ======================================== */
 
 // Float: action floats inline-end inside head
-:is(.nds-content-section, .nds-hero-section):not(.nds-horizontal, .nds-center) .nds-section-head > .nds-section-action:first-child {
+:is(.nds-content-section, .nds-hero-section):not(.nds-horizontal, .nds-center) .nds-section-head>.nds-section-action {
     float: inline-end;
     margin-inline-start: var(--_section-col-gap);
     margin-block-end: calc(var(--_section-col-gap) / 2);
 }
 
 // Dual action: outside action wraps full row when head has float action
-:is(.nds-content-section, .nds-hero-section):not(.nds-center, .nds-horizontal) .nds-section-head:has(> .nds-section-action:first-child) ~ .nds-section-action {
+:is(.nds-content-section, .nds-hero-section):not(.nds-center, .nds-horizontal)>.nds-section-wrapper>.nds-section-head:has(> .nds-section-action)~.nds-section-action {
     flex: 1 0 100%;
     flex-direction: row;
     --btn-width: unset;
@@ -88,11 +88,11 @@
 
 // Mobile: float action wraps below title via flex column + order
 @include mobile {
-    .nds-section-head:has(> .nds-section-action:first-child:not(.nds-nowrap)) {
+    .nds-section-head:has(> .nds-section-action.nds-wrap) {
         display: flex;
         flex-direction: column;
 
-        > .nds-section-action:first-child {
+        >.nds-section-action {
             float: none;
             order: 1;
             margin-inline-start: 0;
@@ -100,6 +100,20 @@
             --btn-width: unset;
             flex-direction: row;
         }
+    }
+
+
+    .nds-section-head>.nds-section-action.nds-minimal {
+
+        >.nds-btn,
+        >.nds-dropmenu>.nds-btn {
+            /* --btn-size: 32px; */
+
+            >.label {
+                display: none;
+            }
+        }
+
     }
 }
 
@@ -185,7 +199,7 @@
    ======================================== */
 
 .nds-content-section.nds-center {
-    > .nds-section-wrapper {
+    >.nds-section-wrapper {
         flex-direction: column;
         align-items: center;
         text-align: center;
@@ -198,9 +212,10 @@
         align-items: center;
         width: 100%;
 
-        > .nds-section-action:first-child {
+        >.nds-section-action {
             order: 1;
-            margin-block-start: var(--_section-col-gap);
+            margin-inline-start: 0;
+            margin-block: var(--_section-col-gap) 0;
         }
     }
 
@@ -226,7 +241,7 @@
    ======================================== */
 
 @include desktop(min) {
-    :is(.nds-content-section, .nds-hero-section).nds-horizontal > .nds-section-wrapper {
+    :is(.nds-content-section, .nds-hero-section).nds-horizontal>.nds-section-wrapper {
         display: grid;
         grid-template-columns: auto 1fr;
         align-items: center;
@@ -240,8 +255,10 @@
             display: flex;
             flex-direction: column;
 
-            > .nds-section-action:first-child {
+            >.nds-section-action {
                 order: 1;
+                margin-inline-start: 0;
+                margin-block: var(--_section-col-gap) 0;
             }
         }
     }

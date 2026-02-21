@@ -1,14 +1,24 @@
-# Hero Action Data — tags & action buttons for the sub hero section
+# Hero Action Data — tags, actions & float actions for the sub hero section
 #
-# Resolution order:
-#   1. page.hero_tags / page.hero_actions (inline front matter — highest priority)
+# Resolution order (per category):
+#   1. page front matter (hero_tags / hero_actions / hero_float_actions — highest priority)
 #   2. _data/hero/{heroaction-value}.yml (set `heroaction: filename` in front matter)
 #   3. _data/hero/heroaction.yml (this file — default fallback)
 #
 # Structure:
-#   tags:     (optional) array of tag badges shown below the hero title
-#   actions:  (optional) array of CTA buttons shown in the hero section
-#   If no `actions` key exists, the entire file is treated as an actions array (legacy).
+#   tags:           (optional) array of tag badges shown below the hero title
+#   actions:        (optional) array of CTA buttons — standard action (sibling of head)
+#   float_actions:  (optional) float action (inside head, inline-end)
+#                   Simple:  float_actions: [share]
+#                   Object:  float_actions: { class: "nds-minimal", items: [share] }
+#
+# ─── Share button placement ───
+#   The share dropmenu is a predefined action keyword: "share"
+#   Place it in either actions or float_actions to control its position:
+#     float_actions: [share]        → floats inline-end inside head (default if not placed)
+#     actions: [..., share]         → renders in standard action alongside CTAs
+#   If "share" is not in either array, it will not render.
+#   Set `hide_share_page: true` in front matter to force-hide it.
 #
 # ─── Tag fields ───
 #   label:      (required) Tag text
@@ -16,28 +26,44 @@
 #   icon:       HGI icon name, e.g. "hgi-star-01"
 #   modifiers:  Extra classes, e.g. "nds-outline nds-rounded"
 #
-# ─── Action fields ───
+# ─── Action fields (actions & float_actions) ───
 #   label:          (required) Button text
 #   url:            (required) Link URL
-#   style:          Button variant (default: nds-primary)
+#   style:          Button variant (default: nds-primary for actions, nds-secondary-outline for float_actions)
 #   icon:           HGI icon name, e.g. "hgi-arrow-right-01"
 #   icon_position:  "trailing" to place icon after label (default: leading)
 #   aria_label:     Custom aria-label for accessibility
 #   target:         Link target, e.g. "_blank"
+#
+# ─── Float action class modifiers ───
+#   nds-minimal:  hides button labels on mobile (icon-only)
+#   nds-wrap:     allows float action items to wrap
 #
 # ─── Example ───
 # tags:
 #   - label: "New Service"
 #     style: "nds-green"
 #     icon: "hgi-star-01"
-#   - label: "Beta"
-#     style: "nds-orange"
+#
+# float_actions:                        # simple array format
+#   - share
+#   - label: "Bookmark"
+#     url: "#"
+#     icon: "hgi-bookmark-01"
+#     style: "nds-subtle"
+#
+# float_actions:                        # object format with class
+#   class: "nds-minimal"
+#   items:
+#     - share
 #
 # actions:
 #   - label: "Get Started"
 #     url: "/services"
 #     style: "nds-primary"
-#     icon: "hgi-arrow-right-01"
-#   - label: "Learn More"
-#     url: "/about"
-#     style: "nds-secondary-outline"
+
+# ─── Default ───
+float_actions:
+  class: nds-minimal
+  items:
+    - share

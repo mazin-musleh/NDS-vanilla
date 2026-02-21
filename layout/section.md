@@ -35,6 +35,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
 │   ├── div.nds-section-image        (optional)
 │   ├── div.nds-section-head         (flex:1 — title + desc + meta)
 │   │   ├── div.nds-section-action   (optional float — must be first child)
+│   │   │                            Modifiers: .nds-minimal (icon-only on mobile) | .nds-wrap (allow wrap)
 │   │   ├── h2.nds-section-title
 │   │   ├── div.nds-section-meta
 │   │   └── p.nds-section-description
@@ -322,7 +323,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Float Action</h2>
-            <p class="nds-section-description">Place the action as the <strong>first child</strong> inside the section head. It floats to the inline-end, letting the title and description text wrap around it. Not compatible with .nds-center or .nds-horizontal layouts.</p>
+            <p class="nds-section-description">Place the action as the <strong>first child</strong> inside the section head. It floats to the inline-end, letting the title and description text wrap around it. Not compatible with .nds-center or .nds-horizontal layouts. Add <strong>.nds-minimal</strong> to hide button labels on mobile (icon-only) or <strong>.nds-wrap</strong> to allow items to wrap.</p>
         </div>
         <div class="nds-section-content">
             <div class="nds-showcase">
@@ -330,6 +331,14 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                     <div class="demo-header">
                         <div class="demo-label">Float Action</div>
                         <div class="demo-action">
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-minimal", ".nds-section-head > .nds-section-action", "floatMod"]'>
+                                <span class="label">Minimal</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-wrap", ".nds-section-head > .nds-section-action", "floatMod"]'>
+                                <span class="label">Wrap</span>
+                            </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-center", ".nds-content-section", "sectionLayout"]'>
                                 <span class="label">Center</span>
@@ -342,7 +351,8 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                                 <div class="nds-section-wrapper">
                                     <div class="nds-section-head">
                                         <div class="nds-section-action">
-                                            <a href="#" class="nds-btn nds-primary">
+                                            <a href="#" class="nds-btn nds-primary" aria-label="View All">
+                                                <i class="hgi hgi-stroke hgi-arrow-right-01 icon"></i>
                                                 <span class="label">View All</span>
                                             </a>
                                         </div>
@@ -372,11 +382,14 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                                     </button>
                                 </div>
                                 <code class="lang-html code">
+<!-- Float action: first child of nds-section-head -->
+<!-- Optional modifiers: nds-minimal (icon-only on mobile) | nds-wrap (allow wrap) -->
 <section class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
-            <div class="nds-section-action">
-                <a href="#" class="nds-btn nds-primary">
+            <div class="nds-section-action nds-minimal">
+                <a href="#" class="nds-btn nds-primary" aria-label="View All">
+                    <i class="hgi hgi-stroke hgi-arrow-right-01 icon"></i>
                     <span class="label">View All</span>
                 </a>
             </div>
