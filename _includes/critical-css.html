@@ -1,6 +1,6 @@
 <style>
     :root {
-        /* Navigation and layout (critical for initial render) */
+        /* Navigation & layout tokens (critical for initial render) */
         --nds-nav-height: 72px;
         --nds-minimal-nav-item-height: 40px;
         --nds-sideMenu-width: 260px;
@@ -15,7 +15,7 @@
         --background-white: #fff;
     }
 
-    /* ===== RESET & BASE ===== */
+    /* ===== RESET ===== */
     *,
     *::before,
     *::after {
@@ -26,7 +26,9 @@
         margin: 0;
     }
 
+    /* ===== BASE ===== */
     body {
+        font-family: 'IBM Plex Sans Arabic', sans-serif;
         background-color: var(--background-body, #f9fafb);
         color: var(--text-default, #161616);
         font-size: var(--nds-text-md-FS, 16px);
@@ -34,11 +36,10 @@
         min-height: 100dvh;
         display: flex;
         flex-direction: column;
-        margin: 0;
     }
 
-    body * {
-        font-family: 'IBM Plex Sans Arabic', sans-serif;
+    body.fullWidth {
+        --nds-content-MaxWidth: 100%;
     }
 
     img {
@@ -51,34 +52,6 @@
         height: 100%;
     }
 
-    body.fullWidth {
-        --nds-content-MaxWidth: 100%;
-    }
-
-    /* ===== MAIN CONTENT ===== */
-
-    /* Hide icon font elements until loaded */
-    i.hgi-stroke,
-    .nds-breadcrumb li:not(:last-child)::after,
-    .nds-btn:is(.nds-menu-btn, .nds-next, .nds-prev, .nds-up, .nds-down)::after,
-    .nds-form-control input[type="checkbox"]::after,
-    :is(.nds-select, .nds-date-picker) .nds-form-control::after,
-    .nds-step[data-step-state="completed"] .nds-stepper-circle::before {
-        opacity: 0;
-    }
-
-    /* Show icon font elements when loaded */
-    body[data-font-loaded*="hgi-stroke-rounded"] {
-        & i.hgi-stroke,
-        & .nds-breadcrumb li:not(:last-child)::after,
-        & .nds-btn:is(.nds-menu-btn, .nds-next, .nds-prev, .nds-up, .nds-down)::after,
-        & .nds-form-control input[type="checkbox"]::after,
-        & :is(.nds-select, .nds-date-picker) .nds-form-control::after,
-        & .nds-step[data-step-state="completed"] .nds-stepper-circle::before {
-            opacity: 1;
-        }
-    }
-
     .nds-text-icon {
         display: flex;
         align-items: center;
@@ -88,38 +61,46 @@
         background-color: transparent;
     }
 
+    /* ===== ICON FONT LOADING ===== */
+    /* Hide icon pseudo-elements until font loaded (prevents FOUT) */
+    i.hgi-stroke,
+    .nds-breadcrumb li:not(:last-child)::after,
+    .nds-btn:is(.nds-menu-btn, .nds-next, .nds-prev, .nds-up, .nds-down)::after,
+    .nds-form-control input[type="checkbox"]::after,
+    :is(.nds-select, .nds-date-picker) .nds-form-control::after,
+    .nds-step[data-step-state="completed"] .nds-stepper-circle::before {
+        opacity: 0;
+    }
+
+    /* ===== TOPBAR & NAV ===== */
     .nds-topbar {
         background-color: var(--background-neutral-100, #f3f4f6);
         height: 40px;
         z-index: 1000;
     }
 
-    .nds-main-nav {
-        position: sticky;
-        top: 0;
-        left: 0;
-        right: 0;
-        background-color: var(--nds-nav-background-color, #fff);
-        height: var(--nds-nav-height, 72px);
-        box-shadow: var(--shadow-md, 0px 3.288px 6.575px -1.644px rgba(16, 24, 40, 0.10), 0px 1.644px 3.288px -1.644px rgba(16, 24, 40, 0.06));
-        z-index: 1000;
-    }
-
-    .nds-topbar>*,
+    .nds-topbar > *,
     #nds-digitalStamp {
         display: none;
     }
 
-    .nds-hero-section :is(.nds-section-wrapper, .nds-section-head, .nds-section-content) {
-        visibility: hidden;
+    .nds-main-nav {
+        position: sticky;
+        top: 0;
+        inset-inline: 0;
+        background-color: var(--nds-nav-background-color, #fff);
+        height: var(--nds-nav-height, 72px);
+        box-shadow: var(--shadow-md);
+        z-index: 1000;
     }
 
+    /* ===== CLS PREVENTION ===== */
+    /* Hide content until JS hydrates, but reserve layout space */
+    .nds-hero-section :is(.nds-section-wrapper, .nds-section-head, .nds-section-content),
     .nds-content-layout {
         visibility: hidden;
     }
 
-    /* Override hidden attribute for NDS components to prevent CLS */
-    /* Elements are invisible but still reserve layout space */
     [hidden]:is(.nds-tabs, .nds-drawer, .nds-swiper, .nds-breadcrumb-nav, .nds-sideInfo, .nds-user-feedback, .nds-footer) {
         display: block;
         visibility: hidden;
@@ -127,28 +108,55 @@
         max-width: 100%;
     }
 
+    #nds-sharePage {
+        display: none;
+    }
+
+    /* ===== BREADCRUMB ===== */
     .nds-breadcrumb,
     .nds-breadcrumb li {
         display: flex;
     }
 
-    /* Hero Section Base Styles */
+    .nds-breadcrumb li::after {
+        content: '';
+        min-width: 24px;
+    }
+
+    /* ===== HERO SECTION ===== */
     .nds-hero-section {
         width: 100%;
         background-color: var(--background-sa-flag, #074c30);
         position: relative;
         background-position: 50% 50%;
+        --section-padding-block: 0;
     }
 
     .nds-hero-section:not(.sub) {
         overflow: hidden;
         aspect-ratio: 16 / 9;
-        max-height: 550px;
+        height: 550px;
     }
 
-    /* Hero Sub Section */
-    /* Fallback */
+    /* Hero image & overlay */
+    .nds-hero-image {
+        width: 100%;
+        height: 100%;
+    }
+
+    .nds-hero-image-wrapper::before {
+        --_overlay: var(--overlay, 0.20);
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(0deg, rgba(9, 42, 30, var(--_overlay)) 0%, rgba(9, 42, 30, var(--_overlay)) 100%);
+        z-index: 2;
+        pointer-events: none;
+    }
+
+    /* Sub hero (breadcrumb bar) — fallback */
     .nds-hero-section.sub {
+        --section-padding-block: var(--spacing-2xl, 20px);
         background-image: linear-gradient(90deg,
                 transparent 0%,
                 var(--background-brand-light, #f3fcf6) 70%),
@@ -160,7 +168,6 @@
         height: fit-content;
         min-height: 100px;
         box-shadow: inset 0px -2px 4px rgba(0, 0, 0, 0.05) !important;
-        padding: var(--spacing-2xl, 20px) 0;
         border-radius: 0 !important;
     }
 
@@ -171,7 +178,7 @@
             var(--hero_image);
     }
 
-    /* Progressive enhancement with color-mix */
+    /* Sub hero — progressive enhancement with color-mix */
     @supports (background: color-mix(in srgb, #000 0%, transparent)) {
         .nds-hero-section.sub {
             background-image: linear-gradient(90deg,
@@ -188,7 +195,6 @@
         }
     }
 
-
     .nds-hero-section.sub .nds-hero-image-wrapper {
         display: none;
     }
@@ -198,39 +204,7 @@
         box-shadow: unset !important;
     }
 
-    .nds-breadcrumb li::after {
-        content: '';
-        min-width: 24px;
-    }
-
-    /* Hero Image Wrapper */
-    .nds-hero-image {
-        width: 100%;
-        height: 100%;
-    }
-
-    .nds-hero-section:not(.sub) .nds-hero-image {
-        height: 600px;
-    }
-
-    .nds-hero-image-wrapper::before {
-        --_overlay: var(--overlay, 0.20);
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(0deg, rgba(9, 42, 30, var(--_overlay)) 0%, rgba(9, 42, 30, var(--_overlay)) 100%);
-        z-index: 2;
-        pointer-events: none;
-    }
-
-    #nds-sharePage {
-        display: none;
-    }
-
-    /* Swiper Styles */
+    /* ===== HERO SWIPER ===== */
     .nds-swiper.nds-hero {
         width: 100%;
         height: 100%;
@@ -257,23 +231,13 @@
         color: var(--text-oncolor-primary, #fff);
     }
 
-
-    /* Tablet Responsive */
-    @media (max-width: 960px) {
-        .nds-hero-section {
-            height: 500px;
-        }
-
-    }
-
-    /* Mobile Responsive */
     @media (max-width: 768px) {
-
         .nds-hero-section:not(.sub) .nds-section-content .nds-section-title::before {
             width: 80vw;
         }
     }
 
+    /* ===== AUTHOR COPYRIGHT ===== */
     #authorCopyright {
         color: var(--text-oncolor-primary, #fff);
         text-decoration: none;
@@ -282,7 +246,7 @@
         gap: var(--spacing-xs, 4px);
     }
 
-    #authorCopyright:hover>span {
+    #authorCopyright:hover > span {
         text-decoration: underline;
     }
 </style>

@@ -8,7 +8,7 @@
    CONTENT SECTION VISUAL TOKENS
    ======================================== */
 
-.nds-content-section {
+:is(.nds-hero-section, .nds-content-section) {
     /* Section background, shadow, and border overridable tokens */
     --_section-bg: var(--section-bg, var(--background-white, #fff));
     --_section-shadow: var(--section-shadow, none);
@@ -22,6 +22,10 @@
     --_section-margin-block-start: var(--section-margin-block-start, 0);
     --_section-margin-block-end: var(--section-margin-block-end, 0);
 
+    /* Section gap tokens (used by wrapper, float action, etc.) */
+    --_section-col-gap: var(--section-col-gap, var(--spacing-xl, 16px));
+    --_section-row-gap: var(--section-row-gap, var(--spacing-xl, 16px));
+
     background-color: var(--_section-bg);
     box-shadow: var(--_section-shadow);
     border: var(--_section-border);
@@ -34,26 +38,23 @@
     margin-block-start: var(--_section-margin-block-start);
     margin-block-end: var(--_section-margin-block-end);
 
-    &.nds-blue {
-        @include section-variant(var(--colors-blue-950),
-            var(--text-secondary),
-            var(--text-oncolor-secondary));
-    }
-
-    &.nds-green {
+    &:is(.nds-primary, .nds-green) {
         @include section-variant(var(--colors-green-900),
             var(--text-oncolor-primary),
+            var(--text-oncolor-secondary),
             var(--text-oncolor-secondary));
     }
 
     &.nds-neutral {
         @include section-variant(var(--colors-neutral-900),
-            var(--text-secondary),
+            var(--text-oncolor-primary),
+            var(--text-oncolor-secondary),
             var(--text-oncolor-secondary));
     }
 
     &.nds-brand {
         @include section-variant(var(--background-brand-light),
+            var(--text-display),
             var(--text-default),
             var(--text-default));
     }
@@ -207,7 +208,7 @@
         }
     }
 
-    :is(p, ul, ol, .nds-content-block, .nds-table-wrapper, .nds-table , .nds-tabs , .nds-code) {
+    :is(p, ul, ol, .nds-content-block, .nds-table-wrapper, .nds-table, .nds-tabs, .nds-code) {
         margin-block-end: 1rem;
 
         &:last-child {

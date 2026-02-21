@@ -1,6 +1,7 @@
 /* ========================================
    SECTION LAYOUT - Independent Overrides
-   Section wrapper, 404, sideInfo, last-edit, horizontal
+   Wrapper, float action, center, horizontal,
+   404, sideInfo, last-edit
    ======================================== */
 
 @use '../mixins' as *;
@@ -10,8 +11,6 @@
    ======================================== */
 
 .nds-section-wrapper {
-    --_section-col-gap: var(--section-col-gap, var(--spacing-xl, 16px));
-    --_section-row-gap: var(--section-row-gap, var(--spacing-xl, 16px));
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -30,6 +29,7 @@
     .nds-section-image {
         .nds-avatar {
             --avatar-size: 112px;
+
             @include tablet(max) {
                 --avatar-size: 96px;
             }
@@ -44,6 +44,11 @@
     .nds-section-action {
         align-items: self-start;
         align-self: self-start;
+        --btn-width: 100%;
+
+        .label {
+            text-align: center;
+        }
     }
 
     .nds-section-content {
@@ -51,23 +56,49 @@
         min-width: 0;
     }
 
-    @include tablet(max) {
-        .nds-section-action {
+    // Mobile: standard action wraps to full row
+    @include mobile {
+        > .nds-section-action:not(.nds-nowrap) {
             flex: 1 0 100%;
             flex-direction: row;
+            --btn-width: unset;
         }
     }
+}
 
-    @include desktop(min) {
-        .nds-section-action {
-            align-items: stretch;
-            --btn-width: 100%;
+/* ========================================
+   FLOAT ACTION
+   Action as first child of head floats inline-end.
+   Excluded from center/horizontal (they use order instead).
+   ======================================== */
 
-            >.nds-btn {
-                .label {
-                    text-align: center;
-                }
-            }
+// Float: action floats inline-end inside head
+:is(.nds-content-section, .nds-hero-section):not(.nds-horizontal, .nds-center) .nds-section-head > .nds-section-action:first-child {
+    float: inline-end;
+    margin-inline-start: var(--_section-col-gap);
+    margin-block-end: calc(var(--_section-col-gap) / 2);
+}
+
+// Dual action: outside action wraps full row when head has float action
+:is(.nds-content-section, .nds-hero-section):not(.nds-center, .nds-horizontal) .nds-section-head:has(> .nds-section-action:first-child) ~ .nds-section-action {
+    flex: 1 0 100%;
+    flex-direction: row;
+    --btn-width: unset;
+}
+
+// Mobile: float action wraps below title via flex column + order
+@include mobile {
+    .nds-section-head:has(> .nds-section-action:first-child:not(.nds-nowrap)) {
+        display: flex;
+        flex-direction: column;
+
+        > .nds-section-action:first-child {
+            float: none;
+            order: 1;
+            margin-inline-start: 0;
+            margin-block: var(--_section-col-gap) 0;
+            --btn-width: unset;
+            flex-direction: row;
         }
     }
 }
@@ -106,7 +137,7 @@
         display: flex;
         flex-direction: column;
         flex: 1;
-        min-width: 0; // Allow flex item to shrink below content size
+        min-width: 0;
     }
 
     .nds-sideInfo {
@@ -150,28 +181,11 @@
 }
 
 /* ========================================
-   LAST EDIT
-   ======================================== */
-
-.nds-last-edit {
-    font-size: var(--nds-text-clamp-md-FS);
-    text-align: end;
-    height: 24px;
-    display: block;
-    margin-top: calc((24px + var(--spacing-md)) * -1);
-    grid-column: content;
-    width: 100%;
-    max-width: var(--nds-content-MaxWidth, 1280px);
-    margin-inline: auto;
-    padding: 0 var(--nds-viewport-padding, 32px);
-}
-
-/* ========================================
    CENTERED SECTION LAYOUT
    ======================================== */
 
 .nds-content-section.nds-center {
-    >.nds-section-wrapper {
+    > .nds-section-wrapper {
         flex-direction: column;
         align-items: center;
         text-align: center;
@@ -182,6 +196,12 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        width: 100%;
+
+        > .nds-section-action:first-child {
+            order: 1;
+            margin-block-start: var(--_section-col-gap);
+        }
     }
 
     .nds-section-description {
@@ -206,7 +226,7 @@
    ======================================== */
 
 @include desktop(min) {
-    :is(.nds-content-section, .nds-hero-section).nds-horizontal>.nds-section-wrapper {
+    :is(.nds-content-section, .nds-hero-section).nds-horizontal > .nds-section-wrapper {
         display: grid;
         grid-template-columns: auto 1fr;
         align-items: center;
@@ -214,6 +234,15 @@
 
         .nds-section-action {
             --btn-width: fit-content;
+        }
+
+        .nds-section-head {
+            display: flex;
+            flex-direction: column;
+
+            > .nds-section-action:first-child {
+                order: 1;
+            }
         }
     }
 }
