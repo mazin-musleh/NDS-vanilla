@@ -8,7 +8,7 @@
                 Digital Government
                 Authority.</span>
             <span class="nds-digitalStamp-sm-text nds-truncate" id="small-screen-text">Government website registered with DGA</span>
-            <b id="nds-digitalStamp-verify-text">How you know?</b>
+            <span id="nds-digitalStamp-verify-text" class="nds-link nds-primary">How you know?</span>
         </button>
         <div class="nds-topbar-info">
             
@@ -62,7 +62,7 @@
                     <span id="register-text">
                     مسجل لدى هيئة الحكومة الرقمية برقم:
                     </span>
-                    <a class="nds-digitalStamp-registration"
+                    <a class="nds-digitalStamp-registration nds-primary nds-underline"
                     href="{{ page.dga_registration_url | default: site.dga_registration_url }}" target="_blank">{{
                     page.dga_registration_number | default: site.dga_registration_number }}</a>
                 </div>

@@ -208,6 +208,7 @@ textarea {
   --_btn-border-selected: var(--btn-border-selected, var(--_btn-border));
   --_btn-border-disabled: var(--btn-border-disabled, transparent);
   --_btn-indicator-color: var(--btn-indicator-color, var(--background-neutral-400));
+  --_btn-indicator-active: var(--btn-indicator-active, var(--background-neutral-800));
   --_btn-indicator-selected: var(--btn-indicator-selected, var(--background-neutral-800));
   --_btn-loading-color: var(--btn-loading-color, var(--text-default));
   --_btn-loading-track: var(--btn-loading-track, var(--alpha-black-10));
@@ -283,6 +284,7 @@ textarea {
     height: $size;
     border-radius: var(--radius-full);
     display: block;
+    /* transition: height var(--nds-transition); */
 
     @if $position =='b' {
       bottom: 0;
@@ -301,15 +303,14 @@ textarea {
   }
 }
 
-@mixin btn-indicator-styles($hover-color: var(--background-neutral-400), $selected-color: var(--background-neutral-800), $position : 'b') {
+@mixin btn-indicator-styles($hover-color: var(--background-neutral-400), $pressed-color: var(--background-neutral-800), $selected-color: var(--background-neutral-800), $position : 'b') {
   @include btn-indicator($position);
 
-  &:is(:hover, [data-state="hover"])::before {
+  &:is(:hover, [data-state~="hover"])::before {
     background-color: $hover-color;
   }
 
-  &:is( :active,
-    .selected,
+  &:is(.selected,
     :focus-visible,
     [aria-selected="true"],
     [data-state~="open"],
@@ -318,6 +319,10 @@ textarea {
     [data-state~="focused"])::before,
   :is(.show, .open, .active, [data-state~="open"])>&::before {
     background-color: $selected-color;
+  }
+
+  &:active>&::before {
+    background-color: $pressed-color;
   }
 }
 

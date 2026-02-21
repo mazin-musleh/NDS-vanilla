@@ -228,7 +228,6 @@
             padding: 0;
             border-radius: 0;
             transform: translateX(0px) !important;
-            z-index: 899;
 
             #sideMenuToggle {
                 --btn-width: 100%;
@@ -242,7 +241,8 @@
                 position: relative;
                 top: unset;
                 --toggle-transform: unset;
-                z-index: 3;
+                z-index: 900;
+                
 
                 .label {
                     &[hidden] {

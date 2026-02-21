@@ -185,10 +185,11 @@
             }
         }
 
-        // Show backdrop and set toggle button state for all modes
+        // Show backdrop
+        const backdropZ = isTopMode ? 997 : 998;
         if (window.NDSBackdrop) {
             window.NDSBackdrop.show({
-                zIndex: isTopMode ? 997 : 998, // Top mode: 997, Slide menu: 998
+                zIndex: backdropZ,
                 preventScroll: !isTopMode, // Disable scroll lock for top mode (allows smooth scroll)
                 onClick: () => {
                     if (hasState(animationTarget, 'open')) {
@@ -254,7 +255,7 @@
                 document.body.removeAttribute('data-state');
                 window.scrollTo(0, scrollY);
             }
-            // Hide backdrop using API
+            // Hide backdrop
             if (window.NDSBackdrop) window.NDSBackdrop.hide();
             animationTarget.removeEventListener('transitionend', handleTransitionEnd);
         };
