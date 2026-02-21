@@ -3,6 +3,23 @@
 /* Note: CSS Reset & Normalization moved to _reset.scss */
 
 /* ========================================
+   ICON FONT VISIBILITY
+   Show icon elements once font is loaded
+   (hidden by default in critical-css.html)
+   ======================================== */
+
+body[data-font-loaded*="hgi-stroke-rounded"] {
+    i.hgi-stroke,
+    .nds-breadcrumb li:not(:last-child)::after,
+    .nds-btn:is(.nds-menu-btn, .nds-next, .nds-prev, .nds-up, .nds-down)::after,
+    .nds-form-control input[type="checkbox"]::after,
+    :is(.nds-select, .nds-date-picker) .nds-form-control::after,
+    .nds-step[data-step-state="completed"] .nds-stepper-circle::before {
+        opacity: 1;
+    }
+}
+
+/* ========================================
    INTERACTIVE ELEMENTS
    ======================================== */
 
@@ -44,10 +61,6 @@
     &.nds-underline {
         text-decoration: underline;
     }
-}
-
-.ltr {
-    direction: ltr !important;
 }
 
 .sr-only {
@@ -99,4 +112,21 @@
         }
 
     }
+}
+
+/* ========================================
+   LAST EDIT
+   ======================================== */
+
+.nds-last-edit {
+    font-size: var(--nds-text-clamp-md-FS);
+    text-align: end;
+    height: 24px;
+    display: block;
+    margin-top: calc((24px + var(--spacing-md)) * -1);
+    grid-column: content;
+    width: 100%;
+    max-width: var(--nds-content-MaxWidth, 1280px);
+    margin-inline: auto;
+    padding: 0 var(--nds-viewport-padding, 32px);
 }

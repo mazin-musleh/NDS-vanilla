@@ -34,10 +34,11 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
 ├── div.nds-section-wrapper          (Flex row + responsive breakpoints)
 │   ├── div.nds-section-image        (optional)
 │   ├── div.nds-section-head         (flex:1 — title + desc + meta)
+│   │   ├── div.nds-section-action   (optional float — must be first child)
 │   │   ├── h2.nds-section-title
 │   │   ├── div.nds-section-meta
 │   │   └── p.nds-section-description
-│   ├── div.nds-section-action       (optional, auto width)
+│   ├── div.nds-section-action       (optional, auto width — add .nds-nowrap to keep inline on mobile)
 │   └── div.nds-section-content      (full row below)
 │       └── div.nds-content-block    (optional content grouping)
 │           ├── h3.nds-block-title   (optional)
@@ -71,16 +72,12 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                                 <span class="label">Center</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-blue", ".nds-content-section", "sectionColor"]'>
-                                <span class="label">Blue</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-green", ".nds-content-section", "sectionColor"]'>
-                                <span class="label">Green</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-neutral", ".nds-content-section", "sectionColor"]'>
+                                data-toggler='[["nds-neutral", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
                                 <span class="label">Neutral</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='[["nds-primary", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                <span class="label">Primary</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-brand", ".nds-content-section", "sectionColor"]'>
@@ -154,16 +151,12 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                                 <span class="label">Center</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-blue", ".nds-content-section", "sectionColor"]'>
-                                <span class="label">Blue</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-green", ".nds-content-section", "sectionColor"]'>
-                                <span class="label">Green</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-neutral", ".nds-content-section", "sectionColor"]'>
+                                data-toggler='[["nds-neutral", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
                                 <span class="label">Neutral</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='[["nds-primary", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                <span class="label">Primary</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-brand", ".nds-content-section", "sectionColor"]'>
@@ -245,16 +238,12 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                                 <span class="label">Center</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-blue", ".nds-content-section", "sectionColor"]'>
-                                <span class="label">Blue</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-green", ".nds-content-section", "sectionColor"]'>
-                                <span class="label">Green</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-neutral", ".nds-content-section", "sectionColor"]'>
+                                data-toggler='[["nds-neutral", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
                                 <span class="label">Neutral</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='[["nds-primary", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                <span class="label">Primary</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-brand", ".nds-content-section", "sectionColor"]'>
@@ -328,6 +317,247 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
     </div>
 </section>
 
+<!-- Float Action -->
+<section id="float-action" class="nds-content-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Float Action</h2>
+            <p class="nds-section-description">Place the action as the <strong>first child</strong> inside the section head. It floats to the inline-end, letting the title and description text wrap around it. Not compatible with .nds-center or .nds-horizontal layouts.</p>
+        </div>
+        <div class="nds-section-content">
+            <div class="nds-showcase">
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Float Action</div>
+                        <div class="demo-action">
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-center", ".nds-content-section", "sectionLayout"]'>
+                                <span class="label">Center</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <section class="nds-content-section nds-ghost">
+                                <div class="nds-section-wrapper">
+                                    <div class="nds-section-head">
+                                        <div class="nds-section-action">
+                                            <a href="#" class="nds-btn nds-primary">
+                                                <span class="label">View All</span>
+                                            </a>
+                                        </div>
+                                        <h2 class="nds-section-title">Section Title</h2>
+                                        <p class="nds-section-description">The action button floats to the inline-end corner while the title and description text wrap around it naturally. This creates a compact layout without the action taking its own flex row.</p>
+                                    </div>
+                                    <div class="nds-section-content">
+                                        <p>Section content area.</p>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                    <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tab-list-container">
+                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-float" id="tab-float">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                            </nav>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-float" aria-labelledby="tab-float">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <code class="lang-html code">
+<section class="nds-content-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <div class="nds-section-action">
+                <a href="#" class="nds-btn nds-primary">
+                    <span class="label">View All</span>
+                </a>
+            </div>
+            <h2 class="nds-section-title">Section Title</h2>
+            <p class="nds-section-description">Description text wraps around the float action.</p>
+        </div>
+        <div class="nds-section-content">
+            <!-- Content here -->
+        </div>
+    </div>
+</section>
+</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Dual Action -->
+<section id="dual-action" class="nds-content-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Dual Action</h2>
+            <p class="nds-section-description">A section can have both a float action inside the head and a standard action outside. The outside action automatically wraps to a full row when a float action is present.</p>
+        </div>
+        <div class="nds-section-content">
+            <div class="nds-showcase">
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Dual Action</div>
+                        <div class="demo-action">
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-center", ".nds-content-section", "sectionLayout"]'>
+                                <span class="label">Center</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <section class="nds-content-section nds-ghost">
+                                <div class="nds-section-wrapper">
+                                    <div class="nds-section-head">
+                                        <div class="nds-section-action">
+                                            <a href="#" class="nds-btn nds-subtle">
+                                                <i class="hgi hgi-stroke hgi-share-01"></i>
+                                                <span class="label">Share</span>
+                                            </a>
+                                        </div>
+                                        <h2 class="nds-section-title">Section Title</h2>
+                                        <p class="nds-section-description">Float action in the head, standard action outside for secondary controls.</p>
+                                    </div>
+                                    <div class="nds-section-action">
+                                        <a href="#" class="nds-btn nds-primary">
+                                            <span class="label">View All</span>
+                                        </a>
+                                        <a href="#" class="nds-btn nds-secondary-outline">
+                                            <span class="label">Download</span>
+                                        </a>
+                                    </div>
+                                    <div class="nds-section-content">
+                                        <p>Section content area.</p>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                    <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tab-list-container">
+                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-dual" id="tab-dual">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                            </nav>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-dual" aria-labelledby="tab-dual">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <code class="lang-html code">
+<section class="nds-content-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <div class="nds-section-action">
+                <a href="#" class="nds-btn nds-subtle">
+                    <i class="hgi hgi-stroke hgi-share-01"></i>
+                    <span class="label">Share</span>
+                </a>
+            </div>
+            <h2 class="nds-section-title">Section Title</h2>
+            <p class="nds-section-description">Description text.</p>
+        </div>
+        <div class="nds-section-action">
+            <a href="#" class="nds-btn nds-primary">
+                <span class="label">Primary Action</span>
+            </a>
+        </div>
+        <div class="nds-section-content">
+            <!-- Content here -->
+        </div>
+    </div>
+</section>
+</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- nds-nowrap Modifier -->
+<section id="nowrap" class="nds-content-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Action Wrapping — nds-nowrap</h2>
+            <p class="nds-section-description">By default, the standard action wraps to a full row on mobile. Add .nds-nowrap to keep it inline.</p>
+        </div>
+        <div class="nds-section-content">
+            <div class="nds-showcase">
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">nds-nowrap (resize to mobile)</div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <section class="nds-content-section nds-ghost">
+                                <div class="nds-section-wrapper">
+                                    <div class="nds-section-head">
+                                        <h2 class="nds-section-title">Section Title</h2>
+                                        <p class="nds-section-description">The action stays inline on all breakpoints.</p>
+                                    </div>
+                                    <div class="nds-section-action nds-nowrap">
+                                        <a href="#" class="nds-btn nds-primary nds-sm">
+                                            <span class="label">Action</span>
+                                        </a>
+                                    </div>
+                                    <div class="nds-section-content">
+                                        <p>Resize the browser to mobile width — the action stays beside the head.</p>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                    <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tab-list-container">
+                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-nowrap" id="tab-nowrap">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                            </nav>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-nowrap" aria-labelledby="tab-nowrap">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <code class="lang-html code">
+<div class="nds-section-action nds-nowrap">
+    <a href="#" class="nds-btn nds-primary nds-sm">
+        <span class="label">Action</span>
+    </a>
+</div>
+</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Tier 4: With Image -->
 <section id="tier4" class="nds-content-section">
     <div class="nds-section-wrapper">
@@ -346,16 +576,12 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                                 <span class="label">Center</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-blue", ".nds-content-section", "sectionColor"]'>
-                                <span class="label">Blue</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-green", ".nds-content-section", "sectionColor"]'>
-                                <span class="label">Green</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-neutral", ".nds-content-section", "sectionColor"]'>
+                                data-toggler='[["nds-neutral", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
                                 <span class="label">Neutral</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='[["nds-primary", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                <span class="label">Primary</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-brand", ".nds-content-section", "sectionColor"]'>
@@ -455,16 +681,12 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                                 <span class="label">Center</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-blue", ".nds-content-section", "sectionColor"]'>
-                                <span class="label">Blue</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-green", ".nds-content-section", "sectionColor"]'>
-                                <span class="label">Green</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-neutral", ".nds-content-section", "sectionColor"]'>
+                                data-toggler='[["nds-neutral", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
                                 <span class="label">Neutral</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='[["nds-primary", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                <span class="label">Primary</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-brand", ".nds-content-section", "sectionColor"]'>
@@ -556,16 +778,12 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                                 <span class="label">Center</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-blue", ".nds-content-section", "sectionColor"]'>
-                                <span class="label">Blue</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-green", ".nds-content-section", "sectionColor"]'>
-                                <span class="label">Green</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-neutral", ".nds-content-section", "sectionColor"]'>
+                                data-toggler='[["nds-neutral", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
                                 <span class="label">Neutral</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='[["nds-primary", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                <span class="label">Primary</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-brand", ".nds-content-section", "sectionColor"]'>

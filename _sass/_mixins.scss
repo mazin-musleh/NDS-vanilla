@@ -428,9 +428,9 @@ textarea {
   --section-border-radius: 0 !important;
 }
 
-@mixin section-variant($background, $title-color, $description-color) {
+@mixin section-variant($background, $title-color, $description-color, $text-color) {
   --section-bg: #{$background};
-  color: var(--text-oncolor-primary);
+  color: $text-color;
 
   .nds-section-title {
     color: $title-color;
@@ -439,4 +439,5 @@ textarea {
   .nds-section-description {
     color: $description-color;
   }
+  
 }

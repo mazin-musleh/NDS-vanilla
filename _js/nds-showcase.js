@@ -1,18 +1,22 @@
 /**
  * National Design System - Showcase JavaScript
  * Common functionality for component demonstration pages
- * 
+ *
  * Toggle Button Formats:
- * 
+ *
  * Class toggling (default):
  * data-toggler='["class1 class2", ".target", "type"]'
- * 
+ *
+ * Class with explicit action (add/remove instead of toggle):
+ * data-toggler='["class1", ".target", "type", "add"]'
+ * data-toggler='["class1", ".target", "type", "remove"]'
+ *
  * Attribute toggling:
  * data-toggler='["attr1=value1 attr2", ".target", "type", "attr"]'
  * data-toggler='["disabled checked", ".target", "type", "attr"]'  // for boolean attributes
- * 
+ *
  * Multiple operations:
- * data-toggler='[["class1", ".target1", "type1"], ["attr1=val1", ".target2", "type2", "attr"]]'
+ * data-toggler='[["class1", ".target1", "type1"], ["class2", ".target2", "type2", "add"]]'
  */
 
 (function() {
@@ -141,12 +145,24 @@
                 if (Array.isArray(parsed) && parsed.length >= 2) {
                     // Check if it's a single operation or multiple operations
                     if (typeof parsed[0] === 'string') {
-                        // Single operation: ["class1 class2" or "attr1=val1 attr2", "target", "type", "operation"]
+                        // Single operation: ["class1 class2", "target", "type", "operation"]
                         togglePairs = [[parsed[0], parsed[1], parsed[2], parsed[3]]];
                     } else {
-                        // Multiple operations: [["class1 class2", "target1", "type1", "operation1"], ["attr1=val1", "target2", "type2", "attr"]]
+                        // Multiple operations: [["class1", "target1", "type1", "operation"], ...]
                         togglePairs = parsed;
                     }
+
+                    // Normalize 4th param: detect "add"/"remove" as action (not operation type)
+                    const ACTION_KEYWORDS = ['add', 'remove'];
+                    togglePairs = togglePairs.map(pair => {
+                        const op = pair[3];
+                        if (op && ACTION_KEYWORDS.includes(op)) {
+                            // 4th param is an action → operation defaults to "class"
+                            return [pair[0], pair[1], pair[2], 'class', op];
+                        }
+                        // Otherwise keep as-is: [value, target, type, operation, action?]
+                        return pair;
+                    });
                 } else {
                     return;
                 }
@@ -170,12 +186,165 @@
             return;
         }
 
-        // Process each toggle operation
-        togglePairs.forEach(([classNamesOrAttrs, targetSelector, type, operation]) => {
+        // --- Mutual exclusion: deselect other buttons BEFORE applying new toggle ---
+        const buttonTypes = [...new Set(togglePairs.map(([,, type]) => type || 'default'))];
+
+        if (buttonTypes.length === 1) {
+            const buttonType = buttonTypes[0];
+            const ACTION_KW = ['add', 'remove'];
+
+            const allTogglers = demoCard.querySelectorAll('[data-toggler]');
+            allTogglers.forEach(otherButton => {
+                if (otherButton === button) return;
+
+                const otherData = otherButton.getAttribute('data-toggler');
+                if (!otherData) return;
+                try {
+                    const otherParsed = JSON.parse(otherData);
+                    let otherOps = [];
+
+                    if (Array.isArray(otherParsed) && otherParsed.length >= 2) {
+                        if (typeof otherParsed[0] === 'string') {
+                            otherOps = [[otherParsed[0], otherParsed[1], otherParsed[2], otherParsed[3]]];
+                        } else {
+                            otherOps = otherParsed;
+                        }
+                    }
+
+                    // Normalize action keywords for other button too
+                    otherOps = otherOps.map(pair => {
+                        const op = pair[3];
+                        if (op && ACTION_KW.includes(op)) {
+                            return [pair[0], pair[1], pair[2], 'class', op];
+                        }
+                        return pair;
+                    });
+
+                    const otherTypes = [...new Set(otherOps.map(([,, type]) => type || 'default'))];
+
+                    // Deselect if other button is single-type, same type, and currently selected
+                    if (otherTypes.length === 1 && otherTypes[0] === buttonType && otherButton.classList.contains('selected')) {
+                        otherButton.classList.remove('selected');
+
+                        // Reverse the changes for the deselected button
+                        otherOps.forEach(([classNamesOrAttrs, targetSelector, , otherOperation, otherAction]) => {
+                            if (!classNamesOrAttrs || !targetSelector) return;
+
+                            const deselectionOperationType = otherOperation || 'class';
+
+                            // Find ALL matching elements for deselection - only in .demo-container and .code-example
+                            let deselectionTargetElements = [];
+                            const deselectionSearchContainers = [
+                                ...demoCard.querySelectorAll('.demo-container'),
+                                ...demoCard.querySelectorAll('.code-example')
+                            ];
+
+                            if (targetSelector.startsWith('#')) {
+                                const idSelector = targetSelector.substring(1);
+                                const idParts = idSelector.split(' ');
+                                const elementId = idParts[0];
+                                const subSelector = idParts.slice(1).join(' ');
+
+                                for (const container of deselectionSearchContainers) {
+                                    const elementById = container.querySelector(`#${elementId}`);
+                                    if (elementById) {
+                                        if (subSelector) {
+                                            deselectionTargetElements.push(...elementById.querySelectorAll(subSelector));
+                                        } else {
+                                            deselectionTargetElements.push(elementById);
+                                        }
+                                    }
+                                }
+                            } else {
+                                if (targetSelector === '.demo-container') {
+                                    deselectionTargetElements.push(...demoCard.querySelectorAll('.demo-container'));
+                                } else if (targetSelector === '.code-example') {
+                                    deselectionTargetElements.push(...demoCard.querySelectorAll('.code-example'));
+                                } else {
+                                    for (const container of deselectionSearchContainers) {
+                                        if (targetSelector.includes(' ') || targetSelector.includes('[') || targetSelector.includes(':')) {
+                                            deselectionTargetElements.push(...container.querySelectorAll(targetSelector));
+                                        } else if (targetSelector.startsWith('.')) {
+                                            if (targetSelector.includes('.') && targetSelector.lastIndexOf('.') > 0) {
+                                                deselectionTargetElements.push(...container.querySelectorAll(targetSelector));
+                                            } else {
+                                                const className = targetSelector.substring(1);
+                                                const allElements = container.querySelectorAll('*');
+                                                const exactMatches = Array.from(allElements).filter(el =>
+                                                    el.classList.contains(className) &&
+                                                    Array.from(el.classList).includes(className)
+                                                );
+                                                deselectionTargetElements.push(...exactMatches);
+                                            }
+                                        } else {
+                                            deselectionTargetElements.push(...container.querySelectorAll(targetSelector));
+                                        }
+                                    }
+                                }
+                            }
+
+                            if (deselectionTargetElements.length) {
+                                deselectionTargetElements.forEach(targetElement => {
+                                    const otherButtonType = otherTypes[0];
+
+                                    if (deselectionOperationType === 'attr') {
+                                        handleAttributeToggling(targetElement, classNamesOrAttrs, demoCard);
+                                    } else if (deselectionOperationType === 'data-state') {
+                                        handleDataStateToggling(targetElement, classNamesOrAttrs);
+                                    } else if (deselectionOperationType === 'prop') {
+                                        handlePropertyDeselection(targetElement, classNamesOrAttrs);
+                                    } else if (deselectionOperationType === 'content-prepend' || deselectionOperationType === 'content-append') {
+                                        handleContentToggling(targetElement, classNamesOrAttrs, deselectionOperationType);
+                                        updateCodeExampleForContent(demoCard, targetElement, classNamesOrAttrs, deselectionOperationType);
+                                    } else {
+                                        // Class deselection: reverse based on action
+                                        const classArray = classNamesOrAttrs.trim().split(/\s+/);
+
+                                        classArray.forEach(className => {
+                                            if (!className) return;
+                                            if (otherAction === 'add') {
+                                                // Reverse of "add" → remove
+                                                targetElement.classList.remove(className);
+                                            } else if (otherAction === 'remove') {
+                                                // Reverse of "remove" → add
+                                                targetElement.classList.add(className);
+                                            } else {
+                                                // Reverse of "toggle" → remove if present
+                                                if (targetElement.classList.contains(className)) {
+                                                    targetElement.classList.remove(className);
+                                                }
+                                            }
+                                        });
+
+                                        if (otherButtonType === 'VerticalTabs' && classArray.includes('oneRowContent')) {
+                                            setTimeout(() => {
+                                                if (window.initializeRowScroll) {
+                                                    window.initializeRowScroll(true);
+                                                }
+                                            }, 100);
+                                        }
+
+                                        updateCodeExampleForClasses(demoCard, targetElement, classArray);
+                                    }
+                                });
+                            }
+                        });
+                    }
+                } catch (e) {
+                    // Ignore invalid JSON
+                }
+            });
+        }
+
+        // --- Process each toggle operation ---
+        // If button is already selected, we're deselecting → reverse explicit actions
+        const isDeselecting = button.classList.contains('selected');
+
+        togglePairs.forEach(([classNamesOrAttrs, targetSelector, type, operation, action]) => {
             if (!classNamesOrAttrs || !targetSelector) {
                 return;
             }
-            
+
             // Determine operation type: "class" (default), "attr", "content-prepend", or "content-append"
             const operationType = operation || 'class';
             
@@ -314,11 +483,21 @@
                     // Handle content toggling (append/prepend)
                     handleContentToggling(targetElement, classNamesOrAttrs, operationType);
                 } else {
-                    // Handle class toggling (default behavior)
+                    // Handle class toggling (default), add, or remove
                     const classArray = classNamesOrAttrs.trim().split(/\s+/);
-                    
+
+                    // Reverse explicit actions when deselecting
+                    const effectiveAction = isDeselecting
+                        ? (action === 'add' ? 'remove' : action === 'remove' ? 'add' : action)
+                        : action;
+
                     classArray.forEach(className => {
-                        if (className) {
+                        if (!className) return;
+                        if (effectiveAction === 'add') {
+                            targetElement.classList.add(className);
+                        } else if (effectiveAction === 'remove') {
+                            targetElement.classList.remove(className);
+                        } else {
                             targetElement.classList.toggle(className);
                         }
                     });
@@ -348,242 +527,13 @@
             }
         });
         
-        // Simple button selection: just toggle the clicked button and handle type-based mutual exclusion
-        const buttonTogglerData = button.getAttribute('data-toggler');
-        if (buttonTogglerData) {
-            try {
-                const parsed = JSON.parse(buttonTogglerData);
-                let operations = [];
-                
-                if (Array.isArray(parsed) && parsed.length >= 2) {
-                    if (typeof parsed[0] === 'string') {
-                        operations = [[parsed[0], parsed[1], parsed[2], parsed[3]]];
-                    } else {
-                        operations = parsed;
-                    }
-                }
+        // Toggle the clicked button's selected state
+        button.classList.toggle('selected');
 
-                // Get unique types for this button
-                const buttonTypes = [...new Set(operations.map(([,, type]) => type || 'default'))];
-                
-                // Handle type-based mutual exclusion for single-type buttons only
-                if (buttonTypes.length === 1) {
-                    const buttonType = buttonTypes[0];
-                    
-                    // First, deselect other buttons with the same type (if any are selected)
-                    const allTogglers = demoCard.querySelectorAll('[data-toggler]');
-                    allTogglers.forEach(otherButton => {
-                        if (otherButton === button) return;
-                        
-                        const otherData = otherButton.getAttribute('data-toggler');
-                        if (otherData) {
-                            try {
-                                const otherParsed = JSON.parse(otherData);
-                                let otherOperations = [];
-                                
-                                if (Array.isArray(otherParsed) && otherParsed.length >= 2) {
-                                    if (typeof otherParsed[0] === 'string') {
-                                        otherOperations = [[otherParsed[0], otherParsed[1], otherParsed[2], otherParsed[3]]];
-                                    } else {
-                                        otherOperations = otherParsed;
-                                    }
-                                }
-                                
-                                const otherTypes = [...new Set(otherOperations.map(([,, type]) => type || 'default'))];
-                                
-                                // Deselect if other button is single-type, same type, and currently selected
-                                if (otherTypes.length === 1 && otherTypes[0] === buttonType && otherButton.classList.contains('selected')) {
-                                    otherButton.classList.remove('selected');
-                                    
-                                    // Also reverse the changes for the deselected button
-                                    otherOperations.forEach(([classNamesOrAttrs, targetSelector, , otherOperation]) => {
-                                        if (!classNamesOrAttrs || !targetSelector) return;
-                                        
-                                        // Determine operation type for deselection
-                                        const deselectionOperationType = otherOperation || 'class';
-                                        
-                                        let targetElement;
-                                        
-                                        // Find target element same way as main logic - only in .demo-container and .code-example
-                                        const deselectionSearchContainers = [
-                                            ...demoCard.querySelectorAll('.demo-container'),
-                                            ...demoCard.querySelectorAll('.code-example')
-                                        ];
-                                        
-                                        if (targetSelector.startsWith('#')) {
-                                            const idSelector = targetSelector.substring(1);
-                                            const idParts = idSelector.split(' ');
-                                            const elementId = idParts[0];
-                                            const subSelector = idParts.slice(1).join(' ');
-                                            
-                                            // Search in each allowed container
-                                            for (const container of deselectionSearchContainers) {
-                                                const elementById = container.querySelector(`#${elementId}`);
-                                                if (elementById) {
-                                                    if (subSelector) {
-                                                        targetElement = elementById.querySelector(subSelector);
-                                                    } else {
-                                                        targetElement = elementById;
-                                                    }
-                                                    break;
-                                                }
-                                            }
-                                        } else {
-                                            // Check if targeting the containers themselves first
-                                            if (targetSelector === '.demo-container') {
-                                                targetElement = demoCard.querySelector('.demo-container');
-                                            } else if (targetSelector === '.code-example') {
-                                                targetElement = demoCard.querySelector('.code-example');
-                                            } else {
-                                                // Search in each allowed container
-                                                for (const container of deselectionSearchContainers) {
-                                                    if (targetSelector.includes(' ') || targetSelector.includes('[') || targetSelector.includes(':')) {
-                                                        targetElement = container.querySelector(targetSelector);
-                                                    } else if (targetSelector.startsWith('.')) {
-                                                        // Handle both simple single class selectors and compound class selectors
-                                                        if (targetSelector.includes('.') && targetSelector.lastIndexOf('.') > 0) {
-                                                            // Compound class selector like .class1.class2
-                                                            targetElement = container.querySelector(targetSelector);
-                                                        } else {
-                                                            // Simple single class selector - ensure exact match
-                                                            const className = targetSelector.substring(1);
-                                                            const allElements = container.querySelectorAll('*');
-                                                            targetElement = Array.from(allElements).find(el =>
-                                                                el.classList.contains(className) &&
-                                                                Array.from(el.classList).includes(className)
-                                                            );
-                                                        }
-                                                    } else {
-                                                        targetElement = container.querySelector(targetSelector);
-                                                    }
-
-                                                    if (targetElement) break;
-                                                }
-                                            }
-                                        }
-                                        
-                                        // Find ALL matching elements for deselection too - only in .demo-container and .code-example
-                                        let deselectionTargetElements = [];
-                                        
-                                        if (targetSelector.startsWith('#')) {
-                                            const idSelector = targetSelector.substring(1);
-                                            const idParts = idSelector.split(' ');
-                                            const elementId = idParts[0];
-                                            const subSelector = idParts.slice(1).join(' ');
-                                            
-                                            // Search in each allowed container
-                                            for (const container of deselectionSearchContainers) {
-                                                const elementById = container.querySelector(`#${elementId}`);
-                                                if (elementById) {
-                                                    if (subSelector) {
-                                                        deselectionTargetElements.push(...elementById.querySelectorAll(subSelector));
-                                                    } else {
-                                                        deselectionTargetElements.push(elementById);
-                                                    }
-                                                }
-                                            }
-                                        } else {
-                                            // Check if targeting the containers themselves first
-                                            if (targetSelector === '.demo-container') {
-                                                const containers = demoCard.querySelectorAll('.demo-container');
-                                                deselectionTargetElements.push(...containers);
-                                            } else if (targetSelector === '.code-example') {
-                                                const codeExamples = demoCard.querySelectorAll('.code-example');
-                                                deselectionTargetElements.push(...codeExamples);
-                                            } else {
-                                                // Search in each allowed container
-                                                for (const container of deselectionSearchContainers) {
-                                                    if (targetSelector.includes(' ') || targetSelector.includes('[') || targetSelector.includes(':')) {
-                                                        deselectionTargetElements.push(...container.querySelectorAll(targetSelector));
-                                                    } else if (targetSelector.startsWith('.')) {
-                                                        // Handle both simple single class selectors and compound class selectors
-                                                        if (targetSelector.includes('.') && targetSelector.lastIndexOf('.') > 0) {
-                                                            // Compound class selector like .class1.class2
-                                                            deselectionTargetElements.push(...container.querySelectorAll(targetSelector));
-                                                        } else {
-                                                            // Simple single class selector - use exact match logic
-                                                            const className = targetSelector.substring(1);
-                                                            const allElements = container.querySelectorAll('*');
-                                                            const exactMatches = Array.from(allElements).filter(el =>
-                                                                el.classList.contains(className) &&
-                                                                Array.from(el.classList).includes(className)
-                                                            );
-                                                            deselectionTargetElements.push(...exactMatches);
-                                                        }
-                                                    } else {
-                                                        deselectionTargetElements.push(...container.querySelectorAll(targetSelector));
-                                                    }
-                                                }
-                                            }
-                                        }
-                                        
-                                        if (deselectionTargetElements.length) {
-                                            deselectionTargetElements.forEach(targetElement => {
-                                                const otherButtonType = otherTypes[0]; // We know it's single type
-
-                                                if (deselectionOperationType === 'attr') {
-                                                    // Handle attribute deselection - toggle attributes back to original state
-                                                    handleAttributeToggling(targetElement, classNamesOrAttrs, demoCard);
-                                                } else if (deselectionOperationType === 'data-state') {
-                                                    // Handle data-state deselection - toggle states back to original state
-                                                    handleDataStateToggling(targetElement, classNamesOrAttrs);
-                                                } else if (deselectionOperationType === 'prop') {
-                                                    // Handle property deselection - explicitly set to false (not toggle)
-                                                    handlePropertyDeselection(targetElement, classNamesOrAttrs);
-                                                } else if (deselectionOperationType === 'content-prepend' || deselectionOperationType === 'content-append') {
-                                                    // Handle content deselection - toggle content back to original state
-                                                    handleContentToggling(targetElement, classNamesOrAttrs, deselectionOperationType);
-                                                    // Update code example for content changes
-                                                    updateCodeExampleForContent(demoCard, targetElement, classNamesOrAttrs, deselectionOperationType);
-                                                } else {
-                                                    // Handle class deselection (default behavior)
-                                                    const classArray = classNamesOrAttrs.trim().split(/\s+/);
-                                                    
-                                                    classArray.forEach(className => {
-                                                        if (className && targetElement.classList.contains(className)) {
-                                                            targetElement.classList.remove(className);
-                                                        }
-                                                    });
-                                                    
-                                                    // Special handling for VerticalTabs deselection: trigger scroll logic after any oneRowContent change
-                                                    if (otherButtonType === 'VerticalTabs' && classArray.includes('oneRowContent')) {
-                                                        setTimeout(() => {
-                                                            if (window.initializeRowScroll) {
-                                                                window.initializeRowScroll(true); // Force update for already initialized elements
-                                                            }
-                                                        }, 100);
-                                                    }
-                                                    
-                                                    // Update code example after removing classes
-                                                    updateCodeExampleForClasses(demoCard, targetElement, classArray);
-                                                }
-                                            });
-                                        }
-                                    });
-                                }
-                            } catch (e) {
-                                // Ignore invalid JSON
-                            }
-                        }
-                    });
-                }
-                
-                // Now toggle the clicked button
-                button.classList.toggle('selected');
-
-                // Update alert/toast code examples directly from toggle states
-                updateAlertCodeFromToggles(demoCard, buttonTypes[0]);
-
-                // Update feedback code examples directly from toggle states
-                updateFeedbackCodeFromToggles(demoCard, buttonTypes[0]);
-
-            } catch (e) {
-                // Fallback: just toggle the button
-                button.classList.toggle('selected');
-            }
-        } else {
-            // Fallback: just toggle the button
-            button.classList.toggle('selected');
+        // Update alert/toast code examples directly from toggle states
+        if (buttonTypes.length === 1) {
+            updateAlertCodeFromToggles(demoCard, buttonTypes[0]);
+            updateFeedbackCodeFromToggles(demoCard, buttonTypes[0]);
         }
     }
 
