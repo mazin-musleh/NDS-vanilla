@@ -50,13 +50,11 @@
                 const isExpanded = button.getAttribute('aria-expanded') === 'true';
                 
                 if (isExpanded) {
-                    collapse.classList.add('show');
-                    button.classList.remove('collapsed');
-                    button.classList.add('selected');
+                    collapse.dataset.state = 'open';
+                    button.dataset.state = 'open';
                 } else {
-                    collapse.classList.remove('show');
-                    button.classList.add('collapsed');
-                    button.classList.remove('selected');
+                    delete collapse.dataset.state;
+                    delete button.dataset.state;
                     button.setAttribute('aria-expanded', 'false');
                 }
             });
@@ -161,14 +159,14 @@
 
             // Update button state immediately
             button.setAttribute('aria-expanded', 'true');
-            button.classList.remove('collapsed');
-            button.classList.add('selected');
+            button.dataset.state = 'open';
 
-            // Add show class immediately
-            collapse.classList.add('show');
+            // Set collapse to opening, then open after animation
+            collapse.dataset.state = 'opening';
 
             // Animate and dispatch event after
             this.animateShow(collapse, () => {
+                collapse.dataset.state = 'open';
                 // Dispatch custom event
                 this.dispatchToggleEvent(index, button, collapse, true);
             });
@@ -188,12 +186,13 @@
 
             // Update button state immediately
             button.setAttribute('aria-expanded', 'false');
-            button.classList.add('collapsed');
-            button.classList.remove('selected');
+            delete button.dataset.state;
+
+            // Set collapse to closing, then remove after animation
+            collapse.dataset.state = 'closing';
 
             this.animateHide(collapse, () => {
-                // Remove show class after animation completes
-                collapse.classList.remove('show');
+                delete collapse.dataset.state;
 
                 // Dispatch custom event
                 this.dispatchToggleEvent(index, button, collapse, false);
@@ -215,13 +214,9 @@
                 return;
             }
 
-            // Set initial state for animation
-            collapse.classList.add('opening');
-
             // Clean up after animation
             const handleTransitionEnd = () => {
                 collapse.removeEventListener('transitionend', handleTransitionEnd);
-                collapse.classList.remove('opening');
                 callback();
             };
 
@@ -229,7 +224,7 @@
 
             // Fallback in case transitionend doesn't fire
             setTimeout(() => {
-                if (collapse.classList.contains('opening')) {
+                if (collapse.dataset.state === 'opening') {
                     handleTransitionEnd();
                 }
             }, this.getTransitionDuration());
@@ -242,13 +237,9 @@
                 return;
             }
 
-            // Set initial state
-            collapse.classList.add('closing');
-
             // Clean up after animation
             const handleTransitionEnd = () => {
                 collapse.removeEventListener('transitionend', handleTransitionEnd);
-                collapse.classList.remove('closing');
                 callback();
             };
 
@@ -256,7 +247,7 @@
 
             // Fallback in case transitionend doesn't fire
             setTimeout(() => {
-                if (collapse.classList.contains('closing')) {
+                if (collapse.dataset.state === 'closing') {
                     handleTransitionEnd();
                 }
             }, this.getTransitionDuration());

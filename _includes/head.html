@@ -3,6 +3,19 @@
 
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% unless page.exclude_showcase == true %}
+    <script>
+        // Apply cached language preference before any rendering to prevent direction mismatch
+        (function() {
+            var m = document.cookie.match(/(?:^|;\s*)preferred-language=(\w+)/);
+            if (m) {
+                var lang = m[1];
+                document.documentElement.lang = lang;
+                document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            }
+        })();
+    </script>
+    {% endunless %}
     <meta name="description"
         content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}">
     <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site_title }}</title>

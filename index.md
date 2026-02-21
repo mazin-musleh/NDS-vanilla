@@ -3,7 +3,7 @@ layout: home
 title: "National Design System for Saudi Arabia"
 
 lang: en
-direction: rtl
+direction: ltr
 ---
 
 <!-- About the System -->
