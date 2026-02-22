@@ -14,7 +14,14 @@ bundle exec jekyll build      # Production build → _site/
 ruby _plugins/js_processor.rb # REQUIRED after any _js/ changes (bundles & minifies → assets/js/*.min.js)
 ruby _plugins/baseurl_cleaner.rb      # Strip /_site baseurl prefix for root-domain deploys
 ruby _plugins/baseurl_cleaner.rb dry  # Dry run
+ruby _plugins/html_compressor.rb      # Remove blank lines from _site/ HTML (post-build)
+ruby _plugins/html_compressor.rb dry  # Dry run
 ```
+
+## Skills
+
+- `/clean-liquid [file]` — Clean Liquid/HTML template formatting: adds `{%- -%}` whitespace trimming, fixes broken inline tags, formats HTML child elements. Use after creating or editing `_includes/*.html` templates.
+- `/doc-page [component-name]` — Create or update documentation page with demo cards, code examples, toggles, and sidemenu registration.
 
 ## Project Structure
 
@@ -41,7 +48,7 @@ _data/             Data files organized by category:
   footerlogos/       Footer logos
   hero/              Hero sliders & hero actions
   content/           Page content data (services, etc.)
-_plugins/          Build scripts (js_processor.rb, baseurl_cleaner.rb)
+_plugins/          Build scripts (js_processor.rb, baseurl_cleaner.rb, html_compressor.rb)
 _site/             Generated output (gitignored)
 ```
 
@@ -126,9 +133,9 @@ background-color: var(--component-background-primary-default);
 - Font weight: use numbers directly (`400`, `500`, `600`, `700`) — never tokens or keywords
 - Font size: use `--nds-text-{xs|sm|md|lg|xl}-FS` and matching `-LH` for line-height
 
-## Section & Grid Structure (CRITICAL)
+## Section & Grid Structure
 
-All page content is built from sections. Every section follows this nesting:
+All page content is built from sections. See `layout/section.md` for full reference with all tiers.
 
 ```html
 <section class="nds-content-section">
@@ -147,54 +154,29 @@ All page content is built from sections. Every section follows this nesting:
 </section>
 ```
 
-**Nesting rules:**
-- `nds-content-section` — grid container (auto-centers content, max-width `--nds-content-MaxWidth: 1280px`)
-- `nds-section-wrapper` — flex wrap container (`--section-col-gap`, `--section-row-gap`)
+**Key classes:**
+- `nds-content-section` — grid container (max-width `--nds-content-MaxWidth: 1280px`)
+- `nds-section-wrapper` — flex wrap container
 - `nds-section-head` — title + description (flex: 1)
-- `nds-section-action` — buttons area (flex: 1, full-width on mobile)
-- `nds-section-content` — all content (flex: 1 1 100%). Children (p, ul, ol, tables, tabs, code) get automatic `margin-block-end: 1rem`
+- `nds-section-action` — buttons (flex: 1, full-width on mobile). Inside head = float action, outside = standard action
+- `nds-section-content` — all content (flex: 1 1 100%)
+- `nds-content-block` — group content with optional `nds-block-title`
 
-**Section variants:**
-- `.nds-blue`, `.nds-green`, `.nds-neutral`, `.nds-brand` — color backgrounds
-- `.noBg` or `.nds-ghost` — remove background
-- `.nds-horizontal` — side-by-side layout (grid, desktop only)
-- Use `nds-full-width` on a direct child to break out to full viewport width
+**Section modifiers:** `.nds-neutral`, `.nds-brand`, `.nds-ghost` (no bg), `.nds-horizontal` (side-by-side), `.nds-center`
 
-**Content blocks** (for text, guidelines, docs inside `nds-section-content`):
-```html
-<div class="nds-content-block">
-    <h3 class="nds-block-title">Title</h3>
-    <p>Content goes directly here — no extra wrappers.</p>
-</div>
-```
-- `nds-block-title` is optional — blocks work without a title
-- Title tokens: `--block-title-FS`, `--block-title-LH`, `--block-title-FW`, `--block-title-MB`, `--block-title-color`
-- Use for guidelines, accessibility info, and any titled content sections — **do NOT use** `guidelines-grid`, `guideline-item`, `accessibility-info`, or `comparison-item`
-
-**Grid utility** (`nds-grid`) for multi-column layouts inside `nds-section-content`:
+**Grid utility** for multi-column layouts:
 ```html
 <div class="nds-grid" style="--max-col: 3; --mid-col: 2; --min-col: 1;">
-    <div>Column 1</div>
-    <div>Column 2</div>
-    <div>Column 3</div>
-</div>
 ```
-- Default: 12-column grid with `--gap: --spacing-2xl`
-- Custom properties: `--max-col` (desktop), `--mid-col` (tablet), `--min-col` (mobile)
-- Column span classes: `.col-1` through `.col-12`, `.col-full` (responsive: `.col-md-*`, `.col-lg-*`, `.col-xl-*`)
 
-**Layout modifiers** (set via `layout_class` front matter):
-- `cardView` — card styling on sections (shadow, border-radius, smaller padding/titles)
-- `topSubMenu` — sub-navigation above content
-- `nds-middle` — vertically centered content
-- `toEdge` — full-width, no max-width constraint
+**Do NOT use** `guidelines-grid`, `guideline-item`, `accessibility-info`, or `comparison-item`
 
 ## Component HTML Patterns
 
 **Button structure:**
 ```html
 <button class="nds-btn nds-primary nds-lg">
-    <i class="hgi hgi-stroke hgi-plus-sign"></i>  <!-- optional icon -->
+    <i class="hgi hgi-stroke hgi-plus-sign icon"></i>
     <span class="label">Button Text</span>
 </button>
 ```
@@ -207,25 +189,6 @@ All page content is built from sections. Every section follows this nesting:
 lang: en
 direction: ltr
 ```
-
-## Component Demo Standards
-
-**Use `components/alert.md` as the BASE STANDARD** for creating documentation pages. It is the best example of page structure, demo cards, and code examples.
-
-**Use `components/tags.md` as the reference** for interactive demo toggles. Use demo action toggles instead of separate demo cards per variation.
-
-**Toggle syntax:** `data-toggler='["value", "targetSelector", "toggleGroup"]'`
-- Class toggle: `'["selected", ".nds-tag", "tagState"]'`
-- Content injection: `'["<i class=\"hgi ...\"></i>", ".nds-tag", "icons", "content-prepend"]'`
-- Toggle groups prevent conflicts (e.g. only one size active)
-
-**Toggle categories:** State (`selected`, `disabled`), Style (`nds-neutral`), Size (`nds-sm`, `nds-lg`), Icon (content-prepend), Background (`noBg`, `darkBg`)
-
-**NEVER use inline `<code>` tags** inside table cells or descriptions for small words. Only use `<code class="lang-html code">` blocks for actual copyable code examples.
-
-**Code examples use raw HTML** inside `.nds-code <code>` blocks — never use HTML entities (`&lt;`, `&gt;`). Write `<div>` not `&lt;div&gt;`. Entities are still needed outside code blocks (e.g. `&lt;nav&gt;` in text labels).
-
-**Demo card structure** — see `components/tags.md` for full reference. Key classes: `.nds-demo-card` > `.demo-header` + `.demo-container` > `.state-demo`, with `.nds-tabs.nds-code` for code examples.
 
 ## Creating New Pages
 
@@ -264,7 +227,7 @@ Resolution: `page.hero_float_actions` → `hero_data.float_actions` → none. Sa
 
 1. Create `_sass/components/_[name].scss` (with `@use '../mixins' as *;`)
 2. Add `@use 'components/[name]';` to `assets/css/nds-main.min.scss`
-3. Add documentation page: `components/[name].md` with `breadcrumb: ["Components"]`
+3. Add documentation page: `components/[name].md` — use `/doc-page [name]` skill
 4. Add to `_data/sidemenu/sidemenu.yml` under Components children
 5. Add to `_includes/` if reusable across pages
 6. Use `nds-` prefix for all class names

@@ -1,7 +1,7 @@
-- src: assets/img/riyadhcenter3.webp
+- src: assets/img/riyadhcenter_ai.webp
   src_small: assets/img/riyadhcenter3s.webp
   overlay: 0.7
-  position: center center
+  position: center 20%
   title: "National Design System"
   description: "Building consistent digital experiences for Saudi Arabia"
   url: "#"

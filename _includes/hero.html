@@ -1,41 +1,41 @@
-{% assign hero_type = include.hero_type | default: 'main' %}
-{% if hero_type == 'sub' %}
-{% assign hero_bg = page.hero_image | default: site.hero_image_sub %}
-{% comment %}
+{%- assign hero_type = include.hero_type | default: 'main' -%}
+{%- if hero_type == 'sub' -%}
+{%- assign hero_bg = page.hero_image | default: site.hero_image_sub -%}
+{%- comment %}
 ── Load hero data (single load for tags, actions, float_actions) ──
 Resolution: page front matter → data file → defaults
-{% endcomment %}
-{% assign hero_action_file = page.heroaction | default: "heroaction" %}
-{% assign hero_data = site.data.hero[hero_action_file] %}
-{% comment %} ── Resolve tags ── {% endcomment %}
-{% if page.hero_tags %}{% assign hero_tags = page.hero_tags %}
-{% elsif hero_data.tags %}{% assign hero_tags = hero_data.tags %}{% endif %}
-{% comment %} ── Resolve float_actions (supports array or object with class/items) ── {% endcomment %}
-{% if page.hero_float_actions %}{% assign _raw_float = page.hero_float_actions %}
-{% elsif hero_data.float_actions %}{% assign _raw_float = hero_data.float_actions %}{% endif %}
-{% if _raw_float.items %}{% assign hero_float_actions = _raw_float.items %}{% assign hero_float_actions_class = _raw_float.class %}
-{% else %}{% assign hero_float_actions = _raw_float %}{% endif %}
-{% comment %} ── Resolve actions ── {% endcomment %}
-{% if page.hero_actions %}{% assign hero_actions = page.hero_actions %}
-{% elsif hero_data.actions %}{% assign hero_actions = hero_data.actions %}{% endif %}
-{% comment %}
+{%- endcomment -%}
+{%- assign hero_action_file = page.heroaction | default: "heroaction" -%}
+{%- assign hero_data = site.data.hero[hero_action_file] -%}
+{%- comment %} ── Resolve tags ── {%- endcomment -%}
+{%- if page.hero_tags -%}{%- assign hero_tags = page.hero_tags -%}
+{%- elsif hero_data.tags -%}{%- assign hero_tags = hero_data.tags -%}{%- endif -%}
+{%- comment %} ── Resolve float_actions (supports array or object with class/items) ── {%- endcomment -%}
+{%- if page.hero_float_actions -%}{%- assign _raw_float = page.hero_float_actions -%}
+{%- elsif hero_data.float_actions -%}{%- assign _raw_float = hero_data.float_actions -%}{%- endif -%}
+{%- if _raw_float.items -%}{%- assign hero_float_actions = _raw_float.items -%}{%- assign hero_float_actions_class = _raw_float.class -%}
+{%- else -%}{%- assign hero_float_actions = _raw_float -%}{%- endif -%}
+{%- comment %} ── Resolve actions ── {%- endcomment -%}
+{%- if page.hero_actions -%}{%- assign hero_actions = page.hero_actions -%}
+{%- elsif hero_data.actions -%}{%- assign hero_actions = hero_data.actions -%}{%- endif -%}
+{%- comment %}
 ── Share placement logic ──
 1. "share" in actions array → standard action
 2. "share" in float_actions array → float action
 3. hide_share_page: true → hidden
 4. Neither → hidden (no share rendered)
-{% endcomment %}
-{% assign _share_in_action = false %}
-{% for item in hero_actions %}{% if item == "share" %}{% assign _share_in_action = true %}{% endif %}{% endfor %}
-{% assign _share_in_float = false %}
-{% for item in hero_float_actions %}{% if item == "share" %}{% assign _share_in_float = true %}{% endif %}{% endfor %}
-{% if page.hide_share_page %}{% assign share_placement = "hidden" %}
-{% elsif _share_in_action %}{% assign share_placement = "action" %}
-{% elsif _share_in_float %}{% assign share_placement = "float" %}
-{% else %}{% assign share_placement = "hidden" %}{% endif %}
-{% comment %} ── Capture share dropmenu HTML ── {% endcomment %}
-{% unless share_placement == "hidden" %}
-{% capture share_html %}
+{%- endcomment -%}
+{%- assign _share_in_action = false -%}
+{%- for item in hero_actions -%}{%- if item == "share" -%}{%- assign _share_in_action = true -%}{%- endif -%}{%- endfor -%}
+{%- assign _share_in_float = false -%}
+{%- for item in hero_float_actions -%}{%- if item == "share" -%}{%- assign _share_in_float = true -%}{%- endif -%}{%- endfor -%}
+{%- if page.hide_share_page -%}{%- assign share_placement = "hidden" -%}
+{%- elsif _share_in_action -%}{%- assign share_placement = "action" -%}
+{%- elsif _share_in_float -%}{%- assign share_placement = "float" -%}
+{%- else -%}{%- assign share_placement = "hidden" -%}{%- endif -%}
+{%- comment %} ── Capture share dropmenu HTML ── {%- endcomment -%}
+{%- unless share_placement == "hidden" -%}
+{%- capture share_html %}
             <div id="nds-sharePage" class="nds-dropmenu">
                 <button id="nds-sharePageBtn" class="nds-btn nds-secondary-outline nds-dropmenu-trigger"
                     aria-label="Share Page">
@@ -64,61 +64,63 @@ Resolution: page front matter → data file → defaults
                     </button>
                 </div>
             </div>
-{% endcapture %}
-{% endunless %}
-{% comment %} ── Determine if float/standard action divs are needed ── {% endcomment %}
-{% assign _has_float = false %}
-{% for item in hero_float_actions %}{% if item == "share" %}{% if share_placement == "float" %}{% assign _has_float = true %}{% endif %}
-{% else %}{% assign _has_float = true %}{% endif %}{% endfor %}
-{% assign _has_action = false %}
-{% for item in hero_actions %}{% unless item == "share" %}{% assign _has_action = true %}{% endunless %}{% endfor %}
-{% if share_placement == "action" %}{% assign _has_action = true %}{% endif %}
+{%- endcapture -%}
+{%- endunless -%}
+{%- comment %} ── Determine if float/standard action divs are needed ── {%- endcomment -%}
+{%- assign _has_float = false -%}
+{%- for item in hero_float_actions -%}{%- if item == "share" -%}{%- if share_placement == "float" -%}{%- assign _has_float = true -%}{%- endif -%}
+{%- else -%}{%- assign _has_float = true -%}{%- endif -%}{%- endfor -%}
+{%- assign _has_action = false -%}
+{%- for item in hero_actions -%}{%- unless item == "share" -%}{%- assign _has_action = true -%}{%- endunless -%}{%- endfor -%}
+{%- if share_placement == "action" -%}{%- assign _has_action = true -%}{%- endif -%}
 <section class="nds-hero-section sub {{ page.hero_style }}" aria-label="قسم العرض الرئيسي"
-    {% if hero_bg %}style="--hero_image: url('{{ hero_bg | relative_url }}');"{% endif %}>
+    {%- if hero_bg %} style="--hero_image: url('{{ hero_bg | relative_url }}');"{%- endif %}>
     <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb" hidden>
         <ol class="nds-breadcrumb">
-            {% assign home_text = 'الرئيسية' %}{% if page.lang == 'en' %}{% assign home_text = 'Home' %}{% endif %}
-            <li><a href="{{ page.breadcrumb_root_url | default: '/' | relative_url }}">{{ page.breadcrumb_root |
-                    default: home_text }}</a></li>
-            {% if page.breadcrumb %}
-            {% for crumb in page.breadcrumb %}
-            <li><a href="{% if crumb.first %}{{ crumb[1] | relative_url }}{% else %}#{% endif %}">{% if crumb.first
-                    %}{{ crumb[0] }}{% else %}{{ crumb }}{% endif %}</a></li>
-            {% endfor %}
-            {% endif %}
+            {%- assign home_text = 'الرئيسية' -%}{%- if page.lang == 'en' -%}{%- assign home_text = 'Home' -%}{%- endif %}
+            <li><a href="{{ page.breadcrumb_root_url | default: '/' | relative_url }}">{{ page.breadcrumb_root | default: home_text }}</a></li>
+            {%- if page.breadcrumb %}
+            {%- for crumb in page.breadcrumb %}
+            <li><a href="{%- if crumb.first %}{{ crumb[1] | relative_url }}{%- else %}#{%- endif %}">
+                {%- if crumb.first %}{{ crumb[0] }}{%- else %}{{ crumb }}{%- endif %}</a></li>
+            {%- endfor %}
+            {%- endif %}
             <li class="nds-truncate" aria-current="page">{{ page.title }}</li>
         </ol>
     </nav>
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
-            {% comment %} ── Float action (must be first child of head) ── {% endcomment %}
-            {% if _has_float %}
-            <div class="nds-section-action{% if hero_float_actions_class %} {{ hero_float_actions_class }}{% endif %}">
-                {% for item in hero_float_actions %}
-                {% if item == "share" %}{% unless share_placement == "hidden" %}{{ share_html }}{% endunless %}
-                {% else %}
+            {%- comment %} ── Float action (must be first child of head) ── {%- endcomment -%}
+            {%- if _has_float %}
+            <div class="nds-section-action{%- if hero_float_actions_class %} {{ hero_float_actions_class }}{%- endif %}">
+                {%- for item in hero_float_actions %}
+                {%- if item == "share" -%}{%- unless share_placement == "hidden" %}{{ share_html }}{%- endunless %}
+                {%- else %}
                 <a class="nds-btn {{ item.style | default: 'nds-secondary-outline' }}" href="{{ item.url | relative_url }}"
-                    aria-label="{{ item.aria_label | default: item.label }}"{% if item.target %} target="{{ item.target }}"{% endif %}>
-                    {% if item.icon and item.icon_position != "trailing" %}<i
-                        class="hgi hgi-stroke {{ item.icon }} icon"></i>{% endif %}
+                    aria-label="{{ item.aria_label | default: item.label }}"
+                    {%- if item.target %} target="{{ item.target }}"{%- endif %}>
+                    {%- if item.icon and item.icon_position != "trailing" %}
+                    <i class="hgi hgi-stroke {{ item.icon }} icon"></i>
+                    {%- endif %}
                     <span class="label">{{ item.label }}</span>
-                    {% if item.icon and item.icon_position == "trailing" %}<i
-                        class="hgi hgi-stroke {{ item.icon }} icon"></i>{% endif %}
+                    {%- if item.icon and item.icon_position == "trailing" %}
+                    <i class="hgi hgi-stroke {{ item.icon }} icon"></i>
+                    {%- endif %}
                 </a>
-                {% endif %}
-                {% endfor %}
+                {%- endif %}
+                {%- endfor %}
             </div>
-            {% endif %}
+            {%- endif %}
             <h1 class="nds-section-title">{{ page.hero_title | default: site.hero_title }}</h1>
-            {% if hero_tags %}
+            {%- if hero_tags %}
             <div class="nds-section-meta">
                 <div class="nds-section-tags">
-                    {% for tag in hero_tags %}
+                    {%- for tag in hero_tags %}
                     <span class="nds-tag {{ tag.style | default: 'nds-neutral' }} {{ tag.modifiers }} nds-sm">
-                        {% if tag.icon %}<i class="hgi hgi-stroke {{ tag.icon }} icon"></i>{% endif %}
+                        {%- if tag.icon %}<i class="hgi hgi-stroke {{ tag.icon }} icon"></i>{%- endif %}
                         <span class="label">{{ tag.label }}</span>
                     </span>
-                    {% endfor %}
+                    {%- endfor %}
                 </div>
                 <div class="nds-dropmenu nds-rating-dropmenu">
                     <button class="nds-section-rating nds-btn nds-subtle nds-menu-btn nds-dropmenu-trigger nds-md" type="button">
@@ -145,89 +147,95 @@ Resolution: page front matter → data file → defaults
                         <div class="nds-dropmenu-footer">
                             <hr class="nds-divider nds-lg">
                             <div class="nds-dropmenu-action nds-grid">
-                            <button class="nds-btn nds-primary nds-dropmenu-item" data-no-auto-close>
-                                <span class="label">Vote</span>
-                            </button>
-                        </div>
+                                <button class="nds-btn nds-primary nds-dropmenu-item" data-no-auto-close>
+                                    <span class="label">Vote</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            {% endif %}
+            {%- endif %}
             <p class="nds-section-description">{{ page.hero_description | default: site.hero_description }}</p>
         </div>
-        {% comment %} ── Standard action (sibling of head) ── {% endcomment %}
-        {% if _has_action %}
+        {%- comment %} ── Standard action (sibling of head) ── {%- endcomment -%}
+        {%- if _has_action %}
         <div class="nds-section-action">
-            {% for action in hero_actions %}
-            {% if action == "share" %}{{ share_html }}
-            {% else %}
+            {%- for action in hero_actions %}
+            {%- if action == "share" %}{{ share_html }}
+            {%- else %}
             <a class="nds-btn {{ action.style | default: 'nds-primary' }}" href="{{ action.url | relative_url }}"
-                aria-label="{{ action.aria_label | default: action.label }}"{% if action.target %} target="{{ action.target }}"{% endif %}>
-                {% if action.icon and action.icon_position != "trailing" %}<i
-                    class="hgi hgi-stroke {{ action.icon }} icon"></i>{% endif %}
+                aria-label="{{ action.aria_label | default: action.label }}"
+                {%- if action.target %} target="{{ action.target }}"{%- endif %}>
+                {%- if action.icon and action.icon_position != "trailing" %}
+                <i class="hgi hgi-stroke {{ action.icon }} icon"></i>
+                {%- endif %}
                 <span class="label">{{ action.label }}</span>
-                {% if action.icon and action.icon_position == "trailing" %}<i
-                    class="hgi hgi-stroke {{ action.icon }} icon"></i>{% endif %}
+                {%- if action.icon and action.icon_position == "trailing" %}
+                <i class="hgi hgi-stroke {{ action.icon }} icon"></i>
+                {%- endif %}
             </a>
-            {% endif %}
-            {% endfor %}
+            {%- endif %}
+            {%- endfor %}
         </div>
-        {% endif %}
+        {%- endif %}
     </div>
 </section>
-{% else %}
-{% comment %}
+{%- else -%}
+{%- comment %}
 Determine hero sliders source:
 1. Use page.hero_sliders if custom slides defined in page front matter
 2. Use page.herosliders to specify which data file to load (e.g., "herosliders-about")
 3. Fall back to site.herosliders config (default: "herosliders")
 4. Load from site.data[hero_file_name]
-{% endcomment %}
-{% if page.hero_sliders %}
-{% assign hero_sliders = page.hero_sliders %}
-{% else %}
-{% assign hero_file_name = page.herosliders | default: site.herosliders | default: "herosliders" %}
-{% assign hero_sliders = site.data.hero[hero_file_name] %}
-{% endif %}
-
+{%- endcomment -%}
+{%- if page.hero_sliders -%}
+{%- assign hero_sliders = page.hero_sliders -%}
+{%- else -%}
+{%- assign hero_file_name = page.herosliders | default: site.herosliders | default: "herosliders" -%}
+{%- assign hero_sliders = site.data.hero[hero_file_name] -%}
+{%- endif -%}
 <section class="nds-hero-section" aria-label="قسم العرض الرئيسي">
     <div class="nds-swiper nds-hero nds-full-width" style="--total: {{ hero_sliders | size }}">
         <div class="nds-swiper-wrapper">
-            {% for slide in hero_sliders %}
-            <div class="nds-swiper-slide nds-content-grid" {% unless forloop.first %} hidden{% endunless %}>
+            {%- for slide in hero_sliders %}
+            <div class="nds-swiper-slide nds-content-grid"{%- unless forloop.first %} hidden{%- endunless %}>
                 <div class="nds-hero-image-wrapper nds-full-width"
                     style="--overlay:{{ slide.overlay | default: 0.7 }}; position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
-                    {% if forloop.first %}
+                    {%- if forloop.first %}
                     <img src="{{ slide.src_small | default: slide.src | relative_url }}"
                         srcset="{{ slide.src_small | default: slide.src | relative_url }} 600w, {{ slide.src | relative_url }} 1200w"
                         sizes="100vw" class="nds-hero-image" alt=""
                         style="width: 100%; height: 100%; object-fit: cover; object-position: {{ slide.position | default: 'center center' }}; display: block;"
                         fetchpriority="high">
-                    {% else %}
+                    {%- else %}
                     <img data-src="{{ slide.src_small | default: slide.src | relative_url }}"
                         data-srcset="{{ slide.src_small | default: slide.src | relative_url }} 600w, {{ slide.src | relative_url }} 1200w"
                         sizes="100vw" class="nds-hero-image nds-swiper-lazy" alt=""
                         style="width: 100%; height: 100%; object-fit: cover; object-position: {{ slide.position | default: 'center center' }}; display: block;">
-                    {% endif %}
+                    {%- endif %}
                 </div>
                 <div class="nds-section-content" style="position: relative; z-index: 3;">
                     <h1 class="nds-section-title">{{ slide.title }}</h1>
                     <p class="nds-section-description">{{ slide.description }}</p>
-                    {% if slide.url and slide.url != '#' %}
+                    {%- if slide.url and slide.url != '#' %}
                     <a href="{{ slide.url | relative_url }}" class="nds-btn nds-primary nds-oncolor nds-lg">
                         <span class="label">Learn More</span>
                     </a>
-                    {% endif %}
+                    {%- endif %}
                 </div>
             </div>
-            {% endfor %}
+            {%- endfor %}
         </div>
         <div class="nds-swiper-pagination"></div>
         <button class="nds-btn nds-subtle nds-oncolor nds-icon-only nds-swiper-button-prev"
-            aria-label="Previous slide"><i class="hgi hgi-stroke hgi-arrow-right-01 icon"></i></button>
-        <button class="nds-btn nds-subtle nds-oncolor nds-icon-only nds-swiper-button-next" aria-label="Next slide"><i
-                class="hgi hgi-stroke hgi-arrow-left-01 icon"></i></button>
+            aria-label="Previous slide">
+            <i class="hgi hgi-stroke hgi-arrow-right-01 icon"></i>
+        </button>
+        <button class="nds-btn nds-subtle nds-oncolor nds-icon-only nds-swiper-button-next"
+            aria-label="Next slide">
+            <i class="hgi hgi-stroke hgi-arrow-left-01 icon"></i>
+        </button>
     </div>
 </section>
-{% endif %}
+{%- endif %}

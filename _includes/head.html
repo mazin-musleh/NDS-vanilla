@@ -1,9 +1,8 @@
 <head>
-    {% assign site_title = page.siteTitle | default: site.title %}
-
+    {%- assign site_title = page.siteTitle | default: site.title -%}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    {% unless page.exclude_showcase == true %}
+    {%- unless page.exclude_showcase == true %}
     <script>
         // Apply cached language preference before any rendering to prevent direction mismatch
         (function() {
@@ -15,21 +14,18 @@
             }
         })();
     </script>
-    {% endunless %}
+    {%- endunless %}
     <meta name="description"
         content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}">
-    <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site_title }}</title>
-
+    <title>{%- if page.title %}{{ page.title }} | {%- endif %}{{ site_title }}</title>
     <!-- Critical CSS inline -->
-    {% include critical-css.html %}
-
+    {%- include critical-css.html %}
     <!-- Preload critical resources -->
-    {% if page.layout == 'home' or page.url == '/' %}
+    {%- if page.layout == 'home' or page.url == '/' %}
     <link rel="preload" as="image" href="{{ page.hero_image | default: site.hero_image | relative_url }}"
         imagesrcset="{{ page.hero_image_small | default: site.hero_image_small | relative_url }} 600w, {{ page.hero_image | default: site.hero_image | relative_url }} 1200w"
         imagesizes="100vw" fetchpriority="high">
-    {% endif %}
-
+    {%- endif %}
     <!-- Define deferred assets loader BEFORE any links that call it -->
     <script>
         function loadDeferredAssets() {
@@ -47,36 +43,32 @@
             document.head.appendChild(favicon);
         }
     </script>
-
     <!-- Critical CSS - Load with deferred loading -->
     <link rel="preload" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver=1.008" as="style"
         onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
         <link rel="stylesheet" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver=1.008">
     </noscript>
-
     <!-- Main CSS - Load with deferred loading for below-the-fold content -->
     <link rel="preload" href="{{ 'assets/css/nds-main.min.css' | relative_url }}?ver=1.064" as="style"
         onload="this.onload=null;this.rel='stylesheet';loadDeferredAssets()">
     <noscript>
         <link rel="stylesheet" href="{{ 'assets/css/nds-main.min.css' | relative_url }}?ver=1.064">
     </noscript>
-
     <!-- Custom page-specific CSS files with deferred loading -->
-    {% if page.custom_css %}
-    {% for css_file in page.custom_css %}
+    {%- if page.custom_css %}
+    {%- for css_file in page.custom_css %}
     <link rel="preload" href="{{ css_file | relative_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
         <link rel="stylesheet" href="{{ css_file | relative_url }}">
     </noscript>
-    {% endfor %}
-    {% endif %}
-
+    {%- endfor %}
+    {%- endif %}
     <noscript>
         <link rel="stylesheet" href="{{ 'assets/css/hgi-rounded-stroke-min.css' | relative_url }}">
         <link rel="icon" type="image/svg+xml" href="{{ 'assets/img/favicon.svg' | relative_url }}">
     </noscript>
-    {% if site.debug %}
-    {% include perf-monitor.html %}
-    {% endif %}
+    {%- if site.debug %}
+    {%- include perf-monitor.html %}
+    {%- endif %}
 </head>
