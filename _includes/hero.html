@@ -203,16 +203,22 @@ Determine hero sliders source:
                 <div class="nds-hero-image-wrapper nds-full-width"
                     style="--overlay:{{ slide.overlay | default: 0.7 }}; position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
                     {%- if forloop.first %}
-                    <img src="{{ slide.src_small | default: slide.src | relative_url }}"
-                        srcset="{{ slide.src_small | default: slide.src | relative_url }} 600w, {{ slide.src | relative_url }} 1200w"
-                        sizes="100vw" class="nds-hero-image" alt=""
-                        style="width: 100%; height: 100%; object-fit: cover; object-position: {{ slide.position | default: 'center center' }}; display: block;"
-                        fetchpriority="high">
+                    <picture>
+                        {%- if slide.src_small %}
+                        <source media="(max-width: 768px)" srcset="{{ slide.src_small | relative_url }}">
+                        {%- endif %}
+                        <img src="{{ slide.src | relative_url }}" class="nds-hero-image" alt=""
+                            style="width: 100%; height: 100%; object-fit: cover; object-position: {{ slide.position | default: 'center center' }}; display: block;"
+                            fetchpriority="high">
+                    </picture>
                     {%- else %}
-                    <img data-src="{{ slide.src_small | default: slide.src | relative_url }}"
-                        data-srcset="{{ slide.src_small | default: slide.src | relative_url }} 600w, {{ slide.src | relative_url }} 1200w"
-                        sizes="100vw" class="nds-hero-image nds-swiper-lazy" alt=""
-                        style="width: 100%; height: 100%; object-fit: cover; object-position: {{ slide.position | default: 'center center' }}; display: block;">
+                    <picture>
+                        {%- if slide.src_small %}
+                        <source media="(max-width: 768px)" data-srcset="{{ slide.src_small | relative_url }}">
+                        {%- endif %}
+                        <img data-src="{{ slide.src | relative_url }}" class="nds-hero-image nds-swiper-lazy" alt=""
+                            style="width: 100%; height: 100%; object-fit: cover; object-position: {{ slide.position | default: 'center center' }}; display: block;">
+                    </picture>
                     {%- endif %}
                 </div>
                 <div class="nds-section-content" style="position: relative; z-index: 3;">

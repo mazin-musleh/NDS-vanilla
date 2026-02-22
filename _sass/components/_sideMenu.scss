@@ -12,7 +12,7 @@
 .nds-sideMenu {
     --drawer-max-height: calc(100svh - var(--nds-nav-height) - var(--spacing-xl));
     --btn-width: 40px;
-    --_toggle-height: var(--toggle-height, var(--nds-sideMenu-toggle-height));
+    --_toggle-height: var(--toggle-height, var(--nds-sideMenu-toggle-height, 40px));
     width: var(--nds-sideMenu-width);
     min-width: var(--nds-sideMenu-width);
     background-color: var(--background-white);
@@ -67,7 +67,7 @@
 
 @include tablet(max) {
     .nds-sideMenu {
-       
+
         height: 100%;
         border-radius: 0 !important;
         border-top: 0;
@@ -81,7 +81,7 @@
         position: fixed;
         top: 0;
         bottom: 0;
-        z-index: 999;
+        z-index: 899;
 
         // RTL: slide out to the right
         transform: translateX(100%);
@@ -229,6 +229,7 @@
             border-radius: 0;
             transform: translateX(0px) !important;
             z-index: 899;
+
             #sideMenuToggle {
                 --btn-width: 100%;
                 --btn-bg: var(--background-white);
@@ -242,8 +243,8 @@
                 top: unset;
                 --toggle-transform: unset;
                 z-index: 900;
-                
-                
+
+
 
                 .label {
                     &[hidden] {
@@ -286,9 +287,8 @@
             }
 
             // Backdrop effect when sideMenu is open or closing (matches modal backdrop)
-            &[data-state~="open"],
-            &[data-state~="closing"] {
-                z-index: 998;
+            &:is([data-state~="open"], [data-state~="closing"]) {
+
                 top: 0;
                 height: fit-content;
                 box-shadow: unset;
@@ -309,7 +309,7 @@
 
         // Add padding-top to mainContent when drawer is open
         .nds-sideMenu[data-state~="open"]~.nds-main-content {
-            padding-top: calc(var(--_toggle-height) + 16px);
+            margin-top: calc((var(--_topsubmenu-height) - var(--nds-sideMenu-toggle-height, 40px) + 16px) * -1);
         }
     }
 }
