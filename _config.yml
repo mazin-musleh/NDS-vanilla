@@ -19,9 +19,9 @@ headerBrandH: 48
 
 # Hero Settings (fallback defaults)
 hero_image: assets/img/riyadhcenter_ai.webp
-hero_image_small: assets/img/riyadhcenter3s.webp
+hero_image_small: assets/img/riyadhcenter_ais.webp
 hero_image_sub:
-hero_image_pos: 50% 50%
+hero_image_pos: 50% 80%
 hero_title: National Design System
 hero_description: The National Design System provides comprehensive design guidelines, components, and resources for creating consistent and accessible digital experiences across government services in Saudi Arabia.
 

@@ -2,70 +2,52 @@
 (() => {
     'use strict';
 
-    const getSafeZonePixels = () => {
-        const cssValue = getComputedStyle(document.documentElement).getPropertyValue('--nds-dropdown-safeZone').trim();
-        return cssValue ? parseInt(cssValue, 10) : 40;
-    };
-
-    // Check if parent .nds-content-layout has .topSubMenu variant
-    const isTopSubMenuMode = (accMenu) => {
-        const contentLayout = accMenu.closest('.nds-content-layout');
-        return contentLayout && contentLayout.classList.contains('topSubMenu');
-    };
-
-    // Get the target element that should be animated (drawer for topSubMenu, sideMenu otherwise)
-    const getAnimationTarget = (accMenu) => {
-        if (isTopSubMenuMode(accMenu)) {
-            return accMenu.querySelector('.nds-drawer');
-        }
-        return accMenu;
-    };
-
     // State management helpers for space-separated data-state values
-    const addState = (element, ...states) => {
-        if (!element) return;
-        const current = new Set((element.getAttribute('data-state') || '').split(/\s+/).filter(Boolean));
+    const addState = (el, ...states) => {
+        if (!el) return;
+        const current = new Set((el.getAttribute('data-state') || '').split(/\s+/).filter(Boolean));
         states.forEach(s => current.add(s));
-        element.setAttribute('data-state', [...current].join(' '));
+        el.setAttribute('data-state', [...current].join(' '));
     };
 
-    const removeState = (element, ...states) => {
-        if (!element) return;
-        const current = new Set((element.getAttribute('data-state') || '').split(/\s+/).filter(Boolean));
+    const removeState = (el, ...states) => {
+        if (!el) return;
+        const current = new Set((el.getAttribute('data-state') || '').split(/\s+/).filter(Boolean));
         states.forEach(s => current.delete(s));
-        if (current.size === 0) {
-            element.removeAttribute('data-state');
-        } else {
-            element.setAttribute('data-state', [...current].join(' '));
-        }
+        current.size ? el.setAttribute('data-state', [...current].join(' ')) : el.removeAttribute('data-state');
     };
 
-    const hasState = (element, state) => {
-        if (!element) return false;
-        const current = (element.getAttribute('data-state') || '').split(/\s+/);
-        return current.includes(state);
+    const hasState = (el, state) => {
+        if (!el) return false;
+        return (el.getAttribute('data-state') || '').split(/\s+/).includes(state);
     };
 
-    // Clear all states
-    const clearState = (element) => {
-        if (!element) return;
-        element.removeAttribute('data-state');
+    const clearState = (el) => { if (el) el.removeAttribute('data-state'); };
+
+    // Set --drawer-max-height for slider mode only
+    const updateDrawerMaxHeight = (accMenu, drawer) => {
+        const nav = document.getElementById('ndsMainNav');
+        const topbar = document.querySelector('.nds-topbar');
+        const navBottom = nav ? Math.max(0, nav.getBoundingClientRect().bottom) : 0;
+        const topbarBottom = topbar ? Math.max(0, topbar.getBoundingClientRect().bottom) : 0;
+        const visibleHeader = Math.max(navBottom, topbarBottom);
+
+        accMenu.style.paddingTop = visibleHeader + 'px';
+        drawer.style.setProperty('--drawer-max-height', Math.max(window.innerHeight - visibleHeader, 100) + 'px');
     };
 
     function initializeActiveStates(accMenu) {
         accMenu.querySelectorAll('li[data-state~="active"]').forEach(activeItem => {
             let current = activeItem;
             while (current && current !== accMenu) {
-                if (current.classList.contains("has-sub")) {
-                    addState(current, 'open');
-                }
+                if (current.classList.contains("has-sub")) addState(current, 'open');
                 current = current.parentElement.closest("li");
             }
         });
     }
 
     function setupAccordionToggle(accMenu) {
-        accMenu.addEventListener("click", function (e) {
+        accMenu.addEventListener("click", (e) => {
             const anchor = e.target.closest("li.has-sub > a");
             if (!anchor) return;
 
@@ -78,31 +60,23 @@
             anchor.setAttribute('aria-expanded', !isOpen);
 
             if (!isOpen) {
-                // Close all sibling items
-                const siblings = [...li.parentElement.children].filter(el => el !== li && el.classList.contains("has-sub"));
-
-                siblings.forEach(sibling => {
+                // Close open siblings
+                [...li.parentElement.children].forEach(sibling => {
+                    if (sibling === li || !sibling.classList.contains("has-sub")) return;
                     const siblingSub = sibling.querySelector(":scope > ul");
-                    if (hasState(sibling, 'open') && siblingSub) {
-                        const siblingAnchor = sibling.querySelector(":scope > a");
-                        if (siblingAnchor) {
-                            siblingAnchor.setAttribute('aria-expanded', 'false');
-                        }
+                    if (!hasState(sibling, 'open') || !siblingSub) return;
 
-                        // Set closing state (open + closing coexist)
-                        addState(sibling, 'closing');
-                        siblingSub.style.height = siblingSub.scrollHeight + "px";
-                        siblingSub.offsetHeight;
-                        siblingSub.style.height = "0px";
+                    const siblingAnchor = sibling.querySelector(":scope > a");
+                    if (siblingAnchor) siblingAnchor.setAttribute('aria-expanded', 'false');
 
-                        setTimeout(() => {
-                            clearState(sibling);
-                            siblingSub.style.height = "";
-                        }, 250);
-                    }
+                    addState(sibling, 'closing');
+                    siblingSub.style.height = siblingSub.scrollHeight + "px";
+                    siblingSub.offsetHeight;
+                    siblingSub.style.height = "0px";
+                    setTimeout(() => { clearState(sibling); siblingSub.style.height = ""; }, 250);
                 });
 
-                // Open current item with opening state (open + opening coexist)
+                // Open current
                 addState(li, 'open', 'opening');
                 submenu.style.height = "0px";
                 submenu.offsetHeight;
@@ -113,397 +87,275 @@
                     submenu.style.height = "";
                     submenu.removeEventListener("transitionend", handler);
                 });
-
             } else {
-                // Close current item with closing state (open + closing coexist)
+                // Close current
                 addState(li, 'closing');
                 submenu.style.height = submenu.scrollHeight + "px";
                 submenu.offsetHeight;
                 submenu.style.height = "0px";
-
-                setTimeout(() => {
-                    clearState(li);
-                    submenu.style.height = "";
-                }, 250);
+                setTimeout(() => { clearState(li); submenu.style.height = ""; }, 250);
             }
         });
     }
 
-    // Set --drawer-max-height to full viewport height minus visible header content
-    // Only applies to slider side menu mode, not top mode
-    const updateDrawerMaxHeight = (accMenu, isTopMode) => {
-        // Only update for slider mode (not top mode)
-        if (isTopMode) return;
-
-        const drawer = accMenu.querySelector('.nds-drawer');
-        if (!drawer) return;
-
-        const nav = document.getElementById('ndsMainNav');
-        const topbar = document.querySelector('.nds-topbar');
-
-        const navBottom = nav ? Math.max(0, nav.getBoundingClientRect().bottom) : 0;
-        const topbarBottom = topbar ? Math.max(0, topbar.getBoundingClientRect().bottom) : 0;
-
-        // Take the maximum bottom position of header elements
-        const visibleHeader = Math.max(navBottom, topbarBottom);
-
-        // Set top padding to match visible header height
-        accMenu.style.paddingTop = visibleHeader + 'px';
-
-        // Set drawer max height accounting for visible header
-        const availableHeight = window.innerHeight - visibleHeader;
-        drawer.style.setProperty('--drawer-max-height', Math.max(availableHeight, 100) + 'px');
+    // Scroll lock helpers for top mode
+    const lockBodyScroll = () => {
+        const scrollY = window.pageYOffset;
+        document.body.style.top = `-${scrollY}px`;
+        document.body.setAttribute('data-state', 'backdrop');
     };
 
-    // Helper: Open menu for both modes
-    const openMenu = (accMenu, animationTarget, toggleBtn, contentLayout, isTopMode) => {
-        // Set drawer max height based on available space (slider mode only)
-        updateDrawerMaxHeight(accMenu, isTopMode);
+    const unlockBodyScroll = () => {
+        if (!document.body.style.top) return;
+        const scrollY = parseInt(document.body.style.top, 10) * -1;
+        document.body.style.top = '';
+        document.body.removeAttribute('data-state');
+        window.scrollTo(0, scrollY);
+    };
 
-        // Top mode: scroll past hero if visible, then lock scroll
-        if (isTopMode) {
-            const heroSection = document.querySelector('.nds-hero-section');
-            const heroVisible = heroSection && heroSection.getBoundingClientRect().bottom > 0;
+    // Scroll past hero then lock — handles user touch interruption
+    const scrollPastHeroAndLock = () => {
+        const heroSection = document.querySelector('.nds-hero-section');
+        const nav = document.getElementById('ndsMainNav');
+        const navBottom = nav ? nav.getBoundingClientRect().bottom : 0;
+        const heroBtm = heroSection ? heroSection.getBoundingClientRect().bottom : 0;
 
-            if (heroVisible) {
-                const heroBottom = heroSection.getBoundingClientRect().bottom + window.scrollY;
-                window.scrollTo({ top: heroBottom, behavior: 'smooth' });
+        if (!heroSection || heroBtm <= navBottom) {
+            lockBodyScroll();
+            return;
+        }
 
-                // Lock scroll after smooth scroll finishes
-                const lockScroll = () => {
-                    window.removeEventListener('scrollend', lockScroll);
-                    const scrollY = window.pageYOffset;
-                    document.body.style.top = `-${scrollY}px`;
-                    document.body.setAttribute('data-state', 'backdrop');
-                };
-                window.addEventListener('scrollend', lockScroll);
-            } else {
-                // Hero not visible or no hero: lock scroll immediately
-                const scrollY = window.pageYOffset;
-                document.body.style.top = `-${scrollY}px`;
-                document.body.setAttribute('data-state', 'backdrop');
+        window.scrollTo({ top: heroBtm + window.scrollY, behavior: 'smooth' });
+
+        let locked = false;
+        const doLock = () => {
+            if (locked) return;
+            locked = true;
+            // If hero still visible (user touch interrupted smooth scroll), force instant scroll
+            const currentBtm = heroSection.getBoundingClientRect().bottom;
+            if (currentBtm > navBottom) {
+                window.scrollTo({ top: currentBtm + window.scrollY, behavior: 'instant' });
             }
+            lockBodyScroll();
+        };
+
+        let lastY = window.pageYOffset;
+        let stableFrames = 0;
+        const checkSettled = () => {
+            if (locked) return;
+            const currentY = window.pageYOffset;
+            if (currentY === lastY) { stableFrames++; } else { stableFrames = 0; lastY = currentY; }
+            stableFrames >= 3 ? doLock() : requestAnimationFrame(checkSettled);
+        };
+        requestAnimationFrame(checkSettled);
+        setTimeout(doLock, 500);
+    };
+
+    // Get mainContent sibling
+    const getMainContent = (accMenu) => {
+        const el = accMenu.nextElementSibling;
+        return el && el.classList.contains('nds-main-content') ? el : null;
+    };
+
+    // Epoch counter to invalidate stale z-index removals
+    let menuEpoch = 0;
+
+    const openMenu = (ctx) => {
+        const { accMenu, animTarget, toggleBtn, isTopMode, drawer } = ctx;
+        menuEpoch++;
+
+        // Set z-index above backdrop immediately
+        const backdropZ = isTopMode ? 997 : 998;
+        accMenu.style.zIndex = backdropZ + 1;
+
+        if (isTopMode) {
+            scrollPastHeroAndLock();
+        } else {
+            updateDrawerMaxHeight(accMenu, drawer);
         }
 
         // Show backdrop
-        const backdropZ = isTopMode ? 997 : 998;
         if (window.NDSBackdrop) {
             window.NDSBackdrop.show({
                 zIndex: backdropZ,
-                preventScroll: !isTopMode, // Disable scroll lock for top mode (allows smooth scroll)
-                onClick: () => {
-                    if (hasState(animationTarget, 'open')) {
-                        closeMenu(accMenu, animationTarget, toggleBtn, contentLayout, isTopMode);
-                    }
-                }
+                preventScroll: !isTopMode,
+                onClick: () => { if (hasState(animTarget, 'open')) closeMenu(ctx); }
             });
         }
+
         if (toggleBtn) addState(toggleBtn, 'open');
 
         if (isTopMode) {
-            // Top mode: animate drawer
             addState(accMenu, 'open');
-            addState(animationTarget, 'open', 'opening');
+            addState(animTarget, 'open', 'opening');
+            const mainContent = getMainContent(accMenu);
+            if (mainContent) mainContent.style.setProperty('--_topsubmenu-height', accMenu.offsetHeight + 'px');
         } else {
-            // Slider mode: animate menu, remove peek
-            addState(animationTarget, 'open', 'opening');
+            addState(animTarget, 'open', 'opening');
             accMenu.classList.remove('nds-peek');
         }
 
-        const handleTransitionEnd = () => {
-            removeState(animationTarget, 'opening');
-            // Top mode: check drawer overflow after it becomes visible
-            if (isTopMode && window.NDSDrawer) {
-                window.NDSDrawer.checkOverflow(animationTarget);
-            }
-            animationTarget.removeEventListener('transitionend', handleTransitionEnd);
+        const onOpened = () => {
+            removeState(animTarget, 'opening');
+            if (isTopMode && window.NDSDrawer) window.NDSDrawer.checkOverflow(animTarget);
+            animTarget.removeEventListener('transitionend', onOpened);
         };
-        animationTarget.addEventListener('transitionend', handleTransitionEnd);
+        animTarget.addEventListener('transitionend', onOpened);
     };
 
-    // Helper: Close menu for both modes
-    const closeMenu = (accMenu, animationTarget, toggleBtn, contentLayout, isTopMode) => {
-        // Both modes now use closing animation for consistent state cycle
-        if (isTopMode) {
-            addState(accMenu, 'closing');
-        }
+    const closeMenu = (ctx) => {
+        const { accMenu, animTarget, toggleBtn, isTopMode, drawer } = ctx;
+        const closeEpoch = menuEpoch;
 
-        addState(animationTarget, 'closing');
+        if (isTopMode) addState(accMenu, 'closing');
+        addState(animTarget, 'closing');
 
-        let transitionCompleted = false;
-
+        let done = false;
         const cleanup = () => {
-            if (transitionCompleted) return;
-            transitionCompleted = true;
+            if (done) return;
+            done = true;
 
-            clearState(animationTarget);
+            clearState(animTarget);
             if (isTopMode) {
                 clearState(accMenu);
+                const mainContent = getMainContent(accMenu);
+                if (mainContent) mainContent.style.removeProperty('--_topsubmenu-height');
+                unlockBodyScroll();
             } else {
-                // Slider mode: restore peek class after animation
                 accMenu.classList.add('nds-peek');
+                accMenu.style.removeProperty('padding-top');
             }
             if (toggleBtn) clearState(toggleBtn);
-            // Clear dynamic drawer max height and padding (slider mode only)
-            const drawer = accMenu.querySelector('.nds-drawer');
             if (drawer) drawer.style.removeProperty('--drawer-max-height');
-            if (!isTopMode) accMenu.style.removeProperty('padding-top');
-            // Unlock manual scroll lock (top mode applies this after smooth scroll)
-            if (isTopMode && document.body.style.top) {
-                const scrollY = parseInt(document.body.style.top, 10) * -1;
-                document.body.style.top = '';
-                document.body.removeAttribute('data-state');
-                window.scrollTo(0, scrollY);
-            }
-            // Hide backdrop
+
             if (window.NDSBackdrop) window.NDSBackdrop.hide();
-            animationTarget.removeEventListener('transitionend', handleTransitionEnd);
+            setTimeout(() => { if (closeEpoch === menuEpoch) accMenu.style.removeProperty('z-index'); }, 300);
+            animTarget.removeEventListener('transitionend', onClosed);
         };
 
-        const handleTransitionEnd = (e) => {
-            // Only handle transitions on the animation target itself
-            if (e && e.target !== animationTarget) return;
+        const onClosed = (e) => {
+            if (e && e.target !== animTarget) return;
             cleanup();
         };
 
-        animationTarget.addEventListener('transitionend', handleTransitionEnd);
-
-        // Fallback timeout in case transition doesn't fire (300ms = default transition duration)
-        setTimeout(() => {
-            if (!transitionCompleted) {
-                cleanup();
-            }
-        }, 300);
+        animTarget.addEventListener('transitionend', onClosed);
+        setTimeout(() => { if (!done) cleanup(); }, 300);
     };
 
-    function setupMenuToggle(accMenu) {
-        const toggleBtn = document.getElementById("sideMenuToggle");
-
-        if (toggleBtn) {
-            toggleBtn.addEventListener("click", (e) => {
-                e.stopPropagation();
-                const isTopMode = isTopSubMenuMode(accMenu);
-                const animationTarget = getAnimationTarget(accMenu);
-                const isOpen = hasState(animationTarget, 'open');
-                const contentLayout = accMenu.closest('.nds-content-layout');
-
-                if (!isOpen) {
-                    openMenu(accMenu, animationTarget, toggleBtn, contentLayout, isTopMode);
-                } else {
-                    closeMenu(accMenu, animationTarget, toggleBtn, contentLayout, isTopMode);
-                }
-            });
-        }
-        return toggleBtn;
-    }
-
-    function setupClickOutside(accMenu, toggleBtn) {
-        document.addEventListener("click", function (e) {
-            const isTopMode = isTopSubMenuMode(accMenu);
-            const animationTarget = getAnimationTarget(accMenu);
-            const contentLayout = accMenu.closest('.nds-content-layout');
-
-            if (!hasState(animationTarget, 'open')) return;
-
-            // Skip if clicked on toggle button
-            if (toggleBtn && toggleBtn.contains(e.target)) {
-                return;
-            }
-
-            // In topSubMenu mode, close if clicked outside drawer or on backdrop
-            if (isTopMode) {
-                const drawer = accMenu.querySelector('.nds-drawer');
-                // If click is inside drawer content, don't close
-                if (drawer && drawer.contains(e.target)) {
-                    return;
-                }
-                // Close menu using helper
-                closeMenu(accMenu, animationTarget, toggleBtn, contentLayout, isTopMode);
-                return;
-            }
-
-            // Regular slider mode: check if click is inside menu
-            if (accMenu.contains(e.target)) {
-                return;
-            }
-
-            // Check safe zone for regular mode
-            const menuRect = accMenu.getBoundingClientRect();
-            const safeZone = getSafeZonePixels();
-            const clickX = e.clientX;
-            const clickY = e.clientY;
-
-            const inSafeZone = (
-                clickX >= menuRect.left - safeZone &&
-                clickX <= menuRect.right + safeZone &&
-                clickY >= menuRect.top - safeZone &&
-                clickY <= menuRect.bottom + safeZone
-            );
-
-            if (!inSafeZone) {
-                // Close menu using helper
-                closeMenu(accMenu, animationTarget, toggleBtn, contentLayout, isTopMode);
-            }
-        });
-    }
-
-    function setupKeyboardEvents(accMenu) {
-        document.addEventListener("keydown", function (e) {
-            if (e.key !== "Escape") return;
-
-            const isTopMode = isTopSubMenuMode(accMenu);
-            const animationTarget = getAnimationTarget(accMenu);
-
-            if (hasState(animationTarget, 'open')) {
-                const contentLayout = accMenu.closest('.nds-content-layout');
-                const toggleBtn = document.getElementById("sideMenuToggle");
-
-                // Close menu using helper
-                closeMenu(accMenu, animationTarget, toggleBtn, contentLayout, isTopMode);
-            }
-        });
-    }
-
-    function updateToggleLabel(accMenu) {
-        const toggleBtn = document.getElementById("sideMenuToggle");
-        if (!toggleBtn) return;
-
+    function updateToggleLabel(accMenu, toggleBtn, isTopMode) {
         const labelSpan = toggleBtn.querySelector('.label');
         if (!labelSpan) return;
 
-        const isTopMode = isTopSubMenuMode(accMenu);
-
-        // Find active item, or use first item as fallback
-        const activeItem = accMenu.querySelector('li[data-state~="active"] .nds-btn .label');
-        const firstItem = accMenu.querySelector('.nds-drawer-list > li .nds-btn .label');
-        const menuLabel = activeItem || firstItem;
-
-        if (menuLabel) {
-            labelSpan.textContent = menuLabel.textContent;
-        }
+        const menuLabel = accMenu.querySelector('li[data-state~="active"] .nds-btn .label')
+            || accMenu.querySelector('.nds-drawer-list > li .nds-btn .label');
+        if (menuLabel) labelSpan.textContent = menuLabel.textContent;
 
         if (isTopMode) {
-            // TopSubMenu mode: show label, add menu-btn class, use subtle style
             labelSpan.removeAttribute('hidden');
             toggleBtn.classList.add('nds-menu-btn', 'nds-subtle', 'nds-indicator');
             toggleBtn.classList.remove('nds-primary');
         } else {
-            // Slider mode: keep label hidden, use primary style, keep indicator
             labelSpan.setAttribute('hidden', '');
             toggleBtn.classList.add('nds-primary', 'nds-indicator');
             toggleBtn.classList.remove('nds-menu-btn', 'nds-subtle');
         }
     }
 
-    function setupScrollPeek() {
-        const toggleBtn = document.getElementById("sideMenuToggle");
-        if (!toggleBtn) return;
-
-        // Only run if nds-peek class exists on init
+    function setupScrollPeek(toggleBtn) {
         if (!toggleBtn.classList.contains('nds-peek')) return;
 
-        // Toggle peek on page load for 1500ms
+        // Flash peek on page load
         toggleBtn.classList.remove('nds-peek');
-        setTimeout(() => {
-            toggleBtn.classList.add('nds-peek');
-        }, 1500);
+        setTimeout(() => toggleBtn.classList.add('nds-peek'), 1500);
 
-        let proximityTicking = false;
-        const proximityThreshold = 60; // Distance from button to toggle peek
+        let ticking = false;
+        const threshold = 60;
         let cachedRect = null;
-        let rectCacheTimer = null;
+        let rectTimer = null;
 
-        const invalidateRect = () => { cachedRect = null; };
-
-        const getButtonRect = () => {
+        const invalidate = () => { cachedRect = null; };
+        const getRect = () => {
             if (!cachedRect) {
                 cachedRect = toggleBtn.getBoundingClientRect();
-                // Invalidate cache after 500ms or on scroll/resize
-                clearTimeout(rectCacheTimer);
-                rectCacheTimer = setTimeout(invalidateRect, 500);
+                clearTimeout(rectTimer);
+                rectTimer = setTimeout(invalidate, 500);
             }
             return cachedRect;
         };
 
-        // Invalidate cached rect on scroll/resize
-        window.addEventListener('scroll', invalidateRect, { passive: true });
-        NDS.onResize(invalidateRect);
+        window.addEventListener('scroll', invalidate, { passive: true });
+        NDS.onResize(invalidate);
 
-        const handleProximity = (clientX, clientY) => {
-            const rect = getButtonRect();
-            const buttonCenterX = rect.left + rect.width / 2;
-            const buttonCenterY = rect.top + rect.height / 2;
-
-            // Calculate distance from cursor/touch to button center
-            const distance = Math.sqrt(
-                Math.pow(clientX - buttonCenterX, 2) +
-                Math.pow(clientY - buttonCenterY, 2)
-            );
-
-            // Toggle peek based on proximity: hide when near, show when far
-            if (distance <= proximityThreshold) {
-                toggleBtn.classList.remove('nds-peek');
-            } else {
-                toggleBtn.classList.add('nds-peek');
-            }
-
-            proximityTicking = false;
-        };
-
-        // Mouse move listener with RAF throttling (desktop only)
         window.addEventListener('mousemove', (e) => {
-            if (!proximityTicking) {
-                proximityTicking = true;
-                requestAnimationFrame(() => handleProximity(e.clientX, e.clientY));
-            }
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(() => {
+                const rect = getRect();
+                const cx = rect.left + rect.width / 2;
+                const cy = rect.top + rect.height / 2;
+                const dist = Math.sqrt((e.clientX - cx) ** 2 + (e.clientY - cy) ** 2);
+                toggleBtn.classList.toggle('nds-peek', dist > threshold);
+                ticking = false;
+            });
         }, { passive: true });
     }
 
     function initializeSideMenu() {
         const accMenu = document.querySelector(".nds-sideMenu");
-        if (!accMenu) return;
+        if (!accMenu || accMenu.closest('code, .code-example')) return;
 
-        // Skip elements inside code examples
-        if (accMenu.closest('code, .code-example')) {
-            return;
-        }
+        const toggleBtn = document.getElementById("sideMenuToggle");
+        const isTopMode = accMenu.closest('.nds-content-layout')?.classList.contains('topSubMenu') ?? false;
+        const animTarget = isTopMode ? accMenu.querySelector('.nds-drawer') : accMenu;
+        const drawer = accMenu.querySelector('.nds-drawer');
+
+        // Shared context object passed to open/close
+        const ctx = { accMenu, animTarget, toggleBtn, isTopMode, drawer };
 
         initializeActiveStates(accMenu);
         setupAccordionToggle(accMenu);
-        const toggleBtn = setupMenuToggle(accMenu);
-        setupClickOutside(accMenu, toggleBtn);
-        setupKeyboardEvents(accMenu);
-        updateToggleLabel(accMenu);
-        setupScrollPeek();
 
-        // Remove hidden attribute from trigger on init (drawer handled by loader)
-        if (toggleBtn) toggleBtn.removeAttribute('hidden');
+        // Toggle button
+        if (toggleBtn) {
+            toggleBtn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                hasState(animTarget, 'open') ? closeMenu(ctx) : openMenu(ctx);
+            });
+            toggleBtn.removeAttribute('hidden');
+            updateToggleLabel(accMenu, toggleBtn, isTopMode);
+            setupScrollPeek(toggleBtn);
+        }
 
-        // Close menu when window width changes
-        let previousWidth = window.innerWidth;
+        // Click outside
+        document.addEventListener("click", (e) => {
+            if (!hasState(animTarget, 'open')) return;
+            if (toggleBtn && toggleBtn.contains(e.target)) return;
+
+            if (isTopMode) {
+                if (drawer && drawer.contains(e.target)) return;
+            } else {
+                if (accMenu.contains(e.target)) return;
+            }
+            closeMenu(ctx);
+        });
+
+        // Escape key
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" && hasState(animTarget, 'open')) closeMenu(ctx);
+        });
+
+        // Close on width change
+        let prevWidth = window.innerWidth;
         NDS.onResize(() => {
-            const currentWidth = window.innerWidth;
-            if (currentWidth !== previousWidth) {
-                previousWidth = currentWidth;
-
-                const isTopMode = isTopSubMenuMode(accMenu);
-                const animationTarget = getAnimationTarget(accMenu);
-                const contentLayout = accMenu.closest('.nds-content-layout');
-
-                if (hasState(animationTarget, 'open')) {
-                    closeMenu(accMenu, animationTarget, toggleBtn, contentLayout, isTopMode);
-                }
+            const w = window.innerWidth;
+            if (w !== prevWidth) {
+                prevWidth = w;
+                if (hasState(animTarget, 'open')) closeMenu(ctx);
             }
         });
     }
 
-    // CRITICAL: Expose global API immediately (called by unified init system)
     if (typeof window !== 'undefined') {
-        window.NDSSideMenu = {
-            init: initializeSideMenu,
-            getSafeZonePixels
-        };
+        window.NDSSideMenu = { init: initializeSideMenu };
     }
-
-    // Note: Initialization now handled by nds-loader.js unified system
 })();

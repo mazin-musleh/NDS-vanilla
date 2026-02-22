@@ -541,6 +541,11 @@
             lazySlides.forEach(slide => {
                 const off = NDS.onIntersect(slide, (entry) => {
                     if (entry.isIntersecting) {
+                        // Activate <source> elements inside <picture> first
+                        entry.target.querySelectorAll('source[data-srcset]').forEach(source => {
+                            source.srcset = fixSrcsetSpaces(source.dataset.srcset);
+                            delete source.dataset.srcset;
+                        });
                         entry.target.querySelectorAll('img[data-src], img[data-srcset]').forEach(img => {
                             if (img.dataset.src) { img.src = img.dataset.src; delete img.dataset.src; }
                             if (img.dataset.srcset) { img.srcset = fixSrcsetSpaces(img.dataset.srcset); delete img.dataset.srcset; }
