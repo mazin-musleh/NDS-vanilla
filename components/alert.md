@@ -6,7 +6,6 @@ hero_description: Alert notifications for displaying important messages, warning
 breadcrumb: ["Components"]
 lang: en
 direction: ltr
-layout_class: cardView topSubMenu
 ---
 
 <!-- Alert Overview -->
@@ -58,24 +57,24 @@ layout_class: cardView topSubMenu
                         </div>
                     </div>
                     <div class="demo-code">
-                    <div class="nds-tabs nds-code nds-divided" hidden>
-                        <div class="nds-tab-list-container">
-                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                                    aria-controls="panel-success-1" id="tab-success-1">
-                                    <span class="nds-tab-label">HTML</span>
-                                </button>
-                            </nav>
-                        </div>
-                        <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-success-1"
-                                aria-labelledby="tab-success-1">
-                                <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                        <div class="nds-tabs nds-code nds-divided" hidden>
+                            <div class="nds-tab-list-container">
+                                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                        aria-controls="panel-success-1" id="tab-success-1">
+                                        <span class="nds-tab-label">HTML</span>
                                     </button>
-                                </div>
-                                <code class="lang-html code">
+                                </nav>
+                            </div>
+                            <div class="nds-tab-content">
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-success-1"
+                                    aria-labelledby="tab-success-1">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-html code">
 <div class="nds-alert nds-card" data-status="success">
   <span class="nds-feedback nds-alert-icon nds-outline">
     <span class="nds-feedback-icon">
@@ -91,9 +90,9 @@ layout_class: cardView topSubMenu
   </button>
 </div>
                                 </code>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     </div>
                 </div>
 
@@ -137,24 +136,24 @@ layout_class: cardView topSubMenu
                         </div>
                     </div>
                     <div class="demo-code">
-                    <div class="nds-tabs nds-code nds-divided" hidden>
-                        <div class="nds-tab-list-container">
-                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                                    aria-controls="panel-info-1" id="tab-info-1">
-                                    <span class="nds-tab-label">HTML</span>
-                                </button>
-                            </nav>
-                        </div>
-                        <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-info-1"
-                                aria-labelledby="tab-info-1">
-                                <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                        <div class="nds-tabs nds-code nds-divided" hidden>
+                            <div class="nds-tab-list-container">
+                                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                        aria-controls="panel-info-1" id="tab-info-1">
+                                        <span class="nds-tab-label">HTML</span>
                                     </button>
-                                </div>
-                                <code class="lang-html code">
+                                </nav>
+                            </div>
+                            <div class="nds-tab-content">
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-info-1"
+                                    aria-labelledby="tab-info-1">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-html code">
 <div class="nds-alert nds-card" data-status="info">
   <span class="nds-feedback nds-alert-icon nds-outline">
     <span class="nds-feedback-icon">
@@ -170,9 +169,9 @@ layout_class: cardView topSubMenu
   </button>
 </div>
                                 </code>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     </div>
                 </div>
 
@@ -215,24 +214,24 @@ layout_class: cardView topSubMenu
                         </div>
                     </div>
                     <div class="demo-code">
-                    <div class="nds-tabs nds-code nds-divided" hidden>
-                        <div class="nds-tab-list-container">
-                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                                    aria-controls="panel-warning-1" id="tab-warning-1">
-                                    <span class="nds-tab-label">HTML</span>
-                                </button>
-                            </nav>
-                        </div>
-                        <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-warning-1"
-                                aria-labelledby="tab-warning-1">
-                                <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                        <div class="nds-tabs nds-code nds-divided" hidden>
+                            <div class="nds-tab-list-container">
+                                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                        aria-controls="panel-warning-1" id="tab-warning-1">
+                                        <span class="nds-tab-label">HTML</span>
                                     </button>
-                                </div>
-                                <code class="lang-html code">
+                                </nav>
+                            </div>
+                            <div class="nds-tab-content">
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-warning-1"
+                                    aria-labelledby="tab-warning-1">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-html code">
 <div class="nds-alert nds-card" data-status="warning">
   <span class="nds-feedback nds-alert-icon nds-outline">
     <span class="nds-feedback-icon">
@@ -248,9 +247,9 @@ layout_class: cardView topSubMenu
   </button>
 </div>
                                 </code>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     </div>
                 </div>
 
@@ -294,24 +293,24 @@ layout_class: cardView topSubMenu
                         </div>
                     </div>
                     <div class="demo-code">
-                    <div class="nds-tabs nds-code nds-divided" hidden>
-                        <div class="nds-tab-list-container">
-                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                                    aria-controls="panel-error-1" id="tab-error-1">
-                                    <span class="nds-tab-label">HTML</span>
-                                </button>
-                            </nav>
-                        </div>
-                        <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-error-1"
-                                aria-labelledby="tab-error-1">
-                                <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                        <div class="nds-tabs nds-code nds-divided" hidden>
+                            <div class="nds-tab-list-container">
+                                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                        aria-controls="panel-error-1" id="tab-error-1">
+                                        <span class="nds-tab-label">HTML</span>
                                     </button>
-                                </div>
-                                <code class="lang-html code">
+                                </nav>
+                            </div>
+                            <div class="nds-tab-content">
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-error-1"
+                                    aria-labelledby="tab-error-1">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-html code">
 <div class="nds-alert nds-card" data-status="error">
   <span class="nds-feedback nds-alert-icon nds-outline">
     <span class="nds-feedback-icon">
@@ -327,9 +326,9 @@ layout_class: cardView topSubMenu
   </button>
 </div>
                                 </code>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     </div>
                 </div>
             </div>
@@ -393,24 +392,24 @@ layout_class: cardView topSubMenu
                         </div>
                     </div>
                     <div class="demo-code">
-                    <div class="nds-tabs nds-code nds-divided" hidden>
-                        <div class="nds-tab-list-container">
-                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                                    aria-controls="panel-actions-1" id="tab-actions-1">
-                                    <span class="nds-tab-label">HTML</span>
-                                </button>
-                            </nav>
-                        </div>
-                        <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-actions-1"
-                                aria-labelledby="tab-actions-1">
-                                <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                        <div class="nds-tabs nds-code nds-divided" hidden>
+                            <div class="nds-tab-list-container">
+                                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                        aria-controls="panel-actions-1" id="tab-actions-1">
+                                        <span class="nds-tab-label">HTML</span>
                                     </button>
-                                </div>
-                                <code class="lang-html code">
+                                </nav>
+                            </div>
+                            <div class="nds-tab-content">
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-actions-1"
+                                    aria-labelledby="tab-actions-1">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-html code">
 <div class="nds-alert nds-card" data-status="info">
   <span class="nds-feedback nds-alert-icon nds-outline">
     <span class="nds-feedback-icon">
@@ -434,9 +433,9 @@ layout_class: cardView topSubMenu
   </button>
 </div>
                                 </code>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     </div>
                 </div>
             </div>
@@ -492,24 +491,24 @@ layout_class: cardView topSubMenu
                         </div>
                     </div>
                     <div class="demo-code">
-                    <div class="nds-tabs nds-code nds-divided" hidden>
-                        <div class="nds-tab-list-container">
-                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                                    aria-controls="panel-neutral-1" id="tab-neutral-1">
-                                    <span class="nds-tab-label">HTML</span>
-                                </button>
-                            </nav>
-                        </div>
-                        <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-neutral-1"
-                                aria-labelledby="tab-neutral-1">
-                                <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                        <div class="nds-tabs nds-code nds-divided" hidden>
+                            <div class="nds-tab-list-container">
+                                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                        aria-controls="panel-neutral-1" id="tab-neutral-1">
+                                        <span class="nds-tab-label">HTML</span>
                                     </button>
-                                </div>
-                                <code class="lang-html code">
+                                </nav>
+                            </div>
+                            <div class="nds-tab-content">
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-neutral-1"
+                                    aria-labelledby="tab-neutral-1">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-html code">
 <div class="nds-alert nds-card" data-status="neutral">
   <span class="nds-feedback nds-alert-icon nds-outline">
     <span class="nds-feedback-icon">
@@ -522,9 +521,9 @@ layout_class: cardView topSubMenu
   </div>
 </div>
                                 </code>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     </div>
                 </div>
 
@@ -587,28 +586,28 @@ layout_class: cardView topSubMenu
                         </div>
                     </div>
                     <div class="demo-code">
-                    <div class="nds-tabs nds-code nds-divided" hidden>
-                        <div class="nds-tab-list-container">
-                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                                    aria-controls="panel-programmatic-html" id="tab-programmatic-html">
-                                    <span class="nds-tab-label">HTML</span>
-                                </button>
-                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
-                                    aria-controls="panel-programmatic-js" id="tab-programmatic-js">
-                                    <span class="nds-tab-label">JavaScript</span>
-                                </button>
-                            </nav>
-                        </div>
-                        <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-programmatic-html"
-                                aria-labelledby="tab-programmatic-html">
-                                <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                        <div class="nds-tabs nds-code nds-divided" hidden>
+                            <div class="nds-tab-list-container">
+                                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                        aria-controls="panel-programmatic-html" id="tab-programmatic-html">
+                                        <span class="nds-tab-label">HTML</span>
                                     </button>
-                                </div>
-                                <code class="lang-html code">
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                                        aria-controls="panel-programmatic-js" id="tab-programmatic-js">
+                                        <span class="nds-tab-label">JavaScript</span>
+                                    </button>
+                                </nav>
+                            </div>
+                            <div class="nds-tab-content">
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-programmatic-html"
+                                    aria-labelledby="tab-programmatic-html">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-html code">
 <div class="nds-alert nds-card" data-status="success" role="alert">
     <span class="nds-feedback nds-alert-icon nds-outline">
         <span class="nds-feedback-icon">
@@ -624,15 +623,15 @@ layout_class: cardView topSubMenu
     </button>
 </div>
                                 </code>
-                            </div>
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-programmatic-js"
-                                aria-labelledby="tab-programmatic-js" hidden>
-                                <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                    </button>
                                 </div>
-                                <code class="lang-javascript code">NDSAlert.create({
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-programmatic-js"
+                                    aria-labelledby="tab-programmatic-js" hidden>
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-javascript code">NDSAlert.create({
     variant: 'success',
     title: 'Success',
     description: 'Operation completed successfully!',
@@ -640,9 +639,9 @@ layout_class: cardView topSubMenu
     color: false,
     prepend: true
 });</code>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     </div>
                 </div>
             </div>
@@ -701,28 +700,28 @@ layout_class: cardView topSubMenu
                         </div>
                     </div>
                     <div class="demo-code">
-                    <div class="nds-tabs nds-code nds-divided" hidden>
-                        <div class="nds-tab-list-container">
-                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                                    aria-controls="panel-toast-html" id="tab-toast-html">
-                                    <span class="nds-tab-label">HTML</span>
-                                </button>
-                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
-                                    aria-controls="panel-toast-js" id="tab-toast-js">
-                                    <span class="nds-tab-label">JavaScript</span>
-                                </button>
-                            </nav>
-                        </div>
-                        <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-toast-html"
-                                aria-labelledby="tab-toast-html">
-                                <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                        <div class="nds-tabs nds-code nds-divided" hidden>
+                            <div class="nds-tab-list-container">
+                                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                        aria-controls="panel-toast-html" id="tab-toast-html">
+                                        <span class="nds-tab-label">HTML</span>
                                     </button>
-                                </div>
-                                <code class="lang-html code">
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                                        aria-controls="panel-toast-js" id="tab-toast-js">
+                                        <span class="nds-tab-label">JavaScript</span>
+                                    </button>
+                                </nav>
+                            </div>
+                            <div class="nds-tab-content">
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-toast-html"
+                                    aria-labelledby="tab-toast-html">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-html code">
                                     <div class="nds-alert nds-card nds-toast nds-shadow"  data-status="success" role="alert" data-position="top" data-toast-state="show" hidden>
                                         <span class="nds-feedback nds-alert-icon nds-outline">
                                             <span class="nds-feedback-icon">
@@ -744,15 +743,15 @@ layout_class: cardView topSubMenu
                                         </button>
                                     </div>
                                 </code>
-                            </div>
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-toast-js"
-                                aria-labelledby="tab-toast-js" hidden>
-                                <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                    </button>
                                 </div>
-                                <code class="lang-javascript code">NDSAlert.create({
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-toast-js"
+                                    aria-labelledby="tab-toast-js" hidden>
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-javascript code">NDSAlert.create({
     variant: 'success',
     title: 'Success',
     description: 'Changes saved successfully!',
@@ -762,9 +761,9 @@ layout_class: cardView topSubMenu
     shadow: true,
     color: false
 });</code>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     </div>
                 </div>
             </div>

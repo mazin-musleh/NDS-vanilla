@@ -18,7 +18,7 @@ headerBrandH: 48
 #brandSloganColor: var(--text-secondary-paragraph)
 
 # Hero Settings (fallback defaults)
-hero_image: assets/img/riyadhcenter3.webp
+hero_image: assets/img/riyadhcenter_ai.webp
 hero_image_small: assets/img/riyadhcenter3s.webp
 hero_image_sub:
 hero_image_pos: 50% 50%
