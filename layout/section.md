@@ -49,6 +49,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                             </div>
                         </div>
                     </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -81,6 +82,10 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                                 <span class="label">Primary</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='[["nds-gradient-green", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                <span class="label">Gradient Green</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-brand", ".nds-content-section", "sectionColor"]'>
                                 <span class="label">Brand</span>
                             </button>
@@ -101,6 +106,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                             </section>
                         </div>
                     </div>
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -127,6 +133,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
 </code>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -160,6 +167,10 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                                 <span class="label">Primary</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='[["nds-gradient-green", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                <span class="label">Gradient Green</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-brand", ".nds-content-section", "sectionColor"]'>
                                 <span class="label">Brand</span>
                             </button>
@@ -184,6 +195,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                             </section>
                         </div>
                     </div>
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -214,6 +226,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
 </code>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -247,6 +260,10 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                                 <span class="label">Primary</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='[["nds-gradient-green", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                <span class="label">Gradient Green</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-brand", ".nds-content-section", "sectionColor"]'>
                                 <span class="label">Brand</span>
                             </button>
@@ -276,6 +293,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                             </section>
                         </div>
                     </div>
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -311,6 +329,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
 </code>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -366,6 +385,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                             </section>
                         </div>
                     </div>
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -404,6 +424,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
 </code>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -459,6 +480,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                             </section>
                         </div>
                     </div>
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -501,6 +523,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                             </div>
                         </div>
                     </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -540,6 +563,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                             </section>
                         </div>
                     </div>
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -564,6 +588,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
 </code>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -595,6 +620,10 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='[["nds-primary", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
                                 <span class="label">Primary</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='[["nds-gradient-green", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                <span class="label">Gradient Green</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-brand", ".nds-content-section", "sectionColor"]'>
@@ -631,6 +660,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                             </section>
                         </div>
                     </div>
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -670,6 +700,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                             </div>
                         </div>
                     </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -702,6 +733,10 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                                 <span class="label">Primary</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='[["nds-gradient-green", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                <span class="label">Gradient Green</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-brand", ".nds-content-section", "sectionColor"]'>
                                 <span class="label">Brand</span>
                             </button>
@@ -731,6 +766,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                             </section>
                         </div>
                     </div>
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -767,6 +803,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                             </div>
                         </div>
                     </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -799,6 +836,10 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                                 <span class="label">Primary</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='[["nds-gradient-green", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                <span class="label">Gradient Green</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-brand", ".nds-content-section", "sectionColor"]'>
                                 <span class="label">Brand</span>
                             </button>
@@ -828,6 +869,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                             </section>
                         </div>
                     </div>
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -863,6 +905,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
 </code>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -906,6 +949,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                             </section>
                         </div>
                     </div>
+                    <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
@@ -934,6 +978,107 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
 </code>
                             </div>
                         </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Gradient Section -->
+<section id="gradient" class="nds-content-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Gradient Section</h2>
+            <p class="nds-section-description">Add .nds-gradient-green to apply a direction-aware diagonal gradient. The gradient angle automatically flips between RTL (-45deg) and LTR (45deg).</p>
+        </div>
+        <div class="nds-section-content">
+            <div class="nds-showcase">
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Gradient Green</div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <section class="nds-content-section nds-gradient-green">
+                                <div class="nds-section-wrapper">
+                                    <div class="nds-section-head">
+                                        <h2 class="nds-section-title">Featured Services</h2>
+                                        <p class="nds-section-description">Browse our catalog of digital government services available to citizens.</p>
+                                    </div>
+                                    <div class="nds-section-action">
+                                        <a href="#" class="nds-btn nds-primary nds-oncolor">
+                                            <span class="label">View All</span>
+                                        </a>
+                                    </div>
+                                    <div class="nds-section-content">
+                                        <div class="nds-grid" style="--max-col: 3; --mid-col: 2; --min-col: 1;">
+                                            <div class="nds-card nds-stroke">
+                                                <div class="nds-card-content">
+                                                    <div class="nds-card-text">
+                                                        <h3 class="nds-card-title">Digital Identity</h3>
+                                                        <p class="nds-card-description">Secure digital identity verification for government services.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="nds-card nds-stroke">
+                                                <div class="nds-card-content">
+                                                    <div class="nds-card-text">
+                                                        <h3 class="nds-card-title">E-Services Portal</h3>
+                                                        <p class="nds-card-description">Access government services online from anywhere.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="nds-card nds-stroke">
+                                                <div class="nds-card-content">
+                                                    <div class="nds-card-text">
+                                                        <h3 class="nds-card-title">Open Data</h3>
+                                                        <p class="nds-card-description">Public datasets and analytics for transparency.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                    <div class="nds-tabs nds-code nds-divided" hidden>
+                            <div class="nds-tab-list-container">
+                                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-gradient" id="tab-gradient">
+                                        <span class="nds-tab-label">HTML</span>
+                                    </button>
+                                </nav>
+                            </div>
+                            <div class="nds-tab-content">
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-gradient" aria-labelledby="tab-gradient">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-html code">
+<section class="nds-content-section nds-gradient-green">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Section Title</h2>
+            <p class="nds-section-description">Description text.</p>
+        </div>
+        <div class="nds-section-content">
+            <div class="nds-grid" style="--max-col: 3; --mid-col: 2; --min-col: 1;">
+                <!-- Cards or content here -->
+            </div>
+        </div>
+    </div>
+</section>
+</code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -973,7 +1118,7 @@ Default child         → grid-column: content
                         </div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                    <div class="nds-tabs nds-code nds-divided" hidden>
                             <div class="nds-tab-list-container">
                                 <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-grid" id="tab-grid">
@@ -1001,6 +1146,7 @@ Default child         → grid-column: content
                                 </div>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
             </div>

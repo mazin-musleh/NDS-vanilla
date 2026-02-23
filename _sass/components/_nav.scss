@@ -656,10 +656,31 @@ body.nds-minimal .nds-main-nav {
         transition: max-height var(--nds-transition), margin-bottom 0.1s;
 
         .nds-nav-item {
-            .nds-nav-link:is([data-state~="selected"], [data-state~="active"], [data-state~="current"]) {
-                --btn-bg: var(--button-background-transparent-default);
-                --btn-bg-selected: var(--button-background-transparent-default);
-                --btn-indicator-selected: var(--background-primary);
+
+            .nds-nav-link {
+                &.nds-menu-btn {
+                    --btn-bg: var(--button-background-transparent-default);
+                    --btn-bg-hover: var(--button-background-neutral-default);
+                    --btn-bg-active: var(--button-background-neutral-pressed);
+                    --btn-bg-selected: var(--button-background-transparent-default);
+
+                    &.nds-oncolor {
+                        --btn-bg-hover: var(--button-background-transparent-hovered);
+                        --btn-bg-active: var(--button-background-transparent-pressed);
+                    }
+
+                    &:is([data-state~="active"], [data-state~="selected"], [data-state~="current"]):not( :active, .nds-oncolor) {
+                        --btn-indicator-color: var(--background-primary);
+                        --btn-indicator-selected: var(--background-primary);
+                    }
+
+                }
+
+                &:not(.nds-menu-btn, :active, .nds-oncolor):is([data-state~="active"], [data-state~="selected"], [data-state~="current"]) {
+                    --btn-color: var(--background-primary);
+                    --btn-indicator-color: var(--background-primary);
+                    --btn-indicator-selected: var(--background-primary);
+                }
 
             }
 

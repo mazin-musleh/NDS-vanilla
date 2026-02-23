@@ -36,7 +36,7 @@
     border-color: var(--_btn-border-hover);
   }
 
-  &:is(.active, .selected, [data-state~="selected"], [data-state~="open"], [data-state~="active"]) {
+  &:is(.active, .selected, [data-state~="selected"], [data-state~="open"], [data-state~="active"] ,[data-state~="current"]) {
     background-color: var(--_btn-bg-selected);
     border-color: var(--_btn-border-selected);
   }
@@ -166,7 +166,7 @@
       --btn-color-hover: var(--text-default);
     }
 
-    &:is(.selected, [data-state~="selected"], [data-state~="open"], [data-state~="active"]) {
+    &:is(.selected, [data-state~="selected"], [data-state~="open"], [data-state~="active"], [data-state~="current"]) {
       color: var(--button-background-primary-selected);
     }
 
@@ -250,7 +250,7 @@
       --btn-loading-color: var(--text-oncolor-primary);
       --btn-loading-track: var(--alpha-white-20);
 
-      &:is(.selected, [data-state~="selected"], [data-state~="open"], [data-state~="active"]) {
+      &:is(.selected, [data-state~="selected"], [data-state~="open"], [data-state~="active"], [data-state~="current"]) {
         color: var(--button-label-transparent-pressed-on-color);
       }
 
@@ -319,7 +319,7 @@
       --btn-color-hover: var(--button-background-danger-primary-hovered);
       --btn-loading-color: var(--button-background-danger-primary-default);
 
-      &:is(.selected, [data-state~="selected"], [data-state~="open"], [data-state~="active"]) {
+      &:is(.selected, [data-state~="selected"], [data-state~="open"], [data-state~="active"] ,[data-state~="current"]) {
         color: var(--button-background-danger-primary-selected);
       }
 
@@ -367,7 +367,7 @@
       --btn-border-selected: var(--border-error-light);
       --btn-border-disabled: var(--border-neutral-secondary);
 
-      &:is(.selected, [data-state~="selected"], [data-state~="open"], [data-state~="active"]) {
+      &:is(.selected, [data-state~="selected"], [data-state~="open"], [data-state~="active"], [data-state~="current"]) {
         color: var(--button-background-danger-primary-selected);
       }
 
@@ -385,7 +385,7 @@
       --btn-color: var(--button-label-danger-primary-default-oncolor);
       --btn-color-hover: var(--button-background-danger-primary-hovered);
 
-      &:is(.selected, [data-state~="selected"], [data-state~="open"], [data-state~="active"]) {
+      &:is(.selected, [data-state~="selected"], [data-state~="open"], [data-state~="active"], [data-state~="current"]) {
         color: var(--button-background-danger-primary-selected);
       }
 
@@ -398,7 +398,7 @@
       --btn-color: var(--button-label-danger-primary-default-oncolor);
       --btn-color-hover: var(--button-label-danger-primary-hovered-oncolor);
 
-      &:is(.selected, [data-state~="selected"], [data-state~="open"], [data-state~="active"]) {
+      &:is(.selected, [data-state~="selected"], [data-state~="open"], [data-state~="active"], [data-state~="current"]) {
         color: var(--button-label-danger-primary-selected-oncolor);
       }
 
@@ -419,7 +419,7 @@
       background-color: var(--_btn-indicator-color);
     }
 
-    &:is(.selected, :focus-visible, [aria-selected="true"], [data-state~="open"], [data-state~="selected"], [data-state~="active"], [data-state~="focused"])::before {
+    &:is(.selected, :focus-visible, [aria-selected="true"], [data-state~="open"], [data-state~="selected"], [data-state~="active"], [data-state~="current"], [data-state~="focused"])::before {
       background-color: var(--_btn-indicator-selected);
     }
 

@@ -45,6 +45,19 @@
             var(--text-oncolor-secondary));
     }
 
+    &.nds-gradient-green {
+        --_gradient-angle: var(--gradient-angle,-45deg);
+        @include section-variant(var(--colors-green-900),
+            var(--text-oncolor-primary),
+            var(--text-oncolor-secondary),
+            var(--text-oncolor-secondary));
+        background: linear-gradient(var(--_gradient-angle), var(--colors-primary-sa-flag-900), var(--colors-primary-sa-flag-600));
+
+        @include ltr {
+            --gradient-angle: 45deg;
+        }
+    }
+
     &.nds-neutral {
         @include section-variant(var(--colors-neutral-900),
             var(--text-oncolor-primary),
