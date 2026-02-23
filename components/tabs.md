@@ -354,7 +354,7 @@ direction: ltr
                                 <!-- Analytics Data Types -->
                                 <fieldset>
                                     <legend class="label">Data to Include</legend>
-                                    <div class="nds-check-group">
+                                    <div class="nds-form-group nds-check-group">
                                         <div class="nds-form-container nds-check-container">
                                             <div class="nds-form-header">
                                                 <label class="label" for="includeUsers">User Activity</label>
@@ -432,7 +432,7 @@ direction: ltr
                                 <!-- Theme Preference -->
                                 <fieldset>
                                     <legend class="label">Theme Preference</legend>
-                                    <div class="nds-radio-group">
+                                    <div class="nds-form-group nds-radio-group">
                                         <div class="nds-form-container nds-radio-container">
                                             <div class="nds-form-header">
                                                 <label class="label" for="themeLight">Light Theme</label>
@@ -468,7 +468,7 @@ direction: ltr
                                 <!-- Notification Settings -->
                                 <fieldset>
                                     <legend class="label">Notification Settings</legend>
-                                    <div class="nds-check-group">
+                                    <div class="nds-form-group nds-check-group">
                                         <div class="nds-form-container nds-check-container">
                                             <div class="nds-form-header">
                                                 <label class="label" for="emailNotifications">Email

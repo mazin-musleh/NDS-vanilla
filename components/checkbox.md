@@ -151,7 +151,7 @@ direction: ltr
             <div class="state-demo">
               <fieldset>
                 <legend class="label">Select your interests</legend>
-                <div class="nds-check-group">
+                <div class="nds-form-group nds-check-group">
                   <div class="nds-form-container nds-check-container">
                     <div class="nds-form-header">
                       <label for="demo-checkbox1">
@@ -229,7 +229,7 @@ direction: ltr
                 </div>
                 <div class="nds-expandable-content">
                   <code class="lang-html code">
-                <fieldset class="nds-check-group">
+                <fieldset class="nds-form-group nds-check-group">
                   <legend class="label">Select your interests</legend>
                   <div class="nds-form-container nds-check-container">
                     <div class="nds-form-header">
@@ -306,7 +306,7 @@ direction: ltr
           </div>
           <div class="demo-container">
             <div class="state-demo">
-              <fieldset class="nds-check-group" id="demo-group-validation" data-min-checked="2" data-max-checked="4">
+              <fieldset class="nds-form-group nds-check-group" id="demo-group-validation" data-min-checked="2" data-max-checked="4">
                 <legend class="label">Select 2-4 interests</legend>
                 <div class="nds-form-container nds-check-container">
                   <div class="nds-form-header">
@@ -419,7 +419,7 @@ direction: ltr
                 </div>
                 <div class="nds-expandable-content">
                   <code class="lang-html code">
-<fieldset class="nds-check-group" data-min-checked="2" data-max-checked="4">
+<fieldset class="nds-form-group nds-check-group" data-min-checked="2" data-max-checked="4">
   <legend class="label">Select 2-4 interests</legend>
   <div class="nds-form-container nds-check-container">
     <div class="nds-form-header">
@@ -470,7 +470,7 @@ var result = NDS.Forms.validateCheckboxGroup(group, { showMessage: false });
 NDS.Forms.clearStatus(group);
 
 // Custom error message (via data attribute)
-// <div class="nds-check-group" data-min-checked="2" data-error-message="Please select at least 2 interests">
+// <div class="nds-form-group nds-check-group" data-min-checked="2" data-error-message="Please select at least 2 interests">
                   </code>
                 </div>
               </div>

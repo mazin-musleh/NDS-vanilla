@@ -404,7 +404,7 @@ Data Attributes:
                                 </div>
                                 <hr class="nds-dropmenu-divider nds-lg">
                                 <!-- Filter Options -->
-                                <fieldset class="nds-dropmenu-item nds-check-group" data-filter="tags" data-no-auto-close>
+                                <fieldset class="nds-form-group nds-dropmenu-item nds-check-group" data-filter="tags" data-no-auto-close>
                                     <legend class="label">Filter by category</legend>
                                     <div class="nds-form-container nds-check-container">
                                         <div class="nds-form-header">
@@ -492,7 +492,7 @@ Data Attributes:
       </div>
       <hr class="nds-dropmenu-divider nds-lg">
       <!-- Filter Options -->
-      <fieldset class="nds-dropmenu-item nds-check-group" data-filter="tags" data-no-auto-close>
+      <fieldset class="nds-form-group nds-dropmenu-item nds-check-group" data-filter="tags" data-no-auto-close>
         <legend class="label">Filter by category</legend>
         <div class="nds-form-container nds-check-container">
           <div class="nds-form-header">
