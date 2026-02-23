@@ -422,10 +422,10 @@ textarea {
 // ==============================================
 
 @mixin reset-section-style {
-  --section-bg: transparent !important;
-  --section-shadow: none !important;
-  --section-border: none !important;
-  --section-border-radius: 0 !important;
+  --section-bg: transparent;
+  --section-shadow: none;
+  --section-border: none ;
+  --section-border-radius: 0;
 }
 
 @mixin section-variant($background, $title-color, $description-color, $text-color) {

@@ -17,7 +17,7 @@
     --_indent: var(--drawer-indent, calc(var(--_btn-padding, var(--spacing-md))));
     --_divider: var(--drawer-divider, var(--alpha-black-10));
     --_indicator-width: var(--drawer-indicator-width, 5px);
-    --_indicator: var(--drawer-indicator, var(--alpha-black-30));
+    --_indicator: var(--drawer-indicator, transparent/* var(--alpha-black-30) */);
     --_indicator-active: var(--drawer-indicator-active, var(--colors-primary-sa-flag-600-primary));
     --_indicator-hover: var(--drawer-indicator-hover, var(--colors-neutral-400));
     --_font-size: var(--drawer-font-size, var(--nds-text-md-FS));
@@ -48,7 +48,7 @@
 
     &.nds-oncolor {
         --drawer-divider: var(--alpha-white-10);
-        --drawer-indicator: var(--alpha-white-30);
+        /* --drawer-indicator: var(--alpha-white-30); */
     }
 
 }
