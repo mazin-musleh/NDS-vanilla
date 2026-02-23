@@ -693,7 +693,7 @@ direction: ltr
                   </code>
                   </div>
                 </div>
-                <div class="nds-tab-panel code-example nds-expandable hidden" role="tabpanel" id="panel-status-api-js"
+                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-status-api-js"
                   aria-labelledby="tab-status-api-js">
                   <div class="nds-code-action">
                     <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
@@ -701,12 +701,11 @@ direction: ltr
                     </button>
                   </div>
                   <div class="nds-expandable-content">
-                    <code class="lang-javascript code">
-// Set status with message
-NDS.Forms.setStatus(element, 'error', 'This field is required');
-NDS.Forms.setStatus(element, 'success', 'Looks good!');
-NDS.Forms.setStatus(element, 'warning', 'Please review');
-NDS.Forms.setStatus(element, 'info', 'Additional information');
+                    <code class="lang-javascript code">// Set status with message
+NDS.Forms.setStatus({ element: element, status: 'error', message: 'This field is required' });
+NDS.Forms.setStatus({ element: element, status: 'success', message: 'Looks good!' });
+NDS.Forms.setStatus({ element: element, status: 'warning', message: 'Please review' });
+NDS.Forms.setStatus({ element: element, status: 'neutral', message: 'Additional information' });
 
 // Clear status (restores original message)
 NDS.Forms.clearStatus(element);
@@ -718,8 +717,7 @@ var status = NDS.Forms.getStatus(element);
 // Listen for status changes
 element.addEventListener('nds:statusChange', function(e) {
     console.log(e.detail.status, e.detail.message);
-});
-                  </code>
+});</code>
                   </div>
                 </div>
               </div>
@@ -758,7 +756,7 @@ element.addEventListener('nds:statusChange', function(e) {
                   </div>
                 </div>
                 <div class="nds-form-footer" data-feedback-target>
-                  <span class="nds-feedback nds-sm" data-status="info" data-permanent>
+                  <span class="nds-feedback nds-outline nds-sm" data-status="neutral" data-permanent>
                     <span class="nds-feedback-icon">
                       <i class="hgi hgi-stroke icon"></i>
                     </span>
@@ -807,7 +805,7 @@ element.addEventListener('nds:statusChange', function(e) {
   <div class="nds-form-footer" data-feedback-target>
     <!-- Permanent feedback with data-permanent attribute -->
     <!-- This will be hidden when validation errors appear, then restored when cleared -->
-    <span class="nds-feedback nds-sm" data-status="info" data-permanent>
+    <span class="nds-feedback nds-outline nds-sm" data-status="neutral" data-permanent>
       <span class="nds-feedback-icon">
         <i class="hgi hgi-stroke icon"></i>
       </span>
@@ -818,7 +816,7 @@ element.addEventListener('nds:statusChange', function(e) {
                   </code>
                   </div>
                 </div>
-                <div class="nds-tab-panel code-example nds-expandable hidden" role="tabpanel" id="panel-permanent-js"
+                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-permanent-js"
                   aria-labelledby="tab-permanent-js">
                   <div class="nds-code-action">
                     <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
@@ -826,29 +824,27 @@ element.addEventListener('nds:statusChange', function(e) {
                     </button>
                   </div>
                   <div class="nds-expandable-content">
-                    <code class="lang-javascript code">
-// Show validation error
-// Permanent feedback (data-permanent) will be automatically hidden
-NDS.Forms.setStatus('#username', 'error', 'Username is required');
+                    <code class="lang-javascript code">// Create permanent hint via Forms API
+NDS.Forms.setStatus({
+    element: container,
+    status: 'neutral',
+    message: 'Use 3-20 characters, letters and numbers only',
+    permanent: true
+});
 
 // Or using NDSFeedback directly:
 NDSFeedback.create({
-    message: 'Username is required',
-    status: 'error',
+    message: 'Use 3-20 characters, letters and numbers only',
+    status: 'neutral',
     target: container,
-    style: 'outline',
-    size: 'sm'
+    permanent: true
 });
-// Permanent feedback with data-permanent is hidden automatically
 
-// Clear validation error
-// Permanent feedback will be automatically restored
-NDS.Forms.clearStatus('#username');
+// Show validation error — permanent feedback is hidden automatically
+NDS.Forms.setStatus({ element: container, status: 'error', message: 'Username is required' });
 
-// Or dismiss the feedback:
-NDSFeedback.dismiss(errorFeedback);
-// Permanent feedback is restored automatically
-                  </code>
+// Clear validation — permanent feedback is restored automatically
+NDS.Forms.clearStatus(container);</code>
                   </div>
                 </div>
               </div>
@@ -881,7 +877,7 @@ NDSFeedback.dismiss(errorFeedback);
           </div>
           <div class="demo-container">
             <div class="state-demo">
-              <div class="nds-form-container" data-url="{{ '/assets/data/autocomplete-demo.json' | relative_url }}"
+              <div class="nds-form-container" id="autocomplete-demo-container" data-url="{{ '/assets/data/autocomplete-demo.json' | relative_url }}"
                 data-name="Title" data-query-param="q">
                 <div class="nds-form-header">
                   <label for="demo-autocompleteInput">
@@ -959,35 +955,42 @@ NDSFeedback.dismiss(errorFeedback);
 </section>
 
 <script>
-  // Permanent feedback demo interactions
-  (function () {
-    const permanentErrorBtn = document.getElementById('permanent-error-btn');
-    const permanentClearBtn = document.getElementById('permanent-clear-btn');
-    const permanentContainer = document.getElementById('permanent-demo-container');
-
-    if (permanentErrorBtn && permanentClearBtn && permanentContainer) {
-      let currentFeedback = null;
-
-      permanentErrorBtn.addEventListener('click', function () {
-        // Show error - permanent feedback will be hidden automatically
-        currentFeedback = window.NDSFeedback.create({
-          message: 'Username is required',
-          status: 'error',
-          target: permanentContainer,
-          style: 'outline',
-          size: 'sm'
-        });
-        permanentContainer.setAttribute('data-status', 'error');
+  document.addEventListener('DOMContentLoaded', function () {
+    // Form Status API demo
+    var statusContainer = document.getElementById('status-demo-container');
+    if (statusContainer) {
+      document.getElementById('status-error-btn').addEventListener('click', function () {
+        NDS.Forms.setStatus({ element: statusContainer, status: 'error', message: 'This field is required' });
       });
-
-      permanentClearBtn.addEventListener('click', function () {
-        // Dismiss error - permanent feedback will be restored automatically
-        if (currentFeedback) {
-          window.NDSFeedback.dismiss(currentFeedback);
-          currentFeedback = null;
-        }
-        permanentContainer.removeAttribute('data-status');
+      document.getElementById('status-success-btn').addEventListener('click', function () {
+        NDS.Forms.setStatus({ element: statusContainer, status: 'success', message: 'Looks good!' });
+      });
+      document.getElementById('status-warning-btn').addEventListener('click', function () {
+        NDS.Forms.setStatus({ element: statusContainer, status: 'warning', message: 'Please review this field' });
+      });
+      document.getElementById('status-info-btn').addEventListener('click', function () {
+        NDS.Forms.setStatus({ element: statusContainer, status: 'info', message: 'Additional information' });
+      });
+      document.getElementById('status-clear-btn').addEventListener('click', function () {
+        NDS.Forms.clearStatus(statusContainer);
       });
     }
-  })();
+
+    // Permanent feedback demo
+    var permanentContainer = document.getElementById('permanent-demo-container');
+    if (permanentContainer) {
+      document.getElementById('permanent-error-btn').addEventListener('click', function () {
+        NDS.Forms.setStatus({ element: permanentContainer, status: 'error', message: 'Username is required' });
+      });
+      document.getElementById('permanent-clear-btn').addEventListener('click', function () {
+        NDS.Forms.clearStatus(permanentContainer);
+      });
+    }
+
+    // Autocomplete demo hint
+    var autocompleteContainer = document.getElementById('autocomplete-demo-container');
+    if (autocompleteContainer) {
+      NDS.Forms.setStatus({ element: autocompleteContainer, status: 'neutral', message: 'Try typing "request" or "طلب"', permanent: true });
+    }
+  });
 </script>

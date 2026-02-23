@@ -1370,7 +1370,9 @@
                 if (!document.getElementById(alertId) && window.NDSAlert) {
                     const isArabic = NDS.isArabic;
                     const self = this;
-                    NDSAlert.warning(isArabic ? 'لا توجد نتائج لمعايير التصفية الحالية' : 'No result for current filter criteria', {
+                    NDSAlert.create({
+                        variant: 'warning',
+                        description: isArabic ? 'لا توجد نتائج لمعايير التصفية الحالية' : 'No result for current filter criteria',
                         target: this.targetContainer,
                         title: isArabic ? 'لا توجد نتائج' : 'No Result',
                         id: alertId,

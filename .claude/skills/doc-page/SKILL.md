@@ -17,7 +17,8 @@ Create or update a documentation page for `$ARGUMENTS`.
    - `components/tags.md` — reference for interactive demo toggles
    - `standard-page.md` — front matter template
 2. **Read the component's SCSS** file if it exists (`_sass/components/_$0.scss`) to understand all variants, sizes, and states
-3. **Check `_data/sidemenu/sidemenu.yml`** to see if the page is already registered
+3. **Check `playground.md`** for existing demo HTML — use it as the authoritative HTML structure for the component
+4. **Check `_data/sidemenu/sidemenu.yml`** to see if the page is already registered
 
 ## Front Matter
 

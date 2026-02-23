@@ -42,6 +42,11 @@
             init: () => window.NDSSwiper?.init?.(),
         },
         {
+            name: 'otp',
+            selector: '.nds-otp-group',
+            init: () => window.NDS?.OTP?.init?.(),
+        },
+        {
             name: 'fileUpload',
             selector: '.nds-file-upload',
             init: () => window.NDS?.Forms?.FileUpload?.init?.(),

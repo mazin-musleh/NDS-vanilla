@@ -182,7 +182,11 @@
     // STATUS MANAGEMENT API
     // ==============================================
     var StatusManager = {
-        set: function(element, status, message) {
+        set: function(options) {
+            var element = options.element;
+            var status = options.status;
+            var message = options.message;
+
             if (!element) return false;
 
             var container = this._findContainer(element);
@@ -190,7 +194,6 @@
 
             // Handle standalone feedback
             if (container.classList.contains('nds-feedback')) {
-                // For standalone feedback, just update data attributes
                 if (status) {
                     container.setAttribute('data-status', status);
                     if (message) {
@@ -213,34 +216,31 @@
                 // Create feedback using NDSFeedback API
                 if (window.NDSFeedback && message) {
                     // Dynamic target selection using data-feedback-target attribute
-                    // 1. Check for data-feedback-target with selector value on container
-                    // 2. Look for child element with data-feedback-target attribute (boolean)
-                    // 3. Default to container itself
                     var targetSelector = container.getAttribute('data-feedback-target');
-                    var target = container; // Default to container
+                    var target = container;
 
                     if (targetSelector) {
-                        // Container has data-feedback-target with selector value
                         var foundTarget = container.querySelector(targetSelector);
                         if (foundTarget) {
                             target = foundTarget;
                         }
                     } else {
-                        // Look for child element with data-feedback-target attribute (no value)
                         var markedTarget = container.querySelector('[data-feedback-target]');
                         if (markedTarget) {
                             target = markedTarget;
                         }
                     }
 
-                    window.NDSFeedback.create({
-                        message: message,
-                        status: status,
-                        target: target,
+                    var defaults = {
                         position: 'append',
                         size: 'sm',
                         style: 'outline'
+                    };
+                    var feedbackOptions = Object.assign({}, defaults, options, {
+                        target: target
                     });
+                    delete feedbackOptions.element;
+                    window.NDSFeedback.create(feedbackOptions);
                 }
 
                 // Accessibility
@@ -307,7 +307,7 @@
         },
 
         _findContainer: function(element) {
-            var selectors = '.nds-form-container, .nds-check-group, .nds-radio-group, .nds-feedback';
+            var selectors = '.nds-form-container, .nds-form-group, .nds-feedback';
             return (element.matches && element.matches(selectors))
                 ? element
                 : element.closest(selectors);
@@ -360,7 +360,7 @@
         validateCheckboxGroup: function(groupElement, options) {
             options = options || { showMessage: true };
 
-            var group = groupElement.closest('.nds-check-group') || groupElement;
+            var group = groupElement.closest('.nds-form-group') || groupElement;
             var checkboxes = group.querySelectorAll('input[type="checkbox"]');
             var checkedCount = Array.from(checkboxes).filter(function(cb) { return cb.checked; }).length;
 
@@ -390,7 +390,7 @@
             if (!isValid && customMessage) message = customMessage;
 
             if (options.showMessage) {
-                if (!isValid) StatusManager.set(group, 'error', message);
+                if (!isValid) StatusManager.set({ element: group, status: 'error', message: message });
                 else StatusManager.clear(group);
             }
 
@@ -400,7 +400,7 @@
         validateRadioGroup: function(groupElement, options) {
             options = options || { showMessage: true };
 
-            var group = groupElement.closest('.nds-radio-group') || groupElement;
+            var group = groupElement.closest('.nds-form-group') || groupElement;
             var radios = group.querySelectorAll('input[type="radio"]');
             var isSelected = Array.from(radios).some(function(r) { return r.checked; });
 
@@ -417,7 +417,7 @@
             if (!isValid && customMessage) message = customMessage;
 
             if (options.showMessage) {
-                if (!isValid) StatusManager.set(group, 'error', message);
+                if (!isValid) StatusManager.set({ element: group, status: 'error', message: message });
                 else StatusManager.clear(group);
             }
 
@@ -471,42 +471,33 @@
 
                     if (!firstInvalidInput) firstInvalidInput = input;
                     if (options.showMessages) {
-                        StatusManager.set(container, 'error', Validator.getMessage(input));
+                        StatusManager.set({ element: container, status: 'error', message: Validator.getMessage(input) });
                     }
                 }
             });
 
-            // Validate checkbox groups
-            form.querySelectorAll('.nds-check-group[data-min-checked], .nds-check-group[data-max-checked], .nds-check-group[data-required]').forEach(function(group) {
+            // Validate form groups (checkbox, radio)
+            form.querySelectorAll('.nds-form-group[data-min-checked], .nds-form-group[data-max-checked], .nds-form-group[data-required], .nds-form-group.nds-required').forEach(function(group) {
                 // Skip hidden groups
                 if (!isVisible(group)) return;
 
-                var result = Validator.validateCheckboxGroup(group, { showMessage: options.showMessages });
-                if (!result.valid) {
-                    invalidFields.push(group);
-                    errors.push({
-                        field: group,
-                        input: group.querySelector('input[type="checkbox"]'),
-                        message: result.message
-                    });
-                    if (!firstInvalidInput) firstInvalidInput = group.querySelector('input[type="checkbox"]');
-                }
-            });
+                var hasCheckboxes = group.querySelector('input[type="checkbox"]');
+                var hasRadios = group.querySelector('input[type="radio"]');
 
-            // Validate radio groups
-            form.querySelectorAll('.nds-radio-group[data-required], .nds-radio-group.nds-required').forEach(function(group) {
-                // Skip hidden groups
-                if (!isVisible(group)) return;
-
-                var result = Validator.validateRadioGroup(group, { showMessage: options.showMessages });
-                if (!result.valid) {
-                    invalidFields.push(group);
-                    errors.push({
-                        field: group,
-                        input: group.querySelector('input[type="radio"]'),
-                        message: result.message
-                    });
-                    if (!firstInvalidInput) firstInvalidInput = group.querySelector('input[type="radio"]');
+                if (hasCheckboxes) {
+                    var result = Validator.validateCheckboxGroup(group, { showMessage: options.showMessages });
+                    if (!result.valid) {
+                        invalidFields.push(group);
+                        errors.push({ field: group, input: hasCheckboxes, message: result.message });
+                        if (!firstInvalidInput) firstInvalidInput = hasCheckboxes;
+                    }
+                } else if (hasRadios) {
+                    var result = Validator.validateRadioGroup(group, { showMessage: options.showMessages });
+                    if (!result.valid) {
+                        invalidFields.push(group);
+                        errors.push({ field: group, input: hasRadios, message: result.message });
+                        if (!firstInvalidInput) firstInvalidInput = hasRadios;
+                    }
                 }
             });
 
@@ -544,6 +535,8 @@
                 states.push(stateName);
             } else if (!add && stateIndex !== -1) {
                 states.splice(stateIndex, 1);
+            } else {
+                return; // No change needed — skip DOM write
             }
 
             if (states.length > 0) {
@@ -592,6 +585,9 @@
 
             if (skipValidation) return;
 
+            // Skip per-input validation for groups — validated at group level
+            if (formContainer && formContainer.closest('.nds-form-group')) return;
+
             // Validate
             var isInvalid = input.validity && !input.validity.valid;
 
@@ -604,7 +600,7 @@
             if (!formContainer) return;
 
             if (isInvalid) {
-                StatusManager.set(formContainer, 'error', Validator.getMessage(input));
+                StatusManager.set({ element: formContainer, status: 'error', message: Validator.getMessage(input) });
             } else {
                 var currentStatus = formContainer.getAttribute('data-status');
                 if (currentStatus === 'error') {
@@ -632,7 +628,7 @@
         updateRadioGroup: function(changedRadio) {
             if (changedRadio.type !== 'radio' || !changedRadio.name) return;
 
-            var radioGroupContainer = changedRadio.closest('.nds-radio-group');
+            var radioGroupContainer = changedRadio.closest('.nds-form-group');
             if (!radioGroupContainer) return;
 
             var radioGroup = radioGroupContainer.querySelectorAll('input[type="radio"][name="' + changedRadio.name + '"]');
@@ -715,6 +711,15 @@
                 var formContainer = formControl.closest('.nds-form-container');
                 if (formContainer && formContainer.hasAttribute('data-status')) {
                     StatusManager.clear(formContainer);
+                }
+
+                // Auto-clear group-level status on input (skip groups with own validation)
+                var formGroup = formControl.closest('.nds-form-group');
+                if (formGroup && formGroup.hasAttribute('data-status')
+                    && !formGroup.hasAttribute('data-min-checked')
+                    && !formGroup.hasAttribute('data-max-checked')
+                    && !formGroup.hasAttribute('data-required')) {
+                    StatusManager.clear(formGroup);
                 }
             });
 
@@ -1527,10 +1532,12 @@
             }
         });
 
-        // Initialize checkbox/radio/switch groups
-        container.querySelectorAll('.nds-check-group, .nds-radio-group, .nds-switch-group').forEach(initGroupState);
-        container.querySelectorAll('.nds-check-group[data-min-checked], .nds-check-group[data-max-checked], .nds-check-group[data-required]').forEach(initCheckboxGroupValidation);
-        container.querySelectorAll('.nds-radio-group[data-required], .nds-radio-group.nds-required').forEach(initRadioGroupValidation);
+        // Initialize form groups
+        container.querySelectorAll('.nds-form-group').forEach(function(group) {
+            initGroupState(group);
+            if (group.querySelector('input[type="checkbox"]')) initCheckboxGroupValidation(group);
+            if (group.querySelector('input[type="radio"]')) initRadioGroupValidation(group);
+        });
 
         // Initialize forms
         var forms = container.classList && container.classList.contains('nds-form')

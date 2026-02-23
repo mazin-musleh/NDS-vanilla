@@ -50,12 +50,12 @@ layout_class: cardView topSubMenu
                                     </button>
                                     <div class="nds-dropmenu-menu" hidden>
                                         <div class="nds-dropmenu-scroll">
-                                            <div class="nds-check-group nds-dropmenu-item" data-filter="department"
+                                            <div class="nds-form-group nds-check-group nds-dropmenu-item" data-filter="department"
                                                 data-filter-type="checkbox" data-filter-legend="Department"
                                                 data-no-auto-close>
                                             </div>
                                             <hr class="nds-divider nds-lg">
-                                            <div class="nds-check-group nds-dropmenu-item" data-filter="role"
+                                            <div class="nds-form-group nds-check-group nds-dropmenu-item" data-filter="role"
                                                 data-filter-type="radio" data-filter-legend="Role" data-no-auto-close>
                                             </div>
                                         </div>
@@ -214,7 +214,7 @@ layout_class: cardView topSubMenu
     <div class="nds-dropmenu-menu" hidden>
       <div class="nds-dropmenu-scroll">
         <!-- Auto-generated checkbox filter -->
-        <div class="nds-check-group nds-dropmenu-item"
+        <div class="nds-form-group nds-check-group nds-dropmenu-item"
           data-filter="department"
           data-filter-type="checkbox"
           data-filter-legend="Department"
@@ -222,7 +222,7 @@ layout_class: cardView topSubMenu
         </div>
         <hr class="nds-divider nds-lg">
         <!-- Auto-generated radio filter -->
-        <div class="nds-check-group nds-dropmenu-item"
+        <div class="nds-form-group nds-check-group nds-dropmenu-item"
           data-filter="role"
           data-filter-type="radio"
           data-filter-legend="Role"
@@ -306,7 +306,7 @@ layout_class: cardView topSubMenu
                                     </button>
                                     <div class="nds-dropmenu-menu" style="min-width: 260px;" hidden>
                                         <div class="nds-dropmenu-scroll">
-                                            <div class="nds-check-group nds-dropmenu-item" data-filter="status"
+                                            <div class="nds-form-group nds-check-group nds-dropmenu-item" data-filter="status"
                                                 data-filter-type="checkbox" data-filter-legend="Status"
                                                 data-no-auto-close>
                                             </div>
@@ -418,7 +418,7 @@ layout_class: cardView topSubMenu
                                     </button>
                                     <div class="nds-dropmenu-menu" style="min-width: 260px;" hidden>
                                         <div class="nds-dropmenu-scroll">
-                                            <div class="nds-check-group nds-dropmenu-item" data-filter="priority"
+                                            <div class="nds-form-group nds-check-group nds-dropmenu-item" data-filter="priority"
                                                 data-filter-type="radio" data-filter-legend="Priority"
                                                 data-no-auto-close>
                                             </div>
@@ -530,7 +530,7 @@ layout_class: cardView topSubMenu
                                     </button>
                                     <div class="nds-dropmenu-menu" style="min-width: 260px;" hidden>
                                         <div class="nds-dropmenu-scroll">
-                                            <div class="nds-check-group nds-dropmenu-item" data-filter="feature"
+                                            <div class="nds-form-group nds-check-group nds-dropmenu-item" data-filter="feature"
                                                 data-filter-type="switch" data-filter-legend="Features"
                                                 data-no-auto-close>
                                             </div>
@@ -667,7 +667,7 @@ layout_class: cardView topSubMenu
                                     </button>
                                     <div class="nds-dropmenu-menu" hidden>
                                         <div class="nds-dropmenu-scroll">
-                                            <fieldset class="nds-check-group nds-dropmenu-item" data-filter="category"
+                                            <fieldset class="nds-form-group nds-check-group nds-dropmenu-item" data-filter="category"
                                                 data-no-auto-close>
                                                 <legend class="label">Category</legend>
                                                 <div class="nds-form-container nds-radio-container">
@@ -802,7 +802,7 @@ layout_class: cardView topSubMenu
                                     </div>
                                     <code class="lang-html code">
 <!-- Manual radio filter with custom HTML -->
-<fieldset class="nds-check-group nds-dropmenu-item"
+<fieldset class="nds-form-group nds-check-group nds-dropmenu-item"
   data-filter="category" data-no-auto-close>
   <legend class="label">Category</legend>
   <div class="nds-form-container nds-radio-container">

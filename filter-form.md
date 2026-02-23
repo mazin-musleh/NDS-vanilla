@@ -48,7 +48,7 @@ exclude_showcase: true
                 <div class="nds-dropmenu-menu" style="min-width: 300px;" hidden>
                     <div class="nds-dropmenu-scroll">
                     <!-- Manual filter inputs (form mode doesn't support auto-generation) -->
-                    <fieldset class="nds-check-group nds-dropmenu-item" data-filter="department" data-no-auto-close>
+                    <fieldset class="nds-form-group nds-check-group nds-dropmenu-item" data-filter="department" data-no-auto-close>
                         <legend class="label">القسم</legend>
 
                         <div class="nds-form-container nds-check-container">
@@ -201,7 +201,7 @@ exclude_showcase: true
                 <div class="nds-dropmenu-menu" style="min-width: 300px;" hidden>
                     <div class="nds-dropmenu-scroll">
                     <!-- Manual filter inputs without custom name (uses default) -->
-                    <fieldset class="nds-check-group nds-dropmenu-item" data-filter="category" data-no-auto-close>
+                    <fieldset class="nds-form-group nds-check-group nds-dropmenu-item" data-filter="category" data-no-auto-close>
                         <legend class="label">التصنيف</legend>
 
                         <div class="nds-form-container nds-check-container">
@@ -479,7 +479,7 @@ exclude_showcase: true
                 <div class="nds-dropmenu-menu" style="min-width: 300px;" hidden>
                     <div class="nds-dropmenu-scroll">
                     <!-- Manual filter inputs -->
-                    <fieldset class="nds-check-group nds-dropmenu-item" data-filter="status" data-no-auto-close>
+                    <fieldset class="nds-form-group nds-check-group nds-dropmenu-item" data-filter="status" data-no-auto-close>
                         <legend class="label">الحالة</legend>
 
                         <div class="nds-form-container nds-check-container">

@@ -241,27 +241,6 @@
                 alert.setAttribute('data-nds-alert-init', 'true');
             });
         },
-
-        // Convenience methods for each variant
-        success(description, options = {}) {
-            return this.create({ ...options, variant: 'success', description });
-        },
-
-        warning(description, options = {}) {
-            return this.create({ ...options, variant: 'warning', description });
-        },
-
-        error(description, options = {}) {
-            return this.create({ ...options, variant: 'error', description });
-        },
-
-        info(description, options = {}) {
-            return this.create({ ...options, variant: 'info', description });
-        },
-
-        neutral(description, options = {}) {
-            return this.create({ ...options, variant: 'neutral', description });
-        }
     };
 
     if (typeof window !== 'undefined') {

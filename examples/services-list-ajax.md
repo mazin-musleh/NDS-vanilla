@@ -79,7 +79,7 @@ exclude_showcase: false
                         </div>
                         <hr class="nds-divider nds-lg">
                         <!-- Filter by System -->
-                        <fieldset class="nds-check-group nds-dropmenu-item" data-filter="system" data-no-auto-close>
+                        <fieldset class="nds-form-group nds-check-group nds-dropmenu-item" data-filter="system" data-no-auto-close>
                             <legend class="label">System</legend>
                             <div class="nds-form-container nds-check-container">
                                 <div class="nds-form-header">

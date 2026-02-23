@@ -23,13 +23,16 @@
  * });
  *
  * // Permanent feedback (tips/hints that persist)
- * // Add data-permanent attribute to feedback in HTML:
- * // <span class="nds-feedback" data-permanent data-status="info">
- * //     <span class="nds-feedback-message">This is a tip</span>
- * // </span>
- * //
- * // When new feedback is created, permanent feedback is hidden (not dismissed)
- * // When new feedback is dismissed, permanent feedback is restored automatically
+ * NDSFeedback.create({
+ *     message: 'This is a tip',
+ *     status: 'neutral',
+ *     target: '#container',
+ *     permanent: true
+ * });
+ *
+ * // When new non-permanent feedback is created, permanent feedback is hidden (not dismissed)
+ * // When non-permanent feedback is dismissed, permanent feedback is restored automatically
+ * // When new permanent feedback is created, it replaces the existing permanent feedback
  */
 
 (function() {
@@ -40,15 +43,16 @@
          * Create and insert a feedback element
          * @param {Object} options
          * @param {string} options.message - Feedback message text (optional, can be icon-only)
-         * @param {string} options.status - 'error', 'success', 'warning', 'info', 'neutral' (default: 'info')
+         * @param {string} options.status - 'error', 'success', 'warning', 'info', 'neutral' (default: 'neutral')
          * @param {string|Element} options.target - Target selector or element
          * @param {string} options.position - 'before', 'after', 'prepend', 'append' (default: 'append')
          * @param {string} options.size - 'sm', 'md', 'lg' (default: 'sm')
-         * @param {string} options.style - '', 'ring', 'outline' (default: '')
+         * @param {string} options.style - '', 'ring', 'outline' (default: 'outline')
          * @param {boolean} options.showIcon - Show/hide icon (default: true)
          * @param {string} options.id - Custom ID (optional)
          * @param {string} options.className - Additional CSS classes (optional)
          * @param {string} options.ariaLive - 'polite' or 'assertive' (default: 'polite')
+         * @param {boolean} options.permanent - Persist across status changes (default: false)
          * @param {Function} options.onDismiss - Callback when dismissed (optional)
          * @param {Function} options.onCreate - Callback after creation (optional)
          * @returns {HTMLElement}
@@ -56,15 +60,16 @@
         create(options = {}) {
             const {
                 message = '',
-                status = 'info',
+                status = 'neutral',
                 target = null,
                 position = 'append',
                 size = 'sm',
-                style = '',
+                style = 'outline',
                 showIcon = true,
                 id = null,
                 className = '',
                 ariaLive = null,
+                permanent = false,
                 onDismiss = null,
                 onCreate = null
             } = options;
@@ -79,6 +84,7 @@
             feedback.className = feedbackClasses;
             if (id) feedback.id = id;
             feedback.setAttribute('data-status', status);
+            if (permanent) feedback.setAttribute('data-permanent', '');
 
             // Set ARIA attributes
             const role = (status === 'error' || status === 'warning') ? 'alert' : 'status';
@@ -187,8 +193,11 @@
             if (!el) return;
 
             el.querySelectorAll('.nds-feedback').forEach(feedback => {
-                // Skip feedback in code examples
                 if (feedback.closest('code, .code-example')) return;
+                if (feedback.hasAttribute('data-permanent')) {
+                    feedback.removeAttribute('hidden');
+                    return;
+                }
                 this.dismiss(feedback);
             });
         },
@@ -223,43 +232,33 @@
                 return false;
             }
 
-            // Store hidden permanent feedback elements
             const hiddenPermanent = [];
+            const newIsPermanent = feedback.hasAttribute('data-permanent');
 
             // Handle existing feedback from target area before adding new one
             if (position === 'prepend' || position === 'append') {
-                // For prepend/append: handle existing feedback inside the target
                 targetEl.querySelectorAll('.nds-feedback').forEach(existingFeedback => {
-                    // Skip feedback in code examples
                     if (!existingFeedback.closest('code, .code-example')) {
-                        // Check if this is permanent feedback (data-permanent attribute)
-                        if (existingFeedback.hasAttribute('data-permanent')) {
-                            // Hide permanent feedback instead of dismissing
+                        if (existingFeedback.hasAttribute('data-permanent') && !newIsPermanent) {
                             existingFeedback.setAttribute('hidden', '');
                             hiddenPermanent.push(existingFeedback);
                         } else {
-                            // Dismiss non-permanent feedback
+                            existingFeedback._hiddenPermanent = null;
                             this.dismiss(existingFeedback);
                         }
                     }
                 });
             } else {
-                // For before/after: handle existing feedback siblings of the target
                 const parent = targetEl.parentNode;
                 if (parent) {
-                    // Find all feedback elements in the parent
                     parent.querySelectorAll('.nds-feedback').forEach(existingFeedback => {
-                        // Skip feedback in code examples
                         if (!existingFeedback.closest('code, .code-example')) {
-                            // Check if it's a sibling of the target (before or after)
                             if (existingFeedback.parentNode === parent) {
-                                // Check if this is permanent feedback
-                                if (existingFeedback.hasAttribute('data-permanent')) {
-                                    // Hide permanent feedback instead of dismissing
+                                if (existingFeedback.hasAttribute('data-permanent') && !newIsPermanent) {
                                     existingFeedback.setAttribute('hidden', '');
                                     hiddenPermanent.push(existingFeedback);
                                 } else {
-                                    // Dismiss non-permanent feedback
+                                    existingFeedback._hiddenPermanent = null;
                                     this.dismiss(existingFeedback);
                                 }
                             }

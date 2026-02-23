@@ -145,7 +145,7 @@ direction: ltr
           </div>
           <div class="demo-container">
             <div class="state-demo">
-              <fieldset class="nds-radio-group">
+              <fieldset class="nds-form-group nds-radio-group">
                 <legend class="label">Choose your preferred contact method</legend>
                 <div class="nds-form-container nds-radio-container">
                   <div class="nds-form-header">
@@ -215,7 +215,7 @@ direction: ltr
                 </div>
                 <div class="nds-expandable-content">
                   <code class="lang-html code">
-                <fieldset class="nds-radio-group">
+                <fieldset class="nds-form-group nds-radio-group">
                   <legend class="label">Choose your preferred contact method</legend>
                   <div class="nds-form-container nds-radio-container">
                     <div class="nds-form-header">
@@ -292,7 +292,7 @@ direction: ltr
           </div>
           <div class="demo-container">
             <div class="state-demo">
-              <fieldset class="nds-radio-group" data-required id="demo-radio-validation">
+              <fieldset class="nds-form-group nds-radio-group" data-required id="demo-radio-validation">
                 <legend class="label">Select your subscription plan (required)</legend>
                 <div class="nds-form-container nds-radio-container">
                   <div class="nds-form-header">
@@ -376,7 +376,7 @@ direction: ltr
                 </div>
                 <div class="nds-expandable-content">
                   <code class="lang-html code">
-<fieldset class="nds-radio-group" data-status="error">
+<fieldset class="nds-form-group nds-radio-group" data-status="error">
   <legend class="label">Select your subscription plan</legend>
   <div class="nds-form-container nds-radio-container">
     <div class="nds-form-header">
@@ -413,10 +413,10 @@ direction: ltr
                   <code class="lang-javascript code">
 // Set error status on radio group
 var group = document.querySelector('.nds-radio-group');
-NDS.Forms.setStatus(group, 'error', 'Please select a subscription plan');
+NDS.Forms.setStatus({ element: group, status: 'error', message: 'Please select a subscription plan' });
 
 // Set success status
-NDS.Forms.setStatus(group, 'success', 'Plan selected successfully');
+NDS.Forms.setStatus({ element: group, status: 'success', message: 'Plan selected successfully' });
 
 // Clear status
 NDS.Forms.clearStatus(group);
@@ -430,7 +430,7 @@ var radios = group.querySelectorAll('input[type="radio"]');
 var isSelected = Array.from(radios).some(r => r.checked);
 
 if (!isSelected) {
-  NDS.Forms.setStatus(group, 'error', 'Please select an option');
+  NDS.Forms.setStatus({ element: group, status: 'error', message: 'Please select an option' });
 }
                   </code>
                 </div>
@@ -455,13 +455,13 @@ if (!isSelected) {
 
     if (setErrorBtn && group) {
       setErrorBtn.addEventListener('click', function () {
-        NDS.Forms.setStatus(group, 'error', 'Please select a subscription plan');
+        NDS.Forms.setStatus({ element: group, status: 'error', message: 'Please select a subscription plan' });
       });
     }
 
     if (setSuccessBtn && group) {
       setSuccessBtn.addEventListener('click', function () {
-        NDS.Forms.setStatus(group, 'success', 'Plan selected successfully');
+        NDS.Forms.setStatus({ element: group, status: 'success', message: 'Plan selected successfully' });
       });
     }
 

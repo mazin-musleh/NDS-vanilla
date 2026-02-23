@@ -158,7 +158,7 @@ direction: ltr
             <div class="state-demo">
               <fieldset>
                 <legend class="label">Switch Group</legend>
-                <div class="nds-switch-group">
+                <div class="nds-form-group nds-switch-group">
                   <div class="nds-form-container nds-switch-container">
                     <div class="nds-form-header">
                       <label for="switch1">
@@ -234,7 +234,7 @@ direction: ltr
                 </div>
                 <div class="nds-expandable-content">
                   <code class="lang-html code">
-                  <fieldset class="nds-switch-group">
+                  <fieldset class="nds-form-group nds-switch-group">
                     <legend class="label">Switch Group</legend>
                     <div class="nds-form-container nds-switch-container">
                       <div class="nds-form-header">
