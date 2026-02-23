@@ -4,11 +4,9 @@
             aria-controls="nds-digitalStamp">
             <img class="flag" src="{{ 'assets/icon/SAflag.min.svg' | relative_url }}" width="20" height="14"
                 loading="lazy" alt="Logo of Saudi Arabia Flag">
-            <span class="nds-digitalStamp-lg-text nds-truncate" id="big-screen-text">A government website registered with the
-                Digital Government
-                Authority.</span>
-            <span class="nds-digitalStamp-sm-text nds-truncate" id="small-screen-text">Government website registered with DGA</span>
-            <span id="nds-digitalStamp-verify-text" class="nds-link nds-primary">How you know?</span>
+            <span class="nds-digitalStamp-lg-text nds-truncate" id="big-screen-text">{{ site.digital_stamp[page.lang].tab_text_lg }}</span>
+            <span class="nds-digitalStamp-sm-text nds-truncate" id="small-screen-text">{{ site.digital_stamp[page.lang].tab_text_sm }}</span>
+            <span id="nds-digitalStamp-verify-text" class="nds-link nds-primary">{{ site.digital_stamp[page.lang].tab_verify_text }}</span>
         </button>
         <div class="nds-topbar-info">
             <span id="nds-date" class="nds-text-icon" data-calendar="hijri"></span>
@@ -29,11 +27,10 @@
                 </div>
                 <div class="nds-digitalStamp-content">
                     <div class="nds-digitalStamp-heading" id="domain-title">
-                        روابط المواقع الالكترونية الرسمية السعودية تنتهي بـ <span
-                            class="nds-digitalStamp-highlight">gov.sa</span>
+                        {{ site.digital_stamp[page.lang].domain_title }}
                     </div>
                     <div class="nds-digitalStamp-description" id="domain-desc">
-                        جميع روابط المواقع الرسمية التابعة للجهات الحكومية في المملكة العربية السعودية تنتهي بـ .gov.sa
+                        {{ site.digital_stamp[page.lang].domain_desc }}
                     </div>
                 </div>
             </div>
@@ -44,12 +41,10 @@
                 </div>
                 <div class="nds-digitalStamp-content">
                     <div class="nds-digitalStamp-heading" id="https-title">
-                        المواقع الالكترونية الحكومية تستخدم بروتوكول <span
-                            class="nds-digitalStamp-highlight">HTTPS</span>
-                        للتشفير و الأمان.
+                        {{ site.digital_stamp[page.lang].https_title }}
                     </div>
                     <div class="nds-digitalStamp-description" id="https-desc">
-                        المواقع الالكترونية الآمنة في المملكة العربية السعودية تستخدم بروتوكول HTTPS للتشفير.
+                        {{ site.digital_stamp[page.lang].https_desc }}
                     </div>
                 </div>
             </div>
@@ -58,7 +53,7 @@
                     alt="هيئة الحكومة الرقمية" loading="lazy">
                 <div>
                     <span id="register-text">
-                    مسجل لدى هيئة الحكومة الرقمية برقم:
+                        {{ site.digital_stamp[page.lang].register_text }}
                     </span>
                     <a class="nds-digitalStamp-registration nds-primary nds-underline"
                         href="{{ page.dga_registration_url | default: site.dga_registration_url }}"

@@ -52,6 +52,27 @@ city_longitude: 46.6753
 dga_registration_number: 20240520402
 dga_registration_url: https://raqmi.dga.gov.sa/platforms/DigitalStamp/ShowCertificate/4990
 
+# Digital Stamp Content (multilingual)
+digital_stamp:
+  ar:
+    tab_text_lg: 'موقع إلكتروني حكومي مسجل لدى هيئة الحكومة الرقمية.'
+    tab_text_sm: 'موقع حكومي مسجل لدى هيئة الحكومة الرقمية'
+    tab_verify_text: 'كيف تتحقق؟'
+    domain_title: 'روابط المواقع الالكترونية الرسمية السعودية تنتهي بـ <span class="nds-digitalStamp-highlight">gov.sa</span>'
+    domain_desc: 'جميع روابط المواقع الرسمية التابعة للجهات الحكومية في المملكة العربية السعودية تنتهي بـ .gov.sa'
+    https_title: 'المواقع الالكترونية الحكومية تستخدم بروتوكول <span class="nds-digitalStamp-highlight">HTTPS</span> للتشفير و الأمان.'
+    https_desc: 'المواقع الالكترونية الآمنة في المملكة العربية السعودية تستخدم بروتوكول HTTPS للتشفير.'
+    register_text: 'مسجل لدى هيئة الحكومة الرقمية برقم:'
+  en:
+    tab_text_lg: 'A government website registered with the Digital Government Authority.'
+    tab_text_sm: 'Government website registered with DGA'
+    tab_verify_text: 'How you know?'
+    domain_title: 'Official Saudi Government website URL ends with <span class="nds-digitalStamp-highlight">gov.sa</span>'
+    domain_desc: 'Website belongs to an official government organization in the Kingdom of Saudi Arabia always ends with .gov.sa .'
+    https_title: 'Official Secure websites use <span class="nds-digitalStamp-highlight">HTTPS</span>'
+    https_desc: 'Secured governments websites in the Kingdom of Saudi Arabia use Https encryption.'
+    register_text: 'Registered on Digital Government Authority:'
+
 # Default navigation data files
 mainnav: mainnav
 sidemenu: sidemenu
