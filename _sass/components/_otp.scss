@@ -51,12 +51,11 @@
     row-gap: var(--spacing-md);
     display: flex;
     flex-direction: column;
-    align-items: start;
 
     .nds-otp {
         column-gap: var(--spacing-md);
         display: flex;
-        align-items: start;
+        align-items: center;
     }
 
     // ==============================================
@@ -96,6 +95,7 @@
     background-color: var(--border-neutral-primary);
     border-radius: 1px;
     flex-shrink: 0;
+    align-self: center;
 }
 
 // ==============================================

@@ -23,15 +23,15 @@ direction: ltr
                         <div class="demo-action">
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-sm", ".nds-otp-group", "sizeToggle"]'>
-                                <span class="label">Small</span>
+                                <span class="label">SM</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
                                 data-toggler='["nds-md", ".nds-otp-group", "sizeToggle"]'>
-                                <span class="label">Medium</span>
+                                <span class="label">MD</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-lg", ".nds-otp-group", "sizeToggle"]'>
-                                <span class="label">Large</span>
+                                <span class="label">LG</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
@@ -140,15 +140,15 @@ direction: ltr
                         <div class="demo-action">
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-sm", ".nds-otp-group", "sizeToggle"]'>
-                                <span class="label">Small</span>
+                                <span class="label">SM</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
                                 data-toggler='["nds-md", ".nds-otp-group", "sizeToggle"]'>
-                                <span class="label">Medium</span>
+                                <span class="label">MD</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-lg", ".nds-otp-group", "sizeToggle"]'>
-                                <span class="label">Large</span>
+                                <span class="label">LG</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
