@@ -973,8 +973,6 @@
             var isNowOpen = this.elements.dropdown.classList.contains('hidden');
 
             if (isNowOpen) {
-                // Make dropdown invisible BEFORE removing hidden class
-                this.elements.dropdown.style.visibility = 'hidden';
                 this.elements.dropdown.classList.remove('hidden');
                 this.elements.formControl.classList.add('open');
 
@@ -988,64 +986,24 @@
         },
 
         adjustDropdownPosition: function () {
-            var self = this;
-            // Wait for dropdown to be rendered
-            setTimeout(function () {
-                var dropdown = self.elements.dropdown;
-                var formControl = self.elements.formControl;
+            var dropdown = this.elements.dropdown;
+            var formControl = this.elements.formControl;
 
-                if (!dropdown || !formControl) return;
+            if (!dropdown || !formControl) return;
 
-                // Get dropdown height and position
-                var dropdownRect = dropdown.getBoundingClientRect();
-                var formControlRect = formControl.getBoundingClientRect();
-                var viewportHeight = window.innerHeight;
-                var viewportWidth = window.innerWidth;
+            // Measure with fixed + hidden to avoid extending the page
+            dropdown.style.cssText = 'visibility:hidden;position:fixed;top:0;left:0;';
 
-                // Calculate space below and above the input
-                var spaceBelow = viewportHeight - formControlRect.bottom;
-                var spaceAbove = formControlRect.top;
-                var dropdownHeight = dropdownRect.height;
+            var dropdownHeight = dropdown.offsetHeight;
+            var fcRect = formControl.getBoundingClientRect();
+            var spaceBelow = window.innerHeight - fcRect.bottom;
 
-                // Vertical positioning: Check if there's not enough space below
-                if (spaceBelow < dropdownHeight && spaceAbove > spaceBelow) {
-                    // Position above the input
-                    dropdown.style.top = 'unset';
-                    dropdown.style.marginTop = 'unset';
-                    dropdown.style.bottom = '100%';
-                    dropdown.style.marginBottom = '4px';
-                } else {
-                    // Reset to default position (below the input)
-                    dropdown.style.top = '';
-                    dropdown.style.marginTop = '';
-                    dropdown.style.bottom = '';
-                    dropdown.style.marginBottom = '';
-                }
-
-                // Horizontal positioning: Check if dropdown goes off-screen
-                var dropdownWidth = dropdownRect.width;
-                var spaceOnRight = viewportWidth - dropdownRect.right;
-                var spaceOnLeft = dropdownRect.left;
-
-                // Check if dropdown goes off the right edge
-                if (spaceOnRight < 0 && Math.abs(spaceOnRight) > 20) {
-                    dropdown.style.left = 'auto';
-                    dropdown.style.right = '0';
-                }
-                // Check if dropdown goes off the left edge
-                else if (spaceOnLeft < 0 && Math.abs(spaceOnLeft) > 20) {
-                    dropdown.style.right = 'auto';
-                    dropdown.style.left = '0';
-                }
-                // Reset to default if it fits
-                else {
-                    dropdown.style.left = '';
-                    dropdown.style.right = '';
-                }
-
-                // Make dropdown visible after positioning is complete
-                dropdown.style.visibility = 'visible';
-            }, 10);
+            // Clear measurement styles, flip above if not enough space below
+            if (spaceBelow < dropdownHeight + 4 && fcRect.top > spaceBelow) {
+                dropdown.style.cssText = 'top:unset;margin-top:unset;bottom:100%;margin-bottom:4px;';
+            } else {
+                dropdown.style.cssText = '';
+            }
         },
 
         initializeCalendar: function () {
@@ -1157,13 +1115,7 @@
 
             // Reset all inline positioning styles
             if (this.elements.dropdown) {
-                this.elements.dropdown.style.top = '';
-                this.elements.dropdown.style.marginTop = '';
-                this.elements.dropdown.style.bottom = '';
-                this.elements.dropdown.style.marginBottom = '';
-                this.elements.dropdown.style.left = '';
-                this.elements.dropdown.style.right = '';
-                this.elements.dropdown.style.visibility = '';
+                this.elements.dropdown.style.cssText = '';
             }
 
             // Clear ALL Hijri cache

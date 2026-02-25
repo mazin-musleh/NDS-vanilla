@@ -846,58 +846,29 @@
 
             function updateOpenState() {
                 formControl.classList.toggle('open', isOpen);
-                dropdown.toggleAttribute('hidden', !isOpen);
 
                 if (isOpen) {
                     updateSelectedOptions();
-                    adjustDropdownPosition();
+                    // Measure with fixed + hidden to avoid extending the page
+                    dropdown.style.cssText = 'visibility:hidden;position:fixed;top:0;left:0;';
+                    dropdown.removeAttribute('hidden');
+
+                    var dropdownHeight = dropdown.offsetHeight;
+                    var fcRect = formControl.getBoundingClientRect();
+                    var spaceBelow = window.innerHeight - fcRect.bottom;
+
+                    // Clear measurement styles, apply direction override if needed
+                    if (spaceBelow < dropdownHeight + 4 && fcRect.top > spaceBelow) {
+                        dropdown.style.cssText = 'top:unset;bottom:100%;margin-bottom:4px;';
+                    } else {
+                        dropdown.style.cssText = '';
+                    }
+
                     if (options[0]) options[0].focus();
                 } else {
-                    resetDropdownPosition();
+                    dropdown.setAttribute('hidden', '');
+                    dropdown.style.cssText = '';
                 }
-            }
-
-            function adjustDropdownPosition() {
-                setTimeout(function() {
-                    if (!dropdown || !formControl) return;
-
-                    var dropdownRect = dropdown.getBoundingClientRect();
-                    var formControlRect = formControl.getBoundingClientRect();
-                    var viewportHeight = window.innerHeight;
-                    var spaceBelow = viewportHeight - formControlRect.bottom;
-                    var spaceAbove = formControlRect.top;
-                    var dropdownHeight = dropdownRect.height;
-
-                    // Vertical positioning
-                    if (spaceBelow < dropdownHeight && spaceAbove > spaceBelow) {
-                        dropdown.style.top = 'unset';
-                        dropdown.style.bottom = '100%';
-                        dropdown.style.marginBottom = '4px';
-                    } else {
-                        dropdown.style.top = '';
-                        dropdown.style.bottom = '';
-                        dropdown.style.marginBottom = '';
-                    }
-
-                    // Horizontal positioning
-                    var spaceOnRight = window.innerWidth - dropdownRect.right;
-                    if (spaceOnRight < 0 && Math.abs(spaceOnRight) > 20) {
-                        dropdown.style.left = 'auto';
-                        dropdown.style.right = '0';
-                    } else {
-                        dropdown.style.left = '';
-                        dropdown.style.right = '';
-                    }
-                }, 10);
-            }
-
-            function resetDropdownPosition() {
-                if (!dropdown) return;
-                dropdown.style.top = '';
-                dropdown.style.bottom = '';
-                dropdown.style.marginBottom = '';
-                dropdown.style.left = '';
-                dropdown.style.right = '';
             }
 
             function updateSelectedOptions() {

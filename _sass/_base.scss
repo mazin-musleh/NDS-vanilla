@@ -20,6 +20,19 @@ body[data-font-loaded*="hgi-stroke-rounded"] {
 }
 
 /* ========================================
+   MINIMAL LAYOUT
+   ======================================== */
+
+body.nds-minimal[style*="--bg-img"] {
+    background:
+        linear-gradient(
+            color-mix(in srgb, var(--background-body) var(--bg-opacity, 80%), transparent),
+            color-mix(in srgb, var(--background-body) var(--bg-opacity, 80%), transparent)
+        ),
+        var(--bg-img) center / cover no-repeat fixed;
+}
+
+/* ========================================
    INTERACTIVE ELEMENTS
    ======================================== */
 

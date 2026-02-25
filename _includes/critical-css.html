@@ -112,6 +112,50 @@
         display: none;
     }
 
+    /* ===== CARD (CLS) ===== */
+    .nds-card {
+        width: var(--card-width, 100%);
+        max-width: var(--card-width, 100%);
+        position: relative;
+    }
+
+    .nds-card:not([hidden]):has([class*='nds-card-']) {
+        display: flex;
+        flex-direction: column;
+        gap: var(--card-gap, var(--spacing-3xl, 24px));
+    }
+
+    .nds-card .nds-card-header,
+    .nds-card .nds-card-content,
+    .nds-card .nds-card-text,
+    .nds-card .nds-card-meta,
+    .nds-card-form {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .nds-card .nds-card-header {
+        gap: var(--card-gap, var(--spacing-3xl, 24px));
+    }
+
+    .nds-card .nds-card-header:is(:has(.nds-close), .nds-row) {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .nds-card .nds-card-content,
+    .nds-card-form {
+        gap: var(--card-gap, var(--spacing-3xl, 24px));
+        flex: 1;
+    }
+
+    .nds-card .nds-card-actions {
+        display: flex;
+        width: 100%;
+        margin-top: auto;
+    }
+
     /* ===== BREADCRUMB ===== */
     .nds-breadcrumb,
     .nds-breadcrumb li {
