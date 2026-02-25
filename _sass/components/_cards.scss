@@ -83,7 +83,7 @@
     gap: var(--_card-gap);
     width: 100%;
 
-    &:has(.nds-close) {
+    &:is(:has(.nds-close),.nds-row) {
       flex-direction: row;
       justify-content: space-between;
     }
@@ -245,6 +245,12 @@
 
     &.nds-end {
       justify-content: flex-end;
+    }
+
+    &.nds-row {
+      flex-direction: column;
+      --btn-width: 100%;
+      row-gap: var(--buttons-group-gap);
     }
 
     @include ltr {
@@ -437,7 +443,7 @@
   }
 
   // Shadow variant interactive states
-/*   &.nds-shadow {
+  /*   &.nds-shadow {
     &:hover {
       box-shadow: var(--shadow-lg);
     }
@@ -448,7 +454,7 @@
   } */
 
   // Stroke variant interactive states
-/*   &.nds-stroke {
+  /*   &.nds-stroke {
     &:hover {
       border-color: var(--_card-border-hover);
     }

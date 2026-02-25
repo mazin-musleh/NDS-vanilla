@@ -32,6 +32,7 @@
 
   // Image styling
   img {
+    width: 100%;
     max-width: 100%;
     height: auto !important;
     object-fit: cover;
@@ -98,16 +99,20 @@
   --avatar-size: 32px;
 }
 
+.nds-avatar.nds-md {
+  --avatar-size: 40px;
+}
+
 .nds-avatar.nds-lg {
-  --avatar-size: 56px;
+  --avatar-size: 48px;
 }
 
 .nds-avatar.nds-xl {
-  --avatar-size: 80px;
+  --avatar-size: 64px;
 }
 
 .nds-avatar.nds-2xl {
-  --avatar-size: 96px;
+  --avatar-size: 80px;
 }
 
 .nds-avatar.nds-3xl {
@@ -201,7 +206,7 @@
     --avatar-gap: 8px;
 
     .nds-avatar {
-      --avatar-size: 56px;
+      --avatar-size: 48px;
     }
   }
 
@@ -209,7 +214,7 @@
     --avatar-gap: 10px;
 
     .nds-avatar {
-      --avatar-size: 80px;
+      --avatar-size: 64px;
     }
   }
 
@@ -217,7 +222,7 @@
     --avatar-gap: 12px;
 
     .nds-avatar {
-      --avatar-size: 96px;
+      --avatar-size: 80px;
     }
   }
 

@@ -28,10 +28,10 @@
 
     .nds-section-image {
         .nds-avatar {
-            --avatar-size: 112px;
+            --avatar-size: 120px;
 
             @include tablet(max) {
-                --avatar-size: 96px;
+                --avatar-size: 80px;
             }
         }
     }

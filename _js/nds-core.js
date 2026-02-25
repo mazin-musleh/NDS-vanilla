@@ -149,4 +149,11 @@
 
     NDS.onDOMAdd = (sel, fn) => { domBus.addSubs.push({ sel, fn }); domBus.start(); };
     NDS.onDOMRemove = (sel, fn) => { domBus.removeSubs.push({ sel, fn }); domBus.start(); };
+
+    // ── Lazy Reveal ────────────────────────────────────────────────────
+    // Remove hidden from [data-nds-lazy] once DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+        const els = document.querySelectorAll('[data-nds-lazy]');
+        for (let i = 0; i < els.length; i++) els[i].removeAttribute('hidden');
+    });
 })();

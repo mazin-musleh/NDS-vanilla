@@ -22,7 +22,6 @@
     &[data-status]:not([hidden]),
     [data-status] &:not([hidden]) {
         display: flex;
-        align-items: flex-start;
     }
 
     // ==============================================

@@ -44,275 +44,245 @@ breadcrumb: ["Examples"]
   </div>
   <form id="registration-form" class="nds-card-form">
     <!-- Step 1: Basic Information -->
-    <div class="nds-card-content registration-step active">
-      <div class="nds-card-text nds-center">
-        <h3 class="nds-card-title">البيانات الأساسية</h3>
-        <p class="nds-card-description">يرجى إدخال بياناتك الأكاديمية للتحقق من هويتك</p>
-      </div>
-      <div class="nds-card-form">
-        <!-- University ID Field -->
-        <div class="nds-form-container nds-required">
-          <div class="nds-form-header">
-            <label for="university-id">
-              <span class="label">الرقم الجامعي</span>
-            </label>
-          </div>
-          <div class="nds-form-control">
-            <input type="text" id="university-id" class="nds-input" placeholder="" value="" required>
-            <div class="nds-form-action">
-              <button class="nds-btn nds-subtle clear hidden" type="button" aria-label="Clear input">
-                <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
-              </button>
-            </div>
-          </div>
-          <div class="nds-form-footer">
-            <span class="nds-feedback nds-outline nds-sm">
-              <span class="nds-feedback-icon">
-                <i class="hgi hgi-stroke icon"></i>
-              </span>
-              <span class="msg"></span>
-            </span>
-          </div>
+    <div class="registration-step">
+      <div class="nds-card-content">
+        <div class="nds-card-text nds-center">
+          <h3 class="nds-card-title">البيانات الأساسية</h3>
+          <p class="nds-card-description">يرجى إدخال بياناتك الأكاديمية للتحقق من هويتك</p>
         </div>
-
-        <!-- Graduation Year Dropdown -->
-        <div class="nds-form-container nds-select nds-required">
-          <div class="nds-form-header">
-            <label for="graduation-year">
-              <span class="label">اختر عام التخرج</span>
-            </label>
-          </div>
-          <div class="nds-form-control">
-            <input type="text" id="graduation-year" class="nds-input nds-select-input" placeholder="اختر السنة..."
-              readonly required>
-            <input type="hidden" name="graduationYearValue" class="nds-select-value">
-
-            <!-- Custom Dropdown Menu -->
-            <div class="nds-select-dropdown hidden">
-              <div class="select-options">
-                <button type="button" class="nds-btn nds-subtle select-option" data-value="">
-                  <span class="option-text">اختر السنة...</span>
-                </button>
-                <button type="button" class="nds-btn nds-subtle select-option" data-value="2025">
-                  <span class="option-text">2025</span>
-                </button>
-                <button type="button" class="nds-btn nds-subtle select-option" data-value="2024">
-                  <span class="option-text">2024</span>
-                </button>
-                <button type="button" class="nds-btn nds-subtle select-option" data-value="2023">
-                  <span class="option-text">2023</span>
-                </button>
-                <button type="button" class="nds-btn nds-subtle select-option" data-value="2022">
-                  <span class="option-text">2022</span>
-                </button>
-                <button type="button" class="nds-btn nds-subtle select-option" data-value="2021">
-                  <span class="option-text">2021</span>
+        <div class="nds-card-form">
+          <!-- University ID Field -->
+          <div class="nds-form-container" data-required>
+            <div class="nds-form-header">
+              <label for="university-id">
+                <span class="label">الرقم الجامعي</span>
+              </label>
+            </div>
+            <div class="nds-form-control">
+              <input type="text" id="university-id" class="nds-input" placeholder="" value="" required>
+              <div class="nds-form-action">
+                <button class="nds-btn nds-subtle clear" hidden type="button" aria-label="Clear input">
+                  <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
                 </button>
               </div>
             </div>
           </div>
-          <div class="nds-form-footer">
-            <span class="nds-feedback nds-outline nds-sm">
-              <span class="nds-feedback-icon">
-                <i class="hgi hgi-stroke icon"></i>
-              </span>
-              <span class="msg"></span>
-            </span>
-          </div>
-        </div>
 
-        <!-- Date of Birth Field -->
-        <div class="nds-form-container nds-date-picker nds-required">
-          <div class="nds-form-header">
-            <label for="date-of-birth">
-              <span class="label">تاريخ الميلاد</span>
-            </label>
-          </div>
-          <div class="nds-form-control">
-            <div class="nds-form-action before">
-              <button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle" aria-label="Calendar Toggler">
-                <i class="hgi hgi-stroke hgi-calendar-03 icon"></i>
-              </button>
+          <!-- Graduation Year Dropdown -->
+          <div class="nds-form-container nds-select" data-required>
+            <div class="nds-form-header">
+              <label for="graduation-year">
+                <span class="label">اختر عام التخرج</span>
+              </label>
             </div>
-            <input type="text" id="date-of-birth" class="nds-input nds-date-input" placeholder="mm/dd/yyyy"
-              data-year-before="40" data-year-after="5" data-hijri-offset="0" required>
-          </div>
-          <div class="nds-form-footer">
-            <span class="nds-feedback nds-outline nds-sm">
-              <span class="nds-feedback-icon">
-                <i class="hgi hgi-stroke icon"></i>
-              </span>
-              <span class="msg"></span>
-            </span>
-          </div>
-        </div>
+            <div class="nds-form-control">
+              <input type="text" id="graduation-year" class="nds-input nds-select-input" placeholder="اختر السنة..."
+                readonly required>
+              <input type="hidden" name="graduationYearValue" class="nds-select-value">
 
-        <!-- Where did you hear about us -->
-        <div class="nds-form-container nds-select nds-required">
-          <div class="nds-form-header">
-            <label for="heard-about">
-              <span class="label">من أين سمعت عن المنصة؟</span>
-            </label>
-          </div>
-          <div class="nds-form-control">
-            <input type="text" id="heard-about" class="nds-input nds-select-input" placeholder="اختر الإجابة..."
-              readonly required>
-            <input type="hidden" name="heardAboutValue" class="nds-select-value">
-
-            <!-- Custom Dropdown Menu -->
-            <div class="nds-select-dropdown hidden">
-              <div class="select-options">
-                <button type="button" class="nds-btn nds-subtle select-option" data-value="">
-                  <span class="option-text">اختر الإجابة...</span>
-                </button>
-                <button type="button" class="nds-btn nds-subtle select-option" data-value="social-media">
-                  <span class="option-text">وسائل التواصل الاجتماعي</span>
-                </button>
-                <button type="button" class="nds-btn nds-subtle select-option" data-value="friends">
-                  <span class="option-text">الأصدقاء</span>
-                </button>
-                <button type="button" class="nds-btn nds-subtle select-option" data-value="university">
-                  <span class="option-text">الجامعة</span>
-                </button>
-                <button type="button" class="nds-btn nds-subtle select-option" data-value="search-engine">
-                  <span class="option-text">محركات البحث</span>
-                </button>
-                <button type="button" class="nds-btn nds-subtle select-option" data-value="other">
-                  <span class="option-text">أخرى</span>
-                </button>
+              <!-- Custom Dropdown Menu -->
+              <div class="nds-select-dropdown" hidden>
+                <div class="select-options">
+                  <button type="button" class="nds-btn nds-subtle select-option" data-value="">
+                    <span class="option-text">اختر السنة...</span>
+                  </button>
+                  <button type="button" class="nds-btn nds-subtle select-option" data-value="2025">
+                    <span class="option-text">2025</span>
+                  </button>
+                  <button type="button" class="nds-btn nds-subtle select-option" data-value="2024">
+                    <span class="option-text">2024</span>
+                  </button>
+                  <button type="button" class="nds-btn nds-subtle select-option" data-value="2023">
+                    <span class="option-text">2023</span>
+                  </button>
+                  <button type="button" class="nds-btn nds-subtle select-option" data-value="2022">
+                    <span class="option-text">2022</span>
+                  </button>
+                  <button type="button" class="nds-btn nds-subtle select-option" data-value="2021">
+                    <span class="option-text">2021</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-          <div class="nds-form-footer">
-            <span class="nds-feedback nds-outline nds-sm">
-              <span class="nds-feedback-icon">
-                <i class="hgi hgi-stroke icon"></i>
-              </span>
-              <span class="msg"></span>
-            </span>
+
+          <!-- Date of Birth Field -->
+          <div class="nds-form-container nds-date-picker" data-required>
+            <div class="nds-form-header">
+              <label for="date-of-birth">
+                <span class="label">تاريخ الميلاد</span>
+              </label>
+            </div>
+            <div class="nds-form-control">
+              <div class="nds-form-action before">
+                <button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle" aria-label="Calendar Toggler">
+                  <i class="hgi hgi-stroke hgi-calendar-03 icon"></i>
+                </button>
+              </div>
+              <input type="text" id="date-of-birth" class="nds-input nds-date-input" placeholder="mm/dd/yyyy"
+                data-year-before="40" data-year-after="5" data-hijri-offset="0" required>
+            </div>
+          </div>
+
+          <!-- Where did you hear about us -->
+          <div class="nds-form-container nds-select" data-required>
+            <div class="nds-form-header">
+              <label for="heard-about">
+                <span class="label">من أين سمعت عن المنصة؟</span>
+              </label>
+            </div>
+            <div class="nds-form-control">
+              <input type="text" id="heard-about" class="nds-input nds-select-input" placeholder="اختر الإجابة..."
+                readonly required>
+              <input type="hidden" name="heardAboutValue" class="nds-select-value">
+
+              <!-- Custom Dropdown Menu -->
+              <div class="nds-select-dropdown" hidden>
+                <div class="select-options">
+                  <button type="button" class="nds-btn nds-subtle select-option" data-value="">
+                    <span class="option-text">اختر الإجابة...</span>
+                  </button>
+                  <button type="button" class="nds-btn nds-subtle select-option" data-value="social-media">
+                    <span class="option-text">وسائل التواصل الاجتماعي</span>
+                  </button>
+                  <button type="button" class="nds-btn nds-subtle select-option" data-value="friends">
+                    <span class="option-text">الأصدقاء</span>
+                  </button>
+                  <button type="button" class="nds-btn nds-subtle select-option" data-value="university">
+                    <span class="option-text">الجامعة</span>
+                  </button>
+                  <button type="button" class="nds-btn nds-subtle select-option" data-value="search-engine">
+                    <span class="option-text">محركات البحث</span>
+                  </button>
+                  <button type="button" class="nds-btn nds-subtle select-option" data-value="other">
+                    <span class="option-text">أخرى</span>
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      <!-- Next Button -->
-      <div class="nds-card-actions">
-        <button type="button" class="nds-btn nds-primary nds-lg nds-full step-next-btn">
-          <span class="label">التالي</span>
-        </button>
-      </div>
+        <!-- Next Button -->
+        <div class="nds-card-actions nds-row">
+          <button type="button" class="nds-btn nds-primary nds-lg nds-full step-next-btn">
+            <span class="label">التالي</span>
+          </button>
+        </div>
 
-      <!-- Forgot Data Link -->
-      <div class="nds-card-footer">
-        <span class="forgot-data-text">لا تتذكر بياناتك؟</span>
-        <a href="#" class="forgot-data-link">
-          لم أتذكر بياناتي
-        </a>
+        <!-- Forgot Data Link -->
+        <div class="nds-card-footer">
+          <span class="forgot-data-text">لا تتذكر بياناتك؟</span>
+          <a href="#" class="forgot-data-link">
+            لم أتذكر بياناتي
+          </a>
+        </div>
       </div>
     </div>
 
     <!-- Step 2: Email Verification -->
-    <div class="nds-card-content registration-step">
-      <div class="nds-card-text nds-center">
-        <h3 class="nds-card-title">البريد الإلكتروني</h3>
-        <p class="nds-card-description">أدخل بريدك الإلكتروني لإرسال رمز التحقق</p>
-      </div>
-      <div class="nds-card-form">
-        <!-- Email Field -->
-        <div class="nds-form-container nds-required">
-          <div class="nds-form-header">
-            <label for="email-address">
-              <span class="label">البريد الإلكتروني</span>
-            </label>
-          </div>
-          <div class="nds-form-control">
-            <div class="nds-form-action before">
-              <button type="button" class="nds-btn nds-subtle nds-md" aria-label="Email icon">
-                <i class="hgi hgi-stroke hgi-mail-01 icon"></i>
-              </button>
+    <div class="registration-step" hidden>
+      <div class="nds-card-content">
+        <div class="nds-card-text nds-center">
+          <h3 class="nds-card-title">البريد الإلكتروني</h3>
+          <p class="nds-card-description">أدخل بريدك الإلكتروني لإرسال رمز التحقق</p>
+        </div>
+        <div class="nds-card-form">
+          <!-- Email Field -->
+          <div class="nds-form-container" data-required>
+            <div class="nds-form-header">
+              <label for="email-address">
+                <span class="label">البريد الإلكتروني</span>
+              </label>
             </div>
-            <input type="email" id="email-address" class="nds-input" placeholder="" value="" required>
-            <div class="nds-form-action">
-              <button class="nds-btn nds-subtle clear hidden" type="button" aria-label="Clear input">
-                <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
-              </button>
+            <div class="nds-form-control">
+              <div class="nds-form-action before">
+                <button type="button" class="nds-btn nds-subtle nds-md" aria-label="Email icon">
+                  <i class="hgi hgi-stroke hgi-mail-01 icon"></i>
+                </button>
+              </div>
+              <input type="email" id="email-address" class="nds-input" placeholder="" value="" required>
+              <div class="nds-form-action">
+                <button class="nds-btn nds-subtle clear" hidden type="button" aria-label="Clear input">
+                  <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
+                </button>
+              </div>
             </div>
-          </div>
-          <div class="nds-form-footer">
-            <span class="nds-feedback nds-outline nds-sm">
-              <span class="nds-feedback-icon">
-                <i class="hgi hgi-stroke icon"></i>
-              </span>
-              <span class="msg"></span>
-            </span>
           </div>
         </div>
-      </div>
-      <!-- Action Buttons -->
-      <div class="nds-card-actions nds-btn-group">
-        <button type="button" class="nds-btn nds-secondary-outline nds-lg step-prev-btn">
-          <span class="label">السابق</span>
-        </button>
-        <button type="button" class="nds-btn nds-primary nds-lg nds-full step-next-btn">
-          <span class="label">إرسال رمز التحقق</span>
-        </button>
-      </div>
+        <!-- Action Buttons -->
+        <div class="nds-card-actions nds-row">
+          <button type="button" class="nds-btn nds-primary nds-lg nds-full step-next-btn">
+            <span class="label">إرسال رمز التحقق</span>
+          </button>
+          <button type="button" class="nds-btn nds-secondary-outline nds-lg step-prev-btn">
+            <span class="label">السابق</span>
+          </button>
+        </div>
 
-      <!-- Forgot Data Link -->
-      <div class="nds-card-footer">
-        <span class="forgot-data-text">لا تتذكر بياناتك؟</span>
-        <a href="#" class="forgot-data-link">
-          لم أتذكر بياناتي
-        </a>
+        <!-- Forgot Data Link -->
+        <div class="nds-card-footer">
+          <span class="forgot-data-text">لا تتذكر بياناتك؟</span>
+          <a href="#" class="forgot-data-link">
+            لم أتذكر بياناتي
+          </a>
+        </div>
       </div>
     </div>
 
     <!-- Step 3: Verification Code -->
-    <div class="nds-card-content registration-step">
-      <div class="nds-card-text nds-center">
-        <h3 class="nds-card-title">تأكيد البريد الإلكتروني</h3>
-        <p class="nds-card-description">تم إرسال رمز التحقق إلى بريدك الإلكتروني</p>
-      </div>
-      <div class="nds-card-form">
-        <!-- Verification Code Field -->
-        <div class="nds-form-container nds-required">
-          <div class="nds-form-header">
-            <label for="verification-code">
-              <span class="label">أدخل رمز التحقق</span>
-            </label>
-          </div>
-          <div class="nds-form-control">
-            <input type="text" id="verification-code" class="nds-input" placeholder="" value="" required>
-            <div class="nds-form-action">
-              <button class="nds-btn nds-subtle clear hidden" type="button" aria-label="Clear input">
-                <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
-              </button>
-            </div>
-          </div>
-          <div class="nds-form-footer">
-            <span class="nds-feedback nds-outline nds-sm" data-status="info">
-              <span class="nds-feedback-icon">
-                <i class="hgi hgi-stroke icon"></i>
-              </span>
-              <span class="msg">لم تستلم الرمز؟ <a href="#" class="resend-link">إعادة الإرسال</a></span>
-            </span>
-          </div>
+    <div class="registration-step" hidden>
+      <div class="nds-card-content">
+        <div class="nds-card-text nds-center">
+          <h3 class="nds-card-title">تأكيد البريد الإلكتروني</h3>
+          <p class="nds-card-description">تم إرسال رمز التحقق إلى بريدك الإلكتروني</p>
         </div>
-      </div>
-      <!-- Action Buttons -->
-      <div class="nds-card-actions nds-btn-group">
-        <button type="button" class="nds-btn nds-secondary-outline nds-lg step-prev-btn">
-          <span class="label">السابق</span>
-        </button>
-        <button type="submit" class="nds-btn nds-primary nds-lg nds-full">
-          <span class="label">تأكيد التسجيل</span>
-        </button>
-      </div>
+        <div class="nds-card-form">
+          <!-- OTP Verification Code -->
+          <fieldset class="nds-form-group nds-otp-group nds-md nds-center">
+            <legend><span class="label">أدخل رمز التحقق</span></legend>
+            <div class="nds-otp">
+              <div class="nds-form-container nds-otp-container">
+                <div class="nds-form-control">
+                  <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="one-time-code">
+                </div>
+              </div>
+              <div class="nds-form-container nds-otp-container">
+                <div class="nds-form-control">
+                  <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]">
+                </div>
+              </div>
+              <div class="nds-form-container nds-otp-container">
+                <div class="nds-form-control">
+                  <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]">
+                </div>
+              </div>
+              <div class="nds-form-container nds-otp-container">
+                <div class="nds-form-control">
+                  <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]">
+                </div>
+              </div>
+            </div>
+            <input type="hidden" class="nds-otp-value" name="verification-code">
+          </fieldset>
+          <p class="nds-card-description nds-center">لم تستلم الرمز؟ <a href="#" class="resend-link">إعادة الإرسال</a></p>
+        </div>
+        <!-- Action Buttons -->
+        <div class="nds-card-actions nds-row">
+          <button type="submit" class="nds-btn nds-primary nds-lg nds-full">
+            <span class="label">تأكيد التسجيل</span>
+          </button>
+          <button type="button" class="nds-btn nds-secondary-outline nds-lg step-prev-btn">
+            <span class="label">السابق</span>
+          </button>
+        </div>
 
-      <!-- Forgot Data Link -->
-      <div class="nds-card-footer">
-        <span class="forgot-data-text">لا تتذكر بياناتك؟</span>
-        <a href="#" class="forgot-data-link">
-          لم أتذكر بياناتي
-        </a>
+        <!-- Forgot Data Link -->
+        <div class="nds-card-footer">
+          <span class="forgot-data-text">لا تتذكر بياناتك؟</span>
+          <a href="#" class="forgot-data-link">
+            لم أتذكر بياناتي
+          </a>
+        </div>
       </div>
     </div>
   </form>
@@ -320,7 +290,7 @@ breadcrumb: ["Examples"]
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    const steps = document.querySelectorAll('.nds-card-content.registration-step');
+    const steps = document.querySelectorAll('.registration-step');
     const stepperId = 'registration-stepper';
     let currentStep = 1;
     const totalSteps = 3;
@@ -328,13 +298,7 @@ breadcrumb: ["Examples"]
     // Show specific step
     function showStep(stepNumber) {
       steps.forEach((step, index) => {
-        if (index + 1 === stepNumber) {
-          step.classList.remove('hidden');
-          step.classList.add('active');
-        } else {
-          step.classList.add('hidden');
-          step.classList.remove('active');
-        }
+        step.toggleAttribute('hidden', index + 1 !== stepNumber);
       });
       currentStep = stepNumber;
 
