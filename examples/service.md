@@ -102,7 +102,9 @@ hideSidemenu: true
                     </dt>
                     <dd>Arabic Language,English Language</dd>
                 </div>
-                <div class="nds-definition-item"><hr class="nds-divider"></div>
+                <div class="nds-definition-item">
+                    <hr class="nds-divider">
+                </div>
                 <div class="nds-definition-item">
                     <dt>
                         <i class="hgi hgi-stroke hgi-help-circle icon"></i>

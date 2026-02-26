@@ -91,8 +91,8 @@ $all-spacers: $spacers;
   flex: none;
 }
 
-.nds-truncate:not([hidden]){
-  --_truncate: var(--truncate,1);
+.nds-truncate:not([hidden]) {
+  --_truncate: var(--truncate, 1);
   overflow: hidden;
   display: -webkit-box !important;
   -webkit-box-orient: vertical;
@@ -142,44 +142,71 @@ $all-spacers: $spacers;
 
 
 .nds-expandable {
-    position: relative;
+  position: relative;
 
-    // Gradient mask custom properties
-    --mask-fade-percentage: 35%; // Fade last 35% of content
+  // Gradient mask custom properties
+  --mask-fade-percentage: 35%; // Fade last 35% of content
 
-    // Default constrained state to prevent CLS
-    .nds-expandable-content {
-        overflow-y: hidden;
-        max-height: var(--max-height, 300px);
-    }
+  // Default constrained state to prevent CLS
+  .nds-expandable-content {
+    overflow-y: hidden;
+    max-height: var(--max-height, 300px);
+  }
 }
 
 .nds-expandable.nds-expand {
 
-    &:has(>.nds-expandable-content),
-    &>*:has(>.nds-expandable-content) {
-        overflow: hidden;
-    }
+  &:has(>.nds-expandable-content),
+  &>*:has(>.nds-expandable-content) {
+    overflow: hidden;
+  }
 
+  .nds-expandable-content {
+    mask-image: linear-gradient(180deg, black calc(100% - var(--mask-fade-percentage)), transparent 100%);
+  }
+
+  .nds-expand-btn {
+    position: absolute;
+    bottom: 0;
+    z-index: 6;
+    inset-inline-end: 0;
+  }
+
+  &.nds-expanded {
     .nds-expandable-content {
-        mask-image: linear-gradient(180deg, black calc(100% - var(--mask-fade-percentage)), transparent 100%);
+      max-height: 100%;
+      padding-bottom: var(--spacing-4xl);
+      mask-image: none;
+      -webkit-mask-image: none;
     }
+  }
+}
 
-    .nds-expand-btn {
-        position: absolute;
-        bottom: 0;
-        z-index: 6;
-        inset-inline-end: 0;
-    }
+:is(.nds-external) {
+  display: flex;
+  gap: var(--spacing-xs);
+  align-items: center;
 
-    &.nds-expanded {
-        .nds-expandable-content {
-            max-height: 100%;
-            padding-bottom: var(--spacing-4xl);
-            mask-image: none;
-            -webkit-mask-image: none;
-        }
-    }
+  &::after {
+    content: "䩡";
+    font-family: "hgi-stroke-rounded" !important;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    position: relative;
+    display: inline-flex;
+    width: var(--_btn-FS);
+    height: var(--_btn-FS);
+    font-size: var(--_btn-FS);
+    line-height: var(--_btn-FS);
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+  }
+
+  >.label {
+    flex: unset !important;
+  }
 }
 
 // ==============================================

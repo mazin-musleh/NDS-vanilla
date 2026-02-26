@@ -12,6 +12,7 @@ columns:
       - label: "Design Tokens"
         url: "#"
       - label: "Resources"
+        class: "nds-external"
         url: "#"
       - label: "Documentation"
         url: "#"
