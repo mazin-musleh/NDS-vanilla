@@ -9,6 +9,7 @@
    ======================================== */
 
 body[data-font-loaded*="hgi-stroke-rounded"] {
+
     i.hgi-stroke,
     .nds-breadcrumb li:not(:last-child)::after,
     .nds-btn:is(.nds-menu-btn, .nds-next, .nds-prev, .nds-up, .nds-down)::after,
@@ -26,10 +27,8 @@ body[data-font-loaded*="hgi-stroke-rounded"] {
 
 body.nds-minimal[style*="--bg-img"] {
     background:
-        linear-gradient(
-            color-mix(in srgb, var(--background-body) var(--bg-opacity, 80%), transparent),
-            color-mix(in srgb, var(--background-body) var(--bg-opacity, 80%), transparent)
-        ),
+        linear-gradient(color-mix(in srgb, var(--background-body) var(--bg-opacity, 80%), transparent),
+            color-mix(in srgb, var(--background-body) var(--bg-opacity, 80%), transparent)),
         var(--bg-img) center / cover no-repeat fixed;
 }
 
@@ -51,6 +50,9 @@ body.nds-minimal[style*="--bg-img"] {
 }
 
 :is(.nds-link, a):not(.nds-btn) {
+    display: inline-flex;
+    width: fit-content;
+    
     --_link-color: var(--link-color, var(--link-neutral));
     --_link-hover: var(--link-hover, var(--link-neutral-hovered));
     --_link-pressed: var(--link-pressed, var(--link-neutral-pressed));
@@ -59,17 +61,36 @@ body.nds-minimal[style*="--bg-img"] {
 
     color: var(--_link-color);
 
-    &:visited { color: var(--_link-visited); }
-    &:focus { color: var(--_link-focused); }
-    &:hover { color: var(--_link-hover); }
-    &:active { color: var(--_link-pressed); }
+    &:visited {
+        color: var(--_link-visited);
+    }
 
-    &.nds-primary {
+    &:focus {
+        color: var(--_link-focused);
+    }
+
+    &:hover {
+        color: var(--_link-hover);
+    }
+
+    &:active {
+        color: var(--_link-pressed);
+    }
+
+    &:is(.nds-primary, .nds-color) {
         --link-color: var(--link-primary);
         --link-hover: var(--link-primary-hovered);
         --link-pressed: var(--link-primary-pressed);
         --link-focused: var(--link-primary-focused);
         --link-visited: var(--link-primary-visited);
+    }
+
+    &.nds-oncolor {
+        --link-color: var(--link-oncolor);
+        --link-hover: var(--link-oncolor-hovered);
+        --link-pressed: var(--link-oncolor-pressed);
+        --link-focused: var(--link-oncolor-focused);
+        --link-visited: var(--link-oncolor-visited);
     }
 
     &.nds-underline {

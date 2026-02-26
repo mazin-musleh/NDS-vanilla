@@ -66,6 +66,7 @@
     }
 
     &.nds-brand {
+        --section-shadow: var(--shadow-inset);
         @include section-variant(var(--background-brand-light),
             var(--text-display),
             var(--text-default),
@@ -73,7 +74,7 @@
     }
 
     &:is(.nds-ghost, .noBg) {
-        @include reset-section-style;
+        @include reset-section-style(!important);
     }
 }
 
@@ -184,6 +185,7 @@
     gap: var(--spacing-sm);
     visibility: visible;
     position: relative;
+    z-index: 1;
 }
 
 /* ========================================

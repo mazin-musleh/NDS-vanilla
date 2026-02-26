@@ -222,7 +222,7 @@ main {
     /* === 3f. MODIFIER: Side menu layout === */
 
     &:is(.wSideMenu) {
-        .nds-main-content section {
+        .nds-content-section {
             @include desktop(min) {
                 --section-shadow: var(--shadow-md);
             }
