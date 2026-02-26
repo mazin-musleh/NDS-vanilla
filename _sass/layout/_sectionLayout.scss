@@ -30,7 +30,7 @@
         .nds-avatar {
             --avatar-size: 120px;
 
-            @include tablet(max) {
+            @include mobile {
                 --avatar-size: 80px;
             }
         }
@@ -157,7 +157,7 @@
     .nds-sideInfo {
         --card-padding: var(--spacing-4xl);
         width: var(--nds-sideInfo-width);
-        position: sticky;
+        position: static;
         top: calc(var(--nds-nav-height) + var(--spacing-md) + var(--nds-sideInfo-top) * -1);
         transform: translateY(calc(var(--nds-sideInfo-top, -180px) + var(--spacing-3xl)));
         margin-bottom: calc(var(--nds-sideInfo-top, -180px) + var(--spacing-3xl));

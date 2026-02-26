@@ -258,6 +258,7 @@
         setupResize() {
             this._offResize = NDS.onResize(() => {
                 this._cachedGap = null; // Invalidate gap cache on resize
+                this._measuredStep = null; // Invalidate step cache on resize
                 const oldSlidesPerView = this.slidesPerView;
                 this.updateSlidesPerView();
 
@@ -314,13 +315,12 @@
         }
 
         prev() {
-            const targetIndex = this.currentIndex - this.slidesPerView;
-            this.goTo(targetIndex);
+            // Snap to nearest page-aligned boundary going backward
+            this.goTo(Math.floor((this.currentIndex - 1) / this.slidesPerView) * this.slidesPerView);
         }
 
         next() {
-            const targetIndex = this.currentIndex + this.slidesPerView;
-            this.goTo(targetIndex);
+            this.goTo(this.currentIndex + this.slidesPerView);
         }
 
         goTo(index) {
@@ -330,20 +330,12 @@
             const targetSlide = this.slides[clampedIndex];
             if (!targetSlide) return;
 
-            // Calculate absolute scroll position using slide dimensions
-            const slideWidth = targetSlide.offsetWidth;
-            const gap = this.getGap();
-            const rtl = isRTL();
+            // Use offsetLeft difference from first slide — static DOM property,
+            // unaffected by scroll animation, accounts for wrapper padding
+            const offset = Math.abs(targetSlide.offsetLeft - this.slides[0].offsetLeft);
 
-            // Calculate target scroll position
-            let targetScrollLeft = clampedIndex * (slideWidth + gap);
-            if (rtl) {
-                targetScrollLeft = -targetScrollLeft;
-            }
-
-            // Use scrollTo with absolute position (like native scroll-snap)
             this.wrapper.scrollTo({
-                left: targetScrollLeft,
+                left: isRTL() ? -offset : offset,
                 behavior: 'smooth'
             });
         }
@@ -369,17 +361,18 @@
         detectCurrentSlide() {
             if (this.slides.length === 0) return;
 
-            // Use scroll position instead of getBoundingClientRect for each slide
-            const scrollLeft = this.wrapper.scrollLeft;
-            const slideWidth = this.slides[0].offsetWidth;
-            const gap = this.getGap();
+            // Measure actual step from DOM once (accounts for fractional widths + gap)
+            if (this.slides.length > 1 && !this._measuredStep) {
+                this._measuredStep = Math.abs(this.slides[1].offsetLeft - this.slides[0].offsetLeft);
+            }
 
-            // Calculate index from scroll position
-            const rtl = isRTL();
-            const scrollPos = rtl ? -scrollLeft : scrollLeft;
-            const newIndex = Math.round(scrollPos / (slideWidth + gap));
+            const step = this._measuredStep || (this.slides[0].offsetWidth + this.getGap()) || 1;
+            const scrollPos = isRTL() ? -this.wrapper.scrollLeft : this.wrapper.scrollLeft;
 
-            this.currentIndex = Math.max(0, Math.min(newIndex, this.slides.length - this.slidesPerView));
+            this.currentIndex = Math.max(0, Math.min(
+                Math.round(scrollPos / step),
+                this.slides.length - this.slidesPerView
+            ));
         }
 
         // ==============================================
@@ -575,12 +568,8 @@
         updateButtons() {
             const maxIndex = Math.max(0, this.slides.length - this.slidesPerView);
 
-            if (this.prevBtn) {
-                this.prevBtn.disabled = this.currentIndex <= 0;
-            }
-            if (this.nextBtn) {
-                this.nextBtn.disabled = this.currentIndex >= maxIndex;
-            }
+            if (this.prevBtn) this.prevBtn.disabled = this.currentIndex <= 0;
+            if (this.nextBtn) this.nextBtn.disabled = this.currentIndex >= maxIndex;
         }
 
         updateBoundaryClasses() {

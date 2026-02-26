@@ -45,6 +45,10 @@
   // Shadow variant
   &.nds-shadow {
     box-shadow: var(--shadow-md);
+
+    &:not(.nds-stroke) {
+      border: 1px solid var(--colors-neutral-100);
+    }
   }
 
   // Stroke variant
@@ -83,7 +87,7 @@
     gap: var(--_card-gap);
     width: 100%;
 
-    &:is(:has(.nds-close),.nds-row) {
+    &:is(:has(.nds-close), .nds-row) {
       flex-direction: row;
       justify-content: space-between;
     }

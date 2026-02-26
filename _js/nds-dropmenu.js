@@ -365,12 +365,9 @@
             const triggerRect = this.trigger.getBoundingClientRect();
             const triggerHeight = this.trigger.offsetHeight;
             const vh = window.innerHeight;
-            const cr = this.contentLayout?.getBoundingClientRect();
-            const boundsTop = Math.max(cr?.top ?? 0, 0);
-            const boundsBottom = Math.min(cr?.bottom ?? vh, vh);
 
-            const spaceBelow = boundsBottom - triggerRect.bottom;
-            const spaceAbove = triggerRect.top - boundsTop;
+            const spaceBelow = vh - triggerRect.bottom;
+            const spaceAbove = triggerRect.top;
 
             if (spaceBelow < spaceAbove && spaceBelow < 200) {
                 this.dropmenu.setAttribute('data-position-vertical', 'top');
