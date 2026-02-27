@@ -59,6 +59,22 @@ hr {
 
 }
 
+.nds-divider-text {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    color: var(--text-secondary-paragraph);
+    font-size: var(--nds-text-sm-FS);
+    line-height: var(--nds-text-sm-LH);
+
+    &::before,
+    &::after {
+        content: '';
+        flex: 1;
+        border-top: 1px solid var(--border-neutral-primary);
+    }
+}
+
 :is(h1, h2, h3, h4, h5, h6) {
     font-weight: 600;
     font-size: var(--nds-display-clamp-xs-FS);

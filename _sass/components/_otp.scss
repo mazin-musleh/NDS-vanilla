@@ -65,17 +65,19 @@
     // SIZES
     // ==============================================
 
+    
+
+    // Default (md)
+    .nds-otp-container {
+        --_otp-size: 40px;
+    }
+
     &.nds-sm .nds-otp-container {
         --_otp-size: 32px;
 
         .nds-form-control>input {
             font-size: var(--nds-text-md-FS);
         }
-    }
-
-    // Default (md)
-    .nds-otp-container {
-        --_otp-size: 40px;
     }
 
     &.nds-lg .nds-otp-container {

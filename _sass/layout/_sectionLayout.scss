@@ -163,10 +163,6 @@
         margin-bottom: calc(var(--nds-sideInfo-top, -180px) + var(--spacing-3xl));
         height: fit-content;
 
-        @include desktop(min) {
-            z-index: 996;
-        }
-
         @include tablet(max) {
             top: unset;
             transform: translateY(0px);

@@ -528,8 +528,8 @@
   &:is(.nds-icon-only, :has(i, img, svg):not(:has(span, p, div, h1, h2, h3, h4, h5, h6))) {
     justify-content: center;
     width: var(--btn-size);
-    padding: 0;
-
+    padding: 0 var(--spacing-md);
+    
     &.nds-menu-btn {
       width: fit-content;
       padding: 0 var(--spacing-lg);

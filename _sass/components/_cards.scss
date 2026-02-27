@@ -269,10 +269,9 @@
 // CARD FORM SECTION
 // ==============================================
 
-.nds-card-form {
+.nds-card-form:not([hidden]) {
   display: flex;
   flex-direction: column;
-  gap: var(--_card-gap);
   width: 100%;
 
 }
