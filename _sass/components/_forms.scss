@@ -1,10 +1,11 @@
 @use '../mixins' as *;
 
 .nds-form-container {
+    --_form-width: var(--form-width, 100%);
     display: flex;
     gap: var(--spacing-md);
     flex-direction: column;
-    width: 100%;
+    width: var(--_form-width);
 
     .nds-form-header {
 
@@ -171,7 +172,6 @@ fieldset {
     min-height: 40px;
     height: 40px;
     width: 100%;
-    min-width: 200px;
     justify-content: flex-start;
     align-items: center;
     padding: var(--spacing-none) var(--spacing-md);
@@ -375,7 +375,7 @@ fieldset {
         flex-direction: row-reverse;
         margin-inline-end: calc(var(--spacing-md) * -1);
 
-        &.before {
+        &:first-child {
             margin-inline-end: unset;
             margin-inline-start: calc(var(--spacing-md) * -1);
         }
@@ -384,7 +384,7 @@ fieldset {
             --nds-input-size: 38px;
             --btn-height: var(--nds-input-size);
             position: relative;
-            width: var(--nds-input-size);
+            /* width: var(--nds-input-size); */
             height: var(--nds-input-size);
             display: flex;
             align-items: center;

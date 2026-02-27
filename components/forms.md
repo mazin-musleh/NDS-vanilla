@@ -954,6 +954,76 @@ NDS.Forms.clearStatus(container);</code>
   </div>
 </section>
 
+<!-- HTML Attributes Reference -->
+<section id="htmlAttributes" class="nds-content-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">HTML Attributes Reference</h2>
+      <p class="nds-section-description">Data attributes used on form containers and their children</p>
+    </div>
+    <div class="nds-section-content">
+      <div class="nds-content-block">
+        <h3 class="nds-block-title">Container Attributes</h3>
+        <table class="nds-table nds-sm nds-stroke">
+          <thead>
+            <tr>
+              <th>Attribute</th>
+              <th>Element</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>data-required</td>
+              <td>.nds-form-container</td>
+              <td>Marks the field as required. Auto-adds required and aria-required="true" to the input, and appends a * indicator to the label.</td>
+            </tr>
+            <tr>
+              <td>data-status</td>
+              <td>.nds-form-container</td>
+              <td>Current validation status: error, success, warning, info. Set automatically by the Status API or form validation.</td>
+            </tr>
+            <tr>
+              <td>data-state</td>
+              <td>.nds-form-container</td>
+              <td>Space-separated interaction states: focus, active, typing, disabled. Managed automatically by the forms JS.</td>
+            </tr>
+            <tr>
+              <td>data-feedback-target</td>
+              <td>Any child of .nds-form-container</td>
+              <td>Redirects where feedback messages are appended. Used by the forms Status API (NDS.Forms.setStatus) and form validation — not by NDSFeedback.create(), which accepts a target option directly. Typically used on .nds-form-footer. Use with hidden attribute to auto-show/hide the element when feedback appears/clears.</td>
+            </tr>
+            <tr>
+              <td>data-error-message</td>
+              <td>input, textarea, select</td>
+              <td>Custom validation error message. Overrides the default auto-generated message when the field fails validation.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="nds-content-block">
+        <h3 class="nds-block-title">Feedback Attributes</h3>
+        <table class="nds-table nds-sm nds-stroke">
+          <thead>
+            <tr>
+              <th>Attribute</th>
+              <th>Element</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>data-permanent</td>
+              <td>.nds-feedback</td>
+              <td>Marks the feedback as permanent (e.g. tips, hints). When a validation error appears, permanent feedback is hidden instead of removed. When the error is cleared, permanent feedback is automatically restored.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     // Form Status API demo

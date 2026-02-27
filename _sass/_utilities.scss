@@ -35,37 +35,39 @@ $all-spacers: $spacers;
 
 // Base flex direction classes (mobile-first) with sm aliases
 // Primary directions: row and col (most common)
-// Pattern: .flex-{direction}-{size} - Size comes last
-:is(.flex-row, .flex-row-sm) {
+// Pattern: .nds-{direction}-{size} - Size comes last
+:is(.nds-row, .nds-row-sm) {
   flex-direction: row;
 }
 
-:is(.flex-col, .flex-col-sm) {
+:is(.nds-col, .nds-col-sm) {
   flex-direction: column;
 }
 
 // Reverse directions (base only - use inline styles for responsive reverse if needed)
-.flex-row-reverse {
+.nds-row-reverse {
   flex-direction: row-reverse;
 }
 
-.flex-col-reverse {
+.nds-col-reverse {
   flex-direction: column-reverse;
 }
 
 // Wrap utilities (base only - use inline styles for responsive wrap if needed)
-.flex-wrap {
+.nds-wrap {
   flex-wrap: wrap;
 }
 
-.flex-nowrap {
+.nds-nowrap {
   flex-wrap: nowrap;
 }
 
 // Responsive flex direction classes using responsive breakpoints only (excludes sm)
 // Only includes row/col (most common use cases), excludes reverse/wrap/nowrap to reduce CSS
-// Pattern: .flex-{direction}-{breakpoint} - Size (breakpoint) comes last
+// Pattern: .nds-{direction}-{breakpoint} - Size (breakpoint) comes last
 // Note: Alignment utilities now use range-based breakpoints (see ALIGNMENT UTILITIES section)
+
+
 @each $breakpoint, $query in $breakpoints-responsive {
   @media #{$query} {
     .flex-row-#{$breakpoint} {

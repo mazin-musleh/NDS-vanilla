@@ -228,7 +228,7 @@
             padding: 0;
             border-radius: 0;
             transform: translateX(0px) !important;
-            z-index: 899;
+            z-index: 900;
 
             #sideMenuToggle {
                 --btn-width: 100%;
@@ -242,7 +242,7 @@
                 position: relative;
                 top: unset;
                 --toggle-transform: unset;
-                z-index: 900;
+                z-index: 1;
 
 
 
@@ -265,7 +265,6 @@
                 background-color: var(--background-white);
                 box-shadow: var(--shadow-md);
                 padding: var(--spacing-md);
-                z-index: 2;
                 border-radius: 0 0 var(--radius-md) var(--radius-md);
                 transform: translateY(-110%);
                 transition: transform var(--nds-transition);

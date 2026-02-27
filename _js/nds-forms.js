@@ -651,14 +651,14 @@
             if (input._ndsInitialized) return;
             input._ndsInitialized = true;
 
-            // Auto-add required attribute to input if container has data-required attribute
+            // Remember original type for password fields
+            if (input.type === 'password') input.dataset.type = 'password';
+
+            // Auto-add required and aria-required if container has data-required attribute
             var formContainer = formControl.closest('.nds-form-container');
-            if (formContainer && formContainer.hasAttribute('data-required') && !input.hasAttribute('required')) {
-                input.setAttribute('required', '');
-            }
-            // Legacy: also check for nds-required class
-            if (formContainer && formContainer.classList.contains('nds-required') && !input.hasAttribute('required')) {
-                input.setAttribute('required', '');
+            if (formContainer && (formContainer.hasAttribute('data-required') || formContainer.classList.contains('nds-required'))) {
+                if (!input.hasAttribute('required')) input.setAttribute('required', '');
+                input.setAttribute('aria-required', 'true');
             }
 
             // Mouse interaction - use data-state on container
@@ -688,7 +688,9 @@
                     FormState.updateDataState(formContainer, 'focus', false);
                     FormState.updateDataState(formContainer, 'typing', false);
                 }
-                FormState.update(input, formControl);
+                // Only validate on blur if field already has an error (to clear it when fixed)
+                var hasError = formContainer && formContainer.getAttribute('data-status') === 'error';
+                FormState.update(input, formControl, !hasError);
             });
 
             // Typing state - indicates real user input
@@ -706,6 +708,20 @@
 
             // Input changes - clear errors but don't validate while typing
             input.addEventListener('input', function() {
+                // Strip Arabic characters from password fields
+                if (input.type === 'password' || input.dataset.type === 'password') {
+                    var cleaned = input.value.replace(/[\u0600-\u06FF]/g, '');
+                    if (cleaned !== input.value) {
+                        input.value = cleaned;
+                        var fc = formControl.closest('.nds-form-container');
+                        if (fc) {
+                            var msg = Utils.isArabic() ? 'الأحرف العربية غير مسموح بها' : 'Arabic characters are not allowed';
+                            StatusManager.set({ element: fc, status: 'error', message: msg });
+                        }
+                        return;
+                    }
+                }
+
                 FormState.update(input, formControl, true);
 
                 var formContainer = formControl.closest('.nds-form-container');
@@ -723,9 +739,10 @@
                 }
             });
 
-            // Change event
+            // Change event - update state only, validate on submit
             input.addEventListener('change', function() {
-                FormState.update(input, formControl);
+                var hasError = formContainer && formContainer.getAttribute('data-status') === 'error';
+                FormState.update(input, formControl, !hasError);
                 FormState.updateRadioGroup(input);
 
                 // Auto-clear indeterminate on user interaction
@@ -1327,6 +1344,7 @@
         var form = formElement.closest('.nds-form') || formElement;
         if (!form || form._ndsFormInitialized) return;
         form._ndsFormInitialized = true;
+        form.setAttribute('novalidate', '');
 
         form.addEventListener('submit', function(e) {
             var result = Validator.validateForm(form, { showMessages: true, focusFirst: true });

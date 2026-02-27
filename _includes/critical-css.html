@@ -126,11 +126,8 @@
         gap: var(--card-gap, var(--spacing-3xl, 24px));
     }
 
-    .nds-card .nds-card-header,
-    .nds-card .nds-card-content,
-    .nds-card .nds-card-text,
-    .nds-card .nds-card-meta,
-    .nds-card-form {
+    .nds-card :not([hidden]):is(.nds-card-header, .nds-card-content, .nds-card-text, .nds-card-meta),
+    .nds-card-form:not([hidden]) {
         display: flex;
         flex-direction: column;
         width: 100%;
@@ -197,7 +194,6 @@
         position: absolute;
         inset: 0;
         background: linear-gradient(0deg, rgba(9, 42, 30, var(--_overlay)) 0%, rgba(9, 42, 30, var(--_overlay)) 100%);
-        z-index: 2;
         pointer-events: none;
     }
 
@@ -256,7 +252,6 @@
         width: 100%;
         height: 100%;
         position: relative;
-        z-index: 1;
     }
 
     .nds-swiper.nds-hero .nds-swiper-slide {
