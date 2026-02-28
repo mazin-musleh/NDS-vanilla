@@ -427,17 +427,3 @@ textarea {
   --section-border: none $important;
   --section-border-radius: 0 $important;
 }
-
-@mixin section-variant($background, $title-color, $description-color, $text-color) {
-  --section-bg: #{$background};
-  color: $text-color;
-
-  .nds-section-title {
-    color: $title-color;
-  }
-
-  .nds-section-description {
-    color: $description-color;
-  }
-  
-}

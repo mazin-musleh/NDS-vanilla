@@ -33,11 +33,11 @@ direction: ltr
                                 data-toggler='["data-state=always-open", ".nds-accordion", "accordionBehavior", "attr"]'>
                                 <span class="label">Always Open</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
                                 data-toggler='["nds-lg", ".nds-accordion", "sizeToggle"]'>
                                 <span class="label">LG</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-md", ".nds-accordion", "sizeToggle"]'>
                                 <span class="label">MD</span>
                             </button>
@@ -204,11 +204,11 @@ direction: ltr
                                 data-toggler='["data-state=always-open", ".nds-accordion", "accordionBehavior", "attr"]'>
                                 <span class="label">Always Open</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
                                 data-toggler='["nds-lg", ".nds-accordion", "sizeToggle"]'>
                                 <span class="label">LG</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-md", ".nds-accordion", "sizeToggle"]'>
                                 <span class="label">MD</span>
                             </button>

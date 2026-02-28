@@ -9,7 +9,7 @@
 // RADIO CONTAINER
 // ==============================================
 
-.nds-form-container.nds-radio-container {
+.nds-form-container.nds-radio-container:not([hidden]) {
     --nds-input-size: 16px;
     display: flex;
     gap: var(--spacing-md);

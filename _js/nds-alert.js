@@ -89,7 +89,7 @@
                     </span>
                 </span>
                 <div class="nds-alert-content">
-                    ${title ? `<h4 class="nds-alert-title">${title}</h4>` : ''}
+                    ${title ? `<span class="nds-alert-title">${title}</span>` : ''}
                     ${description ? `<p class="nds-alert-description">${description}</p>` : ''}
                     ${actionsHtml}
                 </div>

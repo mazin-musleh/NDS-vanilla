@@ -9,7 +9,7 @@
 // CHECKBOX CONTAINER
 // ==============================================
 
-.nds-form-container.nds-check-container {
+.nds-form-container.nds-check-container:not([hidden]) {
     --nds-input-size: 16px;
     display: flex;
     gap: var(--spacing-md);

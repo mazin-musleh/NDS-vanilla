@@ -626,7 +626,7 @@
                 updatedCode = updatedCode.replace(/data-status="[^"]*"/, `data-status="${variant}"`);
 
                 // Update title
-                updatedCode = updatedCode.replace(/(<h4 class="nds-alert-title">)[^<]+(<\/h4>)/, `$1${capitalizedVariant}$2`);
+                updatedCode = updatedCode.replace(/(<span class="nds-alert-title">)[^<]+(<\/span>)/, `$1${capitalizedVariant}$2`);
 
                 // Update description
                 if (messages[variant]) {
@@ -938,7 +938,7 @@
                 let updatedCode = hiddenCopy.textContent;
                 // Update title
                 updatedCode = updatedCode.replace(
-                    /(<h4 class="nds-alert-title">)[^<]+(<\/h4>)/,
+                    /(<span class="nds-alert-title">)[^<]+(<\/span>)/,
                     `$1${capitalizedVariant}$2`
                 );
                 // Update description
