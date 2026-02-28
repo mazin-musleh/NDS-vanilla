@@ -27,8 +27,8 @@ body[data-font-loaded*="hgi-stroke-rounded"] {
 
 body.nds-minimal[style*="--bg-img"] {
     background:
-        linear-gradient(color-mix(in srgb, var(--background-body) var(--bg-opacity, 80%), transparent),
-            color-mix(in srgb, var(--background-body) var(--bg-opacity, 80%), transparent)),
+        linear-gradient(color-mix(in srgb, var(--background-body) var(--bg-opacity-top, 80%), transparent),
+            color-mix(in srgb, var(--background-body) var(--bg-opacity-bottom, 80%), transparent)),
         var(--bg-img) center / cover no-repeat fixed;
 }
 
@@ -49,9 +49,8 @@ body.nds-minimal[style*="--bg-img"] {
     cursor: pointer;
 }
 
-:is(.nds-link, a):not(.nds-btn) {
+:is(.nds-link, a):not(.nds-btn, .nds-card) {
     display: inline-flex;
-    width: fit-content;
     
     --_link-color: var(--link-color, var(--link-neutral));
     --_link-hover: var(--link-hover, var(--link-neutral-hovered));

@@ -37,20 +37,23 @@
     padding-inline: 0;
     margin-block-start: var(--_section-margin-block-start);
     margin-block-end: var(--_section-margin-block-end);
+    color: var(--_section-text-color);
 
     &:is(.nds-primary, .nds-green) {
-        @include section-variant(var(--colors-green-900),
-            var(--text-oncolor-primary),
-            var(--text-oncolor-secondary),
-            var(--text-oncolor-secondary));
+        --section-bg: var(--colors-green-900);
+        --section-title-color: var(--text-oncolor-primary);
+        --section-subtitle-color: var(--text-oncolor-secondary);
+        --section-description-color: var(--text-oncolor-secondary);
+        --section-text-color: var(--text-oncolor-secondary);
     }
 
     &.nds-gradient-green {
-        --_gradient-angle: var(--gradient-angle,-45deg);
-        @include section-variant(var(--colors-green-900),
-            var(--text-oncolor-primary),
-            var(--text-oncolor-secondary),
-            var(--text-oncolor-secondary));
+        --_gradient-angle: var(--gradient-angle, -45deg);
+        --section-bg: var(--colors-green-900);
+        --section-title-color: var(--text-oncolor-primary);
+        --section-subtitle-color: var(--text-oncolor-secondary);
+        --section-description-color: var(--text-oncolor-secondary);
+        --section-text-color: var(--text-oncolor-secondary);
         background: linear-gradient(var(--_gradient-angle), var(--colors-primary-sa-flag-900), var(--colors-primary-sa-flag-600));
 
         @include ltr {
@@ -59,18 +62,20 @@
     }
 
     &.nds-neutral {
-        @include section-variant(var(--colors-neutral-900),
-            var(--text-oncolor-primary),
-            var(--text-oncolor-secondary),
-            var(--text-oncolor-secondary));
+        --section-bg: var(--colors-neutral-900);
+        --section-title-color: var(--text-oncolor-primary);
+        --section-subtitle-color: var(--text-oncolor-secondary);
+        --section-description-color: var(--text-oncolor-secondary);
+        --section-text-color: var(--text-oncolor-secondary);
     }
 
     &.nds-brand {
         --section-shadow: var(--shadow-inset);
-        @include section-variant(var(--background-brand-light),
-            var(--text-display),
-            var(--text-default),
-            var(--text-default));
+        --section-bg: var(--background-brand-light);
+        --section-title-color: var(--text-display);
+        --section-subtitle-color: var(--text-default);
+        --section-description-color: var(--text-default);
+        --section-text-color: var(--text-default);
     }
 
     &:is(.nds-ghost, .noBg) {
@@ -87,9 +92,19 @@
     --_section-title-FS: var(--section-title-FS, var(--nds-display-clamp-md-FS, clamp(24px, 3vw, 36px)));
     --_section-title-LH: var(--section-title-LH, var(--nds-display-clamp-md-LH, clamp(30px, 3.67vw, 44px)));
     --_section-title-MB: var(--section-title-MB, var(--nds-display-clamp-md-MB, clamp(7.5px, 0.9175vw, 11px)));
+    --_section-subtitle-FS: var(--section-subtitle-FS, var(--nds-text-clamp-lg-FS, clamp(16px, 1.5vw, 18px)));
+    --_section-subtitle-LH: var(--section-subtitle-LH, var(--nds-text-clamp-lg-LH, clamp(24px, 2.17vw, 26px)));
+    --_section-subtitle-MB: var(--section-subtitle-MB, var(--_section-title-MB));
     --_section-description-FS: var(--section-description-FS, var(--nds-text-clamp-lg-FS, clamp(16px, 1.5vw, 18px)));
     --_section-description-LH: var(--section-description-LH, var(--nds-text-clamp-lg-LH, clamp(24px, 2.17vw, 26px)));
     --_section-description-MB: var(--section-description-MB, var(--spacing-2xl, 20px));
+    --_section-image-MB: var(--section-image-MB, var(--spacing-2xl, 20px));
+
+    /* Section color overridable tokens */
+    --_section-title-color: var(--section-title-color, var(--text-display, #1f2a37));
+    --_section-subtitle-color: var(--section-subtitle-color, var(--text-secondary-paragraph));
+    --_section-description-color: var(--section-description-color, var(--text-default, #161616));
+    --_section-text-color: var(--section-text-color, inherit);
 }
 
 /* ========================================
@@ -118,12 +133,30 @@
     line-height: var(--_section-title-LH);
     letter-spacing: -0.02rem;
     font-weight: bold;
-    color: var(--text-display, #1f2a37);
+    color: var(--_section-title-color);
 
     &:not(:last-child) {
         margin-bottom: var(--_section-title-MB);
     }
 
+}
+
+/* ========================================
+   SECTION SUBTITLE
+   ======================================== */
+
+.nds-section-subtitle {
+    font-size: var(--_section-subtitle-FS);
+    line-height: var(--_section-subtitle-LH);
+    font-weight: 500;
+    letter-spacing: -0.01rem;
+    color: var(--_section-subtitle-color);
+    margin-block-start: 0;
+    max-width: var(--maxwidth-paragraph-max-width, 720px);
+
+    &:not(:last-child) {
+        margin-bottom: var(--_section-subtitle-MB);
+    }
 }
 
 /* ========================================
@@ -133,12 +166,33 @@
 .nds-section-description {
     font-size: var(--_section-description-FS);
     line-height: var(--_section-description-LH);
-    color: var(--text-default, #161616);
+    color: var(--_section-description-color);
     margin-block-start: 0;
     max-width: var(--maxwidth-paragraph-max-width, 720px);
 
     &:not(:last-child) {
         margin-bottom: var(--_section-description-MB);
+    }
+}
+
+/* ========================================
+   SECTION IMAGE
+   ======================================== */
+
+.nds-section-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    &:not(:last-child) {
+        margin-bottom: var(--_section-image-MB);
     }
 }
 

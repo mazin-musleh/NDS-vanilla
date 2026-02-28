@@ -17,6 +17,11 @@
             init: () => window.NDS?.Forms?.init?.(),
         },
         {
+            name: 'otp',
+            selector: '.nds-otp-group',
+            init: () => window.NDS?.OTP?.init?.(),
+        },
+        {
             name: 'tabs',
             selector: '.nds-tabs',
             init: () => window.NDSTabs?.init?.(),
@@ -40,11 +45,6 @@
             name: 'swiper',
             selector: '.nds-swiper',
             init: () => window.NDSSwiper?.init?.(),
-        },
-        {
-            name: 'otp',
-            selector: '.nds-otp-group',
-            init: () => window.NDS?.OTP?.init?.(),
         },
         {
             name: 'fileUpload',
@@ -293,6 +293,9 @@
                     '[hidden].nds-tabs, ' +
                     '[hidden].nds-drawer, ' +
                     '[hidden].nds-breadcrumb-nav, ' +
+                    '[hidden].nds-form-group, ' +
+                    '[hidden].nds-form-container, ' +
+                    '[hidden].nds-form-action, ' +
                     '[hidden].nds-user-feedback, ' +
                     '[hidden].nds-dropmenu-menu, ' +
                     '[hidden].nds-nav-container, ' +

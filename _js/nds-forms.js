@@ -424,6 +424,33 @@
             return { valid: isValid, selected: isSelected, message: message };
         },
 
+        validateOtpGroup: function(groupElement, options) {
+            options = options || { showMessage: true };
+
+            var group = groupElement.closest('.nds-form-group') || groupElement;
+            var inputs = Array.from(group.querySelectorAll('.nds-otp-container input'));
+            var isAllFilled = inputs.length > 0 && inputs.every(function(i) { return i.value.length === 1; });
+
+            var isRequired = group.hasAttribute('data-required') || group.classList.contains('nds-required');
+            var isValid = !isRequired || isAllFilled;
+            var message = '';
+            var isArabic = Utils.isArabic();
+
+            if (!isValid) {
+                message = isArabic ? 'يرجى إدخال رمز التحقق' : 'Please enter the verification code';
+            }
+
+            var customMessage = group.getAttribute('data-error-message');
+            if (!isValid && customMessage) message = customMessage;
+
+            if (options.showMessage) {
+                if (!isValid) StatusManager.set({ element: group, status: 'error', message: message });
+                else StatusManager.clear(group);
+            }
+
+            return { valid: isValid, filled: isAllFilled, message: message };
+        },
+
         validateForm: function(formElement, options) {
             options = options || { showMessages: true, focusFirst: true };
 
@@ -458,6 +485,9 @@
                 // Skip hidden containers
                 if (!isVisible(container)) return;
 
+                // Skip OTP containers — validated as a group below
+                if (container.classList.contains('nds-otp-container')) return;
+
                 var input = container.querySelector('input, textarea, select');
                 if (!input || input.disabled) return;
 
@@ -484,7 +514,15 @@
                 var hasCheckboxes = group.querySelector('input[type="checkbox"]');
                 var hasRadios = group.querySelector('input[type="radio"]');
 
-                if (hasCheckboxes) {
+                if (group.classList.contains('nds-otp-group')) {
+                    var result = Validator.validateOtpGroup(group, { showMessage: options.showMessages });
+                    if (!result.valid) {
+                        invalidFields.push(group);
+                        var otpFirst = group.querySelector('.nds-otp-container input');
+                        errors.push({ field: group, input: otpFirst, message: result.message });
+                        if (!firstInvalidInput) firstInvalidInput = otpFirst;
+                    }
+                } else if (hasCheckboxes) {
                     var result = Validator.validateCheckboxGroup(group, { showMessage: options.showMessages });
                     if (!result.valid) {
                         invalidFields.push(group);
@@ -705,6 +743,13 @@
                     FormState.updateDataState(formContainer, 'typing', true);
                 }
             });
+
+            // Numeric-only enforcement for inputmode="numeric"
+            if (input.getAttribute('inputmode') === 'numeric') {
+                input.addEventListener('beforeinput', function(e) {
+                    if (e.data && /\D/.test(e.data)) e.preventDefault();
+                });
+            }
 
             // Input changes - clear errors but don't validate while typing
             input.addEventListener('input', function() {
@@ -1534,6 +1579,14 @@
             : Array.from(container.querySelectorAll('.nds-form'));
 
         forms.forEach(initForm);
+
+        // Restore autofocus — browser native autofocus may be lost during init
+        var autofocusEl = container.querySelector('input[autofocus], textarea[autofocus], select[autofocus]');
+        if (autofocusEl) {
+            autofocusEl.focus();
+            var fc = autofocusEl.closest('.nds-form-container');
+            if (fc) FormState.updateDataState(fc, 'focus', true);
+        }
     }
 
     // ==============================================
@@ -1579,6 +1632,9 @@
         // Radio Group Validation
         validateRadioGroup: Validator.validateRadioGroup.bind(Validator),
         initRadioGroupValidation: initRadioGroupValidation,
+
+        // OTP Group Validation
+        validateOtpGroup: Validator.validateOtpGroup.bind(Validator),
 
         // Form Validation
         validateForm: Validator.validateForm.bind(Validator),

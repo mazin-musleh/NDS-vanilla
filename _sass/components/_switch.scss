@@ -9,7 +9,7 @@
 // SWITCH CONTAINER
 // ==============================================
 
-.nds-form-container.nds-switch-container {
+.nds-form-container.nds-switch-container:not([hidden]) {
     --nds-input-size: 20px;
     --switch-width: 48px;
     --switch-height: 24px;

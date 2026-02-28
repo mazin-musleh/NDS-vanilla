@@ -50,7 +50,7 @@
         var inputs = getOtpInputs(group);
         var last = startIndex || 0;
 
-        for (var i = 0; i < digits.length && (last + i) < inputs.length; i++) {
+        for (var i = 0; i < digits.length && (startIndex + i) < inputs.length; i++) {
             inputs[startIndex + i].value = digits[i];
             last = startIndex + i;
         }
@@ -234,6 +234,10 @@
             input.addEventListener('click', function (e) { handleClick(e, group); });
             input.addEventListener('focus', handleFocus);
         });
+
+        // Restore autofocus — browser native autofocus may be lost due to staggered init
+        var autofocusInput = group.querySelector('input[autofocus]');
+        if (autofocusInput) autofocusInput.focus();
     }
 
     // ==============================================

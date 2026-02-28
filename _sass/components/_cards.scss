@@ -131,7 +131,7 @@
   // CARD CONTENT SECTION
   // ==============================================
 
-  .nds-card-content {
+  .nds-card-content:not([hidden]) {
     display: flex;
     flex-direction: column;
     gap: var(--_card-gap);
@@ -139,7 +139,7 @@
     flex: 1;
   }
 
-  .nds-card-text {
+  .nds-card-text:not([hidden]) {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-md, 8px);
@@ -176,7 +176,7 @@
     }
   }
 
-  .nds-card-meta {
+  .nds-card-meta:not([hidden]) {
     display: flex;
     flex-direction: column;
     gap: var(--_card-gap);
@@ -187,7 +187,7 @@
   // CARD TAGS SECTION
   // ==============================================
 
-  .nds-card-tags {
+  .nds-card-tags:not([hidden]) {
     display: flex;
     flex-wrap: wrap;
     gap: var(--spacing-md, 8px);
@@ -198,7 +198,7 @@
   // CARD RATING SECTION
   // ==============================================
 
-  .nds-card-rating {
+  .nds-card-rating:not([hidden]) {
     display: flex;
     align-items: center;
     gap: var(--spacing-xs, 4px);
@@ -239,7 +239,7 @@
   // CARD ACTIONS SECTION
   // ==============================================
 
-  .nds-card-actions {
+  .nds-card-actions:not([hidden]) {
     display: flex;
     gap: var(--spacing-xl, 16px);
     align-items: flex-start;

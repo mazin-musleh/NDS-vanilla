@@ -7,7 +7,6 @@
         --nds-sideMenu-toggle-height: 56px;
         --nds-sideInfo-width: 400px;
         --nds-minimal-nav-bp: 960px;
-        --nds-dropdown-safeZone: 24px;
         --nds-content-MaxWidth: 1280px;
         --nds-viewport-base-padding: 32px;
         --nds-transition-speed: .2;
@@ -48,6 +47,11 @@
         height: auto;
     }
 
+    .nds-main-nav .nds-brand {
+        height: var(--nds-nav-height);
+        padding: var(--spacing-lg, 12px) 0;
+    }
+
     .nds-brand-logo {
         height: 100%;
     }
@@ -80,7 +84,7 @@
         z-index: 1000;
     }
 
-    .nds-topbar > *,
+    .nds-topbar>*,
     #nds-digitalStamp {
         display: none;
     }
@@ -148,12 +152,19 @@
         flex: 1;
     }
 
-    .nds-card .nds-card-actions {
+    .nds-card .nds-card-actions:not([hidden]) {
         display: flex;
         width: 100%;
         margin-top: auto;
     }
 
+
+    .nds-feedback-icon{
+        display: inline-flex;
+        width: 40px;
+        height: 40px;
+
+    }
     /* ===== BREADCRUMB ===== */
     .nds-breadcrumb,
     .nds-breadcrumb li {
@@ -172,14 +183,14 @@
         position: relative;
         background-position: 50% 50%;
         --section-padding-block: 0;
+        max-height: 550px;
     }
 
     .nds-hero-section:not(.sub) {
         overflow: hidden;
         aspect-ratio: 16 / 9;
-        height: 550px;
+        height: 60svh;
         min-height: 400px;
-        max-height: 60svh;
     }
 
     /* Hero image & overlay */

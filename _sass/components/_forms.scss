@@ -1,6 +1,6 @@
 @use '../mixins' as *;
 
-.nds-form-container {
+.nds-form-container:not([hidden]) {
     --_form-width: var(--form-width, 100%);
     display: flex;
     gap: var(--spacing-md);
@@ -369,7 +369,7 @@ fieldset {
         color: var(--form-field-text-placeholder);
     }
 
-    .nds-form-action {
+    .nds-form-action:not([hidden]) {
         display: flex;
         gap: var(--spacing-sm);
         flex-direction: row-reverse;
