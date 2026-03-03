@@ -1,0 +1,268 @@
+@use '../mixins' as *;
+
+// ── Chart Colors (CSS-controlled) ─────────────────────────────
+// Override these custom properties to theme chart colors.
+// JS reads them at render time via getComputedStyle.
+
+.nds-chart {
+    // Bar defaults (sa-flag-600, sa-flag-400, neutral-200)
+    --nds-chart-color-1: var(--colors-primary-sa-flag-600, #1B8354);
+    --nds-chart-color-2: var(--colors-primary-sa-flag-400, #54C08A);
+    --nds-chart-color-3: var(--colors-neutral-200, #E5E7EB);
+    --nds-chart-color-4: var(--colors-primary-sa-flag-500, #25935f);
+    --nds-chart-color-5: var(--colors-primary-sa-flag-200, #B8EACB);
+    --nds-chart-color-6: var(--colors-primary-sa-flag-800, #14573A);
+    --nds-chart-area-opacity: 0.1;
+
+    position: relative;
+    width: 100%;
+    min-height: 200px;
+    font-family: var(--nds-font-family, 'IBM Plex Sans Arabic', sans-serif);
+}
+
+// Pie / Donut palette (sa-flag-600, 500, 400, 200, 800, 900)
+.nds-chart[data-chart-type="pie"],
+.nds-chart[data-chart-type="donut"] {
+    --nds-chart-color-1: var(--colors-primary-sa-flag-600, #1B8354);
+    --nds-chart-color-2: var(--colors-primary-sa-flag-500, #25935f);
+    --nds-chart-color-3: var(--colors-primary-sa-flag-400, #54C08A);
+    --nds-chart-color-4: var(--colors-primary-sa-flag-200, #B8EACB);
+    --nds-chart-color-5: var(--colors-primary-sa-flag-800, #14573A);
+    --nds-chart-color-6: var(--colors-primary-sa-flag-900, #104631);
+}
+
+// Line palette (sa-flag-900, 600, 200)
+.nds-chart[data-chart-type="line"] {
+    --nds-chart-color-1: var(--colors-primary-sa-flag-900, #104631);
+    --nds-chart-color-2: var(--colors-primary-sa-flag-600, #1B8354);
+    --nds-chart-color-3: var(--colors-primary-sa-flag-200, #B8EACB);
+    --nds-chart-color-4: var(--colors-primary-sa-flag-500, #25935f);
+    --nds-chart-color-5: var(--colors-primary-sa-flag-400, #54C08A);
+    --nds-chart-color-6: var(--colors-primary-sa-flag-800, #14573A);
+}
+
+// ── Chart Canvas ──────────────────────────────────────────────
+
+.nds-chart-canvas {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+}
+
+// ── SVG ────────────────────────────────────────────────────────
+
+.nds-chart-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+// ── Grid Lines ─────────────────────────────────────────────────
+
+.nds-chart-gridline {
+    stroke: var(--border-neutral-secondary, #E5E7EB);
+    stroke-width: 1;
+    stroke-dasharray: 4 4;
+}
+
+// ── Axis Labels ────────────────────────────────────────────────
+
+.nds-chart-axis-label {
+    fill: var(--text-primary-paragraph, #384250);
+    font-size: var(--nds-text-sm-FS);
+    font-family: inherit;
+}
+
+// ── Chart Body (y-title + canvas side by side) ─────────────────
+
+.nds-chart-body {
+    display: flex;
+    align-items: center;
+}
+
+// ── Axis Titles (DOM elements) ─────────────────────────────────
+
+.nds-chart-axis-title {
+    color: var(--text-primary-paragraph, #384250);
+    font-size: var(--nds-text-sm-FS);
+    font-weight: 600;
+    font-family: inherit;
+    white-space: nowrap;
+
+    &--y {
+        writing-mode: vertical-lr;
+        transform: rotate(180deg);
+        flex-shrink: 0;
+    }
+
+    &--x {
+        text-align: center;
+        padding-block-start: var(--spacing-xl);
+    }
+}
+
+// ── Bars ───────────────────────────────────────────────────────
+
+.nds-chart-bar {
+    transition: opacity 0.2s ease;
+    cursor: pointer;
+
+    &--active {
+        opacity: 0.8;
+    }
+}
+
+// ── Pie / Donut Slices ─────────────────────────────────────────
+
+.nds-chart-slice {
+    transition: opacity 0.2s ease;
+    cursor: pointer;
+
+    &--active {
+        opacity: 0.85;
+    }
+}
+
+.nds-chart-pie-label {
+    fill: #fff;
+    font-size: var(--nds-text-sm-FS);
+    font-weight: 600;
+    font-family: inherit;
+    pointer-events: none;
+}
+
+// ── Line / Area ────────────────────────────────────────────────
+
+.nds-chart-line {
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.nds-chart-area {
+    // area fill color set via JS
+}
+
+.nds-chart-area-top {
+    stop-color: #fff;
+    stop-opacity: var(--nds-chart-area-opacity, 0.1);
+}
+
+.nds-chart-area-bottom {
+    stop-color: #fff;
+    stop-opacity: 0;
+}
+
+.nds-chart-dot {
+    transition: r 0.15s ease;
+    pointer-events: none;
+
+    &--active {
+        r: 6;
+    }
+}
+
+.nds-chart-dot-hit {
+    cursor: pointer;
+}
+
+// ── Data Labels ────────────────────────────────────────────────
+
+.nds-chart-data-label {
+    fill: var(--text-default, #111827);
+    font-size: var(--nds-text-sm-FS);
+    font-weight: 600;
+    font-family: inherit;
+}
+
+// ── Legend ──────────────────────────────────────────────────────
+
+.nds-chart-legend {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xl);
+    padding:  var(--spacing-md) 0;
+}
+
+.nds-chart-legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.nds-chart-legend-marker {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.nds-chart-legend-label {
+    font-size: var(--nds-text-sm-FS);
+    color: var(--text-default, #111827);
+}
+
+// ── Tooltip ────────────────────────────────────────────────────
+
+.nds-chart-tooltip {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    padding: 8px 12px;
+    background: var(--background-primary-white, #fff);
+    border: 1px solid var(--border-neutral-secondary, #E5E7EB);
+    border-radius: var(--radius-md, 8px);
+    box-shadow: var(--shadow-md, 0 4px 12px rgba(0, 0, 0, 0.1));
+    font-size: var(--nds-text-sm-FS);
+    line-height: var(--nds-text-sm-LH);
+    color: var(--text-default, #111827);
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.15s ease;
+    white-space: nowrap;
+
+    &--visible {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+// ── Responsive ─────────────────────────────────────────────────
+
+@include mobile {
+    .nds-chart-legend {
+        gap: 10px;
+    }
+
+    .nds-chart-legend-label {
+        font-size: 12px;
+    }
+
+    .nds-chart-axis-label {
+        font-size: 10px;
+    }
+}
+
+// ── Accessibility ──────────────────────────────────────────────
+
+@include reduced-motion {
+    .nds-chart-bar,
+    .nds-chart-slice,
+    .nds-chart-dot,
+    .nds-chart-tooltip {
+        transition: none;
+    }
+}
+
+@include print-media {
+    .nds-chart-tooltip {
+        display: none;
+    }
+
+    .nds-chart-area {
+        opacity: 0.2;
+    }
+}

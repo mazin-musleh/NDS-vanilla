@@ -1,0 +1,792 @@
+/**
+ * NDS Chart Component — Vanilla SVG Charts
+ * Supports: bar, line, pie, donut
+ * Zero external dependencies
+ * Colors: CSS custom properties (--nds-chart-color-1…6), auto-extends beyond 6
+ */
+(function () {
+    'use strict';
+
+    const SVG_NS = 'http://www.w3.org/2000/svg';
+    let uid = 0;
+
+    // ── Utilities ──────────────────────────────────────────────────
+
+    function deepMerge(target, source) {
+        const out = Object.assign({}, target);
+        for (const key in source) {
+            if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])
+                && target[key] && typeof target[key] === 'object' && !Array.isArray(target[key])) {
+                out[key] = deepMerge(target[key], source[key]);
+            } else {
+                out[key] = source[key];
+            }
+        }
+        return out;
+    }
+
+    function svgEl(tag, attrs) {
+        const el = document.createElementNS(SVG_NS, tag);
+        if (attrs) for (const k in attrs) el.setAttribute(k, attrs[k]);
+        return el;
+    }
+
+    function htmlEl(tag, cls, text) {
+        const el = document.createElement(tag);
+        if (cls) el.className = cls;
+        if (text !== undefined) el.textContent = text;
+        return el;
+    }
+
+    function polarToCart(cx, cy, r, angleDeg) {
+        const rad = (angleDeg - 90) * Math.PI / 180;
+        return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
+    }
+
+    function niceScale(min, max, ticks) {
+        if (max === min) { max = min + 1; }
+        const range = max - min;
+        const roughStep = range / (ticks || 5);
+        const mag = Math.pow(10, Math.floor(Math.log10(roughStep)));
+        const norm = roughStep / mag;
+        let step;
+        if (norm <= 1) step = mag;
+        else if (norm <= 2) step = 2 * mag;
+        else if (norm <= 5) step = 5 * mag;
+        else step = 10 * mag;
+        const niceMin = Math.floor(min / step) * step;
+        const niceMax = Math.ceil(max / step) * step;
+        const steps = [];
+        for (let v = niceMin; v <= niceMax + step * 0.01; v += step) {
+            steps.push(Math.round(v * 1e10) / 1e10);
+        }
+        return { min: niceMin, max: niceMax, step, steps };
+    }
+
+    function formatNumber(n) {
+        if (Math.abs(n) >= 1e6) return (n / 1e6).toFixed(1).replace(/\.0$/, '') + 'M';
+        if (Math.abs(n) >= 1e3) return (n / 1e3).toFixed(1).replace(/\.0$/, '') + 'K';
+        return String(n);
+    }
+
+    function chartColor(index) {
+        return 'var(--nds-chart-color-' + (index % 6 + 1) + ')';
+    }
+
+    function tryParse(str) {
+        try { return JSON.parse(str); } catch { return null; }
+    }
+
+    // ── Tooltip data store (element → { html, activeEl, activeClass }) ──
+    const tipData = new WeakMap();
+
+    // ── Shared ResizeObserver (one for all chart instances) ─────────
+    const resizeCallbacks = new WeakMap();
+    const sharedRO = new ResizeObserver(entries => {
+        for (const entry of entries) {
+            const cb = resizeCallbacks.get(entry.target);
+            if (cb) cb();
+        }
+    });
+
+    // ── Default options per chart type ─────────────────────────────
+
+    const PIE_BASE = {
+        height: 300,
+        legend: { show: true, position: 'bottom' },
+        labels: { show: true },
+        tooltip: { show: true },
+        stroke: { show: false, width: 2, color: '#fff' },
+        startAngle: 0,
+    };
+
+    const AXIS_BASE = {
+        height: 350,
+        legend: { show: true, position: 'top' },
+        labels: { show: true },
+        tooltip: { show: true },
+        grid: { show: true },
+        yaxis: { show: true, title: '' },
+        xaxis: { show: true, title: '' },
+    };
+
+    const TYPE_DEFAULTS = {
+        pie: PIE_BASE,
+        donut: { ...PIE_BASE, donut: { size: 0.50 } },
+        bar: { ...AXIS_BASE, bar: { borderRadius: 6, gap: 0.3, stacked: false }, dataLabels: { show: false } },
+        line: { ...AXIS_BASE, line: { width: 3, smooth: true, dots: true, dotRadius: 4, area: false } },
+    };
+
+    // ── Chart class ────────────────────────────────────────────────
+
+    class NDSChartInstance {
+        constructor(el, opts) {
+            this.el = el;
+            this.opts = this._resolveOpts(opts);
+            this._tooltip = null;
+            this._lastW = 0;
+            this._rafPending = false;
+            this._activeHover = null;
+            this._ac = new AbortController();
+            this._setupDelegation();
+            this._setupResize();
+            this.render();
+        }
+
+        _resolveOpts(opts) {
+            const type = opts.type || 'bar';
+            const defaults = TYPE_DEFAULTS[type] || TYPE_DEFAULTS.bar;
+            const merged = deepMerge(defaults, opts);
+            merged.type = type;
+            return merged;
+        }
+
+        _color(index) {
+            if (this.opts.colors) return this.opts.colors[index % this.opts.colors.length];
+            return chartColor(index);
+        }
+
+        // ── Public API ─────────────────────────────────────────────
+
+        update(newOpts) {
+            this.opts = this._resolveOpts(deepMerge(this.opts, newOpts));
+            this.render();
+        }
+
+        destroy() {
+            this._ac.abort();
+            sharedRO.unobserve(this.el);
+            resizeCallbacks.delete(this.el);
+            this.el.innerHTML = '';
+            delete this.el.ndsChart;
+        }
+
+        // ── Event delegation (3 listeners total, set once in constructor) ──
+
+        _setupDelegation() {
+            const signal = this._ac.signal;
+
+            this.el.addEventListener('mouseover', (e) => {
+                const data = tipData.get(e.target);
+                if (!data) return;
+                this._clearHover();
+                this._activeHover = { target: e.target, ...data };
+                this._showTooltip(e, data.html);
+                const el = data.activeEl || e.target;
+                if (data.activeClass) el.classList.add(data.activeClass);
+            }, { signal });
+
+            this.el.addEventListener('mousemove', (e) => {
+                if (this._activeHover) this._moveTooltip(e);
+            }, { signal });
+
+            this.el.addEventListener('mouseout', (e) => {
+                if (!this._activeHover) return;
+                if (e.relatedTarget && tipData.has(e.relatedTarget)) return;
+                this._clearHover();
+            }, { signal });
+        }
+
+        _clearHover() {
+            if (!this._activeHover) return;
+            const { target, activeEl, activeClass } = this._activeHover;
+            if (activeClass) (activeEl || target).classList.remove(activeClass);
+            this._hideTooltip();
+            this._activeHover = null;
+        }
+
+        _bindTooltip(triggerEl, html, activeEl, activeClass) {
+            tipData.set(triggerEl, { html, activeEl, activeClass });
+        }
+
+        // ── Shared ResizeObserver (registered once in constructor) ──
+
+        _setupResize() {
+            resizeCallbacks.set(this.el, () => {
+                const w = this.el.clientWidth;
+                if (w && w !== this._lastW) {
+                    this._lastW = w;
+                    if (!this._rafPending) {
+                        this._rafPending = true;
+                        requestAnimationFrame(() => {
+                            this._rafPending = false;
+                            this.render();
+                        });
+                    }
+                }
+            });
+            sharedRO.observe(this.el);
+        }
+
+        // ── Shared helpers (bar + line) ─────────────────────────────
+
+        _normSeries(series) {
+            return series.map((s, i) => ({
+                name: s.name || `Series ${i + 1}`,
+                data: Array.isArray(s.data) ? s.data : (Array.isArray(s) ? s : [s]),
+            }));
+        }
+
+        _layout(wrap, height) {
+            const isRTL = this._isRTL;
+            const w = wrap.clientWidth || this.el.clientWidth || 600;
+            const h = height || 350;
+            const padTop = 20, padBottom = 40;
+            const padLeft = isRTL ? 20 : 55;
+            const padRight = isRTL ? 55 : 20;
+            return {
+                w, h, padTop, padBottom, padLeft, padRight, isRTL,
+                plotW: w - padLeft - padRight,
+                plotH: h - padTop - padBottom,
+            };
+        }
+
+        _valToY(val, scale, L) {
+            return L.padTop + L.plotH - ((val - scale.min) / (scale.max - scale.min)) * L.plotH;
+        }
+
+        _createSvg(L, ariaLabel) {
+            return svgEl('svg', {
+                width: L.w, height: L.h,
+                class: 'nds-chart-svg',
+                role: 'img',
+                'aria-label': ariaLabel,
+            });
+        }
+
+        _renderGrid(svg, scale, L) {
+            scale.steps.forEach(v => {
+                const y = this._valToY(v, scale, L);
+                svg.appendChild(svgEl('line', {
+                    x1: L.padLeft, y1: y,
+                    x2: L.padLeft + L.plotW, y2: y,
+                    class: 'nds-chart-gridline',
+                }));
+            });
+        }
+
+        _renderYAxis(svg, scale, L) {
+            scale.steps.forEach(v => {
+                const txt = svgEl('text', {
+                    x: L.isRTL ? L.w - 8 : L.padLeft - 8,
+                    y: this._valToY(v, scale, L) + 4,
+                    class: 'nds-chart-axis-label',
+                    'text-anchor': L.isRTL ? 'start' : 'end',
+                });
+                txt.textContent = formatNumber(v);
+                svg.appendChild(txt);
+            });
+        }
+
+        _renderXLabels(svg, catLabels, xPositions, L) {
+            const y = L.padTop + L.plotH + 30;
+            catLabels.forEach((label, i) => {
+                const txt = svgEl('text', {
+                    x: xPositions[i], y,
+                    class: 'nds-chart-axis-label',
+                    'text-anchor': 'middle',
+                });
+                txt.textContent = label;
+                svg.appendChild(txt);
+            });
+        }
+
+        // ── Render orchestrator ────────────────────────────────────
+
+        render() {
+            if (!this.el.clientWidth) {
+                this._deferCount = (this._deferCount || 0) + 1;
+                if (this._deferCount < 10) {
+                    requestAnimationFrame(() => this.render());
+                    return;
+                }
+            }
+            this._deferCount = 0;
+            this._activeHover = null;
+
+            this.el.innerHTML = '';
+            this.el.classList.add('nds-chart');
+            this.el.setAttribute('data-chart-type', this.opts.type);
+
+            const { type } = this.opts;
+            this._isRTL = typeof NDS !== 'undefined' && NDS.isRTL;
+
+            // Legend top
+            if (this.opts.legend?.show && this.opts.legend.position === 'top') {
+                this.el.appendChild(this._buildLegend());
+            }
+
+            // Axis titles (DOM elements, not SVG)
+            const yTitle = this.opts.yaxis?.title;
+            const xTitle = this.opts.xaxis?.title;
+            const hasAxes = type === 'bar' || type === 'line';
+
+            const body = htmlEl('div', 'nds-chart-body');
+            if (hasAxes && yTitle) {
+                body.appendChild(htmlEl('span', 'nds-chart-axis-title nds-chart-axis-title--y', yTitle));
+            }
+
+            const wrap = htmlEl('div', 'nds-chart-canvas');
+            body.appendChild(wrap);
+            this.el.appendChild(body);
+
+            if (type === 'pie' || type === 'donut') this._renderPie(wrap);
+            else if (type === 'bar') this._renderBar(wrap);
+            else if (type === 'line') this._renderLine(wrap);
+
+            if (hasAxes && xTitle) {
+                this.el.appendChild(htmlEl('div', 'nds-chart-axis-title nds-chart-axis-title--x', xTitle));
+            }
+
+            // Legend bottom
+            if (this.opts.legend?.show && this.opts.legend.position === 'bottom') {
+                this.el.appendChild(this._buildLegend());
+            }
+
+            this._tooltip = htmlEl('div', 'nds-chart-tooltip');
+            this.el.appendChild(this._tooltip);
+            this._lastW = this.el.clientWidth;
+        }
+
+        // ── Pie / Donut ────────────────────────────────────────────
+
+        _renderPie(wrap) {
+            const { series, labels, height, stroke, startAngle } = this.opts;
+            const data = Array.isArray(series) ? series : [];
+            const total = data.reduce((s, v) => s + (typeof v === 'number' ? v : 0), 0);
+            if (!total) return;
+
+            const size = height || 300;
+            const cx = size / 2, cy = size / 2;
+            const outerR = size / 2 - 10;
+            const isDonut = this.opts.type === 'donut';
+            const innerR = isDonut ? outerR * (this.opts.donut?.size || 0.5) : 0;
+
+            const svg = svgEl('svg', {
+                viewBox: `0 0 ${size} ${size}`,
+                class: 'nds-chart-svg',
+                role: 'img',
+                'aria-label': 'Chart',
+            });
+
+            let current = startAngle || 0;
+
+            data.forEach((val, i) => {
+                if (val <= 0) return;
+                const angle = (val / total) * 360;
+                const start = current;
+                const end = current + angle;
+                const mid = start + angle / 2;
+
+                const path = this._arcPath(cx, cy, outerR, innerR, start, end);
+                const slice = svgEl('path', {
+                    d: path,
+                    fill: this._color(i),
+                    class: 'nds-chart-slice',
+                });
+
+                if (stroke?.show) {
+                    slice.setAttribute('stroke', stroke.color || '#fff');
+                    slice.setAttribute('stroke-width', stroke.width || 2);
+                }
+
+                const label = labels?.[i] || `Item ${i + 1}`;
+                const pct = ((val / total) * 100).toFixed(1) + '%';
+                this._bindTooltip(
+                    slice,
+                    `<strong>${label}</strong><br>${formatNumber(val)} (${pct})`,
+                    null, 'nds-chart-slice--active'
+                );
+
+                svg.appendChild(slice);
+
+                if (this.opts.labels?.show && angle > 20) {
+                    const labelR = isDonut ? (outerR + innerR) / 2 : outerR * 0.65;
+                    const pos = polarToCart(cx, cy, labelR, mid);
+                    const txt = svgEl('text', {
+                        x: pos.x, y: pos.y,
+                        class: 'nds-chart-pie-label',
+                        'text-anchor': 'middle',
+                        'dominant-baseline': 'central',
+                    });
+                    txt.textContent = pct;
+                    svg.appendChild(txt);
+                }
+
+                current = end;
+            });
+
+            wrap.appendChild(svg);
+        }
+
+        _arcPath(cx, cy, outerR, innerR, startAngle, endAngle) {
+            const sweep = Math.min(endAngle - startAngle, 359.999);
+            const end = startAngle + sweep;
+            const outerStart = polarToCart(cx, cy, outerR, startAngle);
+            const outerEnd = polarToCart(cx, cy, outerR, end);
+            const largeArc = sweep > 180 ? 1 : 0;
+
+            if (innerR <= 0) {
+                return [
+                    `M ${cx} ${cy}`,
+                    `L ${outerStart.x} ${outerStart.y}`,
+                    `A ${outerR} ${outerR} 0 ${largeArc} 1 ${outerEnd.x} ${outerEnd.y}`,
+                    'Z',
+                ].join(' ');
+            }
+
+            const innerStart = polarToCart(cx, cy, innerR, startAngle);
+            const innerEnd = polarToCart(cx, cy, innerR, end);
+            return [
+                `M ${outerStart.x} ${outerStart.y}`,
+                `A ${outerR} ${outerR} 0 ${largeArc} 1 ${outerEnd.x} ${outerEnd.y}`,
+                `L ${innerEnd.x} ${innerEnd.y}`,
+                `A ${innerR} ${innerR} 0 ${largeArc} 0 ${innerStart.x} ${innerStart.y}`,
+                'Z',
+            ].join(' ');
+        }
+
+        // ── Bar Chart ──────────────────────────────────────────────
+
+        _renderBar(wrap) {
+            const { series, labels, height, bar, grid, dataLabels } = this.opts;
+            if (!series?.length) return;
+
+            const stacked = bar?.stacked || false;
+            const seriesArr = this._normSeries(series);
+            const catCount = Math.max(...seriesArr.map(s => s.data.length));
+            const catLabels = labels || Array.from({ length: catCount }, (_, i) => `${i + 1}`);
+
+            let maxVal = 0;
+            if (stacked) {
+                for (let c = 0; c < catCount; c++) {
+                    let sum = 0;
+                    seriesArr.forEach(s => { sum += (s.data[c] || 0); });
+                    if (sum > maxVal) maxVal = sum;
+                }
+            } else {
+                seriesArr.forEach(s => s.data.forEach(v => { if (v > maxVal) maxVal = v; }));
+            }
+
+            const scale = niceScale(0, maxVal, 5);
+            const L = this._layout(wrap, height);
+            const svg = this._createSvg(L, 'Bar chart');
+
+            if (grid?.show) this._renderGrid(svg, scale, L);
+            if (this.opts.yaxis?.show) this._renderYAxis(svg, scale, L);
+
+            const groupW = L.plotW / catCount;
+            const gapRatio = bar?.gap ?? 0.3;
+            const usableGroupW = groupW * (1 - gapRatio);
+            const barCount = stacked ? 1 : seriesArr.length;
+            const barW = usableGroupW / barCount;
+            const radius = Math.min(bar?.borderRadius || 6, barW / 2);
+
+            for (let c = 0; c < catCount; c++) {
+                let stackY = 0;
+                const groupX = L.padLeft + c * groupW + (groupW - usableGroupW) / 2;
+
+                let topSeriesIdx = -1;
+                let stackTotal = 0;
+                if (stacked) {
+                    for (let si = seriesArr.length - 1; si >= 0; si--) {
+                        if ((seriesArr[si].data[c] || 0) > 0) { topSeriesIdx = si; break; }
+                    }
+                    seriesArr.forEach(s => { stackTotal += (s.data[c] || 0); });
+                }
+
+                seriesArr.forEach((s, si) => {
+                    const val = s.data[c] || 0;
+                    const barH = (val / scale.max) * L.plotH;
+                    let x = L.isRTL
+                        ? L.w - L.padRight - (c + 1) * groupW + (groupW - usableGroupW) / 2
+                        : groupX;
+
+                    if (!stacked) x += si * barW;
+
+                    const y = stacked
+                        ? L.padTop + L.plotH - stackY - barH
+                        : L.padTop + L.plotH - barH;
+
+                    const r = stacked ? (si === topSeriesIdx ? radius : 0) : radius;
+                    const rect = this._roundedRect(x, y, stacked ? usableGroupW : barW, barH, r);
+                    rect.setAttribute('fill', this._color(si));
+                    rect.setAttribute('class', 'nds-chart-bar');
+
+                    this._bindTooltip(
+                        rect,
+                        `<strong>${s.name}</strong><br>${catLabels[c]}: ${formatNumber(val)}`,
+                        null, 'nds-chart-bar--active'
+                    );
+
+                    svg.appendChild(rect);
+
+                    if (dataLabels?.show && (!stacked || si === topSeriesIdx)) {
+                        const lbl = svgEl('text', {
+                            x: x + (stacked ? usableGroupW : barW) / 2,
+                            y: y - 6,
+                            class: 'nds-chart-data-label',
+                            'text-anchor': 'middle',
+                        });
+                        lbl.textContent = formatNumber(stacked ? stackTotal : val);
+                        svg.appendChild(lbl);
+                    }
+
+                    if (stacked) stackY += barH;
+                });
+            }
+
+            if (this.opts.xaxis?.show) {
+                const xPositions = catLabels.map((_, c) =>
+                    L.isRTL
+                        ? L.w - L.padRight - c * groupW - groupW / 2
+                        : L.padLeft + c * groupW + groupW / 2
+                );
+                this._renderXLabels(svg, catLabels, xPositions, L);
+            }
+
+            wrap.appendChild(svg);
+        }
+
+        _roundedRect(x, y, w, h, r) {
+            if (h <= 0) return svgEl('path', { d: '' });
+            r = Math.min(r, h / 2, w / 2);
+            const d = [
+                `M ${x + r} ${y}`,
+                `L ${x + w - r} ${y}`,
+                `Q ${x + w} ${y} ${x + w} ${y + r}`,
+                `L ${x + w} ${y + h}`,
+                `L ${x} ${y + h}`,
+                `L ${x} ${y + r}`,
+                `Q ${x} ${y} ${x + r} ${y}`,
+                'Z',
+            ].join(' ');
+            return svgEl('path', { d });
+        }
+
+        // ── Line Chart ─────────────────────────────────────────────
+
+        _renderLine(wrap) {
+            const { series, labels, height, line, grid } = this.opts;
+            if (!series?.length) return;
+
+            const smooth = line?.smooth !== false;
+            const showDots = line?.dots !== false;
+            const dotR = line?.dotRadius || 4;
+            const lineW = line?.width || 3;
+            const showArea = line?.area || false;
+
+            const seriesArr = this._normSeries(series);
+            const catCount = Math.max(...seriesArr.map(s => s.data.length));
+            const catLabels = labels || Array.from({ length: catCount }, (_, i) => `${i + 1}`);
+
+            let maxVal = 0, minVal = 0;
+            seriesArr.forEach(s => s.data.forEach(v => {
+                if (v > maxVal) maxVal = v;
+                if (v < minVal) minVal = v;
+            }));
+
+            const scale = niceScale(Math.min(0, minVal), maxVal, 5);
+            const L = this._layout(wrap, height);
+            const svg = this._createSvg(L, 'Line chart');
+
+            if (grid?.show) this._renderGrid(svg, scale, L);
+            if (this.opts.yaxis?.show) this._renderYAxis(svg, scale, L);
+
+            const computed = seriesArr.map((s, si) => {
+                const pts = s.data.map((v, idx) => {
+                    const xRatio = catCount === 1 ? 0.5 : idx / (catCount - 1);
+                    const x = L.isRTL
+                        ? L.padLeft + L.plotW - xRatio * L.plotW
+                        : L.padLeft + xRatio * L.plotW;
+                    return { x, y: this._valToY(v, scale, L), val: v, idx };
+                });
+                const pathD = this._buildPath(pts, smooth);
+                return { s, pts, pathD, color: this._color(si) };
+            });
+
+            // Layer 1: Areas (gradient mask fades from line peaks → baseline)
+            if (showArea) {
+                const id = 'nds-af-' + uid++;
+                const baseline = L.padTop + L.plotH;
+                const topY = Math.min(...computed.flatMap(c => c.pts.map(p => p.y))) - L.plotH * 0.05;
+                const defs = svgEl('defs');
+                const grad = svgEl('linearGradient', {
+                    id, gradientUnits: 'userSpaceOnUse',
+                    x1: 0, y1: topY, x2: 0, y2: baseline,
+                });
+                grad.appendChild(svgEl('stop', { offset: '0%', class: 'nds-chart-area-top' }));
+                grad.appendChild(svgEl('stop', { offset: '100%', class: 'nds-chart-area-bottom' }));
+                defs.appendChild(grad);
+                const mask = svgEl('mask', { id: id + '-m' });
+                mask.appendChild(svgEl('rect', { x: 0, y: topY, width: L.w, height: baseline - topY, fill: `url(#${id})` }));
+                defs.appendChild(mask);
+                svg.insertBefore(defs, svg.firstChild);
+
+                const g = svgEl('g', { mask: `url(#${id}-m)` });
+                computed.forEach(({ pts, pathD, color }) => {
+                    if (pts.length > 1) {
+                        const areaD = pathD
+                            + ` L ${pts[pts.length - 1].x} ${baseline}`
+                            + ` L ${pts[0].x} ${baseline} Z`;
+                        g.appendChild(svgEl('path', { d: areaD, fill: color, class: 'nds-chart-area' }));
+                    }
+                });
+                svg.appendChild(g);
+            }
+
+            // Layer 2: Lines
+            computed.forEach(({ pathD, color }) => {
+                svg.appendChild(svgEl('path', {
+                    d: pathD,
+                    stroke: color,
+                    'stroke-width': lineW,
+                    fill: 'none',
+                    class: 'nds-chart-line',
+                }));
+            });
+
+            // Layer 3: Dots + hit areas
+            if (showDots) {
+                computed.forEach(({ s, pts, color }) => {
+                    pts.forEach(p => {
+                        const dot = svgEl('circle', {
+                            cx: p.x, cy: p.y, r: dotR,
+                            fill: '#fff', stroke: color, 'stroke-width': 2,
+                            class: 'nds-chart-dot',
+                        });
+                        svg.appendChild(dot);
+
+                        const hitArea = svgEl('circle', {
+                            cx: p.x, cy: p.y, r: dotR * 3,
+                            fill: 'transparent',
+                            class: 'nds-chart-dot-hit',
+                        });
+                        this._bindTooltip(
+                            hitArea,
+                            `<strong>${s.name}</strong><br>${catLabels[p.idx]}: ${formatNumber(p.val)}`,
+                            dot, 'nds-chart-dot--active'
+                        );
+                        svg.appendChild(hitArea);
+                    });
+                });
+            }
+
+            if (this.opts.xaxis?.show) {
+                const xPositions = catLabels.map((_, c) => {
+                    const xRatio = catCount === 1 ? 0.5 : c / (catCount - 1);
+                    return L.isRTL
+                        ? L.padLeft + L.plotW - xRatio * L.plotW
+                        : L.padLeft + xRatio * L.plotW;
+                });
+                this._renderXLabels(svg, catLabels, xPositions, L);
+            }
+
+            wrap.appendChild(svg);
+        }
+
+        _buildPath(pts, smooth) {
+            if (!pts.length) return '';
+            if (!smooth || pts.length < 2) {
+                return pts.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ');
+            }
+            let d = `M ${pts[0].x} ${pts[0].y}`;
+            for (let i = 0; i < pts.length - 1; i++) {
+                const p0 = pts[Math.max(i - 1, 0)];
+                const p1 = pts[i];
+                const p2 = pts[i + 1];
+                const p3 = pts[Math.min(i + 2, pts.length - 1)];
+                const cp1x = p1.x + (p2.x - p0.x) / 6;
+                const cp1y = p1.y + (p2.y - p0.y) / 6;
+                const cp2x = p2.x - (p3.x - p1.x) / 6;
+                const cp2y = p2.y - (p3.y - p1.y) / 6;
+                d += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${p2.x} ${p2.y}`;
+            }
+            return d;
+        }
+
+        // ── Legend ──────────────────────────────────────────────────
+
+        _buildLegend() {
+            const { series, labels, type } = this.opts;
+            const legend = htmlEl('div', 'nds-chart-legend');
+
+            const isPie = type === 'pie' || type === 'donut';
+            const items = isPie
+                ? (labels || series.map((_, i) => `Item ${i + 1}`))
+                : series.map((s, i) => s.name || `Series ${i + 1}`);
+
+            items.forEach((name, i) => {
+                const item = htmlEl('div', 'nds-chart-legend-item');
+                const marker = htmlEl('span', 'nds-chart-legend-marker');
+                marker.style.backgroundColor = this._color(i);
+                item.appendChild(marker);
+                item.appendChild(htmlEl('span', 'nds-chart-legend-label', name));
+                legend.appendChild(item);
+            });
+
+            return legend;
+        }
+
+        // ── Tooltip ────────────────────────────────────────────────
+
+        _showTooltip(e, html) {
+            if (!this.opts.tooltip?.show || !this._tooltip) return;
+            this._tooltip.innerHTML = html;
+            this._tooltip.classList.add('nds-chart-tooltip--visible');
+            this._moveTooltip(e);
+        }
+
+        _moveTooltip(e) {
+            if (!this._tooltip) return;
+            const rect = this.el.getBoundingClientRect();
+            let x = e.clientX - rect.left + 12;
+            let y = e.clientY - rect.top - 10;
+
+            const tw = this._tooltip.offsetWidth;
+            const th = this._tooltip.offsetHeight;
+            if (x + tw > rect.width) x = x - tw - 24;
+            if (y + th > rect.height) y = y - th;
+            if (y < 0) y = 4;
+
+            this._tooltip.style.left = x + 'px';
+            this._tooltip.style.top = y + 'px';
+        }
+
+        _hideTooltip() {
+            if (this._tooltip) {
+                this._tooltip.classList.remove('nds-chart-tooltip--visible');
+            }
+        }
+    }
+
+    // ── Public interface ───────────────────────────────────────────
+
+    function initCharts() {
+        document.querySelectorAll('.nds-chart:not([data-nds-init])').forEach(el => {
+            if (el.ndsChart) return;
+            const d = el.dataset;
+            const config = tryParse(d.chartConfig) || {};
+            if (d.chartType) config.type = d.chartType;
+            if (d.chartSeries) config.series = tryParse(d.chartSeries) || config.series;
+            if (d.chartLabels) config.labels = tryParse(d.chartLabels) || config.labels;
+
+            if (config.type || config.series) {
+                el.ndsChart = new NDSChartInstance(el, config);
+                el.setAttribute('data-nds-init', '');
+            }
+        });
+    }
+
+    function createChart(el, opts) {
+        if (el.ndsChart) el.ndsChart.destroy();
+        el.ndsChart = new NDSChartInstance(el, opts);
+        el.setAttribute('data-nds-init', '');
+        return el.ndsChart;
+    }
+
+    window.NDSChart = {
+        init: initCharts,
+        create: createChart,
+    };
+})();
