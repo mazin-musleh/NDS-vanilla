@@ -176,6 +176,11 @@
             selector: '.nds-user-feedback',
             init: () => window.NDSUserFeedback?.init?.(),
         },
+        {
+            name: 'chart',
+            selector: '.nds-chart',
+            init: () => window.NDSChart?.init?.(),
+        },
     ].map((component, index) => ({
         ...component,
         priority: index + 1  // Auto-assign priority based on array order

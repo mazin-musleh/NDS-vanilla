@@ -55,7 +55,7 @@
 @use 'components/rating';
 @use 'components/upload';
 @use 'components/code';
-/* @use 'components/sideMenu'; */ /* Moved to critical CSS */
+@use 'components/sideMenu'; /* Moved to critical CSS */
 @use 'components/drawer';  /* Moved to critical CSS */
 /* @use 'layout/contentLayout'; */ /* Moved to critical CSS */
 /* @use 'components/hero'; */ /* Moved to critical CSS */
@@ -64,6 +64,7 @@
 @use 'components/cookie';
 @use 'components/loading';
 @use 'components/definition-list';
+@use 'components/chart';
 
 /* @use 'grid'; */ /* Moved to critical CSS */
 
