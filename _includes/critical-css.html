@@ -159,12 +159,13 @@
     }
 
 
-    .nds-feedback-icon{
+    .nds-feedback-icon {
         display: inline-flex;
         width: 40px;
         height: 40px;
 
     }
+
     /* ===== BREADCRUMB ===== */
     .nds-breadcrumb,
     .nds-breadcrumb li {
@@ -287,6 +288,23 @@
     @media (max-width: 768px) {
         .nds-hero-section:not(.sub) .nds-section-content .nds-section-title::before {
             width: 80vw;
+        }
+    }
+
+
+
+    .nds-content-layout .nds-sideMenu {
+        width: var(--nds-sideMenu-width);
+    }
+
+    @media (max-width: 768px) {
+        .nds-content-layout {
+            --layout-gap: 0!important;
+        }
+
+        .nds-content-layout .nds-sideMenu {
+            min-width: 0;
+            flex: 0;
         }
     }
 </style>
