@@ -74,6 +74,7 @@ main {
         padding-block: var(--_main-padding-block);
         padding-inline: var(--_main-padding-inline);
         gap: var(--_main-gap);
+        flex: 1;
     }
 
 }
@@ -162,7 +163,7 @@ main {
 
     &.cardView {
         --section-padding-block: var(--nds-viewport-padding);
-        --layout-gap: var(--spacing-xl);
+        --layout-gap: var(--spacing-xl); 
         --main-padding-block: var(--spacing-xl);
         --main-gap: var(--spacing-4xl);
 
