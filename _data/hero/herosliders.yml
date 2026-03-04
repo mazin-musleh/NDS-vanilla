@@ -1,23 +1,50 @@
+# Hero Slider Configuration
+# ─────────────────────────
+# Each slide supports:
+#   src:        Background image path (required)
+#   src_small:  Mobile background image path
+#   overlay:    Background overlay opacity (0-1, default: 0.7)
+#   position:   Background image position (default: "center center")
+#   class:      Custom CSS class added to the slide
+#
+# Default content (title/description/button):
+#   title:       Slide heading
+#   description: Slide paragraph
+#   url:         "Read More" button link (omit or "#" to hide button)
+#
+# Custom content (replaces default title/description/button):
+#   content: |
+#     <img src="{relative_url}/assets/img/logo.svg" alt="Logo">
+#     <h1 class="nds-section-title">Custom Title</h1>
+#     <p class="nds-section-description">Custom text</p>
+#     
+#
+#   Use {relative_url} for any paths — resolves to site baseurl (works from any page).
+
 - src: assets/img/riyadhcenter_ai.webp
   src_small: assets/img/riyadhcenter3s.webp
   overlay: 0.7
   position: center 80%
-  title: "National Design System"
-  description: "Building consistent digital experiences for Saudi Arabia"
-  url: "#"
+  #class: custom_calss
+  content: |
+    <img src="{relative_url}/assets/img/dga-logo.svg" width="150" height="48" loading="lazy" alt="National Design System Logo">
+    <h1 class="nds-section-title">National Design System</h1>
+    <p class="nds-section-description">Building consistent digital experiences for Saudi Arabia</p>
 
 - src: assets/img/riyadhcenter3.webp
   src_small: assets/img/riyadhcenter3s.webp
   overlay: 0.7
   position: center center
+  #class: custom_calss
   title: "Design with Confidence"
   description: "Comprehensive components and guidelines for government services"
-  url: "#"
+  url: "#" #Read More Button url
 
 - src: assets/img/riyadhcenter3.webp
   src_small: assets/img/riyadhcenter3s.webp
   overlay: 0.7
   position: center center
+  #class: custom_calss
   title: "Accessible by Design"
   description: "Meet WCAG standards with built-in accessibility features"
-  url: "#"
+  url: "#" #Read More Button url
