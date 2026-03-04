@@ -63,6 +63,7 @@
         padding: var(--_accordion-header-padding) var(--accordion-lg-header-padding);
         font-size: var(--nds-text-md-FS);
         line-height: var(--nds-text-md-LH);
+        white-space: normal;
 
         .nds-accordion-title {
             display: block;

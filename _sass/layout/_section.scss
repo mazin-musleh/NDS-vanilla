@@ -79,7 +79,7 @@
     }
 
     &:is(.nds-ghost, .noBg) {
-        @include reset-section-style(!important);
+        @include reset-section-style( !important);
     }
 }
 
@@ -92,6 +92,7 @@
     --_section-title-FS: var(--section-title-FS, var(--nds-display-clamp-md-FS, clamp(24px, 3vw, 36px)));
     --_section-title-LH: var(--section-title-LH, var(--nds-display-clamp-md-LH, clamp(30px, 3.67vw, 44px)));
     --_section-title-MB: var(--section-title-MB, var(--nds-display-clamp-md-MB, clamp(7.5px, 0.9175vw, 11px)));
+    --_section-shape-size: var(--section-shape-size, var(--_section-title-FS));
     --_section-subtitle-FS: var(--section-subtitle-FS, var(--nds-text-clamp-lg-FS, clamp(16px, 1.5vw, 18px)));
     --_section-subtitle-LH: var(--section-subtitle-LH, var(--nds-text-clamp-lg-LH, clamp(24px, 2.17vw, 26px)));
     --_section-subtitle-MB: var(--section-subtitle-MB, var(--_section-title-MB));
@@ -129,14 +130,28 @@
    ======================================== */
 
 .nds-section-title {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: center;
     font-size: var(--_section-title-FS);
     line-height: var(--_section-title-LH);
     letter-spacing: -0.02rem;
     font-weight: bold;
     color: var(--_section-title-color);
 
+    .nds-center &,
+    &.nds-center {
+        flex-direction: column;
+        gap: var(--spacing-xl);
+    }
+
     &:not(:last-child) {
         margin-bottom: var(--_section-title-MB);
+    }
+
+    .nds-section-shape {
+        height: var(--_section-shape-size);
+        width: auto;
     }
 
 }
