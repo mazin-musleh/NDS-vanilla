@@ -94,16 +94,15 @@
     const PIE_BASE = {
         height: 300,
         legend: { show: true, position: 'bottom' },
-        labels: { show: true },
+        dataLabels: { show: true },
         tooltip: { show: true },
-        stroke: { show: false, width: 2, color: '#fff' },
+        stroke: { show: false, width: 2, color: 'var(--_chart-dot-fill)' },
         startAngle: 0,
     };
 
     const AXIS_BASE = {
         height: 350,
         legend: { show: true, position: 'top' },
-        labels: { show: true },
         tooltip: { show: true },
         grid: { show: true },
         yaxis: { show: true, title: '' },
@@ -413,12 +412,13 @@
                     null, 'nds-chart-slice--active');
                 svg.appendChild(slice);
 
-                if (this.opts.labels?.show && angle > 20) {
+                if (this.opts.dataLabels?.show && angle > 20) {
                     const labelR = isDonut ? (outerR + innerR) / 2 : outerR * 0.65;
                     const pos = polarToCart(cx, cy, labelR, current + angle / 2);
                     const txt = svgEl('text', {
                         x: pos.x, y: pos.y,
                         class: 'nds-chart-pie-label',
+                        fill: 'var(--_chart-pie-label-' + (i % 6 + 1) + ')',
                         'text-anchor': 'middle',
                         'dominant-baseline': 'central',
                     });
@@ -566,7 +566,7 @@
             const smooth = line?.smooth !== false;
             const showDots = line?.dots !== false;
             const dotR = line?.dotRadius || 4;
-            const lineW = line?.width || 3;
+            const lineW = line?.width || 2;
             const showArea = line?.area || false;
 
             const ctx = this._axisChart(wrap, 'Line chart', (seriesArr) => {
@@ -608,6 +608,7 @@
                     x1: 0, y1: topY, x2: 0, y2: baseline,
                 });
                 grad.appendChild(svgEl('stop', { offset: '0%', class: 'nds-chart-area-top' }));
+                grad.appendChild(svgEl('stop', { offset: '50%', class: 'nds-chart-area-top' }));
                 grad.appendChild(svgEl('stop', { offset: '100%', class: 'nds-chart-area-bottom' }));
                 defs.appendChild(grad);
 
@@ -644,7 +645,7 @@
                     pts.forEach(p => {
                         const dot = svgEl('circle', {
                             cx: p.x, cy: p.y, r: dotR,
-                            fill: '#fff', stroke: color, 'stroke-width': 2,
+                            fill: 'var(--_chart-dot-fill)', stroke: color, 'stroke-width': 2,
                             class: 'nds-chart-dot',
                         });
                         svg.appendChild(dot);
@@ -679,10 +680,11 @@
                 const p1 = pts[i];
                 const p2 = pts[i + 1];
                 const p3 = pts[Math.min(i + 2, pts.length - 1)];
-                const cp1x = p1.x + (p2.x - p0.x) / 6;
-                const cp1y = p1.y + (p2.y - p0.y) / 6;
-                const cp2x = p2.x - (p3.x - p1.x) / 6;
-                const cp2y = p2.y - (p3.y - p1.y) / 6;
+                const t = 8;
+                const cp1x = p1.x + (p2.x - p0.x) / t;
+                const cp1y = p1.y + (p2.y - p0.y) / t;
+                const cp2x = p2.x - (p3.x - p1.x) / t;
+                const cp2y = p2.y - (p3.y - p1.y) / t;
                 d += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${p2.x} ${p2.y}`;
             }
             return d;

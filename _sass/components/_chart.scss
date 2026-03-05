@@ -10,14 +10,20 @@
     --_chart-color-4: var(--chart-color-4, var(--colors-primary-sa-flag-500, #25935f));
     --_chart-color-5: var(--chart-color-5, var(--colors-primary-sa-flag-200, #B8EACB));
     --_chart-color-6: var(--chart-color-6, var(--colors-primary-sa-flag-800, #14573A));
-    --_chart-area-opacity: var(--chart-area-opacity, 0.1);
+    --_chart-area-opacity: var(--chart-area-opacity, 0.15);
     --_chart-grid-color: var(--chart-grid-color, var(--border-background-white, #F3F4F6));
     --_chart-text: var(--chart-text, var(--text-primary-paragraph, #384250));
     --_chart-label: var(--chart-label, var(--text-default, #111827));
     --_chart-radius: var(--chart-radius, var(--radius-md, 8px));
     --_chart-tooltip-bg: var(--chart-tooltip-bg, var(--background-primary-white, #fff));
     --_chart-tooltip-border: var(--chart-tooltip-border, var(--border-neutral-secondary, #E5E7EB));
-
+    --_chart-pie-label-1: var(--chart-pie-label-1, var(--text-oncolor-primary, #fff));
+    --_chart-pie-label-2: var(--chart-pie-label-2, var(--text-oncolor-primary, #fff));
+    --_chart-pie-label-3: var(--chart-pie-label-3, var(--text-display, #111827));
+    --_chart-pie-label-4: var(--chart-pie-label-4, var(--text-display, #111827));
+    --_chart-pie-label-5: var(--chart-pie-label-5, var(--text-oncolor-primary, #fff));
+    --_chart-pie-label-6: var(--chart-pie-label-6, var(--text-oncolor-primary, #fff));
+    --_chart-dot-fill: var(--chart-dot-fill, var(--background-primary-white, #fff));
     position: relative;
     width: 100%;
     min-height: 200px;
@@ -122,7 +128,6 @@
 }
 
 .nds-chart-pie-label {
-    fill: #fff;
     font-size: var(--nds-text-sm-FS);
     font-weight: 600;
     font-family: inherit;
@@ -137,12 +142,13 @@
 }
 
 .nds-chart-area-top {
-    stop-color: #fff;
+    
+    stop-color: #fff; // SVG mask luminance — white = visible, not a themed color
     stop-opacity: var(--_chart-area-opacity);
 }
 
 .nds-chart-area-bottom {
-    stop-color: #fff;
+    stop-color: #fff; // SVG mask luminance — white = visible, not a themed color
     stop-opacity: 0;
 }
 
@@ -204,7 +210,7 @@
     top: 0;
     left: 0;
     z-index: 10;
-    padding: 8px 12px;
+    padding: var(--spacing-sm) var(--spacing-md);
     background: var(--_chart-tooltip-bg);
     border: 1px solid var(--_chart-tooltip-border);
     border-radius: var(--_chart-radius);
@@ -228,11 +234,11 @@
 
 @include mobile {
     .nds-chart-legend {
-        gap: 10px;
+        gap: var(--spacing-sm);
     }
 
     .nds-chart-legend-label {
-        font-size: 12px;
+        font-size: var(--nds-text-xs-FS);
     }
 
     .nds-chart-axis-label {
