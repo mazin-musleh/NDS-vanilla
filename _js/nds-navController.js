@@ -853,6 +853,41 @@
             if (e.target.closest('[data-toggle="navbar"]')) { e.preventDefault(); toggleNavbar(); }
         });
 
+        // Same-page anchor navigation — close nav and scroll to target
+        DOM.nav?.addEventListener('click', (e) => {
+            const anchor = e.target.closest('a[href*="#"]:not([data-toggle])');
+            if (!anchor) return;
+
+            const href = anchor.getAttribute('href');
+            const hashIdx = href.indexOf('#');
+            if (hashIdx === -1) return;
+
+            const path = href.substring(0, hashIdx);
+            const hash = href.substring(hashIdx + 1);
+            if (!hash) return;
+
+            const isSamePage = !path || path === location.pathname || path === location.pathname.replace(/\/$/, '');
+            if (!isSamePage) return;
+
+            const target = document.getElementById(hash);
+            if (!target) return;
+
+            e.preventDefault();
+
+            const wasNavOpen = hasState(DOM.collapse, 'open');
+            const openDropdowns = document.querySelectorAll('#ndsMainNav .nds-dropdown[data-state~="open"]');
+
+            if (wasNavOpen) toggleNavbar();
+            else openDropdowns.forEach(dd => dropdown.toggle(dd, false));
+
+            const delay = wasNavOpen || openDropdowns.length ? state.css.speed + 100 : 0;
+
+            setTimeout(() => {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                history.replaceState(null, '', `#${hash}`);
+            }, delay);
+        });
+
         DOM.collapse?.addEventListener('transitionend', (e) => {
             if (e.target === DOM.collapse && e.propertyName === 'height') scheduleUpdate();
         });

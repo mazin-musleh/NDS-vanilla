@@ -20,13 +20,6 @@
     <title>{%- if page.title %}{{ page.title }} | {%- endif %}{{ site_title }}</title>
     <!-- Critical CSS inline -->
     {%- include critical-css.html %}
-    <!-- Preload critical resources -->
-    {%- if page.layout == 'home' or page.url == '/' %}
-    <link rel="preload" as="image" href="{{ page.hero_image | default: site.hero_image | relative_url }}"
-        media="(min-width: 769px)" fetchpriority="high">
-    <link rel="preload" as="image" href="{{ page.hero_image_small | default: site.hero_image_small | relative_url }}"
-        media="(max-width: 768px)" fetchpriority="high">
-    {%- endif %}
     <!-- Define deferred assets loader BEFORE any links that call it -->
     <script>
         function loadDeferredAssets() {
