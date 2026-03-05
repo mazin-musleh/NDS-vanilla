@@ -12,7 +12,7 @@
             this.table = tableElement;
             this.thead = tableElement.querySelector('thead');
             this.tbody = tableElement.querySelector('tbody');
-            this.sortButtons = Array.from(tableElement.querySelectorAll('.sortable .sort-header'));
+            this.sortButtons = Array.from(tableElement.querySelectorAll('.nds-sortable-col .nds-sort-header'));
 
             // Checkbox selection support
             this.selectAllCheckbox = this.thead?.querySelector('th input[type="checkbox"].nds-check');
@@ -47,20 +47,20 @@
         }
 
         findActiveSortColumn() {
-            const sortedTh = this.thead.querySelector('.sorted-asc, .sorted-desc');
+            const sortedTh = this.thead.querySelector('.nds-sorted-asc, .nds-sorted-desc');
             if (sortedTh) {
-                const button = sortedTh.querySelector('.sort-header');
+                const button = sortedTh.querySelector('.nds-sort-header');
                 return this.sortButtons.indexOf(button);
             }
             return -1;
         }
 
         findActiveSortDirection() {
-            const sortedTh = this.thead.querySelector('.sorted-asc, .sorted-desc');
+            const sortedTh = this.thead.querySelector('.nds-sorted-asc, .nds-sorted-desc');
             if (!sortedTh) return null;
 
-            if (sortedTh.classList.contains('sorted-asc')) return 'asc';
-            if (sortedTh.classList.contains('sorted-desc')) return 'desc';
+            if (sortedTh.classList.contains('nds-sorted-asc')) return 'asc';
+            if (sortedTh.classList.contains('nds-sorted-desc')) return 'desc';
             return null;
         }
 
@@ -157,17 +157,17 @@
             this.sortButtons.forEach(button => {
                 const th = button.closest('th');
 
-                th.classList.remove('sorted-asc', 'sorted-desc');
+                th.classList.remove('nds-sorted-asc', 'nds-sorted-desc');
                 button.setAttribute('aria-sort', 'none');
             });
         }
 
         applySortState(th, button, direction) {
             if (direction === 'asc') {
-                th.classList.add('sorted-asc');
+                th.classList.add('nds-sorted-asc');
                 button.setAttribute('aria-sort', 'ascending');
             } else if (direction === 'desc') {
-                th.classList.add('sorted-desc');
+                th.classList.add('nds-sorted-desc');
                 button.setAttribute('aria-sort', 'descending');
             }
         }
@@ -398,21 +398,66 @@
             if (this.table.parentElement.classList.contains('nds-table-wrapper')) {
                 this.wrapper = this.table.parentElement;
                 this.copyMaxWidthToWrapper();
-                return;
+            } else {
+                // Create wrapper
+                this.wrapper = document.createElement('div');
+                this.wrapper.className = 'nds-table-wrapper';
+
+                // Insert wrapper before table
+                this.table.parentElement.insertBefore(this.wrapper, this.table);
+
+                // Move table into wrapper
+                this.wrapper.appendChild(this.table);
+
+                // Copy max-width from table to wrapper
+                this.copyMaxWidthToWrapper();
             }
 
-            // Create wrapper
-            this.wrapper = document.createElement('div');
-            this.wrapper.className = 'nds-table-wrapper';
+            // Auto-calculate min-width if not explicitly set
+            this.autoSetMinWidth();
+        }
 
-            // Insert wrapper before table
-            this.table.parentElement.insertBefore(this.wrapper, this.table);
+        autoSetMinWidth() {
+            // Skip if user explicitly set --min-width on the table
+            const explicitMinWidth = this.table.style.getPropertyValue('--min-width');
+            if (explicitMinWidth && explicitMinWidth.trim()) return;
 
-            // Move table into wrapper
-            this.wrapper.appendChild(this.table);
+            // Temporarily set min-width to max-content to measure natural width
+            this.table.style.setProperty('--min-width', 'max-content');
+            const naturalWidth = this.table.scrollWidth;
 
-            // Copy max-width from table to wrapper
-            this.copyMaxWidthToWrapper();
+            // Set the measured natural width as the min-width
+            this.table.style.setProperty('--min-width', naturalWidth + 'px');
+
+            // Lock column widths so they stay consistent across pagination pages
+            this.lockColumnWidths();
+        }
+
+        lockColumnWidths() {
+            // Only lock if table has pagination items (paginated table)
+            if (!this.table.querySelector('tr.nds-page-item')) return;
+
+            // Temporarily show all rows to measure true max column widths
+            const rows = this.table.querySelectorAll('tr.nds-page-item');
+            const hiddenRows = [];
+            rows.forEach(row => {
+                if (row.hidden) {
+                    hiddenRows.push(row);
+                    row.hidden = false;
+                }
+            });
+
+            // Measure each header cell's computed width with all rows visible
+            const headers = this.table.querySelectorAll('thead th');
+            headers.forEach(th => {
+                const width = th.getBoundingClientRect().width;
+                th.style.width = width + 'px';
+            });
+
+            // Re-hide the rows that were hidden
+            hiddenRows.forEach(row => {
+                row.hidden = true;
+            });
         }
 
         copyMaxWidthToWrapper() {
@@ -538,7 +583,7 @@
             const activePanel = e.detail?.panel;
             if (activePanel) {
                 // Find all responsive tables inside the activated tab panel
-                const tables = activePanel.querySelectorAll('.nds-table.nds-responsive[data-nds-responsive-initialized]');
+                const tables = activePanel.querySelectorAll('.nds-table[data-nds-responsive-initialized]');
                 tables.forEach(table => {
                     if (table.ndsResponsiveTableInstance) {
                         // Debounce the recheck
@@ -563,10 +608,11 @@
                 return;
             }
 
-            // Initialize responsive wrapper ONLY for tables with nds-responsive class
+            // Initialize responsive wrapper for all tables
             // If table has --max-width, it will use that value
             // Otherwise, wrapper will use default max-width (100%)
-            if (table.classList.contains('nds-responsive') && !table.hasAttribute('data-nds-responsive-initialized')) {
+            // --min-width is auto-calculated from content if not explicitly set
+            if (!table.hasAttribute('data-nds-responsive-initialized')) {
                 const responsiveInstance = new NDSResponsiveTable(table);
                 table.ndsResponsiveTableInstance = responsiveInstance;
                 table.setAttribute('data-nds-responsive-initialized', 'true');
@@ -591,7 +637,7 @@
 
     // Recheck width for all responsive tables
     function recheckAllWidths() {
-        const responsiveTables = document.querySelectorAll('.nds-table.nds-responsive[data-nds-responsive-initialized]');
+        const responsiveTables = document.querySelectorAll('.nds-table[data-nds-responsive-initialized]');
         responsiveTables.forEach(table => {
             if (table.ndsResponsiveTableInstance && table.ndsResponsiveTableInstance.recheckWidth) {
                 table.ndsResponsiveTableInstance.recheckWidth();

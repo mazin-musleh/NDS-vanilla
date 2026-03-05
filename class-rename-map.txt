@@ -31,3 +31,16 @@ Topbar Utilities
 Body / Layout
 -------------
 body.minimal            → body.nds-minimal
+
+Pagination Content (pagination-item → nds-page-item)
+-----------------------------------------------------
+.pagination-item            → .nds-page-item
+.nds-pagination-content     → .nds-paged-content
+
+Table Sorting (sortable → nds-sortable-col)
+--------------------------------------------
+.sortable                   → .nds-sortable-col
+.sort-header                → .nds-sort-header
+.sorted-asc                 → .nds-sorted-asc
+.sorted-desc                → .nds-sorted-desc
+.sort-icon                  → .nds-sort-icon

@@ -323,12 +323,12 @@
 
             // Find the content container (previous sibling)
             const contentContainer = paginationNav.previousElementSibling;
-            if (!contentContainer || !contentContainer.classList.contains('nds-pagination-content')) {
+            if (!contentContainer || !contentContainer.classList.contains('nds-paged-content')) {
                 return;
             }
 
             // Get items
-            const items = Array.from(contentContainer.querySelectorAll('.pagination-item'));
+            const items = Array.from(contentContainer.querySelectorAll('.nds-page-item'));
 
             // Hide all items initially to prevent CLS (Cumulative Layout Shift)
             items.forEach(item => item.hidden = true);
@@ -506,7 +506,7 @@
             const contentContainer = paginationNav.previousElementSibling;
             let targetElement = null;
 
-            if (contentContainer && contentContainer.classList.contains('nds-pagination-content')) {
+            if (contentContainer && contentContainer.classList.contains('nds-paged-content')) {
                 targetElement = contentContainer;
             } else if (paginationNav.previousElementSibling) {
                 // Fallback: scroll to any previous sibling element
@@ -561,7 +561,7 @@
         if (!pagination) return;
 
         // Skip if this is an auto-pagination (already handled)
-        const paginationNav = pagination.closest('.nds-pagination-nav, nds-pagination-nav');
+        const paginationNav = pagination.closest('.nds-pagination-nav, .nds-auto-pagination');
         if (paginationNav && paginationNav.hasAttribute('data-nds-auto-pagination-initialized')) {
             return;
         }
@@ -634,7 +634,7 @@
         if (!paginationNav) return;
 
         // Get only visible (non-filtered) items
-        const allItems = Array.from(contentContainer.querySelectorAll('.pagination-item'));
+        const allItems = Array.from(contentContainer.querySelectorAll('.nds-page-item'));
         const visibleItems = allItems.filter(item => !item.hasAttribute('data-filtered') && !item.classList.contains('nds-filtered-out'));
 
         const perPage = parseInt(getComputedStyle(contentContainer).getPropertyValue('--per-page')) || 5;
@@ -669,7 +669,7 @@
         const newPagination = paginationNav.querySelector('.nds-pagination');
         newPagination.addEventListener('click', (e) => {
             // Re-get visible items in case filter changed
-            const currentVisibleItems = Array.from(contentContainer.querySelectorAll('.pagination-item'))
+            const currentVisibleItems = Array.from(contentContainer.querySelectorAll('.nds-page-item'))
                 .filter(item => !item.hasAttribute('data-filtered') && !item.classList.contains('nds-filtered-out'));
 
             // Check for page buttons/links

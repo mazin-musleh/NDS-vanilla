@@ -305,7 +305,7 @@
                     '[hidden].nds-dropmenu-menu, ' +
                     '[hidden].nds-nav-container, ' +
                     '[hidden].nds-swiper, ' +
-                    '[hidden].nds-pagination-content, ' +
+                    '[hidden].nds-paged-content, ' +
                     '[hidden].nds-footer, ' +
                     '[hidden].nds-sideInfo '
                 );

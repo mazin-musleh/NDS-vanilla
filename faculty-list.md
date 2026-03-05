@@ -67,11 +67,11 @@ exclude_showcase: true
         </div>
     </div>
     <div class="nds-section-content">
-        <div id="faculty_list_content" class="nds-pagination-content nds-grid"
+        <div id="faculty_list_content" class="nds-paged-content nds-grid"
             style="--per-page: 12; --max-col: 3; --mid-col: 3; --min-col: 1;" hidden>
             <!-- Card 1 - Male -->
             <a href="{{ 'faculty.html' | relative_url }}"
-                class="pagination-item nds-card nds-stroke nds-user nds-center">
+                class="nds-page-item nds-card nds-stroke nds-user nds-center">
                 <div class="nds-card-header">
                     <div class="nds-card-image nds-avatar nds-2xl nds-image-border">
                         <img src="{{ 'assets/img/avatar3.png' | relative_url }}" width="92" height="92"
@@ -88,7 +88,7 @@ exclude_showcase: true
             </a>
             <!-- Card 2 - Male -->
             <a href="{{ 'faculty.html' | relative_url }}"
-                class="pagination-item nds-card nds-stroke nds-user nds-center">
+                class="nds-page-item nds-card nds-stroke nds-user nds-center">
                 <div class="nds-card-header">
                     <div class="nds-card-image nds-avatar nds-2xl">
                         <i class="hgi hgi-stroke hgi-user"></i>
@@ -104,7 +104,7 @@ exclude_showcase: true
             </a>
             <!-- Card 3 - Female -->
             <a href="{{ 'faculty.html' | relative_url }}"
-                class="pagination-item nds-card nds-stroke nds-user nds-center">
+                class="nds-page-item nds-card nds-stroke nds-user nds-center">
                 <div class="nds-card-header">
                     <div class="nds-card-image nds-avatar nds-2xl nds-image-border">
                         <img src="{{ 'assets/img/avatar2.png' | relative_url }}" width="92" height="92"
@@ -121,7 +121,7 @@ exclude_showcase: true
             </a>
             <!-- Card 4 - Male -->
             <a href="{{ 'faculty.html' | relative_url }}"
-                class="pagination-item nds-card nds-stroke nds-user nds-center">
+                class="nds-page-item nds-card nds-stroke nds-user nds-center">
                 <div class="nds-card-header">
                     <div class="nds-card-image nds-avatar nds-2xl">
                         <i class="hgi hgi-stroke hgi-user"></i>
@@ -137,7 +137,7 @@ exclude_showcase: true
             </a>
             <!-- Card 5 - Female -->
             <a href="{{ 'faculty.html' | relative_url }}"
-                class="pagination-item nds-card nds-stroke nds-user nds-center">
+                class="nds-page-item nds-card nds-stroke nds-user nds-center">
                 <div class="nds-card-header">
                     <div class="nds-card-image nds-avatar nds-2xl nds-image-border">
                         <img src="{{ 'assets/img/avatar4.png' | relative_url }}" width="92" height="92"
@@ -154,7 +154,7 @@ exclude_showcase: true
             </a>
             <!-- Card 6 - Male -->
             <a href="{{ 'faculty.html' | relative_url }}"
-                class="pagination-item nds-card nds-stroke nds-user nds-center">
+                class="nds-page-item nds-card nds-stroke nds-user nds-center">
                 <div class="nds-card-header">
                     <div class="nds-card-image nds-avatar nds-2xl">
                         <i class="hgi hgi-stroke hgi-user"></i>
@@ -170,7 +170,7 @@ exclude_showcase: true
             </a>
             <!-- Card 7 - Female -->
             <a href="{{ 'faculty.html' | relative_url }}"
-                class="pagination-item nds-card nds-stroke nds-user nds-center">
+                class="nds-page-item nds-card nds-stroke nds-user nds-center">
                 <div class="nds-card-header">
                     <div class="nds-card-image nds-avatar nds-2xl nds-image-border">
                         <img src="{{ 'assets/img/avatar5.png' | relative_url }}" width="92" height="92"
@@ -187,7 +187,7 @@ exclude_showcase: true
             </a>
             <!-- Card 8 - Male -->
             <a href="{{ 'faculty.html' | relative_url }}"
-                class="pagination-item nds-card nds-stroke nds-user nds-center">
+                class="nds-page-item nds-card nds-stroke nds-user nds-center">
                 <div class="nds-card-header">
                     <div class="nds-card-image nds-avatar nds-2xl">
                         <i class="hgi hgi-stroke hgi-user"></i>
@@ -203,7 +203,7 @@ exclude_showcase: true
             </a>
             <!-- Card 9 - Female -->
             <a href="{{ 'faculty.html' | relative_url }}"
-                class="pagination-item nds-card nds-stroke nds-user nds-center">
+                class="nds-page-item nds-card nds-stroke nds-user nds-center">
                 <div class="nds-card-header">
                     <div class="nds-card-image nds-avatar nds-2xl">
                         <i class="hgi hgi-stroke hgi-user"></i>
@@ -219,7 +219,7 @@ exclude_showcase: true
             </a>
             <!-- Card 10 - Male -->
             <a href="{{ 'faculty.html' | relative_url }}"
-                class="pagination-item nds-card nds-stroke nds-user nds-center">
+                class="nds-page-item nds-card nds-stroke nds-user nds-center">
                 <div class="nds-card-header">
                     <div class="nds-card-image nds-avatar nds-2xl">
                         <i class="hgi hgi-stroke hgi-user"></i>
@@ -235,7 +235,7 @@ exclude_showcase: true
             </a>
             <!-- Card 11 - Female -->
             <a href="{{ 'faculty.html' | relative_url }}"
-                class="pagination-item nds-card nds-stroke nds-user nds-center">
+                class="nds-page-item nds-card nds-stroke nds-user nds-center">
                 <div class="nds-card-header">
                     <div class="nds-card-image nds-avatar nds-2xl">
                         <i class="hgi hgi-stroke hgi-user"></i>
@@ -251,7 +251,7 @@ exclude_showcase: true
             </a>
             <!-- Card 12 - Male -->
             <a href="{{ 'faculty.html' | relative_url }}"
-                class="pagination-item nds-card nds-stroke nds-user nds-center">
+                class="nds-page-item nds-card nds-stroke nds-user nds-center">
                 <div class="nds-card-header">
                     <div class="nds-card-image nds-avatar nds-2xl">
                         <i class="hgi hgi-stroke hgi-user"></i>
@@ -267,7 +267,7 @@ exclude_showcase: true
             </a>
             <!-- Card 13 - Female -->
             <a href="{{ 'faculty.html' | relative_url }}"
-                class="pagination-item nds-card nds-stroke nds-user nds-center">
+                class="nds-page-item nds-card nds-stroke nds-user nds-center">
                 <div class="nds-card-header">
                     <div class="nds-card-image nds-avatar nds-2xl">
                         <i class="hgi hgi-stroke hgi-user"></i>
@@ -283,7 +283,7 @@ exclude_showcase: true
             </a>
             <!-- Card 14 - Male -->
             <a href="{{ 'faculty.html' | relative_url }}"
-                class="pagination-item nds-card nds-stroke nds-user nds-center">
+                class="nds-page-item nds-card nds-stroke nds-user nds-center">
                 <div class="nds-card-header">
                     <div class="nds-card-image nds-avatar nds-2xl">
                         <i class="hgi hgi-stroke hgi-user"></i>
@@ -299,7 +299,7 @@ exclude_showcase: true
             </a>
             <!-- Card 15 - Female -->
             <a href="{{ 'faculty.html' | relative_url }}"
-                class="pagination-item nds-card nds-stroke nds-user nds-center">
+                class="nds-page-item nds-card nds-stroke nds-user nds-center">
                 <div class="nds-card-header">
                     <div class="nds-card-image nds-avatar nds-2xl">
                         <i class="hgi hgi-stroke hgi-user"></i>
@@ -315,7 +315,7 @@ exclude_showcase: true
             </a>
             <!-- Card 16 - Male -->
             <a href="{{ 'faculty.html' | relative_url }}"
-                class="pagination-item nds-card nds-stroke nds-user nds-center">
+                class="nds-page-item nds-card nds-stroke nds-user nds-center">
                 <div class="nds-card-header">
                     <div class="nds-card-image nds-avatar nds-2xl">
                         <i class="hgi hgi-stroke hgi-user"></i>
@@ -331,7 +331,7 @@ exclude_showcase: true
             </a>
             <!-- Card 17 - Female -->
             <a href="{{ 'faculty.html' | relative_url }}"
-                class="pagination-item nds-card nds-stroke nds-user nds-center">
+                class="nds-page-item nds-card nds-stroke nds-user nds-center">
                 <div class="nds-card-header">
                     <div class="nds-card-image nds-avatar nds-2xl">
                         <i class="hgi hgi-stroke hgi-user"></i>
@@ -347,7 +347,7 @@ exclude_showcase: true
             </a>
             <!-- Card 18 - Male -->
             <a href="{{ 'faculty.html' | relative_url }}"
-                class="pagination-item nds-card nds-stroke nds-user nds-center">
+                class="nds-page-item nds-card nds-stroke nds-user nds-center">
                 <div class="nds-card-header">
                     <div class="nds-card-image nds-avatar nds-2xl">
                         <i class="hgi hgi-stroke hgi-user"></i>
@@ -363,7 +363,7 @@ exclude_showcase: true
             </a>
             <!-- Card 19 - Female -->
             <a href="{{ 'faculty.html' | relative_url }}"
-                class="pagination-item nds-card nds-stroke nds-user nds-center">
+                class="nds-page-item nds-card nds-stroke nds-user nds-center">
                 <div class="nds-card-header">
                     <div class="nds-card-image nds-avatar nds-2xl">
                         <i class="hgi hgi-stroke hgi-user"></i>
@@ -379,7 +379,7 @@ exclude_showcase: true
             </a>
             <!-- Card 20 - Male -->
             <a href="{{ 'faculty.html' | relative_url }}"
-                class="pagination-item nds-card nds-stroke nds-user nds-center">
+                class="nds-page-item nds-card nds-stroke nds-user nds-center">
                 <div class="nds-card-header">
                     <div class="nds-card-image nds-avatar nds-2xl">
                         <i class="hgi hgi-stroke hgi-user"></i>
