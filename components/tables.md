@@ -783,7 +783,7 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Responsive Table</h2>
-            <p class="nds-section-description">Table with horizontal scroll and gradient mask for overflow content</p>
+            <p class="nds-section-description">Add <strong>nds-responsive</strong> to any nds-table to enable horizontal scroll with gradient fade masks on overflow. JS auto-wraps the table in an nds-table-wrapper — no manual wrapper needed. Use <strong>--max-width</strong> CSS var to constrain width.</p>
         </div>
         <div class="nds-section-content">
             <div class="nds-showcase">
@@ -897,10 +897,12 @@ direction: ltr
                                   </tbody>
                                 </table>
 
-                                <!-- Custom max-width options -->
+                                <!-- Usage: add nds-responsive class to nds-table -->
+                                <!-- JS auto-wraps in nds-table-wrapper with scroll detection + gradient masks -->
+                                <!-- Optional --max-width constrains the wrapper width: -->
                                 <!-- style="--max-width: 600px;" - Fixed pixel width -->
-                                <!-- style="--max-width: 80%;" - Percentage of parent -->
-                                <!-- No style attribute - Full width (100%) -->
+                                <!-- style="--max-width: 80%;"   - Percentage of parent -->
+                                <!-- No style attribute           - Full width (100%) -->
                                 </code>
                             </div>
                         </div>

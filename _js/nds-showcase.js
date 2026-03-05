@@ -341,7 +341,7 @@
         const isDeselecting = button.classList.contains('selected');
 
         togglePairs.forEach(([classNamesOrAttrs, targetSelector, type, operation, action]) => {
-            if (!classNamesOrAttrs || !targetSelector) {
+            if (!targetSelector || (!classNamesOrAttrs && (!operation || operation === 'class'))) {
                 return;
             }
 
@@ -479,6 +479,9 @@
                 } else if (operationType === 'prop') {
                     // Handle native JS property toggling (e.g. indeterminate)
                     handlePropertyToggling(targetElement, classNamesOrAttrs);
+                } else if (operationType === 'chart') {
+                    // Handle chart option toggling via NDSChart API
+                    handleChartToggling(targetElement, button, isDeselecting);
                 } else if (operationType === 'content-prepend' || operationType === 'content-append') {
                     // Handle content toggling (append/prepend)
                     handleContentToggling(targetElement, classNamesOrAttrs, operationType);
@@ -534,6 +537,11 @@
         if (buttonTypes.length === 1) {
             updateAlertCodeFromToggles(demoCard, buttonTypes[0]);
             updateFeedbackCodeFromToggles(demoCard, buttonTypes[0]);
+        }
+
+        // Update chart JS code example from current toggle states
+        if (togglePairs.some(([,,, op]) => op === 'chart')) {
+            updateChartCodeFromToggles(demoCard);
         }
     }
 
@@ -1037,6 +1045,45 @@
             /color:\s*(true|false)/,
             `color: ${hasColor}`
         );
+
+        updateCodeFromHiddenCopy(jsCodeElement, updatedCode);
+    }
+
+    // Handle chart option toggling — calls NDSChart update() API
+    function handleChartToggling(targetElement, button, isDeselecting) {
+        if (!targetElement || !targetElement.ndsChart) return;
+        var optsAttr = isDeselecting ? button.getAttribute('data-chart-opt-off') : button.getAttribute('data-chart-opt');
+        if (!optsAttr) return;
+        try {
+            var opts = JSON.parse(optsAttr);
+            targetElement.ndsChart.update(opts);
+        } catch (e) { /* invalid JSON */ }
+    }
+
+    // Update chart JS code example based on current toggle button states
+    function updateChartCodeFromToggles(demoCard) {
+        var jsCodeElement = demoCard.querySelector('.code-example code.lang-js');
+        if (!jsCodeElement) return;
+
+        var hiddenCopy = getHiddenCodeCopy(jsCodeElement);
+        if (!hiddenCopy) return;
+
+        var updatedCode = hiddenCopy.textContent;
+
+        // Read all chart toggle buttons and apply their current state to the code
+        demoCard.querySelectorAll('[data-toggler*="chart"]').forEach(function (btn) {
+            var isOn = btn.classList.contains('selected');
+            var codeReplace = btn.getAttribute('data-code-on');
+            var codeReplaceOff = btn.getAttribute('data-code-off');
+            if (!codeReplace || !codeReplaceOff) return;
+
+            // Replace the off pattern with on pattern or vice versa
+            if (isOn) {
+                updatedCode = updatedCode.split(codeReplaceOff).join(codeReplace);
+            } else {
+                updatedCode = updatedCode.split(codeReplace).join(codeReplaceOff);
+            }
+        });
 
         updateCodeFromHiddenCopy(jsCodeElement, updatedCode);
     }
