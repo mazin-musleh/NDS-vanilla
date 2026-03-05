@@ -66,6 +66,7 @@
     .nds-swiper:not(.nds-hero) & {
         padding-block-end: var(--spacing-xl);
         margin-block-end: calc(var(--spacing-xl) / 2 * -1);
+        padding-inline: max(2px, var(--swiper-padding)); //2px min for shadow
     }
 
 }
