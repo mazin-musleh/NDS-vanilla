@@ -27,7 +27,6 @@
   position: center 80%
   #class: custom_calss
   content: |
-    <img src="{relative_url}/assets/img/dga-logo.svg" width="150" height="48" loading="lazy" alt="National Design System Logo">
     <h1 class="nds-section-title">National Design System</h1>
     <p class="nds-section-description">Building consistent digital experiences for Saudi Arabia</p>
 
