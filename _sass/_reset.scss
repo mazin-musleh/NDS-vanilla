@@ -79,7 +79,8 @@ hr {
     font-weight: 600;
     font-size: var(--nds-display-clamp-xs-FS);
     line-height: var(--nds-display-clamp-xs-FS);
-    margin-bottom: var(--nds-display-clamp-xs-MB);
+    margin-bottom: calc(var(--nds-display-clamp-xs-MB)*2);
+    margin-top: calc(var(--nds-display-clamp-xs-MB)*4);
     color: var(--text-display, #1f2a37);
 
     &:first-child {
