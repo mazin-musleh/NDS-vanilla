@@ -311,22 +311,22 @@ direction: ltr
                         <table class="nds-table nds-sortable">
                             <thead>
                                 <tr>
-                                    <th class="sortable">
-                                        <button class="nds-btn sort-header">
+                                    <th class="nds-sortable-col">
+                                        <button class="nds-btn nds-sort-header">
                                             <span class="label">Department</span>
-                                            <i class="hgi hgi-stroke hgi-arrow-up-down sort-icon"></i>
+                                            <i class="hgi hgi-stroke hgi-arrow-up-down nds-sort-icon"></i>
                                         </button>
                                     </th>
-                                    <th class="sortable sorted-asc">
-                                        <button class="nds-btn sort-header">
+                                    <th class="nds-sortable-col nds-sorted-asc">
+                                        <button class="nds-btn nds-sort-header">
                                             <span class="label">Employees</span>
-                                            <i class="hgi hgi-stroke hgi-arrow-up sort-icon"></i>
+                                            <i class="hgi hgi-stroke hgi-arrow-up nds-sort-icon"></i>
                                         </button>
                                     </th>
-                                    <th class="sortable">
-                                        <button class="nds-btn sort-header">
+                                    <th class="nds-sortable-col">
+                                        <button class="nds-btn nds-sort-header">
                                             <span class="label">Budget</span>
-                                            <i class="hgi hgi-stroke hgi-arrow-up-down sort-icon"></i>
+                                            <i class="hgi hgi-stroke hgi-arrow-up-down nds-sort-icon"></i>
                                         </button>
                                     </th>
                                     <th>Status</th>
@@ -388,22 +388,22 @@ direction: ltr
                                 <table class="nds-table nds-sortable">
                                   <thead>
                                     <tr>
-                                      <th class="sortable">
-                                        <button class="nds-btn sort-header">
+                                      <th class="nds-sortable-col">
+                                        <button class="nds-btn nds-sort-header">
                                           Department
-                                          <i class="hgi hgi-stroke hgi-arrow-up-down sort-icon"></i>
+                                          <i class="hgi hgi-stroke hgi-arrow-up-down nds-sort-icon"></i>
                                         </button>
                                       </th>
-                                      <th class="sortable sorted-asc">
-                                        <button class="nds-btn sort-header">
+                                      <th class="nds-sortable-col nds-sorted-asc">
+                                        <button class="nds-btn nds-sort-header">
                                           Employees
-                                          <i class="hgi hgi-stroke hgi-arrow-up sort-icon"></i>
+                                          <i class="hgi hgi-stroke hgi-arrow-up nds-sort-icon"></i>
                                         </button>
                                       </th>
-                                      <th class="sortable">
-                                        <button class="nds-btn sort-header">
+                                      <th class="nds-sortable-col">
+                                        <button class="nds-btn nds-sort-header">
                                           Budget
-                                          <i class="hgi hgi-stroke hgi-arrow-up-down sort-icon"></i>
+                                          <i class="hgi hgi-stroke hgi-arrow-up-down nds-sort-icon"></i>
                                         </button>
                                       </th>
                                       <th>Status</th>
@@ -783,7 +783,7 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Responsive Table</h2>
-            <p class="nds-section-description">Add <strong>nds-responsive</strong> to any nds-table to enable horizontal scroll with gradient fade masks on overflow. JS auto-wraps the table in an nds-table-wrapper — no manual wrapper needed. Use <strong>--max-width</strong> CSS var to constrain width.</p>
+            <p class="nds-section-description">All tables are responsive by default — JS auto-wraps every <strong>nds-table</strong> in an nds-table-wrapper with horizontal scroll and gradient fade masks on overflow. Use <strong>--max-width</strong> to constrain wrapper width and <strong>--min-width</strong> to lock the table's minimum width. If <strong>--min-width</strong> is not set, the JS auto-calculates it from the table's natural content width so cells never shrink.</p>
         </div>
         <div class="nds-section-content">
             <div class="nds-showcase">
@@ -799,7 +799,7 @@ direction: ltr
                 </div>
                 <div class="demo-container">
                     <div class="state-demo">
-                        <table class="nds-table nds-responsive" style="--max-width: 600px;">
+                        <table class="nds-table" style="--max-width: 600px;">
                             <thead>
                                 <tr>
                                     <th>Employee ID</th>
@@ -872,7 +872,7 @@ direction: ltr
                             </div>
                             <div class="nds-expandable-content">
                                 <code class="lang-html code">
-                                <table class="nds-table nds-responsive" style="--max-width: 600px;">
+                                <table class="nds-table" style="--max-width: 600px;">
                                   <thead>
                                     <tr>
                                       <th>Employee ID</th>
@@ -897,12 +897,156 @@ direction: ltr
                                   </tbody>
                                 </table>
 
-                                <!-- Usage: add nds-responsive class to nds-table -->
+                                <!-- All nds-table elements are responsive by default -->
                                 <!-- JS auto-wraps in nds-table-wrapper with scroll detection + gradient masks -->
-                                <!-- Optional --max-width constrains the wrapper width: -->
+
+                                <!-- --max-width: constrains the wrapper width -->
                                 <!-- style="--max-width: 600px;" - Fixed pixel width -->
                                 <!-- style="--max-width: 80%;"   - Percentage of parent -->
-                                <!-- No style attribute           - Full width (100%) -->
+                                <!-- No --max-width              - Full width (100%) -->
+
+                                <!-- --min-width: locks the table's minimum width (cells won't shrink below this) -->
+                                <!-- style="--min-width: 900px;" - Explicit minimum width -->
+                                <!-- No --min-width              - Auto-calculated from content (default) -->
+                                </code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Paginated Table Section -->
+<section id="paginatedTableOverview" class="nds-content-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Table with Pagination</h2>
+            <p class="nds-section-description">Large datasets can be paginated using the <strong>nds-auto-pagination</strong> system. Add <strong>nds-page-item</strong> class to each <code>&lt;tr&gt;</code> in <code>&lt;tbody&gt;</code> and set <strong>--per-page</strong> on the content wrapper.</p>
+        </div>
+        <div class="nds-section-content">
+            <div class="nds-showcase">
+            <div class="nds-demo-card">
+                <div class="demo-header">
+                    <div class="demo-label">Paginated Services Table ({{ site.data.content.services | size }} items, 5 per page)</div>
+                    <div class="demo-action">
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                            <span class="label">Remove bg</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="demo-container">
+                    <div class="state-demo">
+                        <div class="nds-paged-content" style="--per-page: 5;">
+                            <table class="nds-table nds-compact nds-sortable">
+                                <thead>
+                                    <tr>
+                                        <th class="nds-sortable-col">
+                                            <button class="nds-btn nds-sort-header">
+                                                <span class="label">#</span>
+                                                <i class="hgi hgi-stroke hgi-arrow-up-down nds-sort-icon"></i>
+                                            </button>
+                                        </th>
+                                        <th class="nds-sortable-col">
+                                            <button class="nds-btn nds-sort-header">
+                                                <span class="label">Service</span>
+                                                <i class="hgi hgi-stroke hgi-arrow-up-down nds-sort-icon"></i>
+                                            </button>
+                                        </th>
+                                        <th class="nds-sortable-col">
+                                            <button class="nds-btn nds-sort-header">
+                                                <span class="label">System</span>
+                                                <i class="hgi hgi-stroke hgi-arrow-up-down nds-sort-icon"></i>
+                                            </button>
+                                        </th>
+                                        <th>Popularity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for service in site.data.content.services %}
+                                    <tr class="nds-page-item" hidden>
+                                        <td>{{ forloop.index }}</td>
+                                        <td>{{ service.title }}</td>
+                                        <td><span class="nds-tag nds-info nds-sm"><span class="label">{{ service.system }}</span></span></td>
+                                        <td>
+                                            {% if service.most_used %}
+                                            <span class="nds-tag nds-success nds-status nds-sm"><span class="label">Most Used</span></span>
+                                            {% else %}
+                                            <span class="nds-tag nds-neutral nds-status nds-sm"><span class="label">Standard</span></span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <nav class="nds-pagination-nav nds-auto-pagination" aria-label="Table pagination"></nav>
+                    </div>
+                </div>
+                <div class="demo-code">
+                <div class="nds-tabs nds-code nds-divided" hidden>
+                    <div class="nds-tab-list-container">
+                        <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                            <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                aria-controls="panel-paginated-1" id="tab-paginated-1">
+                                <span class="nds-tab-label">HTML</span>
+                            </button>
+                        </nav>
+                    </div>
+                    <div class="nds-tab-content">
+                        <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-paginated-1"
+                            aria-labelledby="tab-paginated-1">
+                            <div class="nds-code-action">
+                                <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                </button>
+                            </div>
+                            <div class="nds-expandable-content">
+                                <code class="lang-html code">
+                                <!-- Wrap table in nds-paged-content with --per-page -->
+                                <div class="nds-paged-content" style="--per-page: 5;">
+                                  <table class="nds-table nds-sortable">
+                                    <thead>
+                                      <tr>
+                                        <th class="nds-sortable-col">
+                                          <button class="nds-btn nds-sort-header">
+                                            <span class="label">#</span>
+                                            <i class="hgi hgi-stroke hgi-arrow-up-down nds-sort-icon"></i>
+                                          </button>
+                                        </th>
+                                        <th class="nds-sortable-col">
+                                          <button class="nds-btn nds-sort-header">
+                                            <span class="label">Service</span>
+                                            <i class="hgi hgi-stroke hgi-arrow-up-down nds-sort-icon"></i>
+                                          </button>
+                                        </th>
+                                        <th class="nds-sortable-col">
+                                          <button class="nds-btn nds-sort-header">
+                                            <span class="label">System</span>
+                                            <i class="hgi hgi-stroke hgi-arrow-up-down nds-sort-icon"></i>
+                                          </button>
+                                        </th>
+                                        <th>Popularity</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <!-- Add nds-page-item class and hidden attr to each tr -->
+                                      <tr class="nds-page-item" hidden>
+                                        <td>1</td>
+                                        <td>Identity Verification</td>
+                                        <td><span class="nds-tag nds-info nds-sm"><span class="label">Identity System</span></span></td>
+                                        <td><span class="nds-tag nds-success nds-status nds-sm"><span class="label">Most Used</span></span></td>
+                                      </tr>
+                                      <!-- ... more rows ... -->
+                                    </tbody>
+                                  </table>
+                                </div>
+                                <!-- Auto-pagination nav placed right after the content wrapper -->
+                                <nav class="nds-pagination-nav nds-auto-pagination" aria-label="Table pagination"></nav>
                                 </code>
                             </div>
                         </div>

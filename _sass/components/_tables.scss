@@ -104,9 +104,8 @@
         border-bottom: 1px solid var(--table-cell-border);
         text-align: start;
         vertical-align: middle;
+        white-space: nowrap;
         height: 64px;
-
-
 
         &:last-child {
             border-right: none;
@@ -188,11 +187,11 @@
 // ==============================================
 
 .nds-table.nds-sortable {
-    th.sortable {
+    th.nds-sortable-col {
         padding: 0;
         position: relative;
 
-        .sort-header {
+        .nds-sort-header {
             width: 100%;
             padding: var(--table-cell-v-padding) var(--table-cell-h-padding);
             background: transparent;
@@ -216,7 +215,7 @@
                 outline: none;
             }
 
-            .sort-icon {
+            .nds-sort-icon {
                 font-size: var(--nds-text-sm-FS);
                 color: var(--colors-neutral-500);
             }
@@ -227,13 +226,13 @@
 
         }
 
-        th.sortable // Sorted states
+        th.nds-sortable-col // Sorted states
 
-        &.sorted-asc .sort-header .sort-icon {
+        &.nds-sorted-asc .nds-sort-header .nds-sort-icon {
             color: var(--colors-primary-sa-flag-600-primary);
         }
 
-        &.sorted-desc .sort-header .sort-icon {
+        &.nds-sorted-desc .nds-sort-header .nds-sort-icon {
             color: var(--colors-primary-sa-flag-600-primary);
         }
     }

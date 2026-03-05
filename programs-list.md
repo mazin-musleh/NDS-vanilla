@@ -68,11 +68,11 @@ exclude_showcase: true
         </div>
     </div>
     <div class="nds-section-content">
-        <div id="programs_list_content" class="nds-pagination-content nds-grid" hidden
+        <div id="programs_list_content" class="nds-paged-content nds-grid" hidden
             style="--per-page: 12; --max-col: 3; --mid-col: 2; --min-col: 1;">
 
             <!-- Program 1 - بكالوريوس -->
-            <a href="{{ 'program.html' | relative_url }}" class="pagination-item nds-card nds-stroke">
+            <a href="{{ 'program.html' | relative_url }}" class="nds-page-item nds-card nds-stroke">
                 <div class="nds-card-content">
                     <div class="nds-card-text">
                         <h3 class="nds-card-title nds-truncate">علوم الحاسب الآلي</h3>
@@ -88,7 +88,7 @@ exclude_showcase: true
             </a>
 
             <!-- Program 2 - بكالوريوس -->
-            <a href="{{ 'program.html' | relative_url }}" class="pagination-item nds-card nds-stroke">
+            <a href="{{ 'program.html' | relative_url }}" class="nds-page-item nds-card nds-stroke">
                 <div class="nds-card-content">
                     <div class="nds-card-text">
                         <h3 class="nds-card-title nds-truncate">نظم المعلومات</h3>
@@ -104,7 +104,7 @@ exclude_showcase: true
             </a>
 
             <!-- Program 3 - بكالوريوس -->
-            <a href="{{ 'program.html' | relative_url }}" class="pagination-item nds-card nds-stroke">
+            <a href="{{ 'program.html' | relative_url }}" class="nds-page-item nds-card nds-stroke">
                 <div class="nds-card-content">
                     <div class="nds-card-text">
                         <h3 class="nds-card-title nds-truncate">هندسة البرمجيات</h3>
@@ -120,7 +120,7 @@ exclude_showcase: true
             </a>
 
             <!-- Program 4 - بكالوريوس -->
-            <a href="{{ 'program.html' | relative_url }}" class="pagination-item nds-card nds-stroke">
+            <a href="{{ 'program.html' | relative_url }}" class="nds-page-item nds-card nds-stroke">
                 <div class="nds-card-content">
                     <div class="nds-card-text">
                         <h3 class="nds-card-title nds-truncate">الذكاء الاصطناعي</h3>
@@ -136,7 +136,7 @@ exclude_showcase: true
             </a>
 
             <!-- Program 5 - بكالوريوس -->
-            <a href="{{ 'program.html' | relative_url }}" class="pagination-item nds-card nds-stroke">
+            <a href="{{ 'program.html' | relative_url }}" class="nds-page-item nds-card nds-stroke">
                 <div class="nds-card-content">
                     <div class="nds-card-text">
                         <h3 class="nds-card-title nds-truncate">الأمن السيبراني</h3>
@@ -152,7 +152,7 @@ exclude_showcase: true
             </a>
 
             <!-- Program 6 - بكالوريوس -->
-            <a href="{{ 'program.html' | relative_url }}" class="pagination-item nds-card nds-stroke">
+            <a href="{{ 'program.html' | relative_url }}" class="nds-page-item nds-card nds-stroke">
                 <div class="nds-card-content">
                     <div class="nds-card-text">
                         <h3 class="nds-card-title nds-truncate">إدارة الأعمال</h3>
@@ -167,7 +167,7 @@ exclude_showcase: true
             </a>
 
             <!-- Program 7 - بكالوريوس -->
-            <a href="{{ 'program.html' | relative_url }}" class="pagination-item nds-card nds-stroke">
+            <a href="{{ 'program.html' | relative_url }}" class="nds-page-item nds-card nds-stroke">
                 <div class="nds-card-content">
                     <div class="nds-card-text">
                         <h3 class="nds-card-title nds-truncate">المحاسبة</h3>
@@ -182,7 +182,7 @@ exclude_showcase: true
             </a>
 
             <!-- Program 8 - بكالوريوس -->
-            <a href="{{ 'program.html' | relative_url }}" class="pagination-item nds-card nds-stroke">
+            <a href="{{ 'program.html' | relative_url }}" class="nds-page-item nds-card nds-stroke">
                 <div class="nds-card-content">
                     <div class="nds-card-text">
                         <h3 class="nds-card-title nds-truncate">التسويق</h3>
@@ -197,7 +197,7 @@ exclude_showcase: true
             </a>
 
             <!-- Program 9 - ماجستير -->
-            <a href="{{ 'program.html' | relative_url }}" class="pagination-item nds-card nds-stroke">
+            <a href="{{ 'program.html' | relative_url }}" class="nds-page-item nds-card nds-stroke">
                 <div class="nds-card-content">
                     <div class="nds-card-text">
                         <h3 class="nds-card-title nds-truncate">علوم الحاسب الآلي</h3>
@@ -213,7 +213,7 @@ exclude_showcase: true
             </a>
 
             <!-- Program 10 - ماجستير -->
-            <a href="{{ 'program.html' | relative_url }}" class="pagination-item nds-card nds-stroke">
+            <a href="{{ 'program.html' | relative_url }}" class="nds-page-item nds-card nds-stroke">
                 <div class="nds-card-content">
                     <div class="nds-card-text">
                         <h3 class="nds-card-title nds-truncate">الذكاء الاصطناعي</h3>
@@ -229,7 +229,7 @@ exclude_showcase: true
             </a>
 
             <!-- Program 11 - ماجستير -->
-            <a href="{{ 'program.html' | relative_url }}" class="pagination-item nds-card nds-stroke">
+            <a href="{{ 'program.html' | relative_url }}" class="nds-page-item nds-card nds-stroke">
                 <div class="nds-card-content">
                     <div class="nds-card-text">
                         <h3 class="nds-card-title nds-truncate">الأمن السيبراني</h3>
@@ -245,7 +245,7 @@ exclude_showcase: true
             </a>
 
             <!-- Program 12 - ماجستير -->
-            <a href="{{ 'program.html' | relative_url }}" class="pagination-item nds-card nds-stroke">
+            <a href="{{ 'program.html' | relative_url }}" class="nds-page-item nds-card nds-stroke">
                 <div class="nds-card-content">
                     <div class="nds-card-text">
                         <h3 class="nds-card-title nds-truncate">إدارة الأعمال التنفيذية</h3>
@@ -260,7 +260,7 @@ exclude_showcase: true
             </a>
 
             <!-- Program 13 - ماجستير -->
-            <a href="{{ 'program.html' | relative_url }}" class="pagination-item nds-card nds-stroke">
+            <a href="{{ 'program.html' | relative_url }}" class="nds-page-item nds-card nds-stroke">
                 <div class="nds-card-content">
                     <div class="nds-card-text">
                         <h3 class="nds-card-title nds-truncate">المالية</h3>
@@ -275,7 +275,7 @@ exclude_showcase: true
             </a>
 
             <!-- Program 14 - ماجستير -->
-            <a href="{{ 'program.html' | relative_url }}" class="pagination-item nds-card nds-stroke">
+            <a href="{{ 'program.html' | relative_url }}" class="nds-page-item nds-card nds-stroke">
                 <div class="nds-card-content">
                     <div class="nds-card-text">
                         <h3 class="nds-card-title nds-truncate">الهندسة الكهربائية</h3>
@@ -290,7 +290,7 @@ exclude_showcase: true
             </a>
 
             <!-- Program 15 - دكتوراه -->
-            <a href="{{ 'program.html' | relative_url }}" class="pagination-item nds-card nds-stroke">
+            <a href="{{ 'program.html' | relative_url }}" class="nds-page-item nds-card nds-stroke">
                 <div class="nds-card-content">
                     <div class="nds-card-text">
                         <h3 class="nds-card-title nds-truncate">علوم الحاسب الآلي</h3>
@@ -306,7 +306,7 @@ exclude_showcase: true
             </a>
 
             <!-- Program 16 - دكتوراه -->
-            <a href="{{ 'program.html' | relative_url }}" class="pagination-item nds-card nds-stroke">
+            <a href="{{ 'program.html' | relative_url }}" class="nds-page-item nds-card nds-stroke">
                 <div class="nds-card-content">
                     <div class="nds-card-text">
                         <h3 class="nds-card-title nds-truncate">الذكاء الاصطناعي</h3>
@@ -322,7 +322,7 @@ exclude_showcase: true
             </a>
 
             <!-- Program 17 - دكتوراه -->
-            <a href="{{ 'program.html' | relative_url }}" class="pagination-item nds-card nds-stroke">
+            <a href="{{ 'program.html' | relative_url }}" class="nds-page-item nds-card nds-stroke">
                 <div class="nds-card-content">
                     <div class="nds-card-text">
                         <h3 class="nds-card-title nds-truncate">إدارة الأعمال</h3>
@@ -337,7 +337,7 @@ exclude_showcase: true
             </a>
 
             <!-- Program 18 - دكتوراه -->
-            <a href="{{ 'program.html' | relative_url }}" class="pagination-item nds-card nds-stroke">
+            <a href="{{ 'program.html' | relative_url }}" class="nds-page-item nds-card nds-stroke">
                 <div class="nds-card-content">
                     <div class="nds-card-text">
                         <h3 class="nds-card-title nds-truncate">الهندسة الميكانيكية</h3>
@@ -352,7 +352,7 @@ exclude_showcase: true
             </a>
 
             <!-- Program 19 - بكالوريوس -->
-            <a href="{{ 'program.html' | relative_url }}" class="pagination-item nds-card nds-stroke">
+            <a href="{{ 'program.html' | relative_url }}" class="nds-page-item nds-card nds-stroke">
                 <div class="nds-card-content">
                     <div class="nds-card-text">
                         <h3 class="nds-card-title nds-truncate">الهندسة المدنية</h3>
@@ -367,7 +367,7 @@ exclude_showcase: true
             </a>
 
             <!-- Program 20 - بكالوريوس -->
-            <a href="{{ 'program.html' | relative_url }}" class="pagination-item nds-card nds-stroke">
+            <a href="{{ 'program.html' | relative_url }}" class="nds-page-item nds-card nds-stroke">
                 <div class="nds-card-content">
                     <div class="nds-card-text">
                         <h3 class="nds-card-title nds-truncate">الهندسة الكهربائية</h3>
