@@ -2,6 +2,23 @@
 
 :root {
     // ==============================================
+    // FOUNDATION LAYOUT TOKENS (user-customizable defaults)
+    // Users can override these via an optional inline <style>:root{...}</style>
+    // ==============================================
+
+    --nds-nav-height: 72px;
+    --nds-minimal-nav-item-height: 40px;
+    --nds-sideMenu-width: 260px;
+    --nds-sideMenu-toggle-height: 56px;
+    --nds-sideInfo-width: 400px;
+    --nds-minimal-nav-bp: 960px;
+    --nds-content-MaxWidth: 1280px;
+    --nds-viewport-base-padding: 32px;
+    --nds-transition-speed: .2;
+    --shadow-md: 0px 2px 4px -2px rgba(16, 24, 40, .06), 0px 4px 8px -2px rgba(16, 24, 40, .1);
+    --background-white: #fff;
+
+    // ==============================================
     // CRITICAL VARIABLES - ABOVE THE FOLD ONLY
     // ==============================================
 

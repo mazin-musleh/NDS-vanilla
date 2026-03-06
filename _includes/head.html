@@ -18,8 +18,6 @@
     <meta name="description"
         content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}">
     <title>{%- if page.title %}{{ page.title }} | {%- endif %}{{ site_title }}</title>
-    <!-- Critical CSS inline -->
-    {%- include critical-css.html %}
     <!-- Define deferred assets loader BEFORE any links that call it -->
     <script>
         function loadDeferredAssets() {
@@ -37,13 +35,9 @@
             document.head.appendChild(favicon);
         }
     </script>
-    <!-- Critical CSS - Load with deferred loading -->
-    <link rel="preload" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver=1.008" as="style"
-        onload="this.onload=null;this.rel='stylesheet'">
-    <noscript>
-        <link rel="stylesheet" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver=1.008">
-    </noscript>
-    <!-- Main CSS - Load with deferred loading for below-the-fold content -->
+    <!-- Critical CSS - Blocking (small, cacheable) -->
+    <link rel="stylesheet" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver=1.009">
+    <!-- Main CSS - Deferred loading for below-the-fold content -->
     <link rel="preload" href="{{ 'assets/css/nds-main.min.css' | relative_url }}?ver=1.064" as="style"
         onload="this.onload=null;this.rel='stylesheet';loadDeferredAssets()">
     <noscript>

@@ -1,12 +1,19 @@
 @use './mixins' as *;
 
-/* Note: CSS Reset & Normalization moved to _reset.scss */
-
 /* ========================================
-   ICON FONT VISIBILITY
-   Show icon elements once font is loaded
-   (hidden by default in critical-css.html)
+   ICON FONT VISIBILITY (FOUT Prevention)
+   Hidden by default, shown once font loads
    ======================================== */
+
+i.hgi-stroke,
+.nds-breadcrumb li:not(:last-child)::after,
+.nds-btn:is(.nds-menu-btn, .nds-next, .nds-prev, .nds-up, .nds-down)::after,
+:is(.nds-external)::after,
+.nds-form-control input[type="checkbox"]::after,
+:is(.nds-select, .nds-date-picker) .nds-form-control::after,
+.nds-step[data-step-state="completed"] .nds-stepper-circle::before {
+    opacity: 0;
+}
 
 body[data-font-loaded*="hgi-stroke-rounded"] {
 
@@ -30,6 +37,15 @@ body.nds-minimal[style*="--bg-img"] {
         linear-gradient(color-mix(in srgb, var(--background-body) var(--bg-opacity-top, 80%), transparent),
             color-mix(in srgb, var(--background-body) var(--bg-opacity-bottom, 80%), transparent)),
         var(--bg-img) center / cover no-repeat fixed;
+}
+
+.nds-text-icon {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: var(--spacing-xs, 4px);
+    border: unset;
+    background-color: transparent;
 }
 
 /* ========================================

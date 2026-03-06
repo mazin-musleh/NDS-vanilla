@@ -11,12 +11,19 @@
    ======================================== */
 
 .nds-topbar {
+    background-color: var(--background-neutral-100, #f3f4f6);
+    height: 40px;
+    z-index: 1000;
     position: relative;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
     /* Fallback for older browsers */
     overflow-y: clip;
+
+    > * {
+        visibility: visible;
+    }
 
     .nds-topbar-content {
         display: flex;
@@ -131,6 +138,7 @@
         }
 
         .nds-brand-name {
+            visibility: visible;
             line-height: var(--nds-text-clamp-md-LH);
             font-size: var(--nds-text-clamp-md-FS);
             display: flex;

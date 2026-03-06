@@ -1,0 +1,64 @@
+/* ========================================
+   SKELETON
+   Temporary layout reservations to prevent
+   CLS before main CSS loads.
+   Safe to remove — nothing breaks without it.
+   ======================================== */
+
+/* ── Navigation ── */
+.nds-main-nav {
+    height: var(--nds-nav-height, 72px);
+
+    .nds-brand {
+        height: var(--nds-nav-height);
+    }
+
+    .nds-brand-name {
+        visibility: hidden;
+    }
+}
+
+.nds-topbar {
+    height: 40px;
+    background-color: var(--background-neutral-100, #f3f4f6);
+
+    >* {
+        visibility: hidden;
+    }
+}
+
+/* ── Hero ── */
+.nds-hero-section:not(.sub) :is(.nds-section-title, .nds-section-description) {
+    color: var(--text-oncolor-primary, #fff);
+}
+
+.nds-swiper-wrapper {
+    display: flex;
+    height: 100%;
+}
+
+/* ── Content ── */
+.nds-hero-section :is(.nds-section-wrapper, .nds-section-head),
+.nds-content-layout {
+    visibility: hidden;
+}
+
+.nds-sideMenu {
+    width: var(--nds-sideMenu-width);
+    min-width: var(--nds-sideMenu-width);
+    background-color: var(--background-white);
+}
+
+/* ── Hidden components (reserve space) ── */
+[hidden]:is(.nds-tabs, .nds-swiper, .nds-breadcrumb-nav, .nds-sideInfo) {
+    display: block;
+    visibility: hidden;
+    overflow-x: hidden;
+    max-width: 100%;
+}
+
+/* ── Reveal once critical CSS loads ── */
+.nds-heroContent,
+.nds-content-layout {
+    visibility: visible;
+}
