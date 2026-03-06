@@ -20,6 +20,12 @@
     - label: "Services List"
       url: "/examples/services-list"
       href: "/examples/services-list.html"
+    - label: "Faculty"
+      url: "/examples/faculty"
+      href: "/examples/faculty.html"
+    - label: "Program"
+      url: "/examples/program"
+      href: "/examples/program.html"
       
 
 - label: "Components"
