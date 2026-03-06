@@ -100,8 +100,6 @@ exclude:
   - .sass-cache
   - .jekyll-cache
   - CLAUDE.md
-  - GPT.md
-  - DEVELOPMENT.md
   - package.json
   - package-lock.json
   - notes.txt
