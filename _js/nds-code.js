@@ -381,12 +381,21 @@
     function addLineNumbers(codeElement) {
         if (codeElement.dataset.lineNumbers === 'true') return;
 
-        const htmlContent = codeElement.innerHTML;
-        const textContent = codeElement.textContent;
+        let htmlContent = codeElement.innerHTML;
+        let textContent = codeElement.textContent;
+
+        // Strip leading newline (from <code> tag on its own line)
+        if (htmlContent.startsWith('\n')) {
+            htmlContent = htmlContent.substring(1);
+        }
+        if (textContent.startsWith('\n')) {
+            textContent = textContent.substring(1);
+        }
+
         const lines = textContent.split('\n');
 
         // Remove trailing empty line
-        if (lines[lines.length - 1].trim() === '') {
+        if (lines.length > 0 && lines[lines.length - 1].trim() === '') {
             lines.pop();
         }
 
