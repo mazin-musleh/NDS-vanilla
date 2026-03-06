@@ -189,26 +189,26 @@
 
     // Success icon
     [data-status="success"] & .icon:before {
-        content: "䂇";
+        content: "㶧";
     }
 
     // Info icon
     [data-status="info"] & .icon:before {
-        content: "䢵";
+        content: "䆾";
     }
 
     // Warning icon
     [data-status="warning"] & .icon:before {
-        content: "㬿";
+        content: "㬃";
     }
 
     // Error icon
     [data-status="error"] & .icon:before {
-        content: "㿃";
+        content: "㵅";
     }
 
     // Neutral icon
     [data-status="neutral"] & .icon:before {
-        content: "䞭";
+        content: "䄺";
     }
 }

@@ -225,7 +225,7 @@
     // ==============================================
 
     &:is(:checked, :indeterminate)::after {
-        content: "坉" !important;
+        content: "䤈" !important;
         font-family: "hgi-stroke-rounded" !important;
         font-style: normal;
         -webkit-font-smoothing: antialiased;
@@ -297,7 +297,7 @@
     // ==============================================
 
     &:indeterminate::after {
-        content: "儣" !important;
+        content: "䗵" !important;
     }
 
     // ==============================================

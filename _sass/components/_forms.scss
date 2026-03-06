@@ -299,7 +299,7 @@ fieldset {
 
 
         &::after {
-            content: "㯭";
+            content: "㭚";
             pointer-events: none;
             font-family: "hgi-stroke-rounded" !important;
             font-style: normal;
@@ -411,5 +411,5 @@ fieldset {
 }
 
 .toggle-password.show i::before {
-    content: "䔅";
+    content: "㿦";
 }
