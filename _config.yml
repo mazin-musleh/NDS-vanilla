@@ -7,15 +7,15 @@ port: 4002
 host: 0.0.0.0  # Allow network access for mobile testing
 
 # Brand Logo
-brandLogo: assets/img/dga-logo.svg
-headerBrandW: 150
+brandLogo: assets/img/palm_swords.svg
+headerBrandW: 48
 headerBrandH: 48
 
 # Brand Name
-#brandName: "National Design System" #comment this to remove text from brand
-#brandNameColor: var(--text-display)
-#brandSlogan: Vanilla, Compatible, Adaptive
-#brandSloganColor: var(--text-secondary-paragraph)
+brandName: "Vanilla NDS" #comment this to remove text from brand
+brandNameColor: var(--text-display,#1f2a37)
+brandSlogan: Compatible, Adaptive
+brandSloganColor: var(--text-secondary-paragraph,#6c727e)
 
 # Hero Settings (fallback defaults)
 hero_image: assets/img/riyadhcenter_ai.webp
