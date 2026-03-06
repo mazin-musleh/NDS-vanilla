@@ -50,6 +50,13 @@
     .nds-main-nav .nds-brand {
         height: var(--nds-nav-height);
         padding: var(--spacing-lg, 12px) 0;
+        display: flex;
+        
+    }
+
+    .nds-brand-name{
+        display: flex;
+        flex-direction: column;
     }
 
     .nds-brand-logo {
@@ -64,6 +71,7 @@
         border: unset;
         background-color: transparent;
     }
+
 
     /* ===== ICON FONT LOADING ===== */
     /* Hide icon pseudo-elements until font loaded (prevents FOUT) */
@@ -97,6 +105,36 @@
         height: var(--nds-nav-height, 72px);
         box-shadow: var(--shadow-md);
         z-index: 1000;
+    }
+
+    .nds-main-nav>.nds-nav-container:not([hidden]){
+        display: flex;
+    }
+
+    nav :is(ul, ol) {
+    list-style: none;
+    padding: 0 !important;
+    margin: 0;
+}
+
+    /* ===== CONTENT GRID ===== */
+    :is(.nds-content-grid, .nds-hero-section, .nds-content-section) {
+        width: 100%;
+    }
+
+    :is(.nds-content-grid, .nds-content-section):not([hidden]) {
+        display: grid;
+        grid-template-columns:
+            [full-width-start] minmax(var(--nds-viewport-base-padding), 1fr)
+            [breakout-start] minmax(0, calc(var(--nds-viewport-base-padding) / 2))
+            [content-start] min(100% - (var(--nds-viewport-base-padding) * 2), var(--nds-content-MaxWidth))
+            [content-end] minmax(0, calc(var(--nds-viewport-base-padding) / 2))
+            [breakout-end] minmax(var(--nds-viewport-base-padding), 1fr)
+            [full-width-end];
+    }
+
+    :is(.nds-content-grid, .nds-hero-section, .nds-content-section) > :not(.nds-full-width) {
+        grid-column: content;
     }
 
     /* ===== CLS PREVENTION ===== */
