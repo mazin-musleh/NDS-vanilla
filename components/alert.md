@@ -64,6 +64,10 @@ direction: ltr
                                         aria-controls="panel-success-1" id="tab-success-1">
                                         <span class="nds-tab-label">HTML</span>
                                     </button>
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                                        aria-controls="panel-success-js" id="tab-success-js">
+                                        <span class="nds-tab-label">JavaScript</span>
+                                    </button>
                                 </nav>
                             </div>
                             <div class="nds-tab-content">
@@ -90,6 +94,20 @@ direction: ltr
   </button>
 </div>
                                 </code>
+                                </div>
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-success-js"
+                                    aria-labelledby="tab-success-js" hidden>
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-javascript code">NDSAlert.create({
+    variant: 'success',
+    title: 'Success',
+    description: 'Your changes have been saved successfully.',
+    target: '#alert-container'
+});</code>
                                 </div>
                             </div>
                         </div>
@@ -143,6 +161,10 @@ direction: ltr
                                         aria-controls="panel-info-1" id="tab-info-1">
                                         <span class="nds-tab-label">HTML</span>
                                     </button>
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                                        aria-controls="panel-info-js" id="tab-info-js">
+                                        <span class="nds-tab-label">JavaScript</span>
+                                    </button>
                                 </nav>
                             </div>
                             <div class="nds-tab-content">
@@ -169,6 +191,20 @@ direction: ltr
   </button>
 </div>
                                 </code>
+                                </div>
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-info-js"
+                                    aria-labelledby="tab-info-js" hidden>
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-javascript code">NDSAlert.create({
+    variant: 'info',
+    title: 'Information',
+    description: 'A new software update is available.',
+    target: '#alert-container'
+});</code>
                                 </div>
                             </div>
                         </div>
@@ -221,6 +257,10 @@ direction: ltr
                                         aria-controls="panel-warning-1" id="tab-warning-1">
                                         <span class="nds-tab-label">HTML</span>
                                     </button>
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                                        aria-controls="panel-warning-js" id="tab-warning-js">
+                                        <span class="nds-tab-label">JavaScript</span>
+                                    </button>
                                 </nav>
                             </div>
                             <div class="nds-tab-content">
@@ -247,6 +287,20 @@ direction: ltr
   </button>
 </div>
                                 </code>
+                                </div>
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-warning-js"
+                                    aria-labelledby="tab-warning-js" hidden>
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-javascript code">NDSAlert.create({
+    variant: 'warning',
+    title: 'Warning',
+    description: 'Your session will expire in 5 minutes.',
+    target: '#alert-container'
+});</code>
                                 </div>
                             </div>
                         </div>
@@ -300,6 +354,10 @@ direction: ltr
                                         aria-controls="panel-error-1" id="tab-error-1">
                                         <span class="nds-tab-label">HTML</span>
                                     </button>
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                                        aria-controls="panel-error-js" id="tab-error-js">
+                                        <span class="nds-tab-label">JavaScript</span>
+                                    </button>
                                 </nav>
                             </div>
                             <div class="nds-tab-content">
@@ -326,6 +384,20 @@ direction: ltr
   </button>
 </div>
                                 </code>
+                                </div>
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-error-js"
+                                    aria-labelledby="tab-error-js" hidden>
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-javascript code">NDSAlert.create({
+    variant: 'error',
+    title: 'Error',
+    description: 'There was an error processing your request.',
+    target: '#alert-container'
+});</code>
                                 </div>
                             </div>
                         </div>
@@ -399,6 +471,10 @@ direction: ltr
                                         aria-controls="panel-actions-1" id="tab-actions-1">
                                         <span class="nds-tab-label">HTML</span>
                                     </button>
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                                        aria-controls="panel-actions-js" id="tab-actions-js">
+                                        <span class="nds-tab-label">JavaScript</span>
+                                    </button>
                                 </nav>
                             </div>
                             <div class="nds-tab-content">
@@ -433,6 +509,24 @@ direction: ltr
   </button>
 </div>
                                 </code>
+                                </div>
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-actions-js"
+                                    aria-labelledby="tab-actions-js" hidden>
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-javascript code">NDSAlert.create({
+    variant: 'info',
+    title: 'Update Available',
+    description: 'A new version is available.',
+    target: '#alert-container',
+    actions: [
+        { label: 'Update Now', variant: 'primary', onClick: () => handleUpdate() },
+        { label: 'Later', variant: 'subtle', dismiss: true }
+    ]
+});</code>
                                 </div>
                             </div>
                         </div>
@@ -498,6 +592,10 @@ direction: ltr
                                         aria-controls="panel-neutral-1" id="tab-neutral-1">
                                         <span class="nds-tab-label">HTML</span>
                                     </button>
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                                        aria-controls="panel-neutral-js" id="tab-neutral-js">
+                                        <span class="nds-tab-label">JavaScript</span>
+                                    </button>
                                 </nav>
                             </div>
                             <div class="nds-tab-content">
@@ -522,128 +620,26 @@ direction: ltr
 </div>
                                 </code>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Programmatic Alert Demo -->
-<section id="programmaticAlert" class="nds-content-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Programmatic Alert Creation</h2>
-            <p class="nds-section-description">Create alerts dynamically using the JavaScript API</p>
-        </div>
-        <div class="nds-section-content">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Dynamic Alert Demo</div>
-                        <div class="demo-action">
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
-                                data-toggler='["data-status=success", ".nds-demo-alert", "alertVariant", "attr"]'>
-                                <span class="label">Success</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["data-status=warning", ".nds-demo-alert", "alertVariant", "attr"]'>
-                                <span class="label">Warning</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["data-status=error", ".nds-demo-alert", "alertVariant", "attr"]'>
-                                <span class="label">Error</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["data-status=info", ".nds-demo-alert", "alertVariant", "attr"]'>
-                                <span class="label">Info</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["data-status=neutral", ".nds-demo-alert", "alertVariant", "attr"]'>
-                                <span class="label">Neutral</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-color", ".nds-demo-alert", "alertColor"]'>
-                                <span class="label">Color</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo"
-                            style="display: flex; flex-direction: column; align-items: center; gap: var(--spacing-lg); padding: var(--spacing-2xl);">
-                            <button class="nds-btn nds-primary nds-lg demo-action-btn" data-action="alert-create">
-                                <span class="label">Create Alert</span>
-                            </button>
-                            <button class="nds-btn nds-subtle nds-md"
-                                onclick="NDSAlert.dismissAll('#demo-alert-container')">
-                                <span class="label">Clear All</span>
-                            </button>
-                            <div id="demo-alert-container" class="nds-alert-container" style="width:100%;"></div>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
-                            <div class="nds-tab-list-container">
-                                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                                        aria-controls="panel-programmatic-html" id="tab-programmatic-html">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
-                                        aria-controls="panel-programmatic-js" id="tab-programmatic-js">
-                                        <span class="nds-tab-label">JavaScript</span>
-                                    </button>
-                                </nav>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-programmatic-html"
-                                    aria-labelledby="tab-programmatic-html">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                        </button>
-                                    </div>
-                                    <code class="lang-html code">
-<div class="nds-alert nds-card" data-status="success" role="alert">
-    <span class="nds-feedback nds-alert-icon nds-outline">
-        <span class="nds-feedback-icon">
-            <i class="hgi hgi-stroke icon"></i>
-        </span>
-    </span>
-    <div class="nds-alert-content">
-        <span class="nds-alert-title">Success</span>
-        <p class="nds-alert-description">Operation completed successfully!</p>
-    </div>
-    <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close" aria-label="Close">
-        <i class="hgi hgi-stroke hgi-cancel-01"></i>
-    </button>
-</div>
-                                </code>
-                                </div>
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-programmatic-js"
-                                    aria-labelledby="tab-programmatic-js" hidden>
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-neutral-js"
+                                    aria-labelledby="tab-neutral-js" hidden>
                                     <div class="nds-code-action">
                                         <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                                             <i class="hgi hgi-stroke hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <code class="lang-javascript code">NDSAlert.create({
-    variant: 'success',
-    title: 'Success',
-    description: 'Operation completed successfully!',
-    target: '#alert-container',
-    color: false,
-    prepend: true
+    variant: 'neutral',
+    title: 'Notification',
+    description: 'You have 3 new messages.',
+    target: '#alert-container'
 });</code>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+
             </div>
         </div>
     </div>
