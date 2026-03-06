@@ -8,9 +8,10 @@
  * Author: {{ site.author }}
  * Profile: {{ site.author_profile }}
  */
-/* @use 'fonts'; */ /* Moved to critical CSS */
+// Note: fonts, base, reset, breadcrumb, hero, grid, contentLayout, sectionLayout
+// are in nds.critical.min.scss (loaded as blocking CSS)
 
-// Import variables (CSS custom properties) - Loaded in main CSS for all components
+// Import variables (CSS custom properties)
 @use 'variables';
 
 // Import mixins
@@ -19,11 +20,9 @@
 // Import animations
 @use 'animations';
 
-/* @use 'base'; */ /* Moved to critical CSS */
-
-@use 'components/avatar';  /* Moved to critical CSS */
+@use 'components/avatar';
 @use 'components/backdrop';
-@use 'components/buttons'; /* Moved to critical CSS */
+@use 'components/buttons';
 @use 'components/cards';
 @use 'components/modal';
 @use 'components/checkbox';
@@ -44,8 +43,6 @@
 @use 'components/tabs';
 @use 'components/nav';
 @use 'components/DGAdigitalStamp';
-/* @use 'components/breadcrumb'; */ /* Moved to critical CSS */
-/* @use 'components/oneRowContent'; */
 @use 'components/forms';
 @use 'components/otp';
 @use 'components/ipv';
@@ -55,18 +52,14 @@
 @use 'components/rating';
 @use 'components/upload';
 @use 'components/code';
-@use 'components/sideMenu'; /* Moved to critical CSS */
-@use 'components/drawer';  /* Moved to critical CSS */
-/* @use 'layout/contentLayout'; */ /* Moved to critical CSS */
-/* @use 'components/hero'; */ /* Moved to critical CSS */
+@use 'components/sideMenu';
+@use 'components/drawer';
 @use 'components/user-feedback.scss';
 @use 'components/footer';
 @use 'components/cookie';
 @use 'components/loading';
 @use 'components/definition-list';
 @use 'components/chart';
-
-/* @use 'grid'; */ /* Moved to critical CSS */
 
 // Import utilities
 @use 'utilities';

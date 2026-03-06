@@ -28,7 +28,8 @@
 // ==============================================
 
 .nds-swiper-wrapper {
-    // display: flex & height: 100% in critical-css.html
+    display: flex;
+    height: 100%;
     width: 100%;
 
     //display: grid;
@@ -269,7 +270,9 @@
 // ==============================================
 
 .nds-swiper.nds-hero {
-    // width, height, position, z-index in critical-css.html
+    width: 100%;
+    height: 100%;
+    position: relative;
 
     // Hero swiper has no gap between slides
     .nds-swiper-wrapper {
@@ -279,6 +282,13 @@
     .nds-swiper-slide {
         // Full width slides in hero (no gap adjustment needed)
         flex: 0 0 100%;
+        position: relative;
+        background-size: cover;
+        background-position: center;
+        color: var(--text-oncolor-primary, #fff);
+        overflow: hidden;
+        height: 100%;
+        width: 100%;
     }
 
     .nds-swiper-button-prev {

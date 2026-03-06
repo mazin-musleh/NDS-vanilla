@@ -25,20 +25,13 @@
 // Import base styles - Essential for initial render
 @use 'base';
 
+// Skeleton - Reserve layout space to prevent CLS
+@use 'skeleton';
+
 // ====================================================================
 // CRITICAL ABOVE-THE-FOLD COMPONENTS
 // ====================================================================
 // These components are loaded first for optimal perceived performance
-
-// Navigation components - Visible on page load
-/* @use 'components/sideMenu'; */
-/* @use 'components/drawer'; */
-
-// Avatar - Used in navigation and user profile areas
-/* @use 'components/avatar'; */
-
-// Buttons - Essential interactive elements used throughout
-/* @use 'components/buttons'; */
 
 // Breadcrumb navigation - Important for page context
 @use 'components/breadcrumb';

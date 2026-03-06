@@ -3,13 +3,15 @@
 /* ========================================
    CSS RESET & NORMALIZATION
    ======================================== */
-/* Note: Universal reset (*, *::before, *::after) already inlined in head.html */
-/* Note: Body base styles already inlined in head.html */
 
-.nds-topbar>*,
-.nds-heroContent,
-.nds-content-layout {
-    visibility: visible;
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+    padding: 0;
+    margin: 0;
 }
 
 html {
@@ -19,9 +21,27 @@ html {
 }
 
 body {
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    background-color: var(--background-body, #f9fafb);
+    color: var(--text-default, #161616);
+    font-size: var(--nds-text-md-FS, 16px);
+    line-height: var(--nds-text-md-LH, 24px);
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+}
+
+body.fullWidth {
+    --nds-content-MaxWidth: 100%;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
 }
 
 hr {

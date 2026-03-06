@@ -284,6 +284,16 @@ main {
             @include _section-striping;
         }
     }
+
+    /* === Mobile: collapse layout gap and side menu === */
+    @include mobile {
+        --layout-gap: 0 !important;
+
+        .nds-sideMenu {
+            min-width: 0;
+            flex: 0;
+        }
+    }
 }
 
 /* ========================================

@@ -5,12 +5,21 @@
 
 @use '../mixins' as *;
 
+#nds-sharePage {
+  display: none;
+}
+
 // ==============================================
 // BASE HERO SECTION STYLES
 // ==============================================
 
 .nds-hero-section {
-  
+  width: 100%;
+  background-color: var(--background-sa-flag, #074c30);
+  position: relative;
+  background-position: 50% 50%;
+  --section-padding-block: 0;
+  max-height: 550px;
 
   &:not(.sub) {
     /* Hero uses larger title/description sizes via public section tokens */
@@ -19,6 +28,10 @@
     --section-title-MB: var(--nds-display-clamp-lg-MB, 15px);
     --section-description-FS: var(--nds-text-clamp-xl-FS, 20px);
     --section-description-LH: var(--nds-text-clamp-xl-LH, 28px);
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+    height: 60svh;
+    min-height: 400px;
 
     img {
       pointer-events: none;
@@ -52,13 +65,83 @@
   // SUB VARIANT STYLES
   // ==============================================
 
+  // ==============================================
+  // HERO IMAGE & OVERLAY
+  // ==============================================
+
+  .nds-hero-image {
+    width: 100%;
+    height: 100%;
+  }
+
+  .nds-hero-image-wrapper::before {
+    --_overlay: var(--overlay, 0.20);
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(9, 42, 30, var(--_overlay)) 0%, rgba(9, 42, 30, var(--_overlay)) 100%);
+    pointer-events: none;
+  }
+
+  // ==============================================
+  // SUB VARIANT STYLES
+  // ==============================================
+
   &.sub {
+    --section-padding-block: var(--spacing-2xl, 20px);
     --section-title-FS: var(--nds-display-clamp-md-FS, 36px);
     --section-title-LH: var(--nds-display-clamp-md-LH, 44px);
     --section-title-MB: var(--nds-display-clamp-md-MB, 11px);
+    background-image: linear-gradient(90deg,
+            transparent 0%,
+            var(--background-brand-light, #f3fcf6) 70%),
+        var(--hero_image);
+    background-position-x: left;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: var(--background-brand-light, #f3fcf6);
+    height: fit-content;
+    min-height: 100px;
+    box-shadow: inset 0px -2px 4px rgba(0, 0, 0, 0.05) !important;
+    border-radius: 0 !important;
+
+    .nds-hero-image-wrapper {
+      display: none;
+    }
+  }
+
+  @include ltr {
+    &.sub {
+      background-image: linear-gradient(270deg,
+              transparent 0%,
+              var(--background-brand-light, #f3fcf6) 70%),
+          var(--hero_image);
+    }
+  }
+
+  /* Sub hero — progressive enhancement with color-mix */
+  @supports (background: color-mix(in srgb, #000 0%, transparent)) {
+    &.sub {
+      background-image: linear-gradient(90deg,
+              color-mix(in srgb, var(--background-brand-light, #f3fcf6) 0%, transparent) 0%,
+              color-mix(in srgb, var(--background-brand-light, #f3fcf6) 100%, transparent) 70%),
+          var(--hero_image);
+    }
+
+    @include ltr {
+      &.sub {
+        background-image: linear-gradient(270deg,
+                color-mix(in srgb, var(--background-brand-light, #f3fcf6) 0%, transparent) 0%,
+                color-mix(in srgb, var(--background-brand-light, #f3fcf6) 100%, transparent) 70%),
+            var(--hero_image);
+      }
+    }
   }
 
   &.sub.flat {
+    background: #fff !important;
+    box-shadow: unset !important;
+
     .nds-section-head {
       .nds-section-description {
         color: var(--text-primary-paragraph);
@@ -73,7 +156,6 @@
         width: calc(100% - var(--nds-sideInfo-width) - var(--spacing-xl));
       }
     }
-
 
   }
 
@@ -122,5 +204,11 @@
   // Icon change for copied state
   #nds-sharePage .nds-dropmenu-menu .copied i::before {
     content: "㶧";
+  }
+
+  @include mobile {
+    &:not(.sub) .nds-section-content .nds-section-title::before {
+      width: 80vw;
+    }
   }
 }
