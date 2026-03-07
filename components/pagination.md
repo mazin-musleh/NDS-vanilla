@@ -274,42 +274,42 @@ direction: ltr
                             <div class="nds-page-item nds-card nds-stroke">Card 2</div>
                             <div class="nds-page-item nds-card nds-stroke">Card 3</div>
                             <div class="nds-page-item nds-card nds-stroke">Card 4</div>
-                            <div class="nds-page-item nds-card nds-stroke">Card 5</div>
-                            <div class="nds-page-item nds-card nds-stroke">Card 6</div>
-                            <div class="nds-page-item nds-card nds-stroke">Card 7</div>
-                            <div class="nds-page-item nds-card nds-stroke">Card 8</div>
-                            <div class="nds-page-item nds-card nds-stroke">Card 9</div>
-                            <div class="nds-page-item nds-card nds-stroke">Card 10</div>
-                            <div class="nds-page-item nds-card nds-stroke">Card 11</div>
-                            <div class="nds-page-item nds-card nds-stroke">Card 12</div>
-                            <div class="nds-page-item nds-card nds-stroke">Card 13</div>
-                            <div class="nds-page-item nds-card nds-stroke">Card 14</div>
-                            <div class="nds-page-item nds-card nds-stroke">Card 15</div>
-                            <div class="nds-page-item nds-card nds-stroke">Card 16</div>
-                            <div class="nds-page-item nds-card nds-stroke">Card 17</div>
-                            <div class="nds-page-item nds-card nds-stroke">Card 18</div>
-                            <div class="nds-page-item nds-card nds-stroke">Card 19</div>
-                            <div class="nds-page-item nds-card nds-stroke">Card 20</div>
-                            <div class="nds-page-item nds-card nds-stroke">Card 21</div>
-                            <div class="nds-page-item nds-card nds-stroke">Card 22</div>
-                            <div class="nds-page-item nds-card nds-stroke">Card 23</div>
-                            <div class="nds-page-item nds-card nds-stroke">Card 24</div>
-                            <div class="nds-page-item nds-card nds-stroke">Card 25</div>
-                            <div class="nds-page-item nds-card nds-stroke">Card 26</div>
-                            <div class="nds-page-item nds-card nds-stroke">Card 27</div>
-                            <div class="nds-page-item nds-card nds-stroke">Card 28</div>
-                            <div class="nds-page-item nds-card nds-stroke">Card 29</div>
-                            <div class="nds-page-item nds-card nds-stroke">Card 30</div>
-                            <div class="nds-page-item nds-card nds-stroke">Card 31</div>
-                            <div class="nds-page-item nds-card nds-stroke">Card 32</div>
-                            <div class="nds-page-item nds-card nds-stroke">Card 33</div>
-                            <div class="nds-page-item nds-card nds-stroke">Card 34</div>
-                            <div class="nds-page-item nds-card nds-stroke">Card 35</div>
-                            <div class="nds-page-item nds-card nds-stroke">Card 36</div>
-                            <div class="nds-page-item nds-card nds-stroke">Card 37</div>
-                            <div class="nds-page-item nds-card nds-stroke">Card 38</div>
-                            <div class="nds-page-item nds-card nds-stroke">Card 39</div>
-                            <div class="nds-page-item nds-card nds-stroke">Card 40</div>
+                            <div class="nds-page-item nds-card nds-stroke" hidden>Card 5</div>
+                            <div class="nds-page-item nds-card nds-stroke" hidden>Card 6</div>
+                            <div class="nds-page-item nds-card nds-stroke" hidden>Card 7</div>
+                            <div class="nds-page-item nds-card nds-stroke" hidden>Card 8</div>
+                            <div class="nds-page-item nds-card nds-stroke" hidden>Card 9</div>
+                            <div class="nds-page-item nds-card nds-stroke" hidden>Card 10</div>
+                            <div class="nds-page-item nds-card nds-stroke" hidden>Card 11</div>
+                            <div class="nds-page-item nds-card nds-stroke" hidden>Card 12</div>
+                            <div class="nds-page-item nds-card nds-stroke" hidden>Card 13</div>
+                            <div class="nds-page-item nds-card nds-stroke" hidden>Card 14</div>
+                            <div class="nds-page-item nds-card nds-stroke" hidden>Card 15</div>
+                            <div class="nds-page-item nds-card nds-stroke" hidden>Card 16</div>
+                            <div class="nds-page-item nds-card nds-stroke" hidden>Card 17</div>
+                            <div class="nds-page-item nds-card nds-stroke" hidden>Card 18</div>
+                            <div class="nds-page-item nds-card nds-stroke" hidden>Card 19</div>
+                            <div class="nds-page-item nds-card nds-stroke" hidden>Card 20</div>
+                            <div class="nds-page-item nds-card nds-stroke" hidden>Card 21</div>
+                            <div class="nds-page-item nds-card nds-stroke" hidden>Card 22</div>
+                            <div class="nds-page-item nds-card nds-stroke" hidden>Card 23</div>
+                            <div class="nds-page-item nds-card nds-stroke" hidden>Card 24</div>
+                            <div class="nds-page-item nds-card nds-stroke" hidden>Card 25</div>
+                            <div class="nds-page-item nds-card nds-stroke" hidden>Card 26</div>
+                            <div class="nds-page-item nds-card nds-stroke" hidden>Card 27</div>
+                            <div class="nds-page-item nds-card nds-stroke" hidden>Card 28</div>
+                            <div class="nds-page-item nds-card nds-stroke" hidden>Card 29</div>
+                            <div class="nds-page-item nds-card nds-stroke" hidden>Card 30</div>
+                            <div class="nds-page-item nds-card nds-stroke" hidden>Card 31</div>
+                            <div class="nds-page-item nds-card nds-stroke" hidden>Card 32</div>
+                            <div class="nds-page-item nds-card nds-stroke" hidden>Card 33</div>
+                            <div class="nds-page-item nds-card nds-stroke" hidden>Card 34</div>
+                            <div class="nds-page-item nds-card nds-stroke" hidden>Card 35</div>
+                            <div class="nds-page-item nds-card nds-stroke" hidden>Card 36</div>
+                            <div class="nds-page-item nds-card nds-stroke" hidden>Card 37</div>
+                            <div class="nds-page-item nds-card nds-stroke" hidden>Card 38</div>
+                            <div class="nds-page-item nds-card nds-stroke" hidden>Card 39</div>
+                            <div class="nds-page-item nds-card nds-stroke" hidden>Card 40</div>
                         </div>
 
                         <!-- Pagination will be auto-generated here -->
@@ -342,13 +342,108 @@ direction: ltr
                                     <div class="nds-page-item nds-card nds-stroke">Card 1</div>
                                     <div class="nds-page-item nds-card nds-stroke">Card 2</div>
                                     <div class="nds-page-item nds-card nds-stroke">Card 3</div>
-                                    <!-- ... Cards 4-37 ... -->
-                                    <div class="nds-page-item nds-card nds-stroke">Card 38</div>
-                                    <div class="nds-page-item nds-card nds-stroke">Card 39</div>
-                                    <div class="nds-page-item nds-card nds-stroke">Card 40</div>
+                                    <div class="nds-page-item nds-card nds-stroke">Card 4</div>
+                                    <!-- First --per-page items visible, rest hidden -->
+                                    <div class="nds-page-item nds-card nds-stroke" hidden>Card 5</div>
+                                    <!-- ... More cards ... -->
+                                    <div class="nds-page-item nds-card nds-stroke" hidden>Card 40</div>
                                 </div>
                                 <!-- Pagination will be auto-generated here -->
                                 <nav class="nds-pagination-nav nds-auto-pagination" aria-label="Pagination"></nav>
+                            </code>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+            <div class="nds-demo-card">
+                <div class="demo-header">
+                    <div class="demo-label">Paginated Table</div>
+                    <div class="demo-action">
+                        <button type="button" class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                            <span class="label">Remove bg</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="demo-container">
+                    <div class="state-demo">
+                        <div class="nds-table-wrapper nds-paged-content" style="--max-width: 100%; --per-page: 5;">
+                            <table class="nds-table nds-sortable">
+                                <thead>
+                                    <tr>
+                                        <th class="nds-sortable-col">
+                                            <button class="nds-sort-header nds-btn" data-sort-type="number">#<span class="nds-sort-icon">↕</span></button>
+                                        </th>
+                                        <th class="nds-sortable-col">
+                                            <button class="nds-sort-header nds-btn" data-sort-type="string">Service<span class="nds-sort-icon">↕</span></button>
+                                        </th>
+                                        <th>Description</th>
+                                        <th class="nds-sortable-col">
+                                            <button class="nds-sort-header nds-btn" data-sort-type="string">System<span class="nds-sort-icon">↕</span></button>
+                                        </th>
+                                        <th>Most Used</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for service in site.data.content.services %}
+                                    <tr class="nds-page-item" hidden>
+                                        <td>{{ forloop.index }}</td>
+                                        <td>{{ service.title }}</td>
+                                        <td>{{ service.description }}</td>
+                                        <td>{{ service.system }}</td>
+                                        <td>{% if service.most_used %}Yes{% else %}—{% endif %}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <nav class="nds-auto-pagination"></nav>
+                    </div>
+                </div>
+                <div class="demo-code">
+                <div class="nds-tabs nds-code nds-divided" hidden>
+                    <div class="nds-tab-list-container">
+                        <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                            <button type="button" class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                aria-controls="panel-table-1" id="tab-table-1">
+                                <span class="nds-tab-label">HTML</span>
+                            </button>
+                        </nav>
+                    </div>
+                    <div class="nds-tab-content">
+                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-table-1"
+                            aria-labelledby="tab-table-1">
+                            <div class="nds-code-action">
+                                <button type="button" class="nds-btn nds-subtle copy-btn"
+                                    aria-label="Copy code example">
+                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                </button>
+                            </div>
+                            <code class="lang-html code">
+                                <div class="nds-table-wrapper nds-paged-content" style="--max-width: 100%; --per-page: 5;">
+                                    <table class="nds-table nds-sortable">
+                                        <thead>
+                                            <tr>
+                                                <th class="nds-sortable-col">
+                                                    <button class="nds-sort-header nds-btn" data-sort-type="number">
+                                                        #<span class="nds-sort-icon">↕</span>
+                                                    </button>
+                                                </th>
+                                                <th>Column</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="nds-page-item" hidden>
+                                                <td>1</td>
+                                                <td>Row data</td>
+                                            </tr>
+                                            <!-- More rows... -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <nav class="nds-auto-pagination"></nav>
                             </code>
                         </div>
                     </div>
