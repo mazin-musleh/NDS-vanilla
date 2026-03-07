@@ -14,6 +14,9 @@
 // Import variables (CSS custom properties)
 @use 'variables';
 
+// Section styles - visual tokens, color variants, meta, actions, 404, sideInfo
+@use 'layout/section';
+
 // Import mixins
 @use 'mixins' as *;
 
