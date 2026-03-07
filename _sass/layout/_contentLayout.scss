@@ -1,23 +1,16 @@
-/* ========================================
-   1. CONTENT GRID SYSTEM
-   Shared grid + column routing for
-   .nds-content-grid, .nds-hero-section,
-   .nds-content-section
-   ======================================== */
-
 @use '../mixins' as *;
 
+/* ── Content grid ── */
+
 :is(.nds-content-grid, .nds-hero-section, .nds-content-section) {
-    --nds-breakout-max-width: calc(var(--nds-content-MaxWidth) + var(--nds-viewport-padding));
-    --nds-breakout-size: calc((var(--nds-breakout-max-width) - var(--nds-content-MaxWidth)) / 2);
     width: 100%;
 
     &:not([hidden]) {
         display: grid;
         row-gap: var(--gap, 0);
         grid-template-columns:
-            [full-width-start] minmax(var(--nds-viewport-padding), 1fr) [breakout-start] minmax(0, var(--nds-breakout-size)) [content-start] min(100% - (var(--nds-viewport-padding) * 2),
-                var(--nds-content-MaxWidth)) [content-end] minmax(0, var(--nds-breakout-size)) [breakout-end] minmax(var(--nds-viewport-padding), 1fr) [full-width-end];
+            [full-width-start] minmax(var(--nds-viewport-padding), 1fr) [content-start] min(100% - (var(--nds-viewport-padding) * 2),
+                var(--nds-content-MaxWidth)) [content-end] minmax(var(--nds-viewport-padding), 1fr) [full-width-end];
     }
 
     &> :not(.nds-full-width) {
@@ -41,11 +34,7 @@
     margin-inline: auto;
 }
 
-/* ========================================
-   2. ELEMENT DEFINITIONS
-   Custom properties + base styles for each
-   layout element, defined on the element itself
-   ======================================== */
+/* ── Content layout ── */
 
 main {
     height: 100%;
@@ -77,20 +66,7 @@ main {
         flex: 1;
     }
 
-}
-
-
-/* ========================================
-   3. LAYOUT MODIFIERS
-   Each modifier overrides public custom
-   properties that cascade into elements
-   ======================================== */
-
-.nds-content-layout {
-
-    // Note: Backdrop for side menu moved to unified NDSBackdrop API (_backdrop.scss)
-
-    /* === 3a. MODIFIER: Middle (centered/hero) === */
+    /* ── Middle (centered/hero) ── */
 
     &.nds-middle {
         --layout-min-height: 100dvh;
@@ -98,7 +74,7 @@ main {
         justify-content: center;
 
         &.nds-content-container {
-            padding: var(--nds-viewport-padding, 32px);
+            padding: var(--nds-viewport-padding);
         }
 
         .nds-main-content {
@@ -106,29 +82,28 @@ main {
         }
     }
 
-    /* === 3b. MODIFIER: Edge-to-edge === */
+    /* ── Edge-to-edge ── */
 
     &.toEdge {
         --nds-content-MaxWidth: 100%;
         --layout-gap: 0;
         padding: 0;
         height: 100%;
+
+        &:is(.wSideMenu, .wSideInfo) .nds-main-content {
+            --main-padding-block: 0;
+            --main-padding-inline: 0;
+            --main-gap: 0;
+        }
     }
 
-    &.toEdge:is(.wSideMenu, .wSideInfo) .nds-main-content {
-        --main-padding-block: 0;
-        --main-padding-inline: 0;
-        --main-gap: 0;
-    }
-
-    /* === 3c. MODIFIER: No sidebar === */
+    /* ── No sidebar ── */
 
     &:not(.wSideMenu, .wSideInfo) {
         @include desktop(min) {
             --section-padding-block: var(--spacing-7xl);
         }
 
-        // User feedback keeps base padding on desktop
         &:not(.cardView) .nds-user-feedback-section {
             --section-padding-block: var(--spacing-5xl);
         }
@@ -142,7 +117,6 @@ main {
                 --section-margin-block-start: 0;
             }
 
-            /* Add margin-bottom only when next element doesn't have .noBg class */
             section.noBg:not(:has(+ .noBg)) {
                 --section-margin-block-end: var(--spacing-5xl);
             }
@@ -153,17 +127,17 @@ main {
         }
     }
 
-    /* === 3d. MODIFIER: Post layout === */
+    /* ── Post layout ── */
 
     &.post .nds-main-content section:first-of-type {
         --section-padding-block-start: 0;
     }
 
-    /* === 3e. MODIFIER: Card view === */
+    /* ── Card view ── */
 
     &.cardView {
         --section-padding-block: var(--nds-viewport-padding);
-        --layout-gap: var(--spacing-xl); 
+        --layout-gap: var(--spacing-xl);
         --main-padding-block: var(--spacing-xl);
         --main-gap: var(--spacing-4xl);
 
@@ -185,11 +159,10 @@ main {
             }
         }
 
-        /* Smaller title sizes for cardView */
         .nds-content-section {
-            --section-title-FS: var(--nds-display-clamp-sm-FS, 30px);
-            --section-title-LH: var(--nds-display-clamp-sm-LH, 38px);
-            --section-title-MB: var(--nds-display-clamp-sm-MB, 9.5px);
+            --section-title-FS: var(--nds-display-clamp-sm-FS);
+            --section-title-LH: var(--nds-display-clamp-sm-LH);
+            --section-title-MB: var(--nds-display-clamp-sm-MB);
         }
 
         .nds-content-section.nds-ghost {
@@ -220,14 +193,13 @@ main {
         }
 
         @include large-desktop(min) {
-
             :is(.nds-main-content, .nds-sideMenu) {
                 margin-inline: 0;
             }
         }
     }
 
-    /* === 3f. MODIFIER: Side menu layout === */
+    /* ── Side menu layout ── */
 
     &:is(.wSideMenu) {
         .nds-content-section {
@@ -258,34 +230,26 @@ main {
         }
     }
 
-    /* === 3g. Section striping === */
+    /* ── Section striping ── */
 
-    // Alternating background reset: even sections reset, flips to odd when hero is present
     @mixin _section-striping {
         .nds-content-section:not(.nds-user-feedback-section):nth-of-type(even) {
-            @include reset-section-style;
-        }
-
-        &:has(>.nds-hero-section) {
-            .nds-content-section:nth-of-type(odd) {
-                @include reset-section-style;
-            }
+            --section-bg: var(--background-neutral-50, #f9fafb);
         }
     }
 
-    // Without side menu - always
     &:not(.wSideMenu, .cardView) .nds-main-content {
         @include _section-striping;
     }
 
-    // With side menu - tablet and below only
     &:not(.cardView):is(.wSideMenu) .nds-main-content {
         @include tablet(max) {
             @include _section-striping;
         }
     }
 
-    /* === Mobile: collapse layout gap and side menu === */
+    /* ── Mobile ── */
+
     @include mobile {
         --layout-gap: 0 !important;
 
@@ -296,13 +260,10 @@ main {
     }
 }
 
-/* ========================================
-   4. CONTENT CONTAINER
-   .nds-content-container utility
-   ======================================== */
+/* ── Content container ── */
 
 .nds-content-container {
-    max-width: var(--nds-content-MaxWidth, 1280px);
+    max-width: var(--nds-content-MaxWidth);
     margin: 0 auto;
-    padding: 0 var(--nds-viewport-padding, 32px);
+    padding: 0 var(--nds-viewport-padding);
 }

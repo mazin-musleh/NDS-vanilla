@@ -1,7 +1,7 @@
 ---
 # Critical CSS for NDS (National Design System)
 # This file contains above-the-fold styles for faster initial page render
-# Includes: hero, breadcrumb, contentLayout
+# Includes: hero, contentLayout
 ---
 /*!
  * National Design System - Critical CSS
@@ -22,9 +22,6 @@
 // Import CSS reset - Essential normalization
 @use 'reset';
 
-// Import base styles - Essential for initial render
-@use 'base';
-
 // Skeleton - Reserve layout space to prevent CLS
 @use 'skeleton';
 
@@ -33,17 +30,11 @@
 // ====================================================================
 // These components are loaded first for optimal perceived performance
 
-// Breadcrumb navigation - Important for page context
-@use 'components/breadcrumb';
-
-// Section component - Shared section base (tokens, wrapper, head, title, desc, meta, action, content)
+// Section component - tokens, elements, wrapper, layouts (center, horizontal, 404, sideInfo)
 @use 'layout/section';
 
-// Content layout - Main content structure (grid, layout variants, striping, section context overrides)
+// Content layout - grid, layout variants, striping, section context overrides
 @use 'layout/contentLayout';
-
-// Section layout - Independent section overrides (wrapper, 404, sideInfo, last-edit, horizontal)
-@use 'layout/sectionLayout';
 
 // Hero section - First visual element on most pages
 @use 'components/hero';

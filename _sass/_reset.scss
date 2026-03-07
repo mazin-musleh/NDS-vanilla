@@ -44,57 +44,6 @@ img {
     height: auto;
 }
 
-hr {
-    --_divider: var(--divider, var(--spacing-xs));
-    opacity: .10;
-    border: 0;
-    border-top: 1px solid;
-    margin: var(--_divider) 0;
-    color: inherit;
-    width: 100%;
-
-    &.nds-md {
-        --divider: var(--spacing-md);
-    }
-
-    &.nds-lg {
-        --divider: var(--spacing-lg);
-    }
-
-    &.nds-xl {
-        --divider: var(--spacing-xl);
-    }
-
-    &.nds-2xl {
-        --divider: var(--spacing-2xl);
-    }
-
-    &.nds-3xl {
-        --divider: var(--spacing-3xl);
-    }
-
-    &.nds-4xl {
-        --divider: var(--spacing-4xl);
-    }
-
-}
-
-.nds-divider-text {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-md);
-    color: var(--text-secondary-paragraph);
-    font-size: var(--nds-text-sm-FS);
-    line-height: var(--nds-text-sm-LH);
-
-    &::before,
-    &::after {
-        content: '';
-        flex: 1;
-        border-top: 1px solid var(--border-neutral-primary);
-    }
-}
-
 :is(h1, h2, h3, h4, h5, h6) {
     font-weight: 600;
     color: var(--text-display, #1f2a37);
@@ -212,4 +161,39 @@ header {
     header {
         display: contents;
     }
+}
+
+/* ── Icon font FOUT prevention ── */
+
+body[data-font-loaded*="hgi-stroke-rounded"] {
+    --hgi-icon-opacity: 1;
+}
+
+i.hgi-stroke {
+    opacity: var(--hgi-icon-opacity);
+}
+
+/* ========================================
+   UTILITIES (Critical)
+   ======================================== */
+
+.nds-text-icon {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: var(--spacing-xs);
+    border: unset;
+    background-color: transparent;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }

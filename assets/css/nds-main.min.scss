@@ -8,7 +8,7 @@
  * Author: {{ site.author }}
  * Profile: {{ site.author_profile }}
  */
-// Note: fonts, base, reset, breadcrumb, hero, grid, contentLayout, sectionLayout
+// Note: fonts, reset, hero, grid, contentLayout, sectionLayout
 // are in nds.critical.min.scss (loaded as blocking CSS)
 
 // Import variables (CSS custom properties)
@@ -17,9 +17,13 @@
 // Import mixins
 @use 'mixins' as *;
 
+// Import base styles (dividers, links, interactive elements)
+@use 'base';
+
 // Import animations
 @use 'animations';
 
+@use 'components/breadcrumb';
 @use 'components/avatar';
 @use 'components/backdrop';
 @use 'components/buttons';

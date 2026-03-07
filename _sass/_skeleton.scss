@@ -4,10 +4,15 @@
    CLS before main CSS loads.
    Safe to remove — nothing breaks without it.
    ======================================== */
+@use './mixins' as *;
 
 /* ── Navigation ── */
 .nds-main-nav {
-    height: var(--nds-nav-height, 72px);
+    height: var(--nds-nav-height);
+
+    .nds-nav-container:not([hidden]) {
+        display: flex;
+    }
 
     .nds-brand {
         height: var(--nds-nav-height);
@@ -25,6 +30,15 @@
     >* {
         visibility: hidden;
     }
+}
+
+.nds-breadcrumb {
+    display: flex;
+}
+
+.nds-breadcrumb li::after {
+    content: "";
+    min-width: 24px;
 }
 
 /* ── Hero ── */
@@ -47,6 +61,10 @@
     width: var(--nds-sideMenu-width);
     min-width: var(--nds-sideMenu-width);
     background-color: var(--background-white);
+
+    @include tablet(max) {
+        position: absolute;
+    }
 }
 
 /* ── Hidden components (reserve space) ── */

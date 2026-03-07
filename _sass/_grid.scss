@@ -1,11 +1,9 @@
-// ==============================================
-// NDS GRID SYSTEM
-// ==============================================
+/* ── Grid system ── */
 @use './mixins' as *;
 
 .nds-grid {
-  $col-token-selector: '> :is([class^="col-"], [class*=" col-"])';
-
+  $col-selector: '> :is([class^="col-"], [class*=" col-"])';
+  --_gap-min: var(--spacing-md);
   --grid-col: var(--max-col, auto-fit);
 
   &:not([hidden]) {
@@ -21,27 +19,23 @@
 
   >* {
     max-width: 100% !important;
-    min-width: 0; // prevent overflow in grid
+    min-width: 0;
     height: 100%;
   }
 
-  @include tablet(max) {
-    &:not(:has(#{$col-token-selector})) {
+  &:not(:has(#{$col-selector})) {
+    @include tablet(max) {
       --grid-col: var(--mid-col, var(--max-col, auto-fit));
-      gap: max(8px, calc(var(--gap, var(--spacing-2xl)) / 2));
-      row-gap: max(8px, calc(var(--row-gap, var(--spacing-2xl)) / 2));
+      gap: max(var(--_gap-min), calc(var(--gap, var(--spacing-2xl)) / 2));
+      row-gap: max(var(--_gap-min), calc(var(--row-gap, var(--spacing-2xl)) / 2));
     }
-  }
 
-  @include mobile {
-    &:not(:has(#{$col-token-selector})) {
+    @include mobile {
       --grid-col: var(--min-col, var(--mid-col, var(--max-col, auto-fit)));
-      gap: max(8px, calc(var(--gap, var(--spacing-2xl)) / 2));
-      row-gap: max(8px, calc(var(--row-gap, var(--spacing-2xl)) / 2));
     }
   }
 
-  &:has(#{$col-token-selector}) {
+  &:has(#{$col-selector}) {
     --col-width: 0 !important;
     --grid-col: 12;
   }
@@ -51,9 +45,9 @@
   }
 }
 
-/* Column spans (1…12) - Mobile first (base) with sm aliases */
-@for $i from 1 through 12 {
+/* ── Column spans ── */
 
+@for $i from 1 through 12 {
   :is(.col-#{$i}, .col-sm-#{$i}) {
     grid-column: span #{$i};
   }
@@ -63,7 +57,6 @@
   grid-column: 1 / -1;
 }
 
-/* Generate responsive column spans using viewport breakpoints (excludes sm) */
 @each $breakpoint, $width in $grid-breakpoints {
   @media (min-width: #{$width}) {
     @for $i from 1 through 12 {
