@@ -12,8 +12,10 @@
         {%- assign site_title = page.siteTitle | default: site.title -%}
 
         <a href="{{ '/' | relative_url }}" class="nds-brand">
+            {%- if brand_logo %}
             <img class="nds-brand-logo" src="{{ brand_logo | relative_url }}"
                 width="{{ brand_width }}" height="{{ brand_height }}" loading="lazy" alt="{{ site_title }} Logo">
+            {%- endif %}
             {%- if brand_name %}
             <span class="nds-brand-name" style="color: {{ brand_name_color }};">
                 {{- brand_name -}}

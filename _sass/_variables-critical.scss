@@ -1,11 +1,9 @@
 @use './mixins' as *;
 
-:root {
-    // ==============================================
-    // FOUNDATION LAYOUT TOKENS (user-customizable defaults)
-    // Users can override these via an optional inline <style>:root{...}</style>
-    // ==============================================
+// Foundation tokens that critical CSS depends on.
+// Remaining design tokens (static sizes, radius, width, colors) are in _variables.scss.
 
+:root {
     --nds-nav-height: 72px;
     --nds-minimal-nav-item-height: 40px;
     --nds-sideMenu-width: 260px;
@@ -15,34 +13,15 @@
     --nds-content-MaxWidth: 1280px;
     --nds-viewport-base-padding: 32px;
     --nds-transition-speed: .2;
-    --shadow-md: 0px 2px 4px -2px rgba(16, 24, 40, .06), 0px 4px 8px -2px rgba(16, 24, 40, .1);
     --background-white: #fff;
+    --hgi-icon-opacity: 0;
 
-    // ==============================================
-    // CRITICAL VARIABLES - ABOVE THE FOLD ONLY
-    // ==============================================
-
-    --nds-nav-background-color: var(--colors-base-white,#fff);
-    --nds-nav-dropmenu-background-color: var(--nds-nav-background-color,#fff);
-    --nds-nav-color: var(--text-default);
-    --nds-nav-dropmenu-color: var(--text-default);
-    --nds-nav-dropmenu-title-color: var(--text-primary);
     --nds-viewport-padding: var(--nds-viewport-base-padding);
 
-    // Transitions (critical for all interactions)
     --nds-transition-effect: ease;
     --nds-transition: calc(var(--nds-transition-speed) * 1s) var(--nds-transition-effect);
 
-    // Critical shadows
-    --shadow-md-top: 0px -3.288px 6.575px -1.644px rgba(16, 24, 40, 0.10), 0px -1.644px 3.288px -1.644px rgba(16, 24, 40, 0.06);
-
-    // ==============================================
-    // FLUID TYPOGRAPHY - RESPONSIVE SCALING
-    // ==============================================
-    /* Fluid Typography using clamp() and vw units */
-    /* Formula: clamp(min-size, fluid-size, max-size) */
-
-    /* === Display Sizes - Fluid scaling === */
+    // Fluid typography — display sizes
     --nds-display-clamp-2xl-FS: clamp(48px, 6vw, 72px);
     --nds-display-clamp-2xl-LH: clamp(58px, 7.5vw, 90px);
     --nds-display-clamp-2xl-MB: clamp(14.5px, 1.875vw, 22.5px);
@@ -67,7 +46,7 @@
     --nds-display-clamp-xs-LH: clamp(24px, 2.5vw, 30px);
     --nds-display-clamp-xs-MB: clamp(6px, 0.625vw, 7.5px);
 
-    /* === Text Sizes - Conservative scaling for readability === */
+    // Fluid typography — text sizes
     --nds-text-clamp-xl-FS: clamp(18px, 1.67vw, 20px);
     --nds-text-clamp-xl-LH: clamp(26px, 2.33vw, 28px);
 
@@ -86,132 +65,28 @@
     --nds-text-clamp-xxs-FS: clamp(9px, 0.83vw, 10px);
     --nds-text-clamp-xxs-LH: clamp(14px, 1.33vw, 16px);
 
-    /* Display Sizes - Static (for hero/headings) */
-    --nds-display-2xl-FS: 72px;
-    --nds-display-2xl-LH: 90px;
-    --nds-display-xl-FS: 60px;
-    --nds-display-xl-LH: 72px;
-    --nds-display-lg-FS: 48px;
-    --nds-display-lg-LH: 60px;
-    --nds-display-md-FS: 36px;
-    --nds-display-md-LH: 44px;
-    --nds-display-sm-FS: 30px;
-    --nds-display-sm-LH: 38px;
-    --nds-display-xs-FS: 24px;
-    --nds-display-xs-LH: 32px;
-
-    /* Text Sizes - Static (for body/breadcrumb) */
-    --nds-text-xl-FS: 20px;
-    --nds-text-xl-LH: 30px;
-    --nds-text-lg-FS: 18px;
-    --nds-text-lg-LH: 28px;
-    --nds-text-md-FS: 16px;
-    --nds-text-md-LH: 24px;
-    --nds-text-sm-FS: 14px;
-    --nds-text-sm-LH: 20px;
-    --nds-text-xs-FS: 12px;
-    --nds-text-xs-LH: 18px;
-
-    // ==============================================
-    // SPACING SYSTEM - ESSENTIAL TOKENS
-    // ==============================================
-
-    --spacing-0: 0px;
-    --spacing-0-5: 2px;
-    --spacing-1: 4px;
-    --spacing-1-5: 6px;
-    --spacing-2: 8px;
-    --spacing-3: 12px;
-    --spacing-4: 16px;
-    --spacing-5: 20px;
-    --spacing-6: 24px;
-    --spacing-8: 32px;
-    --spacing-10: 40px;
-    --spacing-12: 48px;
-    --spacing-16: 64px;
-    --spacing-20: 80px;
-    --spacing-24: 96px;
-    --spacing-32: 128px;
-    --spacing-40: 160px;
-    --spacing-48: 192px;
-    --spacing-56: 224px;
-    --spacing-64: 256px;
-    --spacing-80: 320px;
-    --spacing-96: 384px;
-    --spacing-120: 480px;
-    --spacing-140: 560px;
-    --spacing-160: 640px;
-    --spacing-180: 720px;
-    --spacing-192: 768px;
-    --spacing-256: 1024px;
-    --spacing-320: 1280px;
-    --spacing-360: 1440px;
-    --spacing-400: 1600px;
-    --spacing-480: 1920px; 
-    
-    // Semantic spacing aliases
-    --spacing-none: var(--spacing-0);
-    --spacing-xxs: var(--spacing-0-5);
-    --spacing-xs: var(--spacing-1);
-    --spacing-sm: var(--spacing-1-5);
-    --spacing-md: var(--spacing-2);
-    --spacing-lg: var(--spacing-3);
-    --spacing-xl: var(--spacing-4);
-    --spacing-2xl: var(--spacing-5);
-    --spacing-3xl: var(--spacing-6);
-    --spacing-4xl: var(--spacing-8);
-    --spacing-5xl: var(--spacing-10);
-    --spacing-6xl: var(--spacing-12);
-    --spacing-7xl: var(--spacing-16);
-    --spacing-8xl: var(--spacing-20);
-    --spacing-9xl: var(--spacing-24);
-    --spacing-10xl: var(--spacing-32);
-    --spacing-11xl: var(--spacing-40);
-
-    // ==============================================
-    // BORDER RADIUS
-    // ==============================================
-
-    --radius-0: 0;
-    --radius-2: 2px;
-    --radius-4: 4px;
-    --radius-8: 8px;
-    --radius-16: 16px;
-    --radius-24: 24px;
-    --radius-9999: 9999px;
-    --radius-none: var(--radius-0);
-    --radius-xs: var(--radius-2);
-    --radius-sm: var(--radius-4);
-    --radius-md: var(--radius-8);
-    --radius-lg: var(--radius-16);
-    --radius-xl: var(--radius-24);
-    --radius-full: var(--radius-9999);
-
-    // ==============================================
-    // WIDTH TOKENS
-    // ==============================================
-
-    --width-xxs: var(--spacing-80);
-    --width-xs: var(--spacing-96);
-    --width-sm: var(--spacing-120);
-    --width-md: var(--spacing-140);
-    --width-lg: var(--spacing-160);
-    --width-xl: var(--spacing-192);
-    --width-2xl: var(--spacing-256);
-    --width-3xl: var(--spacing-320);
-    --width-4xl: var(--spacing-360);
-    --width-5xl: var(--spacing-400);
-    --width-6xl: var(--spacing-480);
-    --maxwidth-paragraph-max-width: var(--spacing-180);
-
+    // Semantic spacing aliases (numeric tokens in _variables.scss)
+    --spacing-none: var(--spacing-0, 0px);
+    --spacing-xxs: var(--spacing-0-5, 2px);
+    --spacing-xs: var(--spacing-1, 4px);
+    --spacing-sm: var(--spacing-1-5, 6px);
+    --spacing-md: var(--spacing-2, 8px);
+    --spacing-lg: var(--spacing-3, 12px);
+    --spacing-xl: var(--spacing-4, 16px);
+    --spacing-2xl: var(--spacing-5, 20px);
+    --spacing-3xl: var(--spacing-6, 24px);
+    --spacing-4xl: var(--spacing-8, 32px);
+    --spacing-5xl: var(--spacing-10, 40px);
+    --spacing-6xl: var(--spacing-12, 48px);
+    --spacing-7xl: var(--spacing-16, 64px);
+    --spacing-8xl: var(--spacing-20, 80px);
+    --spacing-9xl: var(--spacing-24, 96px);
+    --spacing-10xl: var(--spacing-32, 128px);
+    --spacing-11xl: var(--spacing-40, 160px);
 }
-
-// ==============================================
-// RESPONSIVE VARIABLES - MOBILE OVERRIDES
-// ==============================================
 
 @include mobile {
     :root {
-        --nds-viewport-padding: calc(var(--nds-viewport-base-padding)/2);
+        --nds-viewport-padding: calc(var(--nds-viewport-base-padding) / 2);
     }
 }

@@ -1,30 +1,37 @@
-/* ========================================
-   SECTION COMPONENT - Shared Base
-   ======================================== */
-
 @use '../mixins' as *;
 
-/* ========================================
-   CONTENT SECTION VISUAL TOKENS
-   ======================================== */
+/* ── Section tokens ── */
 
 :is(.nds-hero-section, .nds-content-section) {
-    /* Section background, shadow, and border overridable tokens */
-    --_section-bg: var(--section-bg, var(--background-white, #fff));
+    --_section-bg: var(--section-bg, var(--background-white));
     --_section-shadow: var(--section-shadow, none);
     --_section-border: var(--section-border, none);
     --_section-border-radius: var(--section-border-radius, 0);
 
-    /* Section spacing overridable tokens */
     --_section-padding-block: var(--section-padding-block, var(--spacing-5xl));
     --_section-padding-block-start: var(--section-padding-block-start, var(--_section-padding-block));
     --_section-padding-block-end: var(--section-padding-block-end, var(--_section-padding-block));
     --_section-margin-block-start: var(--section-margin-block-start, 0);
     --_section-margin-block-end: var(--section-margin-block-end, 0);
+    --_section-col-gap: var(--section-col-gap, var(--spacing-xl));
+    --_section-row-gap: var(--section-row-gap, var(--spacing-xl));
 
-    /* Section gap tokens (used by wrapper, float action, etc.) */
-    --_section-col-gap: var(--section-col-gap, var(--spacing-xl, 16px));
-    --_section-row-gap: var(--section-row-gap, var(--spacing-xl, 16px));
+    --_section-title-FS: var(--section-title-FS, var(--nds-display-clamp-md-FS));
+    --_section-title-LH: var(--section-title-LH, var(--nds-display-clamp-md-LH));
+    --_section-title-MB: var(--section-title-MB, var(--nds-display-clamp-md-MB));
+    --_section-shape-size: var(--section-shape-size, var(--_section-title-FS));
+    --_section-subtitle-FS: var(--section-subtitle-FS, var(--nds-text-clamp-lg-FS));
+    --_section-subtitle-LH: var(--section-subtitle-LH, var(--nds-text-clamp-lg-LH));
+    --_section-subtitle-MB: var(--section-subtitle-MB, var(--_section-title-MB));
+    --_section-description-FS: var(--section-description-FS, var(--nds-text-clamp-lg-FS));
+    --_section-description-LH: var(--section-description-LH, var(--nds-text-clamp-lg-LH));
+    --_section-description-MB: var(--section-description-MB, var(--spacing-2xl));
+    --_section-image-MB: var(--section-image-MB, var(--spacing-2xl));
+
+    --_section-title-color: var(--section-title-color, var(--text-display, #1f2a37));
+    --_section-subtitle-color: var(--section-subtitle-color, var(--text-secondary-paragraph));
+    --_section-description-color: var(--section-description-color, var(--text-default, #161616));
+    --_section-text-color: var(--section-text-color, inherit);
 
     background-color: var(--_section-bg);
     box-shadow: var(--_section-shadow);
@@ -39,21 +46,20 @@
     margin-block-end: var(--_section-margin-block-end);
     color: var(--_section-text-color);
 
-    &:is(.nds-primary, .nds-green) {
-        --section-bg: var(--colors-green-900);
+    &:is(.nds-primary, .nds-green, .nds-gradient-green, .nds-neutral) {
         --section-title-color: var(--text-oncolor-primary);
         --section-subtitle-color: var(--text-oncolor-secondary);
         --section-description-color: var(--text-oncolor-secondary);
         --section-text-color: var(--text-oncolor-secondary);
     }
 
+    &:is(.nds-primary, .nds-green) {
+        --section-bg: var(--colors-green-900);
+    }
+
     &.nds-gradient-green {
         --_gradient-angle: var(--gradient-angle, -45deg);
         --section-bg: var(--colors-green-900);
-        --section-title-color: var(--text-oncolor-primary);
-        --section-subtitle-color: var(--text-oncolor-secondary);
-        --section-description-color: var(--text-oncolor-secondary);
-        --section-text-color: var(--text-oncolor-secondary);
         background: linear-gradient(var(--_gradient-angle), var(--colors-primary-sa-flag-900), var(--colors-primary-sa-flag-600));
 
         @include ltr {
@@ -63,10 +69,6 @@
 
     &.nds-neutral {
         --section-bg: var(--colors-neutral-900);
-        --section-title-color: var(--text-oncolor-primary);
-        --section-subtitle-color: var(--text-oncolor-secondary);
-        --section-description-color: var(--text-oncolor-secondary);
-        --section-text-color: var(--text-oncolor-secondary);
     }
 
     &.nds-brand {
@@ -83,51 +85,23 @@
     }
 }
 
-/* ========================================
-   SHARED SECTION TOKENS
-   ======================================== */
-
-:is(.nds-content-section, .nds-hero-section) {
-    /* Section title and description overridable tokens */
-    --_section-title-FS: var(--section-title-FS, var(--nds-display-clamp-md-FS, clamp(24px, 3vw, 36px)));
-    --_section-title-LH: var(--section-title-LH, var(--nds-display-clamp-md-LH, clamp(30px, 3.67vw, 44px)));
-    --_section-title-MB: var(--section-title-MB, var(--nds-display-clamp-md-MB, clamp(7.5px, 0.9175vw, 11px)));
-    --_section-shape-size: var(--section-shape-size, var(--_section-title-FS));
-    --_section-subtitle-FS: var(--section-subtitle-FS, var(--nds-text-clamp-lg-FS, clamp(16px, 1.5vw, 18px)));
-    --_section-subtitle-LH: var(--section-subtitle-LH, var(--nds-text-clamp-lg-LH, clamp(24px, 2.17vw, 26px)));
-    --_section-subtitle-MB: var(--section-subtitle-MB, var(--_section-title-MB));
-    --_section-description-FS: var(--section-description-FS, var(--nds-text-clamp-lg-FS, clamp(16px, 1.5vw, 18px)));
-    --_section-description-LH: var(--section-description-LH, var(--nds-text-clamp-lg-LH, clamp(24px, 2.17vw, 26px)));
-    --_section-description-MB: var(--section-description-MB, var(--spacing-2xl, 20px));
-    --_section-image-MB: var(--section-image-MB, var(--spacing-2xl, 20px));
-
-    /* Section color overridable tokens */
-    --_section-title-color: var(--section-title-color, var(--text-display, #1f2a37));
-    --_section-subtitle-color: var(--section-subtitle-color, var(--text-secondary-paragraph));
-    --_section-description-color: var(--section-description-color, var(--text-default, #161616));
-    --_section-text-color: var(--section-text-color, inherit);
-}
-
-/* ========================================
-   SECTION HEAD
-   ======================================== */
+/* ── Section head ── */
 
 .nds-section-head {
     position: relative;
     column-gap: var(--spacing-xl);
+}
 
-    &:has(~ .nds-section-content) {
-        margin-bottom: var(--spacing-4xl, 32px);
-    }
+.nds-section-head:has(~ .nds-section-content),
+.nds-section-wrapper:not(:last-child) {
+    margin-bottom: var(--spacing-4xl);
 
-    .nds-content-layout.cardView &:has(~ .nds-section-content) {
-        margin-bottom: var(--spacing-2xl, 20px);
+    .nds-content-layout.cardView & {
+        margin-bottom: var(--spacing-2xl);
     }
 }
 
-/* ========================================
-   SECTION TITLE
-   ======================================== */
+/* ── Section title ── */
 
 .nds-section-title {
     display: flex;
@@ -154,35 +128,12 @@
         height: var(--_section-shape-size);
         width: auto;
     }
-
 }
 
-/* ========================================
-   SECTION SUBTITLE
-   ======================================== */
+/* ── Section subtitle + description ── */
 
-.nds-section-subtitle {
-    font-size: var(--_section-subtitle-FS);
-    line-height: var(--_section-subtitle-LH);
-    font-weight: 500;
-    letter-spacing: -0.01rem;
-    color: var(--_section-subtitle-color);
-    margin-block-start: 0;
-    max-width: var(--maxwidth-paragraph-max-width, 720px);
-
-    &:not(:last-child) {
-        margin-bottom: var(--_section-subtitle-MB);
-    }
-}
-
-/* ========================================
-   SECTION DESCRIPTION
-   ======================================== */
-
+.nds-section-subtitle,
 .nds-section-description {
-    font-size: var(--_section-description-FS);
-    line-height: var(--_section-description-LH);
-    color: var(--_section-description-color);
     margin-block-start: 0;
     max-width: var(--maxwidth-paragraph-max-width, 720px);
 
@@ -191,9 +142,25 @@
     }
 }
 
-/* ========================================
-   SECTION IMAGE
-   ======================================== */
+.nds-section-subtitle {
+    font-size: var(--_section-subtitle-FS);
+    line-height: var(--_section-subtitle-LH);
+    font-weight: 500;
+    letter-spacing: -0.01rem;
+    color: var(--_section-subtitle-color);
+
+    &:not(:last-child) {
+        margin-bottom: var(--_section-subtitle-MB);
+    }
+}
+
+.nds-section-description {
+    font-size: var(--_section-description-FS);
+    line-height: var(--_section-description-LH);
+    color: var(--_section-description-color);
+}
+
+/* ── Section image ── */
 
 .nds-section-image {
     display: flex;
@@ -201,37 +168,12 @@
     justify-content: center;
     flex-shrink: 0;
 
-    img {
-        max-width: 100%;
-        height: auto;
-        display: block;
-    }
-
     &:not(:last-child) {
         margin-bottom: var(--_section-image-MB);
     }
 }
 
-/* ========================================
-   SECTION META (TAGS, RATING)
-   ======================================== */
-
-.nds-section-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--spacing-sm);
-}
-
-.nds-section-rating {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--spacing-sm);
-    font-size: var(--nds-text-clamp-sm-FS);
-    align-items: flex-end;
-    line-height: 1;
-    --btn-padding: var(--spacing-xs);
-    --btn-height: 24px;
-}
+/* ── Section meta ── */
 
 .nds-section-meta {
     display: flex;
@@ -242,9 +184,22 @@
     align-items: center;
 }
 
-/* ========================================
-   SECTION ACTION
-   ======================================== */
+.nds-section-tags,
+.nds-section-rating {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+}
+
+.nds-section-rating {
+    font-size: var(--nds-text-clamp-sm-FS);
+    align-items: flex-end;
+    line-height: 1;
+    --btn-padding: var(--spacing-xs);
+    --btn-height: 24px;
+}
+
+/* ── Section action ── */
 
 .nds-section-action {
     display: flex;
@@ -258,87 +213,223 @@
     z-index: 1;
 }
 
-/* ========================================
-   READ MORE
-   ======================================== */
-
 .nds-readMore {
-    margin: var(--spacing-xl, 20px) auto 0;
+    margin: var(--spacing-xl) auto 0;
     display: flex;
 }
 
-/* ========================================
-   SECTION CONTENT
-   ======================================== */
+/* ── Section wrapper ── */
 
-.nds-section-content {
+.nds-section-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    align-content: flex-start;
+    column-gap: var(--_section-col-gap);
+    row-gap: var(--_section-row-gap);
 
-    & :not(nav, .nds-drawer-scroll)>ul,
-    & :not(nav, .nds-drawer-scroll)>ol {
+    .nds-section-image .nds-avatar {
+        --avatar-size: 120px;
 
-        &.nds-divided li {
-            border-bottom: 1px solid var(--border-neutral-secondary);
+        @include mobile {
+            --avatar-size: 80px;
+        }
+    }
+
+    .nds-section-head {
+        flex: 1;
+        margin-bottom: 0;
+    }
+
+    .nds-section-action {
+        align-items: self-start;
+        align-self: self-start;
+        --btn-width: 100%;
+
+        .label {
+            text-align: center;
+        }
+    }
+
+    .nds-section-content {
+        flex: 1 1 100%;
+        min-width: 0;
+    }
+
+    @include mobile {
+        >.nds-section-action {
+            flex: 1 0 100%;
+            flex-direction: row;
+            --btn-width: unset;
+        }
+    }
+}
+
+/* ── Float action ── */
+
+:is(.nds-content-section, .nds-hero-section):not(.nds-horizontal, .nds-center) .nds-section-head>.nds-section-action {
+    float: inline-end;
+    margin-inline-start: var(--_section-col-gap);
+    margin-block-end: calc(var(--_section-col-gap) / 2);
+}
+
+:is(.nds-content-section, .nds-hero-section):not(.nds-center, .nds-horizontal)>.nds-section-wrapper>.nds-section-head:has(> .nds-section-action)~.nds-section-action {
+    flex: 1 0 100%;
+    flex-direction: row;
+    --btn-width: unset;
+}
+
+:is(.nds-center, .nds-horizontal) .nds-section-head>.nds-section-action {
+    order: 1;
+    margin-inline-start: 0;
+    margin-block: var(--_section-col-gap) 0;
+}
+
+@include mobile {
+    .nds-section-head:has(> .nds-section-action.nds-wrap) {
+        display: flex;
+        flex-direction: column;
+
+        >.nds-section-action {
+            float: none;
+            order: 1;
+            margin-inline-start: 0;
+            margin-block: var(--_section-col-gap) 0;
+            --btn-width: unset;
+            flex-direction: row;
+        }
+    }
+
+    .nds-section-head>.nds-section-action.nds-minimal {
+
+        >.nds-btn,
+        >.nds-dropmenu>.nds-btn {
+            >.label {
+                display: none;
+            }
+        }
+    }
+}
+
+/* ── 404 ── */
+
+.nds-content-section.nds-404 {
+
+    .nds-grid {
+        row-gap: var(--spacing-6xl);
+    }
+
+    * {
+        text-align: center;
+        margin-inline: auto;
+    }
+}
+
+/* ── Side info ── */
+
+.nds-sideInfo-section {
+    .nds-section-content {
+        display: flex;
+        gap: var(--spacing-xl);
+
+        @include tablet(max) {
+            flex-direction: column;
+        }
+    }
+
+    .nds-info-content {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        min-width: 0;
+    }
+
+    .nds-sideInfo {
+        --card-padding: var(--spacing-4xl);
+        width: var(--nds-sideInfo-width);
+        position: static;
+        top: calc(var(--nds-nav-height) + var(--spacing-md) + var(--nds-sideInfo-top) * -1);
+        transform: translateY(calc(var(--nds-sideInfo-top, -180px) + var(--spacing-3xl)));
+        margin-bottom: calc(var(--nds-sideInfo-top, -180px) + var(--spacing-3xl));
+        height: fit-content;
+
+        @include tablet(max) {
+            top: unset;
+            transform: translateY(0px);
+            --nds-sideInfo-width: 100%;
+            margin-bottom: unset;
+            padding-inline: var(--spacing-xl);
         }
 
-        li {
-            padding-block: var(--spacing-md);
+        .nds-definition-list {
+            --dl-icon-size: 24px;
+            --dl-icon-gap: var(--spacing-md);
+            gap: var(--spacing-xl);
 
-            &:first-child {
-                padding-block-start: 0;
+            dt {
+                font-size: var(--nds-text-md-FS);
             }
 
-            &:last-child {
-                padding-block-end: 0;
-                border-bottom: none;
+            dd {
+                .nds-btn.nds-transparent {
+                    padding: 0;
+                    --btn-height: fit-content;
+                }
             }
         }
     }
+}
 
-    :is(p, ul, ol, .nds-content-block, .nds-table-wrapper, .nds-table, .nds-tabs, .nds-code) {
-        margin-block-end: 1rem;
+/* ── Centered layout ── */
 
-        &:last-child {
-            margin-block-end: 0;
-        }
+.nds-content-section.nds-center {
+    >.nds-section-wrapper {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
     }
 
-    :is(article, .nds-content-block) {
-
-        p {
-            color: var(--text-primary-paragraph);
-            text-wrap: pretty;
-            text-align: justify;
-        }
-
-        &>img {
-            max-width: 80%;
-            margin: auto;
-            display: block;
-
-            @include tablet(max) {
-                max-width: 100%;
-            }
-        }
-
-        &>video {
-            max-height: 60vh;
-            width: auto;
-            margin: auto;
-            display: block;
-        }
+    .nds-section-head {
+        flex: unset;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
     }
 
-    .nds-block-title {
-        --_block-title-FS: var(--block-title-FS, var(--nds-text-xl-FS));
-        --_block-title-LH: var(--block-title-LH, var(--nds-text-xl-LH));
-        --_block-title-FW: var(--block-title-FW, 600);
-        --_block-title-MB: var(--block-title-MB, var(--spacing-lg));
-        --_block-title-color: var(--block-title-color, var(--text-display));
-
-        font-size: var(--_block-title-FS);
-        line-height: var(--_block-title-LH);
-        font-weight: var(--_block-title-FW);
-        color: var(--_block-title-color);
+    .nds-section-description {
+        margin-inline: auto;
     }
 
+    .nds-section-action {
+        align-items: center;
+        align-self: center;
+        flex: 1;
+    }
+
+    .nds-section-content {
+        width: 100%;
+        flex: 1;
+        text-align: unset;
+    }
+}
+
+/* ── Horizontal layout ── */
+
+@include desktop(min) {
+    :is(.nds-content-section, .nds-hero-section).nds-horizontal>.nds-section-wrapper {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        align-items: center;
+        gap: var(--gap, var(--spacing-6xl));
+
+        .nds-section-action {
+            --btn-width: fit-content;
+        }
+
+        .nds-section-head {
+            display: flex;
+            flex-direction: column;
+        }
+    }
 }
