@@ -93,6 +93,19 @@ $all-spacers: $spacers;
   flex: none;
 }
 
+.nds-number-format {
+  --_number-icon-size: var(--number-icon-size, 1em);
+  display: inline-flex;
+  align-items: baseline;
+  line-height: normal;
+
+  > .icon {
+    width: var(--_number-icon-size);
+    height: var(--_number-icon-size);
+    align-self: center;
+  }
+}
+
 .nds-truncate:not([hidden]) {
   --_truncate: var(--truncate, 1);
   overflow: hidden;

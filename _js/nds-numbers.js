@@ -2,27 +2,33 @@
 (() => {
     'use strict';
 
-    function formatThousands() {
-        const ThousandsNumbers = document.querySelectorAll('.nds-number-format');
-        if (ThousandsNumbers.length > 0) {
-            ThousandsNumbers.forEach(el => {
-                const text = el.textContent.trim();
-                // Extract prefix (including + or - sign), number, and suffix
-                const match = text.match(/^([^\d]*)([-+]?\d[\d,]*\.?\d*)(.*)$/);
-                if (match) {
-                    const prefix = match[1] || '';
-                    const numStr = match[2].replace(/,/g, '');
-                    const suffix = match[3] || '';
-                    const num = parseFloat(numStr);
-
-                    if (!isNaN(num)) {
-                        const sign = numStr.startsWith('+') ? '+' : (numStr.startsWith('-') ? '-' : '');
-                        const formatted = Math.abs(num).toLocaleString();
-                        el.textContent = `${prefix}${sign}${formatted}${suffix}`;
-                    }
+    function formatNumbers() {
+        document.querySelectorAll('.nds-number-format').forEach(el => {
+            if (el.closest('code, .code-example')) return;
+            // Find the text node containing the number (preserves child elements like icons)
+            const textNodes = [];
+            for (const node of el.childNodes) {
+                if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
+                    textNodes.push(node);
                 }
-            });
-        }
+            }
+
+            const targetNode = textNodes.find(n => /\d/.test(n.textContent));
+            if (!targetNode) return;
+
+            const text = targetNode.textContent.trim();
+            const match = text.match(/^([^\d]*)([-+]?\d[\d,]*\.?\d*)(.*)$/);
+            if (match) {
+                const prefix = match[1] || '';
+                const numStr = match[2].replace(/,/g, '');
+                const suffix = match[3] || '';
+                const num = parseFloat(numStr);
+
+                if (!isNaN(num)) {
+                    targetNode.textContent = `${prefix}${num.toLocaleString()}${suffix}`;
+                }
+            }
+        });
     }
 
     function setupCounterAnimations() {
@@ -32,51 +38,24 @@
         const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches || false;
 
         function parseTarget(el) {
-            // Attributes take precedence
             let targetStr = el.getAttribute('data-target');
-            let suffixAttr = el.getAttribute('data-suffix') || '';
-            let prefixAttr = el.getAttribute('data-prefix') || '';
             let decimalsAttr = el.getAttribute('data-decimals');
-            let useSiblingSuffix = false;
-            let suffixEl = null;
+            let prefix = '';
+            let suffix = '';
 
-            // Auto-extract prefix/suffix from data-target if present
-            if (targetStr && !suffixAttr && !prefixAttr) {
-                const targetMatch = targetStr.match(/^([^\d.-]*)([-+]?\d*\.?\d+)(.*)$/);
-                if (targetMatch) {
-                    prefixAttr = targetMatch[1] || '';
-                    targetStr = targetMatch[2];
-                    suffixAttr = targetMatch[3] || '';
+            if (targetStr) {
+                // Extract prefix/suffix from data-target (e.g. "$75,000", "98.6%")
+                const m = targetStr.match(/^([^\d.-]*)([-+]?\d*\.?\d+)(.*)$/);
+                if (m) {
+                    prefix = m[1] || '';
+                    targetStr = m[2];
+                    suffix = m[3] || '';
                 }
-            }
-
-            if (!targetStr) {
-                // Handle split suffix pattern: <span.nds-counter-value>98</span><span.suffix>.2%</span>
-                const next = el.nextElementSibling;
-                if (next && next.classList.contains('suffix')) {
-                    suffixEl = next;
-                    const m = next.textContent.trim().match(/^([.,](\d+))?(.*)$/);
-                    const decimalDigits = m && m[2] ? m[2] : '';
-                    const remainderSuffix = m ? (m[3] || '') : '';
-                    if (decimalDigits) {
-                        targetStr = `${el.textContent.trim().replace(/,/g, '')}.${decimalDigits}`;
-                        suffixAttr = suffixAttr || remainderSuffix;
-                        useSiblingSuffix = true;
-                        next.textContent = remainderSuffix;
-                    } else {
-                        targetStr = el.textContent.trim().replace(/,/g, '');
-                        suffixAttr = suffixAttr || next.textContent.trim();
-                        useSiblingSuffix = true;
-                    }
-                } else {
-                    // Fallback: parse number and suffix from own text
-                    const full = el.textContent.trim();
-                    const match = full.replace(/,/g, '').match(/([-+]?\d*\.?\d+)/);
-                    targetStr = match ? match[1] : '0';
-                    const idx = full.indexOf(match ? match[0] : '');
-                    const after = idx >= 0 ? full.slice(idx + (match ? match[0].length : 0)) : '';
-                    if (!suffixAttr && after) suffixAttr = after.trim();
-                }
+            } else {
+                // Fallback: parse from element text
+                const full = el.textContent.trim();
+                const m = full.replace(/,/g, '').match(/([-+]?\d*\.?\d+)/);
+                targetStr = m ? m[1] : '0';
             }
 
             const target = parseFloat(targetStr || '0') || 0;
@@ -87,14 +66,12 @@
                 decimals = String(targetStr).split('.')[1].length;
             }
 
-            const sign = target < 0 ? '-' : '';
+            if (target < 0) prefix = prefix || '-';
             return {
                 target: Math.abs(target),
                 decimals,
-                prefix: prefixAttr || sign,
-                suffix: suffixAttr || '',
-                useSiblingSuffix,
-                suffixEl
+                prefix,
+                suffix
             };
         }
 
@@ -102,11 +79,10 @@
         const counterConfigs = new WeakMap();
 
         counters.forEach(counter => {
+            if (counter.closest('code, .code-example')) return;
             const cfg = parseTarget(counter);
             const start = parseFloat(counter.getAttribute('data-start') || '0') || 0;
             const duration = parseInt(counter.getAttribute('data-duration') || '1000', 10);
-            const threshold = parseFloat(counter.getAttribute('data-threshold')) || 0.5;
-
             // Pre-format target value to avoid toLocaleString() during animation
             const formatNumber = (value) => value.toLocaleString(undefined, {
                 minimumFractionDigits: cfg.decimals,
@@ -117,18 +93,25 @@
                 cfg,
                 start,
                 duration,
-                threshold,
                 formatNumber,
                 preFormattedTarget: formatNumber(cfg.target)
             });
         });
 
-        // Helper to update counter text
+        // Helper to update counter text (preserves child elements like icons)
         const updateText = (el, cfg, formattedValue) => {
-            if (cfg.useSiblingSuffix && cfg.suffixEl) {
-                el.textContent = `${cfg.prefix}${formattedValue}`;
+            const text = `${cfg.prefix}${formattedValue}${cfg.suffix}`;
+
+            // Find existing text node with a number, or the last text node
+            const textNodes = [];
+            for (const node of el.childNodes) {
+                if (node.nodeType === Node.TEXT_NODE) textNodes.push(node);
+            }
+            const targetNode = textNodes.find(n => /\d/.test(n.textContent)) || textNodes[textNodes.length - 1];
+            if (targetNode) {
+                targetNode.textContent = text;
             } else {
-                el.textContent = `${cfg.prefix}${formattedValue}${cfg.suffix}`;
+                el.appendChild(document.createTextNode(text));
             }
         };
 
@@ -146,98 +129,71 @@
             return Math.round(value);
         };
 
-        // Group counters by threshold to minimize observers
-        const observersByThreshold = new Map();
-        const observerCounts = new Map();
+        let remaining = 0;
+        const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting || entry.target.hasAttribute('data-animated')) return;
+
+                const el = entry.target;
+                obs.unobserve(el);
+                if (--remaining <= 0) obs.disconnect();
+
+                const config = counterConfigs.get(el);
+                if (!config) return;
+
+                const { cfg, start, duration, formatNumber, preFormattedTarget } = config;
+                const animDuration = prefersReducedMotion ? 0 : duration;
+
+                if (animDuration === 0) {
+                    updateText(el, cfg, preFormattedTarget);
+                    el.setAttribute('data-animated', 'true');
+                    return;
+                }
+
+                const startTime = performance.now();
+                const formattedCache = new Map();
+                let lastCacheKey = null;
+
+                function updateCounter(now) {
+                    const elapsed = now - startTime;
+                    const progress = Math.min(elapsed / animDuration, 1);
+
+                    if (progress < 1) {
+                        const currentValue = start + (cfg.target - start) * progress;
+                        const cacheKey = getCacheKey(currentValue, cfg.target, cfg.decimals);
+
+                        if (cacheKey !== lastCacheKey) {
+                            lastCacheKey = cacheKey;
+                            if (!formattedCache.has(cacheKey)) {
+                                formattedCache.set(cacheKey, formatNumber(cacheKey));
+                            }
+                            updateText(el, cfg, formattedCache.get(cacheKey));
+                        }
+
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        updateText(el, cfg, preFormattedTarget);
+                        el.setAttribute('data-animated', 'true');
+                        formattedCache.clear();
+                    }
+                }
+
+                requestAnimationFrame(updateCounter);
+            });
+        }, { threshold: 0.5 });
 
         counters.forEach(counter => {
-            const config = counterConfigs.get(counter);
-            if (!config) return;
-
-            const { threshold } = config;
-
-            if (!observersByThreshold.has(threshold)) {
-                const observer = new IntersectionObserver(
-                    (entries, obs) => {
-                        entries.forEach((entry) => {
-                            if (!entry.isIntersecting || entry.target.hasAttribute('data-animated')) {
-                                return;
-                            }
-
-                            const el = entry.target;
-                            obs.unobserve(el);
-
-                            // Decrement count and disconnect if no more elements
-                            const count = (observerCounts.get(threshold) || 1) - 1;
-                            observerCounts.set(threshold, count);
-                            if (count <= 0) {
-                                obs.disconnect();
-                                observersByThreshold.delete(threshold);
-                                observerCounts.delete(threshold);
-                            }
-
-                            const config = counterConfigs.get(el);
-                            if (!config) return;
-
-                            const { cfg, start, duration, formatNumber, preFormattedTarget } = config;
-                            const animDuration = prefersReducedMotion ? 0 : duration;
-
-                            // Instant display for reduced motion
-                            if (animDuration === 0) {
-                                updateText(el, cfg, preFormattedTarget);
-                                el.setAttribute('data-animated', 'true');
-                                return;
-                            }
-
-                            const startTime = performance.now();
-                            const formattedCache = new Map();
-                            let lastCacheKey = null;
-
-                            function updateCounter(now) {
-                                const elapsed = now - startTime;
-                                const progress = Math.min(elapsed / animDuration, 1);
-
-                                if (progress < 1) {
-                                    const currentValue = start + (cfg.target - start) * progress;
-                                    const cacheKey = getCacheKey(currentValue, cfg.target, cfg.decimals);
-
-                                    // Skip update if display value hasn't changed
-                                    if (cacheKey !== lastCacheKey) {
-                                        lastCacheKey = cacheKey;
-                                        if (!formattedCache.has(cacheKey)) {
-                                            formattedCache.set(cacheKey, formatNumber(cacheKey));
-                                        }
-                                        updateText(el, cfg, formattedCache.get(cacheKey));
-                                    }
-
-                                    requestAnimationFrame(updateCounter);
-                                } else {
-                                    // Final frame: use pre-formatted exact value
-                                    updateText(el, cfg, preFormattedTarget);
-                                    el.setAttribute('data-animated', 'true');
-                                    formattedCache.clear();
-                                }
-                            }
-
-                            requestAnimationFrame(updateCounter);
-                        });
-                    },
-                    { threshold }
-                );
-
-                observersByThreshold.set(threshold, observer);
-                observerCounts.set(threshold, 0);
+            if (counterConfigs.has(counter)) {
+                remaining++;
+                observer.observe(counter);
             }
-
-            observerCounts.set(threshold, (observerCounts.get(threshold) || 0) + 1);
-            observersByThreshold.get(threshold).observe(counter);
         });
     }
 
     // CRITICAL: Expose global API immediately (called by unified init system)
     if (typeof window !== 'undefined') {
         window.NDSNumbers = {
-            formatThousands,
+            formatNumbers,
             setupCounterAnimations
         };
     }
