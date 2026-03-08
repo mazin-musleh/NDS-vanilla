@@ -71,7 +71,7 @@
             selector: '.nds-number-format, .nds-counter-value',
             init: () => {
                 // Run both formatting and counter setup regardless of return values
-                window.NDSNumbers?.formatThousands?.();
+                window.NDSNumbers?.formatNumbers?.();
                 window.NDSNumbers?.setupCounterAnimations?.();
             },
         },
