@@ -184,7 +184,7 @@ body.nds-minimal[style*="--bg-img"] {
     & :not(nav, .nds-drawer-scroll)>ol {
 
         &.nds-divided li {
-            border-bottom: 1px solid var(--border-neutral-secondary);
+            border-bottom: 1px solid var(--divider-color);
         }
 
         li {

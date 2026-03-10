@@ -98,7 +98,7 @@ dd {
     // For non-tableView variant
     &:not(.tableView) .nds-definition-item {
         padding-bottom: var(--spacing-lg);
-        border-bottom: 1px solid var(--border-neutral-secondary);
+        border-bottom: 1px solid var(--divider-color);
 
         &:last-child {
             border-bottom: none;
@@ -112,7 +112,7 @@ dd {
 
         .nds-definition-item {
             padding: var(--spacing-md) 0;
-            border-bottom: 1px solid var(--border-neutral-secondary);
+            border-bottom: 1px solid var(--divider-color);
 
             &:last-child {
                 border-bottom: none;

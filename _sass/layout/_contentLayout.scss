@@ -234,7 +234,7 @@ main {
 
     @mixin _section-striping {
         .nds-content-section:not(.nds-user-feedback-section):nth-of-type(even) {
-            --section-bg: var(--background-section-stripe);
+            --section-bg: var(--background-stripe);
         }
     }
 

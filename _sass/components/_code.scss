@@ -42,7 +42,6 @@
     position: absolute;
     top: 0;
     inset-inline-end: 0;
-    background-color: var(--alpha-white-70);
     z-index: 2;
 
     .copy-btn.copied {
@@ -117,8 +116,8 @@
           width: 3em;
           height: calc(100% + var(--spacing-7xl));
           font-size: var(--nds-text-xs-FS);
-          background-color: var(--background-neutral-100);
-          border: 1px solid var(--background-neutral-100);
+          background-color: var(--background-stripe);
+          border: none;
           border-right: 1px solid var(--border-neutral-secondary, #E5E7EB);
           user-select: none;
           pointer-events: none;

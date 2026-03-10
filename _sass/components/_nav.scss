@@ -21,7 +21,7 @@
     /* Fallback for older browsers */
     overflow-y: clip;
 
-    > * {
+    >* {
         visibility: visible;
     }
 
@@ -228,7 +228,6 @@
         --btn-height: var(--nds-nav-height);
         font-size: var(--nds-text-clamp-lg-FS);
         line-height: var(--nds-text-clamp-lg-LH);
-
 
         .nds-avatar {
             --avatar-size: calc(var(--nds-nav-height) - 40px);
@@ -439,11 +438,6 @@ body:not(.nds-minimal) .nds-main-nav {
                 --btn-indicator-selected: var(--background-primary-400);
                 --btn-loading-color: var(--text-oncolor-primary);
                 --btn-loading-track: var(--alpha-white-20);
-
-                &::before {
-                    background-color: var(--_btn-indicator-color);
-                }
-
             }
         }
     }
@@ -618,7 +612,7 @@ body.nds-minimal .nds-main-nav {
         overflow: clip;
 
         .nds-collapse-content {
-            background-color: var(--background-white);
+            background-color: var(--background-nav);
             box-shadow: var(--shadow-md);
             transform: translateY(-100%);
             transition: transform var(--nds-transition);
@@ -679,8 +673,14 @@ body.nds-minimal .nds-main-nav {
                     --btn-bg-selected: var(--button-background-transparent-default);
 
                     &.nds-oncolor {
-                        --btn-bg-hover: var(--button-background-transparent-hovered);
-                        --btn-bg-active: var(--button-background-transparent-pressed);
+                        @at-root {
+
+                            #{&},
+                            :root[data-theme="dark"] body.nds-minimal .nds-main-nav .nds-nav-primary .nds-nav-item .nds-nav-link.nds-menu-btn {
+                                --btn-bg-hover: var(--button-background-transparent-hovered);
+                                --btn-bg-active: var(--button-background-transparent-pressed);
+                            }
+                        }
                     }
 
                     &:is([data-state~="active"], [data-state~="selected"], [data-state~="current"]):not( :active, .nds-oncolor) {
@@ -690,11 +690,11 @@ body.nds-minimal .nds-main-nav {
 
                 }
 
-                &:not(.nds-menu-btn, :active, .nds-oncolor):is([data-state~="active"], [data-state~="selected"], [data-state~="current"]) {
+                /*  &:not(.nds-menu-btn, :active, .nds-oncolor):is([data-state~="active"], [data-state~="selected"], [data-state~="current"]) {
                     --btn-color: var(--background-primary);
                     --btn-indicator-color: var(--background-primary);
                     --btn-indicator-selected: var(--background-primary);
-                }
+                } */
 
             }
 
@@ -746,7 +746,7 @@ body.nds-minimal .nds-main-nav {
     }
 
     .nds-nav-item {
-        border-bottom: 1px solid var(--border-neutral-secondary);
+        border-bottom: 1px solid var(--divider-color);
     }
 
     /* Show More Button */
@@ -795,7 +795,7 @@ body.nds-minimal .nds-main-nav {
         align-items: stretch;
         gap: 0;
         width: 100%;
-        border-top: 1px solid var(--border-neutral-secondary);
+        border-top: 1px solid var(--divider-color);
         justify-content: center;
         background-color: var(--nds-nav-background-color);
         z-index: var(--_nav-z-secondary);
@@ -823,7 +823,7 @@ body.nds-minimal .nds-main-nav {
             overflow-y: clip;
 
             .nds-dropdown-content {
-                background-color: var(--background-white);
+                background-color: var(--background-nav);
                 border-radius: 0 0 var(--radius-lg) var(--radius-lg);
                 box-shadow: var(--shadow-md);
             }
@@ -853,7 +853,7 @@ body.nds-minimal .nds-main-nav {
 
 /* Small Mobile Screens */
 @include mobile {
-    .nds-topbar .nds-topbar-info:not(.nds-digitalStamp-tab) > :not(.nds-theme-toggle-wrap) {
+    .nds-topbar .nds-topbar-info:not(.nds-digitalStamp-tab)> :not(.nds-theme-toggle-wrap) {
         display: none;
     }
 

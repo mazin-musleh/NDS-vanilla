@@ -112,16 +112,9 @@
         .nds-user-feedback-agreement {
             font-size: var(--nds-text-sm-FS);
             line-height: var(--nds-text-sm-LH);
-            color: var(--text-primary-default);
-
-            a {
-                color: var(--colors-primary-sa-flag-600-primary);
-                text-decoration: underline;
-
-                &:hover {
-                    color: var(--colors-primary-sa-flag-700);
-                }
-            }
+            --link-color: var(--link-primary);
+            --link-hover: var(--link-primary-hovered);
+            --link-pressed: var(--link-primary-pressed);
         }
 
         .nds-user-feedback-submit-btn {
@@ -132,5 +125,5 @@
 
 .nds-user-feedback-section {
     border-top: 2px solid var(--border-primary) !important;
-    background: var(--background-white);
+    background: var(--background-default);
 }
