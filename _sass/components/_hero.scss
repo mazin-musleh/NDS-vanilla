@@ -63,7 +63,7 @@
     // ── Sub variant ──
 
     &.sub {
-        --_brand-light: var(--background-brand-light, #f3fcf6);
+        --_brand-light: var(--background-sub-hero);
         --_gradient-angle: 90deg;
         --section-padding-block: var(--spacing-2xl);
         --section-title-FS: var(--nds-display-clamp-md-FS);

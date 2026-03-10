@@ -11,7 +11,7 @@
    ======================================== */
 
 .nds-topbar {
-    background-color: var(--background-neutral-100, #f3f4f6);
+    background-color: var(--background-topbar);
     height: 40px;
     z-index: 1000;
     position: relative;
@@ -35,6 +35,7 @@
         display: flex;
         gap: var(--spacing-xl);
     }
+
 
     .nds-text-icon {
         height: 40px;
@@ -77,8 +78,8 @@
     --_nav-z-secondary: calc(var(--_nav-z-base) + 1);
     --_nav-z-secondary-dropdown: calc(var(--_nav-z-base) + 2);
 
-    --nds-nav-background-color: var(--colors-base-white, #fff);
-    --nds-nav-dropmenu-background-color: var(--nds-nav-background-color);
+    --nds-nav-background-color: var(--background-nav);
+    --nds-nav-dropmenu-background-color: var(--background-menu);
     --nds-nav-color: var(--text-default);
     --nds-nav-dropmenu-title-color: var(--text-primary);
 
@@ -852,9 +853,10 @@ body.nds-minimal .nds-main-nav {
 
 /* Small Mobile Screens */
 @include mobile {
-    .nds-topbar .nds-topbar-info:not(.nds-digitalStamp-tab) {
+    .nds-topbar .nds-topbar-info:not(.nds-digitalStamp-tab) > :not(.nds-theme-toggle-wrap) {
         display: none;
     }
+
 
     .nds-dropdown-menu .nds-dropdown-columns.columnView {
         column-count: 1;

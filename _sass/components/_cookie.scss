@@ -12,9 +12,9 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: var(--background-white, #fff);
+    background-color: var(--background-white);
     border-radius: 12px 12px 0 0;
-    box-shadow: 0px -3.288px 6.575px -1.644px rgba(16, 24, 40, 0.10), 0px -1.644px 3.288px -1.644px rgba(16, 24, 40, 0.06);
+    box-shadow: var(--shadow-md-top);
     width: 100%;
     padding: 24px;
     z-index: 1000;
@@ -39,7 +39,7 @@
     font-size: var(--nds-text-clamp-xl-FS);
     line-height: var(--nds-text-clamp-xl-LH);
     font-weight: 600;
-    color: #333;
+    color: var(--text-display);
     display: flex;
     align-items: center;
     gap: var(--spacing-md);
@@ -48,7 +48,7 @@
 .nds-cookie-popup-icon {
     width: 40px;
     height: 40px;
-    color: #666;
+    color: var(--text-secondary-paragraph);
 }
 
 .nds-cookie-popup-close {
@@ -57,14 +57,14 @@
     font-size: var(--nds-display-clamp-md-FS);
     line-height: var(--nds-display-clamp-md-LH);
     letter-spacing: -0.02rem;
-    color: #666;
+    color: var(--text-secondary-paragraph);
     cursor: pointer;
     padding: var(--spacing-sm);
     transition: color 0.2s;
 }
 
 .nds-cookie-popup-close:hover {
-    color: #333;
+    color: var(--text-display);
 }
 
 /* ========================================

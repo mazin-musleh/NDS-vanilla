@@ -13,6 +13,8 @@
 
 // Import variables (CSS custom properties)
 @use 'variables';
+@use 'variables-dark';
+@use 'variables-dark-dga';
 
 // Section styles - visual tokens, color variants, meta, actions, 404, sideInfo
 @use 'layout/section';

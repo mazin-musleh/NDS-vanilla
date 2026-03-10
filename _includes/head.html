@@ -2,6 +2,13 @@
     {%- assign site_title = page.siteTitle | default: site.title -%}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+        // Apply cached theme before rendering to prevent FOUC
+        (function() {
+            var t = localStorage.getItem('nds-theme');
+            if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
+        })();
+    </script>
     {%- unless page.exclude_showcase == true %}
     <script>
         // Apply cached language preference before any rendering to prevent direction mismatch

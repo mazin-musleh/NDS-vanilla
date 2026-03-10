@@ -148,6 +148,11 @@ secondary_nav:
         button_style: "nds-subtle nds-destructive"
         url: "#"
 
+  - label: "Toggle theme"
+    icon: "hgi-moon-02"
+    custom_class: "iconOnly"
+    id: "ndsThemeToggle"
+
   - label: "English"
     icon: "hgi-translation"
     custom_class: "iconOnly lang"

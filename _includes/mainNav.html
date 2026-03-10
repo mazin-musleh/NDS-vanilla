@@ -250,6 +250,9 @@
                     {%- endfor %}
                 </ul>
                 {%- endif %}
+                <!-- TEMP: DGA dark mode toggle for visual comparison -->
+                <button class="nds-btn nds-subtle" id="dga-toggle" style="font-size:11px;min-width:40px">NDS</button>
+                <script>document.getElementById('dga-toggle').onclick=function(){var r=document.documentElement,d=r.getAttribute('data-dark-mode');if(d){r.removeAttribute('data-dark-mode');this.textContent='NDS'}else{r.setAttribute('data-dark-mode','dga');this.textContent='DGA'}}</script>
             </div>
         </div>
     </div>

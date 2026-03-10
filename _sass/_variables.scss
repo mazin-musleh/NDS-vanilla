@@ -4,10 +4,6 @@
 /* Foundation tokens (layout, spacing, fluid typography) are in _variables-critical.scss */
 
 :root {
-    // Shadows
-    --shadow-md: 0px 2px 4px -2px rgba(16, 24, 40, .06), 0px 4px 8px -2px rgba(16, 24, 40, .1);
-    --shadow-md-top: 0px -3.288px 6.575px -1.644px rgba(16, 24, 40, 0.10), 0px -1.644px 3.288px -1.644px rgba(16, 24, 40, 0.06);
-
     // Spacing system (numeric)
     --spacing-0: 0px;
     --spacing-0-5: 2px;
@@ -231,7 +227,9 @@
     --colors-neutral-500: #6c727e;
     --colors-neutral-600: #4d5761;
     --colors-neutral-700: #384250;
+    --colors-neutral-750: #2b3643;
     --colors-neutral-800: #1f2a37;
+    --colors-neutral-850: #18212f;
     --colors-neutral-900: #111927;
     --colors-neutral-950: #0c111b;
     --colors-blue-25: #f5faff;
@@ -324,6 +322,7 @@
     --shadow-xl: 0px 8px 8px -4px rgba(16, 24, 40, .03), 0px 20px 24px -4px rgba(16, 24, 40, .08);
     --shadow-2xl: 0px 24px 48px -12px rgba(16, 24, 40, .18);
     --shadow-3xl: 0px 32px 64px -12px rgba(16, 24, 40, .14);
+    --shadow-md-top: 0px -3.288px 6.575px -1.644px rgba(16, 24, 40, 0.10), 0px -1.644px 3.288px -1.644px rgba(16, 24, 40, 0.06);
     --shadow-inset: inset 0px 0 4px 2px rgba(0, 0, 0, 0.05);
 }
 
@@ -351,11 +350,16 @@
 :root {
     --background-white: var(--colors-base-white);
     --background-body: var(--colors-neutral-50);
+    --background-nav: var(--colors-base-white);
+    --background-topbar: var(--colors-neutral-100);
+    --background-footer: var(--background-sa-flag);
     --background-menu: var(--colors-base-white);
     --background-card: var(--colors-base-white);
+    --background-section-stripe: var(--colors-neutral-50);
     --background-surface-oncolor: var(--colors-base-white);
     --background-black: var(--colors-base-black);
     --background-brand-light: var(--colors-primary-sa-flag-50);
+    --background-sub-hero: var(--background-brand-light);
     --background-neutral-800: var(--colors-neutral-800);
     --background-neutral-400: var(--colors-neutral-400);
     --background-neutral-300: var(--colors-neutral-300);
@@ -395,6 +399,9 @@
     --background-sa-flag-50: var(--colors-green-50);
     --background-sa-flag-25: var(--colors-green-25);
     --background-notification-white: var(--colors-base-white);
+    --background-surface-elevated: var(--colors-base-white);
+    --background-surface-sunken: var(--colors-neutral-100);
+    --background-overlay: var(--colors-alpha-alpha-black-50);
     --text-default: var(--colors-base-black);
     --text-primary: var(--colors-primary-sa-flag-600-primary);
     --text-secondary: var(--colors-secondary-gold-600-primary);
@@ -485,6 +492,7 @@
     --border-error-light: var(--colors-red-200);
     --button-icon-transparent-selected-on-color: var(--colors-primary-sa-flag-400);
     --border-disabled: var(--colors-neutral-400);
+    --border-focus: var(--colors-base-black);
     --link-primary: var(--colors-primary-sa-flag-600-primary);
     --link-primary-hovered: var(--colors-primary-sa-flag-400);
     --link-primary-pressed: var(--colors-primary-sa-flag-300);
@@ -737,16 +745,16 @@
     --form-datecell-today-background-pressed: var(--colors-neutral-300);
     --icon-default-500: var(--colors-neutral-500);
     --form-datecell-today-background-focused: var(--alpha-white-0);
-    --form-datecell-background-disabled: #ffffff;
+    --form-datecell-background-disabled: var(--colors-base-white);
     --form-datecell-background-600: var(--colors-primary-sa-flag-600-primary);
     --form-datecell-background-300: var(--colors-primary-sa-flag-300);
     --form-datecell-background-200: var(--colors-primary-sa-flag-200);
     --form-datecell-background-100: var(--colors-primary-sa-flag-100);
     --controls-control-icon-hovered: var(--icon-oncolor);
-    --alpha-primary-10: #1b835419;
+    --alpha-primary-10: var(--colors-alpha-alpha-green-10);
     --icon-default-400: var(--colors-neutral-400);
     --icon-primary: var(--colors-primary-sa-flag-600-primary);
-    --alpha-primary-20: #1b835433;
+    --alpha-primary-20: var(--colors-alpha-alpha-green-20);
     --icon-primary-light: var(--colors-primary-sa-flag-50);
     --alpha-warning-10: #dc680319;
     --icon-primary-400: var(--colors-primary-sa-flag-400);
@@ -805,11 +813,6 @@
     --featuredicons-icon-info: var(--colors-blue-700);
     --featuredicons-icon-info-light: var(--colors-blue-50);
     --featuredicons-icon-warning: var(--colors-yellow-700);
-    --featuredicons-bg-icon-warning-light: var(--background-warning-50);
-    --featuredicons-bg-icon-error-light: var(--background-error-50);
-    --featuredicons-bg-icon-brand-light: var(--colors-primary-sa-flag-50);
-    --featuredicons-bg-icon-info-light: var(--background-info-50);
-    --featuredicons-bg-icon-success-light: var(--background-success-50);
     --controls-control-icon-pressed: var(--icon-oncolor);
     --controls-control-icon-disabled: var(--colors-base-white);
     --notification-background-error-light: var(--colors-red-50);
@@ -847,3 +850,4 @@
         --nds-viewport-padding: calc(var(--nds-viewport-base-padding)/2);
     }
 }
+

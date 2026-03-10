@@ -54,31 +54,31 @@ img {
 }
 
 h1 {
-    font-size: var(--nds-display-clamp-lg-FS);
-    line-height: var(--nds-display-clamp-lg-LH);
-    margin-bottom: calc(var(--nds-display-clamp-lg-MB) * 2);
-    margin-top: calc(var(--nds-display-clamp-lg-MB) * 4);
-}
-
-h2 {
     font-size: var(--nds-display-clamp-md-FS);
     line-height: var(--nds-display-clamp-md-LH);
     margin-bottom: calc(var(--nds-display-clamp-md-MB) * 2);
-    margin-top: calc(var(--nds-display-clamp-md-MB) * 4);
+    margin-top: calc(var(--nds-display-clamp-ms-MB) * 4);
 }
 
-h3 {
+h2 {
     font-size: var(--nds-display-clamp-sm-FS);
     line-height: var(--nds-display-clamp-sm-LH);
     margin-bottom: calc(var(--nds-display-clamp-sm-MB) * 2);
     margin-top: calc(var(--nds-display-clamp-sm-MB) * 4);
 }
 
-:is(h4, h5, h6) {
+h3 {
     font-size: var(--nds-display-clamp-xs-FS);
     line-height: var(--nds-display-clamp-xs-LH);
     margin-bottom: calc(var(--nds-display-clamp-xs-MB) * 2);
     margin-top: calc(var(--nds-display-clamp-xs-MB) * 4);
+}
+
+:is(h4, h5, h6) {
+    font-size: var(--nds-text-clamp-xl-FS);
+    line-height: var(--nds-text-clamp-xl-LH);
+    margin-bottom: calc(var(--nds-display-clamp-xs-MB) * 1.5);
+    margin-top: calc(var(--nds-display-clamp-xs-MB) * 2);
 }
 
 p {
@@ -148,7 +148,7 @@ address{
 }
 
 *:focus-visible {
-    outline: 2px solid var(--colors-base-black);
+    outline: 2px solid var(--border-focus);
     outline-offset: 2px;
 }
 

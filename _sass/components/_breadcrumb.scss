@@ -22,7 +22,11 @@
 .nds-breadcrumb>li {
     display: flex;
     align-items: center;
-    color: var(--colors-neutral-400, #9DA4AE);
+    color: var(--text-secondary-paragraph);
+
+    &:last-child {
+        color: var(--text-default-disabled);
+    }
 }
 
 /* ========================================
@@ -32,7 +36,7 @@
 /* Arrow separator */
 .nds-breadcrumb li:not(:last-child)::after {
     content: "㭪";
-    color: var(--colors-neutral-400, #9DA4AE);
+    color: var(--icon-default-400);
     font-family: "hgi-stroke-rounded" !important;
     font-style: normal;
     opacity: var(--hgi-icon-opacity);
@@ -63,6 +67,8 @@
    ======================================== */
 
 .nds-breadcrumb>li>a {
+   /*  --link-focused: var(--link-neutral);
+    --link-visited: var(--link-neutral); */
     text-decoration: none;
     line-height: normal;
 }

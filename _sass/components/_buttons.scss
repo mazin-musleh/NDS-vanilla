@@ -127,7 +127,7 @@
 
   /* Secondary Outline Button */
   &.nds-secondary-outline {
-    --btn-bg: var(--button-background-transparent-hovered);
+    --btn-bg: var(--button-background-transparent-default);
     --btn-bg-hover: var(--button-background-neutral-default);
     --btn-bg-active: var(--button-background-neutral-pressed);
     --btn-bg-selected: var(--button-background-neutral-selected);
@@ -423,7 +423,7 @@
       background-color: var(--_btn-indicator-selected);
     }
 
-    &:active::before {
+    &:is(:active, [data-state~="pressed"])::before {
       background-color: var(--_btn-indicator-active);
     }
 
