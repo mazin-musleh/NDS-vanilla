@@ -94,14 +94,14 @@ body.nds-minimal[style*="--bg-img"] {
 
     color: var(--_link-color);
 
-    &:visited {
+/*     &:visited {
         color: var(--_link-visited);
     }
 
     &:focus {
         color: var(--_link-focused);
     }
-
+ */
     &:hover {
         color: var(--_link-hover);
     }

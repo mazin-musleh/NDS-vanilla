@@ -38,8 +38,8 @@
     margin-top: var(--_dropmenu-offset);
     padding: var(--_menu-padding);
     list-style: none;
-    background-color: var(--colors-neutral-white, #FFFFFF);
-    border: 1px solid var(--colors-neutral-200, #EAECF0);
+    background-color: var(--background-white);
+    border: 1px solid var(--border-neutral-secondary);
     border-radius: var(--radius-md, 8px);
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 

@@ -14,6 +14,11 @@
     --nds-viewport-base-padding: 32px;
     --nds-transition-speed: .2;
     --background-white: #fff;
+    --background-body: #f9fafb;
+    --background-nav: #fff;
+    --text-default: #161616;
+    --text-display: #1f2a37;
+    --text-oncolor-primary: #fff;
     --hgi-icon-opacity: 0;
 
     --nds-viewport-padding: var(--nds-viewport-base-padding);
@@ -83,6 +88,16 @@
     --spacing-9xl: var(--spacing-24, 96px);
     --spacing-10xl: var(--spacing-32, 128px);
     --spacing-11xl: var(--spacing-40, 160px);
+}
+
+// Critical dark mode overrides — prevent white flash before main CSS loads
+:root[data-theme="dark"] {
+    --background-white: #1f2a37;
+    --background-body: #18212f;
+    --background-nav: #1f2a37;
+    --text-default: #f9fafb;
+    --text-display: #f3f4f6;
+    --text-oncolor-primary: #fff;
 }
 
 @include mobile {

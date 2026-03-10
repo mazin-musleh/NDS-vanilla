@@ -15,7 +15,7 @@
     --_toggle-height: var(--toggle-height, var(--nds-sideMenu-toggle-height, 40px));
     width: var(--nds-sideMenu-width);
     min-width: var(--nds-sideMenu-width);
-    background-color: var(--background-white);
+    background-color: var(--background-menu);
     box-shadow: var(--shadow-md);
     padding: var(--spacing-md);
     min-height: fit-content;
@@ -263,7 +263,7 @@
 
             .nds-drawer {
                 top: calc(var(--nds-nav-height));
-                background-color: var(--background-white);
+                background-color: var(--background-menu);
                 box-shadow: var(--shadow-md);
                 padding: var(--spacing-md);
                 border-radius: 0 0 var(--radius-md) var(--radius-md);

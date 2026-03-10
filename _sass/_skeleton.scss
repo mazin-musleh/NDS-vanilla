@@ -16,6 +16,7 @@
 
     .nds-brand {
         height: var(--nds-nav-height);
+        padding: var(--spacing-lg, 12px) 0;
     }
 
     .nds-brand-name {
@@ -25,7 +26,7 @@
 
 .nds-topbar {
     height: 40px;
-    background-color: var(--background-neutral-100, #f3f4f6);
+    background-color: var(--background-topbar);
 
     >* {
         visibility: hidden;
@@ -39,6 +40,10 @@
 .nds-breadcrumb li::after {
     content: "";
     min-width: 24px;
+}
+
+.nds-pagination {
+    display: flex;
 }
 
 /* ── Hero ── */
@@ -60,7 +65,7 @@
 .nds-sideMenu {
     width: var(--nds-sideMenu-width);
     min-width: var(--nds-sideMenu-width);
-    background-color: var(--background-white);
+    background-color: var(--background-menu);
 
     @include tablet(max) {
         position: absolute;
