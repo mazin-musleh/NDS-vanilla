@@ -11,7 +11,7 @@
 
 /* Demo Card Container */
 .nds-demo-card {
-  background: var(--background-white);
+  background: var(--background-card);
   border: 1px solid var(--border-neutral-secondary);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-md);
@@ -27,7 +27,7 @@
   flex-wrap: wrap;
   gap: var(--spacing-lg);
   padding: var(--spacing-lg);
-  background: var(--background-neutral-50);
+  background: var(--background-stripe);
   border-bottom: 1px solid var(--border-neutral-secondary);
   font-weight: 600;
   font-size: var(--nds-text-md-FS);

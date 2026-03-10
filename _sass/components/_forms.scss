@@ -346,8 +346,8 @@ fieldset {
         z-index: 999;
         margin-top: 4px;
         padding: var(--spacing-xs, 4px);
-        background-color: var(--background-white, #fff);
-        border: 1px solid var(--colors-neutral-300, #d2d6db);
+        background-color: var(--form-field-background-default);
+        border: 1px solid var(--form-field-border-default);
         border-radius: var(--radius-md, 8px);
         box-shadow: var(--shadow-md);
         max-height: 200px;

@@ -1,89 +1,70 @@
 @use './mixins' as *;
 
-/* ── Dark Mode Token Overrides ──
-   Only semantic + component tokens are redefined here.
-   Foundation tokens (spacing, radius, typography) and
-   color palette (--colors-*) remain unchanged.
+/* ── Dark Mode – Foundation Tokens ──
+   Only page-level surfaces, default text, borders, and shadows.
+   Component-specific dark overrides will be added per-component
+   using @include dark { ... } over time.
    Activated via: <html data-theme="dark">
    ── */
 
 :root[data-theme="dark"] {
 
-    // ─── Background ───
-    --background-white: var(--colors-neutral-800);
-    --background-body: var(--colors-neutral-850);
-    --background-nav: var(--colors-neutral-800);
-    --background-topbar: var(--colors-neutral-850);
-    --background-footer: var(--colors-neutral-900);
-    --background-menu: var(--colors-neutral-800);
-    --background-card: var(--colors-neutral-800);
-    --background-section-stripe: var(--colors-neutral-850);
-    --background-surface-oncolor: var(--colors-neutral-800);
-    --background-black: var(--colors-base-white);
-    --background-brand-light: var(--colors-primary-sa-flag-950);
-    --background-sub-hero: var(--colors-neutral-750);
-    --background-neutral-800: var(--colors-neutral-200);
-    --background-neutral-400: var(--colors-neutral-500);
-    --background-neutral-300: var(--colors-neutral-600);
-    --background-neutral-200: var(--colors-neutral-700);
-    --background-neutral-100: var(--colors-neutral-800);
-    --background-neutral-50: var(--colors-neutral-850);
-    --background-neutral-25: var(--colors-neutral-950);
-    --background-primary-50: var(--colors-primary-sa-flag-950);
-    --background-primary-25: var(--alpha-primary-10);
-    --background-secondary-50: var(--colors-secondary-gold-950);
-    --background-secondary-25: var(--colors-secondary-gold-950);
-    --background-tertiary-50: var(--colors-tertiary-lavendar-950);
-    --background-tertiary-25: var(--colors-tertiary-lavendar-950);
-    --background-success-light: var(--colors-green-950);
-    --background-success-50: var(--colors-green-950);
-    --background-success-25: var(--alpha-success-10);
-    --background-info-light: var(--colors-blue-950);
-    --background-info-50: var(--colors-blue-950);
-    --background-info-25: var(--alpha-info-10);
-    --background-warning-light: var(--colors-yellow-950);
-    --background-warning-50: var(--colors-yellow-950);
-    --background-warning-25: var(--alpha-warning-10);
-    --background-error-light: var(--colors-red-950);
-    --background-error-50: var(--colors-red-950);
-    --background-error-25: var(--alpha-error-10);
-    --background-notification-white: var(--colors-neutral-800);
-    --background-surface-elevated: var(--colors-neutral-700);
-    --background-surface-sunken: var(--colors-neutral-950);
+    // ─── Page Surfaces ───
+    --background-default: var(--colors-neutral-800);
+    --background-body: var(--colors-neutral-800);
+    --background-card: var(--background-default);
+    --background-nav: var(--background-default);
+    --background-topbar: var(--colors-neutral-900);
+    --background-footer: var(--alpha-white-10);
+    --background-menu: var(--background-default);
+    --background-stripe: var(--colors-neutral-900);
+    --background-sub-hero: var(--alpha-primary-10);
     --background-overlay: var(--colors-alpha-alpha-black-70);
-    --background-disabled: var(--colors-neutral-700);
-    --background-disabled-primary: var(--colors-primary-sa-flag-900);
-    --background-inverse-disabled: var(--colors-neutral-800);
 
-    // ─── Text ───
+    // ─── Default Text ───
     --text-default: var(--colors-base-white);
-    --text-primary-sa-flag: var(--colors-primary-sa-flag-100);
     --text-display: var(--colors-neutral-50);
     --text-primary-paragraph: var(--colors-neutral-100);
     --text-secondary-paragraph: var(--colors-neutral-200);
-    --text-success: var(--colors-green-600);
-    --text-info: var(--colors-blue-600);
-    --text-warning: var(--colors-yellow-600);
-    --text-error: var(--colors-red-700);
-    --text-default-oncolor-disabled: var(--alpha-black-40);
+    --text-primary: var(--colors-primary-sa-flag-400);
 
-    // ─── Border ───
-    --border-black: var(--colors-base-white);
+    // ─── Divider ───
+    --divider-color: var(--alpha-white-10);
+
+    // ─── Links ───
+    --link-primary: var(--colors-primary-sa-flag-400);
+    --link-primary-hovered: var(--colors-primary-sa-flag-300);
+    --link-primary-pressed: var(--colors-primary-sa-flag-200);
+    --link-primary-focused: var(--colors-primary-sa-flag-400);
+    --link-primary-visited: var(--colors-primary-sa-flag-500);
+    --link-neutral: var(--colors-neutral-300);
+    --link-neutral-hovered: var(--colors-neutral-400);
+    --link-neutral-pressed: var(--colors-neutral-500);
+    --link-neutral-focused: var(--colors-neutral-300);
+    --link-neutral-visited: var(--colors-neutral-400);
+
+    // ─── Featured Icons ───
+    --featuredicons-icon-default: var(--colors-neutral-100);
+    --featuredicons-background-default-light: var(--colors-neutral-800);
+    --featuredicons-icon-neutral: var(--colors-neutral-300);
+    --featuredicons-background-error-light: var(--alpha-error-10);
+    --featuredicons-background-info-light: var(--alpha-info-10);
+    --featuredicons-background-warning-light: var(--alpha-warning-10);
+    --featuredicons-background-success-light: var(--alpha-success-10);
+    --featuredicons-background-brand-light: var(--alpha-primary-10);
+    --featuredicons-icon-success: var(--colors-green-400);
+    --featuredicons-icon-error: var(--colors-red-400);
+    --featuredicons-icon-info: var(--colors-blue-400);
+    --featuredicons-icon-warning: var(--colors-yellow-400);
+    --icon-success-ring: var(--colors-green-900);
+    --icon-info-ring: var(--colors-blue-900);
+    --icon-warning-ring: var(--colors-yellow-900);
+    --icon-error-ring: var(--colors-red-900);
+
+    // ─── Default Borders ───
     --border-neutral-primary: var(--colors-neutral-600);
     --border-neutral-secondary: var(--colors-neutral-700);
     --border-neutral-tertiary: var(--colors-neutral-800);
-    --border-background-white: var(--colors-neutral-800);
-    --border-background-neutral: var(--colors-neutral-600);
-    --border-success: var(--colors-green-400);
-    --border-success-light: var(--colors-green-800);
-    --border-info: var(--colors-blue-400);
-    --border-info-light: var(--colors-blue-800);
-    --border-warning: var(--colors-yellow-400);
-    --border-warning-light: var(--colors-yellow-200);
-    --border-error: var(--colors-red-400);
-    --border-error-light: var(--colors-red-800);
-    --border-disabled: var(--colors-neutral-600);
-    --border-focus: var(--colors-base-white);
 
     // ─── Shadows (stronger opacity for dark surfaces) ───
     --shadow-xs: 0px 1px 2px 0px rgba(0, 0, 0, .2);
@@ -95,177 +76,4 @@
     --shadow-2xl: 0px 24px 48px -12px rgba(0, 0, 0, .5);
     --shadow-3xl: 0px 32px 64px -12px rgba(0, 0, 0, .45);
     --shadow-inset: inset 0px 0 4px 2px rgba(0, 0, 0, 0.15);
-
-    // ─── Button ───
-    /* --button-background-black-default: var(--colors-neutral-100);
-    --button-background-black-hovered: var(--colors-neutral-200);
-    --button-background-black-pressed: var(--colors-neutral-400);
-    --button-background-black-selected: var(--colors-neutral-300);
-    --button-background-black-focused: var(--colors-neutral-100);
-    --button-background-neutral-default: var(--colors-neutral-700);
-    --button-background-neutral-hovered: var(--colors-neutral-600);
-    --button-background-neutral-pressed: var(--colors-neutral-600);
-    --button-background-neutral-selected: var(--colors-neutral-600);
-    --button-background-neutral-focused: var(--colors-neutral-600);
-    --button-background-danger-secondary-default: var(--colors-red-900);
-    --button-background-danger-secondary-hovered: var(--colors-red-900);
-    --button-background-danger-secondary-pressed: var(--colors-red-800);
-    --button-background-danger-secondary-selected: var(--colors-red-900);
-    --button-background-danger-secondary-focused: var(--colors-red-900);
-    --button-background-disabled-on-color: var(--alpha-white-10); */
-
-    // ─── Link ───
-    --link-neutral: var(--colors-neutral-300);
-    --link-neutral-hovered: var(--colors-neutral-400);
-    --link-icon-neutral-hovered: var(--colors-neutral-400);
-    --link-neutral-pressed: var(--colors-neutral-500);
-    --link-icon-neutral-pressed: var(--colors-neutral-500);
-    --link-neutral-focused: var(--colors-neutral-300);
-    --link-icon-neutral-focused: var(--colors-neutral-300);
-    --link-neutral-visited: var(--colors-neutral-400);
-    --link-icon-neutral-visited: var(--colors-neutral-400);
-
-    // ─── Tag ───
-    --tag-background-neutral-light: var(--colors-neutral-800);
-    --tag-text-neutral: var(--colors-neutral-200);
-    --tag-text-success: var(--colors-green-200);
-    --tag-text-info: var(--colors-blue-200);
-    --tag-text-warning: var(--colors-yellow-200);
-    --tag-text-error: var(--colors-red-200);
-    --tag-icon-neutral: var(--colors-neutral-200);
-    --tag-icon-success: var(--colors-green-200);
-    --tag-icon-info: var(--colors-blue-200);
-    --tag-icon-warning: var(--colors-yellow-200);
-    --tag-icon-error: var(--colors-red-200);
-    --tag-background-success-light: var(--colors-green-950);
-    --tag-background-info-light: var(--colors-blue-950);
-    --tag-background-warning-light: var(--colors-yellow-950);
-    --tag-background-error-light: var(--colors-red-900);
-    --tag-border-neutral-light: var(--colors-neutral-700);
-    --tag-border-success-light: var(--colors-green-800);
-    --tag-border-info-light: var(--colors-blue-800);
-    --tag-border-warning-light: var(--colors-yellow-800);
-    --tag-border-error-light: var(--colors-red-800);
-
-    // ─── Chip ───
-    --chip-background-neutral-default: var(--colors-neutral-700);
-    --chip-background-neutral-hovered: var(--colors-neutral-600);
-    --chip-background-neutral-pressed: var(--colors-neutral-500);
-    --chip-background-neutral-selected: var(--colors-neutral-300);
-    --chip-background-neutral-focused: var(--colors-neutral-700);
-    --chip-background-primary-default: var(--colors-primary-sa-flag-900);
-    --chip-background-primary-hovered: var(--colors-primary-sa-flag-800);
-    --chip-background-primary-pressed: var(--colors-primary-sa-flag-700);
-    --chip-background-primary-focused: var(--colors-primary-sa-flag-900);
-    --chip-text-neutral-default: var(--colors-neutral-100);
-    --chip-text-primary-default: var(--colors-primary-sa-flag-200);
-    --chip-text-primary-pressed: var(--colors-primary-sa-flag-100);
-    --chip-text-disabled: var(--colors-neutral-600);
-
-    // ─── Swiper ───
-    --swiper-button-background-default: var(--colors-neutral-800);
-    --swiper-button-background-hovered: var(--colors-neutral-700);
-    --swiper-button-background-pressed: var(--colors-neutral-600);
-    --swiper-button-background-disabled: var(--colors-neutral-700);
-    --swiper-button-icon-disabled: var(--colors-neutral-600);
-    --swiper-pagination-bullet-default: var(--colors-neutral-700);
-
-    // ─── Rating ───
-    --rating-star-normal-default: var(--colors-neutral-700);
-    --rating-star-normal-brand: var(--colors-neutral-700);
-
-    // ─── Table ───
-    --table-cell-border: var(--colors-neutral-700);
-    --table-cell-border-inverse: var(--colors-base-white);
-    --table-text-head: var(--colors-neutral-300);
-    --table-background-hover-selected: var(--colors-neutral-800);
-    --table-background-header: var(--colors-neutral-800);
-    --table-background-row: var(--colors-neutral-900);
-    --table-background-disabled: var(--colors-neutral-700);
-
-    // ─── Controls (checkbox, radio, switch) ───
-    --controls-control-border: var(--colors-neutral-400);
-    --controls-control-pressed: var(--colors-neutral-600);
-    --controls-control-ripple-effect: var(--colors-neutral-800);
-    --control-disabled: var(--colors-neutral-600);
-
-    // ─── Form fields ───
-    --form-field-background-default: var(--colors-neutral-800);
-    --form-field-background-lighter: var(--colors-neutral-900);
-    --form-field-background-darker: var(--colors-neutral-700);
-    --form-field-background-pressed: var(--colors-neutral-700);
-    --form-field-border-default: var(--colors-neutral-500);
-    --form-field-border-hovered: var(--colors-neutral-300);
-    --form-field-border-pressed: var(--colors-neutral-100);
-    --form-option-background-hover: var(--colors-neutral-700);
-    --form-option-background-pressed: var(--colors-neutral-600);
-    --form-datecell-background-disabled: var(--colors-neutral-800);
-    --form-datecell-today-background-hovered: var(--colors-neutral-700);
-    --form-datecell-today-background-pressed: var(--colors-neutral-600);
-
-    // ─── Stepper ───
-    --stepper-button-upcomming: var(--colors-neutral-600);
-    --stepper-button-upcomming-hovered: var(--colors-neutral-500);
-    --stepper-button-background: var(--colors-neutral-900);
-    --stepper-line-current: var(--colors-neutral-600);
-    --stepper-line-upcomming: var(--colors-neutral-600);
-    --stepper-line-upcomming-hovered: var(--colors-neutral-500);
-
-    // ─── Tooltip ───
-    --tooltip-background-light: var(--colors-neutral-800);
-    --tooltip-text-heading-light: var(--colors-neutral-50);
-    --tooltip-text-paragraph-light: var(--colors-neutral-200);
-    --tooltip-background-dark: var(--colors-neutral-100);
-    --tooltip-text-heading-dark: var(--colors-neutral-900);
-    --tooltip-text-paragraph-dark: var(--colors-neutral-800);
-
-    // ─── Icons ───
-    --icon-default: var(--colors-neutral-100);
-    --icon-default-500: var(--colors-neutral-400);
-    --icon-default-400: var(--colors-neutral-500);
-    --icon-neutral: var(--colors-neutral-300);
-    --icon-neutral-light: var(--colors-neutral-900);
-    --icon-neutral-ring: var(--colors-neutral-800);
-    --icon-default-disabled: var(--colors-neutral-600);
-
-    // ─── Featured icons ───
-    --featuredicons-icon-default: var(--colors-neutral-100);
-    --featuredicons-icon-default-500: var(--colors-neutral-400);
-    --featuredicons-icon-default-400: var(--colors-neutral-500);
-    --featuredicons-background-default-light: var(--colors-neutral-800);
-    --featuredicons-icon-neutral: var(--colors-neutral-300);
-    --featuredicons-icon-neutral-light: var(--colors-neutral-900);
-    --featuredicons-background-error-light: var(--alpha-error-10);
-    --featuredicons-background-info-light: var(--alpha-info-10);
-    --featuredicons-background-warning-light: var(--alpha-warning-10);
-    --featuredicons-background-success-light: var(--alpha-success-10);
-    --featuredicons-background-brand-light: var(--alpha-primary-10);
-    --featuredicons-icon-success: var(--colors-green-400);
-    --featuredicons-icon-error: var(--colors-red-400);
-    --featuredicons-icon-info: var(--colors-blue-400);
-    --featuredicons-icon-warning: var(--colors-yellow-400);
-    --icon-success: var(--colors-green-400);
-    --icon-success-light: var(--colors-green-950);
-    --icon-success-ring: var(--colors-green-900);
-    --icon-info: var(--colors-blue-400);
-    --icon-info-light: var(--colors-blue-950);
-    --icon-info-ring: var(--colors-blue-900);
-    --icon-warning: var(--colors-yellow-400);
-    --icon-warning-light: var(--colors-yellow-950);
-    --icon-warning-ring: var(--colors-yellow-900);
-    --icon-error: var(--colors-red-400);
-    --icon-error-light: var(--colors-red-900);
-    --icon-error-ring: var(--colors-red-900);
-
-    // ─── Notification ───
-    --notification-background-error-light: var(--colors-red-900);
-    --notification-background-info-light: var(--colors-blue-950);
-    --notification-background-warning-light: var(--colors-yellow-950);
-    --notification-background-success-light: var(--colors-green-950);
-    --notification-background-brand-light: var(--colors-primary-sa-flag-950);
-    --notification-background-default-light: var(--colors-neutral-800);
-    --notification-text-success: var(--colors-green-300);
-    --notification-text-error: var(--colors-red-300);
-    --notification-text-info: var(--colors-blue-300);
-    --notification-text-warning: var(--colors-yellow-300);
 }

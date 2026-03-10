@@ -82,7 +82,7 @@
 .nds-digitalStamp-register {
     width: 100%;
     margin: 0 auto;
-    background-color: var(--background-white);
+    background-color: var(--background-card);
     border-radius: var(--radius-md);
     padding: var(--spacing-xl) var(--spacing-3xl);
     line-height: 24px;
@@ -165,7 +165,7 @@
 }
 
 .nds-digitalStamp-highlight {
-    color: var(--background-primary);
+    color: var(--text-primary);
     font-weight: bold;
 }
 

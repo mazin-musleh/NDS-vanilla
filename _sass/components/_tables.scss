@@ -229,11 +229,11 @@
         th.nds-sortable-col // Sorted states
 
         &.nds-sorted-asc .nds-sort-header .nds-sort-icon {
-            color: var(--colors-primary-sa-flag-600-primary);
+            color: var(--text-primary);
         }
 
         &.nds-sorted-desc .nds-sort-header .nds-sort-icon {
-            color: var(--colors-primary-sa-flag-600-primary);
+            color: var(--text-primary);
         }
     }
 }
@@ -258,7 +258,7 @@
 
         // Only apply focus styles to interactive elements, not the cell itself
         :is(button, input, a):focus {
-            outline: 2px solid var(--colors-primary-sa-flag-600-primary);
+            outline: 2px solid var(--border-primary);
             outline-offset: -2px;
         }
     }

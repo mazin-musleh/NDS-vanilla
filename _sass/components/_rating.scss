@@ -155,7 +155,7 @@
     }
 
     &:focus-visible {
-      outline: 2px solid var(--colors-primary-sa-flag-600-primary);
+      outline: 2px solid var(--border-primary);
       outline-offset: 2px;
       border-radius: 2px;
     }

@@ -13,7 +13,7 @@
     --nds-content-MaxWidth: 1280px;
     --nds-viewport-base-padding: 32px;
     --nds-transition-speed: .2;
-    --background-white: #fff;
+    --background-default: #fff;
     --background-body: #f9fafb;
     --background-nav: #fff;
     --text-default: #161616;
@@ -92,7 +92,7 @@
 
 // Critical dark mode overrides — prevent white flash before main CSS loads
 :root[data-theme="dark"] {
-    --background-white: #1f2a37;
+    --background-default: #1f2a37;
     --background-body: #18212f;
     --background-nav: #1f2a37;
     --text-default: #f9fafb;

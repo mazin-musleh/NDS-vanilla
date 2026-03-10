@@ -15,10 +15,10 @@
     // Internal custom properties with external fallbacks
     --_gap: var(--drawer-gap, 0px);
     --_indent: var(--drawer-indent, calc(var(--_btn-padding, var(--spacing-md))));
-    --_divider: var(--drawer-divider, var(--alpha-black-10));
+    --_divider: var(--drawer-divider, var(--divider-color));
     --_indicator-width: var(--drawer-indicator-width, 5px);
     --_indicator: var(--drawer-indicator, transparent/* var(--alpha-black-30) */);
-    --_indicator-active: var(--drawer-indicator-active, var(--colors-primary-sa-flag-600-primary));
+    --_indicator-active: var(--drawer-indicator-active, var(--background-primary));
     --_indicator-hover: var(--drawer-indicator-hover, var(--colors-neutral-400));
     --_font-size: var(--drawer-font-size, var(--nds-text-md-FS));
     --_line-height: var(--drawer-line-height, var(--nds-text-md-LH));
@@ -104,7 +104,7 @@
         &:hover .nds-featured-icon {
             --icon-bg-color: var(--featuredicons-background-default-light);
             --icon-color: var(--featuredicons-icon-neutral);
-            --dark-bg-color: var(--featuredicons-icon-default-500);
+            --dark-bg-color: var(--featuredicons-icon-default);
         }
     }
 }
@@ -173,7 +173,7 @@
         --btn-bg: var(--button-background-transparent-default);
         --btn-bg-hover: var(--button-background-neutral-default);
         --btn-bg-active: var(--button-background-neutral-pressed);
-        --btn-bg-selected: var(--button-background-transparent-default);
+        --btn-bg-selected: var(--button-background-transparent-default)!important;
 
         &.nds-oncolor {
             --btn-bg-hover: var(--button-background-transparent-hovered);
@@ -312,7 +312,6 @@
 .nds-drawer-more {
     --btn-height: var(--drawer-btn-height);
     width: 100% !important;
-    background: var(--background-surface, var(--background-white));
     border-block-start: 1px solid var(--_divider);
     justify-content: center;
     display: none;

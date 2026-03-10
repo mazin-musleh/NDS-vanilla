@@ -3,7 +3,7 @@
 /* ── Section visual tokens ── */
 
 :is(.nds-hero-section, .nds-content-section) {
-    --_section-bg: var(--section-bg, var(--background-white));
+    --_section-bg: var(--section-bg, var(--background-default));
     --_section-shadow: var(--section-shadow, none);
     --_section-border: var(--section-border, none);
     --_section-border-radius: var(--section-border-radius, 0);
