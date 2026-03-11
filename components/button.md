@@ -1726,11 +1726,11 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="button-row">
-                            <button class="nds-btn nds-primary nds-demo nds-loading"><span class="label">Loading
+                            <button class="nds-btn nds-primary nds-demo" data-state="loading"><span class="label">Loading
                                     Button</span></button>
-                            <button class="nds-btn nds-secondary nds-demo nds-loading"><span class="label">Processing
+                            <button class="nds-btn nds-secondary nds-demo" data-state="loading"><span class="label">Processing
                                     Button</span></button>
-                            <button class="nds-btn nds-transparent nds-demo nds-loading"><span class="label">Saving
+                            <button class="nds-btn nds-transparent nds-demo" data-state="loading"><span class="label">Saving
                                     Button</span></button>
                         </div>
                     </div>
@@ -1756,7 +1756,7 @@ direction: ltr
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-                                    <button class="nds-btn nds-primary nds-loading">
+                                    <button class="nds-btn nds-primary" data-state="loading">
                                       <span class="label">Loading Button</span>
                                     </button>
                                 </code>
@@ -2012,6 +2012,108 @@ direction: ltr
                             </div>
                         </div>
                     </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Button Status States -->
+<section id="buttonStatusStates" class="nds-content-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Status States</h2>
+            <p class="nds-section-description">Buttons can display contextual status feedback using the data-status attribute. Useful for copy actions, form submissions, and async operations.</p>
+        </div>
+        <div class="nds-section-content">
+            <div class="nds-showcase">
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Status Feedback</div>
+                        <div class="demo-action">
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["data-status=success", ".status-demo-btn", "statusToggle", "attr"]'>
+                                <span class="label">Success</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["data-status=error", ".status-demo-btn", "statusToggle", "attr"]'>
+                                <span class="label">Error</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["data-status=info", ".status-demo-btn", "statusToggle", "attr"]'>
+                                <span class="label">Info</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["data-status=warning", ".status-demo-btn", "statusToggle", "attr"]'>
+                                <span class="label">Warning</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <button class="nds-btn nds-secondary status-demo-btn" onclick="this.dataset.status='success';setTimeout(()=>delete this.dataset.status,2000)">
+                                <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                <span class="label">Copy Link</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                        <div class="nds-tabs nds-code nds-divided" hidden>
+                            <div class="nds-tab-list-container">
+                                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                        aria-controls="panel-status-1" id="tab-status-1">
+                                        <span class="nds-tab-label">HTML</span>
+                                    </button>
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                                        aria-controls="panel-status-js" id="tab-status-js">
+                                        <span class="nds-tab-label">JavaScript</span>
+                                    </button>
+                                </nav>
+                                    <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
+                                            class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                                    </button>
+                            </div>
+                            <div class="nds-tab-content">
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-status-1"
+                                    aria-labelledby="tab-status-1">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="language-html">
+<!-- Status applied via data-status attribute -->
+<button class="nds-btn nds-secondary">
+    <i class="hgi hgi-stroke hgi-copy-01"></i>
+    <span class="label">Copy Link</span>
+</button>
+
+<!-- Available statuses: success, error, info, warning -->
+                                    </code>
+                                </div>
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-status-js"
+                                    aria-labelledby="tab-status-js" hidden>
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="language-javascript">
+// Toggle status with auto-reset after 2 seconds
+function copyAction(button) {
+    button.dataset.status = 'success';
+    setTimeout(() => delete button.dataset.status, 2000);
+}
+
+// Apply to any button
+const btn = document.querySelector('.nds-btn');
+btn.addEventListener('click', () => copyAction(btn));
+                                    </code>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

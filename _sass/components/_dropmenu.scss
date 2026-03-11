@@ -22,6 +22,7 @@
   &-scroll {
     overflow: hidden;
     overflow-y: auto;
+    overscroll-behavior: contain;
     max-height: 400px;
       fieldset{padding-bottom: 8px;}
   }

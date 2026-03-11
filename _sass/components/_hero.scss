@@ -120,17 +120,12 @@
         display: block;
         min-width: 40px;
 
-        .nds-dropmenu-menu .copied {
-            background-color: var(--background-success-light);
-            color: var(--text-success);
+        .nds-dropmenu-menu .label {
+            white-space: nowrap;
+        }
 
-            .label {
-                white-space: nowrap;
-            }
-
-            i::before {
-                content: "㶧";
-            }
+        .nds-dropmenu-menu [data-status="success"] i::before {
+            content: "㶦";
         }
     }
 

@@ -19,13 +19,13 @@
   position: relative;
   overflow: hidden;
   border-radius: 50%; // Circle by default
-  background-color: var(--button-background-neutral-default);
-  color: var(--icon-default);
+  background-color: var(--avatar-background);
+  color: var(--avatar-color);
   font-family: 'IBM Plex Sans Arabic', sans-serif;
   font-weight: 500;
   flex-shrink: 0;
   user-select: none;
-  border: 2px solid var(--border-white);
+  border: 2px solid var(--avatar-border);
   width: 100%;
   height: auto !important;
   aspect-ratio: 1 / 1;
@@ -63,7 +63,6 @@
     align-items: center;
     justify-content: center;
     text-transform: uppercase;
-    line-height: 1;
   }
 }
 
@@ -117,7 +116,7 @@
 
 .nds-avatar.nds-3xl {
   --avatar-size: 120px;
-  border: 4px solid var(--border-white);
+  border: 4px solid var(--avatar-border);
 }
 
 // ==============================================
@@ -231,7 +230,7 @@
 
     .nds-avatar {
       --avatar-size: 120px;
-      border: 4px solid var(--border-white);
+      border: 4px solid var(--avatar-border);
     }
   }
 

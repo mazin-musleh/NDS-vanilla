@@ -44,13 +44,12 @@
     inset-inline-end: 0;
     z-index: 2;
 
-    .copy-btn.copied {
-      background-color: var(--background-success-light);
-      color: var(--text-success);
+    .copy-btn .label {
+      white-space: nowrap;
+    }
 
-      .label {
-        white-space: nowrap;
-      }
+    .copy-btn[data-status="success"] i::before {
+      content: "㶦";
     }
   }
 

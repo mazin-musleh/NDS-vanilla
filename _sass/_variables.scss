@@ -129,6 +129,21 @@
     // DGA bug fix: --tag-border-neutral-light is neutral-50 in DGA, too light
     --tag-border-neutral-light: var(--colors-neutral-200);
 
+    // Avatar
+    --avatar-background: var(--button-background-neutral-default);
+    --avatar-color: var(--icon-default);
+    --avatar-border: var(--border-white);
+
+    // Button status
+    --button-status-success-bg: var(--background-success-light);
+    --button-status-success-text: var(--text-success);
+    --button-status-error-bg: var(--background-error-light);
+    --button-status-error-text: var(--text-error);
+    --button-status-info-bg: var(--background-info-light);
+    --button-status-info-text: var(--text-info);
+    --button-status-warning-bg: var(--background-warning-light);
+    --button-status-warning-text: var(--text-warning);
+
     // Focus ring tokens
     --focus-outline: var(--colors-base-black);
     --focus-inner: var(--colors-base-white);

@@ -88,11 +88,6 @@ primary_nav:
 
 # Secondary Navigation Items
 secondary_nav:
-  - label: "Call to Action"
-    url: "#"
-    custom_class: "CTA"
-    button_style: "nds-nav-link nds-btn nds-primary nds-md nds-indicator"
-
   - label: "Search"
     icon: "hgi-search-01"
     button_style: "nds-nav-link nds-btn nds-subtle nds-notification nds-indicator"
@@ -157,3 +152,8 @@ secondary_nav:
     icon: "hgi-translation"
     custom_class: "iconOnly lang"
     id: "langToggleBtn"
+    
+  - label: "Call to Action"
+    url: "#"
+    custom_class: "CTA"
+    button_style: "nds-nav-link nds-btn nds-primary nds-md nds-indicator"
