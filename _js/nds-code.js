@@ -497,13 +497,10 @@
     }
 
     function showCopyFeedback(button) {
-        const originalIcon = button.innerHTML;
-        button.innerHTML = '<i class="hgi hgi-stroke hgi-checkmark-circle-01"></i>';
-        button.classList.add('copied');
+        button.dataset.status = 'success';
 
         setTimeout(function() {
-            button.innerHTML = originalIcon;
-            button.classList.remove('copied');
+            delete button.dataset.status;
         }, 2000);
     }
 

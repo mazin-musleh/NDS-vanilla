@@ -80,12 +80,12 @@
         }
 
         showCopiedState(item, label, copiedText, originalText) {
-            item.classList.add('copied');
+            item.dataset.status = 'success';
             label.textContent = copiedText;
 
             // Restore original state and close dropdown after 2000ms
             setTimeout(() => {
-                item.classList.remove('copied');
+                delete item.dataset.status;
                 label.textContent = originalText;
 
                 // Close the dropdown using nds-dropmenu API

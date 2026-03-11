@@ -60,6 +60,50 @@
   }
 
   // ==============================================
+  // STATUS STATES (data-status attribute)
+  // ==============================================
+
+  &[data-status="success"] {
+    --btn-bg-hover: var(--button-status-success-bg) !important;
+    --btn-bg: var(--button-status-success-bg) !important;
+    --btn-color: var(--button-status-success-text) !important;
+
+    :is(i, .icon)::before {
+      content: "㶦";
+    }
+  }
+
+  &[data-status="error"] {
+    --btn-bg-hover: var(--button-status-error-bg) !important;
+    --btn-bg: var(--button-status-error-bg) !important;
+    --btn-color: var(--button-status-error-text) !important;
+
+    :is(i, .icon)::before {
+      content: "㵅";
+    }
+  }
+
+  &[data-status="info"] {
+    --btn-bg-hover: var(--button-status-info-bg) !important;
+    --btn-bg: var(--button-status-info-bg) !important;
+    --btn-color: var(--button-status-info-text) !important;
+
+    :is(i, .icon)::before {
+      content: "䆾";
+    }
+  }
+
+  &[data-status="warning"] {
+    --btn-bg-hover: var(--button-status-warning-bg) !important;
+    --btn-bg: var(--button-status-warning-bg) !important;
+    --btn-color: var(--button-status-warning-text) !important;
+
+    :is(i, .icon)::before {
+      content: "㬃";
+    }
+  }
+
+  // ==============================================
   // BUTTON SIZES
   // ==============================================
 
@@ -200,9 +244,9 @@
     }
   }
 
-  &:is(.nds-primary, .nds-neutral){
+  &:is(.nds-primary, .nds-neutral) {
 
-    @include dark{
+    @include dark {
       --btn-bg-disabled: var(--button-background-disabled-on-color);
     }
 

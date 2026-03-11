@@ -165,6 +165,16 @@
     --controls-control-text-error: var(--colors-red-400);
     --controls-switch-track-background: var(--colors-neutral-950);
 
+    // ─── Button Status ───
+    --button-status-success-bg: var(--alpha-success-10);
+    --button-status-success-text: var(--colors-green-400);
+    --button-status-error-bg: var(--alpha-error-10);
+    --button-status-error-text: var(--colors-red-400);
+    --button-status-info-bg: var(--alpha-info-10);
+    --button-status-info-text: var(--colors-blue-400);
+    --button-status-warning-bg: var(--alpha-warning-10);
+    --button-status-warning-text: var(--colors-yellow-400);
+
     // ─── Disabled ───
     --background-disabled: var(--colors-neutral-700);
     --background-disabled-primary: var(--colors-primary-sa-flag-900);
@@ -183,19 +193,33 @@
     --table-background-row: var(--background-stripe);
     --table-background-disabled: var(--colors-neutral-700);
 
+    // ─── Avatar ───
+    --avatar-background: var(--colors-neutral-700);
+    --avatar-color: var(--colors-neutral-300);
+    --avatar-border: var(--colors-neutral-800);
+
+    // ─── Buttons ───
+    --button-background-neutral-default: var(--colors-neutral-700);
+    --button-background-neutral-hovered: var(--colors-neutral-600);
+    --button-background-neutral-pressed: var(--colors-neutral-500);
+    --button-background-neutral-selected: var(--colors-neutral-600);
+    --button-background-neutral-focused: var(--colors-neutral-700);
+    --button-background-black-hovered: var(--colors-neutral-900);
+
+
     // ─── Default Borders ───
     --border-neutral-primary: var(--colors-neutral-600);
     --border-neutral-secondary: var(--colors-neutral-700);
     --border-neutral-tertiary: var(--colors-neutral-800);
 
-    // ─── Shadows (stronger opacity for dark surfaces) ───
-    --shadow-xs: 0px 1px 2px 0px rgba(0, 0, 0, .2);
-    --shadow-sm: 0px 1px 2px 0px rgba(0, 0, 0, .25), 0px 1px 3px 0px rgba(0, 0, 0, .3);
-    --shadow-md: 0px 2px 4px -2px rgba(0, 0, 0, .25), 0px 4px 8px -2px rgba(0, 0, 0, .3);
-    --shadow-md-top: 0px -3.288px 6.575px -1.644px rgba(0, 0, 0, .3), 0px -1.644px 3.288px -1.644px rgba(0, 0, 0, .25);
-    --shadow-lg: 0px 4px 6px -2px rgba(0, 0, 0, .15), 0px 12px 16px -4px rgba(0, 0, 0, .3);
-    --shadow-xl: 0px 8px 8px -4px rgba(0, 0, 0, .15), 0px 20px 24px -4px rgba(0, 0, 0, .3);
-    --shadow-2xl: 0px 24px 48px -12px rgba(0, 0, 0, .5);
-    --shadow-3xl: 0px 32px 64px -12px rgba(0, 0, 0, .45);
-    --shadow-inset: inset 0px 0 4px 2px rgba(0, 0, 0, 0.15);
+    // ─── Shadows (~2x light opacity for dark surfaces) ───
+    --shadow-xs: 0px 1px 2px 0px rgba(0, 0, 0, .10);
+    --shadow-sm: 0px 1px 2px 0px rgba(0, 0, 0, .12), 0px 1px 3px 0px rgba(0, 0, 0, .2);
+    --shadow-md: 0px 2px 4px -2px rgba(0, 0, 0, .12), 0px 4px 8px -2px rgba(0, 0, 0, .2);
+    --shadow-md-top: 0px -3.288px 6.575px -1.644px rgba(0, 0, 0, .2), 0px -1.644px 3.288px -1.644px rgba(0, 0, 0, .12);
+    --shadow-lg: 0px 4px 6px -2px rgba(0, 0, 0, .06), 0px 12px 16px -4px rgba(0, 0, 0, .16);
+    --shadow-xl: 0px 8px 8px -4px rgba(0, 0, 0, .06), 0px 20px 24px -4px rgba(0, 0, 0, .16);
+    --shadow-2xl: 0px 24px 48px -12px rgba(0, 0, 0, .35);
+    --shadow-3xl: 0px 32px 64px -12px rgba(0, 0, 0, .28);
+    --shadow-inset: inset 0px 0 4px 2px rgba(0, 0, 0, 0.10);
 }
