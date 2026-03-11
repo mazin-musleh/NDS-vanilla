@@ -17,6 +17,10 @@
 // ==============================================
 
 .nds-alert.nds-card {
+  // Alert-only internal tokens (not in card)
+  --_alert-stripe: var(--alert-stripe, var(--border-neutral-primary));
+  --_alert-icon-bg: var(--alert-icon-bg, var(--background-neutral-light));
+
   // Extend card component styles
   display: flex;
   flex-direction: row;
@@ -25,7 +29,7 @@
   padding: var(--spacing-lg);
   padding-inline-start: calc(var(--spacing-lg) + 8px);
   border-radius: var(--radius-md);
-  border: 1px solid var(--border-neutral-primary);
+  border: 1px solid var(--_card-border);
   max-width: 100%;
   width: 100%;
   position: relative;
@@ -40,12 +44,8 @@
     display: block;
     width: 8px;
     height: 100%;
-    background-color: var(--border-neutral-primary);
+    background-color: var(--_alert-stripe);
     opacity: 0.7;
-  }
-
-  &.nds-color {
-    background-color: var(--background-neutral-25);
   }
 
   @include mobile {
@@ -68,6 +68,7 @@
     --nds-icon-size: 20px;
     width: calc(var(--nds-icon-size)*2);
     height: calc(var(--nds-icon-size)*2);
+    background-color: var(--_alert-icon-bg);
   }
 
   // ==============================================
@@ -86,7 +87,7 @@
     font-size: var(--nds-text-md-FS);
     line-height: var(--nds-text-md-LH);
     font-weight: 600;
-    color: var(--text-display);
+    color: var(--_card-title);
     margin: 0;
   }
 
@@ -127,90 +128,82 @@
 
   // Success variant
   &[data-status="success"] {
+    --alert-stripe: var(--background-success);
+    --alert-icon-bg: var(--background-success-light);
 
-    &:before {
-      background-color: var(--background-success);
-    }
-
-    .nds-feedback-icon {
-      background-color: var(--featuredicons-background-success-light);
+    @include dark {
+      --alert-icon-bg: var(--alpha-success-10);
     }
 
     &.nds-color {
-      background-color: var(--background-success-25);
-      border-color: var(--border-success-light);
+      --card-bg: var(--background-success-25);
+      --card-border: var(--border-success-light);
+      --card-title: var(--text-success);
 
-      .nds-alert-title {
-        color: var(--featuredicons-icon-success);
+      @include dark {
+        --card-bg: var(--alpha-success-10);
       }
     }
-
   }
 
   // Info variant
   &[data-status="info"] {
+    --alert-stripe: var(--background-info);
+    --alert-icon-bg: var(--background-info-light);
 
-    &:before {
-      background-color: var(--background-info);
-    }
-
-    .nds-feedback-icon {
-      background-color: var(--featuredicons-background-info-light);
+    @include dark {
+      --alert-icon-bg: var(--alpha-info-10);
     }
 
     &.nds-color {
-      background-color: var(--background-info-25);
-      border-color: var(--border-info-light);
+      --card-bg: var(--background-info-25);
+      --card-border: var(--border-info-light);
+      --card-title: var(--text-info);
 
-      .nds-alert-title {
-        color: var(--featuredicons-icon-info);
+      @include dark {
+        --card-bg: var(--alpha-info-10);
       }
     }
-
   }
 
   // Warning variant
   &[data-status="warning"] {
+    --alert-stripe: var(--background-warning);
+    --alert-icon-bg: var(--background-warning-light);
 
-    &:before {
-      background-color: var(--background-warning);
-    }
-
-    .nds-feedback-icon {
-      background-color: var(--featuredicons-background-warning-light);
+    @include dark {
+      --alert-icon-bg: var(--alpha-warning-10);
     }
 
     &.nds-color {
-      background-color: var(--background-warning-25);
-      border-color: var(--border-warning-light);
+      --card-bg: var(--background-warning-25);
+      --card-border: var(--border-warning-light);
+      --card-title: var(--text-warning);
 
-      .nds-alert-title {
-        color: var(--featuredicons-icon-warning);
+      @include dark {
+        --card-bg: var(--alpha-warning-10);
       }
     }
-
   }
 
   // Error variant
   &[data-status="error"] {
+    --alert-stripe: var(--background-error);
+    --alert-icon-bg: var(--background-error-light);
 
-    &:before {
-      background-color: var(--background-error);
-    }
-
-    .nds-feedback-icon {
-      background-color: var(--featuredicons-background-error-light);
+    @include dark {
+      --alert-icon-bg: var(--alpha-error-10);
     }
 
     &.nds-color {
-      background-color: var(--background-error-25);
-      border-color: var(--border-error-light);
+      --card-bg: var(--background-error-25);
+      --card-border: var(--border-error-light);
+      --card-title: var(--text-error);
 
-      .nds-alert-title {
-        color: var(--featuredicons-icon-error);
+      @include dark {
+        --card-bg: var(--alpha-error-10);
       }
     }
-
   }
 
   // ==============================================

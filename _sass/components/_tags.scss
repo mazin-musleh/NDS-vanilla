@@ -13,7 +13,7 @@
   // Private custom properties with public override capability
   --_bg: var(--tag-bg, var(--tag-background-neutral-light));
   --_text: var(--tag-text, var(--tag-text-neutral));
-  --_border: var(--tag-border, var(--border-neutral-secondary));
+  --_border: var(--tag-border, var(--tag-border-neutral-light));
   --_icon: var(--tag-icon, var(--tag-icon-neutral));
   --_tag-height: var(--tag-height, 32px);
   --_tag-fs: var(--tag-fs, var(--nds-text-md-FS));
@@ -95,7 +95,7 @@
   &:is(.nds-neutral, .nds-gray) {
     --tag-bg: var(--tag-background-neutral-light);
     --tag-text: var(--tag-text-neutral);
-    --tag-border: var(--border-neutral-secondary);
+    --tag-border: var(--tag-border-neutral-light);
     --tag-icon: var(--tag-icon-neutral);
 
     &.nds-inverted {

@@ -33,7 +33,7 @@
         color: var(--text-error);
 
         .nds-feedback-icon {
-            --feedback-bg: var(--icon-error);
+            --feedback-bg: var(--background-error);
             --feedback-color: var(--icon-error);
             --feedback-ring: var(--icon-error-ring);
         }
@@ -44,7 +44,7 @@
         color: var(--text-success);
 
         .nds-feedback-icon {
-            --feedback-bg: var(--icon-success);
+            --feedback-bg: var(--background-success);
             --feedback-color: var(--icon-success);
             --feedback-ring: var(--icon-success-ring);
         }
@@ -55,7 +55,7 @@
         color: var(--text-warning);
 
         .nds-feedback-icon {
-            --feedback-bg: var(--icon-warning);
+            --feedback-bg: var(--background-warning);
             --feedback-color: var(--icon-warning);
             --feedback-ring: var(--icon-warning-ring);
         }
@@ -66,7 +66,7 @@
         color: var(--text-info);
 
         .nds-feedback-icon {
-            --feedback-bg: var(--icon-info);
+            --feedback-bg: var(--background-info);
             --feedback-color: var(--icon-info);
             --feedback-ring: var(--icon-info-ring);
         }
