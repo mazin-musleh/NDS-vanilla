@@ -43,6 +43,18 @@
     --link-neutral-focused: var(--colors-neutral-300);
     --link-neutral-visited: var(--colors-neutral-400);
 
+    // ─── Status Text ───
+    --text-success: var(--colors-green-400);
+    --text-info: var(--colors-blue-400);
+    --text-warning: var(--colors-yellow-400);
+    --text-error: var(--colors-red-400);
+
+    // ─── Icons ───
+    --icon-success: var(--colors-green-400);
+    --icon-info: var(--colors-blue-400);
+    --icon-warning: var(--colors-yellow-400);
+    --icon-error: var(--colors-red-400);
+
     // ─── Featured Icons ───
     --featuredicons-icon-default: var(--colors-neutral-100);
     --featuredicons-background-default-light: var(--colors-neutral-800);
@@ -60,6 +72,33 @@
     --icon-info-ring: var(--colors-blue-900);
     --icon-warning-ring: var(--colors-yellow-900);
     --icon-error-ring: var(--colors-red-900);
+
+    // ─── Tags ───
+    --tag-background-neutral-light: var(--alpha-white-10);
+    --tag-text-neutral: var(--colors-neutral-100);
+    --tag-icon-neutral: var(--colors-neutral-300);
+    --tag-border-neutral-light: var(--colors-neutral-400);
+    --tag-border-neutral: var(--colors-neutral-300);
+    --tag-background-success-light: var(--alpha-success-10);
+    --tag-text-success: var(--colors-green-400);
+    --tag-icon-success: var(--colors-green-400);
+    --tag-border-success-light: var(--colors-green-400);
+    --tag-border-success: var(--colors-green-400);
+    --tag-background-info-light: var(--alpha-info-10);
+    --tag-text-info: var(--colors-blue-400);
+    --tag-icon-info: var(--colors-blue-400);
+    --tag-border-info-light: var(--colors-blue-400);
+    --tag-border-info: var(--colors-blue-400);
+    --tag-background-warning-light: var(--alpha-warning-10);
+    --tag-text-warning: var(--colors-yellow-400);
+    --tag-icon-warning: var(--colors-yellow-400);
+    --tag-border-warning-light: var(--colors-yellow-400);
+    --tag-border-warning: var(--colors-yellow-400);
+    --tag-background-error-light: var(--alpha-error-10);
+    --tag-text-error: var(--colors-red-400);
+    --tag-icon-error: var(--colors-red-400);
+    --tag-border-error-light: var(--colors-red-400);
+    --tag-border-error: var(--colors-red-400);
 
     // ─── Default Borders ───
     --border-neutral-primary: var(--colors-neutral-600);
