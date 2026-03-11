@@ -277,9 +277,9 @@ textarea {
 // ==============================================
 
 @mixin btn-focus {
-  outline: 2px solid var(--colors-base-black) !important;
+  outline: 2px solid var(--focus-outline) !important;
   outline-offset: -2px !important;
-  box-shadow: inset 0 0 0 3px var(--colors-base-white) !important;
+  box-shadow: inset 0 0 0 3px var(--focus-inner) !important;
 }
 
 @mixin btn-focus-oncolor {

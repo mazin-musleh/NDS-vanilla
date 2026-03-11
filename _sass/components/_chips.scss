@@ -18,6 +18,7 @@
   // Private custom properties with public override capability
   --_chip-bg: var(--chip-bg, var(--chip-background-neutral-default));
   --_chip-text: var(--chip-text, var(--chip-text-neutral-default));
+  --_chip-icon: var(--chip-icon, var(--_chip-text));
   --_chip-size: var(--chip-size, 24px);
 
   display: inline-flex;
@@ -96,7 +97,6 @@
   &:is(.nds-primary, .nds-green) {
     --chip-bg: var(--chip-background-primary-default);
     --chip-text: var(--chip-text-primary-default);
-
     &:is(:hover, [data-state~="hover"]) {
       --chip-bg: var(--chip-background-primary-hovered);
     }
@@ -118,7 +118,7 @@
 
     &.nds-oncolor {
       --chip-bg: var(--chip-background-on-color-default);
-      --chip-text: var(--chip-text-neutral-default);
+      --chip-text: var(--colors-base-black);
 
       &:is(:hover, [data-state~="hover"]) {
         --chip-bg: var(--chip-background-on-color-hovered);
@@ -147,7 +147,6 @@
   &:is(.nds-neutral, .nds-gray) {
     --chip-bg: var(--chip-background-neutral-default);
     --chip-text: var(--chip-text-neutral-default);
-
     &:is(:hover, [data-state~="hover"]) {
       --chip-bg: var(--chip-background-neutral-hovered);
     }
@@ -158,7 +157,7 @@
 
     &:is(.selected, [data-state~="selected"]) {
       --chip-bg: var(--chip-background-neutral-selected);
-      --chip-text: var(--chip-text-oncolor-primary);
+      --chip-text: var(--chip-text-neutral-selected);
     }
 
     &:is(:focus-visible, [data-state~="focused"]) {
@@ -168,7 +167,7 @@
 
     &.nds-oncolor {
       --chip-bg: var(--chip-background-on-color-default);
-      --chip-text: var(--chip-text-neutral-default);
+      --chip-text: var(--colors-base-black);
 
       &:is(:hover, [data-state~="hover"]) {
         --chip-bg: var(--chip-background-on-color-hovered);
@@ -197,6 +196,10 @@
   // ==============================================
   // CHIP WITH ICONS
   // ==============================================
+
+  .icon {
+    color: var(--_chip-icon);
+  }
 
   &.nds-lead-icon {
     .hgi:first-child {

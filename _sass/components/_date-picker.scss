@@ -101,7 +101,7 @@
         align-items: center;
         justify-content: space-between;
         padding: var(--spacing-md);
-        border-bottom: 1px solid var(--colors-neutral-300, #d2d6db);
+        border-bottom: 1px solid var(--divider-color);
     }
 
     .calendar-title {
@@ -152,6 +152,7 @@
         gap: var(--spacing-xs);
         max-height: 200px;
         overflow-y: auto;
+        overflow-x: hidden;
         scroll-behavior: auto;
         overscroll-behavior: contain;
 
@@ -302,7 +303,7 @@
             }
 
             &.in-range:not(.range-start, .range-end) {
-                background-color: var(--form-datecell-background-100);
+                background-color: var(--form-datecell-today-background-default);
 
                 &::before {
                     content: "";
@@ -335,7 +336,7 @@
         display: flex;
         justify-content: space-between;
         padding: var(--spacing-md);
-        border-top: 1px solid var(--colors-neutral-300, #d2d6db);
+        border-top: 1px solid var(--divider-color);
         gap: var(--spacing-2xl);
 
         :is(.calendar-action-start, .calendar-action-end) {

@@ -129,6 +129,10 @@
     // DGA bug fix: --tag-border-neutral-light is neutral-50 in DGA, too light
     --tag-border-neutral-light: var(--colors-neutral-200);
 
+    // Focus ring tokens
+    --focus-outline: var(--colors-base-black);
+    --focus-inner: var(--colors-base-white);
+
     --icon-neutral-ring: var(--colors-neutral-100);
     --icon-success-ring: var(--colors-green-100);
     --icon-info-ring: var(--colors-blue-100);

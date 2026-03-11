@@ -202,7 +202,7 @@
         position: absolute;
         inset: 0;
         cursor: pointer;
-        background-color: var(--background-white);
+        background-color: var(--controls-switch-track-background, var(--background-white));
         border: 1px solid var(--controls-control-neutral-checked);
         border-radius: 9999px;
         z-index: 2;
