@@ -76,6 +76,11 @@
       &.nds-indicator:before {
         background-color: var(--button-background-primary-hovered);
         color: var(--button-background-primary-hovered);
+
+        @include dark {
+          background-color: var(--button-background-primary-default);
+          color: var(--button-background-primary-default);
+        }
       }
 
 

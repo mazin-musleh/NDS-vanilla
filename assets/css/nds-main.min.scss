@@ -12,6 +12,7 @@
 // are in nds.critical.min.scss (loaded as blocking CSS)
 
 // Import variables (CSS custom properties)
+@use 'variables-dga';
 @use 'variables';
 @use 'variables-dark';
 @use 'variables-dark-dga';

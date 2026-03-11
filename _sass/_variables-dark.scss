@@ -11,15 +11,15 @@
 
     // ─── Page Surfaces ───
     --background-default: var(--colors-neutral-800);
-    --background-body: var(--colors-neutral-800);
+    --background-body: var(--colors-neutral-900);
     --background-card: var(--background-default);
     --background-nav: var(--background-default);
     --background-topbar: var(--colors-neutral-900);
-    --background-footer: var(--alpha-white-10);
+    --background-footer: var(--alpha-primary-10);
     --background-menu: var(--background-default);
-    --background-stripe: var(--colors-neutral-900);
+    --background-stripe: var(--colors-neutral-850);
     --background-sub-hero: var(--alpha-primary-10);
-    --background-overlay: var(--colors-alpha-alpha-black-70);
+    --background-overlay: var(--alpha-black-70);
 
     // ─── Default Text ───
     --text-default: var(--colors-base-white);
@@ -64,6 +64,7 @@
     --featuredicons-background-warning-light: var(--alpha-warning-10);
     --featuredicons-background-success-light: var(--alpha-success-10);
     --featuredicons-background-brand-light: var(--alpha-primary-10);
+    --featuredicons-icon-primary: var(--colors-green-400);
     --featuredicons-icon-success: var(--colors-green-400);
     --featuredicons-icon-error: var(--colors-red-400);
     --featuredicons-icon-info: var(--colors-blue-400);
@@ -99,6 +100,88 @@
     --tag-icon-error: var(--colors-red-400);
     --tag-border-error-light: var(--colors-red-400);
     --tag-border-error: var(--colors-red-400);
+
+    // ─── Chips ───
+    --chip-background-neutral-default: var(--alpha-white-10);
+    --chip-background-neutral-hovered: var(--alpha-white-20);
+    --chip-background-neutral-pressed: var(--alpha-white-30);
+    --chip-background-neutral-selected: var(--colors-neutral-300);
+    --chip-background-neutral-focused: var(--alpha-white-10);
+    --chip-background-primary-default: var(--colors-alpha-alpha-green-10);
+    --chip-background-primary-hovered: var(--colors-alpha-alpha-green-20);
+    --chip-background-primary-pressed: var(--colors-alpha-alpha-green-30);
+    --chip-background-primary-focused: var(--colors-alpha-alpha-green-10);
+    --chip-text-neutral-default: var(--colors-base-white);
+    --chip-text-neutral-selected: var(--colors-base-black);
+    --chip-text-primary-default: var(--colors-primary-sa-flag-200);
+    --chip-text-primary-pressed: var(--colors-primary-sa-flag-100);
+    --chip-text-disabled: var(--colors-neutral-600);
+
+    // ─── Forms ───
+    --form-field-background-default: var(--colors-neutral-800);
+    --form-field-background-lighter: var(--colors-neutral-900);
+    --form-field-background-darker: var(--colors-neutral-700);
+    --form-field-background-pressed: var(--colors-neutral-700);
+    --form-field-border-default: var(--colors-neutral-500);
+    --form-field-border-hovered: var(--colors-neutral-300);
+    --form-field-border-pressed: var(--colors-neutral-100);
+    --form-field-border-error: var(--border-error);
+    --form-field-border-success: var(--border-success);
+    --form-field-border-warning: var(--border-warning);
+    --form-field-border-info: var(--border-info);
+    --form-option-background-hover: var(--colors-neutral-700);
+    --form-option-background-pressed: var(--colors-neutral-600);
+
+    // ─── Datepicker ───
+    --form-datecell-background-default: var(--colors-primary-sa-flag-600-primary);
+    --form-datecell-background-hovered: var(--colors-primary-sa-flag-700);
+    --form-datecell-background-pressed: var(--colors-primary-sa-flag-900);
+    --form-datecell-background-focused: var(--colors-primary-sa-flag-600-primary);
+    --form-datecell-today-background-default: var(--alpha-black-10);
+    --form-datecell-today-background-hovered: var(--colors-neutral-700);
+    --form-datecell-today-background-pressed: var(--colors-neutral-600);
+    --form-datecell-today-background-focused: var(--alpha-white-0);
+    --form-datecell-background-disabled: var(--colors-neutral-800);
+    --form-datecell-background-600: var(--colors-primary-sa-flag-600-primary);
+    --form-datecell-background-300: var(--colors-primary-sa-flag-300);
+    --form-datecell-background-200: var(--colors-primary-sa-flag-400);
+    --form-datecell-background-100: var(--colors-primary-sa-flag-300);
+
+    // ─── Controls (Checkbox, Radio, Switch) ───
+    --controls-control-border: var(--colors-neutral-400);
+    --controls-control-pressed: var(--colors-neutral-600);
+    --controls-control-ripple-effect: var(--alpha-black-50);
+    --controls-control-primary-checked: var(--colors-primary-sa-flag-600-primary);
+    --controls-control-primary-hovered: var(--colors-primary-sa-flag-300);
+    --controls-control-primary-pressed: var(--colors-primary-sa-flag-400);
+    --controls-control-primary-focused: var(--colors-primary-sa-flag-600-primary);
+    --controls-control-neutral-checked: var(--colors-neutral-600);
+    --controls-control-neutral-hovered: var(--colors-neutral-400);
+    --controls-control-neutral-pressed: var(--colors-neutral-400);
+    --controls-control-neutral-focused: var(--colors-neutral-600);
+    --controls-control-icon-hovered: var(--colors-primary-sa-flag-400);
+    --controls-control-icon-pressed: var(--colors-primary-sa-flag-400);
+    --controls-control-icon-disabled: var(--colors-neutral-400);
+    --controls-control-text-error: var(--colors-red-400);
+    --controls-switch-track-background: var(--colors-neutral-950);
+
+    // ─── Disabled ───
+    --background-disabled: var(--colors-neutral-700);
+    --background-disabled-primary: var(--colors-primary-sa-flag-900);
+    --border-disabled: var(--colors-neutral-600);
+
+    // ─── Focus ───
+    --focus-outline: var(--colors-base-white);
+    --focus-inner: var(--colors-base-black);
+
+    // ─── Tables ───
+    --table-cell-border: var(--colors-neutral-700);
+    --table-cell-border-inverse: var(--colors-base-white);
+    --table-text-head: var(--colors-neutral-300);
+    --table-background-hover-selected: var(--colors-neutral-800);
+    --table-background-header: var(--background-stripe);
+    --table-background-row: var(--background-stripe);
+    --table-background-disabled: var(--colors-neutral-700);
 
     // ─── Default Borders ───
     --border-neutral-primary: var(--colors-neutral-600);
