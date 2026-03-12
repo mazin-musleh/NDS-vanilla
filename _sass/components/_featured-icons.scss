@@ -120,6 +120,15 @@
     .icon {
       color: var(--icon-oncolor);
     }
+
+    @include dark {
+      &.nds-brand  { --dark-bg-color: var(--colors-primary-sa-flag-700); }
+      &.nds-success, &.success { --dark-bg-color: var(--colors-green-700); }
+      &.nds-info, &.info { --dark-bg-color: var(--colors-blue-700); }
+      &.nds-warning, &.warning { --dark-bg-color: var(--colors-yellow-700); }
+      &.nds-error, &.error { --dark-bg-color: var(--colors-red-700); }
+      &.nds-neutral { --dark-bg-color: var(--colors-neutral-900); }
+    }
   }
 }
 

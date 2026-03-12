@@ -64,9 +64,9 @@
         background-color: transparent !important;
 
         &.focused:focus-visible {
-            outline: 2px solid var(--colors-base-black);
+            outline: 2px solid var(--focus-outline);
             outline-offset: -2px;
-            box-shadow: inset 0 0 0 3px var(--colors-base-white);
+            box-shadow: inset 0 0 0 3px var(--focus-inner);
         }
 
         &::before {
@@ -180,7 +180,7 @@
         cursor: pointer;
 
         &:focus+.nds-switch-track {
-            outline: 2px solid var(--colors-base-black);
+            outline: 2px solid var(--focus-outline);
             outline-offset: 2px;
         }
 
@@ -258,8 +258,8 @@
 
     // Checked hover state
     .nds-switch-input:not(:disabled):checked+.nds-switch-track:hover {
-        background-color: var(--controls-control-primary-hovered);
-        border-color: var(--controls-control-primary-hovered);
+        background-color: var(--switch-primary-hovered);
+        border-color: var(--switch-primary-hovered);
     }
 
     // ==============================================

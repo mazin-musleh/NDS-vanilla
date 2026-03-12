@@ -79,6 +79,13 @@
             --feedback-color: var(--icon-neutral);
             --feedback-ring: var(--icon-neutral-ring);
         }
+
+        &:not(.nds-outline) .nds-feedback-icon {
+            @include dark {
+                --feedback-bg: var(--colors-neutral-700);
+                --feedback-ring: var(--colors-neutral-900);
+            }
+        }
     }
 
     // ==============================================
