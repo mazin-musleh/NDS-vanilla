@@ -36,7 +36,7 @@
 /* Arrow separator */
 .nds-breadcrumb li:not(:last-child)::after {
     content: "㭪";
-    color: var(--icon-default-400);
+    color: var(--icon-separator);
     font-family: "hgi-stroke-rounded" !important;
     font-style: normal;
     opacity: var(--hgi-icon-opacity);

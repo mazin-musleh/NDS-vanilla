@@ -22,10 +22,10 @@
     --background-overlay: var(--alpha-black-70);
 
     // ─── Default Text ───
-    --text-default: var(--colors-base-white);
-    --text-display: var(--colors-neutral-50);
-    --text-primary-paragraph: var(--colors-neutral-100);
-    --text-secondary-paragraph: var(--colors-neutral-200);
+    --text-default: var(--colors-neutral-200);
+    --text-display: var(--colors-neutral-100);
+    --text-primary-paragraph: var(--colors-neutral-300);
+    --text-secondary-paragraph: var(--colors-neutral-400);
     --text-primary: var(--colors-primary-sa-flag-400);
 
     // ─── Divider ───
@@ -37,11 +37,15 @@
     --link-primary-pressed: var(--colors-primary-sa-flag-200);
     --link-primary-focused: var(--colors-primary-sa-flag-400);
     --link-primary-visited: var(--colors-primary-sa-flag-500);
-    --link-neutral: var(--colors-neutral-300);
+    --link-neutral: var(--colors-neutral-200);
     --link-neutral-hovered: var(--colors-neutral-400);
+    --link-icon-neutral-hovered: var(--colors-neutral-400);
     --link-neutral-pressed: var(--colors-neutral-500);
-    --link-neutral-focused: var(--colors-neutral-300);
-    --link-neutral-visited: var(--colors-neutral-400);
+    --link-icon-neutral-pressed: var(--colors-neutral-500);
+    --link-neutral-focused: var(--colors-neutral-200);
+    --link-icon-neutral-focused: var(--colors-neutral-200);
+    --link-neutral-visited: var(--colors-neutral-300);
+    --link-icon-neutral-visited: var(--colors-neutral-300);
 
     // ─── Status Text ───
     --text-success: var(--colors-green-400);
@@ -50,6 +54,7 @@
     --text-error: var(--colors-red-400);
 
     // ─── Icons ───
+    --icon-separator: var(--colors-neutral-500);
     --icon-neutral: var(--colors-neutral-300);
     --icon-neutral-ring: var(--colors-neutral-800);
     --icon-success: var(--colors-green-400);
@@ -210,7 +215,7 @@
     --table-cell-border-inverse: var(--colors-base-white);
     --table-text-head: var(--colors-neutral-300);
     --table-background-hover-selected: var(--colors-neutral-800);
-    --table-background-header: var(--background-stripe);
+    --table-background-header: var(--colors-neutral-900);
     --table-background-row: var(--background-stripe);
     --table-background-disabled: var(--colors-neutral-700);
 

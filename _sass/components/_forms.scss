@@ -33,7 +33,7 @@
         .nds-form-header .label::after,
         >.label::after {
             content: " *";
-            color: var(--controls-control-text-error, #dc2626);
+            color: var(--controls-control-text-error);
         }
     }
 
@@ -161,7 +161,7 @@ fieldset {
         >legend>.label::after,
         >.label::after {
             content: " *";
-            color: var(--controls-control-text-error, #dc2626);
+            color: var(--controls-control-text-error);
         }
     }
 }
@@ -390,7 +390,7 @@ fieldset {
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--text-default, #161616);
+            color: var(--text-default);
 
             &:not(:first-child)::before {
                 content: '';

@@ -2116,6 +2116,56 @@ btn.addEventListener('click', () => copyAction(btn));
                         </div>
                     </div>
                 </div>
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Notification Badge</div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <button class="nds-btn nds-icon-only nds-subtle">
+                                <i class="hgi hgi-stroke hgi-notification-03"><span class="nds-badge">3</span></i>
+                            </button>
+                            <button class="nds-btn nds-icon-only nds-subtle">
+                                <i class="hgi hgi-stroke hgi-mail-01"><span class="nds-badge">12</span></i>
+                            </button>
+                            <button class="nds-btn nds-icon-only nds-subtle">
+                                <i class="hgi hgi-stroke hgi-shopping-cart-01"><span class="nds-badge">5</span></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                        <div class="nds-tabs nds-code nds-divided" hidden>
+                            <div class="nds-tab-list-container">
+                                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                        aria-controls="panel-badge-1" id="tab-badge-1">
+                                        <span class="nds-tab-label">HTML</span>
+                                    </button>
+                                </nav>
+                                    <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
+                                            class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                                    </button>
+                            </div>
+                            <div class="nds-tab-content">
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-badge-1"
+                                    aria-labelledby="tab-badge-1">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="language-html">
+<button class="nds-btn nds-icon-only nds-subtle">
+    <i class="hgi hgi-stroke hgi-notification-03">
+        <span class="nds-badge">3</span>
+    </i>
+</button>
+                                    </code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

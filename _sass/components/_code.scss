@@ -10,7 +10,7 @@
    ======================================== */
 
 .nds-code {
-  border: 1px solid var(--border-neutral-secondary, #E5E7EB);
+  border: 1px solid var(--border-neutral-secondary);
   border-radius: var(--radius-md);
   padding: 0;
   position: relative;
@@ -117,7 +117,7 @@
           font-size: var(--nds-text-xs-FS);
           background-color: var(--background-stripe);
           border: none;
-          border-right: 1px solid var(--border-neutral-secondary, #E5E7EB);
+          border-right: 1px solid var(--border-neutral-secondary);
           user-select: none;
           pointer-events: none;
           z-index: 1;
@@ -143,7 +143,7 @@
   --_syntax-green: var(--syntax-green, var(--colors-green-600));
   --_syntax-blue: var(--syntax-blue, var(--colors-blue-600));
   --_syntax-purple: var(--syntax-purple, var(--colors-tertiary-lavendar-500));
-  --_syntax-cyan: var(--syntax-cyan, #0086b3);
+  --_syntax-cyan: var(--syntax-cyan);
   --_syntax-yellow: var(--syntax-yellow, var(--colors-yellow-600));
   --_syntax-gray: var(--syntax-gray, var(--colors-neutral-500));
   --_syntax-gray-dark: var(--syntax-gray-dark, var(--colors-neutral-600));

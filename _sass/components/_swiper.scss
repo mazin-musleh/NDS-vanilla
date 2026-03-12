@@ -251,7 +251,7 @@
 .nds-swiper:is(.nds-oncolor, .nds-hero),
 .nds-oncolor {
     :is(.nds-section-title, .nds-section-description) {
-        color: var(--text-oncolor-primary, #fff);
+        color: var(--text-oncolor-primary);
     }
 
     .nds-swiper-pagination-bullet {
@@ -285,7 +285,7 @@
         position: relative;
         background-size: cover;
         background-position: center;
-        color: var(--text-oncolor-primary, #fff);
+        color: var(--text-oncolor-primary);
         overflow: hidden;
         height: 100%;
         width: 100%;

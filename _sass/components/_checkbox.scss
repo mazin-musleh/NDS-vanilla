@@ -99,7 +99,7 @@
     &:is([data-required], [data-min-checked], .nds-required) {
         > .label::after {
             content: " *";
-            color: var(--controls-control-text-error, #dc2626);
+            color: var(--controls-control-text-error);
         }
     }
 
@@ -204,7 +204,7 @@
         color: var(--colors-base-white) !important;
         border: 1px solid transparent;
         border-radius: var(--radius-xs);
-        box-shadow: 0 0 0 1px var(--controls-control-border, #6C737F);
+        box-shadow: 0 0 0 1px var(--controls-control-border);
         z-index: 1;
         justify-content: center;
         align-content: center;
@@ -262,8 +262,8 @@
 
     // Active state for unchecked checkbox
     &:not(:checked, :indeterminate):active::after {
-        background-color: var(--controls-control-pressed, #D2D6DB);
-        color: var(--controls-control-pressed, #D2D6DB);
+        background-color: var(--controls-control-pressed);
+        color: var(--controls-control-pressed);
     }
 
     // ==============================================
