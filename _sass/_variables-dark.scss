@@ -50,6 +50,8 @@
     --text-error: var(--colors-red-400);
 
     // ─── Icons ───
+    --icon-neutral: var(--colors-neutral-300);
+    --icon-neutral-ring: var(--colors-neutral-800);
     --icon-success: var(--colors-green-400);
     --icon-info: var(--colors-blue-400);
     --icon-warning: var(--colors-yellow-400);
@@ -57,7 +59,8 @@
 
     // ─── Featured Icons ───
     --featuredicons-icon-default: var(--colors-neutral-100);
-    --featuredicons-background-default-light: var(--colors-neutral-800);
+    --featuredicons-background-default-light: var(--alpha-white-10);
+    --featuredicons-background-neutral-light: var(--alpha-white-10);
     --featuredicons-icon-neutral: var(--colors-neutral-300);
     --featuredicons-background-error-light: var(--alpha-error-10);
     --featuredicons-background-info-light: var(--alpha-info-10);
@@ -159,11 +162,26 @@
     --controls-control-neutral-hovered: var(--colors-neutral-400);
     --controls-control-neutral-pressed: var(--colors-neutral-400);
     --controls-control-neutral-focused: var(--colors-neutral-600);
+
+    // ─── Checkbox (darker for white checkmark contrast) ───
+    --checkbox-primary-hovered: var(--colors-primary-sa-flag-700);
+    --checkbox-primary-pressed: var(--colors-primary-sa-flag-800);
+
+    // ─── Switch (darker for white thumb contrast) ───
+    --switch-primary-hovered: var(--colors-primary-sa-flag-700);
+    --switch-primary-pressed: var(--colors-primary-sa-flag-800);
+
+    // ─── Radio (brighter for dot-with-border style) ───
+    --radio-neutral-checked: var(--colors-neutral-400);
+    --radio-neutral-hovered: var(--colors-neutral-300);
+    --radio-neutral-pressed: var(--colors-neutral-300);
     --controls-control-icon-hovered: var(--colors-primary-sa-flag-400);
     --controls-control-icon-pressed: var(--colors-primary-sa-flag-400);
     --controls-control-icon-disabled: var(--colors-neutral-400);
     --controls-control-text-error: var(--colors-red-400);
     --controls-switch-track-background: var(--colors-neutral-950);
+
+    --control-disabled: var(--alpha-white-30);
 
     // ─── Button Status ───
     --button-status-success-bg: var(--alpha-success-10);
@@ -174,6 +192,9 @@
     --button-status-info-text: var(--colors-blue-400);
     --button-status-warning-bg: var(--alpha-warning-10);
     --button-status-warning-text: var(--colors-yellow-400);
+
+    // ─── Neutral Background ───
+    --background-neutral-light: var(--alpha-white-10);
 
     // ─── Disabled ───
     --background-disabled: var(--colors-neutral-700);

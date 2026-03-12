@@ -13,7 +13,7 @@
 
 .nds-accordion {
     --_accordion-header-height: var(--accordion-header-height, 56px);
-    --_accordion-header-padding: var(--accordion-header-padding, var(--accordion-lg-header-padding,16px));
+    --_accordion-header-padding: var(--accordion-header-padding, var(--accordion-lg-header-padding, 16px));
     display: flex;
     flex-direction: column;
     gap: 0;
@@ -54,7 +54,7 @@
         --btn-bg: var(--button-background-transparent-default);
         --btn-bg-hover: var(--button-background-neutral-default);
         --btn-bg-active: var(--button-background-neutral-pressed);
-        --btn-bg-selected: var(--button-background-transparent-default);
+        --btn-bg-selected: var(--button-background-transparent-default) !important;
         --btn-height: var(--_accordion-header-height);
         --nds-button-icon-size: 20px !important;
         justify-content: space-between;

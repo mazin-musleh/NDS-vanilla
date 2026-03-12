@@ -148,11 +148,27 @@
     --focus-outline: var(--colors-base-black);
     --focus-inner: var(--colors-base-white);
 
+    --icon-neutral: var(--colors-neutral-700);
     --icon-neutral-ring: var(--colors-neutral-100);
     --icon-success-ring: var(--colors-green-100);
     --icon-info-ring: var(--colors-blue-100);
     --icon-warning-ring: var(--colors-yellow-100);
     --icon-error-ring: var(--colors-red-100);
+
+    --background-neutral-light: var(--colors-neutral-100);
+
+    // Checkbox-specific (defaults to shared controls tokens)
+    --checkbox-primary-hovered: var(--controls-control-primary-hovered);
+    --checkbox-primary-pressed: var(--controls-control-primary-pressed);
+
+    // Switch-specific (defaults to shared controls tokens)
+    --switch-primary-hovered: var(--controls-control-primary-hovered);
+    --switch-primary-pressed: var(--controls-control-primary-pressed);
+
+    // Radio-specific (defaults to shared controls tokens)
+    --radio-neutral-checked: var(--controls-control-neutral-checked);
+    --radio-neutral-hovered: var(--controls-control-neutral-hovered);
+    --radio-neutral-pressed: var(--controls-control-neutral-pressed);
 
 }
 

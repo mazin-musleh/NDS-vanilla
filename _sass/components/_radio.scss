@@ -56,7 +56,7 @@
         &.focused:focus-visible {
             outline: 2px solid var(--colors-base-black) !important;
             outline-offset: -2px !important;
-            box-shadow: inset 0 0 0 3px var(--colors-base-white) !important;
+            box-shadow: inset 0 0 0 3px var(--focus-inner) !important;
         }
 
         &::before {
@@ -200,8 +200,8 @@
         width: 100%;
         height: 100%;
         display: block;
-        background-color: var(--colors-base-white);
-        color: var(--colors-base-white) !important;
+        background-color: var(--background-default);
+        color: var(--background-default) !important;
         border: 1px solid transparent;
         box-shadow: 0 0 0 1px var(--controls-control-border, #6C737F);
         z-index: 1;
@@ -212,20 +212,20 @@
     // ==============================================
 
     &:checked::after {
-        border: 3px solid var(--colors-base-white);
+        border: 3px solid var(--background-default);
         background-color: var(--controls-control-primary-checked);
         color: var(--controls-control-primary-checked);
         box-shadow: 0 0 0 1px var(--controls-control-primary-checked);
-        border-color: var(--colors-base-white);
+        border-color: var(--background-default);
     }
 
     // Size-specific border thickness
     .nds-md &:checked::after {
-        border: 4px solid var(--colors-base-white);
+        border: 4px solid var(--background-default);
     }
 
     .nds-lg &:checked::after {
-        border: 5px solid var(--colors-base-white);
+        border: 5px solid var(--background-default);
     }
 
     // Hover states for checked radio
@@ -233,7 +233,7 @@
         background-color: var(--controls-control-primary-hovered);
         color: var(--controls-control-primary-hovered);
         box-shadow: 0 0 0 1px var(--controls-control-primary-hovered);
-        border-color: var(--colors-base-white);
+        border-color: var(--background-default);
     }
 
     // Active states for checked radio
@@ -241,7 +241,7 @@
         background-color: var(--controls-control-primary-pressed);
         color: var(--controls-control-primary-pressed);
         box-shadow: 0 0 0 1px var(--controls-control-primary-pressed);
-        border-color: var(--colors-base-white);
+        border-color: var(--background-default);
     }
 
     // Active state for unchecked radio
@@ -256,24 +256,24 @@
 
     &.nds-neutral {
         &:checked::after {
-            background-color: var(--controls-control-neutral-checked);
-            color: var(--controls-control-neutral-checked);
-            box-shadow: 0 0 0 1px var(--controls-control-neutral-checked);
-            border-color: var(--colors-base-white);
+            background-color: var(--radio-neutral-checked);
+            color: var(--radio-neutral-checked);
+            box-shadow: 0 0 0 1px var(--radio-neutral-checked);
+            border-color: var(--background-default);
         }
 
         &:checked:hover::after {
-            background-color: var(--controls-control-neutral-hovered);
-            color: var(--controls-control-neutral-hovered);
-            box-shadow: 0 0 0 1px var(--controls-control-neutral-hovered);
-            border-color: var(--colors-base-white);
+            background-color: var(--radio-neutral-hovered);
+            color: var(--radio-neutral-hovered);
+            box-shadow: 0 0 0 1px var(--radio-neutral-hovered);
+            border-color: var(--background-default);
         }
 
         &:checked:active::after {
-            background-color: var(--controls-control-neutral-pressed);
-            color: var(--controls-control-neutral-pressed);
-            box-shadow: 0 0 0 1px var(--controls-control-neutral-pressed);
-            border-color: var(--colors-base-white);
+            background-color: var(--radio-neutral-pressed);
+            color: var(--radio-neutral-pressed);
+            box-shadow: 0 0 0 1px var(--radio-neutral-pressed);
+            border-color: var(--background-default);
         }
     }
 
@@ -288,7 +288,7 @@
     }
 
     &:not(:checked):disabled::after {
-        background-color: var(--colors-base-white) !important;
+        background-color: var(--background-default) !important;
         box-shadow: 0 0 0 1px var(--background-disabled) !important;
     }
 }

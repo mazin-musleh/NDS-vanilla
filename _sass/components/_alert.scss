@@ -206,6 +206,25 @@
     }
   }
 
+  // Neutral variant
+  &[data-status="neutral"] {
+    --alert-stripe: var(--border-neutral-primary);
+    --alert-icon-bg: var(--background-neutral-light);
+
+    @include dark {
+      --alert-icon-bg: var(--alpha-white-10);
+    }
+
+    &.nds-color {
+      --card-bg: var(--background-neutral-light);
+      --card-border: var(--border-neutral-secondary);
+
+      @include dark {
+        --card-bg: var(--alpha-white-10);
+      }
+    }
+  }
+
   // ==============================================
   // LAYOUT VARIANTS
   // ==============================================
