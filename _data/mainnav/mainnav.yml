@@ -90,7 +90,7 @@ primary_nav:
 secondary_nav:
   - label: "Search"
     icon: "hgi-search-01"
-    button_style: "nds-nav-link nds-btn nds-subtle nds-notification nds-indicator"
+    button_style: "nds-nav-link nds-btn nds-subtle nds-indicator"
     custom_class: "iconOnly search PAB"
     has_dropdown: true
     dropdown_type: "search"
@@ -98,7 +98,7 @@ secondary_nav:
   - label: "Notifications"
     icon: "hgi-notification-02"
     custom_class: "iconOnly PAB"
-    button_style: "nds-nav-link nds-btn nds-subtle nds-notification nds-indicator"
+    button_style: "nds-nav-link nds-btn nds-subtle nds-indicator"
     badge: "3"
     has_dropdown: true
     dropdown_class: "widthFit"

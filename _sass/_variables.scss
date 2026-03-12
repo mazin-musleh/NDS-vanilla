@@ -7,6 +7,9 @@
 // NDS-specific additions not found in DGA core
 
 :root {
+    // Font family
+    --nds-font-family: 'IBM Plex Sans Arabic', sans-serif;
+
     // Static display sizes
     --nds-display-2xl-FS: 72px;
     --nds-display-2xl-LH: 90px;
@@ -148,6 +151,7 @@
     --focus-outline: var(--colors-base-black);
     --focus-inner: var(--colors-base-white);
 
+    --icon-separator: var(--colors-neutral-400);
     --icon-neutral: var(--colors-neutral-700);
     --icon-neutral-ring: var(--colors-neutral-100);
     --icon-success-ring: var(--colors-green-100);

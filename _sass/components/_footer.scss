@@ -6,7 +6,7 @@
 .nds-footer {
     display: block;
     background-color: var(--background-footer);
-    color: var(--text-oncolor-primary, #fff);
+    color: var(--text-oncolor-primary);
     padding: var(--spacing-4xl) 0;
     margin-top: auto;
     z-index: 1;
@@ -111,7 +111,7 @@
 }
 
 .nds-footer-separator {
-    color: var(--text-oncolor-primary, #fff);
+    color: var(--text-oncolor-primary);
     margin: 0 0.5rem;
     opacity: 0.7;
 }

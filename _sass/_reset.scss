@@ -21,9 +21,9 @@ html {
 }
 
 body {
-    font-family: 'IBM Plex Sans Arabic', sans-serif;
-    background-color: var(--background-body, #f9fafb);
-    color: var(--text-default, #161616);
+    font-family: var(--nds-font-family);
+    background-color: var(--background-body);
+    color: var(--text-default);
     font-size: var(--nds-text-md-FS, 16px);
     line-height: var(--nds-text-md-LH, 24px);
     min-height: 100dvh;
@@ -46,7 +46,7 @@ img {
 
 :is(h1, h2, h3, h4, h5, h6) {
     font-weight: 600;
-    color: var(--text-display, #1f2a37);
+    color: var(--text-display);
 
     &:first-child {
         margin-top: 0;

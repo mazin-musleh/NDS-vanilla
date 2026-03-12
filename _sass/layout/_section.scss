@@ -8,9 +8,9 @@
     --_section-border: var(--section-border, none);
     --_section-border-radius: var(--section-border-radius, 0);
 
-    --_section-title-color: var(--section-title-color, var(--text-display, #1f2a37));
+    --_section-title-color: var(--section-title-color, var(--text-display));
     --_section-subtitle-color: var(--section-subtitle-color, var(--text-secondary-paragraph));
-    --_section-description-color: var(--section-description-color, var(--text-default, #161616));
+    --_section-description-color: var(--section-description-color, var(--text-default));
     --_section-text-color: var(--section-text-color, inherit);
 
     background-color: var(--_section-bg);

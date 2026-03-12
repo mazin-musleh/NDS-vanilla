@@ -48,7 +48,7 @@
 
 /* ── Hero ── */
 .nds-hero-section:not(.sub) :is(.nds-section-title, .nds-section-description) {
-    color: var(--text-oncolor-primary, #fff);
+    color: var(--text-oncolor-primary);
 }
 
 .nds-swiper-wrapper {

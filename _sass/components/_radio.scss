@@ -99,7 +99,7 @@
     &:is([data-required], .nds-required) {
         > .label::after {
             content: " *";
-            color: var(--controls-control-text-error, #dc2626);
+            color: var(--controls-control-text-error);
         }
     }
 
@@ -203,7 +203,7 @@
         background-color: var(--background-default);
         color: var(--background-default) !important;
         border: 1px solid transparent;
-        box-shadow: 0 0 0 1px var(--controls-control-border, #6C737F);
+        box-shadow: 0 0 0 1px var(--controls-control-border);
         z-index: 1;
     }
 
@@ -246,8 +246,8 @@
 
     // Active state for unchecked radio
     &:not(:checked):active::after {
-        background-color: var(--controls-control-pressed, #D2D6DB);
-        color: var(--controls-control-pressed, #D2D6DB);
+        background-color: var(--controls-control-pressed);
+        color: var(--controls-control-pressed);
     }
 
     // ==============================================

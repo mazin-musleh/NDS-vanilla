@@ -689,23 +689,27 @@
   // NOTIFICATION BADGE
   // ==============================================
 
-  &.nds-notification {
-    .nds-badge {
-      position: absolute;
-      inset-block-start: calc(var(--nds-nav-height) / 4);
-      inset-inline-end: calc(var(--nds-nav-height) / 6);
-      font-size: 9px;
-      background-color: #d92c20;
-      color: #fff;
-      min-width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      line-height: normal;
-      padding: 4px;
-    }
+  :is(i, .icon):has(.nds-badge) {
+    position: relative;
+  }
+
+  .nds-badge {
+    position: absolute;
+    inset-block-start: -4px;
+    inset-inline-end: -4px;
+    font-size: 9px;
+    font-family: var(--nds-font-family);
+    background-color: var(--background-error);
+    color: var(--text-oncolor-primary);
+    min-width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: normal;
+    padding: 4px;
+    pointer-events: none;
   }
 }
 
