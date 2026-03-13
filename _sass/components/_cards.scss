@@ -12,7 +12,7 @@
 .nds-card {
   // Internal custom properties with external fallbacks
   --_card-bg: var(--card-bg, var(--background-card));
-  --_card-bg-hover: var(--card-bg-hover, var(--background-neutral-50));
+  --_card-bg-hover: var(--card-bg-hover, var(--background-card-hovered));
   --_card-border: var(--card-border, var(--border-neutral-primary));
   --_card-border-hover: var(--card-border-hover, var(--border-primary));
   --_card-border-active: var(--card-border-active, var(--border-neutral-primary));
@@ -24,9 +24,9 @@
   --_card-number: var(--card-number, var(--text-primary-sa-flag));
   --_card-icon: var(--icon-color, var(--featuredicons-icon-primary));
   --_card-icon-bg: var(--icon-bg-color, var(--featuredicons-background-brand-light));
-  --_card-rating: var(--card-rating, var(--colors-neutral-600));
+  --_card-rating: var(--card-rating, var(--text-secondary-paragraph));
 
-  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-family: var(--nds-font-family);
   background-color: var(--_card-bg);
   border: 1px solid transparent;
   border-radius: var(--components-card-radius);
@@ -356,7 +356,7 @@
 // COLORED CARD VARIANTS
 // ==============================================
 
-/* .nds-card:not(.nds-oncolor) {
+.nds-card:not(.nds-oncolor) {
   &.nds-gold {
     --card-border-hover: var(--colors-secondary-gold-600);
     --card-border-active: var(--colors-secondary-gold-300);
@@ -370,6 +370,20 @@
       --card-bg: var(--colors-secondary-gold-50);
       --card-bg-hover: var(--colors-secondary-gold-100);
       --card-border: var(--colors-secondary-gold-200);
+    }
+
+    @include dark {
+      --card-title: var(--colors-secondary-gold-300);
+      --card-subtitle: var(--colors-secondary-gold-400);
+      --card-number: var(--colors-secondary-gold-400);
+      --icon-bg-color: var(--alpha-warning-10);
+      --icon-color: var(--colors-secondary-gold-400);
+
+      &.nds-color {
+        --card-bg: var(--alpha-warning-10);
+        --card-bg-hover: var(--alpha-warning-20);
+        --card-border: var(--colors-secondary-gold-700);
+      }
     }
   }
 
@@ -387,6 +401,20 @@
       --card-bg-hover: var(--colors-neutral-100);
       --card-border: var(--colors-neutral-200);
     }
+
+    @include dark {
+      --card-title: var(--colors-neutral-200);
+      --card-subtitle: var(--colors-neutral-400);
+      --card-number: var(--colors-neutral-400);
+      --icon-bg-color: var(--alpha-white-10);
+      --icon-color: var(--colors-neutral-400);
+
+      &.nds-color {
+        --card-bg: var(--alpha-white-10);
+        --card-bg-hover: var(--alpha-white-20);
+        --card-border: var(--colors-neutral-700);
+      }
+    }
   }
 
   &.nds-lavendar {
@@ -403,14 +431,28 @@
       --card-bg-hover: var(--colors-tertiary-lavendar-100);
       --card-border: var(--colors-tertiary-lavendar-200);
     }
+
+    @include dark {
+      --card-title: var(--colors-tertiary-lavendar-300);
+      --card-subtitle: var(--colors-tertiary-lavendar-400);
+      --card-number: var(--colors-tertiary-lavendar-400);
+      --icon-bg-color: var(--alpha-lavender-10);
+      --icon-color: var(--colors-tertiary-lavendar-400);
+
+      &.nds-color {
+        --card-bg: var(--alpha-lavender-10);
+        --card-bg-hover: var(--alpha-lavender-20);
+        --card-border: var(--colors-tertiary-lavendar-700);
+      }
+    }
   }
-} */
+}
 
 // ==============================================
 // ONCOLOR VARIANT (for dark backgrounds)
 // ==============================================
 
-/* .nds-card.nds-oncolor {
+.nds-card.nds-oncolor {
   --card-bg: var(--alpha-white-10);
   --card-bg-hover: var(--alpha-white-20);
   --card-border: var(--alpha-white-20);
@@ -423,7 +465,7 @@
   --icon-bg-color: var(--alpha-white-10);
   --icon-color: var(--featuredicons-icon-oncolor);
   --card-rating: var(--alpha-white-80);
-} */
+}
 
 
 // ==============================================
@@ -432,10 +474,6 @@
 
 .nds-card:is(a, button, .nds-interactive) {
   cursor: pointer;
-
-  /* &:is(:not(.nds-stroke), .nds-oncolor):hover {
-    background-color: var(--_card-bg-hover);
-  } */
 
   &:hover {
     background-color: var(--_card-bg-hover);
@@ -446,7 +484,7 @@
   }
 
   // Shadow variant interactive states
-  /*   &.nds-shadow {
+  &.nds-shadow {
     &:hover {
       box-shadow: var(--shadow-lg);
     }
@@ -454,10 +492,10 @@
     &:active {
       box-shadow: var(--shadow-md);
     }
-  } */
+  }
 
   // Stroke variant interactive states
-  /*   &.nds-stroke {
+  &.nds-stroke {
     &:hover {
       border-color: var(--_card-border-hover);
     }
@@ -465,7 +503,7 @@
     &:active {
       border-color: var(--_card-border-active);
     }
-  } */
+  }
 }
 
 // ==============================================

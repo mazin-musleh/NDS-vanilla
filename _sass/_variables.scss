@@ -58,6 +58,8 @@
     --background-overlay: var(--colors-alpha-alpha-black-50);
     --divider-color: var(--alpha-black-10);
     --border-focus: var(--colors-base-black);
+    --alpha-lavender-10: #80519f19;
+    --alpha-lavender-20: #80519f33;
 
     // Chip tokens - Added Manualy 
     --chip-background-neutral-default: var(--colors-neutral-100);
@@ -160,6 +162,7 @@
     --icon-error-ring: var(--colors-red-100);
 
     --background-neutral-light: var(--colors-neutral-100);
+    --background-card-hovered: var(--colors-neutral-50);
 
     // Checkbox-specific (defaults to shared controls tokens)
     --checkbox-primary-hovered: var(--controls-control-primary-hovered);

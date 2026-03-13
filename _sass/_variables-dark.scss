@@ -13,6 +13,7 @@
     --background-default: var(--colors-neutral-800);
     --background-body: var(--colors-neutral-900);
     --background-card: var(--background-default);
+    --background-card-hovered: var(--alpha-white-10);
     --background-nav: var(--background-default);
     --background-topbar: var(--colors-neutral-900);
     --background-footer: var(--alpha-primary-10);
@@ -46,6 +47,8 @@
     --link-icon-neutral-focused: var(--colors-neutral-200);
     --link-neutral-visited: var(--colors-neutral-300);
     --link-icon-neutral-visited: var(--colors-neutral-300);
+
+    --text-primary-sa-flag: var(--colors-primary-sa-flag-400);
 
     // ─── Status Text ───
     --text-success: var(--colors-green-400);
@@ -234,6 +237,7 @@
 
 
     // ─── Default Borders ───
+    --border-neutral-light: var(--colors-neutral-400);
     --border-neutral-primary: var(--colors-neutral-600);
     --border-neutral-secondary: var(--colors-neutral-700);
     --border-neutral-tertiary: var(--colors-neutral-800);
