@@ -84,9 +84,10 @@ direction: ltr
                 </div>
                 <div class="demo-container">
                     <div class="state-demo" style="display: flex; gap: var(--spacing-2xl); flex-wrap: wrap; align-items: baseline;">
-                        <span class="nds-number-format" style="font-size: var(--nds-display-clamp-sm-FS); font-weight: 600;"><img src="{{ '/assets/icon/saudi-riyal.svg' | relative_url }}" alt="SAR" class="icon" width="24" height="24"> 25000</span>
+                        <span class="nds-number-format" data-currency="SAR" style="font-size: var(--nds-display-clamp-sm-FS); font-weight: 600;">25000</span>
+                        <span class="nds-number-format" data-currency="USD" style="font-size: var(--nds-display-clamp-sm-FS); font-weight: 600;">99999.99</span>
+                        <span class="nds-number-format" data-currency="EUR" style="font-size: var(--nds-display-clamp-sm-FS); font-weight: 600;">75000</span>
                         <span class="nds-number-format" style="font-size: var(--nds-display-clamp-sm-FS); font-weight: 600;">1500000 users</span>
-                        <span class="nds-number-format" style="font-size: var(--nds-display-clamp-sm-FS); font-weight: 600;">$99999.99</span>
                     </div>
                 </div>
                 <div class="demo-code">
@@ -109,17 +110,18 @@ direction: ltr
                                 </button>
                             </div>
                             <code class="lang-html code">
-                                <!-- With inline icon — child elements are preserved -->
-                                <span class="nds-number-format">
-                                    <img src="/assets/icon/saudi-riyal.svg" alt="SAR" class="icon" width="24" height="24"> 25000
-                                </span>
-                                <!-- Renders: [icon] 25,000 -->
+                                <!-- With currency via data attribute -->
+                                <span class="nds-number-format" data-currency="SAR">25000</span>
+                                <!-- Renders: [SAR icon] 25,000 -->
+
+                                <span class="nds-number-format" data-currency="USD">99999.99</span>
+                                <!-- Renders: $ 99,999.99 -->
+
+                                <span class="nds-number-format" data-currency="EUR">75000</span>
+                                <!-- Renders: € 75,000 -->
 
                                 <span class="nds-number-format">1500000 users</span>
                                 <!-- Renders: 1,500,000 users -->
-
-                                <span class="nds-number-format">$99999.99</span>
-                                <!-- Renders: $99,999.99 -->
                             </code>
                         </div>
                     </div>

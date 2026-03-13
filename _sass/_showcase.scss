@@ -29,6 +29,7 @@
   padding: var(--spacing-lg);
   background: var(--background-stripe);
   border-bottom: 1px solid var(--border-neutral-secondary);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
   font-weight: 600;
   font-size: var(--nds-text-md-FS);
   color: var(--text-default);

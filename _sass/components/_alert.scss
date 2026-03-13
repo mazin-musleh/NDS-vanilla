@@ -35,8 +35,9 @@
   position: relative;
   overflow: clip;
   grid-column: 1 / -1;
+  isolation: isolate;
 
-  &:before {
+  &::after {
     content: '';
     position: absolute;
     inset-block-start: 0;
@@ -52,11 +53,11 @@
       flex-direction: column;
       padding-inline-start: var(--spacing-lg);
       padding-block-start: calc(var(--spacing-lg) + 8px);
-      &:before {
+      &::after {
         width: 100%;
         height: 8px;
       }
-    
+
   }
 
 
@@ -122,6 +123,21 @@
     }
   }
 
+  // Solid backdrop + alpha tint overlay to prevent overlap bleed-through
+  &.nds-color {
+    background-color: var(--background-default);
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background-color: var(--_card-bg);
+      pointer-events: none;
+      z-index: -1;
+    }
+  }
+
   // ==============================================
   // COLOR VARIANTS (using data-status attribute)
   // ==============================================
@@ -142,6 +158,7 @@
 
       @include dark {
         --card-bg: var(--alpha-success-10);
+        --card-border: var(--border-success-light);
       }
     }
   }
@@ -162,6 +179,7 @@
 
       @include dark {
         --card-bg: var(--alpha-info-10);
+        --card-border: var(--border-info-light);
       }
     }
   }
@@ -182,6 +200,7 @@
 
       @include dark {
         --card-bg: var(--alpha-warning-10);
+        --card-border: var(--border-warning-light);
       }
     }
   }
@@ -202,13 +221,14 @@
 
       @include dark {
         --card-bg: var(--alpha-error-10);
+        --card-border: var(--border-error-light);
       }
     }
   }
 
   // Neutral variant
   &[data-status="neutral"] {
-    --alert-stripe: var(--border-neutral-primary);
+    --alert-stripe: var(--border-neutral-light);
     --alert-icon-bg: var(--background-neutral-light);
 
     @include dark {
@@ -221,6 +241,7 @@
 
       @include dark {
         --card-bg: var(--alpha-white-10);
+        --card-border: var(--border-neutral-light);
       }
     }
   }
@@ -316,4 +337,5 @@
   &[data-toast-state="hide"] {
     opacity: 0;
   }
+
 }

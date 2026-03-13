@@ -103,7 +103,33 @@ $all-spacers: $spacers;
     width: var(--_number-icon-size);
     height: var(--_number-icon-size);
     align-self: center;
+
+    @include dark {
+      filter: invert(1);
+    }
   }
+
+  &[data-currency]::before {
+    align-self: center;
+  }
+
+  &[data-currency="SAR"]::before {
+    content: "";
+    display: inline-block;
+    width: var(--_number-icon-size);
+    height: var(--_number-icon-size);
+    background: currentColor;
+    mask: url('../icon/saudi-riyal.svg') no-repeat center / contain;
+  }
+
+  &[data-currency="USD"]::before { content: "$"; }
+  &[data-currency="EUR"]::before { content: "€"; }
+  &[data-currency="GBP"]::before { content: "£"; }
+  &[data-currency="JPY"]::before { content: "¥"; }
+  &[data-currency="CNY"]::before { content: "¥"; }
+  &[data-currency="INR"]::before { content: "₹"; }
+  &[data-currency="KRW"]::before { content: "₩"; }
+  &[data-currency="TRY"]::before { content: "₺"; }
 }
 
 .nds-truncate:not([hidden]) {
