@@ -652,9 +652,9 @@
       pointer-events: none;
 
       // Inherit button colors
-      --pc-bg-stroke: var(--_btn-loading-track, var(--alpha-black-10));
-      --pc-bar-stroke: var(--_btn-color);
-      --pc-size: calc(var(--btn-size) - 8px);
+      --progress-track-color: var(--_btn-loading-track, var(--alpha-black-10));
+      --progress-color: var(--_btn-color);
+      --progress-size: calc(var(--btn-size) - 8px);
 
       // Hide text/percentage display
       .progress-info {
@@ -680,8 +680,8 @@
 
     // On-color variant adjustments
     &.nds-oncolor .nds-progress-circle {
-      --pc-bg-stroke: var(--alpha-white-20);
-      --pc-bar-stroke: var(--text-oncolor-primary);
+      --progress-track-color: var(--alpha-white-20);
+      --progress-color: var(--text-oncolor-primary);
     }
   }
 

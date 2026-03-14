@@ -796,6 +796,86 @@ direction: ltr
                     </div>
                 </div>
 
+                <!-- Neutral Feedback Message -->
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Neutral Message</div>
+                        <div class="demo-action">
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-ring", ".nds-feedback", "iconVariant"]'>
+                                <span class="label">Ring</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
+                                data-toggler='["nds-outline", ".nds-feedback", "iconVariant"]'>
+                                <span class="label">Outline</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                                <span class="label">Remove bg</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <span class="nds-feedback nds-outline nds-sm" data-status="neutral">
+                                <span class="nds-feedback-icon">
+                                    <i class="hgi hgi-stroke icon"></i>
+                                </span>
+                                <span class="nds-feedback-message">Default neutral feedback message</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                    <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tab-list-container">
+                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                    aria-controls="panel-neutral-msg-html" id="tab-neutral-msg-html">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                                    aria-controls="panel-neutral-msg-js" id="tab-neutral-msg-js">
+                                    <span class="nds-tab-label">JavaScript</span>
+                                </button>
+                            </nav>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-neutral-msg-html"
+                                aria-labelledby="tab-neutral-msg-html">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <code class="lang-html code">
+<span class="nds-feedback nds-outline nds-sm" data-status="neutral">
+  <span class="nds-feedback-icon">
+    <i class="hgi hgi-stroke icon"></i>
+  </span>
+  <span class="nds-feedback-message">Default neutral feedback message</span>
+</span>
+                                </code>
+                            </div>
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-neutral-msg-js"
+                                aria-labelledby="tab-neutral-msg-js" hidden>
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <code class="lang-javascript code">NDSFeedback.create({
+    message: 'Default neutral feedback message',
+    status: 'neutral',
+    target: '#container',
+    style: 'outline',
+    size: 'sm'
+});</code>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

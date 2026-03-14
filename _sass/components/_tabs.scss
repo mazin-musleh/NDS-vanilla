@@ -207,7 +207,7 @@
   }
 
   &:is(:hover, :active)::before {
-    background-color: var(--border-black);
+    background-color: var(--_btn-indicator-color);
   }
 
   &[aria-selected="true"]::before {

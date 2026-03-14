@@ -11,14 +11,14 @@
 // ==============================================
 
 .nds-feedback {
-    display: none; // Hidden by default
     align-items: center;
     font-size: var(--nds-text-sm-FS);
     line-height: var(--nds-text-sm-LH);
     font-weight: 500;
     gap: var(--spacing-sm);
 
-    // Show when status is set (on self or parent)
+    // Show when status is set (on self or parent) or no status
+    &:not([hidden]):not([data-status]),
     &[data-status]:not([hidden]),
     [data-status] &:not([hidden]) {
         display: flex;
@@ -125,6 +125,11 @@
     --_feedback-color: var(--feedback-color, var(--icon-neutral));
     --_feedback-ring: var(--feedback-ring, var(--icon-neutral-ring));
 
+    @include dark {
+        --_feedback-bg: var(--feedback-bg, var(--colors-neutral-700));
+        --_feedback-ring: var(--feedback-ring, var(--colors-neutral-900));
+    }
+
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -194,6 +199,11 @@
     // ICON CONTENT BY STATUS (auto-set via self or parent)
     // ==============================================
 
+    // Default icon (information-circle)
+    .icon:before {
+        content: "䆾";
+    }
+
     // Success icon
     [data-status="success"] & .icon:before {
         content: "㶧";
@@ -214,8 +224,8 @@
         content: "㵅";
     }
 
-    // Neutral icon
+    // Neutral icon (information-circle, same as info)
     [data-status="neutral"] & .icon:before {
-        content: "䄺";
+        content: "䆾";
     }
 }

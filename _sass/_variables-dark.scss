@@ -136,10 +136,10 @@
     --form-field-border-default: var(--colors-neutral-500);
     --form-field-border-hovered: var(--colors-neutral-300);
     --form-field-border-pressed: var(--colors-neutral-100);
-    --form-field-border-error: var(--border-error);
-    --form-field-border-success: var(--border-success);
-    --form-field-border-warning: var(--border-warning);
-    --form-field-border-info: var(--border-info);
+    --form-field-border-error: var(--border-error-light);
+    --form-field-border-success: var(--border-success-light);
+    --form-field-border-warning: var(--border-warning-light);
+    --form-field-border-info: var(--border-info-light);
     --form-option-background-hover: var(--colors-neutral-700);
     --form-option-background-pressed: var(--colors-neutral-600);
 
@@ -237,6 +237,13 @@
 
 
     // ─── Default Borders ───
+    --border-primary-light: var(--colors-primary-sa-flag-400);
+    --border-secondary-light: var(--colors-secondary-gold-400);
+    --border-tertiary-light: var(--colors-tertiary-lavendar-400);
+    --border-success-light: var(--colors-green-400);
+    --border-info-light: var(--colors-blue-400);
+    --border-warning-light: var(--colors-yellow-400);
+    --border-error-light: var(--colors-red-400);
     --border-neutral-light: var(--colors-neutral-400);
     --border-neutral-primary: var(--colors-neutral-600);
     --border-neutral-secondary: var(--colors-neutral-700);
