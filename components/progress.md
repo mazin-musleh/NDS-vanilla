@@ -24,24 +24,16 @@ direction: ltr
             <div class="demo-label">Progress Circle - Sizes</div>
             <div class="demo-action">
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["nds-primary", ".nds-progress-circle", "progressVariant"]'>
-                <span class="label">Primary</span>
-              </button>
-              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["nds-neutral", ".nds-progress-circle", "progressVariant"]'>
                 <span class="label">Neutral</span>
               </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["nds-success", ".nds-progress-circle", "progressVariant"]'>
+                data-toggler='["data-status=success", ".nds-progress-circle", "progressVariant", "attr"]'>
                 <span class="label">Success</span>
               </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["nds-error", ".nds-progress-circle", "progressVariant"]'>
+                data-toggler='["data-status=error", ".nds-progress-circle", "progressVariant", "attr"]'>
                 <span class="label">Error</span>
-              </button>
-              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='[["nds-oncolor", ".nds-progress-circle", "progressVariant"],["dark-bg", ".demo-container", "containerBg"]]'>
-                <span class="label">On Color</span>
               </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["nds-xs", ".nds-progress-circle", "progressSize"]'>
@@ -78,11 +70,14 @@ direction: ltr
                     stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" />
                 </svg>
                 <div class="progress-info">
+                  <span class="nds-feedback nds-sm">
+                    <span class="nds-feedback-icon"><i class="hgi hgi-stroke icon"></i></span>
+                  </span>
                   <span class="progress-percentage">
                     <span class="progress-number"></span>
                     <span class="progress-symbol">%</span>
                   </span>
-                  <span class="progress-text">Complete</span>
+                  <span class="progress-text">Active users</span>
                 </div>
               </div>
             </div>
@@ -113,11 +108,12 @@ direction: ltr
                         stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" />
                     </svg>
                     <div class="progress-info">
+                      <span class="nds-feedback-icon"><i class="hgi hgi-stroke icon"></i></span>
                       <span class="progress-percentage">
                         <span class="progress-number"></span>
                         <span class="progress-symbol">%</span>
                       </span>
-                      <span class="progress-text">Complete</span>
+                      <span class="progress-text">Active users</span>
                     </div>
                   </div>
                 </code>
@@ -139,26 +135,38 @@ direction: ltr
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Progress Bar</h2>
-      <p class="nds-section-description">Linear progress bars with CSS custom properties</p>
+      <p class="nds-section-description">Linear progress bars with label, percentage, and feedback</p>
     </div>
     <div class="nds-section-content">
       <div class="nds-showcase">
 
-        <!-- Progress Bar Sizes -->
+        <!-- Progress Bar -->
         <div class="nds-demo-card">
           <div class="demo-header">
-            <div class="demo-label">Progress Bar - Sizes</div>
+            <div class="demo-label">Progress Bar</div>
             <div class="demo-action">
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["nds-xs", ".nds-progress-bar", "progressBarSize"]'>
-                <span class="label">XS</span>
-              </button>
-              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
-                data-toggler='["nds-md", ".nds-progress-bar", "progressBarSize"]'>
-                <span class="label">MD</span>
+                data-toggler='["nds-neutral", ".nds-progress-group", "progressBarVariant"]'>
+                <span class="label">Neutral</span>
               </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["nds-lg", ".nds-progress-bar", "progressBarSize"]'>
+                data-toggler='["data-status=success", ".nds-progress-group", "progressBarVariant", "attr"]'>
+                <span class="label">Success</span>
+              </button>
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='["data-status=error", ".nds-progress-group", "progressBarVariant", "attr"]'>
+                <span class="label">Error</span>
+              </button>
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='["nds-sm", ".nds-progress-group", "progressBarSize"]'>
+                <span class="label">SM</span>
+              </button>
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                data-toggler='["nds-md", ".nds-progress-group", "progressBarSize"]'>
+                <span class="label">MD</span>
+              </button>
+              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
+                data-toggler='["nds-lg", ".nds-progress-group", "progressBarSize"]'>
                 <span class="label">LG</span>
               </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
@@ -169,8 +177,15 @@ direction: ltr
           </div>
           <div class="demo-container">
             <div class="state-demo">
-              <div class="nds-progress-bar nds-md" style="--progress-value: 60;">
-                <div class="progress-fill"></div>
+              <div class="nds-progress-group nds-lg" style="--progress-value: 65;">
+                <span class="progress-label">Uploading document.pdf</span>
+                <div class="nds-progress-bar">
+                  <div class="progress-fill"></div>
+                </div>
+                <span class="nds-feedback nds-sm">
+                  <span class="nds-feedback-icon"><i class="hgi hgi-stroke icon"></i></span>
+                  <span class="nds-feedback-message">Processing your file...</span>
+                </span>
               </div>
             </div>
           </div>
@@ -179,158 +194,29 @@ direction: ltr
             <div class="nds-tab-list-container">
               <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                  aria-controls="panel-bar-sizes-1" id="tab-bar-sizes-1">
+                  aria-controls="panel-bar-1" id="tab-bar-1">
                   <span class="nds-tab-label">HTML</span>
                 </button>
               </nav>
             </div>
             <div class="nds-tab-content">
-              <div class="nds-tab-panel code-example" role="tabpanel" id="panel-bar-sizes-1"
-                aria-labelledby="tab-bar-sizes-1">
+              <div class="nds-tab-panel code-example" role="tabpanel" id="panel-bar-1"
+                aria-labelledby="tab-bar-1">
                 <div class="nds-code-action">
                   <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                   </button>
                 </div>
                 <code class="lang-html code">
-                  <!-- Extra Small (4px) -->
-                  <div class="nds-progress-bar nds-xs" style="--progress-value: 60;">
-                    <div class="progress-fill"></div>
-                  </div>
-                </code>
-              </div>
-            </div>
-          </div>
-          </div>
-        </div>
-
-        <!-- Progress Bar Variants -->
-        <div class="nds-demo-card">
-          <div class="demo-header">
-            <div class="demo-label">Progress Bar - Variants</div>
-            <div class="demo-action">
-              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["nds-primary", ".nds-progress-bar", "progressBarVariant"]'>
-                <span class="label">Primary</span>
-              </button>
-              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["nds-neutral", ".nds-progress-bar", "progressBarVariant"]'>
-                <span class="label">Neutral</span>
-              </button>
-              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='[["nds-oncolor", ".nds-progress-bar", "progressBarVariant"],["dark-bg", ".demo-container", "containerBg"]]'>
-                <span class="label">On Color</span>
-              </button>
-              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                <span class="label">Remove bg</span>
-              </button>
-            </div>
-          </div>
-          <div class="demo-container">
-            <div class="state-demo">
-              <div class="nds-progress-bar nds-lg nds-primary" style="--progress-value: 70;">
-                <div class="progress-fill"></div>
-              </div>
-            </div>
-          </div>
-          <div class="demo-code">
-          <div class="nds-tabs nds-code nds-divided" hidden>
-            <div class="nds-tab-list-container">
-              <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                  aria-controls="panel-bar-variants-1" id="tab-bar-variants-1">
-                  <span class="nds-tab-label">HTML</span>
-                </button>
-              </nav>
-            </div>
-            <div class="nds-tab-content">
-              <div class="nds-tab-panel code-example" role="tabpanel" id="panel-bar-variants-1"
-                aria-labelledby="tab-bar-variants-1">
-                <div class="nds-code-action">
-                  <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                  </button>
-                </div>
-                <code class="lang-html code">
-                  <div class="nds-progress-bar nds-lg nds-primary" style="--progress-value: 70;">
-                    <div class="progress-fill"></div>
-                  </div>
-                </code>
-              </div>
-            </div>
-          </div>
-          </div>
-        </div>
-
-        <!-- Progress Bar with Label -->
-        <div class="nds-demo-card">
-          <div class="demo-header">
-            <div class="demo-label">Progress Bar - With Label</div>
-            <div class="demo-action">
-              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["nds-primary", ".nds-progress-bar", "progressBarVariant"]'>
-                <span class="label">Primary</span>
-              </button>
-              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["nds-neutral", ".nds-progress-bar", "progressBarVariant"]'>
-                <span class="label">Neutral</span>
-              </button>
-              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["nds-striped", ".nds-progress-bar", "progressBarPattern"]'>
-                <span class="label">Striped</span>
-              </button>
-              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["nds-animated", ".nds-progress-bar", "progressBarAnimation"]'>
-                <span class="label">Animated</span>
-              </button>
-              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='[["nds-oncolor", ".nds-progress-bar", "progressBarVariant"],["dark-bg", ".demo-container", "containerBg"]]'>
-                <span class="label">On Color</span>
-              </button>
-              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                <span class="label">Remove bg</span>
-              </button>
-            </div>
-          </div>
-          <div class="demo-container">
-            <div class="state-demo">
-
-              <div class="nds-progress-bar nds-md" style="--progress-value: 65;">
-                <div class="nds-progress-header">
-                  <span class="progress-label">Uploading document.pdf</span>
-                  <span class="progress-percentage">65%</span>
-                </div>
-                <div class="progress-fill"></div>
-              </div>
-            </div>
-          </div>
-          <div class="demo-code">
-          <div class="nds-tabs nds-code nds-divided" hidden>
-            <div class="nds-tab-list-container">
-              <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                  aria-controls="panel-bar-label-1" id="tab-bar-label-1">
-                  <span class="nds-tab-label">HTML</span>
-                </button>
-              </nav>
-            </div>
-            <div class="nds-tab-content">
-              <div class="nds-tab-panel code-example" role="tabpanel" id="panel-bar-label-1"
-                aria-labelledby="tab-bar-label-1">
-                <div class="nds-code-action">
-                  <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                  </button>
-                </div>
-                <code class="lang-html code">
-                  <div class="nds-progress-bar nds-md" style="--progress-value: 65;">
-                    <div class="nds-progress-header">
-                      <span class="progress-label">Uploading document.pdf</span>
-                      <span class="progress-percentage">65%</span>
+                  <div class="nds-progress-group nds-lg" style="--progress-value: 65;">
+                    <span class="progress-label">Uploading document.pdf</span>
+                    <div class="nds-progress-bar">
+                      <div class="progress-fill"></div>
                     </div>
-                    <div class="progress-fill"></div>
+                    <span class="nds-feedback nds-sm nds-outline">
+                      <span class="nds-feedback-icon"><i class="hgi hgi-stroke icon"></i></span>
+                      <span class="nds-feedback-message">Processing your file...</span>
+                    </span>
                   </div>
                 </code>
               </div>
@@ -338,7 +224,6 @@ direction: ltr
           </div>
           </div>
         </div>
-
 
       </div>
     </div>

@@ -11,12 +11,16 @@
 // ==============================================
 
 .nds-progress-circle {
-  --_pc-size: var(--pc-size, 64px);
+  --_progress-size: var(--progress-size, 64px);
   --_progress-value: var(--progress-value, 0); // Default progress value (0-100)
   --_progress-circumference: var(--progress-circumference, 62.83); // 2πr where r=10
 
-  @include progress-circle-base(var(--_pc-size), -90deg);
-  @include progress-circle-text(var(--_pc-size));
+  @include progress-circle-base(var(--_progress-size), -90deg);
+  @include progress-circle-text(var(--_progress-size));
+
+  @include dark {
+    --_progress-track-color: var(--progress-track-color, var(--alpha-white-10));
+  }
 
   // CSS counter for automatic number display (clamped to 100)
   counter-reset: progress-counter min(var(--_progress-value), 100);
@@ -34,17 +38,16 @@
     &::before {
       content: counter(progress-counter);
       // Restore proper sizing for the counter
-      font-size: clamp(10px, calc(var(--_pc-size) * 0.15), 36px) !important;
+      font-size: clamp(10px, calc(var(--_progress-size) * 0.15), 36px) !important;
       font-weight: 700 !important;
       line-height: normal;
-      color: var(--text-primary-paragraph);
-      letter-spacing: clamp(0rem, calc(var(--_pc-size) * -0.0006), -0.072rem);
+      letter-spacing: clamp(0rem, calc(var(--_progress-size) * -0.0006), -0.072rem);
     }
   }
 
   // Size variants
   &.nds-xs {
-    --pc-size: 24px;
+    --progress-size: 24px;
 
     .progress-info :is(.progress-symbol, .progress-text) {
       display: none;
@@ -52,7 +55,8 @@
   }
 
   &.nds-sm {
-    --pc-size: 40px;
+    --progress-size: 40px;
+
     .progress-info .progress-text {
       display: none;
     }
@@ -60,44 +64,62 @@
 
   &.nds-md,
   & {
-    --pc-size: 64px;
+    --progress-size: 64px;
   }
 
   &.nds-lg {
-    --pc-size: 120px;
+    --progress-size: 120px;
   }
 
   &.nds-xl {
-    --pc-size: 240px;
+    --progress-size: 240px;
   }
 
-  // Style variants using CSS custom properties
-  &.nds-primary {
-    --pc-bg-stroke: var(--background-neutral-100);
-    --pc-bar-stroke: var(--button-background-primary-default);
-  }
-
+  // Style variants
   &.nds-neutral {
-    --pc-bg-stroke: var(--background-neutral-100);
-    --pc-bar-stroke: var(--button-background-black-selected);
+    --progress-color: var(--colors-neutral-700);
+
+    @include dark {
+      --progress-color: var(--background-white);
+    }
   }
 
-  &.nds-success {
-    --pc-bg-stroke: var(--background-success-100);
-    --pc-bar-stroke: var(--background-success-600);
+  &[data-status="success"] {
+    --progress-color: var(--background-success);
+    --progress-value: 100 !important;
   }
 
-  &.nds-error {
-    --pc-bg-stroke: var(--background-error-100);
-    --pc-bar-stroke: var(--background-error-600);
+  &[data-status="error"] {
+    --progress-color: var(--background-error);
   }
 
-  &.nds-oncolor {
-    --pc-bg-stroke: var(--alpha-white-30);
-    --pc-bar-stroke: var(--background-surface-oncolor);
+  &[data-status="warning"] {
+    --progress-color: var(--background-warning);
+  }
 
-    .progress-info {
-      color: var(--text-oncolor-primary);
+  // Status feedback icon inside circle
+  .nds-feedback {
+    display: none;
+  }
+
+  .nds-feedback-icon {
+    display: none;
+  }
+
+  &[data-status] {
+    .progress-percentage {
+      display: none;
+    }
+
+    .nds-feedback {
+      display: flex;
+    }
+
+    .nds-feedback-icon {
+      display: inline-flex;
+      width: clamp(16px, calc(var(--_progress-size) * 0.3), 72px);
+      height: clamp(16px, calc(var(--_progress-size) * 0.3), 72px);
+      font-size: clamp(16px, calc(var(--_progress-size) * 0.3), 72px);
     }
   }
 
@@ -119,182 +141,125 @@
 // PROGRESS BAR COMPONENT
 // ==============================================
 
-.nds-progress-bar {
-  --_pb-height: var(--pb-height, 8px);
-  --_progress-value: var(--progress-value, 0); // Default progress value (0-100)
+// Wrapper: label + bar + feedback (like form fields)
+.nds-progress-group {
+  --_progress-height: var(--progress-height, 8px);
+  --_progress-value: var(--progress-value, 0);
+  --_progress-color: var(--progress-color, var(--background-primary));
 
-  // Auto-update percentage from progress bar's custom property (clamped to 100)
   counter-reset: progress-counter min(var(--_progress-value), 100);
-
-
-  width: 100%;
-  height: var(--_pb-height);
-  background-color: var(--background-neutral-100);
-  border-radius: var(--radius-full);
-  position: relative;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  width: 100%;
 
-  .nds-progress-header {
-    position: absolute;
-    margin-top: calc((var(--_pb-height) + var(--spacing-2xl) + var(--_pb-height)/10) * -1);
-    padding: 0 calc(var(--_pb-height)/2);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  // ─── Label ───
+  .progress-label {
     font-size: var(--nds-text-sm-FS);
     line-height: var(--nds-text-sm-LH);
-    color: var(--text-default);
     font-weight: 500;
+    color: var(--text-default);
+  }
+
+  // ─── Bar track ───
+  .nds-progress-bar {
     width: 100%;
+    height: var(--_progress-height);
+    background-color: var(--colors-neutral-100);
+    border-radius: var(--radius-full);
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
 
-    .progress-label {
-      flex: 1;
-    }
-
-    .progress-percentage {
-      font-size: 0 !important;
-      font-weight: 600;
-      color: var(--text-primary-paragraph);
-
-      &::before {
-        content: counter(progress-counter);
-        font-size: var(--nds-text-sm-FS) !important;
-        line-height: var(--nds-text-sm-LH);
-        font-weight: 600;
-        color: var(--text-primary-paragraph);
-      }
-
-      &::after {
-        content: '%';
-        font-size: var(--nds-text-sm-FS) !important;
-        line-height: var(--nds-text-sm-LH);
-        font-weight: 600;
-        color: var(--text-primary-paragraph);
-      }
+    @include dark {
+      background-color: var(--alpha-white-10);
     }
   }
 
+  // ─── Fill ───
   .progress-fill {
     height: 100%;
-    background-color: var(--button-background-primary-default);
+    background-color: var(--_progress-color);
     border-radius: var(--radius-full);
     transition: width 0.3s ease;
-    width: calc(min(var(--progress-value), 100) * 1%);
-    position: relative;
-  }
+    width: calc(min(var(--_progress-value), 100) * 1%);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-inline-end: var(--spacing-xs);
+    color: var(--text-oncolor-primary);
+    font-size: var(--nds-text-xs-FS);
+    font-weight: 600;
+    white-space: nowrap;
 
-
-  &.nds-oncolor {
-    .nds-progress-header {
-      color: var(--text-oncolor-primary);
-
-      .progress-percentage,
-      .progress-percentage::before,
-      .progress-percentage::after {
-        color: var(--text-oncolor-primary);
-      }
+    &::after {
+      content: counter(progress-counter) '%';
+      padding-inline: var(--spacing-xs);
     }
   }
 
-  // Size variants
-  &.nds-xs {
-    --pb-height: 4px;
+  // ─── Feedback (uses .nds-feedback component) ───
+  // Always visible inside progress, defaults to info icon
+  .nds-feedback {
+    display: flex;
   }
 
+  &:not([data-status]) .nds-feedback .icon::before {
+    content: "䆾"; // information-circle (default)
+  }
+
+  // ─── Size variants ───
   &.nds-sm {
-    --pb-height: 6px;
+    --progress-height: 4px;
+
+    .progress-fill::after {
+      content: none;
+    }
   }
 
   &.nds-md,
   & {
-    --pb-height: 8px;
+    --progress-height: 8px;
+
+    .progress-fill::after {
+      content: none;
+    }
   }
 
   &.nds-lg {
-    --pb-height: 12px;
-  }
+    --progress-height: 16px;
 
-  &.nds-xl {
-    --pb-height: 16px;
-  }
-
-  // Style variants
-  &.nds-primary .progress-fill {
-    background-color: var(--button-background-primary-default);
-  }
-
-  &.nds-neutral .progress-fill {
-    background-color: var(--button-background-black-selected);
-  }
-
-  &.nds-success .progress-fill {
-    background-color: var(--background-success-600);
-  }
-
-  &.nds-error .progress-fill {
-    background-color: var(--background-error-600);
-  }
-
-  &.nds-oncolor {
-    background-color: var(--alpha-white-30);
-
-    .progress-fill {
-      background-color: var(--background-surface-oncolor);
+    .progress-fill::after {
+      content: counter(progress-counter) '%';
     }
   }
 
-  // Striped variant
-  &.nds-striped .progress-fill {
-    background-image: linear-gradient(45deg,
-        rgba(255, 255, 255, 0.15) 25%,
-        transparent 25%,
-        transparent 50%,
-        rgba(255, 255, 255, 0.15) 50%,
-        rgba(255, 255, 255, 0.15) 75%,
-        transparent 75%,
-        transparent);
-        
-    background-size: var(--_pb-height) var(--_pb-height);
-  }
+  // ─── Color variants (classes) ───
+  &.nds-neutral {
+    --progress-color: var(--colors-neutral-700);
 
-  &.nds-striped.nds-oncolor .progress-fill{
-    background-image: linear-gradient(45deg,
-    rgba(0, 0, 0, 0.15) 25%,
-    transparent 25%,
-    transparent 50%,
-    rgba(0, 0, 0, 0.15) 50%,
-    rgba(0, 0, 0, 0.15) 75%,
-    transparent 75%,
-    transparent);
-  }
+    @include dark {
+      --progress-color: var(--background-white);
 
-  // Animated stripes
-  &.nds-striped.nds-animated .progress-fill {
-    animation: progress-stripes 1s linear infinite;
-
-    @include ltr {
-      animation: progress-stripes-ltr 1s linear infinite;
+      .progress-fill {
+        color: var(--colors-neutral-700);
+      }
     }
   }
-}
 
-@keyframes progress-stripes {
-  0% {
-    background-position: var(--_pb-height) 0;
+  // ─── Status variants (data-status overrides color) ───
+  &[data-status="success"] {
+    --progress-color: var(--background-success);
+    --progress-value: 100 !important;
   }
 
-  100% {
-    background-position: 0 0;
-  }
-}
-
-@keyframes progress-stripes-ltr {
-  0% {
-    background-position: 0 0;
+  &[data-status="error"] {
+    --progress-color: var(--background-error);
   }
 
-  100% {
-    background-position: var(--_pb-height) 0;
+  &[data-status="warning"] {
+    --progress-color: var(--background-warning);
   }
+
 }

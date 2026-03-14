@@ -346,19 +346,19 @@ textarea {
 // ==============================================
 
 @mixin progress-circle-base($size: 24px, $rotate: -90deg) {
-  --_pc-bg-stroke: var(--pc-bg-stroke, var(--background-neutral-100));
-  --_pc-bar-stroke: var(--pc-bar-stroke, var(--button-background-primary-default));
+  --_progress-track-color: var(--progress-track-color, var(--colors-neutral-100));
+  --_progress-color: var(--progress-color, var(--background-primary));
 
   position: relative;
-  width: var(--pc-size, #{$size}) !important;
-  height: var(--pc-size, #{$size}) !important;
+  width: var(--progress-size, #{$size}) !important;
+  height: var(--progress-size, #{$size}) !important;
   display: flex;
   align-items: center;
   justify-content: center;
 
   svg {
-    width: var(--pc-size, #{$size}) !important;
-    height: var(--pc-size, #{$size}) !important;
+    width: var(--progress-size, #{$size}) !important;
+    height: var(--progress-size, #{$size}) !important;
     transform: rotate($rotate) !important;
 
     @include ltr {
@@ -373,11 +373,11 @@ textarea {
       transform-origin: center center;
 
       &.progress-bg {
-        stroke: var(--_pc-bg-stroke);
+        stroke: var(--_progress-track-color);
       }
 
       &.progress-bar {
-        stroke: var(--_pc-bar-stroke);
+        stroke: var(--_progress-color);
       }
     }
   }
@@ -397,25 +397,25 @@ textarea {
 
 @mixin progress-circle-text($size: 24px) {
   .progress-info {
-    gap: clamp(0px, calc(var(--pc-size, #{$size}) * 0.04), 8px) !important;
-    padding: 0 clamp(8px, calc(var(--pc-size, #{$size}) * 0.2), 40px) !important;
+    gap: clamp(0px, calc(var(--progress-size, #{$size}) * 0.04), 8px) !important;
+    padding: 0 clamp(8px, calc(var(--progress-size, #{$size}) * 0.2), 40px) !important;
 
     .progress-percentage {
       display: flex;
       flex-wrap: nowrap;
       flex-direction: row;
       align-items: center;
-      letter-spacing: clamp(0rem, calc(var(--pc-size, #{$size}) * -0.0006), -0.072rem) !important;
+      letter-spacing: clamp(0rem, calc(var(--progress-size, #{$size}) * -0.0006), -0.072rem) !important;
     }
 
     :is(.progress-number, .progress-symbol) {
-      font-size: clamp(10px, calc(var(--pc-size, #{$size}) * 0.15), 36px) !important;
+      font-size: clamp(10px, calc(var(--progress-size, #{$size}) * 0.15), 36px) !important;
       font-weight: 700 !important;
       line-height: normal;
     }
 
     .progress-text {
-      font-size: clamp(10px, calc(var(--pc-size, #{$size}) * 0.1), 20px) !important;
+      font-size: clamp(10px, calc(var(--progress-size, #{$size}) * 0.1), 20px) !important;
     }
   }
 }

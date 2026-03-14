@@ -205,7 +205,7 @@
     display: flex;
     flex-direction: column;
     line-height: normal;
-    gap: calc(var(--pc-size) / 16);
+    gap: calc(var(--progress-size) / 16);
 }
 
 .nds-stepper-title {
@@ -397,10 +397,10 @@
 // ==============================================
 
 .nds-stepper.nds-radial {
-    --pc-size: 64px;
-    --stepper-gap: calc(var(--pc-size)/8);
+    --progress-size: 64px;
+    --stepper-gap: calc(var(--progress-size)/8);
 
-    /* calc(var(--pc-size)/16); */
+    /* calc(var(--progress-size)/16); */
     align-items: center;
 
     .nds-stepper-step {
@@ -419,15 +419,15 @@
     }
 
     &.nds-sm {
-        --pc-size: 48px;
+        --progress-size: 48px;
     }
 
     &.nds-lg {
-        --pc-size: 96px;
+        --progress-size: 96px;
     }
 
     &.nds-xl {
-        --pc-size: 120px;
+        --progress-size: 120px;
     }
 
     .nds-stepper-content {
@@ -435,20 +435,20 @@
         width: 100%;
 
         .nds-stepper-title {
-            font-size: calc(var(--pc-size)/4);
+            font-size: calc(var(--progress-size)/4);
         }
 
         .nds-stepper-description {
-            font-size: calc(var(--pc-size)/5);
+            font-size: calc(var(--progress-size)/5);
         }
     }
 
     .progress-circle {
-        --pc-bg-stroke: var(--background-neutral-100);
-        --pc-bar-stroke: var(--button-background-primary-default);
+        --progress-track-color: var(--colors-neutral-100);
+        --progress-color: var(--background-primary);
         align-self: flex-start;
 
-        @include progress-circle-base(var(--pc-size), -90deg);
+        @include progress-circle-base(var(--progress-size), -90deg);
 
         // Progress based on steps
         svg circle.progress-bar {
@@ -466,11 +466,11 @@
             align-items: center;
             flex-wrap: nowrap;
             justify-content: center;
-            font-size:calc(var(--pc-size) / 5);
-            /* font-size: clamp(10px, calc(var(--pc-size) * 0.2), 24px) !important; */
+            font-size:calc(var(--progress-size) / 5);
+            /* font-size: clamp(10px, calc(var(--progress-size) * 0.2), 24px) !important; */
             font-weight: 700;
             white-space: nowrap;
-            gap: clamp(2px, calc(var(--pc-size) * 0.05), 4px);
+            gap: clamp(2px, calc(var(--progress-size) * 0.05), 4px);
             line-height: 1;
         }
 
@@ -579,8 +579,8 @@
 
     &.nds-radial {
         .progress-circle {
-            --pc-bg-stroke: var(--alpha-white-30);
-            --pc-bar-stroke: var(--background-surface-oncolor);
+            --progress-track-color: var(--alpha-white-30);
+            --progress-color: var(--background-surface-oncolor);
         }
 
         .progress-circle .progress-info {
