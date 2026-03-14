@@ -51,6 +51,10 @@
         --section-subtitle-color: var(--text-default);
         --section-description-color: var(--text-default);
         --section-text-color: var(--text-default);
+
+        @include dark {
+            --section-bg: var(--alpha-primary-10);
+        }
     }
 
     &:is(.nds-ghost, .noBg) {

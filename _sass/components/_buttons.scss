@@ -348,10 +348,10 @@
       --btn-bg-selected: var(--button-background-danger-secondary-selected);
       --btn-bg-disabled: var(--button-background-transparent-default);
       --btn-color: var(--text-error);
-      --btn-border: var(--border-error-light);
-      --btn-border-hover: var(--border-error-light);
-      --btn-border-active: var(--border-error-light);
-      --btn-border-selected: var(--border-error-light);
+      --btn-border: var(--button-border-error);
+      --btn-border-hover: var(--button-border-error);
+      --btn-border-active: var(--button-border-error);
+      --btn-border-selected: var(--button-border-error);
       --btn-border-disabled: var(--border-neutral-secondary);
       --btn-loading-color: var(--button-background-danger-primary-default);
     }
@@ -421,10 +421,10 @@
         --btn-bg-disabled: var(--button-background-transparent-default);
         --btn-color: var(--button-label-danger-primary-default-oncolor);
         --btn-color-hover: var(--button-background-danger-primary-hovered);
-        --btn-border: var(--border-error-light);
-        --btn-border-hover: var(--border-error-light);
-        --btn-border-active: var(--border-error-light);
-        --btn-border-selected: var(--border-error-light);
+        --btn-border: var(--button-border-error);
+        --btn-border-hover: var(--button-border-error);
+        --btn-border-active: var(--button-border-error);
+        --btn-border-selected: var(--button-border-error);
         --btn-border-disabled: var(--border-neutral-secondary);
 
         &:is(.selected, [data-state~="selected"], [data-state~="open"], [data-state~="active"], [data-state~="current"]) {

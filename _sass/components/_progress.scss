@@ -80,7 +80,7 @@
     --progress-color: var(--colors-neutral-700);
 
     @include dark {
-      --progress-color: var(--background-white);
+      --progress-color: var(--colors-neutral-200);
     }
   }
 
@@ -240,7 +240,7 @@
     --progress-color: var(--colors-neutral-700);
 
     @include dark {
-      --progress-color: var(--background-white);
+      --progress-color: var(--colors-neutral-200);
 
       .progress-fill {
         color: var(--colors-neutral-700);

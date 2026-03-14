@@ -28,6 +28,7 @@
     --text-primary-paragraph: var(--colors-neutral-300);
     --text-secondary-paragraph: var(--colors-neutral-400);
     --text-primary: var(--colors-primary-sa-flag-400);
+    --text-oncolor-primary: var(--colors-neutral-100);
 
     // ─── Divider ───
     --divider-color: var(--alpha-white-10);
@@ -162,10 +163,10 @@
     --controls-control-border: var(--colors-neutral-400);
     --controls-control-pressed: var(--colors-neutral-600);
     --controls-control-ripple-effect: var(--alpha-black-50);
-    --controls-control-primary-checked: var(--colors-primary-sa-flag-600-primary);
-    --controls-control-primary-hovered: var(--colors-primary-sa-flag-300);
-    --controls-control-primary-pressed: var(--colors-primary-sa-flag-400);
-    --controls-control-primary-focused: var(--colors-primary-sa-flag-600-primary);
+    --controls-control-primary-checked: var(--colors-green-600);
+    --controls-control-primary-hovered: var(--colors-green-500);
+    --controls-control-primary-pressed: var(--colors-green-400);
+    --controls-control-primary-focused: var(--colors-green-600);
     --controls-control-neutral-checked: var(--colors-neutral-600);
     --controls-control-neutral-hovered: var(--colors-neutral-400);
     --controls-control-neutral-pressed: var(--colors-neutral-400);
@@ -248,6 +249,19 @@
     --border-neutral-primary: var(--colors-neutral-600);
     --border-neutral-secondary: var(--colors-neutral-700);
     --border-neutral-tertiary: var(--colors-neutral-800);
+
+    // ─── Stepper ───
+    --stepper-button-completed: var(--colors-green-600);
+    --stepper-button-completed-hovered: var(--colors-green-700);
+    --stepper-button-current: var(--colors-green-600);
+    --stepper-button-current-hovered: var(--colors-green-700);
+    --stepper-button-upcomming: var(--colors-neutral-600);
+    --stepper-button-upcomming-hovered: var(--colors-neutral-600);
+    --stepper-button-background: var(--background-default);
+    --stepper-text-primary: var(--text-default);
+    --stepper-line-current: var(--colors-neutral-600);
+    --stepper-line-upcomming: var(--colors-neutral-600);
+    --stepper-line-upcomming-hovered: var(--colors-neutral-600);
 
     // ─── Shadows (~2x light opacity for dark surfaces) ───
     --shadow-xs: 0px 1px 2px 0px rgba(0, 0, 0, .10);
