@@ -148,6 +148,10 @@
     --button-status-info-text: var(--text-info);
     --button-status-warning-bg: var(--background-warning-light);
     --button-status-warning-text: var(--text-warning);
+    --button-border-error: var(--colors-red-200);
+    --button-border-success: var(--colors-green-200);
+    --button-border-warning: var(--colors-yellow-200);
+    --button-border-info: var(--colors-blue-200);
 
     // Focus ring tokens
     --focus-outline: var(--colors-base-black);

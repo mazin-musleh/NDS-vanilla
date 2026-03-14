@@ -11,8 +11,10 @@
             border: 2px dashed var(--border-neutral-primary) !important;
             border-radius: var(--radius-sm);
             background-color: var(--background-neutral-100);
-            
-        
+
+            @include dark {
+                background-color: var(--background-default);
+            }
 
             .upload-zone {
                 display: flex;
@@ -28,6 +30,10 @@
             &.drag-over {
                 border-color: var(--border-success) !important;
                 background-color: var(--background-success-25);
+
+                @include dark {
+                    background-color: var(--alpha-success-10);
+                }
                 color: var(--text-success);
 
                 .upload-icon {
@@ -165,6 +171,10 @@
         background-color: var(--background-neutral-100);
         gap: var(--spacing-md);
         min-height: 36px;
+
+        @include dark {
+            background-color: var(--background-default);
+        }
 
         .file-info {
             flex: 1;

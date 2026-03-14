@@ -175,6 +175,7 @@
         content: counter(step-counter);
         font-size: calc(var(--stepper-size)/2);
         font-weight: 500;
+        color: inherit;
     }
 
     // Data attribute support for custom text
@@ -278,6 +279,14 @@
         &:hover {
             border-color: var(--stepper-button-current-hovered);
             color: var(--stepper-button-current-hovered);
+        }
+
+        :not(.nds-oncolor) > & {
+            @include dark {
+                &::before {
+                    color: var(--text-success);
+                }
+            }
         }
     }
 }
@@ -448,6 +457,10 @@
         --progress-color: var(--background-primary);
         align-self: flex-start;
 
+        @include dark {
+            --progress-track-color: var(--alpha-white-10);
+        }
+
         @include progress-circle-base(var(--progress-size), -90deg);
 
         // Progress based on steps
@@ -591,3 +604,4 @@
 
 
 }
+
