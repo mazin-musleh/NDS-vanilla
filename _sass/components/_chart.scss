@@ -11,19 +11,29 @@
     --_chart-color-5: var(--chart-color-5, var(--colors-primary-sa-flag-200));
     --_chart-color-6: var(--chart-color-6, var(--colors-primary-sa-flag-800));
     --_chart-area-opacity: var(--chart-area-opacity, 0.15);
-    --_chart-grid-color: var(--chart-grid-color, var(--border-background-white));
+    --_chart-grid-color: var(--chart-grid-color, var(--colors-neutral-100));
+
+    @include dark {
+        --_chart-grid-color: var(--chart-grid-color, var(--colors-neutral-700));
+        --_chart-color-1: var(--chart-color-1, var(--colors-primary-sa-flag-600));
+        --_chart-color-2: var(--chart-color-2, var(--colors-primary-sa-flag-400));
+        --_chart-color-3: var(--chart-color-3, var(--colors-neutral-200));
+        --_chart-color-4: var(--chart-color-4, var(--colors-primary-sa-flag-500));
+        --_chart-color-5: var(--chart-color-5, var(--colors-primary-sa-flag-200));
+        --_chart-color-6: var(--chart-color-6, var(--colors-primary-sa-flag-300));
+    }
     --_chart-text: var(--chart-text, var(--text-primary-paragraph));
     --_chart-label: var(--chart-label, var(--text-default));
     --_chart-radius: var(--chart-radius, var(--radius-md));
-    --_chart-tooltip-bg: var(--chart-tooltip-bg, var(--background-primary-white));
+    --_chart-tooltip-bg: var(--chart-tooltip-bg, var(--background-menu));
     --_chart-tooltip-border: var(--chart-tooltip-border, var(--border-neutral-secondary));
     --_chart-pie-label-1: var(--chart-pie-label-1, var(--text-oncolor-primary));
     --_chart-pie-label-2: var(--chart-pie-label-2, var(--text-oncolor-primary));
-    --_chart-pie-label-3: var(--chart-pie-label-3, var(--text-display));
-    --_chart-pie-label-4: var(--chart-pie-label-4, var(--text-display));
+    --_chart-pie-label-3: var(--chart-pie-label-3, var(--text-black));
+    --_chart-pie-label-4: var(--chart-pie-label-4, var(--text-black));
     --_chart-pie-label-5: var(--chart-pie-label-5, var(--text-oncolor-primary));
     --_chart-pie-label-6: var(--chart-pie-label-6, var(--text-oncolor-primary));
-    --_chart-dot-fill: var(--chart-dot-fill, var(--background-primary-white));
+    --_chart-dot-fill: var(--chart-dot-fill, var(--background-white));
     position: relative;
     width: 100%;
     min-height: 200px;
@@ -40,6 +50,15 @@
     --chart-color-4: var(--colors-primary-sa-flag-200);
     --chart-color-5: var(--colors-primary-sa-flag-800);
     --chart-color-6: var(--colors-primary-sa-flag-900);
+
+    @include dark {
+        --chart-color-1: var(--colors-primary-sa-flag-600);
+        --chart-color-2: var(--colors-primary-sa-flag-500);
+        --chart-color-3: var(--colors-primary-sa-flag-400);
+        --chart-color-4: var(--colors-primary-sa-flag-200);
+        --chart-color-5: var(--colors-primary-sa-flag-300);
+        --chart-color-6: var(--colors-primary-sa-flag-100);
+    }
 }
 
 .nds-chart[data-chart-type="line"] {
@@ -49,6 +68,15 @@
     --chart-color-4: var(--colors-primary-sa-flag-500);
     --chart-color-5: var(--colors-primary-sa-flag-400);
     --chart-color-6: var(--colors-primary-sa-flag-800);
+
+    @include dark {
+        --chart-color-1: var(--colors-primary-sa-flag-600);
+        --chart-color-2: var(--colors-primary-sa-flag-400);
+        --chart-color-3: var(--colors-primary-sa-flag-200);
+        --chart-color-4: var(--colors-primary-sa-flag-500);
+        --chart-color-5: var(--colors-primary-sa-flag-300);
+        --chart-color-6: var(--colors-primary-sa-flag-100);
+    }
 }
 
 // ── Layout ────────────────────────────────────────────────────

@@ -110,12 +110,12 @@
 
   &.nds-outline {
     background-color: transparent;
-    border: 1px solid currentColor;
+    border: 2px solid currentColor;
   }
 
   &.nds-dark {
     background-color: var(--featuredicons-dark-bg-color);
-    border: 1px solid transparent;
+    border: 2px solid transparent;
 
     .icon {
       color: var(--icon-oncolor);

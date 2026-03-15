@@ -1,6 +1,32 @@
 @use './mixins' as *;
 
 /* ========================================
+   VIEW TRANSITIONS (theme switch)
+   ======================================== */
+
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+}
+
+::view-transition-new(root) {
+    z-index: 1;
+}
+
+/* ========================================
+   SCROLLBAR
+   ======================================== */
+
+:root {
+    scrollbar-color: var(--colors-neutral-500) transparent;
+
+    @include dark {
+        scrollbar-color: var(--colors-neutral-800) transparent;
+    }
+}
+
+/* ========================================
    DIVIDERS
    ======================================== */
 
