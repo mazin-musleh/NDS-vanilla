@@ -122,49 +122,25 @@
         }
     }
 
-    :is(.month-dropdown-wrapper, .year-dropdown-wrapper) {
-        position: relative;
-        display: inline-block;
-
-        & .month-dropdown-btn {
-            .label {
-                @include mobile {
-                    max-width: 100px;
-                    overflow: clip;
-                    text-overflow: ellipsis;
-                }
-            }
+    :is(.month-dropmenu, .year-dropmenu) {
+        .nds-dropmenu-menu {
+            min-width: unset;
+            padding: var(--spacing-md);
         }
-    }
 
-    :is(.month-dropdown-menu, .year-dropdown-menu) {
-        display: none;
-        position: absolute;
-        z-index: 999;
-        right: 0;
-        margin-top: 4px;
-        padding: var(--spacing-md);
-        background-color: var(--form-field-background-default);
-        border: 1px solid var(--form-field-border-default);
-        border-radius: var(--radius-md);
-        box-shadow: var(--shadow-md);
-        flex-direction: column;
-        gap: var(--spacing-xs);
-        max-height: 200px;
-        overflow-y: auto;
-        overflow-x: hidden;
-        scroll-behavior: auto;
-        overscroll-behavior: contain;
-
-        &:not(.hidden) {
+        .nds-dropmenu-scroll {
+            max-height: 200px;
             display: flex;
+            flex-direction: column;
+            gap: var(--spacing-xs);
         }
-    }
 
-    :is(.month-dropdown-menu, .year-dropdown-menu) {
-        @include ltr {
-            left: 0;
-            right: unset;
+        .nds-dropmenu-trigger .label {
+            @include mobile {
+                max-width: 100px;
+                overflow: clip;
+                text-overflow: ellipsis;
+            }
         }
     }
 

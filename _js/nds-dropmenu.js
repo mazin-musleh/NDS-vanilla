@@ -288,12 +288,18 @@
         }
 
         open() {
+            // Cancel any pending close cleanup on this instance
+            this._closeCancelled = true;
+
             // Close any other open dropmenus
             document.querySelectorAll('.nds-dropmenu[data-state~="open"]').forEach(el => {
                 if (el !== this.dropmenu && el.ndsDropmenuInstance) {
                     el.ndsDropmenuInstance.close();
                 }
             });
+
+            // Clear stale close states before opening
+            removeState(this.dropmenu, 'closing');
 
             this.isOpen = true;
 
@@ -319,6 +325,7 @@
 
         close() {
             this.isOpen = false;
+            this._closeCancelled = false;
 
             // Move focus out before hiding to prevent aria-hidden warning
             if (this.menu.contains(document.activeElement)) {
@@ -330,7 +337,7 @@
 
             let done = false;
             const cleanup = () => {
-                if (done) return;
+                if (done || this._closeCancelled) return;
                 done = true;
 
                 removeState(this.dropmenu, 'open', 'opening', 'closing');

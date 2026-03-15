@@ -529,10 +529,12 @@
             container: '.nds-date-picker',
             dropdown: '.nds-date-picker-dropdown',
             toggleBtn: '.date-picker-toggle',
-            monthDropdownBtn: '.month-dropdown-btn',
-            yearDropdownBtn: '.year-dropdown-btn',
-            monthDropdownMenu: '.month-dropdown-menu',
-            yearDropdownMenu: '.year-dropdown-menu',
+            monthDropmenu: '.month-dropmenu',
+            yearDropmenu: '.year-dropmenu',
+            monthDropdownBtn: '.month-dropmenu .nds-dropmenu-trigger',
+            yearDropdownBtn: '.year-dropmenu .nds-dropmenu-trigger',
+            monthDropdownMenu: '.month-dropmenu .nds-dropmenu-scroll',
+            yearDropdownMenu: '.year-dropmenu .nds-dropmenu-scroll',
             prevBtn: '.prev-month',
             nextBtn: '.next-month',
             todayBtn: '.today-btn',
@@ -618,17 +620,21 @@
                 '<div class="calendar-header">' +
                     '<div class="calendar-title">' +
                         '<div class="month-year-selectors">' +
-                            '<div class="month-dropdown-wrapper">' +
-                                '<button class="nds-btn nds-subtle nds-menu-btn month-dropdown-btn" aria-expanded="false" aria-label="Select month">' +
+                            '<div class="nds-dropmenu month-dropmenu">' +
+                                '<button class="nds-dropmenu-trigger nds-btn nds-subtle nds-menu-btn" aria-label="Select month">' +
                                     '<span class="label"></span>' +
                                 '</button>' +
-                                '<div class="month-dropdown-menu hidden" role="menu"></div>' +
+                                '<div class="nds-dropmenu-menu">' +
+                                    '<div class="nds-dropmenu-scroll"></div>' +
+                                '</div>' +
                             '</div>' +
-                            '<div class="year-dropdown-wrapper">' +
-                                '<button class="nds-btn nds-subtle nds-menu-btn year-dropdown-btn" aria-expanded="false" aria-label="Select year">' +
+                            '<div class="nds-dropmenu year-dropmenu">' +
+                                '<button class="nds-dropmenu-trigger nds-btn nds-subtle nds-menu-btn" aria-label="Select year">' +
                                     '<span class="label"></span>' +
                                 '</button>' +
-                                '<div class="year-dropdown-menu hidden" role="menu"></div>' +
+                                '<div class="nds-dropmenu-menu">' +
+                                    '<div class="nds-dropmenu-scroll"></div>' +
+                                '</div>' +
                             '</div>' +
                         '</div>' +
                         '<div class="calendar-month-switch">' +
@@ -699,6 +705,8 @@
             // Optional elements
             var optionalSelectors = {
                 toggleBtn: UIConfig.selectors.toggleBtn,
+                monthDropmenu: UIConfig.selectors.monthDropmenu,
+                yearDropmenu: UIConfig.selectors.yearDropmenu,
                 monthDropdownBtn: UIConfig.selectors.monthDropdownBtn,
                 yearDropdownBtn: UIConfig.selectors.yearDropdownBtn,
                 monthDropdownMenu: UIConfig.selectors.monthDropdownMenu,
@@ -963,7 +971,6 @@
             if (this.elements.dropdown) {
                 this.handlers.dropdownClick = function (e) {
                     e.stopPropagation();
-                    self.closeOtherDropdowns(e);
                 };
                 this.elements.dropdown.addEventListener('click', this.handlers.dropdownClick);
             }
@@ -1096,14 +1103,22 @@
         // Cleanup on close - Clear all cache
         cleanup: function () {
             // Remove event listeners for calendar-specific elements
-            var handlers = ['monthDropdown', 'yearDropdown', 'todayBtn', 'clearBtn', 'prevBtn', 'nextBtn', 'dropdownClick'];
-            var elements = ['monthDropdownBtn', 'yearDropdownBtn', 'todayBtn', 'clearBtn', 'prevBtn', 'nextBtn', 'dropdown'];
+            var handlers = ['todayBtn', 'clearBtn', 'prevBtn', 'nextBtn', 'dropdownClick'];
+            var elements = ['todayBtn', 'clearBtn', 'prevBtn', 'nextBtn', 'dropdown'];
 
             for (var i = 0; i < handlers.length; i++) {
                 if (this.handlers[handlers[i]] && this.elements[elements[i]]) {
                     this.elements[elements[i]].removeEventListener('click', this.handlers[handlers[i]]);
                     delete this.handlers[handlers[i]];
                 }
+            }
+
+            // Close dropmenu instances — keep alive, reused on next calendar open
+            if (this.monthDropmenuInstance && this.monthDropmenuInstance.isOpen) {
+                this.monthDropmenuInstance.close();
+            }
+            if (this.yearDropmenuInstance && this.yearDropmenuInstance.isOpen) {
+                this.yearDropmenuInstance.close();
             }
 
             // Note: Keep ensureDropdownAndToggle and outsideClick handlers - they persist
@@ -1284,38 +1299,27 @@
             return CalendarConfig.hijri.gregorianToHijri(this.state.currentDate);
         },
 
-        // Bind dropdown events
+        // Bind dropdown events — initialize NDSDropmenu instances
         bindDropdownEvents: function () {
-            this.bindMonthDropdown();
-            this.bindYearDropdown();
-        },
-
-        // Bind month dropdown
-        bindMonthDropdown: function () {
-            if (!this.elements.monthDropdownBtn) return;
-
             var self = this;
-            this.handlers.monthDropdown = function (e) {
-                e.preventDefault();
-                e.stopPropagation();
-                self.toggleMonthDropdown();
-            };
 
-            this.elements.monthDropdownBtn.addEventListener('click', this.handlers.monthDropdown);
-        },
+            if (this.elements.monthDropmenu && window.NDSDropmenu && !this.monthDropmenuInstance) {
+                this.monthDropmenuInstance = window.NDSDropmenu.create(this.elements.monthDropmenu);
+                this.elements.monthDropmenu.ndsDropmenuInstance = this.monthDropmenuInstance;
+                this.elements.monthDropmenu.addEventListener('nds:dropmenu:opened', function () {
+                    self.renderMonthOptions();
+                    self.scrollToSelectedMonth();
+                });
+            }
 
-        // Bind year dropdown
-        bindYearDropdown: function () {
-            if (!this.elements.yearDropdownBtn) return;
-
-            var self = this;
-            this.handlers.yearDropdown = function (e) {
-                e.preventDefault();
-                e.stopPropagation();
-                self.toggleYearDropdown();
-            };
-
-            this.elements.yearDropdownBtn.addEventListener('click', this.handlers.yearDropdown);
+            if (this.elements.yearDropmenu && window.NDSDropmenu && !this.yearDropmenuInstance) {
+                this.yearDropmenuInstance = window.NDSDropmenu.create(this.elements.yearDropmenu);
+                this.elements.yearDropmenu.ndsDropmenuInstance = this.yearDropmenuInstance;
+                this.elements.yearDropmenu.addEventListener('nds:dropmenu:opened', function () {
+                    self.renderYearOptions();
+                    self.scrollToSelectedYear();
+                });
+            }
         },
 
         // Bind action events (today/clear/save buttons)
@@ -1346,44 +1350,6 @@
             this.elements.dropdown.classList.add('hidden');
             this.elements.formControl.classList.remove('open');
             this.cleanup();
-        },
-
-        // Toggle month dropdown
-        toggleMonthDropdown: function () {
-            var isOpen = !this.elements.monthDropdownMenu.classList.contains('hidden');
-            this.elements.monthDropdownMenu.classList.toggle('hidden');
-            this.elements.monthDropdownBtn.setAttribute('aria-expanded', !isOpen);
-            this.elements.monthDropdownBtn.classList.toggle('open', !isOpen);
-
-            // Close year dropdown
-            if (!isOpen) {
-                this.elements.yearDropdownMenu.classList.add('hidden');
-                this.elements.yearDropdownBtn.setAttribute('aria-expanded', 'false');
-                this.elements.yearDropdownBtn.classList.remove('open');
-
-                // Render month options and scroll to selected
-                this.renderMonthOptions();
-                this.scrollToSelectedMonth();
-            }
-        },
-
-        // Toggle year dropdown
-        toggleYearDropdown: function () {
-            var isOpen = !this.elements.yearDropdownMenu.classList.contains('hidden');
-            this.elements.yearDropdownMenu.classList.toggle('hidden');
-            this.elements.yearDropdownBtn.setAttribute('aria-expanded', !isOpen);
-            this.elements.yearDropdownBtn.classList.toggle('open', !isOpen);
-
-            // Close month dropdown
-            if (!isOpen) {
-                this.elements.monthDropdownMenu.classList.add('hidden');
-                this.elements.monthDropdownBtn.setAttribute('aria-expanded', 'false');
-                this.elements.monthDropdownBtn.classList.remove('open');
-
-                // Render year options and scroll to selected
-                this.renderYearOptions();
-                this.scrollToSelectedYear();
-            }
         },
 
         // Update dropdown labels
@@ -1830,11 +1796,6 @@
                     return;
                 }
 
-                if (self.isDropdownCreated && self.state.isInitialized && self.elements.dropdown && !self.elements.dropdown.classList.contains('hidden')) {
-                    // Close dropdowns when clicking inside calendar but outside dropdowns
-                    self.closeDropdownsIfClickedOutside(clickTarget);
-                }
-
                 // Close entire calendar if clicked outside container
                 if (self.isDropdownCreated && !self.elements.container.contains(clickTarget)) {
                     if (self.elements.dropdown) {
@@ -1844,40 +1805,6 @@
                     self.cleanup();
                 }
             }, 0);
-        },
-
-        closeOtherDropdowns: function (e) {
-            this.closeDropdownsIfClickedOutside(e.target);
-        },
-
-        closeDropdownsIfClickedOutside: function (clickedElement) {
-            // Close month dropdown if clicked outside it
-            if (this.elements.monthDropdownMenu && !this.elements.monthDropdownMenu.classList.contains('hidden')) {
-                var inMonthArea = this.elements.monthDropdownBtn && (
-                    this.elements.monthDropdownBtn.contains(clickedElement) ||
-                    this.elements.monthDropdownMenu.contains(clickedElement)
-                );
-
-                if (!inMonthArea) {
-                    this.elements.monthDropdownMenu.classList.add('hidden');
-                    this.elements.monthDropdownBtn.setAttribute('aria-expanded', 'false');
-                    this.elements.monthDropdownBtn.classList.remove('open');
-                }
-            }
-
-            // Close year dropdown if clicked outside it
-            if (this.elements.yearDropdownMenu && !this.elements.yearDropdownMenu.classList.contains('hidden')) {
-                var inYearArea = this.elements.yearDropdownBtn && (
-                    this.elements.yearDropdownBtn.contains(clickedElement) ||
-                    this.elements.yearDropdownMenu.contains(clickedElement)
-                );
-
-                if (!inYearArea) {
-                    this.elements.yearDropdownMenu.classList.add('hidden');
-                    this.elements.yearDropdownBtn.setAttribute('aria-expanded', 'false');
-                    this.elements.yearDropdownBtn.classList.remove('open');
-                }
-            }
         },
 
         // Dropdown rendering methods
@@ -1893,15 +1820,15 @@
 
             monthNames.forEach(function (monthName, index) {
                 var btn = document.createElement('button');
-                btn.className = 'nds-btn nds-subtle month-option';
+                btn.className = 'nds-btn nds-subtle nds-dropmenu-item month-option';
                 btn.setAttribute('role', 'menuitem');
                 btn.setAttribute('data-value', index);
                 btn.innerHTML = '<span class="label">' + monthName + '</span>';
 
-                var isSelected = self.state.calendarType === 'hijri' ? 
+                var isSelected = self.state.calendarType === 'hijri' ?
                     (index + 1) === self.getCurrentMonth() : // For Hijri: compare (0-based index + 1) with 1-based month
                     index === self.getCurrentMonth();        // For Gregorian: compare 0-based with 0-based
-                
+
                 if (isSelected) {
                     btn.classList.add('selected');
                 }
@@ -1909,20 +1836,15 @@
                 btn.addEventListener('click', function (e) {
                     e.preventDefault();
                     var monthValue = parseInt(this.dataset.value);
-                    
+
                     if (self.state.calendarType === 'hijri') {
                         self.setHijriMonth(monthValue + 1); // Convert 0-based dropdown index to 1-based Hijri month
                     } else {
                         self.state.currentDate.setMonth(monthValue);
                     }
-                    
+
                     self.updateDropdowns();
                     self.renderCalendarDates();
-
-                    // Close dropdown
-                    self.elements.monthDropdownMenu.classList.add('hidden');
-                    self.elements.monthDropdownBtn.setAttribute('aria-expanded', 'false');
-                    self.elements.monthDropdownBtn.classList.remove('open');
                 });
 
                 self.elements.monthDropdownMenu.appendChild(btn);
@@ -1965,7 +1887,7 @@
 
             for (var year = startYear; year <= endYear; year++) {
                 var btn = document.createElement('button');
-                btn.className = 'nds-btn nds-subtle year-option';
+                btn.className = 'nds-btn nds-subtle nds-dropmenu-item year-option';
                 btn.setAttribute('role', 'menuitem');
                 btn.setAttribute('data-value', year);
                 btn.innerHTML = '<span class="label">' + year + '</span>';
@@ -1977,20 +1899,15 @@
                 btn.addEventListener('click', function (e) {
                     e.preventDefault();
                     var yearValue = parseInt(this.dataset.value);
-                    
+
                     if (self.state.calendarType === 'hijri') {
                         self.setHijriYear(yearValue);
                     } else {
                         self.state.currentDate.setFullYear(yearValue);
                     }
-                    
+
                     self.updateDropdowns();
                     self.renderCalendarDates();
-
-                    // Close dropdown
-                    self.elements.yearDropdownMenu.classList.add('hidden');
-                    self.elements.yearDropdownBtn.setAttribute('aria-expanded', 'false');
-                    self.elements.yearDropdownBtn.classList.remove('open');
                 });
 
                 self.elements.yearDropdownMenu.appendChild(btn);
@@ -2077,13 +1994,11 @@
 
         // Reset button states
         resetButtonStates: function () {
-            if (this.elements.monthDropdownBtn) {
-                this.elements.monthDropdownBtn.classList.remove('open');
-                this.elements.monthDropdownBtn.setAttribute('aria-expanded', 'false');
+            if (this.monthDropmenuInstance && this.monthDropmenuInstance.isOpen) {
+                this.monthDropmenuInstance.close();
             }
-            if (this.elements.yearDropdownBtn) {
-                this.elements.yearDropdownBtn.classList.remove('open');
-                this.elements.yearDropdownBtn.setAttribute('aria-expanded', 'false');
+            if (this.yearDropmenuInstance && this.yearDropmenuInstance.isOpen) {
+                this.yearDropmenuInstance.close();
             }
         },
 
