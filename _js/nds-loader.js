@@ -91,9 +91,9 @@
             init: () => window.NDSShare?.init?.(),
         },
         {
-            name: 'calendar',
+            name: 'datePicker',
             selector: '.nds-date-input',
-            init: () => window.NDSCalendar?.init?.(),
+            init: () => window.NDSDatePicker?.init?.(),
         },
         {
             name: 'cityWeather',
