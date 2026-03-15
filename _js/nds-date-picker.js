@@ -51,21 +51,23 @@
     }
 
     /**
-     * Normalizes Hijri date from various sources (getHijriDate, Intl, etc.)
-     * @param {Object} hijriObj - Hijri date object from any source
-     * @returns {Object|null} Normalized Hijri date object or null if invalid
+     * Clones a Date and preserves any attached Hijri metadata
      */
-    function normalizeHijriDate(hijriObj) {
-        if (!hijriObj) return null;
-
-        var day = hijriObj.day || hijriObj.d || hijriObj.hDay;
-        var month = hijriObj.month || hijriObj.m || hijriObj.hMonth;
-        var year = hijriObj.year || hijriObj.y || hijriObj.hYear;
-
-        return createHijriDate(day, month, year);
+    function copyDateWithHijri(date) {
+        var copy = new Date(date);
+        if (date._hijriDay) {
+            copy._hijriDay = date._hijriDay;
+            copy._hijriMonth = date._hijriMonth;
+            copy._hijriYear = date._hijriYear;
+        }
+        return copy;
     }
 
-
+    // Shared across both calendar systems
+    var WEEKDAY_NAMES = {
+        ar: ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'],
+        en: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+    };
 
     // Calendar System Configuration
     var CalendarConfig = {
@@ -75,10 +77,7 @@
                 ar: ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'],
                 en: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
             },
-            weekdayNames: {
-                ar: ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'],
-                en: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-            },
+            weekdayNames: WEEKDAY_NAMES,
             formatDate: function (date) {
                 var day = String(date.getDate()).padStart(2, '0');
                 var month = String(date.getMonth() + 1).padStart(2, '0');
@@ -115,12 +114,6 @@
                     startOffset: startOfWeek
                 };
             },
-            getToday: function () {
-                return getSaudiDateObject();
-            },
-            isSameDate: function (date1, date2) {
-                return date1.getTime() === date2.getTime();
-            }
         },
 
         // Hijri calendar implementation
@@ -130,11 +123,7 @@
                 ar: ['محرم', 'صفر', 'ربيع الأول', 'ربيع الثاني', 'جمادى الأولى', 'جمادى الآخرة', 'رجب', 'شعبان', 'رمضان', 'شوال', 'ذو القعدة', 'ذو الحجة'],
                 en: ['Muharram', 'Safar', 'Rabi al-Awwal', 'Rabi al-Thani', 'Jumada al-Ula', 'Jumada al-Akhirah', 'Rajab', 'Shaban', 'Ramadan', 'Shawwal', 'Dhu al-Qadah', 'Dhu al-Hijjah']
             },
-            // Weekdays are same for both calendars
-            weekdayNames: {
-                ar: ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'],
-                en: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-            },
+            weekdayNames: WEEKDAY_NAMES,
 
             formatDate: function (date) {
                 var hijriDate;
@@ -219,17 +208,11 @@
 
                 // Mathematical fallback using Julian Day method
                 try {
-                    return this.gregorianToHijriMath(gDate);
+                    return this.julianToHijri(this.gregorianToJulian(gDate));
                 } catch (e) {
                     console.error('All Hijri conversion methods failed:', e.message);
                     throw new Error('Unable to convert Gregorian date to Hijri');
                 }
-            },
-
-            gregorianToHijriMath: function (gDate) {
-                // Simplified mathematical conversion (approximate)
-                var jd = this.gregorianToJulian(gDate);
-                return this.julianToHijri(jd);
             },
 
             /**
@@ -370,8 +353,6 @@
                 return Math.round(totalDays);
             },
 
-
-
             addDaysToHijriDate: function(hijriDate, days) {
                 if (days === 0) return hijriDate;
                 
@@ -508,14 +489,6 @@
 
                 return gregorianDate;
             },
-            getToday: function () {
-                // Don't call getHijriDate here - just return a regular Date
-                // The calendar instance will handle Hijri conversion as needed
-                return getSaudiDateObject();
-            },
-            isSameDate: function (date1, date2) {
-                return date1.getTime() === date2.getTime();
-            }
         }
     };
 
@@ -770,7 +743,6 @@
             return 'gregorian';
         },
 
-
         detectCalendarTypeFromValue: function (inputValue) {
             // Handle range format
             if (inputValue.includes(' - ')) {
@@ -789,7 +761,6 @@
             var parts = dateString.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
             if (!parts) return null;
 
-            var day = parseInt(parts[1], 10);
             var month = parseInt(parts[2], 10);
             var year = parseInt(parts[3], 10);
 
@@ -830,10 +801,7 @@
         },
 
         getCurrentCalendar: function () {
-            var calendar = CalendarConfig[this.state.calendarType];
-            
-            
-            return calendar;
+            return CalendarConfig[this.state.calendarType];
         },
 
         isRangeMode: function () {
@@ -857,7 +825,7 @@
             return this.state.currentDate.getFullYear();
         },
 
-        getDisplayDayNumber: function (date, type) {
+        getDisplayDayNumber: function (date) {
             if (this.state.calendarType === 'hijri' && date._hijriDay) {
                 return date._hijriDay;
             }
@@ -918,43 +886,6 @@
             }
 
             return this._cachedTodaysHijriDate;
-        },
-
-        attachHijriData: function (date) {
-            // Only attach for Hijri calendars
-            if (this.state.calendarType === 'hijri') {
-                // Skip if already has Hijri data
-                if (date._hijriDay && date._hijriMonth && date._hijriYear) {
-                    return;
-                }
-                
-                var calendar = this.getCurrentCalendar();
-                try {
-                    // Use browser's built-in Islamic calendar conversion first
-                    var hijriString = new Intl.DateTimeFormat('en-US-u-ca-islamic', {
-                        day: 'numeric', 
-                        month: 'numeric', 
-                        year: 'numeric'
-                    }).format(date);
-                    
-                    // Parse the result (e.g., "9/15/1446" -> month/day/year)
-                    var parts = hijriString.split('/');
-                    if (parts.length === 3) {
-                        date._hijriMonth = parseInt(parts[0], 10);
-                        date._hijriDay = parseInt(parts[1], 10);
-                        date._hijriYear = parseInt(parts[2], 10);
-                        return;
-                    }
-                } catch (e) {
-                    // Continue with mathematical conversion
-                }
-                
-                // Fallback to mathematical conversion
-                var hijriDate = CalendarConfig.hijri.gregorianToHijri(date);
-                date._hijriDay = hijriDate.day;
-                date._hijriMonth = hijriDate.month;
-                date._hijriYear = hijriDate.year;
-            }
         },
 
         // Calendar lifecycle
@@ -1046,19 +977,6 @@
             });
         },
 
-        initializeHijriCalendar: function () {
-            var self = this;
-            getHijriDate(false, true).then(function(hijriData) {
-                self.storeAccurateHijriData(hijriData);
-                if (self.state.selectedDate || self.state.rangeStart) {
-                    self.updateInput();
-                }
-                self.render();
-            }).catch(function() {
-                self.render();
-            });
-        },
-
         fetchAccurateHijriReference: function () {
             var self = this;
             getHijriDate(false, true).then(function(hijriData) {
@@ -1091,10 +1009,9 @@
             this.render();
         },
 
-
         // Main render method
         render: function () {
-            this.renderDropdowns();
+            this.updateDropdowns();
             this.renderWeekdays();
             this.renderButtonLabels();
             this.renderCalendarDates();
@@ -1228,58 +1145,28 @@
             }
         },
 
-        // Navigation for both calendar types
+        // Navigate month (unified for Gregorian and Hijri)
         navigateMonth: function (direction) {
             if (this.state.calendarType === 'hijri') {
-                this.navigateHijriMonth(direction);
+                var hijri = this.getCurrentHijriDate();
+                hijri.month += direction;
+                if (hijri.month < 1) { hijri.month = 12; hijri.year--; }
+                else if (hijri.month > 12) { hijri.month = 1; hijri.year++; }
+
+                var calendar = this.getCurrentCalendar();
+                var newDate = calendar.hijriToGregorian(hijri.year, hijri.month, 1);
+                newDate._hijriDay = 1;
+                newDate._hijriMonth = hijri.month;
+                newDate._hijriYear = hijri.year;
+                this.state.currentDate = newDate;
             } else {
-                this.navigateGregorianMonth(direction);
+                var month = this.state.currentDate.getMonth() + direction;
+                var year = this.state.currentDate.getFullYear();
+                if (month < 0) { month = 11; year--; }
+                else if (month > 11) { month = 0; year++; }
+                this.state.currentDate.setFullYear(year);
+                this.state.currentDate.setMonth(month);
             }
-        },
-
-        navigateGregorianMonth: function (direction) {
-            var year = this.state.currentDate.getFullYear();
-            var month = this.state.currentDate.getMonth();
-
-            // Calculate new month and year
-            month += direction;
-            if (month < 0) {
-                month = 11;
-                year--;
-            } else if (month > 11) {
-                month = 0;
-                year++;
-            }
-
-            // Keep the same day, just change month/year - let Date constructor handle invalid dates
-            this.state.currentDate.setFullYear(year);
-            this.state.currentDate.setMonth(month);
-
-            this.updateDropdowns();
-            this.renderCalendarDates();
-        },
-
-        navigateHijriMonth: function (direction) {
-            // Get current Hijri date or convert from Gregorian
-            var currentHijriDate = this.getCurrentHijriDate();
-            
-            currentHijriDate.month += direction;
-            if (currentHijriDate.month < 1) {
-                currentHijriDate.month = 12;
-                currentHijriDate.year--;
-            } else if (currentHijriDate.month > 12) {
-                currentHijriDate.month = 1;
-                currentHijriDate.year++;
-            }
-
-            // Convert back to Gregorian for internal storage
-            var calendar = this.getCurrentCalendar();
-            var newGregorianDate = calendar.hijriToGregorian(currentHijriDate.year, currentHijriDate.month, 1);
-            newGregorianDate._hijriDay = 1;
-            newGregorianDate._hijriMonth = currentHijriDate.month;
-            newGregorianDate._hijriYear = currentHijriDate.year;
-            
-            this.state.currentDate = newGregorianDate;
 
             this.updateDropdowns();
             this.renderCalendarDates();
@@ -1308,7 +1195,7 @@
                 this.elements.monthDropmenu.ndsDropmenuInstance = this.monthDropmenuInstance;
                 this.elements.monthDropmenu.addEventListener('nds:dropmenu:opened', function () {
                     self.renderMonthOptions();
-                    self.scrollToSelectedMonth();
+                    self.scrollToSelected(self.elements.monthDropdownMenu, '.month-option.selected');
                 });
             }
 
@@ -1317,7 +1204,7 @@
                 this.elements.yearDropmenu.ndsDropmenuInstance = this.yearDropmenuInstance;
                 this.elements.yearDropmenu.addEventListener('nds:dropmenu:opened', function () {
                     self.renderYearOptions();
-                    self.scrollToSelectedYear();
+                    self.scrollToSelected(self.elements.yearDropdownMenu, '.year-option.selected');
                 });
             }
         },
@@ -1345,11 +1232,11 @@
             }
         },
 
-        // Save and close calendar
+        // Save and close calendar (reuse close path from toggleDropdown)
         saveAndClose: function () {
-            this.elements.dropdown.classList.add('hidden');
-            this.elements.formControl.classList.remove('open');
-            this.cleanup();
+            if (!this.elements.dropdown.classList.contains('hidden')) {
+                this.toggleDropdown();
+            }
         },
 
         // Update dropdown labels
@@ -1372,10 +1259,6 @@
         },
 
         // Render methods
-        renderDropdowns: function () {
-            this.updateDropdowns();
-        },
-
         renderWeekdays: function () {
             var weekdaysContainer = this.elements.dropdown.querySelector('.calendar-weekdays');
             if (!weekdaysContainer) return;
@@ -1395,27 +1278,12 @@
         },
 
         renderButtonLabels: function () {
-            var lang = this.getLanguage();
-            var labels = UIConfig.buttonLabels[lang];
-
-            if (this.elements.todayBtn) {
-                var todayLabelElement = this.elements.todayBtn.querySelector('.label');
-                if (todayLabelElement) {
-                    todayLabelElement.textContent = labels.today;
-                }
-            }
-
-            if (this.elements.clearBtn) {
-                var clearLabelElement = this.elements.clearBtn.querySelector('.label');
-                if (clearLabelElement) {
-                    clearLabelElement.textContent = labels.clear;
-                }
-            }
-
-            if (this.elements.saveBtn) {
-                var saveLabelElement = this.elements.saveBtn.querySelector('.label');
-                if (saveLabelElement) {
-                    saveLabelElement.textContent = labels.save;
+            var labels = UIConfig.buttonLabels[this.getLanguage()];
+            var map = { todayBtn: labels.today, clearBtn: labels.clear, saveBtn: labels.save };
+            for (var key in map) {
+                if (this.elements[key]) {
+                    var el = this.elements[key].querySelector('.label');
+                    if (el) el.textContent = map[key];
                 }
             }
         },
@@ -1434,87 +1302,52 @@
             this.generateCalendarDates(calendarData);
         },
 
-        // Calendar date generation
+        // Calendar date generation (unified for Gregorian and Hijri)
         generateCalendarDates: function (calendarData) {
-            if (this.state.calendarType === 'hijri') {
-                this.generateHijriCalendarDates(calendarData);
+            var isHijri = this.state.calendarType === 'hijri';
+            var calendar = isHijri ? this.getCurrentCalendar() : null;
+
+            // Date factory: creates a date with Hijri metadata if needed
+            function makeDate(year, month, day) {
+                if (isHijri) {
+                    var d = calendar.hijriToGregorian(year, month, day);
+                    d._hijriDay = day;
+                    d._hijriMonth = month;
+                    d._hijriYear = year;
+                    return d;
+                }
+                return new Date(year, month, day);
+            }
+
+            // Previous month trailing dates
+            var prevMonth, prevYear;
+            if (isHijri) {
+                prevMonth = calendarData.month - 1;
+                prevYear = calendarData.year;
+                if (prevMonth < 1) { prevMonth = 12; prevYear--; }
+                var daysInPrev = calendar.getDaysInHijriMonth(prevYear, prevMonth);
+                for (var i = 0; i < calendarData.startOffset; i++) {
+                    this.createDateCell(makeDate(prevYear, prevMonth, daysInPrev - (calendarData.startOffset - i - 1)), 'other-month');
+                }
             } else {
-                this.generateGregorianCalendarDates(calendarData);
-            }
-        },
-
-        generateGregorianCalendarDates: function (calendarData) {
-            // Previous month's trailing dates
-            for (var i = 0; i < calendarData.startOffset; i++) {
-                var prevDate = new Date(calendarData.year, calendarData.month, 0 - (calendarData.startOffset - i - 1));
-                this.createDateCell(prevDate, 'other-month');
+                for (var i = 0; i < calendarData.startOffset; i++) {
+                    this.createDateCell(new Date(calendarData.year, calendarData.month, 0 - (calendarData.startOffset - i - 1)), 'other-month');
+                }
             }
 
             // Current month dates
             for (var day = 1; day <= calendarData.daysInMonth; day++) {
-                var currentDate = new Date(calendarData.year, calendarData.month, day);
-                this.createDateCell(currentDate, 'current-month');
+                this.createDateCell(makeDate(calendarData.year, calendarData.month, day), 'current-month');
             }
 
-            // Fill remaining cells
-            var totalCells = 42; // 6 weeks * 7 days
+            // Fill remaining cells to 42
             var usedCells = calendarData.startOffset + calendarData.daysInMonth;
+            var nextMonth = isHijri ? calendarData.month + 1 : calendarData.month + 1;
+            var nextYear = calendarData.year;
+            if (isHijri && nextMonth > 12) { nextMonth = 1; nextYear++; }
 
-            for (var j = 1; usedCells < totalCells; j++, usedCells++) {
-                var nextDate = new Date(calendarData.year, calendarData.month + 1, j);
-                this.createDateCell(nextDate, 'other-month');
-            }
-        },
-
-        generateHijriCalendarDates: function (calendarData) {
-            var calendar = this.getCurrentCalendar();
-            
-            // Generate previous month dates
-            var prevHijriMonth = calendarData.month - 1;
-            var prevHijriYear = calendarData.year;
-            if (prevHijriMonth < 1) {
-                prevHijriMonth = 12;
-                prevHijriYear--;
-            }
-            var daysInPrevMonth = calendar.getDaysInHijriMonth(prevHijriYear, prevHijriMonth);
-
-            for (var i = 0; i < calendarData.startOffset; i++) {
-                var day = daysInPrevMonth - (calendarData.startOffset - i - 1);
-                var prevDate = calendar.hijriToGregorian(prevHijriYear, prevHijriMonth, day);
-                // Ensure Hijri metadata is properly attached
-                prevDate._hijriDay = day;
-                prevDate._hijriMonth = prevHijriMonth;
-                prevDate._hijriYear = prevHijriYear;
-                this.createDateCell(prevDate, 'other-month');
-            }
-
-            // Current month dates
-            for (var day = 1; day <= calendarData.daysInMonth; day++) {
-                var currentDate = calendar.hijriToGregorian(calendarData.year, calendarData.month, day);
-                // Ensure Hijri metadata is properly attached
-                currentDate._hijriDay = day;
-                currentDate._hijriMonth = calendarData.month;
-                currentDate._hijriYear = calendarData.year;
-                this.createDateCell(currentDate, 'current-month');
-            }
-
-            // Fill remaining cells with next month
-            var totalCells = 42; // 6 weeks * 7 days
-            var usedCells = calendarData.startOffset + calendarData.daysInMonth;
-            var nextHijriMonth = calendarData.month + 1;
-            var nextHijriYear = calendarData.year;
-            if (nextHijriMonth > 12) {
-                nextHijriMonth = 1;
-                nextHijriYear++;
-            }
-
-            for (var j = 1; usedCells < totalCells; j++, usedCells++) {
-                var nextDate = calendar.hijriToGregorian(nextHijriYear, nextHijriMonth, j);
-                // Ensure Hijri metadata is properly attached
-                nextDate._hijriDay = j;
-                nextDate._hijriMonth = nextHijriMonth;
-                nextDate._hijriYear = nextHijriYear;
-                this.createDateCell(nextDate, 'other-month');
+            for (var j = 1; usedCells < 42; j++, usedCells++) {
+                this.createDateCell(makeDate(nextYear, nextMonth, j), 'other-month');
             }
         },
 
@@ -1525,11 +1358,8 @@
             btn.className = 'nds-btn nds-subtle date-cell';
             btn.type = 'button';
 
-            // Hijri data should already be attached by the calendar generation method
-            // Don't call attachHijriData here as it might override existing data
-
             // Use helper method for day number display
-            btn.innerHTML = '<span class="label">' + this.getDisplayDayNumber(date, type) + '</span>';
+            btn.innerHTML = '<span class="label">' + this.getDisplayDayNumber(date) + '</span>';
 
             // Add appropriate classes
             if (type === 'other-month') {
@@ -1628,14 +1458,7 @@
             if (this.isRangeMode()) {
                 this.handleRangeSelection(date);
             } else {
-                var selectedDate = new Date(date);
-                // Preserve Hijri metadata if present
-                if (date._hijriDay) {
-                    selectedDate._hijriDay = date._hijriDay;
-                    selectedDate._hijriMonth = date._hijriMonth;
-                    selectedDate._hijriYear = date._hijriYear;
-                }
-                this.state.selectedDate = selectedDate;
+                this.state.selectedDate = copyDateWithHijri(date);
             }
 
             this.updateInput();
@@ -1656,14 +1479,7 @@
             if (this.isRangeMode()) {
                 this.handleRangeSelection(today);
             } else {
-                var selectedDate = new Date(today);
-                // Preserve Hijri metadata if present
-                if (today._hijriDay) {
-                    selectedDate._hijriDay = today._hijriDay;
-                    selectedDate._hijriMonth = today._hijriMonth;
-                    selectedDate._hijriYear = today._hijriYear;
-                }
-                this.state.selectedDate = selectedDate;
+                this.state.selectedDate = copyDateWithHijri(today);
             }
 
             // Navigate to today's month for Hijri calendar
@@ -1694,28 +1510,18 @@
 
         // Range selection logic
         handleRangeSelection: function (clickedDate) {
-            function copyDateWithHijriData(sourceDate) {
-                var newDate = new Date(sourceDate);
-                if (sourceDate._hijriDay) {
-                    newDate._hijriDay = sourceDate._hijriDay;
-                    newDate._hijriMonth = sourceDate._hijriMonth;
-                    newDate._hijriYear = sourceDate._hijriYear;
-                }
-                return newDate;
-            }
-            
             if (!this.state.rangeStart || (this.state.rangeStart && this.state.rangeEnd)) {
-                this.state.rangeStart = copyDateWithHijriData(clickedDate);
+                this.state.rangeStart = copyDateWithHijri(clickedDate);
                 this.state.rangeEnd = null;
-                this.state.selectedDate = copyDateWithHijriData(clickedDate);
+                this.state.selectedDate = copyDateWithHijri(clickedDate);
             } else if (this.state.rangeStart && !this.state.rangeEnd) {
                 if (clickedDate >= this.state.rangeStart) {
-                    this.state.rangeEnd = copyDateWithHijriData(clickedDate);
+                    this.state.rangeEnd = copyDateWithHijri(clickedDate);
                 } else {
-                    this.state.rangeEnd = copyDateWithHijriData(this.state.rangeStart);
-                    this.state.rangeStart = copyDateWithHijriData(clickedDate);
+                    this.state.rangeEnd = copyDateWithHijri(this.state.rangeStart);
+                    this.state.rangeStart = copyDateWithHijri(clickedDate);
                 }
-                this.state.selectedDate = copyDateWithHijriData(this.state.rangeEnd);
+                this.state.selectedDate = copyDateWithHijri(this.state.rangeEnd);
             }
         },
 
@@ -1747,33 +1553,24 @@
             }
         },
 
-
-        // Get converted date for input dataset
+        // Get converted date for input dataset (opposite calendar format)
         getConvertedDate: function (date) {
             if (!date) return '';
 
             if (this.state.calendarType === 'hijri') {
-                // Convert Hijri to Gregorian
                 if (date._hijriDay && date._hijriMonth && date._hijriYear &&
                     window._accurateTodaysHijriDate && window._accurateTodaysGregorianDate) {
-                    // Use accurate reference conversion
                     var accurateGregorian = CalendarConfig.hijri.convertUsingReference(
                         date._hijriYear, date._hijriMonth, date._hijriDay,
                         window._accurateTodaysHijriDate, window._accurateTodaysGregorianDate
                     );
                     return CalendarConfig.gregorian.formatDate(accurateGregorian);
                 }
-                // Fallback to stored Gregorian date
                 return CalendarConfig.gregorian.formatDate(date);
-            } else {
-                // Convert Gregorian to Hijri
-                var hijriData = CalendarConfig.hijri.gregorianToHijri(date);
-                var tempDate = new Date(date);
-                tempDate._hijriDay = hijriData.day;
-                tempDate._hijriMonth = hijriData.month;
-                tempDate._hijriYear = hijriData.year;
-                return CalendarConfig.hijri.formatDate(tempDate);
             }
+
+            // Gregorian → Hijri: formatDate handles conversion internally
+            return CalendarConfig.hijri.formatDate(date);
         },
 
         // Utility methods
@@ -1782,7 +1579,6 @@
                 date1.getMonth() === date2.getMonth() &&
                 date1.getFullYear() === date2.getFullYear();
         },
-
 
         // Handle outside clicks
         handleOutsideClick: function (e) {
@@ -1838,7 +1634,7 @@
                     var monthValue = parseInt(this.dataset.value);
 
                     if (self.state.calendarType === 'hijri') {
-                        self.setHijriMonth(monthValue + 1); // Convert 0-based dropdown index to 1-based Hijri month
+                        self.setHijriDatePart('month', monthValue + 1); // Convert 0-based dropdown index to 1-based Hijri month
                     } else {
                         self.state.currentDate.setMonth(monthValue);
                     }
@@ -1901,7 +1697,7 @@
                     var yearValue = parseInt(this.dataset.value);
 
                     if (self.state.calendarType === 'hijri') {
-                        self.setHijriYear(yearValue);
+                        self.setHijriDatePart('year', yearValue);
                     } else {
                         self.state.currentDate.setFullYear(yearValue);
                     }
@@ -1915,55 +1711,27 @@
         },
 
         // Helper methods for Hijri date manipulation
-        setHijriMonth: function (hijriMonth) {
+        setHijriDatePart: function (property, value) {
             var currentHijriDate = this.getCurrentHijriDate();
-            currentHijriDate.month = hijriMonth;
-            
-            var calendar = this.getCurrentCalendar();
-            var newGregorianDate = calendar.hijriToGregorian(currentHijriDate.year, currentHijriDate.month, currentHijriDate.day);
-            newGregorianDate._hijriDay = currentHijriDate.day;
-            newGregorianDate._hijriMonth = currentHijriDate.month;
-            newGregorianDate._hijriYear = currentHijriDate.year;
-            
-            this.state.currentDate = newGregorianDate;
-        },
+            currentHijriDate[property] = value;
 
-        setHijriYear: function (hijriYear) {
-            var currentHijriDate = this.getCurrentHijriDate();
-            currentHijriDate.year = hijriYear;
-            
             var calendar = this.getCurrentCalendar();
-            var newGregorianDate = calendar.hijriToGregorian(currentHijriDate.year, currentHijriDate.month, currentHijriDate.day);
-            newGregorianDate._hijriDay = currentHijriDate.day;
-            newGregorianDate._hijriMonth = currentHijriDate.month;
-            newGregorianDate._hijriYear = currentHijriDate.year;
-            
-            this.state.currentDate = newGregorianDate;
+            var newDate = calendar.hijriToGregorian(currentHijriDate.year, currentHijriDate.month, currentHijriDate.day);
+            newDate._hijriDay = currentHijriDate.day;
+            newDate._hijriMonth = currentHijriDate.month;
+            newDate._hijriYear = currentHijriDate.year;
+
+            this.state.currentDate = newDate;
         },
 
         // Scroll to selected options
-        scrollToSelectedMonth: function () {
-            var self = this;
+        scrollToSelected: function (container, selector) {
             setTimeout(function () {
-                var selectedOption = self.elements.monthDropdownMenu.querySelector('.month-option.selected');
-                if (selectedOption) {
-                    var dropdownRect = self.elements.monthDropdownMenu.getBoundingClientRect();
-                    var optionRect = selectedOption.getBoundingClientRect();
-                    var scrollTop = optionRect.top - dropdownRect.top + self.elements.monthDropdownMenu.scrollTop - (dropdownRect.height / 2) + (optionRect.height / 2);
-                    self.elements.monthDropdownMenu.scrollTop = Math.max(0, scrollTop);
-                }
-            }, 10);
-        },
-
-        scrollToSelectedYear: function () {
-            var self = this;
-            setTimeout(function () {
-                var selectedOption = self.elements.yearDropdownMenu.querySelector('.year-option.selected');
-                if (selectedOption) {
-                    var dropdownRect = self.elements.yearDropdownMenu.getBoundingClientRect();
-                    var optionRect = selectedOption.getBoundingClientRect();
-                    var scrollTop = optionRect.top - dropdownRect.top + self.elements.yearDropdownMenu.scrollTop - (dropdownRect.height / 2) + (optionRect.height / 2);
-                    self.elements.yearDropdownMenu.scrollTop = Math.max(0, scrollTop);
+                var selected = container.querySelector(selector);
+                if (selected) {
+                    var cr = container.getBoundingClientRect();
+                    var sr = selected.getBoundingClientRect();
+                    container.scrollTop = Math.max(0, sr.top - cr.top + container.scrollTop - (cr.height / 2) + (sr.height / 2));
                 }
             }, 10);
         },
@@ -1991,7 +1759,6 @@
             this.observers.push(languageObserver);
         },
 
-
         // Reset button states
         resetButtonStates: function () {
             if (this.monthDropmenuInstance && this.monthDropmenuInstance.isOpen) {
@@ -2001,7 +1768,6 @@
                 this.yearDropmenuInstance.close();
             }
         },
-
 
         // Reset state
         resetState: function () {
@@ -2035,20 +1801,17 @@
         }
     };
 
-    function initializeCalendar() {
-        // Any global calendar setup that needs to be deferred
-        // Currently, calendar instances handle their own initialization
-    }
+    // No-op: calendar instances are created by nds-forms.js on each .nds-date-input
+    function initializeCalendar() {}
 
     // CRITICAL: Expose global API immediately (called by unified init system)
     if (typeof window !== 'undefined') {
         window.DatePickerCalendar = DatePickerCalendar;
-        window.NDSCalendar = {
+        window.NDSDatePicker = {
             DatePickerCalendar,
             CalendarConfig,
             UIConfig,
             createHijriDate,
-            normalizeHijriDate,
             init: initializeCalendar
         };
     }
