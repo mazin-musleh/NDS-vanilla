@@ -10,14 +10,35 @@
         return root.getAttribute('data-theme') || 'light';
     }
 
-    function setTheme(theme) {
+    function applyTheme(theme) {
         root.setAttribute('data-theme', theme);
         localStorage.setItem(STORAGE_KEY, theme);
         updateToggles(theme);
     }
 
-    function toggle() {
-        setTheme(getTheme() === 'dark' ? 'light' : 'dark');
+    function setTheme(theme, el) {
+        if (!document.startViewTransition) return applyTheme(theme);
+
+        // Get origin point from toggle element center or screen center
+        let x = innerWidth / 2, y = innerHeight / 2;
+        if (el) {
+            const r = el.getBoundingClientRect();
+            x = r.left + r.width / 2;
+            y = r.top + r.height / 2;
+        }
+        const radius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+
+        const t = document.startViewTransition(() => applyTheme(theme));
+        t.ready.then(() => {
+            root.animate(
+                { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
+                { duration: 500, easing: 'ease-in-out', pseudoElement: '::view-transition-new(root)' }
+            );
+        });
+    }
+
+    function toggle(el) {
+        setTheme(getTheme() === 'dark' ? 'light' : 'dark', el);
     }
 
     function updateToggles(theme) {
@@ -46,9 +67,9 @@
         // If it's a switch with a checkbox, the checkbox already toggled — read its state
         const cb = el.querySelector('.nds-switch-input');
         if (cb) {
-            setTheme(cb.checked ? 'dark' : 'light');
+            setTheme(cb.checked ? 'dark' : 'light', el);
         } else {
-            toggle();
+            toggle(el);
         }
     });
 

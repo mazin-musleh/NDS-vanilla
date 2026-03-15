@@ -37,6 +37,8 @@
     --nds-text-xs-LH: 18px;
 
     // Additional color tokens
+    --text-white: var(--colors-base-white);
+    --text-black: var(--colors-base-black);
     --colors-primary-sa-flag-600: #1b8354;
     --colors-secondary-gold-600: #dba102;
     --colors-secondary-gold-primary: var(--colors-secondary-gold-600);
