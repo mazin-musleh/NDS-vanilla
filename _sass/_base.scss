@@ -19,7 +19,7 @@
    ======================================== */
 
 :root {
-    scrollbar-color: var(--colors-neutral-500) transparent;
+    scrollbar-color: var(--colors-neutral-400) transparent;
 
     @include dark {
         scrollbar-color: var(--colors-neutral-800) transparent;

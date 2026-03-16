@@ -170,6 +170,13 @@
     --background-neutral-light: var(--colors-neutral-100);
     --background-card-hovered: var(--colors-neutral-50);
 
+    // NDS overrides (DGA source values adjusted for NDS)
+    /* --button-background-neutral-hovered: var(--colors-neutral-200);
+    --button-background-neutral-focused: var(--colors-neutral-200);
+    --controls-control-primary-pressed: var(--colors-primary-sa-flag-900);
+    --controls-control-neutral-pressed: var(--colors-neutral-700);
+    --controls-control-ripple-effect: var(--colors-neutral-100); */
+
     // Checkbox-specific (defaults to shared controls tokens)
     --checkbox-primary-hovered: var(--controls-control-primary-hovered);
     --checkbox-primary-pressed: var(--controls-control-primary-pressed);
