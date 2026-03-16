@@ -310,7 +310,9 @@
 
             if (this.el.overlay) {
                 this.el.overlay.classList.add('nds-ipv-active');
-                document.body.style.overflow = 'hidden';
+                if (window.NDSBackdrop) {
+                    window.NDSBackdrop.show({ zIndex: 999, clickToClose: false, escapeClose: false });
+                }
             }
 
             // Update current index if not navigating
@@ -330,7 +332,9 @@
 
             if (this.el.overlay) {
                 this.el.overlay.classList.remove('nds-ipv-active');
-                document.body.style.overflow = 'auto';
+                if (window.NDSBackdrop) {
+                    window.NDSBackdrop.hide();
+                }
             }
 
             this.removeImage();
