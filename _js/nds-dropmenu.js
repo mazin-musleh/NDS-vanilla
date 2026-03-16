@@ -315,7 +315,15 @@
             // Step 3: Set horizontal position (needs menu width)
             this.adjustHorizontalPosition();
 
-            // Step 4: Next frame → remove 'opening' → transition fires
+            // Step 4: Scroll just enough so the menu's bottom edge is visible
+            const menuRect = this.menu.getBoundingClientRect();
+            if (menuRect.bottom > window.innerHeight) {
+                window.scrollBy({ top: menuRect.bottom - window.innerHeight + 20, behavior: 'smooth' });
+            } else if (menuRect.top < 0) {
+                window.scrollBy({ top: menuRect.top - 20, behavior: 'smooth' });
+            }
+
+            // Step 5: Next frame → remove 'opening' → transition fires
             requestAnimationFrame(() => {
                 removeState(this.dropmenu, 'opening');
             });
