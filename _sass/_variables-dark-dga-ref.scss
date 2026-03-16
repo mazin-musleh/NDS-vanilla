@@ -1,12 +1,10 @@
 @use './mixins' as *;
 
-/* ── DGA Dark Mode Token Overrides ──
-   Direct copy from @platformscode/core dark mode tokens.
+/* ── DGA Dark Mode Token Overrides — DO NOT MODIFY ──
    Source: node_modules/@platformscode/core/dist/collection/assets/styles/main.css
-   Selector fixed: [data-theme=dark] :root → :root[data-theme="dark"]
    ── */
 
-:root[data-theme="dark"][data-dark-mode="dga"] {
+[data-theme=dark] :root {
 
     // ─── Background ───
     --background-white: var(--colors-neutral-950);
