@@ -16,7 +16,7 @@ exclude_showcase: false
         <form class="nds-section-search nds-filter" data-filter-target="services_list_content" data-ajax
             data-filter-submit method="GET" action="#" hidden>
             <div class="nds-form-container nds-search-box nds-demo-showcase"
-                data-url="{{ '/assets/data/autocomplete-demo.json' | relative_url }}" data-name="Title"
+                data-url="{{ '/assets/data/services-autocomplete.json' | relative_url }}" data-name="Title"
                 data-query-param="q">
                 <div class="nds-search-content">
                     <div class="nds-form-control">
