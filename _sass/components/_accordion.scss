@@ -16,6 +16,7 @@
     --_accordion-header-padding: var(--accordion-header-padding, var(--accordion-lg-header-padding, 16px));
     display: flex;
     flex-direction: column;
+    width: 100%;
     gap: 0;
 
     &.nds-lg {
@@ -150,6 +151,11 @@
         .nds-accordion-collapse {
             display: block !important;
             height: auto !important;
+        }
+
+        .nds-accordion-content {
+            display: block !important;
+            overflow: visible !important;
         }
 
         .nds-accordion-btn {
