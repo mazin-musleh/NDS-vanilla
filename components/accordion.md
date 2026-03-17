@@ -1,26 +1,25 @@
 ---
 layout: page
 title: Accordion
-hero_title: Accordion Components - National Design System
-hero_description: "Collapsible accordion components for organizing content with proper ARIA accessibility and smooth
-animations"
+hero_title: Accordion - National Design System
+hero_description: Collapsible content panels for organizing information in a space-efficient manner
 breadcrumb: ["Components"]
 lang: en
 direction: ltr
 ---
 
-<!-- Accordion Examples Overview -->
+<!-- Accordion Overview -->
 <section id="accordionOverview" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
-            <h2 class="nds-section-title">Accordion Navigation</h2>
-            <p class="nds-section-description">Collapsible content panels for organizing information in a
-                space-efficient manner</p>
+            <h2 class="nds-section-title">Accordion</h2>
+            <p class="nds-section-description">Collapsible content panels with smooth animations and full keyboard
+                accessibility</p>
         </div>
         <div class="nds-section-content">
             <div class="nds-showcase">
 
-                <!-- Basic Accordion Example -->
+                <!-- Basic Accordion -->
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-label">Basic Accordion</div>
@@ -48,27 +47,24 @@ direction: ltr
                         </div>
                     </div>
                     <div class="demo-container">
-                        <div class="nds-accordion" id="basicAccordion">
+                        <div class="nds-accordion nds-lg" id="accordion-basic-1">
                             <div class="nds-accordion-item">
-                                <h3 class="nds-accordion-header" id="heading-services">
+                                <h3 class="nds-accordion-header" id="accordion-basic-heading-1">
                                     <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
-                                        aria-expanded="true" aria-controls="collapse-services">
-                                        <span class="nds-accordion-title">Digital Government Services</span>
+                                        aria-expanded="true" aria-controls="accordion-basic-collapse-1">
+                                        <span class="nds-accordion-title">Identity & Records</span>
                                     </button>
                                 </h3>
-                                <div class="nds-accordion-collapse" id="collapse-services"
-                                    aria-labelledby="heading-services">
+                                <div class="nds-accordion-collapse" id="accordion-basic-collapse-1"
+                                    aria-labelledby="accordion-basic-heading-1">
                                     <div class="nds-accordion-content">
                                         <div class="nds-accordion-body">
-                                            <p>Explore our comprehensive digital government services designed to streamline
-                                                your
-                                                interactions with government agencies. From document processing to online
-                                                applications, we provide secure and efficient digital solutions.</p>
+                                            <p>Manage your national identity documents, civil records, and personal
+                                                certificates through secure digital services.</p>
                                             <ul>
-                                                <li>Online permit applications</li>
-                                                <li>Digital certificate issuance</li>
-                                                <li>Tax filing and payment systems</li>
-                                                <li>Citizen service portals</li>
+                                                <li>Identity verification and digital certificates</li>
+                                                <li>Passport renewal with home delivery</li>
+                                                <li>Birth and marriage certificate requests</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -76,54 +72,36 @@ direction: ltr
                             </div>
 
                             <div class="nds-accordion-item">
-                                <h3 class="nds-accordion-header" id="heading-support">
-                                    <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn"
-                                        type="button" aria-expanded="false" aria-controls="collapse-support">
-                                        <span class="nds-accordion-title">Support and Documentation</span>
+                                <h3 class="nds-accordion-header" id="accordion-basic-heading-2">
+                                    <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
+                                        aria-expanded="false" aria-controls="accordion-basic-collapse-2">
+                                        <span class="nds-accordion-title">Healthcare & Social</span>
                                     </button>
                                 </h3>
-                                <div class="nds-accordion-collapse" id="collapse-support" aria-labelledby="heading-support">
+                                <div class="nds-accordion-collapse" id="accordion-basic-collapse-2"
+                                    aria-labelledby="accordion-basic-heading-2">
                                     <div class="nds-accordion-content">
                                         <div class="nds-accordion-body">
-                                            <p>Access comprehensive support resources and documentation to help you navigate
-                                                our
-                                                services effectively. Our support team is committed to providing you with
-                                                the
-                                                assistance you need.</p>
-                                            <div class="support-options">
-                                                <div class="support-item">
-                                                    <strong>Help Center:</strong> Browse our extensive knowledge base
-                                                </div>
-                                                <div class="support-item">
-                                                    <strong>Live Chat:</strong> Get immediate assistance from our support
-                                                    team
-                                                </div>
-                                                <div class="support-item">
-                                                    <strong>Email Support:</strong> Submit detailed inquiries via email
-                                                </div>
-                                            </div>
+                                            <p>Access healthcare enrollment, appointment booking, employment services,
+                                                and retirement benefits through a unified platform.</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="nds-accordion-item">
-                                <h3 class="nds-accordion-header" id="heading-resources">
-                                    <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn"
-                                        type="button" aria-expanded="false" aria-controls="collapse-resources">
-                                        <span class="nds-accordion-title">Developer Resources</span>
+                                <h3 class="nds-accordion-header" id="accordion-basic-heading-3">
+                                    <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
+                                        aria-expanded="false" aria-controls="accordion-basic-collapse-3">
+                                        <span class="nds-accordion-title">Business & Finance</span>
                                     </button>
                                 </h3>
-                                <div class="nds-accordion-collapse" id="collapse-resources"
-                                    aria-labelledby="heading-resources">
+                                <div class="nds-accordion-collapse" id="accordion-basic-collapse-3"
+                                    aria-labelledby="accordion-basic-heading-3">
                                     <div class="nds-accordion-content">
                                         <div class="nds-accordion-body">
-                                            <p>Access developer tools, APIs, and resources to integrate with our services.
-                                                Build
-                                                innovative solutions using our comprehensive development platform.</p>
-                                            <p>Available resources include API documentation, code samples, SDKs, and
-                                                developer
-                                                support forums.</p>
+                                            <p>File taxes, register businesses, apply for building permits, and manage
+                                                property transactions online.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -135,7 +113,7 @@ direction: ltr
                             <div class="nds-tab-list-container">
                                 <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                                        aria-controls="panel-basic-1" id="tab-basic-1">
+                                        aria-controls="panel-accordion-basic-1" id="tab-accordion-basic-1">
                                         <span class="nds-tab-label">HTML</span>
                                     </button>
                                 </nav>
@@ -144,8 +122,8 @@ direction: ltr
                                 </button>
                             </div>
                             <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-basic-1"
-                                    aria-labelledby="tab-basic-1">
+                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel"
+                                    id="panel-accordion-basic-1" aria-labelledby="tab-accordion-basic-1">
                                     <div class="nds-code-action">
                                         <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                                             <i class="hgi hgi-stroke hgi-copy-01"></i>
@@ -153,37 +131,46 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
-                                    <div class="nds-accordion" id="basicAccordion">
-                                        <div class="nds-accordion-item">
-                                            <h3 class="nds-accordion-header" id="heading-1">
-                                            <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button" aria-expanded="true" aria-controls="collapse-1">
-                                                <span class="nds-accordion-title">Accordion Item #1</span>
-                                            </button>
-                                            </h3>
-                                            <div class="nds-accordion-collapse" id="collapse-1" aria-labelledby="heading-1">
-                                                <div class="nds-accordion-content">
-                                                    <div class="nds-accordion-body">
-                                                        Content for the first accordion item goes here.
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="nds-accordion-item">
-                                            <h3 class="nds-accordion-header" id="heading-2">
-                                            <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button" aria-expanded="false" aria-controls="collapse-2">
-                                                <span class="nds-accordion-title">Accordion Item #2</span>
-                                            </button>
-                                            </h3>
-                                            <div class="nds-accordion-collapse" id="collapse-2" aria-labelledby="heading-2">
-                                                <div class="nds-accordion-content">
-                                                    <div class="nds-accordion-body">
-                                                        Content for the second accordion item goes here.
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </code>
+<div class="nds-accordion nds-lg" id="my-accordion">
+    <div class="nds-accordion-item">
+        <h3 class="nds-accordion-header" id="heading-1">
+            <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
+                aria-expanded="true" aria-controls="collapse-1">
+                <span class="nds-accordion-title">Identity & Records</span>
+            </button>
+        </h3>
+        <div class="nds-accordion-collapse" id="collapse-1" aria-labelledby="heading-1">
+            <div class="nds-accordion-content">
+                <div class="nds-accordion-body">
+                    <p>Manage your national identity documents, civil records,
+                        and personal certificates through secure digital services.</p>
+                    <ul>
+                        <li>Identity verification and digital certificates</li>
+                        <li>Passport renewal with home delivery</li>
+                        <li>Birth and marriage certificate requests</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="nds-accordion-item">
+        <h3 class="nds-accordion-header" id="heading-2">
+            <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
+                aria-expanded="false" aria-controls="collapse-2">
+                <span class="nds-accordion-title">Healthcare & Social</span>
+            </button>
+        </h3>
+        <div class="nds-accordion-collapse" id="collapse-2" aria-labelledby="heading-2">
+            <div class="nds-accordion-content">
+                <div class="nds-accordion-body">
+                    <p>Access healthcare enrollment, appointment booking,
+                        employment services, and retirement benefits.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+                                        </code>
                                     </div>
                                 </div>
                             </div>
@@ -191,7 +178,7 @@ direction: ltr
                     </div>
                 </div>
 
-                <!-- Icon Accordion Example -->
+                <!-- Accordion with Leading Icons -->
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-label">Accordion with Leading Icons</div>
@@ -219,83 +206,59 @@ direction: ltr
                         </div>
                     </div>
                     <div class="demo-container">
-                        <div class="nds-accordion" id="iconAccordion">
+                        <div class="nds-accordion nds-lg" id="accordion-icon-1">
                             <div class="nds-accordion-item">
-                                <h3 class="nds-accordion-header" id="heading-account">
+                                <h3 class="nds-accordion-header" id="accordion-icon-heading-1">
                                     <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
-                                        aria-expanded="true" aria-controls="collapse-account">
-                                        <i class="nds-accordion-leading-icon hgi hgi-stroke hgi-user-circle"></i>
-                                        <span class="nds-accordion-title">Account Management</span>
+                                        aria-expanded="true" aria-controls="accordion-icon-collapse-1">
+                                        <i class="nds-accordion-leading-icon hgi hgi-stroke hgi-user-id-verification"></i>
+                                        <span class="nds-accordion-title">Identity & Records</span>
                                     </button>
                                 </h3>
-                                <div class="nds-accordion-collapse" id="collapse-account"
-                                    aria-labelledby="heading-account">
+                                <div class="nds-accordion-collapse" id="accordion-icon-collapse-1"
+                                    aria-labelledby="accordion-icon-heading-1">
                                     <div class="nds-accordion-content">
                                         <div class="nds-accordion-body">
-                                            <p>Manage your government account settings, update personal information, and control
-                                                your privacy preferences. Your account is the central hub for all your
-                                                government service interactions.</p>
-                                            <div class="account-features">
-                                                <div class="nds-btn nds-secondary-outline feature-item">
-                                                    <i class="hgi hgi-stroke hgi-settings-01"></i>
-                                                    <span>Profile Settings</span>
-                                                </div>
-                                                <div class="nds-btn nds-secondary-outline feature-item">
-                                                    <i class="hgi hgi-stroke hgi-shield-01"></i>
-                                                    <span>Security Settings</span>
-                                                </div>
-                                                <div class="nds-btn nds-secondary-outline feature-item">
-                                                    <i class="hgi hgi-stroke hgi-notification-01"></i>
-                                                    <span>Notification Preferences</span>
-                                                </div>
-                                            </div>
+                                            <p>Verify your national identity, renew passports, and request birth or
+                                                marriage certificates through secure online services.</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="nds-accordion-item">
-                                <h3 class="nds-accordion-header" id="heading-documents">
-                                    <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn"
-                                        type="button" aria-expanded="false" aria-controls="collapse-documents">
-                                        <i class="nds-accordion-leading-icon hgi hgi-stroke hgi-file-02"></i>
-                                        <span class="nds-accordion-title">Document Services</span>
+                                <h3 class="nds-accordion-header" id="accordion-icon-heading-2">
+                                    <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
+                                        aria-expanded="false" aria-controls="accordion-icon-collapse-2">
+                                        <i class="nds-accordion-leading-icon hgi hgi-stroke hgi-health"></i>
+                                        <span class="nds-accordion-title">Healthcare & Social</span>
                                     </button>
                                 </h3>
-                                <div class="nds-accordion-collapse" id="collapse-documents"
-                                    aria-labelledby="heading-documents">
+                                <div class="nds-accordion-collapse" id="accordion-icon-collapse-2"
+                                    aria-labelledby="accordion-icon-heading-2">
                                     <div class="nds-accordion-content">
                                         <div class="nds-accordion-body">
-                                            <p>Access and manage your official documents, request new certificates, and track
-                                                the status of your applications.</p>
-                                            <ul>
-                                                <li>Birth and marriage certificates</li>
-                                                <li>Business licenses and permits</li>
-                                                <li>Educational transcripts and diplomas</li>
-                                                <li>Health and vaccination records</li>
-                                            </ul>
+                                            <p>Enroll in health insurance, book medical appointments, and manage
+                                                employment certificates and retirement benefits.</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="nds-accordion-item">
-                                <h3 class="nds-accordion-header" id="heading-payments">
-                                    <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn"
-                                        type="button" aria-expanded="false" aria-controls="collapse-payments">
-                                        <i class="nds-accordion-leading-icon hgi hgi-stroke hgi-credit-card-pos"></i>
-                                        <span class="nds-accordion-title">Payment Services</span>
+                                <h3 class="nds-accordion-header" id="accordion-icon-heading-3">
+                                    <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
+                                        aria-expanded="false" aria-controls="accordion-icon-collapse-3">
+                                        <i class="nds-accordion-leading-icon hgi hgi-stroke hgi-calculator"></i>
+                                        <span class="nds-accordion-title">Business & Finance</span>
                                     </button>
                                 </h3>
-                                <div class="nds-accordion-collapse" id="collapse-payments"
-                                    aria-labelledby="heading-payments">
+                                <div class="nds-accordion-collapse" id="accordion-icon-collapse-3"
+                                    aria-labelledby="accordion-icon-heading-3">
                                     <div class="nds-accordion-content">
                                         <div class="nds-accordion-body">
-                                            <p>Make secure payments for government services, view payment history, and set up
-                                                automatic payments for recurring fees.</p>
-                                            <p>We support multiple payment methods including credit cards, bank transfers, and
-                                                digital wallets, all processed through secure, government-approved payment
-                                                gateways.</p>
+                                            <p>File tax declarations, register for VAT, apply for business licenses,
+                                                and manage property and building permits.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -307,7 +270,7 @@ direction: ltr
                             <div class="nds-tab-list-container">
                                 <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                                        aria-controls="panel-icons-1" id="tab-icons-1">
+                                        aria-controls="panel-accordion-icon-1" id="tab-accordion-icon-1">
                                         <span class="nds-tab-label">HTML</span>
                                     </button>
                                 </nav>
@@ -316,8 +279,8 @@ direction: ltr
                                 </button>
                             </div>
                             <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-icons-1"
-                                    aria-labelledby="tab-icons-1">
+                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel"
+                                    id="panel-accordion-icon-1" aria-labelledby="tab-accordion-icon-1">
                                     <div class="nds-code-action">
                                         <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                                             <i class="hgi hgi-stroke hgi-copy-01"></i>
@@ -325,24 +288,43 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
-                                    <div class="nds-accordion" id="iconAccordion">
-                                        <div class="nds-accordion-item">
-                                            <h3 class="nds-accordion-header" id="heading-1">
-                                            <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button" aria-expanded="true" aria-controls="collapse-1">
-                                                <i class="nds-accordion-leading-icon hgi hgi-stroke hgi-user-circle"></i>
-                                                <span class="nds-accordion-title">Accordion with Icon</span>
-                                            </button>
-                                            </h3>
-                                            <div class="nds-accordion-collapse" id="collapse-1" aria-labelledby="heading-1">
-                                                <div class="nds-accordion-content">
-                                                    <div class="nds-accordion-body">
-                                                        Content with leading icon accordion item.
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </code>
+<div class="nds-accordion nds-lg" id="icon-accordion">
+    <div class="nds-accordion-item">
+        <h3 class="nds-accordion-header" id="icon-heading-1">
+            <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
+                aria-expanded="true" aria-controls="icon-collapse-1">
+                <i class="nds-accordion-leading-icon hgi hgi-stroke hgi-user-id-verification"></i>
+                <span class="nds-accordion-title">Identity & Records</span>
+            </button>
+        </h3>
+        <div class="nds-accordion-collapse" id="icon-collapse-1" aria-labelledby="icon-heading-1">
+            <div class="nds-accordion-content">
+                <div class="nds-accordion-body">
+                    <p>Verify your national identity, renew passports,
+                        and request birth or marriage certificates.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="nds-accordion-item">
+        <h3 class="nds-accordion-header" id="icon-heading-2">
+            <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
+                aria-expanded="false" aria-controls="icon-collapse-2">
+                <i class="nds-accordion-leading-icon hgi hgi-stroke hgi-health"></i>
+                <span class="nds-accordion-title">Healthcare & Social</span>
+            </button>
+        </h3>
+        <div class="nds-accordion-collapse" id="icon-collapse-2" aria-labelledby="icon-heading-2">
+            <div class="nds-accordion-content">
+                <div class="nds-accordion-body">
+                    <p>Enroll in health insurance, book appointments,
+                        and manage employment and retirement benefits.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+                                        </code>
                                     </div>
                                 </div>
                             </div>
@@ -355,71 +337,38 @@ direction: ltr
     </div>
 </section>
 
-<!-- Accessibility Guidelines -->
-<section id="accordionAccessibility" class="nds-content-section">
+<!-- Usage Guidelines -->
+<section id="accordionGuidelines" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
-            <h2 class="nds-section-title">Accessibility Guidelines</h2>
-            <p class="nds-section-description">Proper ARIA implementation for accessible accordion navigation</p>
+            <h2 class="nds-section-title">Usage Guidelines</h2>
+            <p class="nds-section-description">Best practices, configuration options, and JavaScript API</p>
         </div>
         <div class="nds-section-content">
             <div class="nds-content-block">
-                <h3 class="nds-block-title">Required Elements & ARIA Attributes</h3>
+                <h3 class="nds-block-title">Built-in Features</h3>
                 <ul>
-                    <li>&lt;button&gt; - Clickable accordion trigger</li>
-                    <li>aria-expanded - Indicates if accordion panel is open/closed</li>
-                    <li>aria-controls - Links button to its collapsible panel</li>
-                    <li>aria-labelledby - Links panel to its header button</li>
-                    <li>type="button" - Prevents form submission if inside forms</li>
-                    <li>id attributes - Required for proper ARIA relationships</li>
+                    <li>Smooth CSS grid animations with automatic fallback when users prefer reduced motion</li>
+                    <li>Full keyboard navigation — Arrow keys, Home, End, Enter, and Space</li>
+                    <li>Auto-initializes when <strong>nds-accordion</strong> is on the page — no JavaScript setup required</li>
+                    <li>Programmatic control via public API — open, close, toggle, and query state</li>
+                    <li>Custom events fire on show/hide for analytics or dependent UI updates</li>
+                    <li>Print-ready — all panels expand automatically so no content is hidden on paper</li>
+                    <li>High contrast and screen reader support built into every state</li>
                 </ul>
             </div>
             <div class="nds-content-block">
-                <h3 class="nds-block-title">Keyboard Navigation</h3>
+                <h3 class="nds-block-title">When to Use</h3>
                 <ul>
-                    <li><kbd>Tab</kbd> - Move focus between accordion buttons</li>
-                    <li><kbd>Enter/Space</kbd> - Toggle focused accordion panel</li>
-                    <li><kbd>Home</kbd> - Move focus to first accordion button</li>
-                    <li><kbd>End</kbd> - Move focus to last accordion button</li>
-                    <li><kbd>Up/Down Arrow</kbd> - Navigate between accordion buttons (optional)</li>
+                    <li>Use accordions to progressively disclose content — show headings first, let users expand what they need</li>
+                    <li>Good for FAQs, categorized service lists, and settings panels where users scan then drill down</li>
+                    <li>Avoid accordions for content users need to compare side-by-side — use tabs or a flat layout instead</li>
+                    <li>Keep accordion titles short and scannable — users decide whether to expand based on the title alone</li>
                 </ul>
             </div>
             <div class="nds-content-block">
-                <h3 class="nds-block-title">Behavior Modes</h3>
-                <ul>
-                    <li><strong>Default:</strong> Only one panel open at a time with flush styling (no borders/shadows)
-                    </li>
-                    <li><strong>Always Open:</strong> Multiple panels can be open simultaneously</li>
-                    <li><strong>Card View:</strong> Add borders, shadows, and rounded corners for card-like appearance
-                    </li>
-                </ul>
+                <h3 class="nds-block-title">JavaScript API</h3>
             </div>
-            <div class="nds-content-block">
-                <h3 class="nds-block-title">Best Practices</h3>
-                <ul>
-                    <li><strong>Semantic Headers:</strong> Use appropriate heading levels (h2, h3, etc.)</li>
-                    <li><strong>Descriptive Titles:</strong> Make accordion titles clear and meaningful</li>
-                    <li><strong>Loading States:</strong> Indicate when content is being loaded</li>
-                    <li><strong>Icon Consistency:</strong> Use consistent chevron/arrow icons for visual cues</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- JavaScript Documentation Section -->
-<section id="accordionJavaScript" class="nds-content-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">JavaScript Integration</h2>
-            <p class="nds-section-description">Complete accordion functionality with automatic initialization and
-                programmatic control</p>
-        </div>
-
-        <div class="nds-section-content">
-            <h3>Automatic Initialization</h3>
-            <p>Accordions initialize automatically on page load. Just add the HTML structure with the .nds-accordion
-                class.</p>
 
             <div class="nds-code nds-expandable">
                 <div class="nds-code-action">
@@ -428,145 +377,41 @@ direction: ltr
                     </button>
                 </div>
                 <div class="nds-expandable-content">
-                    <code class="lang-html">// Accordions initialize automatically on page load
-    // Just add the HTML structure with .nds-accordion class
+                    <code class="lang-javascript">// Accordions auto-initialize on page load.
+// Use NDSAccordion for dynamic content or programmatic control.
 
-                        <div class="nds-accordion">
-                        <div class="nds-accordion-item">
-                            <h3 class="nds-accordion-header">
-                            <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn"
-                                    aria-expanded="false" aria-controls="panel-1">
-                                <span class="nds-accordion-title">Panel Title</span>
-                            </button>
-                            </h3>
-                            <div class="nds-accordion-collapse" id="panel-1">
-                                <div class="nds-accordion-content">
-                                    <div class="nds-accordion-body">
-                                        Panel content goes here...
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        </div>
-                    </code>
-                </div>
-            </div>
-
-            <h3>Dynamic Content Handling</h3>
-            <p>After adding accordion HTML dynamically, reinitialize to activate new accordions.</p>
-
-            <div class="nds-code nds-expandable">
-                <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                        <i class="hgi hgi-stroke hgi-copy-01"></i>
-                    </button>
-                </div>
-                <div class="nds-expandable-content">
-                    <code class="lang-javascript">// After adding accordion HTML dynamically
-document.getElementById('container').innerHTML = accordionHTML;
-
-// Reinitialize to activate new accordions
+// Reinitialize after adding accordion HTML dynamically
 NDSAccordion.reinit();
 
-// Or initialize a specific accordion
-const newAccordion = document.querySelector('#newAccordion');
-const instance = NDSAccordion.create(newAccordion);</code>
-                </div>
-            </div>
+// Or create a new instance for a specific accordion
+var instance = NDSAccordion.create(document.querySelector('#my-accordion'));
 
-            <h3>Programmatic Control</h3>
-            <p>Control accordion programmatically using the public API methods.</p>
+// Programmatic control via instance
+instance.openItem(0);       // Open first item
+instance.closeItem(1);      // Close second item
+instance.toggleItem(2);     // Toggle third item
+instance.closeAll();        // Close all items
 
-            <div class="nds-code nds-expandable">
-                <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                        <i class="hgi hgi-stroke hgi-copy-01"></i>
-                    </button>
-                </div>
-                <div class="nds-expandable-content">
-                    <code class="lang-javascript">// Get accordion instance
-const accordion = document.querySelector('.nds-accordion');
-const instance = accordion.ndsAccordionInstance;
+// Get currently open items
+var openItems = instance.getOpenItems();
+// Returns: [{index, button, collapse, isOpen}, ...]
 
-// Control specific items
-instance.openItem(0);      // Open first item
-instance.closeItem(1);     // Close second item  
-instance.toggleItem(2);    // Toggle third item
-instance.closeAll();       // Close all items
+// Access instance from an existing accordion element
+var existing = document.querySelector('#my-accordion').ndsAccordionInstance;
 
-// Get current state
-const openItems = instance.getOpenItems();
-console.log(`${openItems.length} items are currently open`);</code>
-                </div>
-            </div>
+// Clean up when removing an accordion from the DOM
+instance.destroy();
 
-            <h3>Event Handling</h3>
-            <p>Listen for accordion events to track user interactions and implement custom behaviors.</p>
-
-            <div class="nds-code nds-expandable">
-                <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                        <i class="hgi hgi-stroke hgi-copy-01"></i>
-                    </button>
-                </div>
-                <div class="nds-expandable-content">
-                    <code class="lang-javascript">// Listen for accordion events
-document.addEventListener('nds:accordion:shown', (e) => {
-    console.log('Accordion item opened:', e.detail.index);
-    console.log('Button:', e.detail.button);
-    console.log('Panel:', e.detail.collapse);
-    
-    // Analytics tracking
-    gtag('event', 'accordion_open', {
-        'accordion_title': e.detail.button.textContent.trim()
-    });
+// Listen for accordion events
+document.addEventListener('nds:accordion:shown', function(e) {
+    // e.detail: {index, button, collapse, accordion}
+    console.log('Opened item:', e.detail.index);
 });
 
-document.addEventListener('nds:accordion:hidden', (e) => {
-    console.log('Accordion item closed:', e.detail.index);
-    
-    // Track close events
-    gtag('event', 'accordion_close', {
-        'accordion_title': e.detail.button.textContent.trim()  
-    });
+document.addEventListener('nds:accordion:hidden', function(e) {
+    console.log('Closed item:', e.detail.index);
 });</code>
                 </div>
-            </div>
-
-            <div class="nds-content-block">
-                <h3 class="nds-block-title">JavaScript Features</h3>
-                <ul>
-                    <li><strong>Automatic Initialization:</strong> All accordions initialize on page load automatically
-                    </li>
-                    <li><strong>Dynamic Content Support:</strong> Call NDSAccordion.reinit() after adding
-                        new accordions</li>
-                    <li><strong>Keyboard Navigation:</strong> Full ARIA-compliant keyboard support built-in</li>
-                    <li><strong>Animation Control:</strong> Respects prefers-reduced-motion user
-                        preferences</li>
-                    <li><strong>Event System:</strong> Custom events for shown and hidden
-                        states</li>
-                    <li><strong>Public API:</strong> Programmatic control methods for all accordion operations</li>
-                </ul>
-            </div>
-            <div class="nds-content-block">
-                <h3 class="nds-block-title">Configuration Options</h3>
-                <ul>
-                    <li>data-state="always-open" attribute - Allow multiple panels open simultaneously</li>
-                    <li>.nds-card class - Apply card background styling</li>
-                    <li>.nds-stroke class - Add border around accordion</li>
-                    <li>.nds-shadow class - Apply shadow effect</li>
-                    <li>aria-expanded="true" - Set initial open state for specific panels</li>
-                    <li>--nds-transition-speed - CSS custom property to control animation speed</li>
-                </ul>
-            </div>
-            <div class="nds-content-block">
-                <h3 class="nds-block-title">Browser Support</h3>
-                <ul>
-                    <li><strong>Modern Browsers:</strong> Chrome 60+, Firefox 60+, Safari 12+, Edge 79+</li>
-                    <li><strong>Mobile:</strong> iOS Safari 12+, Chrome Mobile 60+</li>
-                    <li><strong>Accessibility:</strong> Compatible with all major screen readers</li>
-                    <li><strong>Performance:</strong> Optimized for smooth animations and minimal reflows</li>
-                </ul>
             </div>
         </div>
     </div>
