@@ -27,8 +27,8 @@ Apply this skill to: `$ARGUMENTS`
    - `components/tags.md` — reference for interactive demo toggles
    - `standard-page.md` — front matter template
 2. **Read the existing page** (`components/$0.md`) if it exists — preserve working content, fix gaps against this skill's patterns
-3. **Read the component's SCSS** (`_sass/components/_$0.scss`) for variants, sizes, states
-4. **Read the component's JS** (`_js/nds-$0.js` or search `_js/` for matching file) for API, methods, events — determines JS documentation tier
+3. **Read the component's SCSS** (`_sass/components/_$0.scss`) — extract every variant class, size, state, and accessibility feature (`@include reduced-motion`, `@include high-contrast`, `@include print-media`). The page must document all of these.
+4. **Read the component's JS** (`_js/nds-$0.js` or search `_js/` for matching file) — extract every public API method on `window.NDS*` and on the instance (e.g., `destroy()`, `getOpenItems()`), every custom event and its `detail` shape, how to access an existing instance from the DOM (e.g., `element.ndsAccordionInstance`), and every key in `handleKeyDown`. The page must document all of these.
 5. **Check `playground.md`** for existing demo HTML (if available) — use as authoritative HTML structure
 6. **Check `_data/sidemenu/sidemenu.yml`** for registration
 7. **Look up icons** in `_sass/_hgiRoundedStroke.scss` — search for contextually appropriate icon names (e.g., warning for alerts, search for search bars). **NEVER guess icon class names.**
@@ -129,17 +129,31 @@ For page-level scripts, wrap in `DOMContentLoaded`. For inline scripts, toggle `
 
 ## JS Initialization & API Documentation
 
-Components auto-initialize via `nds-loader.js` — no manual initialization is needed. Document this in Usage Guidelines for every component that has JS.
+### How auto-init works
 
-### Tiered approach
+`nds-loader.js` manages all component initialization automatically. It maintains a registry of components — each entry maps a CSS selector (e.g., `.nds-accordion`) to an init function (e.g., `window.NDSAccordion.init()`). On DOMContentLoaded, the loader scans the page for matching selectors and calls each component's init function if its elements exist. Components are initialized in priority order with a small stagger delay between them.
+
+This means **users never need to call init manually** — just adding the correct HTML markup is enough. The loader handles everything.
+
+For dynamically added content, each component exposes a `reinit()` method to re-scan and initialize new instances. There is also a global `NDSInit.reinitialize()` that re-runs all components, and `NDSInit.initializeComponent('name')` to target a specific one.
+
+### Tiered documentation approach
 
 1. **Read the component's JS file** (`_js/nds-$0.js`) and look for `window.NDS*` exports — these are the public APIs
-2. **All components with JS**: add a note in Usage Guidelines that the component initializes automatically
-3. **Components with a public API** (methods like `open()`, `close()`, `create()`, or custom events): add a full JS API section in Usage Guidelines with a standalone `nds-code nds-expandable` block. Use inline comments to explain methods and events. See `components/modal.md` for an example.
+2. **All components with JS**: add a note in Usage Guidelines explaining that the component initializes automatically when the HTML is on the page — no script tags or init calls needed. For dynamic content, mention `reinit()`
+3. **Components with a public API** (methods like `open()`, `close()`, `create()`, or custom events): add a full JS API section in Usage Guidelines with a standalone `nds-code nds-expandable` block. Use inline comments to explain methods and events. See `components/modal.md` for an example
 
 ## Content Blocks (Usage Guidelines)
 
 Use `nds-content-block` with `nds-block-title` for text guidance. Get HTML structure from `components/alert.md`.
+
+Every component page must include these blocks in this order:
+
+1. **Built-in Features** — what the component gives you out of the box (animations, keyboard nav, auto-init, accessibility, print support, events, etc.). Derived from the SCSS and JS source files. This sells the component. For components with JS, state that the component auto-initializes when the loader detects the component's root selector on the page (e.g., "Auto-initializes when `.nds-accordion` is on the page — no JavaScript setup required").
+2. **When to Use** — decision guidance: when to pick this component vs alternatives, what it's good for, what to avoid using it for, and any content tips (e.g., keep titles scannable).
+3. **JavaScript API** (if the component has JS) — auto-init note + expandable code block with full API.
+
+Do NOT document things the user already gets from copying the code examples (ARIA attributes, semantic structure) or from the live demo toggles (configuration classes, sizes). Focus on what users can't see — the component's capabilities and decision guidance.
 
 Rules:
 - Use raw HTML inside `<code>` blocks — never HTML entities
