@@ -7,7 +7,7 @@
  * - Featured icons from nds-featured-icon
  * - Close button (optional)
  * - Color variants: success, info, warning, error, neutral
- * - Inline and banner layouts
+ * - Inline layout
  */
 
 @use '../mixins' as *;
@@ -205,8 +205,8 @@
     }
   }
 
-  // Error variant
-  &[data-status="error"] {
+  // Error / Critical variant
+  &:is([data-status="error"], [data-status="critical"]) {
     --alert-stripe: var(--background-error);
     --alert-icon-bg: var(--background-error-light);
 
@@ -250,36 +250,80 @@
   // LAYOUT VARIANTS
   // ==============================================
 
-  // Banner layout (full width, typically at top of page)
-  &.nds-banner {
-    border-radius: 0;
-    border-left: none;
-    border-right: none;
-  }
-
-  // Compact variant
-  &.nds-compact {
-    padding: var(--spacing-md);
-    gap: var(--spacing-md);
-
-    .nds-alert-content {
-      gap: var(--spacing-xs);
-    }
-  }
-
-  // Inline variant (single line)
+  // Inline variant (single line, bottom stripe, solid icon)
   &.nds-inline {
+    flex-direction: row;
     align-items: center;
+    padding: var(--spacing-md) var(--spacing-lg);
+    padding-inline-start: var(--spacing-lg);
+    gap: var(--spacing-md);
+    border: none;
+
+    // Move stripe to bottom, 2px height
+    &::after {
+      inset-block-start: auto;
+      inset-block-end: 0;
+      inset-inline-start: 0;
+      width: 100%;
+      height: 2px;
+      opacity: 1;
+    }
+
+    // Smaller icon (no 2x multiplier)
+    .nds-feedback-icon {
+      width: var(--nds-icon-size);
+      height: var(--nds-icon-size);
+    }
+
+    // Solid icon bg per variant (override light + dark)
+    &[data-status="success"] { --alert-icon-bg: var(--background-success); @include dark { --alert-icon-bg: var(--background-success); } }
+    &[data-status="info"]    { --alert-icon-bg: var(--background-info);    @include dark { --alert-icon-bg: var(--background-info); } }
+    &[data-status="warning"] { --alert-icon-bg: var(--background-warning); @include dark { --alert-icon-bg: var(--background-warning); } }
+    &:is([data-status="error"], [data-status="critical"]) { --alert-icon-bg: var(--background-error); @include dark { --alert-icon-bg: var(--background-error); } }
+    &[data-status="neutral"] { --alert-icon-bg: var(--background-neutral-primary); @include dark { --alert-icon-bg: var(--background-neutral-primary); } }
+
+    // Always colored (no nds-color class needed)
+    background-color: var(--background-default);
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background-color: var(--_card-bg);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    &[data-status="success"] { --card-bg: var(--background-success-25); --card-title: var(--text-success); --_inline-desc: var(--text-success); @include dark { --card-bg: var(--alpha-success-10); } }
+    &[data-status="info"]    { --card-bg: var(--background-info-25);    --card-title: var(--text-info);    --_inline-desc: var(--text-info);    @include dark { --card-bg: var(--alpha-info-10); } }
+    &[data-status="warning"] { --card-bg: var(--background-warning-25); --card-title: var(--text-warning); --_inline-desc: var(--text-warning); @include dark { --card-bg: var(--alpha-warning-10); } }
+    &:is([data-status="error"], [data-status="critical"]) { --card-bg: var(--background-error-25); --card-title: var(--text-error); --_inline-desc: var(--text-error); @include dark { --card-bg: var(--alpha-error-10); } }
+    &[data-status="neutral"] { --card-bg: var(--background-neutral-light); @include dark { --card-bg: var(--alpha-white-10); } }
+
+    .nds-alert-title,
+    .nds-alert-description {
+      font-size: var(--nds-text-clamp-md-FS);
+      line-height: var(--nds-text-clamp-md-LH);
+    }
+
+    .nds-alert-description {
+      color: var(--_inline-desc, var(--_card-title));
+    }
 
     .nds-alert-content {
       flex-direction: row;
-      align-items: center;
+      align-items: self-start;
       gap: var(--spacing-md);
     }
 
     .nds-alert-actions {
       margin-top: 0;
-      margin-inline-start: auto;
+    }
+
+    .nds-alert-close {
+      position: relative;
+      inset-block-start: auto;
+      inset-inline-end: auto;
     }
   }
 }

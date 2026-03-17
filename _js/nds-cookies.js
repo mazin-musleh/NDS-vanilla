@@ -197,7 +197,7 @@
                 variant: variant,
                 title: title,
                 description: message,
-                toast: true,
+                display: 'toast',
                 position: 'bottom',
                 duration: 4000,
                 closable: true

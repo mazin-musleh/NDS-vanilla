@@ -35,7 +35,7 @@
          * @param {boolean} options.prepend - Prepend instead of append (default: false)
          * @param {Array} options.actions - Action buttons array (optional)
          *        Each action: { label, variant, size, onClick, dismiss }
-         * @param {boolean} options.toast - Display as toast notification (default: false)
+         * @param {string} options.display - 'default', 'inline', or 'toast' (default: 'default')
          * @param {string} options.position - Toast position: 'top' or 'bottom' (default: 'top')
          * @param {number} options.duration - Auto-dismiss duration in ms, 0 for no auto-dismiss (default: 0)
          * @returns {HTMLElement}
@@ -52,7 +52,7 @@
                 id = null,
                 prepend = false,
                 actions = [],
-                toast = false,
+                display = 'default',
                 position = 'top',
                 duration = 0
             } = options;
@@ -62,7 +62,8 @@
             alert.setAttribute('data-status', variant);
             if (shadow) alert.classList.add('nds-shadow');
             if (color) alert.classList.add('nds-color');
-            if (toast) alert.classList.add('nds-toast');
+            if (display === 'inline') alert.classList.add('nds-inline');
+            if (display === 'toast') alert.classList.add('nds-toast');
             if (id) alert.id = id;
             alert.setAttribute('role', 'alert');
 
@@ -82,8 +83,9 @@
                 actionsHtml += '</div>';
             }
 
+            const iconStyle = display === 'inline' ? '' : ' nds-outline';
             let html = `
-                <span class="nds-feedback nds-alert-icon nds-outline">
+                <span class="nds-feedback nds-alert-icon${iconStyle}">
                     <span class="nds-feedback-icon">
                         <i class="hgi hgi-stroke icon"></i>
                     </span>
@@ -97,9 +99,9 @@
 
             if (closable) {
                 // Add progress class and SVG if toast has auto-dismiss
-                const progressClass = (toast && duration > 0) ? ' nds-progress' : '';
-                const progressStyle = (toast && duration > 0) ? ` style="--progress-duration: ${duration}ms;"` : '';
-                const progressSVG = (toast && duration > 0) ? `
+                const progressClass = (display === 'toast' && duration > 0) ? ' nds-progress' : '';
+                const progressStyle = (display === 'toast' && duration > 0) ? ` style="--progress-duration: ${duration}ms;"` : '';
+                const progressSVG = (display === 'toast' && duration > 0) ? `
                     <div class="nds-progress-circle" hidden>
                         <svg width="100%" height="100%" viewBox="0 0 24 24">
                             <circle class="progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2"></circle>
@@ -142,7 +144,7 @@
             }
 
             // Insert into target or as toast
-            if (toast) {
+            if (display === 'toast') {
                 // Find or create the placeholder container for this position
                 const placeholder = this._getPlaceholder(position);
 
