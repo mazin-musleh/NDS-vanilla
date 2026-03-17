@@ -2,127 +2,138 @@
   icon: '<i class="hgi hgi-stroke hgi-user-id-verification icon"></i>'
   description: "Verify your national identity and obtain digital certificates for government transactions"
   url: "service.html"
-  system: "Identity System"
+  system: "Identity & Records"
   most_used: true
 
 - title: "Passport Renewal"
   icon: '<i class="hgi hgi-stroke hgi-passport icon"></i>'
   description: "Renew your passport online with expedited processing and home delivery options"
   url: "service.html"
-  system: "Identity System"
-  most_used: true
-
-- title: "Driver's License Services"
-  icon: '<i class="hgi hgi-stroke hgi-driving-license icon"></i>'
-  description: "Apply for new license, renew existing license, or update your driving information"
-  url: "service.html"
-  system: "Transport System"
-  most_used: true
-
-- title: "Vehicle Registration"
-  icon: '<i class="hgi hgi-stroke hgi-car-01 icon"></i>'
-  description: "Register new vehicles, transfer ownership, or renew your vehicle registration"
-  url: "service.html"
-  system: "Transport System"
+  system: "Identity & Records"
   most_used: true
 
 - title: "Birth Certificate Request"
   icon: '<i class="hgi hgi-stroke hgi-file-02 icon"></i>'
   description: "Request official birth certificates and family documentation online"
   url: "service.html"
-  system: "Civil Records System"
+  system: "Identity & Records"
+  most_used: false
+
+- title: "Marriage Contract Registration"
+  icon: '<i class="hgi hgi-stroke hgi-agreement-02 icon"></i>'
+  description: "Register marriage contracts and obtain official marriage certificates"
+  url: "service.html"
+  system: "Identity & Records"
+  most_used: false
+
+- title: "Driver's License Services"
+  icon: '<i class="hgi hgi-stroke hgi-license icon"></i>'
+  description: "Apply for, renew, or update your driving license information"
+  url: "service.html"
+  system: "Transport & Vehicles"
+  most_used: true
+
+- title: "Vehicle Registration"
+  icon: '<i class="hgi hgi-stroke hgi-car-01 icon"></i>'
+  description: "Register new vehicles, transfer ownership, or renew your vehicle registration"
+  url: "service.html"
+  system: "Transport & Vehicles"
+  most_used: true
+
+- title: "Visa Application"
+  icon: '<i class="hgi hgi-stroke hgi-passport-01 icon"></i>'
+  description: "Apply for entry visas for visitors, workers, or family members"
+  url: "service.html"
+  system: "Transport & Vehicles"
+  most_used: false
 
 - title: "Health Insurance Enrollment"
-  icon: '<i class="hgi hgi-stroke hgi-health-insurance icon"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-health icon"></i>'
   description: "Enroll in government health insurance plans and manage your coverage"
   url: "service.html"
-  system: "Healthcare System"
+  system: "Healthcare & Social"
   most_used: true
 
 - title: "Medical Appointment Booking"
   icon: '<i class="hgi hgi-stroke hgi-calendar-03 icon"></i>'
   description: "Schedule appointments at government hospitals and healthcare facilities"
   url: "service.html"
-  system: "Healthcare System"
+  system: "Healthcare & Social"
   most_used: true
 
-- title: "Business License Application"
-  icon: '<i class="hgi hgi-stroke hgi-store-01 icon"></i>'
-  description: "Apply for commercial licenses and business permits for new ventures"
+- title: "Employment Certificate"
+  icon: '<i class="hgi hgi-stroke hgi-user-multiple icon"></i>'
+  description: "Request official employment certificates and salary statements"
   url: "service.html"
-  system: "Commerce System"
+  system: "Healthcare & Social"
+  most_used: true
 
-- title: "Property Registration"
-  icon: '<i class="hgi hgi-stroke hgi-building-02 icon"></i>'
-  description: "Register property ownership, transfers, and real estate transactions"
+- title: "Work Permit Processing"
+  icon: '<i class="hgi hgi-stroke hgi-briefcase-01 icon"></i>'
+  description: "Apply for work permits and employment authorization for foreign workers"
   url: "service.html"
-  system: "Real Estate System"
+  system: "Healthcare & Social"
+  most_used: false
 
-- title: "Building Permit Request"
-  icon: '<i class="hgi hgi-stroke hgi-structure-02 icon"></i>'
-  description: "Apply for construction permits and building approvals for residential or commercial projects"
+- title: "Retirement Benefits Application"
+  icon: '<i class="hgi hgi-stroke hgi-security-check icon"></i>'
+  description: "Apply for retirement pensions and manage your social security benefits"
   url: "service.html"
-  system: "Real Estate System"
+  system: "Healthcare & Social"
+  most_used: false
 
 - title: "Tax Declaration Filing"
   icon: '<i class="hgi hgi-stroke hgi-calculator icon"></i>'
   description: "Submit your annual tax returns and manage tax obligations online"
   url: "service.html"
-  system: "Tax System"
+  system: "Business & Finance"
   most_used: true
 
 - title: "VAT Registration"
   icon: '<i class="hgi hgi-stroke hgi-invoice-02 icon"></i>'
   description: "Register for VAT and manage value-added tax compliance for your business"
   url: "service.html"
-  system: "Tax System"
+  system: "Business & Finance"
+  most_used: false
+
+- title: "Business License Application"
+  icon: '<i class="hgi hgi-stroke hgi-store-01 icon"></i>'
+  description: "Apply for commercial licenses and business permits for new ventures"
+  url: "service.html"
+  system: "Business & Finance"
+  most_used: false
+
+- title: "Property Registration"
+  icon: '<i class="hgi hgi-stroke hgi-building-02 icon"></i>'
+  description: "Register property ownership, transfers, and real estate transactions"
+  url: "service.html"
+  system: "Business & Finance"
+  most_used: false
+
+- title: "Building Permit Request"
+  icon: '<i class="hgi hgi-stroke hgi-structure-02 icon"></i>'
+  description: "Apply for construction permits and building approvals for new projects"
+  url: "service.html"
+  system: "Business & Finance"
+  most_used: false
 
 - title: "School Enrollment"
-  icon: '<i class="hgi hgi-stroke hgi-graduation-cap icon"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-mortarboard-02 icon"></i>'
   description: "Enroll children in public schools and manage educational records"
   url: "service.html"
-  system: "Education System"
+  system: "Education & Justice"
   most_used: true
 
 - title: "Certificate Authentication"
   icon: '<i class="hgi hgi-stroke hgi-certificate-02 icon"></i>'
   description: "Authenticate academic certificates and professional credentials"
   url: "service.html"
-  system: "Education System"
-
-- title: "Visa Application"
-  icon: '<i class="hgi hgi-stroke hgi-passport-01 icon"></i>'
-  description: "Apply for entry visas for visitors, workers, or family members"
-  url: "service.html"
-  system: "Immigration System"
-
-- title: "Work Permit Processing"
-  icon: '<i class="hgi hgi-stroke hgi-briefcase-01 icon"></i>'
-  description: "Apply for work permits and employment authorization for foreign workers"
-  url: "service.html"
-  system: "Immigration System"
+  system: "Education & Justice"
+  most_used: false
 
 - title: "Court Case Filing"
   icon: '<i class="hgi hgi-stroke hgi-legal-01 icon"></i>'
   description: "File legal cases and track court proceedings through the judicial system"
   url: "service.html"
-  system: "Justice System"
-
-- title: "Marriage Contract Registration"
-  icon: '<i class="hgi hgi-stroke hgi-wedding-rings icon"></i>'
-  description: "Register marriage contracts and obtain official marriage certificates"
-  url: "service.html"
-  system: "Civil Records System"
-
-- title: "Employment Certificate"
-  icon: '<i class="hgi hgi-stroke hgi-user-multiple icon"></i>'
-  description: "Request official employment certificates and salary statements"
-  url: "service.html"
-  system: "HR System"
-  most_used: true
-
-- title: "Retirement Benefits Application"
-  icon: '<i class="hgi hgi-stroke hgi-security-check icon"></i>'
-  description: "Apply for retirement pensions and manage your social security benefits"
-  url: "service.html"
-  system: "Social Security System"
+  system: "Education & Justice"
+  most_used: false
