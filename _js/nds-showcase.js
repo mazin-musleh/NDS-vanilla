@@ -357,11 +357,15 @@
         // If button is already selected, we're deselecting → reverse explicit actions
         const isDeselecting = button.classList.contains('selected');
 
-        // Prevent deselection for attr toggles in a toggle group (must always have one active)
+        // Prevent deselection for attr toggles when other buttons share the same group
+        // (e.g., variant selectors must always have one active)
         const hasAttrOp = togglePairs.some(([,,,op]) => (op || 'class') === 'attr');
         const toggleType = togglePairs[0]?.[2] || 'default';
         if (isDeselecting && hasAttrOp && toggleType !== 'default') {
-            return;
+            const siblingsInGroup = Array.from(demoCard.querySelectorAll('[data-toggler]')).filter(btn =>
+                btn !== button && btn.getAttribute('data-toggler').includes(toggleType)
+            );
+            if (siblingsInGroup.length > 0) return;
         }
 
         togglePairs.forEach(([classNamesOrAttrs, targetSelector, type, operation, action]) => {
