@@ -22,6 +22,23 @@
 (function() {
     'use strict';
 
+    // Alert demo content — single source of truth
+    const ALERT_TITLES = { critical: 'Important:' };
+    const ALERT_MESSAGES = {
+        success: 'Operation completed successfully!',
+        warning: 'Please review your changes before proceeding.',
+        error: 'An error occurred. Please try again.',
+        info: 'This is an informational message.',
+        neutral: 'This is a neutral notification.',
+        critical: 'This is a very important banner message that requires attention'
+    };
+    const TOAST_MESSAGES = {
+        success: 'Changes saved successfully!',
+        warning: 'Your session will expire soon.',
+        error: 'Failed to complete the action.',
+        info: 'New update available for download.'
+    };
+
     // Main initialization function
     function initializeShowcase() {
         storeOriginalCodeContent();
@@ -340,6 +357,13 @@
         // If button is already selected, we're deselecting → reverse explicit actions
         const isDeselecting = button.classList.contains('selected');
 
+        // Prevent deselection for attr toggles in a toggle group (must always have one active)
+        const hasAttrOp = togglePairs.some(([,,,op]) => (op || 'class') === 'attr');
+        const toggleType = togglePairs[0]?.[2] || 'default';
+        if (isDeselecting && hasAttrOp && toggleType !== 'default') {
+            return;
+        }
+
         togglePairs.forEach(([classNamesOrAttrs, targetSelector, type, operation, action]) => {
             if (!targetSelector || (!classNamesOrAttrs && (!operation || operation === 'class'))) {
                 return;
@@ -581,21 +605,8 @@
 
         const capitalizedVariant = variant.charAt(0).toUpperCase() + variant.slice(1);
 
-        // Messages
-        const alertMessages = {
-            success: 'Operation completed successfully!',
-            warning: 'Please review your changes before proceeding.',
-            error: 'An error occurred. Please try again.',
-            info: 'This is an informational message.',
-            neutral: 'This is a neutral notification.'
-        };
-        const toastMessages = {
-            success: 'Changes saved successfully!',
-            warning: 'Your session will expire soon.',
-            error: 'Failed to complete the action.',
-            info: 'New update available for download.'
-        };
-        const messages = isToast ? toastMessages : alertMessages;
+        const messages = isToast ? TOAST_MESSAGES : ALERT_MESSAGES;
+        const title = ALERT_TITLES[variant] || capitalizedVariant;
 
         // Update JS code example
         const jsCodeElement = demoCard.querySelector('.code-example code.lang-javascript, .code-example code[class*="javascript"]');
@@ -607,7 +618,7 @@
                 // Update variant
                 updatedCode = updatedCode.replace(/variant:\s*['"][^'"]+['"]/, `variant: '${variant}'`);
                 // Update title
-                updatedCode = updatedCode.replace(/title:\s*['"][^'"]+['"]/, `title: '${capitalizedVariant}'`);
+                updatedCode = updatedCode.replace(/title:\s*['"][^'"]+['"]/, `title: '${title}'`);
                 // Update description
                 if (messages[variant]) {
                     updatedCode = updatedCode.replace(/description:\s*['"][^'"]+['"]/, `description: '${messages[variant]}'`);
@@ -634,7 +645,7 @@
                 updatedCode = updatedCode.replace(/data-status="[^"]*"/, `data-status="${variant}"`);
 
                 // Update title
-                updatedCode = updatedCode.replace(/(<span class="nds-alert-title">)[^<]+(<\/span>)/, `$1${capitalizedVariant}$2`);
+                updatedCode = updatedCode.replace(/(<span class="nds-alert-title">)[^<]+(<\/span>)/, `$1${title}$2`);
 
                 // Update description
                 if (messages[variant]) {
@@ -906,30 +917,15 @@
     function updateAlertVariantContent(alertElement, variant, demoCard) {
         const capitalizedVariant = variant.charAt(0).toUpperCase() + variant.slice(1);
 
-        // Messages for different variants
-        const alertMessages = {
-            success: 'Operation completed successfully!',
-            warning: 'Please review your changes before proceeding.',
-            error: 'An error occurred. Please try again.',
-            info: 'This is an informational message.',
-            neutral: 'This is a neutral notification.'
-        };
-
-        const toastMessages = {
-            success: 'Changes saved successfully!',
-            warning: 'Your session will expire soon.',
-            error: 'Failed to complete the action.',
-            info: 'New update available for download.'
-        };
-
         // Determine if this is a toast or regular alert
         const isToast = alertElement.classList.contains('nds-toast');
-        const messages = isToast ? toastMessages : alertMessages;
+        const messages = isToast ? TOAST_MESSAGES : ALERT_MESSAGES;
+        const title = ALERT_TITLES[variant] || capitalizedVariant;
 
         // Update title text
         const titleElement = alertElement.querySelector('.nds-alert-title');
         if (titleElement) {
-            titleElement.textContent = capitalizedVariant;
+            titleElement.textContent = title;
         }
 
         // Update description text
@@ -947,7 +943,7 @@
                 // Update title
                 updatedCode = updatedCode.replace(
                     /(<span class="nds-alert-title">)[^<]+(<\/span>)/,
-                    `$1${capitalizedVariant}$2`
+                    `$1${title}$2`
                 );
                 // Update description
                 if (messages[variant]) {
@@ -961,7 +957,7 @@
         }
 
         // Update JS code example with all current options
-        updateAlertJsCodeExample(alertElement, demoCard, variant, capitalizedVariant, messages[variant]);
+        updateAlertJsCodeExample(alertElement, demoCard, variant, title, messages[variant]);
     }
 
     // Update JS code example with all current alert options
@@ -1619,32 +1615,18 @@
             if (positionToggle) position = 'bottom';
         }
 
-        // Messages
-        const alertMessages = {
-            success: 'Operation completed successfully!',
-            warning: 'Please review your changes before proceeding.',
-            error: 'An error occurred. Please try again.',
-            info: 'This is an informational message.',
-            neutral: 'This is a neutral notification.'
-        };
-        const toastMessages = {
-            success: 'Changes saved successfully!',
-            warning: 'Your session will expire soon.',
-            error: 'Failed to complete the action.',
-            info: 'New update available for download.'
-        };
-        const messages = isToast ? toastMessages : alertMessages;
+        const messages = isToast ? TOAST_MESSAGES : ALERT_MESSAGES;
 
         if (window.NDSAlert) {
             const options = {
                 variant: variant,
-                title: variant.charAt(0).toUpperCase() + variant.slice(1),
+                title: ALERT_TITLES[variant] || variant.charAt(0).toUpperCase() + variant.slice(1),
                 description: messages[variant],
                 color: hasColor
             };
 
             if (isToast) {
-                options.toast = true;
+                options.display = 'toast';
                 options.position = position;
                 options.duration = 4000;
                 options.shadow = true;
