@@ -9,7 +9,7 @@ argument-hint: "[component-name] [optional: specific task]"
 Apply this skill to: `$ARGUMENTS`
 
 **Creating a new page**: if the arguments specify a component name only, create the full page.
-**Refining an existing page**: if `components/$0.md` exists, preserve working content and fix gaps against this skill's patterns. Do not rewrite sections that already follow the patterns correctly.
+**Refining an existing page**: if `components/$0.md` exists, run the Smart Merge process below to detect drift from SCSS/JS source and standardize all sections against current patterns.
 **Targeted edit**: if the arguments include a specific task (e.g., `modal add JS API section`), do only that task using the relevant patterns below.
 
 ## Core Principles
@@ -26,12 +26,65 @@ Apply this skill to: `$ARGUMENTS`
    - `components/alert.md` — BASE STANDARD for page structure and demo cards
    - `components/tags.md` — reference for interactive demo toggles
    - `standard-page.md` — front matter template
-2. **Read the existing page** (`components/$0.md`) if it exists — preserve working content, fix gaps against this skill's patterns
+2. **Read the existing page** (`components/$0.md`) if it exists — you will compare it against source files in the Smart Merge process
 3. **Read the component's SCSS** (`_sass/components/_$0.scss`) — extract every variant class, size, state, and accessibility feature (`@include reduced-motion`, `@include high-contrast`, `@include print-media`). The page must document all of these.
 4. **Read the component's JS** (`_js/nds-$0.js` or search `_js/` for matching file) — extract every public API method on `window.NDS*` and on the instance (e.g., `destroy()`, `getOpenItems()`), every custom event and its `detail` shape, how to access an existing instance from the DOM (e.g., `element.ndsAccordionInstance`), and every key in `handleKeyDown`. The page must document all of these.
 5. **Check `playground.md`** for existing demo HTML (if available) — use as authoritative HTML structure
 6. **Check `_data/sidemenu/sidemenu.yml`** for registration
 7. **Look up icons** in `_sass/_hgiRoundedStroke.scss` — search for contextually appropriate icon names (e.g., warning for alerts, search for search bars). **NEVER guess icon class names.**
+
+## Smart Merge Process (Existing Pages Only)
+
+After reading all source files in "Before Starting", perform these steps before making any edits:
+
+### Step 1: Build Source Inventory
+
+From the SCSS file, extract a complete list of:
+- Variant classes (e.g., `nds-outline`, `nds-color`, `nds-filled`)
+- Size classes (e.g., `nds-sm`, `nds-md`, `nds-lg`)
+- State support (disabled, selected, loading, etc.)
+- Layout modifiers (e.g., `nds-banner`, `nds-compact`, `nds-inline`)
+- Accessibility features (`@include reduced-motion`, `@include high-contrast`, `@include print-media`)
+- Any `.nds-{component}-*` modifier classes
+
+From the JS file, extract:
+- Public API methods on `window.NDS*` and on instance
+- Custom events and their `detail` shapes
+- Instance access pattern (e.g., `element.nds{Component}Instance`)
+- Keyboard handling keys
+- Auto-init selector
+
+### Step 2: Build Page Inventory
+
+From the existing doc page, list:
+- Which variants are demoed
+- Which sizes are demoed
+- Which states are shown
+- Which layout variants appear
+- What the Usage Guidelines section covers
+- Whether JS API is documented (and what methods/events)
+
+### Step 3: Diff and Classify Sections
+
+For each section of the page, classify as:
+- **CURRENT** — section content matches source inventory AND follows this skill's patterns (correct HTML structure, code tabs, toggle system). Leave untouched.
+- **INCOMPLETE** — section exists but is missing variants/sizes/states/API methods that the source defines. Add what is missing without rewriting what works.
+- **OUTDATED** — section documents things that no longer exist in source, uses old HTML patterns, has placeholder content, or contradicts this skill's structure. Rebuild the section from scratch.
+- **MISSING** — a section that should exist per Page Structure but doesn't (e.g., missing Usage Guidelines, missing layout variants). Create it.
+
+### Step 4: Execute Changes
+
+- **CURRENT** sections: skip entirely
+- **INCOMPLETE** sections: surgically add missing items (new demo cards, new toggle buttons, new content blocks, new API methods)
+- **OUTDATED** sections: rebuild using current skill patterns — get HTML structure from `components/alert.md`
+- **MISSING** sections: create from scratch following Page Structure order
+
+Report what you classified each section as and why, so the user can verify the assessment.
+
+## Related Skills
+
+- Use `/demo-content` when a component needs new or updated YAML content files for its demos
+- Use `/content-review` to audit a finished page against quality standards
 
 ## Front Matter
 
