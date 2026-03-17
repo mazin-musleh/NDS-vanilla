@@ -1490,10 +1490,10 @@
     }
 
     // Simulated server search for autocomplete demo
-    // Pre-fetches autocomplete-demo.json, then intercepts subsequent fetches to filter by query
+    // Pre-fetches services-autocomplete.json, then intercepts subsequent fetches to filter by query
     function initializeAutocompleteDemoData() {
         // Find autocomplete demo containers
-        var demoContainer = document.querySelector('.nds-form-container[data-url*="autocomplete-demo"]');
+        var demoContainer = document.querySelector('.nds-form-container[data-url*="services-autocomplete"]');
         if (!demoContainer) return;
 
         var dataUrl = demoContainer.getAttribute('data-url');
@@ -1509,7 +1509,7 @@
         // Intercept subsequent fetches to simulate server-side search
         var originalFetch = window.fetch;
         window.fetch = function(url) {
-            if (demoData && typeof url === 'string' && url.includes('autocomplete-demo')) {
+            if (demoData && typeof url === 'string' && url.includes('services-autocomplete')) {
                 var queryMatch = url.match(new RegExp('[?&]' + queryParam + '=([^&]*)'));
                 var query = queryMatch ? decodeURIComponent(queryMatch[1]) : '';
 

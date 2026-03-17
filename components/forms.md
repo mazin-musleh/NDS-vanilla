@@ -877,7 +877,7 @@ NDS.Forms.clearStatus(container);</code>
           </div>
           <div class="demo-container">
             <div class="state-demo">
-              <div class="nds-form-container" id="autocomplete-demo-container" data-url="{{ '/assets/data/autocomplete-demo.json' | relative_url }}"
+              <div class="nds-form-container" id="autocomplete-demo-container" data-url="{{ '/assets/data/services-autocomplete.json' | relative_url }}"
                 data-name="Title" data-query-param="q">
                 <div class="nds-form-header">
                   <label for="demo-autocompleteInput">
