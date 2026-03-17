@@ -99,6 +99,7 @@ exclude:
   - .sass-cache
   - .jekyll-cache
   - CLAUDE.md
+  - .claude
   - package.json
   - package-lock.json
   - notes.txt
