@@ -11,6 +11,10 @@ Apply this skill to: `$ARGUMENTS`
 **Single file** (e.g., `services`): create or refine `_data/content/$0.yml`.
 **Audit mode** (`all`): check and fix every file in `_data/content/`.
 
+## Scope
+
+This skill manages **`_data/content/` YAML files only** — reusable demo data consumed by component documentation pages. For page-level content (homepage copy, promotional text, example page prose), use `/content-review` instead. For building or refining the doc pages that consume this data, use `/doc-page`.
+
 ## Why This Matters
 
 Component documentation pages pull demo content from `_data/content/` YAML files. When this content has broken icons, placeholder text, or inconsistent structure, every demo that references it looks broken or unprofessional. These files are the single source of truth for demo content across the entire design system — getting them right means every component page automatically looks polished.
@@ -112,3 +116,8 @@ When the content is unique to a JS component and doesn't overlap with YAML conte
 3. Report which icons are broken and what you replaced them with
 4. Flag any placeholder-quality content and improve it
 5. Check for structural consistency within each file (same fields across entries)
+
+## Related Skills
+
+- `/doc-page` — creates and refines the component documentation pages that consume this content
+- `/content-review` — audits page-level content quality and writes promotional copy
