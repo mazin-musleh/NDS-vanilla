@@ -8,7 +8,16 @@ argument-hint: "[component-name] [optional: specific task]"
 
 Apply this skill to: `$ARGUMENTS`
 
-If the arguments specify a component name only, create or fully refine the page. If they include a specific task (e.g., `modal add JS API section`), do only that task using the relevant patterns below.
+**Creating a new page**: if the arguments specify a component name only, create the full page.
+**Refining an existing page**: if `components/$0.md` exists, preserve working content and fix gaps against this skill's patterns. Do not rewrite sections that already follow the patterns correctly.
+**Targeted edit**: if the arguments include a specific task (e.g., `modal add JS API section`), do only that task using the relevant patterns below.
+
+## Core Principles
+
+- Every code example must **work immediately** when copy-pasted — no missing dependencies, no placeholder text
+- Use **plain language** in descriptions — avoid design-system jargon
+- Consistent, predictable page structure across all component pages
+- Pages serve as a **copy-paste library** — cover all component variants and states with real, working examples
 
 ## Before Starting
 
@@ -19,11 +28,14 @@ If the arguments specify a component name only, create or fully refine the page.
    - `standard-page.md` — front matter template
 2. **Read the existing page** (`components/$0.md`) if it exists — preserve working content, fix gaps against this skill's patterns
 3. **Read the component's SCSS** (`_sass/components/_$0.scss`) for variants, sizes, states
-4. **Read the component's JS** (`_js/$0.js` or similar) for API, methods, events — determines if demos need custom JS
-5. **Check `playground.md`** for existing demo HTML — use as authoritative HTML structure
+4. **Read the component's JS** (`_js/nds-$0.js` or search `_js/` for matching file) for API, methods, events — determines JS documentation tier
+5. **Check `playground.md`** for existing demo HTML (if available) — use as authoritative HTML structure
 6. **Check `_data/sidemenu/sidemenu.yml`** for registration
+7. **Look up icons** in `_sass/_hgiRoundedStroke.scss` — search for contextually appropriate icon names (e.g., warning for alerts, search for search bars). **NEVER guess icon class names.**
 
 ## Front Matter
+
+All documentation pages are **English, LTR**. Always set `lang: en` and `direction: ltr` in front matter.
 
 Use `standard-page.md` as template. Do NOT use `layout_class: cardView` or `topSubMenu`.
 
@@ -34,10 +46,16 @@ Section 1: Overview / Main Demo → demo cards with toggle controls
 Section 2: Variants (if applicable)
 Section 3: Sizes (if applicable)
 Section 4: States (if applicable)
-Section 5: Usage Guidelines → content blocks with guidance
+Section 5: Usage Guidelines → content blocks with guidance + JS API (if applicable)
 ```
 
 Get section, demo card, and code tab HTML structure from `components/alert.md`.
+
+### Variant organization
+
+- **Simple class-based variants** (style, size): use `data-toggler` buttons within a single demo card
+- **Structurally different variants** (different HTML structure): separate demo cards with their own code examples
+- Cover **all** component variants and states — every variant the SCSS defines should appear on the page
 
 ## Toggle System
 
@@ -64,23 +82,34 @@ Multi:   data-toggler='[["value", ".target", "group", "op", "action"], [...]]'
 | Style variant | `'["nds-outline", ".nds-tag", "styleToggle"]'` |
 | Size | `'["nds-sm", ".nds-tag", "sizeToggle"]'` |
 | Icon prepend | `'["<i class=\"hgi hgi-stroke hgi-icon icon\"></i>", ".nds-tag", "iconToggle", "content-prepend"]'` |
-| Dark bg + oncolor | `'[["darkBg", ".demo-container", "containerBg"], ["nds-oncolor", ".nds-btn", "containerBg", "class", "add"]]'` |
 | Attribute toggle | `'["data-status=success", ".nds-alert", "alertVariant", "attr"]'` |
 | Boolean prop | `'["indeterminate", ".nds-checkbox", "propToggle", "prop"]'` |
 
 Buttons auto-scope to parent `.nds-demo-card`, handle mutual exclusion, and sync `<code>` blocks automatically.
 
+## Demo Content
+
+Use curated content from `_data/content/` YAML files for demo text, titles, descriptions, and icons. This ensures demos look polished with real, verified content instead of ad-hoc placeholders.
+
+- **Check existing files** in `_data/content/` first (e.g., `services.yml` has titles, icons, descriptions)
+- **Create new YAML files** in `_data/content/` when a component needs content that doesn't exist yet (e.g., `notifications.yml`, `users.yml`, `table-rows.yml`)
+- Follow the same structure as `services.yml` — each entry should have contextually appropriate fields and verified icon classes
+- Reference content directly in demo HTML — do not invent placeholder text like "Lorem ipsum" or "Sample title"
+
 ## Code Examples
 
 Code tabs in demo cards are for **copy-paste implementation code only** — NOT documentation or API reference.
 
+- **Code must be production-ready markup** — what users would actually write in their project (no demo wrappers, no showcase classes)
+- **Code must reflect the demo** — same component structure, classes, and attributes as the rendered demo
+- **Use unique IDs** per demo card: `{component}-{variant}-{number}` (e.g., `modal-default-1`, `alert-success-2`) to avoid conflicts when users copy multiple examples
 - **HTML tab**: markup to render the component
-- **JS tab**: only when JS is **required** to create/initialize the component (e.g., `NDSChart.create()`, `NDSAlert.create()`). Do NOT add a JS tab for optional JS (e.g., modal works via `data-modal-target` — `NDSModal.open()` is optional, document it in Usage Guidelines instead)
+- **JS tab**: only when JS is **required** to create/initialize the component (e.g., `NDSChart.create()`, `NDSAlert.create()`). Do NOT add a JS tab for optional JS — document it in Usage Guidelines instead
 - For long code (>15 lines), add `nds-expandable` to the tab panel and wrap `<code>` in `<div class="nds-expandable-content">`
 
 ## Overlay & Trigger Components
 
-Modal, drawer, dropmenu need a **trigger button** + hidden component markup inside `.state-demo`. Check the component's JS for trigger attribute (e.g., `data-modal-target`, `data-drawer-target`). Toggle buttons in `.demo-action` still work via `data-toggler` on the hidden component.
+Modal, drawer, dropmenu need a **trigger button** + hidden component markup inside `.state-demo`. Check the component's JS for trigger attribute (e.g., `data-modal-target`, `data-drawer-target`). Toggle buttons in `.demo-action` still work via `data-toggler` on the hidden component. See `components/modal.md` for the pattern.
 
 ## Custom JS Showcase
 
@@ -98,19 +127,31 @@ For demos needing JS beyond `data-toggler`. Any demo-wiring JS goes in `_js/nds-
 
 For page-level scripts, wrap in `DOMContentLoaded`. For inline scripts, toggle `selected` class on button and update `<code>` innerHTML to keep code in sync.
 
+## JS Initialization & API Documentation
+
+Components auto-initialize via `nds-loader.js` — no manual initialization is needed. Document this in Usage Guidelines for every component that has JS.
+
+### Tiered approach
+
+1. **Read the component's JS file** (`_js/nds-$0.js`) and look for `window.NDS*` exports — these are the public APIs
+2. **All components with JS**: add a note in Usage Guidelines that the component initializes automatically
+3. **Components with a public API** (methods like `open()`, `close()`, `create()`, or custom events): add a full JS API section in Usage Guidelines with a standalone `nds-code nds-expandable` block. Use inline comments to explain methods and events. See `components/modal.md` for an example.
+
 ## Content Blocks (Usage Guidelines)
 
 Use `nds-content-block` with `nds-block-title` for text guidance. Get HTML structure from `components/alert.md`.
-
-For JS API documentation, use a standalone `nds-code nds-expandable` block (NOT inside demo card tabs) with inline comments explaining methods/events. See `components/modal.md` for an example.
 
 Rules:
 - Use raw HTML inside `<code>` blocks — never HTML entities
 - Do NOT use inline `<code>` tags in descriptions
 
+## Dark Mode
+
+Do NOT add custom background classes (`.dark-bg`, `.green-bg`, `.black-bg`) to demo containers. Design tokens handle light/dark mode automatically via the global `data-theme` toggle. Do not add demo-specific style overrides — use existing components and token-based styling only.
+
 ## Registration Checklist
 
-1. **New components**: create SCSS file, add `@use` to `assets/css/nds-main.min.scss`
+1. **New components only**: create SCSS file, add `@use` to `assets/css/nds-main.min.scss` (skip for existing components)
 2. **Sidemenu**: add to `_data/sidemenu/sidemenu.yml` under correct parent
 3. **Build test**: run `bundle exec jekyll build`
 4. **Tab/Panel IDs**: use `panel-{component}-{variant}-{number}` / `tab-{component}-{variant}-{number}` pattern
