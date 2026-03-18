@@ -13,7 +13,7 @@ Apply this skill to: `$ARGUMENTS`
 
 ## Scope
 
-This skill manages **`_data/content/` YAML files only** — reusable demo data consumed by component documentation pages. For page-level content (homepage copy, promotional text, example page prose), use `/content-review` instead. For building or refining the doc pages that consume this data, use `/doc-page`.
+This skill manages **`_data/content/` YAML files only** — reusable demo data consumed by documentation and example pages. For building or refining doc pages that consume this data, use `/doc-page`. For example and promotional pages, use `/example-page`.
 
 ## Why This Matters
 
@@ -117,7 +117,18 @@ When the content is unique to a JS component and doesn't overlap with YAML conte
 4. Flag any placeholder-quality content and improve it
 5. Check for structural consistency within each file (same fields across entries)
 
+## Discovering Content Consumption
+
+Before creating or modifying a content file, discover which pages currently consume it:
+
+1. **Grep for Liquid references**: search all `.md` files for `site.data.content.{filename}` to find pages that loop over this content
+2. **Grep for JSON endpoints**: search `assets/data/` for files that reference `site.data.content.{filename}` to find AJAX consumers
+3. **Check if the content type exists**: list files in `_data/content/` — most content types defined in Content Categories above are not yet created
+
+Create new YAML files on-demand when `/doc-page` or `/example-page` needs them for a specific page.
+
 ## Related Skills
 
-- `/doc-page` — creates and refines the component documentation pages that consume this content
-- `/content-review` — audits page-level content quality and writes promotional copy
+- `/doc-page` — creates and refines the documentation pages that consume this content
+- `/example-page` — creates example/promotional pages that may use Liquid data loops from this content
+- `/content-review` — audits site-wide health including icon validation in content files

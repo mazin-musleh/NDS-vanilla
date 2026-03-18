@@ -972,7 +972,7 @@ const alert = NDS.Alert.create({
             class: 'nds-btn nds-primary nds-sm',  // Custom classes (overrides variant/size)
             onClick: (el) => {},  // Callback, receives the alert element
             dismiss: false,       // Auto-dismiss after click (default: false)
-            href: '/url',         // Render as &lt;a&gt; link instead of &lt;button&gt; (optional)
+            href: '/url',         // Render as <a> link instead of <button> (optional)
             target: '_blank'      // Link target attribute (optional, requires href)
         }
     ]

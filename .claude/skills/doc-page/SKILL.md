@@ -1,15 +1,60 @@
 ---
 name: doc-page
-description: Work with NDS component/page documentation — create new pages, refine existing ones, add sections, fix code tabs, update guidelines, or any task involving doc pages. Use this skill whenever the task involves a component documentation page (components/*.md), demo cards, code examples, toggle controls, or usage guidelines sections.
-argument-hint: "[component-name] [optional: specific task]"
+description: Work with NDS documentation pages — create new pages, refine existing ones, add sections, fix code tabs, update guidelines. Covers all doc page categories: components (components/*.md), UI Shell (ui-shell/*.md), layout (layout/*.md), and utilities (utilities/*.md). Use this skill for any task involving demo cards, code examples, toggle controls, or usage guidelines sections.
+argument-hint: "[name] [optional: specific task]"
 ---
 
 # NDS Documentation Page
 
 Apply this skill to: `$ARGUMENTS`
 
-**Creating a new page**: if the arguments specify a component name only, create the full page.
-**Refining an existing page**: if `components/$0.md` exists, run the Smart Merge process below to detect drift from SCSS/JS source and standardize all sections against current patterns.
+## Scope
+
+This skill handles documentation pages in **four categories**:
+
+| Category | Directory | SCSS source | Example |
+|----------|-----------|-------------|---------|
+| Components | `components/` | `_sass/components/` | `accordion`, `modal`, `tags` |
+| UI Shell | `ui-shell/` | `_sass/components/` | `header`, `side-nav`, `footer` |
+| Layout | `layout/` | `_sass/layout/` | `grid`, `section`, `content-grid` |
+| Utilities | `utilities/` | `_sass/` or `_sass/layout/` | `expandable-content`, `numbers`, `truncate-text` |
+
+### Page Resolution
+
+Resolve the target page path from `$0` (the first argument) by searching:
+
+1. Glob for `$0.md` across `components/`, `ui-shell/`, `layout/`, `utilities/`
+2. If found → use that path and its category
+3. If not found → creating a new page (default to `components/`)
+
+### Source File Discovery
+
+Page names don't always match their SCSS/JS filenames. **Never assume** — always discover by searching:
+
+**SCSS discovery** — search in order, stop at first match:
+1. Glob `_sass/components/_$0.scss` (exact match)
+2. Glob `_sass/layout/_$0.scss` (layout category)
+3. Glob `_sass/components/_$0*.scss` and `_sass/components/_*$0*.scss` (partial match — handles plurals like `button` → `_buttons.scss`)
+4. Glob `_sass/layout/_*$0*.scss` (partial in layout — handles camelCase like `truncate-text` → `_truncateText.scss`)
+5. If no match found, grep `_sass/` for the component's root class (e.g., `.nds-$0`) to find which file defines it
+
+**JS discovery** — search in order, stop at first match:
+1. Glob `_js/nds-$0.js` (exact match)
+2. Glob `_js/nds-*$0*.js` (partial match — handles camelCase like `side-nav` → `nds-sideMenu.js`)
+3. Grep `_js/` for `window.NDS` exports related to the component name (e.g., grep for the PascalCase form)
+4. If no match → component has no JS (CSS-only)
+
+### Category Adaptation
+
+- **Components**: full treatment — variants, sizes, states, JS API, usage guidelines
+- **UI Shell**: full treatment — these are interactive components with SCSS + JS
+- **Utilities**: full treatment — have SCSS + JS, follow same demo-card pattern
+- **Layout**: lighter treatment — skip Variants/States sections, focus on CSS custom properties, grid demos, responsive behavior. Usage Guidelines focus on when to use each layout pattern.
+
+## Modes
+
+**Creating a new page**: if the arguments specify a name only and no page exists, create the full page.
+**Refining an existing page**: if the page exists, run the Smart Merge process below to detect drift from SCSS/JS source and standardize all sections against current patterns.
 **Targeted edit**: if the arguments include a specific task (e.g., `modal add JS API section`), do only that task using the relevant patterns below.
 
 ## Core Principles
@@ -26,9 +71,9 @@ Apply this skill to: `$ARGUMENTS`
    - `components/alert.md` — BASE STANDARD for page structure and demo cards
    - `components/tags.md` — reference for interactive demo toggles
    - `standard-page.md` — front matter template
-2. **Read the existing page** (`components/$0.md`) if it exists — you will compare it against source files in the Smart Merge process
-3. **Read the component's SCSS** (`_sass/components/_$0.scss`) — extract every variant class, size, state, and accessibility feature (`@include reduced-motion`, `@include high-contrast`, `@include print-media`). The page must document all of these.
-4. **Read the component's JS** (`_js/nds-$0.js` or search `_js/` for matching file) — extract every public API method on `window.NDS*` and on the instance (e.g., `destroy()`, `getOpenItems()`), every custom event and its `detail` shape, how to access an existing instance from the DOM (e.g., `element.ndsAccordionInstance`), and every key in `handleKeyDown`. The page must document all of these.
+2. **Resolve the page path** using Page Resolution above, then **read the existing page** if it exists — you will compare it against source files in the Smart Merge process
+3. **Discover the SCSS file** using Source File Discovery above, then **read it** — extract every variant class, size, state, and accessibility feature (`@include reduced-motion`, `@include high-contrast`, `@include print-media`). The page must document all of these.
+4. **Discover the JS file** using Source File Discovery above, then **read it** — extract every public API method on `window.NDS*` and on the instance (e.g., `destroy()`, `getOpenItems()`), every custom event and its `detail` shape, how to access an existing instance from the DOM (e.g., `element.ndsAccordionInstance`), and every key in `handleKeyDown`. The page must document all of these.
 5. **Check `playground.md`** for existing demo HTML (if available) — use as authoritative HTML structure
 6. **Check `_data/sidemenu/sidemenu.yml`** for registration
 7. **Look up icons** in `_sass/_hgiRoundedStroke.scss` — search for contextually appropriate icon names (e.g., warning for alerts, search for search bars). **NEVER guess icon class names.**
@@ -72,19 +117,35 @@ For each section of the page, classify as:
 - **OUTDATED** — section documents things that no longer exist in source, uses old HTML patterns, has placeholder content, or contradicts this skill's structure. Rebuild the section from scratch.
 - **MISSING** — a section that should exist per Page Structure but doesn't (e.g., missing Usage Guidelines, missing layout variants). Create it.
 
-### Step 4: Execute Changes
+### Step 4: Report Classification (Self-Audit)
+
+Before making any edits, present the classification report to the user:
+
+```
+## {Name} — Smart Merge Report
+
+### Section Status
+- Overview: CURRENT | INCOMPLETE (missing: ...) | OUTDATED (...) | MISSING
+- Variants: ...
+- Sizes: ...
+- States: ...
+- Usage Guidelines > Built-in Features: ...
+- Usage Guidelines > When to Use: ...
+- Usage Guidelines > JavaScript API: ...
+
+### Actions Planned
+- CURRENT sections: skip (no changes)
+- INCOMPLETE sections: add [specific items]
+- OUTDATED sections: rebuild [specific sections]
+- MISSING sections: create [specific sections]
+```
+
+Then execute the changes:
 
 - **CURRENT** sections: skip entirely
 - **INCOMPLETE** sections: surgically add missing items (new demo cards, new toggle buttons, new content blocks, new API methods)
 - **OUTDATED** sections: rebuild using current skill patterns — get HTML structure from `components/alert.md`
 - **MISSING** sections: create from scratch following Page Structure order
-
-Report what you classified each section as and why, so the user can verify the assessment.
-
-## Related Skills
-
-- Use `/demo-content` when a component needs new or updated YAML content files for its demos
-- Use `/content-review` to audit a finished page against quality standards
 
 ## Front Matter
 
@@ -219,6 +280,7 @@ Do NOT add custom background classes (`.dark-bg`, `.green-bg`, `.black-bg`) to d
 ## Registration Checklist
 
 1. **New components only**: create SCSS file, add `@use` to `assets/css/nds-main.min.scss` (skip for existing components)
-2. **Sidemenu**: add to `_data/sidemenu/sidemenu.yml` under correct parent
+2. **Sidemenu**: add to `_data/sidemenu/sidemenu.yml` under correct parent (Components, UI Shell, Layout, or Utilities)
 3. **Build test**: run `bundle exec jekyll build`
 4. **Tab/Panel IDs**: use `panel-{component}-{variant}-{number}` / `tab-{component}-{variant}-{number}` pattern
+5. **Breadcrumb**: set to match the category — `["Components"]`, `["UI Shell"]`, `["Layout"]`, or `["Utilities"]`

@@ -1,143 +1,186 @@
 ---
 name: content-review
-description: Audit and improve content quality on any .md page in the project. For component doc pages (components/*.md), audits against doc-page skill standards and reports gaps. For all other pages, writes and refines polished English promotional/informational content. Use this skill for homepage polish, writing new promotional pages, auditing doc page quality, or any content writing task.
-argument-hint: "[page-path or 'audit' for bulk doc page audit]"
+description: Site-wide health auditor for the NDS project. Runs lightweight checks on any single page or bulk-scans all directories for broken icons, placeholder text, undocumented components, and sidemenu coherence. Use this skill to audit site health, validate icons, check coverage, or find stale/broken content anywhere in the project.
+argument-hint: "[page-path | 'audit' | 'icons' | 'coverage']"
 ---
 
-# Content Review
+# Content Review — Site Health Auditor
 
 Apply this skill to: `$ARGUMENTS`
 
 **Mode detection** — based on the argument:
-- Path starting with `components/` → **Doc Audit Mode**
-- The word `audit` → **Bulk Audit Mode**
-- Any other path → **Content Writing Mode**
+- A page path (e.g., `components/accordion.md`, `examples/dashboard-demo.md`) → **Page Health Check**
+- `audit` → **Full Site Audit**
+- `icons` → **Icon Validation**
+- `coverage` → **Coverage Report**
+
+This skill is **read-only** — it reports issues but does NOT modify files. It directs users to the appropriate skill for fixes:
+- Doc pages → `/doc-page`
+- Example/promotional pages → `/example-page`
+- YAML content data → `/demo-content`
 
 ---
 
-## Doc Audit Mode
+## Page Health Check
 
-Audit a single component doc page against `/doc-page` skill standards.
+Lightweight health check on any single page. Does NOT run Smart Merge (that's `/doc-page`'s job). Checks structural health only.
 
 ### Steps
 
-1. **Read the page** (`components/{name}.md`)
-2. **Read the component's SCSS** (`_sass/components/_{name}.scss`) — extract all variant classes, sizes, states, layout modifiers, accessibility features
-3. **Read the component's JS** (search `_js/` for matching file) — extract public API methods, events, keyboard handling, auto-init selector
-4. **Build Source Inventory vs Page Inventory** — same as the doc-page Smart Merge process
-5. **Classify each section** as CURRENT, INCOMPLETE, OUTDATED, or MISSING
+1. **Read the target page**
+2. **Icon validation**: grep all `hgi-*` classes on the page, verify each exists in `_sass/_hgiRoundedStroke.scss`
+3. **Placeholder text detection**: scan for Lorem ipsum, "Sample", "Test", generic "Tag 1/2/3", "Content coming soon"
+4. **Component class validation**: grep all `nds-*` classes used, verify each exists in `_sass/components/` or `_sass/layout/`
+5. **Sidemenu registration**: check that the page has an entry in `_data/sidemenu/sidemenu.yml`
+6. **Front matter**: verify `lang`, `direction`, `breadcrumb` are set
 
 ### Output
 
-Report as a structured list:
-
 ```
-## {Component Name} — Audit Report
+## {Page Name} — Health Check
 
-**Overall**: Good / Needs Work / Outdated
+**Overall**: Healthy / Issues Found
 
-### Section Status
-- Overview: CURRENT | INCOMPLETE (missing: nds-compact variant) | OUTDATED (old toggle pattern) | MISSING
-- Variants: ...
-- Layout Variants: ...
-- States: ...
-- Usage Guidelines > Built-in Features: ...
-- Usage Guidelines > When to Use: ...
-- Usage Guidelines > JavaScript API: ...
-
-### Front Matter
-- lang/direction: ✓ | ✗
-- breadcrumb: ✓ | ✗
-
-### Code Quality
-- Tab/panel IDs follow pattern: ✓ | ✗
-- Code matches demo HTML: ✓ | ✗
-- No placeholder text: ✓ | ✗
+### Checks
+- Icons: ✓ | ✗ (list broken icons)
+- Placeholder text: ✓ | ✗ (list occurrences)
+- Component classes: ✓ | ✗ (list unknown classes)
+- Sidemenu: ✓ | ✗
+- Front matter: ✓ | ✗ (list missing fields)
 
 ### Recommendation
-Run `/doc-page {name}` to fix these issues.
+Run `/doc-page {name}` or `/example-page {name}` to fix.
 ```
-
-Do NOT modify the page — only report. Direct the user to `/doc-page` for fixes.
 
 ---
 
-## Bulk Audit Mode
+## Full Site Audit
 
-Scan all component doc pages and produce a prioritized summary.
+Scan ALL documentation and example pages across the project. Produces a prioritized health summary.
+
+### Directories Scanned
+
+- `components/` — component documentation
+- `ui-shell/` — UI Shell documentation
+- `layout/` — layout documentation
+- `utilities/` — utility documentation
+- `examples/` — example and promotional pages
 
 ### Steps
 
-1. List all `.md` files in `components/`
-2. For each page, perform a lightweight check:
-   - **Front matter**: has `lang: en` and `direction: ltr`?
-   - **Usage Guidelines**: has `nds-content-block` with Built-in Features, When to Use?
-   - **JS API**: if component has a JS file in `_js/`, does the page document the JS API?
-   - **Code tabs**: does each `nds-demo-card` have a `demo-code` section with tabs?
-   - **Demo content**: uses real content (not "Lorem ipsum", "Sample", "Test")?
-3. For components with SCSS, check if the number of variant demo cards roughly matches the number of variants in SCSS
+1. **List all `.md` files** across all five directories
+2. **For each page**, run lightweight checks:
+   - **Front matter**: has `lang` and `direction`?
+   - **Icons**: any `hgi-*` classes that don't exist in the font?
+   - **Placeholder text**: any Lorem ipsum, "Sample", "Test", "Content coming soon"?
+   - **Usage Guidelines** (doc pages only): has `nds-content-block` with Built-in Features, When to Use?
+   - **JS API** (doc pages only): if component has a JS file in `_js/`, does the page document the JS API?
+   - **Code tabs** (doc pages only): does each `nds-demo-card` have a `demo-code` section?
+   - **Component classes** (example pages): do all `nds-*` classes still exist in SCSS?
+3. **Run Coverage Report** (see below) as part of the audit
+4. **Run Sidemenu Coherence Check**:
+   - Every page in the scanned directories has a sidemenu entry
+   - Every sidemenu entry points to a page that exists
 
 ### Output
 
-Summary table sorted by severity (worst first):
-
 ```
-## Doc Page Audit — All Components
+## Site Health Audit
 
-| Component | Status | Issues |
-|-----------|--------|--------|
-| checkbox  | Outdated | No Usage Guidelines, missing JS API, placeholder text |
-| stepper   | Needs Work | Missing Built-in Features block, 2 variants not demoed |
-| alert     | Good | All sections present and current |
-| ...       | ...    | ... |
+### Doc Pages
+| Page | Category | Status | Issues |
+|------|----------|--------|--------|
+| accordion | Component | Good | — |
+| expandable-content | Utility | Needs Work | Placeholder text (Lorem ipsum) |
+| header | UI Shell | Outdated | "Content coming soon" stub |
+
+### Example Pages
+| Page | Status | Issues |
+|------|--------|--------|
+| services-list | Good | — |
+| dashboard-demo | Needs Work | 2 broken icons |
+
+### Coverage Gaps
+(see Coverage Report output)
+
+### Sidemenu Coherence
+- Missing entries: [pages without sidemenu registration]
+- Dead links: [sidemenu entries pointing to non-existent pages]
 
 ### Priority Order
-1. checkbox — run `/doc-page checkbox`
-2. stepper — run `/doc-page stepper`
-...
+1. header — run `/doc-page header` (stub page)
+2. expandable-content — run `/doc-page expandable-content` (placeholder text)
+3. dashboard-demo — run `/example-page dashboard-demo` (broken icons)
 ```
 
 ---
 
-## Content Writing Mode
+## Icon Validation
 
-Write or refine content for any non-component page (homepage, examples, getting-started, etc.).
+Scan all `.md` files and `_data/` YAML files for `hgi-*` icon classes and validate against the font.
 
-### Before Starting
+### Steps
 
-1. **Read the target page** if it exists
-2. **Read `layout/section.md`** for section hierarchy and structure patterns
-3. **Read `standard-page.md`** or `subsite.md` for front matter template
-4. **Check `_sass/_hgiRoundedStroke.scss`** — verify every icon class used on the page exists
+1. **Grep all files** for `hgi-` class patterns:
+   - All `.md` files in `components/`, `ui-shell/`, `layout/`, `utilities/`, `examples/`, and root
+   - All `.yml` files in `_data/`
+2. **Extract unique icon class names** (e.g., `hgi-search-01`, `hgi-award-03`)
+3. **Verify each** against `_sass/_hgiRoundedStroke.scss`
+4. **Report broken icons** with file locations
 
-### Content Principles
+### Output
 
-- **Two audiences**: developers (want technical specifics, code examples, API docs) and decision-makers (want value propositions, capabilities, scope)
-- **Concrete over generic**: "33 production-ready components with dark mode, RTL support, and WCAG 2.1 AA compliance" beats "A comprehensive design system"
-- **No placeholder text**: every heading, description, and list item should be meaningful and specific
-- **Verified icons only**: grep every `hgi-*` class against `_sass/_hgiRoundedStroke.scss` — broken icons are worse than no icons
-- **NDS components in the page**: promotional pages should use real NDS components (cards, grids, sections, buttons) — the page itself is a live showcase
-- **Professional English**: clear, concise, Saudi government context. All content is fictional for demo purposes.
+```
+## Icon Validation Report
 
-### For Existing Pages — Audit and Fix
+**Total unique icons used**: 85
+**Valid**: 82
+**Broken**: 3
 
-1. Check for broken icons (grep against `_hgiRoundedStroke.scss`)
-2. Check for placeholder or generic copy
-3. Check section structure matches `layout/section.md` patterns
-4. Check that NDS components are used correctly (proper class names, attributes)
-5. Rewrite weak sections with concrete, specific content
-
-### For New Pages
-
-1. Use `standard-page.md` front matter template
-2. Set `lang: en`, `direction: ltr`
-3. Build page using NDS section hierarchy from `layout/section.md`
-4. Register in `_data/sidemenu/sidemenu.yml`
-5. Verify build: `bundle exec jekyll build`
+### Broken Icons
+| Icon class | Files using it |
+|------------|----------------|
+| hgi-old-icon | examples/dashboard-demo.md (line 45) |
+| hgi-removed | _data/content/services.yml (line 12) |
+```
 
 ---
 
-## Related Skills
+## Coverage Report
 
-- `/doc-page` — creates and refines component documentation pages (the skill this audit mode measures against)
-- `/demo-content` — manages `_data/content/` YAML files for demo data
+Cross-reference SCSS component files and JS files against existing documentation pages to find undocumented components.
+
+### Steps
+
+1. **List all SCSS files** in `_sass/components/`
+2. **List all JS files** in `_js/` that are component files (exclude `nds-core.js`, `nds-loader.js`, `nds-showcase.js`, `nds-fontLoading.js`)
+3. **List all doc pages** across `components/`, `ui-shell/`, `layout/`, `utilities/`
+4. **Cross-reference** using the name-mapping table from `/doc-page` SKILL.md:
+   - Which SCSS files have NO matching doc page?
+   - Which JS files have NO matching doc page?
+   - Which doc pages have NO matching SCSS file? (orphaned docs)
+
+### Output
+
+```
+## Coverage Report
+
+**SCSS components**: 43 | **Documented**: 33 | **Coverage**: 77%
+
+### Undocumented Components (have SCSS but no doc page)
+| SCSS file | JS file | Suggested action |
+|-----------|---------|------------------|
+| _autocomplete.scss | nds-autocomplete.js | `/doc-page autocomplete` |
+| _cookie.scss | nds-cookies.js | `/doc-page cookie` |
+| _user-feedback.scss | nds-user-feedback.js | `/doc-page user-feedback` |
+| _hero.scss | — | Internal (hero section styling) — may not need docs |
+| _backdrop.scss | nds-backdrop.js | Internal (used by modal/drawer) — may not need docs |
+| _DGAdigitalStamp.scss | — | Internal (DGA compliance badge) — may not need docs |
+
+### JS-only modules (no SCSS, no doc page)
+| JS file | Purpose | Suggested action |
+|---------|---------|------------------|
+| nds-theme.js | Theme switching | Consider utility doc page |
+| nds-share.js | Share functionality | Consider utility doc page |
+| nds-cookies.js | Cookie consent | `/doc-page cookie` |
+```
