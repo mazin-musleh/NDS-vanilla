@@ -69,11 +69,7 @@
         {
             name: 'numbers',
             selector: '.nds-number-format, .nds-counter-value',
-            init: () => {
-                // Run both formatting and counter setup regardless of return values
-                window.NDSNumbers?.formatNumbers?.();
-                window.NDSNumbers?.setupCounterAnimations?.();
-            },
+            init: () => window.NDSNumbers?.init?.(),
         },
         {
             name: 'code',
@@ -119,7 +115,7 @@
         {
             name: 'rating',
             selector: '.nds-rating',
-            init: () => window.NDSRating?.initializeRatings?.(),
+            init: () => window.NDSRating?.init?.(),
         },
         {
             name: 'expandable',

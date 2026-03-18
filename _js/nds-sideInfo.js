@@ -109,6 +109,7 @@
     // Export to window
     window.NDSSideInfo = {
         init: initializeComponents,
+        reinit: initializeComponents,
         create: (element) => {
             const instance = new NDSSideInfo(element);
             element._ndsSideInfo = instance;

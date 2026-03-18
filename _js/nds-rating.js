@@ -232,6 +232,8 @@ NDSRating.enableRating = function(element) {
 // Expose to window for nds-loader.js
 window.NDSRating = window.NDSRating || {};
 window.NDSRating.initializeRatings = initializeRatings;
+window.NDSRating.init = initializeRatings;
+window.NDSRating.reinit = initializeRatings;
 
 // Watch for dynamically added ratings
 NDS.onDOMAdd('.nds-rating', (nodes) => {

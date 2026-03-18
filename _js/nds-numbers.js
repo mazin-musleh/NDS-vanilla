@@ -194,7 +194,15 @@
     if (typeof window !== 'undefined') {
         window.NDSNumbers = {
             formatNumbers,
-            setupCounterAnimations
+            setupCounterAnimations,
+            init() {
+                formatNumbers();
+                setupCounterAnimations();
+            },
+            reinit() {
+                formatNumbers();
+                setupCounterAnimations();
+            }
         };
     }
 
