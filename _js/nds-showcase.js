@@ -23,7 +23,8 @@
     'use strict';
 
     // Alert demo content — single source of truth
-    const ALERT_TITLES = { critical: 'Important:' };
+    const ALERT_TITLES = {};
+    const INLINE_TITLES = { critical: 'Important:', success: 'Success:', info: 'Information:', warning: 'Warning:', neutral: 'Notification:' };
     const ALERT_MESSAGES = {
         success: 'Operation completed successfully!',
         warning: 'Please review your changes before proceeding.',
@@ -610,7 +611,10 @@
         const capitalizedVariant = variant.charAt(0).toUpperCase() + variant.slice(1);
 
         const messages = isToast ? TOAST_MESSAGES : ALERT_MESSAGES;
-        const title = ALERT_TITLES[variant] || capitalizedVariant;
+        const alertEl = demoCard.querySelector('.nds-alert');
+        const isInline = alertEl && alertEl.classList.contains('nds-inline');
+        const titles = isInline ? INLINE_TITLES : ALERT_TITLES;
+        const title = titles[variant] || capitalizedVariant;
 
         // Update JS code example
         const jsCodeElement = demoCard.querySelector('.code-example code.lang-javascript, .code-example code[class*="javascript"]');
@@ -923,8 +927,10 @@
 
         // Determine if this is a toast or regular alert
         const isToast = alertElement.classList.contains('nds-toast');
+        const isInline = alertElement.classList.contains('nds-inline');
         const messages = isToast ? TOAST_MESSAGES : ALERT_MESSAGES;
-        const title = ALERT_TITLES[variant] || capitalizedVariant;
+        const titles = isInline ? INLINE_TITLES : ALERT_TITLES;
+        const title = titles[variant] || capitalizedVariant;
 
         // Update title text
         const titleElement = alertElement.querySelector('.nds-alert-title');

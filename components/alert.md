@@ -536,6 +536,10 @@ direction: ltr
                         <div class="demo-label">Inline</div>
                         <div class="demo-action">
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["data-status=success", ".nds-alert", "inlineVariant", "attr"]'>
+                                <span class="label">Success</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["data-status=neutral", ".nds-alert", "inlineVariant", "attr"]'>
                                 <span class="label">Neutral</span>
                             </button>

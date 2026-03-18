@@ -337,6 +337,10 @@
       display: inline;
     }
 
+    .nds-alert-title {
+      margin-inline-end: var(--spacing-sm);
+    }
+
     @include mobile {
       .nds-alert-actions {
         flex: 1 1 100%;
