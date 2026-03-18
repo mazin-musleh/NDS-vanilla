@@ -1,7 +1,10 @@
 /**
  * NDS Loading Component
- * Add .nds-loading to any element to show a loading spinner
- * Works like button loading - just add the class to any container
+ * Add data-state="loading" or .nds-loading to any container to show a loading spinner
+ * Children are dimmed via opacity; spinner displays centered via ::after
+ *
+ * Public API (override from parent or element):
+ *   --loading-color, --loading-track, --loading-size, --loading-border, --loading-opacity
  */
 
 @use '../mixins' as *;
@@ -12,26 +15,18 @@
 
 .nds-loading,
 [data-state="loading"] {
-  --loading-size: 32px;
-  --loading-border: 3px;
-  --loading-color: var(--background-primary);
-  --loading-track: var(--alpha-black-10);
-  max-height: 50svh;
+  // Private tokens — resolve public overrides with semantic fallbacks
+  --_loading-size: var(--loading-size, 32px);
+  --_loading-border: var(--loading-border, 3px);
+  --_loading-color: var(--loading-color, var(--background-primary));
+  --_loading-track: var(--loading-track, var(--alpha-black-10));
+  --_loading-opacity: var(--loading-opacity, 0.15);
   position: relative;
   pointer-events: none;
 
-  &:not(.nds-btn) {
-    overflow: hidden;
-    max-height: 400px !important;
-
-    &::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      z-index: 9;
-      border-radius: inherit;
-      background-color: var(--alpha-white-70);
-    }
+  // Dim children (not applicable to buttons — they handle their own loading)
+  &:not(.nds-btn) > * {
+    opacity: var(--_loading-opacity);
   }
 
   // Spinner (::after)
@@ -39,35 +34,20 @@
     content: '';
     position: absolute;
     inset: 50% auto auto 50%;
-    width: var(--loading-size);
-    height: var(--loading-size);
-    /* margin: calc(var(--loading-size) / -2) 0 0 calc(var(--loading-size) / -2); */
+    width: var(--_loading-size);
+    height: var(--_loading-size);
     transform: translate(-50%, -50%);
-    border: var(--loading-border) solid var(--loading-track);
-    border-top-color: var(--loading-color);
+    border: var(--_loading-border) solid var(--_loading-track);
+    border-top-color: var(--_loading-color);
     border-radius: 50%;
     animation: nds-spin 1s linear infinite;
     z-index: 9;
   }
 
-  // Overlay variants use ::before for background
-  &.nds-overlay::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 9;
-    border-radius: inherit;
-    background-color: var(--alpha-white-70);
-  }
-
-  // Show content behind overlay
-  &.nds-overlay>* {
-    opacity: 1;
-  }
-
-  // Dark overlay
-  &:is(.nds-dark, .nds-oncolor)::before {
-    background-color: var(--alpha-black-50);
+  // Dark theme — default to white spinner
+  @include dark {
+    --_loading-color: var(--loading-color, var(--colors-base-white));
+    --_loading-track: var(--loading-track, var(--alpha-white-20));
   }
 
   // ==============================================
@@ -77,60 +57,65 @@
 
   // XXS - 20px
   &.nds-xxs {
-    --loading-size: 20px;
-    --loading-border: 2px;
+    --_loading-size: var(--loading-size, 20px);
+    --_loading-border: var(--loading-border, 2px);
   }
 
   // XS - 24px
   &.nds-xs {
-    --loading-size: 24px;
-    --loading-border: 2px;
+    --_loading-size: var(--loading-size, 24px);
+    --_loading-border: var(--loading-border, 2px);
   }
 
   // SM - 28px
   &.nds-sm {
-    --loading-size: 28px;
-    --loading-border: 2px;
+    --_loading-size: var(--loading-size, 28px);
+    --_loading-border: var(--loading-border, 2px);
   }
 
   // MD - 32px (default)
   &.nds-md {
-    --loading-size: 32px;
-    --loading-border: 3px;
+    --_loading-size: var(--loading-size, 32px);
+    --_loading-border: var(--loading-border, 3px);
   }
 
   // LG - 36px
   &.nds-lg {
-    --loading-size: 36px;
-    --loading-border: 3px;
+    --_loading-size: var(--loading-size, 36px);
+    --_loading-border: var(--loading-border, 3px);
   }
 
   // XL - 40px
   &.nds-xl {
-    --loading-size: 40px;
-    --loading-border: 4px;
+    --_loading-size: var(--loading-size, 40px);
+    --_loading-border: var(--loading-border, 4px);
   }
 
   // 2XL - 44px
   &.nds-2xl {
-    --loading-size: 44px;
-    --loading-border: 4px;
+    --_loading-size: var(--loading-size, 44px);
+    --_loading-border: var(--loading-border, 4px);
   }
 
   // ==============================================
   // COLOR VARIANTS
   // ==============================================
 
-  // Primary (green spinner)
+  // Neutral (black spinner)
   &.nds-neutral {
-    --loading-color: var(--background-black);
-    --loading-track: var(--alpha-black-10);
+    --_loading-color: var(--loading-color, var(--background-black));
+    --_loading-track: var(--loading-track, var(--alpha-black-10));
+
+    @include dark {
+      --_loading-color: var(--loading-color, var(--colors-base-white));
+      --_loading-track: var(--loading-track, var(--alpha-white-20));
+    }
   }
 
-  // On dark backgrounds
-  &:is(.nds-oncolor, .nds-dark) {
-    --loading-color: var(--colors-base-white);
-    --loading-track: var(--alpha-white-20);
+  // On dark backgrounds (explicit override for forced-dark containers)
+  &.nds-oncolor {
+    --_loading-color: var(--loading-color, var(--colors-base-white));
+    --_loading-track: var(--loading-track, var(--alpha-white-20));
   }
 
 }

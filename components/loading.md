@@ -2,7 +2,7 @@
 layout: page
 title: Loading
 hero_title: Loading Component - National Design System
-hero_description: A versatile loading spinner and overlay system for indicating loading states across any element
+hero_description: A versatile loading spinner for indicating loading states across any element
 breadcrumb: ["Components"]
 lang: en
 direction: ltr
@@ -13,7 +13,7 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Loading Spinner</h2>
-            <p class="nds-section-description">Add .nds-loading to any element to show a centered loading spinner</p>
+            <p class="nds-section-description">Add data-state="loading" or .nds-loading to any container to dim its content and show a centered spinner</p>
         </div>
         <div class="nds-section-content">
             <div class="nds-showcase">
@@ -63,8 +63,8 @@ direction: ltr
                     <div class="demo-container">
                         <div class="state-demo">
                             <div class="nds-loading"
-                                style="width: 100px; height: 100px; background: var(--background-surface-default); border-radius: 8px;">
-                                <span>Hidden content</span>
+                                style="width: 200px; padding: 16px; background: var(--background-surface-default); border-radius: 8px; border: 1px solid var(--border-default);">
+                                <p style="margin: 0;">Content is dimmed while loading</p>
                             </div>
                         </div>
                     </div>
@@ -87,8 +87,13 @@ direction: ltr
                                     </button>
                                 </div>
                                 <code class="lang-html code">
+<div data-state="loading">
+  <p>Content is dimmed while loading</p>
+</div>
+
+<!-- Or use class toggle -->
 <div class="nds-loading">
-  Content hidden while loading
+  <p>Content is dimmed while loading</p>
 </div>
                                 </code>
                             </div>
@@ -135,8 +140,8 @@ direction: ltr
                     <div class="demo-container" style="background: var(--colors-primary-sa-flag-600-primary);">
                         <div class="state-demo oncolor-demo">
                             <div class="nds-loading nds-oncolor"
-                                style="width: 100px; height: 100px; border-radius: 8px;">
-                                <span>Hidden content</span>
+                                style="width: 200px; padding: 16px; border-radius: 8px;">
+                                <p style="margin: 0; color: var(--colors-base-white);">Content is dimmed while loading</p>
                             </div>
                         </div>
                     </div>
@@ -168,101 +173,6 @@ direction: ltr
                     </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Overlay Section -->
-<section id="overlaySection" class="nds-content-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Loading Overlay</h2>
-            <p class="nds-section-description">Add .nds-overlay to show content behind a dimmed background while loading
-            </p>
-        </div>
-        <div class="nds-section-content">
-            <div class="nds-showcase">
-                <!-- Light Overlay -->
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Light Overlay (Default)</div>
-                        <div class="demo-action">
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-xxs", ".nds-loading","loadingSize"]'>
-                                <span class="label">XXS</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-xs", ".nds-loading","loadingSize"]'>
-                                <span class="label">XS</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-sm", ".nds-loading","loadingSize"]'>
-                                <span class="label">SM</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle selected demo-toggle-btn"
-                                data-toggler='["nds-md", ".nds-loading","loadingSize"]'>
-                                <span class="label">MD</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-lg", ".nds-loading","loadingSize"]'>
-                                <span class="label">LG</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-xl", ".nds-loading","loadingSize"]'>
-                                <span class="label">XL</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-2xl", ".nds-loading","loadingSize"]'>
-                                <span class="label">2XL</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-neutral", ".nds-loading","overlayColor"]'>
-                                <span class="label">Neutral</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-dark", ".nds-loading","overlayColor"]'>
-                                <span class="label">Dark</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo light-overlay-demo">
-                            <div class="nds-loading nds-overlay"
-                                style="width: 200px; padding: 16px; background: var(--background-surface-default); border-radius: 8px; border: 1px solid var(--border-default);">
-                                <p style="margin: 0;">This content is visible but dimmed behind the loading overlay.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                    <div class="nds-tabs nds-code nds-divided" hidden>
-                        <div class="nds-tab-list-container">
-                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                                    aria-controls="panel-overlay-1" id="tab-overlay-1">
-                                    <span class="nds-tab-label">HTML</span>
-                                </button>
-                            </nav>
-                        </div>
-                        <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-overlay-1"
-                                aria-labelledby="tab-overlay-1">
-                                <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                    </button>
-                                </div>
-                                <code class="lang-html code">
-                                    <div class="nds-loading nds-overlay">
-                                        <p>Content behind overlay</p>
-                                    </div>
-                                </code>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>
