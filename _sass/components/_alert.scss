@@ -84,6 +84,12 @@
     min-width: 0;
   }
 
+  .nds-alert-text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
   .nds-alert-title {
     font-size: var(--nds-text-md-FS);
     line-height: var(--nds-text-md-LH);
@@ -282,6 +288,9 @@
     &:is([data-status="error"], [data-status="critical"]) { --alert-icon-bg: var(--background-error); @include dark { --alert-icon-bg: var(--background-error); } }
     &[data-status="neutral"] { --alert-icon-bg: var(--background-neutral-primary); @include dark { --alert-icon-bg: var(--background-neutral-primary); } }
 
+    // Critical uses warning triangle icon
+    &[data-status="critical"] .icon:before { content: "㬃"; }
+
     // Always colored (no nds-color class needed)
     background-color: var(--background-default);
     &::before {
@@ -312,12 +321,36 @@
 
     .nds-alert-content {
       flex-direction: row;
+      flex-wrap: wrap;
       align-items: self-start;
+      justify-content: space-between;
       gap: var(--spacing-md);
+    }
+
+    .nds-alert-text {
+      display: block;
+      white-space: nowrap;
+    }
+
+    .nds-alert-title,
+    .nds-alert-description {
+      display: inline;
+    }
+
+    @include mobile {
+      .nds-alert-actions {
+        flex: 1 1 100%;
+      }
     }
 
     .nds-alert-actions {
       margin-top: 0;
+
+      .nds-link {
+        font-size: var(--nds-text-clamp-md-FS);
+        line-height: var(--nds-text-clamp-md-LH);
+        text-decoration: underline;
+      }
     }
 
     .nds-alert-close {

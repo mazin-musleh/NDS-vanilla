@@ -34,7 +34,7 @@
          * @param {string} options.id - Custom ID (optional)
          * @param {boolean} options.prepend - Prepend instead of append (default: false)
          * @param {Array} options.actions - Action buttons array (optional)
-         *        Each action: { label, variant, size, onClick, dismiss }
+         *        Each action: { label, variant, size, onClick, dismiss, href, target }
          * @param {string} options.display - 'default', 'inline', or 'toast' (default: 'default')
          * @param {string} options.position - Toast position: 'top' or 'bottom' (default: 'top')
          * @param {number} options.duration - Auto-dismiss duration in ms, 0 for no auto-dismiss (default: 0)
@@ -72,13 +72,18 @@
             if (actions && actions.length > 0) {
                 actionsHtml = '<div class="nds-alert-actions">';
                 actions.forEach((action, index) => {
-                    const btnVariant = action.variant || 'subtle';
-                    const btnSize = action.size || 'sm';
-                    actionsHtml += `
-                        <button class="nds-btn nds-${btnVariant} nds-${btnSize}" data-action-index="${index}">
-                            <span class="label">${action.label}</span>
-                        </button>
-                    `;
+                    const classes = action.class || `nds-btn nds-${action.variant || 'subtle'} nds-${action.size || 'sm'}`;
+                    if (action.href) {
+                        actionsHtml += `
+                            <a href="${action.href}" class="${classes}"${action.target ? ` target="${action.target}"` : ''} data-action-index="${index}">${action.label}</a>
+                        `;
+                    } else {
+                        actionsHtml += `
+                            <button class="${classes}" data-action-index="${index}">
+                                <span class="label">${action.label}</span>
+                            </button>
+                        `;
+                    }
                 });
                 actionsHtml += '</div>';
             }
@@ -91,13 +96,15 @@
                     </span>
                 </span>
                 <div class="nds-alert-content">
-                    ${title ? `<span class="nds-alert-title">${title}</span>` : ''}
-                    ${description ? `<p class="nds-alert-description">${description}</p>` : ''}
+                    <div class="nds-alert-text">
+                        ${title ? `<span class="nds-alert-title">${title}</span>` : ''}
+                        ${description ? `<p class="nds-alert-description">${description}</p>` : ''}
+                    </div>
                     ${actionsHtml}
                 </div>
             `;
 
-            if (closable) {
+            if (closable || duration > 0) {
                 // Add progress class and SVG if toast has auto-dismiss
                 const progressClass = (display === 'toast' && duration > 0) ? ' nds-progress' : '';
                 const progressStyle = (display === 'toast' && duration > 0) ? ` style="--progress-duration: ${duration}ms;"` : '';
@@ -121,7 +128,7 @@
             alert.innerHTML = html;
 
             // Close button handler
-            if (closable) {
+            if (closable || duration > 0) {
                 alert.querySelector('.nds-alert-close').addEventListener('click', () => {
                     this.dismiss(alert);
                 });
