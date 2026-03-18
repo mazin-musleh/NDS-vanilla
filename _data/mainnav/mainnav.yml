@@ -102,18 +102,12 @@ secondary_nav:
     badge: "3"
     has_dropdown: true
     dropdown_class: "widthFit"
+    content_source: "notifications"
+    content_label: "title"
+    content_limit: 3
     items:
-      - label: "New comment on your post"
-        icon: "hgi-message-01"
-        url: "#"
-      - label: "Your report is ready"
-        icon: "hgi-file-02"
-        url: "#"
-      - label: "System update available"
-        icon: "hgi-refresh-02"
-        url: "#"
       - label: "View all notifications"
-        icon: "hgi-notification"
+        icon: "hgi-notification-02"
         url: "/notifications"
 
   - label: "Ahmed"

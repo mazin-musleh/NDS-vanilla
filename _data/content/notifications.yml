@@ -1,0 +1,59 @@
+- title: "Document Approved"
+  message: "Your business license application has been reviewed and approved by the licensing authority."
+  type: "success"
+  icon: '<i class="hgi hgi-stroke hgi-checkmark-circle-01 icon"></i>'
+  timestamp: "2026-03-18T09:15:00"
+
+- title: "System Maintenance"
+  message: "Scheduled maintenance window from 2:00 AM to 4:00 AM on Friday. Some services may be unavailable."
+  type: "info"
+  icon: '<i class="hgi hgi-stroke hgi-notification-02 icon"></i>'
+  timestamp: "2026-03-17T16:30:00"
+
+- title: "Payment Overdue"
+  message: "Your annual business registration fee of 1,200 SAR is past due. Please complete payment to avoid service suspension."
+  type: "warning"
+  icon: '<i class="hgi hgi-stroke hgi-alert-02 icon"></i>'
+  timestamp: "2026-03-17T11:00:00"
+
+- title: "Login Attempt Blocked"
+  message: "An unauthorized login attempt was detected from an unrecognized device. Your account has been temporarily locked."
+  type: "error"
+  icon: '<i class="hgi hgi-stroke hgi-shield-01 icon"></i>'
+  timestamp: "2026-03-17T08:45:00"
+
+- title: "New Message Received"
+  message: "You have a new message from the Ministry of Commerce regarding your trade license renewal."
+  type: "info"
+  icon: '<i class="hgi hgi-stroke hgi-mail-01 icon"></i>'
+  timestamp: "2026-03-16T14:20:00"
+
+- title: "Profile Updated"
+  message: "Your contact information and mailing address have been successfully updated in the system."
+  type: "success"
+  icon: '<i class="hgi hgi-stroke hgi-user-check-01 icon"></i>'
+  timestamp: "2026-03-16T10:05:00"
+
+- title: "Certificate Expiring"
+  message: "Your professional engineering certification will expire in 30 days. Submit renewal documents before the deadline."
+  type: "warning"
+  icon: '<i class="hgi hgi-stroke hgi-calendar-03 icon"></i>'
+  timestamp: "2026-03-15T17:00:00"
+
+- title: "Service Request Failed"
+  message: "Your passport renewal request could not be processed due to missing documentation. Please resubmit with the required files."
+  type: "error"
+  icon: '<i class="hgi hgi-stroke hgi-file-02 icon"></i>'
+  timestamp: "2026-03-15T13:30:00"
+
+- title: "Account Verified"
+  message: "Your national identity has been verified successfully. You now have full access to all government digital services."
+  type: "success"
+  icon: '<i class="hgi hgi-stroke hgi-user-id-verification icon"></i>'
+  timestamp: "2026-03-14T09:00:00"
+
+- title: "New Feature Available"
+  message: "Digital document signing is now available for all registered users. Access it from your dashboard settings."
+  type: "info"
+  icon: '<i class="hgi hgi-stroke hgi-star-circle icon"></i>'
+  timestamp: "2026-03-13T12:00:00"

@@ -222,6 +222,18 @@
                                 {%- else %}
                                 {%- comment %} Standard Dropdown Menu {%- endcomment -%}
                                 <div class="nds-column">
+                                    {%- if item.content_source %}
+                                    {%- assign source_data = site.data.content[item.content_source] %}
+                                    {%- assign content_label = item.content_label | default: "title" %}
+                                    {%- assign content_limit = item.content_limit | default: 3 %}
+                                    {%- for entry in source_data limit:content_limit %}
+                                    <a href="#" class="nds-btn nds-subtle nds-dropdown-item">
+                                        {%- if entry.icon %}{{ entry.icon }}{%- endif %}
+                                        <span class="label">{{ entry[content_label] }}</span>
+                                    </a>
+                                    {%- endfor %}
+                                    <hr class="nds-divider">
+                                    {%- endif %}
                                     {%- if item.items %}
                                     {%- for subitem in item.items %}
                                     {%- if subitem.divider %}

@@ -81,90 +81,22 @@ layout_class: cardView topSubMenu
                             </form>
                             <div id="basicFilterCards" class="nds-grid"
                                 style="--max-col: 3; --mid-col: 2; --min-col: 1;">
+                                {% for user in site.data.content.users %}
                                 <div class="nds-card nds-stroke">
                                     <div class="nds-card-content">
                                         <div class="nds-card-text">
-                                            <h3 class="nds-card-title">Ahmed Mohamed</h3>
-                                            <span class="nds-card-description">Software Developer</span>
+                                            <h3 class="nds-card-title">{{ user.name }}</h3>
+                                            <span class="nds-card-description">{{ user.role }}</span>
                                         </div>
                                         <div class="nds-card-tags">
                                             <span class="nds-tag nds-blue nds-sm"><span class="label"
-                                                    data-filter="department">Engineering</span></span>
+                                                    data-filter="department">{{ user.department }}</span></span>
                                             <span class="nds-tag nds-green nds-sm"><span class="label"
-                                                    data-filter="role">Developer</span></span>
+                                                    data-filter="role">{{ user.role }}</span></span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="nds-card nds-stroke">
-                                    <div class="nds-card-content">
-                                        <div class="nds-card-text">
-                                            <h3 class="nds-card-title">Sara Ali</h3>
-                                            <span class="nds-card-description">UX Designer</span>
-                                        </div>
-                                        <div class="nds-card-tags">
-                                            <span class="nds-tag nds-blue nds-sm"><span class="label"
-                                                    data-filter="department">Design</span></span>
-                                            <span class="nds-tag nds-green nds-sm"><span class="label"
-                                                    data-filter="role">Designer</span></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nds-card nds-stroke">
-                                    <div class="nds-card-content">
-                                        <div class="nds-card-text">
-                                            <h3 class="nds-card-title">Omar Hassan</h3>
-                                            <span class="nds-card-description">Project Manager</span>
-                                        </div>
-                                        <div class="nds-card-tags">
-                                            <span class="nds-tag nds-blue nds-sm"><span class="label"
-                                                    data-filter="department">Engineering</span></span>
-                                            <span class="nds-tag nds-green nds-sm"><span class="label"
-                                                    data-filter="role">Manager</span></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nds-card nds-stroke">
-                                    <div class="nds-card-content">
-                                        <div class="nds-card-text">
-                                            <h3 class="nds-card-title">Fatima Khalid</h3>
-                                            <span class="nds-card-description">Frontend Developer</span>
-                                        </div>
-                                        <div class="nds-card-tags">
-                                            <span class="nds-tag nds-blue nds-sm"><span class="label"
-                                                    data-filter="department">Engineering</span></span>
-                                            <span class="nds-tag nds-green nds-sm"><span class="label"
-                                                    data-filter="role">Developer</span></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nds-card nds-stroke">
-                                    <div class="nds-card-content">
-                                        <div class="nds-card-text">
-                                            <h3 class="nds-card-title">Layla Nasser</h3>
-                                            <span class="nds-card-description">Marketing Lead</span>
-                                        </div>
-                                        <div class="nds-card-tags">
-                                            <span class="nds-tag nds-blue nds-sm"><span class="label"
-                                                    data-filter="department">Marketing</span></span>
-                                            <span class="nds-tag nds-green nds-sm"><span class="label"
-                                                    data-filter="role">Manager</span></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nds-card nds-stroke">
-                                    <div class="nds-card-content">
-                                        <div class="nds-card-text">
-                                            <h3 class="nds-card-title">Khaled Ibrahim</h3>
-                                            <span class="nds-card-description">Visual Designer</span>
-                                        </div>
-                                        <div class="nds-card-tags">
-                                            <span class="nds-tag nds-blue nds-sm"><span class="label"
-                                                    data-filter="department">Design</span></span>
-                                            <span class="nds-tag nds-green nds-sm"><span class="label"
-                                                    data-filter="role">Designer</span></span>
-                                        </div>
-                                    </div>
-                                </div>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
