@@ -109,7 +109,7 @@
             this.menuId = menuId;
 
             // Initialize NDSDropmenu on the container
-            this.dropmenuInstance = window.NDSDropmenu.create(this.container);
+            this.dropmenuInstance = NDS.Dropmenu.create(this.container);
         }
 
         setupAria() {
@@ -553,7 +553,7 @@
     // GLOBAL API
     // ==============================================
 
-    window.NDSAutocomplete = {
+    NDS.Autocomplete = {
         init: initializeAutocompletes,
         reinit: initializeAutocompletes,
         create: function (element) { return new NDSAutocomplete(element); }

@@ -213,13 +213,13 @@ layout_class: cardView topSubMenu
                     </div>
                     <div class="nds-expandable-content">
                         <code class="lang-javascript">// Open modal programmatically (by ID string)
-NDSModal.open('modal-id');
+NDS.Modal.open('modal-id');
 
 // Close currently active modal
-NDSModal.close();
+NDS.Modal.close();
 
 // Check if any modal is open
-NDSModal.isOpen(); // returns boolean
+NDS.Modal.isOpen(); // returns boolean
 
 // Listen for modal events (fire on the modal element, bubble up)
 const modal = document.getElementById('modal-id');

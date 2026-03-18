@@ -647,7 +647,7 @@
 
     // CRITICAL: Expose global API immediately (called by unified init system)
     if (typeof window !== 'undefined') {
-        window.NDSTables = {
+        NDS.Tables = {
             init: initializeTables,
             reinit: reinitializeTables,
             recheckWidths: recheckAllWidths,

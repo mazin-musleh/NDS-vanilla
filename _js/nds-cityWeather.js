@@ -178,7 +178,7 @@
     if (typeof window !== 'undefined') {
         window.updateWeather = updateWeather;
         window.updateCity = updateCity;
-        window.NDSCityWeather = {
+        NDS.CityWeather = {
             init: initializeCityWeather
         };
     }

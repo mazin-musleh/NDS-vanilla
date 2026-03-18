@@ -192,8 +192,8 @@
 
     function ndsShowMessage(message, variant = 'success', title = '') {
         // Use NDSAlert toast API for notifications
-        if (typeof window.NDSAlert !== 'undefined') {
-            window.NDSAlert.create({
+        if (typeof NDS.Alert !== 'undefined') {
+            NDS.Alert.create({
                 variant: variant,
                 title: title,
                 description: message,
@@ -247,7 +247,7 @@
     }
 
     // Expose initialization function and utilities for unified system
-    window.NDSCookies = {
+    NDS.Cookies = {
         init: initializeCookies,
         set: ndsSetCookie,
         get: ndsGetCookie,

@@ -983,8 +983,8 @@
          */
         submitForm() {
             // Dismiss any feedback in filter container
-            if (window.NDSFeedback) {
-                NDSFeedback.dismissAll(this.filterContainer);
+            if (NDS.Feedback) {
+                NDS.Feedback.dismissAll(this.filterContainer);
             }
 
 
@@ -1280,8 +1280,8 @@
 
         applyFilters() {
             // Dismiss any feedback in filter container
-            if (window.NDSFeedback) {
-                NDSFeedback.dismissAll(this.filterContainer);
+            if (NDS.Feedback) {
+                NDS.Feedback.dismissAll(this.filterContainer);
             }
 
             // In form mode, just update state (don't submit form programmatically)
@@ -1317,8 +1317,8 @@
                 // Dismiss no-results alert if exists
                 const alertId = `nds-filter-no-results-${this.targetId}`;
                 const existingAlert = document.getElementById(alertId);
-                if (existingAlert && window.NDSAlert) {
-                    NDSAlert.dismiss(existingAlert);
+                if (existingAlert && NDS.Alert) {
+                    NDS.Alert.dismiss(existingAlert);
                 }
 
                 this.updateUrlParams();
@@ -1367,10 +1367,10 @@
             const alertId = `nds-filter-no-results-${this.targetId}`;
 
             if (visibleCount === 0) {
-                if (!document.getElementById(alertId) && window.NDSAlert) {
+                if (!document.getElementById(alertId) && NDS.Alert) {
                     const isArabic = NDS.isArabic;
                     const self = this;
-                    NDSAlert.create({
+                    NDS.Alert.create({
                         variant: 'warning',
                         description: isArabic ? 'لا توجد نتائج لمعايير التصفية الحالية' : 'No result for current filter criteria',
                         target: this.targetContainer,
@@ -1391,7 +1391,7 @@
             } else {
                 const existingAlert = document.getElementById(alertId);
                 if (existingAlert) {
-                    NDSAlert.dismiss(existingAlert);
+                    NDS.Alert.dismiss(existingAlert);
                 }
             }
         }
@@ -1561,13 +1561,13 @@
 
             const alertId = `nds-filter-no-results-${this.targetId}`;
             const existingAlert = document.getElementById(alertId);
-            if (existingAlert && window.NDSAlert) {
-                NDSAlert.dismiss(existingAlert);
+            if (existingAlert && NDS.Alert) {
+                NDS.Alert.dismiss(existingAlert);
             }
 
             // Dismiss any feedback in filter container
-            if (window.NDSFeedback) {
-                NDSFeedback.dismissAll(this.filterContainer);
+            if (NDS.Feedback) {
+                NDS.Feedback.dismissAll(this.filterContainer);
             }
 
             this.dispatchResetEvent();
@@ -1634,11 +1634,11 @@
         updatePagination() {
             if (!this.targetContainer) return;
 
-            if (window.NDSPagination && window.NDSPagination.refresh) {
+            if (NDS.Pagination && NDS.Pagination.refresh) {
                 const paginationNav = this.targetContainer.parentElement?.querySelector('.nds-pagination-nav, .nds-auto-pagination');
                 if (paginationNav) {
                     setTimeout(() => {
-                        window.NDSPagination.refresh(this.targetContainer);
+                        NDS.Pagination.refresh(this.targetContainer);
                     }, 50);
                 }
             }
@@ -1776,7 +1776,7 @@
     // ==============================================
 
     if (typeof window !== 'undefined') {
-        window.NDSFilter = {
+        NDS.Filter = {
             init: initializeFilters,
             reinit: reinitializeFilters,
             create: (container) => new NDSFilter(container),

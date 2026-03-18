@@ -301,6 +301,6 @@
 
     // Export to window
     if (typeof window !== 'undefined') {
-        window.NDSFeedback = NDSFeedback;
+        NDS.Feedback = NDSFeedback;
     }
 })();

@@ -157,7 +157,7 @@ Code tabs in demo cards are for **copy-paste implementation code only** — NOT 
 - **Code must reflect the demo** — same component structure, classes, and attributes as the rendered demo
 - **Use unique IDs** per demo card: `{component}-{variant}-{number}` (e.g., `modal-default-1`, `alert-success-2`) to avoid conflicts when users copy multiple examples
 - **HTML tab**: markup to render the component
-- **JS tab**: only when JS is **required** to create/initialize the component (e.g., `NDSChart.create()`, `NDSAlert.create()`). Do NOT add a JS tab for optional JS — document it in Usage Guidelines instead
+- **JS tab**: only when JS is **required** to create/initialize the component (e.g., `NDS.Chart.create()`, `NDS.Alert.create()`). Do NOT add a JS tab for optional JS — document it in Usage Guidelines instead
 - For long code (>15 lines), add `nds-expandable` to the tab panel and wrap `<code>` in `<div class="nds-expandable-content">`
 
 ## Overlay & Trigger Components
@@ -184,7 +184,7 @@ For page-level scripts, wrap in `DOMContentLoaded`. For inline scripts, toggle `
 
 ### How auto-init works
 
-`nds-loader.js` manages all component initialization automatically. It maintains a registry of components — each entry maps a CSS selector (e.g., `.nds-accordion`) to an init function (e.g., `window.NDSAccordion.init()`). On DOMContentLoaded, the loader scans the page for matching selectors and calls each component's init function if its elements exist. Components are initialized in priority order with a small stagger delay between them.
+`nds-loader.js` manages all component initialization automatically. It maintains a registry of components — each entry maps a CSS selector (e.g., `.nds-accordion`) to an init function (e.g., `NDS.Accordion.init()`). On DOMContentLoaded, the loader scans the page for matching selectors and calls each component's init function if its elements exist. Components are initialized in priority order with a small stagger delay between them.
 
 This means **users never need to call init manually** — just adding the correct HTML markup is enough. The loader handles everything.
 

@@ -378,13 +378,13 @@ direction: ltr
                 </div>
                 <div class="nds-expandable-content">
                     <code class="lang-javascript">// Accordions auto-initialize on page load.
-// Use NDSAccordion for dynamic content or programmatic control.
+// Use NDS.Accordion for dynamic content or programmatic control.
 
 // Reinitialize after adding accordion HTML dynamically
-NDSAccordion.reinit();
+NDS.Accordion.reinit();
 
 // Or create a new instance for a specific accordion
-var instance = NDSAccordion.create(document.querySelector('#my-accordion'));
+var instance = NDS.Accordion.create(document.querySelector('#my-accordion'));
 
 // Programmatic control via instance
 instance.openItem(0);       // Open first item

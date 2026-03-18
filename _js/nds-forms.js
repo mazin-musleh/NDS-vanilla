@@ -214,7 +214,7 @@
                 }
 
                 // Create feedback using NDSFeedback API
-                if (window.NDSFeedback && message) {
+                if (NDS.Feedback && message) {
                     // Dynamic target selection using data-feedback-target attribute
                     var targetSelector = container.getAttribute('data-feedback-target');
                     var target = container;
@@ -240,7 +240,7 @@
                         target: target
                     });
                     delete feedbackOptions.element;
-                    window.NDSFeedback.create(feedbackOptions);
+                    NDS.Feedback.create(feedbackOptions);
                 }
 
                 // Accessibility
@@ -277,8 +277,8 @@
             container.removeAttribute('data-message');
 
             // Dismiss all feedback in container using NDSFeedback API
-            if (window.NDSFeedback) {
-                window.NDSFeedback.dismissAll(container);
+            if (NDS.Feedback) {
+                NDS.Feedback.dismissAll(container);
             }
 
             // Clear accessibility

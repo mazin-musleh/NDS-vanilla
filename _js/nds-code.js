@@ -509,7 +509,7 @@
     // ==============================================
 
     if (typeof window !== 'undefined') {
-        window.NDSCode = {
+        NDS.Code = {
             init: initializeCodeProcessing,
             reprocessCodeElement: reprocessCodeElement,
             detectLanguage: detectLanguage,

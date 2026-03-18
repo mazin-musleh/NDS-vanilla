@@ -656,7 +656,7 @@
     }
 
     // Export to window
-    window.NDSSwiper = {
+    NDS.Swiper = {
         init: initializeComponents,
         reinit: initializeComponents,
         create: (element) => {

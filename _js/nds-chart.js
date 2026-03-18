@@ -769,7 +769,7 @@
         return el.ndsChart;
     }
 
-    window.NDSChart = {
+    NDS.Chart = {
         init: initCharts,
         reinit: initCharts,
         create: createChart,

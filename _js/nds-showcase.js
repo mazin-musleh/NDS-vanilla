@@ -52,7 +52,7 @@
 
     // CRITICAL: Expose global API immediately (called by unified init system)
     if (typeof window !== 'undefined') {
-        window.NDSShowcase = {
+        NDS.Showcase = {
             initializeDemoToggleButtons: initializeDemoToggleButtons,
             updateButtonsForBackground: updateButtonsForBackground,
             initializeDirectionSwitcher: initializeDirectionSwitcher,
@@ -102,8 +102,8 @@
         codeElement.innerHTML = updatedContent;
 
         // Reprocess using new simplified API
-        if (window.NDSCode && window.NDSCode.reprocessCodeElement) {
-            window.NDSCode.reprocessCodeElement(codeElement);
+        if (NDS.Code && NDS.Code.reprocessCodeElement) {
+            NDS.Code.reprocessCodeElement(codeElement);
         }
     }
 
@@ -1627,7 +1627,7 @@
 
         const messages = isToast ? TOAST_MESSAGES : ALERT_MESSAGES;
 
-        if (window.NDSAlert) {
+        if (NDS.Alert) {
             const options = {
                 variant: variant,
                 title: ALERT_TITLES[variant] || variant.charAt(0).toUpperCase() + variant.slice(1),
@@ -1646,7 +1646,7 @@
                 options.prepend = true;
             }
 
-            window.NDSAlert.create(options);
+            NDS.Alert.create(options);
         }
     }
 

@@ -832,8 +832,8 @@ NDS.Forms.setStatus({
     permanent: true
 });
 
-// Or using NDSFeedback directly:
-NDSFeedback.create({
+// Or using NDS.Feedback directly:
+NDS.Feedback.create({
     message: 'Use 3-20 characters, letters and numbers only',
     status: 'neutral',
     target: container,
@@ -991,7 +991,7 @@ NDS.Forms.clearStatus(container);</code>
             <tr>
               <td>data-feedback-target</td>
               <td>Any child of .nds-form-container</td>
-              <td>Redirects where feedback messages are appended. Used by the forms Status API (NDS.Forms.setStatus) and form validation — not by NDSFeedback.create(), which accepts a target option directly. Typically used on .nds-form-footer. Use with hidden attribute to auto-show/hide the element when feedback appears/clears.</td>
+              <td>Redirects where feedback messages are appended. Used by the forms Status API (NDS.Forms.setStatus) and form validation — not by NDS.Feedback.create(), which accepts a target option directly. Typically used on .nds-form-footer. Use with hidden attribute to auto-show/hide the element when feedback appears/clears.</td>
             </tr>
             <tr>
               <td>data-error-message</td>

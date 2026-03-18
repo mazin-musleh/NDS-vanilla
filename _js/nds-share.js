@@ -114,7 +114,7 @@
 
     // CRITICAL: Expose global API immediately (called by unified init system)
     if (typeof window !== 'undefined') {
-        window.NDSShare = {
+        NDS.Share = {
             SharePageDropdown,
             init: initializeShareDropdown
         };

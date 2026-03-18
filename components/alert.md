@@ -105,7 +105,7 @@ direction: ltr
                                             <i class="hgi hgi-stroke hgi-copy-01"></i>
                                         </button>
                                     </div>
-                                    <code class="lang-javascript code">NDSAlert.create({
+                                    <code class="lang-javascript code">NDS.Alert.create({
     variant: 'success',
     title: 'Success',
     description: 'Your changes have been saved successfully.',
@@ -205,7 +205,7 @@ direction: ltr
                                             <i class="hgi hgi-stroke hgi-copy-01"></i>
                                         </button>
                                     </div>
-                                    <code class="lang-javascript code">NDSAlert.create({
+                                    <code class="lang-javascript code">NDS.Alert.create({
     variant: 'info',
     title: 'Information',
     description: 'A new software update is available for download.',
@@ -305,7 +305,7 @@ direction: ltr
                                             <i class="hgi hgi-stroke hgi-copy-01"></i>
                                         </button>
                                     </div>
-                                    <code class="lang-javascript code">NDSAlert.create({
+                                    <code class="lang-javascript code">NDS.Alert.create({
     variant: 'warning',
     title: 'Warning',
     description: 'Your session will expire in 5 minutes. Save your work to avoid losing changes.',
@@ -405,7 +405,7 @@ direction: ltr
                                             <i class="hgi hgi-stroke hgi-copy-01"></i>
                                         </button>
                                     </div>
-                                    <code class="lang-javascript code">NDSAlert.create({
+                                    <code class="lang-javascript code">NDS.Alert.create({
     variant: 'error',
     title: 'Error',
     description: 'There was an error processing your request. Please try again.',
@@ -505,7 +505,7 @@ direction: ltr
                                             <i class="hgi hgi-stroke hgi-copy-01"></i>
                                         </button>
                                     </div>
-                                    <code class="lang-javascript code">NDSAlert.create({
+                                    <code class="lang-javascript code">NDS.Alert.create({
     variant: 'neutral',
     title: 'Notification',
     description: 'You have 3 new messages in your inbox.',
@@ -632,7 +632,7 @@ direction: ltr
                                             <i class="hgi hgi-stroke hgi-copy-01"></i>
                                         </button>
                                     </div>
-                                    <code class="lang-javascript code">NDSAlert.create({
+                                    <code class="lang-javascript code">NDS.Alert.create({
     variant: 'critical',
     title: 'Important:',
     description: 'This is a very important banner message that requires attention.',
@@ -764,7 +764,7 @@ direction: ltr
                                             <i class="hgi hgi-stroke hgi-copy-01"></i>
                                         </button>
                                     </div>
-                                    <code class="lang-javascript code">NDSAlert.create({
+                                    <code class="lang-javascript code">NDS.Alert.create({
     variant: 'info',
     title: 'Update Available',
     description: 'A new version is available. Would you like to update now?',
@@ -888,7 +888,7 @@ direction: ltr
                                             <i class="hgi hgi-stroke hgi-copy-01"></i>
                                         </button>
                                     </div>
-                                    <code class="lang-javascript code">NDSAlert.create({
+                                    <code class="lang-javascript code">NDS.Alert.create({
     variant: 'success',
     title: 'Success',
     description: 'Changes saved successfully!',
@@ -944,7 +944,7 @@ direction: ltr
 
             <div class="nds-content-block">
                 <h3 class="nds-block-title">JavaScript API</h3>
-                <p>The <strong>NDSAlert</strong> API provides methods to create, display, and dismiss alerts programmatically. For dynamically added HTML alerts, call <strong>NDSAlert.init()</strong> to re-attach close button handlers.</p>
+                <p>The <strong>NDS.Alert</strong> API provides methods to create, display, and dismiss alerts programmatically. For dynamically added HTML alerts, call <strong>NDS.Alert.init()</strong> to re-attach close button handlers.</p>
                 <div class="nds-code nds-expandable">
                     <div class="nds-code-action">
                         <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
@@ -955,7 +955,7 @@ direction: ltr
                         <code class="lang-javascript line-numbers">
 // ── Create an alert ──────────────────────────────────
 // Returns the created HTMLElement
-const alert = NDSAlert.create({
+const alert = NDS.Alert.create({
     variant: 'success',       // 'success' | 'warning' | 'error' | 'info' | 'neutral'
     title: 'Success',         // Optional heading text
     description: 'Saved.',    // Alert body text
@@ -979,7 +979,7 @@ const alert = NDSAlert.create({
 });
 
 // ── Create a toast notification ──────────────────────
-NDSAlert.create({
+NDS.Alert.create({
     variant: 'success',
     description: 'Changes saved!',
     display: 'toast',          // 'default' | 'inline' | 'toast'
@@ -989,14 +989,14 @@ NDSAlert.create({
 });
 
 // ── Dismiss ──────────────────────────────────────────
-NDSAlert.dismiss(alert);               // By element reference
-NDSAlert.dismiss('#my-alert');          // By selector
-NDSAlert.dismissAll('#container');      // All alerts in a container
-NDSAlert.dismissAll(document.body);     // All alerts on page
+NDS.Alert.dismiss(alert);               // By element reference
+NDS.Alert.dismiss('#my-alert');          // By selector
+NDS.Alert.dismissAll('#container');      // All alerts in a container
+NDS.Alert.dismissAll(document.body);     // All alerts on page
 
 // ── Re-initialize after dynamic HTML ─────────────────
 // Attaches close handlers to any new .nds-alert elements
-NDSAlert.init();
+NDS.Alert.init();
                         </code>
                     </div>
                 </div>

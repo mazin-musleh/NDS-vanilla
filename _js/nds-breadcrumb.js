@@ -54,9 +54,9 @@
 
             // Initialize only the newly created dropdown menu
             const dropmenuElement = dropdownContainer.querySelector('.nds-dropmenu');
-            if (dropmenuElement && window.NDSDropmenu) {
+            if (dropmenuElement && NDS.Dropmenu) {
                 // Use create() to initialize just this dropdown
-                window.NDSDropmenu.create(dropmenuElement);
+                NDS.Dropmenu.create(dropmenuElement);
             }
         }
 
@@ -132,7 +132,7 @@
 
     // CRITICAL: Expose global API immediately (called by unified init system)
     if (typeof window !== 'undefined') {
-        window.NDSBreadcrumb = {
+        NDS.Breadcrumb = {
             init: initializeBreadcrumbs,
             reinit: reinitializeBreadcrumbs,
             create: (nav) => new NDSBreadcrumb(nav)

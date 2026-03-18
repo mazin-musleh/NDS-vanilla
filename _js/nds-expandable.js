@@ -284,7 +284,7 @@
 
     // CRITICAL: Expose global API immediately (called by unified init system)
     if (typeof window !== 'undefined') {
-        window.NDSExpandable = {
+        NDS.Expandable = {
             init: initializeExpandableContent,
             reinit: reinitializeExpandableContent,
             recheckHeights: recheckAllHeights,

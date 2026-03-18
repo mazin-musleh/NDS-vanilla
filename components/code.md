@@ -97,14 +97,14 @@ direction: ltr
                             </div>
                             <div class="nds-expandable-content">
                                 <code class="lang-javascript line-numbers">
-const alert = NDSAlert.create({
+const alert = NDS.Alert.create({
     variant: 'success',
     title: 'Success',
     description: 'Your changes have been saved.',
     target: '#alert-container'
 });
 
-NDSAlert.create({
+NDS.Alert.create({
     variant: 'info',
     title: 'Update Available',
     description: 'A new version is available.',
@@ -174,13 +174,13 @@ async function handleFormSubmit(form) {
     const alertContainer = document.getElementById('form-alerts');
 
     // Clear previous alerts
-    NDSAlert.dismissAll(alertContainer);
+    NDS.Alert.dismissAll(alertContainer);
 
     try {
         const response = await submitForm(form);
 
         if (response.success) {
-            NDSAlert.create({
+            NDS.Alert.create({
                 variant: 'success',
                 description: 'Form submitted successfully!',
                 target: alertContainer,
@@ -188,7 +188,7 @@ async function handleFormSubmit(form) {
                 prepend: true
             });
         } else {
-            NDSAlert.create({
+            NDS.Alert.create({
                 variant: 'error',
                 description: response.message,
                 target: alertContainer,
@@ -196,7 +196,7 @@ async function handleFormSubmit(form) {
             });
         }
     } catch (error) {
-        NDSAlert.create({
+        NDS.Alert.create({
             variant: 'error',
             description: 'An unexpected error occurred.',
             target: alertContainer,
@@ -408,7 +408,7 @@ async function handleFormSubmit(form) {
                                         </button>
                                     </div>
                                     <code class="lang-javascript code">
-NDSAlert.create({
+NDS.Alert.create({
     variant: 'success',
     title: 'Success',
     description: 'Operation completed.',

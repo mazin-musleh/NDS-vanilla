@@ -219,7 +219,7 @@
   }
 
   // Public API
-  window.NDSBackdrop = {
+  NDS.Backdrop = {
     show,
     hide,
     toggle,

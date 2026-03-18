@@ -125,18 +125,18 @@
     let _navBackdropOwner = null;
 
     const showNavBackdrop = (owner, onClick) => {
-        if (!window.NDSBackdrop) return;
+        if (!NDS.Backdrop) return;
         if (_navBackdropOwner === owner) return;
         const replacing = _navBackdropOwner !== null;
         _navBackdropOwner = owner;
-        window.NDSBackdrop.show({ zIndex: 999, onClick });
-        if (replacing) window.NDSBackdrop.hide();
+        NDS.Backdrop.show({ zIndex: 999, onClick });
+        if (replacing) NDS.Backdrop.hide();
     };
 
     const hideNavBackdrop = (owner) => {
-        if (!window.NDSBackdrop || _navBackdropOwner !== owner) return;
+        if (!NDS.Backdrop || _navBackdropOwner !== owner) return;
         _navBackdropOwner = null;
-        window.NDSBackdrop.hide();
+        NDS.Backdrop.hide();
     };
 
     // ==============================================
@@ -717,7 +717,7 @@
                 if (_navBackdropOwner) {
                     _navBackdropOwner = null;
                     cancelToggleAction();
-                    if (window.NDSBackdrop?.isActive()) window.NDSBackdrop.hide();
+                    if (NDS.Backdrop?.isActive()) NDS.Backdrop.hide();
                 }
             }
 
@@ -952,5 +952,5 @@
     } catch { }
 
     Object.assign(window, { toggleNavbar, toggleDropdown, toggleDGA });
-    window.NDSNavController = { init };
+    NDS.NavController = { init };
 })();

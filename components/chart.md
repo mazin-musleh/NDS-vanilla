@@ -96,7 +96,7 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-js code">
-NDSChart.create('#my-chart', {
+NDS.Chart.create('#my-chart', {
   type: 'bar',
   series: [
     { name: 'Completed', data: [12, 18, 15, 22, 28, 20] },
@@ -203,7 +203,7 @@ NDSChart.create('#my-chart', {
                                         </button>
                                     </div>
                                     <code class="lang-js code">
-NDSChart.create('#my-chart', {
+NDS.Chart.create('#my-chart', {
   type: 'line',
   series: [
     { name: 'Sessions', data: [10, 41, 35, 51, 49, 62, 69, 91, 80] },
@@ -294,7 +294,7 @@ NDSChart.create('#my-chart', {
                                     </div>
                                     <code class="lang-js code">
 // Pie — series are plain numbers, not objects
-NDSChart.create('#my-chart', {
+NDS.Chart.create('#my-chart', {
   type: 'pie',
   series: [44, 55, 13, 43],
   labels: ['Services', 'Products', 'Support', 'Other'],
@@ -379,7 +379,7 @@ NDSChart.create('#my-chart', {
                                     </div>
                                     <code class="lang-js code">
 // Donut — same as pie, with donut.size for inner hole
-NDSChart.create('#my-chart', {
+NDS.Chart.create('#my-chart', {
   type: 'donut',
   series: [35, 25, 20, 20],
   labels: ['Completed', 'In Progress', 'Review', 'Pending'],
@@ -486,11 +486,11 @@ NDSChart.create('#my-chart', {
                         </thead>
                         <tbody>
                             <tr>
-                                <td>NDSChart.create(el, opts)</td>
+                                <td>NDS.Chart.create(el, opts)</td>
                                 <td>Create a chart on an element (accepts selector string or DOM element)</td>
                             </tr>
                             <tr>
-                                <td>NDSChart.init()</td>
+                                <td>NDS.Chart.init()</td>
                                 <td>Auto-initialize all .nds-chart elements with data attributes</td>
                             </tr>
                             <tr>
@@ -887,7 +887,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // ── Create demo charts ────────────────────────────────────────
 
-    NDSChart.create('#demo-bar', {
+    NDS.Chart.create('#demo-bar', {
         type: 'bar',
         series: [
             { name: 'Completed', data: [12, 18, 15, 22, 28, 20] },
@@ -898,7 +898,7 @@ document.addEventListener('DOMContentLoaded', function () {
         dataLabels: { show: true },
     });
 
-    NDSChart.create('#demo-line', {
+    NDS.Chart.create('#demo-line', {
         type: 'line',
         series: [
             { name: 'Sessions', data: [10, 41, 35, 51, 49, 62, 69, 91, 80] },
@@ -909,19 +909,19 @@ document.addEventListener('DOMContentLoaded', function () {
         xaxis: { title: 'Month' },
     });
 
-    NDSChart.create('#demo-pie', {
+    NDS.Chart.create('#demo-pie', {
         type: 'pie',
         series: [44, 55, 13, 43],
         labels: ['Services', 'Products', 'Support', 'Other'],
     });
 
-    NDSChart.create('#demo-donut', {
+    NDS.Chart.create('#demo-donut', {
         type: 'donut',
         series: [35, 25, 20, 20],
         labels: ['Completed', 'In Progress', 'Review', 'Pending'],
     });
 
-    NDSChart.create('#demo-themed', {
+    NDS.Chart.create('#demo-themed', {
         type: 'bar',
         series: [
             { name: 'Downloads', data: [28, 45, 62, 38, 55] },

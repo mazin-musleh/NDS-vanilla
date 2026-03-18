@@ -175,8 +175,8 @@
         }
 
         // Show backdrop
-        if (window.NDSBackdrop) {
-            window.NDSBackdrop.show({
+        if (NDS.Backdrop) {
+            NDS.Backdrop.show({
                 zIndex: backdropZ,
                 preventScroll: !isTopMode,
                 onClick: () => { if (hasState(animTarget, 'open')) closeMenu(ctx); }
@@ -197,7 +197,7 @@
 
         const onOpened = () => {
             removeState(animTarget, 'opening');
-            if (isTopMode && window.NDSDrawer) window.NDSDrawer.checkOverflow(animTarget);
+            if (isTopMode && NDS.Drawer) NDS.Drawer.checkOverflow(animTarget);
             animTarget.removeEventListener('transitionend', onOpened);
         };
         animTarget.addEventListener('transitionend', onOpened);
@@ -228,7 +228,7 @@
             if (toggleBtn) clearState(toggleBtn);
             if (drawer) drawer.style.removeProperty('--drawer-max-height');
 
-            if (window.NDSBackdrop) window.NDSBackdrop.hide();
+            if (NDS.Backdrop) NDS.Backdrop.hide();
             setTimeout(() => { if (closeEpoch === menuEpoch) accMenu.style.removeProperty('z-index'); }, 300);
             animTarget.removeEventListener('transitionend', onClosed);
         };
@@ -356,6 +356,6 @@
     }
 
     if (typeof window !== 'undefined') {
-        window.NDSSideMenu = { init: initializeSideMenu };
+        NDS.SideMenu = { init: initializeSideMenu };
     }
 })();

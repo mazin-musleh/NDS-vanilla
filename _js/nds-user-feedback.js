@@ -32,7 +32,7 @@
  * - data-error-message: Custom error message (overrides language defaults)
  */
 
-window.NDSUserFeedback = (() => {
+NDS.UserFeedback = (() => {
     'use strict';
 
     // Helper function to generate cookie name for current page
@@ -47,17 +47,17 @@ window.NDSUserFeedback = (() => {
     // NOTE: These are ESSENTIAL/FUNCTIONAL cookies - no consent check required
     // They prevent duplicate submissions and maintain form state
     function saveFeedbackStatus(status = 'submitted') {
-        if (window.NDSCookies && window.NDSCookies.set) {
+        if (NDS.Cookies && NDS.Cookies.set) {
             const cookieName = getFeedbackCookieName();
-            window.NDSCookies.set(cookieName, status, 365); // Save for 365 days
+            NDS.Cookies.set(cookieName, status, 365); // Save for 365 days
         }
     }
 
     // Get feedback status from cookie
     function getFeedbackStatus() {
-        if (window.NDSCookies && window.NDSCookies.get) {
+        if (NDS.Cookies && NDS.Cookies.get) {
             const cookieName = getFeedbackCookieName();
-            return window.NDSCookies.get(cookieName);
+            return NDS.Cookies.get(cookieName);
         }
         return null;
     }
@@ -124,12 +124,12 @@ window.NDSUserFeedback = (() => {
                 const message = status === 'success' ? successMessage : errorMessage;
 
                 // Create feedback message using NDSFeedback API
-                if (window.NDSFeedback && statusEl) {
+                if (NDS.Feedback && statusEl) {
                     // Clear any existing feedback in status element
-                    window.NDSFeedback.dismissAll(statusEl);
+                    NDS.Feedback.dismissAll(statusEl);
 
                     // Create new feedback message
-                    window.NDSFeedback.create({
+                    NDS.Feedback.create({
                         message: message,
                         status: status,
                         target: statusEl,
@@ -171,8 +171,8 @@ window.NDSUserFeedback = (() => {
                 feedbackComponent.removeAttribute('data-answer');
 
                 // Dismiss any feedback messages created by NDSFeedback API
-                if (window.NDSFeedback && statusEl) {
-                    window.NDSFeedback.dismissAll(statusEl);
+                if (NDS.Feedback && statusEl) {
+                    NDS.Feedback.dismissAll(statusEl);
                 }
 
                 // Restore hidden attributes

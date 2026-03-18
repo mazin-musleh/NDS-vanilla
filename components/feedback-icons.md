@@ -94,7 +94,7 @@ direction: ltr
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
-                                <code class="lang-javascript code">NDSFeedback.create({
+                                <code class="lang-javascript code">NDS.Feedback.create({
     status: 'success',
     target: '#container',
     size: 'md',
@@ -183,7 +183,7 @@ direction: ltr
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
-                                <code class="lang-javascript code">NDSFeedback.create({
+                                <code class="lang-javascript code">NDS.Feedback.create({
     status: 'info',
     target: '#container',
     size: 'md',
@@ -272,7 +272,7 @@ direction: ltr
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
-                                <code class="lang-javascript code">NDSFeedback.create({
+                                <code class="lang-javascript code">NDS.Feedback.create({
     status: 'warning',
     target: '#container',
     size: 'md',
@@ -361,7 +361,7 @@ direction: ltr
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
-                                <code class="lang-javascript code">NDSFeedback.create({
+                                <code class="lang-javascript code">NDS.Feedback.create({
     status: 'error',
     target: '#container',
     size: 'md',
@@ -450,7 +450,7 @@ direction: ltr
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
-                                <code class="lang-javascript code">NDSFeedback.create({
+                                <code class="lang-javascript code">NDS.Feedback.create({
     status: 'neutral',
     target: '#container',
     size: 'md',
@@ -543,7 +543,7 @@ direction: ltr
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
-                                <code class="lang-javascript code">NDSFeedback.create({
+                                <code class="lang-javascript code">NDS.Feedback.create({
     message: 'This field is required',
     status: 'error',
     target: '#container',
@@ -623,7 +623,7 @@ direction: ltr
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
-                                <code class="lang-javascript code">NDSFeedback.create({
+                                <code class="lang-javascript code">NDS.Feedback.create({
     message: 'Form submitted successfully',
     status: 'success',
     target: '#container',
@@ -703,7 +703,7 @@ direction: ltr
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
-                                <code class="lang-javascript code">NDSFeedback.create({
+                                <code class="lang-javascript code">NDS.Feedback.create({
     message: 'This action cannot be undone',
     status: 'warning',
     target: '#container',
@@ -783,7 +783,7 @@ direction: ltr
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
-                                <code class="lang-javascript code">NDSFeedback.create({
+                                <code class="lang-javascript code">NDS.Feedback.create({
     message: 'Additional information available',
     status: 'info',
     target: '#container',
@@ -863,7 +863,7 @@ direction: ltr
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
-                                <code class="lang-javascript code">NDSFeedback.create({
+                                <code class="lang-javascript code">NDS.Feedback.create({
     message: 'Default neutral feedback message',
     status: 'neutral',
     target: '#container',
@@ -902,7 +902,7 @@ direction: ltr
                         </div>
                         <script>
                             document.addEventListener('DOMContentLoaded', function() {
-                                NDSFeedback.create({
+                                NDS.Feedback.create({
                                     message: 'This hint persists across status changes',
                                     status: 'neutral',
                                     target: '#permanent-js-demo',
@@ -936,7 +936,7 @@ direction: ltr
                                     </button>
                                 </div>
                                 <code class="lang-javascript code">// Create permanent feedback via JS
-NDSFeedback.create({
+NDS.Feedback.create({
     message: 'This hint persists across status changes',
     status: 'neutral',
     target: '#container',
@@ -997,7 +997,7 @@ NDS.Forms.setStatus({
                         <script>
                             document.addEventListener('DOMContentLoaded', function() {
                                 var target = document.getElementById('permanent-lifecycle-demo');
-                                NDSFeedback.create({
+                                NDS.Feedback.create({
                                     message: 'Permanent hint — try adding an error, then clearing it',
                                     status: 'neutral',
                                     target: target,
@@ -1006,7 +1006,7 @@ NDS.Forms.setStatus({
                                     permanent: true
                                 });
                                 document.getElementById('perm-error-btn').addEventListener('click', function() {
-                                    NDSFeedback.create({
+                                    NDS.Feedback.create({
                                         message: 'This is an error (permanent hint is hidden)',
                                         status: 'error',
                                         target: target,
@@ -1015,7 +1015,7 @@ NDS.Forms.setStatus({
                                     });
                                 });
                                 document.getElementById('perm-success-btn').addEventListener('click', function() {
-                                    NDSFeedback.create({
+                                    NDS.Feedback.create({
                                         message: 'Success! (permanent hint is hidden)',
                                         status: 'success',
                                         target: target,
@@ -1024,7 +1024,7 @@ NDS.Forms.setStatus({
                                     });
                                 });
                                 document.getElementById('perm-clear-btn').addEventListener('click', function() {
-                                    NDSFeedback.dismissAll(target);
+                                    NDS.Feedback.dismissAll(target);
                                 });
                             });
                         </script>
@@ -1048,7 +1048,7 @@ NDS.Forms.setStatus({
                                     </button>
                                 </div>
                                 <code class="lang-javascript code">// 1. Create permanent hint
-NDSFeedback.create({
+NDS.Feedback.create({
     message: 'Hint text',
     status: 'neutral',
     target: '#container',
@@ -1056,14 +1056,14 @@ NDSFeedback.create({
 });
 
 // 2. Show error — permanent is hidden automatically
-NDSFeedback.create({
+NDS.Feedback.create({
     message: 'Error message',
     status: 'error',
     target: '#container'
 });
 
 // 3. Clear all — permanent is restored automatically
-NDSFeedback.dismissAll('#container');
+NDS.Feedback.dismissAll('#container');
 
 // Note: Creating a new permanent replaces the old one</code>
                             </div>
@@ -1077,11 +1077,11 @@ NDSFeedback.dismissAll('#container');
     </div>
 </section>
 
-<!-- NDSFeedback vs Forms.setStatus -->
+<!-- NDS.Feedback vs Forms.setStatus -->
 <section id="createVsSetStatus" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
-            <h2 class="nds-section-title">NDSFeedback.create vs NDS.Forms.setStatus</h2>
+            <h2 class="nds-section-title">NDS.Feedback.create vs NDS.Forms.setStatus</h2>
             <p class="nds-section-description">Two APIs for different use cases — low-level feedback creation vs form-aware status management</p>
         </div>
         <div class="nds-section-content">
@@ -1089,7 +1089,7 @@ NDSFeedback.dismissAll('#container');
 
                 <div class="nds-demo-card">
                     <div class="demo-header">
-                        <div class="demo-label">NDSFeedback.create — General Purpose</div>
+                        <div class="demo-label">NDS.Feedback.create — General Purpose</div>
                     </div>
                     <div class="demo-container">
                         <div class="state-demo" style="flex-direction: column; align-items: stretch; gap: var(--spacing-md);">
@@ -1111,7 +1111,7 @@ NDSFeedback.dismissAll('#container');
                             document.addEventListener('DOMContentLoaded', function() {
                                 var target = document.getElementById('create-demo-target');
                                 document.getElementById('create-info-btn').addEventListener('click', function() {
-                                    NDSFeedback.create({
+                                    NDS.Feedback.create({
                                         message: 'Just a visual message — no form state changes',
                                         status: 'info',
                                         target: target,
@@ -1120,7 +1120,7 @@ NDSFeedback.dismissAll('#container');
                                     });
                                 });
                                 document.getElementById('create-error-btn').addEventListener('click', function() {
-                                    NDSFeedback.create({
+                                    NDS.Feedback.create({
                                         message: 'Visual error — no data-status or aria-invalid set',
                                         status: 'error',
                                         target: target,
@@ -1129,7 +1129,7 @@ NDSFeedback.dismissAll('#container');
                                     });
                                 });
                                 document.getElementById('create-clear-btn').addEventListener('click', function() {
-                                    NDSFeedback.dismissAll(target);
+                                    NDS.Feedback.dismissAll(target);
                                 });
                             });
                         </script>
@@ -1154,7 +1154,7 @@ NDSFeedback.dismissAll('#container');
                                 </div>
                                 <code class="lang-javascript code">// Low-level: creates a feedback element in any target
 // Does NOT set data-status, data-message, or aria-invalid
-NDSFeedback.create({
+NDS.Feedback.create({
     message: 'Visual message only',
     status: 'error',
     target: '#any-element',
@@ -1163,7 +1163,7 @@ NDSFeedback.create({
 });
 
 // Dismiss
-NDSFeedback.dismissAll('#any-element');</code>
+NDS.Feedback.dismissAll('#any-element');</code>
                             </div>
                         </div>
                     </div>
@@ -1231,7 +1231,7 @@ NDSFeedback.dismissAll('#any-element');</code>
                                 <code class="lang-javascript code">// High-level: form-aware status management
 // 1. Sets data-status on container (border color)
 // 2. Sets data-message on container
-// 3. Creates feedback via NDSFeedback.create internally
+// 3. Creates feedback via NDS.Feedback.create internally
 // 4. Sets aria-invalid on the input
 NDS.Forms.setStatus({
     element: container,
@@ -1260,7 +1260,7 @@ NDS.Forms.clearStatus(container);</code>
             <div class="nds-content-block">
                 <h3 class="nds-block-title">When to Use</h3>
                 <ul>
-                    <li><strong>NDSFeedback.create</strong> — tooltips, notifications, hints on non-form elements (divs, sections, cards). Use when you only need a visual message without form state.</li>
+                    <li><strong>NDS.Feedback.create</strong> — tooltips, notifications, hints on non-form elements (divs, sections, cards). Use when you only need a visual message without form state.</li>
                     <li><strong>NDS.Forms.setStatus</strong> — form validation, input errors, success states on nds-form-container or nds-form-group. Use when the feedback should drive border colors, aria attributes, and integrate with form validation.</li>
                 </ul>
             </div>
@@ -1277,7 +1277,7 @@ NDS.Forms.clearStatus(container);</code>
         </div>
         <div class="nds-section-content">
             <div class="nds-content-block">
-                <h3 class="nds-block-title">NDSFeedback.create(options)</h3>
+                <h3 class="nds-block-title">NDS.Feedback.create(options)</h3>
                 <table class="nds-table nds-sm nds-stroke">
                     <thead>
                         <tr>
@@ -1380,11 +1380,11 @@ NDS.Forms.clearStatus(container);</code>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>NDSFeedback.dismiss(element)</td>
+                            <td>NDS.Feedback.dismiss(element)</td>
                             <td>Dismiss a single feedback element. Restores any hidden permanent feedback.</td>
                         </tr>
                         <tr>
-                            <td>NDSFeedback.dismissAll(container)</td>
+                            <td>NDS.Feedback.dismissAll(container)</td>
                             <td>Dismiss all non-permanent feedback in a container. Restores permanent feedback visibility.</td>
                         </tr>
                     </tbody>
@@ -1402,7 +1402,7 @@ NDS.Forms.clearStatus(container);</code>
                     <tbody>
                         <tr>
                             <td>NDS.Forms.setStatus({ element, status, message })</td>
-                            <td>Set status on a form container. Creates feedback via NDSFeedback internally.</td>
+                            <td>Set status on a form container. Creates feedback via NDS.Feedback internally.</td>
                         </tr>
                         <tr>
                             <td>NDS.Forms.setStatus({ element, status, message, permanent: true })</td>
