@@ -1812,7 +1812,8 @@
             CalendarConfig,
             UIConfig,
             createHijriDate,
-            init: initializeCalendar
+            init: initializeCalendar,
+            reinit: initializeCalendar
         };
     }
 

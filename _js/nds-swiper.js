@@ -658,6 +658,7 @@
     // Export to window
     window.NDSSwiper = {
         init: initializeComponents,
+        reinit: initializeComponents,
         create: (element) => {
             const instance = new NDSSwiper(element);
             element._ndsSwiper = instance;

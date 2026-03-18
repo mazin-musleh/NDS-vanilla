@@ -771,6 +771,7 @@
 
     window.NDSChart = {
         init: initCharts,
+        reinit: initCharts,
         create: createChart,
     };
 })();

@@ -463,6 +463,7 @@
     if (typeof window !== 'undefined') {
         window.NDSImagePopupViewer = {
             init: initializeIPV,
+            reinit: initializeIPV,
             create: () => {
                 initializeIPV();
                 return window.ndsIPVInstance;
