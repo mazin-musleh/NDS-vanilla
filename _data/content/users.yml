@@ -1,0 +1,87 @@
+- name: "Ahmed Al-Rashidi"
+  email: "ahmed.rashidi@gov.sa"
+  role: "Senior Developer"
+  department: "Engineering"
+  icon: '<i class="hgi hgi-stroke hgi-code-circle icon"></i>'
+  avatar: "assets/img/avatar3.png"
+  status: "active"
+
+- name: "Fatima Al-Harbi"
+  email: "fatima.harbi@gov.sa"
+  role: "UX Designer"
+  department: "Design"
+  icon: '<i class="hgi hgi-stroke hgi-paint-board icon"></i>'
+  avatar: "assets/img/avatar2.png"
+  status: "active"
+
+- name: "Sara Al-Dosari"
+  email: "sara.dosari@gov.sa"
+  role: "Marketing Lead"
+  department: "Marketing"
+  icon: '<i class="hgi hgi-stroke hgi-megaphone-01 icon"></i>'
+  avatar: "assets/img/avatar4.png"
+  status: "active"
+
+- name: "Layla Al-Qahtani"
+  email: "layla.qahtani@gov.sa"
+  role: "HR Specialist"
+  department: "Human Resources"
+  icon: '<i class="hgi hgi-stroke hgi-user-multiple icon"></i>'
+  avatar: "assets/img/avatar5.png"
+  status: "active"
+
+- name: "Khalid Al-Otaibi"
+  email: "khalid.otaibi@gov.sa"
+  role: "Project Manager"
+  department: "Engineering"
+  icon: '<i class="hgi hgi-stroke hgi-briefcase-01 icon"></i>'
+  status: "active"
+
+- name: "Omar Al-Shahrani"
+  email: "omar.shahrani@gov.sa"
+  role: "Data Analyst"
+  department: "Finance"
+  icon: '<i class="hgi hgi-stroke hgi-chart-line-data-01 icon"></i>'
+  status: "active"
+
+- name: "Mohammed Al-Zahrani"
+  email: "mohammed.zahrani@gov.sa"
+  role: "Security Engineer"
+  department: "Engineering"
+  icon: '<i class="hgi hgi-stroke hgi-shield-01 icon"></i>'
+  status: "away"
+
+- name: "Noura Al-Ghamdi"
+  email: "noura.ghamdi@gov.sa"
+  role: "Content Strategist"
+  department: "Marketing"
+  icon: '<i class="hgi hgi-stroke hgi-edit-01 icon"></i>'
+  status: "active"
+
+- name: "Abdulaziz Al-Shehri"
+  email: "abdulaziz.shehri@gov.sa"
+  role: "Finance Manager"
+  department: "Finance"
+  icon: '<i class="hgi hgi-stroke hgi-dollar-circle icon"></i>'
+  status: "active"
+
+- name: "Hana Al-Mutairi"
+  email: "hana.mutairi@gov.sa"
+  role: "Frontend Developer"
+  department: "Engineering"
+  icon: '<i class="hgi hgi-stroke hgi-code-square icon"></i>'
+  status: "offline"
+
+- name: "Turki Al-Subaie"
+  email: "turki.subaie@gov.sa"
+  role: "Operations Lead"
+  department: "Human Resources"
+  icon: '<i class="hgi hgi-stroke hgi-settings-01 icon"></i>'
+  status: "active"
+
+- name: "Reem Al-Tamimi"
+  email: "reem.tamimi@gov.sa"
+  role: "Visual Designer"
+  department: "Design"
+  icon: '<i class="hgi hgi-stroke hgi-paint-board icon"></i>'
+  status: "active"

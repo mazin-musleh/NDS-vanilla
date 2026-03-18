@@ -39,34 +39,15 @@ direction: ltr
                                 </tr>
                             </thead>
                             <tbody>
+                                {% for user in site.data.content.users limit:4 %}
                                 <tr>
-                                    <td>Ahmed Mohammed</td>
-                                    <td>ahmed.mohammed@moi.gov.sa</td>
-                                    <td>Developer</td>
-                                    <td><span class="nds-tag nds-success nds-status nds-sm"><span
-                                                class="label">Active</span></span></td>
+                                    <td>{{ user.name }}</td>
+                                    <td>{{ user.email }}</td>
+                                    <td>{{ user.role }}</td>
+                                    <td><span class="nds-tag {% if user.status == 'active' %}nds-success{% elsif user.status == 'away' %}nds-warning{% else %}nds-error{% endif %} nds-status nds-sm"><span
+                                                class="label">{% if user.status == 'active' %}Active{% elsif user.status == 'away' %}Away{% else %}Offline{% endif %}</span></span></td>
                                 </tr>
-                                <tr>
-                                    <td>Fatima Al-Zahra</td>
-                                    <td>fatima.alzahra@moi.gov.sa</td>
-                                    <td>Designer</td>
-                                    <td><span class="nds-tag nds-info nds-status nds-sm"><span
-                                                class="label">Available</span></span></td>
-                                </tr>
-                                <tr>
-                                    <td>Khalid Al-Rashid</td>
-                                    <td>khalid.alrashid@moi.gov.sa</td>
-                                    <td>Project Manager</td>
-                                    <td><span class="nds-tag nds-warning nds-status nds-sm"><span
-                                                class="label">Busy</span></span></td>
-                                </tr>
-                                <tr>
-                                    <td>Nora Al-Faisal</td>
-                                    <td>nora.alfaisal@moi.gov.sa</td>
-                                    <td>Analyst</td>
-                                    <td><span class="nds-tag nds-error nds-status nds-sm"><span
-                                                class="label">Unavailable</span></span></td>
-                                </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
                     </div>
@@ -812,42 +793,17 @@ direction: ltr
                                 </tr>
                             </thead>
                             <tbody>
+                                {% for user in site.data.content.users limit:4 %}
                                 <tr>
-                                    <td>EMP-001</td>
-                                    <td>Ahmed Mohammed Al-Rashid</td>
-                                    <td>ahmed.alrashid@moi.gov.sa</td>
-                                    <td>Information Technology</td>
-                                    <td>Senior Developer</td>
-                                    <td>2023-01-15</td>
-                                    <td><span class="nds-tag nds-success nds-sm"><span class="label">Active</span></span></td>
+                                    <td>EMP-{{ forloop.index | prepend: '00' | slice: -3, 3 }}</td>
+                                    <td>{{ user.name }}</td>
+                                    <td>{{ user.email }}</td>
+                                    <td>{{ user.department }}</td>
+                                    <td>{{ user.role }}</td>
+                                    <td>2023-0{{ forloop.index }}-15</td>
+                                    <td><span class="nds-tag {% if user.status == 'active' %}nds-success{% elsif user.status == 'away' %}nds-warning{% else %}nds-error{% endif %} nds-sm"><span class="label">{% if user.status == 'active' %}Active{% elsif user.status == 'away' %}On Leave{% else %}Inactive{% endif %}</span></span></td>
                                 </tr>
-                                <tr>
-                                    <td>EMP-002</td>
-                                    <td>Fatima Al-Zahra Al-Mansouri</td>
-                                    <td>fatima.almansouri@moi.gov.sa</td>
-                                    <td>Human Resources</td>
-                                    <td>HR Manager</td>
-                                    <td>2022-06-20</td>
-                                    <td><span class="nds-tag nds-success nds-sm"><span class="label">Active</span></span></td>
-                                </tr>
-                                <tr>
-                                    <td>EMP-003</td>
-                                    <td>Khalid Abdullah Al-Sudairi</td>
-                                    <td>khalid.alsudairi@moi.gov.sa</td>
-                                    <td>Marketing</td>
-                                    <td>Marketing Specialist</td>
-                                    <td>2023-03-10</td>
-                                    <td><span class="nds-tag nds-warning nds-sm"><span class="label">On Leave</span></span></td>
-                                </tr>
-                                <tr>
-                                    <td>EMP-004</td>
-                                    <td>Nora Ibrahim Al-Faisal</td>
-                                    <td>nora.alfaisal@moi.gov.sa</td>
-                                    <td>Finance</td>
-                                    <td>Financial Analyst</td>
-                                    <td>2021-11-05</td>
-                                    <td><span class="nds-tag nds-success nds-sm"><span class="label">Active</span></span></td>
-                                </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
                     </div>
