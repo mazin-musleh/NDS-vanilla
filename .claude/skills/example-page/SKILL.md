@@ -47,7 +47,7 @@ Brainstorm example page ideas based on available NDS components.
 
 ### Output
 
-Present ideas as a prioritized list, noting which would showcase the most underused components.
+Present ideas as a prioritized list, noting which would showcase the most underused components. Then use `/grill-me` to stress-test the proposals — resolve questions about scope, component choices, content needs, and layout decisions before committing to building any page.
 
 ---
 

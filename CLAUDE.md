@@ -59,6 +59,19 @@ All page content is built from sections. Read `layout/section.md` before creatin
 6. Add documentation page: `components/[name].md` — use `/doc-page [name]` skill after testing
 7. Add to `_data/sidemenu/sidemenu.yml` under Components children
 
+## Content Skills
+
+Four skills handle all content creation and quality assurance:
+
+| Skill | Purpose |
+|-------|---------|
+| `/doc-page [name]` | Create, refine, or audit documentation pages (`components/`, `ui-shell/`, `layout/`, `utilities/`) |
+| `/example-page [name]` | Create, refine, or brainstorm example and promotional pages (`examples/`, homepage) |
+| `/demo-content [name]` | Create YAML demo data files in `_data/content/` on demand |
+| `/content-review [audit\|icons\|coverage]` | Site-wide health checks — broken icons, placeholder text, undocumented components, sidemenu coherence |
+
+Each skill's `SKILL.md` has full usage details. All four are independent — use any without the others.
+
 ## Git Commits
 
 - Do NOT add `Co-Authored-By` lines to commit messages
