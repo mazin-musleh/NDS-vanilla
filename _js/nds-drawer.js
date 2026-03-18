@@ -413,7 +413,7 @@
     // PUBLIC API
     // ==============================================
 
-    window.NDSDrawer = {
+    NDS.Drawer = {
         init: initAllDrawers,
         reinit: initAllDrawers,
         initDrawer,

@@ -455,7 +455,7 @@
 
     // Expose global API (called by nds-loader.js unified system)
     if (typeof window !== 'undefined') {
-        window.NDSDropmenu = {
+        NDS.Dropmenu = {
             init: initializeDropmenus,
             reinit: initializeDropmenus,
             create: (element) => new NDSDropmenu(element)

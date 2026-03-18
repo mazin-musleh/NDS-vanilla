@@ -994,7 +994,7 @@ direction: ltr
 
             <h3>JavaScript API</h3>
 
-            <p>The drawer component provides a global <strong>NDSDrawer</strong> object with methods for programmatic control. Use <strong>NDSDrawer.init()</strong> or <strong>NDSDrawer.reinit()</strong> to initialize all drawer components on the page. For individual control, pass a drawer element to <strong>NDSDrawer.initDrawer(element)</strong>. The <strong>toggle(button)</strong> method expands or collapses a submenu when passed the parent button element. Call <strong>checkOverflow(drawer)</strong> to manually recalculate overflow states and show/hide the "Show more" button. The component automatically handles responsive state updates when <strong>data-open-on</strong> or <strong>data-always-open-on</strong> attributes are present, adding window resize listeners as needed.</p>
+            <p>The drawer component provides a global <strong>NDS.Drawer</strong> object with methods for programmatic control. Use <strong>NDS.Drawer.init()</strong> or <strong>NDS.Drawer.reinit()</strong> to initialize all drawer components on the page. For individual control, pass a drawer element to <strong>NDS.Drawer.initDrawer(element)</strong>. The <strong>toggle(button)</strong> method expands or collapses a submenu when passed the parent button element. Call <strong>checkOverflow(drawer)</strong> to manually recalculate overflow states and show/hide the "Show more" button. The component automatically handles responsive state updates when <strong>data-open-on</strong> or <strong>data-always-open-on</strong> attributes are present, adding window resize listeners as needed.</p>
 
             <div class="nds-code nds-expandable">
                 <div class="nds-code-action">
@@ -1005,24 +1005,24 @@ direction: ltr
                 <div class="nds-expandable-content">
                     <code class="lang-javascript line-numbers">
 // Initialize all drawers
-NDSDrawer.init();
+NDS.Drawer.init();
 
 // Initialize specific drawer (handles responsive states automatically)
 const drawer = document.querySelector('.nds-drawer');
-NDSDrawer.initDrawer(drawer);
+NDS.Drawer.initDrawer(drawer);
 
 // Toggle submenu (does nothing if drawer is in always-open mode)
 const button = drawer.querySelector('.nds-menu-btn');
-NDSDrawer.toggle(button);
+NDS.Drawer.toggle(button);
 
 // Check overflow state
-NDSDrawer.checkOverflow(drawer);
+NDS.Drawer.checkOverflow(drawer);
 
 // Destroy drawer instance (removes all event listeners and observers)
-NDSDrawer.destroy(drawer);
+NDS.Drawer.destroy(drawer);
 
 // Reinitialize all drawers (useful after DOM changes)
-NDSDrawer.reinit();
+NDS.Drawer.reinit();
                 </code>
                 </div>
             </div>

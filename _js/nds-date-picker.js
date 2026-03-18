@@ -1190,8 +1190,8 @@
         bindDropdownEvents: function () {
             var self = this;
 
-            if (this.elements.monthDropmenu && window.NDSDropmenu && !this.monthDropmenuInstance) {
-                this.monthDropmenuInstance = window.NDSDropmenu.create(this.elements.monthDropmenu);
+            if (this.elements.monthDropmenu && NDS.Dropmenu && !this.monthDropmenuInstance) {
+                this.monthDropmenuInstance = NDS.Dropmenu.create(this.elements.monthDropmenu);
                 this.elements.monthDropmenu.ndsDropmenuInstance = this.monthDropmenuInstance;
                 this.elements.monthDropmenu.addEventListener('nds:dropmenu:opened', function () {
                     self.renderMonthOptions();
@@ -1199,8 +1199,8 @@
                 });
             }
 
-            if (this.elements.yearDropmenu && window.NDSDropmenu && !this.yearDropmenuInstance) {
-                this.yearDropmenuInstance = window.NDSDropmenu.create(this.elements.yearDropmenu);
+            if (this.elements.yearDropmenu && NDS.Dropmenu && !this.yearDropmenuInstance) {
+                this.yearDropmenuInstance = NDS.Dropmenu.create(this.elements.yearDropmenu);
                 this.elements.yearDropmenu.ndsDropmenuInstance = this.yearDropmenuInstance;
                 this.elements.yearDropmenu.addEventListener('nds:dropmenu:opened', function () {
                     self.renderYearOptions();
@@ -1807,7 +1807,7 @@
     // CRITICAL: Expose global API immediately (called by unified init system)
     if (typeof window !== 'undefined') {
         window.DatePickerCalendar = DatePickerCalendar;
-        window.NDSDatePicker = {
+        NDS.DatePicker = {
             DatePickerCalendar,
             CalendarConfig,
             UIConfig,

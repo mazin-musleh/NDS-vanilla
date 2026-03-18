@@ -1060,14 +1060,14 @@ filterForm.addEventListener('nds:filterFormAjax', (e) => {
                 <div class="nds-expandable-content">
                     <code class="lang-javascript line-numbers">
 // By filter container selector or element
-const filter = NDSFilter.getInstance('.nds-filter');
-const filter = NDSFilter.getInstance(element);
+const filter = NDS.Filter.getInstance('.nds-filter');
+const filter = NDS.Filter.getInstance(element);
 
 // By target container ID
-const filter = NDSFilter.getByTarget('cardList');
+const filter = NDS.Filter.getByTarget('cardList');
 
 // Wait for initialization (handles race conditions with deferred scripts)
-NDSFilter.whenReady('.nds-filter', (instance) => {
+NDS.Filter.whenReady('.nds-filter', (instance) => {
     // instance is guaranteed ready
     // fires immediately if already initialized, or waits for nds:filter:ready
 });
@@ -1147,15 +1147,15 @@ NDSFilter.whenReady('.nds-filter', (instance) => {
                 </thead>
                 <tbody>
                     <tr>
-                        <td>NDSFilter.getInstance(selector)</td>
+                        <td>NDS.Filter.getInstance(selector)</td>
                         <td>Get filter instance by selector or element</td>
                     </tr>
                     <tr>
-                        <td>NDSFilter.getByTarget(targetId)</td>
+                        <td>NDS.Filter.getByTarget(targetId)</td>
                         <td>Get filter instance by target container ID</td>
                     </tr>
                     <tr>
-                        <td>NDSFilter.whenReady(selector, callback)</td>
+                        <td>NDS.Filter.whenReady(selector, callback)</td>
                         <td>Execute callback when filter is initialized. Fires immediately if already ready, otherwise waits for <strong>nds:filter:ready</strong> event</td>
                     </tr>
                 </tbody>
@@ -1175,7 +1175,7 @@ NDSFilter.whenReady('.nds-filter', (instance) => {
                     <tr>
                         <td>nds:filter:ready</td>
                         <td>Filter component initialized and ready</td>
-                        <td>instance (the NDSFilter instance)</td>
+                        <td>instance (the NDS.Filter instance)</td>
                     </tr>
                     <tr>
                         <td>nds:filter:change</td>
@@ -1226,7 +1226,7 @@ NDSFilter.whenReady('.nds-filter', (instance) => {
                 <div class="nds-expandable-content">
                     <code class="lang-javascript line-numbers">
 // Wait for filter to be ready (safe with deferred scripts)
-NDSFilter.whenReady('.nds-filter', (instance) => {
+NDS.Filter.whenReady('.nds-filter', (instance) => {
     console.log('Filter ready:', instance);
 });
 
@@ -1245,7 +1245,7 @@ document.querySelector('.nds-filter')
   });
 
 // Set filters programmatically
-const filter = NDSFilter.getByTarget('cardList');
+const filter = NDS.Filter.getByTarget('cardList');
 filter.setFilterValues('department', ['Engineering', 'Design']);
 filter.setSearchValue('Ahmed');
 

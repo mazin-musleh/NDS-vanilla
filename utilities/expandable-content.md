@@ -261,10 +261,10 @@ direction: ltr
                 <div class="nds-expandable-content">
                     <code class="lang-javascript">// Manual initialization
 const expandableElement = document.querySelector('#myExpandable');
-const expandableInstance = NDSExpandable.create(expandableElement);
+const expandableInstance = NDS.Expandable.create(expandableElement);
 
 // Reinitialize after dynamic content changes
-NDSExpandable.reinit();</code>
+NDS.Expandable.reinit();</code>
                 </div>
             </div>
 

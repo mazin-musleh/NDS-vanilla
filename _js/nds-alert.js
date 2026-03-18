@@ -253,6 +253,6 @@
     };
 
     if (typeof window !== 'undefined') {
-        window.NDSAlert = NDSAlert;
+        NDS.Alert = NDSAlert;
     }
 })();

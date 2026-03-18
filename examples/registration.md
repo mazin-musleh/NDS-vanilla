@@ -303,8 +303,8 @@ breadcrumb: ["Examples"]
       currentStep = stepNumber;
 
       // Update NDS stepper using the global API
-      if (window.NDSStepper) {
-        NDSStepper.goTo(stepperId, stepNumber);
+      if (NDS.Stepper) {
+        NDS.Stepper.goTo(stepperId, stepNumber);
       }
     }
 

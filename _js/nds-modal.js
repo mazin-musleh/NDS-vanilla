@@ -4,8 +4,8 @@
  *
  * Usage:
  * 1. Button trigger: <button data-modal-target="myModal">Open</button>
- * 2. Programmatic: window.NDSModal.open('myModal')
- * 3. Close: window.NDSModal.close()
+ * 2. Programmatic: NDS.Modal.open('myModal')
+ * 3. Close: NDS.Modal.close()
  */
 
 (function () {
@@ -58,7 +58,7 @@
     }
 
     // Show backdrop
-    window.NDSBackdrop.show({
+    NDS.Backdrop.show({
       zIndex: 1100,
       onClick: () => close()
     });
@@ -105,7 +105,7 @@
     modal.setAttribute('aria-hidden', 'true');
 
     // Hide backdrop
-    window.NDSBackdrop.hide();
+    NDS.Backdrop.hide();
 
     // Hide modal after animation
     setTimeout(() => {
@@ -124,7 +124,7 @@
     if (document.body.hasAttribute('data-nds-modal-initialized')) return;
 
     // Ensure NDSBackdrop is available
-    if (!window.NDSBackdrop) {
+    if (!NDS.Backdrop) {
       console.error('NDSModal requires NDSBackdrop API. Please include nds-backdrop.js first.');
       return;
     }
@@ -161,7 +161,7 @@
   /**
    * Public API
    */
-  window.NDSModal = {
+  NDS.Modal = {
     init,
     open,
     close,

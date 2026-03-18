@@ -563,7 +563,7 @@ direction: ltr
 
             <h3>JavaScript API Methods</h3>
 
-            <p>Access stepper instances through the global <strong>NDSStepper</strong> object. Use <strong>NDSStepper.get(id)</strong> to retrieve a specific stepper instance, then call navigation methods directly. The <strong>next()</strong> method moves to the next step or marks the last step as completed on linear steppers. Use <strong>previous()</strong> to go back one step or un-complete a completed final step. Jump to any specific step with <strong>goTo(stepNumber)</strong>.</p>
+            <p>Access stepper instances through the global <strong>NDS.Stepper</strong> object. Use <strong>NDS.Stepper.get(id)</strong> to retrieve a specific stepper instance, then call navigation methods directly. The <strong>next()</strong> method moves to the next step or marks the last step as completed on linear steppers. Use <strong>previous()</strong> to go back one step or un-complete a completed final step. Jump to any specific step with <strong>goTo(stepNumber)</strong>.</p>
 
             <div class="nds-code nds-expandable">
                 <div class="nds-code-action">
@@ -574,7 +574,7 @@ direction: ltr
                 <div class="nds-expandable-content">
                     <code class="lang-javascript line-numbers">
 // Get stepper instance by ID
-const stepper = NDSStepper.get('my-stepper');
+const stepper = NDS.Stepper.get('my-stepper');
 
 // Navigate between steps
 stepper.next();
@@ -589,7 +589,7 @@ console.log(stepper.current, stepper.total, stepper.progress);
 
             <h3>Global API Convenience Methods</h3>
 
-            <p>For quick operations without retrieving instances, use the convenience methods on the global API. Call <strong>NDSStepper.next(id)</strong>, <strong>NDSStepper.previous(id)</strong>, or <strong>NDSStepper.goTo(id, stepNumber)</strong> to control steppers directly. These methods are shortcuts that internally look up the stepper instance by ID and call the corresponding instance methods. Use this approach when you need stepper-specific functionality like navigation and accessing properties.</p>
+            <p>For quick operations without retrieving instances, use the convenience methods on the global API. Call <strong>NDS.Stepper.next(id)</strong>, <strong>NDS.Stepper.previous(id)</strong>, or <strong>NDS.Stepper.goTo(id, stepNumber)</strong> to control steppers directly. These methods are shortcuts that internally look up the stepper instance by ID and call the corresponding instance methods. Use this approach when you need stepper-specific functionality like navigation and accessing properties.</p>
 
             <div class="nds-code nds-expandable">
                 <div class="nds-code-action">
@@ -600,9 +600,9 @@ console.log(stepper.current, stepper.total, stepper.progress);
                 <div class="nds-expandable-content">
                     <code class="lang-javascript line-numbers">
 // Using global convenience methods
-NDSStepper.next('my-stepper');        // Calls instance.next() method
-NDSStepper.previous('my-stepper');    // Calls instance.previous() method
-NDSStepper.goTo('my-stepper', 3);     // Calls instance.goTo(3) method
+NDS.Stepper.next('my-stepper');        // Calls instance.next() method
+NDS.Stepper.previous('my-stepper');    // Calls instance.previous() method
+NDS.Stepper.goTo('my-stepper', 3);     // Calls instance.goTo(3) method
                 </code>
                 </div>
             </div>
@@ -687,7 +687,7 @@ document.addEventListener('nds:stepper:change', (e) => {
 
             <h3>Automatic Initialization</h3>
 
-            <p>The component automatically initializes on DOMContentLoaded by finding all elements with the <strong>.nds-stepper</strong> class that aren't inside code examples. Each stepper is marked with <strong>data-initialized="true"</strong> to prevent double initialization. The instance is stored in the <strong>ndsStepperInstance</strong> property on the DOM element, and if the stepper has an ID, it's also added to the global registry accessible via <strong>NDSStepper.get()</strong>. Control button event delegation is set up once globally, making the system efficient even with multiple steppers on the page.</p>
+            <p>The component automatically initializes on DOMContentLoaded by finding all elements with the <strong>.nds-stepper</strong> class that aren't inside code examples. Each stepper is marked with <strong>data-initialized="true"</strong> to prevent double initialization. The instance is stored in the <strong>ndsStepperInstance</strong> property on the DOM element, and if the stepper has an ID, it's also added to the global registry accessible via <strong>NDS.Stepper.get()</strong>. Control button event delegation is set up once globally, making the system efficient even with multiple steppers on the page.</p>
 
             <h3>Performance Features</h3>
 

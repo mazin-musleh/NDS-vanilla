@@ -271,7 +271,7 @@
     }
 
     // Expose simplified global API
-    window.NDSStepper = {
+    NDS.Stepper = {
         init,
         get,
         control,

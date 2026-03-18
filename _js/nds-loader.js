@@ -5,11 +5,21 @@
     // Component registry with dependencies and selectors
     // Priority is automatically assigned based on array order (first = highest priority)
     // To change initialization order, simply reorder components in this array
+    //
+    // Standard component API contract:
+    //   Factory components (per-element):  init(), reinit(), create(el)
+    //   Singleton components (one global): init() + component-specific methods
+    //   Utility/API components:            init() + utility methods
+    //
+    // All components live under the NDS.* namespace (e.g. NDS.Modal, NDS.Accordion)
+    // Form sub-systems are grouped: NDS.Forms, NDS.Forms.FileUpload, NDS.OTP
+    // Core utilities: NDS.theme, NDS.debounce, NDS.onDOMAdd, etc.
+    // Only exception: window.NDSInitConfig (pre-boot config, set before bundle loads)
     const COMPONENTS = [
         {
             name: 'navigation',
             selector: '.nds-main-nav',
-            init: () => window.NDSNavController?.init?.(),
+            init: () => NDS.NavController?.init?.(),
         },
         {
             name: 'forms',
@@ -24,27 +34,27 @@
         {
             name: 'tabs',
             selector: '.nds-tabs',
-            init: () => window.NDSTabs?.init?.(),
+            init: () => NDS.Tabs?.init?.(),
         },
         {
             name: 'tables',
             selector: '.nds-table',
-            init: () => window.NDSTables?.init?.(),
+            init: () => NDS.Tables?.init?.(),
         },
         {
             name: 'accordion',
             selector: '.nds-accordion',
-            init: () => window.NDSAccordion?.init?.(),
+            init: () => NDS.Accordion?.init?.(),
         },
         {
             name: 'stepper',
             selector: '.nds-stepper',
-            init: () => window.NDSStepper?.init?.(),
+            init: () => NDS.Stepper?.init?.(),
         },
         {
             name: 'swiper',
             selector: '.nds-swiper',
-            init: () => window.NDSSwiper?.init?.(),
+            init: () => NDS.Swiper?.init?.(),
         },
         {
             name: 'fileUpload',
@@ -54,128 +64,128 @@
         {
             name: 'sidemenu',
             selector: '.wSideMenu',
-            init: () => window.NDSSideMenu?.init?.(),
+            init: () => NDS.SideMenu?.init?.(),
         },
         {
             name: 'sideInfo',
             selector: '.nds-sideInfo',
-            init: () => window.NDSSideInfo?.init?.(),
+            init: () => NDS.SideInfo?.init?.(),
         },
         {
             name: 'drawer',
             selector: '.nds-drawer',
-            init: () => window.NDSDrawer?.init?.(),
+            init: () => NDS.Drawer?.init?.(),
         },
         {
             name: 'numbers',
             selector: '.nds-number-format, .nds-counter-value',
-            init: () => window.NDSNumbers?.init?.(),
+            init: () => NDS.Numbers?.init?.(),
         },
         {
             name: 'code',
             selector: 'code',
-            init: () => window.NDSCode?.init?.(),
+            init: () => NDS.Code?.init?.(),
         },
         {
             name: 'showcase',
             selector: '.nds-demo-card, .demo-toggle-btn, .nds-demo-showcase',
-            init: () => window.NDSShowcase?.init?.(),
+            init: () => NDS.Showcase?.init?.(),
         },
         {
             name: 'share',
             selector: '#nds-sharePageBtn',
-            init: () => window.NDSShare?.init?.(),
+            init: () => NDS.Share?.init?.(),
         },
         {
             name: 'datePicker',
             selector: '.nds-date-input',
-            init: () => window.NDSDatePicker?.init?.(),
+            init: () => NDS.DatePicker?.init?.(),
         },
         {
             name: 'cityWeather',
             selector: '#nds-weatherInfo, #nds-cityName',
-            init: () => window.NDSCityWeather?.init?.(),
+            init: () => NDS.CityWeather?.init?.(),
         },
         {
             name: 'timeDate',
             selector: '#nds-date, #nds-realTimeClock',
-            init: () => window.NDSTimeDate?.init?.(),
+            init: () => NDS.TimeDate?.init?.(),
         },
         {
             name: 'fontLoading',
             selector: null,
-            init: () => window.NDSFontLoading?.init?.(),
+            init: () => NDS.FontLoading?.init?.(),
             universal: true,
         },
         {
             name: 'cookies',
             selector: '#ndsCookiesAcceptBtn',
-            init: () => window.NDSCookies?.init?.(),
+            init: () => NDS.Cookies?.init?.(),
         },
         {
             name: 'rating',
             selector: '.nds-rating',
-            init: () => window.NDSRating?.init?.(),
+            init: () => NDS.Rating?.init?.(),
         },
         {
             name: 'expandable',
             selector: '.nds-expandable',
-            init: () => window.NDSExpandable?.init?.(),
+            init: () => NDS.Expandable?.init?.(),
         },
         {
             name: 'breadcrumb',
             selector: '.nds-breadcrumb-nav',
-            init: () => window.NDSBreadcrumb?.init?.(),
+            init: () => NDS.Breadcrumb?.init?.(),
         },
         {
             name: 'dropmenu',
             selector: '.nds-dropmenu',
-            init: () => window.NDSDropmenu?.init?.(),
+            init: () => NDS.Dropmenu?.init?.(),
         },
         {
             name: 'autocomplete',
             selector: '.nds-form-container[data-url]',
-            init: () => window.NDSAutocomplete?.init?.(),
+            init: () => NDS.Autocomplete?.init?.(),
         },
         {
             name: 'pagination',
             selector: '.nds-pagination-nav, .nds-pagination',
-            init: () => window.NDSPagination?.init?.(),
+            init: () => NDS.Pagination?.init?.(),
         },
         {
             name: 'autoPagination',
             selector: '.nds-auto-pagination',
-            init: () => window.NDSPagination?.initAuto?.(),
+            init: () => NDS.Pagination?.initAuto?.(),
         },
         {
             name: 'ipv',
             selector: '.nds-ipv-thumbnail',
-            init: () => window.NDSImagePopupViewer?.init?.(),
+            init: () => NDS.ImagePopupViewer?.init?.(),
         },
         {
             name: 'modal',
             selector: '.nds-modal',
-            init: () => window.NDSModal?.init?.(),
+            init: () => NDS.Modal?.init?.(),
         },
         {
             name: 'alert',
             selector: '.nds-alert',
-            init: () => window.NDSAlert?.init?.(),
+            init: () => NDS.Alert?.init?.(),
         },
         {
             name: 'filter',
             selector: '.nds-filter',
-            init: () => window.NDSFilter?.init?.(),
+            init: () => NDS.Filter?.init?.(),
         },
         {
             name: 'userFeedback',
             selector: '.nds-user-feedback',
-            init: () => window.NDSUserFeedback?.init?.(),
+            init: () => NDS.UserFeedback?.init?.(),
         },
         {
             name: 'chart',
             selector: '.nds-chart',
-            init: () => window.NDSChart?.init?.(),
+            init: () => NDS.Chart?.init?.(),
         },
     ].map((component, index) => ({
         ...component,
@@ -335,6 +345,7 @@
     // Configuration options
     // Merge defaults with optional global/window overrides and HTML data-attributes
     // To enable performance monitoring, set window.NDSInitConfig = { enableTiming: true, enableLogging: true }
+    // Note: NDSInitConfig uses window.* because it's set BEFORE the bundle loads (NDS namespace doesn't exist yet)
     const rootEl = document.documentElement;
     const attrAutoInit = rootEl?.getAttribute('data-nds-auto-init');
     const attrDisableAll = rootEl?.getAttribute('data-nds-disable-all');
@@ -351,7 +362,7 @@
     };
 
     // Expose global API immediately
-    window.NDSInit = {
+    NDS.Init = {
         initialize: initializeNDS,
         components: COMPONENTS,
         config: CONFIG,
@@ -390,9 +401,9 @@
                 status[component.name] = {
                     priority: component.priority,
                     elements: elements,
-                    // Heuristic: check top-level window object referenced in init() string
-                    available: !!window[
-                        component.init.toString().match(/window\.(\w+)/)?.[1]
+                    // Heuristic: check NDS namespace property referenced in init() string
+                    available: !!NDS[
+                        component.init.toString().match(/NDS\.(\w+)/)?.[1]
                     ],
                 };
             });

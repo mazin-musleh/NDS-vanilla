@@ -335,7 +335,7 @@
 
     // CRITICAL: Expose global API immediately (called by unified init system)
     if (typeof window !== 'undefined') {
-        window.NDSAccordion = {
+        NDS.Accordion = {
             init: initializeAccordions,
             reinit: reinitializeAccordions,
             create: (container) => new NDSAccordion(container)

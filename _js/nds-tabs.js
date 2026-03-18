@@ -443,9 +443,9 @@
             panel.setAttribute('tabindex', '0');
 
             // Recheck height for expandable components now that they're visible
-            if (window.NDSExpandable && window.NDSExpandable.recheckHeights) {
+            if (NDS.Expandable && NDS.Expandable.recheckHeights) {
                 setTimeout(() => {
-                    window.NDSExpandable.recheckHeights();
+                    NDS.Expandable.recheckHeights();
                 }, 10);
             }
         }
@@ -547,7 +547,7 @@
 
     // CRITICAL: Expose global API immediately (called by unified init system)
     if (typeof window !== 'undefined') {
-        window.NDSTabs = {
+        NDS.Tabs = {
             init: initializeTabs,
             reinit: reinitializeTabs,
             create: (container) => new NDSTabs(container)

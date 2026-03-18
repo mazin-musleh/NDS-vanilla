@@ -550,11 +550,11 @@ Data Attributes:
 
             <h3>Overview</h3>
 
-            <p>The <strong>NDSDropmenu</strong> component auto-initializes on page load. You can also manually create instances and control dropmenus programmatically.</p>
+            <p>The <strong>NDS.Dropmenu</strong> component auto-initializes on page load. You can also manually create instances and control dropmenus programmatically.</p>
 
             <h3>Initialization</h3>
 
-            <p>Dropmenus are automatically initialized when the page loads. For dynamically added content, call <strong>NDSDropmenu.reinit()</strong> to initialize new dropmenus.</p>
+            <p>Dropmenus are automatically initialized when the page loads. For dynamically added content, call <strong>NDS.Dropmenu.reinit()</strong> to initialize new dropmenus.</p>
 
             <div class="nds-code nds-expandable">
                 <div class="nds-code-action">
@@ -567,11 +567,11 @@ Data Attributes:
 // Auto-initialization happens on page load
 
 // Reinitialize after adding new dropmenus dynamically
-NDSDropmenu.reinit();
+NDS.Dropmenu.reinit();
 
 // Manually create a dropmenu instance
 const element = document.querySelector('.nds-dropmenu');
-const instance = NDSDropmenu.create(element);
+const instance = NDS.Dropmenu.create(element);
                 </code>
                 </div>
             </div>

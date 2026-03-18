@@ -68,8 +68,8 @@
 
             // Initialize only the newly created dropdown menu (same as breadcrumbs)
             const dropmenuElement = dropdownContainer.querySelector('.nds-dropmenu');
-            if (dropmenuElement && window.NDSDropmenu) {
-                window.NDSDropmenu.create(dropmenuElement);
+            if (dropmenuElement && NDS.Dropmenu) {
+                NDS.Dropmenu.create(dropmenuElement);
             }
 
             // If active page is inside the dropdown, activate the ellipsis trigger
@@ -728,7 +728,7 @@
 
     // Expose global API for unified init system
     if (typeof window !== 'undefined') {
-        window.NDSPagination = {
+        NDS.Pagination = {
             init: initializePagination,
             initAuto: initializeAutoPagination,
             create: (container) => new NDSPagination(container),
