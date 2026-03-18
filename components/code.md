@@ -392,8 +392,10 @@ async function handleFormSubmit(form) {
     </span>
   </span>
   <div class="nds-alert-content">
-    <span class="nds-alert-title">Success</span>
-    <p class="nds-alert-description">Operation completed.</p>
+    <div class="nds-alert-text">
+      <span class="nds-alert-title">Success</span>
+      <p class="nds-alert-description">Operation completed.</p>
+    </div>
   </div>
 </div>
                                     </code>

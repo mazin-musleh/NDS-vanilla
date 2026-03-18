@@ -45,8 +45,10 @@ direction: ltr
                                     </span>
                                 </span>
                                 <div class="nds-alert-content">
-                                    <span class="nds-alert-title">Success</span>
-                                    <p class="nds-alert-description">Your changes have been saved successfully.</p>
+                                    <div class="nds-alert-text">
+                                        <span class="nds-alert-title">Success</span>
+                                        <p class="nds-alert-description">Your changes have been saved successfully.</p>
+                                    </div>
                                 </div>
                                 <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close"
                                     aria-label="Close alert">
@@ -85,8 +87,10 @@ direction: ltr
     </span>
   </span>
   <div class="nds-alert-content">
-    <span class="nds-alert-title">Success</span>
-    <p class="nds-alert-description">Your changes have been saved successfully.</p>
+    <div class="nds-alert-text">
+      <span class="nds-alert-title">Success</span>
+      <p class="nds-alert-description">Your changes have been saved successfully.</p>
+    </div>
   </div>
   <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close" aria-label="Close alert">
     <i class="hgi hgi-stroke hgi-cancel-01"></i>
@@ -141,8 +145,10 @@ direction: ltr
                                     </span>
                                 </span>
                                 <div class="nds-alert-content">
-                                    <span class="nds-alert-title">Information</span>
-                                    <p class="nds-alert-description">A new software update is available for download.</p>
+                                    <div class="nds-alert-text">
+                                        <span class="nds-alert-title">Information</span>
+                                        <p class="nds-alert-description">A new software update is available for download.</p>
+                                    </div>
                                 </div>
                                 <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close"
                                     aria-label="Close alert">
@@ -181,8 +187,10 @@ direction: ltr
     </span>
   </span>
   <div class="nds-alert-content">
-    <span class="nds-alert-title">Information</span>
-    <p class="nds-alert-description">A new software update is available for download.</p>
+    <div class="nds-alert-text">
+      <span class="nds-alert-title">Information</span>
+      <p class="nds-alert-description">A new software update is available for download.</p>
+    </div>
   </div>
   <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close" aria-label="Close alert">
     <i class="hgi hgi-stroke hgi-cancel-01"></i>
@@ -237,8 +245,10 @@ direction: ltr
                                     </span>
                                 </span>
                                 <div class="nds-alert-content">
-                                    <span class="nds-alert-title">Warning</span>
-                                    <p class="nds-alert-description">Your session will expire in 5 minutes. Save your work to avoid losing changes.</p>
+                                    <div class="nds-alert-text">
+                                        <span class="nds-alert-title">Warning</span>
+                                        <p class="nds-alert-description">Your session will expire in 5 minutes. Save your work to avoid losing changes.</p>
+                                    </div>
                                 </div>
                                 <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close"
                                     aria-label="Close alert">
@@ -277,8 +287,10 @@ direction: ltr
     </span>
   </span>
   <div class="nds-alert-content">
-    <span class="nds-alert-title">Warning</span>
-    <p class="nds-alert-description">Your session will expire in 5 minutes.</p>
+    <div class="nds-alert-text">
+      <span class="nds-alert-title">Warning</span>
+      <p class="nds-alert-description">Your session will expire in 5 minutes. Save your work to avoid losing changes.</p>
+    </div>
   </div>
   <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close" aria-label="Close alert">
     <i class="hgi hgi-stroke hgi-cancel-01"></i>
@@ -296,7 +308,7 @@ direction: ltr
                                     <code class="lang-javascript code">NDSAlert.create({
     variant: 'warning',
     title: 'Warning',
-    description: 'Your session will expire in 5 minutes.',
+    description: 'Your session will expire in 5 minutes. Save your work to avoid losing changes.',
     target: '#alert-container'
 });</code>
                                 </div>
@@ -333,8 +345,10 @@ direction: ltr
                                     </span>
                                 </span>
                                 <div class="nds-alert-content">
-                                    <span class="nds-alert-title">Error</span>
-                                    <p class="nds-alert-description">There was an error processing your request. Please try again.</p>
+                                    <div class="nds-alert-text">
+                                        <span class="nds-alert-title">Error</span>
+                                        <p class="nds-alert-description">There was an error processing your request. Please try again.</p>
+                                    </div>
                                 </div>
                                 <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close"
                                     aria-label="Close alert">
@@ -373,8 +387,10 @@ direction: ltr
     </span>
   </span>
   <div class="nds-alert-content">
-    <span class="nds-alert-title">Error</span>
-    <p class="nds-alert-description">There was an error processing your request.</p>
+    <div class="nds-alert-text">
+      <span class="nds-alert-title">Error</span>
+      <p class="nds-alert-description">There was an error processing your request. Please try again.</p>
+    </div>
   </div>
   <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close" aria-label="Close alert">
     <i class="hgi hgi-stroke hgi-cancel-01"></i>
@@ -392,7 +408,7 @@ direction: ltr
                                     <code class="lang-javascript code">NDSAlert.create({
     variant: 'error',
     title: 'Error',
-    description: 'There was an error processing your request.',
+    description: 'There was an error processing your request. Please try again.',
     target: '#alert-container'
 });</code>
                                 </div>
@@ -429,8 +445,10 @@ direction: ltr
                                     </span>
                                 </span>
                                 <div class="nds-alert-content">
-                                    <span class="nds-alert-title">Notification</span>
-                                    <p class="nds-alert-description">You have 3 new messages in your inbox.</p>
+                                    <div class="nds-alert-text">
+                                        <span class="nds-alert-title">Notification</span>
+                                        <p class="nds-alert-description">You have 3 new messages in your inbox.</p>
+                                    </div>
                                 </div>
                                 <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close"
                                     aria-label="Close alert">
@@ -469,8 +487,10 @@ direction: ltr
     </span>
   </span>
   <div class="nds-alert-content">
-    <span class="nds-alert-title">Notification</span>
-    <p class="nds-alert-description">You have 3 new messages in your inbox.</p>
+    <div class="nds-alert-text">
+      <span class="nds-alert-title">Notification</span>
+      <p class="nds-alert-description">You have 3 new messages in your inbox.</p>
+    </div>
   </div>
   <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close" aria-label="Close alert">
     <i class="hgi hgi-stroke hgi-cancel-01"></i>
@@ -542,12 +562,12 @@ direction: ltr
                                     </span>
                                 </span>
                                 <div class="nds-alert-content">
-                                    <span class="nds-alert-title">Important:</span>
-                                    <p class="nds-alert-description">This is a very important banner message that requires attention</p>
+                                    <div class="nds-alert-text">
+                                        <span class="nds-alert-title">Important:</span>
+                                        <p class="nds-alert-description">This is a very important banner message that requires attention</p>
+                                    </div>
                                     <div class="nds-alert-actions">
-                                        <button class="nds-btn nds-subtle nds-sm">
-                                            <span class="label">Learn More</span>
-                                        </button>
+                                        <a href="#" class="nds-link">Learn More</a>
                                     </div>
                                 </div>
                                 <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close"
@@ -587,12 +607,12 @@ direction: ltr
     </span>
   </span>
   <div class="nds-alert-content">
-    <span class="nds-alert-title">Important:</span>
-    <p class="nds-alert-description">This is a very important banner message that requires attention.</p>
+    <div class="nds-alert-text">
+      <span class="nds-alert-title">Important:</span>
+      <p class="nds-alert-description">This is a very important banner message that requires attention.</p>
+    </div>
     <div class="nds-alert-actions">
-      <button class="nds-btn nds-subtle nds-sm">
-        <span class="label">Learn More</span>
-      </button>
+      <a href="#" class="nds-link">Learn More</a>
     </div>
   </div>
   <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close" aria-label="Close alert">
@@ -613,7 +633,10 @@ direction: ltr
     title: 'Important:',
     description: 'This is a very important banner message that requires attention.',
     display: 'inline',
-    target: '#alert-container'
+    target: '#alert-container',
+    actions: [
+        { label: 'Learn More', href: '#', class: 'nds-link' }
+    ]
 });</code>
                                 </div>
                             </div>
@@ -661,8 +684,10 @@ direction: ltr
                                     </span>
                                 </span>
                                 <div class="nds-alert-content">
-                                    <span class="nds-alert-title">Update Available</span>
-                                    <p class="nds-alert-description">A new version is available. Would you like to update now?</p>
+                                    <div class="nds-alert-text">
+                                        <span class="nds-alert-title">Update Available</span>
+                                        <p class="nds-alert-description">A new version is available. Would you like to update now?</p>
+                                    </div>
                                     <div class="nds-alert-actions">
                                         <button class="nds-btn nds-primary nds-sm">
                                             <span class="label">Update Now</span>
@@ -709,8 +734,10 @@ direction: ltr
     </span>
   </span>
   <div class="nds-alert-content">
-    <span class="nds-alert-title">Update Available</span>
-    <p class="nds-alert-description">A new version is available.</p>
+    <div class="nds-alert-text">
+      <span class="nds-alert-title">Update Available</span>
+      <p class="nds-alert-description">A new version is available. Would you like to update now?</p>
+    </div>
     <div class="nds-alert-actions">
       <button class="nds-btn nds-primary nds-sm">
         <span class="label">Update Now</span>
@@ -736,11 +763,11 @@ direction: ltr
                                     <code class="lang-javascript code">NDSAlert.create({
     variant: 'info',
     title: 'Update Available',
-    description: 'A new version is available.',
+    description: 'A new version is available. Would you like to update now?',
     target: '#alert-container',
     actions: [
-        { label: 'Update Now', variant: 'primary', onClick: () => handleUpdate() },
-        { label: 'Later', variant: 'subtle', dismiss: true }
+        { label: 'Update Now', class: 'nds-btn nds-primary nds-sm', onClick: () => handleUpdate() },
+        { label: 'Later', class: 'nds-btn nds-subtle nds-sm', dismiss: true }
     ]
 });</code>
                                 </div>
@@ -832,8 +859,10 @@ direction: ltr
       </span>
     </span>
     <div class="nds-alert-content">
-      <span class="nds-alert-title">Success</span>
-      <p class="nds-alert-description">Changes saved successfully!</p>
+      <div class="nds-alert-text">
+        <span class="nds-alert-title">Success</span>
+        <p class="nds-alert-description">Changes saved successfully!</p>
+      </div>
     </div>
     <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close nds-progress" aria-label="Close alert" style="--progress-duration: 4000ms;">
       <i class="hgi hgi-stroke hgi-cancel-01"></i>
@@ -936,10 +965,11 @@ const alert = NDSAlert.create({
     actions: [                // Action buttons (optional)
         {
             label: 'Retry',
-            variant: 'primary',   // Button style: 'primary', 'subtle', etc.
-            size: 'sm',           // Button size: 'sm', 'md', 'lg' (default: 'sm')
+            class: 'nds-btn nds-primary nds-sm',  // Custom classes (overrides variant/size)
             onClick: (el) => {},  // Callback, receives the alert element
-            dismiss: false        // Auto-dismiss after click (default: false)
+            dismiss: false,       // Auto-dismiss after click (default: false)
+            href: '/url',         // Render as &lt;a&gt; link instead of &lt;button&gt; (optional)
+            target: '_blank'      // Link target attribute (optional, requires href)
         }
     ]
 });
