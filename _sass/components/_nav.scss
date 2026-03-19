@@ -312,7 +312,7 @@
             }
         }
 
-        &.widthFit {
+        &.nds-fit {
             .nds-dropdown-item {
                 --btn-width: 100%;
             }
@@ -514,8 +514,8 @@ body:not(.nds-minimal) .nds-main-nav {
     }
 
 
-    .nds-dropdown[data-state~="open"] .nds-dropdown-menu.widthFit,
-    .nds-nav-minimal .nds-dropdown[data-state~="open"] .nds-dropdown-menu.widthFit {
+    .nds-dropdown[data-state~="open"] .nds-dropdown-menu.nds-fit,
+    .nds-nav-minimal .nds-dropdown[data-state~="open"] .nds-dropdown-menu.nds-fit {
         min-width: fit-content !important;
         position: absolute !important;
         inset-inline: auto 0;

@@ -1,0 +1,24 @@
+{%- assign data = site.data.content[include.item.content_source] %}
+<div class="nds-dropdown-columns columnView">
+    {%- if data.columns %}
+    {%- for column in data.columns %}
+    <div class="nds-column">
+        {%- if column.title %}
+        <div class="nds-dropdown-title">{{ column.title }}</div>
+        {%- endif %}
+        <div class="nds-list{%- if column.multi_column_list %} nds-multi-column-list{%- endif %}">
+            {%- for subitem in column.items %}
+            <a class="nds-btn nds-subtle nds-dropdown-item" href="{%- if subitem.url contains '#' and subitem.url | slice: 0 == '#' %}{{ subitem.url }}{%- else %}{{ subitem.url | relative_url }}{%- endif %}">
+                {%- if subitem.img_icon %}
+                <img src="{{ subitem.img_icon | relative_url }}" alt="{{ subitem.label }}" class="icon">
+                {%- elsif subitem.icon %}
+                <i class="hgi hgi-stroke {{ subitem.icon }} icon"></i>
+                {%- endif %}
+                <span class="label">{{ subitem.label }}</span>
+            </a>
+            {%- endfor %}
+        </div>
+    </div>
+    {%- endfor %}
+    {%- endif %}
+</div>

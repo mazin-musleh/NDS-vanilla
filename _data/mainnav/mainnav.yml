@@ -1,3 +1,40 @@
+# ============================================================
+# Main Navigation Configuration
+# ============================================================
+# Each page can override this file via front matter: mainnav: "filename"
+# Files live in _data/mainnav/ and partials in _includes/
+#
+# Item Properties:
+# ──────────────────────────────────────────────────────────────
+# label          - Display text for the nav item
+# url            - Link URL (renders <a>). Omit for <button>
+# icon           - HGI icon class (e.g. "hgi-search-01")
+# img_icon       - Image path instead of icon
+# avatar         - true to wrap img_icon in nds-avatar
+# badge          - Badge text on the icon (e.g. "3")
+# id             - HTML id attribute
+# custom_class   - Extra CSS classes on the <li>
+# button_style   - Override button classes (default: nds-nav-link nds-btn nds-subtle nds-indicator)
+# attr           - Arbitrary HTML attributes (e.g. "hidden", 'data-role="admin"')
+#
+# Content Properties:
+# ──────────────────────────────────────────────────────────────
+# type           - "dropdown" or "modal" (controls container and behavior)
+# template       - Partial file in _includes/ (e.g. "mainnav-search.html")
+# content_class  - Extra classes on container (e.g. "nds-fit", "nds-sm")
+# content_source - Data file key in _data/content/ (for data-driven partials)
+# content_label  - Field name to display from content_source (default: "title")
+# content_limit  - Max items to show from content_source (default: 3)
+# items          - Inline sub-items array (label, icon, url)
+#
+# Type Behavior:
+# ──────────────────────────────────────────────────────────────
+# dropdown  - Renders template inside nds-dropdown-menu (inside nav)
+# modal     - Renders template inside nds-modal nds-card (outside nav)
+#             Button gets data-modal-target, modal id = "{label-slugified}-modal"
+# (none)    - Plain link or button, no content container
+# ============================================================
+
 # Branding (overrides site-level defaults from _config.yml)
 # brandLogo: assets/img/custom-logo.svg
 # headerBrandW: 150
@@ -7,75 +44,24 @@
 # brandSlogan: Custom Slogan
 # brandSloganColor: "#666"
 
-# Primary Navigation Items
+# ──────────────────────────────────────────────────────────────
+# Primary Navigation
+# ──────────────────────────────────────────────────────────────
 primary_nav:
   - label: "Item 1"
     url: "/"
 
   - label: "Item 2"
-    has_dropdown: true
-    dropdown_type: "columnView"
-    columns:
-      - title: "Category A"
-        items:
-          - label: "Sub Item A1"
-            url: "#"
-          - label: "Sub Item A2"
-            url: "#"
-          - label: "Sub Item A3"
-            url: "#"
-          - label: "Sub Item A4"
-            url: "#"
-          - label: "Sub Item A5"
-            url: "#"
-      - title: "Locations"
-        multi_column_list: true
-        items:
-          - label: "Riyadh"
-            url: "#"
-          - label: "Jeddah"
-            url: "#"
-          - label: "Mecca"
-            url: "#"
-          - label: "Medina"
-            url: "#"
-          - label: "Dammam"
-            url: "#"
-          - label: "Abha"
-            url: "#"
-          - label: "Tabuk"
-            url: "#"
-          - label: "Jazan"
-            url: "#"
-          - label: "Hail"
-            url: "#"
-          - label: "Najran"
-            url: "#"
-          - label: "Jouf"
-            url: "#"
-          - label: "Yanbu"
-            url: "#"
-          - label: "Taif"
-            url: "#"
-          - label: "Qassim"
-            url: "#"
-          - label: "Ahsa"
-            url: "#"
+
+    template: "mainnav-column-view.html"
+    type: "dropdown"
+    content_source: "nav-item2"
 
   - label: "Item 3"
-    has_dropdown: true
-    dropdown_type: "rowList"
-    items:
-      - label: "Sub Item 3.1"
-        url: "/about"
-      - label: "Sub Item 3.2"
-        url: "#"
-      - label: "Sub Item 3.3"
-        url: "#"
-      - label: "Sub Item 3.4"
-        url: "#"
-      - label: "Sub Item 3.5"
-        url: "#"
+
+    template: "mainnav-row-list.html"
+    type: "dropdown"
+    content_source: "nav-item3"
 
   - label: "Item 4"
     url: "/services"
@@ -86,22 +72,27 @@ primary_nav:
   - label: "Item 6"
     url: "/contact"
 
-# Secondary Navigation Items
+# ──────────────────────────────────────────────────────────────
+# Secondary Navigation
+# ──────────────────────────────────────────────────────────────
 secondary_nav:
   - label: "Search"
     icon: "hgi-search-01"
     button_style: "nds-nav-link nds-btn nds-subtle nds-indicator"
     custom_class: "iconOnly search PAB"
-    has_dropdown: true
-    dropdown_type: "search"
+
+    template: "mainnav-search.html"
+    type: "dropdown"
 
   - label: "Notifications"
     icon: "hgi-notification-02"
     custom_class: "iconOnly PAB"
     button_style: "nds-nav-link nds-btn nds-subtle nds-indicator"
     badge: "3"
-    has_dropdown: true
-    dropdown_class: "widthFit"
+
+    template: "mainnav-standard.html"
+    type: "dropdown"
+    content_class: "nds-fit"
     content_source: "notifications"
     content_label: "title"
     content_limit: 3
@@ -110,32 +101,24 @@ secondary_nav:
         icon: "hgi-notification-02"
         url: "/notifications"
 
+  - label: "Login"
+    icon: "hgi-user"
+    custom_class: "iconOnly nds-guest"
+    template: "mainnav-login.html"
+    type: "modal"
+    content_class: "nds-sm"
+
   - label: "Ahmed"
     icon: "hgi-user"
     avatar: true
     img_icon: "assets/img/avatar3.png"
-    custom_class: "login iconOnly"
+    custom_class: "login iconOnly nds-auth"
     button_style: "nds-nav-link nds-btn nds-subtle nds-lg nds-indicator"
-    has_dropdown: true
-    dropdown_type: "user"
-    dropdown_class: "widthFit"
-    user_name: "Ahmed Mohammed"
-    user_role: "System Administrator"
-    user_email: "ahmed@example.gov.sa"
-    items:
-      - label: "Portal"
-        icon: "hgi-identity-card"
-        url: "#"
-      - label: "Change Password"
-        icon: "hgi-lock-password"
-        url: "#"
-      - label: "Change Number"
-        icon: "hgi-smart-phone-01"
-        url: "#"
-      - label: "Logout"
-        icon: "hgi-door-01"
-        button_style: "nds-subtle nds-destructive"
-        url: "#"
+
+    template: "mainnav-user.html"
+    type: "dropdown"
+    content_class: "nds-fit"
+    attr: "hidden"
 
   - label: "Toggle theme"
     icon: "hgi-moon-02"
@@ -146,7 +129,7 @@ secondary_nav:
     icon: "hgi-translation"
     custom_class: "iconOnly lang"
     id: "langToggleBtn"
-    
+
   - label: "Call to Action"
     url: "#"
     custom_class: "CTA"

@@ -1,0 +1,31 @@
+<div class="nds-column">
+    {%- if include.item.content_source %}
+    {%- assign source_data = site.data.content[include.item.content_source] %}
+    {%- assign content_label = include.item.content_label | default: "title" %}
+    {%- assign content_limit = include.item.content_limit | default: 3 %}
+    {%- for entry in source_data limit:content_limit %}
+    <a href="#" class="nds-btn nds-subtle nds-dropdown-item">
+        {%- if entry.icon %}{{ entry.icon }}{%- endif %}
+        <span class="label">{{ entry[content_label] }}</span>
+    </a>
+    {%- endfor %}
+    <hr class="nds-divider">
+    {%- endif %}
+    {%- if include.item.items %}
+    {%- for subitem in include.item.items %}
+    {%- if subitem.divider %}
+    <hr class="nds-divider">
+    {%- else %}
+    <a href="{%- if subitem.url contains '#' and subitem.url | slice: 0 == '#' %}{{ subitem.url }}{%- else %}{{ subitem.url | relative_url }}{%- endif %}"
+        class="nds-btn nds-subtle nds-dropdown-item{%- if subitem.custom_class %} {{ subitem.custom_class }}{%- endif %}">
+        {%- if subitem.img_icon %}
+        <img src="{{ subitem.img_icon | relative_url }}" alt="{{ subitem.label }}" class="icon">
+        {%- elsif subitem.icon %}
+        <i class="hgi hgi-stroke {{ subitem.icon }} icon"></i>
+        {%- endif %}
+        <span class="label">{{ subitem.label }}</span>
+    </a>
+    {%- endif %}
+    {%- endfor %}
+    {%- endif %}
+</div>
