@@ -91,6 +91,10 @@
 
 .nds-modal.nds-sm {
   max-width: 400px;
+
+  @include mobile {
+    max-width: 100%;
+  }
 }
 
 .nds-modal.nds-md {

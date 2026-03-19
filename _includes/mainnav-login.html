@@ -1,0 +1,152 @@
+<div class="nds-card-header">
+    <span class="nds-featured-icon nds-lg nds-circle">
+        <i class="hgi hgi-stroke hgi-user-circle-02 icon"></i>
+    </span>
+    <button class="nds-close nds-modal-close nds-btn nds-subtle" aria-label="Close modal">
+        <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
+    </button>
+</div>
+<div class="nds-card-content">
+    <div class="nds-card-text">
+        <h3 class="nds-card-title" id="login-modal-title">Login</h3>
+        <p class="nds-card-description">Sign in to access your account</p>
+    </div>
+    <div class="nds-form-container" id="login-email-field" data-required>
+        <div class="nds-form-header">
+            <label for="login-email">
+                <span class="label">Email</span>
+            </label>
+        </div>
+        <div class="nds-form-control">
+            <i class="hgi hgi-stroke hgi-mail-01 icon"></i>
+            <input type="email" id="login-email" class="nds-input" placeholder="name@example.gov.sa">
+            <div class="nds-form-action">
+                <button class="nds-btn nds-subtle clear" type="button" aria-label="Clear email" hidden>
+                    <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
+                </button>
+            </div>
+        </div>
+        <div class="nds-form-footer" data-feedback-target>
+            <span class="nds-feedback nds-outline nds-sm" data-status="neutral" data-permanent>
+                <span class="nds-feedback-icon">
+                    <i class="hgi hgi-stroke icon"></i>
+                </span>
+                <span class="nds-feedback-message">Use any email</span>
+            </span>
+        </div>
+    </div>
+    <div class="nds-form-container" id="login-password-field" data-required>
+        <div class="nds-form-header">
+            <label for="login-password">
+                <span class="label">Password</span>
+            </label>
+        </div>
+        <div class="nds-form-control">
+            <div class="nds-form-action before">
+                <button class="nds-btn nds-subtle toggle-password" type="button" aria-label="Show password">
+                    <i class="hgi hgi-stroke hgi-view-off icon"></i>
+                </button>
+            </div>
+            <input type="password" id="login-password" class="nds-input" placeholder="Enter your password">
+            <div class="nds-form-action">
+                <button class="nds-btn nds-subtle clear" type="button" aria-label="Clear password" hidden>
+                    <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
+                </button>
+            </div>
+        </div>
+        <div class="nds-form-footer" data-feedback-target>
+            <span class="nds-feedback nds-outline nds-sm" data-status="neutral" data-permanent>
+                <span class="nds-feedback-icon">
+                    <i class="hgi hgi-stroke icon"></i>
+                </span>
+                <span class="nds-feedback-message">Use any password</span>
+            </span>
+        </div>
+    </div>
+</div>
+<div class="nds-card-actions">
+    <button class="nds-btn nds-primary nds-full" id="loginSubmitBtn">
+        <span class="label">Login</span>
+    </button>
+    <button class="nds-btn nds-subtle nds-full nds-modal-close">
+        <span class="label">Cancel</span>
+    </button>
+</div>
+<script>
+(function() {
+    var nav = document.getElementById('ndsMainNav');
+    var emailInput = document.getElementById('login-email');
+    var passInput = document.getElementById('login-password');
+    var emailField = document.getElementById('login-email-field');
+    var passField = document.getElementById('login-password-field');
+
+    function setAuth(isAuth) {
+        if (isAuth) {
+            document.cookie = 'nds_auth=true;path=/;max-age=86400';
+            document.body.dataset.auth = 'true';
+        } else {
+            document.cookie = 'nds_auth=;path=/;max-age=0';
+            delete document.body.dataset.auth;
+        }
+        nav.querySelectorAll('.nds-guest').forEach(function(el){ el.hidden = isAuth; });
+        nav.querySelectorAll('.nds-auth').forEach(function(el){ el.hidden = !isAuth; });
+    }
+
+    function validate() {
+        var valid = true;
+        if (!emailInput.value.trim()) {
+            NDS.Forms.setStatus({ element: emailField, status: 'error', message: 'Email is required' });
+            valid = false;
+        } else if (!emailInput.validity.valid) {
+            NDS.Forms.setStatus({ element: emailField, status: 'error', message: 'Enter a valid email address' });
+            valid = false;
+        } else {
+            NDS.Forms.clearStatus(emailField);
+        }
+        if (!passInput.value.trim()) {
+            NDS.Forms.setStatus({ element: passField, status: 'error', message: 'Password is required' });
+            valid = false;
+        } else {
+            NDS.Forms.clearStatus(passField);
+        }
+        return valid;
+    }
+
+    // Clear error on input
+    emailInput.addEventListener('input', function() { NDS.Forms.clearStatus(emailField); });
+    passInput.addEventListener('input', function() { NDS.Forms.clearStatus(passField); });
+
+    // Check cookie on load
+    if (document.cookie.indexOf('nds_auth=true') !== -1) setAuth(true);
+
+    // Login
+    var loginBtn = document.getElementById('loginSubmitBtn');
+    loginBtn.addEventListener('click', function() {
+        if (!validate()) return;
+        loginBtn.dataset.state = 'loading';
+        setTimeout(function() {
+            loginBtn.removeAttribute('data-state');
+            setAuth(true);
+            NDS.Modal.close();
+            emailInput.value = '';
+            passInput.value = '';
+            NDS.Alert.create({ variant: 'success', title: 'Welcome back!', description: 'You have successfully logged in.', display: 'toast', position: 'top', duration: 3000 });
+        }, 1500);
+    });
+
+    // Logout
+    document.addEventListener('click', function(e) {
+        var btn = e.target.closest('#logoutBtn');
+        if (btn) {
+            e.preventDefault();
+            btn.dataset.state = 'loading';
+            setTimeout(function() {
+                btn.removeAttribute('data-state');
+                document.body.click();
+                setAuth(false);
+                NDS.Alert.create({ variant: 'info', title: 'Logged out', description: 'You have been successfully logged out.', display: 'toast', position: 'top', duration: 3000 });
+            }, 1500);
+        }
+    });
+})();
+</script>
