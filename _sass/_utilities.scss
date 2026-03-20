@@ -223,8 +223,8 @@ $all-spacers: $spacers;
   }
 }
 
-:is(.nds-external) {
-  display: flex;
+:is(.nds-external, a[target="_blank"]):not(.nds-btn,:has(>*)) {
+  display: inline-flex;
   gap: var(--spacing-xs);
   align-items: center;
 
