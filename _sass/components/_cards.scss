@@ -25,14 +25,18 @@
   --_card-icon: var(--icon-color, var(--featuredicons-icon-primary));
   --_card-icon-bg: var(--icon-bg-color, var(--featuredicons-background-brand-light));
   --_card-rating: var(--card-rating, var(--text-secondary-paragraph));
+  --_card-width: var(--card-width, 100%);
+  --_card-width-min: var(--card-width-min, 0);
+  --_card-width-max: var(--card-width-max, 100%);
 
   font-family: var(--nds-font-family);
   background-color: var(--_card-bg);
   border: 1px solid transparent;
   border-radius: var(--components-card-radius);
   padding: var(--_card-padding);
-  width: var(--card-width, 100%);
-  max-width: var(--card-width, 100%);
+  min-width: var(--_card-width-min);
+  width: var(--_card-width);
+  max-width: var(--_card-width-max);
   position: relative;
 
   // Display properties only for standard cards (cards with nds-card-* children)
@@ -295,7 +299,7 @@
 
 // Statistic card variant
 .nds-card.nds-statistic {
-  max-width: var(--card-width, 224px);
+  --_card-width: var(--card-width, 224px);
   justify-content: flex-start !important;
 
   .nds-card-header {
@@ -345,7 +349,7 @@
 
 // Statistic card variant
 .nds-card.nds-user {
-  max-width: var(--card-width, 224px);
+  --_card-width: var(--card-width, 224px);
 
   .nds-card-tags {
     min-height: 48px;
