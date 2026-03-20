@@ -233,7 +233,7 @@ main {
     /* ── Section striping ── */
 
     @mixin _section-striping {
-        .nds-content-section:not(.nds-user-feedback-section):nth-of-type(even) {
+        .nds-content-section:not(.nds-user-feedback-section, .nds-primary, .nds-green, .nds-gradient-green, .nds-neutral, .nds-brand):nth-of-type(even) {
             --section-bg: var(--background-stripe);
         }
     }

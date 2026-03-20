@@ -44,15 +44,6 @@ img {
     height: auto;
 }
 
-:is(h1, h2, h3, h4, h5, h6) {
-    font-weight: 600;
-    color: var(--text-display);
-
-    &:first-child {
-        margin-top: 0;
-    }
-}
-
 h1 {
     font-size: var(--nds-display-clamp-md-FS);
     line-height: var(--nds-display-clamp-md-LH);
@@ -79,6 +70,18 @@ h3 {
     line-height: var(--nds-text-clamp-xl-LH);
     margin-bottom: calc(var(--nds-display-clamp-xs-MB) * 1.5);
     margin-top: calc(var(--nds-display-clamp-xs-MB) * 2);
+}
+
+:is(h1, h2, h3, h4, h5, h6) {
+    font-weight: 600;
+    color: var(--text-display);
+
+    &:first-child {
+        margin-top: 0;
+    }
+    &:last-child {
+        margin-bottom: 0;
+    }
 }
 
 p {
