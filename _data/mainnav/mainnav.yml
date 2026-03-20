@@ -105,8 +105,8 @@ secondary_nav:
     icon: "hgi-user"
     custom_class: "iconOnly nds-guest"
     template: "mainnav-login.html"
-    type: "modal"
-    content_class: "nds-sm"
+    type: "dropdown"
+    content_class: "nds-fit"
 
   - label: "Ahmed"
     icon: "hgi-user"
