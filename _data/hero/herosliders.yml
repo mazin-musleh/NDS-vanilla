@@ -17,7 +17,7 @@
 #     <img src="{relative_url}/assets/img/logo.svg" alt="Logo">
 #     <h1 class="nds-section-title">Custom Title</h1>
 #     <p class="nds-section-description">Custom text</p>
-#     
+#
 #
 #   Use {relative_url} for any paths — resolves to site baseurl (works from any page).
 
@@ -25,25 +25,11 @@
   src_small: assets/img/riyadhcenter3s.webp
   overlay: 0.7
   position: center 80%
-  #class: custom_calss
   content: |
-    <h1 class="nds-section-title">National Design System</h1>
-    <p class="nds-section-description">Building consistent digital experiences for Saudi Arabia</p>
+    <h1 class="nds-section-title">Vanilla Design System</h1>
+    <p class="nds-section-description">An open-source, vanilla implementation of Saudi Arabia's National Design System. Professional HTML, CSS, and JavaScript built from scratch with zero external dependencies.</p>
+    <div style="display:flex;gap:var(--spacing-md);flex-wrap:wrap;">
+      <a href="#" class="nds-btn nds-primary nds-oncolor nds-lg nds-external"><i class="hgi hgi-stroke hgi-github icon"></i><span class="label">View on GitHub</span></a>
+      <a href="#" class="nds-btn nds-secondary-outline nds-oncolor nds-lg nds-external"><span class="label">Download</span></a>
+    </div>
 
-- src: assets/img/riyadhcenter3.webp
-  src_small: assets/img/riyadhcenter3s.webp
-  overlay: 0.7
-  position: center center
-  #class: custom_calss
-  title: "Design with Confidence"
-  description: "Comprehensive components and guidelines for government services"
-  url: "#" #Read More Button url
-
-- src: assets/img/riyadhcenter3.webp
-  src_small: assets/img/riyadhcenter3s.webp
-  overlay: 0.7
-  position: center center
-  #class: custom_calss
-  title: "Accessible by Design"
-  description: "Meet WCAG standards with built-in accessibility features"
-  url: "#" #Read More Button url
