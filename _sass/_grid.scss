@@ -11,8 +11,10 @@
     grid-template-columns: repeat(var(--grid-col, 12), minmax(var(--col-width, 0px), 1fr));
   }
 
-  gap: var(--gap, var(--spacing-2xl));
-  row-gap: var(--row-gap, var(--spacing-2xl));
+  --_row-gap: var(--row-gap, var(--gap, var(--spacing-2xl)));
+  --_col-gap: var(--col-gap, var(--gap, var(--spacing-2xl)));
+  row-gap: var(--_row-gap);
+  column-gap: var(--_col-gap);
   justify-items: var(--justify, stretch);
   align-items: var(--align, start);
   width: 100%;
@@ -26,8 +28,8 @@
   &:not(:has(#{$col-selector})) {
     @include tablet(max) {
       --grid-col: var(--mid-col, var(--max-col, auto-fit));
-      gap: max(var(--_gap-min), calc(var(--gap, var(--spacing-2xl)) / 2));
-      row-gap: max(var(--_gap-min), calc(var(--row-gap, var(--spacing-2xl)) / 2));
+      --_row-gap: max(var(--_gap-min), calc(var(--row-gap, var(--gap, var(--spacing-4xl))) / 2));
+      --_col-gap: max(var(--_gap-min), calc(var(--col-gap, var(--gap, var(--spacing-4xl))) / 2));
     }
 
     @include mobile {

@@ -143,7 +143,6 @@
 
 .nds-section-action {
     display: flex;
-    flex-direction: column;
     flex-wrap: wrap;
     justify-content: flex-start;
     align-items: center;
@@ -183,7 +182,6 @@
     .nds-section-action {
         align-items: self-start;
         align-self: self-start;
-        --btn-width: 100%;
 
         .label {
             text-align: center;
@@ -199,7 +197,8 @@
         >.nds-section-action {
             flex: 1 0 100%;
             flex-direction: row;
-            --btn-width: unset;
+            --btn-width: 100%;
+            width: min-content;
         }
     }
 }
@@ -228,6 +227,7 @@
     .nds-section-action {
         align-items: center;
         align-self: center;
+        justify-content: center;
         flex: 1;
     }
 
@@ -244,6 +244,9 @@
     float: inline-end;
     margin-inline-start: var(--_section-col-gap);
     margin-block-end: calc(var(--_section-col-gap) / 2);
+    flex-direction: column;
+    flex-wrap: wrap;
+    --btn-width: 100%;
 }
 
 :is(.nds-content-section, .nds-hero-section):not(.nds-center, .nds-horizontal)>.nds-section-wrapper>.nds-section-head:has(> .nds-section-action)~.nds-section-action {

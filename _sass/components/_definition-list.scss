@@ -12,9 +12,10 @@
 .nds-definition-list {
     --_dl-icon-size: var(--dl-icon-size, 18px);
     --_dl-icon-gap: var(--dl-icon-gap, var(--spacing-sm));
+    --_dl-gap: var(--row-gap, var(--gap, var(--spacing-lg)));
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-lg);
+    row-gap: var(--_dl-gap, var(--spacing-lg));
 
     &.tableView {
         display: grid;
@@ -45,7 +46,8 @@
         grid-column: 1 / -1;
         display: grid;
         grid-template-columns: subgrid;
-        gap: var(--spacing-xl);
+        row-gap: var(--_dl-gap, var(--spacing-lg));
+        column-gap: var(--col-gap, var(--gap, var(--spacing-xl)));
     }
 }
 
@@ -97,7 +99,7 @@ dd {
 
     // For non-tableView variant
     &:not(.tableView) .nds-definition-item {
-        padding-bottom: var(--spacing-lg);
+        padding-bottom: var(--_dl-gap, var(--spacing-lg));
         border-bottom: 1px solid var(--divider-color);
 
         &:last-child {
