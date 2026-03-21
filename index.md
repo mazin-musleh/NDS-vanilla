@@ -12,10 +12,11 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">About The Project</h2>
+            <p class="nds-section-description">What this project is, why it was built, and what it covers.</p>
         </div>
         <div class="nds-section-content">
             <p>The Digital Government Authority published a <a href="https://www.figma.com/@sdga" target="_blank" class="nds-primary">unified design system on Figma</a> to standardize government digital services. The specifications are clear, but converting them to working code remains a challenge for most teams.</p>
-            <p>The official implementation is a <a href="https://dga-nds-story-book-695z8.ondigitalocean.app/" target="_blank" class="nds-primary">React/Storybook component library</a> that covers core UI components. This project provides the same design system in plain HTML, CSS, and JavaScript, with all components, layout system, page templates, and documentation. Includes a full development environment. No framework required.</p>
+            <p>The official implementation is a <a href="https://dga-nds-story-book-695z8.ondigitalocean.app/" target="_blank" class="nds-primary">React/Storybook component library</a> that covers core UI components. This project provides the same design system in plain HTML, CSS, and JavaScript, with all components, layout system, page templates, documentation, and a full development environment. No framework required.</p>
         </div>
     </div>
 </section>
@@ -25,7 +26,7 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Open Source</h2>
-            <p class="nds-section-description">MIT licensed. Full source code included. Fork it and build on top of it.</p>
+            <p class="nds-section-description">MIT licensed. Full source code included.</p>
         </div>
         <div class="nds-section-content">
             <div class="nds-grid" style="--max-col:3;--mid-col:1;--min-col:1;">
@@ -191,10 +192,10 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Compliance Ready</h2>
-            <p class="nds-section-description">Compliant components and page templates, built to specification.</p>
+            <p class="nds-section-description">Components and page templates built to pass DGA compliance.</p>
         </div>
         <div class="nds-section-content">
-            <p>Every component follows the official design tokens, typography, spacing, and interaction patterns. The project includes working page templates that demonstrate how components come together in real layouts.</p>
+            <p>Every component follows the official design tokens, typography, spacing, and interaction patterns. The project includes required page layouts as ready-to-use code, along with additional real-world examples.</p>
         </div>
     </div>
     <div class="nds-section-content nds-full-width">
@@ -314,7 +315,7 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Architecture & Performance</h2>
-            <p class="nds-section-description">Built with a strict performance-first and compatibility approach.</p>
+            <p class="nds-section-description">Built with a performance-first and compatibility approach.</p>
         </div>
         <div class="nds-section-content">
             <dl class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
@@ -330,7 +331,7 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-cpu-charge icon"></i>
                         <span class="label">Smart Component Loader</span>
                     </dt>
-                    <dd>On page load, a single DOM sweep detects which components are present and initializes only those in priority order. Critical components like navigation and forms load first, visual enhancements follow. Unused components add zero runtime cost.</dd>
+                    <dd>A single DOM sweep on page load detects which components are present and initializes them in priority order. The rest remain idle with zero runtime cost. Resources are only allocated for what the page actually uses.</dd>
                 </div>
                 <div class="nds-definition-item">
                     <dt>
@@ -344,7 +345,7 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-paint-brush-01 icon"></i>
                         <span class="label">3-Tier Design Tokens</span>
                     </dt>
-                    <dd>Color tokens, semantic tokens, and component tokens with full state coverage. All CSS custom properties. Dark and light themes switch via the View Transition API with a circular reveal animation.</dd>
+                    <dd>Color tokens, semantic tokens, and component tokens, all defined as CSS custom properties. Each component exposes public properties for customization while keeping internal styles private, no overrides needed.</dd>
                 </div>
                 <div class="nds-definition-item">
                     <dt>
@@ -358,7 +359,7 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-code-circle icon"></i>
                         <span class="label">~67 KB Total JS (gzipped)</span>
                     </dt>
-                    <dd>The full component library in a single bundle for better compression and simpler deployment. Nothing to configure per page. Include the script once and every component is available.</dd>
+                    <dd>The full component library in a single bundle for better compression, simpler deployment, and minimum requests. Components initialize as needed.</dd>
                 </div>
                 <div class="nds-definition-item">
                     <dt>
@@ -372,7 +373,7 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-dashboard-speed-01 icon"></i>
                         <span class="label">Sleek Animations</span>
                     </dt>
-                    <dd>GPU-accelerated animations with optimized scheduling deliver smooth transitions even on lower-end devices, delivering a native application experience. Off-screen elements are not rendered until needed.</dd>
+                    <dd>GPU-accelerated animations with optimized scheduling deliver smooth transitions even on lower-end devices, with a native application feel. Off-screen elements are not rendered until needed.</dd>
                 </div>
             </dl>
         </div>
