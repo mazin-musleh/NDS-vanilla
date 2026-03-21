@@ -1,0 +1,364 @@
+# Component catalog for homepage listing
+# Tags: JS, CSS, API
+
+# UI Components
+- title: "Accordion"
+  description: "Collapsible content panels with nested support"
+  icon: '<i class="hgi hgi-stroke hgi-arrow-shrink-02 icon"></i>'
+  category: "UI"
+  tags: ["JS", "CSS"]
+  url: "/components/accordion.html"
+
+- title: "Alert"
+  description: "Status and notification banners"
+  icon: '<i class="hgi hgi-stroke hgi-alert-02 icon"></i>'
+  category: "UI"
+  tags: ["CSS"]
+  url: "/components/alert.html"
+
+- title: "Avatar"
+  description: "User profile images and initials"
+  icon: '<i class="hgi hgi-stroke hgi-user icon"></i>'
+  category: "UI"
+  tags: ["CSS"]
+  url: "/components/avatar.html"
+
+- title: "Breadcrumb"
+  description: "Page hierarchy navigation"
+  icon: '<i class="hgi hgi-stroke hgi-arrow-right-double icon"></i>'
+  category: "UI"
+  tags: ["CSS"]
+  url: "/components/breadcrumb.html"
+
+- title: "Buttons"
+  description: "Actions with variants and states"
+  icon: '<i class="hgi hgi-stroke hgi-cursor-pointer-01 icon"></i>'
+  category: "UI"
+  tags: ["CSS"]
+  url: "/components/button.html"
+
+- title: "Cards"
+  description: "Content containers with multiple layouts"
+  icon: '<i class="hgi hgi-stroke hgi-dashboard-square-01 icon"></i>'
+  category: "UI"
+  tags: ["CSS"]
+  url: "/components/cards.html"
+
+- title: "Chips"
+  description: "Compact labels and filters"
+  icon: '<i class="hgi hgi-stroke hgi-tag-01 icon"></i>'
+  category: "UI"
+  tags: ["CSS"]
+  url: "/components/chips.html"
+
+- title: "Code"
+  description: "Syntax-highlighted code blocks"
+  icon: '<i class="hgi hgi-stroke hgi-source-code icon"></i>'
+  category: "UI"
+  tags: ["CSS"]
+  url: "/components/code.html"
+
+- title: "Definition List"
+  description: "Key-value pair layouts"
+  icon: '<i class="hgi hgi-stroke hgi-list-view icon"></i>'
+  category: "UI"
+  tags: ["CSS"]
+  url: "/components/definition-list.html"
+
+- title: "Drawer"
+  description: "Slide-out side panels"
+  icon: '<i class="hgi hgi-stroke hgi-sidebar-right icon"></i>'
+  category: "UI"
+  tags: ["JS", "CSS"]
+  url: "/components/drawer.html"
+
+- title: "Drop Menu"
+  description: "Dropdown action menus"
+  icon: '<i class="hgi hgi-stroke hgi-more-vertical icon"></i>'
+  category: "UI"
+  tags: ["JS", "CSS"]
+  url: "/components/dropmenu.html"
+
+- title: "Featured Icons"
+  description: "Styled icon containers"
+  icon: '<i class="hgi hgi-stroke hgi-star icon"></i>'
+  category: "UI"
+  tags: ["CSS"]
+  url: "/components/featured-icons.html"
+
+- title: "Feedback Icons"
+  description: "Status indicator icons"
+  icon: '<i class="hgi hgi-stroke hgi-checkmark-circle-02 icon"></i>'
+  category: "UI"
+  tags: ["CSS"]
+  url: "/components/feedback-icons.html"
+
+- title: "Hero"
+  description: "Full-width banner sections with slider"
+  icon: '<i class="hgi hgi-stroke hgi-image-02 icon"></i>'
+  category: "UI"
+  tags: ["JS", "CSS"]
+
+- title: "Loading"
+  description: "Spinners and skeleton screens"
+  icon: '<i class="hgi hgi-stroke hgi-loading-03 icon"></i>'
+  category: "UI"
+  tags: ["CSS"]
+  url: "/components/loading.html"
+
+- title: "Modal"
+  description: "Dialog overlays with focus trap"
+  icon: '<i class="hgi hgi-stroke hgi-browser icon"></i>'
+  category: "UI"
+  tags: ["JS", "CSS", "API"]
+  url: "/components/modal.html"
+
+- title: "Pagination"
+  description: "Page navigation controls"
+  icon: '<i class="hgi hgi-stroke hgi-paragraph-bullets-point-01 icon"></i>'
+  category: "UI"
+  tags: ["JS", "CSS"]
+  url: "/components/pagination.html"
+
+- title: "Progress"
+  description: "Progress bars and indicators"
+  icon: '<i class="hgi hgi-stroke hgi-loading-01 icon"></i>'
+  category: "UI"
+  tags: ["CSS"]
+  url: "/components/progress.html"
+
+- title: "Rating"
+  description: "Star-based rating display"
+  icon: '<i class="hgi hgi-stroke hgi-star icon"></i>'
+  category: "UI"
+  tags: ["JS", "CSS"]
+  url: "/components/rating.html"
+
+- title: "Stepper"
+  description: "Multi-step workflow navigation"
+  icon: '<i class="hgi hgi-stroke hgi-right-to-left-list-number icon"></i>'
+  category: "UI"
+  tags: ["CSS"]
+  url: "/components/stepper.html"
+
+- title: "Swiper"
+  description: "Touch-enabled carousel slider"
+  icon: '<i class="hgi hgi-stroke hgi-sliders-horizontal icon"></i>'
+  category: "UI"
+  tags: ["JS", "CSS"]
+  url: "/components/swiper.html"
+
+- title: "Tabs"
+  description: "Tabbed content switching"
+  icon: '<i class="hgi hgi-stroke hgi-browser icon"></i>'
+  category: "UI"
+  tags: ["JS", "CSS", "API"]
+  url: "/components/tabs.html"
+
+- title: "Tags"
+  description: "Categorization labels"
+  icon: '<i class="hgi hgi-stroke hgi-tags icon"></i>'
+  category: "UI"
+  tags: ["CSS"]
+  url: "/components/tags.html"
+
+# Form Components
+- title: "Text Inputs"
+  description: "Single and multi-line text fields"
+  icon: '<i class="hgi hgi-stroke hgi-text-font icon"></i>'
+  category: "Forms"
+  tags: ["JS", "CSS"]
+  url: "/components/forms.html"
+
+- title: "Selects"
+  description: "Dropdown selection menus"
+  icon: '<i class="hgi hgi-stroke hgi-arrow-down-01 icon"></i>'
+  category: "Forms"
+  tags: ["JS", "CSS"]
+  url: "/components/forms.html"
+
+- title: "Textareas"
+  description: "Multi-line text input"
+  icon: '<i class="hgi hgi-stroke hgi-paragraph icon"></i>'
+  category: "Forms"
+  tags: ["CSS"]
+  url: "/components/forms.html"
+
+- title: "Checkbox"
+  description: "Multiple selection toggles"
+  icon: '<i class="hgi hgi-stroke hgi-checkmark-square-01 icon"></i>'
+  category: "Forms"
+  tags: ["CSS"]
+  url: "/components/checkbox.html"
+
+- title: "Radio"
+  description: "Single selection from a group"
+  icon: '<i class="hgi hgi-stroke hgi-radio icon"></i>'
+  category: "Forms"
+  tags: ["CSS"]
+  url: "/components/radio.html"
+
+- title: "Switch"
+  description: "On/off toggle controls"
+  icon: '<i class="hgi hgi-stroke hgi-toggle-on icon"></i>'
+  category: "Forms"
+  tags: ["CSS"]
+  url: "/components/switch.html"
+
+- title: "OTP"
+  description: "One-time password with auto-focus"
+  icon: '<i class="hgi hgi-stroke hgi-key-01 icon"></i>'
+  category: "Forms"
+  tags: ["JS", "CSS"]
+  url: "/components/otp.html"
+
+- title: "File Upload"
+  description: "Drag-and-drop with preview and validation"
+  icon: '<i class="hgi hgi-stroke hgi-upload-04 icon"></i>'
+  category: "Forms"
+  tags: ["JS", "CSS"]
+  url: "/components/upload.html"
+
+- title: "Autocomplete"
+  description: "Search suggestions with keyboard navigation"
+  icon: '<i class="hgi hgi-stroke hgi-search-01 icon"></i>'
+  category: "Forms"
+  tags: ["JS", "CSS"]
+
+- title: "Filter"
+  description: "Multi-criteria with AJAX and URL state"
+  icon: '<i class="hgi hgi-stroke hgi-filter icon"></i>'
+  category: "Forms"
+  tags: ["JS", "CSS", "API"]
+  url: "/components/filter.html"
+
+- title: "User Feedback"
+  description: "Satisfaction and rating forms"
+  icon: '<i class="hgi hgi-stroke hgi-message-edit-01 icon"></i>'
+  category: "Forms"
+  tags: ["JS", "CSS"]
+
+# Data Components
+- title: "Tables"
+  description: "Sorting, pagination, row selection, expandable rows"
+  icon: '<i class="hgi hgi-stroke hgi-table-02 icon"></i>'
+  category: "Data"
+  tags: ["JS", "CSS"]
+  url: "/components/tables.html"
+
+- title: "Charts"
+  description: "Custom SVG: bar, line, pie, donut"
+  icon: '<i class="hgi hgi-stroke hgi-chart icon"></i>'
+  category: "Data"
+  tags: ["JS", "CSS"]
+  url: "/components/chart.html"
+
+# Layout Components
+- title: "Section"
+  description: "Page content sections with head, content, and action areas"
+  icon: '<i class="hgi hgi-stroke hgi-layout-03 icon"></i>'
+  category: "Layout"
+  tags: ["CSS"]
+  url: "/layout/section.html"
+
+- title: "Grid"
+  description: "Responsive column grid system"
+  icon: '<i class="hgi hgi-stroke hgi-grid icon"></i>'
+  category: "Layout"
+  tags: ["CSS"]
+  url: "/layout/grid.html"
+
+# Utilities
+- title: "Truncate Text"
+  description: "Line-clamped text overflow with expand toggle"
+  icon: '<i class="hgi hgi-stroke hgi-text-wrap icon"></i>'
+  category: "Utilities"
+  tags: ["CSS"]
+  url: "/utilities/truncate-text.html"
+
+- title: "Expandable Content"
+  description: "Collapsible content blocks with show more/less"
+  icon: '<i class="hgi hgi-stroke hgi-arrow-expand-02 icon"></i>'
+  category: "Utilities"
+  tags: ["JS", "CSS"]
+  url: "/utilities/expandable-content.html"
+
+- title: "Numbers"
+  description: "Arabic/English numeral formatting"
+  icon: '<i class="hgi hgi-stroke hgi-math icon"></i>'
+  category: "Utilities"
+  tags: ["JS"]
+  url: "/utilities/numbers.html"
+
+# Navigation Components
+- title: "Main Navigation"
+  description: "Mega menu with mobile drawer"
+  icon: '<i class="hgi hgi-stroke hgi-navigation-01 icon"></i>'
+  category: "Navigation"
+  tags: ["JS", "CSS", "API"]
+  url: "/ui-shell/header.html"
+
+- title: "Side Menu"
+  description: "Collapsible nested levels"
+  icon: '<i class="hgi hgi-stroke hgi-menu-02 icon"></i>'
+  category: "Navigation"
+  tags: ["JS", "CSS"]
+  url: "/ui-shell/side-nav.html"
+
+- title: "Footer"
+  description: "Site-wide footer layout"
+  icon: '<i class="hgi hgi-stroke hgi-layout-bottom icon"></i>'
+  category: "Navigation"
+  tags: ["CSS"]
+  url: "/ui-shell/footer.html"
+
+- title: "Top Bar"
+  description: "Utility bar above header"
+  icon: '<i class="hgi hgi-stroke hgi-layout-top icon"></i>'
+  category: "Navigation"
+  tags: ["CSS"]
+
+# Plugins
+- title: "Date Picker"
+  description: "Hijri/Gregorian calendar with dual conversion"
+  icon: '<i class="hgi hgi-stroke hgi-calendar-03 icon"></i>'
+  category: "Plugins"
+  tags: ["JS", "CSS", "API"]
+  url: "/components/date-picker.html"
+
+- title: "Speech Recognition"
+  description: "Arabic and English voice input"
+  icon: '<i class="hgi hgi-stroke hgi-mic-01 icon"></i>'
+  category: "Plugins"
+  tags: ["JS", "API"]
+
+- title: "Weather Widget"
+  description: "Coordinates-based live weather"
+  icon: '<i class="hgi hgi-stroke hgi-sun-cloud-01 icon"></i>'
+  category: "Plugins"
+  tags: ["JS", "CSS", "API"]
+
+- title: "Clock"
+  description: "Real-time with Hijri date via API"
+  icon: '<i class="hgi hgi-stroke hgi-clock-01 icon"></i>'
+  category: "Plugins"
+  tags: ["JS", "API"]
+
+- title: "Cookie Consent"
+  description: "Cookie management banner"
+  icon: '<i class="hgi hgi-stroke hgi-cookie icon"></i>'
+  category: "Plugins"
+  tags: ["JS", "CSS"]
+
+- title: "Image Popup Viewer"
+  description: "Fullscreen image preview overlay"
+  icon: '<i class="hgi hgi-stroke hgi-image-02 icon"></i>'
+  category: "UI"
+  tags: ["JS", "CSS"]
+  url: "/components/ipv.html"
+
+- title: "Share"
+  description: "Native share integration"
+  icon: '<i class="hgi hgi-stroke hgi-share-08 icon"></i>'
+  category: "Plugins"
+  tags: ["JS"]
