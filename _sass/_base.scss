@@ -120,7 +120,7 @@ body.nds-minimal[style*="--bg-img"] {
 
     color: var(--_link-color);
 
-/*     &:visited {
+    /*     &:visited {
         color: var(--_link-visited);
     }
 
@@ -206,6 +206,12 @@ body.nds-minimal[style*="--bg-img"] {
 
 .nds-section-content {
 
+    margin-block-end: 2rem;
+
+    &:last-child {
+        margin-block-end: 0;
+    }
+
     & :not(nav, .nds-drawer-scroll)>ul,
     & :not(nav, .nds-drawer-scroll)>ol {
 
@@ -227,7 +233,7 @@ body.nds-minimal[style*="--bg-img"] {
         }
     }
 
-    :is(p, ul, ol, .nds-table-wrapper, .nds-table, .nds-tabs, .nds-code,.nds-definition-list) {
+    :is(p, ul, ol, .nds-table-wrapper, .nds-table, .nds-tabs, .nds-code, .nds-definition-list) {
         margin-block-end: 1rem;
 
         &:last-child {

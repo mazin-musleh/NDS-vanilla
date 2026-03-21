@@ -223,7 +223,7 @@ $all-spacers: $spacers;
   }
 }
 
-:is(.nds-external, a[target="_blank"]):not(.nds-btn,:has(>*)) {
+.nds-external, a[target="_blank"]:not(.nds-btn,:has(>*)) {
   display: inline-flex;
   gap: var(--spacing-xs);
   align-items: center;
