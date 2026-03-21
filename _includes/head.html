@@ -23,7 +23,7 @@
     </script>
     {%- endunless %}
     <meta name="description"
-        content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}">
+        content="{{ page.description | default: page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}">
     <title>{%- if page.title %}{{ page.title }} | {%- endif %}{{ site_title }}</title>
     <!-- Define deferred assets loader BEFORE any links that call it -->
     <script>
