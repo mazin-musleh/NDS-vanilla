@@ -1,0 +1,41 @@
+<!-- Cookie Popup -->
+<div class="nds-cookie-popup" id="ndsCookiesPopup" hidden>
+    <div class="nds-cookie-popup-header">
+        <div class="nds-cookie-popup-title">
+            <svg class="nds-cookie-popup-icon" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none"
+                viewBox="0 0 40 40">
+                <path fill="#F3FCF6" d="M0 20C0 8.954 8.954 0 20 0s20 8.954 20 20-8.954 20-20 20S0 31.046 0 20"></path>
+                <path fill="#067647"
+                    d="M20.007 20c0 .46-.374.833-.834.833h-.007a.833.833 0 0 1 0-1.666h.007c.46 0 .834.373.834.833M15.007 19.167a.833.833 0 1 0 0-1.667h-.008a.833.833 0 0 0 0 1.667zM20.84 25c0 .46-.373.833-.834.833H20a.833.833 0 0 1 0-1.666h.008c.46 0 .833.373.833.833M18.775 15.442a.625.625 0 1 0-.884-.884l-.833.833a.625.625 0 1 0 .884.884zM24.609 21.225a.625.625 0 0 1 0 .884l-.834.833a.625.625 0 1 1-.884-.884l.834-.833a.625.625 0 0 1 .884 0M15.391 22.942a.625.625 0 1 1 .884-.884l.834.833a.625.625 0 1 1-.884.884z">
+                </path>
+                <path fill="#067647" fill-rule="evenodd"
+                    d="M11.044 19.996c0-5.37 4.888-9.45 10.012-8.905.472.05 1.047.176 1.285.735.1.234.104.475.095.66a7 7 0 0 1-.057.546l-.009.07c-.085.665.15 1.277.522 1.567.082.063.18.14.26.225a.9.9 0 0 1 .24.429.9.9 0 0 1-.026.483c-.034.109-.085.22-.128.313-.122.263-.082.6.151.92.234.32.61.542 1.002.558.14.006.289.012.421.044.14.021.312.065.477.18.17.118.273.27.342.407.065.128.115.275.16.414.183.564.68.941 1.244 1.04.09.016.192.032.292.048.15.024.299.048.415.071.206.04.463.104.685.247.259.167.431.414.5.73.06.279.033.586-.026.898-.787 4.155-4.452 7.293-8.85 7.293-4.972 0-9.007-4.01-9.007-8.962m9.88-7.662c-4.424-.471-8.63 3.073-8.63 7.662 0 4.256 3.47 7.712 7.756 7.712 3.792 0 6.946-2.705 7.623-6.275a1.5 1.5 0 0 0 .036-.363l-.008-.003-.012-.004a2 2 0 0 0-.19-.047c-.105-.02-.206-.037-.327-.056-.1-.015-.213-.033-.353-.058-.953-.167-1.872-.82-2.217-1.886l-.055-.159-.208-.011c-.816-.034-1.528-.479-1.96-1.07-.425-.583-.627-1.387-.29-2.15-.78-.63-1.083-1.713-.959-2.684l.008-.062a6 6 0 0 0 .051-.503 2 2 0 0 0-.265-.043"
+                    clip-rule="evenodd"></path>
+            </svg>
+            <span id="ndsCookiesTitle">Cookies</span>
+        </div>
+        <button id="ndsCookiesCloseBtn" class="nds-cookie-popup-close">&times;</button>
+    </div>
+
+    <div class="nds-cookie-popup-content">
+        <span id="ndsCookiesContent">This website uses cookies to ensure ease of use and provide an enhanced browsing
+            experience. By continuing to browse this site, you acknowledge and accept the use of cookies.</span>
+    </div>
+
+    <div class="nds-cookie-popup-links">
+        <a href="{{ '/terms-and-conditions' | relative_url }}" id="ndsCookiesTermsLink">Terms & Conditions</a>
+        <span>|</span>
+        <a href="{{ '/privacy-policy' | relative_url }}" id="ndsCookiesPrivacyLink">Privacy Policy</a>
+    </div>
+
+    <div class="nds-cookie-popup-actions">
+        <button class="nds-btn nds-primary nds-full" id="ndsCookiesAcceptBtn" data-accept-title="Accepted"
+            data-accept-message="Cookies have been accepted">
+            <span class="label">Accept</span>
+        </button>
+        <button class="nds-btn nds-secondary nds-full" id="ndsCookiesDeclineBtn" data-accept-title="Declined"
+            data-decline-message="Optional cookies have been declined">
+            <span class="label">Decline</span>
+        </button>
+    </div>
+</div>
