@@ -111,9 +111,14 @@
                     const hasText = !hasChildren && child.textContent.trim();
 
                     // Build opening tag
+                    const booleanAttrs = ['hidden', 'disabled', 'checked', 'readonly', 'required', 'autofocus', 'autoplay', 'controls', 'loop', 'muted', 'novalidate', 'open', 'selected', 'multiple', 'defer', 'async'];
                     let openTag = '<' + tag;
                     for (let attr of child.attributes) {
-                        openTag += ' ' + attr.name + '="' + attr.value + '"';
+                        if (booleanAttrs.includes(attr.name) && (attr.value === '' || attr.value === attr.name)) {
+                            openTag += ' ' + attr.name;
+                        } else {
+                            openTag += ' ' + attr.name + '="' + attr.value + '"';
+                        }
                     }
 
                     // Check if it's a void element
@@ -291,10 +296,16 @@
             return escaped.replace(tagMatch[1], '<span class="syntax-tag">' + tagMatch[1] + '</span>');
         }
 
-        // Attribute names
+        // Attribute names (with value)
         const attrMatch = token.match(/\b([a-zA-Z-]+)=/);
         if (attrMatch) {
             return escaped.replace(attrMatch[1] + '=', '<span class="syntax-attr">' + attrMatch[1] + '</span>=');
+        }
+
+        // Boolean attributes (no value, e.g., hidden, disabled)
+        const boolMatch = token.match(/\s([a-zA-Z-]+)(?=[>\s])/);
+        if (boolMatch) {
+            return escaped.replace(boolMatch[1], '<span class="syntax-attr">' + boolMatch[1] + '</span>');
         }
 
         return escaped;
