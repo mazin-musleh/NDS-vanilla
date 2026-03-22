@@ -12,7 +12,7 @@
 
 .nds-definition-list {
     --_dl-icon-size: var(--dl-icon-size, 18px);
-    --_dl-icon-gap: var(--dl-icon-gap, var(--spacing-sm));
+    --_dl-icon-gap: var(--dl-icon-gap, calc(var(--dl-icon-size)/2));
     --_dl-gap: var(--row-gap, var(--gap, var(--spacing-lg)));
     display: flex;
     flex-direction: column;
