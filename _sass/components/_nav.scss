@@ -871,9 +871,7 @@ body.nds-minimal .nds-main-nav {
 /* Respect reduced motion preferences */
 @include reduced-motion {
 
-    .nds-main-nav .nds-dropdown-menu,
-    .nds-main-nav .nds-collapse,
-    .nds-main-nav .nds-nav-primary .showMore i {
+    .nds-main-nav :is(.nds-dropdown-menu, .nds-dropdown-content, .nds-collapse, .nds-collapse-content, .nds-nav-primary, .nds-nav-secondary, .showMore) {
         transition: none !important;
     }
 }

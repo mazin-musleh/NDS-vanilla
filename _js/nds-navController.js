@@ -164,7 +164,18 @@
                 onComplete?.();
             };
 
-            if (open) {
+            if (duration === 0) {
+                // Reduced motion: skip intermediate states, go straight to final state
+                if (open) {
+                    addState(element, 'open', 'opened');
+                    removeState(element, 'closing', 'opening');
+                    onStart?.();
+                } else {
+                    removeState(element, 'open', 'opened', 'opening', 'closing');
+                    onStart?.();
+                }
+                finish();
+            } else if (open) {
                 addState(element, 'open', 'opening');
                 removeState(element, 'closing', 'opened');
                 onStart?.();
