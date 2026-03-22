@@ -33,10 +33,6 @@
   font-weight: 600;
   font-size: var(--nds-text-md-FS);
   color: var(--text-default);
-  overflow: hidden;
-  position: sticky;
-  top: var( --nds-nav-height);
-  z-index: 10;
 }
 
 /* Demo Actions */
@@ -44,6 +40,34 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-xs);
+
+  .nds-btn {
+    --btn-size: 32px;
+  }
+
+  @include mobile {
+    .nds-btn {
+      --btn-size: 24px;
+    }
+  }
+
+  .demo-action-separator {
+    width: 1px;
+    align-self: stretch;
+    background-color: var(--border-neutral-secondary);
+    margin-inline: var(--spacing-xs);
+  }
+
+  .demo-toggle-menu {
+    .nds-dropmenu-menu {
+      --dropmenu-min-width: 120px;
+    }
+
+    .nds-dropmenu-item.selected {
+      background-color: var(--background-neutral-light);
+      font-weight: 600;
+    }
+  }
 }
 
 .demo-bg-btn {
