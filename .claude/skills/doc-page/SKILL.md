@@ -225,13 +225,14 @@ Buttons auto-scope to parent `.nds-demo-card`, handle mutual exclusion, and sync
 
 ## Demo Content
 
-Use curated content from `_data/content/` YAML files for demo text, titles, descriptions, and icons. This ensures demos look polished with real, verified content instead of ad-hoc placeholders.
+Keep demo content **short and generic**. The purpose is to showcase the component, not the content. Avoid bloating code examples with long realistic text.
 
-- **Check existing files** in `_data/content/` first (e.g., `services.yml` has titles, icons, descriptions)
+- **Short labels and sentences** — "Section title", "Description text goes here", "Item one", "Item two". Just enough to show the component structure
+- **Never fabricate specific details** — no prices, dates, phone numbers, real program names, or government service details that could mislead
+- **Vary topics across demos** on the same page so items are visually distinguishable
+- **Check `_data/content/`** for existing YAML files first (e.g., `services.yml` has titles, icons, descriptions)
 - **Create new YAML files** in `_data/content/` when a component needs large or repeating content (loops, lists, tables)
-- Follow the same structure as `services.yml` — each entry should have contextually appropriate fields and verified icon classes
-- YAML files are optional for short inline strings (alert messages, button labels, tooltips) — write those directly in the demo HTML
-- Do not invent placeholder text like "Lorem ipsum" or "Sample title" — use realistic, contextually appropriate content
+- YAML files are optional for short inline strings — write those directly in the demo HTML
 
 ## Code Examples
 
@@ -288,7 +289,7 @@ Use `nds-content-block` with `nds-block-title` for text guidance. Get HTML struc
 
 Every component page must include these **required blocks** in this order:
 
-1. **Built-in Features** — what the component gives you out of the box (animations, keyboard nav, auto-init, accessibility, print support, events, etc.). Derived from the SCSS and JS source files. This sells the component. For components with JS, state that the component auto-initializes when the loader detects the component's root selector on the page (e.g., "Auto-initializes when `.nds-accordion` is on the page — no JavaScript setup required").
+1. **Built-in Features** — what the component gives you out of the box (animations, keyboard nav, auto-init, accessibility, print support, events, etc.). Derived from the SCSS and JS source files. This sells the component. For components with JS, state that the component auto-initializes when the loader detects the component's root selector on the page (e.g., "Auto-initializes when `.nds-accordion` is on the page — no JavaScript setup required"). Use `nds-definition-list` with icons instead of a plain `<ul>`. Get the HTML pattern from `components/accordion.md` Built-in Features section. Use `<span class="nds-item-title">` for titles and `<p class="nds-item-desc">` for descriptions. Look up appropriate icons in `_sass/_hgiRoundedStroke.scss` for each feature. Aim for an **even number** of items (4, 6, 8) so the 2-column grid fills evenly. Merge related features if needed to reach an even count.
 2. **When to Use** — decision guidance: when to pick this component vs alternatives, what it's good for, what to avoid using it for, and any content tips (e.g., keep titles scannable).
 3. **JavaScript API** (if the component has JS) — auto-init note + expandable code block with full API.
 
@@ -303,7 +304,8 @@ Only add extra blocks when the component genuinely needs them — not every page
 Do NOT document things the user already gets from copying the code examples (ARIA attributes, semantic structure) or from the live demo toggles (configuration classes, sizes). Focus on what users can't see — the component's capabilities and decision guidance.
 
 Rules:
-- Use raw HTML inside `<code>` blocks — never HTML entities
+- **Never use em dashes (—)** in any generated content (titles, descriptions, list items, code comments). Use colons, commas, periods, or restructure instead
+- Use raw HTML inside `<code>` blocks, never HTML entities
 - Do NOT use inline `<code>` tags in descriptions
 
 
