@@ -153,6 +153,17 @@ All documentation pages are **English, LTR**. Always set `lang: en` and `directi
 
 Use `standard-page.md` as template. Do NOT use `layout_class: cardView` or `topSubMenu`.
 
+## Naming Hierarchy
+
+The page context already tells the user which component they're looking at. Avoid repeating the component name in section titles and descriptions.
+
+- **Page title** (`title` in front matter): component name only — "Alert", "Modal", "Tags"
+- **Hero title**: `{Name} - National Design System`
+- **Section titles**: describe the section content, not the component — "Variants", "Inline", "With Actions", "Toast", "Usage Guidelines". Not "Alert Variants" or "Alert with Actions".
+- **Section descriptions**: add context the title doesn't cover — avoid restating the title.
+
+Each demo card gets its own section with a section title and description — the section title identifies the demo, so `demo-label` is not needed.
+
 ## Page Structure
 
 ```
@@ -162,6 +173,8 @@ Section 3: Sizes (if applicable)
 Section 4: States (if applicable)
 Section 5: Usage Guidelines → content blocks with guidance + JS API (if applicable)
 ```
+
+Components with distinct **display modes** (e.g., default/inline/toast for alerts, modal/drawer for overlays) should get a separate section per mode rather than forcing them into the Variants/Sizes/States structure.
 
 Get section, demo card, and code tab HTML structure from `components/alert.md`.
 
@@ -206,9 +219,10 @@ Buttons auto-scope to parent `.nds-demo-card`, handle mutual exclusion, and sync
 Use curated content from `_data/content/` YAML files for demo text, titles, descriptions, and icons. This ensures demos look polished with real, verified content instead of ad-hoc placeholders.
 
 - **Check existing files** in `_data/content/` first (e.g., `services.yml` has titles, icons, descriptions)
-- **Create new YAML files** in `_data/content/` when a component needs content that doesn't exist yet (e.g., `notifications.yml`, `users.yml`, `table-rows.yml`)
+- **Create new YAML files** in `_data/content/` when a component needs large or repeating content (loops, lists, tables)
 - Follow the same structure as `services.yml` — each entry should have contextually appropriate fields and verified icon classes
-- Reference content directly in demo HTML — do not invent placeholder text like "Lorem ipsum" or "Sample title"
+- YAML files are optional for short inline strings (alert messages, button labels, tooltips) — write those directly in the demo HTML
+- Do not invent placeholder text like "Lorem ipsum" or "Sample title" — use realistic, contextually appropriate content
 
 ## Code Examples
 
@@ -218,7 +232,7 @@ Code tabs in demo cards are for **copy-paste implementation code only** — NOT 
 - **Code must reflect the demo** — same component structure, classes, and attributes as the rendered demo
 - **Use unique IDs** per demo card: `{component}-{variant}-{number}` (e.g., `modal-default-1`, `alert-success-2`) to avoid conflicts when users copy multiple examples
 - **HTML tab**: markup to render the component
-- **JS tab**: only when JS is **required** to create/initialize the component (e.g., `NDS.Chart.create()`, `NDS.Alert.create()`). Do NOT add a JS tab for optional JS — document it in Usage Guidelines instead
+- **JS API tab** (label: "JS API"): when the component has a **programmatic creation API** (e.g., `NDS.Alert.create()`, `NDS.Chart.create()`). This shows the JS alternative to the HTML tab. Do NOT add a JS tab for optional JS like event listeners or method calls — document those in Usage Guidelines instead
 - For long code (>15 lines), add `nds-expandable` to the tab panel and wrap `<code>` in `<div class="nds-expandable-content">`
 
 ## Overlay & Trigger Components
@@ -235,11 +249,13 @@ For demos needing JS beyond `data-toggler`. Any demo-wiring JS goes in `_js/nds-
 |----------|----------|
 | Component needs JS to exist (chart, programmatic alerts) | Page-level `<script>` at end of page + multi-tab code (HTML + JS tabs) |
 | Toggle needs logic beyond class/attr | Inline `<script>` inside demo card, button uses `onclick`, scope with `button.closest('.nds-demo-card')` |
-| JS action API demo (dismiss, create) | Action buttons inside `.state-demo` with `onclick` or `data-action` |
+| JS action API demo (dismiss, create) | Action buttons inside `.state-demo` with `onclick` or `data-action` (wired in `_js/nds-showcase.js`) |
 | Optional JS control (modal open/close) | Document in Usage Guidelines as standalone `nds-code` block, NOT in demo tabs |
 | Standard visual toggles | `data-toggler` only, no custom JS |
 
 For page-level scripts, wrap in `DOMContentLoaded`. For inline scripts, toggle `selected` class on button and update `<code>` innerHTML to keep code in sync.
+
+**Content sync** (optional): `nds-showcase.js` can auto-update demo text, titles, and code examples when variant togglers change (e.g., switching alert status updates the title, description, and both code tabs). Check if the component already has content sync logic in `nds-showcase.js` before writing custom sync. Add new sync functions there if needed for components with variant-specific content.
 
 ## JS Initialization & API Documentation
 
@@ -261,11 +277,19 @@ For dynamically added content, each component exposes a `reinit()` method to re-
 
 Use `nds-content-block` with `nds-block-title` for text guidance. Get HTML structure from `components/alert.md`.
 
-Every component page must include these blocks in this order:
+Every component page must include these **required blocks** in this order:
 
 1. **Built-in Features** — what the component gives you out of the box (animations, keyboard nav, auto-init, accessibility, print support, events, etc.). Derived from the SCSS and JS source files. This sells the component. For components with JS, state that the component auto-initializes when the loader detects the component's root selector on the page (e.g., "Auto-initializes when `.nds-accordion` is on the page — no JavaScript setup required").
 2. **When to Use** — decision guidance: when to pick this component vs alternatives, what it's good for, what to avoid using it for, and any content tips (e.g., keep titles scannable).
 3. **JavaScript API** (if the component has JS) — auto-init note + expandable code block with full API.
+
+**Additional blocks** can follow the required ones based on what the component needs. Common examples:
+- **Accessibility** — keyboard navigation details, screen reader behavior, focus management (accordion, modal, tabs)
+- **Responsive Behavior** — how the component adapts across breakpoints (grid, nav, sidebar)
+- **Content Guidelines** — writing tips for content inside the component (alerts, form labels, toast messages)
+- **Performance** — lazy loading, virtualization, or rendering notes (table, infinite scroll)
+
+Only add extra blocks when the component genuinely needs them — not every page needs all blocks.
 
 Do NOT document things the user already gets from copying the code examples (ARIA attributes, semantic structure) or from the live demo toggles (configuration classes, sizes). Focus on what users can't see — the component's capabilities and decision guidance.
 
