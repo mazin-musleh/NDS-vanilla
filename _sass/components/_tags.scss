@@ -92,7 +92,7 @@
   // COLOR VARIANTS
   // ==============================================
 
-  &:is(.nds-neutral, .nds-gray) {
+  &:is(.nds-neutral, .nds-gray, [data-status="neutral"]) {
     --tag-bg: var(--tag-background-neutral-light);
     --tag-text: var(--tag-text-neutral);
     --tag-border: var(--tag-border-neutral-light);
@@ -112,7 +112,7 @@
     }
   }
 
-  &:is(.nds-success, .nds-green) {
+  &:is(.nds-success, .nds-green, [data-status="success"]) {
     --tag-bg: var(--tag-background-success-light);
     --tag-text: var(--tag-text-success);
     --tag-border: var(--tag-border-success-light);
@@ -132,7 +132,7 @@
     }
   }
 
-  &:is(.nds-info, .nds-blue) {
+  &:is(.nds-info, .nds-blue, [data-status="info"]) {
     --tag-bg: var(--tag-background-info-light);
     --tag-text: var(--tag-text-info);
     --tag-border: var(--tag-border-info-light);
@@ -152,7 +152,7 @@
     }
   }
 
-  &:is(.nds-warning, .nds-orange, .nds-yellow) {
+  &:is(.nds-warning, .nds-orange, .nds-yellow, [data-status="warning"]) {
     --tag-bg: var(--tag-background-warning-light);
     --tag-text: var(--tag-text-warning);
     --tag-border: var(--tag-border-warning-light);
@@ -172,7 +172,7 @@
     }
   }
 
-  &:is(.nds-error, .nds-red) {
+  &:is(.nds-error, .nds-red, [data-status="error"]) {
     --tag-bg: var(--tag-background-error-light);
     --tag-text: var(--tag-text-error);
     --tag-border: var(--tag-border-error-light);
@@ -196,6 +196,7 @@
     --tag-bg: var(--tag-background-on-color);
     --tag-text: var(--text-oncolor-primary);
     --tag-border: transparent;
+    --tag-icon: var(--text-oncolor-primary);
 
     &.nds-outline {
       --tag-bg: transparent;

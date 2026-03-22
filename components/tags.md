@@ -451,98 +451,6 @@ direction: ltr
     </div>
 </section>
 
-<!-- Tag Group -->
-<section id="tagGroup" class="nds-content-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Tag Group</h2>
-            <p class="nds-section-description">Wrap multiple tags in a flex container with consistent spacing</p>
-        </div>
-        <div class="nds-section-content">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-outline", ".nds-tag", "groupStyle"]'>
-                                <span class="label">Outline</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-rounded", ".nds-tag", "groupShape"]'>
-                                <span class="label">Rounded</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-sm", ".nds-tag", "groupSize"]'>
-                                <span class="label">SM</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-group">
-                                <span class="nds-tag nds-neutral">
-                                    <span class="label">Design</span>
-                                </span>
-                                <span class="nds-tag nds-info">
-                                    <span class="label">Engineering</span>
-                                </span>
-                                <span class="nds-tag nds-success">
-                                    <span class="label">Marketing</span>
-                                </span>
-                                <span class="nds-tag nds-warning">
-                                    <span class="label">Finance</span>
-                                </span>
-                                <span class="nds-tag nds-error">
-                                    <span class="label">Urgent</span>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
-                            <div class="nds-tab-list-container">
-                                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                                        aria-controls="panel-tag-group-1" id="tab-tag-group-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-tag-group-1"
-                                    aria-labelledby="tab-tag-group-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                        </button>
-                                    </div>
-                                    <code class="lang-html code">
-<div class="nds-group">
-  <span class="nds-tag nds-neutral">
-    <span class="label">Design</span>
-  </span>
-  <span class="nds-tag nds-info">
-    <span class="label">Engineering</span>
-  </span>
-  <span class="nds-tag nds-success">
-    <span class="label">Marketing</span>
-  </span>
-</div>
-                                    </code>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
 <!-- Usage Guidelines -->
 <section id="usageGuidelines" class="nds-content-section">
     <div class="nds-section-wrapper">
@@ -555,29 +463,19 @@ direction: ltr
                 <h3 class="nds-block-title">Built-in Features</h3>
                 <p>Pure CSS component with no JavaScript required. Tags render immediately from HTML markup with full design token support.</p>
                 <ul>
-                    <li>Six color variants (neutral, success, info, warning, error, on-color) with light, inverted, and outline sub-styles</li>
-                    <li>Three sizes (md, sm, xs) controlled by a single class</li>
-                    <li>Status variant with automatic dot indicator and pill shape</li>
-                    <li>Ghost variant for borderless, transparent tags</li>
-                    <li>Icon support with automatic color theming and icon-only display mode</li>
-                    <li>Label truncation via the <strong>--truncate</strong> CSS variable</li>
-                    <li>Tag group container with flex wrap and consistent spacing</li>
-                    <li>Dark mode support through design tokens</li>
-                    <li>RTL-ready with CSS logical properties</li>
+                    <li>Labels auto-truncate to a single line with ellipsis, configurable via the <strong>--truncate</strong> CSS variable</li>
+                    <li>Status dot indicator color auto-matches the selected color variant</li>
+                    <li>Icon color auto-themed to match the tag variant</li>
+                    <li>Color via class (<strong>nds-success</strong>), attribute (<strong>data-status="success"</strong>), or alias (<strong>nds-green</strong>, <strong>nds-red</strong>, <strong>nds-blue</strong>, <strong>nds-yellow</strong>, <strong>nds-gray</strong>)</li>
                 </ul>
             </div>
 
             <div class="nds-content-block">
                 <h3 class="nds-block-title">When to Use</h3>
                 <ul>
-                    <li>Use <strong>default tags</strong> for categorization, labels, and metadata (department, topic, technology)</li>
-                    <li>Use <strong>status tags</strong> for state representation (active, pending, approved, rejected) where the dot indicator reinforces the meaning</li>
-                    <li>Use <strong>inverted tags</strong> when you need higher contrast or visual prominence</li>
-                    <li>Use <strong>outline tags</strong> for a lighter, less prominent appearance</li>
-                    <li>Use <strong>ghost tags</strong> for inline labels where background and border would add visual noise</li>
-                    <li>Use <strong>on-color tags</strong> when placing tags on colored or dark backgrounds</li>
+                    <li>Use tags for categorization, labels, and metadata that users need to scan quickly</li>
+                    <li>Use status tags when the state needs a visual indicator beyond just color (the dot reinforces meaning for colorblind users)</li>
                     <li>Choose color by meaning: <strong>neutral</strong> for general labels, <strong>success/error/warning/info</strong> for semantic status</li>
-                    <li>Wrap related tags in <strong>nds-group</strong> for consistent spacing and flex wrap</li>
                 </ul>
             </div>
 
