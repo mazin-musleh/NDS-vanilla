@@ -1594,11 +1594,11 @@
 
         const progressButtons = demoCard.querySelectorAll('.nds-progress:not(.nds-progress-static)');
         progressButtons.forEach(btn => {
-            // Force re-trigger animation by removing and re-adding the progress class
-            btn.classList.remove('nds-progress');
-            setTimeout(() => {
-                btn.classList.add('nds-progress');
-            }, 10);
+            const circle = btn.querySelector('.nds-progress-circle');
+            if (circle) {
+                const clone = circle.cloneNode(true);
+                circle.replaceWith(clone);
+            }
         });
     }
 
