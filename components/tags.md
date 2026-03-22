@@ -13,7 +13,7 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Variants</h2>
-            <p class="nds-section-description">Six color variants with outline, inverted, ghost, and rounded modifiers</p>
+            <p class="nds-section-description">Five color variants with outline, rounded, and icon modifiers</p>
         </div>
         <div class="nds-section-content">
             <div class="nds-showcase">
@@ -451,6 +451,47 @@ direction: ltr
     </div>
 </section>
 
+<!-- Built-in Features -->
+<section id="tagFeatures" class="nds-content-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Built-in Features</h2>
+        </div>
+        <div class="nds-section-content">
+            <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-tag-01 icon"></i>
+                        <span class="label">Pure CSS</span>
+                    </span>
+                    <p class="nds-item-desc">No JavaScript required. Tags render immediately from HTML markup.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-text-wrap icon"></i>
+                        <span class="label">Auto-truncation</span>
+                    </span>
+                    <p class="nds-item-desc">Labels truncate to a single line with ellipsis, configurable via --truncate.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-colors icon"></i>
+                        <span class="label">Flexible Color API</span>
+                    </span>
+                    <p class="nds-item-desc">Set color via class (nds-success), attribute (data-status), or alias (nds-green).</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-puzzle icon"></i>
+                        <span class="label">Works Anywhere</span>
+                    </span>
+                    <p class="nds-item-desc">Drop into any component. Works as labels, badges, status indicators, or metadata display.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Usage Guidelines -->
 <section id="usageGuidelines" class="nds-content-section">
     <div class="nds-section-wrapper">
@@ -458,17 +499,6 @@ direction: ltr
             <h2 class="nds-section-title">Usage Guidelines</h2>
         </div>
         <div class="nds-section-content">
-
-            <div class="nds-content-block">
-                <h3 class="nds-block-title">Built-in Features</h3>
-                <p>Pure CSS component with no JavaScript required. Tags render immediately from HTML markup with full design token support.</p>
-                <ul>
-                    <li>Labels auto-truncate to a single line with ellipsis, configurable via the <strong>--truncate</strong> CSS variable</li>
-                    <li>Status dot indicator color auto-matches the selected color variant</li>
-                    <li>Icon color auto-themed to match the tag variant</li>
-                    <li>Color via class (<strong>nds-success</strong>), attribute (<strong>data-status="success"</strong>), or alias (<strong>nds-green</strong>, <strong>nds-red</strong>, <strong>nds-blue</strong>, <strong>nds-yellow</strong>, <strong>nds-gray</strong>)</li>
-                </ul>
-            </div>
 
             <div class="nds-content-block">
                 <h3 class="nds-block-title">When to Use</h3>
