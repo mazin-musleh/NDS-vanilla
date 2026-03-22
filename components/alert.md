@@ -21,35 +21,44 @@ direction: ltr
                     <div class="demo-header">
 
                         <div class="demo-action">
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
-                                data-toggler='["data-status=success", ".nds-alert", "alertVariant", "attr"]'>
-                                <span class="label">Success</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["data-status=info", ".nds-alert", "alertVariant", "attr"]'>
-                                <span class="label">Info</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["data-status=warning", ".nds-alert", "alertVariant", "attr"]'>
-                                <span class="label">Warning</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["data-status=error", ".nds-alert", "alertVariant", "attr"]'>
-                                <span class="label">Error</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["data-status=neutral", ".nds-alert", "alertVariant", "attr"]'>
-                                <span class="label">Neutral</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            <div class="nds-dropmenu demo-toggle-menu">
+                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                    <span class="label">Success</span>
+                                </button>
+                                <div class="nds-dropmenu-menu" hidden>
+                                    <div class="nds-dropmenu-scroll">
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                                            data-toggler='["data-status=success", ".nds-alert", "alertVariant", "attr"]'>
+                                            <span class="label">Success</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["data-status=info", ".nds-alert", "alertVariant", "attr"]'>
+                                            <span class="label">Info</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["data-status=warning", ".nds-alert", "alertVariant", "attr"]'>
+                                            <span class="label">Warning</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["data-status=error", ".nds-alert", "alertVariant", "attr"]'>
+                                            <span class="label">Error</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["data-status=neutral", ".nds-alert", "alertVariant", "attr"]'>
+                                            <span class="label">Neutral</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-shadow", ".nds-alert", "alertStyle"]'>
                                 <span class="label">Shadow</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-color", ".nds-alert", "alertColor"]'>
                                 <span class="label">Color</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                                 <span class="label">Remove bg</span>
                             </button>
@@ -156,30 +165,39 @@ direction: ltr
                     <div class="demo-header">
 
                         <div class="demo-action">
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["data-status=success", ".nds-alert", "inlineVariant", "attr"]'>
-                                <span class="label">Success</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["data-status=neutral", ".nds-alert", "inlineVariant", "attr"]'>
-                                <span class="label">Neutral</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["data-status=info", ".nds-alert", "inlineVariant", "attr"]'>
-                                <span class="label">Info</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["data-status=warning", ".nds-alert", "inlineVariant", "attr"]'>
-                                <span class="label">Warning</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["data-status=error", ".nds-alert", "inlineVariant", "attr"]'>
-                                <span class="label">Error</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
-                                data-toggler='["data-status=critical", ".nds-alert", "inlineVariant", "attr"]'>
-                                <span class="label">Critical</span>
-                            </button>
+                            <div class="nds-dropmenu demo-toggle-menu">
+                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                    <span class="label">Critical</span>
+                                </button>
+                                <div class="nds-dropmenu-menu" hidden>
+                                    <div class="nds-dropmenu-scroll">
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["data-status=success", ".nds-alert", "inlineVariant", "attr"]'>
+                                            <span class="label">Success</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["data-status=neutral", ".nds-alert", "inlineVariant", "attr"]'>
+                                            <span class="label">Neutral</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["data-status=info", ".nds-alert", "inlineVariant", "attr"]'>
+                                            <span class="label">Info</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["data-status=warning", ".nds-alert", "inlineVariant", "attr"]'>
+                                            <span class="label">Warning</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["data-status=error", ".nds-alert", "inlineVariant", "attr"]'>
+                                            <span class="label">Error</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                                            data-toggler='["data-status=critical", ".nds-alert", "inlineVariant", "attr"]'>
+                                            <span class="label">Critical</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="demo-container">
@@ -290,15 +308,15 @@ direction: ltr
                     <div class="demo-header">
 
                         <div class="demo-action">
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-shadow", ".nds-alert","alertActionsStyle"]'>
                                 <span class="label">Shadow</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-color", ".nds-alert","alertActionsColor"]'>
                                 <span class="label">Color</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                                 <span class="label">Remove bg</span>
                             </button>
@@ -422,27 +440,27 @@ direction: ltr
                     <div class="demo-header">
 
                         <div class="demo-action">
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
+                            <button class="nds-btn nds-subtle demo-toggle-btn selected"
                                 data-toggler='["data-status=success", ".nds-alert", "toastVariant", "attr"]'>
                                 <span class="label">Success</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["data-status=warning", ".nds-alert", "toastVariant", "attr"]'>
                                 <span class="label">Warning</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["data-status=error", ".nds-alert", "toastVariant", "attr"]'>
                                 <span class="label">Error</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["data-status=info", ".nds-alert", "toastVariant", "attr"]'>
                                 <span class="label">Info</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["data-position=bottom", ".nds-alert", "toastPosition", "attr"]'>
                                 <span class="label">Bottom</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-color", ".nds-alert", "toastColor"]'>
                                 <span class="label">Color</span>
                             </button>

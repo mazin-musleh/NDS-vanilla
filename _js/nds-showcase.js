@@ -562,6 +562,16 @@
         // Toggle the clicked button's selected state
         button.classList.toggle('selected');
 
+        // Sync dropmenu trigger label when item is selected
+        const dropmenu = button.closest('.nds-dropmenu');
+        if (dropmenu && button.classList.contains('selected')) {
+            const triggerLabel = dropmenu.querySelector('.nds-dropmenu-trigger .label');
+            const itemLabel = button.querySelector('.label');
+            if (triggerLabel && itemLabel) {
+                triggerLabel.textContent = itemLabel.textContent;
+            }
+        }
+
         // Update alert/toast code examples directly from toggle states
         if (buttonTypes.length === 1) {
             updateAlertCodeFromToggles(demoCard, buttonTypes[0]);
