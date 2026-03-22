@@ -123,10 +123,6 @@
     --btn-indicator-size: 2px;
   }
 
-  &.nds-xl {
-    --btn-size: 48px;
-    --btn-indicator-size: 4px;
-  }
 
   // ==============================================
   // BUTTON VARIANTS
@@ -177,7 +173,7 @@
     --btn-bg-selected: var(--button-background-neutral-selected);
     --btn-bg-disabled: var(--button-background-transparent-default);
     --btn-color: var(--text-default);
-    --btn-border: var(--border-neutral-secondary);
+    --btn-border: var(--border-neutral-primary);
     --btn-border-hover: var(--border-neutral-secondary);
     --btn-border-active: var(--border-neutral-primary);
     --btn-border-selected: var(--border-neutral-primary);
@@ -281,6 +277,9 @@
         --btn-bg-disabled: var(--button-background-transparent-default);
         --btn-color: var(--colors-base-white);
         --btn-border: var(--border-white-40);
+        --btn-border-hover: var(--border-white-40);
+        --btn-border-active: var(--border-white-40);
+        --btn-border-selected: var(--border-white-40);
         --btn-loading-color: var(--colors-base-white);
         --btn-loading-track: var(--alpha-white-20);
       }
@@ -578,7 +577,7 @@
     }
   }
 
-  &.nds-icon-only .label {
+  &:is(.nds-icon-only, .nds-circle) .label {
     display: none;
   }
 
@@ -586,8 +585,10 @@
     display: none;
   }
 
+
+
   /* Icon-Only Button Configurations */
-  &:is(.nds-icon-only, :has(i, img, svg):not(:has(span, p, div, h1, h2, h3, h4, h5, h6))) {
+  &:is(.nds-icon-only, .nds-circle, :has(i, img, svg):not(:has(span, p, div, h1, h2, h3, h4, h5, h6))) {
     justify-content: center;
     width: var(--btn-size);
     padding: 0 var(--spacing-md);
@@ -608,9 +609,7 @@
         padding: 0 var(--spacing-lg);
       }
 
-      &.nds-xl {
-        padding: 0 var(--spacing-xl);
-      }
+
     }
 
     &.nds-circle {
