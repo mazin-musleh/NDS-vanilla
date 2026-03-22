@@ -431,7 +431,7 @@ direction: ltr
 <section id="toastDemo" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
-            <h2 class="nds-section-title">Toast</h2>
+            <h2 class="nds-section-title">Toast Notifications</h2>
             <p class="nds-section-description">Floating notifications that appear at the top or bottom of the viewport</p>
         </div>
         <div class="nds-section-content">
@@ -440,22 +440,31 @@ direction: ltr
                     <div class="demo-header">
 
                         <div class="demo-action">
-                            <button class="nds-btn nds-subtle demo-toggle-btn selected"
-                                data-toggler='["data-status=success", ".nds-alert", "toastVariant", "attr"]'>
-                                <span class="label">Success</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["data-status=warning", ".nds-alert", "toastVariant", "attr"]'>
-                                <span class="label">Warning</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["data-status=error", ".nds-alert", "toastVariant", "attr"]'>
-                                <span class="label">Error</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["data-status=info", ".nds-alert", "toastVariant", "attr"]'>
-                                <span class="label">Info</span>
-                            </button>
+                            <div class="nds-dropmenu demo-toggle-menu">
+                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                    <span class="label">Success</span>
+                                </button>
+                                <div class="nds-dropmenu-menu" hidden>
+                                    <div class="nds-dropmenu-scroll">
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                                            data-toggler='["data-status=success", ".nds-alert", "toastVariant", "attr"]'>
+                                            <span class="label">Success</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["data-status=warning", ".nds-alert", "toastVariant", "attr"]'>
+                                            <span class="label">Warning</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["data-status=error", ".nds-alert", "toastVariant", "attr"]'>
+                                            <span class="label">Error</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["data-status=info", ".nds-alert", "toastVariant", "attr"]'>
+                                            <span class="label">Info</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["data-position=bottom", ".nds-alert", "toastPosition", "attr"]'>
                                 <span class="label">Bottom</span>
@@ -472,7 +481,10 @@ direction: ltr
                             <button class="nds-btn nds-primary nds-lg demo-action-btn" data-action="toast-show">
                                 <span class="label">Show Toast</span>
                             </button>
-                            <p style="text-align: center; color: var(--text-subdued); margin: 0;">Toggle variant and position above, then click the button to preview</p>
+                            <span class="nds-feedback nds-sm nds-outline" data-status="neutral">
+                                <span class="nds-feedback-icon"><i class="hgi hgi-stroke icon"></i></span>
+                                Select a variant and position above, then click the button to preview
+                            </span>
                         </div>
                     </div>
                     <div class="demo-code">
@@ -550,6 +562,61 @@ direction: ltr
     </div>
 </section>
 
+<!-- Built-in Features -->
+<section id="alertFeatures" class="nds-content-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Built-in Features</h2>
+        </div>
+        <div class="nds-section-content">
+            <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-plug-socket icon"></i>
+                        <span class="label">Auto-initialization</span>
+                    </span>
+                    <p class="nds-item-desc">Activates when .nds-alert is on the page. Close button handlers attach automatically.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-colors icon"></i>
+                        <span class="label">Six Status Variants</span>
+                    </span>
+                    <p class="nds-item-desc">Success, info, warning, error, critical, and neutral with automatic icon and color theming.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-notification-square icon"></i>
+                        <span class="label">Toast Notifications</span>
+                    </span>
+                    <p class="nds-item-desc">Fixed positioning with auto-dismiss timer and progress indicator.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-minus-sign icon"></i>
+                        <span class="label">Inline Layout</span>
+                    </span>
+                    <p class="nds-item-desc">Single-line variant for contextual messages with actions pushed to the end.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-api icon"></i>
+                        <span class="label">JavaScript API</span>
+                    </span>
+                    <p class="nds-item-desc">Programmatic creation, dismissal, and bulk dismiss for dynamic alerts and toasts.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-mobile-programming-01 icon"></i>
+                        <span class="label">Responsive Layout</span>
+                    </span>
+                    <p class="nds-item-desc">Stacks vertically on mobile with stripe repositioned to the top.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Usage Guidelines -->
 <section id="alertGuidelines" class="nds-content-section">
     <div class="nds-section-wrapper">
@@ -559,28 +626,13 @@ direction: ltr
         <div class="nds-section-content">
 
             <div class="nds-content-block">
-                <h3 class="nds-block-title">Built-in Features</h3>
-                <p>Auto-initializes when <strong>.nds-alert</strong> is on the page — no JavaScript setup required. The loader attaches close button handlers automatically.</p>
-                <ul>
-                    <li>Six status variants (success, info, warning, error, critical, neutral) with automatic icon and color theming</li>
-                    <li>Close button dismissal with smooth removal from the DOM</li>
-                    <li>Toast notifications with fixed positioning, auto-dismiss timer, and progress indicator</li>
-                    <li>Responsive layout — stacks vertically on mobile with stripe repositioned to top</li>
-                    <li>Dark mode support through design tokens — no extra classes needed</li>
-                    <li>Inline layout variant for single-line contextual messages with actions pushed to the end</li>
-                    <li>Programmatic creation API for dynamic alerts and toasts</li>
-                    <li>Color background variant with solid backdrop to prevent overlap bleed-through</li>
-                </ul>
-            </div>
-
-            <div class="nds-content-block">
                 <h3 class="nds-block-title">When to Use</h3>
                 <ul>
-                    <li>Use <strong>inline alerts</strong> for contextual feedback near a form field or action — single-line layout with actions pushed to the end</li>
+                    <li>Use <strong>inline alerts</strong> for contextual feedback near a form field or action. Single-line layout with actions pushed to the end</li>
                     <li>Use <strong>standard alerts</strong> for important messages that need a title and description within a page section</li>
-                    <li>Use <strong>toast notifications</strong> for transient feedback after an action (save, delete, submit) — auto-dismisses after a set duration</li>
-                    <li>Choose the variant that matches the message severity: <strong>success</strong> for confirmations, <strong>info</strong> for neutral updates, <strong>warning</strong> for caution, <strong>error</strong> for failures, <strong>critical</strong> for system-level emergencies (inline alerts with distinct warning icon), <strong>neutral</strong> for general notices</li>
-                    <li>Prefer alerts over modals for non-blocking feedback — alerts let users continue working</li>
+                    <li>Use <strong>toast notifications</strong> for transient feedback after an action (save, delete, submit). Auto-dismisses after a set duration</li>
+                    <li>Choose the variant that matches the message severity: <strong>success</strong> for confirmations, <strong>info</strong> for neutral updates, <strong>warning</strong> for caution, <strong>error</strong> for failures, <strong>critical</strong> for system-level emergencies, <strong>neutral</strong> for general notices</li>
+                    <li>Prefer alerts over modals for non-blocking feedback. Alerts let users continue working</li>
                     <li>Add action buttons when the user needs to respond (retry, undo, update) rather than just acknowledge</li>
                 </ul>
             </div>
@@ -615,7 +667,7 @@ const alert = NDS.Alert.create({
             class: 'nds-btn nds-primary nds-sm',  // Custom classes (overrides variant/size)
             onClick: (el) => {},  // Callback, receives the alert element
             dismiss: false,       // Auto-dismiss after click (default: false)
-            href: '/url',         // Render as <a> link instead of <button> (optional)
+            href: '/url',         // Render as &lt;a&gt; link instead of &lt;button&gt; (optional)
             target: '_blank'      // Link target attribute (optional, requires href)
         }
     ]
@@ -640,7 +692,7 @@ NDS.Alert.dismissAll(document.body);     // All alerts on page
 // ── Re-initialize after dynamic HTML ─────────────────
 // Attaches close handlers to any new .nds-alert elements
 NDS.Alert.init();
-                        </code>
+</code>
                     </div>
                 </div>
             </div>
