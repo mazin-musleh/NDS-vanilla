@@ -32,6 +32,10 @@
             return this.accordionContainer.getAttribute('data-state') === 'always-open';
         }
 
+        get prefersReducedMotion() {
+            return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        }
+
         getTransitionDuration() {
             if (this._transitionDuration === undefined) {
                 this._transitionDuration = parseFloat(
@@ -143,7 +147,7 @@
         show(index) {
             const button = this.buttons[index];
             const collapse = this.collapses[index];
-            
+
             if (!button || !collapse) return;
 
             // If not always-open mode, hide other panels first
@@ -151,11 +155,15 @@
                 this.hideAll(index);
             }
 
-            // Set animation flag with timeout
-            this.isAnimating = true;
-            setTimeout(() => {
+            // Set animation flag — skip lock when reduced motion is active
+            if (this.prefersReducedMotion) {
                 this.isAnimating = false;
-            }, this.getTransitionDuration() + 50); // CSS transition duration + 50ms buffer
+            } else {
+                this.isAnimating = true;
+                setTimeout(() => {
+                    this.isAnimating = false;
+                }, this.getTransitionDuration() + 50);
+            }
 
             // Update button state immediately
             button.setAttribute('aria-expanded', 'true');
@@ -175,14 +183,18 @@
         hide(index) {
             const button = this.buttons[index];
             const collapse = this.collapses[index];
-            
+
             if (!button || !collapse) return;
 
-            // Set animation flag with timeout
-            this.isAnimating = true;
-            setTimeout(() => {
+            // Set animation flag — skip lock when reduced motion is active
+            if (this.prefersReducedMotion) {
                 this.isAnimating = false;
-            }, this.getTransitionDuration() + 50); // CSS transition duration + 50ms buffer
+            } else {
+                this.isAnimating = true;
+                setTimeout(() => {
+                    this.isAnimating = false;
+                }, this.getTransitionDuration() + 50);
+            }
 
             // Update button state immediately
             button.setAttribute('aria-expanded', 'false');
@@ -209,7 +221,7 @@
 
         animateShow(collapse, callback) {
             // If reduced motion is preferred, skip animation
-            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            if (this.prefersReducedMotion) {
                 callback();
                 return;
             }
@@ -232,7 +244,7 @@
 
         animateHide(collapse, callback) {
             // If reduced motion is preferred, skip animation
-            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            if (this.prefersReducedMotion) {
                 callback();
                 return;
             }
