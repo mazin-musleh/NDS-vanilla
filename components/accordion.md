@@ -8,12 +8,12 @@ lang: en
 direction: ltr
 ---
 
-<!-- Overview -->
+<!-- Standard -->
 <section id="accordionOverview" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
-            <h2 class="nds-section-title">Overview</h2>
-            <p class="nds-section-description">Collapsible content panels with smooth animations and full keyboard accessibility</p>
+            <h2 class="nds-section-title">Standard</h2>
+            <p class="nds-section-description">Basic collapsible panels with toggle controls for size, card view, and always-open mode</p>
         </div>
         <div class="nds-section-content">
             <div class="nds-showcase">
