@@ -1,6 +1,7 @@
 /**
-* NDS Definition List - SCSS Version
-* Component for displaying term-definition pairs with icons
+* NDS Definition List
+* Component for displaying term-description pairs with icons
+* Works with semantic dl/dt/dd or any element using .nds-item-title / .nds-item-desc classes
 */
 
 @use '../mixins' as *;
@@ -22,7 +23,7 @@
         grid-template-columns: auto 1fr;
         height: 100%;
 
-        dd {
+        :is(dd, .nds-item-desc) {
             display: flex;
             align-items: center;
         }
@@ -52,10 +53,10 @@
 }
 
 // ==============================================
-// DEFINITION TERM (dt)
+// DEFINITION TERM (dt or .nds-item-title)
 // ==============================================
 
-dt {
+.nds-definition-list :is(dt, .nds-item-title) {
     display: flex;
     align-items: center;
     gap: var(--_dl-icon-gap);
@@ -71,7 +72,6 @@ dt {
         font-size: var(--_dl-icon-size);
     }
 
-
     .label {
         flex: 1;
         font-weight: 600;
@@ -80,15 +80,15 @@ dt {
 }
 
 // ==============================================
-// DEFINITION DESCRIPTION (dd)
+// DEFINITION DESCRIPTION (dd or .nds-item-desc)
 // ==============================================
 
-dd {
+.nds-definition-list :is(dd, .nds-item-desc) {
     color: var(--text-secondary-paragraph);
+}
 
-    .nds-definition-list:not(.tableView) .nds-definition-item:has(> dt .icon) & {
-        padding-inline-start: calc(var(--_dl-icon-size) + var(--_dl-icon-gap) + 2px);
-    }
+.nds-definition-list:not(.tableView) .nds-definition-item:has(> :is(dt, .nds-item-title) .icon) :is(dd, .nds-item-desc) {
+    padding-inline-start: calc(var(--_dl-icon-size) + var(--_dl-icon-gap) + 2px);
 }
 
 // ==============================================
@@ -108,7 +108,7 @@ dd {
         }
     }
 
-    // For tableView variant (already has borders, just ensure consistency)
+    // For tableView variant
     &.tableView {
         gap: 0;
 
