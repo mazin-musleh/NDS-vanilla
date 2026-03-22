@@ -306,9 +306,6 @@ Rules:
 - Use raw HTML inside `<code>` blocks — never HTML entities
 - Do NOT use inline `<code>` tags in descriptions
 
-## Dark Mode
-
-Do NOT add custom background classes (`.dark-bg`, `.green-bg`, `.black-bg`) to demo containers. Design tokens handle light/dark mode automatically via the global `data-theme` toggle. Do not add demo-specific style overrides — use existing components and token-based styling only.
 
 ## Registration Checklist
 
