@@ -82,7 +82,7 @@
 
         &:not(.nds-outline) .nds-feedback-icon {
             @include dark {
-                --feedback-bg: var(--colors-neutral-700);
+                --feedback-bg: var(--colors-neutral-600);
                 --feedback-ring: var(--colors-neutral-900);
             }
         }
