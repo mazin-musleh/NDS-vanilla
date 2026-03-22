@@ -184,9 +184,18 @@ Get section, demo card, and code tab HTML structure from `components/alert.md`.
 - **Structurally different variants** (different HTML structure): separate demo cards with their own code examples
 - Cover **all** component variants and states — every variant the SCSS defines should appear on the page
 
+## Demo Action Structure
+
+Demo actions use two control types based on the toggle behavior:
+
+- **Selection groups** (one-of-many, mutual exclusion): use **dropmenus** with `.demo-toggle-menu` wrapper. The trigger label auto-syncs to the selected item. Get the HTML pattern from `components/alert.md`.
+- **On/off toggles** (independent): stay as **flat buttons** with `.demo-toggle-btn`.
+
+Always place dropmenus first in the demo action row, followed by flat toggle buttons.
+
 ## Toggle System
 
-Use `data-toggler` on demo action buttons instead of separate demo cards per variation. Get the HTML pattern from `components/tags.md`.
+Use `data-toggler` on demo action buttons and dropmenu items.
 
 ### Format
 
@@ -212,7 +221,7 @@ Multi:   data-toggler='[["value", ".target", "group", "op", "action"], [...]]'
 | Attribute toggle | `'["data-status=success", ".nds-alert", "alertVariant", "attr"]'` |
 | Boolean prop | `'["indeterminate", ".nds-checkbox", "propToggle", "prop"]'` |
 
-Buttons auto-scope to parent `.nds-demo-card`, handle mutual exclusion, and sync `<code>` blocks automatically.
+Buttons auto-scope to parent `.nds-demo-card`, handle mutual exclusion, and sync `<code>` blocks automatically. Add `selected` class to the button/item that matches the demo's default state. The dropmenu trigger label auto-syncs to the selected item.
 
 ## Demo Content
 
