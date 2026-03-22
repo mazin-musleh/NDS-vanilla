@@ -68,8 +68,7 @@ Page names don't always match their SCSS/JS filenames. **Never assume** — alwa
 
 1. **Read reference files** for current patterns:
    - `layout/section.md` — section hierarchy, tiers, content layout
-   - `components/alert.md` — BASE STANDARD for page structure and demo cards
-   - `components/tags.md` — reference for interactive demo toggles
+   - `components/alert.md` — BASE STANDARD for all page patterns (demo cards, toggles, dropmenus, Built-in Features, Usage Guidelines, JS API)
    - `standard-page.md` — front matter template
 2. **Resolve the page path** using Page Resolution above, then **read the existing page** if it exists — you will compare it against source files in the Smart Merge process
 3. **Discover the SCSS file** using Source File Discovery above, then **read it** — extract every variant class, size, state, and accessibility feature (`@include reduced-motion`, `@include high-contrast`, `@include print-media`). The page must document all of these.
@@ -129,7 +128,7 @@ Before making any edits, present the classification report to the user:
 - Variants: ...
 - Sizes: ...
 - States: ...
-- Usage Guidelines > Built-in Features: ...
+- Built-in Features: ...
 - Usage Guidelines > When to Use: ...
 - Usage Guidelines > JavaScript API: ...
 
@@ -162,7 +161,7 @@ The page context already tells the user which component they're looking at. Avoi
 - **Section titles**: describe the section content, not the component — "Variants", "Inline", "With Actions", "Toast", "Usage Guidelines". Not "Alert Variants" or "Alert with Actions".
 - **Section descriptions**: add context the title doesn't cover — avoid restating the title.
 
-Each demo card gets its own section with a section title and description — the section title identifies the demo, so `demo-label` is not needed.
+Each demo card gets its own section. The section title describes the variant or mode shown (e.g., "Standard", "With Leading Icons", "Inline", "Toast Notifications"), not generic labels like "Overview". No `demo-label` needed since the section title identifies the demo.
 
 ## Page Structure
 
@@ -171,7 +170,8 @@ Section 1: Overview / Main Demo → demo cards with toggle controls
 Section 2: Variants (if applicable)
 Section 3: Sizes (if applicable)
 Section 4: States (if applicable)
-Section 5: Usage Guidelines → content blocks with guidance + JS API (if applicable)
+Section 5: Built-in Features → definition-list grid with icons (its own section, NOT inside Usage Guidelines)
+Section 6: Usage Guidelines → content blocks with When to Use + JS API (if applicable)
 ```
 
 Components with distinct **display modes** (e.g., default/inline/toast for alerts, modal/drawer for overlays) should get a separate section per mode rather than forcing them into the Variants/Sizes/States structure.
@@ -280,18 +280,29 @@ For dynamically added content, each component exposes a `reinit()` method to re-
 ### Tiered documentation approach
 
 1. **Read the component's JS file** (`_js/nds-$0.js`) and look for `window.NDS*` exports — these are the public APIs
-2. **All components with JS**: add a note in Usage Guidelines explaining that the component initializes automatically when the HTML is on the page — no script tags or init calls needed. For dynamic content, mention `reinit()`
-3. **Components with a public API** (methods like `open()`, `close()`, `create()`, or custom events): add a full JS API section in Usage Guidelines with a standalone `nds-code nds-expandable` block. Use inline comments to explain methods and events. See `components/modal.md` for an example
+2. **All components with JS**: add an "Auto-initialization" item in the Built-in Features section explaining that the component initializes on page load. For dynamic content, mention `reinit()`
+3. **Components with a public API** (methods like `open()`, `close()`, `create()`, or custom events): add a full JS API block in Usage Guidelines with a standalone `nds-code nds-expandable` block. Use inline comments to explain methods and events. See `components/alert.md` for an example
 
-## Content Blocks (Usage Guidelines)
+## Bottom Sections (Features & Guidelines)
 
 Use `nds-content-block` with `nds-block-title` for text guidance. Get HTML structure from `components/alert.md`.
 
-Every component page must include these **required blocks** in this order:
+### Built-in Features Section
 
-1. **Built-in Features** — what the component gives you out of the box (animations, keyboard nav, auto-init, accessibility, print support, events, etc.). Derived from the SCSS and JS source files. This sells the component. For components with JS, state that the component auto-initializes when the loader detects the component's root selector on the page (e.g., "Auto-initializes when `.nds-accordion` is on the page — no JavaScript setup required"). Use `nds-definition-list` with icons instead of a plain `<ul>`. Get the HTML pattern from `components/accordion.md` Built-in Features section. Use `<span class="nds-item-title">` for titles and `<p class="nds-item-desc">` for descriptions. Look up appropriate icons in `_sass/_hgiRoundedStroke.scss` for each feature. Aim for an **even number** of items (4, 6, 8) so the 2-column grid fills evenly. Merge related features if needed to reach an even count.
-2. **When to Use** — decision guidance: when to pick this component vs alternatives, what it's good for, what to avoid using it for, and any content tips (e.g., keep titles scannable).
-3. **JavaScript API** (if the component has JS) — auto-init note + expandable code block with full API.
+This is its own **section** (not a content block inside Usage Guidelines). It uses a `nds-definition-list` grid with icons. Get the HTML pattern from `components/alert.md` Built-in Features section.
+
+- Derived from the SCSS and JS source files. This sells the component
+- Use `<span class="nds-item-title">` for titles and `<p class="nds-item-desc">` for descriptions
+- Look up appropriate icons in `_sass/_hgiRoundedStroke.scss` for each feature
+- Aim for an **even number** of items (4, 6, 8) so the 2-column grid fills evenly. Merge related features if needed
+- For components with JS, include an "Auto-initialization" item and a "JavaScript API" item
+
+### Usage Guidelines Content Blocks
+
+Every component page must include these **required blocks** inside Usage Guidelines:
+
+1. **When to Use** — decision guidance: when to pick this component vs alternatives, what it's good for, what to avoid using it for, and any content tips (e.g., keep titles scannable).
+2. **JavaScript API** (if the component has JS) — auto-init note + expandable code block with full API.
 
 **Additional blocks** can follow the required ones based on what the component needs. Common examples:
 - **Accessibility** — keyboard navigation details, screen reader behavior, focus management (accordion, modal, tabs)
@@ -305,7 +316,7 @@ Do NOT document things the user already gets from copying the code examples (ARI
 
 Rules:
 - **Never use em dashes (—)** in any generated content (titles, descriptions, list items, code comments). Use colons, commas, periods, or restructure instead
-- Use raw HTML inside `<code>` blocks, never HTML entities
+- Write code examples as raw HTML, not entity-encoded. But always escape HTML tags meant to display as text (e.g., `&lt;a&gt;` in a JS comment) to prevent the browser from parsing them
 - Do NOT use inline `<code>` tags in descriptions
 
 
