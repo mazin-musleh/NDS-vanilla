@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 ---
 
-<!-- Alert Overview -->
+<!-- Variants -->
 <section id="alertOverview" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
