@@ -286,7 +286,7 @@
     &[data-status="info"]    { --alert-icon-bg: var(--background-info);    @include dark { --alert-icon-bg: var(--background-info); } }
     &[data-status="warning"] { --alert-icon-bg: var(--background-warning); @include dark { --alert-icon-bg: var(--background-warning); } }
     &:is([data-status="error"], [data-status="critical"]) { --alert-icon-bg: var(--background-error); @include dark { --alert-icon-bg: var(--background-error); } }
-    &[data-status="neutral"] { --alert-icon-bg: var(--background-neutral-primary); @include dark { --alert-icon-bg: var(--background-neutral-primary); } }
+    &[data-status="neutral"] { --alert-icon-bg: var(--feedback-bg); }
 
     // Critical uses warning triangle icon
     &[data-status="critical"] .icon:before { content: "㬃"; }
@@ -377,6 +377,7 @@
   flex-direction: column;
   gap: var(--spacing-xl);
   pointer-events: none;
+  isolation: isolate;
 
   @include mobile {
     inset-inline: var(--nds-viewport-padding);
@@ -384,7 +385,7 @@
 
   // Top position (default)
   &[data-position="top"] {
-    inset-block-start: calc(var(--nds-nav-height) + var(--spacing-md));
+    inset-block-start: calc(var(--_toast-top, var(--nds-nav-height)) + var(--spacing-md));
   }
 
   // Bottom position

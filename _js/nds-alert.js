@@ -194,14 +194,33 @@
             if (placeholder) {
                 // Ensure it's visible
                 placeholder.removeAttribute('hidden');
-                return placeholder;
+            } else {
+                // Create one automatically
+                placeholder = document.createElement('div');
+                placeholder.className = 'nds-alert-placeholder';
+                placeholder.setAttribute('data-position', position);
+                document.body.appendChild(placeholder);
             }
 
-            // Create one automatically
-            placeholder = document.createElement('div');
-            placeholder.className = 'nds-alert-placeholder';
-            placeholder.setAttribute('data-position', position);
-            document.body.appendChild(placeholder);
+            // Sync top offset to nav bottom
+            if (position === 'top' && !placeholder._scrollSync) {
+                const nav = document.getElementById('ndsMainNav');
+                if (nav) {
+                    const update = () => placeholder.style.setProperty('--_toast-top', nav.getBoundingClientRect().bottom + 'px');
+                    update();
+                    const sync = () => {
+                        if (!placeholder.isConnected) {
+                            window.removeEventListener('scroll', sync);
+                            placeholder._scrollSync = null;
+                            return;
+                        }
+                        if (window.scrollY < 200) update();
+                    };
+                    window.addEventListener('scroll', sync, { passive: true });
+                    placeholder._scrollSync = sync;
+                }
+            }
+
             return placeholder;
         },
 
@@ -219,6 +238,10 @@
                     setTimeout(() => {
                         el.remove();
                         if (placeholder && !placeholder.children.length) {
+                            if (placeholder._scrollSync) {
+                                window.removeEventListener('scroll', placeholder._scrollSync);
+                                placeholder._scrollSync = null;
+                            }
                             placeholder.remove();
                         }
                     }, 300);

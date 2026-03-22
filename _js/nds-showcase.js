@@ -577,7 +577,7 @@
     // Update alert/toast code examples directly from toggle button states
     function updateAlertCodeFromToggles(demoCard, toggleType) {
         // Only handle alert-related toggles
-        if (!toggleType || !['alertVariant', 'toastVariant', 'toastPosition', 'toastColor', 'alertColor'].includes(toggleType)) {
+        if (!toggleType || !['alertVariant', 'toastVariant', 'toastPosition', 'toastColor', 'alertColor', 'alertStyle'].includes(toggleType)) {
             return;
         }
 
@@ -603,10 +603,12 @@
             }
         }
 
-        // Get color
+        // Get color and shadow
         const colorType = isToast ? 'toastColor' : 'alertColor';
         const colorToggle = demoCard.querySelector(`[data-toggler*="${colorType}"].selected`);
         const hasColor = !!colorToggle;
+        const shadowToggle = demoCard.querySelector('[data-toggler*="alertStyle"].selected');
+        const hasShadow = !!shadowToggle;
 
         const capitalizedVariant = variant.charAt(0).toUpperCase() + variant.slice(1);
 
@@ -631,8 +633,9 @@
                 if (messages[variant]) {
                     updatedCode = updatedCode.replace(/description:\s*['"][^'"]+['"]/, `description: '${messages[variant]}'`);
                 }
-                // Update color
+                // Update color and shadow
                 updatedCode = updatedCode.replace(/color:\s*(true|false)/, `color: ${hasColor}`);
+                updatedCode = updatedCode.replace(/shadow:\s*(true|false)/, `shadow: ${hasShadow}`);
                 // Update position (toast only)
                 if (isToast) {
                     updatedCode = updatedCode.replace(/position:\s*['"][^'"]+['"]/, `position: '${position}'`);
@@ -665,6 +668,13 @@
                     updatedCode = updatedCode.replace(/class="nds-alert nds-card/, 'class="nds-alert nds-card nds-color');
                 } else if (!hasColor) {
                     updatedCode = updatedCode.replace(/ nds-color/, '');
+                }
+
+                // Toggle nds-shadow class
+                if (hasShadow && !updatedCode.includes('nds-shadow')) {
+                    updatedCode = updatedCode.replace(/class="nds-alert nds-card/, 'class="nds-alert nds-card nds-shadow');
+                } else if (!hasShadow) {
+                    updatedCode = updatedCode.replace(/ nds-shadow/, '');
                 }
 
                 // Toast-specific updates
