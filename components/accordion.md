@@ -372,6 +372,61 @@ direction: ltr
     </div>
 </section>
 
+<!-- Built-in Features -->
+<section id="accordionFeatures" class="nds-content-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Built-in Features</h2>
+        </div>
+        <div class="nds-section-content">
+            <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-plug-socket icon"></i>
+                        <span class="label">Auto-initialization</span>
+                    </span>
+                    <p class="nds-item-desc">Activates when .nds-accordion is on the page. No JavaScript setup required.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-motion-01 icon"></i>
+                        <span class="label">Smooth Animations</span>
+                    </span>
+                    <p class="nds-item-desc">CSS grid transitions with automatic fallback when users prefer reduced motion.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-keyboard icon"></i>
+                        <span class="label">Keyboard Navigation</span>
+                    </span>
+                    <p class="nds-item-desc">Arrow keys, Home, End, Enter, and Space for full keyboard control.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-api icon"></i>
+                        <span class="label">JavaScript API</span>
+                    </span>
+                    <p class="nds-item-desc">Public API to open, close, and toggle items. Custom events fire on state change for analytics or dependent UI.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-printer icon"></i>
+                        <span class="label">Print-ready</span>
+                    </span>
+                    <p class="nds-item-desc">All panels expand automatically so no content is hidden on paper.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-eye icon"></i>
+                        <span class="label">Accessibility</span>
+                    </span>
+                    <p class="nds-item-desc">High contrast and screen reader support built into every state.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Usage Guidelines -->
 <section id="accordionGuidelines" class="nds-content-section">
     <div class="nds-section-wrapper">
@@ -379,54 +434,6 @@ direction: ltr
             <h2 class="nds-section-title">Usage Guidelines</h2>
         </div>
         <div class="nds-section-content">
-
-            <div class="nds-content-block">
-                <h3 class="nds-block-title">Built-in Features</h3>
-                <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-plug-socket icon"></i>
-                            <span class="label">Auto-initialization</span>
-                        </span>
-                        <p class="nds-item-desc">Activates when .nds-accordion is on the page. No JavaScript setup required.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-motion-01 icon"></i>
-                            <span class="label">Smooth Animations</span>
-                        </span>
-                        <p class="nds-item-desc">CSS grid transitions with automatic fallback when users prefer reduced motion.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-keyboard icon"></i>
-                            <span class="label">Keyboard Navigation</span>
-                        </span>
-                        <p class="nds-item-desc">Arrow keys, Home, End, Enter, and Space for full keyboard control.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-api icon"></i>
-                            <span class="label">JavaScript API</span>
-                        </span>
-                        <p class="nds-item-desc">Public API to open, close, and toggle items. Custom events fire on state change for analytics or dependent UI.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-printer icon"></i>
-                            <span class="label">Print-ready</span>
-                        </span>
-                        <p class="nds-item-desc">All panels expand automatically so no content is hidden on paper.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-eye icon"></i>
-                            <span class="label">Accessibility</span>
-                        </span>
-                        <p class="nds-item-desc">High contrast and screen reader support built into every state.</p>
-                    </div>
-                </div>
-            </div>
 
             <div class="nds-content-block">
                 <h3 class="nds-block-title">When to Use</h3>
