@@ -123,11 +123,11 @@
             --dl-icon-gap: var(--spacing-md);
             gap: var(--spacing-xl);
 
-            dt {
+            :is(dt, .nds-item-title) {
                 font-size: var(--nds-text-md-FS);
             }
 
-            dd {
+            :is(dd, .nds-item-desc) {
                 .nds-btn.nds-transparent {
                     padding: 0;
                     --btn-height: fit-content;
