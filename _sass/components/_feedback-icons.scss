@@ -82,8 +82,13 @@
 
         &:not(.nds-outline) .nds-feedback-icon {
             @include dark {
-                --feedback-bg: var(--colors-neutral-600);
                 --feedback-ring: var(--colors-neutral-900);
+            }
+        }
+
+        &.nds-outline .nds-feedback-icon {
+            @include dark {
+                --feedback-color: var(--colors-neutral-300);
             }
         }
     }
@@ -94,8 +99,6 @@
 
     &.nds-sm {
         --feedback-size: 16px;
-        font-size: var(--nds-text-sm-FS);
-        line-height: var(--nds-text-sm-LH);
     }
 
     &.nds-md {
@@ -126,7 +129,7 @@
     --_feedback-ring: var(--feedback-ring, var(--icon-neutral-ring));
 
     @include dark {
-        --_feedback-bg: var(--feedback-bg, var(--colors-neutral-700));
+        --_feedback-bg: var(--feedback-bg, var(--icon-neutral));
         --_feedback-ring: var(--feedback-ring, var(--colors-neutral-900));
     }
 
@@ -145,23 +148,9 @@
     background-color: var(--_feedback-bg);
     color: var(--_feedback-color);
 
-    // Icon background for solid icons
     body[data-font-loaded*="hgi-stroke-rounded"] & i {
         position: relative;
         z-index: 1;
-
-        /* &:after {
-            content: '';
-            position: absolute;
-            display: block;
-            width: calc(var(--_feedback-size) / 2);
-            height: calc(var(--_feedback-size) / 2);
-            background-color: var(--icon-oncolor);
-            top: 50%;
-            z-index: -1;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        } */
     }
 
     // ==============================================
@@ -209,11 +198,6 @@
         content: "㶧";
     }
 
-    // Info icon
-    [data-status="info"] & .icon:before {
-        content: "䆾";
-    }
-
     // Warning icon
     [data-status="warning"] & .icon:before {
         content: "㬃";
@@ -222,10 +206,5 @@
     // Error icon
     [data-status="error"] & .icon:before {
         content: "㵅";
-    }
-
-    // Neutral icon (information-circle, same as info)
-    [data-status="neutral"] & .icon:before {
-        content: "䆾";
     }
 }

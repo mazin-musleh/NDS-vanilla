@@ -286,7 +286,7 @@
     &[data-status="info"]    { --alert-icon-bg: var(--background-info);    @include dark { --alert-icon-bg: var(--background-info); } }
     &[data-status="warning"] { --alert-icon-bg: var(--background-warning); @include dark { --alert-icon-bg: var(--background-warning); } }
     &:is([data-status="error"], [data-status="critical"]) { --alert-icon-bg: var(--background-error); @include dark { --alert-icon-bg: var(--background-error); } }
-    &[data-status="neutral"] { --alert-icon-bg: var(--feedback-bg); }
+    &[data-status="neutral"] { --alert-icon-bg: var(--icon-neutral); }
 
     // Critical uses warning triangle icon
     &[data-status="critical"] .icon:before { content: "㬃"; }
