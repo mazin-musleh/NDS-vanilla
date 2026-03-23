@@ -1,29 +1,26 @@
 ---
 layout: page
 title: Chart
-hero_title: Chart Components - National Design System
-hero_description: SVG chart components for visualizing data with bar, line, pie, and donut charts — zero external dependencies
+hero_title: Chart - National Design System
+hero_description: SVG chart components for visualizing data with bar, line, pie, and donut charts. Zero external dependencies
 breadcrumb: ["Components"]
 lang: en
 direction: ltr
 ---
 
-<!-- Chart Types -->
-<section id="chartTypes" class="nds-content-section">
+<!-- Bar Chart -->
+<section id="chartBar" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
-            <h2 class="nds-section-title">Chart Types</h2>
-            <p class="nds-section-description">Four chart types with automatic color palettes, tooltips, legends, and responsive sizing. Use the toggle buttons to explore options live.</p>
+            <h2 class="nds-section-title">Bar Chart</h2>
+            <p class="nds-section-description">Grouped or stacked bars for comparing categories across series</p>
         </div>
         <div class="nds-section-content">
             <div class="nds-showcase">
-
-                <!-- Bar Chart -->
                 <div class="nds-demo-card">
                     <div class="demo-header">
-                        <div class="demo-label">Bar Chart</div>
                         <div class="demo-action">
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
+                            <button class="nds-btn nds-subtle demo-toggle-btn selected"
                                 data-toggler='["", "#demo-bar", "chartBarDL", "chart"]'
                                 data-chart-opt='{"dataLabels":{"show":true}}'
                                 data-chart-opt-off='{"dataLabels":{"show":false}}'
@@ -31,7 +28,7 @@ direction: ltr
                                 data-code-off="dataLabels: { show: false }">
                                 <span class="label">Data Labels</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["", "#demo-bar", "chartBarStack", "chart"]'
                                 data-chart-opt='{"bar":{"stacked":true}}'
                                 data-chart-opt-off='{"bar":{"stacked":false}}'
@@ -39,7 +36,7 @@ direction: ltr
                                 data-code-off="stacked: false,">
                                 <span class="label">Stacked</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
+                            <button class="nds-btn nds-subtle demo-toggle-btn selected"
                                 data-toggler='["", "#demo-bar", "chartBarGrid", "chart"]'
                                 data-chart-opt='{"grid":{"show":true}}'
                                 data-chart-opt-off='{"grid":{"show":false}}'
@@ -47,7 +44,7 @@ direction: ltr
                                 data-code-off="grid:    { show: false }">
                                 <span class="label">Grid</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
+                            <button class="nds-btn nds-subtle demo-toggle-btn selected"
                                 data-toggler='["", "#demo-bar", "chartBarYAxis", "chart"]'
                                 data-chart-opt='{"yaxis":{"show":true}}'
                                 data-chart-opt-off='{"yaxis":{"show":false}}'
@@ -72,7 +69,7 @@ direction: ltr
                                     </button>
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
                                         aria-controls="panel-chart-bar-js" id="tab-chart-bar-js">
-                                        <span class="nds-tab-label">JS</span>
+                                        <span class="nds-tab-label">JavaScript</span>
                                     </button>
                                 </nav>
                             </div>
@@ -125,12 +122,24 @@ NDS.Chart.create('#my-chart', {
                     </div>
                 </div>
 
-                <!-- Line Chart -->
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Line Chart -->
+<section id="chartLine" class="nds-content-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Line Chart</h2>
+            <p class="nds-section-description">Smooth or straight lines for tracking trends over time, with optional area fill</p>
+        </div>
+        <div class="nds-section-content">
+            <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
-                        <div class="demo-label">Line Chart</div>
                         <div class="demo-action">
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
+                            <button class="nds-btn nds-subtle demo-toggle-btn selected"
                                 data-toggler='["", "#demo-line", "chartLineSmooth", "chart"]'
                                 data-chart-opt='{"line":{"smooth":true}}'
                                 data-chart-opt-off='{"line":{"smooth":false}}'
@@ -138,7 +147,7 @@ NDS.Chart.create('#my-chart', {
                                 data-code-off="smooth: false,">
                                 <span class="label">Smooth</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
+                            <button class="nds-btn nds-subtle demo-toggle-btn selected"
                                 data-toggler='["", "#demo-line", "chartLineDots", "chart"]'
                                 data-chart-opt='{"line":{"dots":true}}'
                                 data-chart-opt-off='{"line":{"dots":false}}'
@@ -146,7 +155,7 @@ NDS.Chart.create('#my-chart', {
                                 data-code-off="dots: false,">
                                 <span class="label">Dots</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["", "#demo-line", "chartLineArea", "chart"]'
                                 data-chart-opt='{"line":{"area":true}}'
                                 data-chart-opt-off='{"line":{"area":false}}'
@@ -154,7 +163,7 @@ NDS.Chart.create('#my-chart', {
                                 data-code-off="area: false,">
                                 <span class="label">Area</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
+                            <button class="nds-btn nds-subtle demo-toggle-btn selected"
                                 data-toggler='["", "#demo-line", "chartLineGrid", "chart"]'
                                 data-chart-opt='{"grid":{"show":true}}'
                                 data-chart-opt-off='{"grid":{"show":false}}'
@@ -179,7 +188,7 @@ NDS.Chart.create('#my-chart', {
                                     </button>
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
                                         aria-controls="panel-chart-line-js" id="tab-chart-line-js">
-                                        <span class="nds-tab-label">JS</span>
+                                        <span class="nds-tab-label">JavaScript</span>
                                     </button>
                                 </nav>
                             </div>
@@ -231,12 +240,24 @@ NDS.Chart.create('#my-chart', {
                     </div>
                 </div>
 
-                <!-- Pie Chart -->
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Pie Chart -->
+<section id="chartPie" class="nds-content-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Pie Chart</h2>
+            <p class="nds-section-description">Proportional segments for showing distribution of a whole</p>
+        </div>
+        <div class="nds-section-content">
+            <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
-                        <div class="demo-label">Pie Chart</div>
                         <div class="demo-action">
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
+                            <button class="nds-btn nds-subtle demo-toggle-btn selected"
                                 data-toggler='["", "#demo-pie", "chartPieLabels", "chart"]'
                                 data-chart-opt='{"dataLabels":{"show":true}}'
                                 data-chart-opt-off='{"dataLabels":{"show":false}}'
@@ -244,7 +265,7 @@ NDS.Chart.create('#my-chart', {
                                 data-code-off="dataLabels: { show: false }">
                                 <span class="label">Labels</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["", "#demo-pie", "chartPieStroke", "chart"]'
                                 data-chart-opt='{"stroke":{"show":true,"width":2}}'
                                 data-chart-opt-off='{"stroke":{"show":false}}'
@@ -269,7 +290,7 @@ NDS.Chart.create('#my-chart', {
                                     </button>
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
                                         aria-controls="panel-chart-pie-js" id="tab-chart-pie-js">
-                                        <span class="nds-tab-label">JS</span>
+                                        <span class="nds-tab-label">JavaScript</span>
                                     </button>
                                 </nav>
                             </div>
@@ -293,7 +314,7 @@ NDS.Chart.create('#my-chart', {
                                         </button>
                                     </div>
                                     <code class="lang-js code">
-// Pie — series are plain numbers, not objects
+// Pie: series are plain numbers, not objects
 NDS.Chart.create('#my-chart', {
   type: 'pie',
   series: [44, 55, 13, 43],
@@ -316,12 +337,24 @@ NDS.Chart.create('#my-chart', {
                     </div>
                 </div>
 
-                <!-- Donut Chart -->
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Donut Chart -->
+<section id="chartDonut" class="nds-content-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Donut Chart</h2>
+            <p class="nds-section-description">Pie chart with an inner hole for a cleaner look or center content</p>
+        </div>
+        <div class="nds-section-content">
+            <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
-                        <div class="demo-label">Donut Chart</div>
                         <div class="demo-action">
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
+                            <button class="nds-btn nds-subtle demo-toggle-btn selected"
                                 data-toggler='["", "#demo-donut", "chartDonutLabels", "chart"]'
                                 data-chart-opt='{"dataLabels":{"show":true}}'
                                 data-chart-opt-off='{"dataLabels":{"show":false}}'
@@ -329,7 +362,7 @@ NDS.Chart.create('#my-chart', {
                                 data-code-off="dataLabels: { show: false }">
                                 <span class="label">Labels</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["", "#demo-donut", "chartDonutStroke", "chart"]'
                                 data-chart-opt='{"stroke":{"show":true,"width":2}}'
                                 data-chart-opt-off='{"stroke":{"show":false}}'
@@ -354,7 +387,7 @@ NDS.Chart.create('#my-chart', {
                                     </button>
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
                                         aria-controls="panel-chart-donut-js" id="tab-chart-donut-js">
-                                        <span class="nds-tab-label">JS</span>
+                                        <span class="nds-tab-label">JavaScript</span>
                                     </button>
                                 </nav>
                             </div>
@@ -378,7 +411,7 @@ NDS.Chart.create('#my-chart', {
                                         </button>
                                     </div>
                                     <code class="lang-js code">
-// Donut — same as pie, with donut.size for inner hole
+// Donut: same as pie, with donut.size for inner hole
 NDS.Chart.create('#my-chart', {
   type: 'donut',
   series: [35, 25, 20, 20],
@@ -420,7 +453,6 @@ NDS.Chart.create('#my-chart', {
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
-                        <div class="demo-label">Data Attributes</div>
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
@@ -526,13 +558,13 @@ NDS.Chart.create('#my-chart', {
                             <tr>
                                 <td>series</td>
                                 <td>array</td>
-                                <td>—</td>
+                                <td>required</td>
                                 <td>Data series. Objects with name/data for bar/line, numbers for pie/donut</td>
                             </tr>
                             <tr>
                                 <td>labels</td>
                                 <td>array</td>
-                                <td>—</td>
+                                <td>required</td>
                                 <td>Category labels for x-axis or pie slice names</td>
                             </tr>
                             <tr>
@@ -816,9 +848,8 @@ NDS.Chart.create('#my-chart', {
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
-                        <div class="demo-label">Custom Theme Example</div>
                         <div class="demo-action">
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["", "#demo-themed", "chartThemedDL", "chart"]'
                                 data-chart-opt='{"dataLabels":{"show":true}}'
                                 data-chart-opt-off='{"dataLabels":{"show":false}}'>
@@ -878,6 +909,85 @@ NDS.Chart.create('#my-chart', {
                 </div>
             </div>
 
+        </div>
+    </div>
+</section>
+
+<!-- Built-in Features -->
+<section id="chartFeatures" class="nds-content-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Built-in Features</h2>
+            <p class="nds-section-description">What you get out of the box with zero configuration</p>
+        </div>
+        <div class="nds-section-content">
+            <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1;">
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-plug-socket icon"></i>
+                        <span class="label">Auto-initialization</span>
+                    </span>
+                    <p class="nds-item-desc">Charts with data attributes initialize on page load. Use NDS.Chart.create() for programmatic setup.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-resize-01 icon"></i>
+                        <span class="label">Responsive Sizing</span>
+                    </span>
+                    <p class="nds-item-desc">Charts resize automatically via ResizeObserver. No manual resize calls needed.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-customize icon"></i>
+                        <span class="label">CSS Theming</span>
+                    </span>
+                    <p class="nds-item-desc">Override colors, grid, tooltips, and labels with CSS custom properties. Dark mode adapts automatically.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-chart-line-data-01 icon"></i>
+                        <span class="label">JavaScript API</span>
+                    </span>
+                    <p class="nds-item-desc">Create, update, and destroy charts programmatically. Deep-merge options on update for live reconfiguration.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-printer icon"></i>
+                        <span class="label">Print and Accessibility</span>
+                    </span>
+                    <p class="nds-item-desc">Tooltips hidden in print. Transitions disabled for reduced-motion. Pure SVG output for screen readers.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-analytics-up icon"></i>
+                        <span class="label">Smart Scaling</span>
+                    </span>
+                    <p class="nds-item-desc">Automatic nice-number axis scaling, number formatting (K/M suffixes), and legend wrapping.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Usage Guidelines -->
+<section id="chartGuidelines" class="nds-content-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Usage Guidelines</h2>
+            <p class="nds-section-description">When and how to use charts effectively</p>
+        </div>
+        <div class="nds-section-content">
+            <div class="nds-content-block">
+                <h3 class="nds-block-title">When to Use</h3>
+                <ul>
+                    <li>Bar charts for comparing discrete categories or tracking changes over time</li>
+                    <li>Line charts for continuous data, trends, and time series</li>
+                    <li>Pie/donut charts for showing proportions of a whole (keep to 6 or fewer segments)</li>
+                    <li>Use HTML data attributes for static charts, JS API for dynamic or user-driven data</li>
+                    <li>For simple numbers without trends, use statistic cards instead</li>
+                    <li>Avoid pie charts when differences between segments are small</li>
+                </ul>
+            </div>
         </div>
     </div>
 </section>
