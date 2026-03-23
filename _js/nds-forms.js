@@ -613,6 +613,7 @@
             if (formContainer) {
                 FormState.updateDataState(formContainer, 'filled', hasValue);
                 FormState.updateDataState(formContainer, 'disabled', input.disabled);
+                FormState.updateDataState(formContainer, 'required', input.required);
             }
 
             // Show/hide clear button
@@ -852,6 +853,18 @@
                         get: disabledDescriptor.get,
                         set: function(val) {
                             disabledDescriptor.set.call(this, val);
+                            FormState.update(this, formControl, true);
+                        },
+                        configurable: true
+                    });
+                }
+
+                var requiredDescriptor = Object.getOwnPropertyDescriptor(proto, 'required');
+                if (requiredDescriptor && requiredDescriptor.set) {
+                    Object.defineProperty(input, 'required', {
+                        get: requiredDescriptor.get,
+                        set: function(val) {
+                            requiredDescriptor.set.call(this, val);
                             FormState.update(this, formControl, true);
                         },
                         configurable: true
@@ -1372,12 +1385,18 @@
             // This applies to all group types: radio-group, check-group, switch-group
         }
 
-        // Handle data-state disabled - propagate to inputs
+        // Handle data-state disabled/required - propagate to inputs
         var dataState = group.getAttribute('data-state') || '';
-        if (dataState.split(' ').indexOf('disabled') !== -1) {
-            var inputs = group.querySelectorAll('input[type="radio"], input[type="checkbox"], .nds-switch-input');
+        var states = dataState.split(' ');
+        var inputs = group.querySelectorAll('input[type="radio"], input[type="checkbox"], .nds-switch-input');
+        if (states.indexOf('disabled') !== -1) {
             inputs.forEach(function(input) {
                 input.setAttribute('disabled', '');
+            });
+        }
+        if (states.indexOf('required') !== -1) {
+            inputs.forEach(function(input) {
+                input.setAttribute('required', '');
             });
         }
     }
