@@ -137,7 +137,11 @@
    SYNTAX HIGHLIGHTING TOKENS
    ======================================== */
 
-.nds-code {
+.nds-inline-code {
+  font-weight: 600;
+}
+
+:is(.nds-code, .nds-inline-code) {
   --_syntax-red: var(--syntax-red, var(--colors-red-600));
   --_syntax-orange: var(--syntax-orange, var(--colors-yellow-600));
   --_syntax-green: var(--syntax-green, var(--colors-green-600));
