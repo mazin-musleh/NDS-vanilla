@@ -12,7 +12,8 @@
 
 .nds-definition-list {
     --_dl-icon-size: var(--dl-icon-size, 18px);
-    --_dl-icon-gap: var(--dl-icon-gap, calc(var(--dl-icon-size)/2));
+    --_dl-icon-gap: var(--dl-icon-gap, calc(var(--_dl-icon-size)/2));
+    --_dl-title-FS: var(--dl-title-FS, var(--nds-text-clamp-lg-FS));
     --_dl-gap: var(--row-gap, var(--gap, var(--spacing-lg)));
     display: flex;
     flex-direction: column;
@@ -60,13 +61,13 @@
     display: flex;
     align-items: center;
     gap: var(--_dl-icon-gap);
-    font-size: var(--nds-text-clamp-lg-FS);
+    font-size: var(--_dl-title-FS);
     color: var(--text-primary-paragraph);
     margin: 0;
 
     .icon {
         color: var(--text-primary);
-        min-width: var(--nds-text-clamp-lg-FS);
+        min-width: var(--_dl-title-FS);
         width: var(--_dl-icon-size);
         height: var(--_dl-icon-size);
         font-size: var(--_dl-icon-size);
