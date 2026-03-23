@@ -14,10 +14,14 @@
     // ==============================================
 
     function initializeCodeProcessing() {
-        const codeElements = document.querySelectorAll('code');
-
+        const codeElements = document.querySelectorAll('.code-example code, .nds-code code');
         codeElements.forEach(function(codeElement) {
             processCodeElement(codeElement);
+        });
+
+        const inlineCodeElements = document.querySelectorAll('code.nds-inline-code');
+        inlineCodeElements.forEach(function(codeElement) {
+            processInlineCodeElement(codeElement);
         });
 
         initializeCopyButtons();
@@ -45,6 +49,18 @@
 
         // 4. Set display mode
         codeElement.style.display = 'flex';
+        codeElement.dataset.processed = 'true';
+    }
+
+    function processInlineCodeElement(codeElement) {
+        if (codeElement.dataset.processed === 'true') return;
+
+        const text = codeElement.textContent;
+        const lang = detectLanguage(codeElement) || 'html';
+
+        // Inline code gets a single syntax class based on language
+        const syntaxClass = lang === 'javascript' ? 'syntax-keyword' : 'syntax-attr';
+        codeElement.innerHTML = '<span class="' + syntaxClass + '">' + escapeHtml(text) + '</span>';
         codeElement.dataset.processed = 'true';
     }
 
