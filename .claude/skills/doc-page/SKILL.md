@@ -321,7 +321,7 @@ Do NOT document things the user already gets from copying the code examples (ARI
 Rules:
 - **Never use em dashes (—)** in any generated content (titles, descriptions, list items, code comments). Use colons, commas, periods, or restructure instead
 - Write code examples as raw HTML, not entity-encoded. But always escape HTML tags meant to display as text (e.g., `&lt;a&gt;` in a JS comment) to prevent the browser from parsing them
-- Use inline `<code>` tags for technical terms (class names, attributes, API methods) in descriptions. Do NOT use `nds-code` component wrapper for inline text
+- Use `<code class="nds-inline-code lang-html">` for HTML attributes, class names, and data attributes. Use `<code class="nds-inline-code lang-js">` for JavaScript API methods, events, and properties. Do NOT use plain `<code>` or the `nds-code` component wrapper for inline text
 
 
 ## Registration Checklist
