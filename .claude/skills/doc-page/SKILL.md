@@ -42,7 +42,11 @@ Page names don't always match their SCSS/JS filenames. **Never assume** — alwa
 1. Glob `_js/nds-$0.js` (exact match)
 2. Glob `_js/nds-*$0*.js` (partial match — handles camelCase like `side-nav` → `nds-sideMenu.js`)
 3. Grep `_js/` for `window.NDS` exports related to the component name (e.g., grep for the PascalCase form)
-4. If no match → component has no JS (CSS-only)
+4. If no match from steps 1-3, check **shared JS files** — some components live inside shared files rather than having their own. Grep these files for the component's class names, API methods, and custom events:
+   - `_js/nds-forms.js` — checkbox, radio, switch, date picker, text input, textarea, select, file upload
+   - `_js/nds-loader.js` — initialization registry
+   - `_js/nds-showcase.js` — demo-only logic (not component API)
+5. If no match in any file → component has no JS (CSS-only)
 
 ### Category Adaptation
 
@@ -72,7 +76,7 @@ Page names don't always match their SCSS/JS filenames. **Never assume** — alwa
    - `standard-page.md` — front matter template
 2. **Resolve the page path** using Page Resolution above, then **read the existing page** if it exists — you will compare it against source files in the Smart Merge process
 3. **Discover the SCSS file** using Source File Discovery above, then **read it** — extract every variant class, size, state, and accessibility feature (`@include reduced-motion`, `@include high-contrast`, `@include print-media`). The page must document all of these.
-4. **Discover the JS file** using Source File Discovery above, then **read it** — extract every public API method on `window.NDS*` and on the instance (e.g., `destroy()`, `getOpenItems()`), every custom event and its `detail` shape, how to access an existing instance from the DOM (e.g., `element.ndsAccordionInstance`), and every key in `handleKeyDown`. The page must document all of these.
+4. **Discover the JS file** using Source File Discovery above, then **read it** — extract every public API method on `window.NDS*` and on the instance (e.g., `destroy()`, `getOpenItems()`), every custom event and its `detail` shape, how to access an existing instance from the DOM (e.g., `element.ndsAccordionInstance`), and every key in `handleKeyDown`. **For components in shared files** (e.g., checkbox in `nds-forms.js`), grep the shared file for the component's class names and extract all related API methods, events, validation logic, and state management. The page must document all of these.
 5. **Check `playground.md`** for existing demo HTML (if available) — use as authoritative HTML structure
 6. **Check `_data/sidemenu/sidemenu.yml`** for registration
 7. **Look up icons** in `_sass/_hgiRoundedStroke.scss` — search for contextually appropriate icon names (e.g., warning for alerts, search for search bars). **NEVER guess icon class names.**
@@ -158,7 +162,7 @@ The page context already tells the user which component they're looking at. Avoi
 
 - **Page title** (`title` in front matter): component name only — "Alert", "Modal", "Tags"
 - **Hero title**: `{Name} - National Design System`
-- **Section titles**: describe the section content, not the component — "Variants", "Inline", "With Actions", "Toast", "Usage Guidelines". Not "Alert Variants" or "Alert with Actions".
+- **Section titles**: descriptive and SEO-friendly. Including the component name is fine (e.g., "Bar Chart", "Checkbox Group", "Toast Notifications").
 - **Section descriptions**: add context the title doesn't cover — avoid restating the title.
 
 Each demo card gets its own section. The section title describes the variant or mode shown (e.g., "Standard", "With Leading Icons", "Inline", "Toast Notifications"), not generic labels like "Overview". No `demo-label` needed since the section title identifies the demo.
