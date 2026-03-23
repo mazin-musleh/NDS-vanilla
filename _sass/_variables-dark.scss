@@ -144,6 +144,10 @@
     --form-option-background-hover: var(--colors-neutral-700);
     --form-option-background-pressed: var(--colors-neutral-600);
 
+    // ─── Autocomplete ───
+    --autocomplete-highlight: var(--colors-alpha-alpha-green-50);
+    --autocomplete-active: var(--colors-neutral-700);
+
     // ─── Datepicker ───
     --form-datecell-background-default: var(--colors-primary-sa-flag-600-primary);
     --form-datecell-background-hovered: var(--colors-primary-sa-flag-700);
