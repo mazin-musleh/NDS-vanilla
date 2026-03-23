@@ -236,9 +236,7 @@ direction: ltr
       </div>
       <div class="nds-content-block">
         <h3 class="nds-block-title">JavaScript API</h3>
-        <div class="nds-tabs nds-code nds-expandable">
-          <div class="nds-tab-content">
-            <div class="nds-tab-panel code-example">
+        <div class="nds-code nds-expandable">
               <div class="nds-code-action">
                 <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                   <i class="hgi hgi-stroke hgi-copy-01"></i>
@@ -261,8 +259,6 @@ NDS.Forms.setStatus({ element: group, status: 'error', message: 'Please select a
 NDS.Forms.clearStatus(group);
                 </code>
               </div>
-            </div>
-          </div>
         </div>
       </div>
       <div class="nds-content-block">
