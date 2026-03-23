@@ -11,7 +11,7 @@
 // BASE AVATAR STYLES
 // ==============================================
 
-.nds-avatar {
+.nds-avatar:not([hidden]) {
   --_avatar-size: var(--avatar-size, 40px);
   display: inline-flex;
   align-items: center;
@@ -25,10 +25,8 @@
   font-weight: 500;
   flex-shrink: 0;
   user-select: none;
-  border: 2px solid var(--avatar-border);
-  width: 100%;
-  height: auto !important;
-  aspect-ratio: 1 / 1;
+  width: var(--_avatar-size);
+  height: var(--_avatar-size);
 
   // Image styling
   img {
@@ -38,7 +36,6 @@
     object-fit: cover;
     display: block;
     border-radius: 50%;
-    aspect-ratio: 1 / 1;
   }
 
 
