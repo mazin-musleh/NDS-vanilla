@@ -431,13 +431,12 @@
             var inputs = Array.from(group.querySelectorAll('.nds-otp-container input'));
             var isAllFilled = inputs.length > 0 && inputs.every(function(i) { return i.value.length === 1; });
 
-            var isRequired = group.hasAttribute('data-required') || group.classList.contains('nds-required');
-            var isValid = !isRequired || isAllFilled;
+            var isValid = isAllFilled;
             var message = '';
             var isArabic = Utils.isArabic();
 
             if (!isValid) {
-                message = isArabic ? 'يرجى إدخال رمز التحقق' : 'Please enter the verification code';
+                message = isArabic ? 'يرجى إدخال جميع الأرقام' : 'Please enter all ' + inputs.length + ' digits';
             }
 
             var customMessage = group.getAttribute('data-error-message');
