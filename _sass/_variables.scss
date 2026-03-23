@@ -133,6 +133,10 @@
     --form-field-border-success: var(--border-success);
     --form-field-border-warning: var(--border-warning);
     --form-field-border-info: var(--border-info);
+
+    // Autocomplete
+    --autocomplete-highlight: var(--colors-primary-sa-flag-100);
+    --autocomplete-active: var(--background-neutral-light);
     // DGA bug fix: --tag-border-neutral-light is neutral-50 in DGA, too light
     --tag-border-neutral-light: var(--colors-neutral-200);
 

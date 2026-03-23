@@ -25,14 +25,14 @@
     // ==============================================
 
     .nds-autocomplete-menu .nds-dropmenu-item mark {
-        background-color: var(--colors-primary-sa-flag-100);
+        background-color: var(--autocomplete-highlight);
         color: inherit;
         padding: 0;
         border-radius: 2px;
     }
 
     .nds-autocomplete-menu .nds-dropmenu-item.active {
-        background-color: var(--background-neutral-100);
+        background-color: var(--autocomplete-active);
     }
 
 }

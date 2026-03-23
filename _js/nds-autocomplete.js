@@ -57,6 +57,7 @@
             this.nameField = containerElement.getAttribute('data-name') || 'Title';
             this.minChars = parseInt(containerElement.getAttribute('data-min-chars'), 10) || 3;
             this.queryParam = containerElement.getAttribute('data-query-param') || 'q';
+            this.resultsPath = containerElement.getAttribute('data-results-path') || '';
 
             // State
             this.results = [];
@@ -240,7 +241,11 @@
                 }
 
                 var data = JSON.parse(text);
-                this.results = Array.isArray(data) ? data : (data.results || data.data || []);
+                if (this.resultsPath) {
+                    this.results = this.resultsPath.split('.').reduce(function(obj, key) { return obj && obj[key]; }, data) || [];
+                } else {
+                    this.results = Array.isArray(data) ? data : (data.results || data.data || []);
+                }
 
                 this.renderResults(this.results, query);
                 this.emitEvent('nds:autocomplete:fetch', { query: query, results: this.results });
