@@ -55,7 +55,7 @@ direction: ltr
                 <span class="label">Required</span>
               </button>
               <button class="nds-btn nds-subtle demo-toggle-btn"
-                data-toggler='["disabled", "input[type=checkbox]", "disabledToggle", "attr"]'>
+                data-toggler='["disabled", ".nds-check-container", "disabledToggle", "data-state"]'>
                 <span class="label">Disabled</span>
               </button>
               <button class="nds-btn nds-subtle demo-toggle-btn"
@@ -112,7 +112,7 @@ direction: ltr
     </label>
   </div>
   <div class="nds-form-control">
-    <input type="checkbox" id="checkbox-single" name="agreement" value="accepted" class="nds-check">
+    <input type="checkbox" id="checkbox-single" name="agreement" value="accepted" class="nds-check" required>
   </div>
 </div>
                   </code>
@@ -265,8 +265,56 @@ direction: ltr
       <input type="checkbox" id="checkbox1" name="interests" value="technology" class="nds-check">
     </div>
   </div>
-  <!-- More checkboxes... -->
-
+  <div class="nds-form-container nds-check-container">
+    <div class="nds-form-header">
+      <label for="checkbox2">
+        <span class="label">Sports</span>
+      </label>
+    </div>
+    <div class="nds-form-control">
+      <input type="checkbox" id="checkbox2" name="interests" value="sports" class="nds-check">
+    </div>
+  </div>
+  <div class="nds-form-container nds-check-container">
+    <div class="nds-form-header">
+      <label for="checkbox3">
+        <span class="label">Entertainment</span>
+      </label>
+    </div>
+    <div class="nds-form-control">
+      <input type="checkbox" id="checkbox3" name="interests" value="entertainment" class="nds-check">
+    </div>
+  </div>
+  <div class="nds-form-container nds-check-container">
+    <div class="nds-form-header">
+      <label for="checkbox4">
+        <span class="label">Education</span>
+      </label>
+    </div>
+    <div class="nds-form-control">
+      <input type="checkbox" id="checkbox4" name="interests" value="education" class="nds-check">
+    </div>
+  </div>
+  <div class="nds-form-container nds-check-container">
+    <div class="nds-form-header">
+      <label for="checkbox5">
+        <span class="label">Travel</span>
+      </label>
+    </div>
+    <div class="nds-form-control">
+      <input type="checkbox" id="checkbox5" name="interests" value="travel" class="nds-check">
+    </div>
+  </div>
+  <div class="nds-form-container nds-check-container">
+    <div class="nds-form-header">
+      <label for="checkbox6">
+        <span class="label">Food</span>
+      </label>
+    </div>
+    <div class="nds-form-control">
+      <input type="checkbox" id="checkbox6" name="interests" value="food" class="nds-check">
+    </div>
+  </div>
   <div class="nds-form-footer" data-feedback-target hidden></div>
 </fieldset>
                   </code>

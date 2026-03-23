@@ -582,6 +582,12 @@
                 container.removeAttribute('data-state');
             }
 
+            // Propagate state to inputs
+            if (stateName === 'disabled') {
+                var inputs = container.querySelectorAll('input, textarea, select');
+                inputs.forEach(function(input) { input.disabled = add; });
+            }
+
             // Propagate loading state to clear button
             if (stateName === 'loading') {
                 var formControl = container.classList.contains('nds-form-control')
@@ -612,7 +618,7 @@
             if (formContainer) {
                 FormState.updateDataState(formContainer, 'filled', hasValue);
                 FormState.updateDataState(formContainer, 'disabled', input.disabled);
-                FormState.updateDataState(formContainer, 'required', input.required);
+                formContainer.toggleAttribute('data-required', input.required);
             }
 
             // Show/hide clear button
@@ -796,7 +802,14 @@
                 }
             });
 
-            // Initialize state
+            // Initialize state - two-way sync
+            // Container → input: propagate data-required and data-state="disabled"
+            if (formContainer) {
+                if (formContainer.hasAttribute('data-required')) input.required = true;
+                var initState = (formContainer.getAttribute('data-state') || '').split(' ');
+                if (initState.indexOf('disabled') !== -1) input.disabled = true;
+            }
+            // Input → container: sync current input state to data-state
             FormState.update(input, formControl, true);
 
             // Property change detection for programmatic updates
@@ -1384,18 +1397,11 @@
             // This applies to all group types: radio-group, check-group, switch-group
         }
 
-        // Handle data-state disabled/required - propagate to inputs
+        // Propagate initial data-state to inputs
         var dataState = group.getAttribute('data-state') || '';
-        var states = dataState.split(' ');
-        var inputs = group.querySelectorAll('input[type="radio"], input[type="checkbox"], .nds-switch-input');
-        if (states.indexOf('disabled') !== -1) {
-            inputs.forEach(function(input) {
-                input.setAttribute('disabled', '');
-            });
-        }
-        if (states.indexOf('required') !== -1) {
-            inputs.forEach(function(input) {
-                input.setAttribute('required', '');
+        if (dataState.indexOf('disabled') !== -1) {
+            group.querySelectorAll('input, textarea, select').forEach(function(input) {
+                input.disabled = true;
             });
         }
     }
@@ -1639,6 +1645,21 @@
         setStatus: StatusManager.set.bind(StatusManager),
         clearStatus: StatusManager.clear.bind(StatusManager),
         getStatus: StatusManager.get.bind(StatusManager),
+
+        // State Management
+        setState: function(element, stateName, add) {
+            var container = element.closest('.nds-form-container') || element.closest('.nds-form-group') || element;
+            add = add !== false;
+            if (stateName === 'required') {
+                if (add) container.setAttribute('data-required', '');
+                else container.removeAttribute('data-required');
+                container.querySelectorAll('input, textarea, select').forEach(function(input) {
+                    input.required = add;
+                });
+            } else {
+                FormState.updateDataState(container, stateName, add);
+            }
+        },
 
         // Checkbox Indeterminate State
         setIndeterminate: FormState.setIndeterminate.bind(FormState),

@@ -1,79 +1,74 @@
 ---
 layout: page
 title: Date Picker
-hero_title: Date Picker Component - National Design System
+hero_title: Date Picker - National Design System
 hero_description: Interactive calendar component for selecting dates with support for both Gregorian and Hijri calendars
 breadcrumb: ["Components"]
 lang: en
 direction: ltr
 ---
 
-<!-- Date Picker Overview -->
+<!-- Date Picker -->
 <section id="datePickerOverview" class="nds-content-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
-      <h2 class="nds-section-title">Date Picker Component</h2>
-      <p class="nds-section-description">
-        Interactive calendar component with advanced features including Hijri calendar support, date ranges, and
-        flexible year selection
-      </p>
+      <h2 class="nds-section-title">Date Picker Input</h2>
+      <p class="nds-section-description">Text input with calendar dropdown for single date or date range selection</p>
     </div>
     <div class="nds-section-content">
       <div class="nds-showcase">
-
-        <!-- Custom Date Picker -->
         <div class="nds-demo-card">
           <div class="demo-header">
-            <div class="demo-label">Custom Date Picker</div>
             <div class="demo-action">
-              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                data-toggler='["disabled", "#demo-datePickerInput", "stateToggle", "attr"]'>
-                <span class="label">Disabled</span>
-              </button>
-              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+              <button class="nds-btn nds-subtle demo-toggle-btn"
                 data-toggler='["dateRange", ".nds-date-picker", "rangeToggle"]'>
                 <span class="label">Date Range</span>
               </button>
-              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+              <button class="nds-btn nds-subtle demo-toggle-btn"
                 data-toggler='["hijri", ".nds-date-picker", "hijriToggle"]'>
                 <span class="label">Hijri Calendar</span>
               </button>
-              <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+              <button class="nds-btn nds-subtle demo-toggle-btn"
+                data-toggler='["data-required", ".nds-date-picker", "requiredToggle", "attr"]'>
+                <span class="label">Required</span>
+              </button>
+              <button class="nds-btn nds-subtle demo-toggle-btn"
+                data-toggler='["disabled", ".nds-date-picker", "disabledToggle", "data-state"]'>
+                <span class="label">Disabled</span>
+              </button>
+              <button class="nds-btn nds-subtle demo-toggle-btn"
                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                 <span class="label">Remove bg</span>
               </button>
             </div>
           </div>
-
           <div class="demo-container">
             <div class="state-demo">
-
-              <div class="nds-form-container nds-date-picker">
-                <div class="nds-form-header">
-                  <label for="demo-datePickerInput">
-                    <span class="label">Select Date</span>
-                  </label>
-                </div>
-                <div class="nds-form-control">
-                  <div class="nds-form-action before">
-                    <button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle"
-                      aria-label="Calendar Toggler">
-                      <i class="hgi hgi-stroke hgi-calendar-03 icon"></i>
-                    </button>
+              <form class="nds-form nds-grid" style="--max-col:1" onsubmit="return false">
+                <div class="nds-form-container nds-date-picker">
+                  <div class="nds-form-header">
+                    <label for="demo-datePickerInput">
+                      <span class="label">Select date</span>
+                    </label>
                   </div>
-                  <input type="text" id="demo-datePickerInput" class="nds-input nds-date-input" placeholder="DD/MM/YYYY"
-                    data-year-before="40" data-year-after="5">
+                  <div class="nds-form-control">
+                    <div class="nds-form-action before">
+                      <button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle"
+                        aria-label="Calendar Toggler">
+                        <i class="hgi hgi-stroke hgi-calendar-03 icon"></i>
+                      </button>
+                    </div>
+                    <input type="text" id="demo-datePickerInput" class="nds-input nds-date-input" placeholder="DD/MM/YYYY"
+                      data-year-before="40" data-year-after="5">
+                  </div>
+                  <div class="nds-form-footer" data-feedback-target hidden></div>
                 </div>
-                <div class="nds-form-footer">
-                  <span class="nds-feedback nds-outline nds-sm">
-                    <span class="nds-feedback-icon">
-                      <i class="hgi hgi-stroke icon"></i>
-                    </span>
-                    <span class="msg"></span>
-                  </span>
+                <div class="nds-flex">
+                  <button class="nds-btn nds-primary nds-sm" type="submit">
+                    <span class="label">Submit</span>
+                  </button>
                 </div>
-              </div>
-
+              </form>
             </div>
           </div>
           <div class="demo-code">
@@ -85,9 +80,6 @@ direction: ltr
                   <span class="nds-tab-label">HTML</span>
                 </button>
               </nav>
-                <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
-                    class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
-                </button>
             </div>
             <div class="nds-tab-content">
               <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-date-picker-1"
@@ -99,30 +91,24 @@ direction: ltr
                 </div>
                 <div class="nds-expandable-content">
                   <code class="lang-html code">
-                    <div class="nds-form-container nds-date-picker">
-                      <div class="nds-form-header">
-                        <label for="datePickerInput">
-                          <span class="label">Select Date</span>
-                        </label>
-                      </div>
-                      <div class="nds-form-control">
-                        <div class="nds-form-action before">
-                          <button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle" aria-label="Calendar Toggler">
-                            <i class="hgi hgi-stroke hgi-calendar-03 icon"></i>
-                          </button>
-                        </div>
-                        <input type="text" id="datePickerInput" class="nds-input nds-date-input" placeholder="DD/MM/YYYY"
-                          data-year-before="40" data-year-after="5">
-                      </div>
-                      <div class="nds-form-footer">
-                        <span class="nds-feedback nds-outline nds-sm">
-                          <span class="nds-feedback-icon">
-                            <i class="hgi hgi-stroke icon"></i>
-                          </span>
-                          <span class="msg"></span>
-                        </span>
-                      </div>
-                    </div>
+<div class="nds-form-container nds-date-picker">
+  <div class="nds-form-header">
+    <label for="date-picker-1">
+      <span class="label">Select date</span>
+    </label>
+  </div>
+  <div class="nds-form-control">
+    <div class="nds-form-action before">
+      <button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle"
+        aria-label="Calendar Toggler">
+        <i class="hgi hgi-stroke hgi-calendar-03 icon"></i>
+      </button>
+    </div>
+    <input type="text" id="date-picker-1" class="nds-input nds-date-input"
+      placeholder="DD/MM/YYYY" data-year-before="40" data-year-after="5">
+  </div>
+  <div class="nds-form-footer" data-feedback-target hidden></div>
+</div>
                   </code>
                 </div>
               </div>
@@ -130,7 +116,62 @@ direction: ltr
           </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
 
+<!-- Built-in Features -->
+<section id="datePickerFeatures" class="nds-content-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Built-in Features</h2>
+      <p class="nds-section-description">What you get out of the box with zero configuration</p>
+    </div>
+    <div class="nds-section-content">
+      <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1;">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-plug-socket icon"></i>
+            <span class="label">Auto-initialization</span>
+          </span>
+          <p class="nds-item-desc">Initializes automatically via the forms system when a <code class="nds-inline-code lang-html">.nds-date-input</code> is found inside <code class="nds-inline-code lang-html">.nds-form-control</code>. Calendar dropdown is created lazily on first click. For dynamic content, call <code class="nds-inline-code lang-js">NDS.DatePicker.reinit()</code>.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-exchange-01 icon"></i>
+            <span class="label">Dual Calendar System</span>
+          </span>
+          <p class="nds-item-desc">Supports both Gregorian and Hijri (Islamic lunar) calendars. Add the <code class="nds-inline-code lang-html">hijri</code> class to the container to switch. Conversion uses an accurate API reference with browser Intl and mathematical fallbacks.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-calendar-check-in-01 icon"></i>
+            <span class="label">Date Range Selection</span>
+          </span>
+          <p class="nds-item-desc">Add the <code class="nds-inline-code lang-html">dateRange</code> class to enable start/end date selection. Visual indicators highlight the range with connected cells between start and end dates.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-calendar-setting-01 icon"></i>
+            <span class="label">Flexible Year Range</span>
+          </span>
+          <p class="nds-item-desc">Control the year dropdown range with <code class="nds-inline-code lang-html">data-year-before</code> and <code class="nds-inline-code lang-html">data-year-after</code> attributes on the input. Defaults work for most use cases.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-globe-02 icon"></i>
+            <span class="label">Bilingual Support</span>
+          </span>
+          <p class="nds-item-desc">Month names, weekday labels, and button text render in Arabic or English based on the page language. Add <code class="nds-inline-code lang-html">data-lang="ar"</code> on the input to override. Supports RTL and LTR layouts with correct dropdown positioning.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-arrow-shrink-02 icon"></i>
+            <span class="label">Smart Positioning</span>
+          </span>
+          <p class="nds-item-desc">Calendar dropdown automatically flips above the input when there is not enough space below. On mobile, the dropdown centers horizontally for better visibility.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -141,66 +182,58 @@ direction: ltr
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Usage Guidelines</h2>
-      <p class="nds-section-description">Best practices for implementing date picker components</p>
+      <p class="nds-section-description">When and how to use the date picker effectively</p>
     </div>
     <div class="nds-section-content">
-        <div class="nds-content-block">
-          <h3 class="nds-block-title">When to Use</h3>
-          <ul>
-            <li>Date selection in forms and applications</li>
-            <li>Booking and scheduling interfaces</li>
-            <li>Event planning and calendar features</li>
-            <li>Date range selection for reports</li>
-            <li>Historical date entry with flexible years</li>
-          </ul>
+      <div class="nds-content-block">
+        <h3 class="nds-block-title">When to Use</h3>
+        <ul>
+          <li>Date selection in forms where the user needs a calendar view to pick a date</li>
+          <li>Booking, scheduling, and event planning interfaces</li>
+          <li>Use date range mode for report filters, travel dates, or any start/end date pair</li>
+          <li>Use Hijri mode for government forms and services that require Islamic calendar dates</li>
+          <li>For simple known dates (birth date, ID expiry), a plain <a href="{{ 'components/forms' | relative_url }}" class="nds-color">text input</a> with a date mask may be simpler</li>
+          <li>Pre-populate the input with a value in DD/MM/YYYY format to set an initial date</li>
+        </ul>
+      </div>
+      <div class="nds-content-block">
+        <h3 class="nds-block-title">JavaScript API</h3>
+        <div class="nds-code nds-expandable">
+              <div class="nds-code-action">
+                <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                  <i class="hgi hgi-stroke hgi-copy-01"></i>
+                </button>
+              </div>
+              <div class="nds-expandable-content">
+                <code class="lang-javascript code">
+// Auto-initializes via nds-forms.js on any .nds-date-input
+// No manual init needed. For dynamic content:
+NDS.DatePicker.reinit();
+
+// Format a Gregorian date as DD/MM/YYYY
+NDS.DatePicker.CalendarConfig.gregorian.formatDate(new Date());
+
+// Convert between Gregorian and Hijri
+NDS.DatePicker.CalendarConfig.hijri.gregorianToHijri(new Date());
+// Returns: { day, month, year }
+
+NDS.DatePicker.CalendarConfig.hijri.hijriToGregorian(1447, 9, 1);
+// Returns: Date object
+
+// Create a Hijri date object
+NDS.DatePicker.createHijriDate(1, 9, 1447);
+
+// Read the converted date (opposite calendar) from the input
+var input = document.querySelector('.nds-date-input');
+var converted = input.dataset.convertedDate;
+
+// Disable or require the date picker programmatically
+NDS.Forms.setState(input, 'disabled', true);
+NDS.Forms.setState(input, 'required', true);
+                </code>
+              </div>
         </div>
-        <div class="nds-content-block">
-          <h3 class="nds-block-title">Calendar Types</h3>
-          <ul>
-            <li><strong>Gregorian:</strong> Standard international calendar</li>
-            <li><strong>Hijri:</strong> Islamic lunar calendar for Saudi Arabia</li>
-            <li><strong>Dual Support:</strong> Automatic conversion between both</li>
-            <li><strong>API Integration:</strong> Accurate Hijri date conversion</li>
-          </ul>
-        </div>
-        <div class="nds-content-block">
-          <h3 class="nds-block-title">Date Range Features</h3>
-          <ul>
-            <li>Single date selection (default mode)</li>
-            <li>Date range selection with visual indicators</li>
-            <li>Clear start/end date highlighting</li>
-            <li>Range validation and error handling</li>
-          </ul>
-        </div>
-        <div class="nds-content-block">
-          <h3 class="nds-block-title">Configuration Options</h3>
-          <ul>
-            <li><strong>data-year-before:</strong> Years to show before current</li>
-            <li><strong>data-year-after:</strong> Years to show after current</li>
-            <li><strong>data-hijri-offset:</strong> Hijri calendar adjustment</li>
-            <li><strong>dateRange class:</strong> Enable range selection</li>
-            <li><strong>hijri class:</strong> Switch to Hijri calendar</li>
-          </ul>
-        </div>
-        <div class="nds-content-block">
-          <h3 class="nds-block-title">Accessibility</h3>
-          <ul>
-            <li>Keyboard navigation support</li>
-            <li>Screen reader compatible</li>
-            <li>Clear focus indicators</li>
-            <li>Proper ARIA labels and roles</li>
-            <li>Semantic button and input usage</li>
-          </ul>
-        </div>
-        <div class="nds-content-block">
-          <h3 class="nds-block-title">Mobile Considerations</h3>
-          <ul>
-            <li>Touch-friendly date selection</li>
-            <li>Responsive calendar layout</li>
-            <li>Optimized dropdown positioning</li>
-            <li>Large tap targets for dates</li>
-          </ul>
-        </div>
+      </div>
     </div>
   </div>
 </section>

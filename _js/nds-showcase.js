@@ -312,7 +312,7 @@
                                     if (deselectionOperationType === 'attr') {
                                         handleAttributeToggling(targetElement, classNamesOrAttrs, demoCard);
                                     } else if (deselectionOperationType === 'data-state') {
-                                        handleDataStateToggling(targetElement, classNamesOrAttrs);
+                                        handleDataStateToggling(targetElement, classNamesOrAttrs, demoCard);
                                     } else if (deselectionOperationType === 'prop') {
                                         handlePropertyDeselection(targetElement, classNamesOrAttrs);
                                     } else if (deselectionOperationType === 'content-prepend' || deselectionOperationType === 'content-append') {
@@ -508,7 +508,7 @@
                     handleAttributeToggling(targetElement, classNamesOrAttrs, demoCard);
                 } else if (operationType === 'data-state') {
                     // Handle data-state attribute toggling (space-separated values like classes)
-                    handleDataStateToggling(targetElement, classNamesOrAttrs);
+                    handleDataStateToggling(targetElement, classNamesOrAttrs, demoCard);
                 } else if (operationType === 'prop') {
                     // Handle native JS property toggling (e.g. indeterminate)
                     handlePropertyToggling(targetElement, classNamesOrAttrs);
@@ -826,29 +826,11 @@
                 }
             }
 
-            // Special handling for data-required attribute - also toggle required on inputs
-            // Note: For groups (radio-group, check-group, switch-group), we DON'T add required to individual inputs
+            // Propagate data-required to inputs (live demo)
             if (attrName === 'data-required') {
-                const isGroup = targetElement.classList.contains('nds-radio-group')
-                             || targetElement.classList.contains('nds-check-group')
-                             || targetElement.classList.contains('nds-switch-group');
-
-                if (isGroup) {
-                    // For groups, don't add required to individual inputs
-                    // The group is validated as a whole, not individual inputs
-                    // This prevents HTML5 validation from showing errors on each input
-                    return;
+                if (window.NDS && NDS.Forms && NDS.Forms.setState) {
+                    NDS.Forms.setState(targetElement, 'required', isAdding);
                 }
-
-                // For individual form containers (nds-form-container)
-                const inputs = targetElement.querySelectorAll('input, textarea, select');
-                inputs.forEach(input => {
-                    if (isAdding) {
-                        input.setAttribute('required', '');
-                    } else {
-                        input.removeAttribute('required');
-                    }
-                });
             }
 
             // Special handling for data-status variant changes
@@ -867,6 +849,11 @@
 
         // Update code example for attribute changes
         updateCodeExampleForAttributes(demoCard, targetElement, attributePairs);
+
+        // Sync required on inputs in code when data-required toggles (skip groups)
+        if (attributePairs.some(p => p.startsWith('data-required')) && !targetElement.classList.contains('nds-form-group')) {
+            updateCodeInputAttribute(demoCard, 'required', targetElement.hasAttribute('data-required'));
+        }
     }
 
     // Handle native JS property toggling (boolean properties like indeterminate)
@@ -901,48 +888,86 @@
     }
 
     // Handle data-state attribute toggling (space-separated values)
-    function handleDataStateToggling(targetElement, statesString) {
-        // Parse state string format: "focus active disabled"
+    function handleDataStateToggling(targetElement, statesString, demoCard) {
         const states = statesString.trim().split(/\s+/);
-
-        // Get current data-state value
-        const currentDataState = targetElement.getAttribute('data-state') || '';
-        let currentStates = currentDataState.split(' ').filter(s => s.length > 0);
 
         states.forEach(state => {
             if (!state) return;
+            const currentDataState = targetElement.getAttribute('data-state') || '';
+            const isAdding = currentDataState.split(' ').indexOf(state) === -1;
 
-            const stateIndex = currentStates.indexOf(state);
-            const isAdding = stateIndex === -1;
-
-            if (stateIndex !== -1) {
-                // State exists, remove it
-                currentStates.splice(stateIndex, 1);
+            // Live demo: Forms API handles data-state + input propagation
+            if (window.NDS && NDS.Forms && NDS.Forms.setState) {
+                NDS.Forms.setState(targetElement, state, isAdding);
             } else {
-                // State doesn't exist, add it
-                currentStates.push(state);
+                toggleDataState(targetElement, state, isAdding);
             }
 
-            // Special handling for disabled state - also toggle the input's disabled attribute
-            if (state === 'disabled') {
-                // Find all inputs within this container
-                const inputs = targetElement.querySelectorAll('input, textarea, select');
-                inputs.forEach(input => {
-                    if (isAdding) {
-                        input.setAttribute('disabled', '');
-                    } else {
-                        input.removeAttribute('disabled');
-                    }
-                });
+            // Sync code example text
+            if (demoCard) {
+                updateCodeExampleForDataState(demoCard, targetElement, state, isAdding);
             }
         });
+    }
 
-        // Update the attribute
-        if (currentStates.length > 0) {
-            targetElement.setAttribute('data-state', currentStates.join(' '));
-        } else {
-            targetElement.removeAttribute('data-state');
+    function toggleDataState(el, state, add) {
+        let states = (el.getAttribute('data-state') || '').split(' ').filter(s => s.length > 0);
+        const idx = states.indexOf(state);
+        if (add && idx === -1) states.push(state);
+        else if (!add && idx !== -1) states.splice(idx, 1);
+
+        if (states.length > 0) el.setAttribute('data-state', states.join(' '));
+        else el.removeAttribute('data-state');
+    }
+
+    function updateCodeExampleForDataState(demoCard, changedElement, state, isAdding) {
+        const codeElement = demoCard.querySelector('.code-example code');
+        if (!codeElement) return;
+
+        const hiddenCopy = getHiddenCodeCopy(codeElement);
+        if (!hiddenCopy) return;
+        let code = hiddenCopy.textContent;
+
+        // Find the element in code text by its first class
+        const baseClass = Array.from(changedElement.classList)[0];
+        if (!baseClass) return;
+        const escaped = baseClass.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&');
+
+        // Update data-state on the container tag
+        const tagRegex = new RegExp(`(<[^>]*class="[^"]*${escaped}[^"]*"[^>]*?)(/?>)`, 'g');
+        code = code.replace(tagRegex, (match, before, close) => {
+            let tag = before.replace(/\s*data-state="[^"]*"/, '');
+            const liveState = changedElement.getAttribute('data-state');
+            if (liveState) {
+                tag += ` data-state="${liveState}"`;
+            }
+            return tag + close;
+        });
+
+        updateCodeFromHiddenCopy(codeElement, code);
+
+        // Sync disabled on inputs in code
+        if (state === 'disabled') {
+            updateCodeInputAttribute(demoCard, 'disabled', isAdding);
         }
+    }
+
+    function updateCodeInputAttribute(demoCard, attrName, add) {
+        const codeElement = demoCard.querySelector('.code-example code');
+        if (!codeElement) return;
+
+        const hiddenCopy = getHiddenCodeCopy(codeElement);
+        if (!hiddenCopy) return;
+        let code = hiddenCopy.textContent;
+
+        const escapedAttr = attrName.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&');
+        code = code.replace(/(<(?:input|textarea|select)\b[^>]*?)(\/?>)/g, (match, before, close) => {
+            let tag = before.replace(new RegExp(`\\s*${escapedAttr}(?:="[^"]*")?`), '');
+            if (add) tag += ` ${attrName}`;
+            return tag + close;
+        });
+
+        updateCodeFromHiddenCopy(codeElement, code);
     }
 
     // Update alert content and code examples when variant changes
