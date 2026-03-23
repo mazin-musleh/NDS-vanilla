@@ -381,14 +381,28 @@ direction: ltr
                                     </div>
                                     <code class="lang-html code">
 <fieldset class="nds-form-group nds-otp-group" id="my-otp">
-  <legend><span class="label">Verification Code</span></legend>
+  <legend><span class="label">Enter code 1234</span></legend>
   <div class="nds-otp">
     <div class="nds-form-container nds-otp-container">
       <div class="nds-form-control">
         <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="one-time-code">
       </div>
     </div>
-    <!-- ... more inputs ... -->
+    <div class="nds-form-container nds-otp-container">
+      <div class="nds-form-control">
+        <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]">
+      </div>
+    </div>
+    <div class="nds-form-container nds-otp-container">
+      <div class="nds-form-control">
+        <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]">
+      </div>
+    </div>
+    <div class="nds-form-container nds-otp-container">
+      <div class="nds-form-control">
+        <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]">
+      </div>
+    </div>
   </div>
   <input type="hidden" class="nds-otp-value" name="otp">
   <div class="nds-form-footer" data-feedback-target hidden></div>
