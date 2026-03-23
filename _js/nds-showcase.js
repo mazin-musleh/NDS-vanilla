@@ -48,6 +48,10 @@
         initializeFakeFileUpload();
         initializeAutocompleteDemoData();
         initializeDemoActionButtons();
+        initializeCardModeToggles();
+        initializeCardStateToggles();
+        initializeCardHeaderToggles();
+        initializeCardContentToggles();
     }
 
     // CRITICAL: Expose global API immediately (called by unified init system)
@@ -1556,6 +1560,285 @@
             }
             return originalFetch.apply(this, arguments);
         };
+    }
+
+    // Card mode dropmenu — mutually exclusive card modes (default, expandable, selectable)
+    function initializeCardModeToggles() {
+        document.querySelectorAll('[data-card-mode]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const demoCard = this.closest('.nds-demo-card');
+                if (!demoCard) return;
+
+                const mode = this.dataset.cardMode;
+                const card = demoCard.querySelector('.demo-container .nds-card');
+                if (!card) return;
+
+                // Deselect all mode buttons in this dropmenu
+                const dropmenu = this.closest('.nds-dropmenu');
+                dropmenu.querySelectorAll('[data-card-mode]').forEach(b => b.classList.remove('selected'));
+                this.classList.add('selected');
+                const trigger = dropmenu.querySelector('.nds-dropmenu-trigger .label');
+                if (trigger) trigger.textContent = 'Mode: ' + this.querySelector('.label').textContent;
+
+                // Reset all mode sections
+                card.querySelector('.nds-card-checkbox')?.setAttribute('hidden', '');
+                card.querySelector('.nds-card-actions')?.setAttribute('hidden', '');
+                // Clean expandable state
+                if (card.ndsExpandableInstance) {
+                    card.ndsExpandableInstance.destroy();
+                    delete card.ndsExpandableInstance;
+                }
+                card.classList.remove('nds-expandable');
+                card.removeAttribute('data-nds-expandable-initialized');
+                const cardContent = card.querySelector('.nds-card-content');
+                if (cardContent) cardContent.classList.remove('nds-expandable-content');
+
+                // Ensure header visibility matches state
+                const headerMode = demoCard.querySelector('[data-card-header].selected')?.dataset.cardHeader || 'icon';
+                const cardHeader = card.querySelector('.nds-card-header');
+                if (headerMode === 'none' && mode !== 'selectable') {
+                    cardHeader?.setAttribute('hidden', '');
+                } else {
+                    cardHeader?.removeAttribute('hidden');
+                }
+
+                // Swap description for expandable mode
+                const desc = card.querySelector('.nds-card-description');
+                if (desc) {
+                    if (!desc.dataset.shortDesc) desc.dataset.shortDesc = desc.textContent;
+                    desc.textContent = mode === 'expandable'
+                        ? 'This card demonstrates the flexible structure of the NDS card component. It supports featured icons, images, tags, ratings, action buttons, and selection checkboxes. Toggle the options above to preview different configurations. The expandable mode collapses long content behind a show-more button, keeping layouts compact while preserving access to the full content when needed.'
+                        : desc.dataset.shortDesc;
+                }
+
+                // Apply mode
+                if (mode === 'selectable') {
+                    card.querySelector('.nds-card-checkbox')?.removeAttribute('hidden');
+                } else if (mode === 'actions') {
+                    card.querySelector('.nds-card-actions')?.removeAttribute('hidden');
+                } else if (mode === 'expandable') {
+                    // Reset state to default if interactive/disabled
+                    if (card.tagName === 'BUTTON') {
+                        const defaultStateBtn = demoCard.querySelector('[data-card-state="default"]');
+                        if (defaultStateBtn) defaultStateBtn.click();
+                        card = demoCard.querySelector('.demo-container .nds-card');
+                        if (!card) return;
+                    }
+
+                    // Remove truncate if active (conflicts with expandable)
+                    card.querySelectorAll('.nds-truncate').forEach(el => el.classList.remove('nds-truncate'));
+                    const truncateBtn = demoCard.querySelector('[data-toggler*="cardTruncate"]');
+                    if (truncateBtn) truncateBtn.classList.remove('selected');
+
+                    card.classList.add('nds-expandable', 'nds-expand');
+                    if (cardContent) {
+                        cardContent.classList.add('nds-expandable-content');
+                        cardContent.style.setProperty('--max-height', '200px');
+                    }
+                }
+
+                if (NDS.Expandable && NDS.Expandable.reinit) NDS.Expandable.reinit();
+                rebuildCardCode(demoCard);
+            });
+        });
+    }
+
+    // Card state dropmenu — default/interactive/disabled/interactive-disabled
+    function initializeCardStateToggles() {
+        document.querySelectorAll('[data-card-state]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const demoCard = this.closest('.nds-demo-card');
+                if (!demoCard) return;
+
+                const state = this.dataset.cardState;
+                const dropmenu = this.closest('.nds-dropmenu');
+                dropmenu.querySelectorAll('[data-card-state]').forEach(b => b.classList.remove('selected'));
+                this.classList.add('selected');
+                const trigger = dropmenu.querySelector('.nds-dropmenu-trigger .label');
+                if (trigger) trigger.textContent = 'State: ' + this.querySelector('.label').textContent;
+
+                let card = demoCard.querySelector('.demo-container .nds-card');
+                if (!card) return;
+
+                // Reset mode to default if expandable is active
+                if (state !== 'default' && card.classList.contains('nds-expandable')) {
+                    const defaultModeBtn = demoCard.querySelector('[data-card-mode="default"]');
+                    if (defaultModeBtn) defaultModeBtn.click();
+                    card = demoCard.querySelector('.demo-container .nds-card');
+                    if (!card) return;
+                }
+
+                const needsButton = state !== 'default';
+                const isButton = card.tagName === 'BUTTON';
+
+                // Swap element if needed
+                if (needsButton && !isButton) {
+                    const newEl = document.createElement('button');
+                    for (const attr of card.attributes) newEl.setAttribute(attr.name, attr.value);
+                    newEl.innerHTML = card.innerHTML;
+                    card.parentNode.replaceChild(newEl, card);
+                    card = newEl;
+                } else if (!needsButton && isButton) {
+                    const newEl = document.createElement('div');
+                    for (const attr of card.attributes) newEl.setAttribute(attr.name, attr.value);
+                    newEl.innerHTML = card.innerHTML;
+                    card.parentNode.replaceChild(newEl, card);
+                    card = newEl;
+                }
+
+                // Toggle disabled
+                if (state === 'disabled') {
+                    card.setAttribute('disabled', '');
+                    // Disable form controls via data-state (forms.js two-way binding)
+                    card.querySelectorAll('.nds-form-container').forEach(el => {
+                        const ds = el.getAttribute('data-state') || '';
+                        if (!ds.includes('disabled')) el.setAttribute('data-state', (ds + ' disabled').trim());
+                    });
+                    card.querySelectorAll('input, button, a').forEach(el => el.setAttribute('disabled', ''));
+                } else {
+                    card.removeAttribute('disabled');
+                    card.querySelectorAll('.nds-form-container').forEach(el => {
+                        const ds = (el.getAttribute('data-state') || '').replace('disabled', '').trim();
+                        el.setAttribute('data-state', ds);
+                    });
+                    card.querySelectorAll('input, button, a').forEach(el => el.removeAttribute('disabled'));
+                }
+
+                rebuildCardCode(demoCard);
+            });
+        });
+    }
+
+    // Card header dropmenu — icon/image/none
+    function initializeCardHeaderToggles() {
+        document.querySelectorAll('[data-card-header]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const demoCard = this.closest('.nds-demo-card');
+                if (!demoCard) return;
+
+                const headerType = this.dataset.cardHeader;
+
+                const dropmenu = this.closest('.nds-dropmenu');
+                dropmenu.querySelectorAll('[data-card-header]').forEach(b => b.classList.remove('selected'));
+                this.classList.add('selected');
+                const trigger = dropmenu.querySelector('.nds-dropmenu-trigger .label');
+                if (trigger) trigger.textContent = this.querySelector('.label').textContent;
+
+                // Hide both, then show selected
+                const iconSection = demoCard.querySelector('.demo-container .nds-card-featured-icon');
+                const imageSection = demoCard.querySelector('.demo-container .nds-card-image:not(.nds-avatar)');
+                const avatarSection = demoCard.querySelector('.demo-container .nds-avatar');
+                const cardHeader = demoCard.querySelector('.demo-container .nds-card-header');
+                if (iconSection) iconSection.setAttribute('hidden', '');
+                if (imageSection) imageSection.setAttribute('hidden', '');
+                if (avatarSection) avatarSection.setAttribute('hidden', '');
+
+                const checkboxVisible = cardHeader?.querySelector('.nds-card-checkbox:not([hidden])');
+                if (headerType === 'none' && !checkboxVisible) {
+                    if (cardHeader) cardHeader.setAttribute('hidden', '');
+                } else {
+                    if (cardHeader) cardHeader.removeAttribute('hidden');
+                    if (headerType === 'icon' && iconSection) iconSection.removeAttribute('hidden');
+                    if (headerType === 'avatar' && avatarSection) avatarSection.removeAttribute('hidden');
+                    if (headerType === 'image' && imageSection) imageSection.removeAttribute('hidden');
+                }
+
+                rebuildCardCode(demoCard);
+            });
+        });
+    }
+
+    // Card content toggle — show/hide optional card sections and rebuild code
+    function initializeCardContentToggles() {
+        document.querySelectorAll('[data-card-toggle]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const demoCard = this.closest('.nds-demo-card');
+                if (!demoCard) return;
+
+                const section = this.dataset.cardToggle;
+                const card = demoCard.querySelector('.demo-container .nds-card');
+
+                const selectorMap = {
+                    tags: '.nds-card-tags',
+                    rating: '.nds-card-rating'
+                };
+                const selector = selectorMap[section];
+                if (!selector) return;
+                const target = demoCard.querySelector(`.demo-container ${selector}`);
+                if (!target) return;
+
+                // Toggle hidden attribute
+                const isHidden = target.hasAttribute('hidden');
+                if (isHidden) {
+                    target.removeAttribute('hidden');
+                } else {
+                    target.setAttribute('hidden', '');
+                }
+
+                // Toggle button selected state
+                this.classList.toggle('selected', isHidden);
+
+
+
+                // Rebuild code from visible demo HTML
+                rebuildCardCode(demoCard);
+            });
+        });
+    }
+
+    function rebuildCardCode(demoCard) {
+        const codeEl = demoCard.querySelector('.code-example code.lang-html');
+        if (!codeEl) return;
+
+        const card = demoCard.querySelector('.demo-container .nds-card');
+        if (!card) return;
+
+        // Clone and strip hidden elements + demo-only data attributes
+        const clone = card.cloneNode(true);
+        clone.querySelectorAll('[hidden]').forEach(el => el.remove());
+        clone.querySelectorAll('[data-short-desc]').forEach(el => el.removeAttribute('data-short-desc'));
+
+        // Clean expandable inline style to use attribute format
+        const expContent = clone.querySelector('.nds-expandable-content');
+        if (expContent) {
+            expContent.removeAttribute('style');
+            expContent.setAttribute('style', '--max-height:200px');
+        }
+
+        let html = clone.outerHTML;
+
+        // Format and indent the HTML
+        html = formatCardHtml(html);
+        updateCodeFromHiddenCopy(codeEl, html);
+    }
+
+    function formatCardHtml(html) {
+        // Basic HTML formatting with consistent indentation
+        let formatted = '';
+        let indent = 0;
+        const lines = html
+            .replace(/></g, '>\n<')
+            .replace(/([^>])\n/g, '$1')
+            .split('\n');
+
+        lines.forEach(line => {
+            line = line.trim();
+            if (!line) return;
+
+            // Decrease indent for closing tags
+            if (line.match(/^<\//) && !line.match(/^<\/.*<\//)) {
+                indent = Math.max(0, indent - 1);
+            }
+
+            formatted += '    '.repeat(indent) + line + '\n';
+
+            // Increase indent for opening tags (not self-closing or void)
+            if (line.match(/^<[^\/!]/) && !line.match(/\/>$/) && !line.match(/<\//) && !line.match(/^<(img|input|br|hr|meta|link)\b/)) {
+                indent++;
+            }
+        });
+
+        return formatted.trim();
     }
 
     // Demo action buttons functionality
