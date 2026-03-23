@@ -1505,6 +1505,7 @@
             this.state.rangeStart = null;
             this.state.rangeEnd = null;
             this.elements.input.value = '';
+            this.elements.input.dispatchEvent(new Event('change', { bubbles: true }));
             this.renderCalendarDates();
         },
 
@@ -1544,7 +1545,8 @@
             }
 
             this.elements.input.value = value;
-            
+            this.elements.input.dispatchEvent(new Event('change', { bubbles: true }));
+
             // Store converted date in dataset
             if (convertedValue) {
                 this.elements.input.dataset.convertedDate = convertedValue;

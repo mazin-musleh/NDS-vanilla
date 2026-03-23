@@ -46,7 +46,7 @@ direction: ltr
                 <span class="label">Neutral</span>
               </button>
               <button class="nds-btn nds-subtle demo-toggle-btn"
-                data-toggler='["disabled", "input.nds-switch-input", "disabledToggle", "attr"]'>
+                data-toggler='["disabled", ".nds-switch-container", "disabledToggle", "data-state"]'>
                 <span class="label">Disabled</span>
               </button>
               <button class="nds-btn nds-subtle demo-toggle-btn"
@@ -261,7 +261,37 @@ direction: ltr
       </div>
     </div>
   </div>
-  <!-- More switches... -->
+  <div class="nds-form-container nds-switch-container">
+    <div class="nds-form-header">
+      <label for="switch2">
+        <span class="label">Push notifications</span>
+        <span class="info">Instant alerts on your device</span>
+      </label>
+    </div>
+    <div class="nds-form-control">
+      <div class="nds-switch">
+        <input type="checkbox" id="switch2" name="notifications" value="push" checked class="nds-switch-input">
+        <div class="nds-switch-track">
+          <div class="nds-switch-thumb"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="nds-form-container nds-switch-container">
+    <div class="nds-form-header">
+      <label for="switch3">
+        <span class="label">SMS alerts</span>
+      </label>
+    </div>
+    <div class="nds-form-control">
+      <div class="nds-switch">
+        <input type="checkbox" id="switch3" name="notifications" value="sms" class="nds-switch-input">
+        <div class="nds-switch-track">
+          <div class="nds-switch-thumb"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </fieldset>
                   </code>
                 </div>
