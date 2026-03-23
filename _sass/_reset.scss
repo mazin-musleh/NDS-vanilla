@@ -151,8 +151,9 @@ address{
 }
 
 *:focus-visible {
-    outline: 2px solid var(--border-focus);
-    outline-offset: 2px;
+    outline: 2px solid var(--focus-outline);
+    outline-offset: -2px;
+    box-shadow: inset 0 0 0 3px var(--focus-inner);
 }
 
 
