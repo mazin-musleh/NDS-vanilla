@@ -296,28 +296,28 @@ direction: ltr
             <i class="hgi hgi-stroke hgi-plug-socket icon"></i>
             <span class="label">Form Integration</span>
           </span>
-          <p class="nds-item-desc">Auto-initializes with the forms system. Two-way binding syncs disabled and required states between inputs and containers.</p>
+          <p class="nds-item-desc">Auto-initializes with the forms system. Two-way binding syncs <code class="nds-inline-code lang-html">disabled</code> and <code class="nds-inline-code lang-html">required</code> states between inputs and containers.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
             <i class="hgi hgi-stroke hgi-minus-sign icon"></i>
             <span class="label">Indeterminate State</span>
           </span>
-          <p class="nds-item-desc">Set via NDS.Forms.setIndeterminate(). Auto-clears on user click. Fires nds:indeterminateChange event with detail.indeterminate boolean.</p>
+          <p class="nds-item-desc">Set via <code class="nds-inline-code lang-js">NDS.Forms.setIndeterminate()</code>. Auto-clears on user click. Fires <code class="nds-inline-code lang-js">nds:indeterminateChange</code> event with <code class="nds-inline-code lang-js">detail.indeterminate</code> boolean.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
             <i class="hgi hgi-stroke hgi-checkmark-circle-02 icon"></i>
             <span class="label">Group Validation</span>
           </span>
-          <p class="nds-item-desc">Min/max constraints with data-min-checked and data-max-checked. Auto-revalidates on change once an error is shown. Call NDS.Forms.clearStatus() to reset.</p>
+          <p class="nds-item-desc">Min/max constraints with <code class="nds-inline-code lang-html">data-min-checked</code> and <code class="nds-inline-code lang-html">data-max-checked</code>. Auto-revalidates on change once an error is shown. Call <code class="nds-inline-code lang-js">NDS.Forms.clearStatus()</code> to reset.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
             <i class="hgi hgi-stroke hgi-layout-01 icon"></i>
             <span class="label">Responsive Layout</span>
           </span>
-          <p class="nds-item-desc">Column layout by default, row layout with rowView class. Gaps adjust on mobile for touch-friendly spacing.</p>
+          <p class="nds-item-desc">Column layout by default, row layout with <code class="nds-inline-code lang-html">rowView</code> class. Gaps adjust on mobile for touch-friendly spacing.</p>
         </div>
       </div>
     </div>
@@ -337,9 +337,9 @@ direction: ltr
         <ul>
           <li>Multiple selections from a list of options</li>
           <li>Binary choices like accepting terms or toggling a setting</li>
-          <li>Use radio buttons when only one selection is allowed</li>
-          <li>Use switches for instant on/off actions without form submission</li>
-          <li>Keep groups to 7 or fewer options. For longer lists, consider a multi-select dropdown</li>
+          <li>Use <a href="{{ 'components/radio' | relative_url }}" class="nds-color">radio buttons</a> when only one selection is allowed</li>
+          <li>Use <a href="{{ 'components/switch' | relative_url }}" class="nds-color">switches</a> for instant on/off actions without form submission</li>
+          <li>Keep groups to 7 or fewer options. For longer lists, consider a <a href="{{ 'components/forms' | relative_url }}" class="nds-color">multi-select dropdown</a></li>
           <li>Use indeterminate state for "select all" parent checkboxes that partially control child selections</li>
         </ul>
       </div>
@@ -383,13 +383,13 @@ NDS.Forms.clearStatus(group);
       <div class="nds-content-block">
         <h3 class="nds-block-title">Validation Attributes</h3>
         <ul>
-          <li>Add data-required to a single checkbox container to make it mandatory before form submission</li>
-          <li>Add data-required to a group to require at least one selection</li>
-          <li>Use data-min-checked="2" on a group to enforce a minimum number of selections</li>
-          <li>Use data-max-checked="4" on a group to cap the maximum number of selections</li>
+          <li>Add <code class="nds-inline-code lang-html">data-required</code> to a single checkbox container to make it mandatory before form submission</li>
+          <li>Add <code class="nds-inline-code lang-html">data-required</code> to a group to require at least one selection</li>
+          <li>Use <code class="nds-inline-code lang-html">data-min-checked="2"</code> on a group to enforce a minimum number of selections</li>
+          <li>Use <code class="nds-inline-code lang-html">data-max-checked="4"</code> on a group to cap the maximum number of selections</li>
           <li>Combine both for a range constraint (e.g. "select 2 to 4 options")</li>
-          <li>Add data-error-message on the group to override the default validation message</li>
-          <li>Place a nds-form-footer with data-feedback-target inside the group for dynamic feedback placement</li>
+          <li>Add <code class="nds-inline-code lang-html">data-error-message</code> on the group to override the default validation message</li>
+          <li>Place a <code class="nds-inline-code lang-html">nds-form-footer</code> with <code class="nds-inline-code lang-html">data-feedback-target</code> inside the group for dynamic feedback placement</li>
         </ul>
       </div>
     </div>
