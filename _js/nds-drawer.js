@@ -26,7 +26,7 @@
             atEnd: 'atEnd'
         },
         breakpoints: NDS.breakpoints,
-        scrollThreshold: 20,
+        scrollThreshold: 1,
         scrollAmount: 0.8,
         transitionDuration: 250
     };
@@ -325,6 +325,10 @@
 
     function initActiveStates(drawer) {
         drawer.querySelectorAll('li[data-state~="active"]').forEach(activeItem => {
+            // Set active state on the item's own button for visual indicator
+            const activeBtn = activeItem.querySelector(':scope > .nds-btn');
+            if (activeBtn) setState(activeBtn, CONFIG.states.active);
+
             let parent = activeItem.closest('ul')?.closest('li');
 
             while (parent && drawer.contains(parent)) {

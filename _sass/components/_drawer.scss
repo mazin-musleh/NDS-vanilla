@@ -20,9 +20,7 @@
     --_indicator: var(--drawer-indicator, transparent/* var(--alpha-black-30) */);
     --_indicator-active: var(--drawer-indicator-active, var(--background-primary));
     --_indicator-hover: var(--drawer-indicator-hover, var(--colors-neutral-400));
-    --_font-size: var(--drawer-font-size, var(--nds-text-md-FS));
-    --_line-height: var(--drawer-line-height, var(--nds-text-md-LH));
-    --_truncate: var(--drawer-truncate, 1);
+    --truncate: var(--drawer-truncate, 1);
     --_transition: var(--drawer-transition, var(--nds-transition));
     --_max-height: var(--drawer-max-height, 400px);
 
@@ -49,6 +47,10 @@
     &.nds-oncolor {
         --drawer-divider: var(--alpha-white-10);
         /* --drawer-indicator: var(--alpha-white-30); */
+    }
+
+    &.nds-card{
+        --card-width: 100%;
     }
 
 }
@@ -87,7 +89,6 @@
         --btn-width: 100%;
         --btn-gap: var(--drawer-btn-gap, var(--spacing-md));
         justify-content: flex-start;
-        min-height: fit-content;
 
         // Label takes available space
         >.label {
@@ -101,7 +102,7 @@
             }
         }
 
-        &:hover .nds-featured-icon {
+        &:is(:hover,[data-state~="active"]) .nds-featured-icon {
             --icon-bg-color: var(--featuredicons-background-default-light);
             --icon-color: var(--featuredicons-icon-neutral);
             --dark-bg-color: var(--featuredicons-icon-default);
@@ -265,21 +266,17 @@
 // ==============================================
 
 .nds-drawer.nds-sm {
-    --_btn-height: 32px;
-    --_btn-padding: var(--spacing-xs) var(--spacing-sm);
-    --_font-size: var(--nds-text-sm-FS);
-    --_line-height: var(--nds-text-sm-LH);
-    --_indent: var(--spacing-lg);
-    --_indicator-width: 2px;
+    --drawer-indent: var(--spacing-lg);
+    --drawer-indicator-width: 2px;
+
+    .nds-btn { --btn-size: 32px; }
 }
 
 .nds-drawer.nds-lg {
-    --_btn-height: 48px;
-    --_btn-padding: var(--spacing-md) var(--spacing-lg);
-    --_font-size: var(--nds-text-lg-FS);
-    --_line-height: var(--nds-text-lg-LH);
-    --_indent: var(--spacing-2xl);
-    --_indicator-width: 4px;
+    --drawer-indent: var(--spacing-2xl);
+    --drawer-indicator-width: 4px;
+
+    .nds-btn { --btn-size: 48px; }
 }
 
 // ==============================================
@@ -296,7 +293,7 @@
 .nds-drawer-scroll {
     overflow-y: auto;
     overflow-x: hidden;
-    overscroll-behavior: contain;
+   /*  overscroll-behavior: contain; */
     flex: 1;
     min-height: 0;
 
@@ -339,9 +336,11 @@
 .nds-drawer.nds-divided {
     .nds-drawer-list>li {
         border-block-end: 1px solid var(--_divider);
+        padding-bottom: var(--_gap);
 
         &:last-child {
             border-block-end: none;
+            padding-bottom: 0;
         }
     }
 
@@ -352,6 +351,7 @@
 
             >.nds-btn {
                 border-block-end: 1px solid var(--_divider);
+                border-radius: 0;
             }
 
             // Remove border only if it's the only child (no siblings)
@@ -369,6 +369,7 @@
 
 .nds-grid .nds-drawer.nds-fit {
     --drawer-btn-height: 100%;
+    height: 100%;
 
     .nds-drawer-list {
         height: 100%;
@@ -376,16 +377,5 @@
         >li {
             height: 100%;
         }
-    }
-}
-
-// ==============================================
-// RESPONSIVE BEHAVIOR
-// ==============================================
-
-@include mobile {
-    .nds-drawer {
-        --_btn-height: 48px;
-        --_btn-padding: var(--spacing-md);
     }
 }
