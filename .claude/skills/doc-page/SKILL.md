@@ -181,8 +181,8 @@ Get the exact HTML patterns from `alert.md`:
 
 Code tabs are for **production-ready, copy-paste markup only**.
 
-- **Write the live demo HTML first, then derive the code tab from it**: same structure, classes, and attributes. Remove demo-only wrappers. The code tab is what the developer copies into their project.
-- MUST be production-ready: no demo wrappers, no showcase classes, no placeholder content
+- **The code tab MUST be a direct copy of the live demo HTML.** Copy the markup from `.state-demo`, remove demo-only wrappers (`.state-demo`, `.demo-container`), and clean indentation. Do NOT simplify, abbreviate, reduce items, or use placeholder text like "Item title" or "<!-- more items -->". The developer copies what they see in the live demo.
+- MUST be production-ready: no demo wrappers, no showcase classes
 - **Use unique IDs** per demo card: `{component}-{variant}-{number}` (e.g., `modal-default-1`)
 - **HTML tab**: markup to render the component
 - **JS API tab** (label: "JS API"): only when the component has a **programmatic creation API** (e.g., `NDS.Alert.create()`, `NDS.Chart.create()`). This is the JS alternative to the HTML tab. Do NOT add a JS tab for event listeners or method calls.
@@ -201,10 +201,12 @@ Demo-wiring JS goes in `_js/nds-showcase.js`, NOT the component's own JS file. F
 
 Its own section (NOT inside Usage Guidelines). Uses `nds-definition-list` grid with icons. Get the HTML pattern from `alert.md`.
 
-- Derived from SCSS and JS source analysis. This sells the component's capabilities.
+- **Sells the component's capabilities.** Each item is a benefit the developer gets, not a how-to instruction.
+- **Titles**: short noun phrases (e.g., "Accordion Submenus", "State Management", "Scroll Overflow")
+- **Descriptions**: one flowing sentence per item. Lead with the outcome, not the implementation. Use `<code class="nds-inline-code">` for technical references like method names, data attributes, or CSS selectors.
 - Look up icons in `_sass/_hgiRoundedStroke.scss`. **NEVER guess.**
 - Aim for an **even number** of items (4, 6, 8) for the 2-column grid
-- For components with JS: include "Auto-initialization" and "JavaScript API" items
+- For components with JS: include "Auto-initialization" (first item) and "JavaScript API" (last item)
 
 ### Usage Guidelines Section
 
@@ -249,7 +251,7 @@ Before finishing, validate your work against this checklist. Every item MUST pas
 ### Structure and Patterns
 - [ ] All demo card HTML structure matches `alert.md` patterns
 - [ ] All code tabs contain production-ready, copy-paste markup
-- [ ] Code tab markup matches the live demo (same structure, classes, attributes)
+- [ ] Code tab markup is a direct copy of the live demo (same structure, classes, attributes, content, number of items. No abbreviation or placeholders)
 - [ ] All icons verified against `_sass/_hgiRoundedStroke.scss` (none guessed)
 - [ ] Built-in Features section exists with even number of items
 - [ ] Usage Guidelines has "When to Use" block
