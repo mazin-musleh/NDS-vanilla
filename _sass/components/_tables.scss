@@ -26,7 +26,7 @@
 
     // Table inside should also respect max-width
     .nds-table {
-        --_min-width: var(--min-width, 100%);
+        --_min-width: var(--min-width, 600px);
         min-width: var(--_min-width);
         display: table; // Ensure table doesn't collapse
     }
