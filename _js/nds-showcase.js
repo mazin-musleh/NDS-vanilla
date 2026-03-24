@@ -583,8 +583,9 @@
             const triggerLabel = trigger?.querySelector('.label');
             const itemLabel = button.querySelector('.label');
             if (triggerLabel && itemLabel) {
-                const prefix = trigger.getAttribute('data-label-prefix');
-                triggerLabel.textContent = prefix ? prefix + itemLabel.textContent : itemLabel.textContent;
+                const prefix = trigger.getAttribute('data-label-prefix') || '';
+                const customLabel = button.getAttribute('data-trigger-label');
+                triggerLabel.textContent = prefix + (customLabel || itemLabel.textContent);
             }
         }
 
