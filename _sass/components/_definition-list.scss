@@ -103,7 +103,8 @@
         padding-bottom: var(--_dl-gap, var(--spacing-lg));
         border-bottom: 1px solid var(--divider-color);
 
-        &:last-child {
+        &:last-child,
+        &.nds-last-row {
             border-bottom: none;
             padding-bottom: 0;
         }
@@ -117,7 +118,8 @@
             padding: var(--spacing-md) 0;
             border-bottom: 1px solid var(--divider-color);
 
-            &:last-child {
+            &:last-child,
+            &.nds-last-row {
                 border-bottom: none;
             }
         }

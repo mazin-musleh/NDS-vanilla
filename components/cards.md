@@ -21,7 +21,7 @@ direction: ltr
                     <div class="demo-header">
                         <div class="demo-action">
                             <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Mode: ">
                                     <span class="label">Mode: Default</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
@@ -63,7 +63,7 @@ direction: ltr
                                 </div>
                             </div>
                             <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="State: ">
                                     <span class="label">State: Default</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
