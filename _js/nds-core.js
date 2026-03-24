@@ -156,4 +156,56 @@
         const els = document.querySelectorAll('[data-nds-lazy]');
         for (let i = 0; i < els.length; i++) els[i].removeAttribute('hidden');
     });
+
+    // ── Grid Last Row ────────────────────────────────────────────────
+    // Marks items in the last row of a grid with .nds-last-row
+    // Used by .nds-divided grids to remove bottom borders from the last visual row
+    // Usage: NDS.gridLastRow.update()  — re-scan all grids on the page
+    //        NDS.gridLastRow.update(container)  — re-scan grids within a container
+    NDS.gridLastRow = (() => {
+        const SEL = '.nds-divided.nds-grid';
+        const CLS = 'nds-last-row';
+        let listening = false;
+
+        function scan(container) {
+            const grids = container && container.matches?.(SEL)
+                ? [container]
+                : (container || document).querySelectorAll(SEL);
+
+            for (let g = 0; g < grids.length; g++) {
+                const grid = grids[g];
+                const items = grid.children;
+                for (let i = 0; i < items.length; i++) items[i].classList.remove(CLS);
+                if (!items.length) continue;
+
+                // Skip hidden/non-laid-out grids (offsetTop is 0 for all items)
+                if (!grid.offsetParent) continue;
+
+                const lastTop = items[items.length - 1].offsetTop;
+                for (let i = items.length - 1; i >= 0; i--) {
+                    if (items[i].offsetTop === lastTop) {
+                        items[i].classList.add(CLS);
+                    } else {
+                        break;
+                    }
+                }
+            }
+        }
+
+        function startListening() {
+            if (listening) return;
+            listening = true;
+            NDS.onResize(() => scan());
+        }
+
+        function update(container) {
+            scan(container);
+            // Start resize listener on first call that finds grids
+            if (!listening && document.querySelector(SEL)) startListening();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => update());
+
+        return { update };
+    })();
 })();

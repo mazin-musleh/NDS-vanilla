@@ -248,6 +248,9 @@
                     if (otherTypes.length === 1 && otherTypes[0] === buttonType && otherButton.classList.contains('selected')) {
                         otherButton.classList.remove('selected');
 
+                        // Reverse inline styles from data-toggle-style on the deselected button
+                        applyToggleStyles(otherButton, demoCard);
+
                         // Reverse the changes for the deselected button
                         otherOps.forEach(([classNamesOrAttrs, targetSelector, , otherOperation, otherAction]) => {
                             if (!classNamesOrAttrs || !targetSelector) return;
@@ -566,13 +569,22 @@
         // Toggle the clicked button's selected state
         button.classList.toggle('selected');
 
+        // Apply/remove inline styles from data-toggle-style when button is selected/deselected
+        // Format: data-toggle-style=".target { --prop:val; width:fit-content; }"
+        // When selected: sets each property on matching targets in .demo-container and .code-example
+        // When deselected (mutual exclusion): removes those properties
+        applyToggleStyles(button, demoCard);
+
         // Sync dropmenu trigger label when item is selected
+        // Supports data-label-prefix on the trigger for prefixed labels (e.g., "Layout: Default")
         const dropmenu = button.closest('.nds-dropmenu');
         if (dropmenu && button.classList.contains('selected')) {
-            const triggerLabel = dropmenu.querySelector('.nds-dropmenu-trigger .label');
+            const trigger = dropmenu.querySelector('.nds-dropmenu-trigger');
+            const triggerLabel = trigger?.querySelector('.label');
             const itemLabel = button.querySelector('.label');
             if (triggerLabel && itemLabel) {
-                triggerLabel.textContent = itemLabel.textContent;
+                const prefix = trigger.getAttribute('data-label-prefix');
+                triggerLabel.textContent = prefix ? prefix + itemLabel.textContent : itemLabel.textContent;
             }
         }
 
@@ -586,6 +598,9 @@
         if (togglePairs.some(([,,, op]) => op === 'chart')) {
             updateChartCodeFromToggles(demoCard);
         }
+
+        // Re-scan grid last-row borders after any toggle change
+        if (NDS.gridLastRow) NDS.gridLastRow.update(demoCard);
     }
 
     // Update alert/toast code examples directly from toggle button states
@@ -797,6 +812,66 @@
                 updateCodeFromHiddenCopy(htmlCodeElement, updatedCode);
             }
         }
+    }
+
+    // Apply/remove inline styles from data-toggle-style on toggler buttons
+    // Format: data-toggle-style=".selector { --prop:val; width:fit-content }"
+    // Applies styles to live DOM elements in .demo-container AND updates <code> text in code tabs
+    // Reverses styles from deselected buttons in the same toggle group
+    function applyToggleStyles(button, demoCard) {
+        const styleRule = button.getAttribute('data-toggle-style');
+        const isSelected = button.classList.contains('selected');
+
+        if (!styleRule) return;
+
+        const match = styleRule.match(/^([^\{]+)\{([^}]+)\}$/);
+        if (!match) return;
+
+        const selector = match[1].trim();
+        const styleValue = match[2].trim().replace(/;$/, '');
+
+        // 1. Apply to live DOM elements in .demo-container
+        const demoContainers = demoCard.querySelectorAll('.demo-container');
+        demoContainers.forEach(container => {
+            container.querySelectorAll(selector).forEach(el => {
+                if (isSelected) {
+                    el.setAttribute('style', styleValue);
+                } else {
+                    el.removeAttribute('style');
+                }
+            });
+        });
+
+        // 2. Update <code> text content to add/remove style attribute
+        const codeElement = demoCard.querySelector('.code-example code');
+        if (!codeElement) return;
+
+        const hiddenCopy = getHiddenCodeCopy(codeElement);
+        if (!hiddenCopy) return;
+        let code = hiddenCopy.textContent;
+
+        // Build a regex to find the element by its class in the code text
+        // Extract the class name from the selector (e.g., ".nds-definition-list" -> "nds-definition-list")
+        const classMatch = selector.match(/^\.([a-zA-Z0-9_-]+)/);
+        if (!classMatch) return;
+        const className = classMatch[1].replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&');
+
+        // Match the opening tag that contains this class
+        const tagRegex = new RegExp(`(<[a-z][a-z0-9]*\\s[^>]*class="[^"]*${className}[^"]*")( style="[^"]*")?([^>]*>)`, 'g');
+
+        if (isSelected) {
+            // Add or replace style attribute
+            code = code.replace(tagRegex, (match, before, existingStyle, after) => {
+                return before + ` style="${styleValue}"` + after;
+            });
+        } else {
+            // Remove style attribute
+            code = code.replace(tagRegex, (match, before, existingStyle, after) => {
+                return before + after;
+            });
+        }
+
+        updateCodeFromHiddenCopy(codeElement, code);
     }
 
     // Handle attribute toggling for target element
@@ -1602,8 +1677,12 @@
                 const dropmenu = this.closest('.nds-dropmenu');
                 dropmenu.querySelectorAll('[data-card-mode]').forEach(b => b.classList.remove('selected'));
                 this.classList.add('selected');
-                const trigger = dropmenu.querySelector('.nds-dropmenu-trigger .label');
-                if (trigger) trigger.textContent = 'Mode: ' + this.querySelector('.label').textContent;
+                const triggerEl = dropmenu.querySelector('.nds-dropmenu-trigger');
+                const trigger = triggerEl?.querySelector('.label');
+                if (trigger) {
+                    const prefix = triggerEl.getAttribute('data-label-prefix') || '';
+                    trigger.textContent = prefix + this.querySelector('.label').textContent;
+                }
 
                 // Reset all mode sections
                 card.querySelector('.nds-card-checkbox')?.setAttribute('hidden', '');
@@ -1679,8 +1758,12 @@
                 const dropmenu = this.closest('.nds-dropmenu');
                 dropmenu.querySelectorAll('[data-card-state]').forEach(b => b.classList.remove('selected'));
                 this.classList.add('selected');
-                const trigger = dropmenu.querySelector('.nds-dropmenu-trigger .label');
-                if (trigger) trigger.textContent = 'State: ' + this.querySelector('.label').textContent;
+                const triggerEl = dropmenu.querySelector('.nds-dropmenu-trigger');
+                const trigger = triggerEl?.querySelector('.label');
+                if (trigger) {
+                    const prefix = triggerEl.getAttribute('data-label-prefix') || '';
+                    trigger.textContent = prefix + this.querySelector('.label').textContent;
+                }
 
                 let card = demoCard.querySelector('.demo-container .nds-card');
                 if (!card) return;
@@ -1746,8 +1829,12 @@
                 const dropmenu = this.closest('.nds-dropmenu');
                 dropmenu.querySelectorAll('[data-card-header]').forEach(b => b.classList.remove('selected'));
                 this.classList.add('selected');
-                const trigger = dropmenu.querySelector('.nds-dropmenu-trigger .label');
-                if (trigger) trigger.textContent = this.querySelector('.label').textContent;
+                const triggerEl = dropmenu.querySelector('.nds-dropmenu-trigger');
+                const trigger = triggerEl?.querySelector('.label');
+                if (trigger) {
+                    const prefix = triggerEl.getAttribute('data-label-prefix') || '';
+                    trigger.textContent = prefix + this.querySelector('.label').textContent;
+                }
 
                 // Hide both, then show selected
                 const iconSection = demoCard.querySelector('.demo-container .nds-card-featured-icon');
