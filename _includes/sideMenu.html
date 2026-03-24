@@ -10,21 +10,14 @@
             <ul class="nds-drawer-list">
                 {%- for item in sidemenu_items %}
                 {%- if item.has_sub %}
-                {%- assign has_active_child = false -%}
-                {%- for child in item.children -%}
-                    {%- if page.url == child.href -%}{%- assign has_active_child = true -%}{%- break -%}{%- endif -%}
-                {%- endfor %}
-                <li{%- if has_active_child %} data-state="open"{%- endif %}>
-                    <button class="nds-btn nds-subtle nds-menu-btn nds-indicator"
-                        {%- if has_active_child %} data-state="open"{%- endif %}
-                        aria-expanded="{{ has_active_child }}">
+                <li>
+                    <button class="nds-btn nds-subtle nds-menu-btn nds-indicator" aria-expanded="false">
                         <span class="label">{{ item.label }}</span>
                     </button>
                     <ul>
                         {%- for child in item.children %}
                         <li{%- if page.url == child.href %} data-state="active"{%- endif %}>
                             <a class="nds-btn nds-subtle nds-indicator"
-                                {%- if page.url == child.href %} data-state="active"{%- endif %}
                                 href="{{ child.href | relative_url }}">
                                 <span class="label">{{ child.label }}</span>
                             </a>
@@ -35,7 +28,6 @@
                 {%- else %}
                 <li{%- if page.url == item.href %} data-state="active"{%- endif %}>
                     <a class="nds-btn nds-subtle nds-indicator"
-                        {%- if page.url == item.href %} data-state="active"{%- endif %}
                         href="{{ item.href | relative_url }}">
                         <span class="label">{{ item.label }}</span>
                     </a>
