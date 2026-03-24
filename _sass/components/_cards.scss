@@ -28,7 +28,7 @@
   --_card-rating: var(--card-rating, var(--text-secondary-paragraph));
   --_card-width: var(--card-width, 100%);
   --_card-width-min: var(--card-width-min, 0);
-  --_card-width-max: var(--card-width-max, 360px);
+  --_card-width-max: var(--card-width-max, var(--card-width, 360px));
 
   font-family: var(--nds-font-family);
   text-align: start;
@@ -371,7 +371,8 @@
   --_card-rating: var(--text-default-disabled);
   box-shadow: none;
   pointer-events: none;
-  :is(.nds-card-image, .nds-card-meta, .nds-card-actions){
+
+  :is(.nds-card-image, .nds-card-meta, .nds-card-actions) {
     opacity: 0.5;
   }
 }

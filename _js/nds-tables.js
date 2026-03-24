@@ -413,23 +413,7 @@
                 this.copyMaxWidthToWrapper();
             }
 
-            // Auto-calculate min-width if not explicitly set
-            this.autoSetMinWidth();
-        }
-
-        autoSetMinWidth() {
-            // Skip if user explicitly set --min-width on the table
-            const explicitMinWidth = this.table.style.getPropertyValue('--min-width');
-            if (explicitMinWidth && explicitMinWidth.trim()) return;
-
-            // Temporarily set min-width to max-content to measure natural width
-            this.table.style.setProperty('--min-width', 'max-content');
-            const naturalWidth = this.table.scrollWidth;
-
-            // Set the measured natural width as the min-width
-            this.table.style.setProperty('--min-width', naturalWidth + 'px');
-
-            // Lock column widths so they stay consistent across pagination pages
+            // Lock column widths for paginated tables
             this.lockColumnWidths();
         }
 
@@ -611,7 +595,7 @@
             // Initialize responsive wrapper for all tables
             // If table has --max-width, it will use that value
             // Otherwise, wrapper will use default max-width (100%)
-            // --min-width is auto-calculated from content if not explicitly set
+            // Set --min-width inline on the table to control scroll breakpoint
             if (!table.hasAttribute('data-nds-responsive-initialized')) {
                 const responsiveInstance = new NDSResponsiveTable(table);
                 table.ndsResponsiveTableInstance = responsiveInstance;

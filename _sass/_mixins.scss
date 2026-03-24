@@ -229,6 +229,7 @@ textarea {
   --_btn-loading-track: var(--btn-loading-track, var(--alpha-black-10));
   --_btn-size: var(--btn-size, 40px);
   --_btn-height: var(--btn-height, var(--_btn-size));
+  --_btn-height-min: var(--btn-height-min, var(--_btn-size));
   --_btn-width: var(--btn-width, unset);
   --_btn-gap: var(--btn-gap, var(--spacing-xs));
   --_btn-padding: var(--btn-padding, calc(var(--_btn-size) * 0.375 - 3px));
@@ -258,7 +259,7 @@ textarea {
   justify-content: center;
 
   height: var(--_btn-height);
-  min-height: var(--_btn-height);
+  min-height: var(--_btn-height-min);
   width: var(--_btn-width, fit-content);
 
   padding-inline: var(--_btn-padding);

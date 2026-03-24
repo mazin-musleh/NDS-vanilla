@@ -389,7 +389,7 @@
 
 /* Card View Styling */
 .nds-tabs.nds-card {
-
+    --card-width: 100%;
   &:not(.nds-stroke) {
     border: 0;
   }
@@ -433,6 +433,7 @@
 
 :is(.nds-tab-content, .nds-tab-panel).nds-card {
   margin-block-start: var(--spacing-xl);
+  --card-width: 100%;
 }
 
 .nds-content-layout.cardView .nds-ghost,
