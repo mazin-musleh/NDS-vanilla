@@ -11,10 +11,11 @@
 // ==============================================
 
 .nds-dropmenu {
-  --_menu-padding: var(--menu-padding, var(--spacing-sm, 8px));
+  --_menu-padding: var(--menu-padding, var(--spacing-md, 8px));
   --_dropmenu-offset: var(--spacing-xs, 4px);
   --_dropmenu-slide: calc(var(--dropmenu-slide, 8px) * -1);
   --_dropmenu-min-width: var(--dropmenu-min-width, 150px);
+  --divider: var(--_menu-padding);
 
   position: relative;
   display: inline-flex;
@@ -23,8 +24,8 @@
     overflow: hidden;
     overflow-y: auto;
     max-height: 400px;
-      fieldset{padding-bottom: 8px;}
   }
+  
 
   // ==============================================
   // 2. MENU CONTAINER
@@ -48,6 +49,19 @@
       transform var(--nds-transition);
     opacity: 1;
     transform: translateY(0);
+
+    .nds-dropmenu-item:is(.nds-dropmenu-group, .nds-form-group){
+      margin-top: var(--spacing-2xl);
+      margin-bottom: var(--spacing-2xl);
+      margin-inline: var(--spacing-md);
+
+      &:first-child{
+        margin-top: var(--spacing-md);
+      }
+      &:last-child{
+        margin-bottom: var(--spacing-lg);
+      }
+    }
   }
 
   // ==============================================
@@ -119,6 +133,7 @@
 
   // Sticky action footer
   &-action {
+    --gap: var(--spacing-lg);
 
     .nds-btn {
       width: 100%;
