@@ -42,3 +42,6 @@ Desktop.ini
 *.backup
 *.bak
 notes.txt
+
+# Claude workspace
+.claude/workspace/
