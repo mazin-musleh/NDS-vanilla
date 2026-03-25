@@ -189,9 +189,11 @@
     }
 
     &:not(.nds-menu-btn, :active, .nds-oncolor):is([data-state~="active"], [data-state~="selected"]) {
-        --btn-color: var(--background-primary);
-        --btn-indicator-color: var(--background-primary);
-        --btn-indicator-selected: var(--background-primary);
+        :root:not([data-theme="dark"]) & {
+            --btn-color: var(--background-primary);
+            --btn-indicator-color: var(--background-primary);
+            --btn-indicator-selected: var(--background-primary);
+        }
     }
 }
 
