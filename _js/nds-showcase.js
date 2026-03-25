@@ -600,8 +600,21 @@
             updateChartCodeFromToggles(demoCard);
         }
 
-        // Re-scan grid last-row borders after any toggle change
-        if (NDS.gridLastRow) NDS.gridLastRow.update(demoCard);
+        // Clean up and re-scan grid last-row borders after any toggle change
+        // When switching layouts (especially from grid view), manually remove nds-last-row first
+        if (NDS.gridLastRow) {
+            // Remove nds-last-row from all items in divided lists before rescanning
+            togglePairs.forEach(([classNames, targetSelector, type]) => {
+                if (type === 'dlLayout' || classNames.includes('nds-grid')) {
+                    const targets = demoCard.querySelectorAll(targetSelector);
+                    targets.forEach(target => {
+                        const items = target.querySelectorAll('.nds-definition-item');
+                        items.forEach(item => item.classList.remove('nds-last-row'));
+                    });
+                }
+            });
+            NDS.gridLastRow.update(demoCard);
+        }
     }
 
     // Update alert/toast code examples directly from toggle button states
