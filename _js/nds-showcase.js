@@ -39,6 +39,13 @@
         error: 'Failed to complete the action.',
         info: 'New update available for download.'
     };
+    const FEEDBACK_MESSAGES = {
+        success: 'Operation completed successfully',
+        warning: 'Please review before proceeding',
+        error: 'This field is required',
+        info: 'This is an informational hint',
+        neutral: 'General note for reference'
+    };
 
     // Main initialization function
     function initializeShowcase() {
@@ -364,6 +371,10 @@
         // --- Process each toggle operation ---
         // If button is already selected, we're deselecting → reverse explicit actions
         const isDeselecting = button.classList.contains('selected');
+
+        // Prevent deselection for dropmenu items — they are always one-of-many,
+        // so clicking the already-selected value should do nothing
+        if (isDeselecting && button.closest('.demo-toggle-menu')) return;
 
         // Prevent deselection for attr toggles when other buttons share the same group
         // (e.g., variant selectors must always have one active)
@@ -732,101 +743,6 @@
     }
 
     // Update feedback code examples directly from toggle button states
-    function updateFeedbackCodeFromToggles(demoCard, toggleType) {
-        // Only handle feedback-related toggles
-        if (!toggleType || !['iconVariant', 'iconSize'].includes(toggleType)) {
-            return;
-        }
-
-        // Find the actual feedback element to read current classes
-        const feedbackElement = demoCard.querySelector('.demo-container .nds-feedback');
-        if (!feedbackElement) return;
-
-        // Get current icon style from selected toggle button (ring, outline, or '')
-        let iconStyle = '';
-        const ringToggle = demoCard.querySelector('[data-toggler*="nds-ring"][data-toggler*="iconVariant"].selected');
-        const outlineToggle = demoCard.querySelector('[data-toggler*="nds-outline"][data-toggler*="iconVariant"].selected');
-        if (ringToggle) {
-            iconStyle = 'ring';
-        } else if (outlineToggle) {
-            iconStyle = 'outline';
-        }
-
-        // Get current icon size from selected toggle button (sm, md, lg)
-        // If no size toggle is selected, read from the actual element
-        let iconSize = 'md'; // default
-        const smToggle = demoCard.querySelector('[data-toggler*="nds-sm"][data-toggler*="iconSize"].selected');
-        const mdToggle = demoCard.querySelector('[data-toggler*="nds-md"][data-toggler*="iconSize"].selected');
-        const lgToggle = demoCard.querySelector('[data-toggler*="nds-lg"][data-toggler*="iconSize"].selected');
-        if (smToggle) {
-            iconSize = 'sm';
-        } else if (mdToggle) {
-            iconSize = 'md';
-        } else if (lgToggle) {
-            iconSize = 'lg';
-        } else {
-            // No size toggle selected - read from element's current classes
-            if (feedbackElement.classList.contains('nds-sm')) {
-                iconSize = 'sm';
-            } else if (feedbackElement.classList.contains('nds-lg')) {
-                iconSize = 'lg';
-            } else {
-                iconSize = 'md'; // default
-            }
-        }
-
-        // Update JS code example
-        const jsCodeElement = demoCard.querySelector('.code-example code.lang-javascript, .code-example code[class*="javascript"]');
-        if (jsCodeElement) {
-            const hiddenCopy = getHiddenCodeCopy(jsCodeElement);
-            if (hiddenCopy) {
-                let updatedCode = hiddenCopy.textContent;
-
-                // Update style parameter
-                updatedCode = updatedCode.replace(/style:\s*['"][^'"]*['"]/, `style: '${iconStyle}'`);
-
-                // Update size parameter
-                updatedCode = updatedCode.replace(/size:\s*['"][^'"]*['"]/, `size: '${iconSize}'`);
-
-                updateCodeFromHiddenCopy(jsCodeElement, updatedCode);
-            }
-        }
-
-        // Update HTML code example
-        const htmlCodeElement = demoCard.querySelector('.code-example code.lang-html, .code-example code[class*="html"]');
-        if (htmlCodeElement) {
-            const hiddenCopy = getHiddenCodeCopy(htmlCodeElement);
-            if (hiddenCopy) {
-                let updatedCode = hiddenCopy.textContent;
-
-                // Update class on .nds-feedback element to include/exclude iconStyle and iconSize
-                // Pattern: <span class="nds-feedback [nds-ring|nds-outline] [nds-sm|nds-md|nds-lg]" ...>
-                updatedCode = updatedCode.replace(
-                    /(<span class="nds-feedback)([^"]*)"([^>]*data-status="[^"]*")/,
-                    function(match, prefix, currentClasses, rest) {
-                        // Remove existing icon style and size classes
-                        let classes = currentClasses.replace(/\s*nds-ring/g, '')
-                                                   .replace(/\s*nds-outline/g, '')
-                                                   .replace(/\s*nds-sm/g, '')
-                                                   .replace(/\s*nds-md/g, '')
-                                                   .replace(/\s*nds-lg/g, '');
-
-                        // Add current icon style with nds- prefix if not empty
-                        if (iconStyle) {
-                            classes += ' nds-' + iconStyle;
-                        }
-
-                        // Add current icon size with nds- prefix
-                        classes += ' nds-' + iconSize;
-
-                        return prefix + classes + '"' + rest;
-                    }
-                );
-
-                updateCodeFromHiddenCopy(htmlCodeElement, updatedCode);
-            }
-        }
-    }
 
     // Apply/remove inline styles from data-toggle-style on toggler buttons
     // Format: data-toggle-style=".selector { --prop:val; width:fit-content }"
@@ -927,6 +843,17 @@
                 const currentStatus = targetElement.getAttribute('data-status');
                 if (currentStatus) {
                     updateAlertVariantContent(targetElement, currentStatus, demoCard);
+                }
+            }
+
+            // Update feedback message text when status changes
+            if (attrName === 'data-status' && targetElement.classList.contains('nds-feedback')) {
+                const currentStatus = targetElement.getAttribute('data-status');
+                if (currentStatus) {
+                    const msgEl = targetElement.querySelector('.nds-feedback-message');
+                    if (msgEl && FEEDBACK_MESSAGES[currentStatus]) {
+                        msgEl.textContent = FEEDBACK_MESSAGES[currentStatus];
+                    }
                 }
             }
 
@@ -1057,6 +984,85 @@
         });
 
         updateCodeFromHiddenCopy(codeElement, code);
+    }
+
+    // Update feedback code examples (JS + HTML) from toggle button states
+    function updateFeedbackCodeFromToggles(demoCard, toggleType) {
+        if (!toggleType || !['feedbackStatus', 'feedbackMsgStatus', 'feedbackSize', 'feedbackMsgSize', 'feedbackStyle', 'feedbackRing', 'feedbackMsgStyle'].includes(toggleType)) {
+            return;
+        }
+
+        const feedbackEl = demoCard.querySelector('.demo-container .nds-feedback');
+        if (!feedbackEl) return;
+
+        // Read current state from the live element
+        const status = feedbackEl.getAttribute('data-status') || 'info';
+
+        let size = 'sm';
+        if (feedbackEl.classList.contains('nds-lg')) size = 'lg';
+        else if (feedbackEl.classList.contains('nds-md')) size = 'md';
+
+        let style = '';
+        if (feedbackEl.classList.contains('nds-outline')) style = 'outline';
+        else if (feedbackEl.classList.contains('nds-ring')) style = 'ring';
+
+        const msgEl = feedbackEl.querySelector('.nds-feedback-message');
+        const hasMessage = !!msgEl;
+        const message = hasMessage ? (FEEDBACK_MESSAGES[status] || msgEl.textContent) : null;
+
+        // Update JS code example
+        const jsCode = demoCard.querySelector('.code-example code.lang-javascript, .code-example code[class*="javascript"]');
+        if (jsCode) {
+            const hiddenCopy = getHiddenCodeCopy(jsCode);
+            if (hiddenCopy) {
+                let updated = hiddenCopy.textContent;
+                updated = updated.replace(/status:\s*['"][^'"]+['"]/, `status: '${status}'`);
+                updated = updated.replace(/size:\s*['"][^'"]+['"]/, `size: '${size}'`);
+                if (hasMessage && message) {
+                    updated = updated.replace(/message:\s*['"][^'"]+['"]/, `message: '${message}'`);
+                }
+                // Update style — handle both existing style line and missing style line
+                if (updated.match(/style:\s*['"][^'"]*['"]/)) {
+                    updated = updated.replace(/style:\s*['"][^'"]*['"]/, `style: '${style}'`);
+                }
+                updateCodeFromHiddenCopy(jsCode, updated);
+            }
+        }
+
+        // Update HTML code example
+        const htmlCode = demoCard.querySelector('.code-example code.lang-html, .code-example code[class*="html"]');
+        if (htmlCode) {
+            const hiddenCopy = getHiddenCodeCopy(htmlCode);
+            if (hiddenCopy) {
+                let updated = hiddenCopy.textContent;
+
+                // Update data-status
+                updated = updated.replace(/data-status="[^"]*"/, `data-status="${status}"`);
+
+                // Update message text
+                if (hasMessage && message) {
+                    updated = updated.replace(/(nds-feedback-message">)[^<]+(<)/, `$1${message}$2`);
+                }
+
+                // Update classes on .nds-feedback element
+                updated = updated.replace(
+                    /(<span class="nds-feedback)([^"]*)"/,
+                    function(match, prefix, currentClasses) {
+                        let classes = currentClasses
+                            .replace(/\s*nds-ring/g, '')
+                            .replace(/\s*nds-outline/g, '')
+                            .replace(/\s*nds-sm/g, '')
+                            .replace(/\s*nds-md/g, '')
+                            .replace(/\s*nds-lg/g, '');
+                        if (style) classes += ' nds-' + style;
+                        classes += ' nds-' + size;
+                        return prefix + classes + '"';
+                    }
+                );
+
+                updateCodeFromHiddenCopy(htmlCode, updated);
+            }
+        }
     }
 
     // Update alert content and code examples when variant changes
