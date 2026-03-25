@@ -2,7 +2,7 @@
 layout: page
 title: Chart
 hero_title: Chart - National Design System
-hero_description: SVG chart components for visualizing data with bar, line, pie, and donut charts. Zero external dependencies
+hero_description: Visualize data with bar, line, pie, and donut charts that render as pure SVG with built-in theming, tooltips, and responsive sizing
 breadcrumb: ["Components"]
 lang: en
 direction: ltr
@@ -498,353 +498,14 @@ NDS.Chart.create('#my-chart', {
     </div>
 </section>
 
-<!-- API Reference -->
-<section id="chartApi" class="nds-content-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">API Reference</h2>
-            <p class="nds-section-description">Methods and configuration options</p>
-        </div>
-        <div class="nds-section-content">
-
-            <div class="nds-content-block">
-                <h3 class="nds-block-title">Methods</h3>
-                <table class="nds-table nds-responsive">
-                        <thead>
-                            <tr>
-                                <th>Method</th>
-                                <th>Description</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>NDS.Chart.create(el, opts)</td>
-                                <td>Create a chart on an element (accepts selector string or DOM element)</td>
-                            </tr>
-                            <tr>
-                                <td>NDS.Chart.init()</td>
-                                <td>Auto-initialize all .nds-chart elements with data attributes</td>
-                            </tr>
-                            <tr>
-                                <td>chart.update(opts)</td>
-                                <td>Update chart with new options (merges with existing) and re-render</td>
-                            </tr>
-                            <tr>
-                                <td>chart.destroy()</td>
-                                <td>Remove chart, clean up listeners and observers</td>
-                            </tr>
-                        </tbody>
-                </table>
-            </div>
-
-            <div class="nds-content-block">
-                <h3 class="nds-block-title">Common Options</h3>
-                <table class="nds-table nds-responsive">
-                        <thead>
-                            <tr>
-                                <th>Option</th>
-                                <th>Type</th>
-                                <th>Default</th>
-                                <th>Description</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>type</td>
-                                <td>string</td>
-                                <td>'bar'</td>
-                                <td>'bar', 'line', 'pie', or 'donut'</td>
-                            </tr>
-                            <tr>
-                                <td>series</td>
-                                <td>array</td>
-                                <td>required</td>
-                                <td>Data series. Objects with name/data for bar/line, numbers for pie/donut</td>
-                            </tr>
-                            <tr>
-                                <td>labels</td>
-                                <td>array</td>
-                                <td>required</td>
-                                <td>Category labels for x-axis or pie slice names</td>
-                            </tr>
-                            <tr>
-                                <td>height</td>
-                                <td>number</td>
-                                <td>350/300</td>
-                                <td>Chart height in pixels (350 for bar/line, 300 for pie/donut)</td>
-                            </tr>
-                            <tr>
-                                <td>colors</td>
-                                <td>array</td>
-                                <td>CSS vars</td>
-                                <td>Override color palette with hex/rgb values</td>
-                            </tr>
-                            <tr>
-                                <td>legend.show</td>
-                                <td>boolean</td>
-                                <td>true</td>
-                                <td>Show/hide legend</td>
-                            </tr>
-                            <tr>
-                                <td>legend.position</td>
-                                <td>string</td>
-                                <td>'top'/'bottom'</td>
-                                <td>'top' for bar/line, 'bottom' for pie/donut</td>
-                            </tr>
-                            <tr>
-                                <td>tooltip.show</td>
-                                <td>boolean</td>
-                                <td>true</td>
-                                <td>Show/hide hover tooltips</td>
-                            </tr>
-                        </tbody>
-                </table>
-            </div>
-
-            <div class="nds-content-block">
-                <h3 class="nds-block-title">Bar Options</h3>
-                <table class="nds-table nds-responsive">
-                        <thead>
-                            <tr>
-                                <th>Option</th>
-                                <th>Type</th>
-                                <th>Default</th>
-                                <th>Description</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>bar.stacked</td>
-                                <td>boolean</td>
-                                <td>false</td>
-                                <td>Stack bars on top of each other</td>
-                            </tr>
-                            <tr>
-                                <td>bar.borderRadius</td>
-                                <td>number</td>
-                                <td>6</td>
-                                <td>Corner radius for bar tops</td>
-                            </tr>
-                            <tr>
-                                <td>bar.gap</td>
-                                <td>number</td>
-                                <td>0.3</td>
-                                <td>Gap ratio between groups (0–1)</td>
-                            </tr>
-                            <tr>
-                                <td>dataLabels.show</td>
-                                <td>boolean</td>
-                                <td>false</td>
-                                <td>Show value labels above bars</td>
-                            </tr>
-                        </tbody>
-                </table>
-            </div>
-
-            <div class="nds-content-block">
-                <h3 class="nds-block-title">Line Options</h3>
-                <table class="nds-table nds-responsive">
-                        <thead>
-                            <tr>
-                                <th>Option</th>
-                                <th>Type</th>
-                                <th>Default</th>
-                                <th>Description</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>line.smooth</td>
-                                <td>boolean</td>
-                                <td>true</td>
-                                <td>Smooth curves (Catmull-Rom) vs straight segments</td>
-                            </tr>
-                            <tr>
-                                <td>line.dots</td>
-                                <td>boolean</td>
-                                <td>true</td>
-                                <td>Show data point dots</td>
-                            </tr>
-                            <tr>
-                                <td>line.dotRadius</td>
-                                <td>number</td>
-                                <td>4</td>
-                                <td>Dot radius in pixels</td>
-                            </tr>
-                            <tr>
-                                <td>line.width</td>
-                                <td>number</td>
-                                <td>2</td>
-                                <td>Line stroke width</td>
-                            </tr>
-                            <tr>
-                                <td>line.area</td>
-                                <td>boolean</td>
-                                <td>false</td>
-                                <td>Fill area under lines</td>
-                            </tr>
-                        </tbody>
-                </table>
-            </div>
-
-            <div class="nds-content-block">
-                <h3 class="nds-block-title">Axis Options (bar + line)</h3>
-                <table class="nds-table nds-responsive">
-                        <thead>
-                            <tr>
-                                <th>Option</th>
-                                <th>Type</th>
-                                <th>Default</th>
-                                <th>Description</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>grid.show</td>
-                                <td>boolean</td>
-                                <td>true</td>
-                                <td>Show horizontal gridlines</td>
-                            </tr>
-                            <tr>
-                                <td>yaxis.show</td>
-                                <td>boolean</td>
-                                <td>true</td>
-                                <td>Show y-axis value labels</td>
-                            </tr>
-                            <tr>
-                                <td>yaxis.title</td>
-                                <td>string</td>
-                                <td>''</td>
-                                <td>Y-axis title (rendered vertically)</td>
-                            </tr>
-                            <tr>
-                                <td>xaxis.show</td>
-                                <td>boolean</td>
-                                <td>true</td>
-                                <td>Show x-axis category labels</td>
-                            </tr>
-                            <tr>
-                                <td>xaxis.title</td>
-                                <td>string</td>
-                                <td>''</td>
-                                <td>X-axis title</td>
-                            </tr>
-                        </tbody>
-                </table>
-            </div>
-
-            <div class="nds-content-block">
-                <h3 class="nds-block-title">Pie / Donut Options</h3>
-                <table class="nds-table nds-responsive">
-                        <thead>
-                            <tr>
-                                <th>Option</th>
-                                <th>Type</th>
-                                <th>Default</th>
-                                <th>Description</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>donut.size</td>
-                                <td>number</td>
-                                <td>0.5</td>
-                                <td>Inner hole ratio (0–1, donut only)</td>
-                            </tr>
-                            <tr>
-                                <td>stroke.show</td>
-                                <td>boolean</td>
-                                <td>false</td>
-                                <td>Show stroke between slices</td>
-                            </tr>
-                            <tr>
-                                <td>stroke.width</td>
-                                <td>number</td>
-                                <td>2</td>
-                                <td>Stroke width</td>
-                            </tr>
-                            <tr>
-                                <td>stroke.color</td>
-                                <td>string</td>
-                                <td>'#fff'</td>
-                                <td>Stroke color</td>
-                            </tr>
-                            <tr>
-                                <td>startAngle</td>
-                                <td>number</td>
-                                <td>0</td>
-                                <td>Starting angle in degrees</td>
-                            </tr>
-                        </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</section>
-
 <!-- Theming -->
 <section id="chartTheming" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Theming</h2>
-            <p class="nds-section-description">Override CSS custom properties to customize chart appearance</p>
+            <p class="nds-section-description">Override CSS custom properties to customize chart colors without changing JavaScript options</p>
         </div>
         <div class="nds-section-content">
-
-            <div class="nds-content-block">
-                <h3 class="nds-block-title">CSS Custom Properties</h3>
-                <table class="nds-table nds-responsive">
-                        <thead>
-                            <tr>
-                                <th>Property</th>
-                                <th>Description</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>--chart-color-1 … 6</td>
-                                <td>Series color palette (6 colors, auto-wraps)</td>
-                            </tr>
-                            <tr>
-                                <td>--chart-grid-color</td>
-                                <td>Gridline color</td>
-                            </tr>
-                            <tr>
-                                <td>--chart-text</td>
-                                <td>Axis label and title color</td>
-                            </tr>
-                            <tr>
-                                <td>--chart-label</td>
-                                <td>Data label, legend, and tooltip text color</td>
-                            </tr>
-                            <tr>
-                                <td>--chart-radius</td>
-                                <td>Tooltip border radius</td>
-                            </tr>
-                            <tr>
-                                <td>--chart-area-opacity</td>
-                                <td>Area fill opacity for line charts</td>
-                            </tr>
-                            <tr>
-                                <td>--chart-tooltip-bg</td>
-                                <td>Tooltip background color</td>
-                            </tr>
-                            <tr>
-                                <td>--chart-tooltip-border</td>
-                                <td>Tooltip border color</td>
-                            </tr>
-                            <tr>
-                                <td>--chart-pie-label-fill</td>
-                                <td>Pie/donut percentage label color (on slices)</td>
-                            </tr>
-                            <tr>
-                                <td>--chart-dot-fill</td>
-                                <td>Line chart dot fill color</td>
-                            </tr>
-                        </tbody>
-                </table>
-            </div>
-
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -908,7 +569,6 @@ NDS.Chart.create('#my-chart', {
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </section>
@@ -918,23 +578,22 @@ NDS.Chart.create('#my-chart', {
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
-            <p class="nds-section-description">What you get out of the box with zero configuration</p>
         </div>
         <div class="nds-section-content">
-            <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1;">
+            <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
                         <i class="hgi hgi-stroke hgi-plug-socket icon"></i>
                         <span class="label">Auto-initialization</span>
                     </span>
-                    <p class="nds-item-desc">Charts with data attributes initialize on page load. Use NDS.Chart.create() for programmatic setup.</p>
+                    <p class="nds-item-desc">Charts with <code class="nds-inline-code lang-html">data-chart-*</code> attributes initialize on page load. Call <code class="nds-inline-code lang-js">NDS.Chart.init()</code> to re-scan after adding new chart elements dynamically.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
                         <i class="hgi hgi-stroke hgi-resize-01 icon"></i>
                         <span class="label">Responsive Sizing</span>
                     </span>
-                    <p class="nds-item-desc">Charts resize automatically via ResizeObserver. No manual resize calls needed.</p>
+                    <p class="nds-item-desc">Charts resize automatically when their container width changes. No manual resize calls needed.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -945,24 +604,24 @@ NDS.Chart.create('#my-chart', {
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-chart-line-data-01 icon"></i>
-                        <span class="label">JavaScript API</span>
+                        <i class="hgi hgi-stroke hgi-analytics-up icon"></i>
+                        <span class="label">Smart Scaling</span>
                     </span>
-                    <p class="nds-item-desc">Create, update, and destroy charts programmatically. Deep-merge options on update for live reconfiguration.</p>
+                    <p class="nds-item-desc">Automatic nice-number axis scaling, number formatting (K/M suffixes), and legend wrapping.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
                         <i class="hgi hgi-stroke hgi-printer icon"></i>
                         <span class="label">Print and Accessibility</span>
                     </span>
-                    <p class="nds-item-desc">Tooltips hidden in print. Transitions disabled for reduced-motion. Pure SVG output for screen readers.</p>
+                    <p class="nds-item-desc">Tooltips hidden in print, transitions disabled for reduced-motion preference. SVG output includes ARIA labels for screen readers.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-analytics-up icon"></i>
-                        <span class="label">Smart Scaling</span>
+                        <i class="hgi hgi-stroke hgi-chart-line-data-01 icon"></i>
+                        <span class="label">Programmatic Control</span>
                     </span>
-                    <p class="nds-item-desc">Automatic nice-number axis scaling, number formatting (K/M suffixes), and legend wrapping.</p>
+                    <p class="nds-item-desc">Create, update, and destroy charts with <code class="nds-inline-code lang-js">NDS.Chart.create()</code>. Options deep-merge on update for live reconfiguration.</p>
                 </div>
             </div>
         </div>
@@ -974,28 +633,386 @@ NDS.Chart.create('#my-chart', {
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>
-            <p class="nds-section-description">When and how to use charts effectively</p>
         </div>
         <div class="nds-section-content">
+
             <div class="nds-content-block">
-                <h3 class="nds-block-title">When to Use</h3>
+                <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
-                    <li>Bar charts for comparing discrete categories or tracking changes over time</li>
-                    <li>Line charts for continuous data, trends, and time series</li>
-                    <li>Pie/donut charts for showing proportions of a whole (keep to 6 or fewer segments)</li>
-                    <li>Use HTML data attributes for static charts, JS API for dynamic or user-driven data</li>
-                    <li>For simple numbers without trends, use statistic cards instead</li>
-                    <li>Avoid pie charts when differences between segments are small</li>
+                    <li>Use <strong>bar charts</strong> for comparing discrete categories or tracking changes across periods. Use stacked mode when the total matters as much as individual values</li>
+                    <li>Use <strong>line charts</strong> for continuous data, trends, and time series. Enable area fill to emphasize volume over shape</li>
+                    <li>Use <strong>pie or donut charts</strong> for showing proportions of a whole. Keep to 6 or fewer segments so the chart stays readable</li>
+                    <li>Avoid pie charts when differences between segments are small. A bar chart makes small differences easier to compare</li>
+                    <li>For simple numbers without trends, use a <a href="{{ 'components/statistic-card' | relative_url }}">Statistic Card</a> instead of a chart</li>
+                    <li>Use HTML <code class="nds-inline-code lang-html">data-chart-*</code> attributes for static charts that don't change. Use the JS API for dynamic or user-driven data that updates after load</li>
+                    <li>Set axis titles (<code class="nds-inline-code lang-js">yaxis.title</code>, <code class="nds-inline-code lang-js">xaxis.title</code>) to label what the numbers represent. Without titles, the chart relies on the legend alone</li>
+                    <li>Override <code class="nds-inline-code lang-html">--chart-color-*</code> properties to match your project's brand palette. The default palette uses Saudi flag green tones</li>
+                    <li>Charts auto-resize via ResizeObserver. No manual resize calls are needed when the container width changes</li>
                 </ul>
             </div>
+
+            <div class="nds-content-block">
+                <h3 class="nds-block-title">Methods</h3>
+                <table class="nds-table nds-responsive">
+                    <thead>
+                        <tr>
+                            <th>Method</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code class="nds-inline-code lang-js">NDS.Chart.create(el, opts)</code></td>
+                            <td>Create a chart on an element (accepts selector string or DOM element)</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-js">NDS.Chart.init()</code></td>
+                            <td>Auto-initialize all <code class="nds-inline-code lang-html">.nds-chart</code> elements with data attributes</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-js">chart.update(opts)</code></td>
+                            <td>Update chart with new options (merges with existing) and re-render</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-js">chart.destroy()</code></td>
+                            <td>Remove chart, clean up listeners and observers</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="nds-content-block">
+                <h3 class="nds-block-title">Common Options</h3>
+                <table class="nds-table nds-responsive">
+                    <thead>
+                        <tr>
+                            <th>Option</th>
+                            <th>Type</th>
+                            <th>Default</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code class="nds-inline-code lang-js">type</code></td>
+                            <td>string</td>
+                            <td><code class="nds-inline-code lang-js">'bar'</code></td>
+                            <td><code class="nds-inline-code lang-js">'bar'</code>, <code class="nds-inline-code lang-js">'line'</code>, <code class="nds-inline-code lang-js">'pie'</code>, or <code class="nds-inline-code lang-js">'donut'</code></td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-js">series</code></td>
+                            <td>array</td>
+                            <td>required</td>
+                            <td>Data series. Objects with name/data for bar/line, numbers for pie/donut</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-js">labels</code></td>
+                            <td>array</td>
+                            <td>required</td>
+                            <td>Category labels for x-axis or pie slice names</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-js">height</code></td>
+                            <td>number</td>
+                            <td>350/300</td>
+                            <td>Chart height in pixels (350 for bar/line, 300 for pie/donut)</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-js">colors</code></td>
+                            <td>array</td>
+                            <td>CSS vars</td>
+                            <td>Override color palette with hex/rgb values</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-js">legend.show</code></td>
+                            <td>boolean</td>
+                            <td>true</td>
+                            <td>Show/hide legend</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-js">legend.position</code></td>
+                            <td>string</td>
+                            <td><code class="nds-inline-code lang-js">'top'</code>/<code class="nds-inline-code lang-js">'bottom'</code></td>
+                            <td><code class="nds-inline-code lang-js">'top'</code> for bar/line, <code class="nds-inline-code lang-js">'bottom'</code> for pie/donut</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-js">tooltip.show</code></td>
+                            <td>boolean</td>
+                            <td>true</td>
+                            <td>Show/hide hover tooltips</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="nds-content-block">
+                <h3 class="nds-block-title">Bar Options</h3>
+                <table class="nds-table nds-responsive">
+                    <thead>
+                        <tr>
+                            <th>Option</th>
+                            <th>Type</th>
+                            <th>Default</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code class="nds-inline-code lang-js">bar.stacked</code></td>
+                            <td>boolean</td>
+                            <td>false</td>
+                            <td>Stack bars on top of each other</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-js">bar.borderRadius</code></td>
+                            <td>number</td>
+                            <td>6</td>
+                            <td>Corner radius for bar tops</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-js">bar.gap</code></td>
+                            <td>number</td>
+                            <td>0.3</td>
+                            <td>Gap ratio between groups (0-1)</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-js">dataLabels.show</code></td>
+                            <td>boolean</td>
+                            <td>false</td>
+                            <td>Show value labels above bars</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="nds-content-block">
+                <h3 class="nds-block-title">Line Options</h3>
+                <table class="nds-table nds-responsive">
+                    <thead>
+                        <tr>
+                            <th>Option</th>
+                            <th>Type</th>
+                            <th>Default</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code class="nds-inline-code lang-js">line.smooth</code></td>
+                            <td>boolean</td>
+                            <td>true</td>
+                            <td>Smooth curves (Catmull-Rom) vs straight segments</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-js">line.dots</code></td>
+                            <td>boolean</td>
+                            <td>true</td>
+                            <td>Show data point dots</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-js">line.dotRadius</code></td>
+                            <td>number</td>
+                            <td>4</td>
+                            <td>Dot radius in pixels</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-js">line.width</code></td>
+                            <td>number</td>
+                            <td>2</td>
+                            <td>Line stroke width</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-js">line.area</code></td>
+                            <td>boolean</td>
+                            <td>false</td>
+                            <td>Fill area under lines</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="nds-content-block">
+                <h3 class="nds-block-title">Axis Options (bar + line)</h3>
+                <table class="nds-table nds-responsive">
+                    <thead>
+                        <tr>
+                            <th>Option</th>
+                            <th>Type</th>
+                            <th>Default</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code class="nds-inline-code lang-js">grid.show</code></td>
+                            <td>boolean</td>
+                            <td>true</td>
+                            <td>Show horizontal gridlines</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-js">yaxis.show</code></td>
+                            <td>boolean</td>
+                            <td>true</td>
+                            <td>Show y-axis value labels</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-js">yaxis.title</code></td>
+                            <td>string</td>
+                            <td><code class="nds-inline-code lang-js">''</code></td>
+                            <td>Y-axis title (rendered vertically)</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-js">xaxis.show</code></td>
+                            <td>boolean</td>
+                            <td>true</td>
+                            <td>Show x-axis category labels</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-js">xaxis.title</code></td>
+                            <td>string</td>
+                            <td><code class="nds-inline-code lang-js">''</code></td>
+                            <td>X-axis title</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="nds-content-block">
+                <h3 class="nds-block-title">Pie / Donut Options</h3>
+                <table class="nds-table nds-responsive">
+                    <thead>
+                        <tr>
+                            <th>Option</th>
+                            <th>Type</th>
+                            <th>Default</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code class="nds-inline-code lang-js">donut.size</code></td>
+                            <td>number</td>
+                            <td>0.5</td>
+                            <td>Inner hole ratio (0-1, donut only)</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-js">stroke.show</code></td>
+                            <td>boolean</td>
+                            <td>false</td>
+                            <td>Show stroke between slices</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-js">stroke.width</code></td>
+                            <td>number</td>
+                            <td>2</td>
+                            <td>Stroke width</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-js">stroke.color</code></td>
+                            <td>string</td>
+                            <td><code class="nds-inline-code lang-js">'#fff'</code></td>
+                            <td>Stroke color</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-js">startAngle</code></td>
+                            <td>number</td>
+                            <td>0</td>
+                            <td>Starting angle in degrees</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="nds-content-block">
+                <h3 class="nds-block-title">Data Attributes</h3>
+                <table class="nds-table nds-responsive">
+                    <thead>
+                        <tr>
+                            <th>Attribute</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">data-chart-type</code></td>
+                            <td>Chart type: <code class="nds-inline-code lang-html">bar</code>, <code class="nds-inline-code lang-html">line</code>, <code class="nds-inline-code lang-html">pie</code>, or <code class="nds-inline-code lang-html">donut</code></td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">data-chart-series</code></td>
+                            <td>JSON array of series data. Objects with <code class="nds-inline-code lang-js">name</code> and <code class="nds-inline-code lang-js">data</code> for bar/line, plain numbers for pie/donut.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">data-chart-labels</code></td>
+                            <td>JSON array of category labels for x-axis or pie slice names.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">data-chart-config</code></td>
+                            <td>JSON object with full chart options. Overrides individual data attributes when both are present.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="nds-content-block">
+                <h3 class="nds-block-title">CSS Custom Properties</h3>
+                <table class="nds-table nds-responsive">
+                    <thead>
+                        <tr>
+                            <th>Property</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--chart-color-1</code> to <code class="nds-inline-code lang-html">--chart-color-6</code></td>
+                            <td>Series color palette (6 colors, auto-wraps beyond 6)</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--chart-grid-color</code></td>
+                            <td>Gridline color</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--chart-text</code></td>
+                            <td>Axis label and title color</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--chart-label</code></td>
+                            <td>Data label, legend, and tooltip text color</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--chart-radius</code></td>
+                            <td>Tooltip border radius</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--chart-area-opacity</code></td>
+                            <td>Area fill opacity for line charts</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--chart-tooltip-bg</code></td>
+                            <td>Tooltip background color</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--chart-tooltip-border</code></td>
+                            <td>Tooltip border color</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--chart-pie-label-1</code> to <code class="nds-inline-code lang-html">--chart-pie-label-6</code></td>
+                            <td>Pie/donut percentage label color per slice</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--chart-dot-fill</code></td>
+                            <td>Line chart dot fill color</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
         </div>
     </div>
 </section>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-
-    // ── Create demo charts ────────────────────────────────────────
 
     NDS.Chart.create('#demo-bar', {
         type: 'bar',
