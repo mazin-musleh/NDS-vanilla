@@ -2,7 +2,7 @@
 layout: page
 title: Dropmenu
 hero_title: Dropmenu - National Design System
-hero_description: Dropdown menu component with smart positioning, keyboard navigation, and full accessibility support
+hero_description: A toggle-activated menu for presenting actions, navigation links, or filter controls in a compact overlay
 breadcrumb: ["Components"]
 lang: en
 direction: ltr
@@ -13,7 +13,7 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Standard Dropmenu</h2>
-            <p class="nds-section-description">Dropdown menu for actions with optional icons and configurable button styles</p>
+            <p class="nds-section-description">Action menu for tasks like edit, duplicate, share, or delete. Use buttons for items that trigger actions on the current page</p>
         </div>
         <div class="nds-section-content">
             <div class="nds-showcase">
@@ -21,14 +21,6 @@ direction: ltr
                     <div class="demo-header">
 
                         <div class="demo-action">
-                            <button class="nds-btn nds-subtle demo-toggle-btn selected"
-                                data-toggler='["", ".nds-dropmenu-item i", "iconVisibility"]'>
-                                <span class="label">With icons</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["hidden", ".nds-dropmenu-item i", "iconVisibility"]'>
-                                <span class="label">No icons</span>
-                            </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                                 <span class="label">Remove bg</span>
@@ -130,7 +122,7 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Navigation Dropmenu</h2>
-            <p class="nds-section-description">Dropdown menu using anchor tags for navigation links</p>
+            <p class="nds-section-description">Menu items that navigate to other pages. Use anchor elements when each item is a link rather than an action</p>
         </div>
         <div class="nds-section-content">
             <div class="nds-showcase">
@@ -537,7 +529,7 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-location-star-01 icon"></i>
                         <span class="label">Smart Positioning</span>
                     </span>
-                    <p class="nds-item-desc">Automatically detects viewport boundaries and adjusts vertical and horizontal positioning to keep menus fully visible.</p>
+                    <p class="nds-item-desc">Menus stay fully visible regardless of where the trigger sits on the page, flipping direction when near screen edges.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -551,7 +543,7 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-shield-user icon"></i>
                         <span class="label">Accessibility</span>
                     </span>
-                    <p class="nds-item-desc">Complete ARIA implementation with <code class="nds-inline-code lang-html">aria-expanded</code>, <code class="nds-inline-code lang-html">aria-haspopup</code>, <code class="nds-inline-code lang-html">role="menu"</code>, and reduced motion support.</p>
+                    <p class="nds-item-desc">ARIA roles and states are applied automatically, and animations respect the user's reduced-motion preference.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -563,7 +555,7 @@ direction: ltr
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
                         <i class="hgi hgi-stroke hgi-code-circle icon"></i>
-                        <span class="label">JavaScript API</span>
+                        <span class="label">Programmatic Control</span>
                     </span>
                     <p class="nds-item-desc">Programmatic control with instance methods <code class="nds-inline-code lang-js">open()</code>, <code class="nds-inline-code lang-js">close()</code>, <code class="nds-inline-code lang-js">toggle()</code>, and custom events for state changes.</p>
                 </div>
@@ -581,17 +573,98 @@ direction: ltr
         <div class="nds-section-content">
 
             <div class="nds-content-block">
-                <h3 class="nds-block-title">When to Use</h3>
+                <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use dropmenus for action lists when screen space is limited and actions don't need to be immediately visible</li>
-                    <li>Use <strong>button elements</strong> with <code class="nds-inline-code lang-html">.nds-dropmenu-item</code> for actions that trigger JavaScript functions or modify state</li>
-                    <li>Use <strong>anchor elements</strong> with <code class="nds-inline-code lang-html">.nds-dropmenu-item</code> for navigation links that take users to different pages</li>
+                    <li>Use for <strong>contextual actions</strong> that apply to a specific item, like row-level edit, delete, or share</li>
+                    <li>Use for <strong>secondary navigation</strong> that doesn't need permanent visibility, like account or settings links</li>
+                    <li>Use with <code class="nds-inline-code lang-html">data-no-auto-close</code> for <strong>filter panels</strong> where users select multiple options before closing</li>
                     <li>Group related actions together and use <code class="nds-inline-code lang-html">&lt;hr class="nds-divider"&gt;</code> to separate action groups</li>
-                    <li>Place destructive actions last in the menu with the <code class="nds-inline-code lang-html">.nds-destructive</code> class for visual separation</li>
                     <li>Keep menus focused with 3-8 items. If you need more, consider restructuring into multiple menus or a different pattern</li>
                     <li>Icons are optional but recommended for faster visual scanning when actions have clear iconic representations</li>
+                    <li>Don't use for primary navigation that should always be visible. Use the Header or Side Nav instead</li>
+                    <li>Don't use for a single toggle action. A Switch or standalone Button is simpler</li>
+                    <li>Don't use for complex multi-step forms. Use a Modal or Drawer for more space</li>
 
                 </ul>
+            </div>
+
+            <div class="nds-content-block">
+                <h3 class="nds-block-title">Modifier Classes</h3>
+                <table class="nds-table nds-responsive">
+                    <thead>
+                        <tr>
+                            <th>Class</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">nds-destructive</code></td>
+                            <td>Applies destructive (red) styling to a menu item. Place destructive actions last in the menu for visual separation.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">nds-dropmenu-footer</code></td>
+                            <td>Sticky footer area that stays visible while the menu content scrolls. Place outside <code class="nds-inline-code lang-html">.nds-dropmenu-scroll</code>.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">nds-dropmenu-action</code></td>
+                            <td>Action bar inside the footer for buttons like Clear and Apply. Combine with <code class="nds-inline-code lang-html">nds-grid</code> for side-by-side layout.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">nds-dropmenu-group</code></td>
+                            <td>Groups form controls or related items inside the menu with consistent spacing.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="nds-content-block">
+                <h3 class="nds-block-title">Data Attributes</h3>
+                <table class="nds-table nds-responsive">
+                    <thead>
+                        <tr>
+                            <th>Attribute</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">data-no-auto-close</code></td>
+                            <td>Set on a <code class="nds-inline-code lang-html">.nds-dropmenu-item</code> to prevent the menu from closing when that item is clicked. Use for checkboxes, inputs, and filter controls that need multiple interactions.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="nds-content-block">
+                <h3 class="nds-block-title">CSS Custom Properties</h3>
+                <table class="nds-table nds-responsive">
+                    <thead>
+                        <tr>
+                            <th>Property</th>
+                            <th>Default</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--menu-padding</code></td>
+                            <td>8px</td>
+                            <td>Inner padding of the menu container</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--dropmenu-min-width</code></td>
+                            <td>150px</td>
+                            <td>Minimum width of the menu. Override inline or via CSS to fit your content.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--dropmenu-slide</code></td>
+                            <td>8px</td>
+                            <td>Distance the menu slides during open/close animation</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
             <div class="nds-content-block">
@@ -623,7 +696,7 @@ const instance = dropmenu.ndsDropmenuInstance;
 instance.open();    // Open the menu
 instance.close();   // Close the menu
 instance.toggle();  // Toggle open/closed state
-instance.destroy(); // Remove listeners and clean up
+instance.destroy(); // Remove listeners and replace the DOM node (external references will be invalidated)
 
 // ── Events ─────────────────────────────────────────────────
 // Listen for state changes
