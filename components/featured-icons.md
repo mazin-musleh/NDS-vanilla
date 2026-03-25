@@ -1,55 +1,97 @@
 ---
 layout: page
 title: Featured Icons
-hero_title: Featured Icon Components - National Design System
-hero_description: Circular background containers with centered icons for highlighting content and creating visual focus
+hero_title: Featured Icons - National Design System
+hero_description: Colored icon containers that draw attention to features, statuses, and categories across cards, lists, and page sections
 breadcrumb: ["Components"]
 lang: en
 direction: ltr
 ---
 
-<!-- Featured Icons Overview -->
+<!-- Featured Icons -->
 <section id="featuredIconsOverview" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
-            <h2 class="nds-section-title">Featured Icon Styles</h2>
-            <p class="nds-section-description">All featured icon styles available in the National Design System</p>
+            <h2 class="nds-section-title">Featured Icons</h2>
+            <p class="nds-section-description">Combine a color variant, size, and style to match the context where the icon appears</p>
         </div>
         <div class="nds-section-content">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
-                        <div class="demo-label">Brand Featured Icon</div>
                         <div class="demo-action">
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-circle", ".nds-featured-icon", "circle"]'>
+                            <div class="nds-dropmenu demo-toggle-menu">
+                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Color: ">
+                                    <span class="label">Color: Brand</span>
+                                </button>
+                                <div class="nds-dropmenu-menu" hidden>
+                                    <div class="nds-dropmenu-scroll">
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                                            data-toggler='["nds-brand", ".nds-featured-icon", "iconColor"]'>
+                                            <span class="label">Brand</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["nds-success", ".nds-featured-icon", "iconColor"]'>
+                                            <span class="label">Success</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["nds-info", ".nds-featured-icon", "iconColor"]'>
+                                            <span class="label">Info</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["nds-warning", ".nds-featured-icon", "iconColor"]'>
+                                            <span class="label">Warning</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["nds-error", ".nds-featured-icon", "iconColor"]'>
+                                            <span class="label">Error</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["nds-neutral", ".nds-featured-icon", "iconColor"]'>
+                                            <span class="label">Neutral</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="nds-dropmenu demo-toggle-menu">
+                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Size: ">
+                                    <span class="label">Size: Medium</span>
+                                </button>
+                                <div class="nds-dropmenu-menu" hidden>
+                                    <div class="nds-dropmenu-scroll">
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["nds-sm", ".nds-featured-icon", "iconSize"]'>
+                                            <span class="label">Small (32px)</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                                            data-toggler='["", ".nds-featured-icon", "iconSize"]'
+                                            data-trigger-label="Medium">
+                                            <span class="label">Medium (40px)</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["nds-lg", ".nds-featured-icon", "iconSize"]'>
+                                            <span class="label">Large (48px)</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["nds-xl", ".nds-featured-icon", "iconSize"]'>
+                                            <span class="label">Extra Large (56px)</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-circle", ".nds-featured-icon", "iconShape"]'>
                                 <span class="label">Circle</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-outline", ".nds-featured-icon", "iconVariant"]'>
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-outline", ".nds-featured-icon", "iconStyle"]'>
                                 <span class="label">Outline</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-dark", ".nds-featured-icon", "iconVariant"]'>
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-dark", ".nds-featured-icon", "iconStyle"]'>
                                 <span class="label">Dark</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-sm", ".nds-featured-icon", "iconSize"]'>
-                                <span class="label">SM</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-md", ".nds-featured-icon", "iconSize"]'>
-                                <span class="label">MD</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-lg", ".nds-featured-icon", "iconSize"]'>
-                                <span class="label">LG</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-xl", ".nds-featured-icon", "iconSize"]'>
-                                <span class="label">XL</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                                 <span class="label">Remove bg</span>
                             </button>
@@ -63,401 +105,31 @@ direction: ltr
                         </div>
                     </div>
                     <div class="demo-code">
-                    <div class="nds-tabs nds-code nds-divided" hidden>
-                        <div class="nds-tab-list-container">
-                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                                    aria-controls="panel-brand-1" id="tab-brand-1">
-                                    <span class="nds-tab-label">HTML</span>
-                                </button>
-                            </nav>
-                        </div>
-                        <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-brand-1"
-                                aria-labelledby="tab-brand-1">
-                                <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                        <div class="nds-tabs nds-code nds-divided" hidden>
+                            <div class="nds-tab-list-container">
+                                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                        aria-controls="panel-featured-icon-1" id="tab-featured-icon-1">
+                                        <span class="nds-tab-label">HTML</span>
                                     </button>
+                                </nav>
+                            </div>
+                            <div class="nds-tab-content">
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-featured-icon-1"
+                                    aria-labelledby="tab-featured-icon-1">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-html code">
+<span class="nds-featured-icon nds-brand">
+  <i class="hgi hgi-stroke hgi-information-circle icon"></i>
+</span>
+                                    </code>
                                 </div>
-                                <code class="lang-html code">
-                                    <span class="nds-featured-icon nds-brand">
-                                      <i class="hgi hgi-stroke hgi-information-circle icon"></i>
-                                    </span>
-                                </code>
                             </div>
                         </div>
-                    </div>
-                    </div>
-                </div>
-
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Success Featured Icon</div>
-                        <div class="demo-action">
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-circle", ".nds-featured-icon", "circle"]'>
-                                <span class="label">Circle</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-outline", ".nds-featured-icon", "iconVariant"]'>
-                                <span class="label">Outline</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-dark", ".nds-featured-icon", "iconVariant"]'>
-                                <span class="label">Dark</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-sm", ".nds-featured-icon", "iconSize"]'>
-                                <span class="label">SM</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-md", ".nds-featured-icon", "iconSize"]'>
-                                <span class="label">MD</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-lg", ".nds-featured-icon", "iconSize"]'>
-                                <span class="label">LG</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-xl", ".nds-featured-icon", "iconSize"]'>
-                                <span class="label">XL</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <span class="nds-featured-icon nds-success">
-                                <i class="hgi hgi-stroke hgi-checkmark-circle-02 icon"></i>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                    <div class="nds-tabs nds-code nds-divided" hidden>
-                        <div class="nds-tab-list-container">
-                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                                    aria-controls="panel-success-1" id="tab-success-1">
-                                    <span class="nds-tab-label">HTML</span>
-                                </button>
-                            </nav>
-                        </div>
-                        <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-success-1"
-                                aria-labelledby="tab-success-1">
-                                <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                    </button>
-                                </div>
-                                <code class="lang-html code">
-                                    <span class="nds-featured-icon nds-success">
-                                      <i class="hgi hgi-stroke hgi-checkmark-circle-02 icon"></i>
-                                    </span>
-                                </code>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Info Featured Icon</div>
-                        <div class="demo-action">
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-circle", ".nds-featured-icon", "circle"]'>
-                                <span class="label">Circle</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-outline", ".nds-featured-icon", "iconVariant"]'>
-                                <span class="label">Outline</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-dark", ".nds-featured-icon", "iconVariant"]'>
-                                <span class="label">Dark</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-sm", ".nds-featured-icon", "iconSize"]'>
-                                <span class="label">SM</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-md", ".nds-featured-icon", "iconSize"]'>
-                                <span class="label">MD</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-lg", ".nds-featured-icon", "iconSize"]'>
-                                <span class="label">LG</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-xl", ".nds-featured-icon", "iconSize"]'>
-                                <span class="label">XL</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <span class="nds-featured-icon nds-info">
-                                <i class="hgi hgi-stroke hgi-information-circle icon"></i>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                    <div class="nds-tabs nds-code nds-divided" hidden>
-                        <div class="nds-tab-list-container">
-                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                                    aria-controls="panel-info-1" id="tab-info-1">
-                                    <span class="nds-tab-label">HTML</span>
-                                </button>
-                            </nav>
-                        </div>
-                        <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-info-1"
-                                aria-labelledby="tab-info-1">
-                                <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                    </button>
-                                </div>
-                                <code class="lang-html code">
-                                    <span class="nds-featured-icon nds-info">
-                                      <i class="hgi hgi-stroke hgi-information-circle icon"></i>
-                                    </span>
-                                </code>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Warning Featured Icon</div>
-                        <div class="demo-action">
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-circle", ".nds-featured-icon", "circle"]'>
-                                <span class="label">Circle</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-outline", ".nds-featured-icon", "iconVariant"]'>
-                                <span class="label">Outline</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-dark", ".nds-featured-icon", "iconVariant"]'>
-                                <span class="label">Dark</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-sm", ".nds-featured-icon", "iconSize"]'>
-                                <span class="label">SM</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-md", ".nds-featured-icon", "iconSize"]'>
-                                <span class="label">MD</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-lg", ".nds-featured-icon", "iconSize"]'>
-                                <span class="label">LG</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-xl", ".nds-featured-icon", "iconSize"]'>
-                                <span class="label">XL</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <span class="nds-featured-icon nds-warning">
-                                <i class="hgi hgi-stroke hgi-alert-02 icon"></i>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                    <div class="nds-tabs nds-code nds-divided" hidden>
-                        <div class="nds-tab-list-container">
-                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                                    aria-controls="panel-warning-1" id="tab-warning-1">
-                                    <span class="nds-tab-label">HTML</span>
-                                </button>
-                            </nav>
-                        </div>
-                        <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-warning-1"
-                                aria-labelledby="tab-warning-1">
-                                <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                    </button>
-                                </div>
-                                <code class="lang-html code">
-                                    <span class="nds-featured-icon nds-warning">
-                                      <i class="hgi hgi-stroke hgi-alert-02 icon"></i>
-                                    </span>
-                                </code>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Error Featured Icon</div>
-                        <div class="demo-action">
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-circle", ".nds-featured-icon", "circle"]'>
-                                <span class="label">Circle</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-outline", ".nds-featured-icon", "iconVariant"]'>
-                                <span class="label">Outline</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-dark", ".nds-featured-icon", "iconVariant"]'>
-                                <span class="label">Dark</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-sm", ".nds-featured-icon", "iconSize"]'>
-                                <span class="label">SM</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-md", ".nds-featured-icon", "iconSize"]'>
-                                <span class="label">MD</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-lg", ".nds-featured-icon", "iconSize"]'>
-                                <span class="label">LG</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-xl", ".nds-featured-icon", "iconSize"]'>
-                                <span class="label">XL</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <span class="nds-featured-icon nds-error">
-                                <i class="hgi hgi-stroke hgi-alert-circle icon"></i>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                    <div class="nds-tabs nds-code nds-divided" hidden>
-                        <div class="nds-tab-list-container">
-                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                                    aria-controls="panel-error-1" id="tab-error-1">
-                                    <span class="nds-tab-label">HTML</span>
-                                </button>
-                            </nav>
-                        </div>
-                        <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-error-1"
-                                aria-labelledby="tab-error-1">
-                                <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                    </button>
-                                </div>
-                                <code class="lang-html code">
-                                    <span class="nds-featured-icon nds-error">
-                                      <i class="hgi hgi-stroke hgi-alert-circle icon"></i>
-                                    </span>
-                                </code>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Neutral Featured Icon</div>
-                        <div class="demo-action">
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-circle", ".nds-featured-icon", "circle"]'>
-                                <span class="label">Circle</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-outline", ".nds-featured-icon", "iconVariant"]'>
-                                <span class="label">Outline</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-dark", ".nds-featured-icon", "iconVariant"]'>
-                                <span class="label">Dark</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-sm", ".nds-featured-icon", "iconSize"]'>
-                                <span class="label">SM</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-md", ".nds-featured-icon", "iconSize"]'>
-                                <span class="label">MD</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-lg", ".nds-featured-icon", "iconSize"]'>
-                                <span class="label">LG</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-xl", ".nds-featured-icon", "iconSize"]'>
-                                <span class="label">XL</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <span class="nds-featured-icon nds-neutral">
-                                <i class="hgi hgi-stroke hgi-help-circle icon"></i>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                    <div class="nds-tabs nds-code nds-divided" hidden>
-                        <div class="nds-tab-list-container">
-                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                                    aria-controls="panel-neutral-1" id="tab-neutral-1">
-                                    <span class="nds-tab-label">HTML</span>
-                                </button>
-                            </nav>
-                        </div>
-                        <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-neutral-1"
-                                aria-labelledby="tab-neutral-1">
-                                <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                    </button>
-                                </div>
-                                <code class="lang-html code">
-                                    <span class="nds-featured-icon nds-neutral">
-                                      <i class="hgi hgi-stroke hgi-help-circle icon"></i>
-                                    </span>
-                                </code>
-                            </div>
-                        </div>
-                    </div>
                     </div>
                 </div>
             </div>
@@ -465,53 +137,162 @@ direction: ltr
     </div>
 </section>
 
+<!-- Built-in Features -->
+<section id="featuredIconsFeatures" class="nds-content-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Built-in Features</h2>
+        </div>
+        <div class="nds-section-content">
+            <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-colors icon"></i>
+                        <span class="label">Six Color Variants</span>
+                    </span>
+                    <p class="nds-item-desc">Brand, success, info, warning, error, and neutral. Each sets the background and icon color automatically through design tokens.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-resize-01 icon"></i>
+                        <span class="label">Four Sizes</span>
+                    </span>
+                    <p class="nds-item-desc">From 32px to 56px. Icon and padding scale proportionally through the <code class="nds-inline-code lang-html">--nds-icon-size</code> property.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-square-circle icon"></i>
+                        <span class="label">Shape and Style Modifiers</span>
+                    </span>
+                    <p class="nds-item-desc">Rounded square by default, with circle, outline, and dark fill options that combine freely with any color and size.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-paint-board icon"></i>
+                        <span class="label">Custom Color Override</span>
+                    </span>
+                    <p class="nds-item-desc">Set <code class="nds-inline-code lang-html">--icon-bg-color</code> and <code class="nds-inline-code lang-html">--icon-color</code> directly on the element without a variant class to create custom color pairings beyond the built-in variants.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 <!-- Usage Guidelines -->
-<section id="usageGuidelines" class="nds-content-section">
+<section id="featuredIconsGuidelines" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>
-            <p class="nds-section-description">Best practices for using featured icon components</p>
         </div>
         <div class="nds-section-content">
-                <div class="nds-content-block">
-                    <h3 class="nds-block-title">When to Use</h3>
-                    <ul>
-                        <li>Highlighting key features or benefits</li>
-                        <li>Drawing attention to important content</li>
-                        <li>Creating visual hierarchy and focus</li>
-                        <li>Representing status or categories</li>
-                        <li>Icon-based navigation elements</li>
-                    </ul>
-                </div>
-                <div class="nds-content-block">
-                    <h3 class="nds-block-title">Color Selection</h3>
-                    <ul>
-                        <li><strong>Brand:</strong> Primary actions and brand-related content</li>
-                        <li><strong>Success:</strong> Positive outcomes and achievements</li>
-                        <li><strong>Info:</strong> Informational content and tips</li>
-                        <li><strong>Warning:</strong> Cautionary information</li>
-                        <li><strong>Error:</strong> Error states and critical issues</li>
-                        <li><strong>Neutral:</strong> General purpose and default states</li>
-                    </ul>
-                </div>
-                <div class="nds-content-block">
-                    <h3 class="nds-block-title">Size Guidelines</h3>
-                    <ul>
-                        <li><strong>Small (32px):</strong> Dense layouts and secondary features</li>
-                        <li><strong>Medium (40px):</strong> Default size for most use cases</li>
-                        <li><strong>Large (48px):</strong> Prominent features and hero sections</li>
-                    </ul>
-                </div>
-                <div class="nds-content-block">
-                    <h3 class="nds-block-title">Accessibility</h3>
-                    <ul>
-                        <li>Always include proper alt text for icon meaning</li>
-                        <li>Ensure sufficient color contrast with backgrounds</li>
-                        <li>Consider accompanying text for complex meanings</li>
-                        <li>Use semantic HTML for interactive elements</li>
-                    </ul>
-                </div>
+
+            <div class="nds-content-block">
+                <h3 class="nds-block-title">Best Practices</h3>
+                <ul>
+                    <li>Use featured icons to visually anchor key items in <a href="{{ 'components/cards' | relative_url }}">Cards</a>, <a href="{{ 'components/definition-list' | relative_url }}">Definition Lists</a>, and page sections where a plain icon would not stand out enough</li>
+                    <li>Use inside <a href="{{ 'components/alert' | relative_url }}">Alerts</a> and <a href="{{ 'components/modal' | relative_url }}">Modals</a> to reinforce the message type with a matching color variant</li>
+                    <li>Use as leading icons in <a href="{{ 'components/drawer' | relative_url }}">Drawer</a> navigation items to give each section a distinct visual identity</li>
+                    <li>Match the color variant to the meaning: brand for primary actions, success/error/warning for status, info for informational, neutral for general purpose</li>
+                    <li>Don't use for decorative icons that carry no meaning. A plain icon without a container is lighter and less visually demanding</li>
+                    <li>Use <code class="nds-inline-code lang-html">nds-sm</code> in dense layouts like table rows or sidebar items. Use <code class="nds-inline-code lang-html">nds-lg</code> or <code class="nds-inline-code lang-html">nds-xl</code> for hero sections and landing page features</li>
+                    <li>Use <code class="nds-inline-code lang-html">nds-circle</code> when the icon sits next to rounded elements like avatars. Use the default rounded square for card headers and list items</li>
+                    <li>Use <code class="nds-inline-code lang-html">nds-dark</code> when the icon needs to stand out on light backgrounds with stronger visual weight. Use <code class="nds-inline-code lang-html">nds-outline</code> for a lighter, secondary treatment</li>
+                    <li>Override <code class="nds-inline-code lang-html">--icon-bg-color</code> and <code class="nds-inline-code lang-html">--icon-color</code> directly on the element without a variant class to create custom color pairings beyond the built-in variants</li>
+                </ul>
+            </div>
+
+            <div class="nds-content-block">
+                <h3 class="nds-block-title">Modifier Classes</h3>
+                <table class="nds-table nds-responsive">
+                    <thead>
+                        <tr>
+                            <th>Class</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">nds-brand</code></td>
+                            <td>Primary brand green. Default when no color is specified.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">nds-success</code></td>
+                            <td>Green for positive outcomes and confirmations.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">nds-info</code></td>
+                            <td>Blue for informational content and tips.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">nds-warning</code></td>
+                            <td>Yellow/amber for cautionary information.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">nds-error</code></td>
+                            <td>Red for errors and critical issues.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">nds-neutral</code></td>
+                            <td>Gray for general purpose and default states.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">nds-sm</code></td>
+                            <td>Small size, 32px. For dense layouts and secondary features.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">nds-md</code></td>
+                            <td>Medium size, 40px. Default when no size is specified.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">nds-lg</code></td>
+                            <td>Large size, 48px. For prominent features and section headers.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">nds-xl</code></td>
+                            <td>Extra large, 56px. For hero sections and landing page features.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">nds-circle</code></td>
+                            <td>Fully rounded shape instead of the default rounded square.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">nds-outline</code></td>
+                            <td>Transparent background with a colored border. Lighter visual weight.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">nds-dark</code></td>
+                            <td>Solid filled background with white icon. Stronger visual weight for emphasis.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="nds-content-block">
+                <h3 class="nds-block-title">CSS Custom Properties</h3>
+                <table class="nds-table nds-responsive">
+                    <thead>
+                        <tr>
+                            <th>Property</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--icon-bg-color</code></td>
+                            <td>Override the background color. Set on the element or a parent to create custom color pairings.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--icon-color</code></td>
+                            <td>Override the icon color. Pair with <code class="nds-inline-code lang-html">--icon-bg-color</code> for full control.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--nds-icon-size</code></td>
+                            <td>Override the container size in pixels. Icon and padding scale proportionally.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
         </div>
     </div>
 </section>

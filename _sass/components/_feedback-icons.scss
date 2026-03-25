@@ -107,12 +107,6 @@
         line-height: var(--nds-text-md-LH);
     }
 
-    &.nds-lg {
-        --feedback-size: 32px;
-        font-size: var(--nds-text-lg-FS);
-        line-height: var(--nds-text-lg-LH);
-    }
-
     .nds-feedback-message {
         flex: 1;
     }

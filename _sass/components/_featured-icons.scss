@@ -76,11 +76,6 @@
     --dark-bg-color: var(--featuredicons-icon-info);
   }
 
-  &.nds-gold {
-    --icon-bg-color: var(--colors-secondary-gold-100);
-    --icon-color: var(--colors-secondary-gold-800);
-    --dark-bg-color: var(--colors-secondary-gold-800);
-  }
 
   &.nds-warning, &.warning {
     --icon-bg-color: var(--featuredicons-background-warning-light);
