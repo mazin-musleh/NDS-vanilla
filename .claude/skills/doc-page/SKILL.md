@@ -70,12 +70,19 @@ Read source files to build a complete understanding of the component. **The sour
   - The page must document all of these.
 - **Existing page** (if refining): read it but do NOT trust it. You will validate it against source files in Phase 3.
 
+### MUST read for context
+
+- **`_data/sidemenu/sidemenu.yml`**: read this every time. It is your map of the entire design system: every component, layout, utility, UI shell element, and example page. Use it to:
+  - Know what related components exist when writing Best Practices ("don't use" alternatives, "use X with Y" suggestions)
+  - Link to related pages with `{{ 'path' | relative_url }}`
+  - Verify any component you mention by name actually exists
+  - Understand where the current component fits in the system
+
 ### Read when relevant
 
 - `standard-page.md`: front matter template (new pages)
 - `layout/section.md`: section hierarchy and tiers (new pages or adding sections)
 - `playground.md`: existing demo HTML if available
-- `_data/sidemenu/sidemenu.yml`: registration check (new pages)
 - `_sass/_hgiRoundedStroke.scss`: icon class lookup. **NEVER guess icon class names.**
 - **Additional reference pages** for complex components: `components/chart.md` (API-heavy with options reference), `components/cards.md` (builder-style multi-dropmenu demos). Judge whether the component's complexity warrants reading these.
 
@@ -145,8 +152,9 @@ All documentation pages are **English, LTR**. Always set `lang: en` and `directi
 
 - **Page title** (`title` in front matter): component name only
 - **Hero title**: `{Name} - National Design System`
+- **Hero description**: one sentence answering "What is this component and what does it do for me?" Study ALL demos on the page before writing this. Components often serve multiple purposes beyond what their name suggests. Do NOT list internal features ("smart positioning, keyboard navigation, accessibility support"). Do NOT narrow the component to one use case. Instead, state its purpose covering the full range of what the demos show. Example: "A toggle-activated menu for presenting actions, navigation links, or filter controls in a compact overlay."
 - **Section titles**: descriptive and SEO-friendly. Including the component name is fine
-- **Section descriptions**: add context the title doesn't cover. Do not restate the title.
+- **Section descriptions**: orient the developer on what they are looking at and when they would pick this variant over other sections on the page. Do not restate the title. Do not describe internal mechanisms. Good: "A condensed layout for contextual messages placed near the content they relate to." Bad: "Compact single-line layout with bottom stripe and solid icon."
 - Each demo card gets its own section. The section title describes the variant or mode shown (e.g., "Standard", "With Leading Icons", "Inline", "Toast Notifications"), not generic labels like "Overview"
 
 ### Page Structure
@@ -157,7 +165,7 @@ Section 2: Variants (if applicable)
 Section 3: Sizes (if applicable)
 Section 4: States (if applicable)
 Section 5: Built-in Features (definition-list grid with icons, its own section)
-Section 6: Usage Guidelines (content blocks: When to Use + JS API + additional blocks as needed)
+Section 6: Usage Guidelines (content blocks: Best Practices + Modifier Classes + Data Attributes + CSS Custom Properties + JS API)
 ```
 
 Components with distinct **display modes** (e.g., default/inline/toast for alerts) get a separate section per mode rather than forcing them into the Variants/Sizes/States structure.
@@ -201,22 +209,70 @@ Demo-wiring JS goes in `_js/nds-showcase.js`, NOT the component's own JS file. F
 
 Its own section (NOT inside Usage Guidelines). Uses `nds-definition-list` grid with icons. Get the HTML pattern from `alert.md`.
 
-- **Sells the component's capabilities.** Each item is a benefit the developer gets, not a how-to instruction.
-- **Titles**: short noun phrases (e.g., "Accordion Submenus", "State Management", "Scroll Overflow")
-- **Descriptions**: one flowing sentence per item. Lead with the outcome, not the implementation. Use `<code class="nds-inline-code">` for technical references like method names, data attributes, or CSS selectors.
+- **Sells the component's capabilities.** Each item should make a developer think "I get that for free just by using this component."
+- **Titles**: short, concrete noun phrases that name the capability. Prefer specific names over abstract ones ("Active Page Tracking" over "State Management", "Programmatic Control" over "JavaScript API").
+- **Descriptions**: one flowing sentence per item. Lead with what the developer sees or controls, not how it works internally.
+  - **Interaction patterns are fine**: accordion, collapsible, toggle, responsive. These describe how the developer experiences it.
+  - **Internal mechanisms are not**: CSS selectors (`:has()`), DOM detection techniques, CSS positioning strategies (`fixed positioning`), internal state tracking. The developer never touches these.
+  - **Mention code references only when the developer writes or calls them**: `data-state="active"` (developer sets this in HTML) is useful. `aria-expanded` (auto-applied by JS) is noise.
+  - Example shift: "Automatically detects viewport boundaries and adjusts positioning" becomes "Menus stay fully visible regardless of trigger position, flipping direction near screen edges."
 - Look up icons in `_sass/_hgiRoundedStroke.scss`. **NEVER guess.**
 - Aim for an **even number** of items (4, 6, 8) for the 2-column grid
-- For components with JS: include "Auto-initialization" (first item) and "JavaScript API" (last item)
+- For components with JS: include "Auto-initialization" (first item) and "Programmatic Control" (last item)
 
 ### Usage Guidelines Section
 
 Required content blocks:
 
-1. **When to Use**: decision guidance. When to pick this component vs alternatives, what it's good for, what to avoid. Based on your deep understanding of the component's capabilities from the source files.
-2. **JavaScript API** (if the component has JS): auto-init note + expandable code block documenting the full API with inline comments. See `alert.md` for format.
+1. **Best Practices**: 7-12 bullets mixing decision guidance and practical tips:
+   - **Primary use cases** (2-3 bullets): when to reach for this component. Go beyond the obvious. Add value by explaining specific scenarios.
+   - **"Don't use" guidance** (1-2 bullets): when this is the wrong choice and what to use instead. Only suggest alternatives that exist in NDS. Check `_data/sidemenu/sidemenu.yml` to verify before naming any component as an alternative.
+   - **Variant selection** (1-2 bullets): how to choose between variants/sizes/modes when it's not obvious from the demos.
+   - **Practical tips** (2-3 bullets): recommended item counts, grouping strategies, icon usage, content guidelines. These help developers who already chose the component build it well.
+2. **Modifier Classes** (when the component has class-based variants, sizes, or modes): a compact `nds-table nds-responsive` listing every modifier class with what it does. Developers should not need to click through demo toggles to discover available options. Extract these from the SCSS source. Example format:
+
+```html
+<table class="nds-table nds-responsive">
+    <thead><tr><th>Class</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td><code class="nds-inline-code lang-html">nds-sm</code></td><td>Compact size with reduced padding and font size</td></tr>
+        <tr><td><code class="nds-inline-code lang-html">nds-divided</code></td><td>Adds separator lines between list items</td></tr>
+    </tbody>
+</table>
+```
+
+Skip this block if the component has no modifier classes beyond its base.
+
+3. **Data Attributes** (when the component's JS reads `data-*` attributes for configuration): a table listing each attribute, where to place it, and valid values. These are the knobs a developer turns without writing JS. Extract from the JS source by searching for `dataset` or `getAttribute('data-`. Example:
+
+```html
+<table class="nds-table nds-responsive">
+    <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td><code class="nds-inline-code lang-html">data-state="active"</code></td><td>Set on <code class="nds-inline-code lang-html">&lt;li&gt;</code> to mark the current page. Parent menus expand automatically.</td></tr>
+    </tbody>
+</table>
+```
+
+Skip if the component has no developer-facing data attributes (ignore internal ones like `data-initialized`).
+
+4. **CSS Custom Properties** (when the SCSS defines `--component-*` variables or exposes tokens via `var()` fallbacks): a table of overridable properties with their defaults. Developers use these to customize without touching SCSS. Search the SCSS for custom property definitions. Example:
+
+```html
+<table class="nds-table nds-responsive">
+    <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td><code class="nds-inline-code lang-html">--drawer-max-height</code></td><td>none</td><td>Maximum height before scroll overflow activates</td></tr>
+    </tbody>
+</table>
+```
+
+Skip if the component exposes no custom properties.
+
+5. **JavaScript API** (if the component has JS): auto-init note + expandable code block documenting the full API with inline comments. See `alert.md` for format.
 
 Additional blocks based on component needs (only when genuinely warranted):
-- Accessibility, Responsive Behavior, Content Guidelines, Performance, API Reference (for complex option-heavy components like charts)
+- Accessibility, Responsive Behavior, Content Guidelines, Performance
 
 Do NOT document things the developer already gets from copying the code examples (ARIA attributes, semantic structure) or from the demo toggles (configuration classes). Focus on capabilities and decision guidance.
 
@@ -225,6 +281,7 @@ Do NOT document things the developer already gets from copying the code examples
 - **NEVER use em dashes** in any generated content. Use colons, commas, periods, or restructure instead.
 - Write code examples as raw HTML, not entity-encoded. Escape HTML tags meant to display as text (e.g., `&lt;a&gt;` in a JS comment).
 - Use `<code class="nds-inline-code lang-html">` for HTML references. Use `<code class="nds-inline-code lang-js">` for JS references. Do NOT use plain `<code>` or the `nds-code` wrapper for inline text.
+- **Links to other pages**: always use Jekyll's `relative_url` filter with `nds-color` class. Example: `<a class="nds-color" href="{{ 'components/stepper' | relative_url }}">Stepper</a>`. Never use absolute paths like `/components/stepper`.
 
 ### Registration (New Pages Only)
 
@@ -254,9 +311,24 @@ Before finishing, validate your work against this checklist. Every item MUST pas
 - [ ] Code tab markup is a direct copy of the live demo (same structure, classes, attributes, content, number of items. No abbreviation or placeholders)
 - [ ] All icons verified against `_sass/_hgiRoundedStroke.scss` (none guessed)
 - [ ] Built-in Features section exists with even number of items
-- [ ] Usage Guidelines has "When to Use" block
+- [ ] Usage Guidelines has "Best Practices" block
 - [ ] Usage Guidelines has "JS API" block (if component has JS)
 - [ ] Additional Usage Guidelines blocks exist where the component warrants them (API Reference for option-heavy components, Accessibility for keyboard-managed components, etc.)
+
+### Content Quality
+- [ ] Hero description states what the component does for the developer, not a list of internal features
+- [ ] Hero description covers the full range of use cases shown in the demos
+- [ ] Section descriptions orient the developer on when/why to pick this variant, not how it works internally
+- [ ] Built-in Features descriptions lead with outcomes, not internal mechanisms
+- [ ] Best Practices has at least 7 bullets including "don't use" guidance and practical tips
+- [ ] Best Practices covers both when to use/not use AND how to use well
+- [ ] Alternative components mentioned in "don't use" bullets actually exist in NDS
+
+### Reference Tables
+- [ ] Modifier Classes table exists (if component has class-based variants/sizes/modes)
+- [ ] Data Attributes table exists (if component JS reads data-* for configuration)
+- [ ] CSS Custom Properties table exists (if SCSS exposes overridable custom properties)
+- [ ] All table entries extracted from source files, not guessed
 
 ### Formatting
 - [ ] No em dashes anywhere in the page
