@@ -84,15 +84,6 @@
         }
     }
 
-    .nds-dropmenu {
-        --menu-padding: var(--spacing-lg);
-
-        .nds-dropmenu-menu {
-            padding-top: var(--spacing-2xl);
-        }
-
-    }
-
     @include desktop(min) {
         &.nds-section-action {
             flex-direction: row;

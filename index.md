@@ -12,7 +12,7 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">About The Project</h2>
-            <p class="nds-section-description">What this project is, why it was built, and what it covers.</p>
+            <p class="nds-section-description">Why it was built, and what it covers.</p>
         </div>
         <div class="nds-section-content">
             <p>The Digital Government Authority published a <a href="https://www.figma.com/@sdga" target="_blank" class="nds-primary">unified design system on Figma</a> to standardize government digital services. The specifications are clear, but converting them to working code remains a challenge for most teams.</p>
@@ -124,14 +124,14 @@ direction: ltr
                 </button>
                 <div class="nds-dropmenu-menu" style="min-width: 300px;" hidden>
                     <div class="nds-dropmenu-scroll">
-                        <div class="nds-dropmenu-item" data-filter="category" data-filter-legend="Category"
+                        <div data-filter="category" data-filter-legend="Category"
                             data-filter-type="checkbox" data-no-auto-close></div>
-                        <hr class="nds-dropmenu-divider nds-lg">
-                        <div class="nds-dropmenu-item" data-filter="tech" data-filter-legend="Technology"
+                        <hr class="nds-dropmenu-divider">
+                        <div data-filter="tech" data-filter-legend="Technology"
                             data-filter-type="checkbox" data-no-auto-close></div>
                     </div>
                     <div class="nds-dropmenu-footer">
-                        <hr class="nds-dropmenu-divider nds-lg">
+                        <hr class="nds-divider">
                         <div class="nds-dropmenu-action nds-grid">
                             <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
                                 data-filter-action="clear" data-no-auto-close>
