@@ -226,18 +226,17 @@ direction: ltr
     </div>
 </section>
 
-<!-- Prevent Auto-Close -->
+<!-- Scrollable Menu with No Auto-Close -->
 <section id="dropmenuNoAutoClose" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
-            <h2 class="nds-section-title">Prevent Auto-Close</h2>
-            <p class="nds-section-description">Keep the menu open when interacting with form controls using data-no-auto-close</p>
+            <h2 class="nds-section-title">Scrollable Menu with No Auto-Close</h2>
+            <p class="nds-section-description">Use <code class="nds-inline-code lang-html">nds-dropmenu-scroll</code> for scrollable content areas and <code class="nds-inline-code lang-html">data-no-auto-close</code> to keep the menu open when interacting with form controls</p>
         </div>
         <div class="nds-section-content">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
-
                         <div class="demo-action">
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
@@ -248,123 +247,123 @@ direction: ltr
                     <div class="demo-container">
                         <div class="state-demo">
                             <div class="nds-dropmenu">
-                                <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
-                                    <i class="hgi hgi-stroke hgi-filter icon"></i>
-                                    <span class="label">Filter</span>
+                                <button class="nds-btn nds-neutral nds-menu-btn nds-dropmenu-trigger">
+                                    <i class="hgi hgi-stroke hgi-settings-02 icon"></i>
+                                    <span class="label">Settings</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden style="min-width: 220px;">
                                     <div class="nds-dropmenu-scroll">
-                                        <fieldset class="nds-form-group nds-check-group nds-dropmenu-item" data-no-auto-close>
-                                                <legend class="label">Status</legend>
-                                                <div class="nds-form-container nds-check-container">
-                                                    <div class="nds-form-header">
-                                                        <label for="filter-active">
-                                                            <span class="label">Active</span>
-                                                        </label>
-                                                    </div>
-                                                    <div class="nds-form-control">
-                                                        <input type="checkbox" id="filter-active" class="nds-check" checked>
+                                        <fieldset class="nds-dropmenu-group nds-form-group nds-check-group" data-no-auto-close>
+                                            <legend class="label">Notifications</legend>
+                                            <div class="nds-form-container nds-switch-container">
+                                                <div class="nds-form-header">
+                                                    <label for="setting-email"><span class="label">Email</span></label>
+                                                </div>
+                                                <div class="nds-form-control">
+                                                    <div class="nds-switch">
+                                                        <input type="checkbox" id="setting-email" class="nds-switch-input" checked>
+                                                        <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
                                                     </div>
                                                 </div>
-                                                <div class="nds-form-container nds-check-container">
-                                                    <div class="nds-form-header">
-                                                        <label for="filter-pending">
-                                                            <span class="label">Pending</span>
-                                                        </label>
-                                                    </div>
-                                                    <div class="nds-form-control">
-                                                        <input type="checkbox" id="filter-pending" class="nds-check">
+                                            </div>
+                                            <div class="nds-form-container nds-switch-container">
+                                                <div class="nds-form-header">
+                                                    <label for="setting-sms"><span class="label">SMS</span></label>
+                                                </div>
+                                                <div class="nds-form-control">
+                                                    <div class="nds-switch">
+                                                        <input type="checkbox" id="setting-sms" class="nds-switch-input">
+                                                        <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
                                                     </div>
                                                 </div>
-                                                <div class="nds-form-container nds-check-container">
-                                                    <div class="nds-form-header">
-                                                        <label for="filter-complete">
-                                                            <span class="label">Complete</span>
-                                                        </label>
-                                                    </div>
-                                                    <div class="nds-form-control">
-                                                        <input type="checkbox" id="filter-complete" class="nds-check">
+                                            </div>
+                                            <div class="nds-form-container nds-switch-container">
+                                                <div class="nds-form-header">
+                                                    <label for="setting-push"><span class="label">Push</span></label>
+                                                </div>
+                                                <div class="nds-form-control">
+                                                    <div class="nds-switch">
+                                                        <input type="checkbox" id="setting-push" class="nds-switch-input" checked>
+                                                        <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
                                                     </div>
                                                 </div>
-                                            </fieldset>
+                                            </div>
+                                        </fieldset>
                                         <hr class="nds-divider">
-                                        <fieldset class="nds-form-group nds-check-group nds-dropmenu-item" data-no-auto-close>
-                                                <legend class="label">Priority</legend>
-                                                <div class="nds-form-container nds-check-container">
-                                                    <div class="nds-form-header">
-                                                        <label for="filter-high">
-                                                            <span class="label">High</span>
-                                                        </label>
-                                                    </div>
-                                                    <div class="nds-form-control">
-                                                        <input type="checkbox" id="filter-high" class="nds-check">
-                                                    </div>
+                                        <fieldset class="nds-dropmenu-group nds-form-group nds-check-group" data-no-auto-close>
+                                            <legend class="label">Display</legend>
+                                            <div class="nds-form-container nds-check-container">
+                                                <div class="nds-form-header">
+                                                    <label for="setting-compact"><span class="label">Compact view</span></label>
                                                 </div>
-                                                <div class="nds-form-container nds-check-container">
-                                                    <div class="nds-form-header">
-                                                        <label for="filter-medium">
-                                                            <span class="label">Medium</span>
-                                                        </label>
-                                                    </div>
-                                                    <div class="nds-form-control">
-                                                        <input type="checkbox" id="filter-medium" class="nds-check">
-                                                    </div>
+                                                <div class="nds-form-control">
+                                                    <input type="checkbox" id="setting-compact" class="nds-check">
                                                 </div>
-                                                <div class="nds-form-container nds-check-container">
-                                                    <div class="nds-form-header">
-                                                        <label for="filter-low">
-                                                            <span class="label">Low</span>
-                                                        </label>
-                                                    </div>
-                                                    <div class="nds-form-control">
-                                                        <input type="checkbox" id="filter-low" class="nds-check">
-                                                    </div>
+                                            </div>
+                                            <div class="nds-form-container nds-check-container">
+                                                <div class="nds-form-header">
+                                                    <label for="setting-icons"><span class="label">Show icons</span></label>
                                                 </div>
-                                            </fieldset>
+                                                <div class="nds-form-control">
+                                                    <input type="checkbox" id="setting-icons" class="nds-check" checked>
+                                                </div>
+                                            </div>
+                                            <div class="nds-form-container nds-check-container">
+                                                <div class="nds-form-header">
+                                                    <label for="setting-desc"><span class="label">Show descriptions</span></label>
+                                                </div>
+                                                <div class="nds-form-control">
+                                                    <input type="checkbox" id="setting-desc" class="nds-check" checked>
+                                                </div>
+                                            </div>
+                                        </fieldset>
                                         <hr class="nds-divider">
-                                        <fieldset class="nds-form-group nds-check-group nds-dropmenu-item" data-no-auto-close>
-                                                <legend class="label">Category</legend>
-                                                <div class="nds-form-container nds-check-container">
-                                                    <div class="nds-form-header">
-                                                        <label for="filter-design">
-                                                            <span class="label">Design</span>
-                                                        </label>
-                                                    </div>
-                                                    <div class="nds-form-control">
-                                                        <input type="checkbox" id="filter-design" class="nds-check">
+                                        <fieldset class="nds-dropmenu-group nds-form-group nds-check-group" data-no-auto-close>
+                                            <legend class="label">Privacy</legend>
+                                            <div class="nds-form-container nds-switch-container">
+                                                <div class="nds-form-header">
+                                                    <label for="setting-analytics"><span class="label">Analytics</span></label>
+                                                </div>
+                                                <div class="nds-form-control">
+                                                    <div class="nds-switch">
+                                                        <input type="checkbox" id="setting-analytics" class="nds-switch-input" checked>
+                                                        <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
                                                     </div>
                                                 </div>
-                                                <div class="nds-form-container nds-check-container">
-                                                    <div class="nds-form-header">
-                                                        <label for="filter-development">
-                                                            <span class="label">Development</span>
-                                                        </label>
-                                                    </div>
-                                                    <div class="nds-form-control">
-                                                        <input type="checkbox" id="filter-development" class="nds-check">
+                                            </div>
+                                            <div class="nds-form-container nds-switch-container">
+                                                <div class="nds-form-header">
+                                                    <label for="setting-cookies"><span class="label">Cookies</span></label>
+                                                </div>
+                                                <div class="nds-form-control">
+                                                    <div class="nds-switch">
+                                                        <input type="checkbox" id="setting-cookies" class="nds-switch-input" checked>
+                                                        <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
                                                     </div>
                                                 </div>
-                                                <div class="nds-form-container nds-check-container">
-                                                    <div class="nds-form-header">
-                                                        <label for="filter-marketing">
-                                                            <span class="label">Marketing</span>
-                                                        </label>
-                                                    </div>
-                                                    <div class="nds-form-control">
-                                                        <input type="checkbox" id="filter-marketing" class="nds-check">
+                                            </div>
+                                            <div class="nds-form-container nds-switch-container">
+                                                <div class="nds-form-header">
+                                                    <label for="setting-tracking"><span class="label">Ad tracking</span></label>
+                                                </div>
+                                                <div class="nds-form-control">
+                                                    <div class="nds-switch">
+                                                        <input type="checkbox" id="setting-tracking" class="nds-switch-input">
+                                                        <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
                                                     </div>
                                                 </div>
-                                            </fieldset>
+                                            </div>
+                                        </fieldset>
                                     </div>
                                     <div class="nds-dropmenu-footer">
                                         <hr class="nds-divider">
                                         <div class="nds-dropmenu-action nds-grid">
                                             <button class="nds-btn nds-secondary nds-dropmenu-item" type="button" data-no-auto-close
-                                                onclick="this.closest('.nds-dropmenu-menu').querySelectorAll('input[type=checkbox]').forEach(c=>c.checked=false)">
-                                                <span class="label">Clear</span>
+                                                onclick="this.closest('.nds-dropmenu-menu').querySelectorAll('input').forEach(c=>c.checked=false)">
+                                                <span class="label">Reset</span>
                                             </button>
                                             <button class="nds-btn nds-primary nds-dropmenu-item" type="button">
-                                                <span class="label">Apply</span>
+                                                <span class="label">Save</span>
                                             </button>
                                         </div>
                                     </div>
@@ -393,105 +392,61 @@ direction: ltr
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
 <div class="nds-dropmenu">
-  <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
-    <i class="hgi hgi-stroke hgi-filter icon"></i>
-    <span class="label">Filter</span>
+  <button class="nds-btn nds-neutral nds-menu-btn nds-dropmenu-trigger">
+    <i class="hgi hgi-stroke hgi-settings-02 icon"></i>
+    <span class="label">Settings</span>
   </button>
   <div class="nds-dropmenu-menu" hidden style="min-width: 220px;">
     <div class="nds-dropmenu-scroll">
-      <fieldset class="nds-form-group nds-check-group nds-dropmenu-item" data-no-auto-close>
-          <legend class="label">Status</legend>
-          <div class="nds-form-container nds-check-container">
-            <div class="nds-form-header">
-              <label for="filter-active"><span class="label">Active</span></label>
-            </div>
-            <div class="nds-form-control">
-              <input type="checkbox" id="filter-active" class="nds-check" checked>
+      <!-- data-no-auto-close keeps menu open on interaction -->
+      <fieldset class="nds-dropmenu-group nds-form-group nds-check-group"
+        data-no-auto-close>
+        <legend class="label">Notifications</legend>
+        <div class="nds-form-container nds-switch-container">
+          <div class="nds-form-header">
+            <label for="setting-email">
+              <span class="label">Email</span>
+            </label>
+          </div>
+          <div class="nds-form-control">
+            <div class="nds-switch">
+              <input type="checkbox" id="setting-email"
+                class="nds-switch-input" checked>
+              <div class="nds-switch-track">
+                <div class="nds-switch-thumb"></div>
+              </div>
             </div>
           </div>
-          <div class="nds-form-container nds-check-container">
-            <div class="nds-form-header">
-              <label for="filter-pending"><span class="label">Pending</span></label>
-            </div>
-            <div class="nds-form-control">
-              <input type="checkbox" id="filter-pending" class="nds-check">
-            </div>
-          </div>
-          <div class="nds-form-container nds-check-container">
-            <div class="nds-form-header">
-              <label for="filter-complete"><span class="label">Complete</span></label>
-            </div>
-            <div class="nds-form-control">
-              <input type="checkbox" id="filter-complete" class="nds-check">
-            </div>
-          </div>
+        </div>
+        <!-- more switches... -->
       </fieldset>
       <hr class="nds-divider">
-      <fieldset class="nds-form-group nds-check-group nds-dropmenu-item" data-no-auto-close>
-          <legend class="label">Priority</legend>
-          <div class="nds-form-container nds-check-container">
-            <div class="nds-form-header">
-              <label for="filter-high"><span class="label">High</span></label>
-            </div>
-            <div class="nds-form-control">
-              <input type="checkbox" id="filter-high" class="nds-check">
-            </div>
+      <fieldset class="nds-dropmenu-group nds-form-group nds-check-group"
+        data-no-auto-close>
+        <legend class="label">Display</legend>
+        <div class="nds-form-container nds-check-container">
+          <div class="nds-form-header">
+            <label for="setting-compact">
+              <span class="label">Compact view</span>
+            </label>
           </div>
-          <div class="nds-form-container nds-check-container">
-            <div class="nds-form-header">
-              <label for="filter-medium"><span class="label">Medium</span></label>
-            </div>
-            <div class="nds-form-control">
-              <input type="checkbox" id="filter-medium" class="nds-check">
-            </div>
+          <div class="nds-form-control">
+            <input type="checkbox" id="setting-compact" class="nds-check">
           </div>
-          <div class="nds-form-container nds-check-container">
-            <div class="nds-form-header">
-              <label for="filter-low"><span class="label">Low</span></label>
-            </div>
-            <div class="nds-form-control">
-              <input type="checkbox" id="filter-low" class="nds-check">
-            </div>
-          </div>
-      </fieldset>
-      <hr class="nds-divider">
-      <fieldset class="nds-form-group nds-check-group nds-dropmenu-item" data-no-auto-close>
-          <legend class="label">Category</legend>
-          <div class="nds-form-container nds-check-container">
-            <div class="nds-form-header">
-              <label for="filter-design"><span class="label">Design</span></label>
-            </div>
-            <div class="nds-form-control">
-              <input type="checkbox" id="filter-design" class="nds-check">
-            </div>
-          </div>
-          <div class="nds-form-container nds-check-container">
-            <div class="nds-form-header">
-              <label for="filter-development"><span class="label">Development</span></label>
-            </div>
-            <div class="nds-form-control">
-              <input type="checkbox" id="filter-development" class="nds-check">
-            </div>
-          </div>
-          <div class="nds-form-container nds-check-container">
-            <div class="nds-form-header">
-              <label for="filter-marketing"><span class="label">Marketing</span></label>
-            </div>
-            <div class="nds-form-control">
-              <input type="checkbox" id="filter-marketing" class="nds-check">
-            </div>
-          </div>
+        </div>
+        <!-- more checkboxes... -->
       </fieldset>
     </div>
     <div class="nds-dropmenu-footer">
       <hr class="nds-divider">
       <div class="nds-dropmenu-action nds-grid">
-        <button class="nds-btn nds-secondary nds-dropmenu-item" type="button" data-no-auto-close
-          onclick="this.closest('.nds-dropmenu-menu').querySelectorAll('input[type=checkbox]').forEach(c=>c.checked=false)">
-          <span class="label">Clear</span>
+        <button class="nds-btn nds-secondary nds-dropmenu-item"
+          type="button" data-no-auto-close>
+          <span class="label">Reset</span>
         </button>
-        <button class="nds-btn nds-primary nds-dropmenu-item" type="button">
-          <span class="label">Apply</span>
+        <button class="nds-btn nds-primary nds-dropmenu-item"
+          type="button">
+          <span class="label">Save</span>
         </button>
       </div>
     </div>
