@@ -147,9 +147,10 @@
             setDefault(this.menu, 'role', 'menu');
             setDefault(this.menu, 'aria-hidden', 'true');
 
-            // Set role for menu items (skip form controls)
+            // Set role for menu items (skip form controls and groups)
             this.menu.querySelectorAll('.nds-dropmenu-item').forEach(item => {
-                if (!item.classList.contains('nds-form-control')) {
+                if (!item.classList.contains('nds-form-control')
+                    && !item.classList.contains('nds-dropmenu-group')) {
                     setDefault(item, 'role', 'menuitem');
                 }
             });
