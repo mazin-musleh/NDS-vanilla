@@ -61,15 +61,15 @@ exclude_showcase: false
                 <div class="nds-dropmenu-menu" style="min-width: 300px;" hidden>
                     <div class="nds-dropmenu-scroll">
                         <!-- Filter by Most Used -->
-                        <div class="nds-dropmenu-item" data-filter="most-used" data-filter-legend="Most Used"
+                        <div data-filter="most-used" data-filter-legend="Most Used"
                             data-filter-type="switch" data-no-auto-close></div>
-                        <hr class="nds-dropmenu-divider nds-lg">
+                        <hr class="nds-divider">
                         <!-- Filter by System -->
-                        <div class="nds-dropmenu-item" data-filter="system" data-filter-legend="System"
+                        <div data-filter="system" data-filter-legend="System"
                             data-filter-type="checkbox" data-no-auto-close></div>
                     </div>
                     <div class="nds-dropmenu-footer">
-                        <hr class="nds-dropmenu-divider nds-lg">
+                        <hr class="nds-divider">
                         <div class="nds-dropmenu-action nds-grid">
                             <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
                                 data-filter-action="clear" data-no-auto-close>

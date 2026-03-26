@@ -790,8 +790,14 @@
                 if (filterName === 'search') {
                     this.setupSearchFilter(element);
                 } else if (filterType === 'checkbox' || filterType === 'radio' || filterType === 'switch') {
-                    // Auto-generate filter inputs
-                    this.setupDynamicFilter(element, filterName, filterType);
+                    // Check for explicit values via data-filter-values
+                    const staticValues = element.getAttribute('data-filter-values');
+                    if (staticValues) {
+                        const values = JSON.parse(staticValues);
+                        this.setupDynamicFilter(element, filterName, filterType, values);
+                    } else {
+                        this.setupDynamicFilter(element, filterName, filterType);
+                    }
                 } else {
                     // Skip data markers inside the target container (e.g. <span data-filter="x"> in cards)
                     const isDataMarker = this.targetContainer && this.targetContainer.contains(element);
@@ -1010,12 +1016,12 @@
         // DYNAMIC FILTER (AUTO-GENERATED)
         // ==============================================
 
-        setupDynamicFilter(element, filterName, inputType) {
-            // Generate filter inputs from card data
-            this.generateFilterInputs(element, filterName, inputType);
+        setupDynamicFilter(element, filterName, inputType, explicitValues = null) {
+            // Generate filter inputs (may replace element with fieldset)
+            const actualElement = this.generateFilterInputs(element, filterName, inputType, explicitValues) || element;
 
             // Setup the filter after generation
-            this.setupManualFilter(element, filterName);
+            this.setupManualFilter(actualElement, filterName);
         }
 
         setupManualFilter(element, filterName) {
@@ -1119,18 +1125,14 @@
             return Array.from(values).sort((a, b) => a.localeCompare(b, 'ar'));
         }
 
-        generateFilterInputs(container, filterName, inputType) {
-            // Skip auto-generation in form submission mode
-            if (this.isFormMode) {
-                console.warn(`NDS Filter: Auto-generation not supported in form submission mode. Use manual filter inputs for filter "${filterName}".`);
-                return;
-            }
-
-            // Auto-collect values from cards
-            const values = this.collectFilterValues(filterName);
+        generateFilterInputs(container, filterName, inputType, explicitValues = null) {
+            // Use explicit values if provided, otherwise collect from cards
+            const values = explicitValues || this.collectFilterValues(filterName);
 
             if (values.length === 0) {
-                console.warn(`NDS Filter: No values found for filter "${filterName}". No cards with data-filter="${filterName}" found.`);
+                if (!explicitValues) {
+                    console.warn(`NDS Filter: No values found for filter "${filterName}". Use data-filter-values or populateFilter() to provide values.`);
+                }
                 return;
             }
 
@@ -1141,14 +1143,14 @@
             let wrapper = container;
             let fieldset;
 
-            // Check if container should be wrapped in nds-dropmenu-item
+            // Check if container should get dropmenu-group spacing
             const isInDropmenu = container.closest('.nds-dropmenu-menu') !== null;
 
             if (container.tagName === 'FIELDSET') {
                 fieldset = container;
-                // Add nds-dropmenu-item if in dropmenu and not already has it
-                if (isInDropmenu && !fieldset.classList.contains('nds-dropmenu-item')) {
-                    fieldset.classList.add('nds-dropmenu-item');
+                // Add nds-dropmenu-group if in dropmenu and not already has it
+                if (isInDropmenu && !fieldset.classList.contains('nds-dropmenu-group')) {
+                    fieldset.classList.add('nds-dropmenu-group');
                 }
                 // Clear existing content
                 const existingLegend = fieldset.querySelector('legend');
@@ -1159,25 +1161,45 @@
                     legend.textContent = legendText || (existingLegend ? existingLegend.textContent : '');
                     fieldset.appendChild(legend);
                 }
-            } else {
-                // Create fieldset inside container
+            } else if (values.length > 1) {
+                // Multiple values: convert to fieldset for semantic grouping
                 fieldset = document.createElement('fieldset');
-                fieldset.className = 'nds-check-group';
-                if (isInDropmenu) {
-                    fieldset.classList.add('nds-dropmenu-item');
+                // Copy classes from container
+                fieldset.className = container.className;
+                // Copy data attributes
+                Array.from(container.attributes).forEach(attr => {
+                    if (attr.name !== 'class' && attr.name !== 'id') {
+                        fieldset.setAttribute(attr.name, attr.value);
+                    }
+                });
+                if (container.id) fieldset.id = container.id;
+                if (isInDropmenu && !fieldset.classList.contains('nds-dropmenu-group')) {
+                    fieldset.classList.add('nds-dropmenu-group');
                 }
+                // Add form classes since placeholder only has dropmenu classes
+                fieldset.classList.add('nds-form-group');
                 if (legendText) {
                     const legend = document.createElement('legend');
                     legend.className = 'label';
                     legend.textContent = legendText;
                     fieldset.appendChild(legend);
                 }
+                container.replaceWith(fieldset);
+                wrapper = fieldset;
+            } else {
+                // Single value: keep as div, treat as dropmenu item
+                fieldset = container;
+                if (isInDropmenu) {
+                    fieldset.classList.remove('nds-dropmenu-group');
+                    if (!fieldset.classList.contains('nds-dropmenu-item')) {
+                        fieldset.classList.add('nds-dropmenu-item');
+                    }
+                }
                 container.innerHTML = '';
-                container.appendChild(fieldset);
             }
 
-            // Add nds-check-group class
-            if (!fieldset.classList.contains('nds-check-group')) {
+            // Add nds-check-group class for groups (multiple inputs)
+            if (values.length > 1 && !fieldset.classList.contains('nds-check-group')) {
                 fieldset.classList.add('nds-check-group');
             }
 
@@ -1259,6 +1281,8 @@
                 formContainer.appendChild(formControl);
                 fieldset.appendChild(formContainer);
             });
+
+            return fieldset;
         }
 
         generateId() {
@@ -1662,31 +1686,27 @@
 
         /**
          * Refresh items list and regenerate filters
-         * Only works for client-side filtering (not form submission mode)
          */
         refresh() {
-            if (this.isFormMode) {
-                console.warn('NDS Filter: refresh() not supported in form submission mode. Use manual filter inputs.');
-                return;
-            }
-
             // Update items list
             this.items = this.targetContainer
                 ? Array.from(this.targetContainer.querySelectorAll('.nds-card'))
                 : [];
 
-            // Regenerate auto-generated filters
+            // Regenerate auto-scanned filters only (skip data-filter-values — those have their own source)
             const filterElements = this.filterContainer.querySelectorAll('[data-filter-type]');
             filterElements.forEach(element => {
+                if (element.hasAttribute('data-filter-values')) return;
+
                 const filterName = element.getAttribute('data-filter');
                 const filterType = element.getAttribute('data-filter-type');
 
                 // Clear existing inputs first
                 element.innerHTML = '';
 
-                // Regenerate
-                this.generateFilterInputs(element, filterName, filterType);
-                this.setupManualFilter(element, filterName);
+                // Regenerate (may replace element with fieldset)
+                const actualEl = this.generateFilterInputs(element, filterName, filterType) || element;
+                this.setupManualFilter(actualEl, filterName);
             });
 
             // Reapply current filters
@@ -1728,6 +1748,21 @@
             this.updateFilterCriteria(filterName);
             this.updateApplyButtonLabel();
             this.applyFilters();
+        }
+
+        populateFilter(filterName, values, inputType = null) {
+            // Find the container element for this filter
+            const container = this.filterContainer.querySelector(`[data-filter="${filterName}"]`);
+            if (!container) return;
+
+            // Determine input type from data attribute or parameter
+            const type = inputType || container.getAttribute('data-filter-type') || 'checkbox';
+
+            // Generate inputs with explicit values
+            const actualElement = this.generateFilterInputs(container, filterName, type, values) || container;
+
+            // Re-setup the filter listeners
+            this.setupManualFilter(actualElement, filterName);
         }
 
         // Legacy API for backward compatibility
@@ -1921,7 +1956,7 @@
  *                  data-filter-legend="القسم">
  *             </div>
  *
- *             <hr class="nds-dropmenu-divider">
+ *             <hr class="nds-divider">
  *             <div class="nds-dropmenu-action nds-grid">
  *                 <button class="nds-btn nds-secondary" data-filter-action="clear">
  *                     <span class="label">إعادة تعيين</span>
