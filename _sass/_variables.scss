@@ -137,8 +137,6 @@
     // Autocomplete
     --autocomplete-highlight: var(--colors-primary-sa-flag-100);
     --autocomplete-active: var(--background-neutral-light);
-    // DGA bug fix: --tag-border-neutral-light is neutral-50 in DGA, too light
-    --tag-border-neutral-light: var(--colors-neutral-200);
 
     // Avatar
     --avatar-background: var(--button-background-neutral-default);
@@ -173,6 +171,11 @@
 
     --background-neutral-light: var(--colors-neutral-100);
     --background-card-hovered: var(--colors-neutral-50);
+
+    // ── DGA Token Corrections ──
+    // Fixes for DGA tokens that don't match the design spec
+    --tag-border-neutral-light: var(--colors-neutral-200); // DGA uses neutral-50, too light
+    --border-disabled: var(--colors-neutral-300); // DGA uses neutral-400, spec is #D2D6DB (neutral-300)
 
     // NDS overrides (DGA source values adjusted for NDS)
     /* --button-background-neutral-hovered: var(--colors-neutral-200);

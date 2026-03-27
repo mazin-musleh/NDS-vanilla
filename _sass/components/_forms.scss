@@ -111,11 +111,6 @@
         }
     }
 
-    // Hide action (not fix) on readonly/disabled
-    &:is([data-state~="readonly"], [data-state~="disabled"]) .nds-form-control .nds-form-action:not(.nds-prefix, .nds-suffix) {
-        display: none;
-    }
-
     // Readonly state
     &[data-state~="readonly"] .nds-form-control {
         border-color: var(--border-neutral-primary);
@@ -212,9 +207,7 @@ fieldset {
     position: relative;
 
 
-    &>input,
-    textarea,
-    select {
+    :is(input, textarea, select):not(:disabled) {
         color: var(--form-field-text-focused);
         outline: unset !important;
         outline-offset: unset !important;
@@ -298,9 +291,6 @@ fieldset {
             color: var(--text-default-disabled) !important;
         }
 
-        .nds-form-action:not(.nds-prefix, .nds-suffix) {
-            display: none;
-        }
     }
 
     >i {
