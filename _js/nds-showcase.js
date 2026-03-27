@@ -72,6 +72,7 @@
             initializeDirectionSwitcher: initializeDirectionSwitcher,
             startUploadSimulation: startUploadSimulation,
             populateDemoFiles: populateDemoFiles,
+            reapplyActiveTogglers: reapplyActiveTogglers,
             init: initializeShowcase
         };
     }
@@ -165,51 +166,235 @@
         });
     }
 
+    // Parse data-toggler JSON into normalized togglePairs array, or null if invalid
+    function parseTogglerData(button) {
+        var togglerData = button.getAttribute('data-toggler');
+        if (!togglerData) return null;
+
+        try {
+            var parsed = JSON.parse(togglerData);
+            var pairs = [];
+
+            if (Array.isArray(parsed) && parsed.length >= 2) {
+                if (typeof parsed[0] === 'string') {
+                    pairs = [[parsed[0], parsed[1], parsed[2], parsed[3]]];
+                } else {
+                    pairs = parsed;
+                }
+
+                var ACTION_KEYWORDS = ['add', 'remove'];
+                pairs = pairs.map(function(pair) {
+                    var op = pair[3];
+                    if (op && ACTION_KEYWORDS.includes(op)) {
+                        return [pair[0], pair[1], pair[2], 'class', op];
+                    }
+                    return pair;
+                });
+            } else {
+                return null;
+            }
+
+            return pairs;
+        } catch (e) {
+            return null;
+        }
+    }
+
+    // Find all matching target elements within a demo card's .demo-container and .code-example
+    function findToggleTargets(demoCard, targetSelector) {
+        var targets = [];
+        var searchContainers = [
+            ...demoCard.querySelectorAll('.demo-container'),
+            ...demoCard.querySelectorAll('.code-example')
+        ];
+
+        if (targetSelector.startsWith('#')) {
+            var idSelector = targetSelector.substring(1);
+            var idParts = idSelector.split(' ');
+            var elementId = idParts[0];
+            var subSelector = idParts.slice(1).join(' ');
+
+            for (var i = 0; i < searchContainers.length; i++) {
+                var elementById = searchContainers[i].querySelector('#' + elementId);
+                if (elementById) {
+                    if (subSelector) {
+                        targets.push(...elementById.querySelectorAll(subSelector));
+                    } else {
+                        targets.push(elementById);
+                    }
+                }
+            }
+        } else if (targetSelector === '.demo-container') {
+            targets.push(...demoCard.querySelectorAll('.demo-container'));
+        } else if (targetSelector === '.code-example') {
+            targets.push(...demoCard.querySelectorAll('.code-example'));
+        } else {
+            for (var i = 0; i < searchContainers.length; i++) {
+                var container = searchContainers[i];
+                if (targetSelector.includes(' ') || targetSelector.includes('[') || targetSelector.includes(':')) {
+                    targets.push(...container.querySelectorAll(targetSelector));
+                } else if (targetSelector.startsWith('.')) {
+                    if (targetSelector.includes('.') && targetSelector.lastIndexOf('.') > 0) {
+                        targets.push(...container.querySelectorAll(targetSelector));
+                    } else {
+                        var className = targetSelector.substring(1);
+                        var allElements = container.querySelectorAll('*');
+                        var exactMatches = Array.from(allElements).filter(function(el) {
+                            return el.classList.contains(className) && Array.from(el.classList).includes(className);
+                        });
+                        targets.push(...exactMatches);
+                    }
+                } else {
+                    targets.push(...container.querySelectorAll(targetSelector));
+                }
+            }
+        }
+
+        return targets;
+    }
+
+    // Re-apply all active data-toggler operations in a demo card after DOM changes.
+    // Handles mutual exclusion: reverses deselected siblings before applying selected ones.
+    function reapplyActiveTogglers(demoCard) {
+        var allTogglerBtns = demoCard.querySelectorAll('.demo-toggle-btn[data-toggler]');
+
+        // Collect types that have an active (selected) button
+        var activeTypes = {};
+        allTogglerBtns.forEach(function(btn) {
+            if (!btn.classList.contains('selected')) return;
+            var pairs = parseTogglerData(btn);
+            if (!pairs) return;
+            pairs.forEach(function(pair) {
+                var type = pair[2] || 'default';
+                activeTypes[type] = true;
+            });
+        });
+
+        // Pass 1: reverse deselected buttons whose type has an active selection
+        allTogglerBtns.forEach(function(btn) {
+            if (btn.classList.contains('selected')) return;
+            var pairs = parseTogglerData(btn);
+            if (!pairs) return;
+
+            pairs.forEach(function(pair) {
+                var value = pair[0], selector = pair[1], type = pair[2] || 'default', operation = pair[3], action = pair[4];
+                if (!value || !selector || !activeTypes[type]) return;
+
+                var op = operation || 'class';
+                var targets = findToggleTargets(demoCard, selector);
+
+                targets.forEach(function(el) {
+                    if (op === 'attr') {
+                        value.trim().split(/\s+/).forEach(function(attrPair) {
+                            var attrName = attrPair.split('=')[0];
+                            el.removeAttribute(attrName);
+                            if (attrName === 'data-required' && window.NDS && NDS.Forms && NDS.Forms.setState) {
+                                NDS.Forms.setState(el, 'required', false);
+                            }
+                        });
+                    } else if (op === 'data-state') {
+                        value.trim().split(/\s+/).forEach(function(state) {
+                            if (!state) return;
+                            if (window.NDS && NDS.Forms && NDS.Forms.setState) {
+                                NDS.Forms.setState(el, state, false);
+                            } else {
+                                toggleDataState(el, state, false);
+                            }
+                        });
+                    } else if (op === 'prop') {
+                        value.trim().split(/\s+/).forEach(function(prop) {
+                            if (prop) el[prop] = false;
+                        });
+                    } else if (op !== 'content-prepend' && op !== 'content-append') {
+                        // Class: reverse
+                        value.trim().split(/\s+/).forEach(function(cls) {
+                            if (!cls) return;
+                            if (action === 'add' || !action) {
+                                el.classList.remove(cls);
+                            } else if (action === 'remove') {
+                                el.classList.add(cls);
+                            }
+                        });
+                    }
+                });
+            });
+        });
+
+        // Pass 2: apply selected buttons
+        allTogglerBtns.forEach(function(btn) {
+            if (!btn.classList.contains('selected')) return;
+            var pairs = parseTogglerData(btn);
+            if (!pairs) return;
+
+            pairs.forEach(function(pair) {
+                var value = pair[0], selector = pair[1], operation = pair[3], action = pair[4];
+                if (!value || !selector) return;
+
+                var op = operation || 'class';
+                var targets = findToggleTargets(demoCard, selector);
+
+                targets.forEach(function(el) {
+                    if (op === 'attr') {
+                        value.trim().split(/\s+/).forEach(function(attrPair) {
+                            var parts = attrPair.split('=');
+                            if (parts[1] !== undefined) {
+                                el.setAttribute(parts[0], parts[1]);
+                            } else {
+                                el.setAttribute(parts[0], '');
+                            }
+                            if (parts[0] === 'data-required' && window.NDS && NDS.Forms && NDS.Forms.setState) {
+                                NDS.Forms.setState(el, 'required', true);
+                            }
+                        });
+                    } else if (op === 'data-state') {
+                        value.trim().split(/\s+/).forEach(function(state) {
+                            if (!state) return;
+                            toggleDataState(el, state, false);
+                            if (window.NDS && NDS.Forms && NDS.Forms.setState) {
+                                NDS.Forms.setState(el, state, true);
+                            } else {
+                                toggleDataState(el, state, true);
+                            }
+                        });
+                    } else if (op === 'prop') {
+                        value.trim().split(/\s+/).forEach(function(prop) {
+                            if (prop) el[prop] = true;
+                        });
+                    } else if (op === 'content-prepend' || op === 'content-append') {
+                        handleContentToggling(el, value, op);
+                    } else {
+                        var effectiveAction = action || 'add';
+                        value.trim().split(/\s+/).forEach(function(cls) {
+                            if (!cls) return;
+                            if (effectiveAction === 'remove') {
+                                el.classList.remove(cls);
+                            } else {
+                                el.classList.add(cls);
+                            }
+                        });
+                    }
+                });
+            });
+
+            if (btn.hasAttribute('data-toggle-style')) {
+                applyToggleStyles(btn, demoCard);
+            }
+        });
+    }
+
     function handleToggleClick(button) {
         // Check for new data-toggler format first
-        const togglerData = button.getAttribute('data-toggler');
-        let togglePairs = [];
-        
-        if (togglerData) {
-            try {
-                const parsed = JSON.parse(togglerData);
-                
-                if (Array.isArray(parsed) && parsed.length >= 2) {
-                    // Check if it's a single operation or multiple operations
-                    if (typeof parsed[0] === 'string') {
-                        // Single operation: ["class1 class2", "target", "type", "operation"]
-                        togglePairs = [[parsed[0], parsed[1], parsed[2], parsed[3]]];
-                    } else {
-                        // Multiple operations: [["class1", "target1", "type1", "operation"], ...]
-                        togglePairs = parsed;
-                    }
+        let togglePairs = parseTogglerData(button);
 
-                    // Normalize 4th param: detect "add"/"remove" as action (not operation type)
-                    const ACTION_KEYWORDS = ['add', 'remove'];
-                    togglePairs = togglePairs.map(pair => {
-                        const op = pair[3];
-                        if (op && ACTION_KEYWORDS.includes(op)) {
-                            // 4th param is an action → operation defaults to "class"
-                            return [pair[0], pair[1], pair[2], 'class', op];
-                        }
-                        // Otherwise keep as-is: [value, target, type, operation, action?]
-                        return pair;
-                    });
-                } else {
-                    return;
-                }
-            } catch (e) {
-                return;
-            }
-        } else {
+        if (!togglePairs) {
             // Fallback to legacy data attributes for backward compatibility
             const toggleClass = button.getAttribute('data-toggle');
             const targetSelector = button.getAttribute('data-target') || button.getAttribute('data-default-target');
-            
+
             if (!toggleClass) {
                 return;
             }
-            
+
             togglePairs = [[toggleClass, targetSelector]];
         }
 
@@ -223,150 +408,73 @@
 
         if (buttonTypes.length === 1) {
             const buttonType = buttonTypes[0];
-            const ACTION_KW = ['add', 'remove'];
 
             const allTogglers = demoCard.querySelectorAll('[data-toggler]');
             allTogglers.forEach(otherButton => {
                 if (otherButton === button) return;
 
-                const otherData = otherButton.getAttribute('data-toggler');
-                if (!otherData) return;
-                try {
-                    const otherParsed = JSON.parse(otherData);
-                    let otherOps = [];
+                const otherOps = parseTogglerData(otherButton);
+                if (!otherOps) return;
 
-                    if (Array.isArray(otherParsed) && otherParsed.length >= 2) {
-                        if (typeof otherParsed[0] === 'string') {
-                            otherOps = [[otherParsed[0], otherParsed[1], otherParsed[2], otherParsed[3]]];
-                        } else {
-                            otherOps = otherParsed;
-                        }
-                    }
+                const otherTypes = [...new Set(otherOps.map(([,, type]) => type || 'default'))];
 
-                    // Normalize action keywords for other button too
-                    otherOps = otherOps.map(pair => {
-                        const op = pair[3];
-                        if (op && ACTION_KW.includes(op)) {
-                            return [pair[0], pair[1], pair[2], 'class', op];
-                        }
-                        return pair;
-                    });
+                // Deselect if other button is single-type, same type, and currently selected
+                if (otherTypes.length === 1 && otherTypes[0] === buttonType && otherButton.classList.contains('selected')) {
+                    otherButton.classList.remove('selected');
 
-                    const otherTypes = [...new Set(otherOps.map(([,, type]) => type || 'default'))];
+                    // Reverse inline styles from data-toggle-style on the deselected button
+                    applyToggleStyles(otherButton, demoCard);
 
-                    // Deselect if other button is single-type, same type, and currently selected
-                    if (otherTypes.length === 1 && otherTypes[0] === buttonType && otherButton.classList.contains('selected')) {
-                        otherButton.classList.remove('selected');
+                    // Reverse the changes for the deselected button
+                    otherOps.forEach(([classNamesOrAttrs, targetSelector, , otherOperation, otherAction]) => {
+                        if (!classNamesOrAttrs || !targetSelector) return;
 
-                        // Reverse inline styles from data-toggle-style on the deselected button
-                        applyToggleStyles(otherButton, demoCard);
+                        const deselectionOperationType = otherOperation || 'class';
+                        const deselectionTargetElements = findToggleTargets(demoCard, targetSelector);
 
-                        // Reverse the changes for the deselected button
-                        otherOps.forEach(([classNamesOrAttrs, targetSelector, , otherOperation, otherAction]) => {
-                            if (!classNamesOrAttrs || !targetSelector) return;
+                        if (deselectionTargetElements.length) {
+                            deselectionTargetElements.forEach(targetElement => {
+                                const otherButtonType = otherTypes[0];
 
-                            const deselectionOperationType = otherOperation || 'class';
-
-                            // Find ALL matching elements for deselection - only in .demo-container and .code-example
-                            let deselectionTargetElements = [];
-                            const deselectionSearchContainers = [
-                                ...demoCard.querySelectorAll('.demo-container'),
-                                ...demoCard.querySelectorAll('.code-example')
-                            ];
-
-                            if (targetSelector.startsWith('#')) {
-                                const idSelector = targetSelector.substring(1);
-                                const idParts = idSelector.split(' ');
-                                const elementId = idParts[0];
-                                const subSelector = idParts.slice(1).join(' ');
-
-                                for (const container of deselectionSearchContainers) {
-                                    const elementById = container.querySelector(`#${elementId}`);
-                                    if (elementById) {
-                                        if (subSelector) {
-                                            deselectionTargetElements.push(...elementById.querySelectorAll(subSelector));
-                                        } else {
-                                            deselectionTargetElements.push(elementById);
-                                        }
-                                    }
-                                }
-                            } else {
-                                if (targetSelector === '.demo-container') {
-                                    deselectionTargetElements.push(...demoCard.querySelectorAll('.demo-container'));
-                                } else if (targetSelector === '.code-example') {
-                                    deselectionTargetElements.push(...demoCard.querySelectorAll('.code-example'));
+                                if (deselectionOperationType === 'attr') {
+                                    handleAttributeToggling(targetElement, classNamesOrAttrs, demoCard);
+                                } else if (deselectionOperationType === 'data-state') {
+                                    handleDataStateToggling(targetElement, classNamesOrAttrs, demoCard);
+                                } else if (deselectionOperationType === 'prop') {
+                                    handlePropertyDeselection(targetElement, classNamesOrAttrs);
+                                } else if (deselectionOperationType === 'content-prepend' || deselectionOperationType === 'content-append') {
+                                    handleContentToggling(targetElement, classNamesOrAttrs, deselectionOperationType);
+                                    updateCodeExampleForContent(demoCard, targetElement, classNamesOrAttrs, deselectionOperationType);
                                 } else {
-                                    for (const container of deselectionSearchContainers) {
-                                        if (targetSelector.includes(' ') || targetSelector.includes('[') || targetSelector.includes(':')) {
-                                            deselectionTargetElements.push(...container.querySelectorAll(targetSelector));
-                                        } else if (targetSelector.startsWith('.')) {
-                                            if (targetSelector.includes('.') && targetSelector.lastIndexOf('.') > 0) {
-                                                deselectionTargetElements.push(...container.querySelectorAll(targetSelector));
-                                            } else {
-                                                const className = targetSelector.substring(1);
-                                                const allElements = container.querySelectorAll('*');
-                                                const exactMatches = Array.from(allElements).filter(el =>
-                                                    el.classList.contains(className) &&
-                                                    Array.from(el.classList).includes(className)
-                                                );
-                                                deselectionTargetElements.push(...exactMatches);
-                                            }
+                                    // Class deselection: reverse based on action
+                                    const classArray = classNamesOrAttrs.trim().split(/\s+/);
+
+                                    classArray.forEach(className => {
+                                        if (!className) return;
+                                        if (otherAction === 'add') {
+                                            targetElement.classList.remove(className);
+                                        } else if (otherAction === 'remove') {
+                                            targetElement.classList.add(className);
                                         } else {
-                                            deselectionTargetElements.push(...container.querySelectorAll(targetSelector));
-                                        }
-                                    }
-                                }
-                            }
-
-                            if (deselectionTargetElements.length) {
-                                deselectionTargetElements.forEach(targetElement => {
-                                    const otherButtonType = otherTypes[0];
-
-                                    if (deselectionOperationType === 'attr') {
-                                        handleAttributeToggling(targetElement, classNamesOrAttrs, demoCard);
-                                    } else if (deselectionOperationType === 'data-state') {
-                                        handleDataStateToggling(targetElement, classNamesOrAttrs, demoCard);
-                                    } else if (deselectionOperationType === 'prop') {
-                                        handlePropertyDeselection(targetElement, classNamesOrAttrs);
-                                    } else if (deselectionOperationType === 'content-prepend' || deselectionOperationType === 'content-append') {
-                                        handleContentToggling(targetElement, classNamesOrAttrs, deselectionOperationType);
-                                        updateCodeExampleForContent(demoCard, targetElement, classNamesOrAttrs, deselectionOperationType);
-                                    } else {
-                                        // Class deselection: reverse based on action
-                                        const classArray = classNamesOrAttrs.trim().split(/\s+/);
-
-                                        classArray.forEach(className => {
-                                            if (!className) return;
-                                            if (otherAction === 'add') {
-                                                // Reverse of "add" → remove
+                                            if (targetElement.classList.contains(className)) {
                                                 targetElement.classList.remove(className);
-                                            } else if (otherAction === 'remove') {
-                                                // Reverse of "remove" → add
-                                                targetElement.classList.add(className);
-                                            } else {
-                                                // Reverse of "toggle" → remove if present
-                                                if (targetElement.classList.contains(className)) {
-                                                    targetElement.classList.remove(className);
-                                                }
                                             }
-                                        });
-
-                                        if (otherButtonType === 'VerticalTabs' && classArray.includes('oneRowContent')) {
-                                            setTimeout(() => {
-                                                if (window.initializeRowScroll) {
-                                                    window.initializeRowScroll(true);
-                                                }
-                                            }, 100);
                                         }
+                                    });
 
-                                        updateCodeExampleForClasses(demoCard, targetElement, classArray);
+                                    if (otherButtonType === 'VerticalTabs' && classArray.includes('oneRowContent')) {
+                                        setTimeout(() => {
+                                            if (window.initializeRowScroll) {
+                                                window.initializeRowScroll(true);
+                                            }
+                                        }, 100);
                                     }
-                                });
-                            }
-                        });
-                    }
-                } catch (e) {
-                    // Ignore invalid JSON
+
+                                    updateCodeExampleForClasses(demoCard, targetElement, classArray);
+                                }
+                            });
+                        }
+                    });
                 }
             });
         }
@@ -397,127 +505,10 @@
 
             // Determine operation type: "class" (default), "attr", "content-prepend", or "content-append"
             const operationType = operation || 'class';
-            
-            let targetElement;
-            
-            // Find target elements within .demo-container, .code-example, or target the containers themselves
-            const searchContainers = [
-                ...demoCard.querySelectorAll('.demo-container'),
-                ...demoCard.querySelectorAll('.code-example')
-            ];
-            
-            if (targetSelector.startsWith('#')) {
-                const idSelector = targetSelector.substring(1);
-                const idParts = idSelector.split(' ');
-                const elementId = idParts[0];
-                const subSelector = idParts.slice(1).join(' ');
-                
-                // Search in each allowed container
-                for (const container of searchContainers) {
-                    const elementById = container.querySelector(`#${elementId}`);
-                    if (elementById) {
-                        if (subSelector) {
-                            targetElement = elementById.querySelector(subSelector);
-                        } else {
-                            targetElement = elementById;
-                        }
-                        break;
-                    }
-                }
-            } else {
-                // Check if targeting the containers themselves first
-                if (targetSelector === '.demo-container') {
-                    targetElement = demoCard.querySelector('.demo-container');
-                } else if (targetSelector === '.code-example') {
-                    targetElement = demoCard.querySelector('.code-example');
-                } else {
-                    // Search in each allowed container
-                    for (const container of searchContainers) {
-                        if (targetSelector.includes(' ') || targetSelector.includes('[') || targetSelector.includes(':')) {
-                            targetElement = container.querySelector(targetSelector);
-                        } else if (targetSelector.startsWith('.')) {
-                            // Handle both simple single class selectors and compound class selectors
-                            if (targetSelector.includes('.') && targetSelector.lastIndexOf('.') > 0) {
-                                // Compound class selector like .class1.class2
-                                targetElement = container.querySelector(targetSelector);
-                            } else {
-                                // Simple single class selector - ensure exact match
-                                const className = targetSelector.substring(1);
-                                const allElements = container.querySelectorAll('*');
-                                targetElement = Array.from(allElements).find(el =>
-                                    el.classList.contains(className) &&
-                                    Array.from(el.classList).includes(className)
-                                );
-                            }
-                        } else {
-                            targetElement = container.querySelector(targetSelector);
-                        }
 
-                        if (targetElement) break;
-                    }
-                }
-            }
+            const targetElements = findToggleTargets(demoCard, targetSelector);
+            if (!targetElements.length) return;
 
-            // Find ALL matching elements, not just the first one
-            let targetElements = [];
-            
-            // Find target elements within .demo-container, .code-example, or target the containers themselves
-            if (targetSelector.startsWith('#')) {
-                const idSelector = targetSelector.substring(1);
-                const idParts = idSelector.split(' ');
-                const elementId = idParts[0];
-                const subSelector = idParts.slice(1).join(' ');
-                
-                // Search in each allowed container
-                for (const container of searchContainers) {
-                    const elementById = container.querySelector(`#${elementId}`);
-                    if (elementById) {
-                        if (subSelector) {
-                            targetElements.push(...elementById.querySelectorAll(subSelector));
-                        } else {
-                            targetElements.push(elementById);
-                        }
-                    }
-                }
-            } else {
-                // Check if targeting the containers themselves first
-                if (targetSelector === '.demo-container') {
-                    const containers = demoCard.querySelectorAll('.demo-container');
-                    targetElements.push(...containers);
-                } else if (targetSelector === '.code-example') {
-                    const codeExamples = demoCard.querySelectorAll('.code-example');
-                    targetElements.push(...codeExamples);
-                } else {
-                    // Search in each allowed container
-                    for (const container of searchContainers) {
-                        if (targetSelector.includes(' ') || targetSelector.includes('[') || targetSelector.includes(':')) {
-                            targetElements.push(...container.querySelectorAll(targetSelector));
-                        } else if (targetSelector.startsWith('.')) {
-                            // Handle both simple single class selectors and compound class selectors
-                            if (targetSelector.includes('.') && targetSelector.lastIndexOf('.') > 0) {
-                                // Compound class selector like .class1.class2
-                                targetElements.push(...container.querySelectorAll(targetSelector));
-                            } else {
-                                // Simple single class selector - use exact match logic
-                                const className = targetSelector.substring(1);
-                                const allElements = container.querySelectorAll('*');
-                                const exactMatches = Array.from(allElements).filter(el =>
-                                    el.classList.contains(className) &&
-                                    Array.from(el.classList).includes(className)
-                                );
-                                targetElements.push(...exactMatches);
-                            }
-                        } else {
-                            targetElements.push(...container.querySelectorAll(targetSelector));
-                        }
-                    }
-                }
-            }
-
-            if (!targetElements.length) {
-                return;
-            }
-            
             // Apply changes to ALL matching elements
             targetElements.forEach(targetElement => {
                 if (operationType === 'attr') {
@@ -628,6 +619,11 @@
                 }
             });
             NDS.gridLastRow.update(demoCard);
+        }
+
+        // Rebuild code from live DOM for demo cards that opt in via data-code-rebuild
+        if (demoCard.hasAttribute('data-code-rebuild')) {
+            rebuildDemoCode(demoCard);
         }
     }
 
@@ -1963,15 +1959,39 @@
                     if (toRemove) toRemove.remove();
                 }
 
-                // Re-apply active toggles
-                var iconBtn = demoCard.querySelector('[data-form-fix-icon].selected');
-                if (iconBtn) { iconBtn.classList.remove('selected'); iconBtn.click(); }
-                var dropmenuBtn = demoCard.querySelector('[data-form-fix-dropmenu].selected');
-                if (dropmenuBtn) { dropmenuBtn.classList.remove('selected'); dropmenuBtn.click(); }
+                // Re-apply active data-toggler operations first (fixStyle, fixSize, state, etc.)
+                reapplyActiveTogglers(demoCard);
 
-                // Update code example
-                rebuildFormFixCode(demoCard);
+                // Re-apply icon/dropmenu after state so new elements inherit disabled/readonly
+                if (demoCard.querySelector('[data-form-fix-icon].selected')) {
+                    applyFormFixIcon(formControl, true);
+                }
+                if (demoCard.querySelector('[data-form-fix-dropmenu].selected')) {
+                    applyFormFixDropmenu(formControl, true);
+                }
+
+                // Update code example after all toggles reapplied
+                rebuildDemoCode(demoCard);
             });
+        });
+    }
+
+    // Apply or remove icon from prefix/suffix buttons
+    function applyFormFixIcon(formControl, isActive) {
+        formControl.querySelectorAll('.nds-prefix, .nds-suffix').forEach(function(fix) {
+            var childBtn = fix.querySelector('.nds-btn');
+            if (!childBtn) return;
+
+            if (isActive) {
+                if (!childBtn.querySelector('i.hgi')) {
+                    var icon = document.createElement('i');
+                    icon.className = 'hgi hgi-stroke hgi-award-05';
+                    childBtn.insertBefore(icon, childBtn.firstChild);
+                }
+            } else {
+                var existing = childBtn.querySelector('i.hgi');
+                if (existing) existing.remove();
+            }
         });
     }
 
@@ -1986,20 +2006,83 @@
                 const formControl = demoCard.querySelector('.demo-container .nds-form-control');
                 if (!formControl) return;
 
-                formControl.querySelectorAll('.nds-prefix, .nds-suffix').forEach(function(fix) {
-                    var childBtn = fix.querySelector('.nds-btn');
-                    if (!childBtn) return;
-
-                    if (isActive) {
-                        var icon = document.createElement('i');
-                        icon.className = 'hgi hgi-stroke hgi-award-05';
-                        childBtn.insertBefore(icon, childBtn.firstChild);
-                    } else {
-                        var existing = childBtn.querySelector('i.hgi');
-                        if (existing) existing.remove();
-                    }
-                });
+                applyFormFixIcon(formControl, isActive);
+                rebuildDemoCode(demoCard);
             });
+        });
+    }
+
+    // Apply or remove dropmenu from prefix/suffix containers
+    function applyFormFixDropmenu(formControl, isActive) {
+        var formContainer = formControl.closest('.nds-form-container');
+        var containerState = formContainer ? (formContainer.getAttribute('data-state') || '') : '';
+        var isDisabled = containerState.indexOf('disabled') !== -1;
+
+        formControl.querySelectorAll('.nds-prefix, .nds-suffix').forEach(fix => {
+            var childBtn = fix.querySelector('.nds-btn');
+
+            if (isActive) {
+                // Add dropmenu to container
+                fix.classList.add('nds-dropmenu');
+
+                // Convert child span to button trigger
+                if (childBtn && !childBtn.classList.contains('nds-dropmenu-trigger')) {
+                    var trigger = document.createElement('button');
+                    trigger.className = childBtn.className + ' nds-menu-btn nds-dropmenu-trigger';
+                    trigger.innerHTML = childBtn.innerHTML;
+                    if (isDisabled) {
+                        trigger.disabled = true;
+                        trigger.setAttribute('aria-disabled', 'true');
+                    }
+                    childBtn.replaceWith(trigger);
+                }
+
+                // Inject menu if not present
+                if (!fix.querySelector('.nds-dropmenu-menu')) {
+                    var menu = document.createElement('div');
+                    menu.className = 'nds-dropmenu-menu';
+                    menu.hidden = true;
+                    menu.innerHTML =
+                        '<div class="nds-dropmenu-scroll">' +
+                            '<button class="nds-btn nds-subtle nds-dropmenu-item"><span class="label">Option 1</span></button>' +
+                            '<button class="nds-btn nds-subtle nds-dropmenu-item"><span class="label">Option 2</span></button>' +
+                            '<button class="nds-btn nds-subtle nds-dropmenu-item"><span class="label">Option 3</span></button>' +
+                        '</div>';
+                    fix.appendChild(menu);
+
+                    // Propagate disabled to menu items
+                    if (isDisabled) {
+                        menu.querySelectorAll('button').forEach(function(btn) {
+                            btn.disabled = true;
+                            btn.setAttribute('aria-disabled', 'true');
+                        });
+                    }
+                }
+
+                if (window.NDS && NDS.Dropmenu) NDS.Dropmenu.init(fix);
+            } else {
+                // Remove dropmenu from container
+                fix.classList.remove('nds-dropmenu');
+                fix.removeAttribute('data-nds-dropmenu-initialized');
+
+                // Convert button trigger back to span
+                var trigger = fix.querySelector('.nds-dropmenu-trigger');
+                if (trigger) {
+                    var span = document.createElement('span');
+                    span.className = trigger.className.replace(' nds-menu-btn', '').replace(' nds-dropmenu-trigger', '');
+                    span.innerHTML = trigger.innerHTML;
+                    span.removeAttribute('aria-expanded');
+                    span.removeAttribute('aria-haspopup');
+                    if (isDisabled) {
+                        span.setAttribute('aria-disabled', 'true');
+                    }
+                    trigger.replaceWith(span);
+                }
+
+                // Remove menu
+                var menu = fix.querySelector('.nds-dropmenu-menu');
+                if (menu) menu.remove();
+            }
         });
     }
 
@@ -2014,87 +2097,82 @@
                 const formControl = demoCard.querySelector('.demo-container .nds-form-control');
                 if (!formControl) return;
 
-                formControl.querySelectorAll('.nds-prefix, .nds-suffix').forEach(fix => {
-                    var childBtn = fix.querySelector('.nds-btn');
-
-                    if (isActive) {
-                        // Add dropmenu to container
-                        fix.classList.add('nds-dropmenu');
-
-                        // Convert child span to button trigger
-                        if (childBtn) {
-                            var trigger = document.createElement('button');
-                            trigger.className = childBtn.className + ' nds-menu-btn nds-dropmenu-trigger';
-                            trigger.innerHTML = childBtn.innerHTML;
-                            childBtn.replaceWith(trigger);
-                        }
-
-                        // Inject menu
-                        var menu = document.createElement('div');
-                        menu.className = 'nds-dropmenu-menu';
-                        menu.hidden = true;
-                        menu.innerHTML =
-                            '<div class="nds-dropmenu-scroll">' +
-                                '<button class="nds-btn nds-subtle nds-dropmenu-item"><span class="label">Option 1</span></button>' +
-                                '<button class="nds-btn nds-subtle nds-dropmenu-item"><span class="label">Option 2</span></button>' +
-                                '<button class="nds-btn nds-subtle nds-dropmenu-item"><span class="label">Option 3</span></button>' +
-                            '</div>';
-                        fix.appendChild(menu);
-
-                        if (window.NDS && NDS.Dropmenu) NDS.Dropmenu.init(fix);
-                    } else {
-                        // Remove dropmenu from container
-                        fix.classList.remove('nds-dropmenu');
-                        fix.removeAttribute('data-nds-dropmenu-initialized');
-
-                        // Convert button trigger back to span
-                        var trigger = fix.querySelector('.nds-dropmenu-trigger');
-                        if (trigger) {
-                            var span = document.createElement('span');
-                            span.className = trigger.className.replace(' nds-menu-btn', '').replace(' nds-dropmenu-trigger', '');
-                            span.innerHTML = trigger.innerHTML;
-                            span.removeAttribute('aria-expanded');
-                            span.removeAttribute('aria-haspopup');
-                            trigger.replaceWith(span);
-                        }
-
-                        // Remove menu
-                        var menu = fix.querySelector('.nds-dropmenu-menu');
-                        if (menu) menu.remove();
-                    }
-                });
+                applyFormFixDropmenu(formControl, isActive);
 
                 // Rebuild code example from live demo
-                rebuildFormFixCode(demoCard);
+                rebuildDemoCode(demoCard);
             });
         });
     }
 
-    function rebuildFormFixCode(demoCard) {
+    // Generic: rebuild code example from the live demo DOM.
+    // Works for any demo card — clones the first root element in .demo-container,
+    // strips runtime/demo-only attributes, replaces demo IDs, and outputs clean HTML.
+    function rebuildDemoCode(demoCard) {
         var codeElement = demoCard.querySelector('.code-example code');
         if (!codeElement) return;
 
-        var container = demoCard.querySelector('.demo-container .nds-form-container');
-        if (!container) return;
+        // Find the root demo element (skip wrapper divs like .state-demo)
+        var demoContainer = demoCard.querySelector('.demo-container');
+        if (!demoContainer) return;
+        var rootEl = demoContainer.querySelector('.state-demo > *') || demoContainer.querySelector(':scope > *');
+        if (!rootEl) return;
 
-        // Clone live demo and clean up
-        var clone = container.cloneNode(true);
-        // Remove dropmenu init attributes
+        // Get clean IDs from the original static code
+        var hiddenCopy = codeElement.parentNode.querySelector('.original-code-content');
+        var idMap = {};
+        if (hiddenCopy) {
+            var origIds = hiddenCopy.textContent.match(/id="([^"]+)"/g);
+            var demoIds = [];
+            rootEl.querySelectorAll('[id]').forEach(function(el) { demoIds.push(el.id); });
+            if (origIds) {
+                origIds.forEach(function(match, i) {
+                    var cleanId = match.replace(/id="([^"]+)"/, '$1');
+                    if (demoIds[i]) idMap[demoIds[i]] = cleanId;
+                });
+            }
+        }
+
+        var clone = rootEl.cloneNode(true);
+
+        // Strip runtime attributes added by JS initialization
         clone.querySelectorAll('[data-nds-dropmenu-initialized]').forEach(function(el) { el.removeAttribute('data-nds-dropmenu-initialized'); });
         clone.querySelectorAll('[aria-expanded]').forEach(function(el) { el.removeAttribute('aria-expanded'); el.removeAttribute('aria-haspopup'); });
         clone.querySelectorAll('[role="menu"]').forEach(function(el) { el.removeAttribute('role'); el.removeAttribute('aria-hidden'); el.removeAttribute('style'); });
         clone.querySelectorAll('[role="menuitem"]').forEach(function(el) { el.removeAttribute('role'); });
-        // Remove data-original-fix-html
+
+        // Strip demo-only data attributes
         clone.querySelectorAll('[data-original-fix-html]').forEach(function(el) { el.removeAttribute('data-original-fix-html'); });
-        var fc = clone.querySelector('.nds-form-control');
-        if (fc) fc.removeAttribute('data-original-fix-html');
+        if (clone.hasAttribute('data-original-fix-html')) clone.removeAttribute('data-original-fix-html');
+        clone.querySelectorAll('[data-short-desc]').forEach(function(el) { el.removeAttribute('data-short-desc'); });
+
+        // Strip state propagation (disabled/readonly/required on inputs — data-state on container is enough)
+        clone.querySelectorAll('[aria-disabled]').forEach(function(el) { el.removeAttribute('aria-disabled'); });
+        clone.querySelectorAll('input[disabled], textarea[disabled], select[disabled], button[disabled]').forEach(function(el) {
+            // Only strip if parent container has data-state with disabled
+            if (el.closest('[data-state*="disabled"]')) el.removeAttribute('disabled');
+        });
+        clone.querySelectorAll('input[readonly], textarea[readonly]').forEach(function(el) {
+            if (el.closest('[data-state*="readonly"]')) el.removeAttribute('readonly');
+        });
+        clone.querySelectorAll('input[required], textarea[required], select[required]').forEach(function(el) {
+            if (el.closest('[data-required]')) el.removeAttribute('required');
+        });
+
+        // Replace demo IDs with clean code IDs
+        Object.keys(idMap).forEach(function(demoId) {
+            var cleanId = idMap[demoId];
+            var el = clone.querySelector('#' + demoId);
+            if (el) el.id = cleanId;
+            var label = clone.querySelector('label[for="' + demoId + '"]');
+            if (label) label.setAttribute('for', cleanId);
+        });
 
         // Format code
-        var code = clone.innerHTML
+        var code = clone.outerHTML
             .replace(/^\s+/gm, '')
             .replace(/></g, '>\n<');
 
-        // Indent
         var lines = code.split('\n');
         var indent = 0;
         var formatted = [];
