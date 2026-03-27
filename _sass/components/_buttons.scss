@@ -17,6 +17,10 @@
 
   @include btn-base;
 
+  &:not(button, a) {
+    pointer-events: none;
+  }
+
   // Apply internal properties
   background-color: var(--_btn-bg);
   color: var(--_btn-color);
@@ -47,7 +51,7 @@
   }
 
 
-  &:is(:disabled, .disabled, [data-state~="disabled"]) {
+  &:is(:disabled, .disabled, [data-state~="disabled"], [aria-disabled="true"]) {
     background-color: var(--_btn-bg-disabled);
     color: var(--_btn-color-disabled);
     border-color: var(--_btn-border-disabled);
@@ -186,7 +190,7 @@
     --btn-bg-hover: var(--button-background-neutral-default);
     --btn-bg-active: var(--button-background-neutral-pressed);
     --btn-bg-selected: var(--button-background-neutral-selected);
-    --btn-bg-disabled: var(--button-background-neutral-default);
+    --btn-bg-disabled: transparent;
     --btn-color: var(--text-default);
   }
 
@@ -729,7 +733,7 @@
   }
 
   .nds-btn {
-    border-radius: 0;
+    --btn-radius: 0;
     position: relative;
     z-index: 1;
 
@@ -742,11 +746,13 @@
     }
 
     &:first-child {
+      --btn-radius: 0;
       border-start-start-radius: var(--btn-group-radius);
       border-end-start-radius: var(--btn-group-radius);
     }
 
     &:last-child {
+      --btn-radius: 0;
       border-start-end-radius: var(--btn-group-radius);
       border-end-end-radius: var(--btn-group-radius);
     }

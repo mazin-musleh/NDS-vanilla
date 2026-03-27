@@ -233,6 +233,7 @@ textarea {
   --_btn-width: var(--btn-width, unset);
   --_btn-gap: var(--btn-gap, var(--spacing-xs));
   --_btn-padding: var(--btn-padding, calc(var(--_btn-size) * 0.375 - 3px));
+  --_btn-radius: var(--btn-radius, var(--radius-sm));
 
   --_btn-FS: calc(var(--_btn-size) * 0.2 + 8px);
   --_btn-icon-size: calc(var(--_btn-size) / 2);
@@ -251,7 +252,7 @@ textarea {
   }
 
   border: 1px solid transparent;
-  border-radius: var(--radius-sm);
+  border-radius: var(--_btn-radius);
   white-space: nowrap;
   position: relative;
   box-sizing: border-box;
