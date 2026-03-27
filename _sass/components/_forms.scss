@@ -81,8 +81,8 @@
     // FORM CONTAINER STATE (data-state attribute)
     // ==============================================
 
-    // Focus state
-    &[data-state~="focus"] .nds-form-control {
+    // Focus state (not readonly)
+    &[data-state~="focus"]:not([data-state~="readonly"]) .nds-form-control {
         &::before {
             width: 100%;
         }
@@ -95,12 +95,13 @@
         }
     }
 
-    // Active state
-    &[data-state~="active"] .nds-form-control {
+    // Active state (not readonly)
+    &[data-state~="active"]:not([data-state~="readonly"]) .nds-form-control {
         &::before {
             width: 50%;
         }
 
+        border-color: var(--form-field-border-default);
         background-color: var(--form-field-background-darker);
         box-shadow: var(--shadow-md);
 
@@ -110,20 +111,47 @@
         }
     }
 
-    // Disabled state
-    &[data-state~="disabled"] .nds-form-control {
-        background-color: var(--background-disabled);
-        color: var(--text-default-disabled);
-        border-color: var(--border-disabled);
-        pointer-events: none;
-        user-select: none;
+    // Hide action (not fix) on readonly/disabled
+    &:is([data-state~="readonly"], [data-state~="disabled"]) .nds-form-control .nds-form-action:not(.nds-prefix, .nds-suffix) {
+        display: none;
+    }
+
+    // Readonly state
+    &[data-state~="readonly"] .nds-form-control {
+        border-color: var(--border-neutral-primary);
+        background-color: transparent;
+        color: var(--form-field-text-readonly);
 
         ::-webkit-input-placeholder {
+            color: var(--form-field-text-placeholder);
+        }
+
+        &:hover {
+            border-color: var(--border-neutral-primary);
+            color: var(--form-field-text-readonly);
+
+            ::-webkit-input-placeholder {
+                color: var(--form-field-text-placeholder);
+            }
+        }
+    }
+
+    // Disabled state
+    &[data-state~="disabled"] {
+        .nds-form-header .label {
             color: var(--text-default-disabled);
         }
 
-        .nds-form-action {
-            display: none;
+        .nds-form-control {
+            background-color: transparent;
+            color: var(--text-default-disabled);
+            border-color: var(--border-disabled);
+            pointer-events: none;
+            user-select: none;
+
+            ::-webkit-input-placeholder {
+                color: var(--text-default-disabled);
+            }
         }
     }
 }
@@ -168,14 +196,16 @@ fieldset {
 
 
 .nds-form-control {
+    --_input-size: var(--input-size, 40px);
+    --_input-radius: var(--input-radius, var(--radius-sm));
     display: flex;
-    min-height: 40px;
-    height: 40px;
+    min-height: var(--_input-size);
+    height: var(--_input-size);
     width: 100%;
     justify-content: flex-start;
-    align-items: center;
+    align-items: self-start;
     padding: var(--spacing-none) var(--spacing-md);
-    border-radius: var(--radius-sm);
+    border-radius: var(--_input-radius);
     gap: var(--spacing-md);
     border: 1px solid var(--form-field-border-default);
     background-color: var(--form-field-background-default);
@@ -185,11 +215,16 @@ fieldset {
     &>input,
     textarea,
     select {
-        font-size: 1rem;
+        color: var(--form-field-text-focused);
         outline: unset !important;
         outline-offset: unset !important;
         box-shadow: unset !important;
     }
+
+    ::-webkit-input-placeholder {
+        color: var(--form-field-text-placeholder);
+    }
+
 
     &:hover {
         border-color: var(--form-field-border-hovered);
@@ -212,6 +247,16 @@ fieldset {
         background-color: var(--form-field-border-pressed);
         transition: width var(--nds-transition);
         z-index: 2;
+    }
+
+    // Size: Medium (32px)
+    .nds-md>& {
+        --_input-size: 32px;
+        font-size: var(--nds-text-sm-FS);
+
+        .nds-form-action > .nds-btn {
+            --btn-size: 32px;
+        }
     }
 
     // Legacy class support (deprecated)
@@ -253,11 +298,14 @@ fieldset {
             color: var(--text-default-disabled) !important;
         }
 
-        .nds-form-action {
+        .nds-form-action:not(.nds-prefix, .nds-suffix) {
             display: none;
         }
     }
 
+    >i {
+        align-self: center;
+    }
 
     >input {
         background-color: transparent;
@@ -317,6 +365,8 @@ fieldset {
             justify-content: center;
             align-content: center;
             align-items: center;
+            top: 50%;
+            transform: translateY(-50%);
 
             @include ltr {
                 & {
@@ -330,7 +380,7 @@ fieldset {
     }
 
     .nds-select>&.open::after {
-        transform: rotate(180deg);
+        transform: translateY(-50%) rotate(180deg);
     }
 
     // Custom dropdown styles for nds-select when using input instead of select element
@@ -373,34 +423,70 @@ fieldset {
     .nds-form-action:not([hidden]) {
         display: flex;
         gap: var(--spacing-sm);
-        flex-direction: row-reverse;
+        flex-direction: row;
         margin-inline-end: calc(var(--spacing-md) * -1);
+        height: 100%;
 
         &:first-child {
             margin-inline-end: unset;
             margin-inline-start: calc(var(--spacing-md) * -1);
         }
 
-        >*:not([hidden]) {
-            --nds-input-size: 38px;
-            --btn-height: var(--nds-input-size);
+        >*:not([hidden]):not(.nds-dropmenu) {
+            --btn-height: 100%;
+            --btn-height-min: var(--btn-height);
+            --btn-radius: var(--_input-radius);
+            padding-block: 0;
             position: relative;
-            /* width: var(--nds-input-size); */
-            height: var(--nds-input-size);
+            height: var(--btn-height);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--text-default);
 
-            &:not(:first-child)::before {
+            &:not(:first-child):not([hidden] + *)::before {
                 content: '';
                 width: 1px;
                 background-color: var(--border-neutral-primary);
                 height: calc(100% - var(--spacing-lg));
                 position: absolute;
-                inset-inline-end: calc(var(--spacing-xs) * -1);
+                inset-inline-start: calc(var(--spacing-sm) / -1.5);
                 top: 50%;
                 transform: translateY(-50%);
+            }
+        }
+
+        // Prefix/Suffix modifiers
+        &:is(.nds-prefix, .nds-suffix) {
+            gap: 0;
+            white-space: nowrap;
+
+            >*:not([hidden]){
+                --btn-radius: 0;
+
+                &:not(:first-child)::before {
+                    display: none;
+                }
+            }
+
+            > :not(button, a) {
+                --btn-color: var(--text-secondary-paragraph);
+            }
+        }
+
+        &.nds-suffix {
+            >*:last-child {
+                border-start-end-radius: var(--_input-radius);
+                border-end-end-radius: var(--_input-radius);
+            }
+        }
+
+        &.nds-prefix {
+            margin-inline-end: unset;
+            margin-inline-start: calc(var(--spacing-md) * -1);
+
+            >*:first-child {
+                border-start-start-radius: var(--_input-radius);
+                border-end-start-radius: var(--_input-radius);
             }
         }
     }
