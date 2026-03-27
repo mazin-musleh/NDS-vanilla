@@ -586,6 +586,16 @@
             if (stateName === 'disabled') {
                 var inputs = container.querySelectorAll('input, textarea, select');
                 inputs.forEach(function(input) { input.disabled = add; });
+                var actionBtns = container.querySelectorAll('.nds-form-action .nds-btn');
+                actionBtns.forEach(function(btn) {
+                    btn.setAttribute('aria-disabled', add ? 'true' : 'false');
+                    if (btn.tagName === 'BUTTON') btn.disabled = add;
+                });
+            }
+
+            if (stateName === 'readonly') {
+                var inputs = container.querySelectorAll('input, textarea, select');
+                inputs.forEach(function(input) { input.readOnly = add; });
             }
 
             // Propagate loading state to clear button
@@ -618,6 +628,7 @@
             if (formContainer) {
                 FormState.updateDataState(formContainer, 'filled', hasValue);
                 FormState.updateDataState(formContainer, 'disabled', input.disabled);
+                FormState.updateDataState(formContainer, 'readonly', input.readOnly);
                 formContainer.toggleAttribute('data-required', input.required);
             }
 
@@ -707,14 +718,14 @@
 
             // Mouse interaction - use data-state on container
             input.addEventListener('mousedown', function() {
-                if (formContainer) {
+                if (formContainer && !input.readOnly) {
                     FormState.updateDataState(formContainer, 'active', true);
                 }
             });
 
             ['mouseup', 'mouseleave'].forEach(function(event) {
                 input.addEventListener(event, function() {
-                    if (formContainer) {
+                    if (formContainer && !input.readOnly) {
                         FormState.updateDataState(formContainer, 'active', false);
                     }
                 });
@@ -722,24 +733,24 @@
 
             // Focus states - use data-state on container
             input.addEventListener('focus', function() {
-                if (formContainer) {
+                if (formContainer && !input.readOnly) {
                     FormState.updateDataState(formContainer, 'focus', true);
                 }
             });
 
             input.addEventListener('blur', function() {
-                if (formContainer) {
+                if (formContainer && !input.readOnly) {
                     FormState.updateDataState(formContainer, 'focus', false);
                     FormState.updateDataState(formContainer, 'typing', false);
                 }
                 // Only validate on blur if field already has an error (to clear it when fixed)
                 var hasError = formContainer && formContainer.getAttribute('data-status') === 'error';
-                FormState.update(input, formControl, !hasError);
+                if (!input.readOnly) FormState.update(input, formControl, !hasError);
             });
 
             // Typing state - indicates real user input
             input.addEventListener('keydown', function() {
-                if (formContainer) {
+                if (formContainer && !input.readOnly) {
                     FormState.updateDataState(formContainer, 'typing', true);
                 }
             });
@@ -807,7 +818,14 @@
             if (formContainer) {
                 if (formContainer.hasAttribute('data-required')) input.required = true;
                 var initState = (formContainer.getAttribute('data-state') || '').split(' ');
-                if (initState.indexOf('disabled') !== -1) input.disabled = true;
+                if (initState.indexOf('disabled') !== -1) {
+                    input.disabled = true;
+                    formContainer.querySelectorAll('.nds-form-action .nds-btn').forEach(function(btn) {
+                        btn.setAttribute('aria-disabled', 'true');
+                        if (btn.tagName === 'BUTTON') btn.disabled = true;
+                    });
+                }
+                if (initState.indexOf('readonly') !== -1) input.readOnly = true;
             }
             // Input → container: sync current input state to data-state
             FormState.update(input, formControl, true);
@@ -877,6 +895,18 @@
                         get: requiredDescriptor.get,
                         set: function(val) {
                             requiredDescriptor.set.call(this, val);
+                            FormState.update(this, formControl, true);
+                        },
+                        configurable: true
+                    });
+                }
+
+                var readOnlyDescriptor = Object.getOwnPropertyDescriptor(proto, 'readOnly');
+                if (readOnlyDescriptor && readOnlyDescriptor.set) {
+                    Object.defineProperty(input, 'readOnly', {
+                        get: readOnlyDescriptor.get,
+                        set: function(val) {
+                            readOnlyDescriptor.set.call(this, val);
                             FormState.update(this, formControl, true);
                         },
                         configurable: true
@@ -1228,7 +1258,8 @@
 
         initPasswordToggle: function(formControl) {
             var passwordToggle = formControl.querySelector('.nds-form-action .toggle-password');
-            if (!passwordToggle) return;
+            if (!passwordToggle || passwordToggle._ndsPasswordToggle) return;
+            passwordToggle._ndsPasswordToggle = true;
 
             passwordToggle.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -1402,6 +1433,15 @@
         if (dataState.indexOf('disabled') !== -1) {
             group.querySelectorAll('input, textarea, select').forEach(function(input) {
                 input.disabled = true;
+            });
+            group.querySelectorAll('.nds-form-action .nds-btn').forEach(function(btn) {
+                btn.setAttribute('aria-disabled', 'true');
+                if (btn.tagName === 'BUTTON') btn.disabled = true;
+            });
+        }
+        if (dataState.indexOf('readonly') !== -1) {
+            group.querySelectorAll('input, textarea, select').forEach(function(input) {
+                input.readOnly = true;
             });
         }
     }
