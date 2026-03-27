@@ -24,10 +24,10 @@ exclude_showcase: false
                         <input id="filterSearch" type="text" class="nds-search-input" name="search" autocomplete="on"
                             placeholder="Search in services...">
                         <div class="nds-form-action">
-                            <button class="nds-btn nds-subtle voiceInput"><i
-                                    class="hgi hgi-stroke hgi-mic-01 icon"></i></button>
                             <button class="nds-btn nds-subtle clear" hidden><i
                                     class="hgi hgi-stroke hgi-cancel-01 icon"></i></button>
+                            <button class="nds-btn nds-subtle voiceInput"><i
+                                    class="hgi hgi-stroke hgi-mic-01 icon"></i></button>
                         </div>
                     </div>
                     <button class="nds-btn nds-primary nds-search-btn" type="button">
