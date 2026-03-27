@@ -59,6 +59,9 @@
         initializeCardStateToggles();
         initializeCardHeaderToggles();
         initializeCardContentToggles();
+        initializeFormFixToggles();
+        initializeFormFixDropmenu();
+        initializeFormFixIcon();
     }
 
     // CRITICAL: Expose global API immediately (called by unified init system)
@@ -1916,6 +1919,197 @@
                 rebuildCardCode(demoCard);
             });
         });
+    }
+
+
+    // Form fix visibility — show/hide prefix/suffix
+    function initializeFormFixToggles() {
+        document.querySelectorAll('[data-form-fix]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const demoCard = this.closest('.nds-demo-card');
+                if (!demoCard) return;
+
+                const mode = this.dataset.formFix;
+                const formControl = demoCard.querySelector('.demo-container .nds-form-control');
+                if (!formControl) return;
+
+                // Deselect siblings, select this
+                const dropmenu = this.closest('.nds-dropmenu');
+                dropmenu.querySelectorAll('[data-form-fix]').forEach(b => b.classList.remove('selected'));
+                this.classList.add('selected');
+                const triggerEl = dropmenu.querySelector('.nds-dropmenu-trigger');
+                const trigger = triggerEl?.querySelector('.label');
+                if (trigger) {
+                    const prefix = triggerEl.getAttribute('data-label-prefix') || '';
+                    trigger.textContent = prefix + this.querySelector('.label').textContent;
+                }
+
+                // Store original content on first use
+                if (!formControl.dataset.originalFixHtml) {
+                    formControl.dataset.originalFixHtml = formControl.innerHTML;
+                }
+
+                // Restore original first
+                var input = formControl.querySelector('input, textarea, select');
+                var inputValue = input ? input.value : '';
+                formControl.innerHTML = formControl.dataset.originalFixHtml;
+                input = formControl.querySelector('input, textarea, select');
+                if (input) input.value = inputValue;
+
+                // Remove based on mode
+                if (mode === 'suffix' || mode === 'prefix') {
+                    var removeSelector = mode === 'suffix' ? '.nds-prefix' : '.nds-suffix';
+                    var toRemove = formControl.querySelector(removeSelector);
+                    if (toRemove) toRemove.remove();
+                }
+
+                // Re-apply active toggles
+                var iconBtn = demoCard.querySelector('[data-form-fix-icon].selected');
+                if (iconBtn) { iconBtn.classList.remove('selected'); iconBtn.click(); }
+                var dropmenuBtn = demoCard.querySelector('[data-form-fix-dropmenu].selected');
+                if (dropmenuBtn) { dropmenuBtn.classList.remove('selected'); dropmenuBtn.click(); }
+
+                // Update code example
+                rebuildFormFixCode(demoCard);
+            });
+        });
+    }
+
+    // Form fix icon toggle — add/remove icon to prefix/suffix
+    function initializeFormFixIcon() {
+        document.querySelectorAll('[data-form-fix-icon]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const demoCard = this.closest('.nds-demo-card');
+                if (!demoCard) return;
+
+                const isActive = this.classList.toggle('selected');
+                const formControl = demoCard.querySelector('.demo-container .nds-form-control');
+                if (!formControl) return;
+
+                formControl.querySelectorAll('.nds-prefix, .nds-suffix').forEach(function(fix) {
+                    var childBtn = fix.querySelector('.nds-btn');
+                    if (!childBtn) return;
+
+                    if (isActive) {
+                        var icon = document.createElement('i');
+                        icon.className = 'hgi hgi-stroke hgi-award-05';
+                        childBtn.insertBefore(icon, childBtn.firstChild);
+                    } else {
+                        var existing = childBtn.querySelector('i.hgi');
+                        if (existing) existing.remove();
+                    }
+                });
+            });
+        });
+    }
+
+    // Form fix dropmenu toggle — convert prefix/suffix to dropmenu triggers
+    function initializeFormFixDropmenu() {
+        document.querySelectorAll('[data-form-fix-dropmenu]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const demoCard = this.closest('.nds-demo-card');
+                if (!demoCard) return;
+
+                const isActive = this.classList.toggle('selected');
+                const formControl = demoCard.querySelector('.demo-container .nds-form-control');
+                if (!formControl) return;
+
+                formControl.querySelectorAll('.nds-prefix, .nds-suffix').forEach(fix => {
+                    var childBtn = fix.querySelector('.nds-btn');
+
+                    if (isActive) {
+                        // Add dropmenu to container
+                        fix.classList.add('nds-dropmenu');
+
+                        // Convert child span to button trigger
+                        if (childBtn) {
+                            var trigger = document.createElement('button');
+                            trigger.className = childBtn.className + ' nds-menu-btn nds-dropmenu-trigger';
+                            trigger.innerHTML = childBtn.innerHTML;
+                            childBtn.replaceWith(trigger);
+                        }
+
+                        // Inject menu
+                        var menu = document.createElement('div');
+                        menu.className = 'nds-dropmenu-menu';
+                        menu.hidden = true;
+                        menu.innerHTML =
+                            '<div class="nds-dropmenu-scroll">' +
+                                '<button class="nds-btn nds-subtle nds-dropmenu-item"><span class="label">Option 1</span></button>' +
+                                '<button class="nds-btn nds-subtle nds-dropmenu-item"><span class="label">Option 2</span></button>' +
+                                '<button class="nds-btn nds-subtle nds-dropmenu-item"><span class="label">Option 3</span></button>' +
+                            '</div>';
+                        fix.appendChild(menu);
+
+                        if (window.NDS && NDS.Dropmenu) NDS.Dropmenu.init(fix);
+                    } else {
+                        // Remove dropmenu from container
+                        fix.classList.remove('nds-dropmenu');
+                        fix.removeAttribute('data-nds-dropmenu-initialized');
+
+                        // Convert button trigger back to span
+                        var trigger = fix.querySelector('.nds-dropmenu-trigger');
+                        if (trigger) {
+                            var span = document.createElement('span');
+                            span.className = trigger.className.replace(' nds-menu-btn', '').replace(' nds-dropmenu-trigger', '');
+                            span.innerHTML = trigger.innerHTML;
+                            span.removeAttribute('aria-expanded');
+                            span.removeAttribute('aria-haspopup');
+                            trigger.replaceWith(span);
+                        }
+
+                        // Remove menu
+                        var menu = fix.querySelector('.nds-dropmenu-menu');
+                        if (menu) menu.remove();
+                    }
+                });
+
+                // Rebuild code example from live demo
+                rebuildFormFixCode(demoCard);
+            });
+        });
+    }
+
+    function rebuildFormFixCode(demoCard) {
+        var codeElement = demoCard.querySelector('.code-example code');
+        if (!codeElement) return;
+
+        var container = demoCard.querySelector('.demo-container .nds-form-container');
+        if (!container) return;
+
+        // Clone live demo and clean up
+        var clone = container.cloneNode(true);
+        // Remove dropmenu init attributes
+        clone.querySelectorAll('[data-nds-dropmenu-initialized]').forEach(function(el) { el.removeAttribute('data-nds-dropmenu-initialized'); });
+        clone.querySelectorAll('[aria-expanded]').forEach(function(el) { el.removeAttribute('aria-expanded'); el.removeAttribute('aria-haspopup'); });
+        clone.querySelectorAll('[role="menu"]').forEach(function(el) { el.removeAttribute('role'); el.removeAttribute('aria-hidden'); el.removeAttribute('style'); });
+        clone.querySelectorAll('[role="menuitem"]').forEach(function(el) { el.removeAttribute('role'); });
+        // Remove data-original-fix-html
+        clone.querySelectorAll('[data-original-fix-html]').forEach(function(el) { el.removeAttribute('data-original-fix-html'); });
+        var fc = clone.querySelector('.nds-form-control');
+        if (fc) fc.removeAttribute('data-original-fix-html');
+
+        // Format code
+        var code = clone.innerHTML
+            .replace(/^\s+/gm, '')
+            .replace(/></g, '>\n<');
+
+        // Indent
+        var lines = code.split('\n');
+        var indent = 0;
+        var formatted = [];
+        lines.forEach(function(line) {
+            if (line.match(/^<\//) && indent > 0) indent--;
+            formatted.push('  '.repeat(indent) + line);
+            if (line.match(/^<[a-z][^/]*[^/]>$/) && !line.match(/^<(input|br|hr|img)/)) indent++;
+        });
+
+        var result = formatted.join('\n');
+        codeElement.dataset.originalContent = result;
+        codeElement.innerHTML = result;
+        if (NDS.Code && NDS.Code.reprocessCodeElement) {
+            NDS.Code.reprocessCodeElement(codeElement);
+        }
     }
 
     function rebuildCardCode(demoCard) {
