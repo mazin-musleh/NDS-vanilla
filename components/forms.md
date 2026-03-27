@@ -141,7 +141,7 @@ direction: ltr
     </div>
     <div class="nds-section-content">
       <div class="nds-showcase">
-        <div class="nds-demo-card">
+        <div class="nds-demo-card" data-code-rebuild>
           <div class="demo-header">
             <div class="demo-action">
               <div class="nds-dropmenu demo-toggle-menu">

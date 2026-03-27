@@ -422,7 +422,7 @@ fieldset {
             margin-inline-start: calc(var(--spacing-md) * -1);
         }
 
-        >*:not([hidden]):not(.nds-dropmenu) {
+        >*:not([hidden]):not(.nds-dropmenu):not(.nds-dropmenu-menu) {
             --btn-height: 100%;
             --btn-height-min: var(--btn-height);
             --btn-radius: var(--_input-radius);
@@ -451,7 +451,7 @@ fieldset {
             white-space: nowrap;
 
             >*:not([hidden]){
-                --btn-radius: 0;
+                --btn-radius: 0 !important;
 
                 &:not(:first-child)::before {
                     display: none;
