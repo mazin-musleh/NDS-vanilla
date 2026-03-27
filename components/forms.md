@@ -20,14 +20,44 @@ direction: ltr
         <div class="nds-demo-card">
           <div class="demo-header">
             <div class="demo-action">
-              <button class="nds-btn nds-subtle demo-toggle-btn selected"
-                data-toggler='["data-required", ".nds-form-container", "requiredToggle", "attr"]'>
-                <span class="label">Required</span>
-              </button>
-              <button class="nds-btn nds-subtle demo-toggle-btn"
-                data-toggler='["disabled", ".nds-form-container", "disabledToggle", "data-state"]'>
-                <span class="label">Disabled</span>
-              </button>
+              <div class="nds-dropmenu demo-toggle-menu">
+                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                  <span class="label">State</span>
+                </button>
+                <div class="nds-dropmenu-menu" hidden>
+                  <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["data-required", ".nds-form-container", "formState", "attr"]'>
+                      <span class="label">Required</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["disabled", ".nds-form-container", "formState", "data-state"]'>
+                      <span class="label">Disabled</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["readonly", ".nds-form-container", "formState", "data-state"]'>
+                      <span class="label">Readonly</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="nds-dropmenu demo-toggle-menu">
+                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                  <span class="label">LG</span>
+                </button>
+                <div class="nds-dropmenu-menu" hidden>
+                  <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                      data-toggler='["nds-lg", ".nds-form-container", "formSize"]'>
+                      <span class="label">LG</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["nds-md", ".nds-form-container", "formSize"]'>
+                      <span class="label">MD</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
               <button class="nds-btn nds-subtle demo-toggle-btn"
                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                 <span class="label">Remove bg</span>
@@ -36,7 +66,7 @@ direction: ltr
           </div>
           <div class="demo-container">
             <div class="state-demo">
-              <div class="nds-form-container" data-required>
+              <div class="nds-form-container">
                 <div class="nds-form-header">
                   <label for="demo-textInput">
                     <span class="label">Full Name</span>
@@ -102,6 +132,182 @@ direction: ltr
   </div>
 </section>
 
+<!-- Prefix & Suffix -->
+<section id="prefixSuffix" class="nds-content-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Prefix & Suffix</h2>
+      <p class="nds-section-description">Text input with inline prefix and suffix labels inside the form control</p>
+    </div>
+    <div class="nds-section-content">
+      <div class="nds-showcase">
+        <div class="nds-demo-card">
+          <div class="demo-header">
+            <div class="demo-action">
+              <div class="nds-dropmenu demo-toggle-menu">
+                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                  <span class="label">State</span>
+                </button>
+                <div class="nds-dropmenu-menu" hidden>
+                  <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["data-required", ".nds-form-container", "formState", "attr"]'>
+                      <span class="label">Required</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["disabled", ".nds-form-container", "formState", "data-state"]'>
+                      <span class="label">Disabled</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["readonly", ".nds-form-container", "formState", "data-state"]'>
+                      <span class="label">Readonly</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="nds-dropmenu demo-toggle-menu">
+                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                  <span class="label">LG</span>
+                </button>
+                <div class="nds-dropmenu-menu" hidden>
+                  <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                      data-toggler='["nds-lg", ".nds-form-container", "formSize"]'>
+                      <span class="label">LG</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["nds-md", ".nds-form-container", "formSize"]'>
+                      <span class="label">MD</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="nds-dropmenu demo-toggle-menu">
+                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Fix: ">
+                  <span class="label">Fix: Subtle</span>
+                </button>
+                <div class="nds-dropmenu-menu" hidden>
+                  <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                      data-toggler='["nds-subtle", ".nds-prefix > .nds-btn, .nds-suffix > .nds-btn", "fixStyle"]'>
+                      <span class="label">Subtle</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["nds-secondary", ".nds-prefix > .nds-btn, .nds-suffix > .nds-btn", "fixStyle"]'>
+                      <span class="label">Solid</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="nds-dropmenu demo-toggle-menu">
+                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Fix: ">
+                  <span class="label">Fix: LG</span>
+                </button>
+                <div class="nds-dropmenu-menu" hidden>
+                  <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                      data-toggler='["nds-lg", ".nds-prefix > .nds-btn, .nds-suffix > .nds-btn", "fixSize"]'>
+                      <span class="label">LG</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["nds-md", ".nds-prefix > .nds-btn, .nds-suffix > .nds-btn", "fixSize"]'>
+                      <span class="label">MD</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="nds-dropmenu demo-toggle-menu">
+                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Fix: ">
+                  <span class="label">Fix: Both</span>
+                </button>
+                <div class="nds-dropmenu-menu" hidden>
+                  <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item" data-form-fix="prefix">
+                      <span class="label">Prefix</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item" data-form-fix="suffix">
+                      <span class="label">Suffix</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item selected" data-form-fix="both">
+                      <span class="label">Both</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <button class="nds-btn nds-subtle demo-toggle-btn" data-form-fix-icon>
+                <span class="label">Icon</span>
+              </button>
+              <button class="nds-btn nds-subtle demo-toggle-btn" data-form-fix-dropmenu>
+                <span class="label">Dropmenu</span>
+              </button>
+              <button class="nds-btn nds-subtle demo-toggle-btn"
+                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                <span class="label">Remove bg</span>
+              </button>
+            </div>
+          </div>
+          <div class="demo-container">
+            <div class="state-demo">
+              <div class="nds-form-container">
+                <div class="nds-form-header">
+                  <label for="demo-prefixSuffix">
+                    <span class="label">Label</span>
+                  </label>
+                </div>
+                <div class="nds-form-control">
+                  <div class="nds-form-action nds-prefix"><span class="nds-btn nds-subtle"><span class="label">Prefix</span></span></div>
+                  <input type="text" id="demo-prefixSuffix" class="nds-input" placeholder="Entered text">
+                  <div class="nds-form-action nds-suffix"><span class="nds-btn nds-subtle"><span class="label">Suffix</span></span></div>
+                </div>
+                <div class="nds-form-footer" data-feedback-target hidden></div>
+              </div>
+            </div>
+          </div>
+          <div class="demo-code">
+            <div class="nds-tabs nds-code nds-divided" hidden>
+              <div class="nds-tab-list-container">
+                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                  <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                    aria-controls="panel-prefix-suffix-1" id="tab-prefix-suffix-1">
+                    <span class="nds-tab-label">HTML</span>
+                  </button>
+                </nav>
+              </div>
+              <div class="nds-tab-content">
+                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-prefix-suffix-1"
+                  aria-labelledby="tab-prefix-suffix-1">
+                  <div class="nds-code-action">
+                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                      <i class="hgi hgi-stroke hgi-copy-01"></i>
+                    </button>
+                  </div>
+                  <div class="nds-expandable-content">
+                    <code class="lang-html code">
+<div class="nds-form-container">
+  <div class="nds-form-header">
+    <label for="prefix-suffix-1">
+      <span class="label">Label</span>
+    </label>
+  </div>
+  <div class="nds-form-control">
+    <div class="nds-form-action nds-prefix"><span class="nds-btn nds-subtle"><span class="label">Prefix</span></span></div>
+    <input type="text" id="prefix-suffix-1" class="nds-input" placeholder="Entered text">
+    <div class="nds-form-action nds-suffix"><span class="nds-btn nds-subtle"><span class="label">Suffix</span></span></div>
+  </div>
+  <div class="nds-form-footer" data-feedback-target hidden></div>
+</div>
+                    </code>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- Search Input -->
 <section id="searchInput" class="nds-content-section">
   <div class="nds-section-wrapper">
@@ -114,14 +320,44 @@ direction: ltr
         <div class="nds-demo-card">
           <div class="demo-header">
             <div class="demo-action">
-              <button class="nds-btn nds-subtle demo-toggle-btn"
-                data-toggler='["data-required", ".nds-form-container", "requiredToggle", "attr"]'>
-                <span class="label">Required</span>
-              </button>
-              <button class="nds-btn nds-subtle demo-toggle-btn"
-                data-toggler='["disabled", ".nds-form-container", "disabledToggle", "data-state"]'>
-                <span class="label">Disabled</span>
-              </button>
+              <div class="nds-dropmenu demo-toggle-menu">
+                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                  <span class="label">State</span>
+                </button>
+                <div class="nds-dropmenu-menu" hidden>
+                  <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["data-required", ".nds-form-container", "formState", "attr"]'>
+                      <span class="label">Required</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["disabled", ".nds-form-container", "formState", "data-state"]'>
+                      <span class="label">Disabled</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["readonly", ".nds-form-container", "formState", "data-state"]'>
+                      <span class="label">Readonly</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="nds-dropmenu demo-toggle-menu">
+                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                  <span class="label">LG</span>
+                </button>
+                <div class="nds-dropmenu-menu" hidden>
+                  <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                      data-toggler='["nds-lg", ".nds-form-container", "formSize"]'>
+                      <span class="label">LG</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["nds-md", ".nds-form-container", "formSize"]'>
+                      <span class="label">MD</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
               <button class="nds-btn nds-subtle demo-toggle-btn"
                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                 <span class="label">Remove bg</span>
@@ -141,11 +377,11 @@ direction: ltr
                   <input type="text" id="demo-searchInput" class="nds-search-input" name="search"
                     placeholder="Search services...">
                   <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle voiceInput" type="button" aria-label="Voice input">
-                      <i class="hgi hgi-stroke hgi-mic-01 icon"></i>
-                    </button>
                     <button class="nds-btn nds-subtle clear" type="button" aria-label="Clear search" hidden>
                       <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
+                    </button>
+                    <button class="nds-btn nds-subtle voiceInput" type="button" aria-label="Voice input">
+                      <i class="hgi hgi-stroke hgi-mic-01 icon"></i>
                     </button>
                   </div>
                 </div>
@@ -183,11 +419,11 @@ direction: ltr
     <i class="hgi hgi-stroke hgi-search-01 icon"></i>
     <input type="text" id="search-input-1" class="nds-search-input" name="search" placeholder="Search services...">
     <div class="nds-form-action">
-      <button class="nds-btn nds-subtle voiceInput" type="button" aria-label="Voice input">
-        <i class="hgi hgi-stroke hgi-mic-01 icon"></i>
-      </button>
       <button class="nds-btn nds-subtle clear" type="button" aria-label="Clear search" hidden>
         <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
+      </button>
+      <button class="nds-btn nds-subtle voiceInput" type="button" aria-label="Voice input">
+        <i class="hgi hgi-stroke hgi-mic-01 icon"></i>
       </button>
     </div>
   </div>
@@ -217,14 +453,44 @@ direction: ltr
         <div class="nds-demo-card">
           <div class="demo-header">
             <div class="demo-action">
-              <button class="nds-btn nds-subtle demo-toggle-btn"
-                data-toggler='["data-required", ".nds-form-container", "requiredToggle", "attr"]'>
-                <span class="label">Required</span>
-              </button>
-              <button class="nds-btn nds-subtle demo-toggle-btn"
-                data-toggler='["disabled", ".nds-form-container", "disabledToggle", "data-state"]'>
-                <span class="label">Disabled</span>
-              </button>
+              <div class="nds-dropmenu demo-toggle-menu">
+                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                  <span class="label">State</span>
+                </button>
+                <div class="nds-dropmenu-menu" hidden>
+                  <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["data-required", ".nds-form-container", "formState", "attr"]'>
+                      <span class="label">Required</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["disabled", ".nds-form-container", "formState", "data-state"]'>
+                      <span class="label">Disabled</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["readonly", ".nds-form-container", "formState", "data-state"]'>
+                      <span class="label">Readonly</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="nds-dropmenu demo-toggle-menu">
+                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                  <span class="label">LG</span>
+                </button>
+                <div class="nds-dropmenu-menu" hidden>
+                  <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                      data-toggler='["nds-lg", ".nds-form-container", "formSize"]'>
+                      <span class="label">LG</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["nds-md", ".nds-form-container", "formSize"]'>
+                      <span class="label">MD</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
               <button class="nds-btn nds-subtle demo-toggle-btn"
                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                 <span class="label">Remove bg</span>
@@ -313,14 +579,44 @@ direction: ltr
         <div class="nds-demo-card">
           <div class="demo-header">
             <div class="demo-action">
-              <button class="nds-btn nds-subtle demo-toggle-btn"
-                data-toggler='["data-required", ".nds-form-container", "requiredToggle", "attr"]'>
-                <span class="label">Required</span>
-              </button>
-              <button class="nds-btn nds-subtle demo-toggle-btn"
-                data-toggler='["disabled", ".nds-form-container", "disabledToggle", "data-state"]'>
-                <span class="label">Disabled</span>
-              </button>
+              <div class="nds-dropmenu demo-toggle-menu">
+                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                  <span class="label">State</span>
+                </button>
+                <div class="nds-dropmenu-menu" hidden>
+                  <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["data-required", ".nds-form-container", "formState", "attr"]'>
+                      <span class="label">Required</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["disabled", ".nds-form-container", "formState", "data-state"]'>
+                      <span class="label">Disabled</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["readonly", ".nds-form-container", "formState", "data-state"]'>
+                      <span class="label">Readonly</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="nds-dropmenu demo-toggle-menu">
+                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                  <span class="label">LG</span>
+                </button>
+                <div class="nds-dropmenu-menu" hidden>
+                  <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                      data-toggler='["nds-lg", ".nds-form-container", "formSize"]'>
+                      <span class="label">LG</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["nds-md", ".nds-form-container", "formSize"]'>
+                      <span class="label">MD</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
               <button class="nds-btn nds-subtle demo-toggle-btn"
                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                 <span class="label">Remove bg</span>
@@ -417,14 +713,44 @@ direction: ltr
         <div class="nds-demo-card">
           <div class="demo-header">
             <div class="demo-action">
-              <button class="nds-btn nds-subtle demo-toggle-btn"
-                data-toggler='["data-required", ".nds-form-container", "requiredToggle", "attr"]'>
-                <span class="label">Required</span>
-              </button>
-              <button class="nds-btn nds-subtle demo-toggle-btn"
-                data-toggler='["disabled", ".nds-form-container", "disabledToggle", "data-state"]'>
-                <span class="label">Disabled</span>
-              </button>
+              <div class="nds-dropmenu demo-toggle-menu">
+                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                  <span class="label">State</span>
+                </button>
+                <div class="nds-dropmenu-menu" hidden>
+                  <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["data-required", ".nds-form-container", "formState", "attr"]'>
+                      <span class="label">Required</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["disabled", ".nds-form-container", "formState", "data-state"]'>
+                      <span class="label">Disabled</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["readonly", ".nds-form-container", "formState", "data-state"]'>
+                      <span class="label">Readonly</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="nds-dropmenu demo-toggle-menu">
+                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                  <span class="label">LG</span>
+                </button>
+                <div class="nds-dropmenu-menu" hidden>
+                  <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                      data-toggler='["nds-lg", ".nds-form-container", "formSize"]'>
+                      <span class="label">LG</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["nds-md", ".nds-form-container", "formSize"]'>
+                      <span class="label">MD</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
               <button class="nds-btn nds-subtle demo-toggle-btn"
                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                 <span class="label">Remove bg</span>
@@ -502,14 +828,44 @@ direction: ltr
         <div class="nds-demo-card">
           <div class="demo-header">
             <div class="demo-action">
-              <button class="nds-btn nds-subtle demo-toggle-btn"
-                data-toggler='["data-required", ".nds-form-container", "requiredToggle", "attr"]'>
-                <span class="label">Required</span>
-              </button>
-              <button class="nds-btn nds-subtle demo-toggle-btn"
-                data-toggler='["disabled", ".nds-form-container", "disabledToggle", "data-state"]'>
-                <span class="label">Disabled</span>
-              </button>
+              <div class="nds-dropmenu demo-toggle-menu">
+                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                  <span class="label">State</span>
+                </button>
+                <div class="nds-dropmenu-menu" hidden>
+                  <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["data-required", ".nds-form-container", "formState", "attr"]'>
+                      <span class="label">Required</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["disabled", ".nds-form-container", "formState", "data-state"]'>
+                      <span class="label">Disabled</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["readonly", ".nds-form-container", "formState", "data-state"]'>
+                      <span class="label">Readonly</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="nds-dropmenu demo-toggle-menu">
+                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                  <span class="label">LG</span>
+                </button>
+                <div class="nds-dropmenu-menu" hidden>
+                  <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                      data-toggler='["nds-lg", ".nds-form-container", "formSize"]'>
+                      <span class="label">LG</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["nds-md", ".nds-form-container", "formSize"]'>
+                      <span class="label">MD</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
               <button class="nds-btn nds-subtle demo-toggle-btn"
                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                 <span class="label">Remove bg</span>
