@@ -103,7 +103,7 @@ body.nds-minimal[style*="--bg-img"] {
     -webkit-touch-callout: none;
 }
 
-:is(button, .button, .btn, .nds-btn) {
+:is(button) {
     background-color: transparent;
     border: none;
     cursor: pointer;
