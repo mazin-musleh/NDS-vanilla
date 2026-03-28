@@ -310,7 +310,7 @@
 
             if (this.el.overlay) {
                 this.el.overlay.classList.add('nds-ipv-active');
-                if (NDS.Backdrop) {
+                if (!skipIndexUpdate && NDS.Backdrop) {
                     NDS.Backdrop.show({ zIndex: 999, clickToClose: false, escapeClose: false });
                 }
             }

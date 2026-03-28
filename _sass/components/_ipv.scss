@@ -9,18 +9,6 @@
 // GALLERY STYLES
 // ==============================================
 
-.nds-ipv-gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: var(--spacing-lg);
-  max-width: 1200px;
-  width: 100%;
-
-  @include mobile {
-    grid-template-columns: 1fr;
-    gap: var(--spacing-md);
-  }
-}
 
 .nds-ipv-image-card {
 
