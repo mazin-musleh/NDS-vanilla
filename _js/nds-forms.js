@@ -156,6 +156,16 @@
             return NDS.isArabic;
         },
 
+        validateNumberRange: function(input) {
+            var val = parseInt(input.value);
+            if (input.value === '' || isNaN(val)) return null;
+            var min = input.hasAttribute('min') ? parseInt(input.min) : 0;
+            var max = input.hasAttribute('max') ? parseInt(input.max) : val;
+            if (val < min) return { clamped: min, message: Validator.getNumberRangeMessage('min', min) };
+            if (val > max) return { clamped: max, message: Validator.getNumberRangeMessage('max', max) };
+            return null;
+        },
+
         debounce: function(func, wait) {
             var timeout;
             return function() {
@@ -357,6 +367,12 @@
             return isArabic ? 'مدخل غير صحيح' : 'Invalid input';
         },
 
+        getNumberRangeMessage: function(type, value) {
+            var isArabic = Utils.isArabic();
+            if (type === 'min') return isArabic ? 'الحد الأدنى ' + value : 'Minimum value is ' + value;
+            return isArabic ? 'الحد الأقصى ' + value : 'Maximum value is ' + value;
+        },
+
         validateCheckboxGroup: function(groupElement, options) {
             options = options || { showMessage: true };
 
@@ -490,17 +506,30 @@
                 var input = container.querySelector('input, textarea, select');
                 if (!input || input.disabled) return;
 
-                if (!input.checkValidity()) {
+                var isInvalid = !input.checkValidity();
+                var numberMsg = null;
+
+                // Validate number input min/max (type="text" with increment/decrement buttons)
+                if (!isInvalid && container.querySelector('.nds-number-increment, .nds-number-decrement')) {
+                    var rangeError = Utils.validateNumberRange(input);
+                    if (rangeError) {
+                        isInvalid = true;
+                        numberMsg = rangeError.message;
+                    }
+                }
+
+                if (isInvalid) {
                     invalidFields.push(container);
+                    var msg = numberMsg || Validator.getMessage(input);
                     errors.push({
                         field: container,
                         input: input,
-                        message: Validator.getMessage(input)
+                        message: msg
                     });
 
                     if (!firstInvalidInput) firstInvalidInput = input;
                     if (options.showMessages) {
-                        StatusManager.set({ element: container, status: 'error', message: Validator.getMessage(input) });
+                        StatusManager.set({ element: container, status: 'error', message: msg });
                     }
                 }
             });
@@ -743,6 +772,20 @@
                     FormState.updateDataState(formContainer, 'focus', false);
                     FormState.updateDataState(formContainer, 'typing', false);
                 }
+
+                // Clamp number input value to min/max on blur
+                if (formControl.querySelector('.nds-number-increment, .nds-number-decrement')) {
+                    var val = parseInt(input.value);
+                    if (isNaN(val)) { input.value = ''; }
+                    else {
+                        var rangeError = Utils.validateNumberRange(input);
+                        if (rangeError) {
+                            input.value = rangeError.clamped;
+                            StatusManager.set({ element: formContainer, status: 'error', message: rangeError.message });
+                        }
+                    }
+                }
+
                 // Only validate on blur if field already has an error (to clear it when fixed)
                 var hasError = formContainer && formContainer.getAttribute('data-status') === 'error';
                 if (!input.readOnly) FormState.update(input, formControl, !hasError);
@@ -1358,6 +1401,89 @@
             });
         },
 
+        initNumberInput: function(formControl) {
+            var buttons = formControl.querySelectorAll('.nds-number-increment, .nds-number-decrement');
+            if (!buttons.length) return;
+
+            function stepValue(btn, multiplier) {
+                var input = formControl.querySelector('input');
+                if (!input || input.disabled || input.readOnly) return false;
+
+                var current = parseInt(input.value) || 0;
+                var min = input.hasAttribute('min') ? parseInt(input.min) : 0;
+                var max = input.hasAttribute('max') ? parseInt(input.max) : current;
+                var step = (parseInt(input.step) || 1) * (multiplier || 1);
+                var next = btn.classList.contains('nds-number-increment') ? current + step : current - step;
+
+                next = Math.max(min, Math.min(max, next));
+                var formContainer = formControl.closest('.nds-form-container');
+                if (next !== current) {
+                    if (formContainer && formContainer.getAttribute('data-status') === 'error') {
+                        StatusManager.clear(formContainer);
+                    }
+                    input.value = next;
+                    input.dispatchEvent(new Event('input', { bubbles: true }));
+                    return true;
+                }
+                if (formContainer && formContainer.getAttribute('data-status') !== 'error') {
+                    var isIncrement = btn.classList.contains('nds-number-increment');
+                    var msg = isIncrement ? Validator.getNumberRangeMessage('max', max) : Validator.getNumberRangeMessage('min', min);
+                    StatusManager.set({ element: formContainer, status: 'error', message: msg });
+                }
+                return false;
+            }
+
+            // Acceleration tiers: [duration held (ms), step multiplier, interval (ms)]
+            var tiers = [
+                [0,    1,  75],
+                [1500, 10, 50]
+            ];
+
+            buttons.forEach(function(btn) {
+                if (btn._ndsNumberInit) return;
+                btn._ndsNumberInit = true;
+
+                var holdTimer = null;
+                var holdInterval = null;
+                var tierTimers = [];
+
+                btn.addEventListener('click', function() { stepValue(btn); });
+
+                btn.addEventListener('pointerdown', function(e) {
+                    if (e.button !== 0) return;
+                    var currentMultiplier = tiers[0][1];
+                    var currentSpeed = tiers[0][2];
+
+                    holdTimer = setTimeout(function() {
+                        holdInterval = setInterval(function() { stepValue(btn, currentMultiplier); }, currentSpeed);
+
+                        // Schedule tier upgrades
+                        for (var i = 1; i < tiers.length; i++) {
+                            (function(tier) {
+                                tierTimers.push(setTimeout(function() {
+                                    currentMultiplier = tier[1];
+                                    clearInterval(holdInterval);
+                                    holdInterval = setInterval(function() { stepValue(btn, currentMultiplier); }, tier[2]);
+                                }, tier[0]));
+                            })(tiers[i]);
+                        }
+                    }, 400);
+                });
+
+                function stopHold() {
+                    clearTimeout(holdTimer);
+                    clearInterval(holdInterval);
+                    tierTimers.forEach(clearTimeout);
+                    holdTimer = null;
+                    holdInterval = null;
+                    tierTimers = [];
+                }
+
+                btn.addEventListener('pointerup', stopHold);
+                btn.addEventListener('pointerleave', stopHold);
+            });
+        },
+
         initClearButton: function(formControl, inputElements) {
             var clearButton = formControl.querySelector('.nds-form-action .clear');
             if (!clearButton) return;
@@ -1608,6 +1734,7 @@
 
             FormControls.initVoiceInput(formControl);
             FormControls.initPasswordToggle(formControl);
+            FormControls.initNumberInput(formControl);
             FormControls.initClearButton(formControl, inputElements);
             FormControls.initSwitchControls(formControl);
         });
