@@ -166,6 +166,20 @@
         });
     }
 
+    // Select a dropmenu item: deselect siblings, select button, update trigger label
+    function selectDropmenuItem(button, siblingSelector) {
+        var dropmenu = button.closest('.nds-dropmenu');
+        if (!dropmenu) return;
+        dropmenu.querySelectorAll(siblingSelector).forEach(function(b) { b.classList.remove('selected'); });
+        button.classList.add('selected');
+        var triggerEl = dropmenu.querySelector('.nds-dropmenu-trigger');
+        var triggerLabel = triggerEl?.querySelector('.label');
+        if (triggerLabel) {
+            var prefix = triggerEl.getAttribute('data-label-prefix') || '';
+            triggerLabel.textContent = prefix + button.querySelector('.label').textContent;
+        }
+    }
+
     // Parse data-toggler JSON into normalized togglePairs array, or null if invalid
     function parseTogglerData(button) {
         var togglerData = button.getAttribute('data-toggler');
@@ -936,53 +950,32 @@
     }
 
     function updateCodeExampleForDataState(demoCard, changedElement, state, isAdding) {
-        const codeElement = demoCard.querySelector('.code-example code');
-        if (!codeElement) return;
-
-        const hiddenCopy = getHiddenCodeCopy(codeElement);
-        if (!hiddenCopy) return;
-        let code = hiddenCopy.textContent;
-
-        // Find the element in code text by its first class
-        const baseClass = Array.from(changedElement.classList)[0];
+        var baseClass = Array.from(changedElement.classList)[0];
         if (!baseClass) return;
-        const escaped = baseClass.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&');
+        var escaped = baseClass.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&');
+        var liveState = changedElement.getAttribute('data-state');
 
-        // Update data-state on the container tag
-        const tagRegex = new RegExp(`(<[^>]*class="[^"]*${escaped}[^"]*"[^>]*?)(/?>)`, 'g');
-        code = code.replace(tagRegex, (match, before, close) => {
-            let tag = before.replace(/\s*data-state="[^"]*"/, '');
-            const liveState = changedElement.getAttribute('data-state');
-            if (liveState) {
-                tag += ` data-state="${liveState}"`;
-            }
-            return tag + close;
+        withCodeExample(demoCard, '', function(code) {
+            var tagRegex = new RegExp('(<[^>]*class="[^"]*' + escaped + '[^"]*"[^>]*?)(/?>)', 'g');
+            return code.replace(tagRegex, function(match, before, close) {
+                var tag = before.replace(/\s*data-state="[^"]*"/, '');
+                if (liveState) tag += ' data-state="' + liveState + '"';
+                return tag + close;
+            });
         });
 
-        updateCodeFromHiddenCopy(codeElement, code);
-
-        // Sync disabled on inputs in code
-        if (state === 'disabled') {
-            updateCodeInputAttribute(demoCard, 'disabled', isAdding);
-        }
+        if (state === 'disabled') updateCodeInputAttribute(demoCard, 'disabled', isAdding);
     }
 
     function updateCodeInputAttribute(demoCard, attrName, add) {
-        const codeElement = demoCard.querySelector('.code-example code');
-        if (!codeElement) return;
-
-        const hiddenCopy = getHiddenCodeCopy(codeElement);
-        if (!hiddenCopy) return;
-        let code = hiddenCopy.textContent;
-
-        const escapedAttr = attrName.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&');
-        code = code.replace(/(<(?:input|textarea|select)\b[^>]*?)(\/?>)/g, (match, before, close) => {
-            let tag = before.replace(new RegExp(`\\s*${escapedAttr}(?:="[^"]*")?`), '');
-            if (add) tag += ` ${attrName}`;
-            return tag + close;
+        var escapedAttr = attrName.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&');
+        withCodeExample(demoCard, '', function(code) {
+            return code.replace(/(<(?:input|textarea|select)\b[^>]*?)(\/?>)/g, function(match, before, close) {
+                var tag = before.replace(new RegExp('\\s*' + escapedAttr + '(?:="[^"]*")?'), '');
+                if (add) tag += ' ' + attrName;
+                return tag + close;
+            });
         });
-
-        updateCodeFromHiddenCopy(codeElement, code);
     }
 
     // Update feedback code examples (JS + HTML) from toggle button states
@@ -1115,87 +1108,41 @@
 
     // Update JS code example with all current alert options
     function updateAlertJsCodeExample(alertElement, demoCard, variant, title, description) {
-        const jsCodeElement = demoCard.querySelector('.code-example code.lang-javascript, .code-example code[class*="javascript"]');
-        if (!jsCodeElement) return;
-
-        const hiddenCopy = getHiddenCodeCopy(jsCodeElement);
-        if (!hiddenCopy) return;
-
-        let updatedCode = hiddenCopy.textContent;
-
-        // Update variant
-        updatedCode = updatedCode.replace(
-            /variant:\s*['"][^'"]+['"]/,
-            `variant: '${variant}'`
-        );
-
-        // Update title
-        updatedCode = updatedCode.replace(
-            /title:\s*['"][^'"]+['"]/,
-            `title: '${title}'`
-        );
-
-        // Update description
-        if (description) {
-            updatedCode = updatedCode.replace(
-                /description:\s*['"][^'"]+['"]/,
-                `description: '${description}'`
-            );
-        }
-
-        // Update position if present in code
-        const position = alertElement.getAttribute('data-position') || 'top';
-        updatedCode = updatedCode.replace(
-            /position:\s*['"][^'"]+['"]/,
-            `position: '${position}'`
-        );
-
-        // Update color if present in code
-        const hasColor = alertElement.classList.contains('nds-color');
-        updatedCode = updatedCode.replace(
-            /color:\s*(true|false)/,
-            `color: ${hasColor}`
-        );
-
-        updateCodeFromHiddenCopy(jsCodeElement, updatedCode);
+        var position = alertElement.getAttribute('data-position') || 'top';
+        var hasColor = alertElement.classList.contains('nds-color');
+        withCodeExample(demoCard, JS_CODE_SELECTOR, function(code) {
+            code = code.replace(/variant:\s*['"][^'"]+['"]/, "variant: '" + variant + "'");
+            code = code.replace(/title:\s*['"][^'"]+['"]/, "title: '" + title + "'");
+            if (description) code = code.replace(/description:\s*['"][^'"]+['"]/, "description: '" + description + "'");
+            code = code.replace(/position:\s*['"][^'"]+['"]/, "position: '" + position + "'");
+            code = code.replace(/color:\s*(true|false)/, 'color: ' + hasColor);
+            return code;
+        });
     }
 
-    // Update JS code for position changes
+    // Update a code example by selector: get hidden copy, apply replaceFn, write back
+    function withCodeExample(demoCard, langSelector, replaceFn) {
+        var el = demoCard.querySelector('.code-example code' + langSelector);
+        if (!el) return;
+        var copy = getHiddenCodeCopy(el);
+        if (!copy) return;
+        updateCodeFromHiddenCopy(el, replaceFn(copy.textContent));
+    }
+
+    var JS_CODE_SELECTOR = '.lang-javascript, [class*="javascript"]';
+
     function updateAlertPositionInJsCode(alertElement, demoCard) {
-        const jsCodeElement = demoCard.querySelector('.code-example code.lang-javascript, .code-example code[class*="javascript"]');
-        if (!jsCodeElement) return;
-
-        const hiddenCopy = getHiddenCodeCopy(jsCodeElement);
-        if (!hiddenCopy) return;
-
-        let updatedCode = hiddenCopy.textContent;
-        const position = alertElement.getAttribute('data-position') || 'top';
-
-        updatedCode = updatedCode.replace(
-            /position:\s*['"][^'"]+['"]/,
-            `position: '${position}'`
-        );
-
-        updateCodeFromHiddenCopy(jsCodeElement, updatedCode);
+        var position = alertElement.getAttribute('data-position') || 'top';
+        withCodeExample(demoCard, JS_CODE_SELECTOR, function(code) {
+            return code.replace(/position:\s*['"][^'"]+['"]/, "position: '" + position + "'");
+        });
     }
 
-    // Update JS code for color changes
     function updateAlertColorInJsCode(alertElement, demoCard) {
-        const jsCodeElement = demoCard.querySelector('.code-example code.lang-javascript, .code-example code[class*="javascript"]');
-        if (!jsCodeElement) return;
-
-        const hiddenCopy = getHiddenCodeCopy(jsCodeElement);
-        if (!hiddenCopy) return;
-
-        let updatedCode = hiddenCopy.textContent;
-        const hasColor = alertElement.classList.contains('nds-color');
-
-        updatedCode = updatedCode.replace(
-            /color:\s*(true|false)/,
-            `color: ${hasColor}`
-        );
-
-        updateCodeFromHiddenCopy(jsCodeElement, updatedCode);
+        var hasColor = alertElement.classList.contains('nds-color');
+        withCodeExample(demoCard, JS_CODE_SELECTOR, function(code) {
+            return code.replace(/color:\s*(true|false)/, 'color: ' + hasColor);
+        });
     }
 
     // Handle chart option toggling — calls NDSChart update() API
@@ -1618,7 +1565,6 @@
                         api.setFileStatus(fileId, 'complete');
                         
                         // Dispatch success event
-                        const container = document.querySelector('.nds-file-upload');
                         api.dispatchEvent('uploadSuccess', {
                             fileId: fileId,
                             file: api.getFile(fileId)?.file
@@ -1627,7 +1573,6 @@
                         api.setFileStatus(fileId, 'error', { error: 'Demo upload failed' });
                         
                         // Dispatch error event
-                        const container = document.querySelector('.nds-file-upload');
                         api.dispatchEvent('uploadError', {
                             fileId: fileId,
                             error: 'Demo upload failed'
@@ -1692,16 +1637,7 @@
                 const card = demoCard.querySelector('.demo-container .nds-card');
                 if (!card) return;
 
-                // Deselect all mode buttons in this dropmenu
-                const dropmenu = this.closest('.nds-dropmenu');
-                dropmenu.querySelectorAll('[data-card-mode]').forEach(b => b.classList.remove('selected'));
-                this.classList.add('selected');
-                const triggerEl = dropmenu.querySelector('.nds-dropmenu-trigger');
-                const trigger = triggerEl?.querySelector('.label');
-                if (trigger) {
-                    const prefix = triggerEl.getAttribute('data-label-prefix') || '';
-                    trigger.textContent = prefix + this.querySelector('.label').textContent;
-                }
+                selectDropmenuItem(this, '[data-card-mode]');
 
                 // Reset all mode sections
                 card.querySelector('.nds-card-checkbox')?.setAttribute('hidden', '');
@@ -1774,15 +1710,7 @@
                 if (!demoCard) return;
 
                 const state = this.dataset.cardState;
-                const dropmenu = this.closest('.nds-dropmenu');
-                dropmenu.querySelectorAll('[data-card-state]').forEach(b => b.classList.remove('selected'));
-                this.classList.add('selected');
-                const triggerEl = dropmenu.querySelector('.nds-dropmenu-trigger');
-                const trigger = triggerEl?.querySelector('.label');
-                if (trigger) {
-                    const prefix = triggerEl.getAttribute('data-label-prefix') || '';
-                    trigger.textContent = prefix + this.querySelector('.label').textContent;
-                }
+                selectDropmenuItem(this, '[data-card-state]');
 
                 let card = demoCard.querySelector('.demo-container .nds-card');
                 if (!card) return;
@@ -1844,16 +1772,7 @@
                 if (!demoCard) return;
 
                 const headerType = this.dataset.cardHeader;
-
-                const dropmenu = this.closest('.nds-dropmenu');
-                dropmenu.querySelectorAll('[data-card-header]').forEach(b => b.classList.remove('selected'));
-                this.classList.add('selected');
-                const triggerEl = dropmenu.querySelector('.nds-dropmenu-trigger');
-                const trigger = triggerEl?.querySelector('.label');
-                if (trigger) {
-                    const prefix = triggerEl.getAttribute('data-label-prefix') || '';
-                    trigger.textContent = prefix + this.querySelector('.label').textContent;
-                }
+                selectDropmenuItem(this, '[data-card-header]');
 
                 // Hide both, then show selected
                 const iconSection = demoCard.querySelector('.demo-container .nds-card-featured-icon');
@@ -1887,8 +1806,6 @@
                 if (!demoCard) return;
 
                 const section = this.dataset.cardToggle;
-                const card = demoCard.querySelector('.demo-container .nds-card');
-
                 const selectorMap = {
                     tags: '.nds-card-tags',
                     rating: '.nds-card-rating'
@@ -1898,18 +1815,10 @@
                 const target = demoCard.querySelector(`.demo-container ${selector}`);
                 if (!target) return;
 
-                // Toggle hidden attribute
-                const isHidden = target.hasAttribute('hidden');
-                if (isHidden) {
-                    target.removeAttribute('hidden');
-                } else {
-                    target.setAttribute('hidden', '');
-                }
-
-                // Toggle button selected state
+                // Toggle hidden + button selected state
+                var isHidden = target.hasAttribute('hidden');
+                target.toggleAttribute('hidden', !isHidden);
                 this.classList.toggle('selected', isHidden);
-
-
 
                 // Rebuild code from visible demo HTML
                 rebuildCardCode(demoCard);
@@ -1929,16 +1838,7 @@
                 const formControl = demoCard.querySelector('.demo-container .nds-form-control');
                 if (!formControl) return;
 
-                // Deselect siblings, select this
-                const dropmenu = this.closest('.nds-dropmenu');
-                dropmenu.querySelectorAll('[data-form-fix]').forEach(b => b.classList.remove('selected'));
-                this.classList.add('selected');
-                const triggerEl = dropmenu.querySelector('.nds-dropmenu-trigger');
-                const trigger = triggerEl?.querySelector('.label');
-                if (trigger) {
-                    const prefix = triggerEl.getAttribute('data-label-prefix') || '';
-                    trigger.textContent = prefix + this.querySelector('.label').textContent;
-                }
+                selectDropmenuItem(this, '[data-form-fix]');
 
                 // Store original content on first use
                 if (!formControl.dataset.originalFixHtml) {
@@ -2168,21 +2068,7 @@
             if (label) label.setAttribute('for', cleanId);
         });
 
-        // Format code
-        var code = clone.outerHTML
-            .replace(/^\s+/gm, '')
-            .replace(/></g, '>\n<');
-
-        var lines = code.split('\n');
-        var indent = 0;
-        var formatted = [];
-        lines.forEach(function(line) {
-            if (line.match(/^<\//) && indent > 0) indent--;
-            formatted.push('  '.repeat(indent) + line);
-            if (line.match(/^<[a-z][^/]*[^/]>$/) && !line.match(/^<(input|br|hr|img)/)) indent++;
-        });
-
-        var result = formatted.join('\n');
+        var result = formatHtml(clone.outerHTML);
         codeElement.dataset.originalContent = result;
         codeElement.innerHTML = result;
         if (NDS.Code && NDS.Code.reprocessCodeElement) {
@@ -2212,34 +2098,26 @@
         let html = clone.outerHTML;
 
         // Format and indent the HTML
-        html = formatCardHtml(html);
+        html = formatHtml(html, '    ');
         updateCodeFromHiddenCopy(codeEl, html);
     }
 
-    function formatCardHtml(html) {
-        // Basic HTML formatting with consistent indentation
-        let formatted = '';
-        let indent = 0;
-        const lines = html
+    // Format raw HTML string with consistent indentation
+    function formatHtml(html, indentChar) {
+        indentChar = indentChar || '  ';
+        var formatted = '';
+        var indent = 0;
+        var lines = html
+            .replace(/^\s+/gm, '')
             .replace(/></g, '>\n<')
-            .replace(/([^>])\n/g, '$1')
             .split('\n');
 
-        lines.forEach(line => {
+        lines.forEach(function(line) {
             line = line.trim();
             if (!line) return;
-
-            // Decrease indent for closing tags
-            if (line.match(/^<\//) && !line.match(/^<\/.*<\//)) {
-                indent = Math.max(0, indent - 1);
-            }
-
-            formatted += '    '.repeat(indent) + line + '\n';
-
-            // Increase indent for opening tags (not self-closing or void)
-            if (line.match(/^<[^\/!]/) && !line.match(/\/>$/) && !line.match(/<\//) && !line.match(/^<(img|input|br|hr|meta|link)\b/)) {
-                indent++;
-            }
+            if (line.match(/^<\//) && indent > 0) indent--;
+            formatted += indentChar.repeat(indent) + line + '\n';
+            if (line.match(/^<[a-z][^/]*[^/]>$/) && !line.match(/^<(input|br|hr|img|meta|link)\b/)) indent++;
         });
 
         return formatted.trim();
