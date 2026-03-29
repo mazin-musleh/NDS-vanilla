@@ -235,7 +235,7 @@ textarea {
   --_btn-padding: var(--btn-padding, calc(var(--_btn-size) * 0.375 - 3px));
   --_btn-radius: var(--btn-radius, var(--radius-sm));
 
-  --_btn-FS: calc(var(--_btn-size) * 0.2 + 8px);
+  --_btn-FS: var(--btn-FS, calc(var(--_btn-size) * 0.2 + 8px));
   --_btn-icon-size: calc(var(--_btn-size) / 2);
 
   --btn-indicator-size: calc(var(--_btn-size) * 0.075);
@@ -305,15 +305,15 @@ textarea {
 
     @if $position =='b' {
       bottom: 0;
-      width: calc(100% - var(--spacing-md) * 2);
-      inset-inline-start: var(--spacing-md);
+      width: calc(100% - var(--_btn-padding) * 2);
+      inset-inline-start: var(--_btn-padding);
     }
 
     @else if $position =='v' {
       inset-inline-start: 0;
       bottom: unset;
       width: $size !important;
-      height: calc(100% - var(--spacing-md) * 2);
+      height: calc(100% - var(--_btn-padding) * 2);
       transform: translateY(-50%);
       top: 50%;
     }

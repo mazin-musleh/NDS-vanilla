@@ -149,12 +149,12 @@
         },
         {
             name: 'pagination',
-            selector: '.nds-pagination-nav, .nds-pagination',
+            selector: '.nds-pagination',
             init: () => NDS.Pagination?.init?.(),
         },
         {
             name: 'autoPagination',
-            selector: '.nds-auto-pagination',
+            selector: '.nds-pagination[data-auto-pagination]',
             init: () => NDS.Pagination?.initAuto?.(),
         },
         {

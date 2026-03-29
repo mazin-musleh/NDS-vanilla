@@ -881,7 +881,7 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Table with Pagination</h2>
-            <p class="nds-section-description">Large datasets can be paginated using the <strong>nds-auto-pagination</strong> system. Add <strong>nds-page-item</strong> class to each <code>&lt;tr&gt;</code> in <code>&lt;tbody&gt;</code> and set <strong>--per-page</strong> on the content wrapper.</p>
+            <p class="nds-section-description">Large datasets can be paginated using the <strong>data-auto-pagination</strong> attribute. Add <strong>nds-page-item</strong> class to each <code>&lt;tr&gt;</code> in <code>&lt;tbody&gt;</code> and set <strong>--per-page</strong> on the content wrapper.</p>
         </div>
         <div class="nds-section-content">
             <div class="nds-showcase">
@@ -940,7 +940,7 @@ direction: ltr
                                 </tbody>
                             </table>
                         </div>
-                        <nav class="nds-pagination-nav nds-auto-pagination" aria-label="Table pagination"></nav>
+                        <nav class="nds-pagination" data-auto-pagination aria-label="Table pagination"></nav>
                     </div>
                 </div>
                 <div class="demo-code">
@@ -1002,7 +1002,7 @@ direction: ltr
                                   </table>
                                 </div>
                                 <!-- Auto-pagination nav placed right after the content wrapper -->
-                                <nav class="nds-pagination-nav nds-auto-pagination" aria-label="Table pagination"></nav>
+                                <nav class="nds-pagination" data-auto-pagination aria-label="Table pagination"></nav>
                                 </code>
                             </div>
                         </div>

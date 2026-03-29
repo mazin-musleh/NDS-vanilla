@@ -14,10 +14,12 @@
 (function() {
     'use strict';
 
+    const ELLIPSIS_SVG = '<svg width="16" height="4" viewBox="0 0 16 4" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><circle cx="2" cy="2" r="1.5"/><circle cx="8" cy="2" r="1.5"/><circle cx="14" cy="2" r="1.5"/></svg>';
+
     class NDSPagination {
         constructor(paginationNav) {
             this.paginationNav = paginationNav;
-            this.pagination = paginationNav.querySelector('.nds-pagination') || paginationNav;
+            this.pagination = paginationNav.querySelector('.nds-pagination-list') || paginationNav;
             this.items = Array.from(this.pagination.querySelectorAll('.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next)'));
             this.threshold = 5; // Collapse if more than 5 page items
 
@@ -98,7 +100,7 @@
             const button = document.createElement('button');
             button.type = 'button';
             button.className = 'nds-btn nds-subtle nds-dropmenu-trigger nds-indicator';
-            button.innerHTML = '<span class="label">...</span>';
+            button.innerHTML = `<span class="label">${ELLIPSIS_SVG}</span>`;
             button.setAttribute('aria-label', 'More pages');
 
             const menu = document.createElement('div');
@@ -163,7 +165,7 @@
 
     // Initialization function (called by nds-loader.js)
     function initializePagination() {
-        const paginationContainers = document.querySelectorAll('.nds-pagination-nav, .nds-pagination');
+        const paginationContainers = document.querySelectorAll('.nds-pagination, .nds-pagination-list');
 
         paginationContainers.forEach(container => {
             // Skip elements inside code examples
@@ -171,9 +173,9 @@
                 return;
             }
 
-            // Skip .nds-pagination elements that are children of .nds-pagination-nav
+            // Skip .nds-pagination-list elements that are children of .nds-pagination
             // (they will be initialized via their parent container)
-            if (container.classList.contains('nds-pagination') && container.closest('.nds-pagination-nav')) {
+            if (container.classList.contains('nds-pagination-list') && container.closest('.nds-pagination')) {
                 return;
             }
 
@@ -182,9 +184,9 @@
                 const totalPages = parseInt(container.dataset.totalPages);
                 const activePage = parseInt(container.dataset.activePage) || 1;
 
-                // Only auto-generate if data-total-pages is set AND container doesn't already have .nds-pagination
-                const hasPaginationList = container.classList.contains('nds-pagination') ||
-                                         container.querySelector('.nds-pagination');
+                // Only auto-generate if data-total-pages is set AND container doesn't already have .nds-pagination-list
+                const hasPaginationList = container.classList.contains('nds-pagination-list') ||
+                                         container.querySelector('.nds-pagination-list');
 
                 if (totalPages && totalPages > 0 && !hasPaginationList) {
                     // Auto-generate pagination HTML
@@ -212,7 +214,7 @@
 
         // Reset all ellipsis triggers back to "..." label
         pagination.querySelectorAll('.nds-dropmenu-trigger .label').forEach(label => {
-            label.textContent = '...';
+            label.innerHTML = ELLIPSIS_SVG;
         });
 
         // Find and activate the target page element
@@ -280,7 +282,7 @@
 
     // Initialize prev/next button states based on active page
     function initializePaginationStates(paginationNav) {
-        const pagination = paginationNav.querySelector('.nds-pagination') || paginationNav;
+        const pagination = paginationNav.querySelector('.nds-pagination-list') || paginationNav;
 
         // Get all page elements and numbers
         const allPageElements = Array.from(pagination.querySelectorAll('.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) button, .nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) a, .nds-dropmenu-item'));
@@ -312,7 +314,7 @@
 
     // Auto-Pagination Generator for content-based pagination
     function initializeAutoPagination() {
-        const autoPaginationContainers = document.querySelectorAll('.nds-auto-pagination');
+        const autoPaginationContainers = document.querySelectorAll('.nds-pagination[data-auto-pagination]');
 
         autoPaginationContainers.forEach(paginationNav => {
             // Skip if already initialized or inside code examples
@@ -330,8 +332,8 @@
             // Get items
             const items = Array.from(contentContainer.querySelectorAll('.nds-page-item'));
 
-            // Hide all items initially to prevent CLS (Cumulative Layout Shift)
-            items.forEach(item => item.hidden = true);
+            // Remove hidden from container (developer adds hidden to prevent FOUC)
+            contentContainer.hidden = false;
 
             // Store last perPage to detect changes
             let lastPerPage = parseInt(getComputedStyle(contentContainer).getPropertyValue('--per-page')) || 5;
@@ -342,7 +344,7 @@
                 const totalPages = Math.ceil(items.length / perPage);
 
                 // Store current page before regenerating
-                const pagination = paginationNav.querySelector('.nds-pagination');
+                const pagination = paginationNav.querySelector('.nds-pagination-list');
                 const currentPage = pagination ? getCurrentPage(pagination) : 1;
 
                 // If no pagination needed, show all items
@@ -371,7 +373,7 @@
                 const finalTotalPages = totalPages;
 
                 // Add click handlers
-                const newPagination = paginationNav.querySelector('.nds-pagination');
+                const newPagination = paginationNav.querySelector('.nds-pagination-list');
                 newPagination.addEventListener('click', (e) => {
                     // Check for page buttons/links (both in pagination list and dropdown menu)
                     const pageElement = e.target.closest('.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) button, .nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) a, .nds-dropmenu-item');
@@ -427,7 +429,7 @@
         // Ensure activePage is within valid range
         activePage = Math.max(1, Math.min(activePage, totalPages));
 
-        let html = '<ul class="nds-pagination">';
+        let html = '<ul class="nds-pagination-list">';
 
         // Prev button
         const prevDisabled = activePage === 1 ? ' disabled' : '';
@@ -494,38 +496,22 @@
 
     // Helper function to scroll to the top of the content list
     function scrollToContent(pagination) {
-        // Calculate nav height dynamically from the nav element
         const nav = document.getElementById('ndsMainNav');
-        const scrollOffset = (nav ? nav.offsetHeight : 72) + 200; // Add 40px spacing
+        const navHeight = nav ? nav.offsetHeight : 72;
 
-        // Find the pagination navigation container
-        const paginationNav = pagination.closest('.nds-pagination-nav, .nds-auto-pagination');
+        const paginationNav = pagination.closest('.nds-pagination');
+        if (!paginationNav) return;
 
-        if (paginationNav) {
-            // For auto-pagination, find the content container (previous sibling)
-            const contentContainer = paginationNav.previousElementSibling;
-            let targetElement = null;
+        const contentContainer = paginationNav.previousElementSibling;
+        const targetElement = (contentContainer && contentContainer.classList.contains('nds-paged-content'))
+            ? contentContainer
+            : paginationNav;
 
-            if (contentContainer && contentContainer.classList.contains('nds-paged-content')) {
-                targetElement = contentContainer;
-            } else if (paginationNav.previousElementSibling) {
-                // Fallback: scroll to any previous sibling element
-                targetElement = paginationNav.previousElementSibling;
-            } else {
-                // If no content container found, scroll to pagination nav itself
-                targetElement = paginationNav;
-            }
-
-            if (targetElement) {
-                // Calculate the scroll position with offset for sticky nav
-                const elementTop = targetElement.getBoundingClientRect().top + window.pageYOffset;
-                const scrollPosition = elementTop - scrollOffset;
-
-                window.scrollTo({ top: scrollPosition, behavior: 'smooth' });
-            }
-        } else {
-            // Manual pagination: scroll to top of the page with offset for sticky nav
-            window.scrollTo({ top: scrollOffset, behavior: 'smooth' });
+        // Only scroll if the top of the content is above the viewport
+        const targetTop = targetElement.getBoundingClientRect().top;
+        if (targetTop < navHeight) {
+            const scrollPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navHeight - 16;
+            window.scrollTo({ top: scrollPosition, behavior: 'smooth' });
         }
     }
 
@@ -547,7 +533,7 @@
     document.addEventListener('click', (e) => {
         // Check if click is on a pagination item or dropdown menu item
         const pageElement = e.target.closest('.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) button, .nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) a');
-        const dropdownItem = e.target.closest('.nds-pagination .nds-dropmenu-item');
+        const dropdownItem = e.target.closest('.nds-pagination-list .nds-dropmenu-item');
         const prevElement = e.target.closest('.nds-pagination-prev button, .nds-pagination-prev a');
         const nextElement = e.target.closest('.nds-pagination-next button, .nds-pagination-next a');
 
@@ -557,11 +543,11 @@
         if (!clickedElement && !prevElement && !nextElement) return;
 
         // Find the pagination container
-        const pagination = (clickedElement || prevElement || nextElement).closest('.nds-pagination');
+        const pagination = (clickedElement || prevElement || nextElement).closest('.nds-pagination-list');
         if (!pagination) return;
 
         // Skip if this is an auto-pagination (already handled)
-        const paginationNav = pagination.closest('.nds-pagination-nav, .nds-auto-pagination');
+        const paginationNav = pagination.closest('.nds-pagination');
         if (paginationNav && paginationNav.hasAttribute('data-nds-auto-pagination-initialized')) {
             return;
         }
@@ -630,7 +616,7 @@
         if (!contentContainer) return;
 
         // Find the pagination nav associated with this content container
-        const paginationNav = contentContainer.parentElement?.querySelector('.nds-auto-pagination');
+        const paginationNav = contentContainer.parentElement?.querySelector('.nds-pagination[data-auto-pagination]');
         if (!paginationNav) return;
 
         // Get only visible (non-filtered) items
@@ -666,7 +652,7 @@
         const finalTotalPages = totalPages;
 
         // Add click handlers
-        const newPagination = paginationNav.querySelector('.nds-pagination');
+        const newPagination = paginationNav.querySelector('.nds-pagination-list');
         newPagination.addEventListener('click', (e) => {
             // Re-get visible items in case filter changed
             const currentVisibleItems = Array.from(contentContainer.querySelectorAll('.nds-page-item'))
@@ -734,7 +720,7 @@
             create: (container) => new NDSPagination(container),
             refresh: refreshAutoPagination,
             setPage: function(container, pageNumber) {
-                const pagination = container.querySelector('.nds-pagination') || container;
+                const pagination = container.querySelector('.nds-pagination-list') || container;
                 const allPages = Array.from(pagination.querySelectorAll(
                     '.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) button, ' +
                     '.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) a, ' +

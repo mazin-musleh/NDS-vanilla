@@ -9,28 +9,25 @@
 // PAGINATION CONTAINER
 // ==============================================
 
-.nds-pagination-nav {
+.nds-pagination {
   --_pagination-margin-top: var(--pagination-margin-top, var(--spacing-2xl));
   width: 100%;
   margin-top: var(--_pagination-margin-top);
 
-  &:not(:has(>.nds-pagination)) {
+  &:not(:has(>.nds-pagination-list)) {
     display: none;
   }
 }
 
-.nds-pagination {
+.nds-pagination-list {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--spacing-xs);
+  gap: var(--spacing-md);
   list-style: none;
   margin: 0;
   padding: 0;
 
-  @include mobile {
-    gap: var(--spacing-xxs);
-  }
 }
 
 // ==============================================
@@ -42,24 +39,17 @@
 
   // Pagination button styling
   .nds-btn {
-    min-width: 40px;
-    height: 40px;
+    --btn-FS: var(--nds-text-md-FS);
+    aspect-ratio: 1;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0 var(--spacing-sm);
     position: relative;
 
     .label {
       text-align: center;
       width: 100%;
       position: relative;
-    }
-
-    @include mobile {
-      min-width: 36px;
-      height: 36px;
-      font-size: var(--nds-text-sm-FS);
     }
 
 
@@ -121,6 +111,7 @@
   .nds-dropmenu-item {
     justify-content: center;
     min-width: 40px;
+    min-height: 40px;
 
     &.nds-indicator {
       @include btn-indicator-styles(var(--background-neutral-400),
@@ -145,18 +136,13 @@
 // PAGINATION SIZES
 // ==============================================
 
-.nds-pagination:is(.nds-sm, .nds-lg) {
-  .nds-pagination-item .nds-btn {
-    min-width: 32px;
-    height: 32px;
-    font-size: var(--nds-text-sm-FS);
-  }
+.nds-pagination.nds-md .nds-btn {
+  --btn-size: 32px;
+}
 
-  &.nds-lg :is(.nds-pagination-item .nds-btn, .nds-pagination-ellipsis) {
-    min-width: 48px;
-    height: 48px;
-    font-size: var(--nds-text-lg-FS);
-  }
+.nds-pagination.nds-sm .nds-btn {
+  --btn-size: 24px;
+  --btn-FS: var(--nds-text-sm-FS);
 }
 
 
@@ -164,12 +150,26 @@
 // AUTO-PAGINATION CONTENT
 // ==============================================
 
-// Pagination items visibility is controlled by the hidden attribute in JavaScript
-// No CSS needed - hidden attribute provides native display: none behavior
+.nds-paged-content {
+  width: 100%;
+}
 
-.nds-pagination-ellipsis .nds-dropmenu-trigger[data-state~="active"]::after {
-  content: '...';
-  display: block;
-  position: absolute;
-  height: 0;
+.nds-pagination-ellipsis .nds-dropmenu-trigger[data-state~="active"] {
+
+  &::before {
+    display: none;
+  }
+
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 0;
+    width: 16px;
+    height: 4px;
+    background-color: currentColor;
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='4'%3E%3Ccircle cx='2' cy='2' r='1.5'/%3E%3Ccircle cx='8' cy='2' r='1.5'/%3E%3Ccircle cx='14' cy='2' r='1.5'/%3E%3C/svg%3E");
+    mask-size: contain;
+    mask-repeat: no-repeat;
+  }
 }

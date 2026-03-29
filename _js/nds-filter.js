@@ -1659,7 +1659,7 @@
             if (!this.targetContainer) return;
 
             if (NDS.Pagination && NDS.Pagination.refresh) {
-                const paginationNav = this.targetContainer.parentElement?.querySelector('.nds-pagination-nav, .nds-auto-pagination');
+                const paginationNav = this.targetContainer.parentElement?.querySelector('.nds-pagination[data-auto-pagination]');
                 if (paginationNav) {
                     setTimeout(() => {
                         NDS.Pagination.refresh(this.targetContainer);

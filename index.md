@@ -182,7 +182,7 @@ direction: ltr
             {% endfor %}
 
         </div>
-        <nav class="nds-pagination-nav nds-auto-pagination" aria-label="Pagination"></nav>
+        <nav class="nds-pagination" data-auto-pagination aria-label="Pagination"></nav>
     </div>
     </div>
 </section>

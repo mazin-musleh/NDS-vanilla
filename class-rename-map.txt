@@ -37,6 +37,12 @@ Pagination Content (pagination-item → nds-page-item)
 .pagination-item            → .nds-page-item
 .nds-pagination-content     → .nds-paged-content
 
+Pagination
+--------------------------------------------------
+.nds-pagination (ul)        → .nds-pagination-list
+.nds-pagination-nav         → .nds-pagination
+.nds-auto-pagination        → [data-auto-pagination] on .nds-pagination
+
 Table Sorting (sortable → nds-sortable-col)
 --------------------------------------------
 .sortable                   → .nds-sortable-col
