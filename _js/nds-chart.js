@@ -140,6 +140,13 @@
             return merged;
         }
 
+        _fmtVal(v) {
+            const f = this.opts.dataLabels?.format;
+            if (typeof f === 'function') return f(v);
+            if (typeof f === 'string') return formatNumber(v) + f;
+            return formatNumber(v);
+        }
+
         _color(index) {
             if (this.opts.colors) return this.opts.colors[index % this.opts.colors.length];
             return chartColor(index);
@@ -230,9 +237,11 @@
             const isRTL = this._isRTL;
             const w = wrap.clientWidth || this.el.clientWidth || 600;
             const h = height || 350;
+            const hasY = this.opts.yaxis?.show !== false;
             const padTop = 20, padBottom = 40;
-            const padLeft = isRTL ? 20 : 55;
-            const padRight = isRTL ? 55 : 20;
+            const axisPad = hasY ? 55 : 20;
+            const padLeft = isRTL ? 20 : axisPad;
+            const padRight = isRTL ? axisPad : 20;
             return {
                 w, h, padTop, padBottom, padLeft, padRight, isRTL,
                 plotW: w - padLeft - padRight,
@@ -291,7 +300,7 @@
                     class: 'nds-chart-axis-label',
                     'text-anchor': L.isRTL ? 'start' : 'end',
                 });
-                txt.textContent = formatNumber(v);
+                txt.textContent = this._fmtVal(v);
                 svg.appendChild(txt);
             });
         }
@@ -385,6 +394,7 @@
                 class: 'nds-chart-svg',
                 role: 'img',
                 'aria-label': 'Chart',
+                style: `max-height:${size}px`,
             });
 
             let current = startAngle || 0;
@@ -515,7 +525,7 @@
                     rect.setAttribute('class', 'nds-chart-bar');
 
                     this._bindTip(rect,
-                        `<strong>${s.name}</strong><br>${catLabels[c]}: ${formatNumber(val)}`,
+                        `<strong>${s.name}</strong><br>${catLabels[c]}: ${this._fmtVal(val)}`,
                         null, 'nds-chart-bar--active');
                     svg.appendChild(rect);
 
@@ -525,7 +535,7 @@
                             class: 'nds-chart-data-label',
                             'text-anchor': 'middle',
                         });
-                        lbl.textContent = formatNumber(stacked ? stackTotal : val);
+                        lbl.textContent = this._fmtVal(stacked ? stackTotal : val);
                         svg.appendChild(lbl);
                     }
 
@@ -655,7 +665,7 @@
                             fill: 'transparent', class: 'nds-chart-dot-hit',
                         });
                         this._bindTip(hitArea,
-                            `<strong>${s.name}</strong><br>${catLabels[p.idx]}: ${formatNumber(p.val)}`,
+                            `<strong>${s.name}</strong><br>${catLabels[p.idx]}: ${this._fmtVal(p.val)}`,
                             dot, 'nds-chart-dot--active');
                         svg.appendChild(hitArea);
                     });
