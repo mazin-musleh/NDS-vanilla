@@ -107,7 +107,7 @@ NDS.Chart.create('#my-chart', {
     borderRadius: 6,                   // Corner radius for bar tops
     gap: 0.3,                          // Gap between groups (0–1)
   },
-  dataLabels: { show: true },          // Show values above bars
+  dataLabels: { show: true, format: '%' }, // Show values above bars (suffix)
   grid:    { show: true },             // Horizontal gridlines
   yaxis:   { show: true, title: '' },  // Y-axis labels & title
   xaxis:   { show: true, title: '' },  // X-axis labels & title
@@ -781,6 +781,12 @@ NDS.Chart.create('#my-chart', {
                             <td>false</td>
                             <td>Show value labels above bars</td>
                         </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-js">dataLabels.format</code></td>
+                            <td>string | function</td>
+                            <td>none</td>
+                            <td>Append a suffix to values: <code class="nds-inline-code lang-js">'%'</code> turns 75 into "75%". For custom logic, pass a function: <code class="nds-inline-code lang-js">v =&gt; v + ' SAR'</code>. Applied to data labels, Y-axis labels, and tooltips</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -1022,7 +1028,7 @@ document.addEventListener('DOMContentLoaded', function () {
             { name: 'Pending', data: [5, 7, 6, 4, 3, 8] },
         ],
         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-        dataLabels: { show: true },
+        dataLabels: { show: true, format: '%'},
     });
 
     NDS.Chart.create('#demo-line', {
