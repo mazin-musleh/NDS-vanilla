@@ -36,30 +36,30 @@ $all-spacers: $spacers;
 // Base flex direction classes (mobile-first) with sm aliases
 // Primary directions: row and col (most common)
 // Pattern: .nds-{direction}-{size} - Size comes last
-:is(.nds-row, .nds-row-sm) {
-  flex-direction: row;
+:is(.nds-row) {
+  flex-direction: row !important;
 }
 
-:is(.nds-col, .nds-col-sm) {
-  flex-direction: column;
+:is(.nds-col) {
+  flex-direction: column !important;
 }
 
 // Reverse directions (base only - use inline styles for responsive reverse if needed)
-.nds-row-reverse {
-  flex-direction: row-reverse;
+:is(.nds-row, [class*="nds-row-"]).nds-reverse {
+  flex-direction: row-reverse !important;
 }
 
-.nds-col-reverse {
-  flex-direction: column-reverse;
+:is(.nds-col, [class*="nds-col-"]).nds-reverse {
+  flex-direction: column-reverse !important;
 }
 
 // Wrap utilities (base only - use inline styles for responsive wrap if needed)
 .nds-wrap {
-  flex-wrap: wrap;
+  flex-wrap: wrap !important;
 }
 
 .nds-nowrap {
-  flex-wrap: nowrap;
+  flex-wrap: nowrap !important;
 }
 
 // Responsive flex direction classes using responsive breakpoints only (excludes sm)
@@ -70,12 +70,12 @@ $all-spacers: $spacers;
 
 @each $breakpoint, $query in $breakpoints-responsive {
   @media #{$query} {
-    .flex-row-#{$breakpoint} {
-      flex-direction: row;
+    .nds-row-#{$breakpoint} {
+      flex-direction: row!important;
     }
 
-    .flex-col-#{$breakpoint} {
-      flex-direction: column;
+    .nds-col-#{$breakpoint} {
+      flex-direction: column!important;
     }
   }
 }
@@ -99,7 +99,7 @@ $all-spacers: $spacers;
   align-items: baseline;
   line-height: normal;
 
-  > .icon {
+  >.icon {
     width: var(--_number-icon-size);
     height: var(--_number-icon-size);
     align-self: center;
@@ -122,14 +122,37 @@ $all-spacers: $spacers;
     mask: url('../icon/saudi-riyal.svg') no-repeat center / contain;
   }
 
-  &[data-currency="USD"]::before { content: "$"; }
-  &[data-currency="EUR"]::before { content: "€"; }
-  &[data-currency="GBP"]::before { content: "£"; }
-  &[data-currency="JPY"]::before { content: "¥"; }
-  &[data-currency="CNY"]::before { content: "¥"; }
-  &[data-currency="INR"]::before { content: "₹"; }
-  &[data-currency="KRW"]::before { content: "₩"; }
-  &[data-currency="TRY"]::before { content: "₺"; }
+  &[data-currency="USD"]::before {
+    content: "$";
+  }
+
+  &[data-currency="EUR"]::before {
+    content: "€";
+  }
+
+  &[data-currency="GBP"]::before {
+    content: "£";
+  }
+
+  &[data-currency="JPY"]::before {
+    content: "¥";
+  }
+
+  &[data-currency="CNY"]::before {
+    content: "¥";
+  }
+
+  &[data-currency="INR"]::before {
+    content: "₹";
+  }
+
+  &[data-currency="KRW"]::before {
+    content: "₩";
+  }
+
+  &[data-currency="TRY"]::before {
+    content: "₺";
+  }
 }
 
 .nds-truncate:not([hidden]) {
@@ -223,7 +246,8 @@ $all-spacers: $spacers;
   }
 }
 
-.nds-external, a[target="_blank"]:not(.nds-btn,:has(>*)) {
+.nds-external,
+a[target="_blank"]:not(.nds-btn, :has(>*)) {
   display: inline-flex;
   gap: var(--spacing-xs);
   align-items: center;
