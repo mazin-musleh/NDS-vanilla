@@ -346,11 +346,11 @@
                 }
             } else if (validity.tooShort) {
                 return isArabic
-                    ? 'المدخل قصير جداً (الحد الأدنى ' + input.minLength + ' حرف)'
+                    ? 'المدخل قصير جداً (الحد الأدنى ' + input.minLength + ')'
                     : 'Input is too short (minimum ' + input.minLength + ' characters)';
             } else if (validity.tooLong) {
                 return isArabic
-                    ? 'المدخل طويل جداً (الحد الأقصى ' + input.maxLength + ' حرف)'
+                    ? 'المدخل طويل جداً (الحد الأقصى ' + input.maxLength + ')'
                     : 'Input is too long (maximum ' + input.maxLength + ' characters)';
             } else if (validity.rangeUnderflow) {
                 return isArabic
