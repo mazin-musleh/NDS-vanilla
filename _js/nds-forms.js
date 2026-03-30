@@ -963,9 +963,10 @@
 
         initSelectDropdown: function(selectElement, formControl) {
             var isOpen = false;
+            var formContainer = formControl.closest('.nds-form-container') || formControl;
 
             function updateOpenState() {
-                formControl.classList.toggle('open', isOpen);
+                FormState.updateDataState(formContainer, 'open', isOpen);
             }
 
             selectElement.addEventListener('mousedown', function() {
@@ -1003,9 +1004,10 @@
 
             var isOpen = false;
             var selectedValue = '';
+            var formContainer = formControl.closest('.nds-form-container') || formControl;
 
             function updateOpenState() {
-                formControl.classList.toggle('open', isOpen);
+                FormState.updateDataState(formContainer, 'open', isOpen);
 
                 if (isOpen) {
                     updateSelectedOptions();
@@ -1055,7 +1057,7 @@
             }
 
             function openDropdown() {
-                if (formControl.classList.contains('disabled') || selectInput.disabled) return;
+                if (selectInput.disabled) return;
                 isOpen = true;
                 updateOpenState();
             }
@@ -1827,6 +1829,9 @@
                 FormState.updateDataState(container, stateName, add);
             }
         },
+
+        // Low-level data-state toggle (works on any element)
+        updateDataState: FormState.updateDataState,
 
         // Checkbox Indeterminate State
         setIndeterminate: FormState.setIndeterminate.bind(FormState),

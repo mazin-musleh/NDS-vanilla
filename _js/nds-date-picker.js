@@ -499,7 +499,7 @@
             en: { today: 'Today', clear: 'Clear', save: 'Save' }
         },
         selectors: {
-            container: '.nds-date-picker',
+            container: '.nds-form-container',
             dropdown: '.nds-date-picker-dropdown',
             toggleBtn: '.date-picker-toggle',
             monthDropmenu: '.month-dropmenu',
@@ -912,13 +912,13 @@
 
             if (isNowOpen) {
                 this.elements.dropdown.classList.remove('hidden');
-                this.elements.formControl.classList.add('open');
+                NDS.Forms.updateDataState(this.elements.container, 'open', true);
 
                 this.initializeCalendar();
                 this.adjustDropdownPosition();
             } else {
                 this.elements.dropdown.classList.add('hidden');
-                this.elements.formControl.classList.remove('open');
+                NDS.Forms.updateDataState(this.elements.container, 'open', false);
                 this.cleanup();
             }
         },
@@ -1599,7 +1599,7 @@
                     if (self.elements.dropdown) {
                         self.elements.dropdown.classList.add('hidden');
                     }
-                    self.elements.formControl.classList.remove('open');
+                    NDS.Forms.updateDataState(self.elements.container, 'open', false);
                     self.cleanup();
                 }
             }, 0);

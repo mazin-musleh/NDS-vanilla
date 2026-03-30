@@ -42,6 +42,8 @@
             justify-content: center;
             align-content: center;
             align-items: center;
+            top: 50%;
+            transform: translateY(-50%);
 
             @include ltr {
                 & {
@@ -51,9 +53,10 @@
             }
         }
 
-        &.open::after {
-            transform: rotate(180deg);
-        }
+    }
+
+    &[data-state~="open"] .nds-form-control::after {
+        transform: translateY(-50%) rotate(180deg);
     }
 
     // ==============================================

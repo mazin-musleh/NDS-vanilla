@@ -369,7 +369,7 @@ fieldset {
 
     }
 
-    .nds-select>&.open::after {
+    .nds-select[data-state~="open"]>&::after {
         transform: translateY(-50%) rotate(180deg);
     }
 
