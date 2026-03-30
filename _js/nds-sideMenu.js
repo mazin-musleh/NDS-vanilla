@@ -60,27 +60,33 @@
             anchor.setAttribute('aria-expanded', !isOpen);
 
             if (!isOpen) {
-                // Close open siblings
+                // Batch: read all heights first, then write — single reflow
+                const closingSiblings = [];
                 [...li.parentElement.children].forEach(sibling => {
                     if (sibling === li || !sibling.classList.contains("has-sub")) return;
                     const siblingSub = sibling.querySelector(":scope > ul");
                     if (!hasState(sibling, 'open') || !siblingSub) return;
+                    closingSiblings.push({ sibling, siblingSub, height: siblingSub.scrollHeight });
+                });
+                const openHeight = submenu.scrollHeight;
 
+                // Write phase — one forced reflow for all transitions
+                closingSiblings.forEach(({ sibling, siblingSub, height }) => {
                     const siblingAnchor = sibling.querySelector(":scope > a");
                     if (siblingAnchor) siblingAnchor.setAttribute('aria-expanded', 'false');
-
                     addState(sibling, 'closing');
-                    siblingSub.style.height = siblingSub.scrollHeight + "px";
-                    siblingSub.offsetHeight;
+                    siblingSub.style.height = height + "px";
+                });
+                addState(li, 'open', 'opening');
+                submenu.style.height = "0px";
+
+                submenu.offsetHeight; // Single reflow to commit start heights
+
+                closingSiblings.forEach(({ sibling, siblingSub }) => {
                     siblingSub.style.height = "0px";
                     setTimeout(() => { clearState(sibling); siblingSub.style.height = ""; }, 250);
                 });
-
-                // Open current
-                addState(li, 'open', 'opening');
-                submenu.style.height = "0px";
-                submenu.offsetHeight;
-                submenu.style.height = submenu.scrollHeight + "px";
+                submenu.style.height = openHeight + "px";
 
                 submenu.addEventListener("transitionend", function handler() {
                     removeState(li, 'opening');
@@ -88,9 +94,10 @@
                     submenu.removeEventListener("transitionend", handler);
                 });
             } else {
-                // Close current
+                // Close current — read then write
+                const height = submenu.scrollHeight;
                 addState(li, 'closing');
-                submenu.style.height = submenu.scrollHeight + "px";
+                submenu.style.height = height + "px";
                 submenu.offsetHeight;
                 submenu.style.height = "0px";
                 setTimeout(() => { clearState(li); submenu.style.height = ""; }, 250);
@@ -164,15 +171,17 @@
         const { accMenu, animTarget, toggleBtn, isTopMode, drawer } = ctx;
         menuEpoch++;
 
-        // Set z-index above backdrop immediately
         const backdropZ = isTopMode ? 997 : 998;
-        accMenu.style.zIndex = backdropZ + 1;
 
+        // Layout reads BEFORE any style writes to avoid forced reflow
         if (isTopMode) {
             scrollPastHeroAndLock();
         } else {
             updateDrawerMaxHeight(accMenu, drawer);
         }
+
+        // Style writes after reads
+        accMenu.style.zIndex = backdropZ + 1;
 
         // Show backdrop
         if (NDS.Backdrop) {

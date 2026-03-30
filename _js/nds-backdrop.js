@@ -13,6 +13,7 @@
   let scrollY = 0;
   let isActive = false;
   let activeCount = 0; // Track how many components are using the backdrop
+  const transitionSpeed = () => (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nds-transition-speed')) || 0.2) * 1000;
 
   /**
    * Initialize backdrop element (created once)
@@ -31,14 +32,7 @@
    */
   function applyStyles(config) {
     if (!backdropElement) return;
-
-    // Apply z-index as inline style
     backdropElement.style.zIndex = config.zIndex;
-
-    // Add active data-state if currently active
-    if (isActive) {
-      backdropElement.setAttribute('data-state', 'active');
-    }
   }
 
   /**
@@ -106,43 +100,37 @@
     currentConfig = newConfig;
     activeCount = 1; // Initialize counter
 
-    // Prevent body scroll
-    if (currentConfig.preventScroll) {
-      scrollY = window.pageYOffset;
-      document.body.style.top = `-${scrollY}px`;
-      document.body.setAttribute('data-state', 'backdrop');
-    }
-
     // Apply inline styles
     applyStyles(currentConfig);
 
     // Mark active synchronously so hide() can always clean up body state
     isActive = true;
 
-    // Show backdrop with animation
+    // Show backdrop — delay active state and scroll lock after component transition
     backdropElement.style.display = 'block';
-    backdropElement.offsetHeight; // Force reflow
+    const speed = transitionSpeed();
+    setTimeout(() => {
+      if (!isActive) return;
+      backdropElement.setAttribute('data-state', 'active');
+      if (currentConfig.preventScroll) {
+        scrollY = window.pageYOffset;
+        document.body.style.top = `-${scrollY}px`;
+      }
+      document.body.setAttribute('data-state', 'backdrop');
+    }, speed);
 
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        if (!isActive) return; // Bail if hide() was called before rAF fired
+    // Attach event listeners
+    if (currentConfig.clickToClose) {
+      backdropElement.addEventListener('click', handleClick);
+    }
+    if (currentConfig.escapeClose) {
+      document.addEventListener('keydown', handleEscape);
+    }
 
-        backdropElement.setAttribute('data-state', 'active');
-
-        // Attach event listeners
-        if (currentConfig?.clickToClose) {
-          backdropElement.addEventListener('click', handleClick);
-        }
-        if (currentConfig?.escapeClose) {
-          document.addEventListener('keydown', handleEscape);
-        }
-
-        // Call onShow callback
-        if (currentConfig?.onShow) {
-          currentConfig.onShow();
-        }
-      });
-    });
+    // Call onShow callback
+    if (currentConfig.onShow) {
+      currentConfig.onShow();
+    }
   }
 
   /**
@@ -163,33 +151,27 @@
     backdropElement.removeEventListener('click', handleClick);
     document.removeEventListener('keydown', handleEscape);
 
-    // Remove active data-state to trigger fade out
+    isActive = false;
+
+    // Remove active state — CSS handles opacity/blur removal
     backdropElement.removeAttribute('data-state');
 
-    // Restore scroll
+    // Restore body state and scroll immediately
+    document.body.removeAttribute('data-state');
     if (currentConfig?.preventScroll) {
-      document.body.removeAttribute('data-state');
       document.body.style.top = '';
       window.scrollTo(0, scrollY);
     }
 
-    isActive = false;
-
-    // Hide after animation completes
+    // Clean up display after component transition
+    const speed = transitionSpeed();
     setTimeout(() => {
-      if (isActive) return; // show() was called again during fade-out
-
-      // Reset display style after animation
+      if (isActive) return;
       backdropElement.style.display = '';
-
-      // Call onHide callback
-      if (currentConfig?.onHide) {
-        currentConfig.onHide();
-      }
-
+      if (currentConfig?.onHide) currentConfig.onHide();
       currentConfig = null;
-      activeCount = 0; // Reset counter
-    }, 300); // Match CSS transition
+      activeCount = 0;
+    }, speed);
   }
 
   /**

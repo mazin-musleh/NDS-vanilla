@@ -17,16 +17,12 @@
   display: none;
   opacity: 0;
   transition: opacity var(--nds-transition);
-
-  // Default styling
   background-color: var(--backdrop-bg, var(--alpha-black-60));
-  backdrop-filter: var(--backdrop-blur, blur(2px));
   z-index: var(--backdrop-z-index, 1100);
 
-  // Active state (using data-state attribute)
   &[data-state~="active"] {
-    display: block;
     opacity: 1;
+    backdrop-filter: var(--backdrop-blur, blur(2px));
   }
 }
 
@@ -34,7 +30,7 @@
 // BODY SCROLL LOCK
 // ==============================================
 
-body[data-state="backdrop"] {
+body[data-state="backdrop"][style*="top"] {
   position: fixed;
   width: 100%;
   inset-inline-start: 0;

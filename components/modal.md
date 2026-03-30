@@ -1,5 +1,6 @@
 ---
 layout: page
+layout_class: topSubMenu
 title: Modal
 hero_title: Modal - National Design System
 hero_description: Focuses the user on a single task or decision by overlaying a dialog that must be addressed before continuing
