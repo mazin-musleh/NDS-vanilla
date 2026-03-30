@@ -438,8 +438,8 @@ textarea {
 // ==============================================
 
 @mixin reset-section-style($important: null) {
-  --section-bg: transparent $important;
-  --section-shadow: none $important;
-  --section-border: none $important;
-  --section-border-radius: 0 $important;
+  --section-bg: transparent #{$important};
+  --section-shadow: none #{$important};
+  --section-border: none #{$important};
+  --section-border-radius: 0 #{$important};
 }
