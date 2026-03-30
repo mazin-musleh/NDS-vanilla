@@ -34,7 +34,7 @@
   &-menu {
     display: none;
     position: absolute;
-    z-index: 900;
+    z-index: 1;
     min-width: var(--_dropmenu-min-width);
     margin-top: var(--_dropmenu-offset);
     padding: var(--_menu-padding);
