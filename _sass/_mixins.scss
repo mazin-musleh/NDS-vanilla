@@ -305,15 +305,14 @@ textarea {
 
     @if $position =='b' {
       bottom: 0;
-      width: calc(100% - var(--_btn-padding) * 2);
-      inset-inline-start: var(--_btn-padding);
+      width: calc(100% - var(--_btn-padding));
     }
 
     @else if $position =='v' {
       inset-inline-start: 0;
       bottom: unset;
       width: $size !important;
-      height: calc(100% - var(--_btn-padding) * 2);
+      height: calc(100% - var(--_btn-padding));
       transform: translateY(-50%);
       top: 50%;
     }

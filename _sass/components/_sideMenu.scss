@@ -77,7 +77,6 @@
         top: 0;
         bottom: 0;
         z-index: 899;
-        transition: transform var(--nds-transition);
 
         // RTL: slide out to the right
         transform: translateX(100%);
@@ -90,12 +89,14 @@
         // Open state: slide in to on-screen position
         &[data-state~="open"] {
             transform: translateX(0px) !important;
+            transition: transform var(--nds-transition);
         }
 
         // Closing state: slide back to off-screen position
         &[data-state~="closing"] {
             // RTL: slide out to the right
             transform: translateX(100%) !important;
+            transition: transform var(--nds-transition);
 
             @include ltr {
                 // LTR: slide out to the left
