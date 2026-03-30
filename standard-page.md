@@ -19,6 +19,7 @@ breadcrumb: ["Components"]     # or: [["Parent", "/url"], "Child"]
 # breadcrumb_root: Home        # override root label (default: Home / الرئيسية)
 # breadcrumb_root_url: /       # override root URL
 # hideSidemenu: false          # hide side navigation (page layout only)
+# hideFeedback: false          # hide user feedback section (page layout only)
 
 # === Data Overrides ===
 # mainnav: mainnav            # loads _data/mainnav/{value}.yml (default: mainnav)

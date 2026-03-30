@@ -10,4 +10,6 @@ layout: default
         {{ content }}
     </div>
 </div>
+{%- if page.hideFeedback != true %}
 {%- include user-feedback.html %}
+{%- endif %}

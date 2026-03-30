@@ -34,7 +34,8 @@ body.minimal            → body.nds-minimal
 
 Pagination Content (pagination-item → nds-page-item)
 -----------------------------------------------------
-.pagination-item            → .nds-page-item
+.pagination-item            → .nds-page-item      (content results in nds-paged-content)
+.pagination-item            → .nds-pagination-item (page buttons in nds-pagination-list)
 .nds-pagination-content     → .nds-paged-content
 
 Pagination
