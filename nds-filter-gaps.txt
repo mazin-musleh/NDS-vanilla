@@ -1,0 +1,80 @@
+NDS Filter Component — Gaps Found During Search Page Implementation
+===================================================================
+
+1. Item Selector Limited to .nds-card
+-------------------------------------
+Problem: this.items only selects .nds-card elements (querySelectorAll('.nds-card')).
+         Non-card containers like drawers (<li>, <tr>, etc.) are not supported.
+Impact:  Filter cannot be used with drawer lists, tables, or custom item structures.
+Suggestion: Support a configurable item selector via data-filter-items attribute,
+            or fall back to direct children of the target container when no .nds-card found.
+Locations: constructor (line ~38), refresh() (line ~1692), AJAX handler (line ~272)
+
+2. refresh() Does Not Re-resolve targetContainer
+-------------------------------------------------
+Problem: refresh() re-scans items on the existing this.targetContainer reference.
+         If targetContainer was null at init (target element didn't exist yet),
+         it stays null — refresh() cannot recover.
+Impact:  Dynamic pages where the target is created after filter init (AJAX, DOM moves)
+         require manual workaround: fi.targetContainer = document.getElementById('...')
+Suggestion: refresh() should re-resolve targetContainer from this.targetId before scanning.
+Location: refresh() (line ~1690)
+
+3. data-filter-value Attribute Not Supported
+--------------------------------------------
+Problem: collectFilterValues() and itemMatchesFilter() only read el.textContent.
+         There is no support for data-filter-value attribute on filterable elements.
+Impact:  Filter values must be visible text content. Hidden or machine-readable values
+         (like ContentType identifiers) require a hidden <span> with text content.
+Suggestion: Check data-filter-value first, fall back to textContent.
+            Helper: getFilterValue(el) { return el.getAttribute('data-filter-value') || el.textContent.trim(); }
+Locations: collectFilterValues() (line ~1105), itemMatchesFilter() (line ~1463)
+
+4. data-filter on Item Itself Not Detected
+-------------------------------------------
+Problem: collectFilterValues() and itemMatchesFilter() use item.querySelectorAll()
+         which only finds child elements. If data-filter is on the item itself
+         (e.g., <li data-filter="type">), it is not detected.
+Impact:  data-filter must always be on a child element, not the item.
+Suggestion: Also check item.getAttribute('data-filter') === filterName as a fallback.
+Locations: collectFilterValues() (line ~1101), itemMatchesFilter() (line ~1458)
+
+5. Search Input Auto-detection Conflicts
+-----------------------------------------
+Problem: Any input.nds-search-input inside .nds-filter is auto-detected as a
+         "direct search" input. The filter hijacks Enter/click with preventDefault,
+         reads/writes its name attribute to URL params, and applies text filtering.
+Impact:  Cannot place a server-side search input inside an .nds-filter container
+         without it being hijacked for client-side text filtering.
+Suggestion: Support data-filter-ignore attribute on inputs to opt out of auto-detection.
+Location: setupDirectSearch() auto-detection (line ~810)
+
+6. applyFilters() Skips Event Dispatch When No Criteria
+-------------------------------------------------------
+Problem: When all filters are cleared, applyFilters() detects no active criteria
+         (hasCriteria = false) and returns early WITHOUT dispatching nds:filter:change.
+Impact:  External listeners relying on nds:filter:change are not notified when
+         the last filter is removed (via chip removal or programmatic clear).
+         Only nds:filter:clear fires from clearDropmenuFilters(), but chip removal
+         calls removeFilterValue() → applyFilters() which fires neither.
+Suggestion: Always dispatch nds:filter:change at the end of applyFilters(),
+            even when no criteria remain (with visibleCount = items.length).
+Location: applyFilters() early return (line ~1328-1352)
+
+7. itemMatchesSearch() Hardcoded to .nds-card-content
+------------------------------------------------------
+Problem: Search text matching only looks inside .nds-card-content child element.
+         If the item doesn't have .nds-card-content, search always returns false.
+Impact:  Text search within filter doesn't work for non-card item structures.
+Suggestion: Fall back to item.textContent when .nds-card-content is not found.
+Location: itemMatchesSearch() (line ~1443)
+
+8. No Label Mapping for data-filter-values
+-------------------------------------------
+Problem: Auto-generated checkboxes from data-filter-values use the raw value as
+         the visible label (labelSpan.textContent = value). No built-in way to
+         provide translated or human-readable labels for machine values.
+Impact:  Requires post-init JS to manually rename labels (translateFilterLabels workaround).
+Suggestion: Support data-filter-labels attribute with JSON object mapping values to labels,
+            e.g., data-filter-labels='{"Announcement":"إعلانات","Page":"صفحات"}'
+Location: generateFilterInputs() (line ~1231)
