@@ -19,7 +19,7 @@
         get minimal() { return this.nav?.querySelector('.nds-nav-minimal'); },
         get toggler() { return this.nav?.querySelector('.nds-mainNav-toggler'); },
         get brand() { return this.nav?.querySelector('.nds-brand'); },
-        get showMore() { return this.collapseContent?.querySelector('.showMore'); }
+        get showMore() { return this.collapseContent?.querySelector('.nds-show-more'); }
     };
 
     // ==============================================
@@ -491,7 +491,7 @@
         const sStyle = DOM.secondary ? styles[idx++] : null;
 
         const pCount = primary.filter((c, i) =>
-            !c.classList.contains('showMore') && styles[idx + i]?.display !== 'none'
+            !c.classList.contains('nds-show-more') && styles[idx + i]?.display !== 'none'
         ).length;
 
         const sCount = secondary.filter((_, i) =>
@@ -508,7 +508,7 @@
     // PAB (Persistent Action Buttons) MANAGEMENT
     // ==============================================
     function managePABPlacement() {
-        const pabs = document.querySelectorAll('.nds-nav-item.PAB');
+        const pabs = document.querySelectorAll('.nds-nav-item.nds-PAB');
         if (!pabs.length) return;
 
         if (state.isMinimal) {
@@ -529,8 +529,8 @@
                 DOM.nav?.insertBefore(minNav, DOM.nav.firstChild);
             }
 
-            const cta = Array.from(pabs).filter(p => p.classList.contains('CTA'));
-            const rest = Array.from(pabs).filter(p => !p.classList.contains('CTA'));
+            const cta = Array.from(pabs).filter(p => p.classList.contains('nds-CTA'));
+            const rest = Array.from(pabs).filter(p => !p.classList.contains('nds-CTA'));
             [...rest].reverse().forEach(p => minNav.prepend(p));
             [...cta].reverse().forEach(p => minNav.prepend(p));
         } else {
@@ -752,7 +752,7 @@
         // Show More button
         const clickTarget = DOM.collapseContent || DOM.primary;
         clickTarget.addEventListener('click', (e) => {
-            const showMore = e.target.closest('.nds-nav-item.showMore');
+            const showMore = e.target.closest('.nds-nav-item.nds-show-more');
             if (!showMore) return;
             e.preventDefault();
             e.stopPropagation();

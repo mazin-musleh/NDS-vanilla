@@ -309,7 +309,7 @@
 // MORE BUTTON (Scroll indicator)
 // ==============================================
 
-.nds-drawer-more {
+.nds-drawer .nds-show-more {
     --btn-height: var(--drawer-btn-height);
     width: 100% !important;
     border-block-start: 1px solid var(--_divider);
@@ -322,12 +322,12 @@
 }
 
 // Show more button when drawer has scrollable content
-.nds-drawer.hasMore .nds-drawer-more {
+.nds-drawer.hasMore .nds-show-more {
     display: flex;
 }
 
 // Rotate icon when scrolled to end
-.nds-drawer.atEnd .nds-drawer-more i {
+.nds-drawer.atEnd .nds-show-more i {
     transform: rotate(180deg);
 }
 

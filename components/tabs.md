@@ -88,7 +88,7 @@ direction: ltr
                                     <span class="label">Settings</span>
                                 </button>
                             </nav>
-                            <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
+                            <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i
                                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                             </button>
                         </div>
@@ -189,7 +189,7 @@ direction: ltr
                                 <span class="label">HTML</span>
                             </button>
                         </nav>
-                        <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
+                        <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i
                                 class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                         </button>
                     </div>
@@ -215,7 +215,7 @@ direction: ltr
                                             <span class="label">Tab 2</span>
                                         </button>
                                         </nav>
-                                        <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more">
+                                        <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more">
                                             <i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                         </button>
                                     </div>
@@ -281,7 +281,7 @@ direction: ltr
                                     <span class="label">Settings</span>
                                 </button>
                         </nav>
-                            <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
+                            <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i
                                     class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                             </button>
                         </div>
@@ -515,7 +515,7 @@ direction: ltr
                                 <span class="label">HTML</span>
                             </button>
                         </nav>
-                        <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more"><i
+                        <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i
                                 class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                         </button>
                     </div>
@@ -548,7 +548,7 @@ direction: ltr
                                             <span class="label">Settings</span>
                                         </button>
                                         </nav>
-                                        <button class="nds-btn nds-subtle nds-tab showMore" aria-label="Show more">
+                                        <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more">
                                             <i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
                                         </button>
                                     </div>

@@ -51,3 +51,11 @@ Table Sorting (sortable → nds-sortable-col)
 .sorted-asc                 → .nds-sorted-asc
 .sorted-desc                → .nds-sorted-desc
 .sort-icon                  → .nds-sort-icon
+
+Nav Component
+-------------
+.iconOnly                   → .nds-icon-only
+.CTA                        → .nds-CTA
+.PAB                        → .nds-PAB
+.showMore                   → .nds-show-more     (nav, tabs, accordion, breadcrumb, etc.)
+.nds-drawer-more            → .nds-show-more     (drawer, scoped to .nds-drawer in SCSS)

@@ -11,7 +11,7 @@
         constructor(tabsContainer) {
             this.tabsContainer = tabsContainer;
             this.tabList = tabsContainer.querySelector('.nds-tab-list');
-            this.tabs = Array.from(tabsContainer.querySelectorAll('.nds-tab:not(.showMore)'));
+            this.tabs = Array.from(tabsContainer.querySelectorAll('.nds-tab:not(.nds-show-more)'));
             this.panels = Array.from(tabsContainer.querySelectorAll('.nds-tab-panel'));
             
             if (!this.tabList || this.tabs.length === 0 || this.panels.length === 0) {
@@ -87,7 +87,7 @@
             // Don't subtract button width - flexbox handles layout
             const children = Array.from(this.tabList.children);
             const contentWidth = children
-                .filter(child => !child.classList.contains('showMore'))
+                .filter(child => !child.classList.contains('nds-show-more'))
                 .reduce((total, child) => total + child.offsetWidth, 0);
 
             return contentWidth > availableWidth;
@@ -161,7 +161,7 @@
 
             // ShowMore button click handler
             // Button is now outside .nds-tab-list, query from parent container
-            const showMoreBtn = this.tabList.parentElement.querySelector('.showMore');
+            const showMoreBtn = this.tabList.parentElement.querySelector('.nds-show-more');
             if (showMoreBtn) {
                 showMoreBtn.addEventListener('click', (e) => {
                     if (!this.needsScroll()) return;

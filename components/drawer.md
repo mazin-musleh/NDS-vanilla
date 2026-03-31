@@ -432,7 +432,7 @@ direction: ltr
                                         </li>
                                     </ul>
                                 </div>
-                                <button class="nds-drawer-more nds-btn nds-subtle">
+                                <button class="nds-show-more nds-btn nds-subtle">
                                     <span class="label">Show more</span>
                                     <i class="hgi hgi-stroke hgi-arrow-down-01"></i>
                                 </button>
@@ -512,7 +512,7 @@ direction: ltr
       </li>
     </ul>
   </div>
-  <button class="nds-drawer-more nds-btn nds-subtle">
+  <button class="nds-show-more nds-btn nds-subtle">
     <span class="label">Show more</span>
     <i class="hgi hgi-stroke hgi-arrow-down-01"></i>
   </button>
@@ -591,7 +591,7 @@ direction: ltr
                                                 </li>
                                             </ul>
                                         </div>
-                                        <button class="nds-drawer-more nds-btn nds-subtle">
+                                        <button class="nds-show-more nds-btn nds-subtle">
                                             <i class="hgi hgi-stroke hgi-arrow-down-01"></i>
                                         </button>
                                     </nav>
@@ -658,7 +658,7 @@ direction: ltr
                                                 </li>
                                             </ul>
                                         </div>
-                                        <button class="nds-drawer-more nds-btn nds-subtle">
+                                        <button class="nds-show-more nds-btn nds-subtle">
                                             <i class="hgi hgi-stroke hgi-arrow-down-01"></i>
                                         </button>
                                     </nav>
@@ -727,7 +727,7 @@ direction: ltr
           </li>
         </ul>
       </div>
-      <button class="nds-drawer-more nds-btn nds-subtle">
+      <button class="nds-show-more nds-btn nds-subtle">
         <i class="hgi hgi-stroke hgi-arrow-down-01"></i>
       </button>
     </nav>
@@ -794,7 +794,7 @@ direction: ltr
           </li>
         </ul>
       </div>
-      <button class="nds-drawer-more nds-btn nds-subtle">
+      <button class="nds-show-more nds-btn nds-subtle">
         <i class="hgi hgi-stroke hgi-arrow-down-01"></i>
       </button>
     </nav>

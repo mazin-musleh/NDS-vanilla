@@ -44,8 +44,8 @@
       top: var(--nds-nav-height);
     }
 
-    /* Never show showMore in vertical tabs */
-    .showMore {
+    /* Never show nds-show-more in vertical tabs */
+    .nds-show-more {
       display: none !important;
     }
 
@@ -138,7 +138,7 @@
   position: relative;
   isolation: isolate;
 
-  /* Use flexbox for horizontal tabs to naturally position showMore button */
+  /* Use flexbox for horizontal tabs to naturally position nds-show-more button */
   .nds-tabs:not(.nds-vertical) & {
     display: flex;
     align-items: stretch;
@@ -215,7 +215,7 @@
   }
 
   /* Show more button styling */
-  &.showMore {
+  &.nds-show-more {
     min-width: var(--btn-size);
   }
 
@@ -293,11 +293,11 @@
     }
   }
 
-  /* Show showMore when overflow detected */
+  /* Show nds-show-more when overflow detected */
   /* Button is now OUTSIDE .nds-tab-list, flexbox handles positioning */
   .nds-tab-list-container {
 
-    .showMore {
+    .nds-show-more {
       z-index: 2;
       transition: opacity var(--nds-transition);
       flex-shrink: 0;
@@ -313,12 +313,12 @@
     }
 
     /* Hide when NO overflow (no .hasMore class) */
-    .nds-tab-list:not(.hasMore) ~ .showMore {
+    .nds-tab-list:not(.hasMore) ~ .nds-show-more {
       display: none;
     }
 
     /* Rotate icon when at end of scroll */
-    .nds-tab-list.atEnd ~ .showMore i {
+    .nds-tab-list.atEnd ~ .nds-show-more i {
       transform: rotate(180deg);
 
       @include ltr {

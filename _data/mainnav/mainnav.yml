@@ -79,14 +79,14 @@ secondary_nav:
   - label: "Search"
     icon: "hgi-search-01"
     button_style: "nds-nav-link nds-btn nds-subtle nds-indicator"
-    custom_class: "iconOnly search PAB"
+    custom_class: "nds-icon-only search nds-PAB"
 
     template: "mainnav-search.html"
     type: "dropdown"
 
   - label: "Notifications"
     icon: "hgi-notification-02"
-    custom_class: "iconOnly PAB"
+    custom_class: "nds-icon-only nds-PAB"
     button_style: "nds-nav-link nds-btn nds-subtle nds-indicator"
     badge: "3"
 
@@ -103,7 +103,7 @@ secondary_nav:
 
   - label: "Login"
     icon: "hgi-user"
-    custom_class: "iconOnly nds-guest"
+    custom_class: "nds-icon-only nds-guest"
     template: "mainnav-login.html"
     type: "dropdown"
     content_class: "nds-fit"
@@ -112,7 +112,7 @@ secondary_nav:
     icon: "hgi-user"
     avatar: true
     img_icon: "assets/img/avatar3.png"
-    custom_class: "login iconOnly nds-auth"
+    custom_class: "login nds-icon-only nds-auth"
     button_style: "nds-nav-link nds-btn nds-subtle nds-lg nds-indicator"
 
     template: "mainnav-user.html"
@@ -122,15 +122,15 @@ secondary_nav:
 
   - label: "Toggle theme"
     icon: "hgi-moon-02"
-    custom_class: "iconOnly"
+    custom_class: "nds-icon-only"
     id: "ndsThemeToggle"
 
   - label: "English"
     icon: "hgi-translation"
-    custom_class: "iconOnly lang"
+    custom_class: "nds-icon-only lang"
     id: "langToggleBtn"
 
   - label: "Call to Action"
     url: "#"
-    custom_class: "CTA"
+    custom_class: "nds-CTA"
     button_style: "nds-nav-link nds-btn nds-primary nds-md nds-indicator"

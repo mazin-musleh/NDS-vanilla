@@ -12,7 +12,7 @@
             drawer: '.nds-drawer',
             list: '.nds-drawer-list',
             scroll: '.nds-drawer-scroll',
-            moreBtn: '.nds-drawer-more'
+            moreBtn: '.nds-show-more'
         },
         states: {
             open: 'open',

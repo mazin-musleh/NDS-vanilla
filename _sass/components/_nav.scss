@@ -197,7 +197,7 @@
             font-weight: 400;
         }
 
-        &.CTA {
+        &.nds-CTA {
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -214,7 +214,7 @@
             border-radius: var(--radius-sm, 4px);
         }
 
-        &.iconOnly {
+        &.nds-icon-only {
             .nds-nav-link .label {
                 display: none;
             }
@@ -252,7 +252,7 @@
     /* Show More Navigation */
     .nds-collapse-content {
 
-        .showMore {
+        .nds-show-more {
             background-color: var(--nds-nav-background-color);
             color: var(--nds-nav-color);
             transition: opacity var(--nds-transition);
@@ -271,7 +271,7 @@
         }
 
         /* Hide when NO overflow (no .hasMore class) */
-        .nds-nav-primary:not(.hasMore)~.showMore {
+        .nds-nav-primary:not(.hasMore)~.nds-show-more {
             display: none;
         }
     }
@@ -478,7 +478,7 @@ body:not(.nds-minimal) .nds-main-nav {
     /* Show More Button Styles - using sibling selector */
     .nds-collapse-content {
         .nds-nav-primary.hasMore {
-            ~.showMore {
+            ~.nds-show-more {
                 transform: translateX(0);
 
                 i {
@@ -489,17 +489,17 @@ body:not(.nds-minimal) .nds-main-nav {
 
             // At end: icon rotation
             &.atEnd {
-                ~.showMore i {
+                ~.nds-show-more i {
                     transform: rotate(270deg);
                 }
             }
 
             @include ltr {
-                ~.showMore i {
+                ~.nds-show-more i {
                     transform: rotate(270deg);
                 }
 
-                &.atEnd~.showMore i {
+                &.atEnd~.nds-show-more i {
                     transform: rotate(90deg);
                 }
             }
@@ -578,7 +578,7 @@ body:not(.nds-minimal) .nds-main-nav {
     .nds-main-nav {
 
         :is(.nds-nav-secondary, .nds-nav-minimal) {
-            .nds-nav-item:not(.CTA) {
+            .nds-nav-item:not(.nds-CTA) {
                 .nds-nav-link .label {
                     display: none;
                 }
@@ -644,7 +644,7 @@ body.nds-minimal .nds-main-nav {
     }
 
     /* Shared nav-link styles for primary nav and showMore */
-    :is(.nds-nav-primary, .showMore) .nds-nav-link {
+    :is(.nds-nav-primary, .nds-show-more) .nds-nav-link {
         --btn-height: var(--nds-minimal-nav-item-height);
         width: 100%;
         align-items: center;
@@ -698,7 +698,7 @@ body.nds-minimal .nds-main-nav {
 
             }
 
-            &:not(.showMore) {
+            &:not(.nds-show-more) {
                 margin: 0 var(--spacing-xl);
             }
 
@@ -754,7 +754,7 @@ body.nds-minimal .nds-main-nav {
         .nds-nav-primary.hasMore {
             margin-bottom: calc(var(--nds-minimal-nav-item-height));
 
-            ~.showMore {
+            ~.nds-show-more {
                 opacity: 1;
                 visibility: visible;
 
@@ -767,14 +767,14 @@ body.nds-minimal .nds-main-nav {
 
             // At end: icon rotation
             &.atEnd {
-                ~.showMore i {
+                ~.nds-show-more i {
                     transform: rotate(180deg);
                 }
             }
         }
     }
 
-    .showMore {
+    .nds-show-more {
         border-bottom: none;
         bottom: var(--nds-nav-height);
         box-shadow: 0px -4px 8px 0px rgba(0, 0, 0, .08);
@@ -871,7 +871,7 @@ body.nds-minimal .nds-main-nav {
 /* Respect reduced motion preferences */
 @include reduced-motion {
 
-    .nds-main-nav :is(.nds-dropdown-menu, .nds-dropdown-content, .nds-collapse, .nds-collapse-content, .nds-nav-primary, .nds-nav-secondary, .showMore) {
+    .nds-main-nav :is(.nds-dropdown-menu, .nds-dropdown-content, .nds-collapse, .nds-collapse-content, .nds-nav-primary, .nds-nav-secondary, .nds-show-more) {
         transition: none !important;
     }
 }
