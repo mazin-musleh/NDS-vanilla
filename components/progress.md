@@ -2,7 +2,7 @@
 layout: page
 title: Progress
 hero_title: Progress - National Design System
-hero_description: Circular and linear indicators for visualizing completion, upload status, and task progress with automatic percentage display and status feedback
+hero_description: Circular and linear indicators for visualizing completion rates, upload status, and task progress across dashboards, forms, and workflows
 breadcrumb: ["Components"]
 lang: en
 direction: ltr
@@ -52,11 +52,15 @@ direction: ltr
                             </div>
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="label">Neutral</span>
+                                    <span class="label">Default</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                                            data-toggler='["", ".nds-progress-circle", "progressVariant"]'>
+                                            <span class="label">Default</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-neutral", ".nds-progress-circle", "progressVariant"]'>
                                             <span class="label">Neutral</span>
                                         </button>
@@ -81,19 +85,19 @@ direction: ltr
                         <div class="state-demo">
                             <div class="nds-progress-circle nds-lg" style="--progress-value: 75;">
                                 <svg width="120" height="120" viewBox="0 0 24 24">
-                                    <circle class="progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2" />
-                                    <circle class="progress-bar" cx="12" cy="12" r="10" fill="none" stroke-width="2"
+                                    <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2" />
+                                    <circle class="nds-progress-bar" cx="12" cy="12" r="10" fill="none" stroke-width="2"
                                         stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" />
                                 </svg>
-                                <div class="progress-info">
+                                <div class="nds-progress-info">
                                     <span class="nds-feedback nds-sm">
                                         <span class="nds-feedback-icon"><i class="hgi hgi-stroke icon"></i></span>
                                     </span>
-                                    <span class="progress-percentage">
-                                        <span class="progress-number"></span>
-                                        <span class="progress-symbol">%</span>
+                                    <span class="nds-progress-percentage">
+                                        <span class="nds-progress-number"></span>
+                                        <span class="nds-progress-symbol">%</span>
                                     </span>
-                                    <span class="progress-text">Active users</span>
+                                    <span class="nds-progress-text">Active users</span>
                                 </div>
                             </div>
                         </div>
@@ -119,19 +123,19 @@ direction: ltr
                                     <code class="lang-html code">
 <div class="nds-progress-circle nds-lg" style="--progress-value: 75;">
   <svg width="120" height="120" viewBox="0 0 24 24">
-    <circle class="progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2" />
-    <circle class="progress-bar" cx="12" cy="12" r="10" fill="none" stroke-width="2"
+    <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2" />
+    <circle class="nds-progress-bar" cx="12" cy="12" r="10" fill="none" stroke-width="2"
       stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" />
   </svg>
-  <div class="progress-info">
+  <div class="nds-progress-info">
     <span class="nds-feedback nds-sm">
       <span class="nds-feedback-icon"><i class="hgi hgi-stroke icon"></i></span>
     </span>
-    <span class="progress-percentage">
-      <span class="progress-number"></span>
-      <span class="progress-symbol">%</span>
+    <span class="nds-progress-percentage">
+      <span class="nds-progress-number"></span>
+      <span class="nds-progress-symbol">%</span>
     </span>
-    <span class="progress-text">Active users</span>
+    <span class="nds-progress-text">Active users</span>
   </div>
 </div>
                                     </code>
@@ -182,11 +186,15 @@ direction: ltr
                             </div>
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="label">Neutral</span>
+                                    <span class="label">Default</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                                            data-toggler='["", ".nds-progress-group", "progressBarVariant"]'>
+                                            <span class="label">Default</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-neutral", ".nds-progress-group", "progressBarVariant"]'>
                                             <span class="label">Neutral</span>
                                         </button>
@@ -210,9 +218,9 @@ direction: ltr
                     <div class="demo-container">
                         <div class="state-demo">
                             <div class="nds-progress-group nds-lg" style="--progress-value: 65;">
-                                <span class="progress-label">Uploading document.pdf</span>
+                                <span class="nds-progress-label">Uploading document.pdf</span>
                                 <div class="nds-progress-bar">
-                                    <div class="progress-fill"></div>
+                                    <div class="nds-progress-fill"></div>
                                 </div>
                                 <span class="nds-feedback nds-sm">
                                     <span class="nds-feedback-icon"><i class="hgi hgi-stroke icon"></i></span>
@@ -241,9 +249,9 @@ direction: ltr
                                     </div>
                                     <code class="lang-html code">
 <div class="nds-progress-group nds-lg" style="--progress-value: 65;">
-  <span class="progress-label">Uploading document.pdf</span>
+  <span class="nds-progress-label">Uploading document.pdf</span>
   <div class="nds-progress-bar">
-    <div class="progress-fill"></div>
+    <div class="nds-progress-fill"></div>
   </div>
   <span class="nds-feedback nds-sm">
     <span class="nds-feedback-icon"><i class="hgi hgi-stroke icon"></i></span>
@@ -275,21 +283,21 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-percent-circle icon"></i>
                         <span class="label">Automatic Percentage Display</span>
                     </span>
-                    <p class="nds-item-desc">The displayed number updates automatically from the <code class="nds-inline-code lang-html">--progress-value</code> property using CSS counters, with no JavaScript required.</p>
+                    <p class="nds-item-desc">Set <code class="nds-inline-code lang-html">--progress-value</code> and the displayed number updates to match, with no JavaScript required for rendering.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
                         <i class="hgi hgi-stroke hgi-resize-01 icon"></i>
-                        <span class="label">Five Circle Sizes</span>
+                        <span class="label">Scalable Sizes</span>
                     </span>
-                    <p class="nds-item-desc">From 24px compact counters to 240px hero displays, with text and icons that scale proportionally at every size.</p>
+                    <p class="nds-item-desc">Five circle sizes from 24px compact counters to 240px hero displays, plus three bar heights, with text and icons that scale proportionally.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
                         <i class="hgi hgi-stroke hgi-colors icon"></i>
                         <span class="label">Status Feedback</span>
                     </span>
-                    <p class="nds-item-desc">Success, error, and warning statuses swap the percentage for a feedback icon and apply the matching color automatically.</p>
+                    <p class="nds-item-desc">Success and error statuses swap the percentage for a feedback icon and apply the matching color automatically.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -300,10 +308,17 @@ direction: ltr
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-sun-03 icon"></i>
-                        <span class="label">Dark Mode</span>
+                        <i class="hgi hgi-stroke hgi-variable icon"></i>
+                        <span class="label">CSS Custom Property Control</span>
                     </span>
-                    <p class="nds-item-desc">Track backgrounds and neutral colors adapt to dark themes with no extra configuration.</p>
+                    <p class="nds-item-desc">Override <code class="nds-inline-code lang-html">--progress-color</code>, <code class="nds-inline-code lang-html">--progress-size</code>, and <code class="nds-inline-code lang-html">--progress-height</code> to customize appearance without modifying SCSS.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-motion-02 icon"></i>
+                        <span class="label">Smooth Transitions</span>
+                    </span>
+                    <p class="nds-item-desc">Both circle and bar fills animate smoothly when the progress value changes, giving users clear visual feedback during updates.</p>
                 </div>
             </div>
         </div>
@@ -326,7 +341,7 @@ direction: ltr
                     <li>Choose the <strong>large bar</strong> (<code class="nds-inline-code lang-html">nds-lg</code>) when you want the percentage visible inside the track without additional labels</li>
                     <li>Use <strong>small or medium bars</strong> when the progress indicator sits alongside other content and should not dominate the layout</li>
                     <li>Set <code class="nds-inline-code lang-html">data-status="success"</code> only when the operation completes. The value automatically locks to 100% and shows a feedback icon</li>
-                    <li>Add a <code class="nds-inline-code lang-html">.progress-label</code> and <code class="nds-inline-code lang-html">.nds-feedback-message</code> to the bar so users understand what is progressing and its current state</li>
+                    <li>Add a <code class="nds-inline-code lang-html">.nds-progress-label</code> and <code class="nds-inline-code lang-html">.nds-feedback-message</code> to the bar so users understand what is progressing and its current state</li>
                     <li>Do not use progress components for indeterminate loading states. Use the <a class="nds-color" href="{{ 'components/loading' | relative_url }}">Loading</a> component instead</li>
                     <li>For multi-step workflows with discrete stages, prefer the <a class="nds-color" href="{{ 'components/stepper' | relative_url }}">Stepper</a> component over a progress bar</li>
                     <li>Update <code class="nds-inline-code lang-html">--progress-value</code> via JavaScript to animate the fill. The CSS transition handles smooth movement automatically</li>
