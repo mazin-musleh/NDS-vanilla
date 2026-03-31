@@ -93,9 +93,6 @@
     --progress-color: var(--background-error);
   }
 
-  &[data-status="warning"] {
-    --progress-color: var(--background-warning);
-  }
 
   // Status feedback icon inside circle
   .nds-feedback {
@@ -123,18 +120,6 @@
     }
   }
 
-  // Text visibility modifiers
-  &.nds-no-text {
-    .progress-info {
-      display: none;
-    }
-  }
-
-  &.nds-no-symbol {
-    .progress-symbol {
-      display: none !important;
-    }
-  }
 }
 
 // ==============================================
@@ -258,8 +243,5 @@
     --progress-color: var(--background-error);
   }
 
-  &[data-status="warning"] {
-    --progress-color: var(--background-warning);
-  }
 
 }
