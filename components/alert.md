@@ -527,8 +527,8 @@ direction: ltr
       <i class="hgi hgi-stroke hgi-cancel-01"></i>
       <div class="nds-progress-circle">
         <svg width="100%" height="100%" viewBox="0 0 24 24">
-          <circle class="progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2"></circle>
-          <circle class="progress-bar" cx="12" cy="12" r="10" fill="none" stroke-width="2" stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round"></circle>
+          <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2"></circle>
+          <circle class="nds-progress-bar" cx="12" cy="12" r="10" fill="none" stroke-width="2" stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round"></circle>
         </svg>
       </div>
     </button>

@@ -38,7 +38,7 @@
         direction: ltr;
     }
 
-    .progress-circle {
+    .nds-progress-circle {
         display: none;
     }
 
@@ -452,7 +452,7 @@
         }
     }
 
-    .progress-circle {
+    .nds-progress-circle {
         --progress-track-color: var(--colors-neutral-100);
         --progress-color: var(--background-primary);
         align-self: flex-start;
@@ -464,17 +464,17 @@
         @include progress-circle-base(var(--progress-size), -90deg);
 
         // Progress based on steps
-        svg circle.progress-bar {
+        svg circle.nds-progress-bar {
             stroke-dasharray: 62.83 !important;
             stroke-dashoffset: calc(62.83 - (62.83 * var(--current-step) / var(--total-steps)));
             transition: stroke-dashoffset 0.3s ease !important;
         }
 
-        .progress-percentage {
+        .nds-progress-percentage {
             display: none !important;
         }
 
-        .progress-text {
+        .nds-progress-text {
             display: flex !important;
             align-items: center;
             flex-wrap: nowrap;
@@ -591,12 +591,12 @@
     }
 
     &.nds-radial {
-        .progress-circle {
+        .nds-progress-circle {
             --progress-track-color: var(--alpha-white-30);
             --progress-color: var(--background-surface-oncolor);
         }
 
-        .progress-circle .progress-info {
+        .nds-progress-circle .nds-progress-info {
             color: var(--text-oncolor-primary);
         }
     }

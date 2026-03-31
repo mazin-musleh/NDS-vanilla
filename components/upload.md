@@ -86,16 +86,16 @@ direction: ltr
 
                     <div class="nds-progress-circle nds-xs" style="display: none; --progress-value: 0;">
                       <svg width="24" height="24" viewBox="0 0 24 24">
-                        <circle class="progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="3" />
-                        <circle class="progress-bar" cx="12" cy="12" r="10" fill="none" stroke-width="3"
+                        <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="3" />
+                        <circle class="nds-progress-bar" cx="12" cy="12" r="10" fill="none" stroke-width="3"
                           stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" />
                       </svg>
-                      <div class="progress-info">
-                        <span class="progress-percentage">
-                          <span class="progress-number"></span>
-                          <span class="progress-symbol">%</span>
+                      <div class="nds-progress-info">
+                        <span class="nds-progress-percentage">
+                          <span class="nds-progress-number"></span>
+                          <span class="nds-progress-symbol">%</span>
                         </span>
-                        <span class="progress-text"></span>
+                        <span class="nds-progress-text"></span>
                       </div>
                     </div>
 
@@ -193,16 +193,16 @@ direction: ltr
 
                           <div class="nds-progress-circle nds-xs" style="display: none; --progress-value: 0;">
                             <svg width="24" height="24" viewBox="0 0 24 24">
-                              <circle class="progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="3" />
-                              <circle class="progress-bar" cx="12" cy="12" r="10" fill="none" stroke-width="3"
+                              <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="3" />
+                              <circle class="nds-progress-bar" cx="12" cy="12" r="10" fill="none" stroke-width="3"
                                 stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" />
                             </svg>
-                            <div class="progress-info">
-                              <span class="progress-percentage">
-                                <span class="progress-number"></span>
-                                <span class="progress-symbol">%</span>
+                            <div class="nds-progress-info">
+                              <span class="nds-progress-percentage">
+                                <span class="nds-progress-number"></span>
+                                <span class="nds-progress-symbol">%</span>
                               </span>
-                              <span class="progress-text"></span>
+                              <span class="nds-progress-text"></span>
                             </div>
                           </div>
 

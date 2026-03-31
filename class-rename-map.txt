@@ -59,3 +59,16 @@ Nav Component
 .PAB                        → .nds-PAB
 .showMore                   → .nds-show-more     (nav, tabs, accordion, breadcrumb, etc.)
 .nds-drawer-more            → .nds-show-more     (drawer, scoped to .nds-drawer in SCSS)
+
+Progress Components
+-------------------
+.progress-bg                → .nds-progress-bg
+.progress-bar (SVG circle)  → .nds-progress-bar   (scoped under .nds-progress-circle)
+.progress-info              → .nds-progress-info
+.progress-number            → .nds-progress-number
+.progress-symbol            → .nds-progress-symbol
+.progress-text              → .nds-progress-text
+.progress-percentage        → .nds-progress-percentage
+.progress-label             → .nds-progress-label
+.progress-fill              → .nds-progress-fill
+.progress-circle (stepper)  → .nds-progress-circle (scoped under .nds-stepper)

@@ -373,17 +373,17 @@ textarea {
       transform: scale(1.08);
       transform-origin: center center;
 
-      &.progress-bg {
+      &.nds-progress-bg {
         stroke: var(--_progress-track-color);
       }
 
-      &.progress-bar {
+      &.nds-progress-bar {
         stroke: var(--_progress-color);
       }
     }
   }
 
-  .progress-info {
+  .nds-progress-info {
     position: absolute;
     color: var(--text-primary-paragraph);
     line-height: 1;
@@ -397,11 +397,11 @@ textarea {
 }
 
 @mixin progress-circle-text($size: 24px) {
-  .progress-info {
+  .nds-progress-info {
     gap: clamp(0px, calc(var(--progress-size, #{$size}) * 0.04), 8px) !important;
     padding: 0 clamp(8px, calc(var(--progress-size, #{$size}) * 0.2), 40px) !important;
 
-    .progress-percentage {
+    .nds-progress-percentage {
       display: flex;
       flex-wrap: nowrap;
       flex-direction: row;
@@ -409,13 +409,13 @@ textarea {
       letter-spacing: clamp(0rem, calc(var(--progress-size, #{$size}) * -0.0006), -0.072rem) !important;
     }
 
-    :is(.progress-number, .progress-symbol) {
+    :is(.nds-progress-number, .nds-progress-symbol) {
       font-size: clamp(10px, calc(var(--progress-size, #{$size}) * 0.15), 36px) !important;
       font-weight: 700 !important;
       line-height: normal;
     }
 
-    .progress-text {
+    .nds-progress-text {
       font-size: clamp(10px, calc(var(--progress-size, #{$size}) * 0.1), 20px) !important;
     }
   }
@@ -426,7 +426,7 @@ textarea {
   $clamped-percent: min($percent, 100);
   $offset: calc(#{$circumference} - (#{$circumference} * #{$clamped-percent} / 100));
 
-  svg circle.progress-bar {
+  svg circle.nds-progress-bar {
     stroke-dasharray: $circumference !important;
     stroke-dashoffset: $offset;
     transition: stroke-dashoffset 0.3s ease !important;

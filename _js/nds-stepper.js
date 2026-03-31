@@ -10,8 +10,8 @@
         constructor(element) {
             this.element = element;
             this.steps = element.querySelectorAll('.nds-stepper-step');
-            this.progressNumber = element.querySelector('.progress-number');
-            this.progressText = element.querySelector('.progress-text');
+            this.progressNumber = element.querySelector('.nds-progress-number');
+            this.progressText = element.querySelector('.nds-progress-text');
 
             // Cache radial check
             this.isRadial = element.classList.contains('nds-radial');
@@ -314,17 +314,17 @@
  *
  * Radial Stepper (with progress circle):
  * <div class="nds-stepper nds-radial" id="radial-stepper" data-current="1" data-total="4">
- *   <div class="progress-circle">
+ *   <div class="nds-progress-circle">
  *     <svg width="64" height="64" viewBox="0 0 24 24">
- *       <circle class="progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="3" />
- *       <circle class="progress-bar" cx="12" cy="12" r="10" fill="none" stroke-width="3"
+ *       <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="3" />
+ *       <circle class="nds-progress-bar" cx="12" cy="12" r="10" fill="none" stroke-width="3"
  *         stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" />
  *     </svg>
- *     <div class="progress-info">
- *       <span class="progress-percentage">
- *         <span class="progress-number">0</span>
+ *     <div class="nds-progress-info">
+ *       <span class="nds-progress-percentage">
+ *         <span class="nds-progress-number">0</span>
  *       </span>
- *       <span class="progress-text"></span>
+ *       <span class="nds-progress-text"></span>
  *     </div>
  *   </div>
  *   <!-- Steps here -->

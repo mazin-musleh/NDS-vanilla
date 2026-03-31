@@ -26,14 +26,14 @@
   counter-reset: progress-counter min(var(--_progress-value), 100);
 
   // Dynamic progress using CSS custom property
-  svg circle.progress-bar {
+  svg circle.nds-progress-bar {
     stroke-dasharray: var(--_progress-circumference) !important;
     stroke-dashoffset: calc(var(--_progress-circumference) - (var(--_progress-circumference) * min(var(--progress-value), 100) / 100));
     transition: stroke-dashoffset 0.3s ease !important;
   }
 
   // Auto-update progress number from CSS counter
-  .progress-number {
+  .nds-progress-number {
 
     &::before {
       content: counter(progress-counter);
@@ -49,7 +49,7 @@
   &.nds-xs {
     --progress-size: 24px;
 
-    .progress-info :is(.progress-symbol, .progress-text) {
+    .nds-progress-info :is(.nds-progress-symbol, .nds-progress-text) {
       display: none;
     }
   }
@@ -57,7 +57,7 @@
   &.nds-sm {
     --progress-size: 40px;
 
-    .progress-info .progress-text {
+    .nds-progress-info .nds-progress-text {
       display: none;
     }
   }
@@ -95,16 +95,13 @@
 
 
   // Status feedback icon inside circle
-  .nds-feedback {
+  :is(.nds-feedback, .nds-feedback-icon) {
     display: none;
   }
 
-  .nds-feedback-icon {
-    display: none;
-  }
 
   &[data-status] {
-    .progress-percentage {
+    .nds-progress-percentage {
       display: none;
     }
 
@@ -139,7 +136,7 @@
   width: 100%;
 
   // ─── Label ───
-  .progress-label {
+  .nds-progress-label {
     font-size: var(--nds-text-sm-FS);
     line-height: var(--nds-text-sm-LH);
     font-weight: 500;
@@ -163,7 +160,7 @@
   }
 
   // ─── Fill ───
-  .progress-fill {
+  .nds-progress-fill {
     height: 100%;
     background-color: var(--_progress-color);
     border-radius: var(--radius-full);
@@ -198,7 +195,7 @@
   &.nds-sm {
     --progress-height: 4px;
 
-    .progress-fill::after {
+    .nds-progress-fill::after {
       content: none;
     }
   }
@@ -207,7 +204,7 @@
   & {
     --progress-height: 8px;
 
-    .progress-fill::after {
+    .nds-progress-fill::after {
       content: none;
     }
   }
@@ -215,7 +212,7 @@
   &.nds-lg {
     --progress-height: 16px;
 
-    .progress-fill::after {
+    .nds-progress-fill::after {
       content: counter(progress-counter) '%';
     }
   }
@@ -227,7 +224,7 @@
     @include dark {
       --progress-color: var(--colors-neutral-200);
 
-      .progress-fill {
+      .nds-progress-fill {
         color: var(--colors-neutral-700);
       }
     }

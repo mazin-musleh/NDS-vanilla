@@ -660,12 +660,12 @@
       --progress-size: calc(var(--btn-size) - 8px);
 
       // Hide text/percentage display
-      .progress-info {
+      .nds-progress-info {
         display: none !important;
       }
 
       // Progress circle SVG
-      svg circle.progress-bar {
+      svg circle.nds-progress-bar {
         // Static progress value (default)
         stroke-dashoffset: calc(var(--progress-circumference, 62.83) - (var(--progress-circumference, 62.83) * min(var(--progress-value, 0), 100) / 100));
         transition: stroke-dashoffset 0.3s ease;
@@ -674,7 +674,7 @@
 
     // Animated countdown when duration is set
     &:not(.nds-progress-static) .nds-progress-circle {
-      svg circle.progress-bar {
+      svg circle.nds-progress-bar {
         // Override static value with animation
         animation: button-progress-countdown linear forwards;
         animation-duration: var(--progress-duration, 4000ms);

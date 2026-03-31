@@ -375,18 +375,18 @@ direction: ltr
                         <div class="state-demo">
                             <div class="nds-stepper nds-radial nds-md" id="demo-stepper-radial" data-current="2"
                                 data-total="4">
-                                <div class="progress-circle">
+                                <div class="nds-progress-circle">
                                     <svg width="64" height="64" viewBox="0 0 24 24">
-                                        <circle class="progress-bg" cx="12" cy="12" r="10" fill="none"
+                                        <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none"
                                             stroke-width="3" />
-                                        <circle class="progress-bar" cx="12" cy="12" r="10" fill="none" stroke-width="3"
+                                        <circle class="nds-progress-bar" cx="12" cy="12" r="10" fill="none" stroke-width="3"
                                             stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" />
                                     </svg>
-                                    <div class="progress-info">
-                                        <span class="progress-percentage">
-                                            <span class="progress-number">0</span>
+                                    <div class="nds-progress-info">
+                                        <span class="nds-progress-percentage">
+                                            <span class="nds-progress-number">0</span>
                                         </span>
-                                        <span class="progress-text"></span>
+                                        <span class="nds-progress-text"></span>
                                     </div>
                                 </div>
                                 <div class="nds-stepper-step completed has-line">
@@ -461,18 +461,18 @@ direction: ltr
                                     <code class="lang-html code">
                                     <!-- Radial stepper with progress circle -->
                                     <div class="nds-stepper nds-radial nds-md" id="stepper-radial" data-current="2" data-total="4">
-                                        <div class="progress-circle">
+                                        <div class="nds-progress-circle">
                                             <svg width="64" height="64" viewBox="0 0 24 24">
-                                                <circle class="progress-bg" cx="12" cy="12" r="10" fill="none"
+                                                <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none"
                                                     stroke-width="3" />
-                                                <circle class="progress-bar" cx="12" cy="12" r="10" fill="none" stroke-width="3"
+                                                <circle class="nds-progress-bar" cx="12" cy="12" r="10" fill="none" stroke-width="3"
                                                     stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" />
                                             </svg>
-                                            <div class="progress-info">
-                                                <span class="progress-percentage">
-                                                    <span class="progress-number">0</span>
+                                            <div class="nds-progress-info">
+                                                <span class="nds-progress-percentage">
+                                                    <span class="nds-progress-number">0</span>
                                                 </span>
-                                                <span class="progress-text"></span>
+                                                <span class="nds-progress-text"></span>
                                             </div>
                                         </div>
                                         <div class="nds-stepper-step completed has-line">
