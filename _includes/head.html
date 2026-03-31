@@ -42,6 +42,8 @@
             document.head.appendChild(favicon);
         }
     </script>
+    <!-- Icon FOUT prevention (inline – must beat deferred main CSS) -->
+    <style>i.hgi-stroke{opacity:var(--hgi-icon-opacity,0)}</style>
     <!-- Critical CSS - Blocking (small, cacheable) -->
     <link rel="stylesheet" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver=1.009">
     <!-- Main CSS - Deferred loading for below-the-fold content -->
