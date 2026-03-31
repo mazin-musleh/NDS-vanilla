@@ -308,46 +308,70 @@
     }
 }
 
-// Error State
-.nds-stepper-step.error {
+
+
+// ==============================================
+// DOT VARIANT (no numbers, just dots)
+// ==============================================
+
+.nds-stepper.nds-dot {
+    --stepper-size: 16px;
+
     .nds-stepper-circle {
-        border-color: var(--icon-error);
+        border: 0;
+
+        &::before,
+        &[data-step-text]::before {
+            content: '' !important;
+            font-size: 0 !important;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--colors-base-white);
+        }
+    }
+
+    .nds-stepper-step.completed .nds-stepper-circle {
+        background-color: var(--stepper-button-completed);
+
+        &:hover {
+            background-color: var(--stepper-button-completed-hovered);
+        }
+
+        &::before,
+        &[data-step-text]::before {
+            background-color: var(--stepper-button-completed);
+        }
+
+        &:hover::before,
+        &:hover[data-step-text]::before {
+            background-color: var(--stepper-button-completed-hovered);
+        }
+    }
+
+    .nds-stepper-step.current .nds-stepper-circle {
+        background-color: var(--stepper-button-current);
+
+        &:hover {
+            background-color: var(--stepper-button-current-hovered);
+        }
+
+    }
+
+    .nds-stepper-step.upcoming .nds-stepper-circle {
         background-color: var(--colors-base-white);
-        color: var(--icon-error);
+        border: 2px solid var(--stepper-button-upcomming);
 
-        // Default content override for error state
+        &:hover {
+            border-color: var(--stepper-button-upcomming-hovered);
+        }
+
         &::before,
         &[data-step-text]::before {
-            content: '!';
-            color: var(--icon-error);
+            display: none;
         }
     }
-
-    .nds-stepper-title {
-        color: var(--colors-error-primary);
-    }
 }
-
-// Warning State
-.nds-stepper-step.warning {
-    .nds-stepper-circle {
-        border-color: var(--colors-warning-primary);
-        background-color: var(--colors-warning-primary);
-        color: var(--colors-base-white);
-
-        // Default content override for warning state
-        &::before,
-        &[data-step-text]::before {
-            content: '⚠';
-            color: var(--colors-base-white);
-        }
-    }
-
-    .nds-stepper-title {
-        color: var(--colors-warning-primary);
-    }
-}
-
 
 // ==============================================
 // VERTICAL STEPPER LAYOUT MODIFIER
@@ -449,6 +473,14 @@
 
         .nds-stepper-description {
             font-size: calc(var(--progress-size)/5);
+        }
+    }
+
+    &.nds-neutral .nds-progress-circle {
+        --progress-color: var(--colors-neutral-700);
+
+        @include dark {
+            --progress-color: var(--colors-neutral-200);
         }
     }
 
