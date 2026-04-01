@@ -462,13 +462,10 @@
 
             // Check if content is wider than visible area (needs scrolling)
             if (wrapperScrollWidth > wrapperClientWidth) {
-                this.wrapper.classList.add('nds-scroll');
-                this.wrapper.classList.add('scrolled-start'); // Start at the beginning
+                this.wrapper.setAttribute('data-state', 'has-more at-start');
                 this.needsScroll = true;
             } else {
-                this.wrapper.classList.remove('nds-scroll');
-                this.wrapper.classList.remove('scrolled-start');
-                this.wrapper.classList.remove('scrolled-end');
+                this.wrapper.removeAttribute('data-state');
                 this.needsScroll = false;
             }
         }
@@ -489,14 +486,11 @@
 
             // Only update DOM if state changed (prevents redundant class operations)
             if (this.currentScrollState !== newState) {
-                this.wrapper.classList.remove('scrolled-start', 'scrolled-end');
+                const tokens = ['has-more'];
+                if (newState === 'start') tokens.push('at-start');
+                else if (newState === 'end') tokens.push('at-end');
 
-                if (newState === 'start') {
-                    this.wrapper.classList.add('scrolled-start');
-                } else if (newState === 'end') {
-                    this.wrapper.classList.add('scrolled-end');
-                }
-
+                this.wrapper.setAttribute('data-state', tokens.join(' '));
                 this.currentScrollState = newState;
             }
         }
@@ -555,7 +549,7 @@
                 clearTimeout(this.visibilityTimer);
             }
 
-            this.wrapper.classList.remove('nds-scroll', 'scrolled-start', 'scrolled-end');
+            this.wrapper.removeAttribute('data-state');
             this.currentScrollState = null;
         }
     }

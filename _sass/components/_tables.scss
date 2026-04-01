@@ -33,19 +33,19 @@
 }
 
 // When table needs scrolling (determined by JS)
-.nds-table-wrapper.nds-scroll {
+.nds-table-wrapper[data-state~="has-more"] {
     // Both sides masked (scrolled to middle) - RTL default
     mask-image:
         linear-gradient(to right, transparent 0%, black var(--mask-fade-distance)),
         linear-gradient(to left, transparent 0%, black var(--mask-fade-distance));
 
     // When at start, only mask inline-end (left in RTL, right in LTR)
-    &.scrolled-start {
+    &[data-state~="at-start"] {
         mask-image: linear-gradient(to right, transparent 0%, black var(--mask-fade-distance));
     }
 
     // When scrolled to the end, only mask inline-start (right in RTL, left in LTR)
-    &.scrolled-end {
+    &[data-state~="at-end"] {
         mask-image: linear-gradient(to left, transparent 0%, black var(--mask-fade-distance));
         padding-inline-end: 2px;
     }
@@ -58,12 +58,12 @@
             linear-gradient(to left, transparent 0%, black var(--mask-fade-distance));
 
         // When at start, only mask inline-end (right in LTR)
-        &.scrolled-start {
+        &[data-state~="at-start"] {
             mask-image: linear-gradient(to left, transparent 0%, black var(--mask-fade-distance));
         }
 
         // When at end, only mask inline-start (left in LTR)
-        &.scrolled-end {
+        &[data-state~="at-end"] {
             mask-image: linear-gradient(to right, transparent 0%, black var(--mask-fade-distance));
         }
     }
