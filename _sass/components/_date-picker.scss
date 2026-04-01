@@ -79,7 +79,7 @@
         border-radius: var(--radius-md, 8px);
         box-shadow: var(--shadow-md);
 
-        &.hidden {
+        &[data-state~="hidden"] {
             display: none;
         }
 
@@ -99,7 +99,7 @@
     // CALENDAR HEADER STYLES
     // ==============================================
 
-    .calendar-header {
+    .nds-calendar-header {
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -107,17 +107,17 @@
         border-bottom: 1px solid var(--divider-color);
     }
 
-    .calendar-title {
+    .nds-calendar-title {
         flex: 1;
         display: flex;
         justify-content: space-between;
     }
 
-    .month-year-selectors {
+    .nds-month-year-selectors {
         display: flex;
     }
 
-    .calendar-month-switch {
+    .nds-calendar-month-switch {
         display: flex;
 
         @include ltr {
@@ -125,7 +125,7 @@
         }
     }
 
-    :is(.month-dropmenu, .year-dropmenu) {
+    :is(.nds-month-dropmenu, .nds-year-dropmenu) {
         .nds-dropmenu-menu {
             min-width: unset;
             padding: var(--spacing-md);
@@ -151,17 +151,17 @@
     // CALENDAR BODY STYLES
     // ==============================================
 
-    .calendar-body {
+    .nds-calendar-body {
         padding: var(--spacing-md);
     }
 
-    .calendar-weekdays {
+    .nds-calendar-weekdays {
         display: grid;
         grid-template-columns: repeat(7, 1fr);
         gap: 4px;
         margin-bottom: 8px;
 
-        .weekday {
+        .nds-weekday {
             
             text-align: center;
             font-size: var(--nds-text-md-FS);
@@ -176,14 +176,14 @@
         }
     }
 
-    .calendar-dates {
+    .nds-calendar-dates {
         display: grid;
         grid-template-columns: repeat(7, 1fr);
         gap: 4px;
         justify-items: center;
         overflow: hidden;
 
-        .date-cell {
+        .nds-date-cell {
 
             border-radius: 50% !important;
             width: var(--btn-size);
@@ -205,28 +205,28 @@
                 z-index: -1;
             }
 
-            &.other-month {
+            &[data-state~="other-month"] {
                 color: var(--text-default-disabled);
             }
 
-            &.today {
+            &[data-state~="today"] {
                 background-color: unset;
                 border: 2px solid var(--button-background-primary-default);
                 color: var(--text-primary);
                 font-weight: 700;
 
-                &.selected {
+                &[data-state~="selected"] {
                     outline: 2px solid var(--button-background-primary-default);
                     outline-offset: -2px !important;
                     box-shadow: inset 0 0 0 2px var(--colors-base-white);
                 }
 
-                &.selected:hover {
+                &[data-state~="selected"]:hover {
                     outline: 2px solid var(--button-background-primary-hover);
                 }
             }
 
-            &.selected {
+            &[data-state~="selected"] {
                 background-color: var(--button-background-primary-default);
                 color: var(--text-oncolor-primary);
 
@@ -239,11 +239,11 @@
             // DATE RANGE STYLES
             // ==============================================
 
-            &:is(.range-start, .range-end) {
+            &:is([data-state~="range-start"], [data-state~="range-end"]) {
                 background-color: var(--form-datecell-background-default);
                 color: var(--text-oncolor-primary);
 
-                &.today {
+                &[data-state~="today"] {
                     outline: 2px solid var(--form-datecell-background-default);
                     outline-offset: -2px !important;
 
@@ -258,7 +258,7 @@
                 }
             }
 
-            &.range-start:not(.range-end).has-range-end {
+            &[data-state~="range-start"]:not([data-state~="range-end"])[data-state~="has-range-end"] {
                 &::before {
                     display: block;
                     transform: scaleX(1) translateX(-50%);
@@ -269,7 +269,7 @@
                 }
             }
 
-            &.range-end:not(.range-start).has-range-start {
+            &[data-state~="range-end"]:not([data-state~="range-start"])[data-state~="has-range-start"] {
                 &::before {
                     content: "";
                     display: block;
@@ -281,7 +281,7 @@
                 }
             }
 
-            &.in-range:not(.range-start, .range-end) {
+            &[data-state~="in-range"]:not([data-state~="range-start"], [data-state~="range-end"]) {
                 background-color: var(--form-datecell-today-background-default);
 
                 &::before {
@@ -311,14 +311,14 @@
     // CALENDAR FOOTER STYLES
     // ==============================================
 
-    .calendar-footer {
+    .nds-calendar-footer {
         display: flex;
         justify-content: space-between;
         padding: var(--spacing-md);
         border-top: 1px solid var(--divider-color);
         gap: var(--spacing-2xl);
 
-        :is(.calendar-action-start, .calendar-action-end) {
+        :is(.nds-calendar-action-start, .nds-calendar-action-end) {
             display: flex;
             gap: var(--spacing-md);
         }

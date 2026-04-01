@@ -25,7 +25,7 @@ direction: ltr
                 <span class="label">Date Range</span>
               </button>
               <button class="nds-btn nds-subtle demo-toggle-btn"
-                data-toggler='["hijri", ".nds-date-picker", "hijriToggle"]'>
+                data-toggler='["nds-hijri", ".nds-date-picker", "hijriToggle"]'>
                 <span class="label">Hijri Calendar</span>
               </button>
               <button class="nds-btn nds-subtle demo-toggle-btn"
@@ -52,7 +52,7 @@ direction: ltr
                     </label>
                   </div>
                   <div class="nds-form-control">
-                    <div class="nds-form-action before">
+                    <div class="nds-form-action">
                       <button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle"
                         aria-label="Calendar Toggler">
                         <i class="hgi hgi-stroke hgi-calendar-03 icon"></i>
@@ -98,7 +98,7 @@ direction: ltr
     </label>
   </div>
   <div class="nds-form-control">
-    <div class="nds-form-action before">
+    <div class="nds-form-action">
       <button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle"
         aria-label="Calendar Toggler">
         <i class="hgi hgi-stroke hgi-calendar-03 icon"></i>
@@ -142,7 +142,7 @@ direction: ltr
             <i class="hgi hgi-stroke hgi-exchange-01 icon"></i>
             <span class="label">Dual Calendar System</span>
           </span>
-          <p class="nds-item-desc">Supports both Gregorian and Hijri (Islamic lunar) calendars. Add the <code class="nds-inline-code lang-html">hijri</code> class to the container to switch. Conversion uses an accurate API reference with browser Intl and mathematical fallbacks.</p>
+          <p class="nds-item-desc">Supports both Gregorian and Hijri (Islamic lunar) calendars. Add the <code class="nds-inline-code lang-html">nds-hijri</code> class to the container to switch. Conversion uses an accurate API reference with browser Intl and mathematical fallbacks.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">

@@ -1,6 +1,10 @@
 (() => {
     'use strict';
 
+    function setState(el, token, add) {
+        NDS.Forms.updateDataState(el, token, add);
+    }
+
     /**
      * Helper to get current date in Saudi Arabia timezone (GMT+3)
      * Returns a Date object representing Saudi time
@@ -502,18 +506,18 @@
             container: '.nds-form-container',
             dropdown: '.nds-date-picker-dropdown',
             toggleBtn: '.date-picker-toggle',
-            monthDropmenu: '.month-dropmenu',
-            yearDropmenu: '.year-dropmenu',
-            monthDropdownBtn: '.month-dropmenu .nds-dropmenu-trigger',
-            yearDropdownBtn: '.year-dropmenu .nds-dropmenu-trigger',
-            monthDropdownMenu: '.month-dropmenu .nds-dropmenu-scroll',
-            yearDropdownMenu: '.year-dropmenu .nds-dropmenu-scroll',
+            monthDropmenu: '.nds-month-dropmenu',
+            yearDropmenu: '.nds-year-dropmenu',
+            monthDropdownBtn: '.nds-month-dropmenu .nds-dropmenu-trigger',
+            yearDropdownBtn: '.nds-year-dropmenu .nds-dropmenu-trigger',
+            monthDropdownMenu: '.nds-month-dropmenu .nds-dropmenu-scroll',
+            yearDropdownMenu: '.nds-year-dropmenu .nds-dropmenu-scroll',
             prevBtn: '.prev-month',
             nextBtn: '.next-month',
             todayBtn: '.today-btn',
             clearBtn: '.clear-btn',
             saveBtn: '.save-btn',
-            datesContainer: '.calendar-dates'
+            datesContainer: '.nds-calendar-dates'
         }
     };
 
@@ -587,13 +591,14 @@
         // Create dropdown DOM structure
         createDropdownDOM: function () {
             var dropdown = document.createElement('div');
-            dropdown.className = 'nds-date-picker-dropdown hidden';
+            dropdown.className = 'nds-date-picker-dropdown';
+            dropdown.setAttribute('data-state', 'hidden');
 
             var calendarHTML =
-                '<div class="calendar-header">' +
-                    '<div class="calendar-title">' +
-                        '<div class="month-year-selectors">' +
-                            '<div class="nds-dropmenu month-dropmenu">' +
+                '<div class="nds-calendar-header">' +
+                    '<div class="nds-calendar-title">' +
+                        '<div class="nds-month-year-selectors">' +
+                            '<div class="nds-dropmenu nds-month-dropmenu">' +
                                 '<button class="nds-dropmenu-trigger nds-btn nds-subtle nds-menu-btn" aria-label="Select month">' +
                                     '<span class="label"></span>' +
                                 '</button>' +
@@ -601,7 +606,7 @@
                                     '<div class="nds-dropmenu-scroll"></div>' +
                                 '</div>' +
                             '</div>' +
-                            '<div class="nds-dropmenu year-dropmenu">' +
+                            '<div class="nds-dropmenu nds-year-dropmenu">' +
                                 '<button class="nds-dropmenu-trigger nds-btn nds-subtle nds-menu-btn" aria-label="Select year">' +
                                     '<span class="label"></span>' +
                                 '</button>' +
@@ -610,7 +615,7 @@
                                 '</div>' +
                             '</div>' +
                         '</div>' +
-                        '<div class="calendar-month-switch">' +
+                        '<div class="nds-calendar-month-switch">' +
                             '<button class="nds-btn nds-subtle next-month" type="button" aria-label="Next month">' +
                                 '<i class="hgi hgi-stroke hgi-arrow-right-02 icon"></i>' +
                             '</button>' +
@@ -620,17 +625,17 @@
                         '</div>' +
                     '</div>' +
                 '</div>' +
-                '<div class="calendar-body">' +
-                    '<div class="calendar-weekdays"></div>' +
-                    '<div class="calendar-dates"></div>' +
+                '<div class="nds-calendar-body">' +
+                    '<div class="nds-calendar-weekdays"></div>' +
+                    '<div class="nds-calendar-dates"></div>' +
                 '</div>' +
-                '<div class="calendar-footer">' +
-                    '<div class="calendar-action-start">' +
+                '<div class="nds-calendar-footer">' +
+                    '<div class="nds-calendar-action-start">' +
                         '<button class="nds-btn nds-secondary-outline today-btn" type="button">' +
                             '<span class="label">Today</span>' +
                         '</button>' +
                     '</div>' +
-                    '<div class="calendar-action-end">' +
+                    '<div class="nds-calendar-action-end">' +
                         '<button class="nds-btn nds-subtle clear-btn" type="button">' +
                             '<span class="label">Clear</span>' +
                         '</button>' +
@@ -737,7 +742,7 @@
             }
             
             // Check hijri class dynamically each time
-            if (this.elements.container && this.elements.container.classList.contains('hijri')) {
+            if (this.elements.container && this.elements.container.classList.contains('nds-hijri')) {
                 return 'hijri';
             }
             return 'gregorian';
@@ -908,16 +913,16 @@
         },
 
         toggleDropdown: function () {
-            var isNowOpen = this.elements.dropdown.classList.contains('hidden');
+            var isNowOpen = (this.elements.dropdown.getAttribute('data-state') || '').includes('hidden');
 
             if (isNowOpen) {
-                this.elements.dropdown.classList.remove('hidden');
+                setState(this.elements.dropdown, 'hidden', false);
                 NDS.Forms.updateDataState(this.elements.container, 'open', true);
 
                 this.initializeCalendar();
                 this.adjustDropdownPosition();
             } else {
-                this.elements.dropdown.classList.add('hidden');
+                setState(this.elements.dropdown, 'hidden', true);
                 NDS.Forms.updateDataState(this.elements.container, 'open', false);
                 this.cleanup();
             }
@@ -1195,7 +1200,7 @@
                 this.elements.monthDropmenu.ndsDropmenuInstance = this.monthDropmenuInstance;
                 this.elements.monthDropmenu.addEventListener('nds:dropmenu:opened', function () {
                     self.renderMonthOptions();
-                    self.scrollToSelected(self.elements.monthDropdownMenu, '.month-option.selected');
+                    self.scrollToSelected(self.elements.monthDropdownMenu, '.nds-month-option[data-state~="selected"]');
                 });
             }
 
@@ -1204,7 +1209,7 @@
                 this.elements.yearDropmenu.ndsDropmenuInstance = this.yearDropmenuInstance;
                 this.elements.yearDropmenu.addEventListener('nds:dropmenu:opened', function () {
                     self.renderYearOptions();
-                    self.scrollToSelected(self.elements.yearDropdownMenu, '.year-option.selected');
+                    self.scrollToSelected(self.elements.yearDropdownMenu, '.nds-year-option[data-state~="selected"]');
                 });
             }
         },
@@ -1234,7 +1239,7 @@
 
         // Save and close calendar (reuse close path from toggleDropdown)
         saveAndClose: function () {
-            if (!this.elements.dropdown.classList.contains('hidden')) {
+            if (!(this.elements.dropdown.getAttribute('data-state') || '').includes('hidden')) {
                 this.toggleDropdown();
             }
         },
@@ -1260,7 +1265,7 @@
 
         // Render methods
         renderWeekdays: function () {
-            var weekdaysContainer = this.elements.dropdown.querySelector('.calendar-weekdays');
+            var weekdaysContainer = this.elements.dropdown.querySelector('.nds-calendar-weekdays');
             if (!weekdaysContainer) return;
 
             weekdaysContainer.innerHTML = '';
@@ -1271,7 +1276,7 @@
 
             weekdayNames.forEach(function (name) {
                 var weekdayElement = document.createElement('div');
-                weekdayElement.className = 'weekday';
+                weekdayElement.className = 'nds-weekday';
                 weekdayElement.textContent = name;
                 weekdaysContainer.appendChild(weekdayElement);
             });
@@ -1355,7 +1360,7 @@
         createDateCell: function (date, type) {
             var self = this;
             var btn = document.createElement('button');
-            btn.className = 'nds-btn nds-subtle date-cell';
+            btn.className = 'nds-btn nds-subtle nds-date-cell';
             btn.type = 'button';
 
             // Use helper method for day number display
@@ -1363,12 +1368,12 @@
 
             // Add appropriate classes
             if (type === 'other-month') {
-                btn.classList.add('other-month');
+                setState(btn,'other-month');
             }
 
             // Check if today using calendar-aware method
             if (this.isTodayDate(date)) {
-                btn.classList.add('today');
+                setState(btn,'today');
             }
 
             // Check selection states
@@ -1389,7 +1394,7 @@
             if (this.isRangeMode()) {
                 this.applyRangeStates(btn, date);
             } else if (this.state.selectedDate && this.isSameCalendarDate(date, this.state.selectedDate)) {
-                btn.classList.add('selected');
+                setState(btn,'selected');
             }
         },
 
@@ -1433,23 +1438,23 @@
                 this.isDateInRange(date, this.state.rangeStart, this.state.rangeEnd);
 
             if (isRangeStart) {
-                btn.classList.add('range-start');
+                setState(btn,'range-start');
             }
 
             if (isRangeEnd) {
-                btn.classList.add('range-end');
+                setState(btn,'range-end');
             }
 
             if (isInRange) {
-                btn.classList.add('in-range');
+                setState(btn,'in-range');
             }
 
-            // Add visual continuity classes for styling
+            // Add visual continuity tokens for styling
             if (isRangeStart && this.state.rangeEnd) {
-                btn.classList.add('has-range-end');
+                setState(btn,'has-range-end');
             }
             if (isRangeEnd && this.state.rangeStart) {
-                btn.classList.add('has-range-start');
+                setState(btn,'has-range-start');
             }
         },
 
@@ -1597,7 +1602,7 @@
                 // Close entire calendar if clicked outside container
                 if (self.isDropdownCreated && !self.elements.container.contains(clickTarget)) {
                     if (self.elements.dropdown) {
-                        self.elements.dropdown.classList.add('hidden');
+                        setState(self.elements.dropdown, 'hidden', true);
                     }
                     NDS.Forms.updateDataState(self.elements.container, 'open', false);
                     self.cleanup();
@@ -1618,7 +1623,7 @@
 
             monthNames.forEach(function (monthName, index) {
                 var btn = document.createElement('button');
-                btn.className = 'nds-btn nds-subtle nds-dropmenu-item month-option';
+                btn.className = 'nds-btn nds-subtle nds-dropmenu-item nds-month-option';
                 btn.setAttribute('role', 'menuitem');
                 btn.setAttribute('data-value', index);
                 btn.innerHTML = '<span class="label">' + monthName + '</span>';
@@ -1628,7 +1633,7 @@
                     index === self.getCurrentMonth();        // For Gregorian: compare 0-based with 0-based
 
                 if (isSelected) {
-                    btn.classList.add('selected');
+                    setState(btn,'selected');
                 }
 
                 btn.addEventListener('click', function (e) {
@@ -1685,13 +1690,13 @@
 
             for (var year = startYear; year <= endYear; year++) {
                 var btn = document.createElement('button');
-                btn.className = 'nds-btn nds-subtle nds-dropmenu-item year-option';
+                btn.className = 'nds-btn nds-subtle nds-dropmenu-item nds-year-option';
                 btn.setAttribute('role', 'menuitem');
                 btn.setAttribute('data-value', year);
                 btn.innerHTML = '<span class="label">' + year + '</span>';
 
                 if (year === currentYear) {
-                    btn.classList.add('selected');
+                    setState(btn,'selected');
                 }
 
                 btn.addEventListener('click', function (e) {
