@@ -17,7 +17,7 @@
 
   @include btn-base;
 
-  &:not(button, a) {
+  &:not(button):not(a) {
     pointer-events: none;
   }
 

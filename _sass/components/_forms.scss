@@ -458,7 +458,7 @@ fieldset {
                 }
             }
 
-            > :not(button, a) {
+            > :not(button):not(a) {
                 --btn-color: var(--text-secondary-paragraph);
             }
         }
