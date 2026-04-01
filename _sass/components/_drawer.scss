@@ -123,7 +123,7 @@
 // ALWAYS OPEN STATE
 // ==============================================
 
-.nds-drawer[data-state="always-open"] {
+.nds-drawer[data-state~="always-open"] {
 
     // Hide arrow icons in always-open mode
     .nds-drawer-list>li>.nds-btn {
@@ -300,7 +300,7 @@
     min-height: 0;
 
     // Fade effect at bottom when scrollable
-    .hasMore:not(.atEnd) & {
+    [data-state~="has-more"]:not([data-state~="at-end"]) & {
         mask-image: linear-gradient(to bottom, black calc(100% - var(--mask-fade-distance)), transparent 100%);
     }
 }
@@ -322,12 +322,12 @@
 }
 
 // Show more button when drawer has scrollable content
-.nds-drawer.hasMore .nds-show-more {
+.nds-drawer[data-state~="has-more"] .nds-show-more {
     display: flex;
 }
 
 // Rotate icon when scrolled to end
-.nds-drawer.atEnd .nds-show-more i {
+.nds-drawer[data-state~="at-end"] .nds-show-more i {
     transform: rotate(180deg);
 }
 
@@ -347,7 +347,7 @@
     }
 
     // When always open, move border to button instead of li
-    &[data-state="always-open"] {
+    &[data-state~="always-open"] {
         .nds-drawer-list>li {
             border-block-end: none;
 

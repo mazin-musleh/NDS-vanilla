@@ -21,9 +21,9 @@
             closed: '',
             active: 'active'
         },
-        classes: {
-            hasMore: 'hasMore',
-            atEnd: 'atEnd'
+        overflow: {
+            hasMore: 'has-more',
+            atEnd: 'at-end'
         },
         breakpoints: NDS.breakpoints,
         scrollThreshold: 1,
@@ -82,11 +82,38 @@
     // STATE MANAGEMENT
     // ==============================================
 
+    function getTokens(el) {
+        return new Set((el.getAttribute('data-state') || '').split(/\s+/).filter(Boolean));
+    }
+
+    function addState(el, ...tokens) {
+        const current = getTokens(el);
+        tokens.forEach(t => current.add(t));
+        el.setAttribute('data-state', [...current].join(' '));
+    }
+
+    function removeState(el, ...tokens) {
+        const current = getTokens(el);
+        tokens.forEach(t => current.delete(t));
+        current.size ? el.setAttribute('data-state', [...current].join(' '))
+                     : el.removeAttribute('data-state');
+    }
+
+    function hasState(el, token) {
+        return el ? getTokens(el).has(token) : false;
+    }
+
+    // Transition states that are mutually exclusive
+    const TRANSITION_STATES = ['open', 'opening', 'closing'];
+
     function setState(element, state) {
         if (state) {
-            element.setAttribute('data-state', state);
+            // Remove sibling transition states before adding new one
+            removeState(element, ...TRANSITION_STATES);
+            addState(element, state);
         } else {
-            element.removeAttribute('data-state');
+            // Empty state = clear transition states, keep others (e.g. has-more)
+            removeState(element, ...TRANSITION_STATES, 'active');
         }
     }
 
@@ -211,9 +238,9 @@
 
         // Set always-open state on drawer for CSS targeting
         if (isAlwaysOpen) {
-            drawer.setAttribute('data-state', 'always-open');
+            addState(drawer, 'always-open');
         } else {
-            drawer.removeAttribute('data-state');
+            removeState(drawer, 'always-open');
         }
     }
 
@@ -227,7 +254,7 @@
 
             button.addEventListener('click', (e) => {
                 // Don't toggle if drawer is in always-open mode
-                if (drawer.getAttribute('data-state') === 'always-open') {
+                if (hasState(drawer, 'always-open')) {
                     return;
                 }
 
@@ -248,12 +275,12 @@
         if (!scrollContainer) return;
 
         const hasOverflow = scrollContainer.scrollHeight > scrollContainer.clientHeight;
-        drawer.classList.toggle(CONFIG.classes.hasMore, hasOverflow);
+        if (hasOverflow) addState(drawer, CONFIG.overflow.hasMore); else removeState(drawer, CONFIG.overflow.hasMore);
 
         if (hasOverflow) {
             checkScrollPosition(drawer, scrollContainer);
         } else {
-            drawer.classList.remove(CONFIG.classes.atEnd);
+            removeState(drawer, CONFIG.overflow.atEnd);
         }
     }
 
@@ -263,14 +290,14 @@
 
         const isAtEnd = scrollContainer.scrollHeight - scrollContainer.scrollTop
             <= scrollContainer.clientHeight + CONFIG.scrollThreshold;
-        drawer.classList.toggle(CONFIG.classes.atEnd, isAtEnd);
+        if (isAtEnd) addState(drawer, CONFIG.overflow.atEnd); else removeState(drawer, CONFIG.overflow.atEnd);
     }
 
     function scrollDrawer(drawer) {
         const scrollContainer = drawer.querySelector(CONFIG.selectors.scroll);
         if (!scrollContainer) return;
 
-        const isAtEnd = drawer.classList.contains(CONFIG.classes.atEnd);
+        const isAtEnd = hasState(drawer, CONFIG.overflow.atEnd);
         scrollContainer.scrollTo({
             top: isAtEnd ? 0 : scrollContainer.scrollTop + scrollContainer.clientHeight * CONFIG.scrollAmount,
             behavior: 'smooth'
@@ -312,8 +339,7 @@
         // For topSubMenu on mobile: only run ResizeObserver overflow check when drawer is open
         drawer._offResizeObs = NDS.onElementResize(scrollContainer, () => {
             if (isTopSubMenu && !window.matchMedia(CONFIG.breakpoints.desktop).matches) {
-                const parentState = drawer.parentElement?.getAttribute('data-state');
-                if (parentState !== 'open') return;
+                if (!hasState(drawer.parentElement, 'open')) return;
             }
             checkOverflow(drawer);
         });
