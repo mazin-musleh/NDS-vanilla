@@ -338,11 +338,11 @@
             if (!DOM.primary) return;
 
             if (state.isMinimal && !hasState(DOM.collapse, 'open')) {
-                DOM.primary.classList.remove('hasMore', 'atStart', 'atEnd');
+                removeState(DOM.primary, 'has-more', 'at-start', 'at-end');
                 return;
             }
 
-            const wasOverflowing = DOM.primary.classList.contains('hasMore');
+            const wasOverflowing = hasState(DOM.primary, 'has-more');
             let hasOverflow = false;
 
             if (state.isMinimal) {
@@ -363,19 +363,19 @@
             }
 
             if (hasOverflow === wasOverflowing) return;
-            DOM.primary.classList.toggle('hasMore', hasOverflow);
+            if (hasOverflow) addState(DOM.primary, 'has-more'); else removeState(DOM.primary, 'has-more');
 
             if (!state.isMinimal) updateNavMaxWidth();
 
             if (!hasOverflow) {
-                DOM.primary.classList.remove('atStart', 'atEnd');
+                removeState(DOM.primary, 'at-start', 'at-end');
             } else {
                 requestAnimationFrame(() => this.checkEnd());
             }
         },
 
         checkEnd() {
-            if (!DOM.primary?.classList.contains('hasMore')) return;
+            if (!hasState(DOM.primary, 'has-more')) return;
 
             let atStart, atEnd;
             if (state.isMinimal) {
@@ -388,8 +388,8 @@
                 atStart = Math.abs(scrollLeft) <= 2;
                 atEnd = max <= 1 || Math.abs(scrollLeft) >= max - 2;
             }
-            DOM.primary.classList.toggle('atStart', atStart);
-            DOM.primary.classList.toggle('atEnd', atEnd);
+            if (atStart) addState(DOM.primary, 'at-start'); else removeState(DOM.primary, 'at-start');
+            if (atEnd) addState(DOM.primary, 'at-end'); else removeState(DOM.primary, 'at-end');
         }
     };
 
@@ -439,7 +439,7 @@
         const brandW = DOM.brand?.offsetWidth || 0;
         const secW = DOM.secondary?.offsetWidth || 0;
         const minW = DOM.minimal?.offsetWidth || 0;
-        const showMoreW = DOM.showMore && DOM.primary?.classList.contains('hasMore') ? DOM.showMore.offsetWidth : 0;
+        const showMoreW = DOM.showMore && hasState(DOM.primary, 'has-more') ? DOM.showMore.offsetWidth : 0;
 
         if (!_containerLayoutCache || _containerLayoutCache.containerW !== containerW) {
             const containerStyles = container ? getComputedStyle(container) : null;
@@ -757,7 +757,7 @@
             e.preventDefault();
             e.stopPropagation();
 
-            const atEnd = DOM.primary.classList.contains('atEnd');
+            const atEnd = hasState(DOM.primary, 'at-end');
             const amount = (state.isMinimal ? DOM.primary.clientHeight : DOM.primary.clientWidth) * 0.8;
 
             if (state.isMinimal) {
@@ -790,7 +790,7 @@
         DOM.primary.addEventListener('wheel', (e) => {
             if (state.isMouseOverDropdown || state.isMinimal ||
                 Math.abs(e.deltaX) >= Math.abs(e.deltaY) ||
-                !DOM.primary.classList.contains('hasMore')) return;
+                !hasState(DOM.primary, 'has-more')) return;
 
             e.preventDefault();
             if (scrolling) return;
@@ -830,7 +830,7 @@
         };
 
         DOM.primary.addEventListener('mousedown', (e) => {
-            if (state.isMinimal || !DOM.primary.classList.contains('hasMore')) return;
+            if (state.isMinimal || !hasState(DOM.primary, 'has-more')) return;
             drag = { active: true, startX: e.pageX, scrollLeft: DOM.primary.scrollLeft };
             Object.assign(DOM.primary.style, { cursor: 'grabbing', userSelect: 'none', scrollBehavior: 'auto' });
             e.preventDefault();

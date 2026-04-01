@@ -270,8 +270,8 @@
             }
         }
 
-        /* Hide when NO overflow (no .hasMore class) */
-        .nds-nav-primary:not(.hasMore)~.nds-show-more {
+        /* Hide when NO overflow */
+        .nds-nav-primary:not([data-state~="has-more"])~.nds-show-more {
             display: none;
         }
     }
@@ -477,7 +477,7 @@ body:not(.nds-minimal) .nds-main-nav {
 
     /* Show More Button Styles - using sibling selector */
     .nds-collapse-content {
-        .nds-nav-primary.hasMore {
+        .nds-nav-primary[data-state~="has-more"] {
             ~.nds-show-more {
                 transform: translateX(0);
 
@@ -488,7 +488,7 @@ body:not(.nds-minimal) .nds-main-nav {
             }
 
             // At end: icon rotation
-            &.atEnd {
+            &[data-state~="at-end"] {
                 ~.nds-show-more i {
                     transform: rotate(270deg);
                 }
@@ -499,7 +499,7 @@ body:not(.nds-minimal) .nds-main-nav {
                     transform: rotate(270deg);
                 }
 
-                &.atEnd~.nds-show-more i {
+                &[data-state~="at-end"]~.nds-show-more i {
                     transform: rotate(90deg);
                 }
             }
@@ -751,7 +751,7 @@ body.nds-minimal .nds-main-nav {
 
     /* Show More Button */
     .nds-collapse-content {
-        .nds-nav-primary.hasMore {
+        .nds-nav-primary[data-state~="has-more"] {
             margin-bottom: calc(var(--nds-minimal-nav-item-height));
 
             ~.nds-show-more {
@@ -766,7 +766,7 @@ body.nds-minimal .nds-main-nav {
             }
 
             // At end: icon rotation
-            &.atEnd {
+            &[data-state~="at-end"] {
                 ~.nds-show-more i {
                     transform: rotate(180deg);
                 }
