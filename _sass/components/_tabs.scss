@@ -258,19 +258,19 @@
     }
 
     /* Mask effects for overflow indication */
-    &.hasMore {
+    &[data-state~="has-more"] {
       // Both sides masked (scrolled to middle) - RTL default
       mask-image:
         linear-gradient(to right, transparent 0%, black var(--mask-fade-distance)),
         linear-gradient(to left, transparent 0%, black var(--mask-fade-distance));
 
       // At start: only mask inline-end (left in RTL)
-      &.atStart {
+      &[data-state~="at-start"] {
         mask-image: linear-gradient(to right, transparent 0%, black var(--mask-fade-distance));
       }
 
       // At end: only mask inline-start (right in RTL)
-      &.atEnd {
+      &[data-state~="at-end"] {
         mask-image: linear-gradient(to left, transparent 0%, black var(--mask-fade-distance));
       }
 
@@ -281,12 +281,12 @@
           linear-gradient(to left, transparent 0%, black var(--mask-fade-distance));
 
         // At start: only mask inline-end (right in LTR)
-        &.atStart {
+        &[data-state~="at-start"] {
           mask-image: linear-gradient(to left, transparent 0%, black var(--mask-fade-distance));
         }
 
         // At end: only mask inline-start (left in LTR)
-        &.atEnd {
+        &[data-state~="at-end"] {
           mask-image: linear-gradient(to right, transparent 0%, black var(--mask-fade-distance));
         }
       }
@@ -312,13 +312,13 @@
       }
     }
 
-    /* Hide when NO overflow (no .hasMore class) */
-    .nds-tab-list:not(.hasMore) ~ .nds-show-more {
+    /* Hide when NO overflow */
+    .nds-tab-list:not([data-state~="has-more"]) ~ .nds-show-more {
       display: none;
     }
 
     /* Rotate icon when at end of scroll */
-    .nds-tab-list.atEnd ~ .nds-show-more i {
+    .nds-tab-list[data-state~="at-end"] ~ .nds-show-more i {
       transform: rotate(180deg);
 
       @include ltr {

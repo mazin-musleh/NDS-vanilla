@@ -98,33 +98,31 @@
 
             // Skip for vertical tabs
             if (this.tabsContainer.classList.contains('nds-vertical')) {
-                this.tabList.classList.remove('hasMore', 'atStart', 'atEnd');
+                this.tabList.removeAttribute('data-state');
                 return;
             }
 
             const hasOverflow = this.needsScroll();
-            this.tabList.classList.toggle('hasMore', hasOverflow);
-
-            if (hasOverflow) {
-                const { scrollLeft, scrollWidth, clientWidth } = this.tabList;
-                const maxScroll = scrollWidth - clientWidth;
-                const isRTL = NDS.isRTL;
-
-                let atStart, atEnd;
-
-                if (isRTL) {
-                    atStart = Math.abs(scrollLeft) <= 2;
-                    atEnd = Math.abs(scrollLeft) >= maxScroll - 2;
-                } else {
-                    atStart = scrollLeft <= 2;
-                    atEnd = scrollLeft >= maxScroll - 2;
-                }
-
-                this.tabList.classList.toggle('atStart', atStart);
-                this.tabList.classList.toggle('atEnd', atEnd);
-            } else {
-                this.tabList.classList.remove('atStart', 'atEnd');
+            if (!hasOverflow) {
+                this.tabList.removeAttribute('data-state');
+                return;
             }
+
+            const { scrollLeft, scrollWidth, clientWidth } = this.tabList;
+            const maxScroll = scrollWidth - clientWidth;
+            const isRTL = NDS.isRTL;
+
+            const tokens = ['has-more'];
+
+            if (isRTL) {
+                if (Math.abs(scrollLeft) <= 2) tokens.push('at-start');
+                if (Math.abs(scrollLeft) >= maxScroll - 2) tokens.push('at-end');
+            } else {
+                if (scrollLeft <= 2) tokens.push('at-start');
+                if (scrollLeft >= maxScroll - 2) tokens.push('at-end');
+            }
+
+            this.tabList.setAttribute('data-state', tokens.join(' '));
         }
 
         scrollToTarget(target) {
@@ -169,7 +167,7 @@
                     e.preventDefault();
                     e.stopPropagation();
 
-                    if (this.tabList.classList.contains('atEnd')) {
+                    if ((this.tabList.getAttribute('data-state') || '').includes('at-end')) {
                         this.tabList.scrollTo({ left: 0, behavior: 'smooth' });
                     } else {
                         const scrollAmount = this.tabList.clientWidth * 0.8;
