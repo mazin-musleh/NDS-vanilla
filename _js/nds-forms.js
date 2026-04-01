@@ -612,8 +612,9 @@
                 container.removeAttribute('data-state');
             }
 
-            // Propagate state to inputs
-            if (stateName === 'disabled') {
+            // Propagate state to inputs (only within form containers)
+            var isFormScoped = container.classList.contains('nds-form-container') || container.classList.contains('nds-form-group');
+            if (isFormScoped && stateName === 'disabled') {
                 var inputs = container.querySelectorAll('input, textarea, select');
                 inputs.forEach(function(input) { input.disabled = add; });
                 var actionBtns = container.querySelectorAll('.nds-form-action .nds-btn');
@@ -623,13 +624,13 @@
                 });
             }
 
-            if (stateName === 'readonly') {
+            if (isFormScoped && stateName === 'readonly') {
                 var inputs = container.querySelectorAll('input, textarea, select');
                 inputs.forEach(function(input) { input.readOnly = add; });
             }
 
             // Propagate loading state to clear button
-            if (stateName === 'loading') {
+            if (isFormScoped && stateName === 'loading') {
                 var formControl = container.classList.contains('nds-form-control')
                     ? container
                     : container.querySelector('.nds-form-control');

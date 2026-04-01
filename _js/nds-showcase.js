@@ -62,6 +62,7 @@
         initializeFormFixToggles();
         initializeFormFixDropmenu();
         initializeFormFixIcon();
+        initializeRatingDisableToggle();
     }
 
     // CRITICAL: Expose global API immediately (called by unified init system)
@@ -956,7 +957,7 @@
         var liveState = changedElement.getAttribute('data-state');
 
         withCodeExample(demoCard, '', function(code) {
-            var tagRegex = new RegExp('(<[^>]*class="[^"]*' + escaped + '[^"]*"[^>]*?)(/?>)', 'g');
+            var tagRegex = new RegExp('(<[^>]*class="(?:[^"]*\\s)?' + escaped + '(?:\\s[^"]*|)"[^>]*?)(/?>)', 'g');
             return code.replace(tagRegex, function(match, before, close) {
                 var tag = before.replace(/\s*data-state="[^"]*"/, '');
                 if (liveState) tag += ' data-state="' + liveState + '"';
@@ -2005,6 +2006,22 @@
         });
     }
 
+    // Rating disable toggle — toggle disabled state via rating API
+    function initializeRatingDisableToggle() {
+        document.querySelectorAll('[data-rating-disable]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const demoCard = this.closest('.nds-demo-card');
+                if (!demoCard) return;
+                const rating = demoCard.querySelector('.nds-rating');
+                if (!rating || !rating.ndsRating) return;
+                const disabled = !rating.ndsRating.isDisabled();
+                rating.ndsRating.setDisabled(disabled);
+                this.classList.toggle('selected', disabled);
+                rebuildDemoCode(demoCard);
+            });
+        });
+    }
+
     // Generic: rebuild code example from the live demo DOM.
     // Works for any demo card — clones the first root element in .demo-container,
     // strips runtime/demo-only attributes, replaces demo IDs, and outputs clean HTML.
@@ -2040,6 +2057,12 @@
         clone.querySelectorAll('[aria-expanded]').forEach(function(el) { el.removeAttribute('aria-expanded'); el.removeAttribute('aria-haspopup'); });
         clone.querySelectorAll('[role="menu"]').forEach(function(el) { el.removeAttribute('role'); el.removeAttribute('aria-hidden'); el.removeAttribute('style'); });
         clone.querySelectorAll('[role="menuitem"]').forEach(function(el) { el.removeAttribute('role'); });
+
+        // Strip rating runtime attributes (set by JS initialization)
+        clone.querySelectorAll('.nds-rating-star').forEach(function(el) {
+            el.removeAttribute('data-state');
+            el.removeAttribute('data-value');
+        });
 
         // Strip demo-only data attributes
         clone.querySelectorAll('[data-original-fix-html]').forEach(function(el) { el.removeAttribute('data-original-fix-html'); });
