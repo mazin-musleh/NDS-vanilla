@@ -123,41 +123,14 @@ direction: ltr
                                 data-toggler='["noBg", ".demo-container", "containerBg"]'>
                                 <span class="label">Remove bg</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle" onclick="toggleRatingDisabled(this)">
+                            <button class="nds-btn nds-sm nds-subtle" data-rating-disable>
                                 <span class="label">Disable</span>
                             </button>
                         </div>
                     </div>
-                    <script>
-                        function toggleRatingDisabled(button) {
-                            const ratingElement = button.closest('.nds-demo-card').querySelector('.nds-rating');
-                            const codeElement = button.closest('.nds-demo-card').querySelector('code');
-
-                            if (ratingElement && codeElement) {
-                                // Initialize rating if not already done
-                                if (!ratingElement.ndsRating) {
-                                    ratingElement.ndsRating = new NDSRating(ratingElement);
-                                }
-
-                                const isCurrentlyDisabled = ratingElement.ndsRating.isDisabled();
-
-                                // Toggle disabled state using built-in method
-                                ratingElement.ndsRating.setDisabled(!isCurrentlyDisabled);
-
-                                // Update button state and code example
-                                if (isCurrentlyDisabled) {
-                                    button.classList.remove('selected');
-                                    codeElement.innerHTML = codeElement.innerHTML.replace('nds-disabled', 'interactive');
-                                } else {
-                                    button.classList.add('selected');
-                                    codeElement.innerHTML = codeElement.innerHTML.replace('interactive', 'nds-disabled');
-                                }
-                            }
-                        }
-                    </script>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-rating nds-md interactive" data-rating="2.5">
+                            <div class="nds-rating nds-md" data-rating="2.5">
                                 <button class="nds-rating-star" type="button" aria-label="1 star"></button>
                                 <button class="nds-rating-star" type="button" aria-label="2 stars"></button>
                                 <button class="nds-rating-star" type="button" aria-label="3 stars"></button>
@@ -186,7 +159,7 @@ direction: ltr
                                 </div>
                                 <div class="nds-expandable-content">
                                     <code class="lang-html code">
-<div class="nds-rating nds-md interactive" data-rating="0">
+<div class="nds-rating nds-md" data-rating="0">
   <button class="nds-rating-star" type="button" aria-label="1 star"></button>
   <button class="nds-rating-star" type="button" aria-label="2 stars"></button>
   <button class="nds-rating-star" type="button" aria-label="3 stars"></button>
@@ -267,8 +240,7 @@ direction: ltr
                 <div class="nds-content-block">
                     <h3 class="nds-block-title">Interactive Ratings</h3>
                     <ul>
-                        <li>Add interactive class for clickable rating controls</li>
-                        <li>JavaScript automatically converts spans to buttons</li>
+                        <li>Use <code>&lt;button&gt;</code> elements for interactive stars (auto-detected by JS)</li>
                         <li>Hover preview shows rating before selection</li>
                         <li>Includes scale effects and focus indicators</li>
                         <li>Full keyboard navigation (arrows, enter, space, home, end)</li>
@@ -304,7 +276,7 @@ document.addEventListener('ratingChange', (e) => {
 });
 
 // Get rating value programmatically
-const ratingElement = document.querySelector('.nds-rating.interactive');
+const ratingElement = document.querySelector('.nds-rating[data-state~="interactive"]');
 const currentRating = ratingElement.ndsRating.getRating();
 
 // Set rating value programmatically

@@ -5,116 +5,123 @@
 (() => {
   'use strict';
 
+  // State helpers (same pattern as dropmenu)
+  const parseStates = (el) =>
+    new Set((el.getAttribute('data-state') || '').split(/\s+/).filter(Boolean));
+
+  const addState = (el, ...states) => {
+    const cur = parseStates(el);
+    states.forEach(s => cur.add(s));
+    el.setAttribute('data-state', [...cur].join(' '));
+  };
+
+  const removeState = (el, ...states) => {
+    const cur = parseStates(el);
+    states.forEach(s => cur.delete(s));
+    cur.size ? el.setAttribute('data-state', [...cur].join(' '))
+             : el.removeAttribute('data-state');
+  };
+
+  const hasState = (el, state) => parseStates(el).has(state);
+
   class NDSRating {
     constructor(element) {
       this.rating = element;
       this.stars = element.querySelectorAll('.nds-rating-star');
       this.currentRating = parseFloat(element.dataset.rating) || 0;
-      this.isInteractive = element.classList.contains('interactive') && !element.classList.contains('nds-disabled');
 
-      if (this.isInteractive) {
+      // Set data-value on stars for delegation lookups
+      for (let i = 0; i < this.stars.length; i++) {
+        this.stars[i].dataset.value = i + 1;
+        this.stars[i].setAttribute('aria-label', `${i + 1} star${i > 0 ? 's' : ''}`);
+      }
+
+      // Auto-detect interactive from button elements
+      if (this.stars[0]?.tagName === 'BUTTON' && !hasState(this.rating, 'disabled')) {
+        addState(this.rating, 'interactive');
+      }
+
+      if (hasState(this.rating, 'interactive') && !hasState(this.rating, 'disabled')) {
         this.init();
       } else {
-        // For display-only ratings, just set the visual state
         this.updateVisualState();
       }
     }
 
     init() {
-      // Add event listeners
-      this.stars.forEach((star, index) => {
-        const value = index + 1;
+      if (this._initialized) return;
+      this._initialized = true;
 
-        star.dataset.value = value;
-        star.setAttribute('aria-label', `${value} star${value > 1 ? 's' : ''}`);
-
-        star.addEventListener('click', (e) => this.handleStarClick(e, value));
-        star.addEventListener('mouseenter', (e) => this.handleStarHover(e, value));
-        star.addEventListener('mouseleave', () => {
-          if (this.isInteractive) {
-            this.hidePreview();
-          }
-        });
-        star.addEventListener('keydown', (e) => this.handleKeyboard(e, value));
+      // Delegated listeners on the container
+      this.rating.addEventListener('click', (e) => {
+        const star = e.target.closest('.nds-rating-star');
+        if (star && !hasState(this.rating, 'disabled')) this.setRating(+star.dataset.value);
       });
 
-      // Set initial visual state
+      this.rating.addEventListener('mouseenter', (e) => {
+        const star = e.target.closest('.nds-rating-star');
+        if (star && !hasState(this.rating, 'disabled')) this.showPreview(+star.dataset.value);
+      }, true);
+
+      this.rating.addEventListener('mouseleave', (e) => {
+        const star = e.target.closest('.nds-rating-star');
+        if (star && !hasState(this.rating, 'disabled')) this.hidePreview();
+      }, true);
+
+      this.rating.addEventListener('keydown', (e) => {
+        const star = e.target.closest('.nds-rating-star');
+        if (star && !hasState(this.rating, 'disabled')) this.handleKeyboard(e, +star.dataset.value);
+      });
+
       this.updateVisualState();
     }
 
-    handleStarClick(e, starValue) {
-      if (this.isInteractive) {
-        this.setRating(starValue);
-      }
-    }
-
-    handleStarHover(e, starValue) {
-      if (this.isInteractive) {
-        this.showPreview(starValue);
-      }
-    }
-
     setRating(value) {
+      if (value === this.currentRating) return;
       this.currentRating = value;
       this.rating.dataset.rating = value;
       this.updateVisualState();
 
-      // Dispatch custom event
       this.rating.dispatchEvent(new CustomEvent('ratingChange', {
-        detail: {
-          rating: value,
-          element: this.rating
-        },
+        detail: { rating: value, element: this.rating },
         bubbles: true
       }));
     }
 
     showPreview(value) {
-      // Remove all preview classes first
-      this.stars.forEach(star => {
-        star.classList.remove('preview');
-      });
-
-      // Handle whole stars for preview
-      const wholeStars = Math.floor(value);
-
-      // Add preview class to whole stars
-      for (let i = 0; i < wholeStars; i++) {
-        this.stars[i].classList.add('preview');
+      for (let i = 0; i < this.stars.length; i++) {
+        if (i < value) addState(this.stars[i], 'preview');
+        else removeState(this.stars[i], 'preview');
       }
     }
 
     hidePreview() {
-      // Remove all preview classes
-      this.stars.forEach(star => {
-        star.classList.remove('preview');
-      });
+      for (let i = 0; i < this.stars.length; i++) {
+        removeState(this.stars[i], 'preview');
+      }
     }
 
     updateVisualState() {
-      // Remove all state classes first
-      this.stars.forEach(star => {
-        star.classList.remove('selected', 'half');
-      });
+      const whole = Math.floor(this.currentRating);
+      const hasHalf = (this.currentRating % 1) >= 0.3;
 
-      // Handle whole and half stars
-      const wholeStars = Math.floor(this.currentRating);
-      const decimalPart = this.currentRating % 1;
-      const hasHalfStar = decimalPart >= 0.3;
+      for (let i = 0; i < this.stars.length; i++) {
+        const states = [];
+        if (i < whole) states.push('selected');
+        if (hasHalf && i === whole) states.push('half');
 
-      // Add selected class to whole stars
-      for (let i = 0; i < wholeStars; i++) {
-        this.stars[i].classList.add('selected');
-      }
+        // Preserve preview state if present
+        if (hasState(this.stars[i], 'preview')) states.push('preview');
 
-      // Add half star if decimal is 0.3 or more
-      if (hasHalfStar && wholeStars < this.stars.length) {
-        this.stars[wholeStars].classList.add('half');
+        if (states.length) this.stars[i].setAttribute('data-state', states.join(' '));
+        else this.stars[i].removeAttribute('data-state');
       }
     }
 
     handleKeyboard(e, value) {
-      const currentIndex = value - 1;
+      const idx = value - 1;
+      const isRTL = NDS.isRTL;
+      const last = this.stars.length - 1;
 
       switch(e.key) {
         case 'Enter':
@@ -124,19 +131,25 @@
           break;
 
         case 'ArrowRight':
-        case 'ArrowUp':
           e.preventDefault();
-          if (currentIndex < this.stars.length - 1) {
-            this.stars[currentIndex + 1].focus();
-          }
+          if (isRTL) { if (idx > 0) this.stars[idx - 1].focus(); }
+          else { if (idx < last) this.stars[idx + 1].focus(); }
           break;
 
         case 'ArrowLeft':
+          e.preventDefault();
+          if (isRTL) { if (idx < last) this.stars[idx + 1].focus(); }
+          else { if (idx > 0) this.stars[idx - 1].focus(); }
+          break;
+
+        case 'ArrowUp':
+          e.preventDefault();
+          if (idx < last) this.stars[idx + 1].focus();
+          break;
+
         case 'ArrowDown':
           e.preventDefault();
-          if (currentIndex > 0) {
-            this.stars[currentIndex - 1].focus();
-          }
+          if (idx > 0) this.stars[idx - 1].focus();
           break;
 
         case 'Home':
@@ -146,7 +159,7 @@
 
         case 'End':
           e.preventDefault();
-          this.stars[this.stars.length - 1].focus();
+          this.stars[last].focus();
           break;
 
         case 'Escape':
@@ -156,79 +169,54 @@
       }
     }
 
-    // Public method to get current rating
     getRating() {
       return this.currentRating;
     }
 
-    // Public method to set rating programmatically
     setValue(value) {
       if (value >= 0 && value <= this.stars.length) {
         this.setRating(value);
       }
     }
 
-    // Public method to disable/enable the rating
     setDisabled(disabled) {
-      this.stars.forEach(star => {
-        star.disabled = disabled;
-        if (disabled) {
-          star.setAttribute('aria-disabled', 'true');
-        } else {
-          star.removeAttribute('aria-disabled');
-        }
-      });
+      for (let i = 0; i < this.stars.length; i++) {
+        this.stars[i].disabled = disabled;
+        if (disabled) this.stars[i].setAttribute('aria-disabled', 'true');
+        else this.stars[i].removeAttribute('aria-disabled');
+      }
 
-      // Update interactive state and classes
-      this.isInteractive = !disabled;
       if (disabled) {
-        this.rating.classList.add('nds-disabled');
-        this.rating.classList.remove('interactive');
-        // Clear any existing preview state when disabling
+        addState(this.rating, 'disabled');
         this.hidePreview();
       } else {
-        this.rating.classList.remove('nds-disabled');
-        this.rating.classList.add('interactive');
-        // Re-initialize event listeners if needed
-        if (!this.rating.dataset.initialized) {
-          this.init();
-          this.rating.dataset.initialized = 'true';
-        }
+        removeState(this.rating, 'disabled');
+        this.init();
       }
     }
 
-    // Public method to enable rating (convenience method)
     enable() {
       this.setDisabled(false);
     }
 
-    // Public method to check if rating is disabled
     isDisabled() {
-      return this.rating.classList.contains('nds-disabled') ||
+      return hasState(this.rating, 'disabled') ||
              (this.stars[0] && this.stars[0].disabled);
     }
   }
 
-  // Initialize all ratings (both display and interactive)
   function initializeRatings() {
     const ratings = document.querySelectorAll('.nds-rating');
-    ratings.forEach(rating => {
-      // Only initialize if not already initialized
-      if (!rating.ndsRating) {
-        rating.ndsRating = new NDSRating(rating);
-      }
-    });
+    for (let i = 0; i < ratings.length; i++) {
+      if (!ratings[i].ndsRating) ratings[i].ndsRating = new NDSRating(ratings[i]);
+    }
   }
 
-  // Static method to enable a disabled rating
   function enableRating(element) {
-    if (!element.ndsRating) {
-      element.ndsRating = new NDSRating(element);
-    }
+    if (!element.ndsRating) element.ndsRating = new NDSRating(element);
     element.ndsRating.enable();
   }
 
-  // Expose API
   NDS.Rating = {
     initializeRatings,
     init: initializeRatings,
@@ -236,10 +224,9 @@
     enableRating,
   };
 
-  // Watch for dynamically added ratings
   NDS.onDOMAdd('.nds-rating', (nodes) => {
-    nodes.forEach(node => {
-      if (!node.ndsRating) node.ndsRating = new NDSRating(node);
-    });
+    for (let i = 0; i < nodes.length; i++) {
+      if (!nodes[i].ndsRating) nodes[i].ndsRating = new NDSRating(nodes[i]);
+    }
   });
 })();

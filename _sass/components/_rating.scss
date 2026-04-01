@@ -44,24 +44,24 @@
   }
 
   // Selected state (filled)
-  &.selected {
+  &[data-state~="selected"] {
     color: var(--_star-selected);
   }
 
   // Pressed state
-  &.pressed {
+  &[data-state~="pressed"] {
     color: var(--_star-pressed);
   }
 
   // Half state
-  &.half {
+  &[data-state~="half"] {
     color: var(--_star-color);
 
     &::after {
       content: '';
       position: absolute;
       top: 0;
-      left: 0;
+      inset-inline-start: 0;
       width: 100%;
       height: 100%;
       background-color: var(--_star-selected);
@@ -77,10 +77,6 @@
       }
     }
   }
-}
-
-.nds-btn .nds-rating .nds-rating-star {
-  cursor: pointer;
 }
 
 .nds-rating-dropmenu {
@@ -122,7 +118,7 @@
 // INTERACTIVE STATES (for clickable ratings)
 // ==============================================
 
-.nds-rating.interactive {
+.nds-rating[data-state~="interactive"]:not([data-state~="disabled"]) {
 
   &:hover .nds-rating-star {
     color: var(--_star-color);
@@ -141,8 +137,9 @@
     border: none;
     background: none;
     padding: 0;
+    border-radius: var(--radius-sm);
 
-    &.preview {
+    &[data-state~="preview"] {
       color: var(--_star-selected);
     }
 
@@ -153,16 +150,10 @@
     &:active {
       color: var(--_star-pressed);
     }
-
-    &:focus-visible {
-      outline: 2px solid var(--border-primary);
-      outline-offset: 2px;
-      border-radius: 2px;
-    }
   }
 
-  // Container-level pressed for brand (preserved from original)
-  &.nds-brand.pressed {
+  // Container-level pressed for brand
+  &.nds-brand[data-state~="pressed"] {
     color: var(--_star-pressed);
   }
 }
@@ -174,10 +165,6 @@
 @include mobile {
   .nds-rating.nds-lg {
     --star-size: 40px;
-
-    .nds-rating-star {
-      font-size: 32px;
-    }
   }
 }
 
