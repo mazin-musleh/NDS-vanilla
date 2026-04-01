@@ -592,6 +592,7 @@
     var FormState = {
         updateDataState: function(container, stateName, add) {
             if (!container) return;
+            if (add === undefined) add = true;
 
             var currentState = container.getAttribute('data-state') || '';
             var states = currentState.split(' ').filter(function(s) { return s.length > 0; });
