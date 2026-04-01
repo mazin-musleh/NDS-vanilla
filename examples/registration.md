@@ -114,7 +114,7 @@ breadcrumb: ["Examples"]
               </label>
             </div>
             <div class="nds-form-control">
-              <div class="nds-form-action before">
+              <div class="nds-form-action">
                 <button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle" aria-label="Calendar Toggler">
                   <i class="hgi hgi-stroke hgi-calendar-03 icon"></i>
                 </button>
@@ -195,7 +195,7 @@ breadcrumb: ["Examples"]
               </label>
             </div>
             <div class="nds-form-control">
-              <div class="nds-form-action before">
+              <div class="nds-form-action">
                 <button type="button" class="nds-btn nds-subtle nds-md" aria-label="Email icon">
                   <i class="hgi hgi-stroke hgi-mail-01 icon"></i>
                 </button>

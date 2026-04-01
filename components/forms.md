@@ -788,7 +788,7 @@ direction: ltr
                   </label>
                 </div>
                 <div class="nds-form-control">
-                  <div class="nds-form-action before">
+                  <div class="nds-form-action">
                     <button class="nds-btn nds-subtle toggle-password" type="button" aria-label="Show password">
                       <i class="hgi hgi-stroke hgi-view-off icon"></i>
                     </button>
@@ -831,7 +831,7 @@ direction: ltr
     </label>
   </div>
   <div class="nds-form-control">
-    <div class="nds-form-action before">
+    <div class="nds-form-action">
       <button class="nds-btn nds-subtle toggle-password" type="button" aria-label="Show password">
         <i class="hgi hgi-stroke hgi-view-off icon"></i>
       </button>
