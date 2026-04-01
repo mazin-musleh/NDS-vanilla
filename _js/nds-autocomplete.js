@@ -483,14 +483,14 @@
             // Clear previous
             if (this.activeIndex >= 0 && items[this.activeIndex]) {
                 items[this.activeIndex].setAttribute('aria-selected', 'false');
-                items[this.activeIndex].classList.remove('active');
+                removeState(items[this.activeIndex], 'active');
             }
 
             this.activeIndex = index;
 
             if (index >= 0 && items[index]) {
                 items[index].setAttribute('aria-selected', 'true');
-                items[index].classList.add('active');
+                addState(items[index], 'active');
                 items[index].scrollIntoView({ block: 'nearest' });
                 this.input.setAttribute('aria-activedescendant', items[index].id);
             } else {
