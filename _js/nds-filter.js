@@ -647,9 +647,9 @@
             }
 
             if (count > 0) {
-                filterBtn.classList.add('has-filters');
+                filterBtn.setAttribute('data-state', 'has-filters');
             } else {
-                filterBtn.classList.remove('has-filters');
+                filterBtn.removeAttribute('data-state');
             }
         }
 
