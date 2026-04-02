@@ -257,10 +257,10 @@
             } else {
                 if (currentPageNum === minPage) {
                     prevBtn.setAttribute('aria-disabled', 'true');
-                    prevBtn.classList.add('disabled');
+                    NDS.State.add(prevBtn, 'disabled');
                 } else {
                     prevBtn.removeAttribute('aria-disabled');
-                    prevBtn.classList.remove('disabled');
+                    NDS.State.remove(prevBtn, 'disabled');
                 }
             }
         }
@@ -271,10 +271,10 @@
             } else {
                 if (currentPageNum === maxPage) {
                     nextBtn.setAttribute('aria-disabled', 'true');
-                    nextBtn.classList.add('disabled');
+                    NDS.State.add(nextBtn, 'disabled');
                 } else {
                     nextBtn.removeAttribute('aria-disabled');
-                    nextBtn.classList.remove('disabled');
+                    NDS.State.remove(nextBtn, 'disabled');
                 }
             }
         }

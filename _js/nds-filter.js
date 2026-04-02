@@ -1329,7 +1329,7 @@
                 // Remove any filter-related attributes/classes from all items
                 this.items.forEach(item => {
                     item.removeAttribute('data-filtered');
-                    item.classList.remove('nds-filtered-out');
+                    NDS.State.remove(item, 'filtered-out');
                     item.style.display = '';
                 });
 
@@ -1490,13 +1490,13 @@
         showItem(item) {
             item.style.display = '';
             item.removeAttribute('data-filtered');
-            item.classList.remove('nds-filtered-out');
+            NDS.State.remove(item, 'filtered-out');
         }
 
         hideItem(item) {
             item.style.display = 'none';
             item.setAttribute('data-filtered', 'true');
-            item.classList.add('nds-filtered-out');
+            NDS.State.add(item, 'filtered-out');
         }
 
         // ==============================================

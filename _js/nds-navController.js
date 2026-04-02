@@ -290,7 +290,8 @@
                 getMenu: () => DOM.dgaDigitalStamp,
                 onStart: () => {
                     DOM.dgaTab?.setAttribute('aria-expanded', String(!isOpen));
-                    DOM.dgaTab?.classList.toggle('expanded', !isOpen);
+                    if (!isOpen) NDS.State.add(DOM.dgaTab, 'expanded');
+                    else NDS.State.remove(DOM.dgaTab, 'expanded');
                 },
                 onComplete: () => { updatePositions(); overflow.schedule(); }
             });

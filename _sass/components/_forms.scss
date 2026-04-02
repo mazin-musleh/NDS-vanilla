@@ -483,7 +483,7 @@ fieldset {
 
 }
 
-.voiceInput.listening>i {
+.nds-form-container[data-state~="listening"] .voiceInput>i {
     animation: colorCycle 1s linear infinite alternate;
 }
 

@@ -1026,7 +1026,11 @@
 
             function updateSelectedOptions() {
                 options.forEach(function(option) {
-                    option.classList.toggle('selected', option.dataset.value === selectedValue);
+                    if (option.dataset.value === selectedValue) {
+                        NDS.State.add(option, 'selected');
+                    } else {
+                        NDS.State.remove(option, 'selected');
+                    }
                 });
             }
 
@@ -1172,6 +1176,7 @@
             var isListening = false;
             var recognition = null;
             var timeout = null;
+            var formContainer = formControl.closest('.nds-form-container') || formControl;
             var input = Utils.findPrimaryInput(formControl);
             var originalPlaceholder = input ? input.placeholder : '';
 
@@ -1208,10 +1213,9 @@
                     timeout = null;
                 }
 
-                voiceButton.classList.remove('listening');
+                NDS.State.remove(formContainer, 'listening');
                 voiceButton.setAttribute('aria-pressed', 'false');
                 voiceButton.setAttribute('aria-label', startLabel);
-                formControl.classList.remove('voice-active');
 
                 if (input) {
                     input.style.fontStyle = '';
@@ -1226,10 +1230,9 @@
                 if (!recognition) return;
 
                 isListening = true;
-                voiceButton.classList.add('listening');
+                NDS.State.add(formContainer, 'listening');
                 voiceButton.setAttribute('aria-pressed', 'true');
                 voiceButton.setAttribute('aria-label', stopLabel);
-                formControl.classList.add('voice-active');
                 input.focus();
 
                 timeout = setTimeout(function() {
