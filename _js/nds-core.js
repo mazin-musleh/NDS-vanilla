@@ -158,22 +158,46 @@
     //        NDS.State.set(el, 'open')     → replaces all tokens
     //        NDS.State.get(el)            → 'open active' (raw string)
     //        NDS.State.clear(el)           → removes data-state entirely
+    //        NDS.State.apply(el, ...states) → fire onAdd hooks for existing states (init-time)
+    //        NDS.State.onAdd(state, scope, fn)    → register hook: fn(el) fires when state added on el matching scope
+    //        NDS.State.onRemove(state, scope, fn) → register hook: fn(el) fires when state removed
     NDS.State = (() => {
+        const _onAdd = {};    // { 'disabled': [{ scope, fn }, ...] }
+        const _onRemove = {};
+
+        function _fire(hooks, token, el) {
+            const fns = hooks[token];
+            if (!fns) return;
+            for (let i = 0; i < fns.length; i++) {
+                if (el.matches(fns[i].scope)) fns[i].fn(el, token);
+            }
+        }
+
         const parse = el => new Set((el.getAttribute('data-state') || '').split(/\s+/).filter(Boolean));
 
         const add = (el, ...states) => {
             if (!el) return;
             const cur = parse(el);
-            for (let i = 0; i < states.length; i++) cur.add(states[i]);
+            const added = [];
+            for (let i = 0; i < states.length; i++) {
+                if (!cur.has(states[i])) { cur.add(states[i]); added.push(states[i]); }
+            }
+            if (!added.length) return;
             el.setAttribute('data-state', [...cur].join(' '));
+            for (let i = 0; i < added.length; i++) _fire(_onAdd, added[i], el);
         };
 
         const remove = (el, ...states) => {
             if (!el) return;
             const cur = parse(el);
-            for (let i = 0; i < states.length; i++) cur.delete(states[i]);
+            const removed = [];
+            for (let i = 0; i < states.length; i++) {
+                if (cur.has(states[i])) { cur.delete(states[i]); removed.push(states[i]); }
+            }
+            if (!removed.length) return;
             cur.size ? el.setAttribute('data-state', [...cur].join(' '))
                      : el.removeAttribute('data-state');
+            for (let i = 0; i < removed.length; i++) _fire(_onRemove, removed[i], el);
         };
 
         const has = (el, state) => el ? parse(el).has(state) : false;
@@ -188,7 +212,23 @@
 
         const clear = el => { if (el) el.removeAttribute('data-state'); };
 
-        return { parse, add, remove, has, get, set, clear };
+        const apply = (el, ...states) => {
+            if (!el) return;
+            const cur = parse(el);
+            for (let i = 0; i < states.length; i++) {
+                if (cur.has(states[i])) _fire(_onAdd, states[i], el);
+            }
+        };
+
+        const onAdd = (state, scope, fn) => {
+            (_onAdd[state] || (_onAdd[state] = [])).push({ scope, fn });
+        };
+
+        const onRemove = (state, scope, fn) => {
+            (_onRemove[state] || (_onRemove[state] = [])).push({ scope, fn });
+        };
+
+        return { parse, add, remove, has, get, set, clear, apply, onAdd, onRemove };
     })();
 
     // ── Status Management (data-status) ─────────────────────────────

@@ -6,6 +6,53 @@
     'use strict';
 
     // ==============================================
+    // STATE PROPAGATION HOOKS
+    // ==============================================
+
+    var FORM_SCOPE = '.nds-form-container, .nds-form-group';
+
+    NDS.State.onAdd('disabled', FORM_SCOPE, function(el) {
+        el.querySelectorAll('input, textarea, select').forEach(function(inp) { inp.disabled = true; });
+        el.querySelectorAll('.nds-form-action .nds-btn').forEach(function(btn) {
+            btn.setAttribute('aria-disabled', 'true');
+            if (btn.tagName === 'BUTTON') btn.disabled = true;
+        });
+    });
+
+    NDS.State.onRemove('disabled', FORM_SCOPE, function(el) {
+        el.querySelectorAll('input, textarea, select').forEach(function(inp) { inp.disabled = false; });
+        el.querySelectorAll('.nds-form-action .nds-btn').forEach(function(btn) {
+            btn.setAttribute('aria-disabled', 'false');
+            if (btn.tagName === 'BUTTON') btn.disabled = false;
+        });
+    });
+
+    NDS.State.onAdd('readonly', FORM_SCOPE, function(el) {
+        el.querySelectorAll('input, textarea, select').forEach(function(inp) { inp.readOnly = true; });
+    });
+
+    NDS.State.onRemove('readonly', FORM_SCOPE, function(el) {
+        el.querySelectorAll('input, textarea, select').forEach(function(inp) { inp.readOnly = false; });
+    });
+
+    NDS.State.onAdd('loading', FORM_SCOPE, function(el) {
+        var fc = el.classList.contains('nds-form-control') ? el : el.querySelector('.nds-form-control');
+        if (!fc) return;
+        var clearBtn = fc.querySelector('.nds-form-action .clear');
+        if (clearBtn) {
+            clearBtn.removeAttribute('hidden');
+            NDS.State.add(clearBtn, 'loading');
+        }
+    });
+
+    NDS.State.onRemove('loading', FORM_SCOPE, function(el) {
+        var fc = el.classList.contains('nds-form-control') ? el : el.querySelector('.nds-form-control');
+        if (!fc) return;
+        var clearBtn = fc.querySelector('.nds-form-action .clear');
+        if (clearBtn) NDS.State.remove(clearBtn, 'loading');
+    });
+
+    // ==============================================
     // CONSTANTS
     // ==============================================
     var StatusTypes = {
@@ -591,53 +638,6 @@
     // FORM STATE MANAGEMENT
     // ==============================================
     var FormState = {
-        updateDataState: function(container, stateName, add) {
-            if (!container) return;
-            if (add === undefined) add = true;
-
-            // Skip if no change needed
-            var hasIt = NDS.State.has(container, stateName);
-            if ((add && hasIt) || (!add && !hasIt)) return;
-
-            if (add) NDS.State.add(container, stateName);
-            else NDS.State.remove(container, stateName);
-
-            // Propagate state to inputs (only within form containers)
-            var isFormScoped = container.classList.contains('nds-form-container') || container.classList.contains('nds-form-group');
-            if (isFormScoped && stateName === 'disabled') {
-                var inputs = container.querySelectorAll('input, textarea, select');
-                inputs.forEach(function(input) { input.disabled = add; });
-                var actionBtns = container.querySelectorAll('.nds-form-action .nds-btn');
-                actionBtns.forEach(function(btn) {
-                    btn.setAttribute('aria-disabled', add ? 'true' : 'false');
-                    if (btn.tagName === 'BUTTON') btn.disabled = add;
-                });
-            }
-
-            if (isFormScoped && stateName === 'readonly') {
-                var inputs = container.querySelectorAll('input, textarea, select');
-                inputs.forEach(function(input) { input.readOnly = add; });
-            }
-
-            // Propagate loading state to clear button
-            if (isFormScoped && stateName === 'loading') {
-                var formControl = container.classList.contains('nds-form-control')
-                    ? container
-                    : container.querySelector('.nds-form-control');
-                if (formControl) {
-                    var clearBtn = formControl.querySelector('.nds-form-action .clear');
-                    if (clearBtn) {
-                        if (add) {
-                            clearBtn.removeAttribute('hidden');
-                            FormState.updateDataState(clearBtn, 'loading', true);
-                        } else {
-                            FormState.updateDataState(clearBtn, 'loading', false);
-                        }
-                    }
-                }
-            }
-        },
-
         update: function(input, formControl, skipValidation) {
             var hasValue = (input.type === 'checkbox' || input.type === 'radio')
                 ? input.checked
@@ -647,9 +647,9 @@
 
             // Update data-state on container
             if (formContainer) {
-                FormState.updateDataState(formContainer, 'filled', hasValue);
-                FormState.updateDataState(formContainer, 'disabled', input.disabled);
-                FormState.updateDataState(formContainer, 'readonly', input.readOnly);
+                hasValue ? NDS.State.add(formContainer, 'filled') : NDS.State.remove(formContainer, 'filled');
+                input.disabled ? NDS.State.add(formContainer, 'disabled') : NDS.State.remove(formContainer, 'disabled');
+                input.readOnly ? NDS.State.add(formContainer, 'readonly') : NDS.State.remove(formContainer, 'readonly');
                 formContainer.toggleAttribute('data-required', input.required);
             }
 
@@ -692,7 +692,7 @@
 
             var formContainer = checkbox.closest('.nds-form-container');
             if (formContainer) {
-                FormState.updateDataState(formContainer, 'indeterminate', !!value);
+                value ? NDS.State.add(formContainer, 'indeterminate') : NDS.State.remove(formContainer, 'indeterminate');
             }
 
             checkbox.dispatchEvent(new CustomEvent('nds:indeterminateChange', {
@@ -740,14 +740,14 @@
             // Mouse interaction - use data-state on container
             input.addEventListener('mousedown', function() {
                 if (formContainer && !input.readOnly) {
-                    FormState.updateDataState(formContainer, 'active', true);
+                    NDS.State.add(formContainer, 'active');
                 }
             });
 
             ['mouseup', 'mouseleave'].forEach(function(event) {
                 input.addEventListener(event, function() {
                     if (formContainer && !input.readOnly) {
-                        FormState.updateDataState(formContainer, 'active', false);
+                        NDS.State.remove(formContainer, 'active');
                     }
                 });
             });
@@ -755,14 +755,14 @@
             // Focus states - use data-state on container
             input.addEventListener('focus', function() {
                 if (formContainer && !input.readOnly) {
-                    FormState.updateDataState(formContainer, 'focus', true);
+                    NDS.State.add(formContainer, 'focus');
                 }
             });
 
             input.addEventListener('blur', function() {
                 if (formContainer && !input.readOnly) {
-                    FormState.updateDataState(formContainer, 'focus', false);
-                    FormState.updateDataState(formContainer, 'typing', false);
+                    NDS.State.remove(formContainer, 'focus');
+                    NDS.State.remove(formContainer, 'typing');
                 }
 
                 // Clamp number input value to min/max on blur
@@ -786,13 +786,13 @@
             // Typing state - indicates real user input
             input.addEventListener('keydown', function() {
                 if (formContainer && !input.readOnly) {
-                    FormState.updateDataState(formContainer, 'typing', true);
+                    NDS.State.add(formContainer, 'typing');
                 }
             });
 
             input.addEventListener('paste', function() {
                 if (formContainer) {
-                    FormState.updateDataState(formContainer, 'typing', true);
+                    NDS.State.add(formContainer, 'typing');
                 }
             });
 
@@ -849,17 +849,10 @@
             });
 
             // Initialize state - two-way sync
-            // Container → input: propagate data-required and data-state="disabled"
+            // Container → input: propagate data-required and pre-existing data-state
             if (formContainer) {
                 if (formContainer.hasAttribute('data-required')) input.required = true;
-                if (NDS.State.has(formContainer, 'disabled')) {
-                    input.disabled = true;
-                    formContainer.querySelectorAll('.nds-form-action .nds-btn').forEach(function(btn) {
-                        btn.setAttribute('aria-disabled', 'true');
-                        if (btn.tagName === 'BUTTON') btn.disabled = true;
-                    });
-                }
-                if (NDS.State.has(formContainer, 'readonly')) input.readOnly = true;
+                NDS.State.apply(formContainer, 'disabled', 'readonly');
             }
             // Input → container: sync current input state to data-state
             FormState.update(input, formControl, true);
@@ -957,7 +950,7 @@
             var formContainer = formControl.closest('.nds-form-container') || formControl;
 
             function updateOpenState() {
-                FormState.updateDataState(formContainer, 'open', isOpen);
+                isOpen ? NDS.State.add(formContainer, 'open') : NDS.State.remove(formContainer, 'open');
             }
 
             selectElement.addEventListener('mousedown', function() {
@@ -998,7 +991,7 @@
             var formContainer = formControl.closest('.nds-form-container') || formControl;
 
             function updateOpenState() {
-                FormState.updateDataState(formContainer, 'open', isOpen);
+                isOpen ? NDS.State.add(formContainer, 'open') : NDS.State.remove(formContainer, 'open');
 
                 if (isOpen) {
                     updateSelectedOptions();
@@ -1329,7 +1322,7 @@
                 switchTrack.addEventListener('mousedown', function() {
                     if (!switchInput.disabled && !switchElement.classList.contains('disabled')) {
                         if (formContainer) {
-                            FormState.updateDataState(formContainer, 'active', true);
+                            NDS.State.add(formContainer, 'active');
                         }
                     }
                 });
@@ -1337,7 +1330,7 @@
                 ['mouseup', 'mouseleave'].forEach(function(event) {
                     switchTrack.addEventListener(event, function() {
                         if (formContainer) {
-                            FormState.updateDataState(formContainer, 'active', false);
+                            NDS.State.remove(formContainer, 'active');
                         }
                     });
                 });
@@ -1550,21 +1543,8 @@
             // This applies to all group types: radio-group, check-group, switch-group
         }
 
-        // Propagate initial data-state to inputs
-        if (NDS.State.has(group, 'disabled')) {
-            group.querySelectorAll('input, textarea, select').forEach(function(input) {
-                input.disabled = true;
-            });
-            group.querySelectorAll('.nds-form-action .nds-btn').forEach(function(btn) {
-                btn.setAttribute('aria-disabled', 'true');
-                if (btn.tagName === 'BUTTON') btn.disabled = true;
-            });
-        }
-        if (NDS.State.has(group, 'readonly')) {
-            group.querySelectorAll('input, textarea, select').forEach(function(input) {
-                input.readOnly = true;
-            });
-        }
+        // Propagate initial data-state to inputs via hooks
+        NDS.State.apply(group, 'disabled', 'readonly');
     }
 
     // ==============================================
@@ -1771,7 +1751,7 @@
         if (autofocusEl) {
             autofocusEl.focus();
             var fc = autofocusEl.closest('.nds-form-container');
-            if (fc) FormState.updateDataState(fc, 'focus', true);
+            if (fc) NDS.State.add(fc, 'focus');
         }
     }
 
@@ -1819,12 +1799,14 @@
                     input.required = add;
                 });
             } else {
-                FormState.updateDataState(container, stateName, add);
+                add ? NDS.State.add(container, stateName) : NDS.State.remove(container, stateName);
             }
         },
 
         // Low-level data-state toggle (works on any element)
-        updateDataState: FormState.updateDataState,
+        updateDataState: function(el, state, add) {
+            (add !== false) ? NDS.State.add(el, state) : NDS.State.remove(el, state);
+        },
 
         // Checkbox Indeterminate State
         setIndeterminate: FormState.setIndeterminate.bind(FormState),

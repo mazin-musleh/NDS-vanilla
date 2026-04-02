@@ -961,6 +961,7 @@
         });
 
         if (state === 'disabled') updateCodeInputAttribute(demoCard, 'disabled', isAdding);
+        if (state === 'readonly') updateCodeInputAttribute(demoCard, 'readonly', isAdding);
     }
 
     function updateCodeInputAttribute(demoCard, attrName, add) {

@@ -2,7 +2,7 @@
     'use strict';
 
     function setState(el, token, add) {
-        NDS.Forms.updateDataState(el, token, add);
+        add ? NDS.State.add(el, token) : NDS.State.remove(el, token);
     }
 
     /**
@@ -917,13 +917,13 @@
 
             if (isNowOpen) {
                 setState(this.elements.dropdown, 'hidden', false);
-                NDS.Forms.updateDataState(this.elements.container, 'open', true);
+                NDS.State.add(this.elements.container, 'open');
 
                 this.initializeCalendar();
                 this.adjustDropdownPosition();
             } else {
                 setState(this.elements.dropdown, 'hidden', true);
-                NDS.Forms.updateDataState(this.elements.container, 'open', false);
+                NDS.State.remove(this.elements.container, 'open');
                 this.cleanup();
             }
         },
@@ -1604,7 +1604,7 @@
                     if (self.elements.dropdown) {
                         setState(self.elements.dropdown, 'hidden', true);
                     }
-                    NDS.Forms.updateDataState(self.elements.container, 'open', false);
+                    NDS.State.remove(self.elements.container, 'open');
                     self.cleanup();
                 }
             }, 0);
