@@ -61,6 +61,7 @@
 
     .nds-stepper-content {
         text-align: start;
+        justify-content: center;
         padding: 0;
 
     }
@@ -77,27 +78,23 @@
     position: relative;
     counter-increment: step-counter;
 
-    // Default horizontal connecting line
-    &.has-line {
-        .nds-stepper-base {
-            &::after {
-                content: '';
-                position: absolute;
-                top: calc(var(--stepper-size) /2); // Half of circle height (32px)
-                inset-inline-start: var(--stepper-size);
-                inset-inline-end: calc(var(--stepper-gap) * -1);
-                height: 2px;
-                background-color: var(--stepper-line-current);
-            }
-        }
+    // Horizontal connecting line (default on all steps except last)
+    .nds-stepper-base::after {
+        content: '';
+        position: absolute;
+        top: calc(var(--stepper-size) /2);
+        inset-inline-start: var(--stepper-size);
+        inset-inline-end: calc(var(--stepper-gap) * -1);
+        height: 2px;
+        background-color: var(--stepper-line-current);
+    }
 
-        &[data-state~="completed"] .nds-stepper-base::after {
-            background-color: var(--stepper-line-completed);
-        }
+    &[data-state~="completed"] .nds-stepper-base::after {
+        background-color: var(--stepper-line-completed);
+    }
 
-        &[data-state~="upcoming"] .nds-stepper-base::after {
-            background-color: var(--stepper-line-upcomming);
-        }
+    &[data-state~="upcoming"] .nds-stepper-base::after {
+        background-color: var(--stepper-line-upcomming);
     }
 
 
@@ -386,21 +383,15 @@
         position: relative;
         flex-direction: row;
 
-        // Remove default horizontal line and add vertical line
-        &.has-line {
-            .nds-stepper-base {
-                &::after {
-                    content: '';
-                    position: absolute;
-                    top: var(--stepper-size); // Below the circle
-                    inset-inline-start: calc((var(--stepper-size) / 2) - 1px);
-                    bottom: calc(var(--stepper-gap) * -1); // Connect to next step
-                    width: 2px;
-                    height: unset;
-                    z-index: 0;
-                }
-            }
-
+        // Override horizontal line to vertical
+        .nds-stepper-base::after {
+            top: var(--stepper-size);
+            inset-inline-start: calc((var(--stepper-size) / 2) - 1px);
+            inset-inline-end: unset;
+            bottom: calc(var(--stepper-gap) * -1);
+            width: 2px;
+            height: unset;
+            z-index: 0;
         }
 
         &:last-child {
@@ -419,7 +410,6 @@
 
         .nds-stepper-content {
             flex: 1;
-            padding: var(--spacing-xs) 0 0 0;
         }
     }
 }
@@ -430,10 +420,10 @@
 // ==============================================
 
 .nds-stepper.nds-radial {
-    --progress-size: 64px;
+    --stepper-size: 64px;
+    --progress-size: var(--stepper-size);
     --stepper-gap: calc(var(--progress-size)/8);
 
-    /* calc(var(--progress-size)/16); */
     align-items: center;
 
     .nds-stepper-step {
@@ -452,15 +442,15 @@
     }
 
     &.nds-sm {
-        --progress-size: 48px;
+        --stepper-size: 48px;
     }
 
     &.nds-lg {
-        --progress-size: 96px;
+        --stepper-size: 96px;
     }
 
     &.nds-xl {
-        --progress-size: 120px;
+        --stepper-size: 120px;
     }
 
     .nds-stepper-content {
@@ -485,6 +475,7 @@
     }
 
     .nds-progress-circle {
+        --progress-size: var(--stepper-size);
         --progress-track-color: var(--colors-neutral-100);
         --progress-color: var(--background-primary);
         align-self: flex-start;
@@ -502,11 +493,8 @@
             transition: stroke-dashoffset 0.3s ease !important;
         }
 
-        .nds-progress-percentage {
-            display: none !important;
-        }
 
-        .nds-progress-text {
+        .nds-progress-steps {
             display: flex !important;
             align-items: center;
             flex-wrap: nowrap;
@@ -542,7 +530,7 @@
 
     .nds-stepper-step {
 
-        &.has-line .nds-stepper-base:after {
+        .nds-stepper-base:after {
             background-color: var(--alpha-white-30);
         }
 

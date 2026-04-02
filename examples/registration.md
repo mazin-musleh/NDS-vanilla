@@ -23,12 +23,12 @@ breadcrumb: ["Examples"]
     <img class="nds-brand-logo nds-center" src="{{ brand_logo | relative_url }}" width="{{ brand_width }}"
       height="{{ brand_height }}" alt="{{ site_title }} Logo">
     <div class="nds-stepper nds-center nds-lg" id="registration-stepper" data-current="1" data-total="3">
-      <div class="nds-stepper-step has-line" data-state="completed">
+      <div class="nds-stepper-step" data-state="completed">
         <div class="nds-stepper-base">
           <div class="nds-stepper-circle" data-step-text="1"></div>
         </div>
       </div>
-      <div class="nds-stepper-step has-line" data-state="current">
+      <div class="nds-stepper-step" data-state="current">
         <div class="nds-stepper-base">
           <div class="nds-stepper-circle" data-step-text="2"></div>
         </div>

@@ -11,7 +11,7 @@
             this.element = element;
             this.steps = element.querySelectorAll('.nds-stepper-step');
             this.progressNumber = element.querySelector('.nds-progress-number');
-            this.progressText = element.querySelector('.nds-progress-text');
+            this.progressText = element.querySelector('.nds-progress-steps');
 
             // Cache radial check
             this.isRadial = element.classList.contains('nds-radial');
@@ -322,7 +322,7 @@
  *       <span class="nds-progress-percentage">
  *         <span class="nds-progress-number">0</span>
  *       </span>
- *       <span class="nds-progress-text"></span>
+ *       <span class="nds-progress-steps"></span>
  *     </div>
  *   </div>
  *   <!-- Steps here -->

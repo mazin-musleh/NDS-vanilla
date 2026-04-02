@@ -39,13 +39,13 @@ direction: ltr
                                             data-toggler='["nds-xl", ".nds-stepper:not(.nds-vertical):not(.nds-radial)", "stepperHSize"]'>
                                             <span class="label">XL</span>
                                         </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["nds-dot", ".nds-stepper:not(.nds-vertical):not(.nds-radial)", "stepperHSize"]'>
+                                            <span class="label">Dot</span>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-dot", ".nds-stepper:not(.nds-vertical):not(.nds-radial)", "stepperHDot"]'>
-                                <span class="label">Dot</span>
-                            </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-center", ".nds-stepper:not(.nds-vertical):not(.nds-radial)", "stepperCenter"]'>
                                 <span class="label">Center</span>
@@ -75,7 +75,7 @@ direction: ltr
                     <div class="demo-container">
                         <div class="state-demo">
                             <div class="nds-stepper" id="demo-stepper-horizontal" data-current="2" data-total="3">
-                                <div class="nds-stepper-step has-line" data-state="completed">
+                                <div class="nds-stepper-step" data-state="completed">
                                     <div class="nds-stepper-base">
                                         <div class="nds-stepper-circle" data-step-text="1"></div>
                                     </div>
@@ -86,7 +86,7 @@ direction: ltr
                                         </div>
                                     </div>
                                 </div>
-                                <div class="nds-stepper-step has-line" data-state="current">
+                                <div class="nds-stepper-step" data-state="current">
                                     <div class="nds-stepper-base">
                                         <div class="nds-stepper-circle" data-step-text="2"></div>
                                     </div>
@@ -132,7 +132,7 @@ direction: ltr
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
 <div class="nds-stepper" id="demo-stepper-horizontal" data-current="2" data-total="3">
-  <div class="nds-stepper-step has-line" data-state="completed">
+  <div class="nds-stepper-step" data-state="completed">
     <div class="nds-stepper-base">
       <div class="nds-stepper-circle" data-step-text="1"></div>
     </div>
@@ -143,7 +143,7 @@ direction: ltr
       </div>
     </div>
   </div>
-  <div class="nds-stepper-step has-line" data-state="current">
+  <div class="nds-stepper-step" data-state="current">
     <div class="nds-stepper-base">
       <div class="nds-stepper-circle" data-step-text="2"></div>
     </div>
@@ -210,13 +210,13 @@ direction: ltr
                                             data-toggler='["nds-xl", ".nds-stepper.nds-vertical", "stepperVSize"]'>
                                             <span class="label">XL</span>
                                         </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["nds-dot", ".nds-stepper.nds-vertical", "stepperVSize"]'>
+                                            <span class="label">Dot</span>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-dot", ".nds-stepper.nds-vertical", "stepperVDot"]'>
-                                <span class="label">Dot</span>
-                            </button>
                             <button class="nds-btn nds-subtle" data-stepper-control="previous"
                                 data-stepper-target="demo-stepper-vertical">
                                 <span class="label">← Previous</span>
@@ -242,7 +242,7 @@ direction: ltr
                     <div class="demo-container">
                         <div class="state-demo">
                             <div class="nds-stepper nds-vertical" id="demo-stepper-vertical" data-current="2" data-total="3">
-                                <div class="nds-stepper-step has-line" data-state="completed">
+                                <div class="nds-stepper-step" data-state="completed">
                                     <div class="nds-stepper-base">
                                         <div class="nds-stepper-circle" data-step-text="1"></div>
                                     </div>
@@ -253,7 +253,7 @@ direction: ltr
                                         </div>
                                     </div>
                                 </div>
-                                <div class="nds-stepper-step has-line" data-state="current">
+                                <div class="nds-stepper-step" data-state="current">
                                     <div class="nds-stepper-base">
                                         <div class="nds-stepper-circle" data-step-text="2"></div>
                                     </div>
@@ -299,7 +299,7 @@ direction: ltr
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
 <div class="nds-stepper nds-vertical" id="demo-stepper-vertical" data-current="2" data-total="3">
-  <div class="nds-stepper-step has-line" data-state="completed">
+  <div class="nds-stepper-step" data-state="completed">
     <div class="nds-stepper-base">
       <div class="nds-stepper-circle" data-step-text="1"></div>
     </div>
@@ -310,7 +310,7 @@ direction: ltr
       </div>
     </div>
   </div>
-  <div class="nds-stepper-step has-line" data-state="current">
+  <div class="nds-stepper-step" data-state="current">
     <div class="nds-stepper-base">
       <div class="nds-stepper-circle" data-step-text="2"></div>
     </div>
@@ -420,13 +420,10 @@ direction: ltr
                                             stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" />
                                     </svg>
                                     <div class="nds-progress-info">
-                                        <span class="nds-progress-percentage">
-                                            <span class="nds-progress-number">0</span>
-                                        </span>
-                                        <span class="nds-progress-text"></span>
+                                        <span class="nds-progress-steps"></span>
                                     </div>
                                 </div>
-                                <div class="nds-stepper-step has-line" data-state="completed">
+                                <div class="nds-stepper-step" data-state="completed">
                                     <div class="nds-stepper-base">
                                         <div class="nds-stepper-circle" data-step-text="1"></div>
                                     </div>
@@ -437,7 +434,7 @@ direction: ltr
                                         </div>
                                     </div>
                                 </div>
-                                <div class="nds-stepper-step has-line" data-state="current">
+                                <div class="nds-stepper-step" data-state="current">
                                     <div class="nds-stepper-base">
                                         <div class="nds-stepper-circle" data-step-text="2"></div>
                                     </div>
@@ -448,7 +445,7 @@ direction: ltr
                                         </div>
                                     </div>
                                 </div>
-                                <div class="nds-stepper-step has-line" data-state="upcoming">
+                                <div class="nds-stepper-step" data-state="upcoming">
                                     <div class="nds-stepper-base">
                                         <div class="nds-stepper-circle" data-step-text="3"></div>
                                     </div>
@@ -501,13 +498,10 @@ direction: ltr
         stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" />
     </svg>
     <div class="nds-progress-info">
-      <span class="nds-progress-percentage">
-        <span class="nds-progress-number">0</span>
-      </span>
-      <span class="nds-progress-text"></span>
+      <span class="nds-progress-steps"></span>
     </div>
   </div>
-  <div class="nds-stepper-step has-line" data-state="completed">
+  <div class="nds-stepper-step" data-state="completed">
     <div class="nds-stepper-base">
       <div class="nds-stepper-circle" data-step-text="1"></div>
     </div>
@@ -518,7 +512,7 @@ direction: ltr
       </div>
     </div>
   </div>
-  <div class="nds-stepper-step has-line" data-state="current">
+  <div class="nds-stepper-step" data-state="current">
     <div class="nds-stepper-base">
       <div class="nds-stepper-circle" data-step-text="2"></div>
     </div>
@@ -529,7 +523,7 @@ direction: ltr
       </div>
     </div>
   </div>
-  <div class="nds-stepper-step has-line" data-state="upcoming">
+  <div class="nds-stepper-step" data-state="upcoming">
     <div class="nds-stepper-base">
       <div class="nds-stepper-circle" data-step-text="3"></div>
     </div>
@@ -637,7 +631,7 @@ direction: ltr
                     <li>Use the <strong>radial layout</strong> for compact spaces like dashboard cards or mobile headers where only the current step needs to be visible</li>
                     <li>Do not use a stepper for indeterminate or percentage-based progress. Use the <a class="nds-color" href="{{ 'components/progress' | relative_url }}">Progress</a> component instead</li>
                     <li>Do not use a stepper for navigation menus or tab-like interfaces. Use <a class="nds-color" href="{{ 'components/tabs' | relative_url }}">Tabs</a> for switching between independent content panels</li>
-                    <li>Add <code class="nds-inline-code lang-html">has-line</code> to all steps except the last one to show connecting lines between them</li>
+                    <li>Connecting lines between steps are shown by default on all steps except the last</li>
                     <li>Keep step titles short (2 to 4 words). Use the description for additional context</li>
                     <li>Always provide a unique <code class="nds-inline-code lang-html">id</code> on the stepper container so control buttons and the JS API can target it</li>
                 </ul>
@@ -659,10 +653,9 @@ direction: ltr
                         <tr><td><code class="nds-inline-code lang-html">nds-xl</code></td><td>Container</td><td>Extra-large circle size (48px linear, 120px radial)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-neutral</code></td><td>Container</td><td>Neutral gray progress circle color (radial only)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-sm</code></td><td>Container</td><td>Smaller radial circle (48px, radial only)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">has-line</code></td><td>Step</td><td>Adds a connecting line from this step to the next</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">completed</code></td><td>Step</td><td>Marks the step as completed with a checkmark icon</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">current</code></td><td>Step</td><td>Marks the step as the active step</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">upcoming</code></td><td>Step</td><td>Marks the step as a future step with muted styling</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-state="completed"</code></td><td>Step</td><td>Marks the step as completed with a checkmark icon</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-state="current"</code></td><td>Step</td><td>Marks the step as the active step</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-state="upcoming"</code></td><td>Step</td><td>Marks the step as a future step with muted styling</td></tr>
                     </tbody>
                 </table>
             </div>
