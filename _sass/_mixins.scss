@@ -326,14 +326,13 @@ textarea {
     background-color: $hover-color;
   }
 
-  &:is(.selected,
-    :focus-visible,
+  &:is(:focus-visible,
     [aria-selected="true"],
     [data-state~="open"],
     [data-state~="selected"],
     [data-state~="active"],
     [data-state~="focused"])::before,
-  :is(.show, .open, .active, [data-state~="open"])>&::before {
+  [data-state~="open"]>&::before {
     background-color: $selected-color;
   }
 

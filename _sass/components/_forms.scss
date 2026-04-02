@@ -266,33 +266,6 @@ fieldset {
         }
     }
 
-    &:is(.nds-active, .active) {
-        &::before {
-            width: 50%;
-        }
-
-        background-color: var(--form-field-background-darker);
-        box-shadow: var(--shadow-md);
-
-        &,
-        ::-webkit-input-placeholder {
-            color: var(--form-field-text-pressed);
-        }
-    }
-
-    &:is(.nds-disabled, .disabled) {
-        background-color: var(--background-disabled) !important;
-        color: var(--text-default-disabled) !important;
-        border-color: var(--border-disabled) !important;
-        pointer-events: none;
-        user-select: none;
-
-        ::-webkit-input-placeholder {
-            color: var(--text-default-disabled) !important;
-        }
-
-    }
-
     >i {
         align-self: center;
     }

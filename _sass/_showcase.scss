@@ -63,7 +63,7 @@
       --dropmenu-min-width: 120px;
     }
 
-    .nds-dropmenu-item.selected {
+    .nds-dropmenu-item[data-state~="selected"] {
       background-color: var(--background-neutral-light);
       font-weight: 600;
     }

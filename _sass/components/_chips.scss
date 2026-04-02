@@ -106,7 +106,7 @@
       --chip-text: var(--chip-text-primary-selected);
     }
 
-    &:is(.selected, [data-state~="selected"]) {
+    &[data-state~="selected"] {
       --chip-bg: var(--chip-background-primary-selected);
       --chip-text: var(--chip-text-oncolor-primary);
     }
@@ -128,7 +128,7 @@
         --chip-bg: var(--chip-background-on-color-pressed);
       }
 
-      &:is(.selected, [data-state~="selected"]) {
+      &[data-state~="selected"] {
         --chip-bg: var(--chip-background-on-color-selected);
       }
 
@@ -155,7 +155,7 @@
       --chip-bg: var(--chip-background-neutral-pressed);
     }
 
-    &:is(.selected, [data-state~="selected"]) {
+    &[data-state~="selected"] {
       --chip-bg: var(--chip-background-neutral-selected);
       --chip-text: var(--chip-text-neutral-selected);
     }
@@ -177,7 +177,7 @@
         --chip-bg: var(--chip-background-on-color-pressed);
       }
 
-      &:is(.selected, [data-state~="selected"]) {
+      &[data-state~="selected"] {
         --chip-bg: var(--chip-background-on-color-selected);
       }
 

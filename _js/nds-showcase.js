@@ -171,8 +171,8 @@
     function selectDropmenuItem(button, siblingSelector) {
         var dropmenu = button.closest('.nds-dropmenu');
         if (!dropmenu) return;
-        dropmenu.querySelectorAll(siblingSelector).forEach(function(b) { b.classList.remove('selected'); });
-        button.classList.add('selected');
+        dropmenu.querySelectorAll(siblingSelector).forEach(function(b) { NDS.State.remove(b, 'selected'); });
+        NDS.State.add(button, 'selected');
         var triggerEl = dropmenu.querySelector('.nds-dropmenu-trigger');
         var triggerLabel = triggerEl?.querySelector('.label');
         if (triggerLabel) {
@@ -276,7 +276,7 @@
         // Collect types that have an active (selected) button
         var activeTypes = {};
         allTogglerBtns.forEach(function(btn) {
-            if (!btn.classList.contains('selected')) return;
+            if (!NDS.State.has(btn, 'selected')) return;
             var pairs = parseTogglerData(btn);
             if (!pairs) return;
             pairs.forEach(function(pair) {
@@ -287,7 +287,7 @@
 
         // Pass 1: reverse deselected buttons whose type has an active selection
         allTogglerBtns.forEach(function(btn) {
-            if (btn.classList.contains('selected')) return;
+            if (NDS.State.has(btn, 'selected')) return;
             var pairs = parseTogglerData(btn);
             if (!pairs) return;
 
@@ -337,7 +337,7 @@
 
         // Pass 2: apply selected buttons
         allTogglerBtns.forEach(function(btn) {
-            if (!btn.classList.contains('selected')) return;
+            if (!NDS.State.has(btn, 'selected')) return;
             var pairs = parseTogglerData(btn);
             if (!pairs) return;
 
@@ -434,8 +434,8 @@
                 const otherTypes = [...new Set(otherOps.map(([,, type]) => type || 'default'))];
 
                 // Deselect if other button is single-type, same type, and currently selected
-                if (otherTypes.length === 1 && otherTypes[0] === buttonType && otherButton.classList.contains('selected')) {
-                    otherButton.classList.remove('selected');
+                if (otherTypes.length === 1 && otherTypes[0] === buttonType && NDS.State.has(otherButton, 'selected')) {
+                    NDS.State.remove(otherButton, 'selected');
 
                     // Reverse inline styles from data-toggle-style on the deselected button
                     applyToggleStyles(otherButton, demoCard);
@@ -496,7 +496,7 @@
 
         // --- Process each toggle operation ---
         // If button is already selected, we're deselecting → reverse explicit actions
-        const isDeselecting = button.classList.contains('selected');
+        const isDeselecting = NDS.State.has(button, 'selected');
 
         // Prevent deselection for dropmenu items — they are always one-of-many,
         // so clicking the already-selected value should do nothing
@@ -587,7 +587,8 @@
         });
         
         // Toggle the clicked button's selected state
-        button.classList.toggle('selected');
+        if (NDS.State.has(button, 'selected')) NDS.State.remove(button, 'selected');
+        else NDS.State.add(button, 'selected');
 
         // Apply/remove inline styles from data-toggle-style when button is selected/deselected
         // Format: data-toggle-style=".target { --prop:val; width:fit-content; }"
@@ -598,7 +599,7 @@
         // Sync dropmenu trigger label when item is selected
         // Supports data-label-prefix on the trigger for prefixed labels (e.g., "Layout: Default")
         const dropmenu = button.closest('.nds-dropmenu');
-        if (dropmenu && button.classList.contains('selected')) {
+        if (dropmenu && NDS.State.has(button, 'selected')) {
             const trigger = dropmenu.querySelector('.nds-dropmenu-trigger');
             const triggerLabel = trigger?.querySelector('.label');
             const itemLabel = button.querySelector('.label');
@@ -654,7 +655,7 @@
         // Get current state from selected toggle buttons
         const variantType = isToast ? 'toastVariant' : 'alertVariant';
         let variant = 'success';
-        const variantToggle = demoCard.querySelector(`[data-toggler*="${variantType}"].selected`);
+        const variantToggle = demoCard.querySelector(`[data-toggler*="${variantType}"][data-state~="selected"]`);
         if (variantToggle) {
             try {
                 const data = JSON.parse(variantToggle.getAttribute('data-toggler'));
@@ -665,7 +666,7 @@
         // Get position (toast only)
         let position = 'top';
         if (isToast) {
-            const positionToggle = demoCard.querySelector('[data-toggler*="toastPosition"].selected');
+            const positionToggle = demoCard.querySelector('[data-toggler*="toastPosition"][data-state~="selected"]');
             if (positionToggle) {
                 position = 'bottom';
             }
@@ -673,9 +674,9 @@
 
         // Get color and shadow
         const colorType = isToast ? 'toastColor' : 'alertColor';
-        const colorToggle = demoCard.querySelector(`[data-toggler*="${colorType}"].selected`);
+        const colorToggle = demoCard.querySelector(`[data-toggler*="${colorType}"][data-state~="selected"]`);
         const hasColor = !!colorToggle;
-        const shadowToggle = demoCard.querySelector('[data-toggler*="alertStyle"].selected');
+        const shadowToggle = demoCard.querySelector('[data-toggler*="alertStyle"][data-state~="selected"]');
         const hasShadow = !!shadowToggle;
 
         const capitalizedVariant = variant.charAt(0).toUpperCase() + variant.slice(1);
@@ -764,7 +765,7 @@
     // Reverses styles from deselected buttons in the same toggle group
     function applyToggleStyles(button, demoCard) {
         const styleRule = button.getAttribute('data-toggle-style');
-        const isSelected = button.classList.contains('selected');
+        const isSelected = NDS.State.has(button, 'selected');
 
         if (!styleRule) return;
 
@@ -1163,7 +1164,7 @@
 
         // Read all chart toggle buttons and apply their current state to the code
         demoCard.querySelectorAll('[data-toggler*="chart"]').forEach(function (btn) {
-            var isOn = btn.classList.contains('selected');
+            var isOn = NDS.State.has(btn, 'selected');
             var codeReplace = btn.getAttribute('data-code-on');
             var codeReplaceOff = btn.getAttribute('data-code-off');
             if (!codeReplace || !codeReplaceOff) return;
@@ -1649,7 +1650,7 @@
                 if (cardContent) cardContent.classList.remove('nds-expandable-content');
 
                 // Ensure header visibility matches state
-                const headerMode = demoCard.querySelector('[data-card-header].selected')?.dataset.cardHeader || 'icon';
+                const headerMode = demoCard.querySelector('[data-card-header][data-state~="selected"]')?.dataset.cardHeader || 'icon';
                 const cardHeader = card.querySelector('.nds-card-header');
                 if (headerMode === 'none' && mode !== 'selectable') {
                     cardHeader?.setAttribute('hidden', '');
@@ -1683,7 +1684,7 @@
                     // Remove truncate if active (conflicts with expandable)
                     card.querySelectorAll('.nds-truncate').forEach(el => el.classList.remove('nds-truncate'));
                     const truncateBtn = demoCard.querySelector('[data-toggler*="cardTruncate"]');
-                    if (truncateBtn) truncateBtn.classList.remove('selected');
+                    if (truncateBtn) NDS.State.remove(truncateBtn, 'selected');
 
                     card.classList.add('nds-expandable');
                     NDS.State.add(card, 'expandable');
@@ -1813,7 +1814,8 @@
                 // Toggle hidden + button selected state
                 var isHidden = target.hasAttribute('hidden');
                 target.toggleAttribute('hidden', !isHidden);
-                this.classList.toggle('selected', isHidden);
+                if (isHidden) NDS.State.add(this, 'selected');
+                else NDS.State.remove(this, 'selected');
 
                 // Rebuild code from visible demo HTML
                 rebuildCardCode(demoCard);
@@ -1858,10 +1860,10 @@
                 reapplyActiveTogglers(demoCard);
 
                 // Re-apply icon/dropmenu after state so new elements inherit disabled/readonly
-                if (demoCard.querySelector('[data-form-fix-icon].selected')) {
+                if (demoCard.querySelector('[data-form-fix-icon][data-state~="selected"]')) {
                     applyFormFixIcon(formControl, true);
                 }
-                if (demoCard.querySelector('[data-form-fix-dropmenu].selected')) {
+                if (demoCard.querySelector('[data-form-fix-dropmenu][data-state~="selected"]')) {
                     applyFormFixDropmenu(formControl, true);
                 }
 
@@ -1897,7 +1899,9 @@
                 const demoCard = this.closest('.nds-demo-card');
                 if (!demoCard) return;
 
-                const isActive = this.classList.toggle('selected');
+                const isActive = !NDS.State.has(this, 'selected');
+                if (isActive) NDS.State.add(this, 'selected');
+                else NDS.State.remove(this, 'selected');
                 const formControl = demoCard.querySelector('.demo-container .nds-form-control');
                 if (!formControl) return;
 
@@ -1987,7 +1991,9 @@
                 const demoCard = this.closest('.nds-demo-card');
                 if (!demoCard) return;
 
-                const isActive = this.classList.toggle('selected');
+                const isActive = !NDS.State.has(this, 'selected');
+                if (isActive) NDS.State.add(this, 'selected');
+                else NDS.State.remove(this, 'selected');
                 const formControl = demoCard.querySelector('.demo-container .nds-form-control');
                 if (!formControl) return;
 
@@ -2009,7 +2015,8 @@
                 if (!rating || !rating.ndsRating) return;
                 const disabled = !rating.ndsRating.isDisabled();
                 rating.ndsRating.setDisabled(disabled);
-                this.classList.toggle('selected', disabled);
+                if (disabled) NDS.State.add(this, 'selected');
+                else NDS.State.remove(this, 'selected');
                 rebuildDemoCode(demoCard);
             });
         });
@@ -2218,7 +2225,7 @@
 
         // Get variant from selected toggle button
         let variant = 'success';
-        const variantToggle = demoCard.querySelector(`[data-toggler*="${variantType}"].selected`);
+        const variantToggle = demoCard.querySelector(`[data-toggler*="${variantType}"][data-state~="selected"]`);
         if (variantToggle) {
             try {
                 const toggleData = JSON.parse(variantToggle.getAttribute('data-toggler'));
@@ -2227,13 +2234,13 @@
         }
 
         // Get color from toggle button
-        const colorToggle = demoCard.querySelector(`[data-toggler*="${colorType}"].selected`);
+        const colorToggle = demoCard.querySelector(`[data-toggler*="${colorType}"][data-state~="selected"]`);
         const hasColor = !!colorToggle;
 
         // Get position (toast only)
         let position = 'top';
         if (isToast) {
-            const positionToggle = demoCard.querySelector('[data-toggler*="toastPosition"].selected');
+            const positionToggle = demoCard.querySelector('[data-toggler*="toastPosition"][data-state~="selected"]');
             if (positionToggle) position = 'bottom';
         }
 

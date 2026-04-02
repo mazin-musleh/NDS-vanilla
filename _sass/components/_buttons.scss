@@ -40,7 +40,7 @@
     border-color: var(--_btn-border-hover);
   }
 
-  &:is(.active, .selected, [data-state~="selected"], [data-state~="open"], [data-state~="active"], [data-state~="current"]) {
+  &:is([data-state~="selected"], [data-state~="open"], [data-state~="active"], [data-state~="current"]) {
     background-color: var(--_btn-bg-selected);
     border-color: var(--_btn-border-selected);
   }
@@ -51,7 +51,7 @@
   }
 
 
-  &:is(:disabled, .disabled, [data-state~="disabled"], [aria-disabled="true"]) {
+  &:is(:disabled, [data-state~="disabled"], [aria-disabled="true"]) {
     background-color: var(--_btn-bg-disabled);
     color: var(--_btn-color-disabled);
     border-color: var(--_btn-border-disabled);
@@ -210,7 +210,7 @@
       --btn-color-hover: var(--text-default);
     }
 
-    &:is(.selected, [data-state~="selected"], [data-state~="open"], [data-state~="active"], [data-state~="current"]) {
+    &:is([data-state~="selected"], [data-state~="open"], [data-state~="active"], [data-state~="current"]) {
       color: var(--button-background-primary-selected);
     }
 
@@ -309,7 +309,7 @@
         --btn-loading-color: var(--text-oncolor-primary);
         --btn-loading-track: var(--alpha-white-20);
 
-        &:is(.selected, [data-state~="selected"], [data-state~="open"], [data-state~="active"], [data-state~="current"]) {
+        &:is([data-state~="selected"], [data-state~="open"], [data-state~="active"], [data-state~="current"]) {
           color: var(--button-label-transparent-pressed-on-color);
         }
 
@@ -379,7 +379,7 @@
       --btn-color-hover: var(--button-background-danger-primary-hovered);
       --btn-loading-color: var(--button-background-danger-primary-default);
 
-      &:is(.selected, [data-state~="selected"], [data-state~="open"], [data-state~="active"], [data-state~="current"]) {
+      &:is([data-state~="selected"], [data-state~="open"], [data-state~="active"], [data-state~="current"]) {
         color: var(--button-background-danger-primary-selected);
       }
 
@@ -430,7 +430,7 @@
         --btn-border-selected: var(--button-border-error);
         --btn-border-disabled: var(--border-neutral-secondary);
 
-        &:is(.selected, [data-state~="selected"], [data-state~="open"], [data-state~="active"], [data-state~="current"]) {
+        &:is([data-state~="selected"], [data-state~="open"], [data-state~="active"], [data-state~="current"]) {
           color: var(--button-background-danger-primary-selected);
         }
 
@@ -448,7 +448,7 @@
         --btn-color: var(--button-label-danger-primary-default-oncolor);
         --btn-color-hover: var(--button-background-danger-primary-hovered);
 
-        &:is(.selected, [data-state~="selected"], [data-state~="open"], [data-state~="active"], [data-state~="current"]) {
+        &:is([data-state~="selected"], [data-state~="open"], [data-state~="active"], [data-state~="current"]) {
           color: var(--button-background-danger-primary-selected);
         }
 
@@ -461,7 +461,7 @@
         --btn-color: var(--button-label-danger-primary-default-oncolor);
         --btn-color-hover: var(--button-label-danger-primary-hovered-oncolor);
 
-        &:is(.selected, [data-state~="selected"], [data-state~="open"], [data-state~="active"], [data-state~="current"]) {
+        &:is([data-state~="selected"], [data-state~="open"], [data-state~="active"], [data-state~="current"]) {
           color: var(--button-label-danger-primary-selected-oncolor);
         }
 
@@ -483,7 +483,7 @@
       background-color: var(--_btn-indicator-color);
     }
 
-    &:is(.selected, :focus-visible, [aria-selected="true"], [data-state~="open"], [data-state~="selected"], [data-state~="active"], [data-state~="current"], [data-state~="focused"])::before {
+    &:is(:focus-visible, [aria-selected="true"], [data-state~="open"], [data-state~="selected"], [data-state~="active"], [data-state~="current"], [data-state~="focused"])::before {
       background-color: var(--_btn-indicator-selected);
     }
 
@@ -525,8 +525,8 @@
 
   &.nds-menu-btn {
 
-    &:is(.selected, .expanded, [data-state~="opening"], [data-state~="open"], [aria-expanded="true"])::after,
-    :is(.show, [data-state~="opening"], [data-state~="open"], .active)>&::after {
+    &:is([data-state~="opening"], [data-state~="open"], [aria-expanded="true"])::after,
+    :is([data-state~="opening"], [data-state~="open"])>&::after {
       transform: rotate(180deg);
     }
   }
@@ -634,7 +634,7 @@
   // LOADING STATES
   // ==============================================
 
-  &:is(.nds-loading, .loading, [data-state~="loading"]) {
+  &:is(.nds-loading, [data-state~="loading"]) {
     --loading-color: var(--_btn-loading-color);
     --loading-track: var(--_btn-loading-track);
     color: transparent !important;

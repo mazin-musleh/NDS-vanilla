@@ -281,7 +281,7 @@
     // DISABLED STATE
     // ==============================================
 
-    &.disabled .nds-switch-track {
+    &:has(:disabled) .nds-switch-track {
         opacity: 0.5;
         cursor: not-allowed;
     }

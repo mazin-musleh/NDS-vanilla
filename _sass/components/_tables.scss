@@ -277,7 +277,7 @@
 // TABLE LOADING STATE
 // ==============================================
 
-.nds-table.loading {
+.nds-table[data-state~="loading"] {
     tbody tr td {
         background-color: var(--colors-neutral-100);
         color: var(--colors-neutral-400);
