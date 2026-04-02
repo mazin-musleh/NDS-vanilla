@@ -22,25 +22,8 @@
         get showMore() { return this.collapseContent?.querySelector('.nds-show-more'); }
     };
 
-    // ==============================================
-    // STATE MANAGEMENT HELPERS
-    // ==============================================
-    const hasState = (el, s) => el ? (el.getAttribute('data-state') || '').split(/\s+/).includes(s) : false;
-
-    const addState = (el, ...states) => {
-        if (!el) return;
-        const current = new Set((el.getAttribute('data-state') || '').split(/\s+/).filter(Boolean));
-        states.forEach(s => current.add(s));
-        el.setAttribute('data-state', [...current].join(' '));
-    };
-
-    const removeState = (el, ...states) => {
-        if (!el) return;
-        const current = new Set((el.getAttribute('data-state') || '').split(/\s+/).filter(Boolean));
-        states.forEach(s => current.delete(s));
-        current.size ? el.setAttribute('data-state', [...current].join(' '))
-                     : el.removeAttribute('data-state');
-    };
+    // State helpers — delegated to NDS.State (nds-core.js)
+    const { add: addState, remove: removeState, has: hasState } = NDS.State;
 
     // ==============================================
     // STATE MANAGEMENT

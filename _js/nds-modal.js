@@ -73,7 +73,7 @@
     // Use requestAnimationFrame to trigger animation
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        modal.setAttribute('data-state', 'open');
+        NDS.State.set(modal, 'open');
         modal.dispatchEvent(new CustomEvent('nds-modal-opened', { bubbles: true }));
       });
     });
@@ -101,7 +101,7 @@
     }
 
     // Trigger closing animation
-    modal.setAttribute('data-state', 'closing');
+    NDS.State.set(modal, 'closing');
     modal.setAttribute('aria-hidden', 'true');
 
     // Hide backdrop
@@ -110,7 +110,7 @@
     // Hide modal after animation
     setTimeout(() => {
       modal.setAttribute('hidden', '');
-      modal.removeAttribute('data-state');
+      NDS.State.clear(modal);
       modal.dispatchEvent(new CustomEvent('nds-modal-closed', { bubbles: true }));
     }, 300);
 

@@ -150,7 +150,7 @@
             this.updateHiddenInputs();
 
             // Set submitting state
-            this.filterContainer.setAttribute('data-state', 'submitting');
+            NDS.State.set(this.filterContainer, 'submitting');
 
             // Dispatch valid event
             this.filterContainer.dispatchEvent(new CustomEvent('nds:formValid', {
@@ -188,8 +188,8 @@
             }
 
             // Set submitting state
-            this.filterContainer.setAttribute('data-state', 'submitting');
-            this.filterContainer.removeAttribute('data-status');
+            NDS.State.set(this.filterContainer, 'submitting');
+            NDS.Status.clear(this.filterContainer);
 
             // Add loading class to target container (similar to client-side filter)
             if (this.targetContainer) {
@@ -299,8 +299,8 @@
                     }
 
                     // Set success state
-                    this.filterContainer.setAttribute('data-status', 'success');
-                    this.filterContainer.removeAttribute('data-state');
+                    NDS.Status.set(this.filterContainer, 'success');
+                    NDS.State.clear(this.filterContainer);
 
                     // Update UI elements
                     this.updateUrlParams();
@@ -314,7 +314,7 @@
 
                     // Clear success state after 3 seconds
                     setTimeout(() => {
-                        this.filterContainer.removeAttribute('data-status');
+                        NDS.Status.clear(this.filterContainer);
                     }, 3000);
                 })
                 .catch(error => {
@@ -326,8 +326,8 @@
                     }
 
                     // Set error state
-                    this.filterContainer.setAttribute('data-status', 'error');
-                    this.filterContainer.removeAttribute('data-state');
+                    NDS.Status.set(this.filterContainer, 'error');
+                    NDS.State.clear(this.filterContainer);
 
                     // Dispatch error event
                     this.filterContainer.dispatchEvent(new CustomEvent('nds:filterFormError', {
@@ -339,7 +339,7 @@
 
                     // Clear error state after 5 seconds
                     setTimeout(() => {
-                        this.filterContainer.removeAttribute('data-status');
+                        NDS.Status.clear(this.filterContainer);
                     }, 5000);
                 });
         }
@@ -647,9 +647,9 @@
             }
 
             if (count > 0) {
-                filterBtn.setAttribute('data-state', 'has-filters');
+                NDS.State.set(filterBtn, 'has-filters');
             } else {
-                filterBtn.removeAttribute('data-state');
+                NDS.State.clear(filterBtn);
             }
         }
 
@@ -1571,8 +1571,8 @@
             // Clear hidden inputs and form state if in form mode
             if (this.isFormMode) {
                 this.clearHiddenInputs();
-                this.filterContainer.removeAttribute('data-state');
-                this.filterContainer.removeAttribute('data-status');
+                NDS.State.clear(this.filterContainer);
+                NDS.Status.clear(this.filterContainer);
             }
 
             this.updateApplyButtonLabel();

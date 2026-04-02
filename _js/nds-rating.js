@@ -5,24 +5,8 @@
 (() => {
   'use strict';
 
-  // State helpers (same pattern as dropmenu)
-  const parseStates = (el) =>
-    new Set((el.getAttribute('data-state') || '').split(/\s+/).filter(Boolean));
-
-  const addState = (el, ...states) => {
-    const cur = parseStates(el);
-    states.forEach(s => cur.add(s));
-    el.setAttribute('data-state', [...cur].join(' '));
-  };
-
-  const removeState = (el, ...states) => {
-    const cur = parseStates(el);
-    states.forEach(s => cur.delete(s));
-    cur.size ? el.setAttribute('data-state', [...cur].join(' '))
-             : el.removeAttribute('data-state');
-  };
-
-  const hasState = (el, state) => parseStates(el).has(state);
+  // State helpers — delegated to NDS.State (nds-core.js)
+  const { add: addState, remove: removeState, has: hasState } = NDS.State;
 
   class NDSRating {
     constructor(element) {
@@ -113,8 +97,7 @@
         // Preserve preview state if present
         if (hasState(this.stars[i], 'preview')) states.push('preview');
 
-        if (states.length) this.stars[i].setAttribute('data-state', states.join(' '));
-        else this.stars[i].removeAttribute('data-state');
+        NDS.State.set(this.stars[i], ...states);
       }
     }
 

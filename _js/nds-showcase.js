@@ -923,8 +923,7 @@
 
         states.forEach(state => {
             if (!state) return;
-            const currentDataState = targetElement.getAttribute('data-state') || '';
-            const isAdding = currentDataState.split(' ').indexOf(state) === -1;
+            const isAdding = !NDS.State.has(targetElement, state);
 
             // Live demo: Forms API handles data-state + input propagation
             if (window.NDS && NDS.Forms && NDS.Forms.setState) {
@@ -941,13 +940,8 @@
     }
 
     function toggleDataState(el, state, add) {
-        let states = (el.getAttribute('data-state') || '').split(' ').filter(s => s.length > 0);
-        const idx = states.indexOf(state);
-        if (add && idx === -1) states.push(state);
-        else if (!add && idx !== -1) states.splice(idx, 1);
-
-        if (states.length > 0) el.setAttribute('data-state', states.join(' '));
-        else el.removeAttribute('data-state');
+        if (add) NDS.State.add(el, state);
+        else NDS.State.remove(el, state);
     }
 
     function updateCodeExampleForDataState(demoCard, changedElement, state, isAdding) {
@@ -1747,15 +1741,13 @@
                     card.setAttribute('disabled', '');
                     // Disable form controls via data-state (forms.js two-way binding)
                     card.querySelectorAll('.nds-form-container').forEach(el => {
-                        const ds = el.getAttribute('data-state') || '';
-                        if (!ds.includes('disabled')) el.setAttribute('data-state', (ds + ' disabled').trim());
+                        NDS.State.add(el, 'disabled');
                     });
                     card.querySelectorAll('input, button, a').forEach(el => el.setAttribute('disabled', ''));
                 } else {
                     card.removeAttribute('disabled');
                     card.querySelectorAll('.nds-form-container').forEach(el => {
-                        const ds = (el.getAttribute('data-state') || '').replace('disabled', '').trim();
-                        el.setAttribute('data-state', ds);
+                        NDS.State.remove(el, 'disabled');
                     });
                     card.querySelectorAll('input, button, a').forEach(el => el.removeAttribute('disabled'));
                 }
@@ -1916,8 +1908,7 @@
     // Apply or remove dropmenu from prefix/suffix containers
     function applyFormFixDropmenu(formControl, isActive) {
         var formContainer = formControl.closest('.nds-form-container');
-        var containerState = formContainer ? (formContainer.getAttribute('data-state') || '') : '';
-        var isDisabled = containerState.indexOf('disabled') !== -1;
+        var isDisabled = formContainer ? NDS.State.has(formContainer, 'disabled') : false;
 
         formControl.querySelectorAll('.nds-prefix, .nds-suffix').forEach(fix => {
             var childBtn = fix.querySelector('.nds-btn');
@@ -2060,7 +2051,7 @@
 
         // Strip rating runtime attributes (set by JS initialization)
         clone.querySelectorAll('.nds-rating-star').forEach(function(el) {
-            el.removeAttribute('data-state');
+            NDS.State.clear(el);
             el.removeAttribute('data-value');
         });
 

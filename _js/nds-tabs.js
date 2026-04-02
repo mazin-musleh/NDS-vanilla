@@ -98,13 +98,13 @@
 
             // Skip for vertical tabs
             if (this.tabsContainer.classList.contains('nds-vertical')) {
-                this.tabList.removeAttribute('data-state');
+                NDS.State.clear(this.tabList);
                 return;
             }
 
             const hasOverflow = this.needsScroll();
             if (!hasOverflow) {
-                this.tabList.removeAttribute('data-state');
+                NDS.State.clear(this.tabList);
                 return;
             }
 
@@ -122,7 +122,7 @@
                 if (scrollLeft >= maxScroll - 2) tokens.push('at-end');
             }
 
-            this.tabList.setAttribute('data-state', tokens.join(' '));
+            NDS.State.set(this.tabList, ...tokens);
         }
 
         scrollToTarget(target) {
@@ -167,7 +167,7 @@
                     e.preventDefault();
                     e.stopPropagation();
 
-                    if ((this.tabList.getAttribute('data-state') || '').includes('at-end')) {
+                    if (NDS.State.has(this.tabList, 'at-end')) {
                         this.tabList.scrollTo({ left: 0, behavior: 'smooth' });
                     } else {
                         const scrollAmount = this.tabList.clientWidth * 0.8;

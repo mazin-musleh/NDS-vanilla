@@ -462,10 +462,10 @@
 
             // Check if content is wider than visible area (needs scrolling)
             if (wrapperScrollWidth > wrapperClientWidth) {
-                this.wrapper.setAttribute('data-state', 'has-more at-start');
+                NDS.State.set(this.wrapper, 'has-more', 'at-start');
                 this.needsScroll = true;
             } else {
-                this.wrapper.removeAttribute('data-state');
+                NDS.State.clear(this.wrapper);
                 this.needsScroll = false;
             }
         }
@@ -490,7 +490,7 @@
                 if (newState === 'start') tokens.push('at-start');
                 else if (newState === 'end') tokens.push('at-end');
 
-                this.wrapper.setAttribute('data-state', tokens.join(' '));
+                NDS.State.set(this.wrapper, ...tokens);
                 this.currentScrollState = newState;
             }
         }
@@ -549,7 +549,7 @@
                 clearTimeout(this.visibilityTimer);
             }
 
-            this.wrapper.removeAttribute('data-state');
+            NDS.State.clear(this.wrapper);
             this.currentScrollState = null;
         }
     }

@@ -82,26 +82,8 @@
     // STATE MANAGEMENT
     // ==============================================
 
-    function getTokens(el) {
-        return new Set((el.getAttribute('data-state') || '').split(/\s+/).filter(Boolean));
-    }
-
-    function addState(el, ...tokens) {
-        const current = getTokens(el);
-        tokens.forEach(t => current.add(t));
-        el.setAttribute('data-state', [...current].join(' '));
-    }
-
-    function removeState(el, ...tokens) {
-        const current = getTokens(el);
-        tokens.forEach(t => current.delete(t));
-        current.size ? el.setAttribute('data-state', [...current].join(' '))
-                     : el.removeAttribute('data-state');
-    }
-
-    function hasState(el, token) {
-        return el ? getTokens(el).has(token) : false;
-    }
+    // State helpers — delegated to NDS.State (nds-core.js)
+    const { add: addState, remove: removeState, has: hasState } = NDS.State;
 
     // Transition states that are mutually exclusive
     const TRANSITION_STATES = ['open', 'opening', 'closing'];
@@ -117,13 +99,8 @@
         }
     }
 
-    function getState(element) {
-        return element.getAttribute('data-state') || '';
-    }
-
     function isOpen(listItem) {
-        const state = getState(listItem);
-        return state === CONFIG.states.open || state === CONFIG.states.opening;
+        return NDS.State.has(listItem, CONFIG.states.open) || NDS.State.has(listItem, CONFIG.states.opening);
     }
 
     // ==============================================
@@ -172,7 +149,7 @@
 
         submenu.addEventListener('transitionend', cleanup);
         setTimeout(() => {
-            if (getState(submenu) === CONFIG.states.opening) cleanup();
+            if (NDS.State.has(submenu, CONFIG.states.opening)) cleanup();
         }, CONFIG.transitionDuration + 50);
     }
 
@@ -183,7 +160,7 @@
         submenu.style.height = '0px';
         setState(listItem, CONFIG.states.closed);
         button.setAttribute('aria-expanded', 'false');
-        button.removeAttribute('data-state');
+        NDS.State.clear(button);
 
         const cleanup = () => {
             submenu.removeEventListener('transitionend', cleanup);
@@ -194,7 +171,7 @@
 
         submenu.addEventListener('transitionend', cleanup);
         setTimeout(() => {
-            if (getState(submenu) === CONFIG.states.closing) cleanup();
+            if (NDS.State.has(submenu, CONFIG.states.closing)) cleanup();
         }, CONFIG.transitionDuration + 50);
     }
 
@@ -232,7 +209,7 @@
                 setState(item, CONFIG.states.closed);
                 setState(submenu, CONFIG.states.closed);
                 button.setAttribute('aria-expanded', 'false');
-                button.removeAttribute('data-state');
+                NDS.State.clear(button);
             }
         });
 

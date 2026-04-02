@@ -92,7 +92,7 @@ NDS.UserFeedback = (() => {
             // Show details section based on answer
             function showDetails(answer) {
                 // Set data-state to details (UI state)
-                feedbackComponent.setAttribute('data-state', 'details');
+                NDS.State.set(feedbackComponent, 'details');
 
                 // Set data-answer attribute based on answer
                 if (answer === 'Yes') {
@@ -110,7 +110,7 @@ NDS.UserFeedback = (() => {
             // Show status state with success/error using NDSFeedback API
             function showStatus(status = 'success') {
                 // Set data-state to status (UI state)
-                feedbackComponent.setAttribute('data-state', 'status');
+                NDS.State.set(feedbackComponent, 'status');
 
                 // Detect page language
                 const isArabic = NDS.isArabic;
@@ -150,7 +150,7 @@ NDS.UserFeedback = (() => {
                 } else {
                     // Fallback if NDSFeedback is not available
                     console.warn('NDSFeedback API not available');
-                    feedbackComponent.setAttribute('data-status', status);
+                    NDS.Status.set(feedbackComponent, status);
                     if (statusEl) statusEl.removeAttribute('hidden');
                     if (closeButton) closeButton.setAttribute('hidden', '');
                     if (detailsEl) detailsEl.setAttribute('hidden', '');
@@ -166,8 +166,8 @@ NDS.UserFeedback = (() => {
             // Reset to initial state (overview)
             function resetFeedback() {
                 // Remove data attributes
-                feedbackComponent.removeAttribute('data-state');
-                feedbackComponent.removeAttribute('data-status');
+                NDS.State.clear(feedbackComponent);
+                NDS.Status.clear(feedbackComponent);
                 feedbackComponent.removeAttribute('data-answer');
 
                 // Dismiss any feedback messages created by NDSFeedback API

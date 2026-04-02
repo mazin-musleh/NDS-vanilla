@@ -29,7 +29,7 @@
         }
 
         get isAlwaysOpen() {
-            return this.accordionContainer.getAttribute('data-state') === 'always-open';
+            return NDS.State.has(this.accordionContainer, 'always-open');
         }
 
         get prefersReducedMotion() {

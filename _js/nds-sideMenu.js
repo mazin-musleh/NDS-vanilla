@@ -2,27 +2,8 @@
 (() => {
     'use strict';
 
-    // State management helpers for space-separated data-state values
-    const addState = (el, ...states) => {
-        if (!el) return;
-        const current = new Set((el.getAttribute('data-state') || '').split(/\s+/).filter(Boolean));
-        states.forEach(s => current.add(s));
-        el.setAttribute('data-state', [...current].join(' '));
-    };
-
-    const removeState = (el, ...states) => {
-        if (!el) return;
-        const current = new Set((el.getAttribute('data-state') || '').split(/\s+/).filter(Boolean));
-        states.forEach(s => current.delete(s));
-        current.size ? el.setAttribute('data-state', [...current].join(' ')) : el.removeAttribute('data-state');
-    };
-
-    const hasState = (el, state) => {
-        if (!el) return false;
-        return (el.getAttribute('data-state') || '').split(/\s+/).includes(state);
-    };
-
-    const clearState = (el) => { if (el) el.removeAttribute('data-state'); };
+    // State helpers — delegated to NDS.State (nds-core.js)
+    const { add: addState, remove: removeState, has: hasState, clear: clearState } = NDS.State;
 
     // Set --drawer-max-height for slider mode only
     const updateDrawerMaxHeight = (accMenu, drawer) => {
@@ -109,14 +90,14 @@
     const lockBodyScroll = () => {
         const scrollY = window.pageYOffset;
         document.body.style.top = `-${scrollY}px`;
-        document.body.setAttribute('data-state', 'backdrop');
+        NDS.State.set(document.body, 'backdrop');
     };
 
     const unlockBodyScroll = () => {
         if (!document.body.style.top) return;
         const scrollY = parseInt(document.body.style.top, 10) * -1;
         document.body.style.top = '';
-        document.body.removeAttribute('data-state');
+        NDS.State.clear(document.body);
         window.scrollTo(0, scrollY);
     };
 

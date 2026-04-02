@@ -83,7 +83,7 @@
             const feedbackClasses = ['nds-feedback', sizeClass, styleClass, className].filter(c => c).join(' ');
             feedback.className = feedbackClasses;
             if (id) feedback.id = id;
-            feedback.setAttribute('data-status', status);
+            NDS.Status.set(feedback, status);
             if (permanent) feedback.setAttribute('data-permanent', '');
 
             // Set ARIA attributes

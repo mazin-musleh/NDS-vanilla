@@ -205,7 +205,7 @@
             // Handle standalone feedback
             if (container.classList.contains('nds-feedback')) {
                 if (status) {
-                    container.setAttribute('data-status', status);
+                    NDS.Status.set(container, status);
                     if (message) {
                         var msgElement = container.querySelector('.nds-feedback-message');
                         if (msgElement) {
@@ -218,7 +218,7 @@
 
             if (status) {
                 // Set status on container
-                container.setAttribute('data-status', status);
+                NDS.Status.set(container, status);
                 if (message) {
                     container.setAttribute('data-message', message);
                 }
@@ -275,7 +275,7 @@
 
             if (element.classList.contains('nds-feedback')) {
                 // For standalone feedback, just remove data attributes
-                element.removeAttribute('data-status');
+                NDS.Status.clear(element);
                 return true;
             }
 
@@ -283,7 +283,7 @@
             if (!container) return false;
 
             // Remove status attributes
-            container.removeAttribute('data-status');
+            NDS.Status.clear(container);
             container.removeAttribute('data-message');
 
             // Dismiss all feedback in container using NDSFeedback API
@@ -309,10 +309,11 @@
             if (!element) return { status: '', message: '', isValid: true };
 
             var container = this._findContainer(element);
+            var status = NDS.Status.get(container);
             return {
-                status: container.getAttribute('data-status') || '',
+                status: status,
                 message: container.getAttribute('data-message') || '',
-                isValid: container.getAttribute('data-status') !== 'error'
+                isValid: status !== 'error'
             };
         },
 
@@ -594,23 +595,12 @@
             if (!container) return;
             if (add === undefined) add = true;
 
-            var currentState = container.getAttribute('data-state') || '';
-            var states = currentState.split(' ').filter(function(s) { return s.length > 0; });
-            var stateIndex = states.indexOf(stateName);
+            // Skip if no change needed
+            var hasIt = NDS.State.has(container, stateName);
+            if ((add && hasIt) || (!add && !hasIt)) return;
 
-            if (add && stateIndex === -1) {
-                states.push(stateName);
-            } else if (!add && stateIndex !== -1) {
-                states.splice(stateIndex, 1);
-            } else {
-                return; // No change needed — skip DOM write
-            }
-
-            if (states.length > 0) {
-                container.setAttribute('data-state', states.join(' '));
-            } else {
-                container.removeAttribute('data-state');
-            }
+            if (add) NDS.State.add(container, stateName);
+            else NDS.State.remove(container, stateName);
 
             // Propagate state to inputs (only within form containers)
             var isFormScoped = container.classList.contains('nds-form-container') || container.classList.contains('nds-form-group');
@@ -688,7 +678,7 @@
             if (isInvalid) {
                 StatusManager.set({ element: formContainer, status: 'error', message: Validator.getMessage(input) });
             } else {
-                var currentStatus = formContainer.getAttribute('data-status');
+                var currentStatus = NDS.Status.get(formContainer);
                 if (currentStatus === 'error') {
                     StatusManager.clear(formContainer);
                 }
@@ -789,7 +779,7 @@
                 }
 
                 // Only validate on blur if field already has an error (to clear it when fixed)
-                var hasError = formContainer && formContainer.getAttribute('data-status') === 'error';
+                var hasError = formContainer && NDS.Status.get(formContainer) === 'error';
                 if (!input.readOnly) FormState.update(input, formControl, !hasError);
             });
 
@@ -848,7 +838,7 @@
 
             // Change event - update state only, validate on submit
             input.addEventListener('change', function() {
-                var hasError = formContainer && formContainer.getAttribute('data-status') === 'error';
+                var hasError = formContainer && NDS.Status.get(formContainer) === 'error';
                 FormState.update(input, formControl, !hasError);
                 FormState.updateRadioGroup(input);
 
@@ -862,15 +852,14 @@
             // Container → input: propagate data-required and data-state="disabled"
             if (formContainer) {
                 if (formContainer.hasAttribute('data-required')) input.required = true;
-                var initState = (formContainer.getAttribute('data-state') || '').split(' ');
-                if (initState.indexOf('disabled') !== -1) {
+                if (NDS.State.has(formContainer, 'disabled')) {
                     input.disabled = true;
                     formContainer.querySelectorAll('.nds-form-action .nds-btn').forEach(function(btn) {
                         btn.setAttribute('aria-disabled', 'true');
                         if (btn.tagName === 'BUTTON') btn.disabled = true;
                     });
                 }
-                if (initState.indexOf('readonly') !== -1) input.readOnly = true;
+                if (NDS.State.has(formContainer, 'readonly')) input.readOnly = true;
             }
             // Input → container: sync current input state to data-state
             FormState.update(input, formControl, true);
@@ -1422,14 +1411,14 @@
                 next = Math.max(min, Math.min(max, next));
                 var formContainer = formControl.closest('.nds-form-container');
                 if (next !== current) {
-                    if (formContainer && formContainer.getAttribute('data-status') === 'error') {
+                    if (formContainer && NDS.Status.get(formContainer) === 'error') {
                         StatusManager.clear(formContainer);
                     }
                     input.value = next;
                     input.dispatchEvent(new Event('input', { bubbles: true }));
                     return true;
                 }
-                if (formContainer && formContainer.getAttribute('data-status') !== 'error') {
+                if (formContainer && NDS.Status.get(formContainer) !== 'error') {
                     var isIncrement = btn.classList.contains('nds-number-increment');
                     var msg = isIncrement ? Validator.getNumberRangeMessage('max', max) : Validator.getNumberRangeMessage('min', min);
                     StatusManager.set({ element: formContainer, status: 'error', message: msg });
@@ -1559,8 +1548,7 @@
         }
 
         // Propagate initial data-state to inputs
-        var dataState = group.getAttribute('data-state') || '';
-        if (dataState.indexOf('disabled') !== -1) {
+        if (NDS.State.has(group, 'disabled')) {
             group.querySelectorAll('input, textarea, select').forEach(function(input) {
                 input.disabled = true;
             });
@@ -1569,7 +1557,7 @@
                 if (btn.tagName === 'BUTTON') btn.disabled = true;
             });
         }
-        if (dataState.indexOf('readonly') !== -1) {
+        if (NDS.State.has(group, 'readonly')) {
             group.querySelectorAll('input, textarea, select').forEach(function(input) {
                 input.readOnly = true;
             });

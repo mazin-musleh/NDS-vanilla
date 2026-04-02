@@ -150,6 +150,58 @@
     NDS.onDOMAdd = (sel, fn) => { domBus.addSubs.push({ sel, fn }); domBus.start(); };
     NDS.onDOMRemove = (sel, fn) => { domBus.removeSubs.push({ sel, fn }); domBus.start(); };
 
+    // ── State Management (data-state) ─────────────────────────────────
+    // Space-separated token management for data-state attribute
+    // Usage: NDS.State.add(el, 'open', 'active')
+    //        NDS.State.remove(el, 'open')
+    //        NDS.State.has(el, 'open')     → true/false
+    //        NDS.State.set(el, 'open')     → replaces all tokens
+    //        NDS.State.get(el)            → 'open active' (raw string)
+    //        NDS.State.clear(el)           → removes data-state entirely
+    NDS.State = (() => {
+        const parse = el => new Set((el.getAttribute('data-state') || '').split(/\s+/).filter(Boolean));
+
+        const add = (el, ...states) => {
+            if (!el) return;
+            const cur = parse(el);
+            for (let i = 0; i < states.length; i++) cur.add(states[i]);
+            el.setAttribute('data-state', [...cur].join(' '));
+        };
+
+        const remove = (el, ...states) => {
+            if (!el) return;
+            const cur = parse(el);
+            for (let i = 0; i < states.length; i++) cur.delete(states[i]);
+            cur.size ? el.setAttribute('data-state', [...cur].join(' '))
+                     : el.removeAttribute('data-state');
+        };
+
+        const has = (el, state) => el ? parse(el).has(state) : false;
+
+        const get = el => el ? (el.getAttribute('data-state') || '') : '';
+
+        const set = (el, ...states) => {
+            if (!el) return;
+            states.length ? el.setAttribute('data-state', states.join(' '))
+                          : el.removeAttribute('data-state');
+        };
+
+        const clear = el => { if (el) el.removeAttribute('data-state'); };
+
+        return { parse, add, remove, has, get, set, clear };
+    })();
+
+    // ── Status Management (data-status) ─────────────────────────────
+    // Single-value management for data-status attribute
+    // Usage: NDS.Status.set(el, 'error')
+    //        NDS.Status.get(el)            → 'error' | ''
+    //        NDS.Status.clear(el)          → removes data-status
+    NDS.Status = {
+        set: (el, status) => { if (el && status) el.setAttribute('data-status', status); },
+        get: (el) => el ? (el.getAttribute('data-status') || '') : '',
+        clear: (el) => { if (el) el.removeAttribute('data-status'); }
+    };
+
     // ── Lazy Reveal ────────────────────────────────────────────────────
     // Remove hidden from [data-nds-lazy] once DOM is ready
     document.addEventListener('DOMContentLoaded', () => {

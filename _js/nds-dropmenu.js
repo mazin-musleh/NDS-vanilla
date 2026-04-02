@@ -8,27 +8,8 @@
 (function() {
     'use strict';
 
-    // ==============================================
-    // STATE MANAGEMENT HELPERS
-    // ==============================================
-
-    const parseStates = (el) =>
-        new Set((el.getAttribute('data-state') || '').split(/\s+/).filter(Boolean));
-
-    const addState = (element, ...states) => {
-        if (!element) return;
-        const current = parseStates(element);
-        states.forEach(s => current.add(s));
-        element.setAttribute('data-state', [...current].join(' '));
-    };
-
-    const removeState = (element, ...states) => {
-        if (!element) return;
-        const current = parseStates(element);
-        states.forEach(s => current.delete(s));
-        current.size ? element.setAttribute('data-state', [...current].join(' '))
-                     : element.removeAttribute('data-state');
-    };
+    // State helpers — delegated to NDS.State (nds-core.js)
+    const { add: addState, remove: removeState } = NDS.State;
 
     // ==============================================
     // DROPMENU CLASS

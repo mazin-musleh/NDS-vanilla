@@ -59,7 +59,7 @@
 
             const alert = document.createElement('div');
             alert.className = 'nds-alert nds-card';
-            alert.setAttribute('data-status', variant);
+            NDS.Status.set(alert, variant);
             if (shadow) alert.classList.add('nds-shadow');
             if (color) alert.classList.add('nds-color');
             if (display === 'inline') alert.classList.add('nds-inline');

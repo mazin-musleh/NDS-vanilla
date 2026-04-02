@@ -111,12 +111,12 @@
     const speed = transitionSpeed();
     setTimeout(() => {
       if (!isActive) return;
-      backdropElement.setAttribute('data-state', 'active');
+      NDS.State.set(backdropElement, 'active');
       if (currentConfig.preventScroll) {
         scrollY = window.pageYOffset;
         document.body.style.top = `-${scrollY}px`;
       }
-      document.body.setAttribute('data-state', 'backdrop');
+      NDS.State.set(document.body, 'backdrop');
     }, speed);
 
     // Attach event listeners
@@ -154,10 +154,10 @@
     isActive = false;
 
     // Remove active state — CSS handles opacity/blur removal
-    backdropElement.removeAttribute('data-state');
+    NDS.State.clear(backdropElement);
 
     // Restore body state and scroll immediately
-    document.body.removeAttribute('data-state');
+    NDS.State.clear(document.body);
     if (currentConfig?.preventScroll) {
       document.body.style.top = '';
       window.scrollTo(0, scrollY);

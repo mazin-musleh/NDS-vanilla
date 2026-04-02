@@ -79,7 +79,7 @@
             if (activeDropdownItem) {
                 const trigger = dropdownContainer.querySelector('.nds-dropmenu-trigger');
                 if (trigger) {
-                    trigger.setAttribute('data-state', 'active');
+                    NDS.State.set(trigger, 'active');
                     const triggerLabel = trigger.querySelector('.label');
                     const activeLabel = activeDropdownItem.querySelector('.label');
                     if (triggerLabel && activeLabel) {
@@ -123,8 +123,8 @@
                     menuItem.setAttribute('aria-label', element.getAttribute('aria-label') || `Page ${element.textContent}`);
 
                     // Preserve active state and aria-current from original element
-                    if (element.hasAttribute('data-state') && element.getAttribute('data-state').includes('active')) {
-                        menuItem.setAttribute('data-state', 'active');
+                    if (NDS.State.has(element, 'active')) {
+                        NDS.State.set(menuItem, 'active');
                     }
                     if (element.hasAttribute('aria-current')) {
                         menuItem.setAttribute('aria-current', element.getAttribute('aria-current'));
@@ -208,7 +208,7 @@
     function setActivePage(pagination, pageNumber) {
         // Remove active from all items (including dropdown items and ellipsis trigger)
         pagination.querySelectorAll('.nds-pagination-item button, .nds-pagination-item a, .nds-dropmenu-item, .nds-dropmenu-trigger').forEach(el => {
-            el.removeAttribute('data-state');
+            NDS.State.clear(el);
             el.removeAttribute('aria-current');
         });
 
@@ -224,7 +224,7 @@
         pagination.querySelectorAll('.nds-pagination-item button, .nds-pagination-item a, .nds-dropmenu-item').forEach(element => {
             const elementPageNumber = parseInt(element.querySelector('.label')?.textContent || element.textContent);
             if (elementPageNumber === pageNumber) {
-                element.setAttribute('data-state', 'active');
+                NDS.State.set(element, 'active');
                 element.setAttribute('aria-current', 'page');
 
                 // Check if this element is inside a dropdown
@@ -238,7 +238,7 @@
 
         // Add active to ellipsis button and show active page number if active page is inside dropdown
         if (activeInDropdown && ellipsisTrigger) {
-            ellipsisTrigger.setAttribute('data-state', 'active');
+            NDS.State.set(ellipsisTrigger, 'active');
             const ellipsisLabel = ellipsisTrigger.querySelector('.label');
             if (ellipsisLabel) {
                 ellipsisLabel.textContent = pageNumber;

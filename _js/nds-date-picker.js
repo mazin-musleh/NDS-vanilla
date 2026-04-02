@@ -592,7 +592,7 @@
         createDropdownDOM: function () {
             var dropdown = document.createElement('div');
             dropdown.className = 'nds-date-picker-dropdown';
-            dropdown.setAttribute('data-state', 'hidden');
+            NDS.State.set(dropdown, 'hidden');
 
             var calendarHTML =
                 '<div class="nds-calendar-header">' +
@@ -913,7 +913,7 @@
         },
 
         toggleDropdown: function () {
-            var isNowOpen = (this.elements.dropdown.getAttribute('data-state') || '').includes('hidden');
+            var isNowOpen = NDS.State.has(this.elements.dropdown, 'hidden');
 
             if (isNowOpen) {
                 setState(this.elements.dropdown, 'hidden', false);
@@ -1239,7 +1239,7 @@
 
         // Save and close calendar (reuse close path from toggleDropdown)
         saveAndClose: function () {
-            if (!(this.elements.dropdown.getAttribute('data-state') || '').includes('hidden')) {
+            if (!NDS.State.has(this.elements.dropdown, 'hidden')) {
                 this.toggleDropdown();
             }
         },
