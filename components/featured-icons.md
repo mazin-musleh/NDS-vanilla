@@ -26,7 +26,7 @@ direction: ltr
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-brand", ".nds-featured-icon", "iconColor"]'>
                                             <span class="label">Brand</span>
                                         </button>
@@ -63,7 +63,7 @@ direction: ltr
                                             data-toggler='["nds-sm", ".nds-featured-icon", "iconSize"]'>
                                             <span class="label">Small (32px)</span>
                                         </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["", ".nds-featured-icon", "iconSize"]'
                                             data-trigger-label="Medium">
                                             <span class="label">Medium (40px)</span>

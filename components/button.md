@@ -26,7 +26,7 @@ direction: ltr
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-primary", ".nds-demo", "stdVariant"]'>
                                             <span class="label">Primary</span>
                                         </button>
@@ -59,7 +59,7 @@ direction: ltr
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
-<button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+<button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-lg", ".nds-demo", "stdSize"]'>
                                             <span class="label">LG</span>
                                         </button>
@@ -93,8 +93,8 @@ direction: ltr
                             <button class="nds-btn nds-primary nds-lg nds-demo" data-state="default"><span class="label">Default</span></button>
                             <button class="nds-btn nds-primary nds-lg nds-demo" data-state="hover"><span class="label">Hover</span></button>
                             <button class="nds-btn nds-primary nds-lg nds-demo" data-state="pressed"><span class="label">Pressed</span></button>
-                            <button class="nds-btn nds-primary nds-lg nds-demo selected" data-state="selected"><span class="label">Selected</span></button>
-                            <button class="nds-btn nds-primary nds-lg nds-demo focus" data-state="focused"><span class="label">Focused</span></button>
+                            <button class="nds-btn nds-primary nds-lg nds-demo" data-state="selected"><span class="label">Selected</span></button>
+                            <button class="nds-btn nds-primary nds-lg nds-demo" data-state="focused"><span class="label">Focused</span></button>
                             <button class="nds-btn nds-primary nds-lg nds-demo" disabled><span class="label">Disabled</span></button>
                         </div>
                     </div>
@@ -149,7 +149,7 @@ direction: ltr
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-primary", ".nds-demo", "destVariant"]'>
                                             <span class="label">Primary</span>
                                         </button>
@@ -178,7 +178,7 @@ direction: ltr
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
-<button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+<button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-lg", ".nds-demo", "destSize"]'>
                                             <span class="label">LG</span>
                                         </button>
@@ -212,8 +212,8 @@ direction: ltr
                             <button class="nds-btn nds-primary nds-destructive nds-lg nds-demo" data-state="default"><span class="label">Default</span></button>
                             <button class="nds-btn nds-primary nds-destructive nds-lg nds-demo" data-state="hover"><span class="label">Hover</span></button>
                             <button class="nds-btn nds-primary nds-destructive nds-lg nds-demo" data-state="pressed"><span class="label">Pressed</span></button>
-                            <button class="nds-btn nds-primary nds-destructive nds-lg nds-demo selected" data-state="selected"><span class="label">Selected</span></button>
-                            <button class="nds-btn nds-primary nds-destructive nds-lg nds-demo focus" data-state="focused"><span class="label">Focused</span></button>
+                            <button class="nds-btn nds-primary nds-destructive nds-lg nds-demo" data-state="selected"><span class="label">Selected</span></button>
+                            <button class="nds-btn nds-primary nds-destructive nds-lg nds-demo" data-state="focused"><span class="label">Focused</span></button>
                             <button class="nds-btn nds-primary nds-destructive nds-lg nds-demo" disabled><span class="label">Disabled</span></button>
                         </div>
                     </div>
@@ -268,7 +268,7 @@ direction: ltr
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-primary", ".nds-demo", "layoutVariant"]'>
                                             <span class="label">Primary</span>
                                         </button>
@@ -301,7 +301,7 @@ direction: ltr
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
-<button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+<button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-lg", ".nds-demo", "layoutSize"]'>
                                             <span class="label">LG</span>
                                         </button>
@@ -322,7 +322,7 @@ direction: ltr
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["", ".nds-demo", "layoutContent"]'>
                                             <span class="label">Default</span>
                                         </button>
@@ -343,7 +343,7 @@ direction: ltr
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["", ".nds-demo", "layoutShape"]'>
                                             <span class="label">Default</span>
                                         </button>
@@ -442,7 +442,7 @@ direction: ltr
                                             data-toggler='["nds-secondary", ".nds-demo", "menuVariant"]'>
                                             <span class="label">Secondary</span>
                                         </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-secondary-outline", ".nds-demo", "menuVariant"]'>
                                             <span class="label">Secondary Outline</span>
                                         </button>
@@ -463,7 +463,7 @@ direction: ltr
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
-<button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+<button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-lg", ".nds-demo", "menuSize"]'>
                                             <span class="label">LG</span>
                                         </button>
@@ -484,7 +484,7 @@ direction: ltr
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["", ".nds-demo", "menuContent"]'>
                                             <span class="label">Default</span>
                                         </button>
@@ -569,7 +569,7 @@ direction: ltr
                                             data-toggler='["nds-secondary", ".nds-demo", "groupVariant"]'>
                                             <span class="label">Secondary</span>
                                         </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-secondary-outline", ".nds-demo", "groupVariant"]'>
                                             <span class="label">Secondary Outline</span>
                                         </button>
@@ -590,7 +590,7 @@ direction: ltr
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
-<button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+<button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-lg", ".nds-demo", "groupSize"]'>
                                             <span class="label">LG</span>
                                         </button>
@@ -671,7 +671,7 @@ direction: ltr
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-primary", ".nds-progress", "progressVariant"]'>
                                             <span class="label">Primary</span>
                                         </button>
@@ -704,7 +704,7 @@ direction: ltr
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-lg", ".nds-progress", "progressSize"]'>
                                             <span class="label">LG</span>
                                         </button>
@@ -811,7 +811,7 @@ direction: ltr
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-primary", ".nds-progress-static", "progressStaticVariant"]'>
                                             <span class="label">Primary</span>
                                         </button>
@@ -844,7 +844,7 @@ direction: ltr
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-lg", ".nds-progress-static", "progressStaticSize"]'>
                                             <span class="label">LG</span>
                                         </button>
@@ -951,7 +951,7 @@ direction: ltr
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["data-status=success", ".status-demo-btn", "statusToggle", "attr"]'>
                                             <span class="label">Success</span>
                                         </button>

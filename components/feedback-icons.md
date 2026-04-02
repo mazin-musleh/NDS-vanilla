@@ -26,7 +26,7 @@ direction: ltr
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["data-status=success", ".nds-feedback", "feedbackStatus", "attr"]'>
                                             <span class="label">Success</span>
                                         </button>
@@ -59,7 +59,7 @@ direction: ltr
                                             data-toggler='["nds-sm", ".nds-feedback", "feedbackSize"]'>
                                             <span class="label">Small (16px)</span>
                                         </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["", ".nds-feedback", "feedbackSize"]'
                                             data-trigger-label="Medium">
                                             <span class="label">Medium (24px)</span>
@@ -162,7 +162,7 @@ direction: ltr
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["data-status=error", ".nds-feedback", "feedbackMsgStatus", "attr"]'>
                                             <span class="label">Error</span>
                                         </button>
@@ -191,7 +191,7 @@ direction: ltr
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-sm", ".nds-feedback", "feedbackMsgSize"]'>
                                             <span class="label">Small (16px)</span>
                                         </button>

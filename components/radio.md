@@ -26,7 +26,7 @@ direction: ltr
                 </button>
                 <div class="nds-dropmenu-menu" hidden>
                   <div class="nds-dropmenu-scroll">
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                       data-toggler='["", ".nds-radio-container", "sizeToggle"]'>
                       <span class="label">SM</span>
                     </button>
@@ -45,7 +45,7 @@ direction: ltr
                 data-toggler='["nds-neutral", ".nds-radio", "variantToggle"]'>
                 <span class="label">Neutral</span>
               </button>
-              <button class="nds-btn nds-subtle demo-toggle-btn selected"
+              <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
                 data-toggler='["data-required", ".nds-radio-group", "requiredToggle", "attr"]'>
                 <span class="label">Required</span>
               </button>

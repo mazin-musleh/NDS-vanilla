@@ -30,7 +30,7 @@ direction: ltr
                       data-toggler='["nds-sm", ".nds-switch-container", "sizeToggle"]'>
                       <span class="label">SM</span>
                     </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                       data-toggler='["", ".nds-switch-container", "sizeToggle"]'>
                       <span class="label">MD</span>
                     </button>
@@ -146,7 +146,7 @@ direction: ltr
                       data-toggler='["nds-sm", ".nds-switch-container", "sizeToggle"]'>
                       <span class="label">SM</span>
                     </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                       data-toggler='["", ".nds-switch-container", "sizeToggle"]'>
                       <span class="label">MD</span>
                     </button>

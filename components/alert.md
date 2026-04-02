@@ -27,7 +27,7 @@ direction: ltr
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["data-status=success", ".nds-alert", "alertVariant", "attr"]'>
                                             <span class="label">Success</span>
                                         </button>
@@ -191,7 +191,7 @@ direction: ltr
                                             data-toggler='["data-status=error", ".nds-alert", "inlineVariant", "attr"]'>
                                             <span class="label">Error</span>
                                         </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["data-status=critical", ".nds-alert", "inlineVariant", "attr"]'>
                                             <span class="label">Critical</span>
                                         </button>
@@ -446,7 +446,7 @@ direction: ltr
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["data-status=success", ".nds-alert", "toastVariant", "attr"]'>
                                             <span class="label">Success</span>
                                         </button>

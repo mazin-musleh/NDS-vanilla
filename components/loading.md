@@ -34,7 +34,7 @@ direction: ltr
                                 data-toggler='["nds-sm", ".nds-loading","loadingSize"]'>
                                 <span class="label">SM</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle selected demo-toggle-btn"
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn" data-state="selected"
                                 data-toggler='["nds-md", ".nds-loading","loadingSize"]'>
                                 <span class="label">MD</span>
                             </button>
@@ -119,7 +119,7 @@ direction: ltr
                                 data-toggler='["nds-sm", ".nds-loading","loadingSize"]'>
                                 <span class="label">SM</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle selected demo-toggle-btn"
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn" data-state="selected"
                                 data-toggler='["nds-md", ".nds-loading","loadingSize"]'>
                                 <span class="label">MD</span>
                             </button>

@@ -26,7 +26,7 @@ direction: ltr
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-primary", ".nds-chip", "chipVariant"]'>
                                             <span class="label">Primary</span>
                                         </button>
@@ -47,7 +47,7 @@ direction: ltr
                                             data-toggler='["nds-lg", ".nds-chip", "chipSize"]'>
                                             <span class="label">LG</span>
                                         </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-md", ".nds-chip", "chipSize"]'>
                                             <span class="label">MD</span>
                                         </button>
@@ -58,7 +58,7 @@ direction: ltr
                                     </div>
                                 </div>
                             </div>
-                            <button class="nds-btn nds-subtle demo-toggle-btn selected"
+                            <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
                                 data-toggler='["nds-rounded", ".nds-chip", "chipRounded"]'>
                                 <span class="label">Rounded</span>
                             </button>
@@ -87,7 +87,7 @@ direction: ltr
                             <button class="nds-chip nds-primary nds-rounded" data-state="pressed">
                                 <span class="label">Pressed</span>
                             </button>
-                            <button class="nds-chip nds-primary nds-rounded selected" data-state="selected">
+                            <button class="nds-chip nds-primary nds-rounded" data-state="selected">
                                 <span class="label">Selected</span>
                             </button>
                             <button class="nds-chip nds-primary nds-rounded focus" data-state="focused">

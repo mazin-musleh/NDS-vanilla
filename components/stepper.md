@@ -27,7 +27,7 @@ direction: ltr
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["", ".nds-stepper:not(.nds-vertical):not(.nds-radial)", "stepperHSize"]'>
                                             <span class="label">Default</span>
                                         </button>
@@ -198,7 +198,7 @@ direction: ltr
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["", ".nds-stepper.nds-vertical", "stepperVSize"]'>
                                             <span class="label">Default</span>
                                         </button>
@@ -369,7 +369,7 @@ direction: ltr
                                             data-toggler='["nds-sm", ".nds-stepper.nds-radial", "stepperRSize"]'>
                                             <span class="label">SM</span>
                                         </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["", ".nds-stepper.nds-radial", "stepperRSize"]'>
                                             <span class="label">Default</span>
                                         </button>

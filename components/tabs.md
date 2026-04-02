@@ -333,7 +333,7 @@ direction: ltr
                                                     data-value="7days">
                                                     <span class="nds-option-text">Last 7 Days</span>
                                                 </button>
-                                                <button type="button" class="nds-btn nds-subtle select-option selected"
+                                                <button type="button" class="nds-btn nds-subtle nds-select-option" data-state="selected"
                                                     data-value="30days">
                                                     <span class="nds-option-text">Last 30 Days</span>
                                                 </button>
@@ -419,7 +419,7 @@ direction: ltr
                                                     data-value="ar">
                                                     <span class="nds-option-text">العربية</span>
                                                 </button>
-                                                <button type="button" class="nds-btn nds-subtle select-option selected"
+                                                <button type="button" class="nds-btn nds-subtle nds-select-option" data-state="selected"
                                                     data-value="en">
                                                     <span class="nds-option-text">English</span>
                                                 </button>

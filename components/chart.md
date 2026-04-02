@@ -20,7 +20,7 @@ direction: ltr
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-action">
-                            <button class="nds-btn nds-subtle demo-toggle-btn selected"
+                            <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
                                 data-toggler='["", "#demo-bar", "chartBarDL", "chart"]'
                                 data-chart-opt='{"dataLabels":{"show":true}}'
                                 data-chart-opt-off='{"dataLabels":{"show":false}}'
@@ -36,7 +36,7 @@ direction: ltr
                                 data-code-off="stacked: false,">
                                 <span class="label">Stacked</span>
                             </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn selected"
+                            <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
                                 data-toggler='["", "#demo-bar", "chartBarGrid", "chart"]'
                                 data-chart-opt='{"grid":{"show":true}}'
                                 data-chart-opt-off='{"grid":{"show":false}}'
@@ -44,7 +44,7 @@ direction: ltr
                                 data-code-off="grid:    { show: false }">
                                 <span class="label">Grid</span>
                             </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn selected"
+                            <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
                                 data-toggler='["", "#demo-bar", "chartBarYAxis", "chart"]'
                                 data-chart-opt='{"yaxis":{"show":true}}'
                                 data-chart-opt-off='{"yaxis":{"show":false}}'
@@ -139,7 +139,7 @@ NDS.Chart.create('#my-chart', {
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-action">
-                            <button class="nds-btn nds-subtle demo-toggle-btn selected"
+                            <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
                                 data-toggler='["", "#demo-line", "chartLineSmooth", "chart"]'
                                 data-chart-opt='{"line":{"smooth":true}}'
                                 data-chart-opt-off='{"line":{"smooth":false}}'
@@ -147,7 +147,7 @@ NDS.Chart.create('#my-chart', {
                                 data-code-off="smooth: false,">
                                 <span class="label">Smooth</span>
                             </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn selected"
+                            <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
                                 data-toggler='["", "#demo-line", "chartLineDots", "chart"]'
                                 data-chart-opt='{"line":{"dots":true}}'
                                 data-chart-opt-off='{"line":{"dots":false}}'
@@ -163,7 +163,7 @@ NDS.Chart.create('#my-chart', {
                                 data-code-off="area: false,">
                                 <span class="label">Area</span>
                             </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn selected"
+                            <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
                                 data-toggler='["", "#demo-line", "chartLineGrid", "chart"]'
                                 data-chart-opt='{"grid":{"show":true}}'
                                 data-chart-opt-off='{"grid":{"show":false}}'
@@ -257,7 +257,7 @@ NDS.Chart.create('#my-chart', {
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-action">
-                            <button class="nds-btn nds-subtle demo-toggle-btn selected"
+                            <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
                                 data-toggler='["", "#demo-pie", "chartPieLabels", "chart"]'
                                 data-chart-opt='{"dataLabels":{"show":true}}'
                                 data-chart-opt-off='{"dataLabels":{"show":false}}'
@@ -354,7 +354,7 @@ NDS.Chart.create('#my-chart', {
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-action">
-                            <button class="nds-btn nds-subtle demo-toggle-btn selected"
+                            <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
                                 data-toggler='["", "#demo-donut", "chartDonutLabels", "chart"]'
                                 data-chart-opt='{"dataLabels":{"show":true}}'
                                 data-chart-opt-off='{"dataLabels":{"show":false}}'

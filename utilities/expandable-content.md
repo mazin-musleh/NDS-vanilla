@@ -105,7 +105,7 @@ direction: ltr
                             data-toggler='["nds-shadow", ".nds-card", "cardVariant"]'>
                             <span class="label">Shadow</span>
                         </button>
-                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn selected"
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn" data-state="selected"
                             data-toggler='["nds-stroke", ".nds-card", "cardVariant"]'>
                             <span class="label">Stroke</span>
                         </button>

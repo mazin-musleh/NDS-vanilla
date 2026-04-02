@@ -26,7 +26,7 @@ direction: ltr
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected" data-card-mode="default">
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected" data-card-mode="default">
                                             <span class="label">Default</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-mode="expandable">
@@ -47,7 +47,7 @@ direction: ltr
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected" data-card-header="icon">
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected" data-card-header="icon">
                                             <span class="label">Icon</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-header="image">
@@ -68,7 +68,7 @@ direction: ltr
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected" data-card-state="default">
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected" data-card-state="default">
                                             <span class="label">Default</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-state="interactive">
@@ -80,7 +80,7 @@ direction: ltr
                                     </div>
                                 </div>
                             </div>
-                            <button class="nds-btn nds-subtle demo-toggle-btn selected"
+                            <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
                                 data-toggler='["nds-stroke", ".nds-card", "cardStroke"]'>
                                 <span class="label">Stroke</span>
                             </button>
@@ -92,7 +92,7 @@ direction: ltr
                                 data-toggler='[["nds-truncate", ".nds-card-title", "cardTruncate"],["nds-truncate", ".nds-card-description", "cardTruncate"]]'>
                                 <span class="label">Truncate</span>
                             </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn selected" data-card-toggle="tags">
+                            <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected" data-card-toggle="tags">
                                 <span class="label">Tags</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn" data-card-toggle="rating">
@@ -235,7 +235,7 @@ direction: ltr
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-action">
-                            <button class="nds-btn nds-subtle demo-toggle-btn selected"
+                            <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
                                 data-toggler='["nds-stroke", ".nds-card", "cardStroke"]'>
                                 <span class="label">Stroke</span>
                             </button>
@@ -325,7 +325,7 @@ direction: ltr
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-action">
-                            <button class="nds-btn nds-subtle demo-toggle-btn selected"
+                            <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
                                 data-toggler='["nds-stroke", ".nds-card", "cardStroke"]'>
                                 <span class="label">Stroke</span>
                             </button>

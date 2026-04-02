@@ -38,7 +38,7 @@ direction: ltr
                                             data-toggler='["nds-md", ".nds-avatar", "avatarSize"]'>
                                             <span class="label">MD</span>
                                         </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-lg", ".nds-avatar", "avatarSize"]'>
                                             <span class="label">LG</span>
                                         </button>
@@ -135,7 +135,7 @@ direction: ltr
                                             data-toggler='["nds-md", ".nds-avatar", "iconAvatarSize"]'>
                                             <span class="label">MD</span>
                                         </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-lg", ".nds-avatar", "iconAvatarSize"]'>
                                             <span class="label">LG</span>
                                         </button>
@@ -232,7 +232,7 @@ direction: ltr
                                             data-toggler='["nds-md", ".nds-avatar", "imgAvatarSize"]'>
                                             <span class="label">MD</span>
                                         </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-lg", ".nds-avatar", "imgAvatarSize"]'>
                                             <span class="label">LG</span>
                                         </button>
@@ -333,7 +333,7 @@ direction: ltr
                                             data-toggler='["nds-md", ".nds-avatar", "linkAvatarSize"]'>
                                             <span class="label">MD</span>
                                         </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-lg", ".nds-avatar", "linkAvatarSize"]'>
                                             <span class="label">LG</span>
                                         </button>
@@ -430,7 +430,7 @@ direction: ltr
                                             data-toggler='["nds-md", ".nds-avatar", "btnAvatarSize"]'>
                                             <span class="label">MD</span>
                                         </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-lg", ".nds-avatar", "btnAvatarSize"]'>
                                             <span class="label">LG</span>
                                         </button>
@@ -560,7 +560,7 @@ direction: ltr
                                             data-toggler='["nds-sm", ".nds-avatar-group", "groupSize"]'>
                                             <span class="label">SM</span>
                                         </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-md", ".nds-avatar-group", "groupSize"]'>
                                             <span class="label">MD</span>
                                         </button>
@@ -583,7 +583,7 @@ direction: ltr
                                     </div>
                                 </div>
                             </div>
-                            <button class="nds-btn nds-subtle demo-toggle-btn selected"
+                            <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
                                 data-toggler='["nds-stacked", ".nds-avatar-group", "stackedVariant"]'>
                                 <span class="label">Stacked</span>
                             </button>
