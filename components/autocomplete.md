@@ -48,7 +48,7 @@ direction: ltr
                   <input type="text" id="demo-autocompleteInput" autocomplete="on"
                     placeholder="Type to search...">
                   <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle clear" type="button" aria-label="Clear input" hidden>
+                    <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
                       <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
                     </button>
                   </div>
@@ -88,7 +88,7 @@ direction: ltr
     <input type="text" id="autocomplete-1" autocomplete="on"
       placeholder="Type to search...">
     <div class="nds-form-action">
-      <button class="nds-btn nds-subtle clear" type="button"
+      <button class="nds-btn nds-subtle nds-clear" type="button"
         aria-label="Clear input" hidden>
         <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
       </button>

@@ -816,7 +816,7 @@
                 for (const input of allSearchInputs) {
                     if (!input.closest('.nds-dropmenu-menu')) {
                         const wrapper = input.closest('.nds-form-control') || input.parentElement;
-                        const clearBtn = wrapper?.querySelector('.clear, [aria-label*="مسح"], [aria-label*="clear"]');
+                        const clearBtn = wrapper?.querySelector('.nds-clear, [aria-label*="مسح"], [aria-label*="clear"]');
 
                         this.searchInputs.direct = {
                             input: input,
@@ -855,7 +855,7 @@
 
             const isInsideDropmenu = element.closest('.nds-dropmenu-menu') !== null;
             const searchContainer = element.matches('input') ? element.parentElement : element;
-            const clearBtn = searchContainer.querySelector('.clear, [aria-label*="مسح"], [aria-label*="clear"]');
+            const clearBtn = searchContainer.querySelector('.nds-clear, [aria-label*="مسح"], [aria-label*="clear"]');
 
             const searchRef = { input: searchInput, clearBtn: clearBtn, element: element };
 

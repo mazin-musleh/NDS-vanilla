@@ -72,3 +72,18 @@ Progress Components
 .progress-label             → .nds-progress-label
 .progress-fill              → .nds-progress-fill
 .progress-circle (stepper)  → .nds-progress-circle (scoped under .nds-stepper)
+
+Forms Internal
+--------------
+.clear                      → .nds-clear
+.voiceInput                 → .nds-voice-input
+.select-option              → .nds-select-option
+.select-options             → .nds-select-options
+.option-text                → .nds-option-text
+
+Share Component
+---------------
+.share-x                    → .nds-share-x
+.share-linkedin             → .nds-share-linkedin
+.share-whatsapp             → .nds-share-whatsapp
+.share-copy                 → .nds-share-copy

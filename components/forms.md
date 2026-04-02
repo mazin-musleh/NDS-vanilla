@@ -75,7 +75,7 @@ direction: ltr
                 <div class="nds-form-control">
                   <input type="text" id="demo-textInput" class="nds-input" placeholder="Enter your full name...">
                   <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle clear" type="button" aria-label="Clear input" hidden>
+                    <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
                       <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
                     </button>
                   </div>
@@ -113,7 +113,7 @@ direction: ltr
   <div class="nds-form-control">
     <input type="text" id="text-input-1" class="nds-input" placeholder="Enter your full name...">
     <div class="nds-form-action">
-      <button class="nds-btn nds-subtle clear" type="button" aria-label="Clear input" hidden>
+      <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
         <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
       </button>
     </div>
@@ -533,10 +533,10 @@ direction: ltr
                   <input type="text" id="demo-searchInput" class="nds-search-input" name="search"
                     placeholder="Search services...">
                   <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle clear" type="button" aria-label="Clear search" hidden>
+                    <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear search" hidden>
                       <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
                     </button>
-                    <button class="nds-btn nds-subtle voiceInput" type="button" aria-label="Voice input">
+                    <button class="nds-btn nds-subtle nds-voice-input" type="button" aria-label="Voice input">
                       <i class="hgi hgi-stroke hgi-mic-01 icon"></i>
                     </button>
                   </div>
@@ -575,10 +575,10 @@ direction: ltr
     <i class="hgi hgi-stroke hgi-search-01 icon"></i>
     <input type="text" id="search-input-1" class="nds-search-input" name="search" placeholder="Search services...">
     <div class="nds-form-action">
-      <button class="nds-btn nds-subtle clear" type="button" aria-label="Clear search" hidden>
+      <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear search" hidden>
         <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
       </button>
-      <button class="nds-btn nds-subtle voiceInput" type="button" aria-label="Voice input">
+      <button class="nds-btn nds-subtle nds-voice-input" type="button" aria-label="Voice input">
         <i class="hgi hgi-stroke hgi-mic-01 icon"></i>
       </button>
     </div>
@@ -665,7 +665,7 @@ direction: ltr
                   <i class="hgi hgi-stroke hgi-mail-01 icon"></i>
                   <input type="email" id="demo-emailInput" class="nds-input" placeholder="Enter your email...">
                   <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle clear" type="button" aria-label="Clear email" hidden>
+                    <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear email" hidden>
                       <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
                     </button>
                   </div>
@@ -704,7 +704,7 @@ direction: ltr
     <i class="hgi hgi-stroke hgi-mail-01 icon"></i>
     <input type="email" id="email-input-1" class="nds-input" placeholder="Enter your email...">
     <div class="nds-form-action">
-      <button class="nds-btn nds-subtle clear" type="button" aria-label="Clear email" hidden>
+      <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear email" hidden>
         <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
       </button>
     </div>
@@ -795,7 +795,7 @@ direction: ltr
                   </div>
                   <input type="password" id="demo-passwordInput" class="nds-input" placeholder="Enter password...">
                   <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle clear" type="button" aria-label="Clear password" hidden>
+                    <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear password" hidden>
                       <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
                     </button>
                   </div>
@@ -838,7 +838,7 @@ direction: ltr
     </div>
     <input type="password" id="password-input-1" class="nds-input" placeholder="Enter password...">
     <div class="nds-form-action">
-      <button class="nds-btn nds-subtle clear" type="button" aria-label="Clear password" hidden>
+      <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear password" hidden>
         <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
       </button>
     </div>
@@ -1043,18 +1043,18 @@ direction: ltr
 
                   <!-- Custom Dropdown Menu -->
                   <div class="nds-select-dropdown" hidden>
-                    <div class="select-options">
-                      <button type="button" class="nds-btn nds-subtle select-option" data-value="">
-                        <span class="option-text">Choose an option...</span>
+                    <div class="nds-select-options">
+                      <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="">
+                        <span class="nds-option-text">Choose an option...</span>
                       </button>
-                      <button type="button" class="nds-btn nds-subtle select-option" data-value="option1">
-                        <span class="option-text">Option 1</span>
+                      <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="option1">
+                        <span class="nds-option-text">Option 1</span>
                       </button>
-                      <button type="button" class="nds-btn nds-subtle select-option" data-value="option2">
-                        <span class="option-text">Option 2</span>
+                      <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="option2">
+                        <span class="nds-option-text">Option 2</span>
                       </button>
-                      <button type="button" class="nds-btn nds-subtle select-option" data-value="option3">
-                        <span class="option-text">Option 3</span>
+                      <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="option3">
+                        <span class="nds-option-text">Option 3</span>
                       </button>
                     </div>
                   </div>
@@ -1093,18 +1093,18 @@ direction: ltr
     <input type="text" id="select-input-1" class="nds-input nds-select-input" placeholder="Choose an option..." readonly>
     <input type="hidden" name="selectValue" class="nds-select-value">
     <div class="nds-select-dropdown" hidden>
-      <div class="select-options">
-        <button type="button" class="nds-btn nds-subtle select-option" data-value="">
-          <span class="option-text">Choose an option...</span>
+      <div class="nds-select-options">
+        <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="">
+          <span class="nds-option-text">Choose an option...</span>
         </button>
-        <button type="button" class="nds-btn nds-subtle select-option" data-value="option1">
-          <span class="option-text">Option 1</span>
+        <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="option1">
+          <span class="nds-option-text">Option 1</span>
         </button>
-        <button type="button" class="nds-btn nds-subtle select-option" data-value="option2">
-          <span class="option-text">Option 2</span>
+        <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="option2">
+          <span class="nds-option-text">Option 2</span>
         </button>
-        <button type="button" class="nds-btn nds-subtle select-option" data-value="option3">
-          <span class="option-text">Option 3</span>
+        <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="option3">
+          <span class="nds-option-text">Option 3</span>
         </button>
       </div>
     </div>
@@ -1164,7 +1164,7 @@ direction: ltr
                   <input type="text" id="status-demo-input" class="nds-input"
                     placeholder="Enter your national ID...">
                   <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle clear" type="button" aria-label="Clear input" hidden>
+                    <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
                       <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
                     </button>
                   </div>
@@ -1206,7 +1206,7 @@ direction: ltr
   <div class="nds-form-control">
     <input type="text" id="national-id" class="nds-input" placeholder="Enter your national ID...">
     <div class="nds-form-action">
-      <button class="nds-btn nds-subtle clear" type="button" aria-label="Clear input" hidden>
+      <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
         <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
       </button>
     </div>
@@ -1282,7 +1282,7 @@ var status = NDS.Forms.getStatus(field);
                 <div class="nds-form-control">
                   <input type="text" id="permanent-demo-input" class="nds-input" placeholder="Enter username...">
                   <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle clear" type="button" aria-label="Clear input" hidden>
+                    <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
                       <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
                     </button>
                   </div>
@@ -1332,7 +1332,7 @@ var status = NDS.Forms.getStatus(field);
   <div class="nds-form-control">
     <input type="text" id="username" class="nds-input" placeholder="Enter username...">
     <div class="nds-form-action">
-      <button class="nds-btn nds-subtle clear" type="button" aria-label="Clear input" hidden>
+      <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
         <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
       </button>
     </div>
@@ -1431,7 +1431,7 @@ NDS.Forms.clearStatus(container);</code>
             <i class="hgi hgi-stroke hgi-mic-01 icon"></i>
             <span class="label">Voice Input</span>
           </span>
-          <p class="nds-item-desc">Add a button with <code class="nds-inline-code lang-html">voiceInput</code> class to enable speech-to-text on any input. Uses the Web Speech API with automatic language detection from the page.</p>
+          <p class="nds-item-desc">Add a button with <code class="nds-inline-code lang-html">nds-voice-input</code> class to enable speech-to-text on any input. Uses the Web Speech API with automatic language detection from the page.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">

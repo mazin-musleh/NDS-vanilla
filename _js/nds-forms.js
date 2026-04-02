@@ -38,7 +38,7 @@
     NDS.State.onAdd('loading', FORM_SCOPE, function(el) {
         var fc = el.classList.contains('nds-form-control') ? el : el.querySelector('.nds-form-control');
         if (!fc) return;
-        var clearBtn = fc.querySelector('.nds-form-action .clear');
+        var clearBtn = fc.querySelector('.nds-form-action .nds-clear');
         if (clearBtn) {
             clearBtn.removeAttribute('hidden');
             NDS.State.add(clearBtn, 'loading');
@@ -48,7 +48,7 @@
     NDS.State.onRemove('loading', FORM_SCOPE, function(el) {
         var fc = el.classList.contains('nds-form-control') ? el : el.querySelector('.nds-form-control');
         if (!fc) return;
-        var clearBtn = fc.querySelector('.nds-form-action .clear');
+        var clearBtn = fc.querySelector('.nds-form-action .nds-clear');
         if (clearBtn) NDS.State.remove(clearBtn, 'loading');
     });
 
@@ -654,7 +654,7 @@
             }
 
             // Show/hide clear button
-            var clearButton = formControl.querySelector('.clear');
+            var clearButton = formControl.querySelector('.nds-clear');
             if (clearButton && input.type !== 'radio' && input.type !== 'checkbox') {
                 clearButton.toggleAttribute('hidden', !hasValue);
             }
@@ -982,7 +982,7 @@
         initCustomSelectDropdown: function(selectInput, formControl) {
             var dropdown = formControl.querySelector('.nds-select-dropdown');
             var hiddenInput = formControl.querySelector('.nds-select-value');
-            var options = formControl.querySelectorAll('.select-option');
+            var options = formControl.querySelectorAll('.nds-select-option');
 
             if (!dropdown || !options.length) return;
 
@@ -1069,7 +1069,7 @@
                 option.addEventListener('click', function(e) {
                     e.preventDefault();
                     var value = this.dataset.value || '';
-                    var optionText = this.querySelector('.option-text');
+                    var optionText = this.querySelector('.nds-option-text');
                     var text = optionText ? optionText.textContent : value;
                     selectValue(value, text);
                     selectInput.focus();
@@ -1083,7 +1083,7 @@
                         case ' ':
                             e.preventDefault();
                             var value = this.dataset.value || '';
-                            var optionText = this.querySelector('.option-text');
+                            var optionText = this.querySelector('.nds-option-text');
                             var text = optionText ? optionText.textContent : value;
                             selectValue(value, text);
                             selectInput.focus();
@@ -1144,7 +1144,7 @@
                 });
                 if (matchingOption) {
                     selectedValue = initialValue;
-                    var optionText = matchingOption.querySelector('.option-text');
+                    var optionText = matchingOption.querySelector('.nds-option-text');
                     var text = optionText ? optionText.textContent : initialValue;
                     selectInput.value = text;
                     updateSelectedOptions();
@@ -1160,7 +1160,7 @@
         },
 
         initVoiceInput: function(formControl) {
-            var voiceButton = formControl.querySelector('.nds-form-action .voiceInput');
+            var voiceButton = formControl.querySelector('.nds-form-action .nds-voice-input');
             if (!voiceButton || !VoiceRecognition.isSupported()) {
                 if (voiceButton) voiceButton.style.display = 'none';
                 return;
@@ -1474,7 +1474,7 @@
         },
 
         initClearButton: function(formControl, inputElements) {
-            var clearButton = formControl.querySelector('.nds-form-action .clear');
+            var clearButton = formControl.querySelector('.nds-form-action .nds-clear');
             if (!clearButton) return;
 
             clearButton.addEventListener('click', function(e) {

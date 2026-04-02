@@ -61,7 +61,7 @@ breadcrumb: ["Examples"]
             <div class="nds-form-control">
               <input type="text" id="university-id" class="nds-input" placeholder="" value="" required>
               <div class="nds-form-action">
-                <button class="nds-btn nds-subtle clear" hidden type="button" aria-label="Clear input">
+                <button class="nds-btn nds-subtle nds-clear" hidden type="button" aria-label="Clear input">
                   <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
                 </button>
               </div>
@@ -82,24 +82,24 @@ breadcrumb: ["Examples"]
 
               <!-- Custom Dropdown Menu -->
               <div class="nds-select-dropdown" hidden>
-                <div class="select-options">
-                  <button type="button" class="nds-btn nds-subtle select-option" data-value="">
-                    <span class="option-text">اختر السنة...</span>
+                <div class="nds-select-options">
+                  <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="">
+                    <span class="nds-option-text">اختر السنة...</span>
                   </button>
-                  <button type="button" class="nds-btn nds-subtle select-option" data-value="2025">
-                    <span class="option-text">2025</span>
+                  <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="2025">
+                    <span class="nds-option-text">2025</span>
                   </button>
-                  <button type="button" class="nds-btn nds-subtle select-option" data-value="2024">
-                    <span class="option-text">2024</span>
+                  <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="2024">
+                    <span class="nds-option-text">2024</span>
                   </button>
-                  <button type="button" class="nds-btn nds-subtle select-option" data-value="2023">
-                    <span class="option-text">2023</span>
+                  <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="2023">
+                    <span class="nds-option-text">2023</span>
                   </button>
-                  <button type="button" class="nds-btn nds-subtle select-option" data-value="2022">
-                    <span class="option-text">2022</span>
+                  <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="2022">
+                    <span class="nds-option-text">2022</span>
                   </button>
-                  <button type="button" class="nds-btn nds-subtle select-option" data-value="2021">
-                    <span class="option-text">2021</span>
+                  <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="2021">
+                    <span class="nds-option-text">2021</span>
                   </button>
                 </div>
               </div>
@@ -138,24 +138,24 @@ breadcrumb: ["Examples"]
 
               <!-- Custom Dropdown Menu -->
               <div class="nds-select-dropdown" hidden>
-                <div class="select-options">
-                  <button type="button" class="nds-btn nds-subtle select-option" data-value="">
-                    <span class="option-text">اختر الإجابة...</span>
+                <div class="nds-select-options">
+                  <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="">
+                    <span class="nds-option-text">اختر الإجابة...</span>
                   </button>
-                  <button type="button" class="nds-btn nds-subtle select-option" data-value="social-media">
-                    <span class="option-text">وسائل التواصل الاجتماعي</span>
+                  <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="social-media">
+                    <span class="nds-option-text">وسائل التواصل الاجتماعي</span>
                   </button>
-                  <button type="button" class="nds-btn nds-subtle select-option" data-value="friends">
-                    <span class="option-text">الأصدقاء</span>
+                  <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="friends">
+                    <span class="nds-option-text">الأصدقاء</span>
                   </button>
-                  <button type="button" class="nds-btn nds-subtle select-option" data-value="university">
-                    <span class="option-text">الجامعة</span>
+                  <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="university">
+                    <span class="nds-option-text">الجامعة</span>
                   </button>
-                  <button type="button" class="nds-btn nds-subtle select-option" data-value="search-engine">
-                    <span class="option-text">محركات البحث</span>
+                  <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="search-engine">
+                    <span class="nds-option-text">محركات البحث</span>
                   </button>
-                  <button type="button" class="nds-btn nds-subtle select-option" data-value="other">
-                    <span class="option-text">أخرى</span>
+                  <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="other">
+                    <span class="nds-option-text">أخرى</span>
                   </button>
                 </div>
               </div>
@@ -202,7 +202,7 @@ breadcrumb: ["Examples"]
               </div>
               <input type="email" id="email-address" class="nds-input" placeholder="" value="" required>
               <div class="nds-form-action">
-                <button class="nds-btn nds-subtle clear" hidden type="button" aria-label="Clear input">
+                <button class="nds-btn nds-subtle nds-clear" hidden type="button" aria-label="Clear input">
                   <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
                 </button>
               </div>

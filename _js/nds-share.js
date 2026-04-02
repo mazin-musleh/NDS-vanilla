@@ -37,13 +37,13 @@
             const title = document.title;
 
             // Determine share type by class
-            if (clickedItem.classList.contains('share-x')) {
+            if (clickedItem.classList.contains('nds-share-x')) {
                 this.shareOnX(url, title);
-            } else if (clickedItem.classList.contains('share-linkedin')) {
+            } else if (clickedItem.classList.contains('nds-share-linkedin')) {
                 this.shareOnLinkedIn(url);
-            } else if (clickedItem.classList.contains('share-whatsapp')) {
+            } else if (clickedItem.classList.contains('nds-share-whatsapp')) {
                 this.shareOnWhatsApp(url, title);
-            } else if (clickedItem.classList.contains('share-copy')) {
+            } else if (clickedItem.classList.contains('nds-share-copy')) {
                 this.copyToClipboard(url);
             }
         }
@@ -64,7 +64,7 @@
         }
 
         async copyToClipboard(text) {
-            const copyLinkItem = this.dropdown.querySelector('.share-copy');
+            const copyLinkItem = this.dropdown.querySelector('.nds-share-copy');
             if (!copyLinkItem) return;
 
             const labelElement = copyLinkItem.querySelector('.label');

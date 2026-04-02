@@ -34,7 +34,7 @@
 
             if (!this.formControl || !this.input) return;
 
-            this.clearBtn = this.formControl.querySelector('.nds-form-action .clear');
+            this.clearBtn = this.formControl.querySelector('.nds-form-action .nds-clear');
 
             // Config from container attributes
             this.url = containerElement.getAttribute('data-url');

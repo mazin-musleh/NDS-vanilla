@@ -30,7 +30,7 @@ direction: ltr
                                             <i class="hgi hgi-stroke hgi-search-01 icon"></i>
                                             <input type="text" class="nds-search-input" placeholder="Search cards...">
                                             <div class="nds-form-action">
-                                                <button class="nds-btn nds-subtle clear" hidden><i
+                                                <button class="nds-btn nds-subtle nds-clear" hidden><i
                                                         class="hgi hgi-stroke hgi-cancel-01 icon"></i></button>
                                             </div>
                                         </div>
@@ -126,7 +126,7 @@ direction: ltr
         <i class="hgi hgi-stroke hgi-search-01 icon"></i>
         <input type="text" class="nds-search-input" placeholder="Search cards...">
         <div class="nds-form-action">
-          <button class="nds-btn nds-subtle clear" hidden>
+          <button class="nds-btn nds-subtle nds-clear" hidden>
             <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
           </button>
         </div>

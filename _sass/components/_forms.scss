@@ -366,7 +366,7 @@ fieldset {
         max-height: 200px;
         overflow-y: auto;
 
-        .select-options {
+        .nds-select-options {
             display: flex;
             flex-direction: column;
             gap: var(--spacing-xs);
@@ -456,7 +456,7 @@ fieldset {
 
 }
 
-.nds-form-container[data-state~="listening"] .voiceInput>i {
+.nds-form-container[data-state~="listening"] .nds-voice-input>i {
     animation: colorCycle 1s linear infinite alternate;
 }
 

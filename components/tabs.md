@@ -324,26 +324,26 @@ direction: ltr
 
                                         <!-- Custom Dropdown Menu -->
                                         <div class="nds-select-dropdown hidden">
-                                            <div class="select-options">
-                                                <button type="button" class="nds-btn nds-subtle select-option"
+                                            <div class="nds-select-options">
+                                                <button type="button" class="nds-btn nds-subtle nds-select-option"
                                                     data-value="">
-                                                    <span class="option-text">Select time period...</span>
+                                                    <span class="nds-option-text">Select time period...</span>
                                                 </button>
-                                                <button type="button" class="nds-btn nds-subtle select-option"
+                                                <button type="button" class="nds-btn nds-subtle nds-select-option"
                                                     data-value="7days">
-                                                    <span class="option-text">Last 7 Days</span>
+                                                    <span class="nds-option-text">Last 7 Days</span>
                                                 </button>
                                                 <button type="button" class="nds-btn nds-subtle select-option selected"
                                                     data-value="30days">
-                                                    <span class="option-text">Last 30 Days</span>
+                                                    <span class="nds-option-text">Last 30 Days</span>
                                                 </button>
-                                                <button type="button" class="nds-btn nds-subtle select-option"
+                                                <button type="button" class="nds-btn nds-subtle nds-select-option"
                                                     data-value="90days">
-                                                    <span class="option-text">Last 90 Days</span>
+                                                    <span class="nds-option-text">Last 90 Days</span>
                                                 </button>
-                                                <button type="button" class="nds-btn nds-subtle select-option"
+                                                <button type="button" class="nds-btn nds-subtle nds-select-option"
                                                     data-value="1year">
-                                                    <span class="option-text">Last Year</span>
+                                                    <span class="nds-option-text">Last Year</span>
                                                 </button>
                                             </div>
                                         </div>
@@ -414,14 +414,14 @@ direction: ltr
 
                                         <!-- Custom Dropdown Menu -->
                                         <div class="nds-select-dropdown hidden">
-                                            <div class="select-options">
-                                                <button type="button" class="nds-btn nds-subtle select-option"
+                                            <div class="nds-select-options">
+                                                <button type="button" class="nds-btn nds-subtle nds-select-option"
                                                     data-value="ar">
-                                                    <span class="option-text">العربية</span>
+                                                    <span class="nds-option-text">العربية</span>
                                                 </button>
                                                 <button type="button" class="nds-btn nds-subtle select-option selected"
                                                     data-value="en">
-                                                    <span class="option-text">English</span>
+                                                    <span class="nds-option-text">English</span>
                                                 </button>
                                             </div>
                                         </div>
