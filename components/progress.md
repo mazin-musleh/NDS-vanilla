@@ -28,24 +28,24 @@ direction: ltr
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-xs", ".nds-progress-circle", "progressSize"]'>
-                                            <span class="label">XS</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-sm", ".nds-progress-circle", "progressSize"]'>
+                                            data-toggler='["", ".nds-progress-circle", "progressSize"]'>
                                             <span class="label">SM</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-md", ".nds-progress-circle", "progressSize"]'>
                                             <span class="label">MD</span>
                                         </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-lg", ".nds-progress-circle", "progressSize"]'>
                                             <span class="label">LG</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-xl", ".nds-progress-circle", "progressSize"]'>
                                             <span class="label">XL</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["nds-2xl", ".nds-progress-circle", "progressSize"]'>
+                                            <span class="label">2XL</span>
                                         </button>
                                     </div>
                                 </div>
@@ -56,7 +56,7 @@ direction: ltr
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["", ".nds-progress-circle", "progressVariant"]'>
                                             <span class="label">Default</span>
                                         </button>
@@ -177,7 +177,7 @@ direction: ltr
                                             data-toggler='["nds-md", ".nds-progress-group", "progressBarSize"]'>
                                             <span class="label">MD</span>
                                         </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-lg", ".nds-progress-group", "progressBarSize"]'>
                                             <span class="label">LG</span>
                                         </button>
@@ -190,7 +190,7 @@ direction: ltr
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn selected"
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["", ".nds-progress-group", "progressBarVariant"]'>
                                             <span class="label">Default</span>
                                         </button>

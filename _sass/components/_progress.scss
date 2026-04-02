@@ -37,34 +37,14 @@
 
     &::before {
       content: counter(progress-counter);
-      // Restore proper sizing for the counter
-      font-size: clamp(10px, calc(var(--_progress-size) * 0.15), 36px) !important;
-      font-weight: 700 !important;
       line-height: normal;
-      letter-spacing: clamp(0rem, calc(var(--_progress-size) * -0.0006), -0.072rem);
+      letter-spacing: clamp(0rem, calc(var(--_progress-size) * -0.0006), -0.12rem);
     }
   }
 
-  // Size variants
-  &.nds-xs {
-    --progress-size: 24px;
-
-    .nds-progress-info :is(.nds-progress-symbol, .nds-progress-text) {
-      display: none;
-    }
-  }
-
-  &.nds-sm {
-    --progress-size: 40px;
-
-    .nds-progress-info .nds-progress-text {
-      display: none;
-    }
-  }
-
-  &.nds-md,
-  & {
-    --progress-size: 64px;
+  // Size variants (default 64px via fallback)
+  &.nds-md {
+    --progress-size: 80px;
   }
 
   &.nds-lg {
@@ -72,7 +52,11 @@
   }
 
   &.nds-xl {
-    --progress-size: 240px;
+    --progress-size: 160px;
+  }
+
+  &.nds-2xl {
+    --progress-size: 200px;
   }
 
   // Style variants
@@ -97,6 +81,7 @@
   // Status feedback icon inside circle
   :is(.nds-feedback, .nds-feedback-icon) {
     display: none;
+    justify-content: center;
   }
 
 

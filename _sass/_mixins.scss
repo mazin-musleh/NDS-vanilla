@@ -386,36 +386,36 @@ textarea {
     position: absolute;
     color: var(--text-primary-paragraph);
     line-height: 1;
-    display: flex;
-    flex-wrap: nowrap;
     align-items: center;
     text-align: center;
-    justify-content: center;
-    flex-direction: column;
   }
 }
 
 @mixin progress-circle-text($size: 24px) {
   .nds-progress-info {
-    gap: clamp(0px, calc(var(--progress-size, #{$size}) * 0.04), 8px) !important;
-    padding: 0 clamp(8px, calc(var(--progress-size, #{$size}) * 0.2), 40px) !important;
+    padding: 0 clamp(8px, calc(var(--_progress-size, #{$size}) * 0.2), 40px) !important;
 
     .nds-progress-percentage {
       display: flex;
       flex-wrap: nowrap;
       flex-direction: row;
       align-items: center;
-      letter-spacing: clamp(0rem, calc(var(--progress-size, #{$size}) * -0.0006), -0.072rem) !important;
+      justify-content: center;
+      letter-spacing: clamp(0rem, calc(var(--_progress-size, #{$size}) * -0.0006), -0.12rem) !important;
     }
 
     :is(.nds-progress-number, .nds-progress-symbol) {
-      font-size: clamp(10px, calc(var(--progress-size, #{$size}) * 0.15), 36px) !important;
+      font-size: clamp(14px, calc(var(--_progress-size, #{$size}) * 0.15 + 6px), 36px) !important;
       font-weight: 700 !important;
       line-height: normal;
     }
 
     .nds-progress-text {
-      font-size: clamp(10px, calc(var(--progress-size, #{$size}) * 0.1), 20px) !important;
+      font-size: clamp(10px, calc(var(--_progress-size, #{$size}) * 0.1), 20px);
+      line-height: clamp(20px, calc(var(--_progress-size, #{$size}) * 0.125 + 5px), 30px);
+      max-height: max(0px, calc(var(--_progress-size, #{$size}) - 80px));
+      overflow: hidden;
+      display: block;
     }
   }
 }
