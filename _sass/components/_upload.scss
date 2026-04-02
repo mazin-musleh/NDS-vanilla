@@ -27,7 +27,7 @@
                 padding-top: var(--spacing-md);
             }
 
-            &.drag-over {
+            &[data-state~="drag-over"] {
                 border-color: var(--border-success) !important;
                 background-color: var(--background-success-25);
 
@@ -90,7 +90,7 @@
         }
 
 
-        &.disabled {
+        &[data-state~="disabled"] {
 
             background-color: unset !important;
 
@@ -227,14 +227,14 @@
             // Progress circle styles now handled by .nds-progress-circle component
         }
 
-        &.processing {
+        &[data-state~="processing"] {
             animation: processing 1.5s ease-in-out infinite;
 
             // Progress circle already at 100% via --progress-value
         }
 
         // Error state styling
-        &.error {
+        &[data-state~="error"] {
 
             border-color: var(--border-error);
             /* background-color: var(--background-error-25); */

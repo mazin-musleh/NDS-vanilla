@@ -218,7 +218,7 @@ $all-spacers: $spacers;
   }
 }
 
-.nds-expandable.nds-expand {
+.nds-expandable[data-state~="expandable"] {
 
   &:has(>.nds-expandable-content),
   &>*:has(>.nds-expandable-content) {
@@ -236,7 +236,7 @@ $all-spacers: $spacers;
     inset-inline-end: 0;
   }
 
-  &.nds-expanded {
+  &[data-state~="expanded"] {
     .nds-expandable-content {
       max-height: 100%;
       padding-bottom: var(--spacing-4xl);

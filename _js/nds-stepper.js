@@ -81,7 +81,7 @@
             const dataStep = parseInt(this.element.dataset.current);
             if (dataStep >= 1 && dataStep <= this.steps.length) return dataStep;
 
-            const currentElement = this.element.querySelector('.current');
+            const currentElement = this.element.querySelector('[data-state~="current"]');
             return currentElement ? Array.from(this.steps).indexOf(currentElement) + 1 : 1;
         }
 
@@ -104,7 +104,11 @@
             this.element.style.setProperty('--total-steps', this.totalSteps);
 
             // Only mark as completed if not radial
-            this.element.classList.toggle('completed', !this.isRadial && this.currentStep >= this.totalSteps);
+            if (!this.isRadial && this.currentStep >= this.totalSteps) {
+                NDS.State.add(this.element, 'completed');
+            } else {
+                NDS.State.remove(this.element, 'completed');
+            }
 
             if (this.progressNumber) {
                 this.progressNumber.textContent = percentage;
@@ -124,17 +128,13 @@
 
             this.steps.forEach((step, index) => {
                 const stepNumber = index + 1;
-                step.classList.remove('completed', 'current', 'upcoming');
 
-                if (allCompleted) {
-                    // Mark all steps as completed if current > total (non-radial only)
-                    step.classList.add('completed');
-                } else if (stepNumber < this.currentStep) {
-                    step.classList.add('completed');
+                if (allCompleted || stepNumber < this.currentStep) {
+                    NDS.State.set(step, 'completed');
                 } else if (stepNumber === this.currentStep) {
-                    step.classList.add('current');
+                    NDS.State.set(step, 'current');
                 } else {
-                    step.classList.add('upcoming');
+                    NDS.State.set(step, 'upcoming');
                 }
             });
         }
@@ -155,10 +155,9 @@
             // Mark last step as completed (linear steppers only)
             if (isLastStep && !this.isRadial) {
                 const lastStep = this.steps[this.totalSteps - 1];
-                if (lastStep && !lastStep.classList.contains('completed')) {
-                    lastStep.classList.remove('current');
-                    lastStep.classList.add('completed');
-                    this.element.classList.add('completed');
+                if (!NDS.State.has(lastStep, 'completed')) {
+                    NDS.State.set(lastStep, 'completed');
+                    NDS.State.add(this.element, 'completed');
                     this.dispatchEvent();
                 }
                 return true;
@@ -172,10 +171,9 @@
             // Un-complete last step instead of going back (linear steppers only)
             if (isLastStep && !this.isRadial) {
                 const lastStep = this.steps[this.totalSteps - 1];
-                if (lastStep && lastStep.classList.contains('completed')) {
-                    lastStep.classList.remove('completed');
-                    lastStep.classList.add('current');
-                    this.element.classList.remove('completed');
+                if (lastStep && NDS.State.has(lastStep, 'completed')) {
+                    NDS.State.set(lastStep, 'current');
+                    NDS.State.remove(this.element, 'completed');
                     this.dispatchEvent();
                     return true;
                 }

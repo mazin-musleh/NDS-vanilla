@@ -1643,6 +1643,7 @@
                     delete card.ndsExpandableInstance;
                 }
                 card.classList.remove('nds-expandable');
+                NDS.State.remove(card, 'expandable', 'expanded');
                 card.removeAttribute('data-nds-expandable-initialized');
                 const cardContent = card.querySelector('.nds-card-content');
                 if (cardContent) cardContent.classList.remove('nds-expandable-content');
@@ -1684,7 +1685,8 @@
                     const truncateBtn = demoCard.querySelector('[data-toggler*="cardTruncate"]');
                     if (truncateBtn) truncateBtn.classList.remove('selected');
 
-                    card.classList.add('nds-expandable', 'nds-expand');
+                    card.classList.add('nds-expandable');
+                    NDS.State.add(card, 'expandable');
                     if (cardContent) {
                         cardContent.classList.add('nds-expandable-content');
                         cardContent.style.setProperty('--max-height', '200px');
@@ -1711,7 +1713,7 @@
                 if (!card) return;
 
                 // Reset mode to default if expandable is active
-                if (state !== 'default' && card.classList.contains('nds-expandable')) {
+                if (state !== 'default' && NDS.State.has(card, 'expandable')) {
                     const defaultModeBtn = demoCard.querySelector('[data-card-mode="default"]');
                     if (defaultModeBtn) defaultModeBtn.click();
                     card = demoCard.querySelector('.demo-container .nds-card');
@@ -2043,8 +2045,10 @@
 
         var clone = rootEl.cloneNode(true);
 
-        // Strip runtime attributes added by JS initialization
-        clone.querySelectorAll('[data-nds-dropmenu-initialized]').forEach(function(el) { el.removeAttribute('data-nds-dropmenu-initialized'); });
+        // Strip all runtime *-initialized attributes added by JS
+        [clone, ...clone.querySelectorAll('*')].forEach(function(el) {
+            el.getAttributeNames().filter(a => a.endsWith('-initialized')).forEach(a => el.removeAttribute(a));
+        });
         clone.querySelectorAll('[aria-expanded]').forEach(function(el) { el.removeAttribute('aria-expanded'); el.removeAttribute('aria-haspopup'); });
         clone.querySelectorAll('[role="menu"]').forEach(function(el) { el.removeAttribute('role'); el.removeAttribute('aria-hidden'); el.removeAttribute('style'); });
         clone.querySelectorAll('[role="menuitem"]').forEach(function(el) { el.removeAttribute('role'); });
@@ -2102,7 +2106,16 @@
         clone.querySelectorAll('[hidden]').forEach(el => el.remove());
         clone.querySelectorAll('[data-short-desc]').forEach(el => el.removeAttribute('data-short-desc'));
 
-        // Clean expandable inline style to use attribute format
+        // Strip all runtime *-initialized attributes
+        [clone, ...clone.querySelectorAll('*')].forEach(el => {
+            el.getAttributeNames().filter(a => a.endsWith('-initialized')).forEach(a => el.removeAttribute(a));
+        });
+
+        // Clean expandable: strip runtime state and button, keep structure
+        clone.querySelectorAll('.nds-expandable').forEach(el => {
+            NDS.State.remove(el, 'expandable', 'expanded');
+        });
+        clone.querySelectorAll('.nds-expand-btn').forEach(el => el.remove());
         const expContent = clone.querySelector('.nds-expandable-content');
         if (expContent) {
             expContent.removeAttribute('style');

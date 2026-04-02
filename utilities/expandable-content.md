@@ -125,7 +125,7 @@ direction: ltr
                 </div>
                 <div class="demo-container">
                     <div class="state-demo">
-                        <div class="nds-card nds-stroke nds-expandable nds-expand">
+                        <div class="nds-card nds-stroke nds-expandable" data-state="expandable">
                             <div class="nds-expandable-content" style="--max-height:200px">
                                 <div class="nds-card-content">
                                     <div class="nds-card-text">
@@ -162,7 +162,7 @@ direction: ltr
                             </div>
                             <div class="nds-expandable-content">
                                 <code class="lang-html code">
-                                    <div class="nds-card nds-stroke nds-expandable nds-expand">
+                                    <div class="nds-card nds-stroke nds-expandable" data-state="expandable">
                                         <div class="nds-expandable-content" style="--max-height:200px">
                                             <div class="nds-card-content">
                                                 <div class="nds-card-text">

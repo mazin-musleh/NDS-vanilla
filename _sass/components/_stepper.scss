@@ -91,11 +91,11 @@
             }
         }
 
-        &.completed .nds-stepper-base::after {
+        &[data-state~="completed"] .nds-stepper-base::after {
             background-color: var(--stepper-line-completed);
         }
 
-        &.upcoming .nds-stepper-base::after {
+        &[data-state~="upcoming"] .nds-stepper-base::after {
             background-color: var(--stepper-line-upcomming);
         }
     }
@@ -238,7 +238,7 @@
 // ==============================================
 
 // Completed State
-.nds-stepper-step.completed {
+.nds-stepper-step[data-state~="completed"] {
     .nds-stepper-circle {
         border-color: var(--stepper-button-completed);
         background-color: var(--stepper-button-completed);
@@ -271,7 +271,7 @@
 }
 
 // Current State (active/default)
-.nds-stepper-step.current {
+.nds-stepper-step[data-state~="current"] {
     .nds-stepper-circle {
         border-color: var(--stepper-button-current);
         color: var(--stepper-button-current);
@@ -292,7 +292,7 @@
 }
 
 // Upcoming State
-.nds-stepper-step.upcoming {
+.nds-stepper-step[data-state~="upcoming"] {
     .nds-stepper-circle {
         border-color: var(--stepper-button-upcomming);
         color: var(--stepper-button-upcomming);
@@ -331,7 +331,7 @@
         }
     }
 
-    .nds-stepper-step.completed .nds-stepper-circle {
+    .nds-stepper-step[data-state~="completed"] .nds-stepper-circle {
         background-color: var(--stepper-button-completed);
 
         &:hover {
@@ -349,7 +349,7 @@
         }
     }
 
-    .nds-stepper-step.current .nds-stepper-circle {
+    .nds-stepper-step[data-state~="current"] .nds-stepper-circle {
         background-color: var(--stepper-button-current);
 
         &:hover {
@@ -358,7 +358,7 @@
 
     }
 
-    .nds-stepper-step.upcoming .nds-stepper-circle {
+    .nds-stepper-step[data-state~="upcoming"] .nds-stepper-circle {
         background-color: var(--colors-base-white);
         border: 2px solid var(--stepper-button-upcomming);
 
@@ -442,7 +442,7 @@
     }
 
     // Only show current step
-    .nds-stepper-step:not(.current) {
+    .nds-stepper-step:not([data-state~="current"]) {
         display: none;
     }
 
@@ -560,7 +560,7 @@
         }
 
 
-        &.current {
+        &[data-state~="current"] {
 
             .nds-stepper-title {
                 color: var(--text-oncolor-primary);
@@ -582,7 +582,7 @@
 
         }
 
-        &.completed {
+        &[data-state~="completed"] {
 
             .nds-stepper-title {
                 color: var(--text-oncolor-primary);

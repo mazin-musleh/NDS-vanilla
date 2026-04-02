@@ -574,8 +574,10 @@
 
         updateBoundaryClasses() {
             const maxIndex = Math.max(0, this.slides.length - this.slidesPerView);
-            this.container.classList.toggle('at-start', this.currentIndex <= 0);
-            this.container.classList.toggle('at-end', this.currentIndex >= maxIndex);
+            const tokens = [];
+            if (this.currentIndex <= 0) tokens.push('at-start');
+            if (this.currentIndex >= maxIndex) tokens.push('at-end');
+            NDS.State.set(this.container, ...tokens);
         }
 
         // ==============================================

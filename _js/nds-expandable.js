@@ -49,13 +49,12 @@
 
             // Toggle nds-expand class and show/hide button based on content height
             if (actualHeight > maxHeight) {
-                this.expandableContainer.classList.add('nds-expand');
+                NDS.State.add(this.expandableContainer, 'expandable');
                 this.expandButton.style.display = '';
                 // Reset inline style to let CSS handle max-height
                 this.contentElement.style.maxHeight = '';
             } else {
-                this.expandableContainer.classList.remove('nds-expand');
-                this.expandableContainer.classList.remove('nds-expanded'); // Remove expanded state if no longer needed
+                NDS.State.remove(this.expandableContainer, 'expandable', 'expanded');
                 this.expandButton.style.display = 'none';
                 this.isExpanded = false; // Reset expanded state
                 // Remove max-height constraint when content fits
@@ -106,8 +105,8 @@
         expand(syncSiblings = true) {
             this.isExpanded = true;
 
-            // Add expanded class to container
-            this.expandableContainer.classList.add('nds-expanded');
+            // Add expanded state to container
+            NDS.State.add(this.expandableContainer, 'expanded');
 
             // Update button state
             if (this.expandButton) {
@@ -128,8 +127,8 @@
         collapse(syncSiblings = true) {
             this.isExpanded = false;
 
-            // Remove expanded class from container
-            this.expandableContainer.classList.remove('nds-expanded');
+            // Remove expanded state from container
+            NDS.State.remove(this.expandableContainer, 'expanded');
 
             // Update button state
             if (this.expandButton) {
@@ -244,8 +243,8 @@
                 clearTimeout(this.resizeTimer);
             }
 
-            // Remove classes
-            this.expandableContainer.classList.remove('nds-expanded', 'nds-expand');
+            // Remove states
+            NDS.State.remove(this.expandableContainer, 'expanded', 'expandable');
         }
     }
 
@@ -254,8 +253,8 @@
         const expandableContainers = document.querySelectorAll('.nds-expandable');
 
         expandableContainers.forEach(container => {
-            // Skip elements inside code examples but NOT the code examples themselves
-            if (container.closest('code') && !container.matches('code')) {
+            // Skip elements rendered inside <code> tags (markup text, not live components)
+            if (container.closest('code')) {
                 return;
             }
 

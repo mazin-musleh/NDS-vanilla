@@ -96,7 +96,7 @@
             const fileSize = fileItem.querySelector('.file-size');
             const fileType = fileItem.querySelector('.file-type');
             const fileStatus = fileItem.querySelector('.file-status');
-            const feedbackIcon = fileItem.querySelector('.nds-feedback-icon');
+            const feedback = fileItem.querySelector('.nds-feedback');
             const progressCircle = fileItem.querySelector('.nds-progress-circle');
             const removeButton = fileItem.querySelector('.remove-file');
             const fileError = fileItem.querySelector('.file-error');
@@ -110,41 +110,39 @@
             
             // Handle icon vs progress bar vs error display
             if (status === 'uploading' || status === 'processing') {
-                if (feedbackIcon) feedbackIcon.style.display = 'none';
+                if (feedback) feedback.style.display = 'none';
                 if (progressCircle) progressCircle.style.display = 'flex';
                 if (fileError) fileError.style.display = 'none';
-                
-                // Add processing class to file item for processing status
+
+                // Add processing state to file item for processing status
                 if (status === 'processing') {
-                    fileItem.classList.add('processing');
+                    NDS.State.add(fileItem, 'processing');
                 } else {
-                    fileItem.classList.remove('processing');
+                    NDS.State.remove(fileItem, 'processing');
                 }
             } else if (status === 'error') {
-                if (feedbackIcon) {
-                    feedbackIcon.style.display = '';
-                    feedbackIcon.classList.add('nds-error');
-                    feedbackIcon.classList.remove('nds-success');
+                if (feedback) {
+                    feedback.style.display = '';
+                    NDS.Status.set(feedback, 'error');
                 }
                 if (progressCircle) progressCircle.style.display = 'none';
                 if (fileError && errorMessage) {
                     fileError.style.display = 'flex';
                     errorMessage.textContent = fileData.error || 'Upload failed';
                 }
-                fileItem.classList.add('error');
+                NDS.State.add(fileItem, 'error');
             } else {
-                if (feedbackIcon) {
-                    feedbackIcon.style.display = '';
+                if (feedback) {
+                    feedback.style.display = '';
                     if (status === 'complete') {
-                        feedbackIcon.classList.add('nds-success');
-                        feedbackIcon.classList.remove('nds-error');
+                        NDS.Status.set(feedback, 'success');
                     } else {
-                        feedbackIcon.classList.remove('nds-success', 'nds-error');
+                        NDS.Status.clear(feedback);
                     }
                 }
                 if (progressCircle) progressCircle.style.display = 'none';
                 if (fileError) fileError.style.display = 'none';
-                fileItem.classList.remove('error', 'processing');
+                NDS.State.remove(fileItem, 'error', 'processing');
             }
             
             // Update progress if uploading or processing
@@ -521,21 +519,21 @@
                 if (!dragOverHandler) {
                     dragOverHandler = function(e) {
                         e.preventDefault();
-                        dropZone.classList.add('drag-over');
+                        NDS.State.add(dropZone, 'drag-over');
                         uploadContainer.classList.add('dropBoxActive');
                     };
                     
                     dragLeaveHandler = function(e) {
                         e.preventDefault();
                         if (!dropZone.contains(e.relatedTarget)) {
-                            dropZone.classList.remove('drag-over');
+                            NDS.State.remove(dropZone, 'drag-over');
                             uploadContainer.classList.remove('dropBoxActive');
                         }
                     };
                     
                     dropHandler = function(e) {
                         e.preventDefault();
-                        dropZone.classList.remove('drag-over');
+                        NDS.State.remove(dropZone, 'drag-over');
                         uploadContainer.classList.remove('dropBoxActive');
                         
                         const files = e.dataTransfer.files;
@@ -565,7 +563,7 @@
                 dropZone.removeEventListener('dragleave', dragLeaveHandler);
                 dropZone.removeEventListener('drop', dropHandler);
                 uploadZone.removeEventListener('click', uploadZoneClickHandler);
-                dropZone.classList.remove('drag-over');
+                NDS.State.remove(dropZone, 'drag-over');
                 uploadContainer.classList.remove('dropBoxActive');
                 dragListenersActive = false;
             }

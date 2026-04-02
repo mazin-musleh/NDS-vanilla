@@ -298,7 +298,7 @@ direction: ltr
                                             <i class="hgi hgi-stroke hgi-arrow-up-down nds-sort-icon"></i>
                                         </button>
                                     </th>
-                                    <th class="nds-sortable-col nds-sorted-asc">
+                                    <th class="nds-sortable-col" data-state="sorted-asc">
                                         <button class="nds-btn nds-sort-header">
                                             <span class="label">Employees</span>
                                             <i class="hgi hgi-stroke hgi-arrow-up nds-sort-icon"></i>
@@ -375,7 +375,7 @@ direction: ltr
                                           <i class="hgi hgi-stroke hgi-arrow-up-down nds-sort-icon"></i>
                                         </button>
                                       </th>
-                                      <th class="nds-sortable-col nds-sorted-asc">
+                                      <th class="nds-sortable-col" data-state="sorted-asc">
                                         <button class="nds-btn nds-sort-header">
                                           Employees
                                           <i class="hgi hgi-stroke hgi-arrow-up nds-sort-icon"></i>

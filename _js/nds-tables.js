@@ -47,7 +47,7 @@
         }
 
         findActiveSortColumn() {
-            const sortedTh = this.thead.querySelector('.nds-sorted-asc, .nds-sorted-desc');
+            const sortedTh = this.thead.querySelector('[data-state~="sorted-asc"], [data-state~="sorted-desc"]');
             if (sortedTh) {
                 const button = sortedTh.querySelector('.nds-sort-header');
                 return this.sortButtons.indexOf(button);
@@ -56,11 +56,11 @@
         }
 
         findActiveSortDirection() {
-            const sortedTh = this.thead.querySelector('.nds-sorted-asc, .nds-sorted-desc');
+            const sortedTh = this.thead.querySelector('[data-state~="sorted-asc"], [data-state~="sorted-desc"]');
             if (!sortedTh) return null;
 
-            if (sortedTh.classList.contains('nds-sorted-asc')) return 'asc';
-            if (sortedTh.classList.contains('nds-sorted-desc')) return 'desc';
+            if (NDS.State.has(sortedTh, 'sorted-asc')) return 'asc';
+            if (NDS.State.has(sortedTh, 'sorted-desc')) return 'desc';
             return null;
         }
 
@@ -157,17 +157,17 @@
             this.sortButtons.forEach(button => {
                 const th = button.closest('th');
 
-                th.classList.remove('nds-sorted-asc', 'nds-sorted-desc');
+                NDS.State.remove(th, 'sorted-asc', 'sorted-desc');
                 button.setAttribute('aria-sort', 'none');
             });
         }
 
         applySortState(th, button, direction) {
             if (direction === 'asc') {
-                th.classList.add('nds-sorted-asc');
+                NDS.State.add(th, 'sorted-asc');
                 button.setAttribute('aria-sort', 'ascending');
             } else if (direction === 'desc') {
-                th.classList.add('nds-sorted-desc');
+                NDS.State.add(th, 'sorted-desc');
                 button.setAttribute('aria-sort', 'descending');
             }
         }

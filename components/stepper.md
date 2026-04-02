@@ -75,7 +75,7 @@ direction: ltr
                     <div class="demo-container">
                         <div class="state-demo">
                             <div class="nds-stepper" id="demo-stepper-horizontal" data-current="2" data-total="3">
-                                <div class="nds-stepper-step completed has-line">
+                                <div class="nds-stepper-step has-line" data-state="completed">
                                     <div class="nds-stepper-base">
                                         <div class="nds-stepper-circle" data-step-text="1"></div>
                                     </div>
@@ -86,7 +86,7 @@ direction: ltr
                                         </div>
                                     </div>
                                 </div>
-                                <div class="nds-stepper-step current has-line">
+                                <div class="nds-stepper-step has-line" data-state="current">
                                     <div class="nds-stepper-base">
                                         <div class="nds-stepper-circle" data-step-text="2"></div>
                                     </div>
@@ -97,7 +97,7 @@ direction: ltr
                                         </div>
                                     </div>
                                 </div>
-                                <div class="nds-stepper-step upcoming">
+                                <div class="nds-stepper-step" data-state="upcoming">
                                     <div class="nds-stepper-base">
                                         <div class="nds-stepper-circle" data-step-text="3"></div>
                                     </div>
@@ -132,7 +132,7 @@ direction: ltr
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
 <div class="nds-stepper" id="demo-stepper-horizontal" data-current="2" data-total="3">
-  <div class="nds-stepper-step completed has-line">
+  <div class="nds-stepper-step has-line" data-state="completed">
     <div class="nds-stepper-base">
       <div class="nds-stepper-circle" data-step-text="1"></div>
     </div>
@@ -143,7 +143,7 @@ direction: ltr
       </div>
     </div>
   </div>
-  <div class="nds-stepper-step current has-line">
+  <div class="nds-stepper-step has-line" data-state="current">
     <div class="nds-stepper-base">
       <div class="nds-stepper-circle" data-step-text="2"></div>
     </div>
@@ -154,7 +154,7 @@ direction: ltr
       </div>
     </div>
   </div>
-  <div class="nds-stepper-step upcoming">
+  <div class="nds-stepper-step" data-state="upcoming">
     <div class="nds-stepper-base">
       <div class="nds-stepper-circle" data-step-text="3"></div>
     </div>
@@ -242,7 +242,7 @@ direction: ltr
                     <div class="demo-container">
                         <div class="state-demo">
                             <div class="nds-stepper nds-vertical" id="demo-stepper-vertical" data-current="2" data-total="3">
-                                <div class="nds-stepper-step completed has-line">
+                                <div class="nds-stepper-step has-line" data-state="completed">
                                     <div class="nds-stepper-base">
                                         <div class="nds-stepper-circle" data-step-text="1"></div>
                                     </div>
@@ -253,7 +253,7 @@ direction: ltr
                                         </div>
                                     </div>
                                 </div>
-                                <div class="nds-stepper-step current has-line">
+                                <div class="nds-stepper-step has-line" data-state="current">
                                     <div class="nds-stepper-base">
                                         <div class="nds-stepper-circle" data-step-text="2"></div>
                                     </div>
@@ -264,7 +264,7 @@ direction: ltr
                                         </div>
                                     </div>
                                 </div>
-                                <div class="nds-stepper-step upcoming">
+                                <div class="nds-stepper-step" data-state="upcoming">
                                     <div class="nds-stepper-base">
                                         <div class="nds-stepper-circle" data-step-text="3"></div>
                                     </div>
@@ -299,7 +299,7 @@ direction: ltr
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
 <div class="nds-stepper nds-vertical" id="demo-stepper-vertical" data-current="2" data-total="3">
-  <div class="nds-stepper-step completed has-line">
+  <div class="nds-stepper-step has-line" data-state="completed">
     <div class="nds-stepper-base">
       <div class="nds-stepper-circle" data-step-text="1"></div>
     </div>
@@ -310,7 +310,7 @@ direction: ltr
       </div>
     </div>
   </div>
-  <div class="nds-stepper-step current has-line">
+  <div class="nds-stepper-step has-line" data-state="current">
     <div class="nds-stepper-base">
       <div class="nds-stepper-circle" data-step-text="2"></div>
     </div>
@@ -321,7 +321,7 @@ direction: ltr
       </div>
     </div>
   </div>
-  <div class="nds-stepper-step upcoming">
+  <div class="nds-stepper-step" data-state="upcoming">
     <div class="nds-stepper-base">
       <div class="nds-stepper-circle" data-step-text="3"></div>
     </div>
@@ -426,7 +426,7 @@ direction: ltr
                                         <span class="nds-progress-text"></span>
                                     </div>
                                 </div>
-                                <div class="nds-stepper-step completed has-line">
+                                <div class="nds-stepper-step has-line" data-state="completed">
                                     <div class="nds-stepper-base">
                                         <div class="nds-stepper-circle" data-step-text="1"></div>
                                     </div>
@@ -437,7 +437,7 @@ direction: ltr
                                         </div>
                                     </div>
                                 </div>
-                                <div class="nds-stepper-step current has-line">
+                                <div class="nds-stepper-step has-line" data-state="current">
                                     <div class="nds-stepper-base">
                                         <div class="nds-stepper-circle" data-step-text="2"></div>
                                     </div>
@@ -448,7 +448,7 @@ direction: ltr
                                         </div>
                                     </div>
                                 </div>
-                                <div class="nds-stepper-step upcoming has-line">
+                                <div class="nds-stepper-step has-line" data-state="upcoming">
                                     <div class="nds-stepper-base">
                                         <div class="nds-stepper-circle" data-step-text="3"></div>
                                     </div>
@@ -459,7 +459,7 @@ direction: ltr
                                         </div>
                                     </div>
                                 </div>
-                                <div class="nds-stepper-step upcoming">
+                                <div class="nds-stepper-step" data-state="upcoming">
                                     <div class="nds-stepper-base">
                                         <div class="nds-stepper-circle" data-step-text="4"></div>
                                     </div>
@@ -507,7 +507,7 @@ direction: ltr
       <span class="nds-progress-text"></span>
     </div>
   </div>
-  <div class="nds-stepper-step completed has-line">
+  <div class="nds-stepper-step has-line" data-state="completed">
     <div class="nds-stepper-base">
       <div class="nds-stepper-circle" data-step-text="1"></div>
     </div>
@@ -518,7 +518,7 @@ direction: ltr
       </div>
     </div>
   </div>
-  <div class="nds-stepper-step current has-line">
+  <div class="nds-stepper-step has-line" data-state="current">
     <div class="nds-stepper-base">
       <div class="nds-stepper-circle" data-step-text="2"></div>
     </div>
@@ -529,7 +529,7 @@ direction: ltr
       </div>
     </div>
   </div>
-  <div class="nds-stepper-step upcoming has-line">
+  <div class="nds-stepper-step has-line" data-state="upcoming">
     <div class="nds-stepper-base">
       <div class="nds-stepper-circle" data-step-text="3"></div>
     </div>
@@ -540,7 +540,7 @@ direction: ltr
       </div>
     </div>
   </div>
-  <div class="nds-stepper-step upcoming">
+  <div class="nds-stepper-step" data-state="upcoming">
     <div class="nds-stepper-base">
       <div class="nds-stepper-circle" data-step-text="4"></div>
     </div>
