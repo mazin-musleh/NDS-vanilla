@@ -278,7 +278,7 @@
             color: var(--stepper-button-current-hovered);
         }
 
-        :not(.nds-oncolor) > & {
+        :not(.nds-oncolor)>& {
             @include dark {
                 &::before {
                     color: var(--text-success);
@@ -356,7 +356,6 @@
     }
 
     .nds-stepper-step[data-state~="upcoming"] .nds-stepper-circle {
-        background-color: var(--colors-base-white);
         border: 2px solid var(--stepper-button-upcomming);
 
         &:hover {
@@ -366,6 +365,15 @@
         &::before,
         &[data-step-text]::before {
             display: none;
+        }
+    }
+
+    &.nds-vertical .nds-stepper-step {
+
+        /* min-height: 128px; */
+
+        .nds-stepper-content {
+            justify-content: flex-start;
         }
     }
 }
@@ -457,12 +465,18 @@
         --content-gap: 0;
         width: 100%;
 
+
         .nds-stepper-title {
-            font-size: calc(var(--progress-size)/4);
+            font-size: clamp(14px, calc(var(--stepper-size) * 0.1 + 8px), 20px);
         }
 
         .nds-stepper-description {
-            font-size: calc(var(--progress-size)/5);
+            font-size: clamp(10px, calc(var(--stepper-size) * 0.056 + 7.3px), 14px);
+        }
+
+        .nds-stepper-next {
+            font-size: clamp(10px, calc(var(--stepper-size) * 0.056 + 7.3px), 14px);
+            color: var(--stepper-text-tertiary);
         }
     }
 
@@ -499,7 +513,7 @@
             align-items: center;
             flex-wrap: nowrap;
             justify-content: center;
-            font-size:calc(var(--progress-size) / 5);
+            font-size: calc(var(--progress-size) / 5);
             /* font-size: clamp(10px, calc(var(--progress-size) * 0.2), 24px) !important; */
             font-weight: 700;
             white-space: nowrap;
@@ -525,6 +539,10 @@
     }
 
     .nds-stepper-description {
+        color: var(--alpha-white-30);
+    }
+
+    .nds-stepper-next {
         color: var(--alpha-white-30);
     }
 
@@ -610,6 +628,40 @@
 
     }
 
+    &.nds-dot {
+        .nds-stepper-circle {
+            background-color: var(--alpha-white-10);
+
+            &::before,
+            &[data-step-text]::before {
+                background-color: var(--alpha-white-30);
+            }
+        }
+
+        .nds-stepper-step[data-state~="completed"] .nds-stepper-circle {
+            background-color: var(--background-surface-oncolor);
+
+            &::before,
+            &[data-step-text]::before {
+                background-color: var(--background-surface-oncolor);
+            }
+        }
+
+        .nds-stepper-step[data-state~="current"] .nds-stepper-circle {
+            background-color: var(--background-surface-oncolor);
+
+            &::before,
+            &[data-step-text]::before {
+                background-color: var(--background-primary);
+            }
+        }
+
+        .nds-stepper-step[data-state~="upcoming"] .nds-stepper-circle {
+            background-color: transparent;
+            border-color: var(--alpha-white-30);
+        }
+    }
+
     &.nds-radial {
         .nds-progress-circle {
             --progress-track-color: var(--alpha-white-30);
@@ -619,9 +671,20 @@
         .nds-progress-circle .nds-progress-info {
             color: var(--text-oncolor-primary);
         }
+
+        .nds-stepper-title {
+            color: var(--text-oncolor-primary);
+        }
+
+        .nds-stepper-description {
+            color: var(--text-oncolor-secondary);
+        }
+
+        .nds-stepper-next {
+            color: var(--text-oncolor-tertiary);
+        }
     }
 
 
 
 }
-

@@ -2,7 +2,7 @@
 layout: page
 title: Stepper
 hero_title: Stepper - National Design System
-hero_description: Numbered step indicators for multi-step processes in horizontal, vertical, and radial layouts with automatic state management and navigation controls
+hero_description: Step-by-step progress indicators for registration forms, onboarding flows, and service applications in horizontal, vertical, and radial layouts
 breadcrumb: ["Components"]
 lang: en
 direction: ltr
@@ -431,6 +431,7 @@ direction: ltr
                                         <div class="nds-stepper-text">
                                             <span class="nds-stepper-title">Personal Information</span>
                                             <span class="nds-stepper-description">Identity details and contact information</span>
+                                            <span class="nds-stepper-next">Next: Document Upload</span>
                                         </div>
                                     </div>
                                 </div>
@@ -442,6 +443,7 @@ direction: ltr
                                         <div class="nds-stepper-text">
                                             <span class="nds-stepper-title">Document Upload</span>
                                             <span class="nds-stepper-description">Upload required supporting documents</span>
+                                            <span class="nds-stepper-next">Next: Review &amp; Confirmation</span>
                                         </div>
                                     </div>
                                 </div>
@@ -453,6 +455,7 @@ direction: ltr
                                         <div class="nds-stepper-text">
                                             <span class="nds-stepper-title">Review &amp; Confirmation</span>
                                             <span class="nds-stepper-description">Verify information before submission</span>
+                                            <span class="nds-stepper-next">Next: Application Submitted</span>
                                         </div>
                                     </div>
                                 </div>
@@ -509,6 +512,7 @@ direction: ltr
       <div class="nds-stepper-text">
         <span class="nds-stepper-title">Personal Information</span>
         <span class="nds-stepper-description">Identity details and contact information</span>
+        <span class="nds-stepper-next">Next: Document Upload</span>
       </div>
     </div>
   </div>
@@ -520,6 +524,7 @@ direction: ltr
       <div class="nds-stepper-text">
         <span class="nds-stepper-title">Document Upload</span>
         <span class="nds-stepper-description">Upload required supporting documents</span>
+        <span class="nds-stepper-next">Next: Review &amp; Confirmation</span>
       </div>
     </div>
   </div>
@@ -531,6 +536,7 @@ direction: ltr
       <div class="nds-stepper-text">
         <span class="nds-stepper-title">Review &amp; Confirmation</span>
         <span class="nds-stepper-description">Verify information before submission</span>
+        <span class="nds-stepper-next">Next: Application Submitted</span>
       </div>
     </div>
   </div>
@@ -631,8 +637,11 @@ direction: ltr
                     <li>Use the <strong>radial layout</strong> for compact spaces like dashboard cards or mobile headers where only the current step needs to be visible</li>
                     <li>Do not use a stepper for indeterminate or percentage-based progress. Use the <a class="nds-color" href="{{ 'components/progress' | relative_url }}">Progress</a> component instead</li>
                     <li>Do not use a stepper for navigation menus or tab-like interfaces. Use <a class="nds-color" href="{{ 'components/tabs' | relative_url }}">Tabs</a> for switching between independent content panels</li>
+                    <li>Use the <strong>dot variant</strong> when step labels are not needed and visual progress alone is sufficient, such as onboarding slides or image carousels</li>
                     <li>Connecting lines between steps are shown by default on all steps except the last</li>
                     <li>Keep step titles short (2 to 4 words). Use the description for additional context</li>
+                    <li>In radial steppers, add <code class="nds-inline-code lang-html">.nds-stepper-next</code> inside the step text to preview the upcoming step name. Omit it on the final step</li>
+                    <li>Radial steppers work best with 3 to 6 steps. Fewer than 3 makes the circle progress hard to read; more than 6 makes step titles too compressed</li>
                     <li>Always provide a unique <code class="nds-inline-code lang-html">id</code> on the stepper container so control buttons and the JS API can target it</li>
                 </ul>
             </div>
@@ -647,15 +656,12 @@ direction: ltr
                         <tr><td><code class="nds-inline-code lang-html">nds-vertical</code></td><td>Container</td><td>Switches to top-to-bottom layout with vertical connecting lines</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-radial</code></td><td>Container</td><td>Circular progress indicator showing one step at a time</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-dot</code></td><td>Container</td><td>Replaces numbered circles with 16px dots (horizontal and vertical)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-center</code></td><td>Container</td><td>Centers step content beneath each circle (horizontal only)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-oncolor</code></td><td>Container</td><td>Adapts colors for dark or branded backgrounds</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-sm</code></td><td>Container</td><td>Smaller radial circle (48px, radial only)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-lg</code></td><td>Container</td><td>Larger circle size (40px linear, 96px radial)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-xl</code></td><td>Container</td><td>Extra-large circle size (48px linear, 120px radial)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-center</code></td><td>Container</td><td>Centers step content beneath each circle (horizontal only)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-oncolor</code></td><td>Container</td><td>Adapts colors for dark or branded backgrounds</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-neutral</code></td><td>Container</td><td>Neutral gray progress circle color (radial only)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-sm</code></td><td>Container</td><td>Smaller radial circle (48px, radial only)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-state="completed"</code></td><td>Step</td><td>Marks the step as completed with a checkmark icon</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-state="current"</code></td><td>Step</td><td>Marks the step as the active step</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-state="upcoming"</code></td><td>Step</td><td>Marks the step as a future step with muted styling</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -673,6 +679,9 @@ direction: ltr
                         <tr><td><code class="nds-inline-code lang-html">data-stepper-control</code></td><td>Set on any button. Values: <code class="nds-inline-code lang-html">next</code>, <code class="nds-inline-code lang-html">previous</code>, or <code class="nds-inline-code lang-html">goto</code>. Buttons inside a stepper target their parent automatically.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-stepper-target</code></td><td>Set on control buttons outside a stepper. The ID of the stepper to control.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-stepper-value</code></td><td>Set on <code class="nds-inline-code lang-html">goto</code> control buttons. The step number to navigate to.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-state="completed"</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-stepper-step</code>. Marks the step as completed with a checkmark icon. Managed automatically by JS.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-state="current"</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-stepper-step</code>. Marks the step as the active step. Managed automatically by JS.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-state="upcoming"</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-stepper-step</code>. Marks the step as a future step with muted styling. Managed automatically by JS.</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -686,7 +695,7 @@ direction: ltr
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">--stepper-size</code></td><td>32px</td><td>Circle diameter for linear steppers. Overridden by size classes</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--stepper-gap</code></td><td>token-based</td><td>Spacing between steps. Adjusts automatically with size classes</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--progress-size</code></td><td>64px</td><td>Circle diameter for radial steppers. Overridden by radial size classes</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--progress-size</code></td><td>var(--stepper-size)</td><td>Circle diameter for radial steppers. Inherits from <code class="nds-inline-code lang-html">--stepper-size</code>, which radial size classes override</td></tr>
                     </tbody>
                 </table>
             </div>
