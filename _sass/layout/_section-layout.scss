@@ -43,7 +43,7 @@
 .nds-section-wrapper:not(:last-child) {
     margin-bottom: var(--spacing-4xl);
 
-    .nds-content-layout.cardView & {
+    .nds-content-layout.nds-cardView & {
         margin-bottom: var(--spacing-2xl);
     }
 }
@@ -149,11 +149,6 @@
     gap: var(--spacing-sm);
     visibility: visible;
     position: relative;
-}
-
-.nds-readMore {
-    margin: var(--spacing-xl) auto 0;
-    display: flex;
 }
 
 /* ── Section wrapper ── */

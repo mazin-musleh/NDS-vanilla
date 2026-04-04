@@ -6,7 +6,7 @@ hero_description: "Celebrating the official launch of Saudi Arabia's comprehensi
 services"
 hero_image: assets/img/riyadhcenter.webp
 hero_image_pos: 50% 30%
-hero_style: "flat"
+hero_style: "nds-flat"
 date: 2025-01-15
 author: "Digital Government Authority"
 lang: en

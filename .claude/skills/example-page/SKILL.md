@@ -63,7 +63,7 @@ Build a new example or promotional page from a brief.
    - `examples/services-list.md` — reference for Liquid data loops + filter/search composition
    - `examples/dashboard-demo.md` — reference for multi-component dashboard composition
    - `examples/registration.md` — reference for Arabic RTL form flows with `minimal` layout
-   - `examples/faculty.md` — reference for profile/detail page with `cardView topSubMenu`
+   - `examples/faculty.md` — reference for profile/detail page with `nds-cardView nds-topSideMenu`
 2. **Read the SCSS** for each NDS component the page will use — verify class names and available variants
 3. **Check `_data/content/`** for available YAML data — use existing data via Liquid loops where applicable
 4. **Look up icons** in `_sass/_hgiRoundedStroke.scss` — verify every icon class. **NEVER guess icon class names.**
@@ -75,9 +75,9 @@ Example pages vary in layout. Choose based on page type:
 | Page type | Layout | Key front matter |
 |-----------|--------|------------------|
 | Full page with sidemenu | `page` | standard breadcrumb |
-| Full-width page | `page` | `body_class: fullWidth`, `layout_class: nds-content-container toEdge` |
+| Full-width page | `page` | `body_class: fullWidth`, `layout_class: nds-content-container nds-toEdge` |
 | Standalone (no chrome) | `minimal` | `layout_class: nds-middle`, `exclude_showcase: true` |
-| Detail/profile page | `page` | `layout_class: cardView topSubMenu` |
+| Detail/profile page | `page` | `layout_class: nds-cardView nds-topSideMenu` |
 | Hidden from sidemenu | any | `hideSidemenu: true` |
 
 All example pages set `lang` and `direction` based on content language (English LTR or Arabic RTL).

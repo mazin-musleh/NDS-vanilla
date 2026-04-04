@@ -42,7 +42,7 @@ direction: ltr
                                 </div>
                             </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='[["nds-card nds-stroke nds-shadow", ".nds-accordion", "accordionStyle"],["noBg", ".demo-container", "containerBg"]]'>
+                                data-toggler='[["nds-card nds-stroke nds-shadow", ".nds-accordion", "accordionStyle"],["nds-noBg", ".demo-container", "containerBg"]]'>
                                 <span class="label">Card View</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
@@ -221,7 +221,7 @@ direction: ltr
                                 </div>
                             </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='[["nds-card nds-stroke nds-shadow", ".nds-accordion", "iconAccordionStyle"],["noBg", ".demo-container", "containerBg"]]'>
+                                data-toggler='[["nds-card nds-stroke nds-shadow", ".nds-accordion", "iconAccordionStyle"],["nds-noBg", ".demo-container", "containerBg"]]'>
                                 <span class="label">Card View</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"

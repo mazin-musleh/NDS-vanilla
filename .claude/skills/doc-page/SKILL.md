@@ -146,7 +146,7 @@ Apply changes following the patterns extracted from `alert.md`. All HTML structu
 
 ### Front Matter
 
-All documentation pages are **English, LTR**. Always set `lang: en` and `direction: ltr`. Use `standard-page.md` as template for new pages. Do NOT use `layout_class: cardView` or `topSubMenu`.
+All documentation pages are **English, LTR**. Always set `lang: en` and `direction: ltr`. Use `standard-page.md` as template for new pages. Do NOT use `layout_class: nds-cardView` or `nds-topSideMenu`.
 
 ### Naming
 

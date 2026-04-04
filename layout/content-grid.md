@@ -21,7 +21,7 @@ direction: ltr
                 <div class="demo-header">
                     <div class="demo-label">Column Tracks</div>
                 </div>
-                <div class="demo-container noBg">
+                <div class="demo-container nds-noBg">
                     <div class="nds-code nds-expandable">
                         <div class="nds-code-action">
                             <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
@@ -248,7 +248,7 @@ direction: ltr
                 <div class="demo-header">
                     <div class="demo-label">Tokens</div>
                 </div>
-                <div class="demo-container noBg">
+                <div class="demo-container nds-noBg">
                     <table class="nds-table nds-striped">
                         <thead>
                             <tr>

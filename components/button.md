@@ -83,7 +83,7 @@ direction: ltr
                                 <span class="label">Indicator</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                                 <span class="label">Remove bg</span>
                             </button>
                         </div>
@@ -202,7 +202,7 @@ direction: ltr
                                 <span class="label">Indicator</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                                 <span class="label">Remove bg</span>
                             </button>
                         </div>
@@ -367,7 +367,7 @@ direction: ltr
                                 <span class="label">Loading</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                                 <span class="label">Remove bg</span>
                             </button>
                         </div>
@@ -606,7 +606,7 @@ direction: ltr
                                 </div>
                             </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                                 <span class="label">Remove bg</span>
                             </button>
                         </div>
@@ -728,7 +728,7 @@ direction: ltr
                                 <span class="label">Reset</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                                 <span class="label">Remove bg</span>
                             </button>
                         </div>
@@ -868,7 +868,7 @@ direction: ltr
                                 <span class="label">Random Value</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                                 <span class="label">Remove bg</span>
                             </button>
                         </div>
@@ -1049,7 +1049,7 @@ btn.addEventListener('click', () => copyAction(btn));
                     <div class="demo-header">
                         <div class="demo-action">
                             <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                                 <span class="label">Remove bg</span>
                             </button>
                         </div>

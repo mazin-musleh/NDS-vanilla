@@ -6,7 +6,7 @@ hero_description: Preparing future leaders in AI, machine learning, and data sci
 breadcrumb: ["College of Computer Science","Artificial Intelligence"]
 lang: en
 direction: ltr
-layout_class: cardView
+layout_class: nds-cardView
 ---
 
 <!--Section 1: About the Program - Expandable Content -->
@@ -32,7 +32,7 @@ layout_class: cardView
     <div class="nds-section-content">
         <div class="nds-content-block nds-grid">
             <div class="nds-block-item col-sm-12 col-lg-6">
-                <dl class="nds-definition-list nds-divided tableView">
+                <dl class="nds-definition-list nds-divided nds-tableView">
                     <div class="nds-definition-item">
                         <dt>
                             <i class="hgi hgi-stroke hgi-school icon"></i>

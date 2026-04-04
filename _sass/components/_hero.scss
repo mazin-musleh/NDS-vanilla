@@ -8,7 +8,7 @@
     --section-padding-block: 0;
     max-height: 550px;
 
-    &:not(.sub) {
+    &:not(.nds-sub) {
         --section-title-FS: var(--nds-display-clamp-lg-FS);
         --section-title-LH: var(--nds-display-clamp-lg-LH);
         --section-title-MB: var(--nds-display-clamp-lg-MB);
@@ -62,7 +62,7 @@
 
     // ── Sub variant ──
 
-    &.sub {
+    &.nds-sub {
         --_brand-light: var(--background-sub-hero);
         --_gradient-angle: 90deg;
         --section-padding-block: var(--spacing-2xl);
@@ -96,7 +96,7 @@
             display: none;
         }
 
-        &.flat {
+        &.nds-flat {
             background: var(--background-default) !important;
             box-shadow: unset !important;
 
@@ -105,10 +105,10 @@
             }
         }
 
-        &.aside {
+        &.nds-aside {
             @include desktop(min) {
                 :is(.nds-breadcrumb-nav, .nds-section-wrapper, .nds-section-head) {
-                    width: calc(100% - var(--nds-sideInfo-width) - var(--spacing-xl));
+                    width: calc(100% - var(--nds-sideinfo-width) - var(--spacing-xl));
                 }
             }
         }
@@ -137,7 +137,7 @@
     // ── Mobile ──
 
     @include mobile {
-        &:not(.sub) .nds-section-content .nds-section-title::before {
+        &:not(.nds-sub) .nds-section-content .nds-section-title::before {
             width: 80vw;
         }
     }

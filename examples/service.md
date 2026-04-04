@@ -1,8 +1,8 @@
 ---
 layout: page
-layout_class: wSideInfo
+layout_class: nds-wSideInfo
 title: Government Digital Service
-hero_style: "aside"
+hero_style: "nds-aside"
 hero_title: Government Digital Service
 hero_description: A comprehensive digital service platform showcasing National Design System components for government services delivery.
 breadcrumb:
@@ -13,7 +13,7 @@ direction: ltr
 heroaction: heroaction-service
 hideSidemenu: true
 ---
-<section id="serviceTabs" class="nds-content-section nds-sideInfo-section">
+<section id="serviceTabs" class="nds-content-section nds-sideinfo-section">
     <div class="nds-section-content">
         <div class="nds-info-content">
             <div class="nds-tabs">
@@ -60,7 +60,7 @@ hideSidemenu: true
                 </div>
             </div>
         </div>
-        <aside class="nds-sideInfo nds-card nds-stroke nds-shadow" aria-label="Service information" hidden>
+        <aside class="nds-sideinfo nds-card nds-stroke nds-shadow" aria-label="Service information" hidden>
             <dl class="nds-definition-list">
                 <div class="nds-definition-item">
                     <dt>

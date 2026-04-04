@@ -9,12 +9,12 @@
    SIDE MENU BASE STYLES
    ======================================== */
 
-.nds-sideMenu {
+.nds-sidemenu {
     --drawer-max-height: calc(100svh - var(--nds-nav-height) - var(--spacing-xl));
     --btn-width: 40px;
-    --_toggle-height: var(--toggle-height, var(--nds-sideMenu-toggle-height, 40px));
-    width: var(--nds-sideMenu-width);
-    min-width: var(--nds-sideMenu-width);
+    --_toggle-height: var(--toggle-height, var(--nds-sidemenu-toggle-height, 40px));
+    width: var(--nds-sidemenu-width);
+    min-width: var(--nds-sidemenu-width);
     background-color: var(--background-menu);
     box-shadow: var(--shadow-md);
     padding: var(--spacing-md);
@@ -22,11 +22,11 @@
     z-index: 1;
 }
 
-.nds-content-layout.cardView .nds-sideMenu {
+.nds-content-layout.nds-cardView .nds-sidemenu {
     border-radius: var(--radius-md);
 }
 
-#sideMenuToggle {
+#nds-sidemenu-toggle {
     --_toggle-transform: var(--toggle-transform, unset);
     --_toggle-pos: var(--toggle-pos, 40svh);
     display: none;
@@ -36,7 +36,7 @@
    NAVIGATION CONTAINER (nds-drawer)
    ======================================== */
 
-.nds-sideMenu>nav.nds-drawer {
+.nds-sidemenu>nav.nds-drawer {
 
     position: sticky;
     top: calc(var(--nds-nav-height) + var(--spacing-md));
@@ -48,11 +48,11 @@
    MENU ITEM ICONS (::after)
    ======================================== */
 
-.hgi-loaded .nds-sideMenu nav li.redirect.external>a:after {
+.hgi-loaded .nds-sidemenu nav li.redirect.external>a:after {
     content: "䊔";
 }
 
-.hgi-loaded .nds-sideMenu nav li.gridView>a:after {
+.hgi-loaded .nds-sidemenu nav li.nds-gridView>a:after {
     content: "䃺";
 }
 
@@ -61,7 +61,7 @@
    ======================================== */
 
 @include tablet(max) {
-    .nds-sideMenu {
+    .nds-sidemenu {
 
         height: 100%;
         border-radius: 0 !important;
@@ -72,7 +72,7 @@
     // ========================================
     // SLIDER MODE STATES - Horizontal sliding (tablet/mobile)
     // ========================================
-    .nds-content-layout:not(.topSubMenu) .nds-sideMenu {
+    .nds-content-layout:not(.nds-topSideMenu) .nds-sidemenu {
         position: fixed;
         top: 0;
         bottom: 0;
@@ -106,7 +106,7 @@
     }
 
     /* Side Menu Toggle Button */
-    #sideMenuToggle:not([hidden]) {
+    #nds-sidemenu-toggle:not([hidden]) {
         --btn-size: 40px;
         border: unset;
         outline: none;
@@ -116,11 +116,11 @@
         display: flex;
         justify-content: center;
         top: calc(var(--nds-nav-height) + var(--spacing-md));
-        --toggle-transform: translate(calc((var(--nds-sideMenu-width)) * -1), var(--_toggle-pos));
+        --toggle-transform: translate(calc((var(--nds-sidemenu-width)) * -1), var(--_toggle-pos));
         box-shadow: var(--shadow-md);
     }
 
-    #sideMenuToggle i {
+    #nds-sidemenu-toggle i {
         font-size: 1.5rem;
         color: var(--text-oncolor-primary);
         scale: -1;
@@ -130,32 +130,32 @@
 
     /* LTR Support */
     @include ltr {
-        #sideMenuToggle i {
+        #nds-sidemenu-toggle i {
             scale: 1;
         }
 
-        .nds-sideMenu {
+        .nds-sidemenu {
             transform: translateX(-100%);
         }
 
-        #sideMenuToggle {
+        #nds-sidemenu-toggle {
             right: unset;
             left: 0;
-            --toggle-transform: translate(calc(var(--nds-sideMenu-width)), var(--_toggle-pos));
+            --toggle-transform: translate(calc(var(--nds-sidemenu-width)), var(--_toggle-pos));
             border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
         }
 
-        .nds-sideMenu li.redirect.external>a::after {
+        .nds-sidemenu li.redirect.external>a::after {
             scale: -1;
         }
     }
 
-    .nds-content-layout:not(.topSubMenu) .nds-sideMenu {
+    .nds-content-layout:not(.nds-topSideMenu) .nds-sidemenu {
 
         --btn-height: 72px;
         --toggle-height: var(--btn-height);
 
-        & #sideMenuToggle {
+        & #nds-sidemenu-toggle {
 
             transform: var(--_toggle-transform);
             transition: transform var(--nds-transition);
@@ -180,11 +180,11 @@
                 }
 
                 &:not([data-state="open"]) {
-                    --toggle-transform: translate(calc((var(--nds-sideMenu-width) - var(--btn-width)/1.5) * -1), var(--_toggle-pos));
+                    --toggle-transform: translate(calc((var(--nds-sidemenu-width) - var(--btn-width)/1.5) * -1), var(--_toggle-pos));
                     --btn-indicator-size: 5px;
 
                     @include ltr {
-                        --toggle-transform: translate(calc(var(--nds-sideMenu-width) - var(--btn-width)/1.5), var(--_toggle-pos));
+                        --toggle-transform: translate(calc(var(--nds-sidemenu-width) - var(--btn-width)/1.5), var(--_toggle-pos));
                     }
 
                     .label {
@@ -206,15 +206,15 @@
     // ========================================
     // TOP SUBMENU MODE - Vertical dropdown (tablet/mobile)
     // ========================================
-    .nds-content-layout.topSubMenu {
+    .nds-content-layout.nds-topSideMenu {
         flex-direction: column;
         gap: 0 !important;
         --btn-gap: var(--spacing-md);
 
-        .nds-sideMenu {
+        .nds-sidemenu {
             position: sticky;
             top: calc(var(--nds-nav-height));
-            --nds-sideMenu-width: 100%;
+            --nds-sidemenu-width: 100%;
             --drawer-max-height: 60svh;
             background-color: unset;
             overflow: clip;
@@ -226,7 +226,7 @@
             z-index: 900;
             flex: unset;
 
-            #sideMenuToggle {
+            #nds-sidemenu-toggle {
                 --btn-width: 100%;
                 --btn-bg: var(--background-nav);
                 --btn-bg-hover: var(--button-background-neutral-hovered);
@@ -294,7 +294,7 @@
                 border-radius: 0;
                 margin-bottom: 1rem;
 
-                #sideMenuToggle {
+                #nds-sidemenu-toggle {
                     position: sticky;
                     top: var(--nds-nav-height);
                 }
@@ -306,8 +306,8 @@
         }
 
         // Add padding-top to mainContent when drawer is open
-        .nds-sideMenu[data-state~="open"]~.nds-main-content {
-            margin-top: calc((var(--_topsubmenu-height) - var(--nds-sideMenu-toggle-height, 40px) + 16px) * -1);
+        .nds-sidemenu[data-state~="open"]~.nds-main-content {
+            margin-top: calc((var(--_topsubmenu-height) - var(--nds-sidemenu-toggle-height, 40px) + 16px) * -1);
         }
     }
 }

@@ -53,7 +53,7 @@
         updatePosition() {
             // Early return for mobile/tablet with reset
             if (window.innerWidth <= 958) {
-                this.sideInfo.style.removeProperty('--nds-sideInfo-top');
+                this.sideInfo.style.removeProperty('--nds-sideinfo-top');
                 return;
             }
 
@@ -69,7 +69,7 @@
             const offsetY = sectionHeadRect.top - parentTop;
 
             // Set CSS variable with the offset
-            this.sideInfo.style.setProperty('--nds-sideInfo-top', `${offsetY}px`);
+            this.sideInfo.style.setProperty('--nds-sideinfo-top', `${offsetY}px`);
         }
 
         setupResize() {
@@ -84,7 +84,7 @@
 
         destroy() {
             this.sideInfo.removeAttribute('data-sideinfo-initialized');
-            this.sideInfo.style.removeProperty('--nds-sideInfo-top');
+            this.sideInfo.style.removeProperty('--nds-sideinfo-top');
 
             if (this._offVisibility) this._offVisibility();
             if (this._offResize) this._offResize();
@@ -96,7 +96,7 @@
     // ==============================================
 
     function initializeComponents() {
-        const sideInfoElements = document.querySelectorAll('.nds-sideInfo');
+        const sideInfoElements = document.querySelectorAll('.nds-sideinfo');
         sideInfoElements.forEach(element => {
             if (element.closest('code, .code-example')) return;
             if (!element.hasAttribute('data-sideinfo-initialized')) {

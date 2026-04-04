@@ -47,7 +47,7 @@
 }
 
 /* ── Hero ── */
-.nds-hero-section:not(.sub) :is(.nds-section-title, .nds-section-description) {
+.nds-hero-section:not(.nds-sub) :is(.nds-section-title, .nds-section-description) {
     color: var(--text-oncolor-primary);
 }
 
@@ -62,9 +62,9 @@
     visibility: hidden;
 }
 
-.nds-sideMenu {
-    width: var(--nds-sideMenu-width);
-    min-width: var(--nds-sideMenu-width);
+.nds-sidemenu {
+    width: var(--nds-sidemenu-width);
+    min-width: var(--nds-sidemenu-width);
     background-color: var(--background-menu);
 
     @include tablet(max) {
@@ -73,7 +73,7 @@
 }
 
 /* ── Hidden components (reserve space) ── */
-[hidden]:is(.nds-tabs, .nds-swiper, .nds-breadcrumb-nav, .nds-sideInfo) {
+[hidden]:is(.nds-tabs, .nds-swiper, .nds-breadcrumb-nav, .nds-sideinfo) {
     display: block;
     visibility: hidden;
     overflow-x: hidden;
@@ -81,7 +81,7 @@
 }
 
 /* ── Reveal once critical CSS loads ── */
-.nds-heroContent,
+.nds-hero-content,
 .nds-content-layout {
     visibility: visible;
 }

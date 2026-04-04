@@ -291,11 +291,11 @@
     }
 
     function initializeSideMenu() {
-        const accMenu = document.querySelector(".nds-sideMenu");
+        const accMenu = document.querySelector(".nds-sidemenu");
         if (!accMenu || accMenu.closest('code, .code-example')) return;
 
-        const toggleBtn = document.getElementById("sideMenuToggle");
-        const isTopMode = accMenu.closest('.nds-content-layout')?.classList.contains('topSubMenu') ?? false;
+        const toggleBtn = document.getElementById("nds-sidemenu-toggle");
+        const isTopMode = accMenu.closest('.nds-content-layout')?.classList.contains('nds-topSideMenu') ?? false;
         const animTarget = isTopMode ? accMenu.querySelector('.nds-drawer') : accMenu;
         const drawer = accMenu.querySelector('.nds-drawer');
 

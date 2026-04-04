@@ -29,7 +29,7 @@ direction: ltr
                             <span class="label">Vertical</span>
                         </button>
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='[["nds-card nds-stroke nds-shadow", ".nds-tabs", "cardView"],["noBg", ".demo-container", "cardView"]]'>
+                            data-toggler='[["nds-card nds-stroke nds-shadow", ".nds-tabs", "nds-cardView"],["nds-noBg", ".demo-container", "nds-cardView"]]'>
                             <span class="label">Card View</span>
                         </button>
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
@@ -248,7 +248,7 @@ direction: ltr
                             <span class="label">Vertical</span>
                         </button>
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='[["nds-card nds-stroke nds-shadow", ".nds-tabs", "cardView"],["noBg", ".demo-container", "cardView"]]'>
+                            data-toggler='[["nds-card nds-stroke nds-shadow", ".nds-tabs", "nds-cardView"],["nds-noBg", ".demo-container", "nds-cardView"]]'>
                             <span class="label">Card View</span>
                         </button>
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
@@ -590,7 +590,7 @@ direction: ltr
         <div class="nds-section-content">
                 <div class="nds-content-block">
                     <h3 class="nds-block-title">HTML Structure Requirements</h3>
-                    <dl class="nds-definition-list tableView">
+                    <dl class="nds-definition-list nds-tableView">
                         <div class="nds-definition-item">
                             <dt><span class="label">&lt;nav&gt; element</span></dt>
                             <dd>Semantic navigation wrapper for the tab list</dd>
@@ -611,7 +611,7 @@ direction: ltr
                 </div>
                 <div class="nds-content-block">
                     <h3 class="nds-block-title">Tab Button Attributes</h3>
-                    <dl class="nds-definition-list tableView">
+                    <dl class="nds-definition-list nds-tableView">
                         <div class="nds-definition-item">
                             <dt><span class="label">aria-selected="true"</span></dt>
                             <dd>Marks the currently active tab (only one tab should have this)</dd>
@@ -641,7 +641,7 @@ direction: ltr
                 <div class="nds-content-block">
                     <h3 class="nds-block-title">Tab Panel Visibility Pattern</h3>
                     <p><strong>Hidden panels require three attributes:</strong></p>
-                    <dl class="nds-definition-list tableView">
+                    <dl class="nds-definition-list nds-tableView">
                         <div class="nds-definition-item">
                             <dt><span class="label">aria-hidden="true"</span></dt>
                             <dd>Informs screen readers that the content is hidden and should be ignored</dd>
@@ -657,7 +657,7 @@ direction: ltr
                     </dl>
 
                     <p><strong>Active panel attributes:</strong></p>
-                    <dl class="nds-definition-list tableView">
+                    <dl class="nds-definition-list nds-tableView">
                         <div class="nds-definition-item">
                             <dt><span class="label">No aria-hidden</span></dt>
                             <dd>Omit the attribute entirely (don't use aria-hidden="false")</dd>
@@ -678,7 +678,7 @@ direction: ltr
                 </div>
                 <div class="nds-content-block">
                     <h3 class="nds-block-title">Keyboard Navigation</h3>
-                    <dl class="nds-definition-list tableView">
+                    <dl class="nds-definition-list nds-tableView">
                         <div class="nds-definition-item">
                             <dt><span class="label">Left/Right Arrow</span></dt>
                             <dd>Navigate between horizontal tabs (automatically reversed in RTL)</dd>
@@ -707,7 +707,7 @@ direction: ltr
                 </div>
                 <div class="nds-content-block">
                     <h3 class="nds-block-title">Layout-Specific Behavior</h3>
-                    <dl class="nds-definition-list tableView">
+                    <dl class="nds-definition-list nds-tableView">
                         <div class="nds-definition-item">
                             <dt><span class="label">Horizontal Tabs</span></dt>
                             <dd>Left/Right arrows for navigation (reversed in RTL). Up/Down also work but Left/Right is

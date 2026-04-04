@@ -24,7 +24,7 @@ direction: rtl
                     <div class="demo-label">Basic Slider</div>
                     <div class="demo-action">
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                            data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                             <span class="label">Remove bg</span>
                         </button>
                     </div>

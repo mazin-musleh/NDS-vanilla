@@ -1,5 +1,5 @@
 {%- assign data = site.data.content[include.item.content_source] %}
-<div class="nds-dropdown-columns nds-rowList">
+<div class="nds-dropdown-columns nds-rowView">
     <div class="nds-list">
         {%- for subitem in data.items %}
         <a class="nds-btn nds-subtle nds-dropdown-item" href="{%- if subitem.url contains '#' and subitem.url | slice: 0 == '#' %}{{ subitem.url }}{%- else %}{{ subitem.url | relative_url }}{%- endif %}">

@@ -22,7 +22,7 @@ direction: ltr
                     <div class="demo-label">Data Table</div>
                     <div class="demo-action">
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                            data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                             <span class="label">Remove bg</span>
                         </button>
                     </div>
@@ -116,7 +116,7 @@ direction: ltr
                     <div class="demo-label">Compact Data Table</div>
                     <div class="demo-action">
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                            data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                             <span class="label">Remove bg</span>
                         </button>
                     </div>
@@ -282,7 +282,7 @@ direction: ltr
                     <div class="demo-label">Sortable Data Table</div>
                     <div class="demo-action">
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                            data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                             <span class="label">Remove bg</span>
                         </button>
                     </div>
@@ -425,7 +425,7 @@ direction: ltr
                     <div class="demo-label">Feedback Status Table</div>
                     <div class="demo-action">
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                            data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                             <span class="label">Remove bg</span>
                         </button>
                     </div>
@@ -611,7 +611,7 @@ direction: ltr
                     <div class="demo-label">Selectable Data Table</div>
                     <div class="demo-action">
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                            data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                             <span class="label">Remove bg</span>
                         </button>
                     </div>
@@ -773,7 +773,7 @@ direction: ltr
                     <div class="demo-label">Responsive Table with Max-Width</div>
                     <div class="demo-action">
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                            data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                             <span class="label">Remove bg</span>
                         </button>
                     </div>
@@ -890,7 +890,7 @@ direction: ltr
                     <div class="demo-label">Paginated Services Table ({{ site.data.content.services | size }} items, 5 per page)</div>
                     <div class="demo-action">
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                            data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                             <span class="label">Remove bg</span>
                         </button>
                     </div>

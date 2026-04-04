@@ -347,7 +347,7 @@ direction: ltr
                     <div class="demo-header">
                         <div class="demo-label">Responsive Breakpoints</div>
                     </div>
-                    <div class="demo-container noBg">
+                    <div class="demo-container nds-noBg">
                         <table class="nds-table nds-responsive nds-striped" style="--min-width:500px;">
                             <thead>
                                 <tr>
@@ -385,7 +385,7 @@ direction: ltr
                     <div class="demo-header">
                         <div class="demo-label">Auto-fit Breakpoints</div>
                     </div>
-                    <div class="demo-container noBg">
+                    <div class="demo-container nds-noBg">
                         <table class="nds-table nds-responsive nds-striped" style="--min-width:500px;">
                             <thead>
                                 <tr>
@@ -432,7 +432,7 @@ direction: ltr
                     <div class="demo-header">
                         <div class="demo-label">Tokens</div>
                     </div>
-                    <div class="demo-container noBg">
+                    <div class="demo-container nds-noBg">
                         <table class="nds-table nds-responsive nds-striped" style="--min-width:600px;">
                             <thead>
                                 <tr>

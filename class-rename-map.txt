@@ -87,3 +87,28 @@ Share Component
 .share-linkedin             → .nds-share-linkedin
 .share-whatsapp             → .nds-share-whatsapp
 .share-copy                 → .nds-share-copy
+
+Content Layout Modifiers
+------------------------
+.cardView                   → .nds-cardView
+.toEdge                     → .nds-toEdge
+.wSideMenu                  → .nds-wSideMenu
+.wSideInfo                  → .nds-wSideInfo
+.topSubMenu                 → .nds-topSideMenu
+.post                       → .nds-post
+.noBg                       → .nds-noBg
+
+Hero Modifiers
+--------------
+.sub                        → .nds-sub
+.flat                       → .nds-flat
+.aside                      → .nds-aside
+.nds-heroContent            → .nds-hero-content
+
+Component Modifiers
+-------------------
+.tableView                  → .nds-tableView
+.rowView                    → .nds-rowView
+.nds-rowList                → .nds-rowView
+.columnView                 → .nds-colView
+.gridView                   → .nds-gridView

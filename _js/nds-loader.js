@@ -63,12 +63,12 @@
         },
         {
             name: 'sidemenu',
-            selector: '.wSideMenu',
+            selector: '.nds-wSideMenu',
             init: () => NDS.SideMenu?.init?.(),
         },
         {
             name: 'sideInfo',
-            selector: '.nds-sideInfo',
+            selector: '.nds-sideinfo',
             init: () => NDS.SideInfo?.init?.(),
         },
         {
@@ -313,7 +313,7 @@
                     '[hidden].nds-swiper, ' +
                     '[hidden].nds-paged-content, ' +
                     '[hidden].nds-footer, ' +
-                    '[hidden].nds-sideInfo '
+                    '[hidden].nds-sideinfo '
                 );
 
                 const collectEnd = performance.now();

@@ -8,7 +8,7 @@ direction: ltr              # ltr | rtl
 # === Hero Section (Sub Hero) ===
 hero_title: Page Title - National Design System
 hero_description: Brief description of this page
-# hero_style: flat          # flat | aside
+# hero_style: nds-flat          # nds-flat | nds-aside
 # hero_image: assets/img/hero.webp  # override site-level hero_image_sub
 # hero_image_pos: 50% 30%           # hero image position
 # hide_share_page: false
@@ -29,7 +29,7 @@ breadcrumb: ["Components"]     # or: [["Parent", "/url"], "Child"]
 
 # === Layout & Body ===
 # body_class: fullWidth
-# layout_class: cardView topSubMenu  # cardView | nds-middle | toEdge | topSubMenu (combinable)
+# layout_class: nds-cardView nds-topSideMenu  # nds-cardView | nds-middle | nds-toEdge | nds-topSideMenu (combinable)
 
 # === Custom Assets ===
 # custom_css:

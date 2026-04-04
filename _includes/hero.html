@@ -73,7 +73,7 @@ Resolution: page front matter → data file → defaults
 {%- assign _has_action = false -%}
 {%- for item in hero_actions -%}{%- unless item == "share" -%}{%- assign _has_action = true -%}{%- endunless -%}{%- endfor -%}
 {%- if share_placement == "action" -%}{%- assign _has_action = true -%}{%- endif -%}
-<section class="nds-hero-section sub {{ page.hero_style }}" aria-label="قسم العرض الرئيسي"
+<section class="nds-hero-section nds-sub {{ page.hero_style }}" aria-label="قسم العرض الرئيسي"
     {%- if hero_bg %} style="--hero_image: url('{{ hero_bg | relative_url }}');"{%- endif %}>
     <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb" hidden>
         <ol class="nds-breadcrumb">

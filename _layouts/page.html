@@ -2,9 +2,9 @@
 layout: default
 ---
 {%- include hero.html hero_type="sub" %}
-<div class="nds-content-layout {%- if page.hideSidemenu != true %} wSideMenu{%- endif %} {{ page.layout_class }}">
+<div class="nds-content-layout {%- if page.hideSidemenu != true %} nds-wSideMenu{%- endif %} {{ page.layout_class }}">
     {%- if page.hideSidemenu != true %}
-    {%- include sideMenu.html %}
+    {%- include sidemenu.html %}
     {%- endif %}
     <div class="nds-main-content">
         {{ content }}

@@ -6,7 +6,7 @@ direction: ltr
 breadcrumb: ["Faculty Members"]
 hero_title: "Dr. Mohammed Ahmed Al-Salem"
 hero_description: "Associate Professor - College of Computer Science"
-layout_class: cardView topSubMenu
+layout_class: nds-cardView nds-topSideMenu
 ---
 
 <section id="facultyInfo" class="nds-content-section nds-user">
@@ -23,7 +23,7 @@ layout_class: cardView topSubMenu
         </div>
 
         <div class="nds-section-content">
-            <dl class="nds-definition-list tableView nds-divided" style="--max-col:4;--mid-col:2;--min-col:2;">
+            <dl class="nds-definition-list nds-tableView nds-divided" style="--max-col:4;--mid-col:2;--min-col:2;">
                 <div class="nds-definition-item">
                     <dt>
                         <i class="hgi hgi-stroke hgi-school icon"></i>
@@ -151,7 +151,7 @@ layout_class: cardView topSubMenu
                     aria-labelledby="tab-education" aria-hidden="true" tabindex="-1" hidden>
                     <div class="nds-content-block">
                         <h3 class="nds-block-title">Academic Qualifications</h3>
-                        <dl class="nds-definition-list tableView">
+                        <dl class="nds-definition-list nds-tableView">
                         <div class="nds-definition-item">
                             <dt><span class="label">Ph.D.</span></dt>
                             <dd>Computer Science (Artificial Intelligence) - Stanford University, USA (2010)</dd>
@@ -172,7 +172,7 @@ layout_class: cardView topSubMenu
                     aria-labelledby="tab-contact" aria-hidden="true" tabindex="-1" hidden>
                     <div class="nds-content-block">
                         <h3 class="nds-block-title">Contact Information</h3>
-                        <dl class="nds-definition-list tableView">
+                        <dl class="nds-definition-list nds-tableView">
                             <div class="nds-definition-item">
                                 <dt><span class="label">Email</span></dt>
                                 <dd>m.alsalem@university.edu.sa</dd>

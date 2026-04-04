@@ -289,7 +289,7 @@
 
         // Skip init-time overflow check for topSubMenu drawers on mobile (checked on open instead)
         // On desktop topSubMenu is inactive, so treat as a regular side menu
-        const isTopSubMenu = drawer.closest('.nds-content-layout.topSubMenu');
+        const isTopSubMenu = drawer.closest('.nds-content-layout.nds-topSideMenu');
         const isDesktop = window.matchMedia(CONFIG.breakpoints.desktop).matches;
         if (!isTopSubMenu || isDesktop) {
             checkOverflow(drawer);

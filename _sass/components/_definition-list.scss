@@ -19,7 +19,7 @@
     flex-direction: column;
     row-gap: var(--_dl-gap, var(--spacing-lg));
 
-    &.tableView {
+    &.nds-tableView {
         display: grid;
         grid-template-columns: auto 1fr;
         height: 100%;
@@ -44,7 +44,7 @@
     width: 100%;
 }
 
-.nds-definition-list.tableView {
+.nds-definition-list.nds-tableView {
     .nds-definition-item {
         grid-column: 1 / -1;
         display: grid;
@@ -89,7 +89,7 @@
     color: var(--text-secondary-paragraph);
 }
 
-.nds-definition-list:not(.tableView) .nds-definition-item:has(> :is(dt, .nds-item-title) .icon) :is(dd, .nds-item-desc) {
+.nds-definition-list:not(.nds-tableView) .nds-definition-item:has(> :is(dt, .nds-item-title) .icon) :is(dd, .nds-item-desc) {
     padding-inline-start: calc(var(--_dl-icon-size) + var(--_dl-icon-gap) + 2px);
 }
 
@@ -100,7 +100,7 @@
 .nds-definition-list.nds-divided {
 
     // For non-tableView variant
-    &:not(.tableView) .nds-definition-item {
+    &:not(.nds-tableView) .nds-definition-item {
         padding-bottom: var(--_dl-gap, var(--spacing-lg));
         border-bottom: 1px solid var(--divider-color);
 
@@ -112,7 +112,7 @@
     }
 
     // For tableView variant
-    &.tableView {
+    &.nds-tableView {
         gap: 0;
 
         .nds-definition-item {

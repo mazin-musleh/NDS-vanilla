@@ -1,7 +1,7 @@
 ---
 # Critical CSS for NDS (National Design System)
 # This file contains above-the-fold styles for faster initial page render
-# Includes: hero, contentLayout
+# Includes: hero, content-layout
 ---
 /*!
  * National Design System - Critical CSS
@@ -31,10 +31,10 @@
 // These components are loaded first for optimal perceived performance
 
 // Section layout - spacing tokens, dimensions, wrapper, layouts (center, horizontal)
-@use 'layout/sectionLayout';
+@use 'layout/section-layout';
 
 // Content layout - grid, layout variants, striping, section context overrides
-@use 'layout/contentLayout';
+@use 'layout/content-layout';
 
 // Hero section - First visual element on most pages
 @use 'components/hero';

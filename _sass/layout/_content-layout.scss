@@ -19,7 +19,7 @@
 
     &>.nds-full-width,
     &>:has(>.nds-full-width),
-    .nds-content-layout:is(.cardView) &.nds-ghost>* {
+    .nds-content-layout:is(.nds-cardView) &.nds-ghost>* {
         grid-column: full-width;
     }
 
@@ -84,13 +84,13 @@ main {
 
     /* ── Edge-to-edge ── */
 
-    &.toEdge {
+    &.nds-toEdge {
         --nds-content-MaxWidth: 100%;
         --layout-gap: 0;
         padding: 0;
         height: 100%;
 
-        &:is(.wSideMenu, .wSideInfo) .nds-main-content {
+        &:is(.nds-wSideMenu, .nds-wSideInfo) .nds-main-content {
             --main-padding-block: 0;
             --main-padding-inline: 0;
             --main-gap: 0;
@@ -99,25 +99,25 @@ main {
 
     /* ── No sidebar ── */
 
-    &:not(.wSideMenu, .wSideInfo) {
+    &:not(.nds-wSideMenu, .nds-wSideInfo) {
         @include desktop(min) {
             --section-padding-block: var(--spacing-7xl);
         }
 
-        &:not(.cardView) .nds-user-feedback-section {
+        &:not(.nds-cardView) .nds-user-feedback-section {
             --section-padding-block: var(--spacing-5xl);
         }
 
         .nds-main-content {
-            section.noBg {
+            section.nds-noBg {
                 --section-margin-block-start: var(--spacing-5xl);
             }
 
-            section.noBg:first-of-type {
+            section.nds-noBg:first-of-type {
                 --section-margin-block-start: 0;
             }
 
-            section.noBg:not(:has(+ .noBg)) {
+            section.nds-noBg:not(:has(+ .nds-noBg)) {
                 --section-margin-block-end: var(--spacing-5xl);
             }
         }
@@ -129,13 +129,13 @@ main {
 
     /* ── Post layout ── */
 
-    &.post .nds-main-content section:first-of-type {
+    &.nds-post .nds-main-content section:first-of-type {
         --section-padding-block-start: 0;
     }
 
     /* ── Card view ── */
 
-    &.cardView {
+    &.nds-cardView {
         --section-padding-block: var(--nds-viewport-padding);
         --layout-gap: var(--spacing-xl);
         --main-padding-block: var(--spacing-xl);
@@ -186,14 +186,14 @@ main {
         }
 
         @include desktop(min) {
-            .nds-sideMenu {
+            .nds-sidemenu {
                 margin-block: var(--spacing-xl);
                 margin-inline: var(--nds-viewport-padding) 0;
             }
         }
 
         @include large-desktop(min) {
-            :is(.nds-main-content, .nds-sideMenu) {
+            :is(.nds-main-content, .nds-sidemenu) {
                 margin-inline: 0;
             }
         }
@@ -201,7 +201,7 @@ main {
 
     /* ── Side menu layout ── */
 
-    &:is(.wSideMenu) {
+    &:is(.nds-wSideMenu) {
         .nds-content-section {
             @include desktop(min) {
                 --section-shadow: var(--shadow-md);
@@ -220,12 +220,12 @@ main {
     }
 
     @include desktop(min) {
-        &:is(.wSideMenu):not(.toEdge) {
+        &:is(.nds-wSideMenu):not(.nds-toEdge) {
             max-width: var(--nds-content-MaxWidth);
             margin-inline: auto;
         }
 
-        &:is(.wSideMenu) .nds-main-content {
+        &:is(.nds-wSideMenu) .nds-main-content {
             width: 100%;
         }
     }
@@ -238,11 +238,11 @@ main {
         }
     }
 
-    &:not(.wSideMenu, .cardView) .nds-main-content {
+    &:not(.nds-wSideMenu, .nds-cardView) .nds-main-content {
         @include _section-striping;
     }
 
-    &:not(.cardView):is(.wSideMenu) .nds-main-content {
+    &:not(.nds-cardView):is(.nds-wSideMenu) .nds-main-content {
         @include tablet(max) {
             @include _section-striping;
         }
@@ -253,7 +253,7 @@ main {
     @include mobile {
         --layout-gap: 0 !important;
 
-        .nds-sideMenu {
+        .nds-sidemenu {
             min-width: 0;
             flex: 0;
         }

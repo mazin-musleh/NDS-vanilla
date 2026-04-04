@@ -59,7 +59,7 @@ direction: ltr
                 <span class="label">Disabled</span>
               </button>
               <button class="nds-btn nds-subtle demo-toggle-btn"
-                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                 <span class="label">Remove bg</span>
               </button>
             </div>
@@ -145,11 +145,11 @@ direction: ltr
                 <span class="label">Disabled</span>
               </button>
               <button class="nds-btn nds-subtle demo-toggle-btn"
-                data-toggler='["rowView", ".nds-check-group", "layoutToggle"]'>
+                data-toggler='["nds-rowView", ".nds-check-group", "layoutToggle"]'>
                 <span class="label">Row View</span>
               </button>
               <button class="nds-btn nds-subtle demo-toggle-btn"
-                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                 <span class="label">Remove bg</span>
               </button>
             </div>
@@ -365,7 +365,7 @@ direction: ltr
             <i class="hgi hgi-stroke hgi-layout-01 icon"></i>
             <span class="label">Responsive Layout</span>
           </span>
-          <p class="nds-item-desc">Column layout by default, row layout with <code class="nds-inline-code lang-html">rowView</code> class. Gaps adjust on mobile for touch-friendly spacing.</p>
+          <p class="nds-item-desc">Column layout by default, row layout with <code class="nds-inline-code lang-html">nds-rowView</code> class. Gaps adjust on mobile for touch-friendly spacing.</p>
         </div>
       </div>
     </div>

@@ -21,7 +21,7 @@ direction: ltr
                     <div class="demo-header">
                         <div class="demo-label">Structure</div>
                     </div>
-                    <div class="demo-container noBg">
+                    <div class="demo-container nds-noBg">
                         <div class="nds-code nds-expandable">
                             <div class="nds-code-action">
                                 <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
@@ -1099,7 +1099,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                     <div class="demo-header">
                         <div class="demo-label">Grid Placement</div>
                     </div>
-                    <div class="demo-container noBg">
+                    <div class="demo-container nds-noBg">
                         <div class="nds-code nds-expandable">
                             <div class="nds-code-action">
                                 <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
@@ -1167,7 +1167,7 @@ Default child         → grid-column: content
                     <div class="demo-header">
                         <div class="demo-label">Visual Tokens</div>
                     </div>
-                    <div class="demo-container noBg">
+                    <div class="demo-container nds-noBg">
                         <table class="nds-table nds-striped">
                             <thead>
                                 <tr>
@@ -1284,7 +1284,7 @@ Default child         → grid-column: content
                     <div class="demo-header">
                         <div class="demo-label">File Structure</div>
                     </div>
-                    <div class="demo-container noBg">
+                    <div class="demo-container nds-noBg">
                         <table class="nds-table nds-striped">
                             <thead>
                                 <tr>
@@ -1302,7 +1302,7 @@ Default child         → grid-column: content
                                 <tr>
                                     <td>_sass/layout/_sectionLayout.scss</td>
                                     <td>Layout overrides</td>
-                                    <td>Wrapper, cardView, 404, sideInfo, horizontal, striping</td>
+                                    <td>Wrapper, nds-cardView, 404, sideInfo, horizontal, striping</td>
                                 </tr>
                                 <tr>
                                     <td>_sass/layout/_contentLayout.scss</td>

@@ -21,7 +21,7 @@ direction: ltr
                     <div class="demo-header">
                         <div class="demo-action">
                             <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                                 <span class="label">Remove bg</span>
                             </button>
                         </div>

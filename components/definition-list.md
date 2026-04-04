@@ -32,7 +32,7 @@ direction: ltr
                                             <span class="label">Default</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["tableView", ".nds-definition-list", "dlLayout"]'>
+                                            data-toggler='["nds-tableView", ".nds-definition-list", "dlLayout"]'>
                                             <span class="label">Table View</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
@@ -65,7 +65,7 @@ direction: ltr
                                 </div>
                             </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                                 <span class="label">Remove bg</span>
                             </button>
                         </div>
@@ -201,7 +201,7 @@ direction: ltr
                                 </div>
                             </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["noBg", ".demo-container", "containerBg"]'>
+                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                                 <span class="label">Remove bg</span>
                             </button>
                         </div>
@@ -357,7 +357,7 @@ direction: ltr
                     <li>Use <strong>semantic markup</strong> (<code class="nds-inline-code lang-html">&lt;dl&gt;/&lt;dt&gt;/&lt;dd&gt;</code>) for data display like user profiles, service details, or specifications where screen reader semantics matter</li>
                     <li>Use <strong>generic markup</strong> (<code class="nds-inline-code lang-html">.nds-item-title</code> / <code class="nds-inline-code lang-html">.nds-item-desc</code>) for feature lists, highlights, or content grids where semantic term-definition relationships don't apply</li>
                     <li>Use <strong>default layout</strong> for vertical stacking. Best when descriptions vary in length or include multiple lines</li>
-                    <li>Use <strong>table view</strong> (<code class="nds-inline-code lang-html">tableView</code>) for compact side-by-side key-value display. Subgrid keeps columns aligned. Only works with <code class="nds-inline-code lang-html">&lt;dt&gt;/&lt;dd&gt;</code> markup</li>
+                    <li>Use <strong>table view</strong> (<code class="nds-inline-code lang-html">nds-tableView</code>) for compact side-by-side key-value display. Subgrid keeps columns aligned. Only works with <code class="nds-inline-code lang-html">&lt;dt&gt;/&lt;dd&gt;</code> markup</li>
                     <li>Use <strong>grid layout</strong> (<code class="nds-inline-code lang-html">nds-grid</code>) for multi-column responsive layouts. Configure breakpoints with <code class="nds-inline-code lang-html">--max-col</code>, <code class="nds-inline-code lang-html">--mid-col</code>, <code class="nds-inline-code lang-html">--min-col</code></li>
                     <li>Combine <strong>styles</strong> independently with any layout: <code class="nds-inline-code lang-html">nds-divided</code> for border separators, <code class="nds-inline-code lang-html">nds-card nds-stroke</code> on items for card appearance</li>
                     <li>Add icons to titles for visual identification. The component auto-indents descriptions to align with the label text</li>

@@ -80,7 +80,7 @@
             padding-inline-start: var(--spacing-md);
         }
     }
-    &.rowView {
+    &.nds-rowView {
         flex-direction: row;
         flex-wrap: wrap;
 
@@ -339,7 +339,7 @@
         row-gap: var(--spacing-lg);
         column-gap: var(--spacing-4xl);
 
-        &.rowView {
+        &.nds-rowView {
             flex-wrap: wrap;
         }
     }
