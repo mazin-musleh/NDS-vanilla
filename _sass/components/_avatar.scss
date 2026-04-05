@@ -55,7 +55,7 @@
   }
 
   // Initials styling
-  .label {
+  .nds-label {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -135,7 +135,7 @@
 // ==============================================
 
 .nds-avatar {
-  :is(.label, i) {
+  :is(.nds-label, i) {
     width: 100%;
     height: 100%;
   }

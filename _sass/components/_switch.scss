@@ -24,7 +24,7 @@
     justify-content: flex-end;
 
     // Label styling
-    .nds-form-header .label {
+    .nds-form-header .nds-label {
         color: var(--text-display);
         font-size: var(--nds-text-md-FS);
         line-height: calc(var(--nds-input-size) + 4px);
@@ -97,7 +97,7 @@
 
     // Required indicator
     &:is([data-required], [data-min-checked], .nds-required) {
-        >.label::after {
+        >.nds-label::after {
             content: " *";
             color: var(--controls-control-text-error);
         }

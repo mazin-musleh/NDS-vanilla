@@ -35,7 +35,7 @@ For each icon class in the file:
 2. If it doesn't exist, search for alternatives using related keywords (e.g., `passport` → try `travel`, `document`, `visa`)
 3. Pick the most contextually fitting alternative — a health service deserves a health-related icon, not a generic file icon
 
-Icon HTML format: `<i class="hgi hgi-stroke hgi-{name} icon"></i>`
+Icon HTML format: `<i class="hgi hgi-stroke hgi-{name} nds-icon"></i>`
 
 ## Content Quality
 

@@ -22,15 +22,15 @@ direction: ltr
             <div class="demo-action">
               <button class="nds-btn nds-subtle demo-toggle-btn"
                 data-toggler='["data-required", ".nds-form-container", "requiredToggle", "attr"]'>
-                <span class="label">Required</span>
+                <span class="nds-label">Required</span>
               </button>
               <button class="nds-btn nds-subtle demo-toggle-btn"
                 data-toggler='["disabled", ".nds-form-container", "disabledToggle", "data-state"]'>
-                <span class="label">Disabled</span>
+                <span class="nds-label">Disabled</span>
               </button>
               <button class="nds-btn nds-subtle demo-toggle-btn"
                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                <span class="label">Remove bg</span>
+                <span class="nds-label">Remove bg</span>
               </button>
             </div>
           </div>
@@ -40,16 +40,16 @@ direction: ltr
                 data-name="Title" data-query-param="q">
                 <div class="nds-form-header">
                   <label for="demo-autocompleteInput">
-                    <span class="label">Search services</span>
+                    <span class="nds-label">Search services</span>
                   </label>
                 </div>
                 <div class="nds-form-control">
-                  <i class="hgi hgi-stroke hgi-search-01 icon"></i>
+                  <i class="hgi hgi-stroke hgi-search-01 nds-icon"></i>
                   <input type="text" id="demo-autocompleteInput" autocomplete="on"
                     placeholder="Type to search...">
                   <div class="nds-form-action">
                     <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
-                      <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
+                      <i class="hgi hgi-stroke hgi-cancel-01 nds-icon"></i>
                     </button>
                   </div>
                 </div>
@@ -80,17 +80,17 @@ direction: ltr
 <div class="nds-form-container" data-url="/api/services" data-name="Title">
   <div class="nds-form-header">
     <label for="autocomplete-1">
-      <span class="label">Search services</span>
+      <span class="nds-label">Search services</span>
     </label>
   </div>
   <div class="nds-form-control">
-    <i class="hgi hgi-stroke hgi-search-01 icon"></i>
+    <i class="hgi hgi-stroke hgi-search-01 nds-icon"></i>
     <input type="text" id="autocomplete-1" autocomplete="on"
       placeholder="Type to search...">
     <div class="nds-form-action">
       <button class="nds-btn nds-subtle nds-clear" type="button"
         aria-label="Clear input" hidden>
-        <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
+        <i class="hgi hgi-stroke hgi-cancel-01 nds-icon"></i>
       </button>
     </div>
   </div>
@@ -119,43 +119,43 @@ direction: ltr
       <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1;">
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket icon"></i>
-            <span class="label">Auto-initialization</span>
+            <i class="hgi hgi-stroke hgi-plug-socket nds-icon"></i>
+            <span class="nds-label">Auto-initialization</span>
           </span>
           <p class="nds-item-desc">Initializes automatically on any input with <code class="nds-inline-code lang-html">autocomplete="on"</code> inside a container with <code class="nds-inline-code lang-html">data-url</code>. For dynamic content, call <code class="nds-inline-code lang-js">NDS.Autocomplete.reinit()</code>.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-search-list-01 icon"></i>
-            <span class="label">Result Highlighting</span>
+            <i class="hgi hgi-stroke hgi-search-list-01 nds-icon"></i>
+            <span class="nds-label">Result Highlighting</span>
           </span>
           <p class="nds-item-desc">Matching characters in results are highlighted with <code class="nds-inline-code lang-html">&lt;mark&gt;</code> tags. Results display in a dropdown built on the NDS Dropmenu component.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-keyboard icon"></i>
-            <span class="label">Keyboard Navigation</span>
+            <i class="hgi hgi-stroke hgi-keyboard nds-icon"></i>
+            <span class="nds-label">Keyboard Navigation</span>
           </span>
           <p class="nds-item-desc">Arrow keys navigate results, Enter selects the active item, Escape closes the dropdown. The active item scrolls into view automatically.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-loading-03 icon"></i>
-            <span class="label">Debounced Fetching</span>
+            <i class="hgi hgi-stroke hgi-loading-03 nds-icon"></i>
+            <span class="nds-label">Debounced Fetching</span>
           </span>
           <p class="nds-item-desc">API requests are debounced at 300ms. Previous in-flight requests are cancelled via AbortController. Loading state shows on the input during fetch.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-globe-02 icon"></i>
-            <span class="label">Bilingual Support</span>
+            <i class="hgi hgi-stroke hgi-globe-02 nds-icon"></i>
+            <span class="nds-label">Bilingual Support</span>
           </span>
           <p class="nds-item-desc">Works with Arabic and English content. Empty state message adapts to the page language. RTL and LTR layouts supported.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-checkmark-circle-02 icon"></i>
-            <span class="label">Form Integration</span>
+            <i class="hgi hgi-stroke hgi-checkmark-circle-02 nds-icon"></i>
+            <span class="nds-label">Form Integration</span>
           </span>
           <p class="nds-item-desc">Selected values sync to the input. Clear button resets the selection. Works with the forms validation and status API.</p>
         </div>

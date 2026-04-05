@@ -22,85 +22,85 @@ direction: ltr
                         <div class="demo-action">
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Color: ">
-                                    <span class="label">Color: Brand</span>
+                                    <span class="nds-label">Color: Brand</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-brand", ".nds-featured-icon", "iconColor"]'>
-                                            <span class="label">Brand</span>
+                                            <span class="nds-label">Brand</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-success", ".nds-featured-icon", "iconColor"]'>
-                                            <span class="label">Success</span>
+                                            <span class="nds-label">Success</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-info", ".nds-featured-icon", "iconColor"]'>
-                                            <span class="label">Info</span>
+                                            <span class="nds-label">Info</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-warning", ".nds-featured-icon", "iconColor"]'>
-                                            <span class="label">Warning</span>
+                                            <span class="nds-label">Warning</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-error", ".nds-featured-icon", "iconColor"]'>
-                                            <span class="label">Error</span>
+                                            <span class="nds-label">Error</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-neutral", ".nds-featured-icon", "iconColor"]'>
-                                            <span class="label">Neutral</span>
+                                            <span class="nds-label">Neutral</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Size: ">
-                                    <span class="label">Size: Medium</span>
+                                    <span class="nds-label">Size: Medium</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-sm", ".nds-featured-icon", "iconSize"]'>
-                                            <span class="label">Small (32px)</span>
+                                            <span class="nds-label">Small (32px)</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["", ".nds-featured-icon", "iconSize"]'
                                             data-trigger-label="Medium">
-                                            <span class="label">Medium (40px)</span>
+                                            <span class="nds-label">Medium (40px)</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-lg", ".nds-featured-icon", "iconSize"]'>
-                                            <span class="label">Large (48px)</span>
+                                            <span class="nds-label">Large (48px)</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-xl", ".nds-featured-icon", "iconSize"]'>
-                                            <span class="label">Extra Large (56px)</span>
+                                            <span class="nds-label">Extra Large (56px)</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-circle", ".nds-featured-icon", "iconShape"]'>
-                                <span class="label">Circle</span>
+                                <span class="nds-label">Circle</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-outline", ".nds-featured-icon", "iconStyle"]'>
-                                <span class="label">Outline</span>
+                                <span class="nds-label">Outline</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-dark", ".nds-featured-icon", "iconStyle"]'>
-                                <span class="label">Dark</span>
+                                <span class="nds-label">Dark</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                <span class="nds-label">Remove bg</span>
                             </button>
                         </div>
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
                             <span class="nds-featured-icon nds-brand">
-                                <i class="hgi hgi-stroke hgi-information-circle icon"></i>
+                                <i class="hgi hgi-stroke hgi-information-circle nds-icon"></i>
                             </span>
                         </div>
                     </div>
@@ -124,7 +124,7 @@ direction: ltr
                                     </div>
                                     <code class="lang-html code">
 <span class="nds-featured-icon nds-brand">
-  <i class="hgi hgi-stroke hgi-information-circle icon"></i>
+  <i class="hgi hgi-stroke hgi-information-circle nds-icon"></i>
 </span>
                                     </code>
                                 </div>
@@ -147,29 +147,29 @@ direction: ltr
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-colors icon"></i>
-                        <span class="label">Six Color Variants</span>
+                        <i class="hgi hgi-stroke hgi-colors nds-icon"></i>
+                        <span class="nds-label">Six Color Variants</span>
                     </span>
                     <p class="nds-item-desc">Brand, success, info, warning, error, and neutral. Each sets the background and icon color automatically through design tokens.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-resize-01 icon"></i>
-                        <span class="label">Four Sizes</span>
+                        <i class="hgi hgi-stroke hgi-resize-01 nds-icon"></i>
+                        <span class="nds-label">Four Sizes</span>
                     </span>
                     <p class="nds-item-desc">From 32px to 56px. Icon and padding scale proportionally through the <code class="nds-inline-code lang-html">--nds-icon-size</code> property.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-square-circle icon"></i>
-                        <span class="label">Shape and Style Modifiers</span>
+                        <i class="hgi hgi-stroke hgi-square-circle nds-icon"></i>
+                        <span class="nds-label">Shape and Style Modifiers</span>
                     </span>
                     <p class="nds-item-desc">Rounded square by default, with circle, outline, and dark fill options that combine freely with any color and size.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-paint-board icon"></i>
-                        <span class="label">Custom Color Override</span>
+                        <i class="hgi hgi-stroke hgi-paint-board nds-icon"></i>
+                        <span class="nds-label">Custom Color Override</span>
                     </span>
                     <p class="nds-item-desc">Set <code class="nds-inline-code lang-html">--icon-bg-color</code> and <code class="nds-inline-code lang-html">--icon-color</code> directly on the element without a variant class to create custom color pairings beyond the built-in variants.</p>
                 </div>

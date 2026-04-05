@@ -39,28 +39,28 @@ Resolution: page front matter → data file → defaults
             <div id="nds-sharePage" class="nds-dropmenu">
                 <button id="nds-sharePageBtn" class="nds-btn nds-secondary-outline nds-dropmenu-trigger"
                     aria-label="Share Page">
-                    <i class="hgi hgi-stroke hgi-share-01 icon"></i>
-                    <span class="label">Share Page</span>
+                    <i class="hgi hgi-stroke hgi-share-01 nds-icon"></i>
+                    <span class="nds-label">Share Page</span>
                 </button>
                 <div id="nds-sharePage-dropdown" class="nds-dropmenu-menu" hidden>
                     <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-x" type="button" aria-label="Share on X">
-                        <i class="hgi hgi-stroke hgi-new-twitter icon"></i>
-                        <span class="label">X</span>
+                        <i class="hgi hgi-stroke hgi-new-twitter nds-icon"></i>
+                        <span class="nds-label">X</span>
                     </button>
                     <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-linkedin" type="button"
                         aria-label="Share on LinkedIn">
-                        <i class="hgi hgi-stroke hgi-linkedin-02 icon"></i>
-                        <span class="label">LinkedIn</span>
+                        <i class="hgi hgi-stroke hgi-linkedin-02 nds-icon"></i>
+                        <span class="nds-label">LinkedIn</span>
                     </button>
                     <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-whatsapp" type="button"
                         aria-label="Share on WhatsApp">
-                        <i class="hgi hgi-stroke hgi-whatsapp icon"></i>
-                        <span class="label">WhatsApp</span>
+                        <i class="hgi hgi-stroke hgi-whatsapp nds-icon"></i>
+                        <span class="nds-label">WhatsApp</span>
                     </button>
                     <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-copy" type="button" aria-label="Copy Link"
                         data-copied-text="Link Copied!" data-no-auto-close>
-                        <i class="hgi hgi-stroke hgi-link-04 icon"></i>
-                        <span class="label">Copy Link</span>
+                        <i class="hgi hgi-stroke hgi-link-04 nds-icon"></i>
+                        <span class="nds-label">Copy Link</span>
                     </button>
                 </div>
             </div>
@@ -100,11 +100,11 @@ Resolution: page front matter → data file → defaults
                     aria-label="{{ item.aria_label | default: item.label }}"
                     {%- if item.target %} target="{{ item.target }}"{%- endif %}>
                     {%- if item.icon and item.icon_position != "trailing" %}
-                    <i class="hgi hgi-stroke {{ item.icon }} icon"></i>
+                    <i class="hgi hgi-stroke {{ item.icon }} nds-icon"></i>
                     {%- endif %}
-                    <span class="label">{{ item.label }}</span>
+                    <span class="nds-label">{{ item.label }}</span>
                     {%- if item.icon and item.icon_position == "trailing" %}
-                    <i class="hgi hgi-stroke {{ item.icon }} icon"></i>
+                    <i class="hgi hgi-stroke {{ item.icon }} nds-icon"></i>
                     {%- endif %}
                 </a>
                 {%- endif %}
@@ -117,8 +117,8 @@ Resolution: page front matter → data file → defaults
                 <div class="nds-section-tags">
                     {%- for tag in hero_tags %}
                     <span class="nds-tag {{ tag.style | default: 'nds-neutral' }} {{ tag.modifiers }} nds-sm">
-                        {%- if tag.icon %}<i class="hgi hgi-stroke {{ tag.icon }} icon"></i>{%- endif %}
-                        <span class="label">{{ tag.label }}</span>
+                        {%- if tag.icon %}<i class="hgi hgi-stroke {{ tag.icon }} nds-icon"></i>{%- endif %}
+                        <span class="nds-label">{{ tag.label }}</span>
                     </span>
                     {%- endfor %}
                 </div>
@@ -131,11 +131,11 @@ Resolution: page front matter → data file → defaults
                             <span class="nds-rating-star" aria-hidden="true"></span>
                             <span class="nds-rating-star" aria-hidden="true"></span>
                         </div>
-                        <span class="label"><span class="total-rate">4.5</span> - (<span class="total-votes">18</span>) Votes</span>
+                        <span class="nds-label"><span class="nds-total-rate">4.5</span> - (<span class="nds-total-votes">18</span>) Votes</span>
                     </button>
                     <div class="nds-dropmenu-menu" hidden="">
                         <div class="nds-dropmenu-item" data-no-auto-close>
-                            <span class="label">Rate this service</span>
+                            <span class="nds-label">Rate this service</span>
                             <div class="nds-rating" data-rating="0">
                                 <button class="nds-rating-star" type="button" aria-label="1 star"></button>
                                 <button class="nds-rating-star" type="button" aria-label="2 stars"></button>
@@ -148,7 +148,7 @@ Resolution: page front matter → data file → defaults
                             <hr class="nds-divider nds-lg">
                             <div class="nds-dropmenu-action nds-grid">
                                 <button class="nds-btn nds-primary nds-dropmenu-item" data-no-auto-close>
-                                    <span class="label">Vote</span>
+                                    <span class="nds-label">Vote</span>
                                 </button>
                             </div>
                         </div>
@@ -168,11 +168,11 @@ Resolution: page front matter → data file → defaults
                 aria-label="{{ action.aria_label | default: action.label }}"
                 {%- if action.target %} target="{{ action.target }}"{%- endif %}>
                 {%- if action.icon and action.icon_position != "trailing" %}
-                <i class="hgi hgi-stroke {{ action.icon }} icon"></i>
+                <i class="hgi hgi-stroke {{ action.icon }} nds-icon"></i>
                 {%- endif %}
-                <span class="label">{{ action.label }}</span>
+                <span class="nds-label">{{ action.label }}</span>
                 {%- if action.icon and action.icon_position == "trailing" %}
-                <i class="hgi hgi-stroke {{ action.icon }} icon"></i>
+                <i class="hgi hgi-stroke {{ action.icon }} nds-icon"></i>
                 {%- endif %}
             </a>
             {%- endif %}
@@ -229,7 +229,7 @@ Determine hero sliders source:
                     <p class="nds-section-description">{{ slide.description }}</p>
                     {%- if slide.url and slide.url != '#' %}
                     <a href="{{ slide.url | relative_url }}" class="nds-btn nds-primary nds-oncolor nds-lg">
-                        <span class="label">Learn More</span>
+                        <span class="nds-label">Learn More</span>
                     </a>
                     {%- endif %}
                 {%- endcapture %}
@@ -243,11 +243,11 @@ Determine hero sliders source:
         <div class="nds-swiper-pagination"></div>
         <button class="nds-btn nds-subtle nds-oncolor nds-icon-only nds-swiper-button-prev"
             aria-label="Previous slide">
-            <i class="hgi hgi-stroke hgi-arrow-right-01 icon"></i>
+            <i class="hgi hgi-stroke hgi-arrow-right-01 nds-icon"></i>
         </button>
         <button class="nds-btn nds-subtle nds-oncolor nds-icon-only nds-swiper-button-next"
             aria-label="Next slide">
-            <i class="hgi hgi-stroke hgi-arrow-left-01 icon"></i>
+            <i class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i>
         </button>
     </div>
 </section>

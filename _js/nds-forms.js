@@ -1289,7 +1289,7 @@
         },
 
         initPasswordToggle: function(formControl) {
-            var passwordToggle = formControl.querySelector('.nds-form-action .toggle-password');
+            var passwordToggle = formControl.querySelector('.nds-form-action .nds-toggle-password');
             if (!passwordToggle || passwordToggle._ndsPasswordToggle) return;
             passwordToggle._ndsPasswordToggle = true;
 

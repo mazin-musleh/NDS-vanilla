@@ -71,27 +71,27 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                         <div class="demo-action">
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-center", ".nds-content-section", "sectionLayout"]'>
-                                <span class="label">Center</span>
+                                <span class="nds-label">Center</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='[["nds-neutral", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                <span class="label">Neutral</span>
+                                <span class="nds-label">Neutral</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='[["nds-primary", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                <span class="label">Primary</span>
+                                <span class="nds-label">Primary</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='[["nds-gradient-green", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                <span class="label">Gradient Green</span>
+                                <span class="nds-label">Gradient Green</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-brand", ".nds-content-section", "sectionColor"]'>
-                                <span class="label">Brand</span>
+                                <span class="nds-label">Brand</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-ghost", ".nds-content-section", "sectionColor"]'>
-                                <span class="label">Ghost</span>
+                                <span class="nds-label">Ghost</span>
                             </button>
                         </div>
                     </div>
@@ -156,27 +156,27 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                         <div class="demo-action">
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-center", ".nds-content-section", "sectionLayout"]'>
-                                <span class="label">Center</span>
+                                <span class="nds-label">Center</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='[["nds-neutral", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                <span class="label">Neutral</span>
+                                <span class="nds-label">Neutral</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='[["nds-primary", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                <span class="label">Primary</span>
+                                <span class="nds-label">Primary</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='[["nds-gradient-green", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                <span class="label">Gradient Green</span>
+                                <span class="nds-label">Gradient Green</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-brand", ".nds-content-section", "sectionColor"]'>
-                                <span class="label">Brand</span>
+                                <span class="nds-label">Brand</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-ghost", ".nds-content-section", "sectionColor"]'>
-                                <span class="label">Ghost</span>
+                                <span class="nds-label">Ghost</span>
                             </button>
                         </div>
                     </div>
@@ -249,27 +249,27 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                         <div class="demo-action">
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-center", ".nds-content-section", "sectionLayout"]'>
-                                <span class="label">Center</span>
+                                <span class="nds-label">Center</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='[["nds-neutral", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                <span class="label">Neutral</span>
+                                <span class="nds-label">Neutral</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='[["nds-primary", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                <span class="label">Primary</span>
+                                <span class="nds-label">Primary</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='[["nds-gradient-green", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                <span class="label">Gradient Green</span>
+                                <span class="nds-label">Gradient Green</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-brand", ".nds-content-section", "sectionColor"]'>
-                                <span class="label">Brand</span>
+                                <span class="nds-label">Brand</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-ghost", ".nds-content-section", "sectionColor"]'>
-                                <span class="label">Ghost</span>
+                                <span class="nds-label">Ghost</span>
                             </button>
                         </div>
                     </div>
@@ -283,7 +283,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                                     </div>
                                     <div class="nds-section-action">
                                         <a href="#" class="nds-btn nds-primary">
-                                            <span class="label">View All</span>
+                                            <span class="nds-label">View All</span>
                                         </a>
                                     </div>
                                     <div class="nds-section-content">
@@ -318,7 +318,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
         </div>
         <div class="nds-section-action">
             <a href="#" class="nds-btn nds-primary">
-                <span class="label">View All</span>
+                <span class="nds-label">View All</span>
             </a>
         </div>
         <div class="nds-section-content">
@@ -352,15 +352,15 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                         <div class="demo-action">
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-minimal", ".nds-section-head > .nds-section-action", "floatMod"]'>
-                                <span class="label">Minimal</span>
+                                <span class="nds-label">Minimal</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-wrap", ".nds-section-head > .nds-section-action", "floatMod"]'>
-                                <span class="label">Wrap</span>
+                                <span class="nds-label">Wrap</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-center", ".nds-content-section", "sectionLayout"]'>
-                                <span class="label">Center</span>
+                                <span class="nds-label">Center</span>
                             </button>
                         </div>
                     </div>
@@ -371,8 +371,8 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                                     <div class="nds-section-head">
                                         <div class="nds-section-action">
                                             <a href="#" class="nds-btn nds-primary" aria-label="View All">
-                                                <i class="hgi hgi-stroke hgi-arrow-right-01 icon"></i>
-                                                <span class="label">View All</span>
+                                                <i class="hgi hgi-stroke hgi-arrow-right-01 nds-icon"></i>
+                                                <span class="nds-label">View All</span>
                                             </a>
                                         </div>
                                         <h2 class="nds-section-title">Section Title</h2>
@@ -409,8 +409,8 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
         <div class="nds-section-head">
             <div class="nds-section-action nds-minimal">
                 <a href="#" class="nds-btn nds-primary" aria-label="View All">
-                    <i class="hgi hgi-stroke hgi-arrow-right-01 icon"></i>
-                    <span class="label">View All</span>
+                    <i class="hgi hgi-stroke hgi-arrow-right-01 nds-icon"></i>
+                    <span class="nds-label">View All</span>
                 </a>
             </div>
             <h2 class="nds-section-title">Section Title</h2>
@@ -447,7 +447,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                         <div class="demo-action">
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-center", ".nds-content-section", "sectionLayout"]'>
-                                <span class="label">Center</span>
+                                <span class="nds-label">Center</span>
                             </button>
                         </div>
                     </div>
@@ -459,7 +459,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                                         <div class="nds-section-action">
                                             <a href="#" class="nds-btn nds-subtle">
                                                 <i class="hgi hgi-stroke hgi-share-01"></i>
-                                                <span class="label">Share</span>
+                                                <span class="nds-label">Share</span>
                                             </a>
                                         </div>
                                         <h2 class="nds-section-title">Section Title</h2>
@@ -467,10 +467,10 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                                     </div>
                                     <div class="nds-section-action">
                                         <a href="#" class="nds-btn nds-primary">
-                                            <span class="label">View All</span>
+                                            <span class="nds-label">View All</span>
                                         </a>
                                         <a href="#" class="nds-btn nds-secondary-outline">
-                                            <span class="label">Download</span>
+                                            <span class="nds-label">Download</span>
                                         </a>
                                     </div>
                                     <div class="nds-section-content">
@@ -503,7 +503,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
             <div class="nds-section-action">
                 <a href="#" class="nds-btn nds-subtle">
                     <i class="hgi hgi-stroke hgi-share-01"></i>
-                    <span class="label">Share</span>
+                    <span class="nds-label">Share</span>
                 </a>
             </div>
             <h2 class="nds-section-title">Section Title</h2>
@@ -511,7 +511,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
         </div>
         <div class="nds-section-action">
             <a href="#" class="nds-btn nds-primary">
-                <span class="label">Primary Action</span>
+                <span class="nds-label">Primary Action</span>
             </a>
         </div>
         <div class="nds-section-content">
@@ -553,7 +553,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                                     </div>
                                     <div class="nds-section-action nds-nowrap">
                                         <a href="#" class="nds-btn nds-primary nds-sm">
-                                            <span class="label">Action</span>
+                                            <span class="nds-label">Action</span>
                                         </a>
                                     </div>
                                     <div class="nds-section-content">
@@ -582,7 +582,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                                 <code class="lang-html code">
 <div class="nds-section-action nds-nowrap">
     <a href="#" class="nds-btn nds-primary nds-sm">
-        <span class="label">Action</span>
+        <span class="nds-label">Action</span>
     </a>
 </div>
 </code>
@@ -611,27 +611,27 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                         <div class="demo-action">
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-center", ".nds-content-section", "sectionLayout"]'>
-                                <span class="label">Center</span>
+                                <span class="nds-label">Center</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='[["nds-neutral", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                <span class="label">Neutral</span>
+                                <span class="nds-label">Neutral</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='[["nds-primary", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                <span class="label">Primary</span>
+                                <span class="nds-label">Primary</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='[["nds-gradient-green", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                <span class="label">Gradient Green</span>
+                                <span class="nds-label">Gradient Green</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-brand", ".nds-content-section", "sectionColor"]'>
-                                <span class="label">Brand</span>
+                                <span class="nds-label">Brand</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-ghost", ".nds-content-section", "sectionColor"]'>
-                                <span class="label">Ghost</span>
+                                <span class="nds-label">Ghost</span>
                             </button>
                         </div>
                     </div>
@@ -650,7 +650,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                                     </div>
                                     <div class="nds-section-action">
                                         <a href="#" class="nds-btn nds-primary">
-                                            <span class="label">Contact</span>
+                                            <span class="nds-label">Contact</span>
                                         </a>
                                     </div>
                                     <div class="nds-section-content">
@@ -688,7 +688,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
         </div>
         <div class="nds-section-action">
             <a href="#" class="nds-btn nds-primary">
-                <span class="label">Action</span>
+                <span class="nds-label">Action</span>
             </a>
         </div>
         <div class="nds-section-content">
@@ -722,27 +722,27 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                         <div class="demo-action">
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-center", ".nds-content-section", "sectionLayout"]'>
-                                <span class="label">Center</span>
+                                <span class="nds-label">Center</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='[["nds-neutral", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                <span class="label">Neutral</span>
+                                <span class="nds-label">Neutral</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='[["nds-primary", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                <span class="label">Primary</span>
+                                <span class="nds-label">Primary</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='[["nds-gradient-green", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                <span class="label">Gradient Green</span>
+                                <span class="nds-label">Gradient Green</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-brand", ".nds-content-section", "sectionColor"]'>
-                                <span class="label">Brand</span>
+                                <span class="nds-label">Brand</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-ghost", ".nds-content-section", "sectionColor"]'>
-                                <span class="label">Ghost</span>
+                                <span class="nds-label">Ghost</span>
                             </button>
                         </div>
                     </div>
@@ -756,7 +756,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                                     </div>
                                     <div class="nds-section-action">
                                         <a href="#" class="nds-btn nds-primary">
-                                            <span class="label">View All</span>
+                                            <span class="nds-label">View All</span>
                                         </a>
                                     </div>
                                 </div>
@@ -791,7 +791,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
         </div>
         <div class="nds-section-action">
             <a href="#" class="nds-btn nds-primary">
-                <span class="label">View All</span>
+                <span class="nds-label">View All</span>
             </a>
         </div>
     </div>
@@ -825,27 +825,27 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                         <div class="demo-action">
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-center", ".nds-content-section", "sectionLayout"]'>
-                                <span class="label">Center</span>
+                                <span class="nds-label">Center</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='[["nds-neutral", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                <span class="label">Neutral</span>
+                                <span class="nds-label">Neutral</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='[["nds-primary", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                <span class="label">Primary</span>
+                                <span class="nds-label">Primary</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='[["nds-gradient-green", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                <span class="label">Gradient Green</span>
+                                <span class="nds-label">Gradient Green</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-brand", ".nds-content-section", "sectionColor"]'>
-                                <span class="label">Brand</span>
+                                <span class="nds-label">Brand</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-ghost", ".nds-content-section", "sectionColor"]'>
-                                <span class="label">Ghost</span>
+                                <span class="nds-label">Ghost</span>
                             </button>
                         </div>
                     </div>
@@ -858,7 +858,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                                         <p class="nds-section-description">Head and content are displayed in a horizontal grid on desktop screens.</p>
                                         <div class="nds-section-action">
                                             <a href="#" class="nds-btn nds-primary">
-                                                <span class="label">View All</span>
+                                                <span class="nds-label">View All</span>
                                             </a>
                                         </div>
                                     </div>
@@ -893,7 +893,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
             <p class="nds-section-description">Description.</p>
             <div class="nds-section-action">
                 <a href="#" class="nds-btn nds-primary">
-                    <span class="label">View All</span>
+                    <span class="nds-label">View All</span>
                 </a>
             </div>
         </div>
@@ -1009,7 +1009,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                                     </div>
                                     <div class="nds-section-action">
                                         <a href="#" class="nds-btn nds-primary nds-oncolor">
-                                            <span class="label">View All</span>
+                                            <span class="nds-label">View All</span>
                                         </a>
                                     </div>
                                     <div class="nds-section-content">

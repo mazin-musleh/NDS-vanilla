@@ -80,8 +80,8 @@
                 const trigger = dropdownContainer.querySelector('.nds-dropmenu-trigger');
                 if (trigger) {
                     NDS.State.set(trigger, 'active');
-                    const triggerLabel = trigger.querySelector('.label');
-                    const activeLabel = activeDropdownItem.querySelector('.label');
+                    const triggerLabel = trigger.querySelector('.nds-label');
+                    const activeLabel = activeDropdownItem.querySelector('.nds-label');
                     if (triggerLabel && activeLabel) {
                         triggerLabel.textContent = activeLabel.textContent;
                     }
@@ -100,7 +100,7 @@
             const button = document.createElement('button');
             button.type = 'button';
             button.className = 'nds-btn nds-subtle nds-dropmenu-trigger nds-indicator';
-            button.innerHTML = `<span class="label">${ELLIPSIS_SVG}</span>`;
+            button.innerHTML = `<span class="nds-label">${ELLIPSIS_SVG}</span>`;
             button.setAttribute('aria-label', 'More pages');
 
             const menu = document.createElement('div');
@@ -213,7 +213,7 @@
         });
 
         // Reset all ellipsis triggers back to "..." label
-        pagination.querySelectorAll('.nds-dropmenu-trigger .label').forEach(label => {
+        pagination.querySelectorAll('.nds-dropmenu-trigger .nds-label').forEach(label => {
             label.innerHTML = ELLIPSIS_SVG;
         });
 
@@ -222,7 +222,7 @@
         let ellipsisTrigger = null;
 
         pagination.querySelectorAll('.nds-pagination-item button, .nds-pagination-item a, .nds-dropmenu-item').forEach(element => {
-            const elementPageNumber = parseInt(element.querySelector('.label')?.textContent || element.textContent);
+            const elementPageNumber = parseInt(element.querySelector('.nds-label')?.textContent || element.textContent);
             if (elementPageNumber === pageNumber) {
                 NDS.State.set(element, 'active');
                 element.setAttribute('aria-current', 'page');
@@ -239,7 +239,7 @@
         // Add active to ellipsis button and show active page number if active page is inside dropdown
         if (activeInDropdown && ellipsisTrigger) {
             NDS.State.set(ellipsisTrigger, 'active');
-            const ellipsisLabel = ellipsisTrigger.querySelector('.label');
+            const ellipsisLabel = ellipsisTrigger.querySelector('.nds-label');
             if (ellipsisLabel) {
                 ellipsisLabel.textContent = pageNumber;
             }
@@ -288,7 +288,7 @@
         const allPageElements = Array.from(pagination.querySelectorAll('.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) button, .nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) a, .nds-dropmenu-item'));
         if (allPageElements.length === 0) return;
 
-        const pageNumbers = allPageElements.map(el => parseInt(el.querySelector('.label')?.textContent || el.textContent)).filter(n => !isNaN(n));
+        const pageNumbers = allPageElements.map(el => parseInt(el.querySelector('.nds-label')?.textContent || el.textContent)).filter(n => !isNaN(n));
         if (pageNumbers.length === 0) return;
 
         const minPage = Math.min(...pageNumbers);
@@ -300,7 +300,7 @@
         // Get current page number (or default to first page if none active)
         let currentPageNum;
         if (activePage) {
-            currentPageNum = parseInt(activePage.querySelector('.label')?.textContent || activePage.textContent);
+            currentPageNum = parseInt(activePage.querySelector('.nds-label')?.textContent || activePage.textContent);
         } else {
             currentPageNum = minPage;
         }
@@ -384,7 +384,7 @@
                             e.preventDefault();
                         }
 
-                        const pageNumber = parseInt(pageElement.querySelector('.label')?.textContent || pageElement.textContent);
+                        const pageNumber = parseInt(pageElement.querySelector('.nds-label')?.textContent || pageElement.textContent);
                         if (pageNumber) {
                             goToPage(newPagination, items, pageNumber, finalPerPage, finalTotalPages);
                         }
@@ -447,7 +447,7 @@
             html += `
             <li class="nds-pagination-item page_${i}">
                 <button type="button" class="nds-btn nds-subtle nds-indicator"${activeAttr}${ariaCurrent} aria-label="Page ${i}">
-                    <span class="label">${i}</span>
+                    <span class="nds-label">${i}</span>
                 </button>
             </li>`;
         }
@@ -482,13 +482,13 @@
         // Check visible pagination items (both buttons and anchors)
         let activeElement = pagination.querySelector('.nds-pagination-item button[aria-current="page"], .nds-pagination-item a[aria-current="page"]');
         if (activeElement) {
-            return parseInt(activeElement.querySelector('.label')?.textContent) || 1;
+            return parseInt(activeElement.querySelector('.nds-label')?.textContent) || 1;
         }
 
         // Check dropdown menu items
         activeElement = pagination.querySelector('.nds-dropmenu-item[aria-current="page"]');
         if (activeElement) {
-            return parseInt(activeElement.querySelector('.label')?.textContent || activeElement.textContent) || 1;
+            return parseInt(activeElement.querySelector('.nds-label')?.textContent || activeElement.textContent) || 1;
         }
 
         return 1;
@@ -557,7 +557,7 @@
             const currentActive = pagination.querySelector('.nds-pagination-item button[aria-current="page"], .nds-pagination-item a[aria-current="page"], .nds-dropmenu-item[aria-current="page"]');
             if (!currentActive) return;
 
-            const currentPageNum = parseInt(currentActive.querySelector('.label')?.textContent || currentActive.textContent);
+            const currentPageNum = parseInt(currentActive.querySelector('.nds-label')?.textContent || currentActive.textContent);
             if (isNaN(currentPageNum)) return;
 
             const targetPageNum = prevElement ? currentPageNum - 1 : currentPageNum + 1;
@@ -565,7 +565,7 @@
             // Find the target page element
             let targetElement = null;
             pagination.querySelectorAll('.nds-pagination-item button, .nds-pagination-item a, .nds-dropmenu-item').forEach(el => {
-                const pageNum = parseInt(el.querySelector('.label')?.textContent || el.textContent);
+                const pageNum = parseInt(el.querySelector('.nds-label')?.textContent || el.textContent);
                 if (pageNum === targetPageNum) {
                     targetElement = el;
                 }
@@ -578,7 +578,7 @@
 
             // Update prev/next button states
             const allPageElements = Array.from(pagination.querySelectorAll('.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) button, .nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) a, .nds-dropmenu-item'));
-            const pageNumbers = allPageElements.map(el => parseInt(el.querySelector('.label')?.textContent || el.textContent)).filter(n => !isNaN(n));
+            const pageNumbers = allPageElements.map(el => parseInt(el.querySelector('.nds-label')?.textContent || el.textContent)).filter(n => !isNaN(n));
             const minPage = Math.min(...pageNumbers);
             const maxPage = Math.max(...pageNumbers);
 
@@ -592,14 +592,14 @@
 
         // Handle direct page clicks
         if (clickedElement) {
-            const clickedPageNum = parseInt(clickedElement.querySelector('.label')?.textContent || clickedElement.textContent);
+            const clickedPageNum = parseInt(clickedElement.querySelector('.nds-label')?.textContent || clickedElement.textContent);
             if (!isNaN(clickedPageNum)) {
                 // Set active page with aria-current
                 setActivePage(pagination, clickedPageNum);
 
                 // Update prev/next button states
                 const allPageElements = Array.from(pagination.querySelectorAll('.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) button, .nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) a, .nds-dropmenu-item'));
-                const pageNumbers = allPageElements.map(el => parseInt(el.querySelector('.label')?.textContent || el.textContent)).filter(n => !isNaN(n));
+                const pageNumbers = allPageElements.map(el => parseInt(el.querySelector('.nds-label')?.textContent || el.textContent)).filter(n => !isNaN(n));
                 const minPage = Math.min(...pageNumbers);
                 const maxPage = Math.max(...pageNumbers);
 
@@ -666,7 +666,7 @@
                     e.preventDefault();
                 }
 
-                const pageNumber = parseInt(pageElement.querySelector('.label')?.textContent || pageElement.textContent);
+                const pageNumber = parseInt(pageElement.querySelector('.nds-label')?.textContent || pageElement.textContent);
                 if (pageNumber) {
                     goToPageFiltered(newPagination, currentVisibleItems, pageNumber, finalPerPage, finalTotalPages);
                 }
@@ -726,7 +726,7 @@
                     '.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) a, ' +
                     '.nds-dropmenu-item'
                 ));
-                const pageNumbers = allPages.map(el => parseInt(el.querySelector('.label')?.textContent || el.textContent)).filter(n => !isNaN(n));
+                const pageNumbers = allPages.map(el => parseInt(el.querySelector('.nds-label')?.textContent || el.textContent)).filter(n => !isNaN(n));
                 if (pageNumbers.length === 0) return;
                 setActivePage(pagination, pageNumber);
                 updatePrevNextStates(pagination, pageNumber, Math.min(...pageNumbers), Math.max(...pageNumbers));

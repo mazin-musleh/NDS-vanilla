@@ -23,44 +23,44 @@ direction: ltr
                         <div class="demo-action">
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="label">Success</span>
+                                    <span class="nds-label">Success</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["data-status=success", ".nds-alert", "alertVariant", "attr"]'>
-                                            <span class="label">Success</span>
+                                            <span class="nds-label">Success</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["data-status=info", ".nds-alert", "alertVariant", "attr"]'>
-                                            <span class="label">Info</span>
+                                            <span class="nds-label">Info</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["data-status=warning", ".nds-alert", "alertVariant", "attr"]'>
-                                            <span class="label">Warning</span>
+                                            <span class="nds-label">Warning</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["data-status=error", ".nds-alert", "alertVariant", "attr"]'>
-                                            <span class="label">Error</span>
+                                            <span class="nds-label">Error</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["data-status=neutral", ".nds-alert", "alertVariant", "attr"]'>
-                                            <span class="label">Neutral</span>
+                                            <span class="nds-label">Neutral</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-shadow", ".nds-alert", "alertStyle"]'>
-                                <span class="label">Shadow</span>
+                                <span class="nds-label">Shadow</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-color", ".nds-alert", "alertColor"]'>
-                                <span class="label">Color</span>
+                                <span class="nds-label">Color</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                <span class="nds-label">Remove bg</span>
                             </button>
                         </div>
                     </div>
@@ -69,7 +69,7 @@ direction: ltr
                             <div class="nds-alert nds-card" data-status="success" role="alert">
                                 <span class="nds-feedback nds-alert-icon nds-outline">
                                     <span class="nds-feedback-icon">
-                                        <i class="hgi hgi-stroke icon"></i>
+                                        <i class="hgi hgi-stroke nds-icon"></i>
                                     </span>
                                 </span>
                                 <div class="nds-alert-content">
@@ -111,7 +111,7 @@ direction: ltr
 <div class="nds-alert nds-card" data-status="success" role="alert">
   <span class="nds-feedback nds-alert-icon nds-outline">
     <span class="nds-feedback-icon">
-      <i class="hgi hgi-stroke icon"></i>
+      <i class="hgi hgi-stroke nds-icon"></i>
     </span>
   </span>
   <div class="nds-alert-content">
@@ -167,33 +167,33 @@ direction: ltr
                         <div class="demo-action">
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="label">Critical</span>
+                                    <span class="nds-label">Critical</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["data-status=success", ".nds-alert", "inlineVariant", "attr"]'>
-                                            <span class="label">Success</span>
+                                            <span class="nds-label">Success</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["data-status=neutral", ".nds-alert", "inlineVariant", "attr"]'>
-                                            <span class="label">Neutral</span>
+                                            <span class="nds-label">Neutral</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["data-status=info", ".nds-alert", "inlineVariant", "attr"]'>
-                                            <span class="label">Info</span>
+                                            <span class="nds-label">Info</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["data-status=warning", ".nds-alert", "inlineVariant", "attr"]'>
-                                            <span class="label">Warning</span>
+                                            <span class="nds-label">Warning</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["data-status=error", ".nds-alert", "inlineVariant", "attr"]'>
-                                            <span class="label">Error</span>
+                                            <span class="nds-label">Error</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["data-status=critical", ".nds-alert", "inlineVariant", "attr"]'>
-                                            <span class="label">Critical</span>
+                                            <span class="nds-label">Critical</span>
                                         </button>
                                     </div>
                                 </div>
@@ -205,7 +205,7 @@ direction: ltr
                             <div class="nds-alert nds-card nds-inline" data-status="critical" role="alert">
                                 <span class="nds-feedback nds-alert-icon">
                                     <span class="nds-feedback-icon">
-                                        <i class="hgi hgi-stroke icon"></i>
+                                        <i class="hgi hgi-stroke nds-icon"></i>
                                     </span>
                                 </span>
                                 <div class="nds-alert-content">
@@ -250,7 +250,7 @@ direction: ltr
 <div class="nds-alert nds-card nds-inline" data-status="critical" role="alert">
   <span class="nds-feedback nds-alert-icon">
     <span class="nds-feedback-icon">
-      <i class="hgi hgi-stroke icon"></i>
+      <i class="hgi hgi-stroke nds-icon"></i>
     </span>
   </span>
   <div class="nds-alert-content">
@@ -310,15 +310,15 @@ direction: ltr
                         <div class="demo-action">
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-shadow", ".nds-alert","alertActionsStyle"]'>
-                                <span class="label">Shadow</span>
+                                <span class="nds-label">Shadow</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-color", ".nds-alert","alertActionsColor"]'>
-                                <span class="label">Color</span>
+                                <span class="nds-label">Color</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                <span class="nds-label">Remove bg</span>
                             </button>
                         </div>
                     </div>
@@ -327,7 +327,7 @@ direction: ltr
                             <div class="nds-alert nds-card" data-status="info" role="alert">
                                 <span class="nds-feedback nds-alert-icon nds-outline">
                                     <span class="nds-feedback-icon">
-                                        <i class="hgi hgi-stroke icon"></i>
+                                        <i class="hgi hgi-stroke nds-icon"></i>
                                     </span>
                                 </span>
                                 <div class="nds-alert-content">
@@ -337,10 +337,10 @@ direction: ltr
                                     </div>
                                     <div class="nds-alert-actions">
                                         <button class="nds-btn nds-primary nds-sm">
-                                            <span class="label">Update Now</span>
+                                            <span class="nds-label">Update Now</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-sm">
-                                            <span class="label">Later</span>
+                                            <span class="nds-label">Later</span>
                                         </button>
                                     </div>
                                 </div>
@@ -377,7 +377,7 @@ direction: ltr
 <div class="nds-alert nds-card" data-status="info" role="alert">
   <span class="nds-feedback nds-alert-icon nds-outline">
     <span class="nds-feedback-icon">
-      <i class="hgi hgi-stroke icon"></i>
+      <i class="hgi hgi-stroke nds-icon"></i>
     </span>
   </span>
   <div class="nds-alert-content">
@@ -387,10 +387,10 @@ direction: ltr
     </div>
     <div class="nds-alert-actions">
       <button class="nds-btn nds-primary nds-sm">
-        <span class="label">Update Now</span>
+        <span class="nds-label">Update Now</span>
       </button>
       <button class="nds-btn nds-subtle nds-sm">
-        <span class="label">Later</span>
+        <span class="nds-label">Later</span>
       </button>
     </div>
   </div>
@@ -442,36 +442,36 @@ direction: ltr
                         <div class="demo-action">
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="label">Success</span>
+                                    <span class="nds-label">Success</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["data-status=success", ".nds-alert", "toastVariant", "attr"]'>
-                                            <span class="label">Success</span>
+                                            <span class="nds-label">Success</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["data-status=warning", ".nds-alert", "toastVariant", "attr"]'>
-                                            <span class="label">Warning</span>
+                                            <span class="nds-label">Warning</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["data-status=error", ".nds-alert", "toastVariant", "attr"]'>
-                                            <span class="label">Error</span>
+                                            <span class="nds-label">Error</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["data-status=info", ".nds-alert", "toastVariant", "attr"]'>
-                                            <span class="label">Info</span>
+                                            <span class="nds-label">Info</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["data-position=bottom", ".nds-alert", "toastPosition", "attr"]'>
-                                <span class="label">Bottom</span>
+                                <span class="nds-label">Bottom</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-color", ".nds-alert", "toastColor"]'>
-                                <span class="label">Color</span>
+                                <span class="nds-label">Color</span>
                             </button>
                         </div>
                     </div>
@@ -479,10 +479,10 @@ direction: ltr
                         <div class="state-demo"
                             style="display: flex; flex-direction: column; align-items: center; gap: var(--spacing-lg); padding: var(--spacing-2xl);">
                             <button class="nds-btn nds-primary nds-lg demo-action-btn" data-action="toast-show">
-                                <span class="label">Show Toast</span>
+                                <span class="nds-label">Show Toast</span>
                             </button>
                             <span class="nds-feedback nds-sm nds-outline" data-status="neutral">
-                                <span class="nds-feedback-icon"><i class="hgi hgi-stroke icon"></i></span>
+                                <span class="nds-feedback-icon"><i class="hgi hgi-stroke nds-icon"></i></span>
                                 Select a variant and position above, then click the button to preview
                             </span>
                         </div>
@@ -514,7 +514,7 @@ direction: ltr
   <div class="nds-alert nds-card nds-toast nds-shadow" data-status="success" role="alert" data-toast-state="show">
     <span class="nds-feedback nds-alert-icon nds-outline">
       <span class="nds-feedback-icon">
-        <i class="hgi hgi-stroke icon"></i>
+        <i class="hgi hgi-stroke nds-icon"></i>
       </span>
     </span>
     <div class="nds-alert-content">
@@ -572,43 +572,43 @@ direction: ltr
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket icon"></i>
-                        <span class="label">Auto-initialization</span>
+                        <i class="hgi hgi-stroke hgi-plug-socket nds-icon"></i>
+                        <span class="nds-label">Auto-initialization</span>
                     </span>
                     <p class="nds-item-desc">Activates when .nds-alert is on the page. Close button handlers attach automatically.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-colors icon"></i>
-                        <span class="label">Six Status Variants</span>
+                        <i class="hgi hgi-stroke hgi-colors nds-icon"></i>
+                        <span class="nds-label">Six Status Variants</span>
                     </span>
                     <p class="nds-item-desc">Success, info, warning, error, critical, and neutral with automatic icon and color theming.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-notification-square icon"></i>
-                        <span class="label">Toast Notifications</span>
+                        <i class="hgi hgi-stroke hgi-notification-square nds-icon"></i>
+                        <span class="nds-label">Toast Notifications</span>
                     </span>
                     <p class="nds-item-desc">Fixed positioning with auto-dismiss timer and progress indicator.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-minus-sign icon"></i>
-                        <span class="label">Inline Layout</span>
+                        <i class="hgi hgi-stroke hgi-minus-sign nds-icon"></i>
+                        <span class="nds-label">Inline Layout</span>
                     </span>
                     <p class="nds-item-desc">Single-line variant for contextual messages with actions pushed to the end.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-api icon"></i>
-                        <span class="label">JavaScript API</span>
+                        <i class="hgi hgi-stroke hgi-api nds-icon"></i>
+                        <span class="nds-label">JavaScript API</span>
                     </span>
                     <p class="nds-item-desc">Programmatic creation, dismissal, and bulk dismiss for dynamic alerts and toasts.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-mobile-programming-01 icon"></i>
-                        <span class="label">Responsive Layout</span>
+                        <i class="hgi hgi-stroke hgi-mobile-programming-01 nds-icon"></i>
+                        <span class="nds-label">Responsive Layout</span>
                     </span>
                     <p class="nds-item-desc">Stacks vertically on mobile with stripe repositioned to the top.</p>
                 </div>

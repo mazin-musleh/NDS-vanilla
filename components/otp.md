@@ -23,35 +23,35 @@ direction: ltr
                         <div class="demo-action">
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="label">MD</span>
+                                    <span class="nds-label">MD</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-sm", ".nds-otp-group", "sizeToggle"]'>
-                                            <span class="label">SM</span>
+                                            <span class="nds-label">SM</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["", ".nds-otp-group", "sizeToggle"]'>
-                                            <span class="label">MD</span>
+                                            <span class="nds-label">MD</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-lg", ".nds-otp-group", "sizeToggle"]'>
-                                            <span class="label">LG</span>
+                                            <span class="nds-label">LG</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                <span class="nds-label">Remove bg</span>
                             </button>
                         </div>
                     </div>
                     <div class="demo-container">
                         <div class="state-demo" style="display: flex; justify-content: center; padding: var(--spacing-2xl);">
                             <fieldset class="nds-form-group nds-otp-group">
-                                <legend><span class="label">Verification Code</span></legend>
+                                <legend><span class="nds-label">Verification Code</span></legend>
                                 <div class="nds-otp">
                                     <div class="nds-form-container nds-otp-container">
                                         <div class="nds-form-control">
@@ -98,7 +98,7 @@ direction: ltr
                                     </div>
                                     <code class="lang-html code">
 <fieldset class="nds-form-group nds-otp-group">
-  <legend><span class="label">Verification Code</span></legend>
+  <legend><span class="nds-label">Verification Code</span></legend>
   <div class="nds-otp">
     <div class="nds-form-container nds-otp-container">
       <div class="nds-form-control">
@@ -148,35 +148,35 @@ direction: ltr
                         <div class="demo-action">
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="label">MD</span>
+                                    <span class="nds-label">MD</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-sm", ".nds-otp-group", "sizeToggle"]'>
-                                            <span class="label">SM</span>
+                                            <span class="nds-label">SM</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["", ".nds-otp-group", "sizeToggle"]'>
-                                            <span class="label">MD</span>
+                                            <span class="nds-label">MD</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-lg", ".nds-otp-group", "sizeToggle"]'>
-                                            <span class="label">LG</span>
+                                            <span class="nds-label">LG</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                <span class="nds-label">Remove bg</span>
                             </button>
                         </div>
                     </div>
                     <div class="demo-container">
                         <div class="state-demo" style="display: flex; justify-content: center; padding: var(--spacing-2xl);">
                             <fieldset class="nds-form-group nds-otp-group">
-                                <legend><span class="label">Verification Code</span></legend>
+                                <legend><span class="nds-label">Verification Code</span></legend>
                                 <div class="nds-otp">
                                     <div class="nds-form-container nds-otp-container">
                                         <div class="nds-form-control">
@@ -234,7 +234,7 @@ direction: ltr
                                     </div>
                                     <code class="lang-html code">
 <fieldset class="nds-form-group nds-otp-group">
-  <legend><span class="label">Verification Code</span></legend>
+  <legend><span class="nds-label">Verification Code</span></legend>
   <div class="nds-otp">
     <div class="nds-form-container nds-otp-container">
       <div class="nds-form-control">
@@ -295,14 +295,14 @@ direction: ltr
                         <div class="demo-action">
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                <span class="nds-label">Remove bg</span>
                             </button>
                         </div>
                     </div>
                     <div class="demo-container">
                         <div class="state-demo" style="display: flex; flex-direction: column; align-items: center; gap: var(--spacing-lg); padding: var(--spacing-2xl);">
                             <fieldset class="nds-form-group nds-otp-group" id="otp-validate-demo">
-                                <legend><span class="label">Enter code 1234</span></legend>
+                                <legend><span class="nds-label">Enter code 1234</span></legend>
                                 <div class="nds-otp">
                                     <div class="nds-form-container nds-otp-container">
                                         <div class="nds-form-control">
@@ -330,10 +330,10 @@ direction: ltr
                             </fieldset>
                             <div class="nds-flex" style="--justify:center">
                                 <button class="nds-btn nds-primary nds-sm" id="otp-validate-btn">
-                                    <span class="label">Verify</span>
+                                    <span class="nds-label">Verify</span>
                                 </button>
                                 <button class="nds-btn nds-subtle nds-sm" id="otp-clear-btn">
-                                    <span class="label">Clear</span>
+                                    <span class="nds-label">Clear</span>
                                 </button>
                             </div>
                             <script>
@@ -381,7 +381,7 @@ direction: ltr
                                     </div>
                                     <code class="lang-html code">
 <fieldset class="nds-form-group nds-otp-group" id="my-otp">
-  <legend><span class="label">Enter code 1234</span></legend>
+  <legend><span class="nds-label">Enter code 1234</span></legend>
   <div class="nds-otp">
     <div class="nds-form-container nds-otp-container">
       <div class="nds-form-control">
@@ -461,43 +461,43 @@ document.getElementById('clear-btn').addEventListener('click', function() {
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket icon"></i>
-                        <span class="label">Auto-initialization</span>
+                        <i class="hgi hgi-stroke hgi-plug-socket nds-icon"></i>
+                        <span class="nds-label">Auto-initialization</span>
                     </span>
                     <p class="nds-item-desc">Initializes on page load and detects dynamically added groups via MutationObserver. No manual setup needed.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-keyboard icon"></i>
-                        <span class="label">Keyboard Navigation</span>
+                        <i class="hgi hgi-stroke hgi-keyboard nds-icon"></i>
+                        <span class="nds-label">Keyboard Navigation</span>
                     </span>
                     <p class="nds-item-desc">Arrow keys move between inputs (RTL-aware). Backspace clears and moves back. Delete clears and moves forward. Auto-advances on digit entry.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-clipboard icon"></i>
-                        <span class="label">Paste Support</span>
+                        <i class="hgi hgi-stroke hgi-clipboard nds-icon"></i>
+                        <span class="nds-label">Paste Support</span>
                     </span>
                     <p class="nds-item-desc">Pasting a multi-digit string distributes digits across all inputs from the first position. Non-numeric characters are stripped automatically.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-link-square-02 icon"></i>
-                        <span class="label">Hidden Field Sync</span>
+                        <i class="hgi hgi-stroke hgi-link-square-02 nds-icon"></i>
+                        <span class="nds-label">Hidden Field Sync</span>
                     </span>
                     <p class="nds-item-desc">A hidden input with <code class="nds-inline-code lang-html">nds-otp-value</code> class stays in sync with the concatenated value for form submission.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-notification-03 icon"></i>
-                        <span class="label">Custom Events</span>
+                        <i class="hgi hgi-stroke hgi-notification-03 nds-icon"></i>
+                        <span class="nds-label">Custom Events</span>
                     </span>
                     <p class="nds-item-desc">Fires <code class="nds-inline-code lang-js">nds:otpChange</code> on any input change, <code class="nds-inline-code lang-js">nds:otpComplete</code> when all digits are filled, and <code class="nds-inline-code lang-js">nds:otpClear</code> on clear.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-eye icon"></i>
-                        <span class="label">Accessibility</span>
+                        <i class="hgi hgi-stroke hgi-eye nds-icon"></i>
+                        <span class="nds-label">Accessibility</span>
                     </span>
                     <p class="nds-item-desc">High-contrast mode thickens input borders. Reduced motion disables transitions. <code class="nds-inline-code lang-html">autocomplete="one-time-code"</code> enables autofill on mobile.</p>
                 </div>

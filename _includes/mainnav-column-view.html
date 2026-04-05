@@ -10,11 +10,11 @@
             {%- for subitem in column.items %}
             <a class="nds-btn nds-subtle nds-dropdown-item" href="{%- if subitem.url contains '#' and subitem.url | slice: 0 == '#' %}{{ subitem.url }}{%- else %}{{ subitem.url | relative_url }}{%- endif %}">
                 {%- if subitem.img_icon %}
-                <img src="{{ subitem.img_icon | relative_url }}" alt="{{ subitem.label }}" class="icon">
+                <img src="{{ subitem.img_icon | relative_url }}" alt="{{ subitem.label }}" class="nds-icon">
                 {%- elsif subitem.icon %}
-                <i class="hgi hgi-stroke {{ subitem.icon }} icon"></i>
+                <i class="hgi hgi-stroke {{ subitem.icon }} nds-icon"></i>
                 {%- endif %}
-                <span class="label">{{ subitem.label }}</span>
+                <span class="nds-label">{{ subitem.label }}</span>
             </a>
             {%- endfor %}
         </div>

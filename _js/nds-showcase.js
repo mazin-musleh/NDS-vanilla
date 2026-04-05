@@ -174,10 +174,10 @@
         dropmenu.querySelectorAll(siblingSelector).forEach(function(b) { NDS.State.remove(b, 'selected'); });
         NDS.State.add(button, 'selected');
         var triggerEl = dropmenu.querySelector('.nds-dropmenu-trigger');
-        var triggerLabel = triggerEl?.querySelector('.label');
+        var triggerLabel = triggerEl?.querySelector('.nds-label');
         if (triggerLabel) {
             var prefix = triggerEl.getAttribute('data-label-prefix') || '';
-            triggerLabel.textContent = prefix + button.querySelector('.label').textContent;
+            triggerLabel.textContent = prefix + button.querySelector('.nds-label').textContent;
         }
     }
 
@@ -601,8 +601,8 @@
         const dropmenu = button.closest('.nds-dropmenu');
         if (dropmenu && NDS.State.has(button, 'selected')) {
             const trigger = dropmenu.querySelector('.nds-dropmenu-trigger');
-            const triggerLabel = trigger?.querySelector('.label');
-            const itemLabel = button.querySelector('.label');
+            const triggerLabel = trigger?.querySelector('.nds-label');
+            const itemLabel = button.querySelector('.nds-label');
             if (triggerLabel && itemLabel) {
                 const prefix = trigger.getAttribute('data-label-prefix') || '';
                 const customLabel = button.getAttribute('data-trigger-label');
@@ -1943,9 +1943,9 @@
                     menu.hidden = true;
                     menu.innerHTML =
                         '<div class="nds-dropmenu-scroll">' +
-                            '<button class="nds-btn nds-subtle nds-dropmenu-item"><span class="label">Option 1</span></button>' +
-                            '<button class="nds-btn nds-subtle nds-dropmenu-item"><span class="label">Option 2</span></button>' +
-                            '<button class="nds-btn nds-subtle nds-dropmenu-item"><span class="label">Option 3</span></button>' +
+                            '<button class="nds-btn nds-subtle nds-dropmenu-item"><span class="nds-label">Option 1</span></button>' +
+                            '<button class="nds-btn nds-subtle nds-dropmenu-item"><span class="nds-label">Option 2</span></button>' +
+                            '<button class="nds-btn nds-subtle nds-dropmenu-item"><span class="nds-label">Option 3</span></button>' +
                         '</div>';
                     fix.appendChild(menu);
 

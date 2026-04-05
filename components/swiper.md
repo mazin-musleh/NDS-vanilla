@@ -25,7 +25,7 @@ direction: rtl
                     <div class="demo-action">
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                            <span class="label">Remove bg</span>
+                            <span class="nds-label">Remove bg</span>
                         </button>
                     </div>
                 </div>
@@ -44,7 +44,7 @@ direction: rtl
                                                 style="color: white; font-size: 1.25rem; margin-bottom: 2rem; opacity: 0.95;">
                                                 Discover innovative solutions for your digital needs</p>
                                             <button class="nds-btn nds-primary nds-lg nds-oncolor">
-                                                <span class="label">Get Started</span>
+                                                <span class="nds-label">Get Started</span>
                                             </button>
                                         </div>
                                     </div>
@@ -60,7 +60,7 @@ direction: rtl
                                                 style="color: white; font-size: 1.25rem; margin-bottom: 2rem; opacity: 0.95;">
                                                 Built with the latest technology and best practices</p>
                                             <button class="nds-btn nds-primary nds-lg nds-oncolor">
-                                                <span class="label">Learn More</span>
+                                                <span class="nds-label">Learn More</span>
                                             </button>
                                         </div>
                                     </div>
@@ -76,7 +76,7 @@ direction: rtl
                                                 style="color: white; font-size: 1.25rem; margin-bottom: 2rem; opacity: 0.95;">
                                                 Join thousands of satisfied users today</p>
                                             <button class="nds-btn nds-primary nds-lg nds-oncolor">
-                                                <span class="label">Join Now</span>
+                                                <span class="nds-label">Join Now</span>
                                             </button>
                                         </div>
                                     </div>
@@ -86,10 +86,10 @@ direction: rtl
                             <button
                                 class="nds-btn nds-subtle nds-icon-only nds-xl nds-circle nds-oncolor nds-swiper-button-prev"
                                 aria-label="Previous slide"><i
-                                    class="hgi hgi-stroke hgi-arrow-right-01 icon"></i></button>
+                                    class="hgi hgi-stroke hgi-arrow-right-01 nds-icon"></i></button>
                             <button
                                 class="nds-btn nds-subtle nds-icon-only nds-xl nds-circle nds-oncolor nds-swiper-button-next"
-                                aria-label="Next slide"><i class="hgi hgi-stroke hgi-arrow-left-01 icon"></i></button>
+                                aria-label="Next slide"><i class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i></button>
                         </div>
                     </div>
                 </div>
@@ -123,10 +123,10 @@ direction: rtl
                                     </div>
                                     <div class="nds-swiper-pagination"></div>
                                     <button class="nds-btn nds-subtle nds-icon-only nds-xl nds-oncolor nds-swiper-button-prev" aria-label="Previous slide">
-                                        <i class="hgi hgi-stroke hgi-arrow-right-01 icon"></i>
+                                        <i class="hgi hgi-stroke hgi-arrow-right-01 nds-icon"></i>
                                     </button>
                                     <button class="nds-btn nds-subtle nds-icon-only nds-xl nds-oncolor nds-swiper-button-next" aria-label="Next slide">
-                                        <i class="hgi hgi-stroke hgi-arrow-left-01 icon"></i>
+                                        <i class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i>
                                     </button>
                                 </div>
                             </code>
@@ -157,7 +157,7 @@ direction: rtl
                     <div class="demo-action">
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='["darkBg", ".demo-container", "containerBg"]'>
-                            <span class="label">Dark bg</span>
+                            <span class="nds-label">Dark bg</span>
                         </button>
                     </div>
                 </div>
@@ -190,10 +190,10 @@ direction: rtl
                             <button
                                 class="nds-btn nds-subtle nds-icon-only nds-xl nds-circle nds-oncolor nds-swiper-button-prev"
                                 aria-label="Previous slide"><i
-                                    class="hgi hgi-stroke hgi-arrow-right-01 icon"></i></button>
+                                    class="hgi hgi-stroke hgi-arrow-right-01 nds-icon"></i></button>
                             <button
                                 class="nds-btn nds-subtle nds-icon-only nds-xl nds-circle nds-oncolor nds-swiper-button-next"
-                                aria-label="Next slide"><i class="hgi hgi-stroke hgi-arrow-left-01 icon"></i></button>
+                                aria-label="Next slide"><i class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i></button>
                         </div>
                     </div>
                 </div>
@@ -258,7 +258,7 @@ direction: rtl
                     <div class="demo-action">
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='["darkBg", ".demo-container", "containerBg"]'>
-                            <span class="label">Dark bg</span>
+                            <span class="nds-label">Dark bg</span>
                         </button>
                     </div>
                 </div>
@@ -320,9 +320,9 @@ direction: rtl
                             <div class="nds-swiper-pagination"></div>
                             <button class="nds-btn nds-subtle nds-icon-only nds-xl nds-swiper-button-prev"
                                 aria-label="Previous slide"><i
-                                    class="hgi hgi-stroke hgi-arrow-right-01 icon"></i></button>
+                                    class="hgi hgi-stroke hgi-arrow-right-01 nds-icon"></i></button>
                             <button class="nds-btn nds-subtle nds-icon-only nds-xl nds-swiper-button-next"
-                                aria-label="Next slide"><i class="hgi hgi-stroke hgi-arrow-left-01 icon"></i></button>
+                                aria-label="Next slide"><i class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i></button>
                         </div>
                     </div>
                 </div>
@@ -389,7 +389,7 @@ direction: rtl
                     <div class="demo-action">
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='["darkBg", ".demo-container", "containerBg"]'>
-                            <span class="label">Dark bg</span>
+                            <span class="nds-label">Dark bg</span>
                         </button>
                     </div>
                 </div>
@@ -449,9 +449,9 @@ direction: rtl
                             <div class="nds-swiper-pagination"></div>
                             <button class="nds-btn nds-subtle nds-icon-only nds-xl nds-swiper-button-prev"
                                 aria-label="Previous slide"><i
-                                    class="hgi hgi-stroke hgi-arrow-right-01 icon"></i></button>
+                                    class="hgi hgi-stroke hgi-arrow-right-01 nds-icon"></i></button>
                             <button class="nds-btn nds-subtle nds-icon-only nds-xl nds-swiper-button-next"
-                                aria-label="Next slide"><i class="hgi hgi-stroke hgi-arrow-left-01 icon"></i></button>
+                                aria-label="Next slide"><i class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i></button>
                         </div>
                     </div>
                 </div>

@@ -6,7 +6,7 @@
     {%- for entry in source_data limit:content_limit %}
     <a href="#" class="nds-btn nds-subtle nds-dropdown-item">
         {%- if entry.icon %}{{ entry.icon }}{%- endif %}
-        <span class="label">{{ entry[content_label] }}</span>
+        <span class="nds-label">{{ entry[content_label] }}</span>
     </a>
     {%- endfor %}
     <hr class="nds-divider">
@@ -19,11 +19,11 @@
     <a href="{%- if subitem.url contains '#' and subitem.url | slice: 0 == '#' %}{{ subitem.url }}{%- else %}{{ subitem.url | relative_url }}{%- endif %}"
         class="nds-btn nds-subtle nds-dropdown-item{%- if subitem.custom_class %} {{ subitem.custom_class }}{%- endif %}">
         {%- if subitem.img_icon %}
-        <img src="{{ subitem.img_icon | relative_url }}" alt="{{ subitem.label }}" class="icon">
+        <img src="{{ subitem.img_icon | relative_url }}" alt="{{ subitem.label }}" class="nds-icon">
         {%- elsif subitem.icon %}
-        <i class="hgi hgi-stroke {{ subitem.icon }} icon"></i>
+        <i class="hgi hgi-stroke {{ subitem.icon }} nds-icon"></i>
         {%- endif %}
-        <span class="label">{{ subitem.label }}</span>
+        <span class="nds-label">{{ subitem.label }}</span>
     </a>
     {%- endif %}
     {%- endfor %}

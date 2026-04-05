@@ -99,7 +99,7 @@ $all-spacers: $spacers;
   align-items: baseline;
   line-height: normal;
 
-  >.icon {
+  >.nds-icon {
     width: var(--_number-icon-size);
     height: var(--_number-icon-size);
     align-self: center;
@@ -270,7 +270,7 @@ a[target="_blank"]:not(.nds-btn, :has(>*)) {
     align-items: center;
   }
 
-  >.label {
+  >.nds-label {
     flex: unset !important;
   }
 }

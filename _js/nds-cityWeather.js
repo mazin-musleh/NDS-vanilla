@@ -96,8 +96,8 @@
             }
 
             // Create both language versions from single API response
-            const arabicHtml = `<i class="hgi hgi-stroke ${icon} icon"></i><span class="text">${arabicDesc}, ${temp}°C</span>`;
-            const englishHtml = `<i class="hgi hgi-stroke ${icon} icon"></i><span class="text">${englishDesc}, ${temp}°C</span>`;
+            const arabicHtml = `<i class="hgi hgi-stroke ${icon} nds-icon"></i><span class="text">${arabicDesc}, ${temp}°C</span>`;
+            const englishHtml = `<i class="hgi hgi-stroke ${icon} nds-icon"></i><span class="text">${englishDesc}, ${temp}°C</span>`;
             
             el.innerHTML = isArabic ? arabicHtml : englishHtml;
             el.style.display = '';
@@ -145,7 +145,7 @@
 
             if (!city) throw new Error('No city found');
 
-            const html = `<i class="hgi hgi-stroke hgi-location-01 icon"></i><span class="text">${city}</span>`;
+            const html = `<i class="hgi hgi-stroke hgi-location-01 nds-icon"></i><span class="text">${city}</span>`;
             
             cityEl.innerHTML = html;
             cityEl.style.display = '';

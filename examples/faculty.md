@@ -26,29 +26,29 @@ layout_class: nds-cardView nds-topSideMenu
             <dl class="nds-definition-list nds-tableView nds-divided" style="--max-col:4;--mid-col:2;--min-col:2;">
                 <div class="nds-definition-item">
                     <dt>
-                        <i class="hgi hgi-stroke hgi-school icon"></i>
-                        <span class="label">College</span>
+                        <i class="hgi hgi-stroke hgi-school nds-icon"></i>
+                        <span class="nds-label">College</span>
                     </dt>
                     <dd>College of Computer and Information Sciences</dd>
                 </div>
                 <div class="nds-definition-item">
                     <dt>
-                        <i class="hgi hgi-stroke hgi-building-02 icon"></i>
-                        <span class="label">Department</span>
+                        <i class="hgi hgi-stroke hgi-building-02 nds-icon"></i>
+                        <span class="nds-label">Department</span>
                     </dt>
                     <dd>Department of Computer Science</dd>
                 </div>
                 <div class="nds-definition-item">
                     <dt>
-                        <i class="hgi hgi-stroke hgi-book-open-02 icon"></i>
-                        <span class="label">General Specialization</span>
+                        <i class="hgi hgi-stroke hgi-book-open-02 nds-icon"></i>
+                        <span class="nds-label">General Specialization</span>
                     </dt>
                     <dd>Computer Science</dd>
                 </div>
                 <div class="nds-definition-item">
                     <dt>
-                        <i class="hgi hgi-stroke hgi-book-02 icon"></i>
-                        <span class="label">Specific Specialization</span>
+                        <i class="hgi hgi-stroke hgi-book-02 nds-icon"></i>
+                        <span class="nds-label">Specific Specialization</span>
                     </dt>
                     <dd>Artificial Intelligence and Machine Learning</dd>
                 </div>
@@ -64,31 +64,31 @@ layout_class: nds-cardView nds-topSideMenu
                 <nav class="nds-tab-list" role="tablist" aria-label="Faculty member information">
                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-cv"
                         id="tab-cv" tabindex="0">
-                        <span class="label">Biography</span>
+                        <span class="nds-label">Biography</span>
                     </button>
                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
                         aria-controls="panel-research" id="tab-research" tabindex="-1">
-                        <span class="label">Research Interests</span>
+                        <span class="nds-label">Research Interests</span>
                     </button>
                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
                         aria-controls="panel-publications" id="tab-publications" tabindex="-1">
-                        <span class="label">Publications</span>
+                        <span class="nds-label">Publications</span>
                     </button>
                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
                         aria-controls="panel-experiences" id="tab-experiences" tabindex="-1">
-                        <span class="label">Experience</span>
+                        <span class="nds-label">Experience</span>
                     </button>
                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
                         aria-controls="panel-education" id="tab-education" tabindex="-1">
-                        <span class="label">Education</span>
+                        <span class="nds-label">Education</span>
                     </button>
                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
                         aria-controls="panel-contact" id="tab-contact" tabindex="-1">
-                        <span class="label">Contact</span>
+                        <span class="nds-label">Contact</span>
                     </button>
                 </nav>
                 <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more">
-                    <i class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                    <i class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i>
                 </button>
             </div>
             <div class="nds-tab-content">
@@ -153,15 +153,15 @@ layout_class: nds-cardView nds-topSideMenu
                         <h3 class="nds-block-title">Academic Qualifications</h3>
                         <dl class="nds-definition-list nds-tableView">
                         <div class="nds-definition-item">
-                            <dt><span class="label">Ph.D.</span></dt>
+                            <dt><span class="nds-label">Ph.D.</span></dt>
                             <dd>Computer Science (Artificial Intelligence) - Stanford University, USA (2010)</dd>
                         </div>
                         <div class="nds-definition-item">
-                            <dt><span class="label">M.Sc.</span></dt>
+                            <dt><span class="nds-label">M.Sc.</span></dt>
                             <dd>Computer Science - King Abdulaziz University, Saudi Arabia (2006)</dd>
                         </div>
                         <div class="nds-definition-item">
-                            <dt><span class="label">B.Sc.</span></dt>
+                            <dt><span class="nds-label">B.Sc.</span></dt>
                             <dd>Computer Science - King Fahd University of Petroleum and Minerals, Saudi Arabia (2004)</dd>
                         </div>
                         </dl>
@@ -174,19 +174,19 @@ layout_class: nds-cardView nds-topSideMenu
                         <h3 class="nds-block-title">Contact Information</h3>
                         <dl class="nds-definition-list nds-tableView">
                             <div class="nds-definition-item">
-                                <dt><span class="label">Email</span></dt>
+                                <dt><span class="nds-label">Email</span></dt>
                                 <dd>m.alsalem@university.edu.sa</dd>
                             </div>
                             <div class="nds-definition-item">
-                                <dt><span class="label">Office</span></dt>
+                                <dt><span class="nds-label">Office</span></dt>
                                 <dd>Computer Science Building - 5th Floor - Office 523</dd>
                             </div>
                             <div class="nds-definition-item">
-                                <dt><span class="label">Office Hours</span></dt>
+                                <dt><span class="nds-label">Office Hours</span></dt>
                                 <dd>Sunday, Tuesday, and Wednesday: 9:00 AM - 11:00 AM</dd>
                             </div>
                             <div class="nds-definition-item">
-                                <dt><span class="label">Phone</span></dt>
+                                <dt><span class="nds-label">Phone</span></dt>
                                 <dd>+966 11 987 6543 Ext. 4251</dd>
                             </div>
                         </dl>

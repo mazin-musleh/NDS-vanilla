@@ -24,7 +24,7 @@ direction: ltr
                     <div class="demo-action">
                         <button type="button" class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                            <span class="label">Remove bg</span>
+                            <span class="nds-label">Remove bg</span>
                         </button>
                     </div>
                 </div>
@@ -78,7 +78,7 @@ direction: ltr
                     <div class="demo-action">
                         <button type="button" class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                            <span class="label">Remove bg</span>
+                            <span class="nds-label">Remove bg</span>
                         </button>
                     </div>
                 </div>
@@ -150,7 +150,7 @@ direction: ltr
                     <div class="demo-action">
                         <button type="button" class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                            <span class="label">Remove bg</span>
+                            <span class="nds-label">Remove bg</span>
                         </button>
                     </div>
                 </div>
@@ -210,7 +210,7 @@ direction: ltr
                     <div class="demo-action">
                         <button type="button" class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                            <span class="label">Remove bg</span>
+                            <span class="nds-label">Remove bg</span>
                         </button>
                     </div>
                 </div>
@@ -278,11 +278,11 @@ direction: ltr
                     <div class="demo-action">
                         <button type="button" class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='["nds-shadow", ".nds-card", "cardStyle"]'>
-                            <span class="label">Shadow</span>
+                            <span class="nds-label">Shadow</span>
                         </button>
                         <button type="button" class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                            <span class="label">Remove bg</span>
+                            <span class="nds-label">Remove bg</span>
                         </button>
                     </div>
                 </div>
@@ -293,7 +293,7 @@ direction: ltr
                                 <div class="nds-card-header">
                                     <div class="nds-card-featured-icon">
                                         <span class="nds-featured-icon nds-brand nds-circle nds-xl">
-                                            <i class="hgi hgi-stroke hgi-award-03 icon"></i>
+                                            <i class="hgi hgi-stroke hgi-award-03 nds-icon"></i>
                                         </span>
                                     </div>
                                 </div>
@@ -308,7 +308,7 @@ direction: ltr
                                 <div class="nds-card-header">
                                     <div class="nds-card-featured-icon">
                                         <span class="nds-featured-icon nds-brand nds-circle nds-xl">
-                                            <i class="hgi hgi-stroke hgi-user-group icon"></i>
+                                            <i class="hgi hgi-stroke hgi-user-group nds-icon"></i>
                                         </span>
                                     </div>
                                 </div>
@@ -323,7 +323,7 @@ direction: ltr
                                 <div class="nds-card-header">
                                     <div class="nds-card-featured-icon">
                                         <span class="nds-featured-icon nds-brand nds-circle nds-xl">
-                                            <i class="hgi hgi-stroke hgi-chart-line-data-02 icon"></i>
+                                            <i class="hgi hgi-stroke hgi-chart-line-data-02 nds-icon"></i>
                                         </span>
                                     </div>
                                 </div>
@@ -361,7 +361,7 @@ direction: ltr
                                     <div class="nds-card-header">
                                         <div class="nds-card-featured-icon">
                                             <span class="nds-featured-icon nds-brand nds-circle nds-xl">
-                                                <i class="hgi hgi-stroke hgi-award-03 icon"></i>
+                                                <i class="hgi hgi-stroke hgi-award-03 nds-icon"></i>
                                             </span>
                                         </div>
                                     </div>

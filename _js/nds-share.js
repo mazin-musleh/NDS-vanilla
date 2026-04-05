@@ -67,7 +67,7 @@
             const copyLinkItem = this.dropdown.querySelector('.nds-share-copy');
             if (!copyLinkItem) return;
 
-            const labelElement = copyLinkItem.querySelector('.label');
+            const labelElement = copyLinkItem.querySelector('.nds-label');
             const originalText = labelElement.textContent;
             const copiedText = copyLinkItem.dataset.copiedText || 'Link Copied!';
 

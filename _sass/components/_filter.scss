@@ -14,7 +14,7 @@
     gap: var(--spacing-md);
     flex-direction: column;
 
-    >.label {
+    >.nds-label {
         font-size: var(--nds-text-clamp-lg-FS);
         line-height: var(--nds-text-clamp-lg-LH);
         color: var(--text-primary);
@@ -63,7 +63,7 @@
         min-width: 0;
         align-items: center;
 
-        >.label {
+        >.nds-label {
             font-size: var(--nds-text-lg-FS);
             font-weight: 500;
             color: var(--text-default);
@@ -78,7 +78,7 @@
         min-width: 0;
         align-items: center;
 
-        >.label {
+        >.nds-label {
             font-size: var(--nds-text-lg-FS);
             font-weight: 500;
         }
@@ -102,7 +102,7 @@
 
         &.nds-section-search {
 
-            :is(.nds-search-btn, .nds-filter-btn)>.label {
+            :is(.nds-search-btn, .nds-filter-btn)>.nds-label {
                 display: none;
             }
         }

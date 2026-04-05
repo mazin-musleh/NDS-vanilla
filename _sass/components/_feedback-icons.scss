@@ -165,11 +165,11 @@
             display: none;
         }
 
-        .icon::before {
+        .nds-icon::before {
             font-family: "hgi-stroke-rounded" !important;
         }
 
-        .icon::after {
+        .nds-icon::after {
             background-color: transparent;
         }
     }
@@ -183,22 +183,22 @@
     // ==============================================
 
     // Default icon (information-circle)
-    .icon:before {
+    .nds-icon:before {
         content: "䆾";
     }
 
     // Success icon
-    [data-status="success"] & .icon:before {
+    [data-status="success"] & .nds-icon:before {
         content: "㶧";
     }
 
     // Warning icon
-    [data-status="warning"] & .icon:before {
+    [data-status="warning"] & .nds-icon:before {
         content: "㬃";
     }
 
     // Error icon
-    [data-status="error"] & .icon:before {
+    [data-status="error"] & .nds-icon:before {
         content: "㵅";
     }
 }

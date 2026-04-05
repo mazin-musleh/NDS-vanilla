@@ -172,7 +172,7 @@
     display: flex;
   }
 
-  &:not([data-status]) .nds-feedback .icon::before {
+  &:not([data-status]) .nds-feedback .nds-icon::before {
     content: "䆾"; // information-circle (default)
   }
 

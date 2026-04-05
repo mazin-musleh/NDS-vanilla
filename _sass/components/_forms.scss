@@ -18,7 +18,7 @@
             cursor: pointer;
         }
 
-        .label {
+        .nds-label {
             color: var(--form-field-text-label);
             font-size: var(--nds-text-md-FS);
             line-height: var(--nds-text-md-LH);
@@ -30,8 +30,8 @@
     // Required field indicator (using data-required attribute or legacy class)
     &:is([data-required], .nds-required) {
 
-        .nds-form-header .label::after,
-        >.label::after {
+        .nds-form-header .nds-label::after,
+        >.nds-label::after {
             content: " *";
             color: var(--controls-control-text-error);
         }
@@ -133,7 +133,7 @@
 
     // Disabled state
     &[data-state~="disabled"] {
-        .nds-form-header .label {
+        .nds-form-header .nds-label {
             color: var(--text-default-disabled);
         }
 
@@ -151,14 +151,14 @@
     }
 }
 
-.label+.info {
+.nds-label+.info {
     color: var(--text-primary-paragraph);
     font-size: var(--nds-text-sm-FS);
     line-height: var(--nds-text-sm-LH);
     min-width: 200px;
 }
 
-.label+.note {
+.nds-label+.nds-note {
     color: var(--text-secondary-paragraph);
     font-weight: 300;
 }
@@ -170,7 +170,7 @@ fieldset {
     min-width: 0; // Fix for flexbox overflow
 
     &>legend,
-    >legend>.label {
+    >legend>.nds-label {
         padding: 0;
         margin-bottom: var(--spacing-xl);
         font-size: var(--nds-text-lg-FS);
@@ -181,8 +181,8 @@ fieldset {
     // Auto-add required indicator when group has data-required, data-min-checked, or nds-required class
     &:is([data-required], [data-min-checked], .nds-required) {
 
-        >legend>.label::after,
-        >.label::after {
+        >legend>.nds-label::after,
+        >.nds-label::after {
             content: " *";
             color: var(--controls-control-text-error);
         }
@@ -460,6 +460,6 @@ fieldset {
     animation: colorCycle 1s linear infinite alternate;
 }
 
-.toggle-password.show i::before {
+.nds-toggle-password.show i::before {
     content: "㿦";
 }

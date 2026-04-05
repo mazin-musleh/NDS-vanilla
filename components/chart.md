@@ -26,7 +26,7 @@ direction: ltr
                                 data-chart-opt-off='{"dataLabels":{"show":false}}'
                                 data-code-on="dataLabels: { show: true }"
                                 data-code-off="dataLabels: { show: false }">
-                                <span class="label">Data Labels</span>
+                                <span class="nds-label">Data Labels</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["", "#demo-bar", "chartBarStack", "chart"]'
@@ -34,7 +34,7 @@ direction: ltr
                                 data-chart-opt-off='{"bar":{"stacked":false}}'
                                 data-code-on="stacked: true,"
                                 data-code-off="stacked: false,">
-                                <span class="label">Stacked</span>
+                                <span class="nds-label">Stacked</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
                                 data-toggler='["", "#demo-bar", "chartBarGrid", "chart"]'
@@ -42,7 +42,7 @@ direction: ltr
                                 data-chart-opt-off='{"grid":{"show":false}}'
                                 data-code-on="grid:    { show: true }"
                                 data-code-off="grid:    { show: false }">
-                                <span class="label">Grid</span>
+                                <span class="nds-label">Grid</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
                                 data-toggler='["", "#demo-bar", "chartBarYAxis", "chart"]'
@@ -50,7 +50,7 @@ direction: ltr
                                 data-chart-opt-off='{"yaxis":{"show":false}}'
                                 data-code-on="yaxis:   { show: true,"
                                 data-code-off="yaxis:   { show: false,">
-                                <span class="label">Y-Axis</span>
+                                <span class="nds-label">Y-Axis</span>
                             </button>
                         </div>
                     </div>
@@ -145,7 +145,7 @@ NDS.Chart.create('#my-chart', {
                                 data-chart-opt-off='{"line":{"smooth":false}}'
                                 data-code-on="smooth: true,"
                                 data-code-off="smooth: false,">
-                                <span class="label">Smooth</span>
+                                <span class="nds-label">Smooth</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
                                 data-toggler='["", "#demo-line", "chartLineDots", "chart"]'
@@ -153,7 +153,7 @@ NDS.Chart.create('#my-chart', {
                                 data-chart-opt-off='{"line":{"dots":false}}'
                                 data-code-on="dots: true,"
                                 data-code-off="dots: false,">
-                                <span class="label">Dots</span>
+                                <span class="nds-label">Dots</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["", "#demo-line", "chartLineArea", "chart"]'
@@ -161,7 +161,7 @@ NDS.Chart.create('#my-chart', {
                                 data-chart-opt-off='{"line":{"area":false}}'
                                 data-code-on="area: true,"
                                 data-code-off="area: false,">
-                                <span class="label">Area</span>
+                                <span class="nds-label">Area</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
                                 data-toggler='["", "#demo-line", "chartLineGrid", "chart"]'
@@ -169,7 +169,7 @@ NDS.Chart.create('#my-chart', {
                                 data-chart-opt-off='{"grid":{"show":false}}'
                                 data-code-on="grid:    { show: true }"
                                 data-code-off="grid:    { show: false }">
-                                <span class="label">Grid</span>
+                                <span class="nds-label">Grid</span>
                             </button>
                         </div>
                     </div>
@@ -263,7 +263,7 @@ NDS.Chart.create('#my-chart', {
                                 data-chart-opt-off='{"dataLabels":{"show":false}}'
                                 data-code-on="dataLabels: { show: true }"
                                 data-code-off="dataLabels: { show: false }">
-                                <span class="label">Labels</span>
+                                <span class="nds-label">Labels</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["", "#demo-pie", "chartPieStroke", "chart"]'
@@ -271,7 +271,7 @@ NDS.Chart.create('#my-chart', {
                                 data-chart-opt-off='{"stroke":{"show":false}}'
                                 data-code-on="show: true,                       // Stroke between slices"
                                 data-code-off="show: false,                      // Stroke between slices">
-                                <span class="label">Stroke</span>
+                                <span class="nds-label">Stroke</span>
                             </button>
                         </div>
                     </div>
@@ -360,7 +360,7 @@ NDS.Chart.create('#my-chart', {
                                 data-chart-opt-off='{"dataLabels":{"show":false}}'
                                 data-code-on="dataLabels: { show: true }"
                                 data-code-off="dataLabels: { show: false }">
-                                <span class="label">Labels</span>
+                                <span class="nds-label">Labels</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["", "#demo-donut", "chartDonutStroke", "chart"]'
@@ -368,7 +368,7 @@ NDS.Chart.create('#my-chart', {
                                 data-chart-opt-off='{"stroke":{"show":false}}'
                                 data-code-on="show: true,                       // Stroke between slices"
                                 data-code-off="show: false,                      // Stroke between slices">
-                                <span class="label">Stroke</span>
+                                <span class="nds-label">Stroke</span>
                             </button>
                         </div>
                     </div>
@@ -514,7 +514,7 @@ NDS.Chart.create('#my-chart', {
                                 data-toggler='["", "#demo-themed", "chartThemedDL", "chart"]'
                                 data-chart-opt='{"dataLabels":{"show":true}}'
                                 data-chart-opt-off='{"dataLabels":{"show":false}}'>
-                                <span class="label">Data Labels</span>
+                                <span class="nds-label">Data Labels</span>
                             </button>
                         </div>
                     </div>
@@ -583,43 +583,43 @@ NDS.Chart.create('#my-chart', {
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket icon"></i>
-                        <span class="label">Auto-initialization</span>
+                        <i class="hgi hgi-stroke hgi-plug-socket nds-icon"></i>
+                        <span class="nds-label">Auto-initialization</span>
                     </span>
                     <p class="nds-item-desc">Charts with <code class="nds-inline-code lang-html">data-chart-*</code> attributes initialize on page load. Call <code class="nds-inline-code lang-js">NDS.Chart.init()</code> to re-scan after adding new chart elements dynamically.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-resize-01 icon"></i>
-                        <span class="label">Responsive Sizing</span>
+                        <i class="hgi hgi-stroke hgi-resize-01 nds-icon"></i>
+                        <span class="nds-label">Responsive Sizing</span>
                     </span>
                     <p class="nds-item-desc">Charts resize automatically when their container width changes. No manual resize calls needed.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-customize icon"></i>
-                        <span class="label">CSS Theming</span>
+                        <i class="hgi hgi-stroke hgi-customize nds-icon"></i>
+                        <span class="nds-label">CSS Theming</span>
                     </span>
                     <p class="nds-item-desc">Override colors, grid, tooltips, and labels with CSS custom properties. Dark mode adapts automatically.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-analytics-up icon"></i>
-                        <span class="label">Smart Scaling</span>
+                        <i class="hgi hgi-stroke hgi-analytics-up nds-icon"></i>
+                        <span class="nds-label">Smart Scaling</span>
                     </span>
                     <p class="nds-item-desc">Automatic nice-number axis scaling, number formatting (K/M suffixes), and legend wrapping.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-printer icon"></i>
-                        <span class="label">Print and Accessibility</span>
+                        <i class="hgi hgi-stroke hgi-printer nds-icon"></i>
+                        <span class="nds-label">Print and Accessibility</span>
                     </span>
                     <p class="nds-item-desc">Tooltips hidden in print, transitions disabled for reduced-motion preference. SVG output includes ARIA labels for screen readers.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-chart-line-data-01 icon"></i>
-                        <span class="label">Programmatic Control</span>
+                        <i class="hgi hgi-stroke hgi-chart-line-data-01 nds-icon"></i>
+                        <span class="nds-label">Programmatic Control</span>
                     </span>
                     <p class="nds-item-desc">Create, update, and destroy charts with <code class="nds-inline-code lang-js">NDS.Chart.create()</code>. Options deep-merge on update for live reconfiguration.</p>
                 </div>

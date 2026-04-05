@@ -54,7 +54,7 @@
     color: var(--text-default-disabled);
   }
 
-  .label {
+  .nds-label {
     --_truncate: var(--truncate, 1);
     overflow: hidden;
     display: -webkit-box !important;
@@ -197,7 +197,7 @@
   // CHIP WITH ICONS
   // ==============================================
 
-  .icon {
+  .nds-icon {
     color: var(--_chip-icon);
   }
 

@@ -22,55 +22,55 @@ direction: ltr
                         <div class="demo-action">
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="label">LG</span>
+                                    <span class="nds-label">LG</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-xs", ".nds-avatar", "avatarSize"]'>
-                                            <span class="label">XS</span>
+                                            <span class="nds-label">XS</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-sm", ".nds-avatar", "avatarSize"]'>
-                                            <span class="label">SM</span>
+                                            <span class="nds-label">SM</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-md", ".nds-avatar", "avatarSize"]'>
-                                            <span class="label">MD</span>
+                                            <span class="nds-label">MD</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-lg", ".nds-avatar", "avatarSize"]'>
-                                            <span class="label">LG</span>
+                                            <span class="nds-label">LG</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-xl", ".nds-avatar", "avatarSize"]'>
-                                            <span class="label">XL</span>
+                                            <span class="nds-label">XL</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-2xl", ".nds-avatar", "avatarSize"]'>
-                                            <span class="label">2XL</span>
+                                            <span class="nds-label">2XL</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-3xl", ".nds-avatar", "avatarSize"]'>
-                                            <span class="label">3XL</span>
+                                            <span class="nds-label">3XL</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-square", ".nds-avatar", "avatarShape"]'>
-                                <span class="label">Square</span>
+                                <span class="nds-label">Square</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                <span class="nds-label">Remove bg</span>
                             </button>
                         </div>
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
                             <div class="nds-avatar nds-lg">
-                                <span class="label">AB</span>
+                                <span class="nds-label">AB</span>
                             </div>
                         </div>
                     </div>
@@ -93,7 +93,7 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code"><div class="nds-avatar nds-lg">
-  <span class="label">AB</span>
+  <span class="nds-label">AB</span>
 </div></code>
                                 </div>
                             </div>
@@ -119,48 +119,48 @@ direction: ltr
                         <div class="demo-action">
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="label">LG</span>
+                                    <span class="nds-label">LG</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-xs", ".nds-avatar", "iconAvatarSize"]'>
-                                            <span class="label">XS</span>
+                                            <span class="nds-label">XS</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-sm", ".nds-avatar", "iconAvatarSize"]'>
-                                            <span class="label">SM</span>
+                                            <span class="nds-label">SM</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-md", ".nds-avatar", "iconAvatarSize"]'>
-                                            <span class="label">MD</span>
+                                            <span class="nds-label">MD</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-lg", ".nds-avatar", "iconAvatarSize"]'>
-                                            <span class="label">LG</span>
+                                            <span class="nds-label">LG</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-xl", ".nds-avatar", "iconAvatarSize"]'>
-                                            <span class="label">XL</span>
+                                            <span class="nds-label">XL</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-2xl", ".nds-avatar", "iconAvatarSize"]'>
-                                            <span class="label">2XL</span>
+                                            <span class="nds-label">2XL</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-3xl", ".nds-avatar", "iconAvatarSize"]'>
-                                            <span class="label">3XL</span>
+                                            <span class="nds-label">3XL</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-square", ".nds-avatar", "iconAvatarShape"]'>
-                                <span class="label">Square</span>
+                                <span class="nds-label">Square</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                <span class="nds-label">Remove bg</span>
                             </button>
                         </div>
                     </div>
@@ -216,52 +216,52 @@ direction: ltr
                         <div class="demo-action">
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="label">LG</span>
+                                    <span class="nds-label">LG</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-xs", ".nds-avatar", "imgAvatarSize"]'>
-                                            <span class="label">XS</span>
+                                            <span class="nds-label">XS</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-sm", ".nds-avatar", "imgAvatarSize"]'>
-                                            <span class="label">SM</span>
+                                            <span class="nds-label">SM</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-md", ".nds-avatar", "imgAvatarSize"]'>
-                                            <span class="label">MD</span>
+                                            <span class="nds-label">MD</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-lg", ".nds-avatar", "imgAvatarSize"]'>
-                                            <span class="label">LG</span>
+                                            <span class="nds-label">LG</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-xl", ".nds-avatar", "imgAvatarSize"]'>
-                                            <span class="label">XL</span>
+                                            <span class="nds-label">XL</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-2xl", ".nds-avatar", "imgAvatarSize"]'>
-                                            <span class="label">2XL</span>
+                                            <span class="nds-label">2XL</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-3xl", ".nds-avatar", "imgAvatarSize"]'>
-                                            <span class="label">3XL</span>
+                                            <span class="nds-label">3XL</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-image-border", ".nds-avatar", "imageBorder"]'>
-                                <span class="label">Image Border</span>
+                                <span class="nds-label">Image Border</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-square", ".nds-avatar", "imgAvatarShape"]'>
-                                <span class="label">Square</span>
+                                <span class="nds-label">Square</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                <span class="nds-label">Remove bg</span>
                             </button>
                         </div>
                     </div>
@@ -317,48 +317,48 @@ direction: ltr
                         <div class="demo-action">
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="label">LG</span>
+                                    <span class="nds-label">LG</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-xs", ".nds-avatar", "linkAvatarSize"]'>
-                                            <span class="label">XS</span>
+                                            <span class="nds-label">XS</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-sm", ".nds-avatar", "linkAvatarSize"]'>
-                                            <span class="label">SM</span>
+                                            <span class="nds-label">SM</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-md", ".nds-avatar", "linkAvatarSize"]'>
-                                            <span class="label">MD</span>
+                                            <span class="nds-label">MD</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-lg", ".nds-avatar", "linkAvatarSize"]'>
-                                            <span class="label">LG</span>
+                                            <span class="nds-label">LG</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-xl", ".nds-avatar", "linkAvatarSize"]'>
-                                            <span class="label">XL</span>
+                                            <span class="nds-label">XL</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-2xl", ".nds-avatar", "linkAvatarSize"]'>
-                                            <span class="label">2XL</span>
+                                            <span class="nds-label">2XL</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-3xl", ".nds-avatar", "linkAvatarSize"]'>
-                                            <span class="label">3XL</span>
+                                            <span class="nds-label">3XL</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-square", ".nds-avatar", "linkAvatarShape"]'>
-                                <span class="label">Square</span>
+                                <span class="nds-label">Square</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                <span class="nds-label">Remove bg</span>
                             </button>
                         </div>
                     </div>
@@ -414,48 +414,48 @@ direction: ltr
                         <div class="demo-action">
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="label">LG</span>
+                                    <span class="nds-label">LG</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-xs", ".nds-avatar", "btnAvatarSize"]'>
-                                            <span class="label">XS</span>
+                                            <span class="nds-label">XS</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-sm", ".nds-avatar", "btnAvatarSize"]'>
-                                            <span class="label">SM</span>
+                                            <span class="nds-label">SM</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-md", ".nds-avatar", "btnAvatarSize"]'>
-                                            <span class="label">MD</span>
+                                            <span class="nds-label">MD</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-lg", ".nds-avatar", "btnAvatarSize"]'>
-                                            <span class="label">LG</span>
+                                            <span class="nds-label">LG</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-xl", ".nds-avatar", "btnAvatarSize"]'>
-                                            <span class="label">XL</span>
+                                            <span class="nds-label">XL</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-2xl", ".nds-avatar", "btnAvatarSize"]'>
-                                            <span class="label">2XL</span>
+                                            <span class="nds-label">2XL</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-3xl", ".nds-avatar", "btnAvatarSize"]'>
-                                            <span class="label">3XL</span>
+                                            <span class="nds-label">3XL</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-square", ".nds-avatar", "btnAvatarShape"]'>
-                                <span class="label">Square</span>
+                                <span class="nds-label">Square</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                <span class="nds-label">Remove bg</span>
                             </button>
                         </div>
                     </div>
@@ -468,13 +468,13 @@ direction: ltr
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
-                                            <span class="label">Profile</span>
+                                            <span class="nds-label">Profile</span>
                                         </a>
                                         <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
-                                            <span class="label">Settings</span>
+                                            <span class="nds-label">Settings</span>
                                         </a>
                                         <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
-                                            <span class="label">Sign out</span>
+                                            <span class="nds-label">Sign out</span>
                                         </a>
                                     </div>
                                 </div>
@@ -491,7 +491,7 @@ direction: ltr
                                     </button>
                                 </nav>
                                 <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i
-                                        class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                                        class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i>
                                 </button>
                             </div>
                             <div class="nds-tab-content">
@@ -511,13 +511,13 @@ direction: ltr
     <div class="nds-dropmenu-menu" hidden>
         <div class="nds-dropmenu-scroll">
             <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
-                <span class="label">Profile</span>
+                <span class="nds-label">Profile</span>
             </a>
             <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
-                <span class="label">Settings</span>
+                <span class="nds-label">Settings</span>
             </a>
             <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
-                <span class="label">Sign out</span>
+                <span class="nds-label">Sign out</span>
             </a>
         </div>
     </div>
@@ -548,48 +548,48 @@ direction: ltr
                         <div class="demo-action">
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="label">MD</span>
+                                    <span class="nds-label">MD</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-xs", ".nds-avatar-group", "groupSize"]'>
-                                            <span class="label">XS</span>
+                                            <span class="nds-label">XS</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-sm", ".nds-avatar-group", "groupSize"]'>
-                                            <span class="label">SM</span>
+                                            <span class="nds-label">SM</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-md", ".nds-avatar-group", "groupSize"]'>
-                                            <span class="label">MD</span>
+                                            <span class="nds-label">MD</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-lg", ".nds-avatar-group", "groupSize"]'>
-                                            <span class="label">LG</span>
+                                            <span class="nds-label">LG</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-xl", ".nds-avatar-group", "groupSize"]'>
-                                            <span class="label">XL</span>
+                                            <span class="nds-label">XL</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-2xl", ".nds-avatar-group", "groupSize"]'>
-                                            <span class="label">2XL</span>
+                                            <span class="nds-label">2XL</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-3xl", ".nds-avatar-group", "groupSize"]'>
-                                            <span class="label">3XL</span>
+                                            <span class="nds-label">3XL</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
                                 data-toggler='["nds-stacked", ".nds-avatar-group", "stackedVariant"]'>
-                                <span class="label">Stacked</span>
+                                <span class="nds-label">Stacked</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                <span class="nds-label">Remove bg</span>
                             </button>
                         </div>
                     </div>
@@ -612,7 +612,7 @@ direction: ltr
                                     <img src="{{ 'assets/img/avatar5.png' | relative_url }}" alt="User 5">
                                 </div>
                                 <div class="nds-avatar nds-lg">
-                                    <span class="label">+99</span>
+                                    <span class="nds-label">+99</span>
                                 </div>
                             </div>
                         </div>
@@ -627,7 +627,7 @@ direction: ltr
                                     </button>
                                 </nav>
                                 <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i
-                                        class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                                        class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i>
                                 </button>
                             </div>
                             <div class="nds-tab-content">
@@ -657,7 +657,7 @@ direction: ltr
         <img src="path/to/avatar5.jpg" alt="User 5">
     </div>
     <div class="nds-avatar">
-        <span class="label">+99</span>
+        <span class="nds-label">+99</span>
     </div>
 </div>
                                         </code>
@@ -682,29 +682,29 @@ direction: ltr
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-tag-01 icon"></i>
-                        <span class="label">Pure CSS</span>
+                        <i class="hgi hgi-stroke hgi-tag-01 nds-icon"></i>
+                        <span class="nds-label">Pure CSS</span>
                     </span>
                     <p class="nds-item-desc">No JavaScript required. Renders immediately from HTML markup.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-resize-01 icon"></i>
-                        <span class="label">Seven Sizes</span>
+                        <i class="hgi hgi-stroke hgi-resize-01 nds-icon"></i>
+                        <span class="nds-label">Seven Sizes</span>
                     </span>
                     <p class="nds-item-desc">From 24px (XS) to 120px (3XL). Font and icon scale proportionally.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-puzzle icon"></i>
-                        <span class="label">Element Agnostic</span>
+                        <i class="hgi hgi-stroke hgi-puzzle nds-icon"></i>
+                        <span class="nds-label">Element Agnostic</span>
                     </span>
                     <p class="nds-item-desc">Works on div, a, or button elements for display, navigation, or actions.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-user-group icon"></i>
-                        <span class="label">Group Layout</span>
+                        <i class="hgi hgi-stroke hgi-user-group nds-icon"></i>
+                        <span class="nds-label">Group Layout</span>
                     </span>
                     <p class="nds-item-desc">Stack avatars with overlapping or spaced arrangement and overflow count.</p>
                 </div>

@@ -23,7 +23,7 @@ direction: ltr
                         <div class="demo-action">
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                <span class="nds-label">Remove bg</span>
                             </button>
                         </div>
                     </div>
@@ -32,26 +32,26 @@ direction: ltr
                             <div class="nds-dropmenu">
                                 <button class="nds-btn nds-secondary-outline nds-dropmenu-trigger">
                                     <i class="hgi hgi-stroke hgi-menu-01"></i>
-                                    <span class="label">Actions</span>
+                                    <span class="nds-label">Actions</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item">
                                             <i class="hgi hgi-stroke hgi-edit-02"></i>
-                                            <span class="label">Edit</span>
+                                            <span class="nds-label">Edit</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item">
                                             <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                            <span class="label">Duplicate</span>
+                                            <span class="nds-label">Duplicate</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item">
                                             <i class="hgi hgi-stroke hgi-share-01"></i>
-                                            <span class="label">Share</span>
+                                            <span class="nds-label">Share</span>
                                         </button>
                                         <hr class="nds-divider">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item nds-destructive">
                                             <i class="hgi hgi-stroke hgi-delete-02"></i>
-                                            <span class="label">Delete</span>
+                                            <span class="nds-label">Delete</span>
                                         </button>
                                     </div>
                                 </div>
@@ -81,26 +81,26 @@ direction: ltr
 <div class="nds-dropmenu">
   <button class="nds-btn nds-secondary-outline nds-dropmenu-trigger">
     <i class="hgi hgi-stroke hgi-menu-01"></i>
-    <span class="label">Actions</span>
+    <span class="nds-label">Actions</span>
   </button>
   <div class="nds-dropmenu-menu" hidden>
     <div class="nds-dropmenu-scroll">
       <button class="nds-btn nds-subtle nds-dropmenu-item">
         <i class="hgi hgi-stroke hgi-edit-02"></i>
-        <span class="label">Edit</span>
+        <span class="nds-label">Edit</span>
       </button>
       <button class="nds-btn nds-subtle nds-dropmenu-item">
         <i class="hgi hgi-stroke hgi-copy-01"></i>
-        <span class="label">Duplicate</span>
+        <span class="nds-label">Duplicate</span>
       </button>
       <button class="nds-btn nds-subtle nds-dropmenu-item">
         <i class="hgi hgi-stroke hgi-share-01"></i>
-        <span class="label">Share</span>
+        <span class="nds-label">Share</span>
       </button>
       <hr class="nds-divider">
       <button class="nds-btn nds-subtle nds-dropmenu-item nds-destructive">
         <i class="hgi hgi-stroke hgi-delete-02"></i>
-        <span class="label">Delete</span>
+        <span class="nds-label">Delete</span>
       </button>
     </div>
   </div>
@@ -132,7 +132,7 @@ direction: ltr
                         <div class="demo-action">
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                <span class="nds-label">Remove bg</span>
                             </button>
                         </div>
                     </div>
@@ -140,27 +140,27 @@ direction: ltr
                         <div class="state-demo">
                             <div class="nds-dropmenu">
                                 <button class="nds-btn nds-secondary-outline nds-dropmenu-trigger">
-                                    <span class="label">Account</span>
+                                    <span class="nds-label">Account</span>
                                     <i class="hgi hgi-stroke hgi-user-circle"></i>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
                                             <i class="hgi hgi-stroke hgi-user-account"></i>
-                                            <span class="label">Profile</span>
+                                            <span class="nds-label">Profile</span>
                                         </a>
                                         <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
                                             <i class="hgi hgi-stroke hgi-settings-01"></i>
-                                            <span class="label">Settings</span>
+                                            <span class="nds-label">Settings</span>
                                         </a>
                                         <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
                                             <i class="hgi hgi-stroke hgi-help-circle"></i>
-                                            <span class="label">Help</span>
+                                            <span class="nds-label">Help</span>
                                         </a>
                                         <hr class="nds-divider">
                                         <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
                                             <i class="hgi hgi-stroke hgi-logout-01"></i>
-                                            <span class="label">Sign out</span>
+                                            <span class="nds-label">Sign out</span>
                                         </a>
                                     </div>
                                 </div>
@@ -189,27 +189,27 @@ direction: ltr
                                         <code class="lang-html code">
 <div class="nds-dropmenu">
   <button class="nds-btn nds-secondary-outline nds-dropmenu-trigger">
-    <span class="label">Account</span>
+    <span class="nds-label">Account</span>
     <i class="hgi hgi-stroke hgi-user-circle"></i>
   </button>
   <div class="nds-dropmenu-menu" hidden>
     <div class="nds-dropmenu-scroll">
       <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
         <i class="hgi hgi-stroke hgi-user-account"></i>
-        <span class="label">Profile</span>
+        <span class="nds-label">Profile</span>
       </a>
       <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
         <i class="hgi hgi-stroke hgi-settings-01"></i>
-        <span class="label">Settings</span>
+        <span class="nds-label">Settings</span>
       </a>
       <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
         <i class="hgi hgi-stroke hgi-help-circle"></i>
-        <span class="label">Help</span>
+        <span class="nds-label">Help</span>
       </a>
       <hr class="nds-divider">
       <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
         <i class="hgi hgi-stroke hgi-logout-01"></i>
-        <span class="label">Sign out</span>
+        <span class="nds-label">Sign out</span>
       </a>
     </div>
   </div>
@@ -240,7 +240,7 @@ direction: ltr
                         <div class="demo-action">
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                <span class="nds-label">Remove bg</span>
                             </button>
                         </div>
                     </div>
@@ -248,16 +248,16 @@ direction: ltr
                         <div class="state-demo">
                             <div class="nds-dropmenu">
                                 <button class="nds-btn nds-neutral nds-menu-btn nds-dropmenu-trigger">
-                                    <i class="hgi hgi-stroke hgi-settings-02 icon"></i>
-                                    <span class="label">Settings</span>
+                                    <i class="hgi hgi-stroke hgi-settings-02 nds-icon"></i>
+                                    <span class="nds-label">Settings</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden style="min-width: 220px;">
                                     <div class="nds-dropmenu-scroll">
                                         <fieldset class="nds-dropmenu-group nds-form-group nds-check-group" data-no-auto-close>
-                                            <legend class="label">Notifications</legend>
+                                            <legend class="nds-label">Notifications</legend>
                                             <div class="nds-form-container nds-switch-container">
                                                 <div class="nds-form-header">
-                                                    <label for="setting-email"><span class="label">Email</span></label>
+                                                    <label for="setting-email"><span class="nds-label">Email</span></label>
                                                 </div>
                                                 <div class="nds-form-control">
                                                     <div class="nds-switch">
@@ -268,7 +268,7 @@ direction: ltr
                                             </div>
                                             <div class="nds-form-container nds-switch-container">
                                                 <div class="nds-form-header">
-                                                    <label for="setting-sms"><span class="label">SMS</span></label>
+                                                    <label for="setting-sms"><span class="nds-label">SMS</span></label>
                                                 </div>
                                                 <div class="nds-form-control">
                                                     <div class="nds-switch">
@@ -279,7 +279,7 @@ direction: ltr
                                             </div>
                                             <div class="nds-form-container nds-switch-container">
                                                 <div class="nds-form-header">
-                                                    <label for="setting-push"><span class="label">Push</span></label>
+                                                    <label for="setting-push"><span class="nds-label">Push</span></label>
                                                 </div>
                                                 <div class="nds-form-control">
                                                     <div class="nds-switch">
@@ -291,10 +291,10 @@ direction: ltr
                                         </fieldset>
                                         <hr class="nds-divider">
                                         <fieldset class="nds-dropmenu-group nds-form-group nds-check-group" data-no-auto-close>
-                                            <legend class="label">Display</legend>
+                                            <legend class="nds-label">Display</legend>
                                             <div class="nds-form-container nds-check-container">
                                                 <div class="nds-form-header">
-                                                    <label for="setting-compact"><span class="label">Compact view</span></label>
+                                                    <label for="setting-compact"><span class="nds-label">Compact view</span></label>
                                                 </div>
                                                 <div class="nds-form-control">
                                                     <input type="checkbox" id="setting-compact" class="nds-check">
@@ -302,7 +302,7 @@ direction: ltr
                                             </div>
                                             <div class="nds-form-container nds-check-container">
                                                 <div class="nds-form-header">
-                                                    <label for="setting-icons"><span class="label">Show icons</span></label>
+                                                    <label for="setting-icons"><span class="nds-label">Show icons</span></label>
                                                 </div>
                                                 <div class="nds-form-control">
                                                     <input type="checkbox" id="setting-icons" class="nds-check" checked>
@@ -310,7 +310,7 @@ direction: ltr
                                             </div>
                                             <div class="nds-form-container nds-check-container">
                                                 <div class="nds-form-header">
-                                                    <label for="setting-desc"><span class="label">Show descriptions</span></label>
+                                                    <label for="setting-desc"><span class="nds-label">Show descriptions</span></label>
                                                 </div>
                                                 <div class="nds-form-control">
                                                     <input type="checkbox" id="setting-desc" class="nds-check" checked>
@@ -319,10 +319,10 @@ direction: ltr
                                         </fieldset>
                                         <hr class="nds-divider">
                                         <fieldset class="nds-dropmenu-group nds-form-group nds-check-group" data-no-auto-close>
-                                            <legend class="label">Privacy</legend>
+                                            <legend class="nds-label">Privacy</legend>
                                             <div class="nds-form-container nds-switch-container">
                                                 <div class="nds-form-header">
-                                                    <label for="setting-analytics"><span class="label">Analytics</span></label>
+                                                    <label for="setting-analytics"><span class="nds-label">Analytics</span></label>
                                                 </div>
                                                 <div class="nds-form-control">
                                                     <div class="nds-switch">
@@ -333,7 +333,7 @@ direction: ltr
                                             </div>
                                             <div class="nds-form-container nds-switch-container">
                                                 <div class="nds-form-header">
-                                                    <label for="setting-cookies"><span class="label">Cookies</span></label>
+                                                    <label for="setting-cookies"><span class="nds-label">Cookies</span></label>
                                                 </div>
                                                 <div class="nds-form-control">
                                                     <div class="nds-switch">
@@ -344,7 +344,7 @@ direction: ltr
                                             </div>
                                             <div class="nds-form-container nds-switch-container">
                                                 <div class="nds-form-header">
-                                                    <label for="setting-tracking"><span class="label">Ad tracking</span></label>
+                                                    <label for="setting-tracking"><span class="nds-label">Ad tracking</span></label>
                                                 </div>
                                                 <div class="nds-form-control">
                                                     <div class="nds-switch">
@@ -360,10 +360,10 @@ direction: ltr
                                         <div class="nds-dropmenu-action nds-grid">
                                             <button class="nds-btn nds-secondary nds-dropmenu-item" type="button" data-no-auto-close
                                                 onclick="this.closest('.nds-dropmenu-menu').querySelectorAll('input').forEach(c=>c.checked=false)">
-                                                <span class="label">Reset</span>
+                                                <span class="nds-label">Reset</span>
                                             </button>
                                             <button class="nds-btn nds-primary nds-dropmenu-item" type="button">
-                                                <span class="label">Save</span>
+                                                <span class="nds-label">Save</span>
                                             </button>
                                         </div>
                                     </div>
@@ -393,19 +393,19 @@ direction: ltr
                                         <code class="lang-html code">
 <div class="nds-dropmenu">
   <button class="nds-btn nds-neutral nds-menu-btn nds-dropmenu-trigger">
-    <i class="hgi hgi-stroke hgi-settings-02 icon"></i>
-    <span class="label">Settings</span>
+    <i class="hgi hgi-stroke hgi-settings-02 nds-icon"></i>
+    <span class="nds-label">Settings</span>
   </button>
   <div class="nds-dropmenu-menu" hidden style="min-width: 220px;">
     <div class="nds-dropmenu-scroll">
       <!-- data-no-auto-close keeps menu open on interaction -->
       <fieldset class="nds-dropmenu-group nds-form-group nds-check-group"
         data-no-auto-close>
-        <legend class="label">Notifications</legend>
+        <legend class="nds-label">Notifications</legend>
         <div class="nds-form-container nds-switch-container">
           <div class="nds-form-header">
             <label for="setting-email">
-              <span class="label">Email</span>
+              <span class="nds-label">Email</span>
             </label>
           </div>
           <div class="nds-form-control">
@@ -423,11 +423,11 @@ direction: ltr
       <hr class="nds-divider">
       <fieldset class="nds-dropmenu-group nds-form-group nds-check-group"
         data-no-auto-close>
-        <legend class="label">Display</legend>
+        <legend class="nds-label">Display</legend>
         <div class="nds-form-container nds-check-container">
           <div class="nds-form-header">
             <label for="setting-compact">
-              <span class="label">Compact view</span>
+              <span class="nds-label">Compact view</span>
             </label>
           </div>
           <div class="nds-form-control">
@@ -442,11 +442,11 @@ direction: ltr
       <div class="nds-dropmenu-action nds-grid">
         <button class="nds-btn nds-secondary nds-dropmenu-item"
           type="button" data-no-auto-close>
-          <span class="label">Reset</span>
+          <span class="nds-label">Reset</span>
         </button>
         <button class="nds-btn nds-primary nds-dropmenu-item"
           type="button">
-          <span class="label">Save</span>
+          <span class="nds-label">Save</span>
         </button>
       </div>
     </div>
@@ -474,43 +474,43 @@ direction: ltr
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-menu-11 icon"></i>
-                        <span class="label">Auto-initialization</span>
+                        <i class="hgi hgi-stroke hgi-menu-11 nds-icon"></i>
+                        <span class="nds-label">Auto-initialization</span>
                     </span>
                     <p class="nds-item-desc">Dropmenus initialize automatically on page load and can be dynamically reinitialized using <code class="nds-inline-code lang-js">NDS.Dropmenu.reinit()</code> for content added after initial load.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-location-star-01 icon"></i>
-                        <span class="label">Smart Positioning</span>
+                        <i class="hgi hgi-stroke hgi-location-star-01 nds-icon"></i>
+                        <span class="nds-label">Smart Positioning</span>
                     </span>
                     <p class="nds-item-desc">Menus stay fully visible regardless of where the trigger sits on the page, flipping direction when near screen edges.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-keyboard icon"></i>
-                        <span class="label">Keyboard Navigation</span>
+                        <i class="hgi hgi-stroke hgi-keyboard nds-icon"></i>
+                        <span class="nds-label">Keyboard Navigation</span>
                     </span>
                     <p class="nds-item-desc">Full keyboard support with arrow keys, Home, End, Tab, Escape, and special handling for input fields inside menus using Alt+Arrow combinations.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-shield-user icon"></i>
-                        <span class="label">Accessibility</span>
+                        <i class="hgi hgi-stroke hgi-shield-user nds-icon"></i>
+                        <span class="nds-label">Accessibility</span>
                     </span>
                     <p class="nds-item-desc">ARIA roles and states are applied automatically, and animations respect the user's reduced-motion preference.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-settings-02 icon"></i>
-                        <span class="label">Data Attributes</span>
+                        <i class="hgi hgi-stroke hgi-settings-02 nds-icon"></i>
+                        <span class="nds-label">Data Attributes</span>
                     </span>
                     <p class="nds-item-desc">Menu items with <code class="nds-inline-code lang-html">data-no-auto-close</code> stay open on click, letting users interact with checkboxes, inputs, and filter controls without interruption.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-code-circle icon"></i>
-                        <span class="label">Programmatic Control</span>
+                        <i class="hgi hgi-stroke hgi-code-circle nds-icon"></i>
+                        <span class="nds-label">Programmatic Control</span>
                     </span>
                     <p class="nds-item-desc">Programmatic control with instance methods <code class="nds-inline-code lang-js">open()</code>, <code class="nds-inline-code lang-js">close()</code>, <code class="nds-inline-code lang-js">toggle()</code>, and custom events for state changes.</p>
                 </div>

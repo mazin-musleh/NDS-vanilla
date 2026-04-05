@@ -55,14 +55,14 @@ breadcrumb: ["Examples"]
           <div class="nds-form-container" data-required>
             <div class="nds-form-header">
               <label for="university-id">
-                <span class="label">الرقم الجامعي</span>
+                <span class="nds-label">الرقم الجامعي</span>
               </label>
             </div>
             <div class="nds-form-control">
               <input type="text" id="university-id" class="nds-input" placeholder="" value="" required>
               <div class="nds-form-action">
                 <button class="nds-btn nds-subtle nds-clear" hidden type="button" aria-label="Clear input">
-                  <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
+                  <i class="hgi hgi-stroke hgi-cancel-01 nds-icon"></i>
                 </button>
               </div>
             </div>
@@ -72,7 +72,7 @@ breadcrumb: ["Examples"]
           <div class="nds-form-container nds-select" data-required>
             <div class="nds-form-header">
               <label for="graduation-year">
-                <span class="label">اختر عام التخرج</span>
+                <span class="nds-label">اختر عام التخرج</span>
               </label>
             </div>
             <div class="nds-form-control">
@@ -110,13 +110,13 @@ breadcrumb: ["Examples"]
           <div class="nds-form-container nds-date-picker" data-required>
             <div class="nds-form-header">
               <label for="date-of-birth">
-                <span class="label">تاريخ الميلاد</span>
+                <span class="nds-label">تاريخ الميلاد</span>
               </label>
             </div>
             <div class="nds-form-control">
               <div class="nds-form-action">
                 <button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle" aria-label="Calendar Toggler">
-                  <i class="hgi hgi-stroke hgi-calendar-03 icon"></i>
+                  <i class="hgi hgi-stroke hgi-calendar-03 nds-icon"></i>
                 </button>
               </div>
               <input type="text" id="date-of-birth" class="nds-input nds-date-input" placeholder="mm/dd/yyyy"
@@ -128,7 +128,7 @@ breadcrumb: ["Examples"]
           <div class="nds-form-container nds-select" data-required>
             <div class="nds-form-header">
               <label for="heard-about">
-                <span class="label">من أين سمعت عن المنصة؟</span>
+                <span class="nds-label">من أين سمعت عن المنصة؟</span>
               </label>
             </div>
             <div class="nds-form-control">
@@ -165,7 +165,7 @@ breadcrumb: ["Examples"]
         <!-- Next Button -->
         <div class="nds-card-actions nds-row">
           <button type="button" class="nds-btn nds-primary nds-lg nds-full step-next-btn">
-            <span class="label">التالي</span>
+            <span class="nds-label">التالي</span>
           </button>
         </div>
 
@@ -191,19 +191,19 @@ breadcrumb: ["Examples"]
           <div class="nds-form-container" data-required>
             <div class="nds-form-header">
               <label for="email-address">
-                <span class="label">البريد الإلكتروني</span>
+                <span class="nds-label">البريد الإلكتروني</span>
               </label>
             </div>
             <div class="nds-form-control">
               <div class="nds-form-action">
                 <button type="button" class="nds-btn nds-subtle nds-md" aria-label="Email icon">
-                  <i class="hgi hgi-stroke hgi-mail-01 icon"></i>
+                  <i class="hgi hgi-stroke hgi-mail-01 nds-icon"></i>
                 </button>
               </div>
               <input type="email" id="email-address" class="nds-input" placeholder="" value="" required>
               <div class="nds-form-action">
                 <button class="nds-btn nds-subtle nds-clear" hidden type="button" aria-label="Clear input">
-                  <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
+                  <i class="hgi hgi-stroke hgi-cancel-01 nds-icon"></i>
                 </button>
               </div>
             </div>
@@ -212,10 +212,10 @@ breadcrumb: ["Examples"]
         <!-- Action Buttons -->
         <div class="nds-card-actions nds-row">
           <button type="button" class="nds-btn nds-primary nds-lg nds-full step-next-btn">
-            <span class="label">إرسال رمز التحقق</span>
+            <span class="nds-label">إرسال رمز التحقق</span>
           </button>
           <button type="button" class="nds-btn nds-secondary-outline nds-lg step-prev-btn">
-            <span class="label">السابق</span>
+            <span class="nds-label">السابق</span>
           </button>
         </div>
 
@@ -239,7 +239,7 @@ breadcrumb: ["Examples"]
         <div class="nds-card-form">
           <!-- OTP Verification Code -->
           <fieldset class="nds-form-group nds-otp-group nds-md nds-center">
-            <legend><span class="label">أدخل رمز التحقق</span></legend>
+            <legend><span class="nds-label">أدخل رمز التحقق</span></legend>
             <div class="nds-otp">
               <div class="nds-form-container nds-otp-container">
                 <div class="nds-form-control">
@@ -269,10 +269,10 @@ breadcrumb: ["Examples"]
         <!-- Action Buttons -->
         <div class="nds-card-actions nds-row">
           <button type="submit" class="nds-btn nds-primary nds-lg nds-full">
-            <span class="label">تأكيد التسجيل</span>
+            <span class="nds-label">تأكيد التسجيل</span>
           </button>
           <button type="button" class="nds-btn nds-secondary-outline nds-lg step-prev-btn">
-            <span class="label">السابق</span>
+            <span class="nds-label">السابق</span>
           </button>
         </div>
 

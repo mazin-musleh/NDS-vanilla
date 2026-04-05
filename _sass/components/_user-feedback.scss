@@ -30,12 +30,12 @@
     // STATE: Details
     &[data-state="details"] {
 
-        :is(.nds-user-feedback-statistic, .why-yes, .why-no) {
+        :is(.nds-user-feedback-statistic, .nds-why-yes, .nds-why-no) {
             display: none;
         }
 
-        &[data-answer="yes"] .why-yes,
-        &[data-answer="no"] .why-no {
+        &[data-answer="yes"] .nds-why-yes,
+        &[data-answer="no"] .nds-why-no {
             display: flex;
         }
     }

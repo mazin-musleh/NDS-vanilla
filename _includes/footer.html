@@ -9,8 +9,8 @@
             {%- if column.mobile_apps %}
             <!-- Mobile App section -->
             <li class="nds-footer-app-item">
-                <button class="list-header nds-btn nds-subtle nds-oncolor nds-menu-btn nds-indicator">
-                    <span class="label">{{ column.heading }}</span>
+                <button class="nds-list-header nds-btn nds-subtle nds-oncolor nds-menu-btn nds-indicator">
+                    <span class="nds-label">{{ column.heading }}</span>
                 </button>
                 <ul>
                     <li class="nds-footer-apps-wrapper">
@@ -52,8 +52,8 @@
             {%- else %}
             <!-- Combined column: supports links, social_icons, or both -->
             <li{%- if column.social_icons %} class="nds-footer-contact-item"{%- endif %}>
-                <button class="list-header nds-btn nds-subtle nds-oncolor nds-menu-btn nds-indicator">
-                    <span class="label">{{ column.heading }}</span>
+                <button class="nds-list-header nds-btn nds-subtle nds-oncolor nds-menu-btn nds-indicator">
+                    <span class="nds-label">{{ column.heading }}</span>
                 </button>
                 <ul>
                     {%- if column.links %}
@@ -65,8 +65,8 @@
                         {%- endunless %}
                         <a class="nds-btn nds-subtle nds-oncolor nds-indicator" href="{{ url_output }}"
                             {%- if link.target %} target="{{ link.target }}"{%- endif %}>
-                            {%- if link.icon %}<i class="hgi hgi-stroke {{ link.icon }} icon"></i>{%- endif %}
-                            <span class="label">{{ link.label }}</span>
+                            {%- if link.icon %}<i class="hgi hgi-stroke {{ link.icon }} nds-icon"></i>{%- endif %}
+                            <span class="nds-label">{{ link.label }}</span>
                         </a>
                     </li>
                     {%- endfor %}
@@ -102,7 +102,7 @@
                 {%- assign url_output = link.url | relative_url -%}
                 {%- endunless %}
                 <a href="{{ url_output }}">
-                    <span class="label">{{ link.label }}</span>
+                    <span class="nds-label">{{ link.label }}</span>
                 </a>
                 {%- unless forloop.last %}<span class="nds-footer-separator">|</span>{%- endunless %}
                 {%- endfor %}

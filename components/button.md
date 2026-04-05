@@ -22,80 +22,80 @@ direction: ltr
                         <div class="demo-action">
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="label">Primary</span>
+                                    <span class="nds-label">Primary</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-primary", ".nds-demo", "stdVariant"]'>
-                                            <span class="label">Primary</span>
+                                            <span class="nds-label">Primary</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-neutral", ".nds-demo", "stdVariant"]'>
-                                            <span class="label">Neutral</span>
+                                            <span class="nds-label">Neutral</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-secondary", ".nds-demo", "stdVariant"]'>
-                                            <span class="label">Secondary</span>
+                                            <span class="nds-label">Secondary</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-secondary-outline", ".nds-demo", "stdVariant"]'>
-                                            <span class="label">Secondary Outline</span>
+                                            <span class="nds-label">Secondary Outline</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-subtle", ".nds-demo", "stdVariant"]'>
-                                            <span class="label">Subtle</span>
+                                            <span class="nds-label">Subtle</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-transparent", ".nds-demo", "stdVariant"]'>
-                                            <span class="label">Transparent</span>
+                                            <span class="nds-label">Transparent</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="label">LG</span>
+                                    <span class="nds-label">LG</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
 <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-lg", ".nds-demo", "stdSize"]'>
-                                            <span class="label">LG</span>
+                                            <span class="nds-label">LG</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-md", ".nds-demo", "stdSize"]'>
-                                            <span class="label">MD</span>
+                                            <span class="nds-label">MD</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-sm", ".nds-demo", "stdSize"]'>
-                                            <span class="label">SM</span>
+                                            <span class="nds-label">SM</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='[["nds-oncolor", ".nds-demo", "stdOncolor"],["dark-bg", ".demo-container", "stdOncolor"]]'>
-                                <span class="label">On Color</span>
+                                <span class="nds-label">On Color</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-indicator", ".nds-demo", "stdIndicator"]'>
-                                <span class="label">Indicator</span>
+                                <span class="nds-label">Indicator</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                <span class="nds-label">Remove bg</span>
                             </button>
                         </div>
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <button class="nds-btn nds-primary nds-lg nds-demo" data-state="default"><span class="label">Default</span></button>
-                            <button class="nds-btn nds-primary nds-lg nds-demo" data-state="hover"><span class="label">Hover</span></button>
-                            <button class="nds-btn nds-primary nds-lg nds-demo" data-state="pressed"><span class="label">Pressed</span></button>
-                            <button class="nds-btn nds-primary nds-lg nds-demo" data-state="selected"><span class="label">Selected</span></button>
-                            <button class="nds-btn nds-primary nds-lg nds-demo" data-state="focused"><span class="label">Focused</span></button>
-                            <button class="nds-btn nds-primary nds-lg nds-demo" disabled><span class="label">Disabled</span></button>
+                            <button class="nds-btn nds-primary nds-lg nds-demo" data-state="default"><span class="nds-label">Default</span></button>
+                            <button class="nds-btn nds-primary nds-lg nds-demo" data-state="hover"><span class="nds-label">Hover</span></button>
+                            <button class="nds-btn nds-primary nds-lg nds-demo" data-state="pressed"><span class="nds-label">Pressed</span></button>
+                            <button class="nds-btn nds-primary nds-lg nds-demo" data-state="selected"><span class="nds-label">Selected</span></button>
+                            <button class="nds-btn nds-primary nds-lg nds-demo" data-state="focused"><span class="nds-label">Focused</span></button>
+                            <button class="nds-btn nds-primary nds-lg nds-demo" disabled><span class="nds-label">Disabled</span></button>
                         </div>
                     </div>
                     <div class="demo-code">
@@ -118,7 +118,7 @@ direction: ltr
                                     </div>
                                     <code class="lang-html code">
 <button class="nds-btn nds-primary">
-  <span class="label">Button</span>
+  <span class="nds-label">Button</span>
 </button>
                                     </code>
                                 </div>
@@ -145,76 +145,76 @@ direction: ltr
                         <div class="demo-action">
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="label">Primary</span>
+                                    <span class="nds-label">Primary</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-primary", ".nds-demo", "destVariant"]'>
-                                            <span class="label">Primary</span>
+                                            <span class="nds-label">Primary</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-secondary", ".nds-demo", "destVariant"]'>
-                                            <span class="label">Secondary</span>
+                                            <span class="nds-label">Secondary</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-secondary-outline", ".nds-demo", "destVariant"]'>
-                                            <span class="label">Secondary Outline</span>
+                                            <span class="nds-label">Secondary Outline</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-subtle", ".nds-demo", "destVariant"]'>
-                                            <span class="label">Subtle</span>
+                                            <span class="nds-label">Subtle</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-transparent", ".nds-demo", "destVariant"]'>
-                                            <span class="label">Transparent</span>
+                                            <span class="nds-label">Transparent</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="label">LG</span>
+                                    <span class="nds-label">LG</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
 <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-lg", ".nds-demo", "destSize"]'>
-                                            <span class="label">LG</span>
+                                            <span class="nds-label">LG</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-md", ".nds-demo", "destSize"]'>
-                                            <span class="label">MD</span>
+                                            <span class="nds-label">MD</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-sm", ".nds-demo", "destSize"]'>
-                                            <span class="label">SM</span>
+                                            <span class="nds-label">SM</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='[["nds-oncolor", ".nds-demo", "destOncolor"],["dark-bg", ".demo-container", "destOncolor"]]'>
-                                <span class="label">On Color</span>
+                                <span class="nds-label">On Color</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-indicator", ".nds-demo", "destIndicator"]'>
-                                <span class="label">Indicator</span>
+                                <span class="nds-label">Indicator</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                <span class="nds-label">Remove bg</span>
                             </button>
                         </div>
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <button class="nds-btn nds-primary nds-destructive nds-lg nds-demo" data-state="default"><span class="label">Default</span></button>
-                            <button class="nds-btn nds-primary nds-destructive nds-lg nds-demo" data-state="hover"><span class="label">Hover</span></button>
-                            <button class="nds-btn nds-primary nds-destructive nds-lg nds-demo" data-state="pressed"><span class="label">Pressed</span></button>
-                            <button class="nds-btn nds-primary nds-destructive nds-lg nds-demo" data-state="selected"><span class="label">Selected</span></button>
-                            <button class="nds-btn nds-primary nds-destructive nds-lg nds-demo" data-state="focused"><span class="label">Focused</span></button>
-                            <button class="nds-btn nds-primary nds-destructive nds-lg nds-demo" disabled><span class="label">Disabled</span></button>
+                            <button class="nds-btn nds-primary nds-destructive nds-lg nds-demo" data-state="default"><span class="nds-label">Default</span></button>
+                            <button class="nds-btn nds-primary nds-destructive nds-lg nds-demo" data-state="hover"><span class="nds-label">Hover</span></button>
+                            <button class="nds-btn nds-primary nds-destructive nds-lg nds-demo" data-state="pressed"><span class="nds-label">Pressed</span></button>
+                            <button class="nds-btn nds-primary nds-destructive nds-lg nds-demo" data-state="selected"><span class="nds-label">Selected</span></button>
+                            <button class="nds-btn nds-primary nds-destructive nds-lg nds-demo" data-state="focused"><span class="nds-label">Focused</span></button>
+                            <button class="nds-btn nds-primary nds-destructive nds-lg nds-demo" disabled><span class="nds-label">Disabled</span></button>
                         </div>
                     </div>
                     <div class="demo-code">
@@ -237,7 +237,7 @@ direction: ltr
                                     </div>
                                     <code class="lang-html code">
 <button class="nds-btn nds-primary nds-destructive">
-  <span class="label">Delete</span>
+  <span class="nds-label">Delete</span>
 </button>
                                     </code>
                                 </div>
@@ -264,118 +264,118 @@ direction: ltr
                         <div class="demo-action">
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="label">Primary</span>
+                                    <span class="nds-label">Primary</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-primary", ".nds-demo", "layoutVariant"]'>
-                                            <span class="label">Primary</span>
+                                            <span class="nds-label">Primary</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-neutral", ".nds-demo", "layoutVariant"]'>
-                                            <span class="label">Neutral</span>
+                                            <span class="nds-label">Neutral</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-secondary", ".nds-demo", "layoutVariant"]'>
-                                            <span class="label">Secondary</span>
+                                            <span class="nds-label">Secondary</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-secondary-outline", ".nds-demo", "layoutVariant"]'>
-                                            <span class="label">Secondary Outline</span>
+                                            <span class="nds-label">Secondary Outline</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-subtle", ".nds-demo", "layoutVariant"]'>
-                                            <span class="label">Subtle</span>
+                                            <span class="nds-label">Subtle</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-transparent", ".nds-demo", "layoutVariant"]'>
-                                            <span class="label">Transparent</span>
+                                            <span class="nds-label">Transparent</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="label">LG</span>
+                                    <span class="nds-label">LG</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
 <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-lg", ".nds-demo", "layoutSize"]'>
-                                            <span class="label">LG</span>
+                                            <span class="nds-label">LG</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-md", ".nds-demo", "layoutSize"]'>
-                                            <span class="label">MD</span>
+                                            <span class="nds-label">MD</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-sm", ".nds-demo", "layoutSize"]'>
-                                            <span class="label">SM</span>
+                                            <span class="nds-label">SM</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="label">Content</span>
+                                    <span class="nds-label">Content</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["", ".nds-demo", "layoutContent"]'>
-                                            <span class="label">Default</span>
+                                            <span class="nds-label">Default</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-icon-only", ".nds-demo", "layoutContent"]'>
-                                            <span class="label">Icon Only</span>
+                                            <span class="nds-label">Icon Only</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-label-only", ".nds-demo", "layoutContent"]'>
-                                            <span class="label">Label Only</span>
+                                            <span class="nds-label">Label Only</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="label">Shape</span>
+                                    <span class="nds-label">Shape</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["", ".nds-demo", "layoutShape"]'>
-                                            <span class="label">Default</span>
+                                            <span class="nds-label">Default</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-circle", ".nds-demo", "layoutShape"]'>
-                                            <span class="label">Circle</span>
+                                            <span class="nds-label">Circle</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-full", ".nds-demo", "layoutShape"]'>
-                                            <span class="label">Full Width</span>
+                                            <span class="nds-label">Full Width</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-trail-icon", ".nds-demo", "layoutTrail"]'>
-                                <span class="label">Trail Icon</span>
+                                <span class="nds-label">Trail Icon</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["data-state=loading", ".nds-demo", "layoutLoading", "attr"]'>
-                                <span class="label">Loading</span>
+                                <span class="nds-label">Loading</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                <span class="nds-label">Remove bg</span>
                             </button>
                         </div>
                     </div>
                     <div class="demo-container">
                         <button class="nds-btn nds-primary nds-lg nds-demo">
                             <i class="hgi hgi-stroke hgi-plus-sign"></i>
-                            <span class="label">Add Item</span>
+                            <span class="nds-label">Add Item</span>
                         </button>
                     </div>
                     <div class="demo-code">
@@ -399,7 +399,7 @@ direction: ltr
                                     <code class="lang-html code">
 <button class="nds-btn nds-primary">
   <i class="hgi hgi-stroke hgi-plus-sign"></i>
-  <span class="label">Add Item</span>
+  <span class="nds-label">Add Item</span>
 </button>
                                     </code>
                                 </div>
@@ -417,7 +417,7 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Menu Button</h2>
-            <p class="nds-section-description">Dropdown trigger with auto-rotating chevron indicator</p>
+            <p class="nds-section-description">Dropdown trigger with auto-rotating indicator</p>
         </div>
         <div class="nds-section-content">
             <div class="nds-showcase">
@@ -426,75 +426,75 @@ direction: ltr
                         <div class="demo-action">
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="label">Secondary Outline</span>
+                                    <span class="nds-label">Secondary Outline</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-primary", ".nds-demo", "menuVariant"]'>
-                                            <span class="label">Primary</span>
+                                            <span class="nds-label">Primary</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-neutral", ".nds-demo", "menuVariant"]'>
-                                            <span class="label">Neutral</span>
+                                            <span class="nds-label">Neutral</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-secondary", ".nds-demo", "menuVariant"]'>
-                                            <span class="label">Secondary</span>
+                                            <span class="nds-label">Secondary</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-secondary-outline", ".nds-demo", "menuVariant"]'>
-                                            <span class="label">Secondary Outline</span>
+                                            <span class="nds-label">Secondary Outline</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-subtle", ".nds-demo", "menuVariant"]'>
-                                            <span class="label">Subtle</span>
+                                            <span class="nds-label">Subtle</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-transparent", ".nds-demo", "menuVariant"]'>
-                                            <span class="label">Transparent</span>
+                                            <span class="nds-label">Transparent</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="label">LG</span>
+                                    <span class="nds-label">LG</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
 <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-lg", ".nds-demo", "menuSize"]'>
-                                            <span class="label">LG</span>
+                                            <span class="nds-label">LG</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-md", ".nds-demo", "menuSize"]'>
-                                            <span class="label">MD</span>
+                                            <span class="nds-label">MD</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-sm", ".nds-demo", "menuSize"]'>
-                                            <span class="label">SM</span>
+                                            <span class="nds-label">SM</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="label">Content</span>
+                                    <span class="nds-label">Content</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["", ".nds-demo", "menuContent"]'>
-                                            <span class="label">Default</span>
+                                            <span class="nds-label">Default</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-icon-only", ".nds-demo", "menuContent"]'>
-                                            <span class="label">Icon Only</span>
+                                            <span class="nds-label">Icon Only</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-label-only", ".nds-demo", "menuContent"]'>
-                                            <span class="label">Label Only</span>
+                                            <span class="nds-label">Label Only</span>
                                         </button>
                                     </div>
                                 </div>
@@ -503,7 +503,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <button class="nds-btn nds-secondary-outline nds-menu-btn nds-lg nds-demo">
-                            <span class="label">Options</span>
+                            <span class="nds-label">Options</span>
                         </button>
                     </div>
                     <div class="demo-code">
@@ -526,7 +526,7 @@ direction: ltr
                                     </div>
                                     <code class="lang-html code">
 <button class="nds-btn nds-secondary-outline nds-menu-btn">
-  <span class="label">Options</span>
+  <span class="nds-label">Options</span>
 </button>
                                     </code>
                                 </div>
@@ -553,69 +553,69 @@ direction: ltr
                         <div class="demo-action">
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="label">Secondary Outline</span>
+                                    <span class="nds-label">Secondary Outline</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-primary", ".nds-demo", "groupVariant"]'>
-                                            <span class="label">Primary</span>
+                                            <span class="nds-label">Primary</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-neutral", ".nds-demo", "groupVariant"]'>
-                                            <span class="label">Neutral</span>
+                                            <span class="nds-label">Neutral</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-secondary", ".nds-demo", "groupVariant"]'>
-                                            <span class="label">Secondary</span>
+                                            <span class="nds-label">Secondary</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-secondary-outline", ".nds-demo", "groupVariant"]'>
-                                            <span class="label">Secondary Outline</span>
+                                            <span class="nds-label">Secondary Outline</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-subtle", ".nds-demo", "groupVariant"]'>
-                                            <span class="label">Subtle</span>
+                                            <span class="nds-label">Subtle</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-transparent", ".nds-demo", "groupVariant"]'>
-                                            <span class="label">Transparent</span>
+                                            <span class="nds-label">Transparent</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="label">LG</span>
+                                    <span class="nds-label">LG</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
 <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-lg", ".nds-demo", "groupSize"]'>
-                                            <span class="label">LG</span>
+                                            <span class="nds-label">LG</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-md", ".nds-demo", "groupSize"]'>
-                                            <span class="label">MD</span>
+                                            <span class="nds-label">MD</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-sm", ".nds-demo", "groupSize"]'>
-                                            <span class="label">SM</span>
+                                            <span class="nds-label">SM</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                <span class="nds-label">Remove bg</span>
                             </button>
                         </div>
                     </div>
                     <div class="demo-container">
                         <div class="nds-btn-group">
-                            <button class="nds-btn nds-secondary-outline nds-lg nds-demo"><span class="label">Left</span></button>
-                            <button class="nds-btn nds-secondary-outline nds-lg nds-demo"><span class="label">Center</span></button>
-                            <button class="nds-btn nds-secondary-outline nds-lg nds-demo"><span class="label">Right</span></button>
+                            <button class="nds-btn nds-secondary-outline nds-lg nds-demo"><span class="nds-label">Left</span></button>
+                            <button class="nds-btn nds-secondary-outline nds-lg nds-demo"><span class="nds-label">Center</span></button>
+                            <button class="nds-btn nds-secondary-outline nds-lg nds-demo"><span class="nds-label">Right</span></button>
                         </div>
                     </div>
                     <div class="demo-code">
@@ -638,9 +638,9 @@ direction: ltr
                                     </div>
                                     <code class="lang-html code">
 <div class="nds-btn-group">
-  <button class="nds-btn nds-secondary-outline nds-lg"><span class="label">Left</span></button>
-  <button class="nds-btn nds-secondary-outline nds-lg"><span class="label">Center</span></button>
-  <button class="nds-btn nds-secondary-outline nds-lg"><span class="label">Right</span></button>
+  <button class="nds-btn nds-secondary-outline nds-lg"><span class="nds-label">Left</span></button>
+  <button class="nds-btn nds-secondary-outline nds-lg"><span class="nds-label">Center</span></button>
+  <button class="nds-btn nds-secondary-outline nds-lg"><span class="nds-label">Right</span></button>
 </div>
                                     </code>
                                 </div>
@@ -667,69 +667,69 @@ direction: ltr
                         <div class="demo-action">
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="label">Primary</span>
+                                    <span class="nds-label">Primary</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-primary", ".nds-progress", "progressVariant"]'>
-                                            <span class="label">Primary</span>
+                                            <span class="nds-label">Primary</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-neutral", ".nds-progress", "progressVariant"]'>
-                                            <span class="label">Neutral</span>
+                                            <span class="nds-label">Neutral</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-secondary", ".nds-progress", "progressVariant"]'>
-                                            <span class="label">Secondary</span>
+                                            <span class="nds-label">Secondary</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-secondary-outline", ".nds-progress", "progressVariant"]'>
-                                            <span class="label">Secondary Outline</span>
+                                            <span class="nds-label">Secondary Outline</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-subtle", ".nds-progress", "progressVariant"]'>
-                                            <span class="label">Subtle</span>
+                                            <span class="nds-label">Subtle</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-transparent", ".nds-progress", "progressVariant"]'>
-                                            <span class="label">Transparent</span>
+                                            <span class="nds-label">Transparent</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="label">LG</span>
+                                    <span class="nds-label">LG</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-lg", ".nds-progress", "progressSize"]'>
-                                            <span class="label">LG</span>
+                                            <span class="nds-label">LG</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-md", ".nds-progress", "progressSize"]'>
-                                            <span class="label">MD</span>
+                                            <span class="nds-label">MD</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-sm", ".nds-progress", "progressSize"]'>
-                                            <span class="label">SM</span>
+                                            <span class="nds-label">SM</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-circle", ".nds-progress", "progressCircle"]'>
-                                <span class="label">Circle</span>
+                                <span class="nds-label">Circle</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-action-btn"
                                 data-action="reset-progress-duration">
-                                <span class="label">Reset</span>
+                                <span class="nds-label">Reset</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                <span class="nds-label">Remove bg</span>
                             </button>
                         </div>
                     </div>
@@ -756,7 +756,7 @@ direction: ltr
                                     </button>
                                 </nav>
                                 <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i
-                                        class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                                        class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i>
                                 </button>
                             </div>
                             <div class="nds-tab-content">
@@ -807,69 +807,69 @@ direction: ltr
                         <div class="demo-action">
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="label">Primary</span>
+                                    <span class="nds-label">Primary</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-primary", ".nds-progress-static", "progressStaticVariant"]'>
-                                            <span class="label">Primary</span>
+                                            <span class="nds-label">Primary</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-neutral", ".nds-progress-static", "progressStaticVariant"]'>
-                                            <span class="label">Neutral</span>
+                                            <span class="nds-label">Neutral</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-secondary", ".nds-progress-static", "progressStaticVariant"]'>
-                                            <span class="label">Secondary</span>
+                                            <span class="nds-label">Secondary</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-secondary-outline", ".nds-progress-static", "progressStaticVariant"]'>
-                                            <span class="label">Secondary Outline</span>
+                                            <span class="nds-label">Secondary Outline</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-subtle", ".nds-progress-static", "progressStaticVariant"]'>
-                                            <span class="label">Subtle</span>
+                                            <span class="nds-label">Subtle</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-transparent", ".nds-progress-static", "progressStaticVariant"]'>
-                                            <span class="label">Transparent</span>
+                                            <span class="nds-label">Transparent</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="label">LG</span>
+                                    <span class="nds-label">LG</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-lg", ".nds-progress-static", "progressStaticSize"]'>
-                                            <span class="label">LG</span>
+                                            <span class="nds-label">LG</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-md", ".nds-progress-static", "progressStaticSize"]'>
-                                            <span class="label">MD</span>
+                                            <span class="nds-label">MD</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-sm", ".nds-progress-static", "progressStaticSize"]'>
-                                            <span class="label">SM</span>
+                                            <span class="nds-label">SM</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-circle", ".nds-progress-static", "progressStaticCircle"]'>
-                                <span class="label">Circle</span>
+                                <span class="nds-label">Circle</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-action-btn"
                                 data-action="random-progress-value">
-                                <span class="label">Random Value</span>
+                                <span class="nds-label">Random Value</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                <span class="nds-label">Remove bg</span>
                             </button>
                         </div>
                     </div>
@@ -896,7 +896,7 @@ direction: ltr
                                     </button>
                                 </nav>
                                 <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i
-                                        class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                                        class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i>
                                 </button>
                             </div>
                             <div class="nds-tab-content">
@@ -947,25 +947,25 @@ direction: ltr
                         <div class="demo-action">
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="label">Success</span>
+                                    <span class="nds-label">Success</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["data-status=success", ".status-demo-btn", "statusToggle", "attr"]'>
-                                            <span class="label">Success</span>
+                                            <span class="nds-label">Success</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["data-status=error", ".status-demo-btn", "statusToggle", "attr"]'>
-                                            <span class="label">Error</span>
+                                            <span class="nds-label">Error</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["data-status=info", ".status-demo-btn", "statusToggle", "attr"]'>
-                                            <span class="label">Info</span>
+                                            <span class="nds-label">Info</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["data-status=warning", ".status-demo-btn", "statusToggle", "attr"]'>
-                                            <span class="label">Warning</span>
+                                            <span class="nds-label">Warning</span>
                                         </button>
                                     </div>
                                 </div>
@@ -976,7 +976,7 @@ direction: ltr
                         <div class="state-demo">
                             <button class="nds-btn nds-secondary status-demo-btn" onclick="this.dataset.status='success';setTimeout(()=>delete this.dataset.status,2000)">
                                 <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                <span class="label">Copy Link</span>
+                                <span class="nds-label">Copy Link</span>
                             </button>
                         </div>
                     </div>
@@ -1005,7 +1005,7 @@ direction: ltr
                                     <code class="lang-html code">
 <button class="nds-btn nds-secondary">
   <i class="hgi hgi-stroke hgi-copy-01"></i>
-  <span class="label">Copy Link</span>
+  <span class="nds-label">Copy Link</span>
 </button>
                                     </code>
                                 </div>
@@ -1050,7 +1050,7 @@ btn.addEventListener('click', () => copyAction(btn));
                         <div class="demo-action">
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                <span class="nds-label">Remove bg</span>
                             </button>
                         </div>
                     </div>
@@ -1112,43 +1112,43 @@ btn.addEventListener('click', () => copyAction(btn));
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-tag-01 icon"></i>
-                        <span class="label">Pure CSS</span>
+                        <i class="hgi hgi-stroke hgi-tag-01 nds-icon"></i>
+                        <span class="nds-label">Pure CSS</span>
                     </span>
                     <p class="nds-item-desc">No JavaScript required. All variants, sizes, and states render from HTML markup with design tokens.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-colors icon"></i>
-                        <span class="label">Six Variants</span>
+                        <i class="hgi hgi-stroke hgi-colors nds-icon"></i>
+                        <span class="nds-label">Six Variants</span>
                     </span>
                     <p class="nds-item-desc">Primary, neutral, secondary, secondary-outline, subtle, and transparent with full state coverage.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-resize-01 icon"></i>
-                        <span class="label">Three Sizes</span>
+                        <i class="hgi hgi-stroke hgi-resize-01 nds-icon"></i>
+                        <span class="nds-label">Three Sizes</span>
                     </span>
                     <p class="nds-item-desc">24px to 40px. Font, icon, and indicator scale proportionally.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-cursor-01 icon"></i>
-                        <span class="label">Layout Options</span>
+                        <i class="hgi hgi-stroke hgi-cursor-01 nds-icon"></i>
+                        <span class="nds-label">Layout Options</span>
                     </span>
                     <p class="nds-item-desc">Lead icon, trail icon, icon-only, label-only, circular, full-width, and loading state.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-eye icon"></i>
-                        <span class="label">Accessibility</span>
+                        <i class="hgi hgi-stroke hgi-eye nds-icon"></i>
+                        <span class="nds-label">Accessibility</span>
                     </span>
                     <p class="nds-item-desc">High contrast borders, reduced motion fallback, print styles, and focus-visible ring.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-puzzle icon"></i>
-                        <span class="label">Composable</span>
+                        <i class="hgi hgi-stroke hgi-puzzle nds-icon"></i>
+                        <span class="nds-label">Composable</span>
                     </span>
                     <p class="nds-item-desc">Combine with destructive, on-color, loading, progress, status, badge, indicator, and groups.</p>
                 </div>

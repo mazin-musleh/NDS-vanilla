@@ -34,7 +34,7 @@ direction: ltr
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-xl">
-                                <i class="hgi hgi-stroke hgi-package icon"></i>
+                                <i class="hgi hgi-stroke hgi-package nds-icon"></i>
                             </span>
                         </div>
                     </div>
@@ -46,7 +46,7 @@ direction: ltr
                     </div>
                     <div class="nds-card-actions">
                         <a href="#" class="nds-btn nds-primary nds-external">
-                            <span class="label">Download Template</span>
+                            <span class="nds-label">Download Template</span>
                         </a>
                     </div>
                 </div>
@@ -54,7 +54,7 @@ direction: ltr
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-xl">
-                                <i class="hgi hgi-stroke hgi-git-fork icon"></i>
+                                <i class="hgi hgi-stroke hgi-git-fork nds-icon"></i>
                             </span>
                         </div>
                     </div>
@@ -66,7 +66,7 @@ direction: ltr
                     </div>
                     <div class="nds-card-actions">
                         <a href="#" class="nds-btn nds-primary nds-external">
-                            <span class="label">View Repository</span>
+                            <span class="nds-label">View Repository</span>
                         </a>
                     </div>
                 </div>
@@ -74,7 +74,7 @@ direction: ltr
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-xl">
-                                <i class="hgi hgi-stroke hgi-git-pull-request icon"></i>
+                                <i class="hgi hgi-stroke hgi-git-pull-request nds-icon"></i>
                             </span>
                         </div>
                     </div>
@@ -86,7 +86,7 @@ direction: ltr
                     </div>
                     <div class="nds-card-actions">
                         <a href="#" class="nds-btn nds-primary nds-external">
-                            <span class="label">Open Issues</span>
+                            <span class="nds-label">Open Issues</span>
                         </a>
                     </div>
                 </div>
@@ -107,20 +107,20 @@ direction: ltr
             <div class="nds-form-container nds-search-box">
                 <div class="nds-search-content">
                     <div class="nds-form-control">
-                        <i class="hgi hgi-stroke hgi-search-01 icon"></i>
+                        <i class="hgi hgi-stroke hgi-search-01 nds-icon"></i>
                         <input id="componentSearch" type="text" class="nds-search-input" name="search" autocomplete="off"
                             placeholder="Search components...">
                         <div class="nds-form-action">
                             <button class="nds-btn nds-subtle nds-clear" hidden><i
-                                    class="hgi hgi-stroke hgi-cancel-01 icon"></i></button>
+                                    class="hgi hgi-stroke hgi-cancel-01 nds-icon"></i></button>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="nds-dropmenu">
                 <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
-                    <i class="hgi hgi-stroke hgi-filter icon"></i>
-                    <span class="label">Filter</span>
+                    <i class="hgi hgi-stroke hgi-filter nds-icon"></i>
+                    <span class="nds-label">Filter</span>
                 </button>
                 <div class="nds-dropmenu-menu" style="min-width: 300px;" hidden>
                     <div class="nds-dropmenu-scroll">
@@ -135,18 +135,18 @@ direction: ltr
                         <div class="nds-dropmenu-action nds-grid">
                             <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
                                 data-filter-action="clear" data-no-auto-close>
-                                <span class="label">Reset</span>
+                                <span class="nds-label">Reset</span>
                             </button>
                             <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
                                 data-filter-action="apply">
-                                <span class="label">Filter</span>
+                                <span class="nds-label">Filter</span>
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="nds-filter-applied" hidden>
-                <span class="label">Applied Filters:</span>
+                <span class="nds-label">Applied Filters:</span>
                 <div class="nds-chips"></div>
             </div>
         </div>
@@ -162,11 +162,11 @@ direction: ltr
                     </div>
                     <div class="nds-card-tags">
                         <span class="nds-tag nds-blue nds-sm">
-                            <span class="label" data-filter="category">{{ comp.category }}</span>
+                            <span class="nds-label" data-filter="category">{{ comp.category }}</span>
                         </span>
                         {% for tag in comp.tags %}
                         <span class="nds-tag nds-neutral nds-sm">
-                            <span class="label" data-filter="tech">{{ tag }}</span>
+                            <span class="nds-label" data-filter="tech">{{ tag }}</span>
                         </span>
                         {% endfor %}
                     </div>
@@ -174,7 +174,7 @@ direction: ltr
                 {% if comp.url %}
                 <div class="nds-card-actions">
                     <a href="{{ comp.url | relative_url }}" class="nds-btn nds-primary">
-                        <span class="label">View Docs</span>
+                        <span class="nds-label">View Docs</span>
                     </a>
                 </div>
                 {% endif %}
@@ -207,7 +207,7 @@ direction: ltr
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
                                 <span class="nds-featured-icon nds-circle nds-xl">
-                                    <i class="hgi hgi-stroke hgi-dashboard-browsing icon"></i>
+                                    <i class="hgi hgi-stroke hgi-dashboard-browsing nds-icon"></i>
                                 </span>
                             </div>
                         </div>
@@ -219,7 +219,7 @@ direction: ltr
                         </div>
                         <div class="nds-card-actions">
                             <a href="{{ '/examples/dashboard-demo.html' | relative_url }}" class="nds-btn nds-primary">
-                                <span class="label">View Page</span>
+                                <span class="nds-label">View Page</span>
                             </a>
                         </div>
                     </div>
@@ -230,7 +230,7 @@ direction: ltr
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
                                 <span class="nds-featured-icon nds-circle nds-xl">
-                                    <i class="hgi hgi-stroke hgi-file-validation icon"></i>
+                                    <i class="hgi hgi-stroke hgi-file-validation nds-icon"></i>
                                 </span>
                             </div>
                         </div>
@@ -242,7 +242,7 @@ direction: ltr
                         </div>
                         <div class="nds-card-actions">
                             <a href="{{ '/examples/registration.html' | relative_url }}" class="nds-btn nds-primary">
-                                <span class="label">View Page</span>
+                                <span class="nds-label">View Page</span>
                             </a>
                         </div>
                     </div>
@@ -253,7 +253,7 @@ direction: ltr
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
                                 <span class="nds-featured-icon nds-circle nds-xl">
-                                    <i class="hgi hgi-stroke hgi-menu-square icon"></i>
+                                    <i class="hgi hgi-stroke hgi-menu-square nds-icon"></i>
                                 </span>
                             </div>
                         </div>
@@ -265,7 +265,7 @@ direction: ltr
                         </div>
                         <div class="nds-card-actions">
                             <a href="{{ '/examples/service.html' | relative_url }}" class="nds-btn nds-primary">
-                                <span class="label">View Page</span>
+                                <span class="nds-label">View Page</span>
                             </a>
                         </div>
                     </div>
@@ -276,7 +276,7 @@ direction: ltr
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
                                 <span class="nds-featured-icon nds-circle nds-xl">
-                                    <i class="hgi hgi-stroke hgi-school icon"></i>
+                                    <i class="hgi hgi-stroke hgi-school nds-icon"></i>
                                 </span>
                             </div>
                         </div>
@@ -288,7 +288,7 @@ direction: ltr
                         </div>
                         <div class="nds-card-actions">
                             <a href="{{ '/examples/faculty.html' | relative_url }}" class="nds-btn nds-primary">
-                                <span class="label">View Page</span>
+                                <span class="nds-label">View Page</span>
                             </a>
                         </div>
                     </div>
@@ -299,10 +299,10 @@ direction: ltr
                 <div class="nds-swiper-buttons">
                     <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-swiper-button-prev"
                         type="button" aria-label="Previous slide"><i
-                            class="hgi hgi-stroke hgi-arrow-right-01 icon"></i></button>
+                            class="hgi hgi-stroke hgi-arrow-right-01 nds-icon"></i></button>
                     <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-swiper-button-next"
                         type="button" aria-label="Next slide"><i
-                            class="hgi hgi-stroke hgi-arrow-left-01 icon"></i></button>
+                            class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i></button>
                 </div>
                 <div class="nds-swiper-pagination"></div>
             </div>
@@ -321,57 +321,57 @@ direction: ltr
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:32px; --dl-title-FS: var(--nds-text-xl-FS); --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket icon"></i>
-                        <span class="label">Zero Dependencies</span>
+                        <i class="hgi hgi-stroke hgi-plug-socket nds-icon"></i>
+                        <span class="nds-label">Zero Dependencies</span>
                     </span>
                     <p class="nds-item-desc">No Bootstrap, Tailwind, jQuery, or framework runtime. The output is plain HTML, CSS, and JavaScript that works in any environment. No conflicts with existing scripts or stylesheets. Drop it into any project regardless of tech stack.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-cpu-charge icon"></i>
-                        <span class="label">Smart Component Loader</span>
+                        <i class="hgi hgi-stroke hgi-cpu-charge nds-icon"></i>
+                        <span class="nds-label">Smart Component Loader</span>
                     </span>
                     <p class="nds-item-desc">A single DOM sweep on page load detects which components are present and initializes them in priority order. The rest remain idle with zero runtime cost. Resources are only allocated for what the page actually uses.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-arrow-data-transfer-horizontal icon"></i>
-                        <span class="label">RTL/LTR Native</span>
+                        <i class="hgi hgi-stroke hgi-arrow-data-transfer-horizontal nds-icon"></i>
+                        <span class="nds-label">RTL/LTR Native</span>
                     </span>
                     <p class="nds-item-desc">Built with CSS Logical Properties from the start. Margins, paddings, borders, and positions adapt automatically. No separate RTL stylesheet. No overrides. Switch direction with a single HTML attribute.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-paint-brush-01 icon"></i>
-                        <span class="label">3-Tier Design Tokens</span>
+                        <i class="hgi hgi-stroke hgi-paint-brush-01 nds-icon"></i>
+                        <span class="nds-label">3-Tier Design Tokens</span>
                     </span>
                     <p class="nds-item-desc">Color tokens, semantic tokens, and component tokens, all defined as CSS custom properties. Each component exposes public properties for customization while keeping internal styles private, no overrides needed.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-zap icon"></i>
-                        <span class="label">~6 KB Critical CSS (gzipped)</span>
+                        <i class="hgi hgi-stroke hgi-zap nds-icon"></i>
+                        <span class="nds-label">~6 KB Critical CSS (gzipped)</span>
                     </span>
                     <p class="nds-item-desc">Critical styles load immediately for instant render. The rest is deferred and loads asynchronously without blocking the page. Styles are split between critical and non-critical at the build level.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-code-circle icon"></i>
-                        <span class="label">~67 KB Total JS (gzipped)</span>
+                        <i class="hgi hgi-stroke hgi-code-circle nds-icon"></i>
+                        <span class="nds-label">~67 KB Total JS (gzipped)</span>
                     </span>
                     <p class="nds-item-desc">The full component library in a single bundle for better compression, simpler deployment, and minimum requests. Components initialize as needed.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-chart-line-data-01 icon"></i>
-                        <span class="label">Web Vitals Compliant</span>
+                        <i class="hgi hgi-stroke hgi-chart-line-data-01 nds-icon"></i>
+                        <span class="nds-label">Web Vitals Compliant</span>
                     </span>
                     <p class="nds-item-desc">100% Google PageSpeed score. LCP, CLS, and INP all pass. Measured and optimized for real-world conditions. Tested across desktop and mobile on both fast and limited connections.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-dashboard-speed-01 icon"></i>
-                        <span class="label">Sleek Animations</span>
+                        <i class="hgi hgi-stroke hgi-dashboard-speed-01 nds-icon"></i>
+                        <span class="nds-label">Sleek Animations</span>
                     </span>
                     <p class="nds-item-desc">GPU-accelerated animations with optimized scheduling deliver smooth transitions even on lower-end devices, with a native application feel. Off-screen elements are not rendered until needed.</p>
                 </div>
@@ -394,43 +394,43 @@ direction: ltr
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:32px; --dl-title-FS: var(--nds-text-xl-FS); --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-paint-brush-01 icon"></i>
-                        <span class="label">Sass Architecture</span>
+                        <i class="hgi hgi-stroke hgi-paint-brush-01 nds-icon"></i>
+                        <span class="nds-label">Sass Architecture</span>
                     </span>
                     <p class="nds-item-desc">Sass with a modular file structure. Each component has its own stylesheet. Variables, mixins, and design tokens are shared across all files. Jekyll compiles and minifies everything into a single CSS output.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-code icon"></i>
-                        <span class="label">Modular JavaScript</span>
+                        <i class="hgi hgi-stroke hgi-code nds-icon"></i>
+                        <span class="nds-label">Modular JavaScript</span>
                     </span>
                     <p class="nds-item-desc">Vanilla JavaScript with one file per component, controlled by a smart loader. Only active components initialize on each page. A Ruby processor bundles and minifies using <a href="https://terser.org/" target="_blank" class="nds-primary">Terser</a>.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layout-03 icon"></i>
-                        <span class="label">Liquid Templates</span>
+                        <i class="hgi hgi-stroke hgi-layout-03 nds-icon"></i>
+                        <span class="nds-label">Liquid Templates</span>
                     </span>
                     <p class="nds-item-desc">Jekyll's built-in template engine. Supports layouts, includes, partials, loops, conditions, and data binding. Pages are composed from reusable blocks with no duplicated markup.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-database icon"></i>
-                        <span class="label">YAML-Driven Data</span>
+                        <i class="hgi hgi-stroke hgi-database nds-icon"></i>
+                        <span class="nds-label">YAML-Driven Data</span>
                     </span>
                     <p class="nds-item-desc">YAML files act as a flat-file database for the project. Menus, navigation, hero content, and site configuration are stored as structured data and fed into templates at build time.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-puzzle icon"></i>
-                        <span class="label">Custom Plugins</span>
+                        <i class="hgi hgi-stroke hgi-puzzle nds-icon"></i>
+                        <span class="nds-label">Custom Plugins</span>
                     </span>
                     <p class="nds-item-desc">Custom Ruby scripts that extend Jekyll's build process. Handle JS bundling, HTML compression, baseurl resolution, and more. Each plugin is project-specific and fully editable.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-artificial-intelligence-04 icon"></i>
-                        <span class="label">AI Integration</span>
+                        <i class="hgi hgi-stroke hgi-artificial-intelligence-04 nds-icon"></i>
+                        <span class="nds-label">AI Integration</span>
                     </span>
                     <p class="nds-item-desc">Configured for <a href="https://claude.ai/" target="_blank" class="nds-primary">Claude Code</a> AI assistant with custom skills for documentation, content creation, code review, and component auditing. The codebase is structured for effective AI-assisted development.</p>
                 </div>
@@ -447,11 +447,11 @@ direction: ltr
         </div>
         <div class="nds-section-action">
             <a href="#" class="nds-btn nds-primary nds-lg nds-external">
-                <i class="hgi hgi-stroke hgi-github icon"></i>
-                <span class="label">View on GitHub</span>
+                <i class="hgi hgi-stroke hgi-github nds-icon"></i>
+                <span class="nds-label">View on GitHub</span>
             </a>
             <a href="#" class="nds-btn nds-secondary-outline nds-lg nds-external">
-                <span class="label">Download Template</span>
+                <span class="nds-label">Download Template</span>
             </a>
         </div>
     </div>

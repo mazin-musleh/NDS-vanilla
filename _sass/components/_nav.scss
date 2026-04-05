@@ -190,7 +190,7 @@
     /* Navigation Items */
     .nds-nav-item {
 
-        :is(.nds-nav-link, .nds-dropdown-item) .label {
+        :is(.nds-nav-link, .nds-dropdown-item) .nds-label {
             position: relative;
             font-size: var(--nds-text-md-FS);
             line-height: var(--nds-text-md-LH);
@@ -215,7 +215,7 @@
         }
 
         &.nds-icon-only {
-            .nds-nav-link .label {
+            .nds-nav-link .nds-label {
                 display: none;
             }
         }
@@ -579,7 +579,7 @@ body:not(.nds-minimal) .nds-main-nav {
 
         :is(.nds-nav-secondary, .nds-nav-minimal) {
             .nds-nav-item:not(.nds-CTA) {
-                .nds-nav-link .label {
+                .nds-nav-link .nds-label {
                     display: none;
                 }
             }

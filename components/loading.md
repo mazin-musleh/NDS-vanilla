@@ -24,39 +24,39 @@ direction: ltr
                         <div class="demo-action">
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-xxs", ".nds-loading","loadingSize"]'>
-                                <span class="label">XXS</span>
+                                <span class="nds-label">XXS</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-xs", ".nds-loading","loadingSize"]'>
-                                <span class="label">XS</span>
+                                <span class="nds-label">XS</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-sm", ".nds-loading","loadingSize"]'>
-                                <span class="label">SM</span>
+                                <span class="nds-label">SM</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn" data-state="selected"
                                 data-toggler='["nds-md", ".nds-loading","loadingSize"]'>
-                                <span class="label">MD</span>
+                                <span class="nds-label">MD</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-lg", ".nds-loading","loadingSize"]'>
-                                <span class="label">LG</span>
+                                <span class="nds-label">LG</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-xl", ".nds-loading","loadingSize"]'>
-                                <span class="label">XL</span>
+                                <span class="nds-label">XL</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-2xl", ".nds-loading","loadingSize"]'>
-                                <span class="label">2XL</span>
+                                <span class="nds-label">2XL</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-neutral", ".nds-loading","loadingColor"]'>
-                                <span class="label">Neutral</span>
+                                <span class="nds-label">Neutral</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                <span class="nds-label">Remove bg</span>
                             </button>
                         </div>
                     </div>
@@ -109,31 +109,31 @@ direction: ltr
                         <div class="demo-action">
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-xxs", ".nds-loading","loadingSize"]'>
-                                <span class="label">XXS</span>
+                                <span class="nds-label">XXS</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-xs", ".nds-loading","loadingSize"]'>
-                                <span class="label">XS</span>
+                                <span class="nds-label">XS</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-sm", ".nds-loading","loadingSize"]'>
-                                <span class="label">SM</span>
+                                <span class="nds-label">SM</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn" data-state="selected"
                                 data-toggler='["nds-md", ".nds-loading","loadingSize"]'>
-                                <span class="label">MD</span>
+                                <span class="nds-label">MD</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-lg", ".nds-loading","loadingSize"]'>
-                                <span class="label">LG</span>
+                                <span class="nds-label">LG</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-xl", ".nds-loading","loadingSize"]'>
-                                <span class="label">XL</span>
+                                <span class="nds-label">XL</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-2xl", ".nds-loading","loadingSize"]'>
-                                <span class="label">2XL</span>
+                                <span class="nds-label">2XL</span>
                             </button>
                         </div>
                     </div>

@@ -56,11 +56,11 @@ Child elements (`<span>`, `<i>`, `<img>`) must NOT be jammed inline with their p
 
 ```html
 <!-- BAD: child inline with parent -->
-<button class="nds-btn" aria-label="Submit"><span class="label">Submit</span></button>
+<button class="nds-btn" aria-label="Submit"><span class="nds-label">Submit</span></button>
 
 <!-- GOOD: child on its own indented line -->
 <button class="nds-btn" aria-label="Submit">
-    <span class="label">Submit</span>
+    <span class="nds-label">Submit</span>
 </button>
 ```
 

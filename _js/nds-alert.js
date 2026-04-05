@@ -80,7 +80,7 @@
                     } else {
                         actionsHtml += `
                             <button class="${classes}" data-action-index="${index}">
-                                <span class="label">${action.label}</span>
+                                <span class="nds-label">${action.label}</span>
                             </button>
                         `;
                     }
@@ -92,7 +92,7 @@
             let html = `
                 <span class="nds-feedback nds-alert-icon${iconStyle}">
                     <span class="nds-feedback-icon">
-                        <i class="hgi hgi-stroke icon"></i>
+                        <i class="hgi hgi-stroke nds-icon"></i>
                     </span>
                 </span>
                 <div class="nds-alert-content">

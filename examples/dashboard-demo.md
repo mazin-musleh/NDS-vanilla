@@ -26,7 +26,7 @@ direction: ltr
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-brand nds-circle nds-xl">
-                                <i class="hgi hgi-stroke hgi-award-03 icon"></i>
+                                <i class="hgi hgi-stroke hgi-award-03 nds-icon"></i>
                             </span>
                         </div>
                     </div>
@@ -43,7 +43,7 @@ direction: ltr
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-brand nds-circle nds-xl">
-                                <i class="hgi hgi-stroke hgi-gift-02 icon"></i>
+                                <i class="hgi hgi-stroke hgi-gift-02 nds-icon"></i>
                             </span>
                         </div>
                     </div>
@@ -60,7 +60,7 @@ direction: ltr
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-brand nds-circle nds-xl">
-                                <i class="hgi hgi-stroke hgi-award-05 icon"></i>
+                                <i class="hgi hgi-stroke hgi-award-05 nds-icon"></i>
                             </span>
                         </div>
                     </div>
@@ -77,7 +77,7 @@ direction: ltr
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-brand nds-circle nds-xl">
-                                <i class="hgi hgi-stroke hgi-target-03 icon"></i>
+                                <i class="hgi hgi-stroke hgi-target-03 nds-icon"></i>
                             </span>
                         </div>
                     </div>
@@ -94,7 +94,7 @@ direction: ltr
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-brand nds-circle nds-xl">
-                                <i class="hgi hgi-stroke hgi-calendar-check-02 icon"></i>
+                                <i class="hgi hgi-stroke hgi-calendar-check-02 nds-icon"></i>
                             </span>
                         </div>
                     </div>
@@ -111,7 +111,7 @@ direction: ltr
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-brand nds-circle nds-xl">
-                                <i class="hgi hgi-stroke hgi-presentation-chart-01 icon"></i>
+                                <i class="hgi hgi-stroke hgi-presentation-chart-01 nds-icon"></i>
                             </span>
                         </div>
                     </div>
@@ -142,7 +142,7 @@ direction: ltr
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-brand nds-circle nds-lg">
-                                <i class="hgi hgi-stroke hgi-announcement-03 icon"></i>
+                                <i class="hgi hgi-stroke hgi-announcement-03 nds-icon"></i>
                             </span>
                         </div>
                     </div>
@@ -155,15 +155,15 @@ direction: ltr
                         <div class="nds-card-meta">
                             <div class="nds-card-tags">
                                 <span class="nds-tag nds-neutral nds-sm">
-                                    <i class="hgi hgi-stroke hgi-calendar-01 icon"></i>
-                                    <span class="label">Due 14 Oct</span>
+                                    <i class="hgi hgi-stroke hgi-calendar-01 nds-icon"></i>
+                                    <span class="nds-label">Due 14 Oct</span>
                                 </span>
                             </div>
                         </div>
                     </div>
                     <div class="nds-card-actions">
                         <a href="#" class="nds-btn nds-secondary-outline nds-lg">
-                            <span class="label">View details</span>
+                            <span class="nds-label">View details</span>
                         </a>
                     </div>
                 </div>
@@ -173,7 +173,7 @@ direction: ltr
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-brand nds-circle nds-lg">
-                                <i class="hgi hgi-stroke hgi-users-01 icon"></i>
+                                <i class="hgi hgi-stroke hgi-users-01 nds-icon"></i>
                             </span>
                         </div>
                     </div>
@@ -186,15 +186,15 @@ direction: ltr
                         <div class="nds-card-meta">
                             <div class="nds-card-tags">
                                 <span class="nds-tag nds-neutral nds-sm">
-                                    <i class="hgi hgi-stroke hgi-calendar-01 icon"></i>
-                                    <span class="label">Due 17 Oct</span>
+                                    <i class="hgi hgi-stroke hgi-calendar-01 nds-icon"></i>
+                                    <span class="nds-label">Due 17 Oct</span>
                                 </span>
                             </div>
                         </div>
                     </div>
                     <div class="nds-card-actions">
                         <a href="#" class="nds-btn nds-secondary-outline nds-lg">
-                            <span class="label">View agenda</span>
+                            <span class="nds-label">View agenda</span>
                         </a>
                     </div>
                 </div>
@@ -204,7 +204,7 @@ direction: ltr
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-brand nds-circle nds-lg">
-                                <i class="hgi hgi-stroke hgi-file-02 icon"></i>
+                                <i class="hgi hgi-stroke hgi-file-02 nds-icon"></i>
                             </span>
                         </div>
                     </div>
@@ -217,15 +217,15 @@ direction: ltr
                         <div class="nds-card-meta">
                             <div class="nds-card-tags">
                                 <span class="nds-tag nds-neutral nds-sm">
-                                    <i class="hgi hgi-stroke hgi-calendar-01 icon"></i>
-                                    <span class="label">Draft review 21 Oct</span>
+                                    <i class="hgi hgi-stroke hgi-calendar-01 nds-icon"></i>
+                                    <span class="nds-label">Draft review 21 Oct</span>
                                 </span>
                             </div>
                         </div>
                     </div>
                     <div class="nds-card-actions">
                         <a href="#" class="nds-btn nds-secondary-outline nds-lg">
-                            <span class="label">Open workspace</span>
+                            <span class="nds-label">Open workspace</span>
                         </a>
                     </div>
                 </div>
@@ -254,16 +254,16 @@ direction: ltr
                         <div class="nds-card-meta">
                             <div class="nds-card-tags">
                                 <span class="nds-tag nds-success nds-sm">
-                                    <i class="hgi hgi-stroke hgi-trend-up icon"></i>
-                                    <span class="label">Up 12% vs last month</span>
+                                    <i class="hgi hgi-stroke hgi-trend-up nds-icon"></i>
+                                    <span class="nds-label">Up 12% vs last month</span>
                                 </span>
                             </div>
                         </div>
                     </div>
                     <div class="nds-card-actions">
                         <button class="nds-btn nds-primary nds-lg">
-                            <i class="hgi hgi-stroke hgi-chart-line icon"></i>
-                            <span class="label">View traffic trends</span>
+                            <i class="hgi hgi-stroke hgi-chart-line nds-icon"></i>
+                            <span class="nds-label">View traffic trends</span>
                         </button>
                     </div>
                 </div>
@@ -278,16 +278,16 @@ direction: ltr
                         <div class="nds-card-meta">
                             <div class="nds-card-tags">
                                 <span class="nds-tag nds-neutral nds-sm">
-                                    <i class="hgi hgi-stroke hgi-hourglass icon"></i>
-                                    <span class="label">3 due today</span>
+                                    <i class="hgi hgi-stroke hgi-hourglass nds-icon"></i>
+                                    <span class="nds-label">3 due today</span>
                                 </span>
                             </div>
                         </div>
                     </div>
                     <div class="nds-card-actions">
                         <button class="nds-btn nds-primary nds-lg">
-                            <i class="hgi hgi-stroke hgi-task icon"></i>
-                            <span class="label">Review requests</span>
+                            <i class="hgi hgi-stroke hgi-task nds-icon"></i>
+                            <span class="nds-label">Review requests</span>
                         </button>
                     </div>
                 </div>
@@ -302,16 +302,16 @@ direction: ltr
                         <div class="nds-card-meta">
                             <div class="nds-card-tags">
                                 <span class="nds-tag nds-info nds-sm">
-                                    <i class="hgi hgi-stroke hgi-bell-01 icon"></i>
-                                    <span class="label">Escalations enabled</span>
+                                    <i class="hgi hgi-stroke hgi-bell-01 nds-icon"></i>
+                                    <span class="nds-label">Escalations enabled</span>
                                 </span>
                             </div>
                         </div>
                     </div>
                     <div class="nds-card-actions">
                         <button class="nds-btn nds-primary nds-lg">
-                            <i class="hgi hgi-stroke hgi-notification icon"></i>
-                            <span class="label">Manage alerts</span>
+                            <i class="hgi hgi-stroke hgi-notification nds-icon"></i>
+                            <span class="nds-label">Manage alerts</span>
                         </button>
                     </div>
                 </div>
@@ -334,23 +334,23 @@ direction: ltr
                     <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Community navigation">
                         <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                             aria-controls="panel-all" id="tab-all" tabindex="0">
-                            <i class="hgi hgi-stroke hgi-users-01 icon"></i>
-                            <span class="label">All</span>
+                            <i class="hgi hgi-stroke hgi-users-01 nds-icon"></i>
+                            <span class="nds-label">All</span>
                         </button>
                         <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
                             aria-controls="panel-new" id="tab-new" tabindex="-1">
-                            <i class="hgi hgi-stroke hgi-star icon"></i>
-                            <span class="label">New</span>
+                            <i class="hgi hgi-stroke hgi-star nds-icon"></i>
+                            <span class="nds-label">New</span>
                         </button>
                         <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
                             aria-controls="panel-following" id="tab-following" tabindex="-1">
-                            <i class="hgi hgi-stroke hgi-user-check-01 icon"></i>
-                            <span class="label">Following</span>
+                            <i class="hgi hgi-stroke hgi-user-check-01 nds-icon"></i>
+                            <span class="nds-label">Following</span>
                         </button>
                         <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
                             aria-controls="panel-popular" id="tab-popular" tabindex="-1">
-                            <i class="hgi hgi-stroke hgi-trending-up icon"></i>
-                            <span class="label">Popular</span>
+                            <i class="hgi hgi-stroke hgi-trending-up nds-icon"></i>
+                            <span class="nds-label">Popular</span>
                         </button>
                     </nav>
                 </div>
@@ -379,12 +379,12 @@ direction: ltr
                                     <td>sara.ibrahim</td>
                                     <td>
                                         <span class="nds-tag nds-neutral nds-sm">
-                                            <span class="label">Project sponsor</span>
+                                            <span class="nds-label">Project sponsor</span>
                                         </span>
                                     </td>
                                     <td>
                                         <button class="nds-btn nds-subtle nds-sm">
-                                            <span class="label">View profile</span>
+                                            <span class="nds-label">View profile</span>
                                         </button>
                                     </td>
                                 </tr>
@@ -400,12 +400,12 @@ direction: ltr
                                     <td>omar.khalid</td>
                                     <td>
                                         <span class="nds-tag nds-neutral nds-sm">
-                                            <span class="label">Key contributor</span>
+                                            <span class="nds-label">Key contributor</span>
                                         </span>
                                     </td>
                                     <td>
                                         <button class="nds-btn nds-subtle nds-sm">
-                                            <span class="label">View profile</span>
+                                            <span class="nds-label">View profile</span>
                                         </button>
                                     </td>
                                 </tr>
@@ -421,12 +421,12 @@ direction: ltr
                                     <td>lamia.alqahtani</td>
                                     <td>
                                         <span class="nds-tag nds-neutral nds-sm">
-                                            <span class="label">Onboarding</span>
+                                            <span class="nds-label">Onboarding</span>
                                         </span>
                                     </td>
                                     <td>
                                         <button class="nds-btn nds-subtle nds-sm">
-                                            <span class="label">View profile</span>
+                                            <span class="nds-label">View profile</span>
                                         </button>
                                     </td>
                                 </tr>

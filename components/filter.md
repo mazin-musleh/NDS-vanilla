@@ -27,24 +27,24 @@ direction: ltr
                                 <div class="nds-form-container nds-search-box">
                                     <div class="nds-search-content">
                                         <div class="nds-form-control">
-                                            <i class="hgi hgi-stroke hgi-search-01 icon"></i>
+                                            <i class="hgi hgi-stroke hgi-search-01 nds-icon"></i>
                                             <input type="text" class="nds-search-input" placeholder="Search cards...">
                                             <div class="nds-form-action">
                                                 <button class="nds-btn nds-subtle nds-clear" hidden><i
-                                                        class="hgi hgi-stroke hgi-cancel-01 icon"></i></button>
+                                                        class="hgi hgi-stroke hgi-cancel-01 nds-icon"></i></button>
                                             </div>
                                         </div>
                                         <button class="nds-btn nds-primary nds-search-btn" type="button">
-                                            <i class="hgi hgi-stroke hgi-search-01 icon"></i>
-                                            <span class="label">Search</span>
+                                            <i class="hgi hgi-stroke hgi-search-01 nds-icon"></i>
+                                            <span class="nds-label">Search</span>
                                         </button>
                                     </div>
                                 </div>
                                 <div class="nds-dropmenu">
                                     <button
                                         class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
-                                        <i class="hgi hgi-stroke hgi-filter icon"></i>
-                                        <span class="label">Filter</span>
+                                        <i class="hgi hgi-stroke hgi-filter nds-icon"></i>
+                                        <span class="nds-label">Filter</span>
                                     </button>
                                     <div class="nds-dropmenu-menu" hidden>
                                         <div class="nds-dropmenu-scroll">
@@ -62,18 +62,18 @@ direction: ltr
                                             <div class="nds-dropmenu-action nds-grid">
                                                 <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
                                                     data-filter-action="clear" data-no-auto-close>
-                                                    <span class="label">Reset</span>
+                                                    <span class="nds-label">Reset</span>
                                                 </button>
                                                 <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
                                                     data-filter-action="apply">
-                                                    <span class="label">Filter</span>
+                                                    <span class="nds-label">Filter</span>
                                                 </button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="nds-filter-applied" hidden>
-                                    <span class="label">Applied Filters:</span>
+                                    <span class="nds-label">Applied Filters:</span>
                                     <div class="nds-chips"></div>
                                 </div>
                             </form>
@@ -87,9 +87,9 @@ direction: ltr
                                             <span class="nds-card-description">{{ user.role }}</span>
                                         </div>
                                         <div class="nds-card-tags">
-                                            <span class="nds-tag nds-blue nds-sm"><span class="label"
+                                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label"
                                                     data-filter="department">{{ user.department }}</span></span>
-                                            <span class="nds-tag nds-green nds-sm"><span class="label"
+                                            <span class="nds-tag nds-green nds-sm"><span class="nds-label"
                                                     data-filter="role">{{ user.role }}</span></span>
                                         </div>
                                     </div>
@@ -123,24 +123,24 @@ direction: ltr
   <div class="nds-form-container nds-search-box">
     <div class="nds-search-content">
       <div class="nds-form-control">
-        <i class="hgi hgi-stroke hgi-search-01 icon"></i>
+        <i class="hgi hgi-stroke hgi-search-01 nds-icon"></i>
         <input type="text" class="nds-search-input" placeholder="Search cards...">
         <div class="nds-form-action">
           <button class="nds-btn nds-subtle nds-clear" hidden>
-            <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
+            <i class="hgi hgi-stroke hgi-cancel-01 nds-icon"></i>
           </button>
         </div>
       </div>
       <button class="nds-btn nds-primary nds-search-btn" type="button">
-        <i class="hgi hgi-stroke hgi-search-01 icon"></i>
-        <span class="label">Search</span>
+        <i class="hgi hgi-stroke hgi-search-01 nds-icon"></i>
+        <span class="nds-label">Search</span>
       </button>
     </div>
   </div>
   <div class="nds-dropmenu">
     <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
-      <i class="hgi hgi-stroke hgi-filter icon"></i>
-      <span class="label">Filter</span>
+      <i class="hgi hgi-stroke hgi-filter nds-icon"></i>
+      <span class="nds-label">Filter</span>
     </button>
     <div class="nds-dropmenu-menu" hidden>
       <div class="nds-dropmenu-scroll">
@@ -161,18 +161,18 @@ direction: ltr
         <div class="nds-dropmenu-action nds-grid">
           <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
             data-filter-action="clear" data-no-auto-close>
-            <span class="label">Reset</span>
+            <span class="nds-label">Reset</span>
           </button>
           <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
             data-filter-action="apply">
-            <span class="label">Filter</span>
+            <span class="nds-label">Filter</span>
           </button>
         </div>
       </div>
     </div>
   </div>
   <div class="nds-filter-applied" hidden>
-    <span class="label">Applied Filters:</span>
+    <span class="nds-label">Applied Filters:</span>
     <div class="nds-chips"></div>
   </div>
 </form>
@@ -188,10 +188,10 @@ direction: ltr
       </div>
       <div class="nds-card-tags">
         <span class="nds-tag nds-blue nds-sm">
-          <span class="label" data-filter="department">Engineering</span>
+          <span class="nds-label" data-filter="department">Engineering</span>
         </span>
         <span class="nds-tag nds-green nds-sm">
-          <span class="label" data-filter="role">Developer</span>
+          <span class="nds-label" data-filter="role">Developer</span>
         </span>
       </div>
     </div>
@@ -228,8 +228,8 @@ direction: ltr
                             <form class="nds-filter" data-filter-target="checkboxCards">
                                 <div class="nds-dropmenu">
                                     <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
-                                        <i class="hgi hgi-stroke hgi-filter icon"></i>
-                                        <span class="label">Filter</span>
+                                        <i class="hgi hgi-stroke hgi-filter nds-icon"></i>
+                                        <span class="nds-label">Filter</span>
                                     </button>
                                     <div class="nds-dropmenu-menu" style="min-width: 260px;" hidden>
                                         <div class="nds-dropmenu-scroll">
@@ -243,18 +243,18 @@ direction: ltr
                                             <div class="nds-dropmenu-action nds-grid">
                                                 <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
                                                     data-filter-action="clear" data-no-auto-close>
-                                                    <span class="label">Reset</span>
+                                                    <span class="nds-label">Reset</span>
                                                 </button>
                                                 <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
                                                     data-filter-action="apply">
-                                                    <span class="label">Apply</span>
+                                                    <span class="nds-label">Apply</span>
                                                 </button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="nds-filter-applied" hidden>
-                                    <span class="label">Applied Filters:</span>
+                                    <span class="nds-label">Applied Filters:</span>
                                     <div class="nds-chips"></div>
                                 </div>
                             </form>
@@ -265,7 +265,7 @@ direction: ltr
                                             <h3 class="nds-card-title">Task A</h3>
                                         </div>
                                         <div class="nds-card-tags"><span class="nds-tag nds-green nds-sm"><span
-                                                    class="label" data-filter="status">Active</span></span></div>
+                                                    class="nds-label" data-filter="status">Active</span></span></div>
                                     </div>
                                 </div>
                                 <div class="nds-card nds-stroke">
@@ -274,7 +274,7 @@ direction: ltr
                                             <h3 class="nds-card-title">Task B</h3>
                                         </div>
                                         <div class="nds-card-tags"><span class="nds-tag nds-neutral nds-sm"><span
-                                                    class="label" data-filter="status">Pending</span></span></div>
+                                                    class="nds-label" data-filter="status">Pending</span></span></div>
                                     </div>
                                 </div>
                                 <div class="nds-card nds-stroke">
@@ -283,7 +283,7 @@ direction: ltr
                                             <h3 class="nds-card-title">Task C</h3>
                                         </div>
                                         <div class="nds-card-tags"><span class="nds-tag nds-blue nds-sm"><span
-                                                    class="label" data-filter="status">Complete</span></span></div>
+                                                    class="nds-label" data-filter="status">Complete</span></span></div>
                                     </div>
                                 </div>
                                 <div class="nds-card nds-stroke">
@@ -292,7 +292,7 @@ direction: ltr
                                             <h3 class="nds-card-title">Task D</h3>
                                         </div>
                                         <div class="nds-card-tags"><span class="nds-tag nds-green nds-sm"><span
-                                                    class="label" data-filter="status">Active</span></span></div>
+                                                    class="nds-label" data-filter="status">Active</span></span></div>
                                     </div>
                                 </div>
                             </div>
@@ -321,8 +321,8 @@ direction: ltr
 <form class="nds-filter" data-filter-target="checkboxCards">
   <div class="nds-dropmenu">
     <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
-      <i class="hgi hgi-stroke hgi-filter icon"></i>
-      <span class="label">Filter</span>
+      <i class="hgi hgi-stroke hgi-filter nds-icon"></i>
+      <span class="nds-label">Filter</span>
     </button>
     <div class="nds-dropmenu-menu" style="min-width: 260px;" hidden>
       <div class="nds-dropmenu-scroll">
@@ -338,18 +338,18 @@ direction: ltr
         <div class="nds-dropmenu-action nds-grid">
           <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
             data-filter-action="clear" data-no-auto-close>
-            <span class="label">Reset</span>
+            <span class="nds-label">Reset</span>
           </button>
           <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
             data-filter-action="apply">
-            <span class="label">Apply</span>
+            <span class="nds-label">Apply</span>
           </button>
         </div>
       </div>
     </div>
   </div>
   <div class="nds-filter-applied" hidden>
-    <span class="label">Applied Filters:</span>
+    <span class="nds-label">Applied Filters:</span>
     <div class="nds-chips"></div>
   </div>
 </form>
@@ -363,7 +363,7 @@ direction: ltr
       </div>
       <div class="nds-card-tags">
         <span class="nds-tag nds-green nds-sm">
-          <span class="label" data-filter="status">Active</span>
+          <span class="nds-label" data-filter="status">Active</span>
         </span>
       </div>
     </div>
@@ -375,7 +375,7 @@ direction: ltr
       </div>
       <div class="nds-card-tags">
         <span class="nds-tag nds-neutral nds-sm">
-          <span class="label" data-filter="status">Pending</span>
+          <span class="nds-label" data-filter="status">Pending</span>
         </span>
       </div>
     </div>
@@ -387,7 +387,7 @@ direction: ltr
       </div>
       <div class="nds-card-tags">
         <span class="nds-tag nds-blue nds-sm">
-          <span class="label" data-filter="status">Complete</span>
+          <span class="nds-label" data-filter="status">Complete</span>
         </span>
       </div>
     </div>
@@ -399,7 +399,7 @@ direction: ltr
       </div>
       <div class="nds-card-tags">
         <span class="nds-tag nds-green nds-sm">
-          <span class="label" data-filter="status">Active</span>
+          <span class="nds-label" data-filter="status">Active</span>
         </span>
       </div>
     </div>
@@ -423,8 +423,8 @@ direction: ltr
                             <form class="nds-filter" data-filter-target="radioCards">
                                 <div class="nds-dropmenu">
                                     <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
-                                        <i class="hgi hgi-stroke hgi-filter icon"></i>
-                                        <span class="label">Filter</span>
+                                        <i class="hgi hgi-stroke hgi-filter nds-icon"></i>
+                                        <span class="nds-label">Filter</span>
                                     </button>
                                     <div class="nds-dropmenu-menu" style="min-width: 260px;" hidden>
                                         <div class="nds-dropmenu-scroll">
@@ -438,18 +438,18 @@ direction: ltr
                                             <div class="nds-dropmenu-action nds-grid">
                                                 <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
                                                     data-filter-action="clear" data-no-auto-close>
-                                                    <span class="label">Reset</span>
+                                                    <span class="nds-label">Reset</span>
                                                 </button>
                                                 <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
                                                     data-filter-action="apply">
-                                                    <span class="label">Apply</span>
+                                                    <span class="nds-label">Apply</span>
                                                 </button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="nds-filter-applied" hidden>
-                                    <span class="label">Applied Filters:</span>
+                                    <span class="nds-label">Applied Filters:</span>
                                     <div class="nds-chips"></div>
                                 </div>
                             </form>
@@ -460,7 +460,7 @@ direction: ltr
                                             <h3 class="nds-card-title">Feature Request</h3>
                                         </div>
                                         <div class="nds-card-tags"><span class="nds-tag nds-red nds-sm"><span
-                                                    class="label" data-filter="priority">High</span></span></div>
+                                                    class="nds-label" data-filter="priority">High</span></span></div>
                                     </div>
                                 </div>
                                 <div class="nds-card nds-stroke">
@@ -469,7 +469,7 @@ direction: ltr
                                             <h3 class="nds-card-title">Bug Fix</h3>
                                         </div>
                                         <div class="nds-card-tags"><span class="nds-tag nds-yellow nds-sm"><span
-                                                    class="label" data-filter="priority">Medium</span></span></div>
+                                                    class="nds-label" data-filter="priority">Medium</span></span></div>
                                     </div>
                                 </div>
                                 <div class="nds-card nds-stroke">
@@ -478,7 +478,7 @@ direction: ltr
                                             <h3 class="nds-card-title">Documentation</h3>
                                         </div>
                                         <div class="nds-card-tags"><span class="nds-tag nds-neutral nds-sm"><span
-                                                    class="label" data-filter="priority">Low</span></span></div>
+                                                    class="nds-label" data-filter="priority">Low</span></span></div>
                                     </div>
                                 </div>
                                 <div class="nds-card nds-stroke">
@@ -487,7 +487,7 @@ direction: ltr
                                             <h3 class="nds-card-title">Security Patch</h3>
                                         </div>
                                         <div class="nds-card-tags"><span class="nds-tag nds-red nds-sm"><span
-                                                    class="label" data-filter="priority">High</span></span></div>
+                                                    class="nds-label" data-filter="priority">High</span></span></div>
                                     </div>
                                 </div>
                             </div>
@@ -516,8 +516,8 @@ direction: ltr
 <form class="nds-filter" data-filter-target="radioCards">
   <div class="nds-dropmenu">
     <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
-      <i class="hgi hgi-stroke hgi-filter icon"></i>
-      <span class="label">Filter</span>
+      <i class="hgi hgi-stroke hgi-filter nds-icon"></i>
+      <span class="nds-label">Filter</span>
     </button>
     <div class="nds-dropmenu-menu" style="min-width: 260px;" hidden>
       <div class="nds-dropmenu-scroll">
@@ -533,18 +533,18 @@ direction: ltr
         <div class="nds-dropmenu-action nds-grid">
           <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
             data-filter-action="clear" data-no-auto-close>
-            <span class="label">Reset</span>
+            <span class="nds-label">Reset</span>
           </button>
           <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
             data-filter-action="apply">
-            <span class="label">Apply</span>
+            <span class="nds-label">Apply</span>
           </button>
         </div>
       </div>
     </div>
   </div>
   <div class="nds-filter-applied" hidden>
-    <span class="label">Applied Filters:</span>
+    <span class="nds-label">Applied Filters:</span>
     <div class="nds-chips"></div>
   </div>
 </form>
@@ -558,7 +558,7 @@ direction: ltr
       </div>
       <div class="nds-card-tags">
         <span class="nds-tag nds-red nds-sm">
-          <span class="label" data-filter="priority">High</span>
+          <span class="nds-label" data-filter="priority">High</span>
         </span>
       </div>
     </div>
@@ -570,7 +570,7 @@ direction: ltr
       </div>
       <div class="nds-card-tags">
         <span class="nds-tag nds-yellow nds-sm">
-          <span class="label" data-filter="priority">Medium</span>
+          <span class="nds-label" data-filter="priority">Medium</span>
         </span>
       </div>
     </div>
@@ -582,7 +582,7 @@ direction: ltr
       </div>
       <div class="nds-card-tags">
         <span class="nds-tag nds-neutral nds-sm">
-          <span class="label" data-filter="priority">Low</span>
+          <span class="nds-label" data-filter="priority">Low</span>
         </span>
       </div>
     </div>
@@ -594,7 +594,7 @@ direction: ltr
       </div>
       <div class="nds-card-tags">
         <span class="nds-tag nds-red nds-sm">
-          <span class="label" data-filter="priority">High</span>
+          <span class="nds-label" data-filter="priority">High</span>
         </span>
       </div>
     </div>
@@ -618,8 +618,8 @@ direction: ltr
                             <form class="nds-filter" data-filter-target="switchCards">
                                 <div class="nds-dropmenu">
                                     <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
-                                        <i class="hgi hgi-stroke hgi-filter icon"></i>
-                                        <span class="label">Filter</span>
+                                        <i class="hgi hgi-stroke hgi-filter nds-icon"></i>
+                                        <span class="nds-label">Filter</span>
                                     </button>
                                     <div class="nds-dropmenu-menu" style="min-width: 260px;" hidden>
                                         <div class="nds-dropmenu-scroll">
@@ -633,18 +633,18 @@ direction: ltr
                                             <div class="nds-dropmenu-action nds-grid">
                                                 <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
                                                     data-filter-action="clear" data-no-auto-close>
-                                                    <span class="label">Reset</span>
+                                                    <span class="nds-label">Reset</span>
                                                 </button>
                                                 <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
                                                     data-filter-action="apply">
-                                                    <span class="label">Apply</span>
+                                                    <span class="nds-label">Apply</span>
                                                 </button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="nds-filter-applied" hidden>
-                                    <span class="label">Applied Filters:</span>
+                                    <span class="nds-label">Applied Filters:</span>
                                     <div class="nds-chips"></div>
                                 </div>
                             </form>
@@ -655,9 +655,9 @@ direction: ltr
                                             <h3 class="nds-card-title">App Alpha</h3>
                                         </div>
                                         <div class="nds-card-tags">
-                                            <span class="nds-tag nds-blue nds-sm"><span class="label"
+                                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label"
                                                     data-filter="feature">SSO</span></span>
-                                            <span class="nds-tag nds-blue nds-sm"><span class="label"
+                                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label"
                                                     data-filter="feature">API</span></span>
                                         </div>
                                     </div>
@@ -668,7 +668,7 @@ direction: ltr
                                             <h3 class="nds-card-title">App Beta</h3>
                                         </div>
                                         <div class="nds-card-tags">
-                                            <span class="nds-tag nds-blue nds-sm"><span class="label"
+                                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label"
                                                     data-filter="feature">SSO</span></span>
                                         </div>
                                     </div>
@@ -679,9 +679,9 @@ direction: ltr
                                             <h3 class="nds-card-title">App Gamma</h3>
                                         </div>
                                         <div class="nds-card-tags">
-                                            <span class="nds-tag nds-blue nds-sm"><span class="label"
+                                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label"
                                                     data-filter="feature">API</span></span>
-                                            <span class="nds-tag nds-blue nds-sm"><span class="label"
+                                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label"
                                                     data-filter="feature">Webhooks</span></span>
                                         </div>
                                     </div>
@@ -692,7 +692,7 @@ direction: ltr
                                             <h3 class="nds-card-title">App Delta</h3>
                                         </div>
                                         <div class="nds-card-tags">
-                                            <span class="nds-tag nds-blue nds-sm"><span class="label"
+                                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label"
                                                     data-filter="feature">Webhooks</span></span>
                                         </div>
                                     </div>
@@ -723,8 +723,8 @@ direction: ltr
 <form class="nds-filter" data-filter-target="switchCards">
   <div class="nds-dropmenu">
     <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
-      <i class="hgi hgi-stroke hgi-filter icon"></i>
-      <span class="label">Filter</span>
+      <i class="hgi hgi-stroke hgi-filter nds-icon"></i>
+      <span class="nds-label">Filter</span>
     </button>
     <div class="nds-dropmenu-menu" style="min-width: 260px;" hidden>
       <div class="nds-dropmenu-scroll">
@@ -740,18 +740,18 @@ direction: ltr
         <div class="nds-dropmenu-action nds-grid">
           <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
             data-filter-action="clear" data-no-auto-close>
-            <span class="label">Reset</span>
+            <span class="nds-label">Reset</span>
           </button>
           <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
             data-filter-action="apply">
-            <span class="label">Apply</span>
+            <span class="nds-label">Apply</span>
           </button>
         </div>
       </div>
     </div>
   </div>
   <div class="nds-filter-applied" hidden>
-    <span class="label">Applied Filters:</span>
+    <span class="nds-label">Applied Filters:</span>
     <div class="nds-chips"></div>
   </div>
 </form>
@@ -765,10 +765,10 @@ direction: ltr
       </div>
       <div class="nds-card-tags">
         <span class="nds-tag nds-blue nds-sm">
-          <span class="label" data-filter="feature">SSO</span>
+          <span class="nds-label" data-filter="feature">SSO</span>
         </span>
         <span class="nds-tag nds-blue nds-sm">
-          <span class="label" data-filter="feature">API</span>
+          <span class="nds-label" data-filter="feature">API</span>
         </span>
       </div>
     </div>
@@ -780,7 +780,7 @@ direction: ltr
       </div>
       <div class="nds-card-tags">
         <span class="nds-tag nds-blue nds-sm">
-          <span class="label" data-filter="feature">SSO</span>
+          <span class="nds-label" data-filter="feature">SSO</span>
         </span>
       </div>
     </div>
@@ -792,10 +792,10 @@ direction: ltr
       </div>
       <div class="nds-card-tags">
         <span class="nds-tag nds-blue nds-sm">
-          <span class="label" data-filter="feature">API</span>
+          <span class="nds-label" data-filter="feature">API</span>
         </span>
         <span class="nds-tag nds-blue nds-sm">
-          <span class="label" data-filter="feature">Webhooks</span>
+          <span class="nds-label" data-filter="feature">Webhooks</span>
         </span>
       </div>
     </div>
@@ -807,7 +807,7 @@ direction: ltr
       </div>
       <div class="nds-card-tags">
         <span class="nds-tag nds-blue nds-sm">
-          <span class="label" data-filter="feature">Webhooks</span>
+          <span class="nds-label" data-filter="feature">Webhooks</span>
         </span>
       </div>
     </div>
@@ -843,8 +843,8 @@ direction: ltr
                             <form class="nds-filter" data-filter-target="staticCards">
                                 <div class="nds-dropmenu">
                                     <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
-                                        <i class="hgi hgi-stroke hgi-filter icon"></i>
-                                        <span class="label">Filter</span>
+                                        <i class="hgi hgi-stroke hgi-filter nds-icon"></i>
+                                        <span class="nds-label">Filter</span>
                                     </button>
                                     <div class="nds-dropmenu-menu" hidden>
                                         <div class="nds-dropmenu-scroll">
@@ -859,18 +859,18 @@ direction: ltr
                                             <div class="nds-dropmenu-action nds-grid">
                                                 <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
                                                     data-filter-action="clear" data-no-auto-close>
-                                                    <span class="label">Reset</span>
+                                                    <span class="nds-label">Reset</span>
                                                 </button>
                                                 <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
                                                     data-filter-action="apply">
-                                                    <span class="label">Filter</span>
+                                                    <span class="nds-label">Filter</span>
                                                 </button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="nds-filter-applied" hidden>
-                                    <span class="label">Applied Filters:</span>
+                                    <span class="nds-label">Applied Filters:</span>
                                     <div class="nds-chips"></div>
                                 </div>
                             </form>
@@ -881,7 +881,7 @@ direction: ltr
                                             <h3 class="nds-card-title">AI Research</h3>
                                         </div>
                                         <div class="nds-card-tags"><span class="nds-tag nds-blue nds-sm"><span
-                                                    class="label" data-filter="category">Technology</span></span></div>
+                                                    class="nds-label" data-filter="category">Technology</span></span></div>
                                     </div>
                                 </div>
                                 <div class="nds-card nds-stroke">
@@ -890,7 +890,7 @@ direction: ltr
                                             <h3 class="nds-card-title">Brand Identity</h3>
                                         </div>
                                         <div class="nds-card-tags"><span class="nds-tag nds-green nds-sm"><span
-                                                    class="label" data-filter="category">Design</span></span></div>
+                                                    class="nds-label" data-filter="category">Design</span></span></div>
                                     </div>
                                 </div>
                                 <div class="nds-card nds-stroke">
@@ -899,7 +899,7 @@ direction: ltr
                                             <h3 class="nds-card-title">Market Analysis</h3>
                                         </div>
                                         <div class="nds-card-tags"><span class="nds-tag nds-yellow nds-sm"><span
-                                                    class="label" data-filter="category">Business</span></span></div>
+                                                    class="nds-label" data-filter="category">Business</span></span></div>
                                     </div>
                                 </div>
                                 <div class="nds-card nds-stroke">
@@ -908,7 +908,7 @@ direction: ltr
                                             <h3 class="nds-card-title">Cloud Migration</h3>
                                         </div>
                                         <div class="nds-card-tags"><span class="nds-tag nds-blue nds-sm"><span
-                                                    class="label" data-filter="category">Technology</span></span></div>
+                                                    class="nds-label" data-filter="category">Technology</span></span></div>
                                     </div>
                                 </div>
                                 <div class="nds-card nds-stroke">
@@ -917,7 +917,7 @@ direction: ltr
                                             <h3 class="nds-card-title">UX Audit</h3>
                                         </div>
                                         <div class="nds-card-tags"><span class="nds-tag nds-green nds-sm"><span
-                                                    class="label" data-filter="category">Design</span></span></div>
+                                                    class="nds-label" data-filter="category">Design</span></span></div>
                                     </div>
                                 </div>
                                 <div class="nds-card nds-stroke">
@@ -926,7 +926,7 @@ direction: ltr
                                             <h3 class="nds-card-title">Revenue Report</h3>
                                         </div>
                                         <div class="nds-card-tags"><span class="nds-tag nds-yellow nds-sm"><span
-                                                    class="label" data-filter="category">Business</span></span></div>
+                                                    class="nds-label" data-filter="category">Business</span></span></div>
                                     </div>
                                 </div>
                             </div>
@@ -956,8 +956,8 @@ direction: ltr
 <form class="nds-filter" data-filter-target="staticCards">
   <div class="nds-dropmenu">
     <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
-      <i class="hgi hgi-stroke hgi-filter icon"></i>
-      <span class="label">Filter</span>
+      <i class="hgi hgi-stroke hgi-filter nds-icon"></i>
+      <span class="nds-label">Filter</span>
     </button>
     <div class="nds-dropmenu-menu" hidden>
       <div class="nds-dropmenu-scroll">
@@ -973,18 +973,18 @@ direction: ltr
         <div class="nds-dropmenu-action nds-grid">
           <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
             data-filter-action="clear" data-no-auto-close>
-            <span class="label">Reset</span>
+            <span class="nds-label">Reset</span>
           </button>
           <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
             data-filter-action="apply">
-            <span class="label">Filter</span>
+            <span class="nds-label">Filter</span>
           </button>
         </div>
       </div>
     </div>
   </div>
   <div class="nds-filter-applied" hidden>
-    <span class="label">Applied Filters:</span>
+    <span class="nds-label">Applied Filters:</span>
     <div class="nds-chips"></div>
   </div>
 </form>
@@ -1050,8 +1050,8 @@ direction: ltr
   method="GET" action="/api/search">
   <div class="nds-dropmenu">
     <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
-      <i class="hgi hgi-stroke hgi-filter icon"></i>
-      <span class="label">Filter</span>
+      <i class="hgi hgi-stroke hgi-filter nds-icon"></i>
+      <span class="nds-label">Filter</span>
     </button>
     <div class="nds-dropmenu-menu" hidden>
       <div class="nds-dropmenu-scroll">
@@ -1067,11 +1067,11 @@ direction: ltr
           <button class="nds-btn nds-secondary nds-dropmenu-item"
             type="button" data-filter-action="clear"
             data-no-auto-close>
-            <span class="label">Reset</span>
+            <span class="nds-label">Reset</span>
           </button>
           <button class="nds-btn nds-primary nds-dropmenu-item"
             type="button" data-filter-action="apply">
-            <span class="label">Apply</span>
+            <span class="nds-label">Apply</span>
           </button>
         </div>
       </div>
@@ -1219,21 +1219,21 @@ NDS.Filter.whenReady('#apiFilter', (filter) => {
     data-name="Title" data-query-param="searchKeyword">
     <div class="nds-search-content">
       <div class="nds-form-control">
-        <i class="hgi hgi-stroke hgi-search-01 icon"></i>
+        <i class="hgi hgi-stroke hgi-search-01 nds-icon"></i>
         <input type="text" class="nds-search-input"
           name="search" placeholder="Search...">
       </div>
       <button class="nds-btn nds-primary nds-search-btn"
         type="button">
-        <span class="label">Search</span>
+        <span class="nds-label">Search</span>
       </button>
     </div>
   </div>
 
   <div class="nds-dropmenu">
     <button class="nds-btn nds-neutral nds-dropmenu-trigger">
-      <i class="hgi hgi-stroke hgi-filter icon"></i>
-      <span class="label">Filter</span>
+      <i class="hgi hgi-stroke hgi-filter nds-icon"></i>
+      <span class="nds-label">Filter</span>
     </button>
     <div class="nds-dropmenu-menu" hidden>
       <div class="nds-dropmenu-scroll">
@@ -1250,11 +1250,11 @@ NDS.Filter.whenReady('#apiFilter', (filter) => {
           <button class="nds-btn nds-secondary nds-dropmenu-item"
             type="button" data-filter-action="clear"
             data-no-auto-close>
-            <span class="label">Reset</span>
+            <span class="nds-label">Reset</span>
           </button>
           <button class="nds-btn nds-primary nds-dropmenu-item"
             type="submit" data-filter-action="apply">
-            <span class="label">Apply</span>
+            <span class="nds-label">Apply</span>
           </button>
         </div>
       </div>
@@ -1262,7 +1262,7 @@ NDS.Filter.whenReady('#apiFilter', (filter) => {
   </div>
 
   <div class="nds-filter-applied" hidden>
-    <span class="label">Applied Filters:</span>
+    <span class="nds-label">Applied Filters:</span>
     <div class="nds-chips"></div>
   </div>
 </form>
@@ -1391,57 +1391,57 @@ filterForm.addEventListener('nds:filterFormAjax', (e) => {
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket icon"></i>
-                        <span class="label">Auto-initialization</span>
+                        <i class="hgi hgi-stroke hgi-plug-socket nds-icon"></i>
+                        <span class="nds-label">Auto-initialization</span>
                     </span>
                     <p class="nds-item-desc">Activates when <code class="nds-inline-code lang-html">.nds-filter</code> is on the page. Search, filter inputs, chips, and URL sync are set up automatically.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-filter icon"></i>
-                        <span class="label">Auto-Generated Filters</span>
+                        <i class="hgi hgi-stroke hgi-filter nds-icon"></i>
+                        <span class="nds-label">Auto-Generated Filters</span>
                     </span>
                     <p class="nds-item-desc">Builds checkbox, radio, or switch inputs automatically. Values come from card content, a JSON attribute (<code class="nds-inline-code lang-html">data-filter-values</code>), or the <code class="nds-inline-code lang-js">populateFilter()</code> API — no manual HTML required.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-link-circle-02 icon"></i>
-                        <span class="label">Shareable URL State</span>
+                        <i class="hgi hgi-stroke hgi-link-circle-02 nds-icon"></i>
+                        <span class="nds-label">Shareable URL State</span>
                     </span>
                     <p class="nds-item-desc">Filter selections and search terms sync to URL query parameters automatically, producing bookmarkable and shareable links that restore the exact filter state.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-tag-01 icon"></i>
-                        <span class="label">Applied Filter Chips</span>
+                        <i class="hgi hgi-stroke hgi-tag-01 nds-icon"></i>
+                        <span class="nds-label">Applied Filter Chips</span>
                     </span>
                     <p class="nds-item-desc">Active filters display as removable chips below the filter bar. Clicking a chip removes that filter and re-applies the remaining criteria.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-search-01 icon"></i>
-                        <span class="label">No Results Alert</span>
+                        <i class="hgi hgi-stroke hgi-search-01 nds-icon"></i>
+                        <span class="nds-label">No Results Alert</span>
                     </span>
                     <p class="nds-item-desc">Shows a warning alert with a "Clear Filter" action when no cards match the current criteria. The alert dismisses automatically when results reappear.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-refresh icon"></i>
-                        <span class="label">Dynamic and Cascading Filters</span>
+                        <i class="hgi hgi-stroke hgi-refresh nds-icon"></i>
+                        <span class="nds-label">Dynamic and Cascading Filters</span>
                     </span>
                     <p class="nds-item-desc">Use <code class="nds-inline-code lang-js">populateFilter()</code> to generate or replace filter inputs at runtime. Supports cascading filters where one selection drives another filter's options via API.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-globe-02 icon"></i>
-                        <span class="label">AJAX Form Submission</span>
+                        <i class="hgi hgi-stroke hgi-globe-02 nds-icon"></i>
+                        <span class="nds-label">AJAX Form Submission</span>
                     </span>
                     <p class="nds-item-desc">Supports server-side filtering via AJAX with automatic HTML response injection and JSON response events for custom rendering.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-code icon"></i>
-                        <span class="label">Programmatic Control</span>
+                        <i class="hgi hgi-stroke hgi-code nds-icon"></i>
+                        <span class="nds-label">Programmatic Control</span>
                     </span>
                     <p class="nds-item-desc">Set filters, search terms, and reset state through the <code class="nds-inline-code lang-js">NDS.Filter</code> API. Access instances by selector, target ID, or the <code class="nds-inline-code lang-js">whenReady</code> helper.</p>
                 </div>

@@ -112,3 +112,27 @@ Component Modifiers
 .nds-rowList                → .nds-rowView
 .columnView                 → .nds-colView
 .gridView                   → .nds-gridView
+
+Internal Element Classes
+------------------------
+.label                      → .nds-label
+.icon                       → .nds-icon
+#sideMenuToggle             → #nds-sidemenu-toggle
+.sideMenuToggle             → .nds-sidemenu-toggle
+
+User Feedback
+-------------
+.why-yes                    → .nds-why-yes
+.why-no                     → .nds-why-no
+.gender                     → .nds-gender
+.total-rate                 → .nds-total-rate
+.total-votes                → .nds-total-votes
+.note                       → .nds-note
+
+Footer
+------
+.list-header                → .nds-list-header
+
+Forms
+-----
+.toggle-password            → .nds-toggle-password

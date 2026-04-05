@@ -543,7 +543,7 @@
                 switch (action) {
                     case 'apply':
                         this.applyButton = button;
-                        const labelEl = button.querySelector('.label');
+                        const labelEl = button.querySelector('.nds-label');
                         this.applyButtonBaseLabel = labelEl ? labelEl.textContent : 'Apply';
 
                         // Change button type to submit if in form mode
@@ -616,7 +616,7 @@
             if (!this.applyButton) return;
 
             const count = this.getActiveFilterCount();
-            const labelEl = this.applyButton.querySelector('.label');
+            const labelEl = this.applyButton.querySelector('.nds-label');
 
             if (labelEl) {
                 labelEl.textContent = count > 0
@@ -633,12 +633,12 @@
             if (!filterBtn) return;
 
             if (!this.filterButtonBaseLabel) {
-                const labelEl = filterBtn.querySelector('.label');
+                const labelEl = filterBtn.querySelector('.nds-label');
                 this.filterButtonBaseLabel = labelEl ? labelEl.textContent : '';
             }
 
             const count = this.getAppliedFilterCount();
-            const labelEl = filterBtn.querySelector('.label');
+            const labelEl = filterBtn.querySelector('.nds-label');
 
             if (labelEl && this.filterButtonBaseLabel) {
                 labelEl.textContent = count > 0
@@ -714,7 +714,7 @@
             chip.setAttribute('data-filter-value', value);
 
             const icon = document.createElement('i');
-            icon.className = 'hgi hgi-stroke hgi-cancel-01 icon';
+            icon.className = 'hgi hgi-stroke hgi-cancel-01 nds-icon';
 
             const label = document.createElement('span');
             label.className = 'label';
@@ -1064,7 +1064,7 @@
             inputs.forEach(input => {
                 const container = input.closest('.nds-form-container');
                 if (container) {
-                    const labelEl = container.querySelector('.nds-form-header .label');
+                    const labelEl = container.querySelector('.nds-form-header .nds-label');
                     if (labelEl) {
                         labels[input.value.toLowerCase()] = labelEl.textContent.trim();
                     }
@@ -1111,7 +1111,7 @@
                     // Fallback for tags: traditional .nds-card-tags structure
                     const cardTags = card.querySelector('.nds-card-tags');
                     if (cardTags) {
-                        const tagElements = cardTags.querySelectorAll('.nds-tag .label');
+                        const tagElements = cardTags.querySelectorAll('.nds-tag .nds-label');
                         tagElements.forEach(el => {
                             const value = el.textContent.trim();
                             if (value) {
@@ -1466,7 +1466,7 @@
                 const cardTags = item.querySelector('.nds-card-tags');
                 if (!cardTags) return false;
 
-                const tagElements = cardTags.querySelectorAll('.nds-tag .label');
+                const tagElements = cardTags.querySelectorAll('.nds-tag .nds-label');
                 itemValues = Array.from(tagElements).map(tag => tag.textContent.trim().toLowerCase());
             }
 
@@ -1871,7 +1871,7 @@
  * <div class="nds-filter" data-filter-target="cardList">
  *     <div class="nds-dropmenu">
  *         <button class="nds-btn nds-neutral nds-dropmenu-trigger">
- *             <span class="label">Filter</span>
+ *             <span class="nds-label">Filter</span>
  *         </button>
  *         <div class="nds-dropmenu-menu">
  *             <!-- Filter content here -->
@@ -1941,7 +1941,7 @@
  *     <!-- Filter Dropdown -->
  *     <div class="nds-dropmenu">
  *         <button class="nds-btn nds-neutral nds-dropmenu-trigger">
- *             <span class="label">تصفية</span>
+ *             <span class="nds-label">تصفية</span>
  *         </button>
  *         <div class="nds-dropmenu-menu" style="min-width: 300px;">
  *             <!-- Auto-generated role filter (checkbox) -->
@@ -1959,10 +1959,10 @@
  *             <hr class="nds-divider">
  *             <div class="nds-dropmenu-action nds-grid">
  *                 <button class="nds-btn nds-secondary" data-filter-action="clear">
- *                     <span class="label">إعادة تعيين</span>
+ *                     <span class="nds-label">إعادة تعيين</span>
  *                 </button>
  *                 <button class="nds-btn nds-primary" data-filter-action="apply">
- *                     <span class="label">تصفية</span>
+ *                     <span class="nds-label">تصفية</span>
  *                 </button>
  *             </div>
  *         </div>
@@ -2035,11 +2035,11 @@
  *     </div>
  *     <div class="nds-dropmenu">
  *         <button class="nds-btn nds-neutral nds-dropmenu-trigger">
- *             <span class="label">Filter</span>
+ *             <span class="nds-label">Filter</span>
  *         </button>
  *         <div class="nds-dropmenu-menu">
  *             <fieldset data-filter="category">
- *                 <legend class="label">Category</legend>
+ *                 <legend class="nds-label">Category</legend>
  *                 <input type="radio" name="category" value="" checked> All
  *                 <input type="radio" name="category" value="news"> News
  *             </fieldset>

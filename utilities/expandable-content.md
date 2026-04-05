@@ -103,23 +103,23 @@ direction: ltr
                     <div class="demo-action">
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='["nds-shadow", ".nds-card", "cardVariant"]'>
-                            <span class="label">Shadow</span>
+                            <span class="nds-label">Shadow</span>
                         </button>
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn" data-state="selected"
                             data-toggler='["nds-stroke", ".nds-card", "cardVariant"]'>
-                            <span class="label">Stroke</span>
+                            <span class="nds-label">Stroke</span>
                         </button>
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='[["nds-truncate", ".nds-card-title"],["nds-truncate", ".nds-card-description"], "truncation"]'>
-                            <span class="label">Truncate</span>
+                            <span class="nds-label">Truncate</span>
                         </button>
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='["nds-full", ".nds-card", "cardSize"]'>
-                            <span class="label">full</span>
+                            <span class="nds-label">full</span>
                         </button>
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                            <span class="label">Remove bg</span>
+                            <span class="nds-label">Remove bg</span>
                         </button>
                     </div>
                 </div>

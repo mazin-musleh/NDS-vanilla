@@ -20,43 +20,43 @@ exclude_showcase: false
                 data-query-param="q">
                 <div class="nds-search-content">
                     <div class="nds-form-control">
-                        <i class="hgi hgi-stroke hgi-search-01 icon"></i>
+                        <i class="hgi hgi-stroke hgi-search-01 nds-icon"></i>
                         <input id="filterSearch" type="text" class="nds-search-input" name="search" autocomplete="on"
                             placeholder="Search in services...">
                         <div class="nds-form-action">
                             <button class="nds-btn nds-subtle nds-clear" hidden><i
-                                    class="hgi hgi-stroke hgi-cancel-01 icon"></i></button>
+                                    class="hgi hgi-stroke hgi-cancel-01 nds-icon"></i></button>
                             <button class="nds-btn nds-subtle nds-voice-input"><i
-                                    class="hgi hgi-stroke hgi-mic-01 icon"></i></button>
+                                    class="hgi hgi-stroke hgi-mic-01 nds-icon"></i></button>
                         </div>
                     </div>
                     <button class="nds-btn nds-primary nds-search-btn" type="button">
-                        <i class="hgi hgi-stroke hgi-search-01 icon"></i>
-                        <span class="label">Search</span>
+                        <i class="hgi hgi-stroke hgi-search-01 nds-icon"></i>
+                        <span class="nds-label">Search</span>
                     </button>
                 </div>
                 <div class="nds-auto-fill" data-target="filterSearch">
-                    <span class="label">Most Searched:</span>
+                    <span class="nds-label">Most Searched:</span>
                     <div class="nds-chips">
                         <button class="nds-chip nds-neutral nds-rounded nds-item">
                             <i class="hgi hgi-stroke hgi-rounded hgi-plus-sign"></i>
-                            <span class="label">Tag 1</span>
+                            <span class="nds-label">Tag 1</span>
                         </button>
                         <button class="nds-chip nds-neutral nds-rounded nds-item">
                             <i class="hgi hgi-stroke hgi-rounded hgi-plus-sign"></i>
-                            <span class="label">Tag 2</span>
+                            <span class="nds-label">Tag 2</span>
                         </button>
                         <button class="nds-chip nds-neutral nds-rounded nds-item">
                             <i class="hgi hgi-stroke hgi-rounded hgi-plus-sign"></i>
-                            <span class="label">Tag 3</span>
+                            <span class="nds-label">Tag 3</span>
                         </button>
                     </div>
                 </div>
             </div>
             <div class="nds-dropmenu">
                 <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
-                    <i class="hgi hgi-stroke hgi-filter icon"></i>
-                    <span class="label">Filter</span>
+                    <i class="hgi hgi-stroke hgi-filter nds-icon"></i>
+                    <span class="nds-label">Filter</span>
                 </button>
                 <div class="nds-dropmenu-menu" style="min-width: 300px;" hidden>
                     <div class="nds-dropmenu-scroll">
@@ -73,18 +73,18 @@ exclude_showcase: false
                         <div class="nds-dropmenu-action nds-grid">
                             <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
                                 data-filter-action="clear" data-no-auto-close>
-                                <span class="label">Reset</span>
+                                <span class="nds-label">Reset</span>
                             </button>
                             <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
                                 data-filter-action="apply">
-                                <span class="label">Filter</span>
+                                <span class="nds-label">Filter</span>
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="nds-filter-applied" hidden>
-                <span class="label">Applied Filters:</span>
+                <span class="nds-label">Applied Filters:</span>
                 <div class="nds-chips"></div>
             </div>
         </div>
@@ -109,11 +109,11 @@ exclude_showcase: false
                     </div>
                     <div class="nds-card-tags">
                         <span class="nds-tag nds-blue nds-sm">
-                            <span class="label" data-filter="system">{{ service.system }}</span>
+                            <span class="nds-label" data-filter="system">{{ service.system }}</span>
                         </span>
                         {% if service.most_used %}
                         <span class="nds-tag nds-green nds-sm">
-                            <span class="label" data-filter="most-used">Most Used</span>
+                            <span class="nds-label" data-filter="most-used">Most Used</span>
                         </span>
                         {% endif %}
                     </div>
@@ -121,11 +121,11 @@ exclude_showcase: false
                 <div class="nds-card-actions">
                     <a href="{{ service.url }}" class="nds-btn nds-secondary-outline nds-lg"
                         aria-label="Service Details">
-                        <span class="label">Details</span>
+                        <span class="nds-label">Details</span>
                     </a>
                     <a href="{{ service.url }}" class="nds-btn nds-primary nds-lg nds-trail-icon"
                         aria-label="Get Started">
-                        <span class="label">Get Started</span>
+                        <span class="nds-label">Get Started</span>
                     </a>
                 </div>
             </div>

@@ -23,52 +23,52 @@ direction: ltr
                         <div class="demo-action">
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="label">Default</span>
+                                    <span class="nds-label">Default</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["", ".nds-stepper:not(.nds-vertical):not(.nds-radial)", "stepperHSize"]'>
-                                            <span class="label">Default</span>
+                                            <span class="nds-label">Default</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-lg", ".nds-stepper:not(.nds-vertical):not(.nds-radial)", "stepperHSize"]'>
-                                            <span class="label">LG</span>
+                                            <span class="nds-label">LG</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-xl", ".nds-stepper:not(.nds-vertical):not(.nds-radial)", "stepperHSize"]'>
-                                            <span class="label">XL</span>
+                                            <span class="nds-label">XL</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-dot", ".nds-stepper:not(.nds-vertical):not(.nds-radial)", "stepperHSize"]'>
-                                            <span class="label">Dot</span>
+                                            <span class="nds-label">Dot</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-center", ".nds-stepper:not(.nds-vertical):not(.nds-radial)", "stepperCenter"]'>
-                                <span class="label">Center</span>
+                                <span class="nds-label">Center</span>
                             </button>
                             <button class="nds-btn nds-subtle" data-stepper-control="previous"
                                 data-stepper-target="demo-stepper-horizontal">
-                                <span class="label">← Previous</span>
+                                <span class="nds-label">← Previous</span>
                             </button>
                             <button class="nds-btn nds-subtle" data-stepper-control="next"
                                 data-stepper-target="demo-stepper-horizontal">
-                                <span class="label">Next →</span>
+                                <span class="nds-label">Next →</span>
                             </button>
                             <button class="nds-btn nds-subtle" data-stepper-control="goto"
                                 data-stepper-target="demo-stepper-horizontal" data-stepper-value="1">
-                                <span class="label">Go to 1</span>
+                                <span class="nds-label">Go to 1</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='[["nds-oncolor", ".nds-stepper:not(.nds-vertical):not(.nds-radial)", "containerBg"],["dark-bg", ".demo-container", "containerBg"]]'>
-                                <span class="label">On Color</span>
+                                <span class="nds-label">On Color</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                <span class="nds-label">Remove bg</span>
                             </button>
                         </div>
                     </div>
@@ -194,48 +194,48 @@ direction: ltr
                         <div class="demo-action">
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="label">Default</span>
+                                    <span class="nds-label">Default</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["", ".nds-stepper.nds-vertical", "stepperVSize"]'>
-                                            <span class="label">Default</span>
+                                            <span class="nds-label">Default</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-lg", ".nds-stepper.nds-vertical", "stepperVSize"]'>
-                                            <span class="label">LG</span>
+                                            <span class="nds-label">LG</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-xl", ".nds-stepper.nds-vertical", "stepperVSize"]'>
-                                            <span class="label">XL</span>
+                                            <span class="nds-label">XL</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-dot", ".nds-stepper.nds-vertical", "stepperVSize"]'>
-                                            <span class="label">Dot</span>
+                                            <span class="nds-label">Dot</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <button class="nds-btn nds-subtle" data-stepper-control="previous"
                                 data-stepper-target="demo-stepper-vertical">
-                                <span class="label">← Previous</span>
+                                <span class="nds-label">← Previous</span>
                             </button>
                             <button class="nds-btn nds-subtle" data-stepper-control="next"
                                 data-stepper-target="demo-stepper-vertical">
-                                <span class="label">Next →</span>
+                                <span class="nds-label">Next →</span>
                             </button>
                             <button class="nds-btn nds-subtle" data-stepper-control="goto"
                                 data-stepper-target="demo-stepper-vertical" data-stepper-value="1">
-                                <span class="label">Go to 1</span>
+                                <span class="nds-label">Go to 1</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='[["nds-oncolor", ".nds-stepper.nds-vertical", "containerBg"],["dark-bg", ".demo-container", "containerBg"]]'>
-                                <span class="label">On Color</span>
+                                <span class="nds-label">On Color</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                <span class="nds-label">Remove bg</span>
                             </button>
                         </div>
                     </div>
@@ -361,52 +361,52 @@ direction: ltr
                         <div class="demo-action">
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="label">Default</span>
+                                    <span class="nds-label">Default</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-sm", ".nds-stepper.nds-radial", "stepperRSize"]'>
-                                            <span class="label">SM</span>
+                                            <span class="nds-label">SM</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["", ".nds-stepper.nds-radial", "stepperRSize"]'>
-                                            <span class="label">Default</span>
+                                            <span class="nds-label">Default</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-lg", ".nds-stepper.nds-radial", "stepperRSize"]'>
-                                            <span class="label">LG</span>
+                                            <span class="nds-label">LG</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-xl", ".nds-stepper.nds-radial", "stepperRSize"]'>
-                                            <span class="label">XL</span>
+                                            <span class="nds-label">XL</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-neutral", ".nds-stepper.nds-radial", "stepperRVariant"]'>
-                                <span class="label">Neutral</span>
+                                <span class="nds-label">Neutral</span>
                             </button>
                             <button class="nds-btn nds-subtle" data-stepper-control="previous"
                                 data-stepper-target="demo-stepper-radial">
-                                <span class="label">← Previous</span>
+                                <span class="nds-label">← Previous</span>
                             </button>
                             <button class="nds-btn nds-subtle" data-stepper-control="next"
                                 data-stepper-target="demo-stepper-radial">
-                                <span class="label">Next →</span>
+                                <span class="nds-label">Next →</span>
                             </button>
                             <button class="nds-btn nds-subtle" data-stepper-control="goto" data-stepper-value="1"
                                 data-stepper-target="demo-stepper-radial">
-                                <span class="label">Go to 1</span>
+                                <span class="nds-label">Go to 1</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='[["nds-oncolor", ".nds-stepper.nds-radial", "containerBg"],["dark-bg", ".demo-container", "containerBg"]]'>
-                                <span class="label">On Color</span>
+                                <span class="nds-label">On Color</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                <span class="nds-label">Remove bg</span>
                             </button>
                         </div>
                     </div>
@@ -575,43 +575,43 @@ direction: ltr
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-loading-03 icon"></i>
-                        <span class="label">Auto-initialization</span>
+                        <i class="hgi hgi-stroke hgi-loading-03 nds-icon"></i>
+                        <span class="nds-label">Auto-initialization</span>
                     </span>
                     <p class="nds-item-desc">Activates when <code class="nds-inline-code lang-html">.nds-stepper</code> is on the page. Step states, progress display, and control button handlers attach automatically.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layout-grid icon"></i>
-                        <span class="label">Three Layout Modes</span>
+                        <i class="hgi hgi-stroke hgi-layout-grid nds-icon"></i>
+                        <span class="nds-label">Three Layout Modes</span>
                     </span>
                     <p class="nds-item-desc">Horizontal, vertical, and radial layouts cover wide forms, narrow sidebars, and compact dashboard widgets respectively.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-workflow-circle-06 icon"></i>
-                        <span class="label">Automatic State Management</span>
+                        <i class="hgi hgi-stroke hgi-workflow-circle-06 nds-icon"></i>
+                        <span class="nds-label">Automatic State Management</span>
                     </span>
                     <p class="nds-item-desc">Set <code class="nds-inline-code lang-html">data-current</code> and all steps update their completed, current, or upcoming states automatically.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-cursor-pointer-01 icon"></i>
-                        <span class="label">Declarative Control Buttons</span>
+                        <i class="hgi hgi-stroke hgi-cursor-pointer-01 nds-icon"></i>
+                        <span class="nds-label">Declarative Control Buttons</span>
                     </span>
                     <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">data-stepper-control</code> to any button to navigate steps without writing JavaScript.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-notification-03 icon"></i>
-                        <span class="label">Step Change Events</span>
+                        <i class="hgi hgi-stroke hgi-notification-03 nds-icon"></i>
+                        <span class="nds-label">Step Change Events</span>
                     </span>
                     <p class="nds-item-desc">The <code class="nds-inline-code lang-js">nds:stepper:change</code> event fires on every navigation with current step, total, and percentage in the detail.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-target-01 icon"></i>
-                        <span class="label">Programmatic Control</span>
+                        <i class="hgi hgi-stroke hgi-target-01 nds-icon"></i>
+                        <span class="nds-label">Programmatic Control</span>
                     </span>
                     <p class="nds-item-desc">Navigate with <code class="nds-inline-code lang-js">NDS.Stepper.next(id)</code>, <code class="nds-inline-code lang-js">NDS.Stepper.previous(id)</code>, and <code class="nds-inline-code lang-js">NDS.Stepper.goTo(id, step)</code>.</p>
                 </div>

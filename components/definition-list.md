@@ -23,50 +23,50 @@ direction: ltr
                         <div class="demo-action">
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Layout: ">
-                                    <span class="label">Layout: Default</span>
+                                    <span class="nds-label">Layout: Default</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["", ".nds-definition-list", "dlLayout"]'>
-                                            <span class="label">Default</span>
+                                            <span class="nds-label">Default</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-tableView", ".nds-definition-list", "dlLayout"]'>
-                                            <span class="label">Table View</span>
+                                            <span class="nds-label">Table View</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-grid", ".nds-definition-list", "dlLayout"]'
                                             data-toggle-style=".nds-definition-list { --max-col:2; --mid-col:2; --min-col:1; width:fit-content }">
-                                            <span class="label">Grid View</span>
+                                            <span class="nds-label">Grid View</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Style: ">
-                                    <span class="label">Style: Default</span>
+                                    <span class="nds-label">Style: Default</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='[["", ".nds-definition-list", "dlStyle"], ["", ".nds-definition-item", "dlStyle"]]'>
-                                            <span class="label">Default</span>
+                                            <span class="nds-label">Default</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='[["nds-divided", ".nds-definition-list", "dlStyle"], ["", ".nds-definition-item", "dlStyle"]]'>
-                                            <span class="label">Divided</span>
+                                            <span class="nds-label">Divided</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='[["", ".nds-definition-list", "dlStyle"], ["nds-card nds-stroke", ".nds-definition-item", "dlStyle"]]'>
-                                            <span class="label">Card</span>
+                                            <span class="nds-label">Card</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                <span class="nds-label">Remove bg</span>
                             </button>
                         </div>
                     </div>
@@ -75,29 +75,29 @@ direction: ltr
                             <dl class="nds-definition-list">
                                 <div class="nds-definition-item">
                                     <dt>
-                                        <i class="hgi hgi-stroke hgi-user-account icon"></i>
-                                        <span class="label">Full Name</span>
+                                        <i class="hgi hgi-stroke hgi-user-account nds-icon"></i>
+                                        <span class="nds-label">Full Name</span>
                                     </dt>
                                     <dd>Mohammed Al-Harbi</dd>
                                 </div>
                                 <div class="nds-definition-item">
                                     <dt>
-                                        <i class="hgi hgi-stroke hgi-building-02 icon"></i>
-                                        <span class="label">Organization</span>
+                                        <i class="hgi hgi-stroke hgi-building-02 nds-icon"></i>
+                                        <span class="nds-label">Organization</span>
                                     </dt>
                                     <dd>Digital Services Department</dd>
                                 </div>
                                 <div class="nds-definition-item">
                                     <dt>
-                                        <i class="hgi hgi-stroke hgi-briefcase-02 icon"></i>
-                                        <span class="label">Position</span>
+                                        <i class="hgi hgi-stroke hgi-briefcase-02 nds-icon"></i>
+                                        <span class="nds-label">Position</span>
                                     </dt>
                                     <dd>Senior Developer</dd>
                                 </div>
                                 <div class="nds-definition-item">
                                     <dt>
-                                        <i class="hgi hgi-stroke hgi-location-01 icon"></i>
-                                        <span class="label">Location</span>
+                                        <i class="hgi hgi-stroke hgi-location-01 nds-icon"></i>
+                                        <span class="nds-label">Location</span>
                                     </dt>
                                     <dd>Riyadh</dd>
                                 </div>
@@ -127,29 +127,29 @@ direction: ltr
 <dl class="nds-definition-list">
   <div class="nds-definition-item">
     <dt>
-      <i class="hgi hgi-stroke hgi-user-account icon"></i>
-      <span class="label">Full Name</span>
+      <i class="hgi hgi-stroke hgi-user-account nds-icon"></i>
+      <span class="nds-label">Full Name</span>
     </dt>
     <dd>Mohammed Al-Harbi</dd>
   </div>
   <div class="nds-definition-item">
     <dt>
-      <i class="hgi hgi-stroke hgi-building-02 icon"></i>
-      <span class="label">Organization</span>
+      <i class="hgi hgi-stroke hgi-building-02 nds-icon"></i>
+      <span class="nds-label">Organization</span>
     </dt>
     <dd>Digital Services Department</dd>
   </div>
   <div class="nds-definition-item">
     <dt>
-      <i class="hgi hgi-stroke hgi-briefcase-02 icon"></i>
-      <span class="label">Position</span>
+      <i class="hgi hgi-stroke hgi-briefcase-02 nds-icon"></i>
+      <span class="nds-label">Position</span>
     </dt>
     <dd>Senior Developer</dd>
   </div>
   <div class="nds-definition-item">
     <dt>
-      <i class="hgi hgi-stroke hgi-location-01 icon"></i>
-      <span class="label">Location</span>
+      <i class="hgi hgi-stroke hgi-location-01 nds-icon"></i>
+      <span class="nds-label">Location</span>
     </dt>
     <dd>Riyadh</dd>
   </div>
@@ -181,28 +181,28 @@ direction: ltr
                         <div class="demo-action">
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Style: ">
-                                    <span class="label">Style: Divided</span>
+                                    <span class="nds-label">Style: Divided</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='[["", ".nds-definition-list", "dlStyle"], ["", ".nds-definition-item", "dlStyle"]]'>
-                                            <span class="label">Default</span>
+                                            <span class="nds-label">Default</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='[["nds-divided", ".nds-definition-list", "dlStyle"], ["", ".nds-definition-item", "dlStyle"]]'>
-                                            <span class="label">Divided</span>
+                                            <span class="nds-label">Divided</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='[["", ".nds-definition-list", "dlStyle"], ["nds-card nds-stroke", ".nds-definition-item", "dlStyle"]]'>
-                                            <span class="label">Card</span>
+                                            <span class="nds-label">Card</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                <span class="nds-label">Remove bg</span>
                             </button>
                         </div>
                     </div>
@@ -211,29 +211,29 @@ direction: ltr
                             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                                 <div class="nds-definition-item">
                                     <span class="nds-item-title">
-                                        <i class="hgi hgi-stroke hgi-checkmark-circle-02 icon"></i>
-                                        <span class="label">Accessibility</span>
+                                        <i class="hgi hgi-stroke hgi-checkmark-circle-02 nds-icon"></i>
+                                        <span class="nds-label">Accessibility</span>
                                     </span>
                                     <p class="nds-item-desc">WCAG 2.1 compliant with full keyboard navigation and screen reader support.</p>
                                 </div>
                                 <div class="nds-definition-item">
                                     <span class="nds-item-title">
-                                        <i class="hgi hgi-stroke hgi-shield-01 icon"></i>
-                                        <span class="label">Security</span>
+                                        <i class="hgi hgi-stroke hgi-shield-01 nds-icon"></i>
+                                        <span class="nds-label">Security</span>
                                     </span>
                                     <p class="nds-item-desc">Built-in XSS protection and content security policy headers.</p>
                                 </div>
                                 <div class="nds-definition-item">
                                     <span class="nds-item-title">
-                                        <i class="hgi hgi-stroke hgi-clock-01 icon"></i>
-                                        <span class="label">Performance</span>
+                                        <i class="hgi hgi-stroke hgi-clock-01 nds-icon"></i>
+                                        <span class="nds-label">Performance</span>
                                     </span>
                                     <p class="nds-item-desc">Lazy loading and staggered initialization for fast page loads.</p>
                                 </div>
                                 <div class="nds-definition-item">
                                     <span class="nds-item-title">
-                                        <i class="hgi hgi-stroke hgi-star icon"></i>
-                                        <span class="label">Theming</span>
+                                        <i class="hgi hgi-stroke hgi-star nds-icon"></i>
+                                        <span class="nds-label">Theming</span>
                                     </span>
                                     <p class="nds-item-desc">CSS custom properties for full visual customization without overrides.</p>
                                 </div>
@@ -263,29 +263,29 @@ direction: ltr
 <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap:24px; --col-gap:32px;">
   <div class="nds-definition-item">
     <span class="nds-item-title">
-      <i class="hgi hgi-stroke hgi-checkmark-circle-02 icon"></i>
-      <span class="label">Accessibility</span>
+      <i class="hgi hgi-stroke hgi-checkmark-circle-02 nds-icon"></i>
+      <span class="nds-label">Accessibility</span>
     </span>
     <p class="nds-item-desc">WCAG 2.1 compliant with full keyboard navigation and screen reader support.</p>
   </div>
   <div class="nds-definition-item">
     <span class="nds-item-title">
-      <i class="hgi hgi-stroke hgi-shield-01 icon"></i>
-      <span class="label">Security</span>
+      <i class="hgi hgi-stroke hgi-shield-01 nds-icon"></i>
+      <span class="nds-label">Security</span>
     </span>
     <p class="nds-item-desc">Built-in XSS protection and content security policy headers.</p>
   </div>
   <div class="nds-definition-item">
     <span class="nds-item-title">
-      <i class="hgi hgi-stroke hgi-clock-01 icon"></i>
-      <span class="label">Performance</span>
+      <i class="hgi hgi-stroke hgi-clock-01 nds-icon"></i>
+      <span class="nds-label">Performance</span>
     </span>
     <p class="nds-item-desc">Lazy loading and staggered initialization for fast page loads.</p>
   </div>
   <div class="nds-definition-item">
     <span class="nds-item-title">
-      <i class="hgi hgi-stroke hgi-star icon"></i>
-      <span class="label">Theming</span>
+      <i class="hgi hgi-stroke hgi-star nds-icon"></i>
+      <span class="nds-label">Theming</span>
     </span>
     <p class="nds-item-desc">CSS custom properties for full visual customization without overrides.</p>
   </div>
@@ -312,29 +312,29 @@ direction: ltr
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layout-table-01 icon"></i>
-                        <span class="label">Table View Layout</span>
+                        <i class="hgi hgi-stroke hgi-layout-table-01 nds-icon"></i>
+                        <span class="nds-label">Table View Layout</span>
                     </span>
                     <p class="nds-item-desc">Two-column grid with CSS subgrid for perfect alignment across all term-definition pairs.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-border-all-01 icon"></i>
-                        <span class="label">Divided Borders</span>
+                        <i class="hgi hgi-stroke hgi-border-all-01 nds-icon"></i>
+                        <span class="nds-label">Divided Borders</span>
                     </span>
                     <p class="nds-item-desc">Optional border separators between items. Works in both default and table view layouts.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-grid-view icon"></i>
-                        <span class="label">Grid Layout</span>
+                        <i class="hgi hgi-stroke hgi-grid-view nds-icon"></i>
+                        <span class="nds-label">Grid Layout</span>
                     </span>
                     <p class="nds-item-desc">Multi-column responsive grid with configurable breakpoints via --max-col, --mid-col, and --min-col properties.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-paint-board icon"></i>
-                        <span class="label">CSS Custom Properties</span>
+                        <i class="hgi hgi-stroke hgi-paint-board nds-icon"></i>
+                        <span class="nds-label">CSS Custom Properties</span>
                     </span>
                     <p class="nds-item-desc">Control icon size, gap, title font size, and row spacing through custom properties without overriding styles.</p>
                 </div>

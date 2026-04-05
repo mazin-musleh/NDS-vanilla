@@ -22,32 +22,32 @@ direction: ltr
                         <div class="demo-action">
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="label">LG</span>
+                                    <span class="nds-label">LG</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-lg", ".nds-accordion", "sizeToggle"]'>
-                                            <span class="label">LG</span>
+                                            <span class="nds-label">LG</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-md", ".nds-accordion", "sizeToggle"]'>
-                                            <span class="label">MD</span>
+                                            <span class="nds-label">MD</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-sm", ".nds-accordion", "sizeToggle"]'>
-                                            <span class="label">SM</span>
+                                            <span class="nds-label">SM</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='[["nds-card nds-stroke nds-shadow", ".nds-accordion", "accordionStyle"],["nds-noBg", ".demo-container", "containerBg"]]'>
-                                <span class="label">Card View</span>
+                                <span class="nds-label">Card View</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["data-state=always-open", ".nds-accordion", "accordionBehavior", "attr"]'>
-                                <span class="label">Always Open</span>
+                                <span class="nds-label">Always Open</span>
                             </button>
                         </div>
                     </div>
@@ -115,7 +115,7 @@ direction: ltr
                                     </button>
                                 </nav>
                                 <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i
-                                        class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                                        class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i>
                                 </button>
                             </div>
                             <div class="nds-tab-content">
@@ -201,32 +201,32 @@ direction: ltr
                         <div class="demo-action">
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="label">LG</span>
+                                    <span class="nds-label">LG</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-lg", ".nds-accordion", "iconSizeToggle"]'>
-                                            <span class="label">LG</span>
+                                            <span class="nds-label">LG</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-md", ".nds-accordion", "iconSizeToggle"]'>
-                                            <span class="label">MD</span>
+                                            <span class="nds-label">MD</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-sm", ".nds-accordion", "iconSizeToggle"]'>
-                                            <span class="label">SM</span>
+                                            <span class="nds-label">SM</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='[["nds-card nds-stroke nds-shadow", ".nds-accordion", "iconAccordionStyle"],["nds-noBg", ".demo-container", "containerBg"]]'>
-                                <span class="label">Card View</span>
+                                <span class="nds-label">Card View</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["data-state=always-open", ".nds-accordion", "iconAccordionBehavior", "attr"]'>
-                                <span class="label">Always Open</span>
+                                <span class="nds-label">Always Open</span>
                             </button>
                         </div>
                     </div>
@@ -297,7 +297,7 @@ direction: ltr
                                     </button>
                                 </nav>
                                 <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i
-                                        class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                                        class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i>
                                 </button>
                             </div>
                             <div class="nds-tab-content">
@@ -382,43 +382,43 @@ direction: ltr
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket icon"></i>
-                        <span class="label">Auto-initialization</span>
+                        <i class="hgi hgi-stroke hgi-plug-socket nds-icon"></i>
+                        <span class="nds-label">Auto-initialization</span>
                     </span>
                     <p class="nds-item-desc">Activates when .nds-accordion is on the page. No JavaScript setup required.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-motion-01 icon"></i>
-                        <span class="label">Smooth Animations</span>
+                        <i class="hgi hgi-stroke hgi-motion-01 nds-icon"></i>
+                        <span class="nds-label">Smooth Animations</span>
                     </span>
                     <p class="nds-item-desc">CSS grid transitions with automatic fallback when users prefer reduced motion.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-keyboard icon"></i>
-                        <span class="label">Keyboard Navigation</span>
+                        <i class="hgi hgi-stroke hgi-keyboard nds-icon"></i>
+                        <span class="nds-label">Keyboard Navigation</span>
                     </span>
                     <p class="nds-item-desc">Arrow keys, Home, End, Enter, and Space for full keyboard control.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-api icon"></i>
-                        <span class="label">JavaScript API</span>
+                        <i class="hgi hgi-stroke hgi-api nds-icon"></i>
+                        <span class="nds-label">JavaScript API</span>
                     </span>
                     <p class="nds-item-desc">Public API to open, close, and toggle items. Custom events fire on state change for analytics or dependent UI.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-printer icon"></i>
-                        <span class="label">Print-ready</span>
+                        <i class="hgi hgi-stroke hgi-printer nds-icon"></i>
+                        <span class="nds-label">Print-ready</span>
                     </span>
                     <p class="nds-item-desc">All panels expand automatically so no content is hidden on paper.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-eye icon"></i>
-                        <span class="label">Accessibility</span>
+                        <i class="hgi hgi-stroke hgi-eye nds-icon"></i>
+                        <span class="nds-label">Accessibility</span>
                     </span>
                     <p class="nds-item-desc">High contrast and screen reader support built into every state.</p>
                 </div>

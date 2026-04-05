@@ -98,11 +98,11 @@ breadcrumb: ["Examples"]
                 </p>
                 <div style="margin-top: var(--spacing-2xl); display: flex; gap: var(--spacing-md); flex-wrap: wrap;">
                     <a href="/components/button.html" class="nds-btn nds-primary nds-lg">
-                        <span class="label">Explore Components</span>
+                        <span class="nds-label">Explore Components</span>
                         <i class="hgi hgi-stroke hgi-arrow-right-01"></i>
                     </a>
                     <a href="#" class="nds-btn nds-secondary-outline nds-lg">
-                        <span class="label">View Documentation</span>
+                        <span class="nds-label">View Documentation</span>
                     </a>
                 </div>
             </article>

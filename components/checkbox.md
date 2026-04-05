@@ -23,44 +23,44 @@ direction: ltr
             <div class="demo-action">
               <div class="nds-dropmenu demo-toggle-menu">
                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                  <span class="label">SM</span>
+                  <span class="nds-label">SM</span>
                 </button>
                 <div class="nds-dropmenu-menu" hidden>
                   <div class="nds-dropmenu-scroll">
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                       data-toggler='["", ".nds-check-container", "sizeToggle"]'>
-                      <span class="label">SM</span>
+                      <span class="nds-label">SM</span>
                     </button>
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                       data-toggler='["nds-md", ".nds-check-container", "sizeToggle"]'>
-                      <span class="label">MD</span>
+                      <span class="nds-label">MD</span>
                     </button>
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                       data-toggler='["nds-lg", ".nds-check-container", "sizeToggle"]'>
-                      <span class="label">LG</span>
+                      <span class="nds-label">LG</span>
                     </button>
                   </div>
                 </div>
               </div>
               <button class="nds-btn nds-subtle demo-toggle-btn"
                 data-toggler='["nds-neutral", ".nds-check", "variantToggle"]'>
-                <span class="label">Neutral</span>
+                <span class="nds-label">Neutral</span>
               </button>
               <button class="nds-btn nds-subtle demo-toggle-btn"
                 data-toggler='["indeterminate", ".nds-check", "stateToggle", "prop"]'>
-                <span class="label">Indeterminate</span>
+                <span class="nds-label">Indeterminate</span>
               </button>
               <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
                 data-toggler='["data-required", ".nds-check-container", "requiredToggle", "attr"]'>
-                <span class="label">Required</span>
+                <span class="nds-label">Required</span>
               </button>
               <button class="nds-btn nds-subtle demo-toggle-btn"
                 data-toggler='["disabled", ".nds-check-container", "disabledToggle", "data-state"]'>
-                <span class="label">Disabled</span>
+                <span class="nds-label">Disabled</span>
               </button>
               <button class="nds-btn nds-subtle demo-toggle-btn"
                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                <span class="label">Remove bg</span>
+                <span class="nds-label">Remove bg</span>
               </button>
             </div>
           </div>
@@ -70,7 +70,7 @@ direction: ltr
                 <div class="nds-form-container nds-check-container" data-required>
                   <div class="nds-form-header" data-feedback-target>
                     <label for="demo-checkbox-single">
-                      <span class="label">I agree to the terms and conditions</span>
+                      <span class="nds-label">I agree to the terms and conditions</span>
                       <span class="info">You must accept our terms to continue with the registration</span>
                     </label>
                   </div>
@@ -79,7 +79,7 @@ direction: ltr
                   </div>
                 </div>
                 <button class="nds-btn nds-primary nds-sm" type="submit">
-                  <span class="label">Submit</span>
+                  <span class="nds-label">Submit</span>
                 </button>
               </form>
             </div>
@@ -107,7 +107,7 @@ direction: ltr
 <div class="nds-form-container nds-check-container" data-required>
   <div class="nds-form-header" data-feedback-target>
     <label for="checkbox-single">
-      <span class="label">I agree to the terms and conditions</span>
+      <span class="nds-label">I agree to the terms and conditions</span>
       <span class="info">You must accept our terms to continue</span>
     </label>
   </div>
@@ -142,15 +142,15 @@ direction: ltr
             <div class="demo-action">
               <button class="nds-btn nds-subtle demo-toggle-btn"
                 data-toggler='["disabled", ".nds-check-group", "disabledToggle", "data-state"]'>
-                <span class="label">Disabled</span>
+                <span class="nds-label">Disabled</span>
               </button>
               <button class="nds-btn nds-subtle demo-toggle-btn"
                 data-toggler='["nds-rowView", ".nds-check-group", "layoutToggle"]'>
-                <span class="label">Row View</span>
+                <span class="nds-label">Row View</span>
               </button>
               <button class="nds-btn nds-subtle demo-toggle-btn"
                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                <span class="label">Remove bg</span>
+                <span class="nds-label">Remove bg</span>
               </button>
             </div>
           </div>
@@ -158,11 +158,11 @@ direction: ltr
             <div class="state-demo">
               <form class="nds-form nds-grid" style="--max-col:1" onsubmit="return false">
               <fieldset class="nds-form-group nds-check-group" data-min-checked="2" data-max-checked="4">
-                <legend class="label">Select 2-4 interests</legend>
+                <legend class="nds-label">Select 2-4 interests</legend>
                 <div class="nds-form-container nds-check-container">
                   <div class="nds-form-header">
                     <label for="demo-valid-checkbox1">
-                      <span class="label">Technology</span>
+                      <span class="nds-label">Technology</span>
                     </label>
                   </div>
                   <div class="nds-form-control">
@@ -173,7 +173,7 @@ direction: ltr
                 <div class="nds-form-container nds-check-container">
                   <div class="nds-form-header">
                     <label for="demo-valid-checkbox2">
-                      <span class="label">Sports</span>
+                      <span class="nds-label">Sports</span>
                     </label>
                   </div>
                   <div class="nds-form-control">
@@ -184,7 +184,7 @@ direction: ltr
                 <div class="nds-form-container nds-check-container">
                   <div class="nds-form-header">
                     <label for="demo-valid-checkbox3">
-                      <span class="label">Entertainment</span>
+                      <span class="nds-label">Entertainment</span>
                     </label>
                   </div>
                   <div class="nds-form-control">
@@ -195,7 +195,7 @@ direction: ltr
                 <div class="nds-form-container nds-check-container">
                   <div class="nds-form-header">
                     <label for="demo-valid-checkbox4">
-                      <span class="label">Education</span>
+                      <span class="nds-label">Education</span>
                     </label>
                   </div>
                   <div class="nds-form-control">
@@ -206,7 +206,7 @@ direction: ltr
                 <div class="nds-form-container nds-check-container">
                   <div class="nds-form-header">
                     <label for="demo-valid-checkbox5">
-                      <span class="label">Travel</span>
+                      <span class="nds-label">Travel</span>
                     </label>
                   </div>
                   <div class="nds-form-control">
@@ -217,7 +217,7 @@ direction: ltr
                 <div class="nds-form-container nds-check-container">
                   <div class="nds-form-header">
                     <label for="demo-valid-checkbox6">
-                      <span class="label">Food</span>
+                      <span class="nds-label">Food</span>
                     </label>
                   </div>
                   <div class="nds-form-control">
@@ -228,7 +228,7 @@ direction: ltr
                 <div class="nds-form-footer" data-feedback-target hidden></div>
               </fieldset>
               <button class="nds-btn nds-primary nds-sm" type="submit">
-                <span class="label">Submit</span>
+                <span class="nds-label">Submit</span>
               </button>
               </form>
             </div>
@@ -254,11 +254,11 @@ direction: ltr
                 <div class="nds-expandable-content">
                   <code class="lang-html code">
 <fieldset class="nds-form-group nds-check-group" data-min-checked="2" data-max-checked="4">
-  <legend class="label">Select 2-4 interests</legend>
+  <legend class="nds-label">Select 2-4 interests</legend>
   <div class="nds-form-container nds-check-container">
     <div class="nds-form-header">
       <label for="checkbox1">
-        <span class="label">Technology</span>
+        <span class="nds-label">Technology</span>
       </label>
     </div>
     <div class="nds-form-control">
@@ -268,7 +268,7 @@ direction: ltr
   <div class="nds-form-container nds-check-container">
     <div class="nds-form-header">
       <label for="checkbox2">
-        <span class="label">Sports</span>
+        <span class="nds-label">Sports</span>
       </label>
     </div>
     <div class="nds-form-control">
@@ -278,7 +278,7 @@ direction: ltr
   <div class="nds-form-container nds-check-container">
     <div class="nds-form-header">
       <label for="checkbox3">
-        <span class="label">Entertainment</span>
+        <span class="nds-label">Entertainment</span>
       </label>
     </div>
     <div class="nds-form-control">
@@ -288,7 +288,7 @@ direction: ltr
   <div class="nds-form-container nds-check-container">
     <div class="nds-form-header">
       <label for="checkbox4">
-        <span class="label">Education</span>
+        <span class="nds-label">Education</span>
       </label>
     </div>
     <div class="nds-form-control">
@@ -298,7 +298,7 @@ direction: ltr
   <div class="nds-form-container nds-check-container">
     <div class="nds-form-header">
       <label for="checkbox5">
-        <span class="label">Travel</span>
+        <span class="nds-label">Travel</span>
       </label>
     </div>
     <div class="nds-form-control">
@@ -308,7 +308,7 @@ direction: ltr
   <div class="nds-form-container nds-check-container">
     <div class="nds-form-header">
       <label for="checkbox6">
-        <span class="label">Food</span>
+        <span class="nds-label">Food</span>
       </label>
     </div>
     <div class="nds-form-control">
@@ -341,29 +341,29 @@ direction: ltr
       <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1;">
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket icon"></i>
-            <span class="label">Form Integration</span>
+            <i class="hgi hgi-stroke hgi-plug-socket nds-icon"></i>
+            <span class="nds-label">Form Integration</span>
           </span>
           <p class="nds-item-desc">Auto-initializes with the forms system. Two-way binding syncs <code class="nds-inline-code lang-html">disabled</code> and <code class="nds-inline-code lang-html">required</code> states between inputs and containers.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-minus-sign icon"></i>
-            <span class="label">Indeterminate State</span>
+            <i class="hgi hgi-stroke hgi-minus-sign nds-icon"></i>
+            <span class="nds-label">Indeterminate State</span>
           </span>
           <p class="nds-item-desc">Set via <code class="nds-inline-code lang-js">NDS.Forms.setIndeterminate()</code>. Auto-clears on user click. Fires <code class="nds-inline-code lang-js">nds:indeterminateChange</code> event with <code class="nds-inline-code lang-js">detail.indeterminate</code> boolean.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-checkmark-circle-02 icon"></i>
-            <span class="label">Group Validation</span>
+            <i class="hgi hgi-stroke hgi-checkmark-circle-02 nds-icon"></i>
+            <span class="nds-label">Group Validation</span>
           </span>
           <p class="nds-item-desc">Min/max constraints with <code class="nds-inline-code lang-html">data-min-checked</code> and <code class="nds-inline-code lang-html">data-max-checked</code>. Auto-revalidates on change once an error is shown. Call <code class="nds-inline-code lang-js">NDS.Forms.clearStatus()</code> to reset.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layout-01 icon"></i>
-            <span class="label">Responsive Layout</span>
+            <i class="hgi hgi-stroke hgi-layout-01 nds-icon"></i>
+            <span class="nds-label">Responsive Layout</span>
           </span>
           <p class="nds-item-desc">Column layout by default, row layout with <code class="nds-inline-code lang-html">nds-rowView</code> class. Gaps adjust on mobile for touch-friendly spacing.</p>
         </div>

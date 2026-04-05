@@ -178,7 +178,7 @@
         align-items: self-start;
         align-self: self-start;
 
-        .label {
+        .nds-label {
             text-align: center;
         }
     }
@@ -275,7 +275,7 @@
 
         >.nds-btn,
         >.nds-dropmenu>.nds-btn {
-            >.label {
+            >.nds-label {
                 display: none;
             }
         }

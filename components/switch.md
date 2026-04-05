@@ -22,36 +22,36 @@ direction: ltr
             <div class="demo-action">
               <div class="nds-dropmenu demo-toggle-menu">
                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                  <span class="label">MD</span>
+                  <span class="nds-label">MD</span>
                 </button>
                 <div class="nds-dropmenu-menu" hidden>
                   <div class="nds-dropmenu-scroll">
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                       data-toggler='["nds-sm", ".nds-switch-container", "sizeToggle"]'>
-                      <span class="label">SM</span>
+                      <span class="nds-label">SM</span>
                     </button>
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                       data-toggler='["", ".nds-switch-container", "sizeToggle"]'>
-                      <span class="label">MD</span>
+                      <span class="nds-label">MD</span>
                     </button>
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                       data-toggler='["nds-lg", ".nds-switch-container", "sizeToggle"]'>
-                      <span class="label">LG</span>
+                      <span class="nds-label">LG</span>
                     </button>
                   </div>
                 </div>
               </div>
               <button class="nds-btn nds-subtle demo-toggle-btn"
                 data-toggler='["nds-neutral", ".nds-switch", "variantToggle"]'>
-                <span class="label">Neutral</span>
+                <span class="nds-label">Neutral</span>
               </button>
               <button class="nds-btn nds-subtle demo-toggle-btn"
                 data-toggler='["disabled", ".nds-switch-container", "disabledToggle", "data-state"]'>
-                <span class="label">Disabled</span>
+                <span class="nds-label">Disabled</span>
               </button>
               <button class="nds-btn nds-subtle demo-toggle-btn"
                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                <span class="label">Remove bg</span>
+                <span class="nds-label">Remove bg</span>
               </button>
             </div>
           </div>
@@ -60,7 +60,7 @@ direction: ltr
               <div class="nds-form-container nds-switch-container">
                 <div class="nds-form-header" data-feedback-target>
                   <label for="demo-switch-single">
-                    <span class="label">Enable notifications</span>
+                    <span class="nds-label">Enable notifications</span>
                     <span class="info">Receive push notifications for important updates</span>
                   </label>
                 </div>
@@ -99,7 +99,7 @@ direction: ltr
 <div class="nds-form-container nds-switch-container">
   <div class="nds-form-header" data-feedback-target>
     <label for="switch-1">
-      <span class="label">Enable notifications</span>
+      <span class="nds-label">Enable notifications</span>
       <span class="info">Receive push notifications for important updates</span>
     </label>
   </div>
@@ -138,47 +138,47 @@ direction: ltr
             <div class="demo-action">
               <div class="nds-dropmenu demo-toggle-menu">
                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                  <span class="label">MD</span>
+                  <span class="nds-label">MD</span>
                 </button>
                 <div class="nds-dropmenu-menu" hidden>
                   <div class="nds-dropmenu-scroll">
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                       data-toggler='["nds-sm", ".nds-switch-container", "sizeToggle"]'>
-                      <span class="label">SM</span>
+                      <span class="nds-label">SM</span>
                     </button>
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                       data-toggler='["", ".nds-switch-container", "sizeToggle"]'>
-                      <span class="label">MD</span>
+                      <span class="nds-label">MD</span>
                     </button>
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                       data-toggler='["nds-lg", ".nds-switch-container", "sizeToggle"]'>
-                      <span class="label">LG</span>
+                      <span class="nds-label">LG</span>
                     </button>
                   </div>
                 </div>
               </div>
               <button class="nds-btn nds-subtle demo-toggle-btn"
                 data-toggler='["disabled", ".nds-switch-group", "disabledToggle", "data-state"]'>
-                <span class="label">Disabled</span>
+                <span class="nds-label">Disabled</span>
               </button>
               <button class="nds-btn nds-subtle demo-toggle-btn"
                 data-toggler='["nds-rowView", ".nds-switch-group", "layoutToggle"]'>
-                <span class="label">Row View</span>
+                <span class="nds-label">Row View</span>
               </button>
               <button class="nds-btn nds-subtle demo-toggle-btn"
                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                <span class="label">Remove bg</span>
+                <span class="nds-label">Remove bg</span>
               </button>
             </div>
           </div>
           <div class="demo-container">
             <div class="state-demo">
                 <fieldset class="nds-form-group nds-switch-group">
-                  <legend class="label">Notification preferences</legend>
+                  <legend class="nds-label">Notification preferences</legend>
                   <div class="nds-form-container nds-switch-container">
                     <div class="nds-form-header">
                       <label for="demo-switch1">
-                        <span class="label">Email alerts</span>
+                        <span class="nds-label">Email alerts</span>
                       </label>
                     </div>
                     <div class="nds-form-control">
@@ -193,7 +193,7 @@ direction: ltr
                   <div class="nds-form-container nds-switch-container">
                     <div class="nds-form-header">
                       <label for="demo-switch2">
-                        <span class="label">Push notifications</span>
+                        <span class="nds-label">Push notifications</span>
                         <span class="info">Instant alerts on your device</span>
                       </label>
                     </div>
@@ -209,7 +209,7 @@ direction: ltr
                   <div class="nds-form-container nds-switch-container">
                     <div class="nds-form-header">
                       <label for="demo-switch3">
-                        <span class="label">SMS alerts</span>
+                        <span class="nds-label">SMS alerts</span>
                       </label>
                     </div>
                     <div class="nds-form-control">
@@ -245,11 +245,11 @@ direction: ltr
                 <div class="nds-expandable-content">
                   <code class="lang-html code">
 <fieldset class="nds-form-group nds-switch-group">
-  <legend class="label">Notification preferences</legend>
+  <legend class="nds-label">Notification preferences</legend>
   <div class="nds-form-container nds-switch-container">
     <div class="nds-form-header">
       <label for="switch1">
-        <span class="label">Email alerts</span>
+        <span class="nds-label">Email alerts</span>
       </label>
     </div>
     <div class="nds-form-control">
@@ -264,7 +264,7 @@ direction: ltr
   <div class="nds-form-container nds-switch-container">
     <div class="nds-form-header">
       <label for="switch2">
-        <span class="label">Push notifications</span>
+        <span class="nds-label">Push notifications</span>
         <span class="info">Instant alerts on your device</span>
       </label>
     </div>
@@ -280,7 +280,7 @@ direction: ltr
   <div class="nds-form-container nds-switch-container">
     <div class="nds-form-header">
       <label for="switch3">
-        <span class="label">SMS alerts</span>
+        <span class="nds-label">SMS alerts</span>
       </label>
     </div>
     <div class="nds-form-control">
@@ -316,29 +316,29 @@ direction: ltr
       <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1;">
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket icon"></i>
-            <span class="label">Form Integration</span>
+            <i class="hgi hgi-stroke hgi-plug-socket nds-icon"></i>
+            <span class="nds-label">Form Integration</span>
           </span>
           <p class="nds-item-desc">Auto-initializes with the forms system. Two-way binding syncs <code class="nds-inline-code lang-html">disabled</code> state between inputs and containers. Use <code class="nds-inline-code lang-html">data-state="disabled"</code> on the group to disable all switches at once.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-cursor-02 icon"></i>
-            <span class="label">Visual Feedback</span>
+            <i class="hgi hgi-stroke hgi-cursor-02 nds-icon"></i>
+            <span class="nds-label">Visual Feedback</span>
           </span>
           <p class="nds-item-desc">Ripple effect on hover, thumb stretch on press, and smooth slide animation. Three sizes (SM, MD, LG) with proportional scaling.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-keyboard icon"></i>
-            <span class="label">Keyboard Support</span>
+            <i class="hgi hgi-stroke hgi-keyboard nds-icon"></i>
+            <span class="nds-label">Keyboard Support</span>
           </span>
           <p class="nds-item-desc">Space and Enter keys toggle the switch. Track click, label click, and keyboard all fire the <code class="nds-inline-code lang-js">switchChange</code> event.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layout-01 icon"></i>
-            <span class="label">Responsive Layout</span>
+            <i class="hgi hgi-stroke hgi-layout-01 nds-icon"></i>
+            <span class="nds-label">Responsive Layout</span>
           </span>
           <p class="nds-item-desc">Column layout by default, row layout with <code class="nds-inline-code lang-html">nds-rowView</code> class. Gaps adjust on mobile for touch-friendly spacing.</p>
         </div>

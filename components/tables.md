@@ -23,7 +23,7 @@ direction: ltr
                     <div class="demo-action">
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                            <span class="label">Remove bg</span>
+                            <span class="nds-label">Remove bg</span>
                         </button>
                     </div>
                 </div>
@@ -45,7 +45,7 @@ direction: ltr
                                     <td>{{ user.email }}</td>
                                     <td>{{ user.role }}</td>
                                     <td><span class="nds-tag {% if user.status == 'active' %}nds-success{% elsif user.status == 'away' %}nds-warning{% else %}nds-error{% endif %} nds-status nds-sm"><span
-                                                class="label">{% if user.status == 'active' %}Active{% elsif user.status == 'away' %}Away{% else %}Offline{% endif %}</span></span></td>
+                                                class="nds-label">{% if user.status == 'active' %}Active{% elsif user.status == 'away' %}Away{% else %}Offline{% endif %}</span></span></td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
@@ -86,7 +86,7 @@ direction: ltr
                                           <td>Ahmed Mohammed</td>
                                           <td>ahmed.mohammed@moi.gov.sa</td>
                                           <td>Developer</td>
-                                          <td><span class="nds-tag nds-success nds-status nds-sm"><span class="label">Active</span></span></td>
+                                          <td><span class="nds-tag nds-success nds-status nds-sm"><span class="nds-label">Active</span></span></td>
                                         </tr>
                                       </tbody>
                                     </table>
@@ -117,7 +117,7 @@ direction: ltr
                     <div class="demo-action">
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                            <span class="label">Remove bg</span>
+                            <span class="nds-label">Remove bg</span>
                         </button>
                     </div>
                 </div>
@@ -139,15 +139,15 @@ direction: ltr
                                     <td>Dell Laptop</td>
                                     <td>9,375 SAR</td>
                                     <td>
-                                        <span class="nds-tag nds-success nds-sm"><span class="label">In
+                                        <span class="nds-tag nds-success nds-sm"><span class="nds-label">In
                                                 Stock</span></span>
                                         <span class="nds-tag nds-neutral nds-sm"><span
-                                                class="label">Electronics</span></span>
+                                                class="nds-label">Electronics</span></span>
                                     </td>
                                     <td>
                                         <button class="nds-btn nds-sm nds-transparent">
                                             <i class="hgi hgi-stroke hgi-edit-05"></i>
-                                            <span class="label">Edit</span>
+                                            <span class="nds-label">Edit</span>
                                         </button>
                                     </td>
                                 </tr>
@@ -156,15 +156,15 @@ direction: ltr
                                     <td>Wireless Mouse</td>
                                     <td>281 SAR</td>
                                     <td>
-                                        <span class="nds-tag nds-warning nds-sm"><span class="label">Low
+                                        <span class="nds-tag nds-warning nds-sm"><span class="nds-label">Low
                                                 Stock</span></span>
                                         <span class="nds-tag nds-info nds-sm"><span
-                                                class="label">Accessories</span></span>
+                                                class="nds-label">Accessories</span></span>
                                     </td>
                                     <td>
                                         <button class="nds-btn nds-sm nds-transparent">
                                             <i class="hgi hgi-stroke hgi-edit-05"></i>
-                                            <span class="label">Edit</span>
+                                            <span class="nds-label">Edit</span>
                                         </button>
                                     </td>
                                 </tr>
@@ -174,16 +174,16 @@ direction: ltr
                                     <td>1,200 SAR</td>
                                     <td>
                                         <span class="nds-tag nds-neutral nds-sm"><span
-                                                class="label">Ordered</span></span>
+                                                class="nds-label">Ordered</span></span>
                                         <span class="nds-tag nds-info nds-sm"><span
-                                                class="label">Accessories</span></span>
+                                                class="nds-label">Accessories</span></span>
                                         <span class="nds-tag nds-success nds-sm"><span
-                                                class="label">Premium</span></span>
+                                                class="nds-label">Premium</span></span>
                                     </td>
                                     <td>
                                         <button class="nds-btn nds-sm nds-transparent">
                                             <i class="hgi hgi-stroke hgi-edit-05"></i>
-                                            <span class="label">Edit</span>
+                                            <span class="nds-label">Edit</span>
                                         </button>
                                     </td>
                                 </tr>
@@ -192,15 +192,15 @@ direction: ltr
                                     <td>27" Monitor</td>
                                     <td>4,500 SAR</td>
                                     <td>
-                                        <span class="nds-tag nds-error nds-sm"><span class="label">Out of
+                                        <span class="nds-tag nds-error nds-sm"><span class="nds-label">Out of
                                                 Stock</span></span>
                                         <span class="nds-tag nds-neutral nds-sm"><span
-                                                class="label">Display</span></span>
+                                                class="nds-label">Display</span></span>
                                     </td>
                                     <td>
                                         <button class="nds-btn nds-sm nds-transparent">
                                             <i class="hgi hgi-stroke hgi-edit-05"></i>
-                                            <span class="label">Edit</span>
+                                            <span class="nds-label">Edit</span>
                                         </button>
                                     </td>
                                 </tr>
@@ -244,13 +244,13 @@ direction: ltr
                                       <td>Dell Laptop</td>
                                       <td>9,375 SAR</td>
                                       <td>
-                                        <span class="nds-tag nds-success nds-sm"><span class="label">In Stock</span></span>
-                                        <span class="nds-tag nds-neutral nds-sm"><span class="label">Electronics</span></span>
+                                        <span class="nds-tag nds-success nds-sm"><span class="nds-label">In Stock</span></span>
+                                        <span class="nds-tag nds-neutral nds-sm"><span class="nds-label">Electronics</span></span>
                                       </td>
                                       <td>
                                         <button class="nds-btn nds-sm nds-transparent">
                                           <i class="hgi hgi-stroke hgi-edit-05"></i>
-                                          <span class="label">Edit</span>
+                                          <span class="nds-label">Edit</span>
                                         </button>
                                       </td>
                                     </tr>
@@ -283,7 +283,7 @@ direction: ltr
                     <div class="demo-action">
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                            <span class="label">Remove bg</span>
+                            <span class="nds-label">Remove bg</span>
                         </button>
                     </div>
                 </div>
@@ -294,19 +294,19 @@ direction: ltr
                                 <tr>
                                     <th class="nds-sortable-col">
                                         <button class="nds-btn nds-sort-header">
-                                            <span class="label">Department</span>
+                                            <span class="nds-label">Department</span>
                                             <i class="hgi hgi-stroke hgi-arrow-up-down nds-sort-icon"></i>
                                         </button>
                                     </th>
                                     <th class="nds-sortable-col" data-state="sorted-asc">
                                         <button class="nds-btn nds-sort-header">
-                                            <span class="label">Employees</span>
+                                            <span class="nds-label">Employees</span>
                                             <i class="hgi hgi-stroke hgi-arrow-up nds-sort-icon"></i>
                                         </button>
                                     </th>
                                     <th class="nds-sortable-col">
                                         <button class="nds-btn nds-sort-header">
-                                            <span class="label">Budget</span>
+                                            <span class="nds-label">Budget</span>
                                             <i class="hgi hgi-stroke hgi-arrow-up-down nds-sort-icon"></i>
                                         </button>
                                     </th>
@@ -319,20 +319,20 @@ direction: ltr
                                     <td>25</td>
                                     <td>5,625,000 SAR</td>
                                     <td><span class="nds-tag nds-success nds-status nds-sm"><span
-                                                class="label">Active</span></span></td>
+                                                class="nds-label">Active</span></span></td>
                                 </tr>
                                 <tr>
                                     <td>Human Resources</td>
                                     <td>12</td>
                                     <td>3,000,000 SAR</td>
                                     <td><span class="nds-tag nds-success nds-status nds-sm"><span
-                                                class="label">Active</span></span></td>
+                                                class="nds-label">Active</span></span></td>
                                 </tr>
                                 <tr>
                                     <td>Sales</td>
                                     <td>18</td>
                                     <td>4,500,000 SAR</td>
-                                    <td><span class="nds-tag nds-warning nds-status nds-sm"><span class="label">Under
+                                    <td><span class="nds-tag nds-warning nds-status nds-sm"><span class="nds-label">Under
                                                 Review</span></span></td>
                                 </tr>
                                 <tr>
@@ -340,7 +340,7 @@ direction: ltr
                                     <td>8</td>
                                     <td>2,250,000 SAR</td>
                                     <td><span class="nds-tag nds-info nds-status nds-sm"><span
-                                                class="label">Planning</span></span></td>
+                                                class="nds-label">Planning</span></span></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -395,7 +395,7 @@ direction: ltr
                                       <td>Information Technology</td>
                                       <td>25</td>
                                       <td>5,625,000 SAR</td>
-                                      <td><span class="nds-tag nds-success nds-status nds-sm"><span class="label">Active</span></span></td>
+                                      <td><span class="nds-tag nds-success nds-status nds-sm"><span class="nds-label">Active</span></span></td>
                                     </tr>
                                   </tbody>
                                 </table>
@@ -426,7 +426,7 @@ direction: ltr
                     <div class="demo-action">
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                            <span class="label">Remove bg</span>
+                            <span class="nds-label">Remove bg</span>
                         </button>
                     </div>
                 </div>
@@ -453,13 +453,13 @@ direction: ltr
                                     <td>Login Issue</td>
                                     <td>
                                         <span class="nds-tag nds-neutral nds-sm">
-                                            <span class="label">Low</span>
+                                            <span class="nds-label">Low</span>
                                         </span>
                                     </td>
                                     <td>
                                         <span class="nds-feedback" data-status="success">
                                             <span class="nds-feedback-icon">
-                                                <i class="hgi hgi-stroke icon"></i>
+                                                <i class="hgi hgi-stroke nds-icon"></i>
                                             </span>
                                         </span>
                                     </td>
@@ -474,13 +474,13 @@ direction: ltr
                                     <td>Performance</td>
                                     <td>
                                         <span class="nds-tag nds-warning nds-sm">
-                                            <span class="label">Medium</span>
+                                            <span class="nds-label">Medium</span>
                                         </span>
                                     </td>
                                     <td>
                                         <span class="nds-feedback" data-status="warning">
                                             <span class="nds-feedback-icon">
-                                                <i class="hgi hgi-stroke icon"></i>
+                                                <i class="hgi hgi-stroke nds-icon"></i>
                                             </span>
                                         </span>
                                     </td>
@@ -495,13 +495,13 @@ direction: ltr
                                     <td>Data Loss</td>
                                     <td>
                                         <span class="nds-tag nds-error nds-sm">
-                                            <span class="label">High</span>
+                                            <span class="nds-label">High</span>
                                         </span>
                                     </td>
                                     <td>
                                         <span class="nds-feedback" data-status="error">
                                             <span class="nds-feedback-icon">
-                                                <i class="hgi hgi-stroke icon"></i>
+                                                <i class="hgi hgi-stroke nds-icon"></i>
                                             </span>
                                         </span>
                                     </td>
@@ -516,13 +516,13 @@ direction: ltr
                                     <td>Feature Request</td>
                                     <td>
                                         <span class="nds-tag nds-neutral nds-sm">
-                                            <span class="label">Low</span>
+                                            <span class="nds-label">Low</span>
                                         </span>
                                     </td>
                                     <td>
                                         <span class="nds-feedback" data-status="info">
                                             <span class="nds-feedback-icon">
-                                                <i class="hgi hgi-stroke icon"></i>
+                                                <i class="hgi hgi-stroke nds-icon"></i>
                                             </span>
                                         </span>
                                     </td>
@@ -572,13 +572,13 @@ direction: ltr
                                       <td>Login Issue</td>
                                       <td>
                                         <span class="nds-tag nds-neutral nds-sm">
-                                          <span class="label">Low</span>
+                                          <span class="nds-label">Low</span>
                                         </span>
                                       </td>
                                       <td>
                                         <span class="nds-feedback" data-status="success">
                                           <span class="nds-feedback-icon">
-                                            <i class="hgi hgi-stroke icon"></i>
+                                            <i class="hgi hgi-stroke nds-icon"></i>
                                           </span>
                                         </span>
                                       </td>
@@ -612,7 +612,7 @@ direction: ltr
                     <div class="demo-action">
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                            <span class="label">Remove bg</span>
+                            <span class="nds-label">Remove bg</span>
                         </button>
                     </div>
                 </div>
@@ -647,7 +647,7 @@ direction: ltr
                                     <td>hassan.almukhtar@moi.gov.sa</td>
                                     <td>Engineering</td>
                                     <td><span class="nds-tag nds-success nds-sm"><span
-                                                class="label">Active</span></span></td>
+                                                class="nds-label">Active</span></span></td>
                                 </tr>
                                 <tr>
                                     <td>
@@ -661,7 +661,7 @@ direction: ltr
                                     <td>nadia.alkhatib@moi.gov.sa</td>
                                     <td>Design</td>
                                     <td><span class="nds-tag nds-success nds-sm"><span
-                                                class="label">Active</span></span></td>
+                                                class="nds-label">Active</span></span></td>
                                 </tr>
                                 <tr>
                                     <td>
@@ -675,7 +675,7 @@ direction: ltr
                                     <td>tariq.alsudairi@moi.gov.sa</td>
                                     <td>Marketing</td>
                                     <td><span class="nds-tag nds-warning nds-sm"><span
-                                                class="label">Pending</span></span></td>
+                                                class="nds-label">Pending</span></span></td>
                                 </tr>
                                 <tr>
                                     <td>
@@ -688,7 +688,7 @@ direction: ltr
                                     <td>Zara Al-Habib</td>
                                     <td>zara.alhabib@moi.gov.sa</td>
                                     <td>Sales</td>
-                                    <td><span class="nds-tag nds-neutral nds-sm"><span class="label">On
+                                    <td><span class="nds-tag nds-neutral nds-sm"><span class="nds-label">On
                                                 Leave</span></span></td>
                                 </tr>
                             </tbody>
@@ -743,7 +743,7 @@ direction: ltr
                                       <td>Hassan Al-Mukhtar</td>
                                       <td>hassan.almukhtar@moi.gov.sa</td>
                                       <td>Engineering</td>
-                                      <td><span class="nds-tag nds-success nds-sm"><span class="label">Active</span></span></td>
+                                      <td><span class="nds-tag nds-success nds-sm"><span class="nds-label">Active</span></span></td>
                                     </tr>
                                   </tbody>
                                 </table>
@@ -774,7 +774,7 @@ direction: ltr
                     <div class="demo-action">
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                            <span class="label">Remove bg</span>
+                            <span class="nds-label">Remove bg</span>
                         </button>
                     </div>
                 </div>
@@ -801,7 +801,7 @@ direction: ltr
                                     <td>{{ user.department }}</td>
                                     <td>{{ user.role }}</td>
                                     <td>2023-0{{ forloop.index }}-15</td>
-                                    <td><span class="nds-tag {% if user.status == 'active' %}nds-success{% elsif user.status == 'away' %}nds-warning{% else %}nds-error{% endif %} nds-sm"><span class="label">{% if user.status == 'active' %}Active{% elsif user.status == 'away' %}On Leave{% else %}Inactive{% endif %}</span></span></td>
+                                    <td><span class="nds-tag {% if user.status == 'active' %}nds-success{% elsif user.status == 'away' %}nds-warning{% else %}nds-error{% endif %} nds-sm"><span class="nds-label">{% if user.status == 'active' %}Active{% elsif user.status == 'away' %}On Leave{% else %}Inactive{% endif %}</span></span></td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
@@ -848,7 +848,7 @@ direction: ltr
                                       <td>Information Technology</td>
                                       <td>Senior Developer</td>
                                       <td>2023-01-15</td>
-                                      <td><span class="nds-tag nds-success nds-sm"><span class="label">Active</span></span></td>
+                                      <td><span class="nds-tag nds-success nds-sm"><span class="nds-label">Active</span></span></td>
                                     </tr>
                                   </tbody>
                                 </table>
@@ -891,7 +891,7 @@ direction: ltr
                     <div class="demo-action">
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                            <span class="label">Remove bg</span>
+                            <span class="nds-label">Remove bg</span>
                         </button>
                     </div>
                 </div>
@@ -903,19 +903,19 @@ direction: ltr
                                     <tr>
                                         <th class="nds-sortable-col">
                                             <button class="nds-btn nds-sort-header">
-                                                <span class="label">#</span>
+                                                <span class="nds-label">#</span>
                                                 <i class="hgi hgi-stroke hgi-arrow-up-down nds-sort-icon"></i>
                                             </button>
                                         </th>
                                         <th class="nds-sortable-col">
                                             <button class="nds-btn nds-sort-header">
-                                                <span class="label">Service</span>
+                                                <span class="nds-label">Service</span>
                                                 <i class="hgi hgi-stroke hgi-arrow-up-down nds-sort-icon"></i>
                                             </button>
                                         </th>
                                         <th class="nds-sortable-col">
                                             <button class="nds-btn nds-sort-header">
-                                                <span class="label">System</span>
+                                                <span class="nds-label">System</span>
                                                 <i class="hgi hgi-stroke hgi-arrow-up-down nds-sort-icon"></i>
                                             </button>
                                         </th>
@@ -927,12 +927,12 @@ direction: ltr
                                     <tr class="nds-page-item" hidden>
                                         <td>{{ forloop.index }}</td>
                                         <td>{{ service.title }}</td>
-                                        <td><span class="nds-tag nds-info nds-sm"><span class="label">{{ service.system }}</span></span></td>
+                                        <td><span class="nds-tag nds-info nds-sm"><span class="nds-label">{{ service.system }}</span></span></td>
                                         <td>
                                             {% if service.most_used %}
-                                            <span class="nds-tag nds-success nds-status nds-sm"><span class="label">Most Used</span></span>
+                                            <span class="nds-tag nds-success nds-status nds-sm"><span class="nds-label">Most Used</span></span>
                                             {% else %}
-                                            <span class="nds-tag nds-neutral nds-status nds-sm"><span class="label">Standard</span></span>
+                                            <span class="nds-tag nds-neutral nds-status nds-sm"><span class="nds-label">Standard</span></span>
                                             {% endif %}
                                         </td>
                                     </tr>
@@ -970,19 +970,19 @@ direction: ltr
                                       <tr>
                                         <th class="nds-sortable-col">
                                           <button class="nds-btn nds-sort-header">
-                                            <span class="label">#</span>
+                                            <span class="nds-label">#</span>
                                             <i class="hgi hgi-stroke hgi-arrow-up-down nds-sort-icon"></i>
                                           </button>
                                         </th>
                                         <th class="nds-sortable-col">
                                           <button class="nds-btn nds-sort-header">
-                                            <span class="label">Service</span>
+                                            <span class="nds-label">Service</span>
                                             <i class="hgi hgi-stroke hgi-arrow-up-down nds-sort-icon"></i>
                                           </button>
                                         </th>
                                         <th class="nds-sortable-col">
                                           <button class="nds-btn nds-sort-header">
-                                            <span class="label">System</span>
+                                            <span class="nds-label">System</span>
                                             <i class="hgi hgi-stroke hgi-arrow-up-down nds-sort-icon"></i>
                                           </button>
                                         </th>
@@ -994,8 +994,8 @@ direction: ltr
                                       <tr class="nds-page-item" hidden>
                                         <td>1</td>
                                         <td>Identity Verification</td>
-                                        <td><span class="nds-tag nds-info nds-sm"><span class="label">Identity System</span></span></td>
-                                        <td><span class="nds-tag nds-success nds-status nds-sm"><span class="label">Most Used</span></span></td>
+                                        <td><span class="nds-tag nds-info nds-sm"><span class="nds-label">Identity System</span></span></td>
+                                        <td><span class="nds-tag nds-success nds-status nds-sm"><span class="nds-label">Most Used</span></span></td>
                                       </tr>
                                       <!-- ... more rows ... -->
                                     </tbody>

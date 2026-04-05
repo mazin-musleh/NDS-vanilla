@@ -22,7 +22,7 @@ direction: ltr
                         <div class="demo-action">
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                <span class="nds-label">Remove bg</span>
                             </button>
                         </div>
                     </div>
@@ -88,7 +88,7 @@ direction: ltr
                         <div class="demo-action">
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                <span class="nds-label">Remove bg</span>
                             </button>
                         </div>
                     </div>
@@ -152,7 +152,7 @@ direction: ltr
                         <div class="demo-action">
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                <span class="nds-label">Remove bg</span>
                             </button>
                         </div>
                     </div>
@@ -218,7 +218,7 @@ direction: ltr
                         <div class="demo-action">
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                <span class="nds-label">Remove bg</span>
                             </button>
                         </div>
                     </div>
@@ -247,7 +247,7 @@ direction: ltr
                                     </button>
                                 </nav>
                                 <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i
-                                        class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                                        class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i>
                                 </button>
                             </div>
                             <div class="nds-tab-content">
@@ -294,29 +294,29 @@ direction: ltr
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket icon"></i>
-                        <span class="label">Auto-initialization</span>
+                        <i class="hgi hgi-stroke hgi-plug-socket nds-icon"></i>
+                        <span class="nds-label">Auto-initialization</span>
                     </span>
                     <p class="nds-item-desc">Activates when .nds-breadcrumb-nav is on the page. No JavaScript setup required.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-menu-02 icon"></i>
-                        <span class="label">Smart Collapsing</span>
+                        <i class="hgi hgi-stroke hgi-menu-02 nds-icon"></i>
+                        <span class="nds-label">Smart Collapsing</span>
                     </span>
                     <p class="nds-item-desc">Deep hierarchies collapse into a dropmenu. Shows Home, ellipsis, and last two items.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-keyboard icon"></i>
-                        <span class="label">Keyboard Support</span>
+                        <i class="hgi hgi-stroke hgi-keyboard nds-icon"></i>
+                        <span class="nds-label">Keyboard Support</span>
                     </span>
                     <p class="nds-item-desc">Collapsed dropmenu is fully keyboard accessible via Enter, Space, and Escape.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-more-horizontal icon"></i>
-                        <span class="label">Title Truncation</span>
+                        <i class="hgi hgi-stroke hgi-more-horizontal nds-icon"></i>
+                        <span class="nds-label">Title Truncation</span>
                     </span>
                     <p class="nds-item-desc">Add nds-truncate to any item to prevent long titles from wrapping.</p>
                 </div>

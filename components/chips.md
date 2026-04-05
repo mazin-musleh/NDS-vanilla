@@ -22,79 +22,79 @@ direction: ltr
                         <div class="demo-action">
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="label">Primary</span>
+                                    <span class="nds-label">Primary</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-primary", ".nds-chip", "chipVariant"]'>
-                                            <span class="label">Primary</span>
+                                            <span class="nds-label">Primary</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-neutral", ".nds-chip", "chipVariant"]'>
-                                            <span class="label">Neutral</span>
+                                            <span class="nds-label">Neutral</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="label">MD</span>
+                                    <span class="nds-label">MD</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-lg", ".nds-chip", "chipSize"]'>
-                                            <span class="label">LG</span>
+                                            <span class="nds-label">LG</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["nds-md", ".nds-chip", "chipSize"]'>
-                                            <span class="label">MD</span>
+                                            <span class="nds-label">MD</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-sm", ".nds-chip", "chipSize"]'>
-                                            <span class="label">SM</span>
+                                            <span class="nds-label">SM</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
                                 data-toggler='["nds-rounded", ".nds-chip", "chipRounded"]'>
-                                <span class="label">Rounded</span>
+                                <span class="nds-label">Rounded</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='[["nds-oncolor", ".nds-chip", "chipOncolor"],["dark-bg", ".demo-container", "chipOncolor"]]'>
-                                <span class="label">On Color</span>
+                                <span class="nds-label">On Color</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["<i class=\"hgi hgi-stroke hgi-add-01 icon\"></i>", ".nds-chip", "chipIcon", "content-prepend"]'>
-                                <span class="label">Icon</span>
+                                <span class="nds-label">Icon</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                <span class="nds-label">Remove bg</span>
                             </button>
                         </div>
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
                             <button class="nds-chip nds-primary nds-rounded" data-state="default">
-                                <span class="label">Default</span>
+                                <span class="nds-label">Default</span>
                             </button>
                             <button class="nds-chip nds-primary nds-rounded" data-state="hover">
-                                <span class="label">Hover</span>
+                                <span class="nds-label">Hover</span>
                             </button>
                             <button class="nds-chip nds-primary nds-rounded" data-state="pressed">
-                                <span class="label">Pressed</span>
+                                <span class="nds-label">Pressed</span>
                             </button>
                             <button class="nds-chip nds-primary nds-rounded" data-state="selected">
-                                <span class="label">Selected</span>
+                                <span class="nds-label">Selected</span>
                             </button>
                             <button class="nds-chip nds-primary nds-rounded focus" data-state="focused">
-                                <span class="label">Focused</span>
+                                <span class="nds-label">Focused</span>
                             </button>
                             <button class="nds-chip nds-primary nds-rounded" disabled>
-                                <span class="label">Disabled</span>
+                                <span class="nds-label">Disabled</span>
                             </button>
                         </div>
                     </div>
@@ -118,7 +118,7 @@ direction: ltr
                                     </div>
                                     <code class="lang-html code">
 <button class="nds-chip nds-primary nds-rounded">
-  <span class="label">Label</span>
+  <span class="nds-label">Label</span>
 </button>
                                     </code>
                                 </div>
@@ -145,26 +145,26 @@ direction: ltr
                         <div class="demo-action">
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                <span class="nds-label">Remove bg</span>
                             </button>
                         </div>
                     </div>
                     <div class="demo-container">
                         <div class="nds-chips">
                             <button class="nds-chip nds-primary nds-rounded" data-state="selected">
-                                <span class="label">All</span>
+                                <span class="nds-label">All</span>
                             </button>
                             <button class="nds-chip nds-neutral nds-rounded">
-                                <span class="label">Category A</span>
+                                <span class="nds-label">Category A</span>
                             </button>
                             <button class="nds-chip nds-neutral nds-rounded">
-                                <span class="label">Category B</span>
+                                <span class="nds-label">Category B</span>
                             </button>
                             <button class="nds-chip nds-neutral nds-rounded">
-                                <span class="label">Category C</span>
+                                <span class="nds-label">Category C</span>
                             </button>
                             <button class="nds-chip nds-neutral nds-rounded">
-                                <span class="label">Category D</span>
+                                <span class="nds-label">Category D</span>
                             </button>
                         </div>
                     </div>
@@ -189,13 +189,13 @@ direction: ltr
                                     <code class="lang-html code">
 <div class="nds-chips">
   <button class="nds-chip nds-primary nds-rounded" data-state="selected">
-    <span class="label">All</span>
+    <span class="nds-label">All</span>
   </button>
   <button class="nds-chip nds-neutral nds-rounded">
-    <span class="label">Category A</span>
+    <span class="nds-label">Category A</span>
   </button>
   <button class="nds-chip nds-neutral nds-rounded">
-    <span class="label">Category B</span>
+    <span class="nds-label">Category B</span>
   </button>
 </div>
                                     </code>
@@ -219,29 +219,29 @@ direction: ltr
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-tag-01 icon"></i>
-                        <span class="label">Pure CSS</span>
+                        <i class="hgi hgi-stroke hgi-tag-01 nds-icon"></i>
+                        <span class="nds-label">Pure CSS</span>
                     </span>
                     <p class="nds-item-desc">No JavaScript required. All variants, sizes, and states render from HTML markup.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-cursor-01 icon"></i>
-                        <span class="label">Interactive States</span>
+                        <i class="hgi hgi-stroke hgi-cursor-01 nds-icon"></i>
+                        <span class="nds-label">Interactive States</span>
                     </span>
                     <p class="nds-item-desc">Hover, pressed, selected, focused, and disabled with focus-visible ring.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-more-horizontal icon"></i>
-                        <span class="label">Label Truncation</span>
+                        <i class="hgi hgi-stroke hgi-more-horizontal nds-icon"></i>
+                        <span class="nds-label">Label Truncation</span>
                     </span>
                     <p class="nds-item-desc">Labels auto-truncate with ellipsis, configurable via --truncate.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-puzzle icon"></i>
-                        <span class="label">Composable</span>
+                        <i class="hgi hgi-stroke hgi-puzzle nds-icon"></i>
+                        <span class="nds-label">Composable</span>
                     </span>
                     <p class="nds-item-desc">Combine with icons, rounded shape, on-color variant, and chip groups.</p>
                 </div>

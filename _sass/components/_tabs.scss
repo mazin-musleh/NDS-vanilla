@@ -63,7 +63,7 @@
       .nds-tab {
         flex-direction: row-reverse;
 
-        .label {
+        .nds-label {
           text-align: end;
         }
 
@@ -201,7 +201,7 @@
   @include btn-indicator('b');
 
   /* Selected tab label enhancement */
-  &[aria-selected="true"] .label {
+  &[aria-selected="true"] .nds-label {
     color: var(--text-default);
     filter: drop-shadow(0 0 .02em currentColor);
   }

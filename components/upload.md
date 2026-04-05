@@ -25,18 +25,18 @@ direction: ltr
             <div class="demo-action">
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='[["single-file", ".nds-form-container", "singleFileToggle"], ["multiple", ".file-input", "multipleToggle", "attr"], ["dropBox", ".nds-form-container", "dropBoxToggle"],["nds-primary nds-secondary", ".browse-btn", "buttonStyle"],["hidden", ".nds-form-header", "hideHeader"]]'>
-                <span class="label">Single File</span>
+                <span class="nds-label">Single File</span>
               </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='[["disabled", ".multi-file-upload .file-input", "stateToggle", "attr"], ["disabled", ".browse-btn", "stateToggle", "attr"]]'>
-                <span class="label">Disabled</span>
+                <span class="nds-label">Disabled</span>
               </button>
               <button class="nds-btn nds-sm nds-subtle demo-action-btn" data-action="populate-demo-files">
-                <span class="label">Demo Files</span>
+                <span class="nds-label">Demo Files</span>
               </button>
               <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                <span class="label">Remove bg</span>
+                <span class="nds-label">Remove bg</span>
               </button>
             </div>
           </div>
@@ -45,7 +45,7 @@ direction: ltr
               <div class="nds-form-container nds-file-upload multi-file-upload dropBox">
                 <div class="nds-form-header hidden">
                   <label for="multiFileUpload">
-                    <span class="label">Upload files</span>
+                    <span class="nds-label">Upload files</span>
                     <span class="info">
                       Maximum file size allowed is 2MB, supported file formats include .jpg, .png, and .pdf.
                     </span>
@@ -56,7 +56,7 @@ direction: ltr
                   <input type="file" id="multiFileUpload" multiple accept=".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx,.txt"
                     class="file-input" />
                   <div class="upload-zone">
-                    <i class="hgi hgi-stroke hgi-file-upload upload-icon icon"></i>
+                    <i class="hgi hgi-stroke hgi-file-upload upload-icon nds-icon"></i>
                     <div class="upload-text">
                       <span class="dropFileHint">Drag and drop files here to upload</span>
                     </div>
@@ -67,7 +67,7 @@ direction: ltr
                   <div class="upload-actions">
                     <button type="button" class="nds-btn nds-secondary nds-md browse-btn">
                       <i class="hgi hgi-stroke hgi-folder-01"></i>
-                      <span class="label">Browse Files</span>
+                      <span class="nds-label">Browse Files</span>
                     </button>
                   </div>
                 </div>
@@ -80,7 +80,7 @@ direction: ltr
                   <div class="file-item">
                     <span class="nds-feedback" data-status="success">
                       <span class="nds-feedback-icon">
-                        <i class="hgi hgi-stroke icon"></i>
+                        <i class="hgi hgi-stroke nds-icon"></i>
                       </span>
                     </span>
 
@@ -113,7 +113,7 @@ direction: ltr
 
                     <div class="file-actions">
                       <button type="button" class="nds-btn nds-subtle nds-md remove-file" aria-label="Remove file">
-                        <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
+                        <i class="hgi hgi-stroke hgi-cancel-01 nds-icon"></i>
                       </button>
                     </div>
                   </div>
@@ -136,7 +136,7 @@ direction: ltr
                 </button>
               </nav>
                 <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i
-                    class="hgi hgi-stroke hgi-arrow-left-01 toggleArrow icon"></i>
+                    class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i>
                 </button>
             </div>
             <div class="nds-tab-content">
@@ -152,7 +152,7 @@ direction: ltr
                     <div class="nds-form-container nds-file-upload multi-file-upload dropBox">
                       <div class="nds-form-header hidden">
                         <label for="multiFileUpload">
-                          <span class="label">Upload files</span>
+                          <span class="nds-label">Upload files</span>
                           <span class="info">
                             Maximum file size allowed is 2MB, supported file formats include .jpg, .png, and .pdf.
                           </span>
@@ -163,7 +163,7 @@ direction: ltr
                         <input type="file" id="multiFileUpload" multiple accept=".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx,.txt"
                           class="file-input" />
                         <div class="upload-zone">
-                          <i class="hgi hgi-stroke hgi-file-upload upload-icon icon"></i>
+                          <i class="hgi hgi-stroke hgi-file-upload upload-icon nds-icon"></i>
                           <div class="upload-text">
                             <span class="dropFileHint">Drag and drop files here to upload</span>
                           </div>
@@ -174,7 +174,7 @@ direction: ltr
                         <div class="upload-actions">
                           <button type="button" class="nds-btn nds-secondary nds-md browse-btn">
                             <i class="hgi hgi-stroke hgi-folder-01"></i>
-                            <span class="label">Browse Files</span>
+                            <span class="nds-label">Browse Files</span>
                           </button>
                         </div>
                       </div>
@@ -187,7 +187,7 @@ direction: ltr
                         <div class="file-item">
                           <span class="nds-feedback" data-status="success">
                             <span class="nds-feedback-icon">
-                              <i class="hgi hgi-stroke icon"></i>
+                              <i class="hgi hgi-stroke nds-icon"></i>
                             </span>
                           </span>
 
@@ -220,7 +220,7 @@ direction: ltr
 
                           <div class="file-actions">
                             <button type="button" class="nds-btn nds-subtle nds-md remove-file" aria-label="Remove file">
-                              <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
+                              <i class="hgi hgi-stroke hgi-cancel-01 nds-icon"></i>
                             </button>
                           </div>
                         </div>

@@ -600,7 +600,7 @@
                         '<div class="nds-month-year-selectors">' +
                             '<div class="nds-dropmenu nds-month-dropmenu">' +
                                 '<button class="nds-dropmenu-trigger nds-btn nds-subtle nds-menu-btn" aria-label="Select month">' +
-                                    '<span class="label"></span>' +
+                                    '<span class="nds-label"></span>' +
                                 '</button>' +
                                 '<div class="nds-dropmenu-menu">' +
                                     '<div class="nds-dropmenu-scroll"></div>' +
@@ -608,7 +608,7 @@
                             '</div>' +
                             '<div class="nds-dropmenu nds-year-dropmenu">' +
                                 '<button class="nds-dropmenu-trigger nds-btn nds-subtle nds-menu-btn" aria-label="Select year">' +
-                                    '<span class="label"></span>' +
+                                    '<span class="nds-label"></span>' +
                                 '</button>' +
                                 '<div class="nds-dropmenu-menu">' +
                                     '<div class="nds-dropmenu-scroll"></div>' +
@@ -617,10 +617,10 @@
                         '</div>' +
                         '<div class="nds-calendar-month-switch">' +
                             '<button class="nds-btn nds-subtle next-month" type="button" aria-label="Next month">' +
-                                '<i class="hgi hgi-stroke hgi-arrow-right-02 icon"></i>' +
+                                '<i class="hgi hgi-stroke hgi-arrow-right-02 nds-icon"></i>' +
                             '</button>' +
                             '<button class="nds-btn nds-subtle prev-month" type="button" aria-label="Previous month">' +
-                                '<i class="hgi hgi-stroke hgi-arrow-left-02 icon"></i>' +
+                                '<i class="hgi hgi-stroke hgi-arrow-left-02 nds-icon"></i>' +
                             '</button>' +
                         '</div>' +
                     '</div>' +
@@ -632,15 +632,15 @@
                 '<div class="nds-calendar-footer">' +
                     '<div class="nds-calendar-action-start">' +
                         '<button class="nds-btn nds-secondary-outline today-btn" type="button">' +
-                            '<span class="label">Today</span>' +
+                            '<span class="nds-label">Today</span>' +
                         '</button>' +
                     '</div>' +
                     '<div class="nds-calendar-action-end">' +
                         '<button class="nds-btn nds-subtle clear-btn" type="button">' +
-                            '<span class="label">Clear</span>' +
+                            '<span class="nds-label">Clear</span>' +
                         '</button>' +
                         '<button class="nds-btn nds-primary save-btn" type="button">' +
-                            '<span class="label">Save</span>' +
+                            '<span class="nds-label">Save</span>' +
                         '</button>' +
                     '</div>' +
                 '</div>';
@@ -1255,11 +1255,11 @@
                 var currentMonth = this.getCurrentMonth();
                 // For Hijri: convert 1-based month to 0-based array index
                 var monthIndex = this.state.calendarType === 'hijri' ? currentMonth - 1 : currentMonth;
-                this.elements.monthDropdownBtn.querySelector('.label').textContent = monthNames[monthIndex];
+                this.elements.monthDropdownBtn.querySelector('.nds-label').textContent = monthNames[monthIndex];
             }
 
             if (this.elements.yearDropdownBtn) {
-                this.elements.yearDropdownBtn.querySelector('.label').textContent = this.getCurrentYear();
+                this.elements.yearDropdownBtn.querySelector('.nds-label').textContent = this.getCurrentYear();
             }
         },
 
@@ -1287,7 +1287,7 @@
             var map = { todayBtn: labels.today, clearBtn: labels.clear, saveBtn: labels.save };
             for (var key in map) {
                 if (this.elements[key]) {
-                    var el = this.elements[key].querySelector('.label');
+                    var el = this.elements[key].querySelector('.nds-label');
                     if (el) el.textContent = map[key];
                 }
             }
@@ -1364,7 +1364,7 @@
             btn.type = 'button';
 
             // Use helper method for day number display
-            btn.innerHTML = '<span class="label">' + this.getDisplayDayNumber(date) + '</span>';
+            btn.innerHTML = '<span class="nds-label">' + this.getDisplayDayNumber(date) + '</span>';
 
             // Add appropriate classes
             if (type === 'other-month') {
@@ -1626,7 +1626,7 @@
                 btn.className = 'nds-btn nds-subtle nds-dropmenu-item nds-month-option';
                 btn.setAttribute('role', 'menuitem');
                 btn.setAttribute('data-value', index);
-                btn.innerHTML = '<span class="label">' + monthName + '</span>';
+                btn.innerHTML = '<span class="nds-label">' + monthName + '</span>';
 
                 var isSelected = self.state.calendarType === 'hijri' ?
                     (index + 1) === self.getCurrentMonth() : // For Hijri: compare (0-based index + 1) with 1-based month
@@ -1693,7 +1693,7 @@
                 btn.className = 'nds-btn nds-subtle nds-dropmenu-item nds-year-option';
                 btn.setAttribute('role', 'menuitem');
                 btn.setAttribute('data-value', year);
-                btn.innerHTML = '<span class="label">' + year + '</span>';
+                btn.innerHTML = '<span class="nds-label">' + year + '</span>';
 
                 if (year === currentYear) {
                     setState(btn,'selected');

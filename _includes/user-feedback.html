@@ -9,30 +9,30 @@
                     </span>
                     <div class="nds-user-feedback-answer-btn ">
                         <button type="button" class="nds-btn nds-primary nds-md" data-answer="Yes" aria-label="Yes">
-                            <span class="label">Yes</span>
+                            <span class="nds-label">Yes</span>
                         </button>
                         <button type="button" class="nds-btn nds-primary nds-md" data-answer="No" aria-label="No">
-                            <span class="label">No</span>
+                            <span class="nds-label">No</span>
                         </button>
                     </div>
                     <span class="nds-user-feedback-statistic">60% of users said Yes from 2843 Feedbacks</span>
                     <button type="button" class="nds-user-feedback-close nds-btn nds-secondary-outline nds-md"
                         aria-label="Close feedback" hidden>
-                        <span class="label">Close</span>
-                        <i class="hgi hgi-stroke hgi-cancel-01 icon"></i>
+                        <span class="nds-label">Close</span>
+                        <i class="hgi hgi-stroke hgi-cancel-01 nds-icon"></i>
                     </button>
                 </div>
                 <div class="nds-user-feedback-details" hidden>
                     <div class="nds-user-feedback-options">
-                        <fieldset class="nds-form-group nds-check-group why-yes" data-min-checked="2">
+                        <fieldset class="nds-form-group nds-check-group nds-why-yes" data-min-checked="2">
                             <legend>
-                                <span class="label">Please tell us why</span>
-                                <span class="note">(you can select multiple options)</span>
+                                <span class="nds-label">Please tell us why</span>
+                                <span class="nds-note">(you can select multiple options)</span>
                             </legend>
                             <div class="nds-form-container nds-check-container">
                                 <div class="nds-form-header">
                                     <label for="feedback-yes-relevant">
-                                        <span class="label">Content is relevant</span>
+                                        <span class="nds-label">Content is relevant</span>
                                     </label>
                                 </div>
                                 <div class="nds-form-control">
@@ -44,18 +44,18 @@
                             <div class="nds-form-container nds-check-container">
                                 <div class="nds-form-header">
                                     <label for="feedback-yes-written">
-                                        <span class="label">It was well written</span>
+                                        <span class="nds-label">It was well written</span>
                                     </label>
                                 </div>
                                 <div class="nds-form-control">
                                     <input type="checkbox" id="feedback-yes-written" name="why-yes"
-                                        value="well-written" class="nds-check primary">
+                                        value="well-written" class="nds-check">
                                 </div>
                             </div>
                             <div class="nds-form-container nds-check-container">
                                 <div class="nds-form-header">
                                     <label for="feedback-yes-layout">
-                                        <span class="label">The layout made it easy to read</span>
+                                        <span class="nds-label">The layout made it easy to read</span>
                                     </label>
                                 </div>
                                 <div class="nds-form-control">
@@ -66,7 +66,7 @@
                             <div class="nds-form-container nds-check-container">
                                 <div class="nds-form-header">
                                     <label for="feedback-yes-other">
-                                        <span class="label">Something else</span>
+                                        <span class="nds-label">Something else</span>
                                     </label>
                                 </div>
                                 <div class="nds-form-control">
@@ -76,15 +76,15 @@
                             </div>
                             <div class="nds-form-footer" data-feedback-target hidden></div>
                         </fieldset>
-                        <fieldset class="nds-form-group nds-check-group why-no" data-required>
+                        <fieldset class="nds-form-group nds-check-group nds-why-no" data-required>
                             <legend>
-                                <span class="label">Please tell us why</span>
-                                <span class="note">(you can select multiple options)</span>
+                                <span class="nds-label">Please tell us why</span>
+                                <span class="nds-note">(you can select multiple options)</span>
                             </legend>
                             <div class="nds-form-container nds-check-container">
                                 <div class="nds-form-header">
                                     <label for="feedback-no-irrelevant">
-                                        <span class="label">Content is not relevant</span>
+                                        <span class="nds-label">Content is not relevant</span>
                                     </label>
                                 </div>
                                 <div class="nds-form-control">
@@ -95,18 +95,18 @@
                             <div class="nds-form-container nds-check-container">
                                 <div class="nds-form-header">
                                     <label for="feedback-no-inaccurate">
-                                        <span class="label">Content is not accurate</span>
+                                        <span class="nds-label">Content is not accurate</span>
                                     </label>
                                 </div>
                                 <div class="nds-form-control">
                                     <input type="checkbox" id="feedback-no-inaccurate" name="why-no"
-                                        value="not-accurate" class="nds-check primary">
+                                        value="not-accurate" class="nds-check">
                                 </div>
                             </div>
                             <div class="nds-form-container nds-check-container">
                                 <div class="nds-form-header">
                                     <label for="feedback-no-long">
-                                        <span class="label">Content is too long</span>
+                                        <span class="nds-label">Content is too long</span>
                                     </label>
                                 </div>
                                 <div class="nds-form-control">
@@ -117,7 +117,7 @@
                             <div class="nds-form-container nds-check-container">
                                 <div class="nds-form-header">
                                     <label for="feedback-no-other">
-                                        <span class="label">Something else</span>
+                                        <span class="nds-label">Something else</span>
                                     </label>
                                 </div>
                                 <div class="nds-form-control">
@@ -127,12 +127,12 @@
                             </div>
                             <div class="nds-form-footer" data-feedback-target hidden></div>
                         </fieldset>
-                        <fieldset class="nds-form-group nds-radio-group nds-rowView gender" data-required>
-                            <legend class="label">I'm</legend>
+                        <fieldset class="nds-form-group nds-radio-group nds-rowView nds-gender" data-required>
+                            <legend class="nds-label">I'm</legend>
                             <div class="nds-form-container nds-radio-container">
                                 <div class="nds-form-header">
                                     <label for="feedback-gender-male">
-                                        <span class="label">Male</span>
+                                        <span class="nds-label">Male</span>
                                     </label>
                                 </div>
                                 <div class="nds-form-control">
@@ -143,7 +143,7 @@
                             <div class="nds-form-container nds-radio-container">
                                 <div class="nds-form-header">
                                     <label for="feedback-gender-female">
-                                        <span class="label">Female</span>
+                                        <span class="nds-label">Female</span>
                                     </label>
                                 </div>
                                 <div class="nds-form-control">
@@ -158,7 +158,7 @@
                         <div class="nds-form-container nds-textarea">
                             <div class="nds-form-header">
                                 <label for="feedback-comment">
-                                    <span class="label">Feedback</span>
+                                    <span class="nds-label">Feedback</span>
                                 </label>
                             </div>
                             <div class="nds-form-control">
@@ -176,7 +176,7 @@
 
                     <button class="nds-user-feedback-submit-btn nds-btn nds-primary" data-answer="submit"
                         aria-label="Submit">
-                        <span class="label">Submit</span>
+                        <span class="nds-label">Submit</span>
                     </button>
                 </div>
             </div>

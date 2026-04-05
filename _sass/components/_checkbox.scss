@@ -18,7 +18,7 @@
     flex-wrap: nowrap;
     justify-content: flex-end;
 
-    &>.nds-form-header .label {
+    &>.nds-form-header .nds-label {
         color: var(--text-display);
         font-size: var(--nds-text-md-FS);
         line-height: var(--nds-input-size);
@@ -75,7 +75,7 @@
     display: flex;
     flex-direction: column;
 
-    &:has(>.label){
+    &:has(>.nds-label){
         .nds-form-container{
             padding-inline-start: var(--spacing-md);
         }
@@ -97,7 +97,7 @@
 
     // Auto-add required indicator when group has data-required, data-min-checked, or nds-required class
     &:is([data-required], [data-min-checked], .nds-required) {
-        > .label::after {
+        > .nds-label::after {
             content: " *";
             color: var(--controls-control-text-error);
         }

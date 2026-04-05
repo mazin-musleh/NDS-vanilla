@@ -23,33 +23,33 @@ direction: ltr
                         <div class="demo-action">
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Size: ">
-                                    <span class="label">Size: Medium</span>
+                                    <span class="nds-label">Size: Medium</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["", ".nds-drawer", "drawerSize"]'
                                             data-trigger-label="Medium">
-                                            <span class="label">Medium (default)</span>
+                                            <span class="nds-label">Medium (default)</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-sm", ".nds-drawer", "drawerSize"]'>
-                                            <span class="label">Small</span>
+                                            <span class="nds-label">Small</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-lg", ".nds-drawer", "drawerSize"]'>
-                                            <span class="label">Large</span>
+                                            <span class="nds-label">Large</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-divided", ".nds-drawer", "drawerDivided"]'>
-                                <span class="label">Divided</span>
+                                <span class="nds-label">Divided</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                <span class="nds-label">Remove bg</span>
                             </button>
                         </div>
                     </div>
@@ -61,32 +61,32 @@ direction: ltr
                                         <li data-state="active">
                                             <a href="#" class="nds-btn nds-subtle nds-indicator">
                                                 <span class="nds-featured-icon nds-brand nds-sm">
-                                                    <i class="hgi hgi-stroke hgi-home-01 icon"></i>
+                                                    <i class="hgi hgi-stroke hgi-home-01 nds-icon"></i>
                                                 </span>
-                                                <span class="label">Dashboard</span>
+                                                <span class="nds-label">Dashboard</span>
                                             </a>
                                         </li>
                                         <li>
                                             <button class="nds-btn nds-subtle nds-menu-btn nds-indicator" aria-expanded="false">
                                                 <span class="nds-featured-icon nds-brand nds-sm">
-                                                    <i class="hgi hgi-stroke hgi-layout-grid icon"></i>
+                                                    <i class="hgi hgi-stroke hgi-layout-grid nds-icon"></i>
                                                 </span>
-                                                <span class="label">Components</span>
+                                                <span class="nds-label">Components</span>
                                             </button>
                                             <ul>
                                                 <li>
                                                     <a href="#" class="nds-btn nds-subtle nds-indicator">
-                                                        <span class="label">Buttons</span>
+                                                        <span class="nds-label">Buttons</span>
                                                     </a>
                                                 </li>
                                                 <li>
                                                     <a href="#" class="nds-btn nds-subtle nds-indicator">
-                                                        <span class="label">Cards</span>
+                                                        <span class="nds-label">Cards</span>
                                                     </a>
                                                 </li>
                                                 <li>
                                                     <a href="#" class="nds-btn nds-subtle nds-indicator">
-                                                        <span class="label">Forms</span>
+                                                        <span class="nds-label">Forms</span>
                                                     </a>
                                                 </li>
                                             </ul>
@@ -94,19 +94,19 @@ direction: ltr
                                         <li>
                                             <button class="nds-btn nds-subtle nds-menu-btn nds-indicator" aria-expanded="false">
                                                 <span class="nds-featured-icon nds-brand nds-sm">
-                                                    <i class="hgi hgi-stroke hgi-settings-01 icon"></i>
+                                                    <i class="hgi hgi-stroke hgi-settings-01 nds-icon"></i>
                                                 </span>
-                                                <span class="label">Settings</span>
+                                                <span class="nds-label">Settings</span>
                                             </button>
                                             <ul>
                                                 <li>
                                                     <a href="#" class="nds-btn nds-subtle nds-indicator">
-                                                        <span class="label">Profile</span>
+                                                        <span class="nds-label">Profile</span>
                                                     </a>
                                                 </li>
                                                 <li>
                                                     <a href="#" class="nds-btn nds-subtle nds-indicator">
-                                                        <span class="label">Security</span>
+                                                        <span class="nds-label">Security</span>
                                                     </a>
                                                 </li>
                                             </ul>
@@ -114,9 +114,9 @@ direction: ltr
                                         <li>
                                             <a href="#" class="nds-btn nds-subtle nds-indicator">
                                                 <span class="nds-featured-icon nds-brand nds-sm">
-                                                    <i class="hgi hgi-stroke hgi-help-circle icon"></i>
+                                                    <i class="hgi hgi-stroke hgi-help-circle nds-icon"></i>
                                                 </span>
-                                                <span class="label">Help</span>
+                                                <span class="nds-label">Help</span>
                                             </a>
                                         </li>
                                     </ul>
@@ -150,32 +150,32 @@ direction: ltr
       <li data-state="active">
         <a href="#" class="nds-btn nds-subtle nds-indicator">
           <span class="nds-featured-icon nds-brand nds-sm">
-            <i class="hgi hgi-stroke hgi-home-01 icon"></i>
+            <i class="hgi hgi-stroke hgi-home-01 nds-icon"></i>
           </span>
-          <span class="label">Dashboard</span>
+          <span class="nds-label">Dashboard</span>
         </a>
       </li>
       <li>
         <button class="nds-btn nds-subtle nds-menu-btn nds-indicator" aria-expanded="false">
           <span class="nds-featured-icon nds-brand nds-sm">
-            <i class="hgi hgi-stroke hgi-layout-grid icon"></i>
+            <i class="hgi hgi-stroke hgi-layout-grid nds-icon"></i>
           </span>
-          <span class="label">Components</span>
+          <span class="nds-label">Components</span>
         </button>
         <ul>
           <li>
             <a href="#" class="nds-btn nds-subtle nds-indicator">
-              <span class="label">Buttons</span>
+              <span class="nds-label">Buttons</span>
             </a>
           </li>
           <li>
             <a href="#" class="nds-btn nds-subtle nds-indicator">
-              <span class="label">Cards</span>
+              <span class="nds-label">Cards</span>
             </a>
           </li>
           <li>
             <a href="#" class="nds-btn nds-subtle nds-indicator">
-              <span class="label">Forms</span>
+              <span class="nds-label">Forms</span>
             </a>
           </li>
         </ul>
@@ -183,19 +183,19 @@ direction: ltr
       <li>
         <button class="nds-btn nds-subtle nds-menu-btn nds-indicator" aria-expanded="false">
           <span class="nds-featured-icon nds-brand nds-sm">
-            <i class="hgi hgi-stroke hgi-settings-01 icon"></i>
+            <i class="hgi hgi-stroke hgi-settings-01 nds-icon"></i>
           </span>
-          <span class="label">Settings</span>
+          <span class="nds-label">Settings</span>
         </button>
         <ul>
           <li>
             <a href="#" class="nds-btn nds-subtle nds-indicator">
-              <span class="label">Profile</span>
+              <span class="nds-label">Profile</span>
             </a>
           </li>
           <li>
             <a href="#" class="nds-btn nds-subtle nds-indicator">
-              <span class="label">Security</span>
+              <span class="nds-label">Security</span>
             </a>
           </li>
         </ul>
@@ -203,9 +203,9 @@ direction: ltr
       <li>
         <a href="#" class="nds-btn nds-subtle nds-indicator">
           <span class="nds-featured-icon nds-brand nds-sm">
-            <i class="hgi hgi-stroke hgi-help-circle icon"></i>
+            <i class="hgi hgi-stroke hgi-help-circle nds-icon"></i>
           </span>
-          <span class="label">Help</span>
+          <span class="nds-label">Help</span>
         </a>
       </li>
     </ul>
@@ -238,7 +238,7 @@ direction: ltr
                         <div class="demo-action">
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                <span class="nds-label">Remove bg</span>
                             </button>
                         </div>
                     </div>
@@ -249,34 +249,34 @@ direction: ltr
                                     <ul class="nds-drawer-list">
                                         <li>
                                             <button class="nds-btn nds-subtle nds-menu-btn nds-indicator">
-                                                <span class="label">Components</span>
+                                                <span class="nds-label">Components</span>
                                             </button>
                                             <ul>
                                                 <li>
                                                     <a href="#" class="nds-btn nds-subtle nds-indicator">
-                                                        <span class="label">Buttons</span>
+                                                        <span class="nds-label">Buttons</span>
                                                     </a>
                                                 </li>
                                                 <li>
                                                     <a href="#" class="nds-btn nds-subtle nds-indicator">
-                                                        <span class="label">Forms</span>
+                                                        <span class="nds-label">Forms</span>
                                                     </a>
                                                 </li>
                                             </ul>
                                         </li>
                                         <li>
                                             <button class="nds-btn nds-subtle nds-menu-btn nds-indicator">
-                                                <span class="label">Guidelines</span>
+                                                <span class="nds-label">Guidelines</span>
                                             </button>
                                             <ul>
                                                 <li>
                                                     <a href="#" class="nds-btn nds-subtle nds-indicator">
-                                                        <span class="label">Typography</span>
+                                                        <span class="nds-label">Typography</span>
                                                     </a>
                                                 </li>
                                                 <li>
                                                     <a href="#" class="nds-btn nds-subtle nds-indicator">
-                                                        <span class="label">Colors</span>
+                                                        <span class="nds-label">Colors</span>
                                                     </a>
                                                 </li>
                                             </ul>
@@ -311,34 +311,34 @@ direction: ltr
     <ul class="nds-drawer-list">
       <li>
         <button class="nds-btn nds-subtle nds-menu-btn nds-indicator">
-          <span class="label">Components</span>
+          <span class="nds-label">Components</span>
         </button>
         <ul>
           <li>
             <a href="#" class="nds-btn nds-subtle nds-indicator">
-              <span class="label">Buttons</span>
+              <span class="nds-label">Buttons</span>
             </a>
           </li>
           <li>
             <a href="#" class="nds-btn nds-subtle nds-indicator">
-              <span class="label">Forms</span>
+              <span class="nds-label">Forms</span>
             </a>
           </li>
         </ul>
       </li>
       <li>
         <button class="nds-btn nds-subtle nds-menu-btn nds-indicator">
-          <span class="label">Guidelines</span>
+          <span class="nds-label">Guidelines</span>
         </button>
         <ul>
           <li>
             <a href="#" class="nds-btn nds-subtle nds-indicator">
-              <span class="label">Typography</span>
+              <span class="nds-label">Typography</span>
             </a>
           </li>
           <li>
             <a href="#" class="nds-btn nds-subtle nds-indicator">
-              <span class="label">Colors</span>
+              <span class="nds-label">Colors</span>
             </a>
           </li>
         </ul>
@@ -373,7 +373,7 @@ direction: ltr
                         <div class="demo-action">
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                <span class="nds-label">Remove bg</span>
                             </button>
                         </div>
                     </div>
@@ -385,55 +385,55 @@ direction: ltr
                                         <li>
                                             <a href="#" class="nds-btn nds-subtle nds-indicator">
                                                 <span class="nds-featured-icon nds-brand nds-sm">
-                                                    <i class="hgi hgi-stroke hgi-promotion icon"></i>
+                                                    <i class="hgi hgi-stroke hgi-promotion nds-icon"></i>
                                                 </span>
-                                                <span class="label">Item 1</span>
+                                                <span class="nds-label">Item 1</span>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#" class="nds-btn nds-subtle nds-indicator">
                                                 <span class="nds-featured-icon nds-brand nds-sm">
-                                                    <i class="hgi hgi-stroke hgi-promotion icon"></i>
+                                                    <i class="hgi hgi-stroke hgi-promotion nds-icon"></i>
                                                 </span>
-                                                <span class="label">Item 2</span>
+                                                <span class="nds-label">Item 2</span>
                                             </a>
                                         </li>
                                         <li data-state="active">
                                             <a href="#" class="nds-btn nds-subtle nds-indicator">
                                                 <span class="nds-featured-icon nds-brand nds-sm">
-                                                    <i class="hgi hgi-stroke hgi-promotion icon"></i>
+                                                    <i class="hgi hgi-stroke hgi-promotion nds-icon"></i>
                                                 </span>
-                                                <span class="label">Item 3</span>
+                                                <span class="nds-label">Item 3</span>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#" class="nds-btn nds-subtle nds-indicator">
                                                 <span class="nds-featured-icon nds-brand nds-sm">
-                                                    <i class="hgi hgi-stroke hgi-promotion icon"></i>
+                                                    <i class="hgi hgi-stroke hgi-promotion nds-icon"></i>
                                                 </span>
-                                                <span class="label">Item 4</span>
+                                                <span class="nds-label">Item 4</span>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#" class="nds-btn nds-subtle nds-indicator">
                                                 <span class="nds-featured-icon nds-brand nds-sm">
-                                                    <i class="hgi hgi-stroke hgi-promotion icon"></i>
+                                                    <i class="hgi hgi-stroke hgi-promotion nds-icon"></i>
                                                 </span>
-                                                <span class="label">Item 5</span>
+                                                <span class="nds-label">Item 5</span>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#" class="nds-btn nds-subtle nds-indicator">
                                                 <span class="nds-featured-icon nds-brand nds-sm">
-                                                    <i class="hgi hgi-stroke hgi-promotion icon"></i>
+                                                    <i class="hgi hgi-stroke hgi-promotion nds-icon"></i>
                                                 </span>
-                                                <span class="label">Item 6</span>
+                                                <span class="nds-label">Item 6</span>
                                             </a>
                                         </li>
                                     </ul>
                                 </div>
                                 <button class="nds-show-more nds-btn nds-subtle">
-                                    <span class="label">Show more</span>
+                                    <span class="nds-label">Show more</span>
                                     <i class="hgi hgi-stroke hgi-arrow-down-01"></i>
                                 </button>
                             </nav>
@@ -465,55 +465,55 @@ direction: ltr
       <li>
         <a href="#" class="nds-btn nds-subtle nds-indicator">
           <span class="nds-featured-icon nds-brand nds-sm">
-            <i class="hgi hgi-stroke hgi-promotion icon"></i>
+            <i class="hgi hgi-stroke hgi-promotion nds-icon"></i>
           </span>
-          <span class="label">Item 1</span>
+          <span class="nds-label">Item 1</span>
         </a>
       </li>
       <li>
         <a href="#" class="nds-btn nds-subtle nds-indicator">
           <span class="nds-featured-icon nds-brand nds-sm">
-            <i class="hgi hgi-stroke hgi-promotion icon"></i>
+            <i class="hgi hgi-stroke hgi-promotion nds-icon"></i>
           </span>
-          <span class="label">Item 2</span>
+          <span class="nds-label">Item 2</span>
         </a>
       </li>
       <li data-state="active">
         <a href="#" class="nds-btn nds-subtle nds-indicator">
           <span class="nds-featured-icon nds-brand nds-sm">
-            <i class="hgi hgi-stroke hgi-promotion icon"></i>
+            <i class="hgi hgi-stroke hgi-promotion nds-icon"></i>
           </span>
-          <span class="label">Item 3</span>
+          <span class="nds-label">Item 3</span>
         </a>
       </li>
       <li>
         <a href="#" class="nds-btn nds-subtle nds-indicator">
           <span class="nds-featured-icon nds-brand nds-sm">
-            <i class="hgi hgi-stroke hgi-promotion icon"></i>
+            <i class="hgi hgi-stroke hgi-promotion nds-icon"></i>
           </span>
-          <span class="label">Item 4</span>
+          <span class="nds-label">Item 4</span>
         </a>
       </li>
       <li>
         <a href="#" class="nds-btn nds-subtle nds-indicator">
           <span class="nds-featured-icon nds-brand nds-sm">
-            <i class="hgi hgi-stroke hgi-promotion icon"></i>
+            <i class="hgi hgi-stroke hgi-promotion nds-icon"></i>
           </span>
-          <span class="label">Item 5</span>
+          <span class="nds-label">Item 5</span>
         </a>
       </li>
       <li>
         <a href="#" class="nds-btn nds-subtle nds-indicator">
           <span class="nds-featured-icon nds-brand nds-sm">
-            <i class="hgi hgi-stroke hgi-promotion icon"></i>
+            <i class="hgi hgi-stroke hgi-promotion nds-icon"></i>
           </span>
-          <span class="label">Item 6</span>
+          <span class="nds-label">Item 6</span>
         </a>
       </li>
     </ul>
   </div>
   <button class="nds-show-more nds-btn nds-subtle">
-    <span class="label">Show more</span>
+    <span class="nds-label">Show more</span>
     <i class="hgi hgi-stroke hgi-arrow-down-01"></i>
   </button>
 </nav>
@@ -544,7 +544,7 @@ direction: ltr
                         <div class="demo-action">
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                <span class="nds-label">Remove bg</span>
                             </button>
                         </div>
                     </div>
@@ -559,33 +559,33 @@ direction: ltr
                                             <ul class="nds-drawer-list">
                                                 <li>
                                                     <button class="nds-btn nds-subtle nds-indicator">
-                                                        <span class="label nds-truncate">New digital identity verification system now available</span>
+                                                        <span class="nds-label nds-truncate">New digital identity verification system now available</span>
                                                         <span class="nds-tag nds-gray nds-xs">
-                                                            <span class="label">23/12/2025</span>
+                                                            <span class="nds-label">23/12/2025</span>
                                                         </span>
                                                     </button>
                                                 </li>
                                                 <li>
                                                     <button class="nds-btn nds-subtle nds-indicator">
-                                                        <span class="label nds-truncate">Enhanced online portal for business licensing and permits</span>
+                                                        <span class="nds-label nds-truncate">Enhanced online portal for business licensing and permits</span>
                                                         <span class="nds-tag nds-gray nds-xs">
-                                                            <span class="label">18/12/2025</span>
+                                                            <span class="nds-label">18/12/2025</span>
                                                         </span>
                                                     </button>
                                                 </li>
                                                 <li>
                                                     <button class="nds-btn nds-subtle nds-indicator">
-                                                        <span class="label nds-truncate">Open data initiative: government datasets now publicly accessible</span>
+                                                        <span class="nds-label nds-truncate">Open data initiative: government datasets now publicly accessible</span>
                                                         <span class="nds-tag nds-gray nds-xs">
-                                                            <span class="label">18/12/2025</span>
+                                                            <span class="nds-label">18/12/2025</span>
                                                         </span>
                                                     </button>
                                                 </li>
                                                 <li>
                                                     <button class="nds-btn nds-subtle nds-indicator">
-                                                        <span class="label nds-truncate">National cybersecurity awareness campaign launches</span>
+                                                        <span class="nds-label nds-truncate">National cybersecurity awareness campaign launches</span>
                                                         <span class="nds-tag nds-gray nds-xs">
-                                                            <span class="label">17/12/2025</span>
+                                                            <span class="nds-label">17/12/2025</span>
                                                         </span>
                                                     </button>
                                                 </li>
@@ -605,55 +605,55 @@ direction: ltr
                                                 <li>
                                                     <a class="nds-btn nds-subtle nds-indicator" href="#">
                                                         <span class="nds-featured-icon nds-brand nds-sm">
-                                                            <i class="hgi hgi-stroke hgi-link-02 icon"></i>
+                                                            <i class="hgi hgi-stroke hgi-link-02 nds-icon"></i>
                                                         </span>
-                                                        <span class="label nds-truncate">Services Portal</span>
-                                                        <i class="hgi hgi-stroke hgi-arrow-left-01 icon"></i>
+                                                        <span class="nds-label nds-truncate">Services Portal</span>
+                                                        <i class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i>
                                                     </a>
                                                 </li>
                                                 <li>
                                                     <a class="nds-btn nds-subtle nds-indicator" href="#">
                                                         <span class="nds-featured-icon nds-brand nds-sm">
-                                                            <i class="hgi hgi-stroke hgi-link-02 icon"></i>
+                                                            <i class="hgi hgi-stroke hgi-link-02 nds-icon"></i>
                                                         </span>
-                                                        <span class="label nds-truncate">Laws and Regulations</span>
-                                                        <i class="hgi hgi-stroke hgi-link-square-02 icon"></i>
+                                                        <span class="nds-label nds-truncate">Laws and Regulations</span>
+                                                        <i class="hgi hgi-stroke hgi-link-square-02 nds-icon"></i>
                                                     </a>
                                                 </li>
                                                 <li>
                                                     <a class="nds-btn nds-subtle nds-indicator" href="#">
                                                         <span class="nds-featured-icon nds-brand nds-sm">
-                                                            <i class="hgi hgi-stroke hgi-link-02 icon"></i>
+                                                            <i class="hgi hgi-stroke hgi-link-02 nds-icon"></i>
                                                         </span>
-                                                        <span class="label nds-truncate">Careers</span>
-                                                        <i class="hgi hgi-stroke hgi-arrow-left-01 icon"></i>
+                                                        <span class="nds-label nds-truncate">Careers</span>
+                                                        <i class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i>
                                                     </a>
                                                 </li>
                                                 <li>
                                                     <a class="nds-btn nds-subtle nds-indicator" href="#">
                                                         <span class="nds-featured-icon nds-brand nds-sm">
-                                                            <i class="hgi hgi-stroke hgi-link-02 icon"></i>
+                                                            <i class="hgi hgi-stroke hgi-link-02 nds-icon"></i>
                                                         </span>
-                                                        <span class="label nds-truncate">Open Data</span>
-                                                        <i class="hgi hgi-stroke hgi-link-square-02 icon"></i>
+                                                        <span class="nds-label nds-truncate">Open Data</span>
+                                                        <i class="hgi hgi-stroke hgi-link-square-02 nds-icon"></i>
                                                     </a>
                                                 </li>
                                                 <li>
                                                     <a class="nds-btn nds-subtle nds-indicator" href="#">
                                                         <span class="nds-featured-icon nds-brand nds-sm">
-                                                            <i class="hgi hgi-stroke hgi-link-02 icon"></i>
+                                                            <i class="hgi hgi-stroke hgi-link-02 nds-icon"></i>
                                                         </span>
-                                                        <span class="label nds-truncate">Media Center</span>
-                                                        <i class="hgi hgi-stroke hgi-arrow-left-01 icon"></i>
+                                                        <span class="nds-label nds-truncate">Media Center</span>
+                                                        <i class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i>
                                                     </a>
                                                 </li>
                                                 <li>
                                                     <a class="nds-btn nds-subtle nds-indicator" href="#">
                                                         <span class="nds-featured-icon nds-brand nds-sm">
-                                                            <i class="hgi hgi-stroke hgi-link-02 icon"></i>
+                                                            <i class="hgi hgi-stroke hgi-link-02 nds-icon"></i>
                                                         </span>
-                                                        <span class="label nds-truncate">Contact Directory</span>
-                                                        <i class="hgi hgi-stroke hgi-link-square-02 icon"></i>
+                                                        <span class="nds-label nds-truncate">Contact Directory</span>
+                                                        <i class="hgi hgi-stroke hgi-link-square-02 nds-icon"></i>
                                                     </a>
                                                 </li>
                                             </ul>
@@ -695,33 +695,33 @@ direction: ltr
         <ul class="nds-drawer-list">
           <li>
             <button class="nds-btn nds-subtle nds-indicator">
-              <span class="label nds-truncate">New digital identity verification system now available</span>
+              <span class="nds-label nds-truncate">New digital identity verification system now available</span>
               <span class="nds-tag nds-gray nds-xs">
-                <span class="label">23/12/2025</span>
+                <span class="nds-label">23/12/2025</span>
               </span>
             </button>
           </li>
           <li>
             <button class="nds-btn nds-subtle nds-indicator">
-              <span class="label nds-truncate">Enhanced online portal for business licensing and permits</span>
+              <span class="nds-label nds-truncate">Enhanced online portal for business licensing and permits</span>
               <span class="nds-tag nds-gray nds-xs">
-                <span class="label">18/12/2025</span>
+                <span class="nds-label">18/12/2025</span>
               </span>
             </button>
           </li>
           <li>
             <button class="nds-btn nds-subtle nds-indicator">
-              <span class="label nds-truncate">Open data initiative: government datasets now publicly accessible</span>
+              <span class="nds-label nds-truncate">Open data initiative: government datasets now publicly accessible</span>
               <span class="nds-tag nds-gray nds-xs">
-                <span class="label">18/12/2025</span>
+                <span class="nds-label">18/12/2025</span>
               </span>
             </button>
           </li>
           <li>
             <button class="nds-btn nds-subtle nds-indicator">
-              <span class="label nds-truncate">National cybersecurity awareness campaign launches</span>
+              <span class="nds-label nds-truncate">National cybersecurity awareness campaign launches</span>
               <span class="nds-tag nds-gray nds-xs">
-                <span class="label">17/12/2025</span>
+                <span class="nds-label">17/12/2025</span>
               </span>
             </button>
           </li>
@@ -741,55 +741,55 @@ direction: ltr
           <li>
             <a class="nds-btn nds-subtle nds-indicator" href="#">
               <span class="nds-featured-icon nds-brand nds-sm">
-                <i class="hgi hgi-stroke hgi-link-02 icon"></i>
+                <i class="hgi hgi-stroke hgi-link-02 nds-icon"></i>
               </span>
-              <span class="label nds-truncate">Services Portal</span>
-              <i class="hgi hgi-stroke hgi-arrow-left-01 icon"></i>
+              <span class="nds-label nds-truncate">Services Portal</span>
+              <i class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i>
             </a>
           </li>
           <li>
             <a class="nds-btn nds-subtle nds-indicator" href="#">
               <span class="nds-featured-icon nds-brand nds-sm">
-                <i class="hgi hgi-stroke hgi-link-02 icon"></i>
+                <i class="hgi hgi-stroke hgi-link-02 nds-icon"></i>
               </span>
-              <span class="label nds-truncate">Laws and Regulations</span>
-              <i class="hgi hgi-stroke hgi-link-square-02 icon"></i>
+              <span class="nds-label nds-truncate">Laws and Regulations</span>
+              <i class="hgi hgi-stroke hgi-link-square-02 nds-icon"></i>
             </a>
           </li>
           <li>
             <a class="nds-btn nds-subtle nds-indicator" href="#">
               <span class="nds-featured-icon nds-brand nds-sm">
-                <i class="hgi hgi-stroke hgi-link-02 icon"></i>
+                <i class="hgi hgi-stroke hgi-link-02 nds-icon"></i>
               </span>
-              <span class="label nds-truncate">Careers</span>
-              <i class="hgi hgi-stroke hgi-arrow-left-01 icon"></i>
+              <span class="nds-label nds-truncate">Careers</span>
+              <i class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i>
             </a>
           </li>
           <li>
             <a class="nds-btn nds-subtle nds-indicator" href="#">
               <span class="nds-featured-icon nds-brand nds-sm">
-                <i class="hgi hgi-stroke hgi-link-02 icon"></i>
+                <i class="hgi hgi-stroke hgi-link-02 nds-icon"></i>
               </span>
-              <span class="label nds-truncate">Open Data</span>
-              <i class="hgi hgi-stroke hgi-link-square-02 icon"></i>
+              <span class="nds-label nds-truncate">Open Data</span>
+              <i class="hgi hgi-stroke hgi-link-square-02 nds-icon"></i>
             </a>
           </li>
           <li>
             <a class="nds-btn nds-subtle nds-indicator" href="#">
               <span class="nds-featured-icon nds-brand nds-sm">
-                <i class="hgi hgi-stroke hgi-link-02 icon"></i>
+                <i class="hgi hgi-stroke hgi-link-02 nds-icon"></i>
               </span>
-              <span class="label nds-truncate">Media Center</span>
-              <i class="hgi hgi-stroke hgi-arrow-left-01 icon"></i>
+              <span class="nds-label nds-truncate">Media Center</span>
+              <i class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i>
             </a>
           </li>
           <li>
             <a class="nds-btn nds-subtle nds-indicator" href="#">
               <span class="nds-featured-icon nds-brand nds-sm">
-                <i class="hgi hgi-stroke hgi-link-02 icon"></i>
+                <i class="hgi hgi-stroke hgi-link-02 nds-icon"></i>
               </span>
-              <span class="label nds-truncate">Contact Directory</span>
-              <i class="hgi hgi-stroke hgi-link-square-02 icon"></i>
+              <span class="nds-label nds-truncate">Contact Directory</span>
+              <i class="hgi hgi-stroke hgi-link-square-02 nds-icon"></i>
             </a>
           </li>
         </ul>
@@ -822,43 +822,43 @@ direction: ltr
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket icon"></i>
-                        <span class="label">Auto-initialization</span>
+                        <i class="hgi hgi-stroke hgi-plug-socket nds-icon"></i>
+                        <span class="nds-label">Auto-initialization</span>
                     </span>
                     <p class="nds-item-desc">Works on page load with just HTML markup. For dynamically added drawers, call <code class="nds-inline-code lang-js">reinit()</code> to activate new instances.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layers-01 icon"></i>
-                        <span class="label">Accordion Submenus</span>
+                        <i class="hgi hgi-stroke hgi-layers-01 nds-icon"></i>
+                        <span class="nds-label">Accordion Submenus</span>
                     </span>
                     <p class="nds-item-desc">Smooth animated expand and collapse with automatic sibling closing, detected via CSS <code class="nds-inline-code lang-html">:has()</code> without extra classes.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-cursor-move-02 icon"></i>
-                        <span class="label">State Management</span>
+                        <i class="hgi hgi-stroke hgi-cursor-move-02 nds-icon"></i>
+                        <span class="nds-label">State Management</span>
                     </span>
                     <p class="nds-item-desc">Open, closing, and active states tracked via <code class="nds-inline-code lang-html">data-state</code> with custom events on every transition. Active nested items auto-reveal their parent menus on load.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-mobile-programming-01 icon"></i>
-                        <span class="label">Breakpoint-Driven Modes</span>
+                        <i class="hgi hgi-stroke hgi-mobile-programming-01 nds-icon"></i>
+                        <span class="nds-label">Breakpoint-Driven Modes</span>
                     </span>
                     <p class="nds-item-desc">Static expanded list on desktop that collapses into an accordion on mobile, controlled per-drawer or per-item with a single data attribute.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-arrow-shrink icon"></i>
-                        <span class="label">Scroll Overflow</span>
+                        <i class="hgi hgi-stroke hgi-arrow-shrink nds-icon"></i>
+                        <span class="nds-label">Scroll Overflow</span>
                     </span>
                     <p class="nds-item-desc">Height-constrained mode with gradient fade and a show-more button that auto-detects overflow and flips at scroll end.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-api icon"></i>
-                        <span class="label">JavaScript API</span>
+                        <i class="hgi hgi-stroke hgi-api nds-icon"></i>
+                        <span class="nds-label">JavaScript API</span>
                     </span>
                     <p class="nds-item-desc">Programmatic toggle, overflow check, init, destroy, and custom events fired on every submenu open and close.</p>
                 </div>

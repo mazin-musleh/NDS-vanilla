@@ -187,7 +187,7 @@
                         --toggle-transform: translate(calc(var(--nds-sidemenu-width) - var(--btn-width)/1.5), var(--_toggle-pos));
                     }
 
-                    .label {
+                    .nds-label {
                         height: 100%;
                         width: 40px;
                         opacity: 0;
@@ -245,7 +245,7 @@
 
 
 
-                .label {
+                .nds-label {
                     &[hidden] {
                         visibility: hidden;
                         display: block;

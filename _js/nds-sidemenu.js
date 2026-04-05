@@ -233,11 +233,11 @@
     };
 
     function updateToggleLabel(accMenu, toggleBtn, isTopMode) {
-        const labelSpan = toggleBtn.querySelector('.label');
+        const labelSpan = toggleBtn.querySelector('.nds-label');
         if (!labelSpan) return;
 
-        const menuLabel = accMenu.querySelector('li[data-state~="active"] .nds-btn .label')
-            || accMenu.querySelector('.nds-drawer-list > li .nds-btn .label');
+        const menuLabel = accMenu.querySelector('li[data-state~="active"] .nds-btn .nds-label')
+            || accMenu.querySelector('.nds-drawer-list > li .nds-btn .nds-label');
         if (menuLabel) labelSpan.textContent = menuLabel.textContent;
 
         if (isTopMode) {

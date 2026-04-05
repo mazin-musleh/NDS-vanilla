@@ -23,28 +23,28 @@ direction: ltr
                         <div class="demo-action">
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="label">Default</span>
+                                    <span class="nds-label">Default</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["", ".nds-pagination", "paginationSize"]'>
-                                            <span class="label">Default</span>
+                                            <span class="nds-label">Default</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-sm", ".nds-pagination", "paginationSize"]'>
-                                            <span class="label">Small</span>
+                                            <span class="nds-label">Small</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-md", ".nds-pagination", "paginationSize"]'>
-                                            <span class="label">Medium</span>
+                                            <span class="nds-label">Medium</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <button type="button" class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                <span class="nds-label">Remove bg</span>
                             </button>
                         </div>
                     </div>
@@ -59,27 +59,27 @@ direction: ltr
                                     </li>
                                     <li class="nds-pagination-item">
                                         <button type="button" class="nds-btn nds-subtle nds-indicator" data-state="active" aria-current="page" aria-label="Page 1">
-                                            <span class="label">1</span>
+                                            <span class="nds-label">1</span>
                                         </button>
                                     </li>
                                     <li class="nds-pagination-item">
                                         <button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 2">
-                                            <span class="label">2</span>
+                                            <span class="nds-label">2</span>
                                         </button>
                                     </li>
                                     <li class="nds-pagination-item">
                                         <button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 3">
-                                            <span class="label">3</span>
+                                            <span class="nds-label">3</span>
                                         </button>
                                     </li>
                                     <li class="nds-pagination-item">
                                         <button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 4">
-                                            <span class="label">4</span>
+                                            <span class="nds-label">4</span>
                                         </button>
                                     </li>
                                     <li class="nds-pagination-item">
                                         <button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 5">
-                                            <span class="label">5</span>
+                                            <span class="nds-label">5</span>
                                         </button>
                                     </li>
                                     <li class="nds-pagination-item nds-pagination-next">
@@ -119,27 +119,27 @@ direction: ltr
         </li>
         <li class="nds-pagination-item">
             <button type="button" class="nds-btn nds-subtle nds-indicator" data-state="active" aria-current="page" aria-label="Page 1">
-                <span class="label">1</span>
+                <span class="nds-label">1</span>
             </button>
         </li>
         <li class="nds-pagination-item">
             <button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 2">
-                <span class="label">2</span>
+                <span class="nds-label">2</span>
             </button>
         </li>
         <li class="nds-pagination-item">
             <button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 3">
-                <span class="label">3</span>
+                <span class="nds-label">3</span>
             </button>
         </li>
         <li class="nds-pagination-item">
             <button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 4">
-                <span class="label">4</span>
+                <span class="nds-label">4</span>
             </button>
         </li>
         <li class="nds-pagination-item">
             <button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 5">
-                <span class="label">5</span>
+                <span class="nds-label">5</span>
             </button>
         </li>
         <li class="nds-pagination-item nds-pagination-next">
@@ -175,28 +175,28 @@ direction: ltr
                         <div class="demo-action">
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="label">Default</span>
+                                    <span class="nds-label">Default</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["", ".nds-pagination", "paginationSize"]'>
-                                            <span class="label">Default</span>
+                                            <span class="nds-label">Default</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-sm", ".nds-pagination", "paginationSize"]'>
-                                            <span class="label">Small</span>
+                                            <span class="nds-label">Small</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-md", ".nds-pagination", "paginationSize"]'>
-                                            <span class="label">Medium</span>
+                                            <span class="nds-label">Medium</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <button type="button" class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                <span class="nds-label">Remove bg</span>
                             </button>
                         </div>
                     </div>
@@ -250,28 +250,28 @@ direction: ltr
                         <div class="demo-action">
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="label">Default</span>
+                                    <span class="nds-label">Default</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["", ".nds-pagination", "paginationSize"]'>
-                                            <span class="label">Default</span>
+                                            <span class="nds-label">Default</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-sm", ".nds-pagination", "paginationSize"]'>
-                                            <span class="label">Small</span>
+                                            <span class="nds-label">Small</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-md", ".nds-pagination", "paginationSize"]'>
-                                            <span class="label">Medium</span>
+                                            <span class="nds-label">Medium</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <button type="button" class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                <span class="nds-label">Remove bg</span>
                             </button>
                         </div>
                     </div>
@@ -286,52 +286,52 @@ direction: ltr
                                     </li>
                                     <li class="nds-pagination-item">
                                         <button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 1">
-                                            <span class="label">1</span>
+                                            <span class="nds-label">1</span>
                                         </button>
                                     </li>
                                     <li class="nds-pagination-item">
                                         <button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 2">
-                                            <span class="label">2</span>
+                                            <span class="nds-label">2</span>
                                         </button>
                                     </li>
                                     <li class="nds-pagination-item">
                                         <button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 3">
-                                            <span class="label">3</span>
+                                            <span class="nds-label">3</span>
                                         </button>
                                     </li>
                                     <li class="nds-pagination-item">
                                         <button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 4">
-                                            <span class="label">4</span>
+                                            <span class="nds-label">4</span>
                                         </button>
                                     </li>
                                     <li class="nds-pagination-item">
                                         <button type="button" class="nds-btn nds-subtle nds-indicator" data-state="active" aria-current="page" aria-label="Page 5">
-                                            <span class="label">5</span>
+                                            <span class="nds-label">5</span>
                                         </button>
                                     </li>
                                     <li class="nds-pagination-item">
                                         <button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 6">
-                                            <span class="label">6</span>
+                                            <span class="nds-label">6</span>
                                         </button>
                                     </li>
                                     <li class="nds-pagination-item">
                                         <button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 7">
-                                            <span class="label">7</span>
+                                            <span class="nds-label">7</span>
                                         </button>
                                     </li>
                                     <li class="nds-pagination-item">
                                         <button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 8">
-                                            <span class="label">8</span>
+                                            <span class="nds-label">8</span>
                                         </button>
                                     </li>
                                     <li class="nds-pagination-item">
                                         <button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 9">
-                                            <span class="label">9</span>
+                                            <span class="nds-label">9</span>
                                         </button>
                                     </li>
                                     <li class="nds-pagination-item">
                                         <button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 10">
-                                            <span class="label">10</span>
+                                            <span class="nds-label">10</span>
                                         </button>
                                     </li>
                                     <li class="nds-pagination-item nds-pagination-next">
@@ -372,52 +372,52 @@ direction: ltr
         </li>
         <li class="nds-pagination-item">
             <button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 1">
-                <span class="label">1</span>
+                <span class="nds-label">1</span>
             </button>
         </li>
         <li class="nds-pagination-item">
             <button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 2">
-                <span class="label">2</span>
+                <span class="nds-label">2</span>
             </button>
         </li>
         <li class="nds-pagination-item">
             <button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 3">
-                <span class="label">3</span>
+                <span class="nds-label">3</span>
             </button>
         </li>
         <li class="nds-pagination-item">
             <button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 4">
-                <span class="label">4</span>
+                <span class="nds-label">4</span>
             </button>
         </li>
         <li class="nds-pagination-item">
             <button type="button" class="nds-btn nds-subtle nds-indicator" data-state="active" aria-current="page" aria-label="Page 5">
-                <span class="label">5</span>
+                <span class="nds-label">5</span>
             </button>
         </li>
         <li class="nds-pagination-item">
             <button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 6">
-                <span class="label">6</span>
+                <span class="nds-label">6</span>
             </button>
         </li>
         <li class="nds-pagination-item">
             <button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 7">
-                <span class="label">7</span>
+                <span class="nds-label">7</span>
             </button>
         </li>
         <li class="nds-pagination-item">
             <button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 8">
-                <span class="label">8</span>
+                <span class="nds-label">8</span>
             </button>
         </li>
         <li class="nds-pagination-item">
             <button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 9">
-                <span class="label">9</span>
+                <span class="nds-label">9</span>
             </button>
         </li>
         <li class="nds-pagination-item">
             <button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 10">
-                <span class="label">10</span>
+                <span class="nds-label">10</span>
             </button>
         </li>
         <li class="nds-pagination-item nds-pagination-next">
@@ -454,28 +454,28 @@ direction: ltr
                         <div class="demo-action">
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="label">Default</span>
+                                    <span class="nds-label">Default</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["", ".nds-pagination", "paginationSize"]'>
-                                            <span class="label">Default</span>
+                                            <span class="nds-label">Default</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-sm", ".nds-pagination", "paginationSize"]'>
-                                            <span class="label">Small</span>
+                                            <span class="nds-label">Small</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-md", ".nds-pagination", "paginationSize"]'>
-                                            <span class="label">Medium</span>
+                                            <span class="nds-label">Medium</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <button type="button" class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                <span class="nds-label">Remove bg</span>
                             </button>
                         </div>
                     </div>
@@ -578,28 +578,28 @@ direction: ltr
                         <div class="demo-action">
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="label">Default</span>
+                                    <span class="nds-label">Default</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["", ".nds-pagination", "paginationSize"]'>
-                                            <span class="label">Default</span>
+                                            <span class="nds-label">Default</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-sm", ".nds-pagination", "paginationSize"]'>
-                                            <span class="label">Small</span>
+                                            <span class="nds-label">Small</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-md", ".nds-pagination", "paginationSize"]'>
-                                            <span class="label">Medium</span>
+                                            <span class="nds-label">Medium</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <button type="button" class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="label">Remove bg</span>
+                                <span class="nds-label">Remove bg</span>
                             </button>
                         </div>
                     </div>
@@ -801,43 +801,43 @@ direction: ltr
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket icon"></i>
-                        <span class="label">Auto-initialization</span>
+                        <i class="hgi hgi-stroke hgi-plug-socket nds-icon"></i>
+                        <span class="nds-label">Auto-initialization</span>
                     </span>
                     <p class="nds-item-desc">Scans for <code class="nds-inline-code lang-html">nds-pagination</code> elements on the page. Active states, disabled buttons, and ellipsis collapse configure themselves from the markup.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-more-horizontal icon"></i>
-                        <span class="label">Ellipsis Collapse</span>
+                        <i class="hgi hgi-stroke hgi-more-horizontal nds-icon"></i>
+                        <span class="nds-label">Ellipsis Collapse</span>
                     </span>
                     <p class="nds-item-desc">Paginations with more than five pages automatically collapse middle pages into a dropdown menu, keeping the first three and last page visible.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layers-01 icon"></i>
-                        <span class="label">Content Pagination</span>
+                        <i class="hgi hgi-stroke hgi-layers-01 nds-icon"></i>
+                        <span class="nds-label">Content Pagination</span>
                     </span>
                     <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">data-auto-pagination</code> to any <code class="nds-inline-code lang-html">nds-pagination</code> after a <code class="nds-inline-code lang-html">nds-paged-content</code> container and the pagination controls, page visibility, and scroll behavior are handled automatically.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-filter icon"></i>
-                        <span class="label">Filter-Aware Refresh</span>
+                        <i class="hgi hgi-stroke hgi-filter nds-icon"></i>
+                        <span class="nds-label">Filter-Aware Refresh</span>
                     </span>
                     <p class="nds-item-desc">When used with filtered content, call <code class="nds-inline-code lang-js">NDS.Pagination.refresh()</code> to recalculate page counts and reset to page one with only visible items.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-mobile-programming-01 icon"></i>
-                        <span class="label">Responsive Adaptation</span>
+                        <i class="hgi hgi-stroke hgi-mobile-programming-01 nds-icon"></i>
+                        <span class="nds-label">Responsive Adaptation</span>
                     </span>
                     <p class="nds-item-desc">Buttons shrink on mobile viewports and content pagination watches for <code class="nds-inline-code lang-html">--per-page</code> changes on resize, rebuilding pages to match the new layout.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-api icon"></i>
-                        <span class="label">Programmatic Control</span>
+                        <i class="hgi hgi-stroke hgi-api nds-icon"></i>
+                        <span class="nds-label">Programmatic Control</span>
                     </span>
                     <p class="nds-item-desc">Navigate to any page, refresh after content changes, or create new pagination instances through the <code class="nds-inline-code lang-js">NDS.Pagination</code> API.</p>
                 </div>
