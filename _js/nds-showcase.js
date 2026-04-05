@@ -1640,9 +1640,9 @@
                 card.querySelector('.nds-card-checkbox')?.setAttribute('hidden', '');
                 card.querySelector('.nds-card-actions')?.setAttribute('hidden', '');
                 // Clean expandable state
-                if (card.ndsExpandableInstance) {
-                    card.ndsExpandableInstance.destroy();
-                    delete card.ndsExpandableInstance;
+                if (card.ndsExpandable) {
+                    card.ndsExpandable.destroy();
+                    delete card.ndsExpandable;
                 }
                 card.classList.remove('nds-expandable');
                 NDS.State.remove(card, 'expandable', 'expanded');
@@ -2095,6 +2095,8 @@
         });
 
         var result = formatHtml(clone.outerHTML);
+        var hiddenCopy = getHiddenCodeCopy(codeElement);
+        if (hiddenCopy) hiddenCopy.textContent = result;
         codeElement.dataset.originalContent = result;
         codeElement.innerHTML = result;
         if (NDS.Code && NDS.Code.reprocessCodeElement) {
