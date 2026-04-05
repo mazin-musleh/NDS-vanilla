@@ -1793,7 +1793,7 @@
             }
 
             const filterInstance = new NDSFilter(container);
-            container.ndsFilterInstance = filterInstance;
+            container.ndsFilter = filterInstance;
             container.setAttribute('data-nds-filter-initialized', 'true');
             container.dispatchEvent(new CustomEvent('nds:filter:ready', {
                 detail: filterInstance,
@@ -1820,12 +1820,12 @@
                 if (typeof container === 'string') {
                     container = document.querySelector(container);
                 }
-                return container?.ndsFilterInstance || null;
+                return container?.ndsFilter || null;
             },
 
             getByTarget: (targetId) => {
                 const filterContainer = document.querySelector(`.nds-filter[data-filter-target="${targetId}"]`);
-                return filterContainer?.ndsFilterInstance || null;
+                return filterContainer?.ndsFilter || null;
             },
 
             /**
@@ -1841,8 +1841,8 @@
                 if (!container) return;
 
                 // Already initialized — call immediately
-                if (container.ndsFilterInstance) {
-                    callback(container.ndsFilterInstance);
+                if (container.ndsFilter) {
+                    callback(container.ndsFilter);
                     return;
                 }
 

@@ -195,7 +195,7 @@
                 }
 
                 const paginationInstance = new NDSPagination(container);
-                container.ndsPaginationInstance = paginationInstance;
+                container.ndsPagination = paginationInstance;
                 container.setAttribute('data-nds-pagination-initialized', 'true');
 
                 // Initialize button states after pagination is ready

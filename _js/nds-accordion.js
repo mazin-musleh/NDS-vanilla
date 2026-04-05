@@ -334,7 +334,7 @@
             
             if (!container.hasAttribute('data-nds-accordion-initialized')) {
                 const accordionInstance = new NDSAccordion(container);
-                container.ndsAccordionInstance = accordionInstance;
+                container.ndsAccordion = accordionInstance;
                 container.setAttribute('data-nds-accordion-initialized', 'true');
             }
         });

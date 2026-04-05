@@ -365,7 +365,7 @@ NDS.Breadcrumb.reinit();
 const instance = NDS.Breadcrumb.create(document.querySelector('.nds-breadcrumb-nav'));
 
 // Access existing instance
-const existing = document.querySelector('.nds-breadcrumb-nav').ndsBreadcrumbInstance;
+const existing = document.querySelector('.nds-breadcrumb-nav').ndsBreadcrumb;
 
 // Clean up
 instance.destroy();

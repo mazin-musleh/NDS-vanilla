@@ -95,8 +95,8 @@
 
         closeDropdown() {
             // Access the nds-dropmenu instance and close it
-            if (this.container && this.container.ndsDropmenuInstance) {
-                this.container.ndsDropmenuInstance.close();
+            if (this.container && this.container.ndsDropmenu) {
+                this.container.ndsDropmenu.close();
             }
         }
 

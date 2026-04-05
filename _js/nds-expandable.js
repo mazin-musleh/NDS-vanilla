@@ -154,11 +154,11 @@
             const siblings = parent.querySelectorAll('.nds-expandable[data-nds-expandable-initialized]');
             siblings.forEach(sibling => {
                 if (sibling === this.expandableContainer) return;
-                if (sibling.ndsExpandableInstance) {
-                    if (expand && !sibling.ndsExpandableInstance.isExpanded) {
-                        sibling.ndsExpandableInstance.expand(false);
-                    } else if (!expand && sibling.ndsExpandableInstance.isExpanded) {
-                        sibling.ndsExpandableInstance.collapse(false);
+                if (sibling.ndsExpandable) {
+                    if (expand && !sibling.ndsExpandable.isExpanded) {
+                        sibling.ndsExpandable.expand(false);
+                    } else if (!expand && sibling.ndsExpandable.isExpanded) {
+                        sibling.ndsExpandable.collapse(false);
                     }
                 }
             });
@@ -260,7 +260,7 @@
 
             if (!container.hasAttribute('data-nds-expandable-initialized')) {
                 const expandableInstance = new NDSExpandable(container);
-                container.ndsExpandableInstance = expandableInstance;
+                container.ndsExpandable = expandableInstance;
                 container.setAttribute('data-nds-expandable-initialized', 'true');
             }
         });
@@ -275,8 +275,8 @@
     function recheckAllHeights() {
         const expandableContainers = document.querySelectorAll('.nds-expandable[data-nds-expandable-initialized]');
         expandableContainers.forEach(container => {
-            if (container.ndsExpandableInstance && container.ndsExpandableInstance.recheckHeight) {
-                container.ndsExpandableInstance.recheckHeight();
+            if (container.ndsExpandable && container.ndsExpandable.recheckHeight) {
+                container.ndsExpandable.recheckHeight();
             }
         });
     }

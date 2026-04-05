@@ -454,7 +454,7 @@
 
         if (overlay && !overlay.hasAttribute('data-nds-ipv-initialized')) {
             const ipvInstance = new NDSImagePopupViewer();
-            window.ndsIPVInstance = ipvInstance;
+            window.ndsIPV = ipvInstance;
             overlay.setAttribute('data-nds-ipv-initialized', 'true');
         }
     }
@@ -466,7 +466,7 @@
             reinit: initializeIPV,
             create: () => {
                 initializeIPV();
-                return window.ndsIPVInstance;
+                return window.ndsIPV;
             }
         };
     }

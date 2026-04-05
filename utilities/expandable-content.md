@@ -280,7 +280,7 @@ NDS.Expandable.reinit();</code>
                 <div class="nds-expandable-content">
                     <code class="lang-javascript">// Get expandable instance
 const expandable = document.querySelector('.nds-expandable');
-const instance = expandable.ndsExpandableInstance;
+const instance = expandable.ndsExpandable;
 
 // Control expansion state
 instance.expandContent();    // Expand content

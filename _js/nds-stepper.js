@@ -205,7 +205,7 @@
                         targetStepper = control.closest('.nds-stepper') || document.querySelector('.nds-stepper');
                     }
 
-                    const stepperInstance = targetStepper?.ndsStepperInstance;
+                    const stepperInstance = targetStepper?.ndsStepper;
                     if (!stepperInstance) return;
 
                     switch (action) {
@@ -244,7 +244,7 @@
 
             const stepper = new NDSStepper(element);
             element.setAttribute('data-initialized', 'true');
-            element.ndsStepperInstance = stepper;
+            element.ndsStepper = stepper;
 
             if (element.id) {
                 steppers.set(element.id, stepper);

@@ -563,11 +563,11 @@
                 // Find all responsive tables inside the activated tab panel
                 const tables = activePanel.querySelectorAll('.nds-table[data-nds-responsive-initialized]');
                 tables.forEach(table => {
-                    if (table.ndsResponsiveTableInstance) {
+                    if (table.ndsTableResponsive) {
                         // Debounce the recheck
-                        clearTimeout(table.ndsResponsiveTableInstance.tabChangeTimer);
-                        table.ndsResponsiveTableInstance.tabChangeTimer = setTimeout(() => {
-                            table.ndsResponsiveTableInstance.checkTableWidth();
+                        clearTimeout(table.ndsTableResponsive.tabChangeTimer);
+                        table.ndsTableResponsive.tabChangeTimer = setTimeout(() => {
+                            table.ndsTableResponsive.checkTableWidth();
                         }, 200);
                     }
                 });
@@ -592,7 +592,7 @@
             // Set --min-width inline on the table to control scroll breakpoint
             if (!table.hasAttribute('data-nds-responsive-initialized')) {
                 const responsiveInstance = new NDSResponsiveTable(table);
-                table.ndsResponsiveTableInstance = responsiveInstance;
+                table.ndsTableResponsive = responsiveInstance;
                 table.setAttribute('data-nds-responsive-initialized', 'true');
             }
 
@@ -602,7 +602,7 @@
 
             if ((isSortable || hasCheckboxes) && !table.hasAttribute('data-nds-tables-initialized')) {
                 const tablesInstance = new NDSTables(table);
-                table.ndsTablesInstance = tablesInstance;
+                table.ndsTableControls = tablesInstance;
                 table.setAttribute('data-nds-tables-initialized', 'true');
             }
         });
@@ -617,8 +617,8 @@
     function recheckAllWidths() {
         const responsiveTables = document.querySelectorAll('.nds-table[data-nds-responsive-initialized]');
         responsiveTables.forEach(table => {
-            if (table.ndsResponsiveTableInstance && table.ndsResponsiveTableInstance.recheckWidth) {
-                table.ndsResponsiveTableInstance.recheckWidth();
+            if (table.ndsTableResponsive && table.ndsTableResponsive.recheckWidth) {
+                table.ndsTableResponsive.recheckWidth();
             }
         });
     }

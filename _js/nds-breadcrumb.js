@@ -119,7 +119,7 @@
 
             if (!nav.hasAttribute('data-nds-breadcrumb-initialized')) {
                 const breadcrumbInstance = new NDSBreadcrumb(nav);
-                nav.ndsBreadcrumbInstance = breadcrumbInstance;
+                nav.ndsBreadcrumb = breadcrumbInstance;
                 nav.setAttribute('data-nds-breadcrumb-initialized', 'true');
             }
         });

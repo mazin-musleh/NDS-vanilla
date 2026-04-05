@@ -240,7 +240,7 @@ NDS.ImagePopupViewer.init();
 var viewer = NDS.ImagePopupViewer.create();
 
 // Access the existing instance directly
-var viewer = window.ndsIPVInstance;
+var viewer = window.ndsIPV;
 
 // ── Instance Methods ────────────────────────────────
 // Open the viewer for a specific thumbnail element

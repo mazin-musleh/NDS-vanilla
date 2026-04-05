@@ -644,9 +644,9 @@ const element = document.querySelector('.nds-dropmenu');
 const instance = NDS.Dropmenu.create(element);
 
 // ── Instance methods ───────────────────────────────────────
-// Access instance via element.ndsDropmenuInstance
+// Access instance via element.ndsDropmenu
 const dropmenu = document.querySelector('.nds-dropmenu');
-const instance = dropmenu.ndsDropmenuInstance;
+const instance = dropmenu.ndsDropmenu;
 
 instance.open();    // Open the menu
 instance.close();   // Close the menu

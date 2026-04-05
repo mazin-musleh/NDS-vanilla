@@ -476,7 +476,7 @@ const openItems = instance.getOpenItems();
 // Returns: [{index, button, collapse, isOpen}, ...]
 
 // Access an existing instance from a DOM element
-const existing = document.querySelector('#my-accordion').ndsAccordionInstance;
+const existing = document.querySelector('#my-accordion').ndsAccordion;
 
 // Clean up when removing an accordion from the DOM
 instance.destroy();

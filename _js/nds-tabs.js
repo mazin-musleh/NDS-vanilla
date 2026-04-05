@@ -532,7 +532,7 @@
             
             if (!container.hasAttribute('data-nds-tabs-initialized')) {
                 const tabsInstance = new NDSTabs(container);
-                container.ndsTabsInstance = tabsInstance;
+                container.ndsTabs = tabsInstance;
                 container.setAttribute('data-nds-tabs-initialized', 'true');
             }
         });

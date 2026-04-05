@@ -275,8 +275,8 @@
 
             // Close any other open dropmenus
             document.querySelectorAll('.nds-dropmenu[data-state~="open"]').forEach(el => {
-                if (el !== this.dropmenu && el.ndsDropmenuInstance) {
-                    el.ndsDropmenuInstance.close();
+                if (el !== this.dropmenu && el.ndsDropmenu) {
+                    el.ndsDropmenu.close();
                 }
             });
 
@@ -431,7 +431,7 @@
             if (el.closest('code, .code-example')) return;
             if (el.hasAttribute('data-nds-dropmenu-initialized')) return;
 
-            el.ndsDropmenuInstance = new NDSDropmenu(el);
+            el.ndsDropmenu = new NDSDropmenu(el);
         });
     }
 
