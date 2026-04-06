@@ -4,7 +4,7 @@
   status: "completed"
   date: "2026-03-15"
   category: "Licensing"
-  icon: '<i class="hgi hgi-stroke hgi-store-01 icon"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-store-01 nds-icon"></i>'
 
 - id: "TXN-2026-002"
   name: "Visa Processing Fee"
@@ -12,7 +12,7 @@
   status: "pending"
   date: "2026-03-14"
   category: "Immigration"
-  icon: '<i class="hgi hgi-stroke hgi-passport-01 icon"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-passport-01 nds-icon"></i>'
 
 - id: "TXN-2026-003"
   name: "Property Transfer Tax"
@@ -20,7 +20,7 @@
   status: "completed"
   date: "2026-03-12"
   category: "Real Estate"
-  icon: '<i class="hgi hgi-stroke hgi-building-02 icon"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-building-02 nds-icon"></i>'
 
 - id: "TXN-2026-004"
   name: "Vehicle Registration Fee"
@@ -28,7 +28,7 @@
   status: "completed"
   date: "2026-03-10"
   category: "Transport"
-  icon: '<i class="hgi hgi-stroke hgi-car-01 icon"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-car-01 nds-icon"></i>'
 
 - id: "TXN-2026-005"
   name: "Building Permit Application"
@@ -36,7 +36,7 @@
   status: "failed"
   date: "2026-03-08"
   category: "Construction"
-  icon: '<i class="hgi hgi-stroke hgi-structure-02 icon"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-structure-02 nds-icon"></i>'
 
 - id: "TXN-2026-006"
   name: "Health Insurance Premium"
@@ -44,7 +44,7 @@
   status: "completed"
   date: "2026-03-06"
   category: "Healthcare"
-  icon: '<i class="hgi hgi-stroke hgi-health icon"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-health nds-icon"></i>'
 
 - id: "TXN-2026-007"
   name: "School Enrollment Fee"
@@ -52,7 +52,7 @@
   status: "pending"
   date: "2026-03-05"
   category: "Education"
-  icon: '<i class="hgi hgi-stroke hgi-mortarboard-02 icon"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-mortarboard-02 nds-icon"></i>'
 
 - id: "TXN-2026-008"
   name: "Court Case Filing Fee"
@@ -60,7 +60,7 @@
   status: "completed"
   date: "2026-03-03"
   category: "Legal"
-  icon: '<i class="hgi hgi-stroke hgi-legal-01 icon"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-legal-01 nds-icon"></i>'
 
 - id: "TXN-2026-009"
   name: "VAT Quarterly Payment"
@@ -68,7 +68,7 @@
   status: "completed"
   date: "2026-03-01"
   category: "Tax"
-  icon: '<i class="hgi hgi-stroke hgi-invoice-02 icon"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-invoice-02 nds-icon"></i>'
 
 - id: "TXN-2026-010"
   name: "Certificate Authentication"
@@ -76,7 +76,7 @@
   status: "pending"
   date: "2026-02-28"
   category: "Education"
-  icon: '<i class="hgi hgi-stroke hgi-certificate-02 icon"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-certificate-02 nds-icon"></i>'
 
 - id: "TXN-2026-011"
   name: "Passport Renewal Fee"
@@ -84,7 +84,7 @@
   status: "completed"
   date: "2026-02-25"
   category: "Identity"
-  icon: '<i class="hgi hgi-stroke hgi-passport icon"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-passport nds-icon"></i>'
 
 - id: "TXN-2026-012"
   name: "Work Permit Processing"
@@ -92,4 +92,4 @@
   status: "failed"
   date: "2026-02-22"
   category: "Employment"
-  icon: '<i class="hgi hgi-stroke hgi-briefcase-01 icon"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-briefcase-01 nds-icon"></i>'

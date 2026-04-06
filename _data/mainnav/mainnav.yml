@@ -79,7 +79,7 @@ secondary_nav:
   - label: "Search"
     icon: "hgi-search-01"
     button_style: "nds-nav-link nds-btn nds-subtle nds-indicator"
-    custom_class: "nds-icon-only search nds-PAB"
+    custom_class: "nds-icon-only nds-search nds-PAB"
 
     template: "mainnav-search.html"
     type: "dropdown"
@@ -112,7 +112,7 @@ secondary_nav:
     icon: "hgi-user"
     avatar: true
     img_icon: "assets/img/avatar3.png"
-    custom_class: "login nds-icon-only nds-auth"
+    custom_class: "nds-login nds-icon-only nds-auth"
     button_style: "nds-nav-link nds-btn nds-subtle nds-lg nds-indicator"
 
     template: "mainnav-user.html"

@@ -27,6 +27,7 @@ Topbar Utilities
 .infoContainer          → .nds-topbar-info
 .smallScreenText        → .nds-digitalStamp-sm-text
 .bigScreenText          → .nds-digitalStamp-lg-text
+.flag                   → .nds-flag
 
 Body / Layout
 -------------
@@ -59,6 +60,8 @@ Nav Component
 .PAB                        → .nds-PAB
 .showMore                   → .nds-show-more     (nav, tabs, accordion, breadcrumb, etc.)
 .nds-drawer-more            → .nds-show-more     (drawer, scoped to .nds-drawer in SCSS)
+.search                     → .nds-search        (mainnav secondary nav)
+.login                      → .nds-login         (mainnav secondary nav)
 
 Progress Components
 -------------------

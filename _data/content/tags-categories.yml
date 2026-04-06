@@ -1,71 +1,71 @@
 # Department tags
 - label: "Engineering"
   variant: "department"
-  icon: '<i class="hgi hgi-stroke hgi-code-circle icon"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-code-circle nds-icon"></i>'
 
 - label: "Design"
   variant: "department"
-  icon: '<i class="hgi hgi-stroke hgi-paint-board icon"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-paint-board nds-icon"></i>'
 
 - label: "Marketing"
   variant: "department"
-  icon: '<i class="hgi hgi-stroke hgi-megaphone-01 icon"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-megaphone-01 nds-icon"></i>'
 
 - label: "Finance"
   variant: "department"
-  icon: '<i class="hgi hgi-stroke hgi-dollar-circle icon"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-dollar-circle nds-icon"></i>'
 
 - label: "Human Resources"
   variant: "department"
-  icon: '<i class="hgi hgi-stroke hgi-user-multiple icon"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-user-multiple nds-icon"></i>'
 
 # Status tags
 - label: "Active"
   variant: "status"
-  icon: '<i class="hgi hgi-stroke hgi-checkmark-circle-01 icon"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-checkmark-circle-01 nds-icon"></i>'
 
 - label: "Pending Review"
   variant: "status"
-  icon: '<i class="hgi hgi-stroke hgi-clock-01 icon"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-clock-01 nds-icon"></i>'
 
 - label: "Approved"
   variant: "status"
-  icon: '<i class="hgi hgi-stroke hgi-tick-01 icon"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-tick-01 nds-icon"></i>'
 
 - label: "Rejected"
   variant: "status"
-  icon: '<i class="hgi hgi-stroke hgi-cancel-01 icon"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-cancel-01 nds-icon"></i>'
 
 - label: "Expired"
   variant: "status"
-  icon: '<i class="hgi hgi-stroke hgi-alert-02 icon"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-alert-02 nds-icon"></i>'
 
 # Priority tags
 - label: "Critical"
   variant: "priority"
-  icon: '<i class="hgi hgi-stroke hgi-alert-diamond icon"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-alert-diamond nds-icon"></i>'
 
 - label: "High"
   variant: "priority"
-  icon: '<i class="hgi hgi-stroke hgi-arrow-up-01 icon"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-arrow-up-01 nds-icon"></i>'
 
 - label: "Medium"
   variant: "priority"
-  icon: '<i class="hgi hgi-stroke hgi-arrow-right-01 icon"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-arrow-right-01 nds-icon"></i>'
 
 - label: "Low"
   variant: "priority"
-  icon: '<i class="hgi hgi-stroke hgi-arrow-down-01 icon"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-arrow-down-01 nds-icon"></i>'
 
 # Role tags
 - label: "Administrator"
   variant: "role"
-  icon: '<i class="hgi hgi-stroke hgi-shield-01 icon"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-shield-01 nds-icon"></i>'
 
 - label: "Editor"
   variant: "role"
-  icon: '<i class="hgi hgi-stroke hgi-edit-01 icon"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-edit-01 nds-icon"></i>'
 
 - label: "Viewer"
   variant: "role"
-  icon: '<i class="hgi hgi-stroke hgi-search-01 icon"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-search-01 nds-icon"></i>'
