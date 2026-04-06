@@ -548,8 +548,9 @@
                 // Skip hidden containers
                 if (!isVisible(container)) return;
 
-                // Skip OTP containers — validated as a group below
+                // Skip containers validated at group level (OTP, radio, checkbox)
                 if (container.classList.contains('nds-otp-container')) return;
+                if (container.closest('.nds-form-group')) return;
 
                 var input = container.querySelector('input, textarea, select');
                 if (!input || input.disabled) return;
@@ -650,7 +651,10 @@
                 hasValue ? NDS.State.add(formContainer, 'filled') : NDS.State.remove(formContainer, 'filled');
                 input.disabled ? NDS.State.add(formContainer, 'disabled') : NDS.State.remove(formContainer, 'disabled');
                 input.readOnly ? NDS.State.add(formContainer, 'readonly') : NDS.State.remove(formContainer, 'readonly');
-                formContainer.toggleAttribute('data-required', input.required);
+                // Skip required propagation for radios/checkboxes — managed at group level
+                if (input.type !== 'radio' && input.type !== 'checkbox') {
+                    formContainer.toggleAttribute('data-required', input.required);
+                }
             }
 
             // Show/hide clear button
@@ -851,7 +855,9 @@
             // Initialize state - two-way sync
             // Container → input: propagate data-required and pre-existing data-state
             if (formContainer) {
-                if (formContainer.hasAttribute('data-required')) input.required = true;
+                if (formContainer.hasAttribute('data-required') && input.type !== 'radio') {
+                    input.required = true;
+                }
                 NDS.State.apply(formContainer, 'disabled', 'readonly');
             }
             // Input → container: sync current input state to data-state
@@ -1795,8 +1801,9 @@
             if (stateName === 'required') {
                 if (add) container.setAttribute('data-required', '');
                 else container.removeAttribute('data-required');
+                // Propagate to inputs, skip radios (always in groups, validated at group level)
                 container.querySelectorAll('input, textarea, select').forEach(function(input) {
-                    input.required = add;
+                    if (input.type !== 'radio') input.required = add;
                 });
             } else {
                 add ? NDS.State.add(container, stateName) : NDS.State.remove(container, stateName);
