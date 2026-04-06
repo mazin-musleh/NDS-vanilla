@@ -19,8 +19,11 @@ direction: ltr
             <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
-                    <div class="demo-label">Data Table</div>
                     <div class="demo-action">
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-compact", ".nds-table", "tableSize"]'>
+                            <span class="nds-label">Compact</span>
+                        </button>
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                             <span class="nds-label">Remove bg</span>
@@ -120,218 +123,6 @@ direction: ltr
     </div>
 </section>
 
-<!-- Compact Table Section -->
-<section id="compactTableOverview" class="nds-content-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Compact Table</h2>
-            <p class="nds-section-description">Reduced padding and smaller text for dense datasets where screen space is limited</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-showcase">
-            <div class="nds-demo-card">
-                <div class="demo-header">
-                    <div class="demo-label">Compact Data Table</div>
-                    <div class="demo-action">
-                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                            <span class="nds-label">Remove bg</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="demo-container">
-                    <div class="state-demo">
-                        <table class="nds-table nds-compact">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Product</th>
-                                    <th>Price</th>
-                                    <th>Tags</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>001</td>
-                                    <td>Dell Laptop</td>
-                                    <td>9,375 SAR</td>
-                                    <td>
-                                        <span class="nds-tag nds-success nds-sm"><span class="nds-label">In
-                                                Stock</span></span>
-                                        <span class="nds-tag nds-neutral nds-sm"><span
-                                                class="nds-label">Electronics</span></span>
-                                    </td>
-                                    <td>
-                                        <button class="nds-btn nds-sm nds-transparent">
-                                            <i class="hgi hgi-stroke hgi-edit-02"></i>
-                                            <span class="nds-label">Edit</span>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>002</td>
-                                    <td>Wireless Mouse</td>
-                                    <td>281 SAR</td>
-                                    <td>
-                                        <span class="nds-tag nds-warning nds-sm"><span class="nds-label">Low
-                                                Stock</span></span>
-                                        <span class="nds-tag nds-info nds-sm"><span
-                                                class="nds-label">Accessories</span></span>
-                                    </td>
-                                    <td>
-                                        <button class="nds-btn nds-sm nds-transparent">
-                                            <i class="hgi hgi-stroke hgi-edit-02"></i>
-                                            <span class="nds-label">Edit</span>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>003</td>
-                                    <td>Mechanical Keyboard</td>
-                                    <td>1,200 SAR</td>
-                                    <td>
-                                        <span class="nds-tag nds-neutral nds-sm"><span
-                                                class="nds-label">Ordered</span></span>
-                                        <span class="nds-tag nds-info nds-sm"><span
-                                                class="nds-label">Accessories</span></span>
-                                        <span class="nds-tag nds-success nds-sm"><span
-                                                class="nds-label">Premium</span></span>
-                                    </td>
-                                    <td>
-                                        <button class="nds-btn nds-sm nds-transparent">
-                                            <i class="hgi hgi-stroke hgi-edit-02"></i>
-                                            <span class="nds-label">Edit</span>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>004</td>
-                                    <td>27" Monitor</td>
-                                    <td>4,500 SAR</td>
-                                    <td>
-                                        <span class="nds-tag nds-error nds-sm"><span class="nds-label">Out of
-                                                Stock</span></span>
-                                        <span class="nds-tag nds-neutral nds-sm"><span
-                                                class="nds-label">Display</span></span>
-                                    </td>
-                                    <td>
-                                        <button class="nds-btn nds-sm nds-transparent">
-                                            <i class="hgi hgi-stroke hgi-edit-02"></i>
-                                            <span class="nds-label">Edit</span>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided" hidden>
-                    <div class="nds-tab-list-container">
-                        <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                                aria-controls="panel-table-compact-1" id="tab-table-compact-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                        </nav>
-                    </div>
-                    <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-table-compact-1"
-                            aria-labelledby="tab-table-compact-1">
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                </button>
-                            </div>
-                            <div class="nds-expandable-content">
-                                <code class="lang-html code">
-<table class="nds-table nds-compact">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Product</th>
-      <th>Price</th>
-      <th>Tags</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>001</td>
-      <td>Dell Laptop</td>
-      <td>9,375 SAR</td>
-      <td>
-        <span class="nds-tag nds-success nds-sm"><span class="nds-label">In Stock</span></span>
-        <span class="nds-tag nds-neutral nds-sm"><span class="nds-label">Electronics</span></span>
-      </td>
-      <td>
-        <button class="nds-btn nds-sm nds-transparent">
-          <i class="hgi hgi-stroke hgi-edit-02"></i>
-          <span class="nds-label">Edit</span>
-        </button>
-      </td>
-    </tr>
-    <tr>
-      <td>002</td>
-      <td>Wireless Mouse</td>
-      <td>281 SAR</td>
-      <td>
-        <span class="nds-tag nds-warning nds-sm"><span class="nds-label">Low Stock</span></span>
-        <span class="nds-tag nds-info nds-sm"><span class="nds-label">Accessories</span></span>
-      </td>
-      <td>
-        <button class="nds-btn nds-sm nds-transparent">
-          <i class="hgi hgi-stroke hgi-edit-02"></i>
-          <span class="nds-label">Edit</span>
-        </button>
-      </td>
-    </tr>
-    <tr>
-      <td>003</td>
-      <td>Mechanical Keyboard</td>
-      <td>1,200 SAR</td>
-      <td>
-        <span class="nds-tag nds-neutral nds-sm"><span class="nds-label">Ordered</span></span>
-        <span class="nds-tag nds-info nds-sm"><span class="nds-label">Accessories</span></span>
-        <span class="nds-tag nds-success nds-sm"><span class="nds-label">Premium</span></span>
-      </td>
-      <td>
-        <button class="nds-btn nds-sm nds-transparent">
-          <i class="hgi hgi-stroke hgi-edit-02"></i>
-          <span class="nds-label">Edit</span>
-        </button>
-      </td>
-    </tr>
-    <tr>
-      <td>004</td>
-      <td>27" Monitor</td>
-      <td>4,500 SAR</td>
-      <td>
-        <span class="nds-tag nds-error nds-sm"><span class="nds-label">Out of Stock</span></span>
-        <span class="nds-tag nds-neutral nds-sm"><span class="nds-label">Display</span></span>
-      </td>
-      <td>
-        <button class="nds-btn nds-sm nds-transparent">
-          <i class="hgi hgi-stroke hgi-edit-02"></i>
-          <span class="nds-label">Edit</span>
-        </button>
-      </td>
-    </tr>
-  </tbody>
-</table>
-                                </code>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                </div>
-            </div>
-            </div>
-        </div>
-    </div>
-</section>
-
 <!-- Sortable Table Section -->
 <section id="sortableTableOverview" class="nds-content-section">
     <div class="nds-section-wrapper">
@@ -343,8 +134,11 @@ direction: ltr
             <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
-                    <div class="demo-label">Sortable Data Table</div>
                     <div class="demo-action">
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-compact", ".nds-table", "tableSize"]'>
+                            <span class="nds-label">Compact</span>
+                        </button>
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                             <span class="nds-label">Remove bg</span>
@@ -356,23 +150,29 @@ direction: ltr
                         <table class="nds-table nds-sortable">
                             <thead>
                                 <tr>
-                                    <th class="nds-sortable-col">
-                                        <button class="nds-btn nds-sort-header">
+                                    <th>
+                                        <div class="nds-col-header">
                                             <span class="nds-label">Department</span>
-                                            <i class="hgi hgi-stroke hgi-arrow-up-down nds-sort-icon"></i>
-                                        </button>
+                                            <div class="nds-col-actions">
+                                                <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"><i class="hgi hgi-stroke hgi-sorting-05 nds-sort-icon"></i></button>
+                                            </div>
+                                        </div>
                                     </th>
-                                    <th class="nds-sortable-col" data-state="sorted-asc">
-                                        <button class="nds-btn nds-sort-header">
+                                    <th data-state="sorted-asc">
+                                        <div class="nds-col-header">
                                             <span class="nds-label">Employees</span>
-                                            <i class="hgi hgi-stroke hgi-arrow-up nds-sort-icon"></i>
-                                        </button>
+                                            <div class="nds-col-actions">
+                                                <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"><i class="hgi hgi-stroke hgi-sorting-05 nds-sort-icon"></i></button>
+                                            </div>
+                                        </div>
                                     </th>
-                                    <th class="nds-sortable-col">
-                                        <button class="nds-btn nds-sort-header">
+                                    <th>
+                                        <div class="nds-col-header">
                                             <span class="nds-label">Budget</span>
-                                            <i class="hgi hgi-stroke hgi-arrow-up-down nds-sort-icon"></i>
-                                        </button>
+                                            <div class="nds-col-actions">
+                                                <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"><i class="hgi hgi-stroke hgi-sorting-05 nds-sort-icon"></i></button>
+                                            </div>
+                                        </div>
                                     </th>
                                     <th>Status</th>
                                 </tr>
@@ -433,23 +233,29 @@ direction: ltr
 <table class="nds-table nds-sortable">
   <thead>
     <tr>
-      <th class="nds-sortable-col">
-        <button class="nds-btn nds-sort-header">
+      <th>
+        <div class="nds-col-header">
           <span class="nds-label">Department</span>
-          <i class="hgi hgi-stroke hgi-arrow-up-down nds-sort-icon"></i>
-        </button>
+          <div class="nds-col-actions">
+            <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"><i class="hgi hgi-stroke hgi-sorting-05 nds-sort-icon"></i></button>
+          </div>
+        </div>
       </th>
-      <th class="nds-sortable-col" data-state="sorted-asc">
-        <button class="nds-btn nds-sort-header">
+      <th data-state="sorted-asc">
+        <div class="nds-col-header">
           <span class="nds-label">Employees</span>
-          <i class="hgi hgi-stroke hgi-arrow-up nds-sort-icon"></i>
-        </button>
+          <div class="nds-col-actions">
+            <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"><i class="hgi hgi-stroke hgi-sorting-05 nds-sort-icon"></i></button>
+          </div>
+        </div>
       </th>
-      <th class="nds-sortable-col">
-        <button class="nds-btn nds-sort-header">
+      <th>
+        <div class="nds-col-header">
           <span class="nds-label">Budget</span>
-          <i class="hgi hgi-stroke hgi-arrow-up-down nds-sort-icon"></i>
-        </button>
+          <div class="nds-col-actions">
+            <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"><i class="hgi hgi-stroke hgi-sorting-05 nds-sort-icon"></i></button>
+          </div>
+        </div>
       </th>
       <th>Status</th>
     </tr>
@@ -504,8 +310,11 @@ direction: ltr
             <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
-                    <div class="demo-label">Feedback Status Table</div>
                     <div class="demo-action">
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-compact", ".nds-table", "tableSize"]'>
+                            <span class="nds-label">Compact</span>
+                        </button>
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                             <span class="nds-label">Remove bg</span>
@@ -753,8 +562,11 @@ direction: ltr
             <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
-                    <div class="demo-label">Selectable Data Table</div>
                     <div class="demo-action">
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-compact", ".nds-table", "tableSize"]'>
+                            <span class="nds-label">Compact</span>
+                        </button>
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                             <span class="nds-label">Remove bg</span>
@@ -769,7 +581,7 @@ direction: ltr
                                     <th>
                                         <div class="nds-form-container nds-check-container">
                                             <div class="nds-form-control">
-                                                <input type="checkbox" class="nds-check">
+                                                <input type="checkbox" class="nds-check" aria-label="Select all rows">
                                             </div>
                                         </div>
                                     </th>
@@ -784,7 +596,7 @@ direction: ltr
                                     <td>
                                         <div class="nds-form-container nds-check-container">
                                             <div class="nds-form-control">
-                                                <input type="checkbox" class="nds-check">
+                                                <input type="checkbox" class="nds-check" aria-label="Select Hassan Al-Mukhtar">
                                             </div>
                                         </div>
                                     </td>
@@ -794,11 +606,11 @@ direction: ltr
                                     <td><span class="nds-tag nds-success nds-sm"><span
                                                 class="nds-label">Active</span></span></td>
                                 </tr>
-                                <tr>
+                                <tr data-state="selected">
                                     <td>
                                         <div class="nds-form-container nds-check-container">
                                             <div class="nds-form-control">
-                                                <input type="checkbox" class="nds-check" checked>
+                                                <input type="checkbox" class="nds-check" checked aria-label="Select Nadia Al-Khatib">
                                             </div>
                                         </div>
                                     </td>
@@ -812,7 +624,7 @@ direction: ltr
                                     <td>
                                         <div class="nds-form-container nds-check-container">
                                             <div class="nds-form-control">
-                                                <input type="checkbox" class="nds-check">
+                                                <input type="checkbox" class="nds-check" aria-label="Select Tariq Al-Sudairi">
                                             </div>
                                         </div>
                                     </td>
@@ -822,11 +634,11 @@ direction: ltr
                                     <td><span class="nds-tag nds-warning nds-sm"><span
                                                 class="nds-label">Pending</span></span></td>
                                 </tr>
-                                <tr>
+                                <tr data-state="selected">
                                     <td>
                                         <div class="nds-form-container nds-check-container">
                                             <div class="nds-form-control">
-                                                <input type="checkbox" class="nds-check" checked>
+                                                <input type="checkbox" class="nds-check" checked aria-label="Select Zara Al-Habib">
                                             </div>
                                         </div>
                                     </td>
@@ -866,7 +678,7 @@ direction: ltr
       <th>
         <div class="nds-form-container nds-check-container">
           <div class="nds-form-control">
-            <input type="checkbox" class="nds-check">
+            <input type="checkbox" class="nds-check" aria-label="Select all rows">
           </div>
         </div>
       </th>
@@ -881,7 +693,7 @@ direction: ltr
       <td>
         <div class="nds-form-container nds-check-container">
           <div class="nds-form-control">
-            <input type="checkbox" class="nds-check">
+            <input type="checkbox" class="nds-check" aria-label="Select Hassan Al-Mukhtar">
           </div>
         </div>
       </td>
@@ -890,11 +702,11 @@ direction: ltr
       <td>Engineering</td>
       <td><span class="nds-tag nds-success nds-sm"><span class="nds-label">Active</span></span></td>
     </tr>
-    <tr>
+    <tr data-state="selected">
       <td>
         <div class="nds-form-container nds-check-container">
           <div class="nds-form-control">
-            <input type="checkbox" class="nds-check" checked>
+            <input type="checkbox" class="nds-check" checked aria-label="Select Nadia Al-Khatib">
           </div>
         </div>
       </td>
@@ -907,7 +719,7 @@ direction: ltr
       <td>
         <div class="nds-form-container nds-check-container">
           <div class="nds-form-control">
-            <input type="checkbox" class="nds-check">
+            <input type="checkbox" class="nds-check" aria-label="Select Tariq Al-Sudairi">
           </div>
         </div>
       </td>
@@ -916,11 +728,11 @@ direction: ltr
       <td>Marketing</td>
       <td><span class="nds-tag nds-warning nds-sm"><span class="nds-label">Pending</span></span></td>
     </tr>
-    <tr>
+    <tr data-state="selected">
       <td>
         <div class="nds-form-container nds-check-container">
           <div class="nds-form-control">
-            <input type="checkbox" class="nds-check" checked>
+            <input type="checkbox" class="nds-check" checked aria-label="Select Zara Al-Habib">
           </div>
         </div>
       </td>
@@ -954,8 +766,11 @@ direction: ltr
             <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
-                    <div class="demo-label">Center Aligned</div>
                     <div class="demo-action">
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-compact", ".nds-table", "tableSize"]'>
+                            <span class="nds-label">Compact</span>
+                        </button>
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                             <span class="nds-label">Remove bg</span>
@@ -1081,8 +896,11 @@ direction: ltr
             <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
-                    <div class="demo-label">Loading Table</div>
                     <div class="demo-action">
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-compact", ".nds-table", "tableSize"]'>
+                            <span class="nds-label">Compact</span>
+                        </button>
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                             <span class="nds-label">Remove bg</span>
@@ -1194,8 +1012,11 @@ direction: ltr
             <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
-                    <div class="demo-label">Responsive Table with Max-Width</div>
                     <div class="demo-action">
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-compact", ".nds-table", "tableSize"]'>
+                            <span class="nds-label">Compact</span>
+                        </button>
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                             <span class="nds-label">Remove bg</span>
@@ -1338,8 +1159,11 @@ direction: ltr
             <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
-                    <div class="demo-label">Paginated Services Table ({{ site.data.content.services | size }} items, 5 per page)</div>
                     <div class="demo-action">
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-compact", ".nds-table", "tableSize"]'>
+                            <span class="nds-label">Compact</span>
+                        </button>
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                             <span class="nds-label">Remove bg</span>
@@ -1348,34 +1172,40 @@ direction: ltr
                 </div>
                 <div class="demo-container">
                     <div class="state-demo">
-                        <div class="nds-paged-content" style="--per-page: 5;">
+                        <div class="nds-paged-content" style="--per-page: 5;" hidden>
                             <table class="nds-table nds-compact nds-sortable">
                                 <thead>
                                     <tr>
-                                        <th class="nds-sortable-col">
-                                            <button class="nds-btn nds-sort-header">
+                                        <th>
+                                            <div class="nds-col-header">
                                                 <span class="nds-label">#</span>
-                                                <i class="hgi hgi-stroke hgi-arrow-up-down nds-sort-icon"></i>
-                                            </button>
+                                                <div class="nds-col-actions">
+                                                    <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"><i class="hgi hgi-stroke hgi-sorting-05 nds-sort-icon"></i></button>
+                                                </div>
+                                            </div>
                                         </th>
-                                        <th class="nds-sortable-col">
-                                            <button class="nds-btn nds-sort-header">
+                                        <th>
+                                            <div class="nds-col-header">
                                                 <span class="nds-label">Service</span>
-                                                <i class="hgi hgi-stroke hgi-arrow-up-down nds-sort-icon"></i>
-                                            </button>
+                                                <div class="nds-col-actions">
+                                                    <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"><i class="hgi hgi-stroke hgi-sorting-05 nds-sort-icon"></i></button>
+                                                </div>
+                                            </div>
                                         </th>
-                                        <th class="nds-sortable-col">
-                                            <button class="nds-btn nds-sort-header">
+                                        <th>
+                                            <div class="nds-col-header">
                                                 <span class="nds-label">System</span>
-                                                <i class="hgi hgi-stroke hgi-arrow-up-down nds-sort-icon"></i>
-                                            </button>
+                                                <div class="nds-col-actions">
+                                                    <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"><i class="hgi hgi-stroke hgi-sorting-05 nds-sort-icon"></i></button>
+                                                </div>
+                                            </div>
                                         </th>
                                         <th>Popularity</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {% for service in site.data.content.services %}
-                                    <tr class="nds-page-item" hidden>
+                                    <tr class="nds-page-item">
                                         <td>{{ forloop.index }}</td>
                                         <td>{{ service.title }}</td>
                                         <td><span class="nds-tag nds-info nds-sm"><span class="nds-label">{{ service.system }}</span></span></td>
@@ -1414,57 +1244,63 @@ direction: ltr
                             </div>
                             <div class="nds-expandable-content">
                                 <code class="lang-html code">
-<div class="nds-paged-content" style="--per-page: 5;">
+<div class="nds-paged-content" style="--per-page: 5;" hidden>
   <table class="nds-table nds-compact nds-sortable">
     <thead>
       <tr>
-        <th class="nds-sortable-col">
-          <button class="nds-btn nds-sort-header">
+        <th>
+          <div class="nds-col-header">
             <span class="nds-label">#</span>
-            <i class="hgi hgi-stroke hgi-arrow-up-down nds-sort-icon"></i>
-          </button>
+            <div class="nds-col-actions">
+              <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"><i class="hgi hgi-stroke hgi-sorting-05 nds-sort-icon"></i></button>
+            </div>
+          </div>
         </th>
-        <th class="nds-sortable-col">
-          <button class="nds-btn nds-sort-header">
+        <th>
+          <div class="nds-col-header">
             <span class="nds-label">Service</span>
-            <i class="hgi hgi-stroke hgi-arrow-up-down nds-sort-icon"></i>
-          </button>
+            <div class="nds-col-actions">
+              <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"><i class="hgi hgi-stroke hgi-sorting-05 nds-sort-icon"></i></button>
+            </div>
+          </div>
         </th>
-        <th class="nds-sortable-col">
-          <button class="nds-btn nds-sort-header">
+        <th>
+          <div class="nds-col-header">
             <span class="nds-label">System</span>
-            <i class="hgi hgi-stroke hgi-arrow-up-down nds-sort-icon"></i>
-          </button>
+            <div class="nds-col-actions">
+              <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"><i class="hgi hgi-stroke hgi-sorting-05 nds-sort-icon"></i></button>
+            </div>
+          </div>
         </th>
         <th>Popularity</th>
       </tr>
     </thead>
     <tbody>
-      <tr class="nds-page-item" hidden>
+      <tr class="nds-page-item">
         <td>1</td>
         <td>Identity Verification</td>
         <td><span class="nds-tag nds-info nds-sm"><span class="nds-label">Identity & Records</span></span></td>
         <td><span class="nds-tag nds-success nds-status nds-sm"><span class="nds-label">Most Used</span></span></td>
       </tr>
-      <tr class="nds-page-item" hidden>
+      <tr class="nds-page-item">
         <td>2</td>
         <td>Passport Renewal</td>
         <td><span class="nds-tag nds-info nds-sm"><span class="nds-label">Identity & Records</span></span></td>
         <td><span class="nds-tag nds-success nds-status nds-sm"><span class="nds-label">Most Used</span></span></td>
       </tr>
-      <tr class="nds-page-item" hidden>
+      <tr class="nds-page-item">
         <td>3</td>
         <td>Birth Certificate Request</td>
         <td><span class="nds-tag nds-info nds-sm"><span class="nds-label">Identity & Records</span></span></td>
         <td><span class="nds-tag nds-neutral nds-status nds-sm"><span class="nds-label">Standard</span></span></td>
       </tr>
-      <tr class="nds-page-item" hidden>
+      <tr class="nds-page-item">
         <td>4</td>
         <td>Marriage Contract Registration</td>
         <td><span class="nds-tag nds-info nds-sm"><span class="nds-label">Identity & Records</span></span></td>
         <td><span class="nds-tag nds-neutral nds-status nds-sm"><span class="nds-label">Standard</span></span></td>
       </tr>
-      <tr class="nds-page-item" hidden>
+      <tr class="nds-page-item">
         <td>5</td>
         <td>Driver's License Services</td>
         <td><span class="nds-tag nds-info nds-sm"><span class="nds-label">Traffic & Vehicles</span></span></td>
@@ -1514,7 +1350,7 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-checkmark-square-02 nds-icon"></i>
                         <span class="nds-label">Row Selection</span>
                     </span>
-                    <p class="nds-item-desc">Header checkbox toggles all rows and automatically enters an indeterminate state when only some rows are selected.</p>
+                    <p class="nds-item-desc">Header checkbox toggles all rows with indeterminate state support. Selected rows receive a distinct background highlight that persists across striped rows.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -1525,17 +1361,17 @@ direction: ltr
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layout-table-01 nds-icon"></i>
-                        <span class="nds-label">Striped Rows</span>
-                    </span>
-                    <p class="nds-item-desc">Alternating row backgrounds and hover highlighting are applied automatically for easier scanning of large datasets.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
                         <i class="hgi hgi-stroke hgi-keyboard nds-icon"></i>
                         <span class="nds-label">Keyboard Accessible</span>
                     </span>
                     <p class="nds-item-desc">Sort headers are focusable buttons that respond to Enter and Space. Interactive elements within cells receive visible focus rings.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-layout-table-01 nds-icon"></i>
+                        <span class="nds-label">Striped Rows</span>
+                    </span>
+                    <p class="nds-item-desc">Alternating row backgrounds and hover highlighting are applied automatically for easier scanning of large datasets.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -1585,14 +1421,16 @@ direction: ltr
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Class</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">nds-compact</code></td><td>Reduced padding and smaller font size for dense data display</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-sortable</code></td><td>Enables column sorting. Requires <code class="nds-inline-code lang-html">nds-sortable-col</code> on sortable <code class="nds-inline-code lang-html">&lt;th&gt;</code> elements</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-compact</code></td><td>Reduces row height to 48px. Override with <code class="nds-inline-code lang-html">--table-row-height</code> for custom values</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-sortable</code></td><td>Enables column sorting. Use <code class="nds-inline-code lang-html">nds-col-header</code> with <code class="nds-inline-code lang-html">nds-sort-btn nds-icon-only</code> inside sortable <code class="nds-inline-code lang-html">&lt;th&gt;</code> elements</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-center</code></td><td>Center-aligns all cell content across the table</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-sortable-col</code></td><td>Applied to <code class="nds-inline-code lang-html">&lt;th&gt;</code> to mark it as a sortable column header</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-sort-header</code></td><td>Button class inside sortable headers that provides hover and focus states</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-col-header</code></td><td>Flex container inside <code class="nds-inline-code lang-html">&lt;th&gt;</code> that holds the label and actions side by side</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-col-actions</code></td><td>Container for action buttons (sort, filter, etc.) inside a column header</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-sort-btn nds-icon-only</code></td><td>Sort button class inside column headers that triggers column sorting</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-page-item</code></td><td>Applied to <code class="nds-inline-code lang-html">&lt;tr&gt;</code> elements for client-side pagination (used with <code class="nds-inline-code lang-html">nds-paged-content</code>)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">table-actions</code></td><td>Flex container for grouping action buttons within a cell</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">actions-column</code></td><td>Shrinks column to fit content width, preventing unnecessary whitespace</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">checkbox-column</code></td><td>Fallback for browsers without <code class="nds-inline-code lang-html">:has()</code> support. Apply to <code class="nds-inline-code lang-html">&lt;th&gt;</code> and <code class="nds-inline-code lang-html">&lt;td&gt;</code> containing checkboxes to fix column width</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -1602,8 +1440,9 @@ direction: ltr
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">data-state="sorted-asc"</code></td><td>Set on <code class="nds-inline-code lang-html">&lt;th class="nds-sortable-col"&gt;</code> to mark the initial sort column as ascending</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-state="sorted-desc"</code></td><td>Set on <code class="nds-inline-code lang-html">&lt;th class="nds-sortable-col"&gt;</code> to mark the initial sort column as descending</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-state="sorted-asc"</code></td><td>Set on <code class="nds-inline-code lang-html">&lt;th&gt;</code> to mark the initial sort column as ascending</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-state="sorted-desc"</code></td><td>Set on <code class="nds-inline-code lang-html">&lt;th&gt;</code> to mark the initial sort column as descending</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-state="selected"</code></td><td>Set on <code class="nds-inline-code lang-html">&lt;tr&gt;</code> to visually highlight a selected row. JS toggles this automatically when checkboxes change</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-state="loading"</code></td><td>Set on <code class="nds-inline-code lang-html">&lt;table&gt;</code> to show the loading shimmer animation</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-auto-pagination</code></td><td>Set on <code class="nds-inline-code lang-html">&lt;nav class="nds-pagination"&gt;</code> to enable auto-pagination for the preceding <code class="nds-inline-code lang-html">nds-paged-content</code> wrapper</td></tr>
                     </tbody>
@@ -1615,6 +1454,7 @@ direction: ltr
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
                     <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">--table-row-height</code></td><td>64px (48px in compact)</td><td>Row height for data cells. Set on the table or use <code class="nds-inline-code lang-html">nds-compact</code> for the 48px preset</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--max-width</code></td><td>100%</td><td>Maximum width of the responsive scroll wrapper</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--min-width</code></td><td>auto-calculated</td><td>Minimum width of the table inside the wrapper. Prevents cells from shrinking below content width</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--mask-fade-distance</code></td><td>48px</td><td>Width of the gradient fade mask on scroll edges</td></tr>

@@ -12,7 +12,7 @@
             this.table = tableElement;
             this.thead = tableElement.querySelector('thead');
             this.tbody = tableElement.querySelector('tbody');
-            this.sortButtons = Array.from(tableElement.querySelectorAll('.nds-sortable-col .nds-sort-header'));
+            this.sortButtons = Array.from(tableElement.querySelectorAll('.nds-sort-btn'));
 
             // Checkbox selection support
             this.selectAllCheckbox = this.thead?.querySelector('th input[type="checkbox"].nds-check');
@@ -43,13 +43,14 @@
 
             if (this.isSelectable) {
                 this.updateSelectAllState();
+                this.updateRowSelectedStates();
             }
         }
 
         findActiveSortColumn() {
             const sortedTh = this.thead.querySelector('[data-state~="sorted-asc"], [data-state~="sorted-desc"]');
             if (sortedTh) {
-                const button = sortedTh.querySelector('.nds-sort-header');
+                const button = sortedTh.querySelector('.nds-sort-btn');
                 return this.sortButtons.indexOf(button);
             }
             return -1;
@@ -70,9 +71,10 @@
                 const th = button.closest('th');
 
                 if (index === this.currentSortColumn) {
-                    button.setAttribute('aria-sort', this.currentSortDirection === 'asc' ? 'ascending' : 'descending');
+                    th.setAttribute('aria-sort', this.currentSortDirection === 'asc' ? 'ascending' : 'descending');
+                    NDS.State.add(button, 'active');
                 } else {
-                    button.setAttribute('aria-sort', 'none');
+                    th.setAttribute('aria-sort', 'none');
                 }
             });
         }
@@ -107,6 +109,7 @@
                 this.rowCheckboxes.forEach(checkbox => {
                     checkbox.addEventListener('change', () => {
                         this.updateSelectAllState();
+                        this.updateRowSelectedStates();
                         this.dispatchSelectionEvent();
                     });
                 });
@@ -138,7 +141,7 @@
 
             // Apply new sort or reset to original
             if (newDirection) {
-                this.applySortState(th, button, newDirection);
+                this.applySortState(th, newDirection);
                 this.sortTableData(columnIndex, newDirection);
                 this.currentSortColumn = columnIndex;
                 this.currentSortDirection = newDirection;
@@ -158,18 +161,23 @@
                 const th = button.closest('th');
 
                 NDS.State.remove(th, 'sorted-asc', 'sorted-desc');
-                button.setAttribute('aria-sort', 'none');
+                NDS.State.remove(button, 'active');
+                th.setAttribute('aria-sort', 'none');
             });
         }
 
-        applySortState(th, button, direction) {
+        applySortState(th, direction) {
+            const button = th.querySelector('.nds-sort-btn');
+
             if (direction === 'asc') {
                 NDS.State.add(th, 'sorted-asc');
-                button.setAttribute('aria-sort', 'ascending');
+                th.setAttribute('aria-sort', 'ascending');
             } else if (direction === 'desc') {
                 NDS.State.add(th, 'sorted-desc');
-                button.setAttribute('aria-sort', 'descending');
+                th.setAttribute('aria-sort', 'descending');
             }
+
+            if (button) NDS.State.add(button, 'active');
         }
 
         sortTableData(columnIndex, direction) {
@@ -310,7 +318,21 @@
                 this.selectAllCheckbox.indeterminate = false;
             }
 
+            this.updateRowSelectedStates();
             this.dispatchSelectionEvent();
+        }
+
+        updateRowSelectedStates() {
+            this.rowCheckboxes.forEach(checkbox => {
+                const tr = checkbox.closest('tr');
+                if (!tr) return;
+
+                if (checkbox.checked) {
+                    NDS.State.add(tr, 'selected');
+                } else {
+                    NDS.State.remove(tr, 'selected');
+                }
+            });
         }
 
         updateSelectAllState() {
@@ -455,41 +477,39 @@
         }
 
         checkTableWidth() {
-            // Get wrapper's scrollable width (full content width)
-            const wrapperScrollWidth = this.wrapper.scrollWidth;
-            // Get wrapper's visible width (constrained by max-width)
-            const wrapperClientWidth = this.wrapper.clientWidth;
+            const { scrollWidth, clientWidth } = this.wrapper;
 
-            // Check if content is wider than visible area (needs scrolling)
-            if (wrapperScrollWidth > wrapperClientWidth) {
-                NDS.State.set(this.wrapper, 'has-more', 'at-start');
+            if (scrollWidth > clientWidth) {
                 this.needsScroll = true;
+                this.currentScrollState = null; // Force handleScroll to update
+                this.handleScroll();
             } else {
                 NDS.State.clear(this.wrapper);
                 this.needsScroll = false;
+                this.currentScrollState = null;
             }
         }
 
         handleScroll() {
             if (!this.needsScroll) return;
 
-            const scrollLeft = Math.abs(this.wrapper.scrollLeft);
-            const maxScroll = this.wrapper.scrollWidth - this.wrapper.clientWidth;
+            const { scrollLeft, scrollWidth, clientWidth } = this.wrapper;
+            const maxScroll = scrollWidth - clientWidth;
+            const isRTL = NDS.isRTL;
 
-            // Determine new state
-            let newState = 'middle';
-            if (scrollLeft <= 5) {
-                newState = 'start';
-            } else if (scrollLeft >= maxScroll - 5) {
-                newState = 'end';
+            const tokens = ['has-more'];
+
+            if (isRTL) {
+                if (Math.abs(scrollLeft) <= 5) tokens.push('at-start');
+                if (Math.abs(scrollLeft) >= maxScroll - 5) tokens.push('at-end');
+            } else {
+                if (scrollLeft <= 5) tokens.push('at-start');
+                if (scrollLeft >= maxScroll - 5) tokens.push('at-end');
             }
 
-            // Only update DOM if state changed (prevents redundant class operations)
+            // Only update DOM if state changed
+            const newState = tokens.join(' ');
             if (this.currentScrollState !== newState) {
-                const tokens = ['has-more'];
-                if (newState === 'start') tokens.push('at-start');
-                else if (newState === 'end') tokens.push('at-end');
-
                 NDS.State.set(this.wrapper, ...tokens);
                 this.currentScrollState = newState;
             }
@@ -596,11 +616,11 @@
                 table.setAttribute('data-nds-responsive-initialized', 'true');
             }
 
-            // Check if table is sortable or has checkboxes
-            const isSortable = table.classList.contains('nds-sortable');
+            // Check if table has sort buttons or checkboxes
+            const hasSortButtons = table.querySelector('.nds-sort-btn') !== null;
             const hasCheckboxes = table.querySelector('thead input[type="checkbox"].nds-check') !== null;
 
-            if ((isSortable || hasCheckboxes) && !table.hasAttribute('data-nds-tables-initialized')) {
+            if ((hasSortButtons || hasCheckboxes) && !table.hasAttribute('data-nds-tables-initialized')) {
                 const tablesInstance = new NDSTables(table);
                 table.ndsTableControls = tablesInstance;
                 table.setAttribute('data-nds-tables-initialized', 'true');

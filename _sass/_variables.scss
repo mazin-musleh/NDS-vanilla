@@ -138,6 +138,11 @@
     --autocomplete-highlight: var(--colors-primary-sa-flag-100);
     --autocomplete-active: var(--background-neutral-light);
 
+    // Table (missing in DGA)
+    --table-background-row-selected: var(--colors-primary-sa-flag-50);
+    --table-background-tr-selected: var(--colors-primary-sa-flag-50);
+    --table-background-hover-selected: var(--colors-alpha-alpha-green-10);
+
     // Avatar
     --avatar-background: var(--button-background-neutral-default);
     --avatar-color: var(--icon-default);

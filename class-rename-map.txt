@@ -45,12 +45,8 @@ Pagination
 .nds-pagination-nav         → .nds-pagination
 .nds-auto-pagination        → [data-auto-pagination] on .nds-pagination
 
-Table Sorting (sortable → nds-sortable-col)
---------------------------------------------
-.sortable                   → .nds-sortable-col
-.sort-header                → .nds-sort-header
-.sorted-asc                 → .nds-sorted-asc
-.sorted-desc                → .nds-sorted-desc
+Table Column Headers
+-----------------------------------------------------------------
 .sort-icon                  → .nds-sort-icon
 
 Nav Component

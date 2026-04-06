@@ -1,5 +1,5 @@
 /**
- * NDS Table Component - SCSS Version
+ * NDS Table Component
  * Responsive data tables with consistent styling and interactive features
  * RTL-first design (Arabic layout by default)
  */
@@ -12,8 +12,6 @@
 
 .nds-table-wrapper {
     --_max-width: var(--max-width, 100%);
-
-    // Gradient mask custom properties
     --mask-fade-distance: 48px;
 
     position: relative;
@@ -24,45 +22,36 @@
     -webkit-overflow-scrolling: touch;
     display: block;
 
-    // Table inside should also respect max-width
     .nds-table {
         --_min-width: var(--min-width, 600px);
         min-width: var(--_min-width);
-        display: table; // Ensure table doesn't collapse
+        display: table;
     }
 }
 
-// When table needs scrolling (determined by JS)
+// Scroll mask states (determined by JS)
 .nds-table-wrapper[data-state~="has-more"] {
-    // Both sides masked (scrolled to middle) - RTL default
     mask-image:
         linear-gradient(to right, transparent 0%, black var(--mask-fade-distance)),
         linear-gradient(to left, transparent 0%, black var(--mask-fade-distance));
 
-    // When at start, only mask inline-end (left in RTL, right in LTR)
     &[data-state~="at-start"] {
         mask-image: linear-gradient(to right, transparent 0%, black var(--mask-fade-distance));
     }
 
-    // When scrolled to the end, only mask inline-start (right in RTL, left in LTR)
     &[data-state~="at-end"] {
         mask-image: linear-gradient(to left, transparent 0%, black var(--mask-fade-distance));
-        padding-inline-end: 2px;
     }
 
-    // Adjust gradient direction for LTR
     @include ltr {
-        // Both sides masked (scrolled to middle) - LTR
         mask-image:
             linear-gradient(to right, transparent 0%, black var(--mask-fade-distance)),
             linear-gradient(to left, transparent 0%, black var(--mask-fade-distance));
 
-        // When at start, only mask inline-end (right in LTR)
         &[data-state~="at-start"] {
             mask-image: linear-gradient(to left, transparent 0%, black var(--mask-fade-distance));
         }
 
-        // When at end, only mask inline-start (left in LTR)
         &[data-state~="at-end"] {
             mask-image: linear-gradient(to right, transparent 0%, black var(--mask-fade-distance));
         }
@@ -85,7 +74,8 @@
         text-align: center;
     }
 
-    // Row styles
+    // ── Rows ──
+
     tr {
         border-bottom: 1px solid var(--table-cell-border);
 
@@ -94,24 +84,25 @@
         }
     }
 
-    // Header styles
+    // ── Header cells ──
+
     :is(th, thead td) {
         background-color: var(--table-background-header);
         color: var(--table-text-head);
-        font-weight: 600;
+        font-weight: 500;
+        font-size: var(--nds-text-sm-FS);
         padding: var(--table-cell-v-padding) var(--table-cell-h-padding);
         border-left: 1px solid var(--table-cell-border);
         border-bottom: 1px solid var(--table-cell-border);
         text-align: start;
         vertical-align: middle;
         white-space: nowrap;
-        height: 64px;
+        height: 48px;
 
         &:last-child {
             border-right: none;
         }
 
-        // LTR override when needed
         @include ltr {
             border-right: 1px solid var(--table-cell-border);
 
@@ -121,20 +112,20 @@
         }
     }
 
-    // Cell styles
+    // ── Data cells ──
+
     td {
         padding: var(--table-cell-v-padding) var(--table-cell-h-padding);
         vertical-align: middle;
         background-color: var(--background-card);
         color: var(--table-text-body);
         border-left: 1px solid var(--table-cell-border);
-        height: 64px;
+        height: var(--_table-row-height, 64px);
 
         &:last-child {
             border-right: none;
         }
 
-        // LTR override when needed
         @include ltr {
             border-right: 1px solid var(--table-cell-border);
 
@@ -144,107 +135,62 @@
         }
     }
 
-    // Hover states
+    // ── Row states ──
+
     tbody tr:hover td {
         background-color: var(--table-background-header);
     }
 
-    // Striped rows
     tbody tr:nth-child(even) td {
         background-color: var(--table-background-row);
     }
 
-    // Even rows should use same hover as regular rows
     tbody tr:nth-child(even):hover td {
         background-color: var(--table-background-header);
     }
-}
 
-// ==============================================
-// COMPACT TABLE VARIANT
-// ==============================================
+    tbody tr[data-state~="selected"] {
+        background-color: var(--table-background-tr-selected);
 
-.nds-table.nds-compact {
+        td {
+            background-color: var(--table-background-row-selected);
+        }
 
-    :is(th, td) {
-        padding: var(--spacing-1) var(--spacing-3);
-        font-size: var(--nds-text-sm-FS);
-        line-height: var(--nds-text-sm-LH);
-    }
-
-    @include mobile {
-
-        :is(th, td) {
-            padding: var(--spacing-0-5) var(--spacing-2);
-            font-size: var(--nds-text-xs-FS);
-            line-height: var(--nds-text-xs-LH);
+        &:hover td {
+            background-color: var(--table-background-hover-selected);
         }
     }
-}
 
-// ==============================================
-// SORTABLE TABLE VARIANT
-// ==============================================
+    // ── Column header (label + actions) ──
 
-.nds-table.nds-sortable {
-    th.nds-sortable-col {
-        padding: 0;
-        position: relative;
+    .nds-col-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--spacing-1);
+    }
 
-        .nds-sort-header {
-            width: 100%;
-            padding: var(--table-cell-v-padding) var(--table-cell-h-padding);
-            background: transparent;
-            border: none;
-            color: var(--table-text-head);
-            font-weight: 600;
-            text-align: start;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: var(--spacing-1);
-            height: 100%;
-            outline: none;
+    .nds-col-actions {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-sm);
 
-            &:hover {
-                background-color: var(--table-background-hover-selected);
-            }
-
-            &:focus {
-                outline: none;
-            }
-
-            .nds-sort-icon {
-                font-size: var(--nds-text-sm-FS);
-                color: var(--text-secondary-paragraph);
-            }
-
-            &.nds-btn {
-                border-radius: 0;
-            }
-
-        }
-
-        th.nds-sortable-col // Sorted states
-
-        &[data-state~="sorted-asc"] .nds-sort-header .nds-sort-icon {
-            color: var(--text-primary);
-        }
-
-        &[data-state~="sorted-desc"] .nds-sort-header .nds-sort-icon {
-            color: var(--text-primary);
+        .nds-btn {
+            --btn-size: 32px;
         }
     }
-}
 
-// ==============================================
-// ACCESSIBILITY IMPROVEMENTS
-// ==============================================
+    // Sort icon swaps
+    th[data-state~="sorted-asc"] .nds-sort-icon::before {
+        content: "䝹";
+    }
 
-.nds-table {
+    th[data-state~="sorted-desc"] .nds-sort-icon::before {
+        content: "䝷";
+    }
 
-    // Remove default focus outline on table cells
+    // ── Accessibility ──
+
     :is(th, td) {
         outline: none;
 
@@ -253,17 +199,6 @@
         }
     }
 
-    // Focus styles only for interactive elements within cells
-    :is(th, td):focus-within {
-
-        // Only apply focus styles to interactive elements, not the cell itself
-        :is(button, input, a):focus {
-            outline: 2px solid var(--border-primary);
-            outline-offset: -2px;
-        }
-    }
-
-    // Screen reader improvements
     caption {
         padding: var(--spacing-4);
         font-weight: 600;
@@ -271,6 +206,52 @@
         background-color: var(--table-background-header);
         border-bottom: 1px solid var(--table-cell-border);
     }
+
+    // ── Actions & checkbox columns ──
+
+    .table-actions {
+        display: flex;
+        gap: var(--spacing-1);
+        align-items: center;
+
+        .nds-btn {
+            min-width: auto;
+        }
+    }
+
+    .actions-column {
+        width: 1%;
+        white-space: nowrap;
+    }
+
+    :is(th, td):has(.nds-check-container),
+    .checkbox-column {
+        width: 40px;
+        text-align: center;
+
+        .nds-form-container.nds-check-container {
+            margin: 0;
+
+            .nds-form-control {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 0;
+
+                .nds-check {
+                    margin: 0;
+                }
+            }
+        }
+    }
+}
+
+// ==============================================
+// COMPACT TABLE VARIANT
+// ==============================================
+
+.nds-table.nds-compact {
+    --_table-row-height: var(--table-row-height, 48px);
 }
 
 // ==============================================
@@ -292,69 +273,5 @@
 
     100% {
         opacity: 1;
-    }
-}
-
-// ==============================================
-// TABLE WITH ACTIONS
-// ==============================================
-
-.nds-table {
-    .table-actions {
-        display: flex;
-        gap: var(--spacing-1);
-        align-items: center;
-
-        .nds-btn {
-            min-width: auto;
-        }
-    }
-
-    // Actions column should be narrower
-    .actions-column {
-        width: 1%;
-        white-space: nowrap;
-    }
-
-    // Checkbox column should have consistent width
-    :is(th, td):has(.nds-check-container) {
-        width: 40px;
-        text-align: center;
-
-        .nds-form-container.nds-check-container {
-            margin: 0;
-
-            .nds-form-control {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                margin: 0;
-
-                .nds-check {
-                    margin: 0;
-                }
-            }
-        }
-    }
-
-    // Fallback for browsers that don't support :has()
-    .checkbox-column {
-        width: 40px;
-        text-align: center;
-
-        .nds-form-container.nds-check-container {
-            margin: 0;
-
-            .nds-form-control {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                margin: 0;
-
-                .nds-check {
-                    margin: 0;
-                }
-            }
-        }
     }
 }

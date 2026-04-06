@@ -223,7 +223,9 @@
     --table-cell-border: var(--colors-neutral-700);
     --table-cell-border-inverse: var(--colors-base-white);
     --table-text-head: var(--colors-neutral-300);
-    --table-background-hover-selected: var(--colors-neutral-800);
+    --table-background-hover-selected: var(--colors-alpha-alpha-green-40);
+    --table-background-tr-selected: var(--colors-neutral-800);
+    --table-background-row-selected: var(--colors-alpha-alpha-green-20);
     --table-background-header: var(--colors-neutral-900);
     --table-background-row: var(--background-stripe);
     --table-background-disabled: var(--colors-neutral-700);

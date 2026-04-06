@@ -609,15 +609,30 @@ direction: ltr
                                 <table class="nds-table nds-sortable">
                                     <thead>
                                         <tr>
-                                            <th class="nds-sortable-col">
-                                                <button class="nds-sort-header nds-btn" data-sort-type="number">#<span class="nds-sort-icon">&#8597;</span></button>
+                                            <th>
+                                                <div class="nds-col-header">
+                                                    <span class="nds-label">#</span>
+                                                    <div class="nds-col-actions">
+                                                        <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" data-sort-type="number"><i class="hgi hgi-stroke hgi-sorting-05 nds-sort-icon"></i></button>
+                                                    </div>
+                                                </div>
                                             </th>
-                                            <th class="nds-sortable-col">
-                                                <button class="nds-sort-header nds-btn" data-sort-type="string">Service<span class="nds-sort-icon">&#8597;</span></button>
+                                            <th>
+                                                <div class="nds-col-header">
+                                                    <span class="nds-label">Service</span>
+                                                    <div class="nds-col-actions">
+                                                        <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" data-sort-type="string"><i class="hgi hgi-stroke hgi-sorting-05 nds-sort-icon"></i></button>
+                                                    </div>
+                                                </div>
                                             </th>
                                             <th>Description</th>
-                                            <th class="nds-sortable-col">
-                                                <button class="nds-sort-header nds-btn" data-sort-type="string">System<span class="nds-sort-icon">&#8597;</span></button>
+                                            <th>
+                                                <div class="nds-col-header">
+                                                    <span class="nds-label">System</span>
+                                                    <div class="nds-col-actions">
+                                                        <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" data-sort-type="string"><i class="hgi hgi-stroke hgi-sorting-05 nds-sort-icon"></i></button>
+                                                    </div>
+                                                </div>
                                             </th>
                                             <th>Most Used</th>
                                         </tr>
