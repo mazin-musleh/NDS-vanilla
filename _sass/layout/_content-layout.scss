@@ -28,7 +28,7 @@
     }
 }
 
-.nds-content-section>.nds-full-width.nds-section-content {
+.nds-content-section>.nds-full-width.nds-section-body {
     width: 100%;
     max-width: var(--nds-content-MaxWidth);
     margin-inline: auto;
@@ -172,8 +172,8 @@ main {
                 >* {
                     grid-column: full-width;
 
-                    &:has(>.nds-section-content>.nds-card),
-                    &.nds-section-content:has(>.nds-card) {
+                    &:has(>.nds-section-body>.nds-card),
+                    &.nds-section-body:has(>.nds-card) {
                         grid-column: content;
                     }
 

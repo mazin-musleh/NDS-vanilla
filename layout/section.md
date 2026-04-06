@@ -15,7 +15,7 @@ direction: ltr
             <h2 class="nds-section-title">Section Hierarchy</h2>
             <p class="nds-section-description">The section component uses a CSS Grid for column placement and a flex wrapper for grouping head, action, image, and content.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -40,11 +40,11 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
 │   │   ├── div.nds-section-meta
 │   │   └── p.nds-section-description
 │   ├── div.nds-section-action       (optional, auto width — add .nds-nowrap to keep inline on mobile)
-│   └── div.nds-section-content      (full row below)
+│   └── div.nds-section-body      (full row below)
 │       └── div.nds-content-block    (optional content grouping)
 │           ├── h3.nds-block-title   (optional)
 │           └── p, ul, ol, img...    (direct content)
-└── div.nds-section-content.nds-full-width  (outside wrapper for breakout)
+└── div.nds-section-body.nds-full-width  (outside wrapper for breakout)
                             </code>
                             </div>
                         </div>
@@ -63,7 +63,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
             <h2 class="nds-section-title">Tier 1 — Minimal (No Wrapper)</h2>
             <p class="nds-section-description">Simplest usage: title, description, and content as direct children of the section grid. No wrapper needed.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -100,7 +100,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                             <section class="nds-content-section">
                                 <h2 class="nds-section-title">Section Title</h2>
                                 <p class="nds-section-description">Section description goes here. Used for simple sections with only a title and content.</p>
-                                <div class="nds-section-content">
+                                <div class="nds-section-body">
                                     <p>Section content area.</p>
                                 </div>
                             </section>
@@ -126,7 +126,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
 <section class="nds-content-section">
     <h2 class="nds-section-title">Section Title</h2>
     <p class="nds-section-description">Description text.</p>
-    <div class="nds-section-content">
+    <div class="nds-section-body">
         <!-- Content here -->
     </div>
 </section>
@@ -148,7 +148,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
             <h2 class="nds-section-title">Tier 2 — Standard (With Wrapper)</h2>
             <p class="nds-section-description">Wrapper groups head and content with consistent gap spacing. Used for most sections.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -188,7 +188,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                                         <h2 class="nds-section-title">Section Title</h2>
                                         <p class="nds-section-description">Description text wrapped with content inside a section wrapper.</p>
                                     </div>
-                                    <div class="nds-section-content">
+                                    <div class="nds-section-body">
                                         <p>Section content area.</p>
                                     </div>
                                 </div>
@@ -218,7 +218,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
             <h2 class="nds-section-title">Section Title</h2>
             <p class="nds-section-description">Description text.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <!-- Content here -->
         </div>
     </div>
@@ -241,7 +241,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
             <h2 class="nds-section-title">Tier 3 — With Action</h2>
             <p class="nds-section-description">Action buttons sit beside the head on desktop and drop to full-row below on tablet and smaller.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -286,7 +286,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                                             <span class="nds-label">View All</span>
                                         </a>
                                     </div>
-                                    <div class="nds-section-content">
+                                    <div class="nds-section-body">
                                         <p>News cards or content goes here.</p>
                                     </div>
                                 </div>
@@ -321,7 +321,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                 <span class="nds-label">View All</span>
             </a>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <!-- Content here -->
         </div>
     </div>
@@ -344,7 +344,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
             <h2 class="nds-section-title">Float Action</h2>
             <p class="nds-section-description">Place the action as the <strong>first child</strong> inside the section head. It floats to the inline-end, letting the title and description text wrap around it. Not compatible with .nds-center or .nds-horizontal layouts. Add <strong>.nds-minimal</strong> to hide button labels on mobile (icon-only) or <strong>.nds-wrap</strong> to allow items to wrap.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -378,7 +378,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                                         <h2 class="nds-section-title">Section Title</h2>
                                         <p class="nds-section-description">The action button floats to the inline-end corner while the title and description text wrap around it naturally. This creates a compact layout without the action taking its own flex row.</p>
                                     </div>
-                                    <div class="nds-section-content">
+                                    <div class="nds-section-body">
                                         <p>Section content area.</p>
                                     </div>
                                 </div>
@@ -416,7 +416,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
             <h2 class="nds-section-title">Section Title</h2>
             <p class="nds-section-description">Description text wraps around the float action.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <!-- Content here -->
         </div>
     </div>
@@ -439,7 +439,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
             <h2 class="nds-section-title">Dual Action</h2>
             <p class="nds-section-description">A section can have both a float action inside the head and a standard action outside. The outside action automatically wraps to a full row when a float action is present.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -473,7 +473,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                                             <span class="nds-label">Download</span>
                                         </a>
                                     </div>
-                                    <div class="nds-section-content">
+                                    <div class="nds-section-body">
                                         <p>Section content area.</p>
                                     </div>
                                 </div>
@@ -514,7 +514,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                 <span class="nds-label">Primary Action</span>
             </a>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <!-- Content here -->
         </div>
     </div>
@@ -537,7 +537,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
             <h2 class="nds-section-title">Action Wrapping — nds-nowrap</h2>
             <p class="nds-section-description">By default, the standard action wraps to a full row on mobile. Add .nds-nowrap to keep it inline.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -556,7 +556,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                                             <span class="nds-label">Action</span>
                                         </a>
                                     </div>
-                                    <div class="nds-section-content">
+                                    <div class="nds-section-body">
                                         <p>Resize the browser to mobile width — the action stays beside the head.</p>
                                     </div>
                                 </div>
@@ -603,7 +603,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
             <h2 class="nds-section-title">Tier 4 — With Image</h2>
             <p class="nds-section-description">Image, head, and action form a flex row. Content takes full row below.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -653,7 +653,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                                             <span class="nds-label">Contact</span>
                                         </a>
                                     </div>
-                                    <div class="nds-section-content">
+                                    <div class="nds-section-body">
                                         <p>Profile details and content goes here.</p>
                                     </div>
                                 </div>
@@ -691,7 +691,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                 <span class="nds-label">Action</span>
             </a>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <!-- Content here -->
         </div>
     </div>
@@ -714,7 +714,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
             <h2 class="nds-section-title">Tier 5 — Full-Width Content</h2>
             <p class="nds-section-description">Content lives outside the wrapper and uses .nds-full-width to break out of the content column into edge-to-edge layout. Wrapper holds head + action only.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -760,7 +760,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                                         </a>
                                     </div>
                                 </div>
-                                <div class="nds-section-content nds-full-width">
+                                <div class="nds-section-body nds-full-width">
                                     <p>Full-width content area (e.g., card carousel, swiper)</p>
                                 </div>
                             </section>
@@ -795,7 +795,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
             </a>
         </div>
     </div>
-    <div class="nds-section-content nds-full-width">
+    <div class="nds-section-body nds-full-width">
         <!-- Full-width content (carousel, cards, etc.) -->
     </div>
 </section>
@@ -817,7 +817,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
             <h2 class="nds-section-title">Tier 6 — Horizontal Layout</h2>
             <p class="nds-section-description">Add .nds-horizontal to a section to switch the wrapper from flex to a two-column grid layout on desktop (head start, content end).</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -862,7 +862,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                                             </a>
                                         </div>
                                     </div>
-                                    <div class="nds-section-content">
+                                    <div class="nds-section-body">
                                         <img src="https://placehold.co/600x400/e2e8f0/475569?text=Content+Image" alt="Placeholder image" style="border-radius: var(--radius-lg); width: 100%;">
                                     </div>
                                 </div>
@@ -897,7 +897,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                 </a>
             </div>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <img src="..." alt="..." />
         </div>
     </div>
@@ -920,7 +920,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
             <h2 class="nds-section-title">Content Block</h2>
             <p class="nds-section-description">Group content inside a section using .nds-content-block. Add an optional .nds-block-title for titled blocks. Content goes directly inside — no extra wrappers needed.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -929,7 +929,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                     <div class="demo-container">
                         <div class="state-demo">
                             <section class="nds-content-section nds-ghost">
-                                <div class="nds-section-content">
+                                <div class="nds-section-body">
                                     <div class="nds-content-block">
                                         <h3 class="nds-block-title">Block Title</h3>
                                         <p>First paragraph of content inside the block. Paragraphs, lists, and media get automatic styling when inside .nds-content-block.</p>
@@ -966,7 +966,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-<div class="nds-section-content">
+<div class="nds-section-body">
     <div class="nds-content-block">
         <h3 class="nds-block-title">Block Title</h3>
         <p>Content goes directly here.</p>
@@ -993,7 +993,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
             <h2 class="nds-section-title">Gradient Section</h2>
             <p class="nds-section-description">Add .nds-gradient-green to apply a direction-aware diagonal gradient. The gradient angle automatically flips between RTL (-45deg) and LTR (45deg).</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -1012,7 +1012,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                                             <span class="nds-label">View All</span>
                                         </a>
                                     </div>
-                                    <div class="nds-section-content">
+                                    <div class="nds-section-body">
                                         <div class="nds-grid" style="--max-col: 3; --mid-col: 2; --min-col: 1;">
                                             <div class="nds-card nds-stroke">
                                                 <div class="nds-card-content">
@@ -1067,7 +1067,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
             <h2 class="nds-section-title">Section Title</h2>
             <p class="nds-section-description">Description text.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-grid" style="--max-col: 3; --mid-col: 2; --min-col: 1;">
                 <!-- Cards or content here -->
             </div>
@@ -1093,7 +1093,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
             <h2 class="nds-section-title">Grid Columns</h2>
             <p class="nds-section-description">Every section is a CSS Grid with named columns. Direct children are placed into content, breakout, or full-width tracks.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -1135,13 +1135,13 @@ Default child         → grid-column: content
                                     </div>
                                     <code class="lang-html code">
 <!-- Default: content column -->
-<div class="nds-section-content">...</div>
+<div class="nds-section-body">...</div>
 
 <!-- Wider: breakout column -->
-<div class="nds-section-content nds-breakout">...</div>
+<div class="nds-section-body nds-breakout">...</div>
 
 <!-- Edge-to-edge: full-width column -->
-<div class="nds-section-content nds-full-width">...</div>
+<div class="nds-section-body nds-full-width">...</div>
 </code>
                                 </div>
                             </div>
@@ -1161,7 +1161,7 @@ Default child         → grid-column: content
             <h2 class="nds-section-title">Customization Tokens</h2>
             <p class="nds-section-description">Override CSS custom properties to customize section appearance without modifying the source.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -1278,7 +1278,7 @@ Default child         → grid-column: content
             <h2 class="nds-section-title">SCSS Architecture</h2>
             <p class="nds-section-description">The section component is split across 3 focused SCSS files with clear separation of concerns.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">

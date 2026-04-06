@@ -17,7 +17,7 @@ direction: rtl
             <p class="nds-section-description">A simple slider with navigation buttons and pagination. Uses native CSS
                 scroll-snap for smooth, performant sliding.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
@@ -149,7 +149,7 @@ direction: rtl
                 data-src pattern to defer image loading until slides approach the viewport.
             </p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
@@ -250,7 +250,7 @@ direction: rtl
             <p class="nds-section-description">Display multiple slides at once with responsive breakpoints: 4 slides on
                 large desktop, 3 on desktop, and 1 on mobile/tablet.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
@@ -381,7 +381,7 @@ direction: rtl
                 peek attribute to set the visible amount in pixels.
             </p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
@@ -504,7 +504,7 @@ direction: rtl
             <p class="nds-section-description">The swiper component supports the following attributes for customization.
             </p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-table-container">
                 <table class="nds-table">
                     <thead>
@@ -553,7 +553,7 @@ direction: rtl
         <div class="nds-section-head">
             <h2 class="nds-section-title">Features</h2>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-grid" style="--max-col:2; --mid-col:2;--min-col:1;">
                 <div class="nds-card">
                     <div class="nds-card-content">
@@ -598,7 +598,7 @@ direction: rtl
         <div class="nds-section-head">
             <h2 class="nds-section-title">Best Practices</h2>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-card">
                 <div class="nds-card-content">
                     <h3>Performance Tips</h3>

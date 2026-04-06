@@ -14,7 +14,7 @@ heroaction: heroaction-service
 hideSidemenu: true
 ---
 <section id="serviceTabs" class="nds-content-section nds-sideinfo-section">
-    <div class="nds-section-content">
+    <div class="nds-section-body">
         <div class="nds-info-content">
             <div class="nds-tabs">
                 <div class="nds-tab-list-container">
@@ -164,7 +164,7 @@ hideSidemenu: true
         <h2 class="nds-section-title">Related Services</h2>
         <p class="nds-section-description">Explore other government digital services that may be relevant to you.</p>
     </div>
-    <div class="nds-section-content nds-full-width">
+    <div class="nds-section-body nds-full-width">
         <div class="nds-swiper" slides-max="3" slides-mid="2" slides-min="1" peek="40" hidden>
             <div class="nds-swiper-wrapper">
                 {% for service in site.data.content.services limit:6 %}

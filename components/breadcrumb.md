@@ -15,7 +15,7 @@ direction: ltr
             <h2 class="nds-section-title">Standard</h2>
             <p class="nds-section-description">Three-level breadcrumb with linked parent pages and current page indicator</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -81,7 +81,7 @@ direction: ltr
             <h2 class="nds-section-title">Two Level</h2>
             <p class="nds-section-description">Minimal breadcrumb for pages one level deep</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -145,7 +145,7 @@ direction: ltr
             <h2 class="nds-section-title">Long Title</h2>
             <p class="nds-section-description">Truncate long page titles with nds-truncate to prevent wrapping</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -211,7 +211,7 @@ direction: ltr
             <h2 class="nds-section-title">Automatic Collapsing</h2>
             <p class="nds-section-description">Breadcrumbs with 5+ levels collapse into a dropmenu showing Home, ellipsis, and the last two items</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -290,7 +290,7 @@ direction: ltr
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -331,7 +331,7 @@ direction: ltr
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
 
             <div class="nds-content-block">
                 <h3 class="nds-block-title">When to Use</h3>

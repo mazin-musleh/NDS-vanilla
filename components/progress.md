@@ -15,7 +15,7 @@ direction: ltr
             <h2 class="nds-section-title">Progress Circle</h2>
             <p class="nds-section-description">Circular indicator that scales from compact inline counters to large hero displays</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
 
                 <div class="nds-demo-card">
@@ -157,7 +157,7 @@ direction: ltr
             <h2 class="nds-section-title">Progress Bar</h2>
             <p class="nds-section-description">Linear indicator with label, fill percentage, and feedback message for file uploads, form completion, and multi-step workflows</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
 
                 <div class="nds-demo-card">
@@ -276,7 +276,7 @@ direction: ltr
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -331,7 +331,7 @@ direction: ltr
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
 
             <div class="nds-content-block">
                 <h3 class="nds-block-title">Best Practices</h3>

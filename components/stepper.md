@@ -15,7 +15,7 @@ direction: ltr
             <h2 class="nds-section-title">Horizontal Stepper</h2>
             <p class="nds-section-description">Steps arranged left-to-right for wide layouts like registration forms and service applications</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
 
                 <div class="nds-demo-card">
@@ -186,7 +186,7 @@ direction: ltr
             <h2 class="nds-section-title">Vertical Stepper</h2>
             <p class="nds-section-description">Top-to-bottom layout for narrow interfaces, sidebars, or when steps need detailed content blocks</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
 
                 <div class="nds-demo-card">
@@ -353,7 +353,7 @@ direction: ltr
             <h2 class="nds-section-title">Radial Stepper</h2>
             <p class="nds-section-description">Compact circular progress indicator that shows one step at a time, suited to dashboards and mobile interfaces</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
 
                 <div class="nds-demo-card">
@@ -571,7 +571,7 @@ direction: ltr
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -626,7 +626,7 @@ direction: ltr
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
 
             <div class="nds-content-block">
                 <h3 class="nds-block-title">Best Practices</h3>

@@ -15,7 +15,7 @@ direction: ltr
             <h2 class="nds-section-title">Variants</h2>
             <p class="nds-section-description">Five status variants communicate different message types through color and icon</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -158,7 +158,7 @@ direction: ltr
             <h2 class="nds-section-title">Inline</h2>
             <p class="nds-section-description">Compact single-line layout with bottom stripe and solid icon</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <!-- Inline Alert -->
                 <div class="nds-demo-card">
@@ -302,7 +302,7 @@ direction: ltr
             <h2 class="nds-section-title">With Actions</h2>
             <p class="nds-section-description">Action buttons let users respond directly from the notification</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -434,7 +434,7 @@ direction: ltr
             <h2 class="nds-section-title">Toast Notifications</h2>
             <p class="nds-section-description">Floating notifications that appear at the top or bottom of the viewport</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -568,7 +568,7 @@ direction: ltr
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -623,7 +623,7 @@ direction: ltr
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
 
             <div class="nds-content-block">
                 <h3 class="nds-block-title">When to Use</h3>

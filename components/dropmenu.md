@@ -15,7 +15,7 @@ direction: ltr
             <h2 class="nds-section-title">Standard Dropmenu</h2>
             <p class="nds-section-description">Action menu for tasks like edit, duplicate, share, or delete. Use buttons for items that trigger actions on the current page</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -124,7 +124,7 @@ direction: ltr
             <h2 class="nds-section-title">Navigation Dropmenu</h2>
             <p class="nds-section-description">Menu items that navigate to other pages. Use anchor elements when each item is a link rather than an action</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -233,7 +233,7 @@ direction: ltr
             <h2 class="nds-section-title">Scrollable Menu with No Auto-Close</h2>
             <p class="nds-section-description">Use <code class="nds-inline-code lang-html">nds-dropmenu-scroll</code> for scrollable content areas and <code class="nds-inline-code lang-html">data-no-auto-close</code> to keep the menu open when interacting with form controls</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -470,7 +470,7 @@ direction: ltr
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -525,7 +525,7 @@ direction: ltr
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
 
             <div class="nds-content-block">
                 <h3 class="nds-block-title">Best Practices</h3>

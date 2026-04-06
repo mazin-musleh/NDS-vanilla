@@ -15,7 +15,7 @@ direction: ltr
             <h2 class="nds-section-title">Standard</h2>
             <p class="nds-section-description">Toggle optional sections to build different card layouts</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -230,7 +230,7 @@ direction: ltr
             <h2 class="nds-section-title">Statistic</h2>
             <p class="nds-section-description">Centered number display with icon and label</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -320,7 +320,7 @@ direction: ltr
             <h2 class="nds-section-title">Card Group</h2>
             <p class="nds-section-description">Responsive grid layout using nds-grid with configurable columns</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -462,7 +462,7 @@ direction: ltr
             <h2 class="nds-section-title">Built-in Features</h2>
             <p class="nds-section-description">What you get out of the box with zero configuration</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -518,7 +518,7 @@ direction: ltr
             <h2 class="nds-section-title">Usage Guidelines</h2>
             <p class="nds-section-description">When and how to use cards effectively</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-content-block">
                 <h3 class="nds-block-title">When to Use</h3>
                 <ul>

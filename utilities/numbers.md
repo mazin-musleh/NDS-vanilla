@@ -15,7 +15,7 @@ direction: ltr
             <h2 class="nds-section-title">Number Formatting</h2>
             <p class="nds-section-description">Automatically formats numbers with locale-appropriate thousand separators</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
 
             <div class="nds-demo-card">
@@ -141,7 +141,7 @@ direction: ltr
             <h2 class="nds-section-title">Counter Animation</h2>
             <p class="nds-section-description">Animated number counters that count up when scrolled into view</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
 
             <div class="nds-demo-card">
@@ -404,7 +404,7 @@ direction: ltr
             <h2 class="nds-section-title">Usage Guidelines</h2>
             <p class="nds-section-description">How to use number formatting and counter utilities</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-content-block">
                 <h3 class="nds-block-title">Number Formatting</h3>
                 <p>Add the class <strong>nds-number-format</strong> to any element containing a number. On page load, the number is automatically formatted with locale-appropriate thousand separators. Prefixes (currency symbols, signs) and suffixes (units) surrounding the number are preserved.</p>

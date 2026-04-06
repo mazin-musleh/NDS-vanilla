@@ -19,7 +19,7 @@ direction: ltr
             <p class="nds-section-description">High-level indicators refreshed every 15 minutes to keep teams aligned.
             </p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-grid" style="--max-col: 3; --mid-col: 2; --min-col: 2;">
                 <!-- Completed Projects Card -->
                 <div class="nds-card nds-statistic nds-stroke nds-shadow">
@@ -135,7 +135,7 @@ direction: ltr
             <p class="nds-section-description">Latest announcements and action items relevant to the operations team.
             </p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-cards-group" style="--max-col: 3; --min-col: 1;">
                 <!-- Update Card 1 -->
                 <div class="nds-card nds-stroke">
@@ -241,7 +241,7 @@ direction: ltr
             <h2 class="nds-section-title">My Operational Snapshot</h2>
             <p class="nds-section-description">Track your current workload, progress, and notifications at a glance.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-cards-group" style="--max-col: 3; --min-col: 1;">
                 <!-- Metric Card 1 -->
                 <div class="nds-card nds-stroke">
@@ -328,7 +328,7 @@ direction: ltr
             <p class="nds-section-description">Stay in sync with updates from partners and teams you collaborate with.
             </p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-tabs" id="communityTabs" hidden>
                 <div class="nds-tab-list-container">
                     <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Community navigation">

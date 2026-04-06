@@ -15,7 +15,7 @@ direction: ltr
             <h2 class="nds-section-title">Grid Structure</h2>
             <p class="nds-section-description">The content grid uses named CSS Grid lines to create three column tracks: content (constrained), breakout (wider), and full-width (edge-to-edge).</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
@@ -79,7 +79,7 @@ direction: ltr
             <h2 class="nds-section-title">Content Column (Default)</h2>
             <p class="nds-section-description">All direct children are placed into the content column by default. The content column is constrained by --nds-content-MaxWidth.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
@@ -130,7 +130,7 @@ direction: ltr
             <h2 class="nds-section-title">Full-Width Column</h2>
             <p class="nds-section-description">Add .nds-full-width to break out of the content column and span the entire viewport width.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
@@ -189,7 +189,7 @@ direction: ltr
             <h2 class="nds-section-title">Content Container</h2>
             <p class="nds-section-description">The .nds-content-container utility provides a simple max-width + centered padding wrapper without the full grid system.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
@@ -242,7 +242,7 @@ direction: ltr
             <h2 class="nds-section-title">Customization Tokens</h2>
             <p class="nds-section-description">Override these CSS custom properties to adjust the content grid behavior.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">

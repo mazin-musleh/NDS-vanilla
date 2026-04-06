@@ -16,7 +16,7 @@ direction: ltr
             <p class="nds-section-description">Interactive tabs for organizing and switching between different content
                 sections</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
 
             <!-- Basic Tabs Example -->
@@ -587,7 +587,7 @@ direction: ltr
             <h2 class="nds-section-title">Accessibility Guidelines</h2>
             <p class="nds-section-description">Proper ARIA implementation for accessible tab navigation</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
                 <div class="nds-content-block">
                     <h3 class="nds-block-title">HTML Structure Requirements</h3>
                     <dl class="nds-definition-list nds-tableView">

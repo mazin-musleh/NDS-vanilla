@@ -136,6 +136,10 @@ Footer
 ------
 .list-header                → .nds-list-header
 
+Section
+-------
+.nds-section-content        → .nds-section-body
+
 Forms
 -----
 .toggle-password            → .nds-toggle-password

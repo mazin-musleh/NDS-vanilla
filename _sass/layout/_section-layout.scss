@@ -39,7 +39,7 @@
     column-gap: var(--spacing-xl);
 }
 
-.nds-section-head:has(~ .nds-section-content),
+.nds-section-head:has(~ .nds-section-body),
 .nds-section-wrapper:not(:last-child) {
     margin-bottom: var(--spacing-4xl);
 
@@ -183,7 +183,7 @@
         }
     }
 
-    .nds-section-content {
+    .nds-section-body {
         flex: 1 1 100%;
         min-width: 0;
     }
@@ -226,7 +226,7 @@
         flex: 1;
     }
 
-    .nds-section-content {
+    .nds-section-body {
         width: 100%;
         flex: 1;
         text-align: unset;

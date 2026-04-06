@@ -15,7 +15,7 @@ direction: ltr
             <h2 class="nds-section-title">Bar Chart</h2>
             <p class="nds-section-description">Grouped or stacked bars for comparing categories across series</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -134,7 +134,7 @@ NDS.Chart.create('#my-chart', {
             <h2 class="nds-section-title">Line Chart</h2>
             <p class="nds-section-description">Smooth or straight lines for tracking trends over time, with optional area fill</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -252,7 +252,7 @@ NDS.Chart.create('#my-chart', {
             <h2 class="nds-section-title">Pie Chart</h2>
             <p class="nds-section-description">Proportional segments for showing distribution of a whole</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -349,7 +349,7 @@ NDS.Chart.create('#my-chart', {
             <h2 class="nds-section-title">Donut Chart</h2>
             <p class="nds-section-description">Pie chart with an inner hole for a cleaner look or center content</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -449,7 +449,7 @@ NDS.Chart.create('#my-chart', {
             <h2 class="nds-section-title">HTML Initialization</h2>
             <p class="nds-section-description">Charts can also be initialized declaratively using data attributes</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -505,7 +505,7 @@ NDS.Chart.create('#my-chart', {
             <h2 class="nds-section-title">Theming</h2>
             <p class="nds-section-description">Override CSS custom properties to customize chart colors without changing JavaScript options</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -579,7 +579,7 @@ NDS.Chart.create('#my-chart', {
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -634,7 +634,7 @@ NDS.Chart.create('#my-chart', {
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
 
             <div class="nds-content-block">
                 <h3 class="nds-block-title">Best Practices</h3>

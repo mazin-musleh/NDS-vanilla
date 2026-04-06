@@ -15,7 +15,7 @@ direction: ltr
             <h2 class="nds-section-title">Direct Code Block</h2>
             <p class="nds-section-description">Standalone code blocks with copy button, used for API documentation and code snippets</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
 
             <!-- Basic Direct Code Block -->
@@ -260,7 +260,7 @@ async function handleFormSubmit(form) {
             <h2 class="nds-section-title">Tabbed Code Block</h2>
             <p class="nds-section-description">Code blocks with tab navigation for showing multiple languages or file types</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
 
             <!-- Single Tab -->
@@ -562,7 +562,7 @@ NDS.Alert.create({
             <h2 class="nds-section-title">Language Classes</h2>
             <p class="nds-section-description">Supported language identifiers for the code element</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
 
             <div class="nds-demo-card">
@@ -612,7 +612,7 @@ NDS.Alert.create({
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
                 <div class="nds-content-block">
                     <h3 class="nds-block-title">Structure</h3>
                     <ul>
@@ -663,7 +663,7 @@ NDS.Alert.create({
             <h2 class="nds-section-title">CSS Implementation</h2>
             <p class="nds-section-description">Core styles for the code block component</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
 
             <div class="nds-code nds-expandable">
                 <div class="nds-code-action">

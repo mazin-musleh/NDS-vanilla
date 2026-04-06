@@ -15,7 +15,7 @@ direction: ltr
             <h2 class="nds-section-title">Standard</h2>
             <p class="nds-section-description">Six variants across all interaction states</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -138,7 +138,7 @@ direction: ltr
             <h2 class="nds-section-title">Destructive</h2>
             <p class="nds-section-description">Red-toned variants for delete, remove, and irreversible actions</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -257,7 +257,7 @@ direction: ltr
             <h2 class="nds-section-title">Layout</h2>
             <p class="nds-section-description">Content visibility, icon position, shape, and state modifiers</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -419,7 +419,7 @@ direction: ltr
             <h2 class="nds-section-title">Menu Button</h2>
             <p class="nds-section-description">Dropdown trigger with auto-rotating indicator</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -546,7 +546,7 @@ direction: ltr
             <h2 class="nds-section-title">Button Group</h2>
             <p class="nds-section-description">Grouped buttons with merged borders and shared border radius</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -660,7 +660,7 @@ direction: ltr
             <h2 class="nds-section-title">Animated Progress</h2>
             <p class="nds-section-description">Circular countdown timer controlled by --progress-duration</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -800,7 +800,7 @@ direction: ltr
             <h2 class="nds-section-title">Static Progress</h2>
             <p class="nds-section-description">Fixed percentage indicator controlled by --progress-value</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -940,7 +940,7 @@ direction: ltr
             <h2 class="nds-section-title">Status Feedback</h2>
             <p class="nds-section-description">Contextual color and icon change via data-status attribute</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -1043,7 +1043,7 @@ btn.addEventListener('click', () => copyAction(btn));
             <h2 class="nds-section-title">Badge</h2>
             <p class="nds-section-description">Notification count overlay on icon buttons</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -1108,7 +1108,7 @@ btn.addEventListener('click', () => copyAction(btn));
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -1163,7 +1163,7 @@ btn.addEventListener('click', () => copyAction(btn));
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
 
             <div class="nds-content-block">
                 <h3 class="nds-block-title">When to Use</h3>

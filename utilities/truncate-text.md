@@ -16,7 +16,7 @@ direction: ltr
             <p class="nds-section-description">Truncate overflowing text with ellipsis for single-line and multi-line
                 content</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
 
             <!-- Single Line Truncate -->
@@ -278,7 +278,7 @@ direction: ltr
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
                 <div class="nds-content-block">
                     <h3 class="nds-block-title">Basic Usage</h3>
                     <ul>
@@ -329,7 +329,7 @@ direction: ltr
             <h2 class="nds-section-title">CSS Implementation</h2>
             <p class="nds-section-description">The underlying CSS that powers the truncate utility</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
 
             <div class="nds-demo-card">
@@ -379,7 +379,7 @@ direction: ltr
             <h2 class="nds-section-title">Truncate vs Expandable</h2>
             <p class="nds-section-description">When to use text truncation vs expandable content</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
 
                 <div class="nds-content-block">
                     <h3 class="nds-block-title">Use Truncate Text When:</h3>

@@ -15,7 +15,7 @@ direction: ltr
             <h2 class="nds-section-title">Loading Spinner</h2>
             <p class="nds-section-description">Add data-state="loading" or .nds-loading to any container to dim its content and show a centered spinner</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <!-- Default Loading -->
                 <div class="nds-demo-card">
@@ -186,7 +186,7 @@ direction: ltr
             <p class="nds-section-description">Loading spinners are available in 7 sizes: xxs (20px), xs (24px), sm
                 (28px), md (32px default), lg (36px), xl (40px), 2xl (44px)</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">

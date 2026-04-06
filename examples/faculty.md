@@ -22,7 +22,7 @@ layout_class: nds-cardView nds-topSideMenu
             </div>
         </div>
 
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <dl class="nds-definition-list nds-tableView nds-divided" style="--max-col:4;--mid-col:2;--min-col:2;">
                 <div class="nds-definition-item">
                     <dt>
@@ -58,7 +58,7 @@ layout_class: nds-cardView nds-topSideMenu
 </section>
 
 <section id="facultyTabs" class="nds-content-section nds-ghost">
-    <div class="nds-section-content">
+    <div class="nds-section-body">
         <div class="nds-tabs nds-divided nds-lg">
             <div class="nds-tab-list-container">
                 <nav class="nds-tab-list" role="tablist" aria-label="Faculty member information">

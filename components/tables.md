@@ -15,7 +15,7 @@ direction: ltr
             <h2 class="nds-section-title">Basic Table</h2>
             <p class="nds-section-description">Standard table structure with header, body, and interactive states</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
@@ -109,7 +109,7 @@ direction: ltr
             <h2 class="nds-section-title">Compact Table</h2>
             <p class="nds-section-description">Space-efficient table design for dense data display</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
@@ -275,7 +275,7 @@ direction: ltr
             <h2 class="nds-section-title">Sortable Table</h2>
             <p class="nds-section-description">Interactive table with sorting capabilities and visual indicators</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
@@ -418,7 +418,7 @@ direction: ltr
             <h2 class="nds-section-title">Table with Feedback Icons</h2>
             <p class="nds-section-description">Interactive table showcasing feedback status with feedback icons</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
@@ -604,7 +604,7 @@ direction: ltr
             <h2 class="nds-section-title">Table with Selection</h2>
             <p class="nds-section-description">Data table with checkbox selection for bulk operations</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
@@ -766,7 +766,7 @@ direction: ltr
             <h2 class="nds-section-title">Responsive Table</h2>
             <p class="nds-section-description">All tables are responsive by default — JS auto-wraps every <strong>nds-table</strong> in an nds-table-wrapper with horizontal scroll and gradient fade masks on overflow. Use <strong>--max-width</strong> to constrain wrapper width and <strong>--min-width</strong> to lock the table's minimum width. If <strong>--min-width</strong> is not set, the JS auto-calculates it from the table's natural content width so cells never shrink.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
@@ -883,7 +883,7 @@ direction: ltr
             <h2 class="nds-section-title">Table with Pagination</h2>
             <p class="nds-section-description">Large datasets can be paginated using the <strong>data-auto-pagination</strong> attribute. Add <strong>nds-page-item</strong> class to each <code>&lt;tr&gt;</code> in <code>&lt;tbody&gt;</code> and set <strong>--per-page</strong> on the content wrapper.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
@@ -1022,7 +1022,7 @@ direction: ltr
             <h2 class="nds-section-title">Usage Guidelines</h2>
             <p class="nds-section-description">Best practices for implementing table components</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
                 <div class="nds-content-block">
                     <h3 class="nds-block-title">When to Use</h3>
                     <ul>

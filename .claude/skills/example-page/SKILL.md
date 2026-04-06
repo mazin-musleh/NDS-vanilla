@@ -92,7 +92,7 @@ All example pages set `lang` and `direction` based on content language (English 
 
 ### Page Structure
 
-Example pages use NDS section hierarchy (`nds-content-section` → `nds-section-wrapper` → `nds-section-head` + `nds-section-content`) but do NOT use demo cards or code tabs. The page IS the demo.
+Example pages use NDS section hierarchy (`nds-content-section` → `nds-section-wrapper` → `nds-section-head` + `nds-section-body`) but do NOT use demo cards or code tabs. The page IS the demo.
 
 ### Registration Checklist
 

@@ -16,7 +16,7 @@ direction: ltr
       <p class="nds-section-description">Upload files with drag-and-drop support, progress tracking, and comprehensive
         validation</p>
     </div>
-    <div class="nds-section-content">
+    <div class="nds-section-body">
       <div class="nds-showcase">
 
         <div class="nds-demo-card">

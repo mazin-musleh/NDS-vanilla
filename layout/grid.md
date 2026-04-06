@@ -16,7 +16,7 @@ direction: ltr
             <p class="nds-section-description">The .nds-grid class creates a CSS grid that auto-fits children
                 into equal columns. Use --max-col to set a fixed column count, or --col-width to set minimum column width for automatic wrapping.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -131,7 +131,7 @@ direction: ltr
             <p class="nds-section-description">Use col-{n} classes to explicitly span columns in a 12-column grid. The
                 grid automatically switches to 12 columns when column classes are detected.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -206,7 +206,7 @@ direction: ltr
             <h2 class="nds-section-title">Responsive Columns</h2>
             <p class="nds-section-description">Use breakpoint-prefixed column classes to change spans at different viewport widths. Available prefixes: col-sm- (base), col-md- (600px+), col-lg- (960px+), col-xl- (1280px+).</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -274,7 +274,7 @@ direction: ltr
             <h2 class="nds-section-title">Responsive Auto-fit</h2>
             <p class="nds-section-description">Without column classes, the grid uses auto-fit mode and adapts column count based on viewport width using --max-col, --mid-col, and --min-col tokens. Each token cascades: if --mid-col is not set, it falls back to --max-col. If --min-col is not set, it falls back to --mid-col then --max-col.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -341,7 +341,7 @@ direction: ltr
             <h2 class="nds-section-title">Responsive Breakpoints</h2>
             <p class="nds-section-description">The grid uses viewport media queries for responsive column spans and auto-fit behavior. Breakpoints align with the design system's standard responsive mixins.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -426,7 +426,7 @@ direction: ltr
             <h2 class="nds-section-title">Customization Tokens</h2>
             <p class="nds-section-description">Override these CSS custom properties on .nds-grid to customize gap, alignment, and column behavior.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">

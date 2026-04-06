@@ -16,7 +16,7 @@ direction: ltr
             <p class="nds-section-description">Automatically adds expand/collapse functionality when content exceeds
                 specified height limits</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
 
             <!-- Basic Expandable Example -->
@@ -196,7 +196,7 @@ direction: ltr
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
                 <div class="nds-content-block">
                     <h3 class="nds-block-title">Structure</h3>
                     <ul>
@@ -247,7 +247,7 @@ direction: ltr
             <h2 class="nds-section-title">JavaScript API</h2>
             <p class="nds-section-description">Programmatic control and event handling for expandable content</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
 
             <h3>Manual Initialization</h3>
             <p>Create expandable instances programmatically for dynamic content.</p>

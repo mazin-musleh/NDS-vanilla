@@ -15,7 +15,7 @@ direction: ltr
             <h2 class="nds-section-title">Search and Filter Cards</h2>
             <p class="nds-section-description">Combine a search box with auto-generated checkbox and radio filters. The component scans card content and builds filter options automatically from data attributes.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -216,7 +216,7 @@ direction: ltr
             <h2 class="nds-section-title">Auto-Generated Filter Types</h2>
             <p class="nds-section-description">Three filter input types that auto-generate from card content: checkbox (multi-select, OR logic), radio (single-select), and switch (toggle, OR logic)</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <!-- Checkbox -->
                 <div class="nds-demo-card">
@@ -832,7 +832,7 @@ direction: ltr
             <h2 class="nds-section-title">Static Values Filter</h2>
             <p class="nds-section-description">Provide filter values directly via <code class="nds-inline-code lang-html">data-filter-values</code> instead of scanning cards. Useful when filter options are known upfront but don't appear in card markup, or for server-side / AJAX filtering where no cards exist on page load.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -1007,7 +1007,7 @@ direction: ltr
             <h2 class="nds-section-title">Dynamic Values (populateFilter API)</h2>
             <p class="nds-section-description">Use <code class="nds-inline-code lang-js">populateFilter()</code> to generate filter inputs from values fetched at runtime. Supports cascading filters where one filter's selection determines another filter's options.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -1171,7 +1171,7 @@ NDS.Filter.whenReady('#apiFilter', (filter) => {
             <h2 class="nds-section-title">AJAX Form Submission</h2>
             <p class="nds-section-description">Send filter criteria to a server endpoint via AJAX. HTML responses are auto-injected into the target container. JSON responses dispatch raw data via event for developer rendering.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -1387,7 +1387,7 @@ filterForm.addEventListener('nds:filterFormAjax', (e) => {
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -1456,7 +1456,7 @@ filterForm.addEventListener('nds:filterFormAjax', (e) => {
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
 
             <div class="nds-content-block">
                 <h3 class="nds-block-title">Best Practices</h3>

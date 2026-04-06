@@ -15,7 +15,7 @@ direction: ltr
             <h2 class="nds-section-title">Initials</h2>
             <p class="nds-section-description">Display user initials as a text-based avatar</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -112,7 +112,7 @@ direction: ltr
             <h2 class="nds-section-title">Icon</h2>
             <p class="nds-section-description">Use an icon as the avatar content for generic user placeholders</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -209,7 +209,7 @@ direction: ltr
             <h2 class="nds-section-title">Image</h2>
             <p class="nds-section-description">Display a user photo with optional image border</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -310,7 +310,7 @@ direction: ltr
             <h2 class="nds-section-title">Link</h2>
             <p class="nds-section-description">Wrap in an anchor tag for clickable profile navigation</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -407,7 +407,7 @@ direction: ltr
             <h2 class="nds-section-title">Dropmenu Trigger</h2>
             <p class="nds-section-description">Avatar as a dropmenu trigger for user menus and profile actions</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -541,7 +541,7 @@ direction: ltr
             <h2 class="nds-section-title">Group</h2>
             <p class="nds-section-description">Stack multiple avatars together with overlapping or spaced layouts</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -678,7 +678,7 @@ direction: ltr
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -719,7 +719,7 @@ direction: ltr
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
 
             <div class="nds-content-block">
                 <h3 class="nds-block-title">When to Use</h3>

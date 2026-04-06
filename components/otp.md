@@ -15,7 +15,7 @@ direction: ltr
             <h2 class="nds-section-title">4-Digit OTP</h2>
             <p class="nds-section-description">Standard verification code input with automatic focus advance and hidden field sync</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -141,7 +141,7 @@ direction: ltr
             <h2 class="nds-section-title">OTP with Separator</h2>
             <p class="nds-section-description">Use the separator element to visually group digits, commonly used for 6-digit verification codes split into two groups of three.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -288,7 +288,7 @@ direction: ltr
             <h2 class="nds-section-title">Validation States</h2>
             <p class="nds-section-description">OTP groups support validation states through the standard form data-status attribute. Status is automatically cleared when the user starts typing.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -457,7 +457,7 @@ document.getElementById('clear-btn').addEventListener('click', function() {
             <h2 class="nds-section-title">Built-in Features</h2>
             <p class="nds-section-description">What you get out of the box with zero configuration</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -513,7 +513,7 @@ document.getElementById('clear-btn').addEventListener('click', function() {
             <h2 class="nds-section-title">Usage Guidelines</h2>
             <p class="nds-section-description">When and how to use OTP inputs effectively</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-content-block">
                 <h3 class="nds-block-title">When to Use</h3>
                 <ul>

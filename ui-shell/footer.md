@@ -15,7 +15,7 @@ direction: ltr
             <h2 class="nds-section-title">Footer</h2>
             <p class="nds-section-description">The footer provides secondary navigation, links, and legal information at the bottom of every page.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <p>Content coming soon.</p>
         </div>
     </div>

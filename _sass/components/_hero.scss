@@ -32,7 +32,7 @@
         }
     }
 
-    .nds-section-content {
+    .nds-section-body {
         height: 100%;
         width: 100%;
         display: flex;
@@ -137,7 +137,7 @@
     // ── Mobile ──
 
     @include mobile {
-        &:not(.nds-sub) .nds-section-content .nds-section-title::before {
+        &:not(.nds-sub) .nds-section-body .nds-section-title::before {
             width: 80vw;
         }
     }

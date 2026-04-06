@@ -14,7 +14,7 @@ layout_class: nds-cardView
     <div class="nds-section-head">
         <h2 class="nds-section-title">About the Program</h2>
     </div>
-    <div class="nds-section-content nds-expandable">
+    <div class="nds-section-body nds-expandable">
         <div class="nds-content-block nds-expandable-content" style="--max-height:300px">
             <div class="nds-block-item">
                 <p>The Bachelor of Science in Artificial Intelligence program equips students with a strong foundation in computer science, mathematics, and the core disciplines of AI including machine learning, deep learning, natural language processing, and computer vision. The program emphasizes both theoretical understanding and practical application, preparing graduates for careers in industry, research, and entrepreneurship.</p>
@@ -29,7 +29,7 @@ layout_class: nds-cardView
     <div class="nds-section-head">
         <h2 class="nds-section-title">Program Details</h2>
     </div>
-    <div class="nds-section-content">
+    <div class="nds-section-body">
         <div class="nds-content-block nds-grid">
             <div class="nds-block-item col-sm-12 col-lg-6">
                 <dl class="nds-definition-list nds-divided nds-tableView">
@@ -169,7 +169,7 @@ layout_class: nds-cardView
 
 <!--Section 3: Tabs (Objectives, Requirements, Curriculum, Course Descriptions) -->
 <section id="programDetails" class="nds-content-section nds-ghost">
-    <div class="nds-section-content">
+    <div class="nds-section-body">
         <div class="nds-tabs nds-divided nds-lg" id="programTabs">
             <div class="nds-tab-list-container">
                 <nav class="nds-tab-list" role="tablist" aria-label="Program details navigation">

@@ -14,7 +14,7 @@ direction: ltr
             <h2 class="nds-section-title">About The Project</h2>
             <p class="nds-section-description">Why it was built, and what it covers.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <p>The Digital Government Authority published a <a href="https://www.figma.com/@sdga" target="_blank" class="nds-primary">unified design system on Figma</a> to standardize government digital services. The specifications are clear, but converting them to working code remains a challenge for most teams.</p>
             <p>The official implementation is a <a href="https://dga-nds-story-book-695z8.ondigitalocean.app/" target="_blank" class="nds-primary">React/Storybook component library</a> that covers core UI components. This project provides the same design system in plain HTML, CSS, and JavaScript, with all components, layout system, page templates, documentation, and a full development environment. No framework required.</p>
         </div>
@@ -28,7 +28,7 @@ direction: ltr
             <h2 class="nds-section-title">Open Source</h2>
             <p class="nds-section-description">MIT licensed. Full source code included.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-grid" style="--max-col:3;--mid-col:1;--min-col:1;">
                 <div class="nds-card nds-stroke">
                     <div class="nds-card-header">
@@ -102,7 +102,7 @@ direction: ltr
             <h2 class="nds-section-title">Components</h2>
             <p class="nds-section-description">52 components, each with markup, styling, and JavaScript behavior. All built from scratch.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
         <div class="nds-section-search nds-filter" data-filter-target="components_list" hidden>
             <div class="nds-form-container nds-search-box">
                 <div class="nds-search-content">
@@ -194,11 +194,11 @@ direction: ltr
             <h2 class="nds-section-title">Compliance Ready</h2>
             <p class="nds-section-description">Components and page templates built to pass DGA compliance.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <p>Every component follows the official design tokens, typography, spacing, and interaction patterns. The project includes required page layouts as ready-to-use code, along with additional real-world examples.</p>
         </div>
     </div>
-    <div class="nds-section-content nds-full-width">
+    <div class="nds-section-body nds-full-width">
         <div class="nds-swiper" slides-max="3" slides-mid="2" slides-min="1" peek="40" hidden>
             <div class="nds-swiper-wrapper">
 
@@ -317,7 +317,7 @@ direction: ltr
             <h2 class="nds-section-title">Architecture & Performance</h2>
             <p class="nds-section-description">Built with a performance-first and compatibility approach.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:32px; --dl-title-FS: var(--nds-text-xl-FS); --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -387,10 +387,10 @@ direction: ltr
             <h2 class="nds-section-title">Development Environment</h2>
             <p class="nds-section-description">Everything needed to build, modify, and extend the system.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <p>The project is built on <a href="https://jekyllrb.com/" target="_blank" class="nds-primary">Jekyll</a>, a static site generator natively supported by GitHub Pages. It compiles templates, stylesheets, and data files into static HTML with no external toolchain.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:32px; --dl-title-FS: var(--nds-text-xl-FS); --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">

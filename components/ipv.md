@@ -15,7 +15,7 @@ direction: ltr
             <h2 class="nds-section-title">Image Gallery</h2>
             <p class="nds-section-description">Click any thumbnail to open the full-screen viewer with zoom and navigation controls</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
@@ -127,7 +127,7 @@ direction: ltr
             <h2 class="nds-section-title">Built-in Features</h2>
             <p class="nds-section-description">What you get out of the box with zero configuration</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -197,7 +197,7 @@ direction: ltr
             <h2 class="nds-section-title">Usage Guidelines</h2>
             <p class="nds-section-description">When and how to use the image popup viewer effectively</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <div class="nds-content-block">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>

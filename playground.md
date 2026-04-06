@@ -16,7 +16,7 @@ direction: ltr
             <h2 class="nds-section-title">Playground</h2>
             <p class="nds-section-description">Component testing area</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
 
         </div>
     </div>

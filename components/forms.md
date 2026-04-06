@@ -15,7 +15,7 @@ direction: ltr
       <h2 class="nds-section-title">Text Input</h2>
       <p class="nds-section-description">Standard single-line text field with clear button and validation feedback</p>
     </div>
-    <div class="nds-section-content">
+    <div class="nds-section-body">
       <div class="nds-showcase">
         <div class="nds-demo-card">
           <div class="demo-header">
@@ -139,7 +139,7 @@ direction: ltr
       <h2 class="nds-section-title">Prefix & Suffix</h2>
       <p class="nds-section-description">Text input with inline prefix and suffix labels inside the form control</p>
     </div>
-    <div class="nds-section-content">
+    <div class="nds-section-body">
       <div class="nds-showcase">
         <div class="nds-demo-card" data-code-rebuild>
           <div class="demo-header">
@@ -315,7 +315,7 @@ direction: ltr
       <h2 class="nds-section-title">Number Input</h2>
       <p class="nds-section-description">Numeric field with increment and decrement buttons for precise value adjustments</p>
     </div>
-    <div class="nds-section-content">
+    <div class="nds-section-body">
       <div class="nds-showcase">
         <div class="nds-demo-card">
           <div class="demo-header">
@@ -471,7 +471,7 @@ direction: ltr
       <h2 class="nds-section-title">Search Input</h2>
       <p class="nds-section-description">Search field with leading icon, voice input, and clear button</p>
     </div>
-    <div class="nds-section-content">
+    <div class="nds-section-body">
       <div class="nds-showcase">
         <div class="nds-demo-card">
           <div class="demo-header">
@@ -604,7 +604,7 @@ direction: ltr
       <h2 class="nds-section-title">Email Input</h2>
       <p class="nds-section-description">Email field with leading icon and built-in format validation</p>
     </div>
-    <div class="nds-section-content">
+    <div class="nds-section-body">
       <div class="nds-showcase">
         <div class="nds-demo-card">
           <div class="demo-header">
@@ -730,7 +730,7 @@ direction: ltr
       <h2 class="nds-section-title">Password Input</h2>
       <p class="nds-section-description">Password field with visibility toggle and Arabic character filtering</p>
     </div>
-    <div class="nds-section-content">
+    <div class="nds-section-body">
       <div class="nds-showcase">
         <div class="nds-demo-card">
           <div class="demo-header">
@@ -864,7 +864,7 @@ direction: ltr
       <h2 class="nds-section-title">Textarea</h2>
       <p class="nds-section-description">Multi-line text entry for longer content like messages and descriptions</p>
     </div>
-    <div class="nds-section-content">
+    <div class="nds-section-body">
       <div class="nds-showcase">
         <div class="nds-demo-card">
           <div class="demo-header">
@@ -979,7 +979,7 @@ direction: ltr
       <h2 class="nds-section-title">Select Dropdown</h2>
       <p class="nds-section-description">Custom dropdown select with keyboard navigation and hidden input for form submission</p>
     </div>
-    <div class="nds-section-content">
+    <div class="nds-section-body">
       <div class="nds-showcase">
         <div class="nds-demo-card">
           <div class="demo-header">
@@ -1130,7 +1130,7 @@ direction: ltr
       <h2 class="nds-section-title">Form Status API</h2>
       <p class="nds-section-description">Set error, success, warning, or info status on any form container with automatic feedback display</p>
     </div>
-    <div class="nds-section-content">
+    <div class="nds-section-body">
       <div class="nds-showcase">
         <div class="nds-demo-card">
           <div class="demo-header">
@@ -1257,7 +1257,7 @@ var status = NDS.Forms.getStatus(field);
       <h2 class="nds-section-title">Permanent Feedback</h2>
       <p class="nds-section-description">Tips and hints that persist across validation cycles, hidden during errors and restored when cleared</p>
     </div>
-    <div class="nds-section-content">
+    <div class="nds-section-body">
       <div class="nds-showcase">
         <div class="nds-demo-card">
           <div class="demo-header">
@@ -1389,7 +1389,7 @@ NDS.Forms.clearStatus(container);</code>
       <h2 class="nds-section-title">Built-in Features</h2>
       <p class="nds-section-description">What you get out of the box with zero configuration</p>
     </div>
-    <div class="nds-section-content">
+    <div class="nds-section-body">
       <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1;">
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -1459,7 +1459,7 @@ NDS.Forms.clearStatus(container);</code>
       <h2 class="nds-section-title">Usage Guidelines</h2>
       <p class="nds-section-description">When and how to use form inputs effectively</p>
     </div>
-    <div class="nds-section-content">
+    <div class="nds-section-body">
       <div class="nds-content-block">
         <h3 class="nds-block-title">Best Practices</h3>
         <ul>

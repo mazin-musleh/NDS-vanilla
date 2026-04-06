@@ -15,7 +15,7 @@ direction: ltr
             <h2 class="nds-section-title">Side Navigation</h2>
             <p class="nds-section-description">The side navigation provides hierarchical access to sections and pages within the application.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <p>Content coming soon.</p>
         </div>
     </div>

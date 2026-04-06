@@ -15,7 +15,7 @@ direction: ltr
             <h2 class="nds-section-title">Header</h2>
             <p class="nds-section-description">The header provides consistent top-level navigation and branding across your application.</p>
         </div>
-        <div class="nds-section-content">
+        <div class="nds-section-body">
             <p>Content coming soon.</p>
         </div>
     </div>
