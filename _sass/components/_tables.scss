@@ -208,7 +208,7 @@
             outline: none;
 
             &:hover {
-                background-color: var(--colors-neutral-200);
+                background-color: var(--table-background-hover-selected);
             }
 
             &:focus {
@@ -217,7 +217,7 @@
 
             .nds-sort-icon {
                 font-size: var(--nds-text-sm-FS);
-                color: var(--colors-neutral-500);
+                color: var(--text-secondary-paragraph);
             }
 
             &.nds-btn {
@@ -279,8 +279,8 @@
 
 .nds-table[data-state~="loading"] {
     tbody tr td {
-        background-color: var(--colors-neutral-100);
-        color: var(--colors-neutral-400);
+        background-color: var(--table-background-row);
+        color: var(--text-disabled);
         animation: tableLoading 1.5s ease-in-out infinite alternate;
     }
 }
