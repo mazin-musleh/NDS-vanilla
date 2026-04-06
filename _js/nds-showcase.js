@@ -2094,7 +2094,8 @@
             if (label) label.setAttribute('for', cleanId);
         });
 
-        var result = formatHtml(clone.outerHTML);
+        // outerHTML serializes empty attributes as attr="", strip for clean output
+        var result = formatHtml(clone.outerHTML.replace(/([\w-])=""/g, '$1'));
         var hiddenCopy = getHiddenCodeCopy(codeElement);
         if (hiddenCopy) hiddenCopy.textContent = result;
         codeElement.dataset.originalContent = result;
@@ -2132,7 +2133,8 @@
             expContent.setAttribute('style', '--max-height:200px');
         }
 
-        let html = clone.outerHTML;
+        // outerHTML serializes empty attributes as attr="", strip for clean output
+        let html = clone.outerHTML.replace(/([\w-])=""/g, '$1');
 
         // Format and indent the HTML
         html = formatHtml(html, '    ');

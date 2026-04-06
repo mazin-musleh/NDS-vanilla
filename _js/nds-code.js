@@ -127,10 +127,9 @@
                     const hasText = !hasChildren && child.textContent.trim();
 
                     // Build opening tag
-                    const booleanAttrs = ['hidden', 'disabled', 'checked', 'readonly', 'required', 'autofocus', 'autoplay', 'controls', 'loop', 'muted', 'novalidate', 'open', 'selected', 'multiple', 'defer', 'async'];
                     let openTag = '<' + tag;
                     for (let attr of child.attributes) {
-                        if (booleanAttrs.includes(attr.name) && (attr.value === '' || attr.value === attr.name)) {
+                        if (attr.value === '' || attr.value === attr.name) {
                             openTag += ' ' + attr.name;
                         } else {
                             openTag += ' ' + attr.name + '="' + attr.value + '"';
@@ -304,27 +303,17 @@
     }
 
     function processHTMLToken(token) {
-        const escaped = escapeHtml(token);
+        let result = escapeHtml(token);
 
         // Tag name (opening or closing)
         const tagMatch = token.match(/^<\/?([a-zA-Z][a-zA-Z0-9-]*)/);
         if (tagMatch) {
-            return escaped.replace(tagMatch[1], '<span class="syntax-tag">' + tagMatch[1] + '</span>');
+            return result.replace(tagMatch[1], '<span class="syntax-tag">' + tagMatch[1] + '</span>');
         }
 
-        // Attribute names (with value)
-        const attrMatch = token.match(/\b([a-zA-Z-]+)=/);
-        if (attrMatch) {
-            return escaped.replace(attrMatch[1] + '=', '<span class="syntax-attr">' + attrMatch[1] + '</span>=');
-        }
-
-        // Boolean attributes (no value, e.g., hidden, disabled)
-        const boolMatch = token.match(/\s([a-zA-Z-]+)(?=[>\s])/);
-        if (boolMatch) {
-            return escaped.replace(boolMatch[1], '<span class="syntax-attr">' + boolMatch[1] + '</span>');
-        }
-
-        return escaped;
+        // Attribute names: with value (attr=) and boolean (attr followed by space, &gt; or end)
+        result = result.replace(/(?<=\s)([a-zA-Z][a-zA-Z0-9-]*)(?==|\s|&gt;|&amp;|$)/g, '<span class="syntax-attr">$1</span>');
+        return result;
     }
 
     // CSS Syntax Highlighting
