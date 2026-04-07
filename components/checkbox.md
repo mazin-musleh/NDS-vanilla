@@ -71,7 +71,7 @@ direction: ltr
                   <div class="nds-form-header" data-feedback-target>
                     <label for="demo-checkbox-single">
                       <span class="nds-label">I agree to the terms and conditions</span>
-                      <span class="info">You must accept our terms to continue with the registration</span>
+                      <span class="nds-info">You must accept our terms to continue with the registration</span>
                     </label>
                   </div>
                   <div class="nds-form-control">
@@ -108,7 +108,7 @@ direction: ltr
   <div class="nds-form-header" data-feedback-target>
     <label for="checkbox-single">
       <span class="nds-label">I agree to the terms and conditions</span>
-      <span class="info">You must accept our terms to continue</span>
+      <span class="nds-info">You must accept our terms to continue</span>
     </label>
   </div>
   <div class="nds-form-control">

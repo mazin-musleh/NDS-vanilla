@@ -64,26 +64,25 @@
     --dark-bg-color: var(--featuredicons-icon-primary);
   }
 
-  &.nds-success, &.success {
+  &.nds-success {
     --icon-bg-color: var(--featuredicons-background-success-light);
     --icon-color: var(--featuredicons-icon-success);
     --dark-bg-color: var(--featuredicons-icon-success);
   }
 
-  &.nds-info, &.info {
+  &.nds-info {
     --icon-bg-color: var(--featuredicons-background-info-light);
     --icon-color: var(--featuredicons-icon-info);
     --dark-bg-color: var(--featuredicons-icon-info);
   }
 
-
-  &.nds-warning, &.warning {
+  &.nds-warning {
     --icon-bg-color: var(--featuredicons-background-warning-light);
     --icon-color: var(--featuredicons-icon-warning);
     --dark-bg-color: var(--featuredicons-icon-warning);
   }
 
-  &.nds-error, &.error {
+  &.nds-error {
     --icon-bg-color: var(--featuredicons-background-error-light);
     --icon-color: var(--featuredicons-icon-error);
     --dark-bg-color: var(--featuredicons-icon-error);
@@ -118,10 +117,10 @@
 
     @include dark {
       &.nds-brand  { --dark-bg-color: var(--colors-primary-sa-flag-700); }
-      &.nds-success, &.success { --dark-bg-color: var(--colors-green-700); }
-      &.nds-info, &.info { --dark-bg-color: var(--colors-blue-700); }
-      &.nds-warning, &.warning { --dark-bg-color: var(--colors-yellow-700); }
-      &.nds-error, &.error { --dark-bg-color: var(--colors-red-700); }
+      &.nds-success { --dark-bg-color: var(--colors-green-700); }
+      &.nds-info { --dark-bg-color: var(--colors-blue-700); }
+      &.nds-warning { --dark-bg-color: var(--colors-yellow-700); }
+      &.nds-error { --dark-bg-color: var(--colors-red-700); }
       &.nds-neutral { --dark-bg-color: var(--colors-neutral-900); }
     }
   }

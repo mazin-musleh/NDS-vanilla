@@ -72,7 +72,7 @@ direction: ltr
                     <div class="nds-form-header">
                       <label for="demo-radio1">
                         <span class="nds-label">Basic</span>
-                        <span class="info">Core features for individuals</span>
+                        <span class="nds-info">Core features for individuals</span>
                       </label>
                     </div>
                     <div class="nds-form-control">
@@ -83,7 +83,7 @@ direction: ltr
                     <div class="nds-form-header">
                       <label for="demo-radio2">
                         <span class="nds-label">Professional</span>
-                        <span class="info">Advanced tools for teams</span>
+                        <span class="nds-info">Advanced tools for teams</span>
                       </label>
                     </div>
                     <div class="nds-form-control">
@@ -94,7 +94,7 @@ direction: ltr
                     <div class="nds-form-header">
                       <label for="demo-radio3">
                         <span class="nds-label">Enterprise</span>
-                        <span class="info">Full access with dedicated support</span>
+                        <span class="nds-info">Full access with dedicated support</span>
                       </label>
                     </div>
                     <div class="nds-form-control">
@@ -140,7 +140,7 @@ direction: ltr
     <div class="nds-form-header">
       <label for="radio1">
         <span class="nds-label">Basic</span>
-        <span class="info">Core features for individuals</span>
+        <span class="nds-info">Core features for individuals</span>
       </label>
     </div>
     <div class="nds-form-control">
@@ -151,7 +151,7 @@ direction: ltr
     <div class="nds-form-header">
       <label for="radio2">
         <span class="nds-label">Professional</span>
-        <span class="info">Advanced tools for teams</span>
+        <span class="nds-info">Advanced tools for teams</span>
       </label>
     </div>
     <div class="nds-form-control">
@@ -162,7 +162,7 @@ direction: ltr
     <div class="nds-form-header">
       <label for="radio3">
         <span class="nds-label">Enterprise</span>
-        <span class="info">Full access with dedicated support</span>
+        <span class="nds-info">Full access with dedicated support</span>
       </label>
     </div>
     <div class="nds-form-control">

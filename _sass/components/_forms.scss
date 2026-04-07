@@ -133,7 +133,8 @@
 
     // Disabled state
     &[data-state~="disabled"] {
-        .nds-form-header .nds-label {
+        .nds-form-header .nds-label,
+        .nds-form-header .nds-info {
             color: var(--text-default-disabled);
         }
 
@@ -151,7 +152,7 @@
     }
 }
 
-.nds-label+.info {
+.nds-label+.nds-info {
     color: var(--text-primary-paragraph);
     font-size: var(--nds-text-sm-FS);
     line-height: var(--nds-text-sm-LH);
@@ -395,7 +396,7 @@ fieldset {
             margin-inline-start: calc(var(--spacing-md) * -1);
         }
 
-        >*:not([hidden]):not(.nds-dropmenu):not(.nds-dropmenu-menu) {
+        >*:not([hidden]):not(.nds-dropmenu,.nds-dropmenu-menu,.nds-browse-btn) {
             --btn-height: 100%;
             --btn-height-min: var(--btn-height);
             --btn-radius: var(--_input-radius);

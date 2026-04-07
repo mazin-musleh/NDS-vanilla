@@ -61,7 +61,7 @@ direction: ltr
                 <div class="nds-form-header" data-feedback-target>
                   <label for="demo-switch-single">
                     <span class="nds-label">Enable notifications</span>
-                    <span class="info">Receive push notifications for important updates</span>
+                    <span class="nds-info">Receive push notifications for important updates</span>
                   </label>
                 </div>
                 <div class="nds-form-control">
@@ -100,7 +100,7 @@ direction: ltr
   <div class="nds-form-header" data-feedback-target>
     <label for="switch-1">
       <span class="nds-label">Enable notifications</span>
-      <span class="info">Receive push notifications for important updates</span>
+      <span class="nds-info">Receive push notifications for important updates</span>
     </label>
   </div>
   <div class="nds-form-control">
@@ -194,7 +194,7 @@ direction: ltr
                     <div class="nds-form-header">
                       <label for="demo-switch2">
                         <span class="nds-label">Push notifications</span>
-                        <span class="info">Instant alerts on your device</span>
+                        <span class="nds-info">Instant alerts on your device</span>
                       </label>
                     </div>
                     <div class="nds-form-control">
@@ -265,7 +265,7 @@ direction: ltr
     <div class="nds-form-header">
       <label for="switch2">
         <span class="nds-label">Push notifications</span>
-        <span class="info">Instant alerts on your device</span>
+        <span class="nds-info">Instant alerts on your device</span>
       </label>
     </div>
     <div class="nds-form-control">

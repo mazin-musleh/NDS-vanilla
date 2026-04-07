@@ -1276,7 +1276,7 @@ var status = NDS.Forms.getStatus(field);
                 <div class="nds-form-header">
                   <label for="permanent-demo-input">
                     <span class="nds-label">Username</span>
-                    <span class="info">Permanent tip shows again after error is cleared</span>
+                    <span class="nds-info">Permanent tip shows again after error is cleared</span>
                   </label>
                 </div>
                 <div class="nds-form-control">
@@ -1326,7 +1326,7 @@ var status = NDS.Forms.getStatus(field);
   <div class="nds-form-header">
     <label for="username">
       <span class="nds-label">Username</span>
-      <span class="info">Permanent tip shows again after error is cleared</span>
+      <span class="nds-info">Permanent tip shows again after error is cleared</span>
     </label>
   </div>
   <div class="nds-form-control">
