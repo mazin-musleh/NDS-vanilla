@@ -133,4 +133,4 @@ secondary_nav:
   - label: "Call to Action"
     url: "#"
     custom_class: "nds-CTA"
-    button_style: "nds-nav-link nds-btn nds-primary nds-md nds-indicator"
+    button_style: "nds-btn nds-primary"
