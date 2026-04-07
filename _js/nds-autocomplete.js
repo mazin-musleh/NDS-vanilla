@@ -286,7 +286,7 @@
                 btn.id = this.menuId + '-item-' + index;
 
                 var labelSpan = document.createElement('span');
-                labelSpan.className = 'label';
+                labelSpan.className = 'nds-label';
                 labelSpan.innerHTML = this.highlightMatch(text, query);
                 btn.appendChild(labelSpan);
 

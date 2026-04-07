@@ -36,7 +36,7 @@
 
             // Get all filterable items (empty array if no target)
             this.items = this.targetContainer
-                ? Array.from(this.targetContainer.querySelectorAll('.nds-card'))
+                ? Array.from(this.targetContainer.querySelectorAll(this.getItemSelector()))
                 : [];
 
             // Filter criteria storage - dynamic structure
@@ -62,7 +62,17 @@
             // Hidden inputs container for form mode
             this.hiddenInputsContainer = null;
 
+            this.filterLabels = {};  // { filterName: { value: label } } — auto-built from data-filter-value
+
             this.init();
+        }
+
+        getItemSelector() {
+            return this.targetContainer?.getAttribute('data-filter-items') || '.nds-card';
+        }
+
+        getFilterValue(el) {
+            return el.getAttribute('data-filter-value') || el.textContent.trim();
         }
 
         init() {
@@ -269,7 +279,7 @@
                                 const newContainer = targetInResponse.cloneNode(true);
                                 this.targetContainer.replaceWith(newContainer);
                                 this.targetContainer = newContainer;
-                                this.items = Array.from(this.targetContainer.querySelectorAll('.nds-card'));
+                                this.items = Array.from(this.targetContainer.querySelectorAll(this.getItemSelector()));
 
                                 this.targetContainer.removeAttribute('hidden');
                                 if (this.targetContainer.style.display === 'none') {
@@ -717,7 +727,7 @@
             icon.className = 'hgi hgi-stroke hgi-cancel-01 nds-icon';
 
             const label = document.createElement('span');
-            label.className = 'label';
+            label.className = 'nds-label';
             label.textContent = displayLabel || value;
 
             chip.appendChild(icon);
@@ -790,10 +800,18 @@
                 if (filterName === 'search') {
                     this.setupSearchFilter(element);
                 } else if (filterType === 'checkbox' || filterType === 'radio' || filterType === 'switch') {
-                    // Check for explicit values via data-filter-values
+                    // Check for explicit values via data-filter-values (array or object)
                     const staticValues = element.getAttribute('data-filter-values');
                     if (staticValues) {
-                        const values = JSON.parse(staticValues);
+                        const raw = JSON.parse(staticValues);
+                        let values;
+                        if (Array.isArray(raw)) {
+                            values = raw;
+                        } else {
+                            // Object form: keys = values, values = labels
+                            values = Object.keys(raw);
+                            this.filterLabels[filterName] = raw;
+                        }
                         this.setupDynamicFilter(element, filterName, filterType, values);
                     } else {
                         this.setupDynamicFilter(element, filterName, filterType);
@@ -814,6 +832,8 @@
                 );
 
                 for (const input of allSearchInputs) {
+                    // Skip inputs opted out via data-filter-ignore
+                    if (input.hasAttribute('data-filter-ignore') || input.closest('[data-filter-ignore]')) continue;
                     if (!input.closest('.nds-dropmenu-menu')) {
                         const wrapper = input.closest('.nds-form-control') || input.parentElement;
                         const clearBtn = wrapper?.querySelector('.nds-clear, [aria-label*="مسح"], [aria-label*="clear"]');
@@ -1096,17 +1116,35 @@
 
         collectFilterValues(filterName) {
             const values = new Set();
+            const labelMap = {};
 
             this.items.forEach(card => {
                 const filterElements = card.querySelectorAll(`[data-filter="${filterName}"]`);
+                const itemHasFilter = card.getAttribute('data-filter') === filterName;
 
-                if (filterElements.length > 0) {
+                if (filterElements.length > 0 || itemHasFilter) {
                     filterElements.forEach(el => {
-                        const value = el.textContent.trim();
+                        const value = this.getFilterValue(el);
                         if (value) {
                             values.add(value);
+                            // Auto-map label when data-filter-value provides a machine value
+                            const machineValue = el.getAttribute('data-filter-value');
+                            if (machineValue) {
+                                labelMap[machineValue] = el.textContent.trim();
+                            }
                         }
                     });
+                    // Also check the item itself (Gap 4)
+                    if (itemHasFilter) {
+                        const value = this.getFilterValue(card);
+                        if (value) {
+                            values.add(value);
+                            const machineValue = card.getAttribute('data-filter-value');
+                            if (machineValue) {
+                                labelMap[machineValue] = card.textContent.trim();
+                            }
+                        }
+                    }
                 } else if (filterName === 'tags') {
                     // Fallback for tags: traditional .nds-card-tags structure
                     const cardTags = card.querySelector('.nds-card-tags');
@@ -1121,6 +1159,11 @@
                     }
                 }
             });
+
+            // Store auto-collected labels for use by generateFilterInputs
+            if (Object.keys(labelMap).length > 0) {
+                this.filterLabels[filterName] = labelMap;
+            }
 
             return Array.from(values).sort((a, b) => a.localeCompare(b, 'ar'));
         }
@@ -1157,7 +1200,7 @@
                 fieldset.innerHTML = '';
                 if (existingLegend || legendText) {
                     const legend = document.createElement('legend');
-                    legend.className = 'label';
+                    legend.className = 'nds-label';
                     legend.textContent = legendText || (existingLegend ? existingLegend.textContent : '');
                     fieldset.appendChild(legend);
                 }
@@ -1180,7 +1223,7 @@
                 fieldset.classList.add('nds-form-group');
                 if (legendText) {
                     const legend = document.createElement('legend');
-                    legend.className = 'label';
+                    legend.className = 'nds-label';
                     legend.textContent = legendText;
                     fieldset.appendChild(legend);
                 }
@@ -1210,6 +1253,7 @@
 
             // Determine input class and structure based on type
             const groupName = `filter-${filterName}-${this.generateId()}`;
+            const labelMap = this.filterLabels[filterName] || {};
 
             // Generate input for each unique value
             values.forEach((value, index) => {
@@ -1227,8 +1271,8 @@
                 label.setAttribute('for', id);
 
                 const labelSpan = document.createElement('span');
-                labelSpan.className = 'label';
-                labelSpan.textContent = value;
+                labelSpan.className = 'nds-label';
+                labelSpan.textContent = labelMap[value] || value;
 
                 label.appendChild(labelSpan);
                 formHeader.appendChild(label);
@@ -1349,6 +1393,9 @@
                 this.updateFilterButtonLabel();
                 this.updateAppliedChips();
                 this.updatePagination();
+
+                // Always dispatch change event, even when clearing all criteria
+                this.dispatchFilterEvent(this.items.length);
                 return;
             }
 
@@ -1440,15 +1487,9 @@
             const searchText = this.criteria.search;
             if (!searchText) return true;
 
-            const cardContent = item.querySelector('.nds-card-content');
-            if (cardContent) {
-                const textContent = cardContent.textContent.toLowerCase();
-                if (textContent.includes(searchText)) {
-                    return true;
-                }
-            }
-
-            return false;
+            // Try .nds-card-content first, fall back to full item text
+            const textSource = item.querySelector('.nds-card-content') || item;
+            return textSource.textContent.toLowerCase().includes(searchText);
         }
 
         itemMatchesFilter(item, filterName, selectedValues) {
@@ -1456,11 +1497,15 @@
 
             // Look for elements with data-filter attribute
             const filterElements = item.querySelectorAll(`[data-filter="${filterName}"]`);
+            const itemHasFilter = item.getAttribute('data-filter') === filterName;
 
             let itemValues = [];
 
-            if (filterElements.length > 0) {
-                itemValues = Array.from(filterElements).map(el => el.textContent.trim().toLowerCase());
+            if (filterElements.length > 0 || itemHasFilter) {
+                itemValues = Array.from(filterElements).map(el => this.getFilterValue(el).toLowerCase());
+                if (itemHasFilter) {
+                    itemValues.push(this.getFilterValue(item).toLowerCase());
+                }
             } else if (filterName === 'tags') {
                 // Fallback for tags: traditional .nds-card-tags structure
                 const cardTags = item.querySelector('.nds-card-tags');
@@ -1688,9 +1733,14 @@
          * Refresh items list and regenerate filters
          */
         refresh() {
+            // Re-resolve targetContainer in case it was null at init or replaced
+            if (this.targetId) {
+                this.targetContainer = document.getElementById(this.targetId);
+            }
+
             // Update items list
             this.items = this.targetContainer
-                ? Array.from(this.targetContainer.querySelectorAll('.nds-card'))
+                ? Array.from(this.targetContainer.querySelectorAll(this.getItemSelector()))
                 : [];
 
             // Regenerate auto-scanned filters only (skip data-filter-values — those have their own source)
