@@ -789,7 +789,7 @@ direction: ltr
                 </div>
                 <div class="nds-form-control">
                   <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle toggle-password" type="button" aria-label="Show password">
+                    <button class="nds-btn nds-subtle nds-toggle-password" type="button" aria-label="Show password">
                       <i class="hgi hgi-stroke hgi-view-off nds-icon"></i>
                     </button>
                   </div>
@@ -832,7 +832,7 @@ direction: ltr
   </div>
   <div class="nds-form-control">
     <div class="nds-form-action">
-      <button class="nds-btn nds-subtle toggle-password" type="button" aria-label="Show password">
+      <button class="nds-btn nds-subtle nds-toggle-password" type="button" aria-label="Show password">
         <i class="hgi hgi-stroke hgi-view-off nds-icon"></i>
       </button>
     </div>
@@ -1424,7 +1424,7 @@ NDS.Forms.clearStatus(container);</code>
             <i class="hgi hgi-stroke hgi-view nds-icon"></i>
             <span class="nds-label">Password Toggle</span>
           </span>
-          <p class="nds-item-desc">Add a button with <code class="nds-inline-code lang-html">toggle-password</code> class to toggle between password and text input. The icon updates automatically to show the current visibility state.</p>
+          <p class="nds-item-desc">Add a button with <code class="nds-inline-code lang-html">nds-toggle-password</code> class to toggle between password and text input. The icon updates automatically to show the current visibility state.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
