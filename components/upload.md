@@ -66,10 +66,10 @@ direction: ltr
                     <div class="demo-container">
                         <div class="state-demo">
                             <div class="nds-form-container nds-file-upload" data-state="dropbox">
-                                <div class="nds-form-header" hidden>
+                                <div class="nds-form-header">
                                     <label for="fileUploadInput">
                                         <span class="nds-label">Upload files</span>
-                                        <span class="info">Maximum file size allowed is 2MB, supported file formats include .jpg, .png, and .pdf.</span>
+                                        <span class="nds-info">Maximum file size allowed is 2MB, supported file formats include .jpg, .png, and .pdf.</span>
                                     </label>
                                 </div>
 
@@ -83,7 +83,7 @@ direction: ltr
                                         <div class="nds-upload-hint">Maximum file size allowed is 2MB, supported file formats include .jpg, .png, and .pdf.</div>
                                     </div>
 
-                                    <div class="nds-upload-actions">
+                                    <div class="nds-form-action">
                                         <button type="button" class="nds-btn nds-secondary nds-md nds-browse-btn">
                                             <i class="hgi hgi-stroke hgi-folder-01"></i>
                                             <span class="nds-label">Browse Files</span>
@@ -154,10 +154,10 @@ direction: ltr
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
 <div class="nds-form-container nds-file-upload" data-state="dropbox">
-  <div class="nds-form-header" hidden>
+  <div class="nds-form-header">
     <label for="fileUploadInput">
       <span class="nds-label">Upload files</span>
-      <span class="info">Maximum file size allowed is 2MB, supported file formats include .jpg, .png, and .pdf.</span>
+      <span class="nds-info">Maximum file size allowed is 2MB, supported file formats include .jpg, .png, and .pdf.</span>
     </label>
   </div>
 
@@ -171,7 +171,7 @@ direction: ltr
       <div class="nds-upload-hint">Maximum file size allowed is 2MB, supported file formats include .jpg, .png, and .pdf.</div>
     </div>
 
-    <div class="nds-upload-actions">
+    <div class="nds-form-action">
       <button type="button" class="nds-btn nds-secondary nds-md nds-browse-btn">
         <i class="hgi hgi-stroke hgi-folder-01"></i>
         <span class="nds-label">Browse Files</span>
