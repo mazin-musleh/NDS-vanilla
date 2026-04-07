@@ -405,7 +405,7 @@ textarea {
     }
 
     :is(.nds-progress-number, .nds-progress-symbol) {
-      font-size: clamp(14px, calc(var(--_progress-size, #{$size}) * 0.15 + 6px), 36px) !important;
+      font-size: clamp(10px, calc(var(--_progress-size, #{$size}) * 0.15 + 6px), 36px) !important;
       font-weight: 700 !important;
       line-height: normal;
     }

@@ -1492,26 +1492,20 @@
         });
 
         // Listen for beforeUpload events to intercept and simulate uploads
-        document.addEventListener('beforeUpload', function(e) {
-            const fileData = e.detail.fileData;
-            const uploadContainer = e.target;
-            
-            // Cancel the real upload and start simulation
-            e.detail.cancel = true;
-            
-            // Start simulation using UI API
-            startUploadSimulation(uploadContainer, fileData);
+        document.addEventListener('nds:upload:beforeUpload', function(e) {
+            e.preventDefault();
+            startUploadSimulation(e.target.closest('.nds-file-upload'), e.detail.fileData);
         });
     }
 
     // Simple upload simulation using UI API
     function startUploadSimulation(uploadContainer, fileData) {
         // Get the file upload API instance
-        const api = window.NDS.Forms.FileUpload.getInstance(uploadContainer);
+        const api = NDS.Upload.getInstance(uploadContainer);
         if (!api) {
             return;
         }
-        
+
         // Calculate upload duration based on file size
         const file = fileData.file;
         const fileSizeKB = file.size / 1024;
@@ -1560,20 +1554,8 @@
                     const shouldSucceed = Math.random() > 0.1;
                     if (shouldSucceed) {
                         api.setFileStatus(fileId, 'complete');
-                        
-                        // Dispatch success event
-                        api.dispatchEvent('uploadSuccess', {
-                            fileId: fileId,
-                            file: api.getFile(fileId)?.file
-                        });
                     } else {
                         api.setFileStatus(fileId, 'error', { error: 'Demo upload failed' });
-                        
-                        // Dispatch error event
-                        api.dispatchEvent('uploadError', {
-                            fileId: fileId,
-                            error: 'Demo upload failed'
-                        });
                     }
                 }, 2000); // 2 second processing delay
             }
@@ -2288,16 +2270,16 @@
         }
         
         // Get the file upload API instance
-        const api = window.NDS.Forms.FileUpload.getInstance(uploadContainer);
+        const api = NDS.Upload.getInstance(uploadContainer);
         if (!api) {
             return;
         }
-        
+
         // Clear existing files first
         api.clearAllFiles();
-        
+
         // Check if single file mode is active
-        const isSingleFile = uploadContainer.classList.contains('single-file');
+        const isSingleFile = NDS.State.has(uploadContainer, 'single');
         
         // Create mock files with different statuses
         const allDemoFiles = [

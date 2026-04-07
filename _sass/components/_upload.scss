@@ -2,7 +2,7 @@
 
 .nds-file-upload {
 
-    &.dropBox {
+    &[data-state~="dropbox"] {
         .nds-form-control {
             flex-direction: column;
             min-height: 120px;
@@ -16,12 +16,11 @@
                 background-color: var(--background-default);
             }
 
-            .upload-zone {
+            .nds-upload-zone {
                 display: flex;
             }
 
-            .upload-actions {
-                display: flex;
+            .nds-upload-actions {
                 justify-content: center;
                 margin-top: var(--spacing-md);
                 padding-top: var(--spacing-md);
@@ -34,33 +33,34 @@
                 @include dark {
                     background-color: var(--alpha-success-10);
                 }
+
                 color: var(--text-success);
 
-                .upload-icon {
+                .nds-upload-icon {
                     color: var(--icon-success);
                 }
 
-                :is(.upload-text, .upload-hint) {
+                :is(.nds-upload-text, .nds-upload-hint) {
                     color: var(--text-success);
                 }
 
-                .browse-btn {
+                .nds-browse-btn {
                     color: var(--text-default-disabled);
                 }
             }
         }
     }
 
-    &:not(.dropBox) {
+    &:not([data-state~="dropbox"]) {
         .nds-form-control {
             min-width: 40px;
             width: fit-content;
-            .upload-zone {
+
+            .nds-upload-zone {
                 display: none;
             }
 
-            .upload-actions {
-                display: flex;
+            .nds-upload-actions {
                 justify-content: flex-start;
                 margin: 0;
                 padding: 0;
@@ -68,7 +68,7 @@
             }
         }
 
-        .dropFileHint {
+        .nds-drop-hint {
             display: none;
         }
     }
@@ -77,7 +77,6 @@
         position: relative;
         flex-direction: row;
         align-items: center;
-        min-height: 40px;
         height: 40px;
         padding: 0;
         border: none;
@@ -89,20 +88,12 @@
             display: none;
         }
 
-
         &[data-state~="disabled"] {
-
             background-color: unset !important;
-
-            & * {
-                color: var(--text-default-disabled) !important;
-            }
         }
-
     }
 
-
-    .upload-zone {
+    .nds-upload-zone {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -111,34 +102,28 @@
         gap: var(--spacing-3xl);
         min-height: 80px;
 
-        .upload-icon {
+        .nds-upload-icon {
             color: var(--text-default);
             font-size: 40px;
             line-height: 40px;
         }
 
-        .upload-text {
+        .nds-upload-text {
             color: var(--text-display);
             font-size: var(--nds-text-md-FS);
             line-height: var(--nds-text-md-LH);
             font-weight: 500;
-
-            .upload-action {
-                color: var(--button-background-primary-default);
-                text-decoration: underline;
-                cursor: pointer;
-
-                &:hover {
-                    color: var(--button-background-primary-hovered);
-                }
-            }
         }
 
-        .upload-hint {
+        .nds-upload-hint {
             color: var(--text-primary-paragraph);
             font-size: var(--nds-text-sm-FS);
             line-height: var(--nds-text-sm-LH);
         }
+    }
+
+    .nds-upload-actions {
+        display: flex;
     }
 
     input[type="file"] {
@@ -151,7 +136,7 @@
         pointer-events: none;
     }
 
-    .file-list {
+    .nds-file-list {
         margin-top: var(--spacing-xl);
         display: flex;
         flex-direction: column;
@@ -162,9 +147,9 @@
         }
     }
 
-    .file-item {
+    .nds-file-item {
         display: flex;
-        align-items: flex-start;
+        align-items: center;
         padding: var(--spacing-md);
         border: 1px solid var(--border-neutral-primary);
         border-radius: var(--radius-sm);
@@ -176,90 +161,78 @@
             background-color: var(--background-default);
         }
 
-        .file-info {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
+        // Status-driven visibility: feedback shown by default, progress hidden
+        .nds-feedback { display: flex; }
+        .nds-progress-circle { display: none; }
+        .nds-file-error { display: none; }
 
-            .file-name {
-                color: var(--text-default);
-                font-size: var(--nds-text-sm-FS);
-                line-height: var(--nds-text-sm-LH);
-                font-weight: 500;
-                min-height: 24px;
-                display: flex;
-                align-items: center;
-            }
-
-            .file-details {
-                display: flex;
-                align-items: flex-start;
-                gap: var(--spacing-sm);
-                font-size: var(--nds-text-xs-FS);
-                line-height: var(--nds-text-xs-LH);
-                color: var(--text-default-disabled);
-                display: none;
-
-                .file-size {
-                    &::after {
-                        content: "•";
-                        margin: 0 var(--spacing-xs);
-                    }
-                }
-            }
-        }
-
-        .file-actions {
-            display: flex;
-            gap: var(--spacing-xs);
-
-            .nds-btn {
-                --nds-input-size: 24px;
-                --btn-width: 24px;
-                --btn-height: 24px;
-                text-align: center;
-                justify-content: center;
-            }
-
-        }
-
-        &.uploading {
-            // Progress circle styles now handled by .nds-progress-circle component
+        // Uploading/processing: show progress, hide feedback
+        &[data-state~="uploading"],
+        &[data-state~="processing"] {
+            .nds-progress-circle { display: flex; }
+            .nds-feedback { display: none; }
         }
 
         &[data-state~="processing"] {
             animation: processing 1.5s ease-in-out infinite;
-
-            // Progress circle already at 100% via --progress-value
         }
 
-        // Error state styling
-        &[data-state~="error"] {
+        // Success: show feedback icon (auto-shows checkmark via data-status)
+        &[data-status="success"] {
+            .nds-progress-circle { display: none; }
+            .nds-feedback { display: flex; }
+        }
 
+        // Error: show feedback (auto-shows X via data-status), show error message
+        &[data-status="error"] {
             border-color: var(--border-error);
-            /* background-color: var(--background-error-25); */
 
-            .file-icon.error {
-                color: var(--icon-error);
+            .nds-progress-circle { display: none; }
+
+            .nds-feedback {
+                display: flex;
+                align-self: flex-start;
             }
 
-            .file-error {
+            .nds-file-error { display: flex; }
+        }
+
+        .nds-file-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-width: 100px;
+
+            .nds-file-name {
+                color: var(--text-default);
+                font-size: var(--nds-text-sm-FS);
+                line-height: var(--nds-text-sm-LH);
+                font-weight: 500;
                 display: flex;
                 align-items: center;
-                gap: var(--spacing-xs);
-                color: var(--text-error);
-                font-size: var(--nds-text-sm-FS);
-                font-weight: 500;
             }
+        }
+
+        .nds-file-actions {
+            display: flex;
+            gap: var(--spacing-xs);
+        }
+
+        .nds-file-error {
+            align-items: center;
+            gap: var(--spacing-xs);
+            color: var(--text-error);
+            font-size: var(--nds-text-sm-FS);
+            font-weight: 500;
         }
     }
 
-    &.single-file {
-        .file-list {
+    &[data-state~="single"] {
+        .nds-file-list {
             max-height: none;
         }
 
-        .file-item:not(:first-child) {
+        .nds-file-item:not(:first-child) {
             display: none;
         }
     }

@@ -1682,14 +1682,6 @@
 
         NDS.onDOMAdd('.nds-form-control', function() { initFormControlClasses(); });
         NDS.onDOMAdd('.nds-auto-fill', function() { initInputAutoFill(); });
-        NDS.onDOMAdd('.nds-file-upload', function(nodes) {
-            if (window.NDS && window.NDS.Forms && window.NDS.Forms.FileUpload) {
-                nodes.forEach(function(el) {
-                    window.NDS.Forms.FileUpload.initFileUpload(el);
-                });
-            }
-        });
-
         NDS.Forms._dynamicObserver = true;
     }
 
@@ -1726,17 +1718,6 @@
             : Array.from(container.querySelectorAll('.nds-auto-fill'));
 
         autoFillContainers.forEach(initAutoFillContainer);
-
-        // Initialize file upload containers
-        var fileUploadContainers = container.classList && container.classList.contains('nds-file-upload')
-            ? [container]
-            : Array.from(container.querySelectorAll('.nds-file-upload'));
-
-        fileUploadContainers.forEach(function(uploadContainer) {
-            if (window.NDS && window.NDS.Forms && window.NDS.Forms.FileUpload && window.NDS.Forms.FileUpload.initFileUpload) {
-                window.NDS.Forms.FileUpload.initFileUpload(uploadContainer);
-            }
-        });
 
         // Initialize form groups
         container.querySelectorAll('.nds-form-group').forEach(function(group) {

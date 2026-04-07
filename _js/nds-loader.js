@@ -12,7 +12,7 @@
     //   Utility/API components:            init() + utility methods
     //
     // All components live under the NDS.* namespace (e.g. NDS.Modal, NDS.Accordion)
-    // Form sub-systems are grouped: NDS.Forms, NDS.Forms.FileUpload, NDS.OTP
+    // Form sub-systems are grouped: NDS.Forms, NDS.Upload, NDS.OTP
     // Core utilities: NDS.theme, NDS.debounce, NDS.onDOMAdd, etc.
     // Only exception: window.NDSInitConfig (pre-boot config, set before bundle loads)
     const COMPONENTS = [
@@ -57,9 +57,9 @@
             init: () => NDS.Swiper?.init?.(),
         },
         {
-            name: 'fileUpload',
+            name: 'upload',
             selector: '.nds-file-upload',
-            init: () => window.NDS?.Forms?.FileUpload?.init?.(),
+            init: () => NDS.Upload?.init?.(),
         },
         {
             name: 'sidemenu',
