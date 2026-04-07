@@ -1704,10 +1704,14 @@
             if (!this.targetContainer) return;
 
             if (NDS.Pagination && NDS.Pagination.refresh) {
-                const paginationNav = this.targetContainer.parentElement?.querySelector('.nds-pagination[data-auto-pagination]');
+                // Walk up to find the .nds-paged-content wrapper (pagination expects this as the container)
+                const pagedContent = this.targetContainer.closest('.nds-paged-content') ||
+                                     this.targetContainer.parentElement?.closest('.nds-paged-content');
+                const container = pagedContent || this.targetContainer;
+                const paginationNav = container.parentElement?.querySelector('.nds-pagination[data-auto-pagination]');
                 if (paginationNav) {
                     setTimeout(() => {
-                        NDS.Pagination.refresh(this.targetContainer);
+                        NDS.Pagination.refresh(container);
                     }, 50);
                 }
             }

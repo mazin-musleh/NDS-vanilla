@@ -154,6 +154,14 @@
 
             // Dispatch custom event
             this.dispatchSortEvent(columnIndex, newDirection);
+
+            // Refresh pagination after sort reorder
+            if (NDS.Pagination && NDS.Pagination.refresh) {
+                const pagedContent = this.tbody.closest('.nds-paged-content');
+                if (pagedContent) {
+                    NDS.Pagination.refresh(pagedContent);
+                }
+            }
         }
 
         clearSortStates() {

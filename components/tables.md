@@ -1160,7 +1160,7 @@ direction: ltr
             <div class="nds-demo-card">
                 <div class="demo-header">
                     <div class="demo-action">
-                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn" data-state="selected"
                             data-toggler='["nds-compact", ".nds-table", "tableSize"]'>
                             <span class="nds-label">Compact</span>
                         </button>
@@ -1172,6 +1172,46 @@ direction: ltr
                 </div>
                 <div class="demo-container">
                     <div class="state-demo">
+                        <div class="nds-filter" data-filter-target="paginatedTableBody">
+                            <div class="nds-dropmenu">
+                                <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
+                                    <i class="hgi hgi-stroke hgi-filter nds-icon"></i>
+                                    <span class="nds-label">Filter</span>
+                                </button>
+                                <div class="nds-dropmenu-menu" hidden>
+                                    <div class="nds-dropmenu-scroll">
+                                        <div data-filter="system" data-filter-type="checkbox"
+                                            data-filter-legend="System"
+                                            data-filter-values='{"Identity & Records":"Identity & Records","Transport & Vehicles":"Transport & Vehicles","Healthcare & Social":"Healthcare & Social","Business & Finance":"Business & Finance","Education & Justice":"Education & Justice"}'
+                                            data-no-auto-close>
+                                        </div>
+                                        <hr class="nds-divider">
+                                        <div data-filter="popularity" data-filter-type="radio"
+                                            data-filter-legend="Popularity"
+                                            data-filter-values='{"most_used":"Most Used","standard":"Standard"}'
+                                            data-no-auto-close>
+                                        </div>
+                                    </div>
+                                    <div class="nds-dropmenu-footer">
+                                        <hr class="nds-divider">
+                                        <div class="nds-dropmenu-action nds-grid">
+                                            <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
+                                                data-filter-action="clear" data-no-auto-close>
+                                                <span class="nds-label">Reset</span>
+                                            </button>
+                                            <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
+                                                data-filter-action="apply">
+                                                <span class="nds-label">Filter</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="nds-filter-applied" hidden>
+                                <span class="nds-label">Applied Filters:</span>
+                                <div class="nds-chips"></div>
+                            </div>
+                        </div>
                         <div class="nds-paged-content" style="--per-page: 5;" hidden>
                             <table class="nds-table nds-compact nds-sortable">
                                 <thead>
@@ -1203,17 +1243,17 @@ direction: ltr
                                         <th>Popularity</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="paginatedTableBody" data-filter-items="tr">
                                     {% for service in site.data.content.services %}
                                     <tr class="nds-page-item">
                                         <td>{{ forloop.index }}</td>
                                         <td>{{ service.title }}</td>
-                                        <td><span class="nds-tag nds-info nds-sm"><span class="nds-label">{{ service.system }}</span></span></td>
+                                        <td><span class="nds-tag nds-info nds-sm"><span class="nds-label" data-filter="system">{{ service.system }}</span></span></td>
                                         <td>
                                             {% if service.most_used %}
-                                            <span class="nds-tag nds-success nds-status nds-sm"><span class="nds-label">Most Used</span></span>
+                                            <span class="nds-tag nds-success nds-status nds-sm"><span class="nds-label" data-filter="popularity" data-filter-value="most_used">Most Used</span></span>
                                             {% else %}
-                                            <span class="nds-tag nds-neutral nds-status nds-sm"><span class="nds-label">Standard</span></span>
+                                            <span class="nds-tag nds-neutral nds-status nds-sm"><span class="nds-label" data-filter="popularity" data-filter-value="standard">Standard</span></span>
                                             {% endif %}
                                         </td>
                                     </tr>
@@ -1244,6 +1284,48 @@ direction: ltr
                             </div>
                             <div class="nds-expandable-content">
                                 <code class="lang-html code">
+<!-- Filter bar above table -->
+<div class="nds-filter" data-filter-target="paginatedTableBody">
+  <div class="nds-dropmenu">
+    <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
+      <i class="hgi hgi-stroke hgi-filter nds-icon"></i>
+      <span class="nds-label">Filter</span>
+    </button>
+    <div class="nds-dropmenu-menu" hidden>
+      <div class="nds-dropmenu-scroll">
+        <div data-filter="system" data-filter-type="checkbox"
+          data-filter-legend="System"
+          data-filter-values='{"Identity & Records":"Identity & Records","Transport & Vehicles":"Transport & Vehicles","Healthcare & Social":"Healthcare & Social","Business & Finance":"Business & Finance","Education & Justice":"Education & Justice"}'
+          data-no-auto-close>
+        </div>
+        <hr class="nds-divider">
+        <div data-filter="popularity" data-filter-type="radio"
+          data-filter-legend="Popularity"
+          data-filter-values='{"most_used":"Most Used","standard":"Standard"}'
+          data-no-auto-close>
+        </div>
+      </div>
+      <div class="nds-dropmenu-footer">
+        <hr class="nds-divider">
+        <div class="nds-dropmenu-action nds-grid">
+          <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
+            data-filter-action="clear" data-no-auto-close>
+            <span class="nds-label">Reset</span>
+          </button>
+          <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
+            data-filter-action="apply">
+            <span class="nds-label">Filter</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="nds-filter-applied" hidden>
+    <span class="nds-label">Applied Filters:</span>
+    <div class="nds-chips"></div>
+  </div>
+</div>
+
 <div class="nds-paged-content" style="--per-page: 5;" hidden>
   <table class="nds-table nds-compact nds-sortable">
     <thead>
@@ -1275,36 +1357,36 @@ direction: ltr
         <th>Popularity</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody id="paginatedTableBody" data-filter-items="tr">
       <tr class="nds-page-item">
         <td>1</td>
         <td>Identity Verification</td>
-        <td><span class="nds-tag nds-info nds-sm"><span class="nds-label">Identity & Records</span></span></td>
-        <td><span class="nds-tag nds-success nds-status nds-sm"><span class="nds-label">Most Used</span></span></td>
+        <td><span class="nds-tag nds-info nds-sm"><span class="nds-label" data-filter="system">Identity & Records</span></span></td>
+        <td><span class="nds-tag nds-success nds-status nds-sm"><span class="nds-label" data-filter="popularity" data-filter-value="most_used">Most Used</span></span></td>
       </tr>
       <tr class="nds-page-item">
         <td>2</td>
         <td>Passport Renewal</td>
-        <td><span class="nds-tag nds-info nds-sm"><span class="nds-label">Identity & Records</span></span></td>
-        <td><span class="nds-tag nds-success nds-status nds-sm"><span class="nds-label">Most Used</span></span></td>
+        <td><span class="nds-tag nds-info nds-sm"><span class="nds-label" data-filter="system">Identity & Records</span></span></td>
+        <td><span class="nds-tag nds-success nds-status nds-sm"><span class="nds-label" data-filter="popularity" data-filter-value="most_used">Most Used</span></span></td>
       </tr>
       <tr class="nds-page-item">
         <td>3</td>
         <td>Birth Certificate Request</td>
-        <td><span class="nds-tag nds-info nds-sm"><span class="nds-label">Identity & Records</span></span></td>
-        <td><span class="nds-tag nds-neutral nds-status nds-sm"><span class="nds-label">Standard</span></span></td>
+        <td><span class="nds-tag nds-info nds-sm"><span class="nds-label" data-filter="system">Identity & Records</span></span></td>
+        <td><span class="nds-tag nds-neutral nds-status nds-sm"><span class="nds-label" data-filter="popularity" data-filter-value="standard">Standard</span></span></td>
       </tr>
       <tr class="nds-page-item">
         <td>4</td>
         <td>Marriage Contract Registration</td>
-        <td><span class="nds-tag nds-info nds-sm"><span class="nds-label">Identity & Records</span></span></td>
-        <td><span class="nds-tag nds-neutral nds-status nds-sm"><span class="nds-label">Standard</span></span></td>
+        <td><span class="nds-tag nds-info nds-sm"><span class="nds-label" data-filter="system">Identity & Records</span></span></td>
+        <td><span class="nds-tag nds-neutral nds-status nds-sm"><span class="nds-label" data-filter="popularity" data-filter-value="standard">Standard</span></span></td>
       </tr>
       <tr class="nds-page-item">
         <td>5</td>
         <td>Driver's License Services</td>
-        <td><span class="nds-tag nds-info nds-sm"><span class="nds-label">Traffic & Vehicles</span></span></td>
-        <td><span class="nds-tag nds-success nds-status nds-sm"><span class="nds-label">Most Used</span></span></td>
+        <td><span class="nds-tag nds-info nds-sm"><span class="nds-label" data-filter="system">Transport & Vehicles</span></span></td>
+        <td><span class="nds-tag nds-success nds-status nds-sm"><span class="nds-label" data-filter="popularity" data-filter-value="most_used">Most Used</span></span></td>
       </tr>
     </tbody>
   </table>
