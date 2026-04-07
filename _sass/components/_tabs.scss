@@ -1,40 +1,37 @@
 /**
  * NDS Tabs Component
  * Interactive tab navigation with horizontal and vertical layouts
- * 
+ *
  * Structure:
- * - Tab container (.nds-tabs)
- * - Tab list (.nds-tab-list)
- * - Individual tabs (.nds-tab)
- * - Tab content (.nds-tab-content)
- * - Tab panels (.nds-tab-panel)
+ * .nds-tabs
+ *   .nds-tab-list-container
+ *     .nds-tab-list[role="tablist"]
+ *       .nds-tab[role="tab"]
+ *     .nds-show-more
+ *   .nds-tab-content
+ *     .nds-tab-panel[role="tabpanel"]
  */
 
 @use '../mixins' as *;
 
 // ==============================================
-// TAB CONTAINERS & LAYOUT
+// TAB CONTAINER
 // ==============================================
 
-/* Base Tab Container */
 .nds-tabs {
+  --mask-fade-distance: 48px;
+  --btn-indicator-size: 3px;
+
   &:not([hidden]) {
     display: flex;
     flex-direction: column;
   }
 
-  // Gradient mask custom properties
-  --mask-fade-distance: 48px;
-
-  --btn-indicator-size: 3px;
-
-  /* Vertical Tab Layout */
+  // ---- Vertical layout ----
   &.nds-vertical {
-    display: flex;
     flex-direction: row;
 
     .nds-tab-list {
-      display: flex;
       flex-direction: column;
       flex-wrap: nowrap;
       min-width: fit-content;
@@ -44,7 +41,6 @@
       top: var(--nds-nav-height);
     }
 
-    /* Never show nds-show-more in vertical tabs */
     .nds-show-more {
       display: none !important;
     }
@@ -53,29 +49,12 @@
       border-radius: var(--radius-sm);
       width: 100%;
       justify-content: start;
-
-      /* Override horizontal indicator with vertical */
       @include btn-indicator('v');
     }
 
     &.nds-divided {
-
       .nds-tab {
         flex-direction: row-reverse;
-
-        .nds-label {
-          text-align: end;
-        }
-
-      }
-
-      .nds-tab-list-container::after {
-        inset-inline-end: 0;
-        height: 100%;
-        width: var(--btn-indicator-size);
-      }
-
-      .nds-tab {
         margin-bottom: unset;
         border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
         justify-content: end;
@@ -84,68 +63,75 @@
           border-radius: var(--radius-sm) 0 0 var(--radius-sm);
         }
 
-        &:before {
+        .nds-label {
+          text-align: end;
+        }
+
+        &::before {
           margin-inline-end: calc(var(--btn-indicator-size) * -1);
           inset-inline-end: 0;
           inset-inline-start: unset;
           margin-bottom: unset;
         }
       }
-    }
 
+      .nds-tab-list-container::after {
+        inset-inline-end: 0;
+        height: 100%;
+        width: var(--btn-indicator-size);
+      }
+    }
   }
 
-  /* Tabs with divider styling */
+  // ---- Divider ----
   &.nds-divided {
     .nds-tab-list-container::after {
       content: '';
       position: absolute;
       bottom: 0;
       width: 100%;
-      background-color: var(--divider-color);
-      display: block;
       height: var(--btn-indicator-size);
-      z-index: -1;
+      background-color: var(--divider-color);
       border-radius: var(--radius-full);
+      z-index: -1;
     }
 
     .nds-tab {
       margin-bottom: var(--btn-indicator-size);
       border-radius: var(--radius-sm) var(--radius-sm) 0 0;
 
-      &:before {
+      &::before {
         margin-bottom: calc(var(--btn-indicator-size) * -1);
       }
     }
   }
 
-  &.nds-center {
-    .nds-tab-list {
-      justify-content: center;
-      width: fit-content;
-      margin: auto;
-    }
+  // ---- Center alignment ----
+  &.nds-center .nds-tab-list {
+    justify-content: center;
+    width: fit-content;
+    margin: auto;
   }
-
 }
 
 // ==============================================
-// TAB LIST & NAVIGATION
+// TAB LIST CONTAINER
 // ==============================================
 
-/* Tab List Container */
 .nds-tab-list-container {
   position: relative;
   isolation: isolate;
 
-  /* Use flexbox for horizontal tabs to naturally position nds-show-more button */
   .nds-tabs:not(.nds-vertical) & {
     display: flex;
     align-items: stretch;
   }
 }
 
-/* Base Tab List */
+// ==============================================
+// TAB LIST
+// ==============================================
+
 .nds-tab-list {
   display: flex;
   margin: 0;
@@ -156,14 +142,12 @@
   white-space: nowrap;
   position: relative;
 
-  /* Centered Tab List */
   &:is(.nds-center, .center) {
     justify-content: flex-start;
     width: fit-content;
     margin: 0 auto;
   }
 
-  /* Scrollbar Styling */
   &::-webkit-scrollbar {
     height: 2px;
   }
@@ -179,10 +163,9 @@
 }
 
 // ==============================================
-// INDIVIDUAL TAB STYLES
+// TAB BUTTON
 // ==============================================
 
-/* Base Tab Button */
 .nds-tab {
   gap: var(--tab-button-gap);
   padding: var(--tab-horizontal-tab-md-button-v-padding) var(--tab-horizontal-tab-md-button-h-padding);
@@ -193,14 +176,12 @@
   position: relative;
   z-index: 2;
 
+  @include btn-indicator('b');
+
   .nds-lg & {
     --btn-size: 48px;
   }
 
-  /* Tab indicator using mixin */
-  @include btn-indicator('b');
-
-  /* Selected tab label enhancement */
   &[aria-selected="true"] .nds-label {
     color: var(--text-default);
     filter: drop-shadow(0 0 .02em currentColor);
@@ -214,36 +195,27 @@
     background-color: var(--border-primary);
   }
 
-  /* Show more button styling */
   &.nds-show-more {
     min-width: var(--btn-size);
   }
 
-  /* Tab disabled state */
   &:disabled {
     color: var(--text-default-disabled);
   }
 }
 
 // ==============================================
-// HORIZONTAL TAB LIST OVERFLOW (cloned from oneRowContent)
-// Applied to non-vertical tab lists only
+// HORIZONTAL OVERFLOW
 // ==============================================
 
-/* Only apply to horizontal (non-vertical) tabs */
 .nds-tabs:not(.nds-vertical) {
-
   .nds-tab-list {
-    /* Base overflow styles */
     flex-wrap: nowrap !important;
-    overflow-x: auto;
     max-width: 100%;
-    overflow-y: hidden;
     scrollbar-width: none;
     scroll-behavior: smooth;
-    position: relative;
 
-    >* {
+    > * {
       white-space: nowrap;
       width: fit-content;
 
@@ -252,40 +224,33 @@
       }
     }
 
-    /* Hide scrollbar in webkit browsers */
     &::-webkit-scrollbar {
       display: none;
     }
 
-    /* Mask effects for overflow indication */
+    // Gradient masks for overflow indication
     &[data-state~="has-more"] {
-      // Both sides masked (scrolled to middle) - RTL default
       mask-image:
         linear-gradient(to right, transparent 0%, black var(--mask-fade-distance)),
         linear-gradient(to left, transparent 0%, black var(--mask-fade-distance));
 
-      // At start: only mask inline-end (left in RTL)
       &[data-state~="at-start"] {
         mask-image: linear-gradient(to right, transparent 0%, black var(--mask-fade-distance));
       }
 
-      // At end: only mask inline-start (right in RTL)
       &[data-state~="at-end"] {
         mask-image: linear-gradient(to left, transparent 0%, black var(--mask-fade-distance));
       }
 
       @include ltr {
-        // Both sides masked (scrolled to middle) - LTR
         mask-image:
           linear-gradient(to right, transparent 0%, black var(--mask-fade-distance)),
           linear-gradient(to left, transparent 0%, black var(--mask-fade-distance));
 
-        // At start: only mask inline-end (right in LTR)
         &[data-state~="at-start"] {
           mask-image: linear-gradient(to left, transparent 0%, black var(--mask-fade-distance));
         }
 
-        // At end: only mask inline-start (left in LTR)
         &[data-state~="at-end"] {
           mask-image: linear-gradient(to right, transparent 0%, black var(--mask-fade-distance));
         }
@@ -293,16 +258,13 @@
     }
   }
 
-  /* Show nds-show-more when overflow detected */
-  /* Button is now OUTSIDE .nds-tab-list, flexbox handles positioning */
+  // Show-more button
   .nds-tab-list-container {
-
     .nds-show-more {
       z-index: 2;
       transition: opacity var(--nds-transition);
       flex-shrink: 0;
 
-      /* Icon rotation */
       i {
         transition: transform 0.1s ease;
 
@@ -312,12 +274,10 @@
       }
     }
 
-    /* Hide when NO overflow */
     .nds-tab-list:not([data-state~="has-more"]) ~ .nds-show-more {
       display: none;
     }
 
-    /* Rotate icon when at end of scroll */
     .nds-tab-list[data-state~="at-end"] ~ .nds-show-more i {
       transform: rotate(180deg);
 
@@ -332,33 +292,23 @@
 // TAB CONTENT & PANELS
 // ==============================================
 
-/* Tab Content Container */
 .nds-tab-content {
   min-height: 40px;
   width: 100%;
 }
 
-/* Tab Panel */
 .nds-tab-panel {
-
   padding: var(--spacing-2xl);
-  /* animation: fadeInUp 0.2s ease-in-out; */
 
   &:focus {
     outline: none;
   }
-
 }
 
-
-
 // ==============================================
-// RESPONSIVE & ACCESSIBILITY
+// ACCESSIBILITY
 // ==============================================
 
-
-
-/* High Contrast Accessibility */
 @include high-contrast {
   .nds-tab {
     border: 1px solid transparent;
@@ -374,9 +324,7 @@
   }
 }
 
-/* Reduced Motion Accessibility */
 @include reduced-motion {
-
   :is(.nds-tab, .nds-tab-panel) {
     transition: none;
     animation: none;
@@ -384,12 +332,13 @@
 }
 
 // ==============================================
-// CARD VARIANT (Last to override other styles)
+// CARD VARIANT
 // ==============================================
 
-/* Card View Styling */
+// Card on entire .nds-tabs container
 .nds-tabs.nds-card {
-    --card-width: 100%;
+  --card-width: 100%;
+
   &:not(.nds-stroke) {
     border: 0;
   }
@@ -403,23 +352,31 @@
     }
   }
 
-  /* Only apply to horizontal tabs */
   &:not(.nds-vertical) {
     gap: 0;
     padding: 0;
     overflow: hidden;
 
     .nds-tab {
-      --btn-height: calc(var(--btn-size)*1.25);
+      --btn-height: calc(var(--btn-size) * 1.25);
     }
   }
 
-  &.nds-vertical {
-    .nds-tab-content {
-      padding-inline-end: 0;
-    }
+  &.nds-vertical .nds-tab-content {
+    padding-inline-end: 0;
+    padding-block: 0;
   }
+}
 
+// Card on .nds-tab-content or .nds-tab-panel only
+:is(.nds-tab-content, .nds-tab-panel).nds-card {
+  --card-width: 100%;
+  margin-block-start: var(--spacing-xl);
+
+  .nds-vertical > & {
+    margin-block-start: 0;
+    margin-inline-start: var(--spacing-xl);
+  }
 }
 
 .nds-tab-content.nds-card {
@@ -431,24 +388,14 @@
   }
 }
 
-:is(.nds-tab-content, .nds-tab-panel).nds-card {
-  margin-block-start: var(--spacing-xl);
-  --card-width: 100%;
-}
+// ==============================================
+// FULL-WIDTH RESPONSIVE OVERRIDES
+// ==============================================
 
 .nds-content-layout.nds-cardView .nds-ghost,
-section>.nds-full-width {
+section > .nds-full-width {
   .nds-tabs:not(.nds-card) {
-
     @include tablet(max) {
-      /* &.nds-divided .nds-tab-list-container::after {
-        display: none;
-      }
-
-      &.nds-divided .nds-tab:before {
-        margin-bottom: unset;
-      } */
-
       .nds-tab-content:not(.nds-card, :has(.nds-full-width)) {
         padding-inline: var(--nds-viewport-padding);
       }
@@ -456,8 +403,6 @@ section>.nds-full-width {
       .nds-tab-list {
         padding-inline: var(--nds-viewport-padding);
       }
-
-
     }
   }
 }
