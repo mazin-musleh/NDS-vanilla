@@ -21,172 +21,6 @@ direction: ltr
     </div>
 </section>
 
-<!-- Open Source -->
-<section id="opensource" class="nds-content-section nds-brand">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Open Source</h2>
-            <p class="nds-section-description">MIT licensed. Full source code included.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-grid" style="--max-col:3;--mid-col:1;--min-col:1;">
-                <div class="nds-card nds-stroke">
-                    <div class="nds-card-header">
-                        <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-xl">
-                                <i class="hgi hgi-stroke hgi-package nds-icon"></i>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="nds-card-content">
-                        <div class="nds-card-text">
-                            <h3 class="nds-card-title">Download</h3>
-                            <p class="nds-card-description">Compiled HTML, CSS, and JavaScript ready to use. Source files included as reference.</p>
-                        </div>
-                    </div>
-                    <div class="nds-card-actions">
-                        <a href="#" class="nds-btn nds-primary nds-external">
-                            <span class="nds-label">Download Template</span>
-                        </a>
-                    </div>
-                </div>
-                <div class="nds-card nds-stroke">
-                    <div class="nds-card-header">
-                        <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-xl">
-                                <i class="hgi hgi-stroke hgi-git-fork nds-icon"></i>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="nds-card-content">
-                        <div class="nds-card-text">
-                            <h3 class="nds-card-title">Fork</h3>
-                            <p class="nds-card-description">Full source code with build system, templates, and tooling.</p>
-                        </div>
-                    </div>
-                    <div class="nds-card-actions">
-                        <a href="#" class="nds-btn nds-primary nds-external">
-                            <span class="nds-label">View Repository</span>
-                        </a>
-                    </div>
-                </div>
-                <div class="nds-card nds-stroke">
-                    <div class="nds-card-header">
-                        <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-xl">
-                                <i class="hgi hgi-stroke hgi-git-pull-request nds-icon"></i>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="nds-card-content">
-                        <div class="nds-card-text">
-                            <h3 class="nds-card-title">Contribute</h3>
-                            <p class="nds-card-description">Report issues, suggest improvements, or submit pull requests on GitHub.</p>
-                        </div>
-                    </div>
-                    <div class="nds-card-actions">
-                        <a href="#" class="nds-btn nds-primary nds-external">
-                            <span class="nds-label">Open Issues</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Components -->
-<section id="components" class="nds-content-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Components</h2>
-            <p class="nds-section-description">52 components, each with markup, styling, and JavaScript behavior. All built from scratch.</p>
-        </div>
-        <div class="nds-section-body">
-        <div class="nds-section-search nds-filter" data-filter-target="components_list" hidden>
-            <div class="nds-form-container nds-search-box">
-                <div class="nds-search-content">
-                    <div class="nds-form-control">
-                        <i class="hgi hgi-stroke hgi-search-01 nds-icon"></i>
-                        <input id="componentSearch" type="text" class="nds-search-input" name="search" autocomplete="off"
-                            placeholder="Search components...">
-                        <div class="nds-form-action">
-                            <button class="nds-btn nds-subtle nds-clear" hidden><i
-                                    class="hgi hgi-stroke hgi-cancel-01 nds-icon"></i></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="nds-dropmenu">
-                <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
-                    <i class="hgi hgi-stroke hgi-filter nds-icon"></i>
-                    <span class="nds-label">Filter</span>
-                </button>
-                <div class="nds-dropmenu-menu" style="min-width: 300px;" hidden>
-                    <div class="nds-dropmenu-scroll">
-                        <div data-filter="category" data-filter-legend="Category"
-                            data-filter-type="checkbox" data-no-auto-close></div>
-                        <hr class="nds-dropmenu-divider">
-                        <div data-filter="tech" data-filter-legend="Technology"
-                            data-filter-type="checkbox" data-no-auto-close></div>
-                    </div>
-                    <div class="nds-dropmenu-footer">
-                        <hr class="nds-divider">
-                        <div class="nds-dropmenu-action nds-grid">
-                            <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
-                                data-filter-action="clear" data-no-auto-close>
-                                <span class="nds-label">Reset</span>
-                            </button>
-                            <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
-                                data-filter-action="apply">
-                                <span class="nds-label">Filter</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="nds-filter-applied" hidden>
-                <span class="nds-label">Applied Filters:</span>
-                <div class="nds-chips"></div>
-            </div>
-        </div>
-        <div id="components_list" class="nds-paged-content nds-grid" hidden
-            style="--per-page: 6; --max-col: 3; --mid-col: 2; --min-col: 1;">
-
-            {% for comp in site.data.content.components %}
-            <div class="nds-page-item nds-card nds-stroke">
-                <div class="nds-card-content">
-                    <div class="nds-card-text">
-                        <h3 class="nds-card-title">{{ comp.title }}</h3>
-                        <p class="nds-card-description">{{ comp.description }}</p>
-                    </div>
-                    <div class="nds-card-tags">
-                        <span class="nds-tag nds-blue nds-sm">
-                            <span class="nds-label" data-filter="category">{{ comp.category }}</span>
-                        </span>
-                        {% for tag in comp.tags %}
-                        <span class="nds-tag nds-neutral nds-sm">
-                            <span class="nds-label" data-filter="tech">{{ tag }}</span>
-                        </span>
-                        {% endfor %}
-                    </div>
-                </div>
-                {% if comp.url %}
-                <div class="nds-card-actions">
-                    <a href="{{ comp.url | relative_url }}" class="nds-btn nds-primary">
-                        <span class="nds-label">View Docs</span>
-                    </a>
-                </div>
-                {% endif %}
-            </div>
-            {% endfor %}
-
-        </div>
-        <nav class="nds-pagination" data-auto-pagination aria-label="Pagination"></nav>
-    </div>
-    </div>
-</section>
-
 <!-- Compliance Ready -->
 <section id="compliance" class="nds-content-section">
     <div class="nds-section-wrapper">
@@ -307,6 +141,98 @@ direction: ltr
                 <div class="nds-swiper-pagination"></div>
             </div>
         </div>
+    </div>
+</section>
+
+<!-- Components -->
+<section id="components" class="nds-content-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Components</h2>
+            <p class="nds-section-description">52 components, each with markup, styling, and JavaScript behavior. All built from scratch.</p>
+        </div>
+        <div class="nds-section-body">
+        <div class="nds-section-search nds-filter" data-filter-target="components_list" hidden>
+            <div class="nds-form-container nds-search-box">
+                <div class="nds-search-content">
+                    <div class="nds-form-control">
+                        <i class="hgi hgi-stroke hgi-search-01 nds-icon"></i>
+                        <input id="componentSearch" type="text" class="nds-search-input" name="search" autocomplete="off"
+                            placeholder="Search components...">
+                        <div class="nds-form-action">
+                            <button class="nds-btn nds-subtle nds-clear" hidden><i
+                                    class="hgi hgi-stroke hgi-cancel-01 nds-icon"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="nds-dropmenu">
+                <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
+                    <i class="hgi hgi-stroke hgi-filter nds-icon"></i>
+                    <span class="nds-label">Filter</span>
+                </button>
+                <div class="nds-dropmenu-menu" style="min-width: 300px;" hidden>
+                    <div class="nds-dropmenu-scroll">
+                        <div data-filter="category" data-filter-legend="Category"
+                            data-filter-type="checkbox" data-no-auto-close></div>
+                        <hr class="nds-dropmenu-divider">
+                        <div data-filter="tech" data-filter-legend="Technology"
+                            data-filter-type="checkbox" data-no-auto-close></div>
+                    </div>
+                    <div class="nds-dropmenu-footer">
+                        <hr class="nds-divider">
+                        <div class="nds-dropmenu-action nds-grid">
+                            <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
+                                data-filter-action="clear" data-no-auto-close>
+                                <span class="nds-label">Reset</span>
+                            </button>
+                            <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
+                                data-filter-action="apply">
+                                <span class="nds-label">Filter</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="nds-filter-applied" hidden>
+                <span class="nds-label">Applied Filters:</span>
+                <div class="nds-chips"></div>
+            </div>
+        </div>
+        <div id="components_list" class="nds-paged-content nds-grid" hidden
+            style="--per-page: 6; --max-col: 3; --mid-col: 2; --min-col: 1;">
+
+            {% for comp in site.data.content.components %}
+            <div class="nds-page-item nds-card nds-stroke">
+                <div class="nds-card-content">
+                    <div class="nds-card-text">
+                        <h3 class="nds-card-title">{{ comp.title }}</h3>
+                        <p class="nds-card-description">{{ comp.description }}</p>
+                    </div>
+                    <div class="nds-card-tags">
+                        <span class="nds-tag nds-blue nds-sm">
+                            <span class="nds-label" data-filter="category">{{ comp.category }}</span>
+                        </span>
+                        {% for tag in comp.tags %}
+                        <span class="nds-tag nds-neutral nds-sm">
+                            <span class="nds-label" data-filter="tech">{{ tag }}</span>
+                        </span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% if comp.url %}
+                <div class="nds-card-actions">
+                    <a href="{{ comp.url | relative_url }}" class="nds-btn nds-primary">
+                        <span class="nds-label">View Docs</span>
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+
+        </div>
+        <nav class="nds-pagination" data-auto-pagination aria-label="Pagination"></nav>
+    </div>
     </div>
 </section>
 
@@ -439,20 +365,76 @@ direction: ltr
     </div>
 </section>
 
-<!-- Get Started -->
-<section id="getStarted" class="nds-content-section nds-center">
+<!-- Open Source -->
+<section id="opensource" class="nds-content-section nds-brand">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
-            <h2 class="nds-section-title">Get Started</h2>
+            <h2 class="nds-section-title">Open Source</h2>
+            <p class="nds-section-description">MIT licensed. Full source code included.</p>
         </div>
-        <div class="nds-section-action">
-            <a href="#" class="nds-btn nds-primary nds-lg nds-external">
-                <i class="hgi hgi-stroke hgi-github nds-icon"></i>
-                <span class="nds-label">View on GitHub</span>
-            </a>
-            <a href="#" class="nds-btn nds-secondary-outline nds-lg nds-external">
-                <span class="nds-label">Download Template</span>
-            </a>
+        <div class="nds-section-body">
+            <div class="nds-grid" style="--max-col:3;--mid-col:1;--min-col:1;">
+                <div class="nds-card nds-stroke">
+                    <div class="nds-card-header">
+                        <div class="nds-card-featured-icon">
+                            <span class="nds-featured-icon nds-circle nds-xl">
+                                <i class="hgi hgi-stroke hgi-package nds-icon"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="nds-card-content">
+                        <div class="nds-card-text">
+                            <h3 class="nds-card-title">Download</h3>
+                            <p class="nds-card-description">Compiled HTML, CSS, and JavaScript ready to use. Source files included as reference.</p>
+                        </div>
+                    </div>
+                    <div class="nds-card-actions">
+                        <a href="#" class="nds-btn nds-primary nds-external">
+                            <span class="nds-label">Download Template</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="nds-card nds-stroke">
+                    <div class="nds-card-header">
+                        <div class="nds-card-featured-icon">
+                            <span class="nds-featured-icon nds-circle nds-xl">
+                                <i class="hgi hgi-stroke hgi-git-fork nds-icon"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="nds-card-content">
+                        <div class="nds-card-text">
+                            <h3 class="nds-card-title">Fork</h3>
+                            <p class="nds-card-description">Full source code with build system, templates, and tooling.</p>
+                        </div>
+                    </div>
+                    <div class="nds-card-actions">
+                        <a href="#" class="nds-btn nds-primary nds-external">
+                            <span class="nds-label">View Repository</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="nds-card nds-stroke">
+                    <div class="nds-card-header">
+                        <div class="nds-card-featured-icon">
+                            <span class="nds-featured-icon nds-circle nds-xl">
+                                <i class="hgi hgi-stroke hgi-git-pull-request nds-icon"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="nds-card-content">
+                        <div class="nds-card-text">
+                            <h3 class="nds-card-title">Contribute</h3>
+                            <p class="nds-card-description">Report issues, suggest improvements, or submit pull requests on GitHub.</p>
+                        </div>
+                    </div>
+                    <div class="nds-card-actions">
+                        <a href="#" class="nds-btn nds-primary nds-external">
+                            <span class="nds-label">Open Issues</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
