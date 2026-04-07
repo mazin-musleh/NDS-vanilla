@@ -829,8 +829,8 @@ direction: ltr
 <section id="staticValues" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
-            <h2 class="nds-section-title">Static Values Filter</h2>
-            <p class="nds-section-description">Provide filter values directly via <code class="nds-inline-code lang-html">data-filter-values</code> instead of scanning cards. Useful when filter options are known upfront but don't appear in card markup, or for server-side / AJAX filtering where no cards exist on page load.</p>
+            <h2 class="nds-section-title">Explicit Values and Label Mapping</h2>
+            <p class="nds-section-description">Define filter options upfront with <code class="nds-inline-code lang-html">data-filter-values</code> instead of scanning card content. Pass a JSON object <code class="nds-inline-code lang-html">{"value":"label"}</code> to map machine values to display labels, keeping internal identifiers separate from what users see.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
@@ -850,7 +850,7 @@ direction: ltr
                                         <div class="nds-dropmenu-scroll">
                                             <div data-filter="category"
                                                 data-filter-type="radio" data-filter-legend="Category"
-                                                data-filter-values='["Technology","Design","Business"]'
+                                                data-filter-values='{"tech":"Technology","design":"Design","biz":"Business"}'
                                                 data-no-auto-close>
                                             </div>
                                         </div>
@@ -881,7 +881,7 @@ direction: ltr
                                             <h3 class="nds-card-title">AI Research</h3>
                                         </div>
                                         <div class="nds-card-tags"><span class="nds-tag nds-blue nds-sm"><span
-                                                    class="nds-label" data-filter="category">Technology</span></span></div>
+                                                    class="nds-label" data-filter="category" data-filter-value="tech">Technology</span></span></div>
                                     </div>
                                 </div>
                                 <div class="nds-card nds-stroke">
@@ -890,7 +890,7 @@ direction: ltr
                                             <h3 class="nds-card-title">Brand Identity</h3>
                                         </div>
                                         <div class="nds-card-tags"><span class="nds-tag nds-green nds-sm"><span
-                                                    class="nds-label" data-filter="category">Design</span></span></div>
+                                                    class="nds-label" data-filter="category" data-filter-value="design">Design</span></span></div>
                                     </div>
                                 </div>
                                 <div class="nds-card nds-stroke">
@@ -899,7 +899,7 @@ direction: ltr
                                             <h3 class="nds-card-title">Market Analysis</h3>
                                         </div>
                                         <div class="nds-card-tags"><span class="nds-tag nds-yellow nds-sm"><span
-                                                    class="nds-label" data-filter="category">Business</span></span></div>
+                                                    class="nds-label" data-filter="category" data-filter-value="biz">Business</span></span></div>
                                     </div>
                                 </div>
                                 <div class="nds-card nds-stroke">
@@ -908,7 +908,7 @@ direction: ltr
                                             <h3 class="nds-card-title">Cloud Migration</h3>
                                         </div>
                                         <div class="nds-card-tags"><span class="nds-tag nds-blue nds-sm"><span
-                                                    class="nds-label" data-filter="category">Technology</span></span></div>
+                                                    class="nds-label" data-filter="category" data-filter-value="tech">Technology</span></span></div>
                                     </div>
                                 </div>
                                 <div class="nds-card nds-stroke">
@@ -917,7 +917,7 @@ direction: ltr
                                             <h3 class="nds-card-title">UX Audit</h3>
                                         </div>
                                         <div class="nds-card-tags"><span class="nds-tag nds-green nds-sm"><span
-                                                    class="nds-label" data-filter="category">Design</span></span></div>
+                                                    class="nds-label" data-filter="category" data-filter-value="design">Design</span></span></div>
                                     </div>
                                 </div>
                                 <div class="nds-card nds-stroke">
@@ -926,7 +926,7 @@ direction: ltr
                                             <h3 class="nds-card-title">Revenue Report</h3>
                                         </div>
                                         <div class="nds-card-tags"><span class="nds-tag nds-yellow nds-sm"><span
-                                                    class="nds-label" data-filter="category">Business</span></span></div>
+                                                    class="nds-label" data-filter="category" data-filter-value="biz">Business</span></span></div>
                                     </div>
                                 </div>
                             </div>
@@ -952,7 +952,7 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                     <code class="lang-html code">
-<!-- Filter values provided directly — no card scanning needed -->
+<!-- Object form: keys = machine values, values = display labels -->
 <form class="nds-filter" data-filter-target="staticCards">
   <div class="nds-dropmenu">
     <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
@@ -964,7 +964,7 @@ direction: ltr
         <div data-filter="category"
           data-filter-type="radio"
           data-filter-legend="Category"
-          data-filter-values='["Technology","Design","Business"]'
+          data-filter-values='{"tech":"Technology","design":"Design","biz":"Business"}'
           data-no-auto-close>
         </div>
       </div>
@@ -988,6 +988,20 @@ direction: ltr
     <div class="nds-chips"></div>
   </div>
 </form>
+
+<!-- Cards use data-filter-value to match machine keys -->
+<div id="staticCards" class="nds-grid">
+  <div class="nds-card nds-stroke">
+    <div class="nds-card-content">
+      <div class="nds-card-tags">
+        <span class="nds-tag nds-blue nds-sm">
+          <span class="nds-label" data-filter="category"
+            data-filter-value="tech">Technology</span>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
                                     </code>
                                     </div>
                                 </div>
@@ -1240,7 +1254,7 @@ NDS.Filter.whenReady('#apiFilter', (filter) => {
         <div data-filter="category"
           data-filter-type="checkbox"
           data-filter-legend="Category"
-          data-filter-values='["News","Services","Events"]'
+          data-filter-values='{"news":"News","services":"Services","events":"Events"}'
           data-no-auto-close>
         </div>
       </div>
@@ -1440,6 +1454,20 @@ filterForm.addEventListener('nds:filterFormAjax', (e) => {
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-layout-grid nds-icon"></i>
+                        <span class="nds-label">Custom Item Selectors</span>
+                    </span>
+                    <p class="nds-item-desc">Filter any element type by setting <code class="nds-inline-code lang-html">data-filter-items</code> on the target container. Works with list items, table rows, drawers, or any custom structure beyond the default <code class="nds-inline-code lang-html">.nds-card</code>.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-translate nds-icon"></i>
+                        <span class="nds-label">Value and Label Mapping</span>
+                    </span>
+                    <p class="nds-item-desc">Separate machine values from display labels using <code class="nds-inline-code lang-html">data-filter-value</code> on items or the object form of <code class="nds-inline-code lang-html">data-filter-values</code> on filter groups. Labels are derived automatically from visible text content.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
                         <i class="hgi hgi-stroke hgi-code nds-icon"></i>
                         <span class="nds-label">Programmatic Control</span>
                     </span>
@@ -1481,9 +1509,18 @@ filterForm.addEventListener('nds:filterFormAjax', (e) => {
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">data-filter-target</code></td><td>ID of the container holding filterable cards</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-filter-target</code></td><td>ID of the container holding filterable items</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-filter-submit</code></td><td>Enable form submission mode instead of client-side filtering</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-ajax</code></td><td>Use AJAX instead of page navigation for form submission (requires <code class="nds-inline-code lang-html">data-filter-submit</code>)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-filter-ignore</code></td><td>Place on a search input (or its ancestor) to prevent the filter from auto-detecting and hijacking it. Useful when a server-side search input lives inside <code class="nds-inline-code lang-html">.nds-filter</code> but should not be used for client-side text filtering.</td></tr>
+                    </tbody>
+                </table>
+
+                <h4>Target Container</h4>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">data-filter-items</code></td><td>Set on the target container (the element referenced by <code class="nds-inline-code lang-html">data-filter-target</code>) to specify a custom CSS selector for filterable items. Default: <code class="nds-inline-code lang-html">.nds-card</code>. Example: <code class="nds-inline-code lang-html">data-filter-items=".search-result"</code> to filter non-card elements like list items or table rows.</td></tr>
                     </tbody>
                 </table>
 
@@ -1491,11 +1528,12 @@ filterForm.addEventListener('nds:filterFormAjax', (e) => {
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">data-filter="name"</code></td><td>Filter group name. On filter controls, groups inputs together. On card elements, marks filterable content.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-filter="name"</code></td><td>Filter group name. On filter controls, groups inputs together. On item elements, marks filterable content. Can be placed on child elements inside items or on the item itself.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-filter-type</code></td><td>Auto-generate inputs. Values: <code class="nds-inline-code lang-html">checkbox</code>, <code class="nds-inline-code lang-html">radio</code>, or <code class="nds-inline-code lang-html">switch</code>. Scans cards for values unless <code class="nds-inline-code lang-html">data-filter-values</code> is set.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-filter-values</code></td><td>JSON array of explicit values, e.g. <code class="nds-inline-code lang-html">'["A","B","C"]'</code>. Skips card scanning and uses these values directly. Static — not affected by <code class="nds-inline-code lang-js">refresh()</code>. Use <code class="nds-inline-code lang-js">populateFilter()</code> if values need to change at runtime. Requires <code class="nds-inline-code lang-html">data-filter-type</code>.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-filter-values</code></td><td>JSON object mapping machine values to display labels, e.g. <code class="nds-inline-code lang-html">'{"A":"Label A","B":"Label B"}'</code>. Keys become checkbox/radio values, values become visible text. Also accepts a JSON array (<code class="nds-inline-code lang-html">'["A","B"]'</code>) which uses raw values as labels. Skips card scanning. Static: not affected by <code class="nds-inline-code lang-js">refresh()</code>. Use <code class="nds-inline-code lang-js">populateFilter()</code> if values need to change at runtime. Requires <code class="nds-inline-code lang-html">data-filter-type</code>.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-filter-legend</code></td><td>Fieldset legend text for auto-generated filter groups</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-filter-variant</code></td><td>CSS class to add to auto-generated input elements (e.g. <code class="nds-inline-code lang-html">nds-primary</code>)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-filter-value</code></td><td>Set on a <code class="nds-inline-code lang-html">[data-filter]</code> element to provide a machine-readable filter value separate from the visible text. The display label is derived from the element's text content automatically. Example: <code class="nds-inline-code lang-html">&lt;span data-filter="type" data-filter-value="Announcement"&gt;Translated Label&lt;/span&gt;</code></td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-filter-name</code></td><td>Custom display name used in applied filter chips instead of the raw value</td></tr>
                     </tbody>
                 </table>
@@ -1582,7 +1620,7 @@ const hidden = filter.getHiddenItems();     // Array of hidden card elements
 // ── Reset and refresh ───────────────────────────────
 filter.reset();     // Clear all filters and search, show all items
 filter.clear();     // Clear all inputs without re-showing items
-filter.refresh();   // Re-scan cards and regenerate auto filters only
+filter.refresh();   // Re-resolve target container, re-scan items, regenerate auto filters
 
 // ── Manual control ──────────────────────────────────
 filter.applyFilters();  // Trigger filtering logic manually
@@ -1602,7 +1640,8 @@ filterEl.addEventListener('nds:filter:ready', (e) => {
     const instance = e.detail;  // the NDSFilter instance
 });
 
-// nds:filter:change - Filters or search changed (all modes)
+// nds:filter:change - Fires after every applyFilters() call, including when
+// all criteria are cleared (visibleItems === totalItems in that case)
 filterEl.addEventListener('nds:filter:change', (e) => {
     const { criteria, totalItems, visibleItems, hiddenItems } = e.detail;
 });
