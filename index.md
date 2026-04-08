@@ -214,7 +214,7 @@ direction: ltr
                             <span class="nds-label" data-filter="category">{{ comp.category }}</span>
                         </span>
                         {% for tag in comp.tags %}
-                        <span class="nds-tag nds-neutral nds-sm">
+                        <span class="nds-tag nds-gray nds-sm">
                             <span class="nds-label" data-filter="tech">{{ tag }}</span>
                         </span>
                         {% endfor %}

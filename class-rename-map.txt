@@ -152,3 +152,17 @@ Featured Icon Color Variants
 .nds-warning                → data-status="warning"  (on .nds-featured-icon)
 .nds-error                  → data-status="error"    (on .nds-featured-icon)
 .nds-neutral                → data-status="neutral"  (on .nds-featured-icon)
+
+Tag Color Variants
+------------------
+.nds-neutral                → .nds-gray              (on .nds-tag)
+.nds-success                → .nds-green             (on .nds-tag)
+.nds-info                   → .nds-blue              (on .nds-tag)
+.nds-warning                → .nds-yellow            (on .nds-tag)
+.nds-error                  → .nds-red               (on .nds-tag)
+.nds-status                 → [data-status]          (on .nds-tag, adds pill shape + dot)
+.nds-neutral .nds-status    → data-status="neutral"  (on .nds-tag)
+.nds-success .nds-status    → data-status="success"  (on .nds-tag)
+.nds-info .nds-status       → data-status="info"     (on .nds-tag)
+.nds-warning .nds-status    → data-status="warning"  (on .nds-tag)
+.nds-error .nds-status      → data-status="error"    (on .nds-tag)

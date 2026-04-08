@@ -47,7 +47,7 @@ direction: ltr
                                     <td>{{ user.name }}</td>
                                     <td>{{ user.email }}</td>
                                     <td>{{ user.role }}</td>
-                                    <td><span class="nds-tag {% if user.status == 'active' %}nds-success{% elsif user.status == 'away' %}nds-warning{% else %}nds-error{% endif %} nds-status nds-sm"><span
+                                    <td><span class="nds-tag nds-sm" data-status="{% if user.status == 'active' %}success{% elsif user.status == 'away' %}warning{% else %}error{% endif %}"><span
                                                 class="nds-label">{% if user.status == 'active' %}Active{% elsif user.status == 'away' %}Away{% else %}Offline{% endif %}</span></span></td>
                                 </tr>
                                 {% endfor %}
@@ -89,25 +89,25 @@ direction: ltr
       <td>Ahmed Al-Rashidi</td>
       <td>ahmed.rashidi@gov.sa</td>
       <td>Senior Developer</td>
-      <td><span class="nds-tag nds-success nds-status nds-sm"><span class="nds-label">Active</span></span></td>
+      <td><span class="nds-tag nds-sm" data-status="success"><span class="nds-label">Active</span></span></td>
     </tr>
     <tr>
       <td>Fatima Al-Harbi</td>
       <td>fatima.harbi@gov.sa</td>
       <td>UX Designer</td>
-      <td><span class="nds-tag nds-success nds-status nds-sm"><span class="nds-label">Active</span></span></td>
+      <td><span class="nds-tag nds-sm" data-status="success"><span class="nds-label">Active</span></span></td>
     </tr>
     <tr>
       <td>Sara Al-Dosari</td>
       <td>sara.dosari@gov.sa</td>
       <td>Marketing Lead</td>
-      <td><span class="nds-tag nds-success nds-status nds-sm"><span class="nds-label">Active</span></span></td>
+      <td><span class="nds-tag nds-sm" data-status="success"><span class="nds-label">Active</span></span></td>
     </tr>
     <tr>
       <td>Layla Al-Qahtani</td>
       <td>layla.qahtani@gov.sa</td>
       <td>HR Specialist</td>
-      <td><span class="nds-tag nds-success nds-status nds-sm"><span class="nds-label">Active</span></span></td>
+      <td><span class="nds-tag nds-sm" data-status="success"><span class="nds-label">Active</span></span></td>
     </tr>
   </tbody>
 </table>
@@ -182,28 +182,28 @@ direction: ltr
                                     <td>Information Technology</td>
                                     <td>25</td>
                                     <td>5,625,000 SAR</td>
-                                    <td><span class="nds-tag nds-success nds-status nds-sm"><span
+                                    <td><span class="nds-tag nds-sm" data-status="success"><span
                                                 class="nds-label">Active</span></span></td>
                                 </tr>
                                 <tr>
                                     <td>Human Resources</td>
                                     <td>12</td>
                                     <td>3,000,000 SAR</td>
-                                    <td><span class="nds-tag nds-success nds-status nds-sm"><span
+                                    <td><span class="nds-tag nds-sm" data-status="success"><span
                                                 class="nds-label">Active</span></span></td>
                                 </tr>
                                 <tr>
                                     <td>Sales</td>
                                     <td>18</td>
                                     <td>4,500,000 SAR</td>
-                                    <td><span class="nds-tag nds-warning nds-status nds-sm"><span class="nds-label">Under
+                                    <td><span class="nds-tag nds-sm" data-status="warning"><span class="nds-label">Under
                                                 Review</span></span></td>
                                 </tr>
                                 <tr>
                                     <td>Marketing</td>
                                     <td>8</td>
                                     <td>2,250,000 SAR</td>
-                                    <td><span class="nds-tag nds-info nds-status nds-sm"><span
+                                    <td><span class="nds-tag nds-sm" data-status="info"><span
                                                 class="nds-label">Planning</span></span></td>
                                 </tr>
                             </tbody>
@@ -265,25 +265,25 @@ direction: ltr
       <td>Information Technology</td>
       <td>25</td>
       <td>5,625,000 SAR</td>
-      <td><span class="nds-tag nds-success nds-status nds-sm"><span class="nds-label">Active</span></span></td>
+      <td><span class="nds-tag nds-sm" data-status="success"><span class="nds-label">Active</span></span></td>
     </tr>
     <tr>
       <td>Human Resources</td>
       <td>12</td>
       <td>3,000,000 SAR</td>
-      <td><span class="nds-tag nds-success nds-status nds-sm"><span class="nds-label">Active</span></span></td>
+      <td><span class="nds-tag nds-sm" data-status="success"><span class="nds-label">Active</span></span></td>
     </tr>
     <tr>
       <td>Sales</td>
       <td>18</td>
       <td>4,500,000 SAR</td>
-      <td><span class="nds-tag nds-warning nds-status nds-sm"><span class="nds-label">Under Review</span></span></td>
+      <td><span class="nds-tag nds-sm" data-status="warning"><span class="nds-label">Under Review</span></span></td>
     </tr>
     <tr>
       <td>Marketing</td>
       <td>8</td>
       <td>2,250,000 SAR</td>
-      <td><span class="nds-tag nds-info nds-status nds-sm"><span class="nds-label">Planning</span></span></td>
+      <td><span class="nds-tag nds-sm" data-status="info"><span class="nds-label">Planning</span></span></td>
     </tr>
   </tbody>
 </table>
@@ -343,7 +343,7 @@ direction: ltr
                                     <td>Omar Al-Ahmad</td>
                                     <td>Login Issue</td>
                                     <td>
-                                        <span class="nds-tag nds-neutral nds-sm">
+                                        <span class="nds-tag nds-gray nds-sm">
                                             <span class="nds-label">Low</span>
                                         </span>
                                     </td>
@@ -364,7 +364,7 @@ direction: ltr
                                     <td>Layla Al-Mansouri</td>
                                     <td>Performance</td>
                                     <td>
-                                        <span class="nds-tag nds-warning nds-sm">
+                                        <span class="nds-tag nds-yellow nds-sm">
                                             <span class="nds-label">Medium</span>
                                         </span>
                                     </td>
@@ -385,7 +385,7 @@ direction: ltr
                                     <td>Yusuf Al-Kindi</td>
                                     <td>Data Loss</td>
                                     <td>
-                                        <span class="nds-tag nds-error nds-sm">
+                                        <span class="nds-tag nds-red nds-sm">
                                             <span class="nds-label">High</span>
                                         </span>
                                     </td>
@@ -406,7 +406,7 @@ direction: ltr
                                     <td>Aisha Al-Farisi</td>
                                     <td>Feature Request</td>
                                     <td>
-                                        <span class="nds-tag nds-neutral nds-sm">
+                                        <span class="nds-tag nds-gray nds-sm">
                                             <span class="nds-label">Low</span>
                                         </span>
                                     </td>
@@ -462,7 +462,7 @@ direction: ltr
       <td>Omar Al-Ahmad</td>
       <td>Login Issue</td>
       <td>
-        <span class="nds-tag nds-neutral nds-sm">
+        <span class="nds-tag nds-gray nds-sm">
           <span class="nds-label">Low</span>
         </span>
       </td>
@@ -483,7 +483,7 @@ direction: ltr
       <td>Layla Al-Mansouri</td>
       <td>Performance</td>
       <td>
-        <span class="nds-tag nds-warning nds-sm">
+        <span class="nds-tag nds-yellow nds-sm">
           <span class="nds-label">Medium</span>
         </span>
       </td>
@@ -504,7 +504,7 @@ direction: ltr
       <td>Yusuf Al-Kindi</td>
       <td>Data Loss</td>
       <td>
-        <span class="nds-tag nds-error nds-sm">
+        <span class="nds-tag nds-red nds-sm">
           <span class="nds-label">High</span>
         </span>
       </td>
@@ -525,7 +525,7 @@ direction: ltr
       <td>Aisha Al-Farisi</td>
       <td>Feature Request</td>
       <td>
-        <span class="nds-tag nds-neutral nds-sm">
+        <span class="nds-tag nds-gray nds-sm">
           <span class="nds-label">Low</span>
         </span>
       </td>
@@ -603,7 +603,7 @@ direction: ltr
                                     <td>Hassan Al-Mukhtar</td>
                                     <td>hassan.almukhtar@moi.gov.sa</td>
                                     <td>Engineering</td>
-                                    <td><span class="nds-tag nds-success nds-sm"><span
+                                    <td><span class="nds-tag nds-green nds-sm"><span
                                                 class="nds-label">Active</span></span></td>
                                 </tr>
                                 <tr data-state="selected">
@@ -617,7 +617,7 @@ direction: ltr
                                     <td>Nadia Al-Khatib</td>
                                     <td>nadia.alkhatib@moi.gov.sa</td>
                                     <td>Design</td>
-                                    <td><span class="nds-tag nds-success nds-sm"><span
+                                    <td><span class="nds-tag nds-green nds-sm"><span
                                                 class="nds-label">Active</span></span></td>
                                 </tr>
                                 <tr>
@@ -631,7 +631,7 @@ direction: ltr
                                     <td>Tariq Al-Sudairi</td>
                                     <td>tariq.alsudairi@moi.gov.sa</td>
                                     <td>Marketing</td>
-                                    <td><span class="nds-tag nds-warning nds-sm"><span
+                                    <td><span class="nds-tag nds-yellow nds-sm"><span
                                                 class="nds-label">Pending</span></span></td>
                                 </tr>
                                 <tr data-state="selected">
@@ -645,7 +645,7 @@ direction: ltr
                                     <td>Zara Al-Habib</td>
                                     <td>zara.alhabib@moi.gov.sa</td>
                                     <td>Sales</td>
-                                    <td><span class="nds-tag nds-neutral nds-sm"><span class="nds-label">On
+                                    <td><span class="nds-tag nds-gray nds-sm"><span class="nds-label">On
                                                 Leave</span></span></td>
                                 </tr>
                             </tbody>
@@ -700,7 +700,7 @@ direction: ltr
       <td>Hassan Al-Mukhtar</td>
       <td>hassan.almukhtar@moi.gov.sa</td>
       <td>Engineering</td>
-      <td><span class="nds-tag nds-success nds-sm"><span class="nds-label">Active</span></span></td>
+      <td><span class="nds-tag nds-green nds-sm"><span class="nds-label">Active</span></span></td>
     </tr>
     <tr data-state="selected">
       <td>
@@ -713,7 +713,7 @@ direction: ltr
       <td>Nadia Al-Khatib</td>
       <td>nadia.alkhatib@moi.gov.sa</td>
       <td>Design</td>
-      <td><span class="nds-tag nds-success nds-sm"><span class="nds-label">Active</span></span></td>
+      <td><span class="nds-tag nds-green nds-sm"><span class="nds-label">Active</span></span></td>
     </tr>
     <tr>
       <td>
@@ -726,7 +726,7 @@ direction: ltr
       <td>Tariq Al-Sudairi</td>
       <td>tariq.alsudairi@moi.gov.sa</td>
       <td>Marketing</td>
-      <td><span class="nds-tag nds-warning nds-sm"><span class="nds-label">Pending</span></span></td>
+      <td><span class="nds-tag nds-yellow nds-sm"><span class="nds-label">Pending</span></span></td>
     </tr>
     <tr data-state="selected">
       <td>
@@ -739,7 +739,7 @@ direction: ltr
       <td>Zara Al-Habib</td>
       <td>zara.alhabib@moi.gov.sa</td>
       <td>Sales</td>
-      <td><span class="nds-tag nds-neutral nds-sm"><span class="nds-label">On Leave</span></span></td>
+      <td><span class="nds-tag nds-gray nds-sm"><span class="nds-label">On Leave</span></span></td>
     </tr>
   </tbody>
 </table>
@@ -793,25 +793,25 @@ direction: ltr
                                     <td>Q1 2024</td>
                                     <td>2,450,000 SAR</td>
                                     <td>+12%</td>
-                                    <td><span class="nds-tag nds-success nds-status nds-sm"><span class="nds-label">On Track</span></span></td>
+                                    <td><span class="nds-tag nds-sm" data-status="success"><span class="nds-label">On Track</span></span></td>
                                 </tr>
                                 <tr>
                                     <td>Q2 2024</td>
                                     <td>2,780,000 SAR</td>
                                     <td>+13.5%</td>
-                                    <td><span class="nds-tag nds-success nds-status nds-sm"><span class="nds-label">On Track</span></span></td>
+                                    <td><span class="nds-tag nds-sm" data-status="success"><span class="nds-label">On Track</span></span></td>
                                 </tr>
                                 <tr>
                                     <td>Q3 2024</td>
                                     <td>2,610,000 SAR</td>
                                     <td>-6.1%</td>
-                                    <td><span class="nds-tag nds-warning nds-status nds-sm"><span class="nds-label">At Risk</span></span></td>
+                                    <td><span class="nds-tag nds-sm" data-status="warning"><span class="nds-label">At Risk</span></span></td>
                                 </tr>
                                 <tr>
                                     <td>Q4 2024</td>
                                     <td>3,100,000 SAR</td>
                                     <td>+18.8%</td>
-                                    <td><span class="nds-tag nds-success nds-status nds-sm"><span class="nds-label">On Track</span></span></td>
+                                    <td><span class="nds-tag nds-sm" data-status="success"><span class="nds-label">On Track</span></span></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -851,25 +851,25 @@ direction: ltr
       <td>Q1 2024</td>
       <td>2,450,000 SAR</td>
       <td>+12%</td>
-      <td><span class="nds-tag nds-success nds-status nds-sm"><span class="nds-label">On Track</span></span></td>
+      <td><span class="nds-tag nds-sm" data-status="success"><span class="nds-label">On Track</span></span></td>
     </tr>
     <tr>
       <td>Q2 2024</td>
       <td>2,780,000 SAR</td>
       <td>+13.5%</td>
-      <td><span class="nds-tag nds-success nds-status nds-sm"><span class="nds-label">On Track</span></span></td>
+      <td><span class="nds-tag nds-sm" data-status="success"><span class="nds-label">On Track</span></span></td>
     </tr>
     <tr>
       <td>Q3 2024</td>
       <td>2,610,000 SAR</td>
       <td>-6.1%</td>
-      <td><span class="nds-tag nds-warning nds-status nds-sm"><span class="nds-label">At Risk</span></span></td>
+      <td><span class="nds-tag nds-sm" data-status="warning"><span class="nds-label">At Risk</span></span></td>
     </tr>
     <tr>
       <td>Q4 2024</td>
       <td>3,100,000 SAR</td>
       <td>+18.8%</td>
-      <td><span class="nds-tag nds-success nds-status nds-sm"><span class="nds-label">On Track</span></span></td>
+      <td><span class="nds-tag nds-sm" data-status="success"><span class="nds-label">On Track</span></span></td>
     </tr>
   </tbody>
 </table>
@@ -1046,7 +1046,7 @@ direction: ltr
                                     <td>{{ user.department }}</td>
                                     <td>{{ user.role }}</td>
                                     <td>2023-0{{ forloop.index }}-15</td>
-                                    <td><span class="nds-tag {% if user.status == 'active' %}nds-success{% elsif user.status == 'away' %}nds-warning{% else %}nds-error{% endif %} nds-sm"><span class="nds-label">{% if user.status == 'active' %}Active{% elsif user.status == 'away' %}On Leave{% else %}Inactive{% endif %}</span></span></td>
+                                    <td><span class="nds-tag {% if user.status == 'active' %}nds-green{% elsif user.status == 'away' %}nds-yellow{% else %}nds-red{% endif %} nds-sm"><span class="nds-label">{% if user.status == 'active' %}Active{% elsif user.status == 'away' %}On Leave{% else %}Inactive{% endif %}</span></span></td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
@@ -1093,7 +1093,7 @@ direction: ltr
       <td>Engineering</td>
       <td>Senior Developer</td>
       <td>2023-01-15</td>
-      <td><span class="nds-tag nds-success nds-sm"><span class="nds-label">Active</span></span></td>
+      <td><span class="nds-tag nds-green nds-sm"><span class="nds-label">Active</span></span></td>
     </tr>
     <tr>
       <td>EMP-002</td>
@@ -1102,7 +1102,7 @@ direction: ltr
       <td>Design</td>
       <td>UX Designer</td>
       <td>2023-02-15</td>
-      <td><span class="nds-tag nds-success nds-sm"><span class="nds-label">Active</span></span></td>
+      <td><span class="nds-tag nds-green nds-sm"><span class="nds-label">Active</span></span></td>
     </tr>
     <tr>
       <td>EMP-003</td>
@@ -1111,7 +1111,7 @@ direction: ltr
       <td>Marketing</td>
       <td>Marketing Lead</td>
       <td>2023-03-15</td>
-      <td><span class="nds-tag nds-success nds-sm"><span class="nds-label">Active</span></span></td>
+      <td><span class="nds-tag nds-green nds-sm"><span class="nds-label">Active</span></span></td>
     </tr>
     <tr>
       <td>EMP-004</td>
@@ -1120,7 +1120,7 @@ direction: ltr
       <td>Human Resources</td>
       <td>HR Specialist</td>
       <td>2023-04-15</td>
-      <td><span class="nds-tag nds-success nds-sm"><span class="nds-label">Active</span></span></td>
+      <td><span class="nds-tag nds-green nds-sm"><span class="nds-label">Active</span></span></td>
     </tr>
   </tbody>
 </table>
@@ -1248,12 +1248,12 @@ direction: ltr
                                     <tr class="nds-page-item">
                                         <td>{{ forloop.index }}</td>
                                         <td>{{ service.title }}</td>
-                                        <td><span class="nds-tag nds-info nds-sm"><span class="nds-label" data-filter="system">{{ service.system }}</span></span></td>
+                                        <td><span class="nds-tag nds-blue nds-sm"><span class="nds-label" data-filter="system">{{ service.system }}</span></span></td>
                                         <td>
                                             {% if service.most_used %}
-                                            <span class="nds-tag nds-success nds-status nds-sm"><span class="nds-label" data-filter="popularity" data-filter-value="most_used">Most Used</span></span>
+                                            <span class="nds-tag nds-sm" data-status="success"><span class="nds-label" data-filter="popularity" data-filter-value="most_used">Most Used</span></span>
                                             {% else %}
-                                            <span class="nds-tag nds-neutral nds-status nds-sm"><span class="nds-label" data-filter="popularity" data-filter-value="standard">Standard</span></span>
+                                            <span class="nds-tag nds-sm" data-status="neutral"><span class="nds-label" data-filter="popularity" data-filter-value="standard">Standard</span></span>
                                             {% endif %}
                                         </td>
                                     </tr>
@@ -1361,32 +1361,32 @@ direction: ltr
       <tr class="nds-page-item">
         <td>1</td>
         <td>Identity Verification</td>
-        <td><span class="nds-tag nds-info nds-sm"><span class="nds-label" data-filter="system">Identity & Records</span></span></td>
-        <td><span class="nds-tag nds-success nds-status nds-sm"><span class="nds-label" data-filter="popularity" data-filter-value="most_used">Most Used</span></span></td>
+        <td><span class="nds-tag nds-blue nds-sm"><span class="nds-label" data-filter="system">Identity & Records</span></span></td>
+        <td><span class="nds-tag nds-sm" data-status="success"><span class="nds-label" data-filter="popularity" data-filter-value="most_used">Most Used</span></span></td>
       </tr>
       <tr class="nds-page-item">
         <td>2</td>
         <td>Passport Renewal</td>
-        <td><span class="nds-tag nds-info nds-sm"><span class="nds-label" data-filter="system">Identity & Records</span></span></td>
-        <td><span class="nds-tag nds-success nds-status nds-sm"><span class="nds-label" data-filter="popularity" data-filter-value="most_used">Most Used</span></span></td>
+        <td><span class="nds-tag nds-blue nds-sm"><span class="nds-label" data-filter="system">Identity & Records</span></span></td>
+        <td><span class="nds-tag nds-sm" data-status="success"><span class="nds-label" data-filter="popularity" data-filter-value="most_used">Most Used</span></span></td>
       </tr>
       <tr class="nds-page-item">
         <td>3</td>
         <td>Birth Certificate Request</td>
-        <td><span class="nds-tag nds-info nds-sm"><span class="nds-label" data-filter="system">Identity & Records</span></span></td>
-        <td><span class="nds-tag nds-neutral nds-status nds-sm"><span class="nds-label" data-filter="popularity" data-filter-value="standard">Standard</span></span></td>
+        <td><span class="nds-tag nds-blue nds-sm"><span class="nds-label" data-filter="system">Identity & Records</span></span></td>
+        <td><span class="nds-tag nds-sm" data-status="neutral"><span class="nds-label" data-filter="popularity" data-filter-value="standard">Standard</span></span></td>
       </tr>
       <tr class="nds-page-item">
         <td>4</td>
         <td>Marriage Contract Registration</td>
-        <td><span class="nds-tag nds-info nds-sm"><span class="nds-label" data-filter="system">Identity & Records</span></span></td>
-        <td><span class="nds-tag nds-neutral nds-status nds-sm"><span class="nds-label" data-filter="popularity" data-filter-value="standard">Standard</span></span></td>
+        <td><span class="nds-tag nds-blue nds-sm"><span class="nds-label" data-filter="system">Identity & Records</span></span></td>
+        <td><span class="nds-tag nds-sm" data-status="neutral"><span class="nds-label" data-filter="popularity" data-filter-value="standard">Standard</span></span></td>
       </tr>
       <tr class="nds-page-item">
         <td>5</td>
         <td>Driver's License Services</td>
-        <td><span class="nds-tag nds-info nds-sm"><span class="nds-label" data-filter="system">Transport & Vehicles</span></span></td>
-        <td><span class="nds-tag nds-success nds-status nds-sm"><span class="nds-label" data-filter="popularity" data-filter-value="most_used">Most Used</span></span></td>
+        <td><span class="nds-tag nds-blue nds-sm"><span class="nds-label" data-filter="system">Transport & Vehicles</span></span></td>
+        <td><span class="nds-tag nds-sm" data-status="success"><span class="nds-label" data-filter="popularity" data-filter-value="most_used">Most Used</span></span></td>
       </tr>
     </tbody>
   </table>

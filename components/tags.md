@@ -22,29 +22,29 @@ direction: ltr
                         <div class="demo-action">
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">Neutral</span>
+                                    <span class="nds-label">Gray</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["nds-neutral", ".nds-tag", "tagColor"]'>
-                                            <span class="nds-label">Neutral</span>
+                                            data-toggler='["nds-gray", ".nds-tag", "tagColor"]'>
+                                            <span class="nds-label">Gray</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-success", ".nds-tag", "tagColor"]'>
-                                            <span class="nds-label">Success</span>
+                                            data-toggler='["nds-green", ".nds-tag", "tagColor"]'>
+                                            <span class="nds-label">Green</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-info", ".nds-tag", "tagColor"]'>
-                                            <span class="nds-label">Info</span>
+                                            data-toggler='["nds-blue", ".nds-tag", "tagColor"]'>
+                                            <span class="nds-label">Blue</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-warning", ".nds-tag", "tagColor"]'>
-                                            <span class="nds-label">Warning</span>
+                                            data-toggler='["nds-yellow", ".nds-tag", "tagColor"]'>
+                                            <span class="nds-label">Yellow</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-error", ".nds-tag", "tagColor"]'>
-                                            <span class="nds-label">Error</span>
+                                            data-toggler='["nds-red", ".nds-tag", "tagColor"]'>
+                                            <span class="nds-label">Red</span>
                                         </button>
                                     </div>
                                 </div>
@@ -90,7 +90,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <span class="nds-tag nds-neutral">
+                            <span class="nds-tag nds-gray">
                                 <span class="nds-label">Label</span>
                             </span>
                         </div>
@@ -114,7 +114,7 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<span class="nds-tag nds-neutral">
+<span class="nds-tag nds-gray">
   <span class="nds-label">Label</span>
 </span>
                                     </code>
@@ -147,23 +147,23 @@ direction: ltr
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["nds-neutral", ".nds-tag", "statusColor"]'>
+                                            data-toggler='["data-status=neutral", ".nds-tag", "statusColor", "attr"]'>
                                             <span class="nds-label">Neutral</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-success", ".nds-tag", "statusColor"]'>
+                                            data-toggler='["data-status=success", ".nds-tag", "statusColor", "attr"]'>
                                             <span class="nds-label">Success</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-info", ".nds-tag", "statusColor"]'>
+                                            data-toggler='["data-status=info", ".nds-tag", "statusColor", "attr"]'>
                                             <span class="nds-label">Info</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-warning", ".nds-tag", "statusColor"]'>
+                                            data-toggler='["data-status=warning", ".nds-tag", "statusColor", "attr"]'>
                                             <span class="nds-label">Warning</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-error", ".nds-tag", "statusColor"]'>
+                                            data-toggler='["data-status=error", ".nds-tag", "statusColor", "attr"]'>
                                             <span class="nds-label">Error</span>
                                         </button>
                                     </div>
@@ -206,7 +206,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <span class="nds-tag nds-neutral nds-status">
+                            <span class="nds-tag" data-status="neutral">
                                 <span class="nds-label">Status</span>
                             </span>
                         </div>
@@ -230,7 +230,7 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<span class="nds-tag nds-neutral nds-status">
+<span class="nds-tag" data-status="neutral">
   <span class="nds-label">Status</span>
 </span>
                                     </code>
@@ -354,24 +354,24 @@ direction: ltr
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["nds-neutral", ".nds-tag", "iconOnlyColor"]'>
-                                            <span class="nds-label">Neutral</span>
+                                            data-toggler='["nds-gray", ".nds-tag", "iconOnlyColor"]'>
+                                            <span class="nds-label">Gray</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-success", ".nds-tag", "iconOnlyColor"]'>
-                                            <span class="nds-label">Success</span>
+                                            data-toggler='["nds-green", ".nds-tag", "iconOnlyColor"]'>
+                                            <span class="nds-label">Green</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-info", ".nds-tag", "iconOnlyColor"]'>
-                                            <span class="nds-label">Info</span>
+                                            data-toggler='["nds-blue", ".nds-tag", "iconOnlyColor"]'>
+                                            <span class="nds-label">Blue</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-warning", ".nds-tag", "iconOnlyColor"]'>
-                                            <span class="nds-label">Warning</span>
+                                            data-toggler='["nds-yellow", ".nds-tag", "iconOnlyColor"]'>
+                                            <span class="nds-label">Yellow</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-error", ".nds-tag", "iconOnlyColor"]'>
-                                            <span class="nds-label">Error</span>
+                                            data-toggler='["nds-red", ".nds-tag", "iconOnlyColor"]'>
+                                            <span class="nds-label">Red</span>
                                         </button>
                                     </div>
                                 </div>
@@ -413,7 +413,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <span class="nds-tag nds-neutral nds-icon-only">
+                            <span class="nds-tag nds-gray nds-icon-only">
                                 <i class="hgi hgi-stroke hgi-tag-01 nds-icon"></i>
                             </span>
                         </div>
@@ -437,7 +437,7 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<span class="nds-tag nds-neutral nds-icon-only">
+<span class="nds-tag nds-gray nds-icon-only">
   <i class="hgi hgi-stroke hgi-tag-01 nds-icon"></i>
 </span>
                                     </code>
@@ -478,7 +478,7 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-colors nds-icon"></i>
                         <span class="nds-label">Flexible Color API</span>
                     </span>
-                    <p class="nds-item-desc">Set color via class (nds-success), attribute (data-status), or alias (nds-green).</p>
+                    <p class="nds-item-desc">Set color via class (nds-green) for normal tags, or data-status attribute for status indicators.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">

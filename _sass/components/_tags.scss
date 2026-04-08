@@ -17,7 +17,7 @@
   --_icon: var(--tag-icon, var(--tag-icon-neutral));
   --_tag-height: var(--tag-height, 32px);
   --_tag-fs: var(--tag-fs, var(--nds-text-md-FS));
-  --_tag-padding-inline: var(--tag-padding-inline, var(--spacing-lg));
+  --_tag-padding-inline: var(--tag-padding-inline, var(--spacing-xl));
   --_tag-dot-size: var(--tag-dot-size, 10px);
 
   display: inline-flex;
@@ -38,14 +38,8 @@
   border: 1px solid var(--_border);
 
   .nds-label{
-    --_truncate: var(--truncate, 1);
-    overflow: hidden;
-    display: -webkit-box !important;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: var(--_truncate);
-    line-clamp: var(--_truncate);
-    text-overflow: ellipsis;
-    white-space: wrap;
+    display: flex;
+    align-items: center;
   }
 
   // ==============================================
@@ -92,7 +86,7 @@
   // COLOR VARIANTS
   // ==============================================
 
-  &:is(.nds-neutral, .nds-gray, [data-status="neutral"]) {
+  &:is(.nds-gray:where(:not([data-status])), [data-status="neutral"]) {
     --tag-bg: var(--tag-background-neutral-light);
     --tag-text: var(--tag-text-neutral);
     --tag-border: var(--tag-border-neutral-light);
@@ -112,7 +106,7 @@
     }
   }
 
-  &:is(.nds-success, .nds-green, [data-status="success"]) {
+  &:is(.nds-green:where(:not([data-status])), [data-status="success"]) {
     --tag-bg: var(--tag-background-success-light);
     --tag-text: var(--tag-text-success);
     --tag-border: var(--tag-border-success-light);
@@ -132,7 +126,7 @@
     }
   }
 
-  &:is(.nds-info, .nds-blue, [data-status="info"]) {
+  &:is(.nds-blue:where(:not([data-status])), [data-status="info"]) {
     --tag-bg: var(--tag-background-info-light);
     --tag-text: var(--tag-text-info);
     --tag-border: var(--tag-border-info-light);
@@ -152,7 +146,7 @@
     }
   }
 
-  &:is(.nds-warning, .nds-orange, .nds-yellow, [data-status="warning"]) {
+  &:is(.nds-yellow:where(:not([data-status])), [data-status="warning"]) {
     --tag-bg: var(--tag-background-warning-light);
     --tag-text: var(--tag-text-warning);
     --tag-border: var(--tag-border-warning-light);
@@ -172,7 +166,7 @@
     }
   }
 
-  &:is(.nds-error, .nds-red, [data-status="error"]) {
+  &:is(.nds-red:where(:not([data-status])), [data-status="error"]) {
     --tag-bg: var(--tag-background-error-light);
     --tag-text: var(--tag-text-error);
     --tag-border: var(--tag-border-error-light);
@@ -220,8 +214,9 @@
   // STATUS VARIANT
   // ==============================================
 
-  &.nds-status {
+  &[data-status] {
     border-radius: 999px;
+    --tag-border: transparent;
 
     .nds-label {
       &::before {

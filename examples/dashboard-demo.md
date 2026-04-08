@@ -154,7 +154,7 @@ direction: ltr
                         </div>
                         <div class="nds-card-meta">
                             <div class="nds-card-tags">
-                                <span class="nds-tag nds-neutral nds-sm">
+                                <span class="nds-tag nds-gray nds-sm">
                                     <i class="hgi hgi-stroke hgi-calendar-01 nds-icon"></i>
                                     <span class="nds-label">Due 14 Oct</span>
                                 </span>
@@ -185,7 +185,7 @@ direction: ltr
                         </div>
                         <div class="nds-card-meta">
                             <div class="nds-card-tags">
-                                <span class="nds-tag nds-neutral nds-sm">
+                                <span class="nds-tag nds-gray nds-sm">
                                     <i class="hgi hgi-stroke hgi-calendar-01 nds-icon"></i>
                                     <span class="nds-label">Due 17 Oct</span>
                                 </span>
@@ -216,7 +216,7 @@ direction: ltr
                         </div>
                         <div class="nds-card-meta">
                             <div class="nds-card-tags">
-                                <span class="nds-tag nds-neutral nds-sm">
+                                <span class="nds-tag nds-gray nds-sm">
                                     <i class="hgi hgi-stroke hgi-calendar-01 nds-icon"></i>
                                     <span class="nds-label">Draft review 21 Oct</span>
                                 </span>
@@ -253,7 +253,7 @@ direction: ltr
                         </div>
                         <div class="nds-card-meta">
                             <div class="nds-card-tags">
-                                <span class="nds-tag nds-success nds-sm">
+                                <span class="nds-tag nds-green nds-sm">
                                     <i class="hgi hgi-stroke hgi-trend-up nds-icon"></i>
                                     <span class="nds-label">Up 12% vs last month</span>
                                 </span>
@@ -277,7 +277,7 @@ direction: ltr
                         </div>
                         <div class="nds-card-meta">
                             <div class="nds-card-tags">
-                                <span class="nds-tag nds-neutral nds-sm">
+                                <span class="nds-tag nds-gray nds-sm">
                                     <i class="hgi hgi-stroke hgi-hourglass nds-icon"></i>
                                     <span class="nds-label">3 due today</span>
                                 </span>
@@ -301,7 +301,7 @@ direction: ltr
                         </div>
                         <div class="nds-card-meta">
                             <div class="nds-card-tags">
-                                <span class="nds-tag nds-info nds-sm">
+                                <span class="nds-tag nds-blue nds-sm">
                                     <i class="hgi hgi-stroke hgi-bell-01 nds-icon"></i>
                                     <span class="nds-label">Escalations enabled</span>
                                 </span>
@@ -378,7 +378,7 @@ direction: ltr
                                     </td>
                                     <td>sara.ibrahim</td>
                                     <td>
-                                        <span class="nds-tag nds-neutral nds-sm">
+                                        <span class="nds-tag nds-gray nds-sm">
                                             <span class="nds-label">Project sponsor</span>
                                         </span>
                                     </td>
@@ -399,7 +399,7 @@ direction: ltr
                                     </td>
                                     <td>omar.khalid</td>
                                     <td>
-                                        <span class="nds-tag nds-neutral nds-sm">
+                                        <span class="nds-tag nds-gray nds-sm">
                                             <span class="nds-label">Key contributor</span>
                                         </span>
                                     </td>
@@ -420,7 +420,7 @@ direction: ltr
                                     </td>
                                     <td>lamia.alqahtani</td>
                                     <td>
-                                        <span class="nds-tag nds-neutral nds-sm">
+                                        <span class="nds-tag nds-gray nds-sm">
                                             <span class="nds-label">Onboarding</span>
                                         </span>
                                     </td>

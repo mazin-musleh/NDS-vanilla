@@ -116,7 +116,7 @@ Resolution: page front matter → data file → defaults
             <div class="nds-section-meta">
                 <div class="nds-section-tags">
                     {%- for tag in hero_tags %}
-                    <span class="nds-tag {{ tag.style | default: 'nds-neutral' }} {{ tag.modifiers }} nds-sm">
+                    <span class="nds-tag {{ tag.style | default: 'nds-gray' }} {{ tag.modifiers }} nds-sm">
                         {%- if tag.icon %}<i class="hgi hgi-stroke {{ tag.icon }} nds-icon"></i>{%- endif %}
                         <span class="nds-label">{{ tag.label }}</span>
                     </span>

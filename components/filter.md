@@ -273,7 +273,7 @@ direction: ltr
                                         <div class="nds-card-text">
                                             <h3 class="nds-card-title">Task B</h3>
                                         </div>
-                                        <div class="nds-card-tags"><span class="nds-tag nds-neutral nds-sm"><span
+                                        <div class="nds-card-tags"><span class="nds-tag nds-gray nds-sm"><span
                                                     class="nds-label" data-filter="status">Pending</span></span></div>
                                     </div>
                                 </div>
@@ -374,7 +374,7 @@ direction: ltr
         <h3 class="nds-card-title">Task B</h3>
       </div>
       <div class="nds-card-tags">
-        <span class="nds-tag nds-neutral nds-sm">
+        <span class="nds-tag nds-gray nds-sm">
           <span class="nds-label" data-filter="status">Pending</span>
         </span>
       </div>
@@ -477,7 +477,7 @@ direction: ltr
                                         <div class="nds-card-text">
                                             <h3 class="nds-card-title">Documentation</h3>
                                         </div>
-                                        <div class="nds-card-tags"><span class="nds-tag nds-neutral nds-sm"><span
+                                        <div class="nds-card-tags"><span class="nds-tag nds-gray nds-sm"><span
                                                     class="nds-label" data-filter="priority">Low</span></span></div>
                                     </div>
                                 </div>
@@ -581,7 +581,7 @@ direction: ltr
         <h3 class="nds-card-title">Documentation</h3>
       </div>
       <div class="nds-card-tags">
-        <span class="nds-tag nds-neutral nds-sm">
+        <span class="nds-tag nds-gray nds-sm">
           <span class="nds-label" data-filter="priority">Low</span>
         </span>
       </div>

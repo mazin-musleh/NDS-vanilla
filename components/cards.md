@@ -138,13 +138,13 @@ direction: ltr
                                     </div>
                                     <div class="nds-card-meta">
                                         <div class="nds-card-tags">
-                                            <span class="nds-tag nds-info nds-sm">
+                                            <span class="nds-tag nds-blue nds-sm">
                                                 <span class="nds-label">Category</span>
                                             </span>
-                                            <span class="nds-tag nds-neutral nds-sm">
+                                            <span class="nds-tag nds-gray nds-sm">
                                                 <span class="nds-label">Topic</span>
                                             </span>
-                                            <span class="nds-tag nds-success nds-sm">
+                                            <span class="nds-tag nds-green nds-sm">
                                                 <span class="nds-label">Active</span>
                                             </span>
                                         </div>
@@ -204,7 +204,7 @@ direction: ltr
         </div>
         <div class="nds-card-meta">
             <div class="nds-card-tags">
-                <span class="nds-tag nds-info nds-sm">
+                <span class="nds-tag nds-blue nds-sm">
                     <span class="nds-label">Category</span>
                 </span>
             </div>
