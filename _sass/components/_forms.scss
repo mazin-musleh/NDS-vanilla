@@ -152,16 +152,18 @@
     }
 }
 
-.nds-label+.nds-info {
-    color: var(--text-primary-paragraph);
-    font-size: var(--nds-text-sm-FS);
-    line-height: var(--nds-text-sm-LH);
-    min-width: 200px;
-}
+:is(.nds-form-container, .nds-form-group) {
+    .nds-label+.nds-info {
+        color: var(--text-primary-paragraph);
+        font-size: var(--nds-text-sm-FS);
+        line-height: var(--nds-text-sm-LH);
+        min-width: 200px;
+    }
 
-.nds-label+.nds-note {
-    color: var(--text-secondary-paragraph);
-    font-weight: 300;
+    .nds-label+.nds-note {
+        color: var(--text-secondary-paragraph);
+        font-weight: 300;
+    }
 }
 
 fieldset {
