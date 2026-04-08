@@ -107,7 +107,7 @@
     }
 
     // Export to window
-    NDS.SideInfo = {
+    NDS.Sideinfo = {
         init: initializeComponents,
         reinit: initializeComponents,
         create: (element) => {

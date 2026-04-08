@@ -209,7 +209,7 @@
         window.addEventListener('pageshow', handlePageShow);
         
         // Create global font loading API
-        NDS.FontLoading = {
+        NDS.Fontloading = {
             waitForFontFile,
             getFontLoadingState: () => ({
                 loadedFonts: Array.from(loadedFonts),

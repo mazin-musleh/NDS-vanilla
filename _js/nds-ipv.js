@@ -461,7 +461,7 @@
 
     // Expose global API for unified init system
     if (typeof window !== 'undefined') {
-        NDS.ImagePopupViewer = {
+        NDS.Ipv = {
             init: initializeIPV,
             reinit: initializeIPV,
             create: () => {

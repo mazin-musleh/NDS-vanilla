@@ -947,5 +947,5 @@
     } catch { }
 
     Object.assign(window, { toggleNavbar, toggleDropdown, toggleDGA });
-    NDS.NavController = { init };
+    NDS.Mainnav = { init };
 })();

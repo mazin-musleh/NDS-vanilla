@@ -32,7 +32,7 @@
  * - data-error-message: Custom error message (overrides language defaults)
  */
 
-NDS.UserFeedback = (() => {
+NDS.Userfeedback = (() => {
     'use strict';
 
     // Helper function to generate cookie name for current page

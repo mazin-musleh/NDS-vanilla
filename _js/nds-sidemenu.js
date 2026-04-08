@@ -346,6 +346,6 @@
     }
 
     if (typeof window !== 'undefined') {
-        NDS.SideMenu = { init: initializeSideMenu };
+        NDS.Sidemenu = { init: initializeSideMenu };
     }
 })();

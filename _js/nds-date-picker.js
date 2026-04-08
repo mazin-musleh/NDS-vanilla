@@ -1814,7 +1814,7 @@
     // CRITICAL: Expose global API immediately (called by unified init system)
     if (typeof window !== 'undefined') {
         window.DatePickerCalendar = DatePickerCalendar;
-        NDS.DatePicker = {
+        NDS.Datepicker = {
             DatePickerCalendar,
             CalendarConfig,
             UIConfig,

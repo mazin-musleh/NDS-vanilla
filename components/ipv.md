@@ -134,7 +134,7 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-plug-socket nds-icon"></i>
                         <span class="nds-label">Auto-initialization</span>
                     </span>
-                    <p class="nds-item-desc">Any image with the <code class="nds-inline-code lang-html">nds-ipv-thumbnail</code> class becomes clickable and opens in the full-screen viewer. No extra markup or JS calls needed. For dynamically added images, call <code class="nds-inline-code lang-js">NDS.ImagePopupViewer.init()</code>.</p>
+                    <p class="nds-item-desc">Any image with the <code class="nds-inline-code lang-html">nds-ipv-thumbnail</code> class becomes clickable and opens in the full-screen viewer. No extra markup or JS calls needed. For dynamically added images, call <code class="nds-inline-code lang-js">NDS.Ipv.init()</code>.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -223,7 +223,7 @@ direction: ltr
             </div>
             <div class="nds-content-block">
                 <h3 class="nds-block-title">JavaScript API</h3>
-                <p>The <strong>NDS.ImagePopupViewer</strong> API controls initialization and programmatic access. The viewer auto-initializes on page load. For dynamically added thumbnails, call <code class="nds-inline-code lang-js">NDS.ImagePopupViewer.init()</code> to re-scan the page.</p>
+                <p>The <strong>NDS.Ipv</strong> API controls initialization and programmatic access. The viewer auto-initializes on page load. For dynamically added thumbnails, call <code class="nds-inline-code lang-js">NDS.Ipv.init()</code> to re-scan the page.</p>
                 <div class="nds-code nds-expandable">
                     <div class="nds-code-action">
                         <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
@@ -234,10 +234,10 @@ direction: ltr
                         <code class="lang-javascript code">
 // ── Initialization ──────────────────────────────────
 // All thumbnails auto-initialize on page load
-NDS.ImagePopupViewer.init();
+NDS.Ipv.init();
 
 // Create and get the viewer instance
-var viewer = NDS.ImagePopupViewer.create();
+var viewer = NDS.Ipv.create();
 
 // Access the existing instance directly
 var viewer = window.ndsIPV;
