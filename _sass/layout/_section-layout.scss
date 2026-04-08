@@ -235,29 +235,31 @@
 
 /* ── Float action ── */
 
-:is(.nds-content-section, .nds-hero-section):not(.nds-horizontal, .nds-center) .nds-section-head>.nds-section-action {
-    float: inline-end;
-    margin-inline-start: var(--_section-col-gap);
-    margin-block-end: calc(var(--_section-col-gap) / 2);
-    flex-direction: column;
-    flex-wrap: wrap;
-    --btn-width: 100%;
+:is(.nds-content-section, .nds-hero-section):not(.nds-horizontal, .nds-center)>.nds-section-wrapper {
+    >.nds-section-head>.nds-section-action {
+        float: inline-end;
+        margin-inline-start: var(--_section-col-gap);
+        margin-block-end: calc(var(--_section-col-gap) / 2);
+        flex-direction: column;
+        flex-wrap: wrap;
+        --btn-width: 100%;
+    }
+
+    >.nds-section-head:has(>.nds-section-action)~.nds-section-action {
+        flex: 1 0 100%;
+        flex-direction: row;
+        --btn-width: unset;
+    }
 }
 
-:is(.nds-content-section, .nds-hero-section):not(.nds-center, .nds-horizontal)>.nds-section-wrapper>.nds-section-head:has(> .nds-section-action)~.nds-section-action {
-    flex: 1 0 100%;
-    flex-direction: row;
-    --btn-width: unset;
-}
-
-:is(.nds-center, .nds-horizontal) .nds-section-head>.nds-section-action {
+:is(.nds-center, .nds-horizontal)>.nds-section-wrapper>.nds-section-head>.nds-section-action {
     order: 1;
     margin-inline-start: 0;
     margin-block: var(--_section-col-gap) 0;
 }
 
 @include mobile {
-    .nds-section-head:has(> .nds-section-action.nds-wrap) {
+    :is(.nds-content-section, .nds-hero-section) .nds-section-head:has(>.nds-section-action.nds-wrap) {
         display: flex;
         flex-direction: column;
 
@@ -301,8 +303,12 @@
 
 @include desktop(min) {
     :is(.nds-content-section, .nds-hero-section).nds-horizontal>.nds-section-wrapper {
-        display: grid;
-        grid-template-columns: auto 1fr;
+
+        &:not(.nds-grid) {
+            display: grid;
+            grid-template-columns: auto 1fr;
+        }
+
         align-items: center;
         gap: var(--gap, var(--spacing-6xl));
 
