@@ -197,6 +197,7 @@
 
   &.nds-show-more {
     min-width: var(--btn-size);
+    aspect-ratio: 1 / 1;
   }
 
   &:disabled {

@@ -184,6 +184,7 @@ Get the exact HTML patterns from `alert.md`:
 - **Selection groups** (one-of-many): dropmenu with `.demo-toggle-menu`. Place these first.
 - **On/off toggles** (independent): flat buttons with `.demo-toggle-btn`. Place these after dropmenus.
 - Add `selected` class to the button/item matching the demo's default state
+- **Demo cards with no actions**: add a `<div class="demo-label">` inside `.demo-header` with a short descriptive title. Only demo cards that have toggle controls (dropmenus or buttons) omit the label.
 
 ### Code Examples
 
