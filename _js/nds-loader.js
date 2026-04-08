@@ -17,19 +17,19 @@
     // Only exception: window.NDSInitConfig (pre-boot config, set before bundle loads)
     const COMPONENTS = [
         {
-            name: 'navigation',
+            name: 'Main Navigation',
             selector: '.nds-main-nav',
-            init: () => NDS.NavController?.init?.(),
+            init: () => NDS.Mainnav?.init?.(),
         },
         {
             name: 'forms',
             selector: '.nds-form-control',
-            init: () => window.NDS?.Forms?.init?.(),
+            init: () => NDS.Forms?.init?.(),
         },
         {
             name: 'otp',
             selector: '.nds-otp-group',
-            init: () => window.NDS?.OTP?.init?.(),
+            init: () => NDS.OTP?.init?.(),
         },
         {
             name: 'tabs',
@@ -63,13 +63,13 @@
         },
         {
             name: 'sidemenu',
-            selector: '.nds-wSideMenu',
-            init: () => NDS.SideMenu?.init?.(),
+            selector: '.nds-sidemenu',
+            init: () => NDS.Sidemenu?.init?.(),
         },
         {
             name: 'sideInfo',
             selector: '.nds-sideinfo',
-            init: () => NDS.SideInfo?.init?.(),
+            init: () => NDS.Sideinfo?.init?.(),
         },
         {
             name: 'drawer',
@@ -99,22 +99,22 @@
         {
             name: 'datePicker',
             selector: '.nds-date-input',
-            init: () => NDS.DatePicker?.init?.(),
+            init: () => NDS.Datepicker?.init?.(),
         },
         {
             name: 'cityWeather',
             selector: '#nds-weatherInfo, #nds-cityName',
-            init: () => NDS.CityWeather?.init?.(),
+            init: () => NDS.Cityweather?.init?.(),
         },
         {
             name: 'timeDate',
             selector: '#nds-date, #nds-realTimeClock',
-            init: () => NDS.TimeDate?.init?.(),
+            init: () => NDS.Timedate?.init?.(),
         },
         {
             name: 'fontLoading',
             selector: null,
-            init: () => NDS.FontLoading?.init?.(),
+            init: () => NDS.Fontloading?.init?.(),
             universal: true,
         },
         {
@@ -150,17 +150,12 @@
         {
             name: 'pagination',
             selector: '.nds-pagination',
-            init: () => NDS.Pagination?.init?.(),
-        },
-        {
-            name: 'autoPagination',
-            selector: '.nds-pagination[data-auto-pagination]',
-            init: () => NDS.Pagination?.initAuto?.(),
+            init: () => { NDS.Pagination?.init?.(); NDS.Pagination?.initAuto?.(); },
         },
         {
             name: 'ipv',
             selector: '.nds-ipv-thumbnail',
-            init: () => NDS.ImagePopupViewer?.init?.(),
+            init: () => NDS.Ipv?.init?.(),
         },
         {
             name: 'modal',
@@ -180,7 +175,7 @@
         {
             name: 'userFeedback',
             selector: '.nds-user-feedback',
-            init: () => NDS.UserFeedback?.init?.(),
+            init: () => NDS.Userfeedback?.init?.(),
         },
         {
             name: 'chart',
