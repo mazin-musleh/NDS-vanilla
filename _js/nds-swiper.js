@@ -229,15 +229,15 @@
             const hasPeek = this.container.hasAttribute('peek');
             const hasOneSlidePage = this.slidesPerView === 1;
 
-            // Check if parent has nds-full-width and parent width >= viewport width
+            // If parent has nds-full-width but narrower than content area (e.g. side menu), add padding
             const parent = this.container.parentElement;
-            const viewportWidth = document.documentElement.clientWidth;
-            const parentWidth = parent?.clientWidth || 0;
             const parentHasFullWidth = parent?.classList.contains('nds-full-width');
-            const parentFillsViewport = parentWidth >= viewportWidth;
+            const styles = getComputedStyle(document.documentElement);
+            const contentMaxWidth = parseInt(styles.getPropertyValue('--nds-content-MaxWidth')) || 1280;
+            const viewportPadding = parseInt(styles.getPropertyValue('--nds-viewport-padding')) || 32;
+            const parentWidth = parent?.clientWidth || 0;
 
-            // If parent has nds-full-width AND fills viewport, add swiper padding
-            if (parentHasFullWidth && parentFillsViewport) {
+            if (parentHasFullWidth && parentWidth < contentMaxWidth) {
                 this.container.style.setProperty('--padding', 'var(--nds-viewport-padding)');
             } else {
                 this.container.style.removeProperty('--padding');

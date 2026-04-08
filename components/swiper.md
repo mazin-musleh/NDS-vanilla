@@ -6,7 +6,7 @@ hero_description: "A responsive carousel/slider component with CSS scroll-snap, 
 navigation"
 breadcrumb: ["Components"]
 lang: en
-direction: rtl
+direction: ltr
 ---
 
 <!-- Basic Swiper Demo -->
@@ -317,12 +317,13 @@ direction: rtl
                                     </div>
                                 </div>
                             </div>
-                            <div class="nds-swiper-pagination"></div>
-                            <button class="nds-btn nds-subtle nds-icon-only nds-xl nds-swiper-button-prev"
-                                aria-label="Previous slide"><i
-                                    class="hgi hgi-stroke hgi-arrow-right-01 nds-icon"></i></button>
-                            <button class="nds-btn nds-subtle nds-icon-only nds-xl nds-swiper-button-next"
-                                aria-label="Next slide"><i class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i></button>
+                            <div class="nds-swiper-navigation">
+                                <div class="nds-swiper-buttons">
+                                    <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-swiper-button-prev" type="button" aria-label="Previous slide"><i class="hgi hgi-stroke hgi-arrow-right-01 nds-icon"></i></button>
+                                    <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-swiper-button-next" type="button" aria-label="Next slide"><i class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i></button>
+                                </div>
+                                <div class="nds-swiper-pagination"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -357,9 +358,13 @@ direction: rtl
                                         </div>
                                         <!-- More slides... -->
                                     </div>
-                                    <div class="nds-swiper-pagination"></div>
-                                    <button class="nds-swiper-button-prev">...</button>
-                                    <button class="nds-swiper-button-next">...</button>
+                                    <div class="nds-swiper-navigation">
+                                        <div class="nds-swiper-buttons">
+                                            <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-swiper-button-prev" type="button" aria-label="Previous slide"><i class="hgi hgi-stroke hgi-arrow-right-01 nds-icon"></i></button>
+                                            <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-swiper-button-next" type="button" aria-label="Next slide"><i class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i></button>
+                                        </div>
+                                        <div class="nds-swiper-pagination"></div>
+                                    </div>
                                 </div>
                             </code>
                         </div>
@@ -446,12 +451,13 @@ direction: rtl
                                     </div>
                                 </div>
                             </div>
-                            <div class="nds-swiper-pagination"></div>
-                            <button class="nds-btn nds-subtle nds-icon-only nds-xl nds-swiper-button-prev"
-                                aria-label="Previous slide"><i
-                                    class="hgi hgi-stroke hgi-arrow-right-01 nds-icon"></i></button>
-                            <button class="nds-btn nds-subtle nds-icon-only nds-xl nds-swiper-button-next"
-                                aria-label="Next slide"><i class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i></button>
+                            <div class="nds-swiper-navigation">
+                                <div class="nds-swiper-buttons">
+                                    <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-swiper-button-prev" type="button" aria-label="Previous slide"><i class="hgi hgi-stroke hgi-arrow-right-01 nds-icon"></i></button>
+                                    <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-swiper-button-next" type="button" aria-label="Next slide"><i class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i></button>
+                                </div>
+                                <div class="nds-swiper-pagination"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -481,9 +487,13 @@ direction: rtl
                                         </div>
                                         <!-- More slides... -->
                                     </div>
-                                    <div class="nds-swiper-pagination"></div>
-                                    <button class="nds-swiper-button-prev">...</button>
-                                    <button class="nds-swiper-button-next">...</button>
+                                    <div class="nds-swiper-navigation">
+                                        <div class="nds-swiper-buttons">
+                                            <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-swiper-button-prev" type="button" aria-label="Previous slide"><i class="hgi hgi-stroke hgi-arrow-right-01 nds-icon"></i></button>
+                                            <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-swiper-button-next" type="button" aria-label="Next slide"><i class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i></button>
+                                        </div>
+                                        <div class="nds-swiper-pagination"></div>
+                                    </div>
                                 </div>
                             </code>
                         </div>
@@ -496,135 +506,172 @@ direction: rtl
     </div>
 </section>
 
-<!-- Configuration Options -->
-<section class="nds-content-section">
+<!-- Built-in Features -->
+<section id="swiperFeatures" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
-            <h2 class="nds-section-title">Configuration Options</h2>
-            <p class="nds-section-description">The swiper component supports the following attributes for customization.
-            </p>
+            <h2 class="nds-section-title">Built-in Features</h2>
         </div>
         <div class="nds-section-body">
-            <div class="nds-table-container">
-                <table class="nds-table">
-                    <thead>
-                        <tr>
-                            <th>Attribute</th>
-                            <th>Type</th>
-                            <th>Default</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
+            <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-zap nds-icon"></i>
+                        <span class="nds-label">Auto-initialization</span>
+                    </span>
+                    <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">nds-swiper</code> on the page initializes automatically on load with no setup code required.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-scroll-horizontal nds-icon"></i>
+                        <span class="nds-label">Native Scroll-Snap</span>
+                    </span>
+                    <p class="nds-item-desc">Slides snap into place using CSS scroll-snap, giving smooth drag-to-scroll on desktop and natural swipe gestures on touch devices.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-layers-01 nds-icon"></i>
+                        <span class="nds-label">Responsive Breakpoints</span>
+                    </span>
+                    <p class="nds-item-desc">Three-tier slide counts (<code class="nds-inline-code lang-html">slides-max</code>, <code class="nds-inline-code lang-html">slides-mid</code>, <code class="nds-inline-code lang-html">slides-min</code>) adjust the visible slides at 960px and 600px breakpoints.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-image-02 nds-icon"></i>
+                        <span class="nds-label">Lazy Loading</span>
+                    </span>
+                    <p class="nds-item-desc">Images with <code class="nds-inline-code lang-html">data-src</code> or <code class="nds-inline-code lang-html">data-srcset</code> load automatically as slides approach the viewport, reducing initial page weight.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-keyboard nds-icon"></i>
+                        <span class="nds-label">Keyboard Navigation</span>
+                    </span>
+                    <p class="nds-item-desc">Arrow keys navigate between slides, Home jumps to the first, and End to the last. All keys are direction-aware for RTL layouts.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-eye nds-icon"></i>
+                        <span class="nds-label">Peek Preview</span>
+                    </span>
+                    <p class="nds-item-desc">Set a <code class="nds-inline-code lang-html">peek</code> value in pixels to reveal partial adjacent slides, signaling that more content is available.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-play-circle nds-icon"></i>
+                        <span class="nds-label">Visibility Handling</span>
+                    </span>
+                    <p class="nds-item-desc">Swipers inside hidden containers like tabs or modals re-measure and render correctly when they become visible.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-touch-01 nds-icon"></i>
+                        <span class="nds-label">Programmatic Control</span>
+                    </span>
+                    <p class="nds-item-desc">Access any swiper instance via <code class="nds-inline-code lang-js">element._ndsSwiper</code> to call <code class="nds-inline-code lang-js">slideTo()</code>, <code class="nds-inline-code lang-js">prev()</code>, <code class="nds-inline-code lang-js">next()</code>, or <code class="nds-inline-code lang-js">destroy()</code>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Usage Guidelines -->
+<section id="swiperGuidelines" class="nds-content-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Usage Guidelines</h2>
+        </div>
+        <div class="nds-section-body">
+
+            <div class="nds-content-block">
+                <h3 class="nds-block-title">Best Practices</h3>
+                <ul>
+                    <li>Use the swiper for <strong>horizontally browsable collections</strong> like featured services, image galleries, or card carousels where showing everything at once would overwhelm the layout</li>
+                    <li>Use the <strong>hero variant</strong> (<code class="nds-inline-code lang-html">nds-hero</code>) for full-width banner sliders with background images or gradient slides at the top of a page</li>
+                    <li>Use <code class="nds-inline-code lang-html">data-src</code> and <code class="nds-inline-code lang-html">data-srcset</code> for <strong>lazy loading</strong> images rather than standard <code class="nds-inline-code lang-html">src</code> to reduce initial page weight</li>
+                    <li>Do not use swiper for content that should be visible all at once. Use <a class="nds-color" href="{{ 'layout/grid' | relative_url }}">Grid</a> for static card layouts or <a class="nds-color" href="{{ 'components/tabs' | relative_url }}">Tabs</a> for switchable content panels</li>
+                    <li>Do not place interactive form controls inside slides. Keep slide content to display elements: text, images, cards, and links</li>
+                    <li>Add <code class="nds-inline-code lang-html">peek="40"</code> when the slide count exceeds the visible slots, giving users a visual cue that more content is available</li>
+                    <li>Set <code class="nds-inline-code lang-html">hidden</code> on the <code class="nds-inline-code lang-html">nds-swiper</code> element for multi-slide swipers to prevent a flash of unstyled content before JS initializes</li>
+                    <li>Keep slide heights consistent within a swiper. Mix uneven heights and the tallest slide will define the row height for all others</li>
+                    <li>Always include <code class="nds-inline-code lang-html">aria-label</code> on navigation buttons with clear directional text like "Previous slide" and "Next slide"</li>
+                    <li>For <strong>full-width section breakouts</strong>, place the swiper inside a <code class="nds-inline-code lang-html">nds-section-body nds-full-width</code> container so it can span beyond the content column</li>
+                </ul>
+            </div>
+
+            <div class="nds-content-block">
+                <h3 class="nds-block-title">Modifier Classes</h3>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Class</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr>
-                            <td>slides-max</td>
-                            <td>Number</td>
-                            <td>1</td>
-                            <td>Slides visible on large desktop (≥1280px)</td>
-                        </tr>
-                        <tr>
-                            <td>slides-mid</td>
-                            <td>Number</td>
-                            <td>1</td>
-                            <td>Slides visible on desktop (960px-1279px)</td>
-                        </tr>
-                        <tr>
-                            <td>slides-min</td>
-                            <td>Number</td>
-                            <td>1</td>
-                            <td>Slides visible on mobile/tablet (&lt;960px)</td>
-                        </tr>
-                        <tr>
-                            <td>peek</td>
-                            <td>Number</td>
-                            <td>0</td>
-                            <td>Pixels of adjacent slides to show (peek effect)</td>
-                        </tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-hero</code></td><td>Full-width single-slide hero mode with overlay navigation and centered pagination</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-oncolor</code></td><td>Adjusts pagination bullets and navigation for dark/image backgrounds</td></tr>
                     </tbody>
                 </table>
             </div>
-        </div>
-    </div>
-</section>
 
-<!-- Features -->
-<section class="nds-content-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Features</h2>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-grid" style="--max-col:2; --mid-col:2;--min-col:1;">
-                <div class="nds-card">
-                    <div class="nds-card-content">
-                        <i class="hgi hgi-stroke hgi-globe-02"></i>
-                        <h3 class="nds-card-title">RTL/LTR Support</h3>
-                        <p class="nds-card-description">Full bidirectional support with automatic direction detection.
-                            Works seamlessly in both Arabic (RTL) and English (LTR) layouts.</p>
+            <div class="nds-content-block">
+                <h3 class="nds-block-title">Data Attributes</h3>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">slides-max="3"</code></td><td>Slides visible at large breakpoint (viewport >= 960px). Default: 1</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">slides-mid="2"</code></td><td>Slides visible at medium breakpoint (600px to 959px). Default: 1</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">slides-min="1"</code></td><td>Slides visible at small breakpoint (viewport < 600px). Default: 1</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">peek="40"</code></td><td>Pixels of adjacent slides to reveal. Only applies when there are multiple pages. Default: 0</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">hidden</code></td><td>Prevents flash of unstyled content. The swiper removes it after initialization</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="nds-content-block">
+                <h3 class="nds-block-title">CSS Custom Properties</h3>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">--swiper-gap</code></td><td>var(--spacing-xl)</td><td>Gap between slides</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--swiper-peek</code></td><td>0px</td><td>Peek amount (set by JS from peek attribute)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--swiper-padding</code></td><td>0px</td><td>Container inline padding (auto-set for full-width sections)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--swiper-slides</code></td><td>1</td><td>Current slides per view (set by JS from breakpoint calculation)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--swiper-total</code></td><td>1</td><td>Total number of slides (set by JS)</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="nds-content-block">
+                <h3 class="nds-block-title">JavaScript API</h3>
+                <p>All <code class="nds-inline-code lang-html">nds-swiper</code> elements initialize automatically. Access an instance via <code class="nds-inline-code lang-js">element._ndsSwiper</code>.</p>
+                <div class="nds-code nds-expandable">
+                    <div class="nds-code-action">
+                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                        </button>
                     </div>
-                </div>
-                <div class="nds-card">
-                    <div class="nds-card-content">
-                        <i class="hgi hgi-stroke hgi-cursor-01"></i>
-                        <h3 class="nds-card-title">Native Scroll</h3>
-                        <p class="nds-card-description">Uses CSS scroll-snap for smooth, native scrolling behavior.
-                            Drag on desktop and swipe on mobile devices.</p>
-                    </div>
-                </div>
-                <div class="nds-card">
-                    <div class="nds-card-content">
-                        <i class="hgi hgi-stroke hgi-grid-01"></i>
-                        <h3 class="nds-card-title">Responsive</h3>
-                        <p class="nds-card-description">Three-tier responsive breakpoints (max/mid/min) for optimal
-                            viewing across all devices.</p>
-                    </div>
-                </div>
-                <div class="nds-card">
-                    <div class="nds-card-content">
-                        <i class="hgi hgi-stroke hgi-keyboard-01"></i>
-                        <h3 class="nds-card-title">Keyboard Navigation</h3>
-                        <p class="nds-card-description">Full keyboard support with arrow keys, Home, and End.
-                            Direction-aware key bindings for RTL/LTR.</p>
+                    <div class="nds-expandable-content">
+                        <code class="lang-js code">
+// ── Access instance ──
+const swiper = document.querySelector('.nds-swiper')._ndsSwiper;
+
+// ── Navigation ──
+swiper.slideTo(2);       // Scroll to slide at index 2 (animated)
+swiper.slideTo(0, false); // Jump to first slide (no animation)
+swiper.prev();           // Go to previous page
+swiper.next();           // Go to next page
+
+// ── Cleanup ──
+swiper.destroy();        // Remove listeners, pagination, and reset state
+
+// ── Factory ──
+const el = document.querySelector('.my-swiper');
+const instance = NDS.Swiper.create(el); // Create and initialize a new instance
+
+// ── Re-initialize all swipers ──
+NDS.Swiper.init();       // Finds and initializes all uninitialized .nds-swiper elements
+                        </code>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</section>
 
-<!-- Best Practices -->
-<section class="nds-content-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Best Practices</h2>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-card">
-                <div class="nds-card-content">
-                    <h3>Performance Tips</h3>
-                    <ul>
-                        <li>Use data-src and data-srcset for lazy loading images (swiper will
-                            load them as slides approach the viewport)</li>
-                        <li>Use consistent slide heights to avoid layout shifts</li>
-                        <li>Leverage CSS scroll-snap for smooth, hardware-accelerated scrolling</li>
-                    </ul>
-
-                    <h3>Accessibility</h3>
-                    <ul>
-                        <li>Always include aria-label on navigation buttons</li>
-                        <li>Provide meaningful content in each slide</li>
-                        <li>Ensure sufficient color contrast for on-color variants</li>
-                    </ul>
-
-                    <h3>Responsive Design</h3>
-                    <ul>
-                        <li>Use slides-max, slides-mid, slides-min for responsive
-                            behavior</li>
-                        <li>Test on multiple screen sizes and devices</li>
-                        <li>Consider content width when setting slides per view</li>
-                    </ul>
-                </div>
-            </div>
         </div>
     </div>
 </section>
