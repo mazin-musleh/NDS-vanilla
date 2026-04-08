@@ -31,8 +31,8 @@ layout_class: nds-cardView
     </div>
     <div class="nds-section-body">
         <div class="nds-content-block nds-grid">
-            <div class="nds-block-item col-sm-12 col-md-6 col-lg-7">
-                <dl class="nds-definition-list nds-divided nds-tableView">
+            <div class="nds-block-item col-sm-12 col-lg-6">
+                <dl class="nds-definition-list nds-divided">
                     <div class="nds-definition-item">
                         <dt>
                             <i class="hgi hgi-stroke hgi-school nds-icon"></i>
@@ -95,7 +95,7 @@ layout_class: nds-cardView
                 </dl>
             </div>
 
-            <div class="program-overview-cards nds-block-item nds-grid col-sm-12 col-md-6 col-lg-5">
+            <div class="program-overview-cards nds-block-item nds-grid col-sm-12 col-lg-6">
                 <div class="nds-grid" style="--max-col: 2;--mid-col: 4;--min-col: 2;--col-width: 100px;--gap: 12px;">
                     <div class="nds-card nds-stroke nds-statistic">
                         <div class="nds-card-header">
