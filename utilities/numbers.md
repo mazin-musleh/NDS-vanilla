@@ -292,7 +292,7 @@ direction: ltr
                             <div class="nds-card nds-statistic nds-stroke">
                                 <div class="nds-card-header">
                                     <div class="nds-card-featured-icon">
-                                        <span class="nds-featured-icon nds-brand nds-circle nds-xl">
+                                        <span class="nds-featured-icon nds-circle nds-xl">
                                             <i class="hgi hgi-stroke hgi-award-03 nds-icon"></i>
                                         </span>
                                     </div>
@@ -307,7 +307,7 @@ direction: ltr
                             <div class="nds-card nds-statistic nds-stroke">
                                 <div class="nds-card-header">
                                     <div class="nds-card-featured-icon">
-                                        <span class="nds-featured-icon nds-brand nds-circle nds-xl">
+                                        <span class="nds-featured-icon nds-circle nds-xl">
                                             <i class="hgi hgi-stroke hgi-user-group nds-icon"></i>
                                         </span>
                                     </div>
@@ -322,7 +322,7 @@ direction: ltr
                             <div class="nds-card nds-statistic nds-stroke">
                                 <div class="nds-card-header">
                                     <div class="nds-card-featured-icon">
-                                        <span class="nds-featured-icon nds-brand nds-circle nds-xl">
+                                        <span class="nds-featured-icon nds-circle nds-xl">
                                             <i class="hgi hgi-stroke hgi-chart-line-data-02 nds-icon"></i>
                                         </span>
                                     </div>
@@ -360,7 +360,7 @@ direction: ltr
                                 <div class="nds-card nds-statistic nds-stroke">
                                     <div class="nds-card-header">
                                         <div class="nds-card-featured-icon">
-                                            <span class="nds-featured-icon nds-brand nds-circle nds-xl">
+                                            <span class="nds-featured-icon nds-circle nds-xl">
                                                 <i class="hgi hgi-stroke hgi-award-03 nds-icon"></i>
                                             </span>
                                         </div>

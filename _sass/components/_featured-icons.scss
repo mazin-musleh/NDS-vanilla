@@ -55,40 +55,35 @@
   }
 
   // ==============================================
-  // FEATURED ICON VARIANTS
+  // FEATURED ICON COLOR VARIANTS (data-status)
+  // Brand is the default (no attribute needed)
   // ==============================================
 
-  &.nds-brand {
-    --icon-bg-color: var(--featuredicons-background-brand-light);
-    --icon-color: var(--featuredicons-icon-primary);
-    --dark-bg-color: var(--featuredicons-icon-primary);
-  }
-
-  &.nds-success {
+  &[data-status="success"] {
     --icon-bg-color: var(--featuredicons-background-success-light);
     --icon-color: var(--featuredicons-icon-success);
     --dark-bg-color: var(--featuredicons-icon-success);
   }
 
-  &.nds-info {
+  &[data-status="info"] {
     --icon-bg-color: var(--featuredicons-background-info-light);
     --icon-color: var(--featuredicons-icon-info);
     --dark-bg-color: var(--featuredicons-icon-info);
   }
 
-  &.nds-warning {
+  &[data-status="warning"] {
     --icon-bg-color: var(--featuredicons-background-warning-light);
     --icon-color: var(--featuredicons-icon-warning);
     --dark-bg-color: var(--featuredicons-icon-warning);
   }
 
-  &.nds-error {
+  &[data-status="error"] {
     --icon-bg-color: var(--featuredicons-background-error-light);
     --icon-color: var(--featuredicons-icon-error);
     --dark-bg-color: var(--featuredicons-icon-error);
   }
 
-  &.nds-neutral {
+  &[data-status="neutral"] {
     --icon-bg-color: var(--featuredicons-background-default-light);
     --icon-color: var(--featuredicons-icon-neutral);
     --dark-bg-color: var(--featuredicons-icon-default);
@@ -116,12 +111,12 @@
     }
 
     @include dark {
-      &.nds-brand  { --dark-bg-color: var(--colors-primary-sa-flag-700); }
-      &.nds-success { --dark-bg-color: var(--colors-green-700); }
-      &.nds-info { --dark-bg-color: var(--colors-blue-700); }
-      &.nds-warning { --dark-bg-color: var(--colors-yellow-700); }
-      &.nds-error { --dark-bg-color: var(--colors-red-700); }
-      &.nds-neutral { --dark-bg-color: var(--colors-neutral-900); }
+      --dark-bg-color: var(--colors-primary-sa-flag-700);
+      &[data-status="success"] { --dark-bg-color: var(--colors-green-700); }
+      &[data-status="info"] { --dark-bg-color: var(--colors-blue-700); }
+      &[data-status="warning"] { --dark-bg-color: var(--colors-yellow-700); }
+      &[data-status="error"] { --dark-bg-color: var(--colors-red-700); }
+      &[data-status="neutral"] { --dark-bg-color: var(--colors-neutral-900); }
     }
   }
 }

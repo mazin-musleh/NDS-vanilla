@@ -27,27 +27,28 @@ direction: ltr
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["nds-brand", ".nds-featured-icon", "iconColor"]'>
-                                            <span class="nds-label">Brand</span>
+                                            data-toggler='["", ".nds-featured-icon", "iconColor"]'
+                                            data-trigger-label="Brand">
+                                            <span class="nds-label">Brand (default)</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-success", ".nds-featured-icon", "iconColor"]'>
+                                            data-toggler='["data-status=success", ".nds-featured-icon", "iconColor", "attr"]'>
                                             <span class="nds-label">Success</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-info", ".nds-featured-icon", "iconColor"]'>
+                                            data-toggler='["data-status=info", ".nds-featured-icon", "iconColor", "attr"]'>
                                             <span class="nds-label">Info</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-warning", ".nds-featured-icon", "iconColor"]'>
+                                            data-toggler='["data-status=warning", ".nds-featured-icon", "iconColor", "attr"]'>
                                             <span class="nds-label">Warning</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-error", ".nds-featured-icon", "iconColor"]'>
+                                            data-toggler='["data-status=error", ".nds-featured-icon", "iconColor", "attr"]'>
                                             <span class="nds-label">Error</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-neutral", ".nds-featured-icon", "iconColor"]'>
+                                            data-toggler='["data-status=neutral", ".nds-featured-icon", "iconColor", "attr"]'>
                                             <span class="nds-label">Neutral</span>
                                         </button>
                                     </div>
@@ -99,8 +100,8 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <span class="nds-featured-icon nds-brand">
-                                <i class="hgi hgi-stroke hgi-information-circle nds-icon"></i>
+                            <span class="nds-featured-icon">
+                                <i class="hgi hgi-stroke hgi-stars nds-icon"></i>
                             </span>
                         </div>
                     </div>
@@ -123,8 +124,8 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<span class="nds-featured-icon nds-brand">
-  <i class="hgi hgi-stroke hgi-information-circle nds-icon"></i>
+<span class="nds-featured-icon">
+  <i class="hgi hgi-stroke hgi-stars nds-icon"></i>
 </span>
                                     </code>
                                 </div>
@@ -202,6 +203,45 @@ direction: ltr
             </div>
 
             <div class="nds-content-block">
+                <h3 class="nds-block-title">Color Variants</h3>
+                <p>Brand is the default color. Use <code class="nds-inline-code lang-html">data-status</code> to set a status color variant.</p>
+                <table class="nds-table nds-responsive">
+                    <thead>
+                        <tr>
+                            <th>Attribute</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><em>none</em></td>
+                            <td>Primary brand green (default).</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">data-status="success"</code></td>
+                            <td>Green for positive outcomes and confirmations.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">data-status="info"</code></td>
+                            <td>Blue for informational content and tips.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">data-status="warning"</code></td>
+                            <td>Yellow/amber for cautionary information.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">data-status="error"</code></td>
+                            <td>Red for errors and critical issues.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">data-status="neutral"</code></td>
+                            <td>Gray for general purpose and default states.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="nds-content-block">
                 <h3 class="nds-block-title">Modifier Classes</h3>
                 <table class="nds-table nds-responsive">
                     <thead>
@@ -211,30 +251,6 @@ direction: ltr
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">nds-brand</code></td>
-                            <td>Primary brand green. Default when no color is specified.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">nds-success</code></td>
-                            <td>Green for positive outcomes and confirmations.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">nds-info</code></td>
-                            <td>Blue for informational content and tips.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">nds-warning</code></td>
-                            <td>Yellow/amber for cautionary information.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">nds-error</code></td>
-                            <td>Red for errors and critical issues.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">nds-neutral</code></td>
-                            <td>Gray for general purpose and default states.</td>
-                        </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">nds-sm</code></td>
                             <td>Small size, 32px. For dense layouts and secondary features.</td>

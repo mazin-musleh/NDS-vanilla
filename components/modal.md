@@ -58,7 +58,7 @@ direction: ltr
                             <div id="modal-basic-demo" class="nds-modal nds-card nds-stroke" role="dialog" aria-labelledby="modal-basic-title"
                                 aria-hidden="true" hidden>
                                 <div class="nds-card-header">
-                                    <span class="nds-featured-icon nds-neutral nds-circle">
+                                    <span class="nds-featured-icon nds-circle" data-status="neutral">
                                         <i class="hgi hgi-stroke hgi-information-circle nds-icon"></i>
                                     </span>
                                     <button class="nds-close nds-modal-close nds-btn nds-subtle" aria-label="Close modal">
@@ -133,7 +133,7 @@ direction: ltr
 <div id="modal-basic-demo" class="nds-modal nds-card nds-stroke" role="dialog" aria-labelledby="modal-basic-title"
     aria-hidden="true" hidden>
   <div class="nds-card-header">
-    <span class="nds-featured-icon nds-neutral nds-circle">
+    <span class="nds-featured-icon nds-circle" data-status="neutral">
       <i class="hgi hgi-stroke hgi-information-circle nds-icon"></i>
     </span>
     <button class="nds-close nds-modal-close nds-btn nds-subtle" aria-label="Close modal">

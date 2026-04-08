@@ -139,3 +139,16 @@ Section
 Forms
 -----
 .toggle-password            → .nds-toggle-password
+
+Info Class
+----------
+.info                       → .nds-info              (forms, upload)
+
+Featured Icon Color Variants
+----------------------------
+.nds-brand                  → (removed, now default)
+.nds-success                → data-status="success"  (on .nds-featured-icon)
+.nds-info                   → data-status="info"     (on .nds-featured-icon)
+.nds-warning                → data-status="warning"  (on .nds-featured-icon)
+.nds-error                  → data-status="error"    (on .nds-featured-icon)
+.nds-neutral                → data-status="neutral"  (on .nds-featured-icon)

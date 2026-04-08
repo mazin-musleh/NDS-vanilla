@@ -25,7 +25,7 @@ direction: ltr
                 <div class="nds-card nds-statistic nds-stroke nds-shadow">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-brand nds-circle nds-xl">
+                            <span class="nds-featured-icon nds-circle nds-xl">
                                 <i class="hgi hgi-stroke hgi-award-03 nds-icon"></i>
                             </span>
                         </div>
@@ -42,7 +42,7 @@ direction: ltr
                 <div class="nds-card nds-statistic nds-stroke nds-shadow">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-brand nds-circle nds-xl">
+                            <span class="nds-featured-icon nds-circle nds-xl">
                                 <i class="hgi hgi-stroke hgi-gift-02 nds-icon"></i>
                             </span>
                         </div>
@@ -59,7 +59,7 @@ direction: ltr
                 <div class="nds-card nds-statistic nds-stroke nds-shadow">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-brand nds-circle nds-xl">
+                            <span class="nds-featured-icon nds-circle nds-xl">
                                 <i class="hgi hgi-stroke hgi-award-05 nds-icon"></i>
                             </span>
                         </div>
@@ -76,7 +76,7 @@ direction: ltr
                 <div class="nds-card nds-statistic nds-stroke nds-shadow">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-brand nds-circle nds-xl">
+                            <span class="nds-featured-icon nds-circle nds-xl">
                                 <i class="hgi hgi-stroke hgi-target-03 nds-icon"></i>
                             </span>
                         </div>
@@ -93,7 +93,7 @@ direction: ltr
                 <div class="nds-card nds-statistic nds-stroke nds-shadow">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-brand nds-circle nds-xl">
+                            <span class="nds-featured-icon nds-circle nds-xl">
                                 <i class="hgi hgi-stroke hgi-calendar-check-02 nds-icon"></i>
                             </span>
                         </div>
@@ -110,7 +110,7 @@ direction: ltr
                 <div class="nds-card nds-statistic nds-stroke nds-shadow">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-brand nds-circle nds-xl">
+                            <span class="nds-featured-icon nds-circle nds-xl">
                                 <i class="hgi hgi-stroke hgi-presentation-chart-01 nds-icon"></i>
                             </span>
                         </div>
@@ -141,7 +141,7 @@ direction: ltr
                 <div class="nds-card nds-stroke">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-brand nds-circle nds-lg">
+                            <span class="nds-featured-icon nds-circle nds-lg">
                                 <i class="hgi hgi-stroke hgi-announcement-03 nds-icon"></i>
                             </span>
                         </div>
@@ -172,7 +172,7 @@ direction: ltr
                 <div class="nds-card nds-stroke">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-brand nds-circle nds-lg">
+                            <span class="nds-featured-icon nds-circle nds-lg">
                                 <i class="hgi hgi-stroke hgi-users-01 nds-icon"></i>
                             </span>
                         </div>
@@ -203,7 +203,7 @@ direction: ltr
                 <div class="nds-card nds-stroke">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-brand nds-circle nds-lg">
+                            <span class="nds-featured-icon nds-circle nds-lg">
                                 <i class="hgi hgi-stroke hgi-file-02 nds-icon"></i>
                             </span>
                         </div>
