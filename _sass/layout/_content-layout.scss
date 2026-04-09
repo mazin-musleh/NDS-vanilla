@@ -1,43 +1,10 @@
 @use '../mixins' as *;
 
-/* ── Content grid ── */
-
-:is(.nds-content-grid, .nds-hero-section, .nds-content-section) {
-    width: 100%;
-
-    &:not([hidden]) {
-        display: grid;
-        row-gap: var(--gap, 0);
-        grid-template-columns:
-            [full-width-start] minmax(var(--nds-viewport-padding), 1fr) [content-start] min(100% - (var(--nds-viewport-padding) * 2),
-                var(--nds-content-MaxWidth)) [content-end] minmax(var(--nds-viewport-padding), 1fr) [full-width-end];
-    }
-
-    &> :not(.nds-full-width) {
-        grid-column: content;
-    }
-
-    &>.nds-full-width,
-    &>:has(>.nds-full-width),
-    .nds-content-layout:is(.nds-cardView) &.nds-ghost>* {
-        grid-column: full-width;
-    }
-
-    &>.nds-grid {
-        grid-column: content;
-    }
-}
-
-.nds-content-section>.nds-full-width.nds-section-body {
-    width: 100%;
-    max-width: var(--nds-content-MaxWidth);
-    margin-inline: auto;
-}
-
 /* ── Content layout ── */
 
 main {
     height: 100%;
+    overflow-x: clip;
 }
 
 .nds-content-layout {
@@ -73,7 +40,7 @@ main {
         align-items: center;
         justify-content: center;
 
-        &.nds-content-container {
+        &.nds-content-wrapper {
             padding: var(--nds-viewport-padding);
         }
 
@@ -169,18 +136,15 @@ main {
             --section-padding-block: 0;
 
             @include tablet(max) {
-                >* {
-                    grid-column: full-width;
+                --_wrapper-padding: 0;
 
-                    &:has(>.nds-section-body>.nds-card),
-                    &.nds-section-body:has(>.nds-card) {
-                        grid-column: content;
-                    }
+                :has(>.nds-section-body>.nds-card),
+                .nds-section-body:has(>.nds-card) {
+                    padding-inline: var(--nds-viewport-padding);
+                }
 
-                    .nds-section-head {
-                        margin-inline: var(--nds-viewport-padding);
-                        max-width: calc(100% - var(--nds-viewport-padding) * 2)
-                    }
+                .nds-section-head {
+                    padding-inline: var(--nds-viewport-padding);
                 }
             }
         }
@@ -260,10 +224,19 @@ main {
     }
 }
 
-/* ── Content container ── */
+/* ── Content wrapper ── */
 
-.nds-content-container {
-    max-width: var(--nds-content-MaxWidth);
-    margin: 0 auto;
-    padding: 0 var(--nds-viewport-padding);
+:is(.nds-content-wrapper, .nds-hero-section, .nds-content-section) {
+    --_wrapper-padding: max(var(--nds-viewport-padding), calc((100% - var(--nds-content-MaxWidth)) / 2));
+    width: 100%;
+    padding-inline: var(--_wrapper-padding);
+
+    .nds-full-width {
+        width: 100vw !important;
+        margin-inline: calc(50% - 50vw);
+    }
+
+    .nds-max-width {
+        margin-inline: calc(var(--_wrapper-padding) * -1);
+    }
 }

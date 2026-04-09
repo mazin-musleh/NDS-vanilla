@@ -303,7 +303,6 @@ body.nds-minimal[style*="--bg-img"] {
     height: 24px;
     display: block;
     margin-top: calc((24px + var(--spacing-md)) * -1);
-    grid-column: content;
     width: 100%;
     max-width: var(--nds-content-MaxWidth, 1280px);
     margin-inline: auto;

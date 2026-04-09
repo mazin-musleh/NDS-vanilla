@@ -394,10 +394,10 @@
 // ==============================================
 
 .nds-content-layout.nds-cardView .nds-ghost,
-section > .nds-full-width {
+section > .nds-max-width {
   .nds-tabs:not(.nds-card) {
     @include tablet(max) {
-      .nds-tab-content:not(.nds-card, :has(.nds-full-width)) {
+      .nds-tab-content:not(.nds-card, :has(.nds-max-width)) {
         padding-inline: var(--nds-viewport-padding);
       }
 

@@ -25,12 +25,6 @@
         visibility: visible;
     }
 
-    .nds-topbar-content {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-    }
-
     .nds-topbar-info {
         display: flex;
         gap: var(--spacing-xl);
@@ -111,16 +105,6 @@
         align-items: center;
         justify-content: space-between;
         gap: var(--spacing-lg);
-        background-color: var(--nds-nav-background-color);
-
-
-        &::before {
-            content: "";
-            position: fixed;
-            height: var(--nds-nav-height);
-            background-color: var(--nds-nav-background-color);
-            inset-inline: 0;
-        }
     }
 
     /* Navigation Brand */
@@ -300,7 +284,7 @@
             box-shadow: var(--shadow-md);
             max-height: 50svh;
 
-            >.nds-content-container {
+            >.nds-content-wrapper {
                 padding-top: var(--spacing-2xl);
                 padding-bottom: var(--spacing-2xl);
                 width: 100%;

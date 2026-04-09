@@ -595,7 +595,7 @@ direction: ltr
                     <li>Set <code class="nds-inline-code lang-html">hidden</code> on the <code class="nds-inline-code lang-html">nds-swiper</code> element for multi-slide swipers to prevent a flash of unstyled content before JS initializes</li>
                     <li>Keep slide heights consistent within a swiper. Mix uneven heights and the tallest slide will define the row height for all others</li>
                     <li>Always include <code class="nds-inline-code lang-html">aria-label</code> on navigation buttons with clear directional text like "Previous slide" and "Next slide"</li>
-                    <li>For <strong>full-width section breakouts</strong>, place the swiper inside a <code class="nds-inline-code lang-html">nds-section-body nds-full-width</code> container so it can span beyond the content column</li>
+                    <li>For <strong>full-width section breakouts</strong>, place the swiper inside a <code class="nds-inline-code lang-html">nds-section-body nds-max-width</code> container so it can span beyond the content padding</li>
                 </ul>
             </div>
 

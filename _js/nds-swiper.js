@@ -229,20 +229,20 @@
             const hasPeek = this.container.hasAttribute('peek');
             const hasOneSlidePage = this.slidesPerView === 1;
 
-            // If parent has nds-full-width but narrower than content area (e.g. side menu), add padding
+           /* // If parent has nds-max-width but narrower than content area (e.g. side menu), add padding
             const parent = this.container.parentElement;
-            const parentHasFullWidth = parent?.classList.contains('nds-full-width');
+            const parentHasMaxWidth = parent?.classList.contains('nds-max-width');
             const styles = getComputedStyle(document.documentElement);
             const contentMaxWidth = parseInt(styles.getPropertyValue('--nds-content-MaxWidth')) || 1280;
             const viewportPadding = parseInt(styles.getPropertyValue('--nds-viewport-padding')) || 32;
             const parentWidth = parent?.clientWidth || 0;
 
-            if (parentHasFullWidth && parentWidth < contentMaxWidth) {
+             if (parentHasMaxWidth && parentWidth < contentMaxWidth) {
                 this.container.style.setProperty('--padding', 'var(--nds-viewport-padding)');
             } else {
                 this.container.style.removeProperty('--padding');
             }
-
+ */
             // If not peek and not single slide, remove gap if present
             if (!hasPeek && !hasOneSlidePage) {
                 this.container.style.removeProperty('--gap');
@@ -269,7 +269,7 @@
                     this.updateBoundaryClasses();
                 }
 
-                // Update peek styles and full-width class on resize
+                // Update peek styles and max-width class on resize
                 this.updatePeekStyles();
 
                 // Reset visibility flag to allow update on next visibility

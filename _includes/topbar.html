@@ -1,29 +1,27 @@
-<div class="nds-topbar nds-content-grid" role="region" aria-label="Top bar utilities">
-    <div class="nds-topbar-content">
-        <button class="nds-btn nds-menu-btn nds-topbar-info nds-digitalStamp-tab" role="button" aria-expanded="false"
-            aria-controls="nds-digitalStamp">
-            <img class="nds-flag" src="{{ 'assets/icon/SAflag.min.svg' | relative_url }}" width="20" height="14"
-                loading="lazy" alt="Logo of Saudi Arabia Flag">
-            <span class="nds-digitalStamp-lg-text nds-truncate" id="big-screen-text">{{ site.digital_stamp[page.lang].tab_text_lg }}</span>
-            <span class="nds-digitalStamp-sm-text nds-truncate" id="small-screen-text">{{ site.digital_stamp[page.lang].tab_text_sm }}</span>
-            <span id="nds-digitalStamp-verify-text" class="nds-link nds-primary">{{ site.digital_stamp[page.lang].tab_verify_text }}</span>
+<div class="nds-topbar nds-content-wrapper" role="region" aria-label="Top bar utilities">
+    <button class="nds-btn nds-menu-btn nds-topbar-info nds-digitalStamp-tab" role="button" aria-expanded="false"
+        aria-controls="nds-digitalStamp">
+        <img class="nds-flag" src="{{ 'assets/icon/SAflag.min.svg' | relative_url }}" width="20" height="14"
+            loading="lazy" alt="Logo of Saudi Arabia Flag">
+        <span class="nds-digitalStamp-lg-text nds-truncate" id="big-screen-text">{{ site.digital_stamp[page.lang].tab_text_lg }}</span>
+        <span class="nds-digitalStamp-sm-text nds-truncate" id="small-screen-text">{{ site.digital_stamp[page.lang].tab_text_sm }}</span>
+        <span id="nds-digitalStamp-verify-text" class="nds-link nds-primary">{{ site.digital_stamp[page.lang].tab_verify_text }}</span>
+    </button>
+    <div class="nds-topbar-info">
+        <span id="nds-date" class="nds-text-icon" data-calendar="hijri"></span>
+        <span id="nds-realTimeClock" class="nds-text-icon"></span>
+        <!--
+        <span id="nds-cityName" class="nds-text-icon"></span>
+        <span id="nds-weatherInfo" class="nds-text-icon" data-latitude="{{ site.city_latitude | default: '24.7136' }}"
+            data-longitude="{{ site.city_longitude | default: '46.6753' }}"></span>
+        -->
+        <button class="nds-btn nds-subtle nds-theme-toggle-wrap" data-theme-toggle aria-label="Toggle dark mode">
+            <i class="hgi hgi-stroke hgi-moon-02"></i>
         </button>
-        <div class="nds-topbar-info">
-            <span id="nds-date" class="nds-text-icon" data-calendar="hijri"></span>
-            <span id="nds-realTimeClock" class="nds-text-icon"></span>
-            <!--
-            <span id="nds-cityName" class="nds-text-icon"></span>
-            <span id="nds-weatherInfo" class="nds-text-icon" data-latitude="{{ site.city_latitude | default: '24.7136' }}"
-                data-longitude="{{ site.city_longitude | default: '46.6753' }}"></span>
-            -->
-            <button class="nds-btn nds-subtle nds-theme-toggle-wrap" data-theme-toggle aria-label="Toggle dark mode">
-                <i class="hgi hgi-stroke hgi-moon-02"></i>
-            </button>
-        </div>
     </div>
 </div>
 <div id="nds-digitalStamp" role="region" aria-label="Digital government stamp" hidden>
-    <div class="nds-content-grid">
+    <div class="nds-content-wrapper">
         <div class="nds-digitalStamp-notices nds-grid">
             <!-- gov Links Notice -->
             <div class="nds-digitalStamp-card col-sm-12 col-lg-6">

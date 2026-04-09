@@ -3,7 +3,7 @@
 {%- include head.html %}
 <body class="nds-minimal {{ page.body_class }}"{% if page.hero_image %} style="--bg-img: url('{{ page.hero_image | relative_url }}');{% if page.bg_opacity_top %} --bg-opacity-top: {{ page.bg_opacity_top }};{% endif %}{% if page.bg_opacity_bottom %} --bg-opacity-bottom: {{ page.bg_opacity_bottom }};{% endif %}"{% endif %}>
     <main>
-        <div class="nds-content-layout nds-content-container {{ page.layout_class }}">
+        <div class="nds-content-layout nds-content-wrapper {{ page.layout_class }}">
             <div class="nds-main-content">
                 {{ content }}
             </div>

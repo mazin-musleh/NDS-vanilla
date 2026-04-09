@@ -1,4 +1,4 @@
-<nav class="nds-main-nav nds-content-grid" id="ndsMainNav" aria-label="Primary navigation">
+<nav class="nds-main-nav nds-content-wrapper" id="ndsMainNav" aria-label="Primary navigation">
     <div class="nds-nav-container">
         {%- assign nav_data_file = page.mainnav | default: site.mainnav | default: "mainnav" -%}
         {%- assign nav_data = site.data.mainnav[nav_data_file] -%}
@@ -48,7 +48,7 @@
                         </a>
                         {%- if item.type == 'dropdown' %}
                         <div class="nds-dropdown-menu">
-                            <div class="nds-dropdown-content nds-content-grid">
+                            <div class="nds-dropdown-content nds-content-wrapper">
                                 {%- if item.template %}
                                 {%- include {{ item.template }} item=item %}
                                 {%- endif %}

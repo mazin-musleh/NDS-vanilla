@@ -153,6 +153,13 @@ Featured Icon Color Variants
 .nds-error                  → data-status="error"    (on .nds-featured-icon)
 .nds-neutral                → data-status="neutral"  (on .nds-featured-icon)
 
+Content Wrapper (content-grid/content-container → content-wrapper)
+-------------------------------------------------------------------
+.nds-content-grid           → .nds-content-wrapper
+.nds-content-container      → .nds-content-wrapper
+.nds-full-width (sections)  → .nds-max-width         (breaks out of wrapper padding, stays within parent)
+.nds-full-width (hero)      → .nds-full-width         (unchanged, true viewport edge-to-edge)
+
 Tag Color Variants
 ------------------
 .nds-neutral                → .nds-gray              (on .nds-tag)

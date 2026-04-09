@@ -26,7 +26,7 @@ Determine the target page and locate its source files.
 |----------|-----------|-------------|---------|
 | Components | `components/` | `_sass/components/` | `accordion`, `modal`, `tags` |
 | UI Shell | `ui-shell/` | `_sass/components/` | `header`, `side-nav`, `footer` |
-| Layout | `layout/` | `_sass/layout/` | `grid`, `section`, `content-grid` |
+| Layout | `layout/` | `_sass/layout/` | `grid`, `section` |
 | Utilities | `utilities/` | `_sass/` or `_sass/layout/` | `expandable-content`, `numbers`, `truncate-text` |
 
 ### Source File Discovery

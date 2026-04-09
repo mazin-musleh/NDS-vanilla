@@ -15,11 +15,15 @@
     --swiper-slides: var(--slides, 1);
     --swiper-gap: var(--gap, var(--spacing-xl));
     --swiper-peek: var(--peek, 0px);
-    --swiper-padding: var(--padding, 0px);
+    --swiper-padding: var(--padding, 0);
 
     position: relative;
     width: 100%;
     direction: inherit;
+
+    .nds-max-width &{
+        --swiper-padding: var(--padding, var(--nds-viewport-padding));
+    }
 
 }
 

@@ -75,7 +75,7 @@ Example pages vary in layout. Choose based on page type:
 | Page type | Layout | Key front matter |
 |-----------|--------|------------------|
 | Full page with sidemenu | `page` | standard breadcrumb |
-| Full-width page | `page` | `body_class: fullWidth`, `layout_class: nds-content-container nds-toEdge` |
+| Full-width page | `page` | `body_class: fullWidth`, `layout_class: nds-content-wrapper nds-toEdge` |
 | Standalone (no chrome) | `minimal` | `layout_class: nds-middle`, `exclude_showcase: true` |
 | Detail/profile page | `page` | `layout_class: nds-cardView nds-topSideMenu` |
 | Hidden from sidemenu | any | `hideSidemenu: true` |

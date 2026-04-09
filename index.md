@@ -32,7 +32,7 @@ direction: ltr
             <p>Every component follows the official design tokens, typography, spacing, and interaction patterns. The project includes required page layouts as ready-to-use code, along with additional real-world examples.</p>
         </div>
     </div>
-    <div class="nds-section-body nds-full-width">
+    <div class="nds-section-body nds-max-width">
         <div class="nds-swiper" slides-max="3" slides-mid="2" slides-min="1" peek="40" hidden>
             <div class="nds-swiper-wrapper">
 

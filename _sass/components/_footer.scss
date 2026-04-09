@@ -4,12 +4,10 @@
    ======================================== */
 
 .nds-footer {
-    display: block;
     background: var(--background-footer);
     color: var(--text-oncolor-primary);
-    padding: var(--spacing-4xl) 0;
-    margin-top: auto;
-    z-index: 1;
+    padding-block: var(--spacing-4xl);
+
 }
 
 /* ========================================
@@ -164,8 +162,6 @@
 
 @include mobile {
     .nds-footer {
-        padding: 2rem 0 1rem;
-
         .nds-footer-bottom {
             justify-content: center;
             margin: auto;

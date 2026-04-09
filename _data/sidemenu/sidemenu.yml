@@ -150,9 +150,6 @@
 - label: "Layout"
   has_sub: true
   children:
-    - label: "Content Grid"
-      url: "/layout/content-grid"
-      href: "/layout/content-grid.html"
     - label: "Grid"
       url: "/layout/grid"
       href: "/layout/grid.html"

@@ -44,7 +44,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
 │       └── div.nds-content-block    (optional content grouping)
 │           ├── h3.nds-block-title   (optional)
 │           └── p, ul, ol, img...    (direct content)
-└── div.nds-section-body.nds-full-width  (outside wrapper for breakout)
+└── div.nds-section-body.nds-max-width  (outside wrapper for breakout)
                             </code>
                             </div>
                         </div>
@@ -685,7 +685,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <section class="nds-content-section nds-ghost">
+                            <section class="nds-content-section">
                                 <div class="nds-section-wrapper">
                                     <div class="nds-section-head">
                                         <h2 class="nds-section-title">Section Title</h2>
@@ -720,7 +720,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-<section class="nds-content-section nds-ghost">
+<section class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Section Title</h2>
@@ -878,7 +878,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Tier 5: Full-Width Content</h2>
-            <p class="nds-section-description">Content lives outside the wrapper and uses .nds-full-width to break out of the content column into edge-to-edge layout. Wrapper holds head + action only.</p>
+            <p class="nds-section-description">Content lives outside the wrapper and uses .nds-max-width to break out of the content padding into the full available width. Wrapper holds head + action only.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
@@ -939,7 +939,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                                         </a>
                                     </div>
                                 </div>
-                                <div class="nds-section-body nds-full-width">
+                                <div class="nds-section-body nds-max-width">
                                     <div class="nds-swiper" slides-max="3" slides-mid="2" slides-min="1" peek="40" hidden>
                                         <div class="nds-swiper-wrapper">
                                             {% for service in site.data.content.services limit:6 %}
@@ -1012,7 +1012,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
             </a>
         </div>
     </div>
-    <div class="nds-section-body nds-full-width">
+    <div class="nds-section-body nds-max-width">
         <div class="nds-swiper" slides-max="3" slides-mid="2" slides-min="1" peek="40" hidden>
             <div class="nds-swiper-wrapper">
                 <div class="nds-swiper-slide">
@@ -1335,7 +1335,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                         <i class="hgi hgi-stroke hgi-arrow-expand-01 nds-icon"></i>
                         <span class="nds-label">Full-Width Breakout</span>
                     </span>
-                    <p class="nds-item-desc">Content marked with <code class="nds-inline-code lang-html">nds-full-width</code> breaks out of the content column to span edge-to-edge, ideal for carousels and media.</p>
+                    <p class="nds-item-desc">Content marked with <code class="nds-inline-code lang-html">nds-max-width</code> breaks out of the content padding to span the full available width, ideal for carousels and media.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -1385,7 +1385,7 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                         <tr><td><code class="nds-inline-code lang-html">nds-neutral</code></td><td>Dark neutral background with on-color text</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-brand</code></td><td>Light brand background with inset shadow, adapts for dark mode</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-ghost</code></td><td>Removes all background, border, and shadow (transparent section)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-full-width</code></td><td>On <code class="nds-inline-code lang-html">nds-section-body</code>: breaks out of content column to span edge-to-edge</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-max-width</code></td><td>On <code class="nds-inline-code lang-html">nds-section-body</code>: breaks out of content padding to span the full available width</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-breakout</code></td><td>On <code class="nds-inline-code lang-html">nds-section-body</code>: wider than content column but not full-width</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-minimal</code></td><td>On float action: hides button labels on mobile (icon-only)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-wrap</code></td><td>On float action: allows action to wrap below the title on mobile instead of floating</td></tr>

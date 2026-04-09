@@ -1,5 +1,5 @@
 <!-- _includes/footer.html -->
-<footer class="nds-footer nds-content-grid" hidden role="contentinfo" aria-label="Site Footer">
+<footer class="nds-footer nds-content-wrapper" hidden role="contentinfo" aria-label="Site Footer">
     {%- assign footer_data_file = page.footer | default: site.footer | default: "footer" -%}
     {%- assign footer_data = site.data.footer[footer_data_file] -%}
     {%- if footer_data.columns and footer_data.columns.size > 0 %}

@@ -164,7 +164,7 @@ hideSidemenu: true
         <h2 class="nds-section-title">Related Services</h2>
         <p class="nds-section-description">Explore other government digital services that may be relevant to you.</p>
     </div>
-    <div class="nds-section-body nds-full-width">
+    <div class="nds-section-body nds-max-width">
         <div class="nds-swiper" slides-max="3" slides-mid="2" slides-min="1" peek="40" hidden>
             <div class="nds-swiper-wrapper">
                 {% for service in site.data.content.services limit:6 %}
