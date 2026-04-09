@@ -98,6 +98,11 @@ $all-spacers: $spacers;
   display: inline-flex;
   align-items: baseline;
   line-height: normal;
+  gap: var(--spacing-xs);
+
+  @include ltr{
+    flex-direction: row-reverse;
+  }
 
   >.nds-icon {
     width: var(--_number-icon-size);
@@ -109,11 +114,11 @@ $all-spacers: $spacers;
     }
   }
 
-  &[data-currency]::before {
+  &[data-currency]::after {
     align-self: center;
   }
 
-  &[data-currency="SAR"]::before {
+  &[data-currency="SAR"]::after {
     content: "";
     display: inline-block;
     width: var(--_number-icon-size);
@@ -122,35 +127,35 @@ $all-spacers: $spacers;
     mask: url('../icon/saudi-riyal.svg') no-repeat center / contain;
   }
 
-  &[data-currency="USD"]::before {
+  &[data-currency="USD"]::after {
     content: "$";
   }
 
-  &[data-currency="EUR"]::before {
+  &[data-currency="EUR"]::after {
     content: "€";
   }
 
-  &[data-currency="GBP"]::before {
+  &[data-currency="GBP"]::after {
     content: "£";
   }
 
-  &[data-currency="JPY"]::before {
+  &[data-currency="JPY"]::after {
     content: "¥";
   }
 
-  &[data-currency="CNY"]::before {
+  &[data-currency="CNY"]::after {
     content: "¥";
   }
 
-  &[data-currency="INR"]::before {
+  &[data-currency="INR"]::after {
     content: "₹";
   }
 
-  &[data-currency="KRW"]::before {
+  &[data-currency="KRW"]::after {
     content: "₩";
   }
 
-  &[data-currency="TRY"]::before {
+  &[data-currency="TRY"]::after {
     content: "₺";
   }
 }
