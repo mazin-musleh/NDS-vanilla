@@ -72,16 +72,16 @@
     --_nav-z-secondary: calc(var(--_nav-z-base) + 1);
     --_nav-z-secondary-dropdown: calc(var(--_nav-z-base) + 2);
 
-    --nds-nav-background-color: var(--background-nav);
-    --nds-nav-dropmenu-background-color: var(--background-menu);
-    --nds-nav-color: var(--text-default);
-    --nds-nav-dropmenu-title-color: var(--text-primary);
+    --_nav-bg: var(--background-nav);
+    --_nav-menu-bg: var(--background-menu);
+    --_nav-color: var(--text-default);
+    --_nav-menu-title: var(--text-primary);
 
     position: sticky;
     top: 0;
     left: 0;
     right: 0;
-    background-color: var(--nds-nav-background-color);
+    background-color: var(--_nav-bg);
     height: var(--nds-nav-height);
     box-shadow: var(--shadow-md);
     z-index: var(--_nav-z-base);
@@ -150,7 +150,7 @@
         border: none;
         font-size: 1.2rem;
         cursor: pointer;
-        color: var(--nds-nav-color);
+        color: var(--_nav-color);
         height: var(--nds-nav-height);
         width: 40px;
         display: none;
@@ -237,8 +237,8 @@
     .nds-collapse-content {
 
         .nds-show-more {
-            background-color: var(--nds-nav-background-color);
-            color: var(--nds-nav-color);
+            background-color: var(--_nav-bg);
+            color: var(--_nav-color);
             transition: opacity var(--nds-transition);
             flex-shrink: 0;
 
@@ -277,7 +277,7 @@
         padding-bottom: 1rem; // fix shadow flicker
 
         >.nds-dropdown-content {
-            background: var(--nds-nav-dropmenu-background-color);
+            background: var(--_nav-menu-bg);
             transform: translate(0, -100%);
             transition: transform var(--nds-transition);
             border-radius: 0 0 var(--radius-lg) var(--radius-lg);
@@ -350,7 +350,7 @@
         .nds-dropdown-title {
             font-size: var(--nds-text-clamp-lg-FS);
             line-height: var(--nds-text-clamp-lg-LH);
-            color: var(--nds-nav-dropmenu-title-color);
+            color: var(--_nav-menu-title);
             font-weight: 500;
         }
 
@@ -781,7 +781,7 @@ body.nds-minimal .nds-main-nav {
         width: 100%;
         border-top: 1px solid var(--divider-color);
         justify-content: center;
-        background-color: var(--nds-nav-background-color);
+        background-color: var(--_nav-bg);
         z-index: var(--_nav-z-secondary);
 
         &:not(:has([data-state~="open"])) {

@@ -13,7 +13,7 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Section Hierarchy</h2>
-            <p class="nds-section-description">The section component uses a CSS Grid for column placement and a flex wrapper for grouping head, action, image, and content.</p>
+            <p class="nds-section-description">The section component uses responsive padding for content constraining and a flex wrapper for grouping head, action, image, and content.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
@@ -30,7 +30,7 @@ direction: ltr
                             </div>
                             <div class="nds-expandable-content">
                                 <code class="lang-html code">
-section.nds-content-section          (CSS Grid: full-width | breakout | content)
+section.nds-content-section          (responsive padding for content constraining)
 ├── div.nds-section-wrapper          (Flex row + responsive breakpoints)
 │   ├── div.nds-section-image        (optional)
 │   ├── div.nds-section-head         (flex:1, title + desc + meta)
@@ -873,11 +873,11 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
     </div>
 </section>
 
-<!-- Tier 5: Full-Width Content -->
+<!-- Tier 5: Max-Width Breakout -->
 <section id="tier5" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
-            <h2 class="nds-section-title">Tier 5: Full-Width Content</h2>
+            <h2 class="nds-section-title">Tier 5: Max-Width Breakout</h2>
             <p class="nds-section-description">Content lives outside the wrapper and uses .nds-max-width to break out of the content padding into the full available width. Wrapper holds head + action only.</p>
         </div>
         <div class="nds-section-body">
@@ -897,15 +897,15 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                                             <span class="nds-label">Default</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-neutral", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                            data-toggler='[["nds-neutral", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-swiper-navigation ,.nds-swiper-navigation .nds-btn", "sectionColor", "add"]]'>
                                             <span class="nds-label">Neutral</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-primary", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                            data-toggler='[["nds-primary", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-swiper,.nds-swiper-navigation .nds-btn,.nds-section-action .nds-btn", "sectionColor", "add"]]'>
                                             <span class="nds-label">Primary</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-gradient-green", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                            data-toggler='[["nds-gradient-green", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-swiper-navigation ,.nds-swiper-navigation .nds-btn", "sectionColor", "add"]]'>
                                             <span class="nds-label">Gradient Green</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
@@ -1386,7 +1386,6 @@ section.nds-content-section          (CSS Grid: full-width | breakout | content)
                         <tr><td><code class="nds-inline-code lang-html">nds-brand</code></td><td>Light brand background with inset shadow, adapts for dark mode</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-ghost</code></td><td>Removes all background, border, and shadow (transparent section)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-max-width</code></td><td>On <code class="nds-inline-code lang-html">nds-section-body</code>: breaks out of content padding to span the full available width</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-breakout</code></td><td>On <code class="nds-inline-code lang-html">nds-section-body</code>: wider than content column but not full-width</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-minimal</code></td><td>On float action: hides button labels on mobile (icon-only)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-wrap</code></td><td>On float action: allows action to wrap below the title on mobile instead of floating</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-nowrap</code></td><td>On standard action: keeps action inline at all breakpoints instead of wrapping to full row</td></tr>
