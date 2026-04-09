@@ -79,7 +79,10 @@
 
         getCurrentStep() {
             const dataStep = parseInt(this.element.dataset.current);
-            if (dataStep >= 1 && dataStep <= this.steps.length) return dataStep;
+            if (dataStep >= 1) {
+                // Radial steppers clamp to totalSteps; linear steppers allow exceeding for completion state
+                return this.isRadial ? Math.min(dataStep, this.steps.length) : dataStep;
+            }
 
             const currentElement = this.element.querySelector('[data-state~="current"]');
             return currentElement ? Array.from(this.steps).indexOf(currentElement) + 1 : 1;

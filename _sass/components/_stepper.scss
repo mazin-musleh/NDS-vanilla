@@ -423,6 +423,26 @@
 }
 
 
+// Reverse vertical stepper (bottom-to-top progress)
+.nds-stepper.nds-vertical.nds-reverse {
+    flex-direction: column-reverse;
+
+    .nds-stepper-step {
+        // In reverse, line color should come from the next DOM sibling's state
+        &[data-state~="completed"] + :not([data-state~="upcoming"]) .nds-stepper-base::after {
+            background-color: var(--stepper-line-completed);
+        }
+
+        &:first-child .nds-stepper-base::after {
+            display: none;
+        }
+
+        &:last-child .nds-stepper-base::after {
+            display: block;
+        }
+    }
+}
+
 // ==============================================
 // RADIAL STEPPER LAYOUT MODIFIER
 // ==============================================
