@@ -601,9 +601,9 @@ direction: ltr
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
                         <i class="hgi hgi-stroke hgi-api nds-icon"></i>
-                        <span class="nds-label">JavaScript API</span>
+                        <span class="nds-label">Programmatic Control</span>
                     </span>
-                    <p class="nds-item-desc">Programmatic creation, dismissal, and bulk dismiss for dynamic alerts and toasts.</p>
+                    <p class="nds-item-desc">Create, dismiss, and bulk-clear alerts through the JS API without writing HTML.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -626,15 +626,56 @@ direction: ltr
         <div class="nds-section-body">
 
             <div class="nds-content-block">
-                <h3 class="nds-block-title">When to Use</h3>
+                <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
-                    <li>Use <strong>inline alerts</strong> for contextual feedback near a form field or action. Single-line layout with actions pushed to the end</li>
                     <li>Use <strong>standard alerts</strong> for important messages that need a title and description within a page section</li>
-                    <li>Use <strong>toast notifications</strong> for transient feedback after an action (save, delete, submit). Auto-dismisses after a set duration</li>
+                    <li>Use <strong>inline alerts</strong> for contextual feedback near a form field or action where space is limited</li>
+                    <li>Use <strong>toast notifications</strong> for transient feedback after an action (save, delete, submit) that does not require the user to stay on the page</li>
                     <li>Choose the variant that matches the message severity: <strong>success</strong> for confirmations, <strong>info</strong> for neutral updates, <strong>warning</strong> for caution, <strong>error</strong> for failures, <strong>critical</strong> for system-level emergencies, <strong>neutral</strong> for general notices</li>
-                    <li>Prefer alerts over modals for non-blocking feedback. Alerts let users continue working</li>
-                    <li>Add action buttons when the user needs to respond (retry, undo, update) rather than just acknowledge</li>
+                    <li>Do not use alerts for blocking decisions that require user input. Use a <a class="nds-color" href="{{ 'components/modal' | relative_url }}">Modal</a> instead</li>
+                    <li>Do not use toast notifications for critical errors or messages that require user action. Toasts can auto-dismiss before the user reads them</li>
+                    <li>Prefer alerts over modals for non-blocking feedback. Alerts let users continue working without interruption</li>
+                    <li>Add action buttons when the user needs to respond (retry, undo, update) rather than just acknowledge the message</li>
+                    <li>Add <code class="nds-inline-code lang-html">nds-color</code> to reinforce severity in high-density layouts where the stripe alone may not stand out</li>
+                    <li>Keep alert descriptions to one or two sentences. For longer content, link to a detail page with an action link</li>
+                    <li>Set a reasonable <code class="nds-inline-code lang-js">duration</code> for toast notifications (3000-5000 ms). Avoid durations under 2000 ms as users may not have time to read the message</li>
                 </ul>
+            </div>
+
+            <div class="nds-content-block">
+                <h3 class="nds-block-title">Modifier Classes</h3>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Class</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">nds-inline</code></td><td>Compact single-line layout with bottom stripe and solid icon</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-toast</code></td><td>Floating notification style with opacity transitions for toast display</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-shadow</code></td><td>Adds elevation shadow to the alert card</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-color</code></td><td>Applies a tinted background matching the status variant</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="nds-content-block">
+                <h3 class="nds-block-title">Data Attributes</h3>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">data-status</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-alert</code> to control the variant. Values: <code class="nds-inline-code lang-html">success</code>, <code class="nds-inline-code lang-html">info</code>, <code class="nds-inline-code lang-html">warning</code>, <code class="nds-inline-code lang-html">error</code>, <code class="nds-inline-code lang-html">critical</code>, <code class="nds-inline-code lang-html">neutral</code></td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-position</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-alert-placeholder</code> to position toast containers. Values: <code class="nds-inline-code lang-html">top</code>, <code class="nds-inline-code lang-html">bottom</code></td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-toast-state</code></td><td>Controls toast visibility transitions. Values: <code class="nds-inline-code lang-html">show</code>, <code class="nds-inline-code lang-html">hide</code>. Managed automatically by the JS API</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="nds-content-block">
+                <h3 class="nds-block-title">CSS Custom Properties</h3>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">--alert-stripe</code></td><td><code class="nds-inline-code lang-html">--border-neutral-primary</code></td><td>Color of the side stripe indicator</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--alert-icon-bg</code></td><td><code class="nds-inline-code lang-html">--background-neutral-light</code></td><td>Background color of the feedback icon circle</td></tr>
+                    </tbody>
+                </table>
             </div>
 
             <div class="nds-content-block">
