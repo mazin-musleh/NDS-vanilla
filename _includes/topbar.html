@@ -1,5 +1,5 @@
 <div class="nds-topbar nds-content-wrapper" role="region" aria-label="Top bar utilities">
-    <button class="nds-btn nds-menu-btn nds-topbar-info nds-digitalStamp-tab" role="button" aria-expanded="false"
+    <button class="nds-btn nds-menu-btn nds-digitalStamp-tab" role="button" aria-expanded="false"
         aria-controls="nds-digitalStamp">
         <img class="nds-flag" src="{{ 'assets/icon/SAflag.min.svg' | relative_url }}" width="20" height="14"
             loading="lazy" alt="Logo of Saudi Arabia Flag">
@@ -22,9 +22,9 @@
 </div>
 <div id="nds-digitalStamp" role="region" aria-label="Digital government stamp" hidden>
     <div class="nds-content-wrapper">
-        <div class="nds-digitalStamp-notices nds-grid">
+        <div class="nds-digitalStamp-notices">
             <!-- gov Links Notice -->
-            <div class="nds-digitalStamp-card col-sm-12 col-lg-6">
+            <div class="nds-digitalStamp-card">
                 <div class="nds-digitalStamp-icon">
                     <i class="hgi hgi-stroke hgi-link-04 nds-icon"></i>
                 </div>
@@ -38,7 +38,7 @@
                 </div>
             </div>
             <!-- HTTPS Security Notice -->
-            <div class="nds-digitalStamp-card col-sm-12 col-lg-6">
+            <div class="nds-digitalStamp-card">
                 <div class="nds-digitalStamp-icon">
                     <i class="hgi hgi-stroke hgi-square-lock-01 nds-icon"></i>
                 </div>
@@ -51,17 +51,17 @@
                     </div>
                 </div>
             </div>
-            <div class="nds-digitalStamp-register col-12">
-                <img src="{{ 'assets/img/dga-logo-icon.svg' | relative_url }}" width="21" height="31"
-                    alt="هيئة الحكومة الرقمية" loading="lazy">
-                <div>
-                    <span id="register-text">
-                        {{ site.digital_stamp[page.lang].register_text }}
-                    </span>
-                    <a class="nds-digitalStamp-registration nds-primary nds-underline"
-                        href="{{ page.dga_registration_url | default: site.dga_registration_url }}"
-                        target="_blank">{{ page.dga_registration_number | default: site.dga_registration_number }}</a>
-                </div>
+        </div>
+        <div class="nds-digitalStamp-register">
+            <img src="{{ 'assets/img/dga-logo-icon.svg' | relative_url }}" width="21" height="31"
+                alt="هيئة الحكومة الرقمية" loading="lazy">
+            <div>
+                <span id="register-text">
+                    {{ site.digital_stamp[page.lang].register_text }}
+                </span>
+                <a class="nds-digitalStamp-registration nds-primary nds-underline"
+                    href="{{ page.dga_registration_url | default: site.dga_registration_url }}"
+                    target="_blank">{{ page.dga_registration_number | default: site.dga_registration_number }}</a>
             </div>
         </div>
     </div>

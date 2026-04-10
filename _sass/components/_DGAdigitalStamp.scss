@@ -64,14 +64,13 @@
 }
 
 .nds-digitalStamp-notices {
-    margin-block: var(--spacing-3xl) var(--spacing-2xl);
+    margin-block: var(--spacing-5xl);
     display: flex;
     gap: var(--spacing-xl);
     flex-wrap: wrap;
 }
 
 .nds-digitalStamp-card {
-    padding: var(--spacing-2xl);
     flex: 1;
     min-width: 300px;
     display: flex;
@@ -85,6 +84,7 @@
     background-color: var(--background-card);
     border-radius: var(--radius-md);
     padding: var(--spacing-xl) var(--spacing-3xl);
+    margin-block: var(--spacing-5xl);
     line-height: 24px;
     text-align: start;
     display: flex;
@@ -149,7 +149,6 @@
     }
 
     .nds-digitalStamp-card {
-        padding: var(--spacing-xl);
         gap: var(--spacing-lg);
     }
 
