@@ -62,6 +62,10 @@
             // Hidden inputs container for form mode
             this.hiddenInputsContainer = null;
 
+            // Resolve applied-chips container: inside filter first, then external with matching target
+            this.appliedContainer = filterContainer.querySelector('.nds-filter-applied')
+                || (this.targetId && document.querySelector(`.nds-filter-applied[data-filter-target="${this.targetId}"]`));
+
             this.filterLabels = {};  // { filterName: { value: label } } — auto-built from data-filter-value
 
             this.init();
@@ -90,8 +94,7 @@
 
         setupChipStyle() {
             // Get chip classes from data-chip-class attribute on .nds-filter-applied
-            const appliedContainer = this.filterContainer.querySelector('.nds-filter-applied');
-            const chipClass = appliedContainer?.getAttribute('data-chip-class') || 'nds-primary nds-lg';
+            const chipClass = this.appliedContainer?.getAttribute('data-chip-class') || 'nds-primary nds-lg';
             this.chipClass = chipClass;
         }
 
@@ -664,7 +667,7 @@
         }
 
         updateAppliedChips() {
-            const appliedContainer = this.filterContainer.querySelector('.nds-filter-applied');
+            const appliedContainer = this.appliedContainer;
             if (!appliedContainer) return;
 
             // Find chips container inside applied container

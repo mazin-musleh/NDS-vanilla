@@ -72,16 +72,6 @@
 
     .nds-filter-applied:not([hidden]) {
         flex: 1 1 100%;
-        display: flex;
-        flex-wrap: wrap;
-        gap: var(--spacing-md);
-        min-width: 0;
-        align-items: center;
-
-        >.nds-label {
-            font-size: var(--nds-text-lg-FS);
-            font-weight: 500;
-        }
     }
 
     @include desktop(min) {
@@ -111,6 +101,27 @@
 
     .nds-form-control {
         min-width: unset;
+    }
+}
+
+// ==============================================
+// APPLIED FILTERS (standalone or nested)
+// ==============================================
+
+.nds-filter-applied:not([hidden]) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    min-width: 0;
+    align-items: center;
+
+    &:not(.nds-filter *) {
+        margin-bottom: 1rem;
+    }
+
+    >.nds-label {
+        font-size: var(--nds-text-lg-FS);
+        font-weight: 500;
     }
 }
 
