@@ -204,7 +204,7 @@
 
             // Sync top offset to nav bottom
             if (position === 'top' && !placeholder._scrollSync) {
-                const nav = document.getElementById('ndsMainNav');
+                const nav = document.querySelector('.nds-main-nav');
                 if (nav) {
                     const update = () => placeholder.style.setProperty('--_toast-top', nav.getBoundingClientRect().bottom + 'px');
                     update();

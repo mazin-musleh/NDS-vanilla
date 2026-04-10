@@ -6,7 +6,7 @@
     // DOM REFERENCES
     // ==============================================
     const DOM = {
-        nav: document.getElementById('ndsMainNav'),
+        nav: document.querySelector('.nds-main-nav'),
         dgaTab: document.querySelector('.nds-digitalStamp-tab'),
         topbar: document.querySelector('.nds-topbar'),
         dgaDigitalStamp: document.querySelector('#nds-digitalStamp'),
@@ -192,7 +192,7 @@
     const dropdown = {
         closeAll(except = null) {
             let maxDuration = 0;
-            document.querySelectorAll('#ndsMainNav .nds-dropdown[data-state~="open"]').forEach(dd => {
+            DOM.nav.querySelectorAll('.nds-dropdown[data-state~="open"]').forEach(dd => {
                 if (dd !== except) {
                     this.toggle(dd, false);
                     maxDuration = Math.max(maxDuration, state.getDuration(getDropdownAnimTarget(dd).animTarget));
@@ -212,7 +212,7 @@
             const collapseHandlesBackdrop = !isInMinimal && hasState(DOM.collapse, 'open');
             if (open && !collapseHandlesBackdrop) {
                 showNavBackdrop('dropdown', () => {
-                    document.querySelectorAll('#ndsMainNav .nds-dropdown[data-state~="open"]')
+                    DOM.nav.querySelectorAll('.nds-dropdown[data-state~="open"]')
                         .forEach(d => dropdown.toggle(d, false));
                 });
             }
@@ -226,7 +226,7 @@
                     overflow.schedule('low', 100);
 
                     if (!open && !collapseHandlesBackdrop) {
-                        const stillOpen = document.querySelectorAll('#ndsMainNav .nds-dropdown[data-state~="open"]');
+                        const stillOpen = DOM.nav.querySelectorAll('.nds-dropdown[data-state~="open"]');
                         if (stillOpen.length === 0 && !hasState(DOM.collapse, 'open') && !_pendingToggleTimer) {
                             hideNavBackdrop('dropdown');
                         }
@@ -673,7 +673,7 @@
         }
 
         // Close dropdowns if click outside
-        document.querySelectorAll('#ndsMainNav .nds-dropdown[data-state~="open"]').forEach(dd => {
+        DOM.nav.querySelectorAll('.nds-dropdown[data-state~="open"]').forEach(dd => {
             if (hasState(dd, 'closing')) return;
             const menu = dd.querySelector('.nds-dropdown-menu');
             if (![dd, menu].some(el => el?.contains(target))) {
@@ -844,14 +844,14 @@
         }, { passive: true });
 
         document.addEventListener('click', (e) => {
-            if (e.target.closest('[data-toggle="dropdown"]')) toggleDropdown(e);
-            if (e.target.closest('[data-toggle="navbar"]')) { e.preventDefault(); toggleNavbar(); }
+            if (e.target.closest('.nds-dropdown > .nds-nav-link')) toggleDropdown(e);
+            if (e.target.closest('.nds-mainNav-toggler')) { e.preventDefault(); toggleNavbar(); }
         });
 
         // Same-page anchor navigation — close nav and scroll to target
         DOM.nav?.addEventListener('click', (e) => {
-            const anchor = e.target.closest('a[href*="#"]:not([data-toggle])');
-            if (!anchor) return;
+            const anchor = e.target.closest('a[href*="#"]');
+            if (!anchor || anchor.closest('.nds-dropdown')) return;
 
             const href = anchor.getAttribute('href');
             const hashIdx = href.indexOf('#');
@@ -870,7 +870,7 @@
             e.preventDefault();
 
             const wasNavOpen = hasState(DOM.collapse, 'open');
-            const openDropdowns = document.querySelectorAll('#ndsMainNav .nds-dropdown[data-state~="open"]');
+            const openDropdowns = DOM.nav.querySelectorAll('.nds-dropdown[data-state~="open"]');
 
             if (wasNavOpen) toggleNavbar();
             else openDropdowns.forEach(dd => dropdown.toggle(dd, false));

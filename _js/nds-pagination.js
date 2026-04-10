@@ -496,7 +496,7 @@
 
     // Helper function to scroll to the top of the content list
     function scrollToContent(pagination) {
-        const nav = document.getElementById('ndsMainNav');
+        const nav = document.querySelector('.nds-main-nav');
         const navHeight = nav ? nav.offsetHeight : 72;
 
         const paginationNav = pagination.closest('.nds-pagination');

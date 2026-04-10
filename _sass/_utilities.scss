@@ -160,10 +160,10 @@ $all-spacers: $spacers;
   }
 }
 
-.nds-truncate:not([hidden]) {
+:where(.nds-truncate:not([hidden])) {
   --_truncate: var(--truncate, 1);
   overflow: hidden;
-  display: -webkit-box !important;
+  display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: var(--_truncate);
   line-clamp: var(--_truncate);

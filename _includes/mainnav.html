@@ -26,7 +26,7 @@
             {%- endif %}
         </a>
         <ul class="nds-nav-minimal">
-            <li class="nds-mainNav-toggler nds-nav-item" data-toggle="navbar">
+            <li class="nds-mainNav-toggler nds-nav-item">
                 <button class="nds-nav-link nds-btn nds-subtle nds-indicator" aria-label="Toggle navigation menu"
                     aria-expanded="false" aria-controls="ndsNavCollapse">
                     <i class="hgi hgi-stroke hgi-menu-01 nds-icon"></i>
@@ -42,8 +42,7 @@
                     <li class="nds-nav-item{%- if item.type == 'dropdown' %} nds-dropdown{%- endif %}" {{ item.attr }}>
                         {%- if item.type %}
                         <a href="#" class="nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator"
-                            {%- if item.type == 'modal' %} data-modal-target="{{ item.id | default: item.label | slugify | append: '-modal' }}"
-                            {%- else %} data-toggle="dropdown"{%- endif %}>
+                            {%- if item.type == 'modal' %} data-modal-target="{{ item.id | default: item.label | slugify | append: '-modal' }}"{%- endif %}>
                             <span class="nds-label">{{ item.label }}</span>
                         </a>
                         {%- if item.type == 'dropdown' %}
@@ -78,8 +77,7 @@
                         {%- if item.url %}
                         <a href="{%- if item.url contains '#' and item.url | slice: 0 == '#' %}{{ item.url }}{%- else %}{{ item.url | relative_url }}{%- endif %}"
                             class="{{ item.button_style | default: 'nds-nav-link nds-btn nds-subtle nds-indicator' }}"
-                            {%- if item.type == 'modal' %} data-modal-target="{{ item.id | default: item.label | slugify | append: '-modal' }}"
-                            {%- elsif item.type == 'dropdown' %} data-toggle="dropdown"{%- endif %}
+                            {%- if item.type == 'modal' %} data-modal-target="{{ item.id | default: item.label | slugify | append: '-modal' }}"{%- endif %}
                             title="{{ item.label }}"
                             {%- if item.id %} id="{{ item.id }}"{%- endif %}>
                             {%- if item.img_icon %}
@@ -94,8 +92,7 @@
                         </a>
                         {%- else %}
                         <button class="{{ item.button_style | default: 'nds-nav-link nds-btn nds-subtle nds-indicator' }}"
-                            {%- if item.type == 'modal' %} data-modal-target="{{ item.id | default: item.label | slugify | append: '-modal' }}"
-                            {%- elsif item.type == 'dropdown' %} data-toggle="dropdown"{%- endif %}
+                            {%- if item.type == 'modal' %} data-modal-target="{{ item.id | default: item.label | slugify | append: '-modal' }}"{%- endif %}
                             title="{{ item.label }}"
                             {%- if item.id %} id="{{ item.id }}"{%- endif %}>
                             {%- if item.img_icon %}

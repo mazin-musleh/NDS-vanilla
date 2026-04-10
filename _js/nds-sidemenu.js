@@ -7,7 +7,7 @@
 
     // Set --drawer-max-height for slider mode only
     const updateDrawerMaxHeight = (accMenu, drawer) => {
-        const nav = document.getElementById('ndsMainNav');
+        const nav = document.querySelector('.nds-main-nav');
         const topbar = document.querySelector('.nds-topbar');
         const navBottom = nav ? Math.max(0, nav.getBoundingClientRect().bottom) : 0;
         const topbarBottom = topbar ? Math.max(0, topbar.getBoundingClientRect().bottom) : 0;
@@ -104,7 +104,7 @@
     // Scroll past hero then lock — handles user touch interruption
     const scrollPastHeroAndLock = () => {
         const heroSection = document.querySelector('.nds-hero-section');
-        const nav = document.getElementById('ndsMainNav');
+        const nav = document.querySelector('.nds-main-nav');
         const navBottom = nav ? nav.getBoundingClientRect().bottom : 0;
         const heroBtm = heroSection ? heroSection.getBoundingClientRect().bottom : 0;
 

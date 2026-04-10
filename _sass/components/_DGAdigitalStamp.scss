@@ -7,7 +7,7 @@
     line-height: normal;
 }
 
-.nds-topbar .nds-digitalStamp-tab {
+.nds-digitalStamp-tab {
     z-index: 10;
     cursor: pointer;
     font-size: var(--nds-text-clamp-sm-FS);
@@ -17,7 +17,7 @@
     gap: var(--spacing-xs);
 }
 
-.nds-topbar .nds-digitalStamp-tab {
+.nds-digitalStamp-tab {
     .nds-flag {
         width: 20px;
         margin-inline-end: 4px;
@@ -26,13 +26,13 @@
 }
 
 @include desktop(min) {
-    .nds-topbar .nds-digitalStamp-tab>.nds-digitalStamp-sm-text {
+    .nds-digitalStamp-tab>.nds-digitalStamp-sm-text {
         display: none!important;
     }
 }
 
 @include tablet(max) {
-    .nds-topbar .nds-digitalStamp-tab>.nds-digitalStamp-lg-text {
+    .nds-digitalStamp-tab>.nds-digitalStamp-lg-text {
         display: none!important;
     }
 
