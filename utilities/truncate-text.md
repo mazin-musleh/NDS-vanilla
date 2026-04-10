@@ -2,36 +2,126 @@
 layout: page
 title: Truncate Text
 hero_title: Truncate Text - National Design System
-hero_description: Text truncation utility with ellipsis for single and multi-line content overflow
+hero_description: A single-class CSS utility that clips overflowing text with an ellipsis, supporting both single-line and configurable multi-line truncation on any element
 breadcrumb: ["Utilities", "Truncate Text"]
 lang: en
 direction: ltr
 ---
 
-<!-- Truncate Text Overview -->
-<section id="truncateOverview" class="nds-content-section">
+<!-- Single-Line Truncation -->
+<section id="truncateSingleLine" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
-            <h2 class="nds-section-title">Text Truncation Utility</h2>
-            <p class="nds-section-description">Truncate overflowing text with ellipsis for single-line and multi-line
-                content</p>
+            <h2 class="nds-section-title">Single-Line Truncation</h2>
+            <p class="nds-section-description">Add <code class="nds-inline-code lang-html">nds-truncate</code> to any text element to clip it to one line with an ellipsis. The element respects its parent's width.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
 
-            <!-- Single Line Truncate -->
             <div class="nds-demo-card">
                 <div class="demo-header">
-                    <div class="demo-label">Single Line Truncation (Default)</div>
-                    <div class="demo-action">
+                    <div class="demo-label">Default Truncation</div>
+                </div>
+                <div class="demo-container">
+                    <div class="state-demo">
+                        <div class="nds-card nds-stroke" style="max-width: 360px;">
+                            <div class="nds-card-content">
+                                <div class="nds-card-text">
+                                    <h3 class="nds-card-title nds-truncate">National Digital Transformation Strategy Overview and Implementation Roadmap</h3>
+                                    <p class="nds-card-description nds-truncate">Complete documentation and guidelines for all ministry digital services including API references, implementation guides, best practices for developers, and integration specifications for government applications.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="demo-code">
+                <div class="nds-tabs nds-code nds-divided" hidden>
+                    <div class="nds-tab-list-container">
+                        <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                            <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                aria-controls="panel-truncate-single-1" id="tab-truncate-single-1">
+                                <span class="nds-tab-label">HTML</span>
+                            </button>
+                        </nav>
+                    </div>
+                    <div class="nds-tab-content">
+                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-truncate-single-1"
+                            aria-labelledby="tab-truncate-single-1">
+                            <div class="nds-code-action">
+                                <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                </button>
+                            </div>
+                            <code class="lang-html code">
+<div class="nds-card nds-stroke" style="max-width: 360px;">
+    <div class="nds-card-content">
+        <div class="nds-card-text">
+            <h3 class="nds-card-title nds-truncate">National Digital Transformation Strategy Overview and Implementation Roadmap</h3>
+            <p class="nds-card-description nds-truncate">Complete documentation and guidelines for all ministry digital services including API references, implementation guides, best practices for developers, and integration specifications for government applications.</p>
+        </div>
+    </div>
+</div>
+                            </code>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
 
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Multi-Line Truncation -->
+<section id="truncateMultiLine" class="nds-content-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Multi-Line Truncation</h2>
+            <p class="nds-section-description">Set <code class="nds-inline-code lang-html">--truncate</code> to control how many lines are visible before the ellipsis. Useful for card descriptions and content previews where more than one line adds context.</p>
+        </div>
+        <div class="nds-section-body">
+            <div class="nds-showcase">
+
+            <div class="nds-demo-card">
+                <div class="demo-header">
+                    <div class="demo-action">
+                        <div class="nds-dropmenu demo-toggle-menu">
+                            <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                <span class="nds-label">2 Lines</span>
+                            </button>
+                            <div class="nds-dropmenu-menu" hidden>
+                                <div class="nds-dropmenu-scroll">
+                                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                        data-toggler='["--truncate:1", ".nds-card-description", "lineCount", "style"]'>
+                                        <span class="nds-label">1 Line</span>
+                                    </button>
+                                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                        data-toggler='["--truncate:2", ".nds-card-description", "lineCount", "style"]'>
+                                        <span class="nds-label">2 Lines</span>
+                                    </button>
+                                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                        data-toggler='["--truncate:3", ".nds-card-description", "lineCount", "style"]'>
+                                        <span class="nds-label">3 Lines</span>
+                                    </button>
+                                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                        data-toggler='["--truncate:4", ".nds-card-description", "lineCount", "style"]'>
+                                        <span class="nds-label">4 Lines</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="demo-container">
                     <div class="state-demo">
-                        <div style="width: 300px; border: 1px solid #ddd; padding: 16px;">
-                            <p class="nds-truncate">This is a very long text that will be truncated to a single line
-                                with ellipsis when it exceeds the container width</p>
+                        <div class="nds-card nds-stroke" style="max-width: 400px;">
+                            <div class="nds-card-content">
+                                <div class="nds-card-text">
+                                    <h3 class="nds-card-title">Citizen Services Portal</h3>
+                                    <p class="nds-card-description nds-truncate" style="--truncate: 2;">The unified portal provides access to over 200 government services across 35 ministries. Citizens can submit applications, track requests, schedule appointments, and receive notifications about their active transactions. The platform supports biometric authentication, digital signatures, and secure document uploads for a seamless end-to-end experience.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -40,22 +130,28 @@ direction: ltr
                     <div class="nds-tab-list-container">
                         <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                                aria-controls="panel-single-1" id="tab-single-1">
+                                aria-controls="panel-truncate-multi-1" id="tab-truncate-multi-1">
                                 <span class="nds-tab-label">HTML</span>
                             </button>
                         </nav>
                     </div>
                     <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-single-1"
-                            aria-labelledby="tab-single-1">
+                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-truncate-multi-1"
+                            aria-labelledby="tab-truncate-multi-1">
                             <div class="nds-code-action">
                                 <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                                     <i class="hgi hgi-stroke hgi-copy-01"></i>
                                 </button>
                             </div>
                             <code class="lang-html code">
-                                <p class="nds-truncate">This is a very long text that will be truncated to a single line
-                                with ellipsis when it exceeds the container width</p>
+<div class="nds-card nds-stroke" style="max-width: 400px;">
+    <div class="nds-card-content">
+        <div class="nds-card-text">
+            <h3 class="nds-card-title">Citizen Services Portal</h3>
+            <p class="nds-card-description nds-truncate" style="--truncate: 2;">The unified portal provides access to over 200 government services across 35 ministries. Citizens can submit applications, track requests, schedule appointments, and receive notifications about their active transactions. The platform supports biometric authentication, digital signatures, and secure document uploads for a seamless end-to-end experience.</p>
+        </div>
+    </div>
+</div>
                             </code>
                         </div>
                     </div>
@@ -63,210 +159,47 @@ direction: ltr
                 </div>
             </div>
 
-            <!-- Single Line with Max Width -->
-            <div class="nds-demo-card">
-                <div class="demo-header">
-                    <div class="demo-label">Single Line with Max Width</div>
-                    <div class="demo-action">
-
-                    </div>
-                </div>
-                <div class="demo-container">
-                    <div class="state-demo">
-                        <div style="border: 1px solid #ddd; padding: 16px;">
-                            <p class="nds-truncate" style="max-width: 250px;">This is a very long text that will be
-                                truncated to a single line when it exceeds the maximum width of 250 pixels</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided" hidden>
-                    <div class="nds-tab-list-container">
-                        <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                                aria-controls="panel-maxwidth-1" id="tab-maxwidth-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                        </nav>
-                    </div>
-                    <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-maxwidth-1"
-                            aria-labelledby="tab-maxwidth-1">
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                </button>
-                            </div>
-                            <code class="lang-html code">
-                                <p class="nds-truncate" style="max-width: 250px;">This is a very long text that will be
-                                truncated to a single line when it exceeds the maximum width of 250 pixels</p>
-                            </code>
-                        </div>
-                    </div>
-                </div>
-                </div>
             </div>
+        </div>
+    </div>
+</section>
 
-            <!-- Multi-line Truncate -->
-            <div class="nds-demo-card">
-                <div class="demo-header">
-                    <div class="demo-label">Multi-line Truncation (2 Lines)</div>
-                    <div class="demo-action">
-
-                    </div>
+<!-- Built-in Features -->
+<section id="truncateFeatures" class="nds-content-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Built-in Features</h2>
+        </div>
+        <div class="nds-section-body">
+            <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-code nds-icon"></i>
+                        <span class="nds-label">CSS-Only</span>
+                    </span>
+                    <p class="nds-item-desc">Works with a single class and zero JavaScript. No initialization, no event listeners, no cleanup.</p>
                 </div>
-                <div class="demo-container">
-                    <div class="state-demo">
-                        <div style="width: 300px; border: 1px solid #ddd; padding: 16px;">
-                            <p class="nds-truncate" style="--truncate: 2;">This is a longer text content that will
-                                be truncated to exactly two lines. When the content exceeds two lines, it will be cut
-                                off and show ellipsis at the end of the second line to indicate there is more content
-                                available.</p>
-                        </div>
-                    </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-text-wrap nds-icon"></i>
+                        <span class="nds-label">Configurable Line Count</span>
+                    </span>
+                    <p class="nds-item-desc">Set <code class="nds-inline-code lang-html">--truncate</code> to any number to control how many lines remain visible before the ellipsis.</p>
                 </div>
-                <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided" hidden>
-                    <div class="nds-tab-list-container">
-                        <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                                aria-controls="panel-multi-1" id="tab-multi-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                        </nav>
-                    </div>
-                    <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-multi-1"
-                            aria-labelledby="tab-multi-1">
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                </button>
-                            </div>
-                            <code class="lang-html code">
-                                <p class="nds-truncate" style="--truncate: 2;">This is a longer text content that will
-                                be truncated to exactly two lines. When the content exceeds two lines, it will be cut
-                                off and show ellipsis at the end of the second line to indicate there is more content
-                                available.</p>
-                            </code>
-                        </div>
-                    </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-text-font nds-icon"></i>
+                        <span class="nds-label">Any Text Element</span>
+                    </span>
+                    <p class="nds-item-desc">Apply to headings, paragraphs, spans, divs, or any element that contains text content.</p>
                 </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-horizontal-resize nds-icon"></i>
+                        <span class="nds-label">Width-Responsive</span>
+                    </span>
+                    <p class="nds-item-desc">Truncation recalculates automatically when the parent container resizes, with no additional code required.</p>
                 </div>
-            </div>
-
-            <!-- Custom Line Count -->
-            <div class="nds-demo-card">
-                <div class="demo-header">
-                    <div class="demo-label">Custom Line Count (3 Lines)</div>
-                    <div class="demo-action">
-
-                    </div>
-                </div>
-                <div class="demo-container">
-                    <div class="state-demo">
-                        <div style="width: 350px; border: 1px solid #ddd; padding: 16px;">
-                            <p class="nds-truncate" style="--truncate: 3;">Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                                enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                                commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-                                dolore eu fugiat nulla pariatur.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided" hidden>
-                    <div class="nds-tab-list-container">
-                        <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                                aria-controls="panel-custom-1" id="tab-custom-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                        </nav>
-                    </div>
-                    <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-custom-1"
-                            aria-labelledby="tab-custom-1">
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                </button>
-                            </div>
-                            <code class="lang-html code">
-                                <p class="nds-truncate" style="--truncate: 3;">Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                                enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                                commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-                                dolore eu fugiat nulla pariatur.</p>
-                            </code>
-                        </div>
-                    </div>
-                </div>
-                </div>
-            </div>
-
-            <!-- Different Elements -->
-            <div class="nds-demo-card">
-                <div class="demo-header">
-                    <div class="demo-label">Different HTML Elements</div>
-                    <div class="demo-action">
-
-                    </div>
-                </div>
-                <div class="demo-container">
-                    <div class="state-demo" style="display: grid; gap: 16px;">
-                        <!-- Heading -->
-                        <div style="width: 250px; border: 1px solid #ddd; padding: 12px;">
-                            <h3 class="nds-truncate">This is a very long heading that will be truncated</h3>
-                        </div>
-
-                        <!-- Span -->
-                        <div style="width: 200px; border: 1px solid #ddd; padding: 12px;">
-                            <span class="nds-truncate" style="--truncate: 2;">This is a span element with truncated
-                                text content that spans multiple lines</span>
-                        </div>
-
-                        <!-- Div -->
-                        <div style="width: 300px; border: 1px solid #ddd; padding: 12px;">
-                            <div class="nds-truncate" style="--truncate: 2;">This div element contains text that
-                                will be truncated after two lines of content. The ellipsis will appear at the end.</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided" hidden>
-                    <div class="nds-tab-list-container">
-                        <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                                aria-controls="panel-elements-1" id="tab-elements-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                        </nav>
-                    </div>
-                    <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-elements-1"
-                            aria-labelledby="tab-elements-1">
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                </button>
-                            </div>
-                            <code class="lang-html code">
-                                <!-- Heading -->
-                                <h3 class="nds-truncate">This is a very long heading that will be truncated</h3>
-
-                                <!-- Span -->
-                                <span class="nds-truncate" style="--truncate: 2;">This is a span element with truncated text content that spans multiple lines</span>
-
-                                <!-- Div -->
-                                <div class="nds-truncate" style="--truncate: 2;">This div element contains text that will be truncated after two lines of content. The ellipsis will appear at the end.</div>
-                            </code>
-                        </div>
-                    </div>
-                </div>
-                </div>
-            </div>
-
             </div>
         </div>
     </div>
@@ -279,129 +212,31 @@ direction: ltr
             <h2 class="nds-section-title">Usage Guidelines</h2>
         </div>
         <div class="nds-section-body">
-                <div class="nds-content-block">
-                    <h3 class="nds-block-title">Basic Usage</h3>
-                    <ul>
-                        <li>Add .nds-truncate class to any text element</li>
-                        <li>Default behavior truncates to 1 line</li>
-                        <li>Automatically adds ellipsis (...) for overflow</li>
-                        <li>Works with any HTML text element (p, span, div, h1-h6)</li>
-                    </ul>
-                </div>
 
-                <div class="nds-content-block">
-                    <h3 class="nds-block-title">Multi-line Truncation</h3>
-                    <ul>
-                        <li>Use --truncate CSS custom property</li>
-                        <li>Set any number: style="--truncate: 3;"</li>
-                        <li>Uses modern line-clamp for better browser support</li>
-                        <li>Includes webkit prefix for older browsers</li>
-                    </ul>
-                </div>
-
-                <div class="nds-content-block">
-                    <h3 class="nds-block-title">When to Use</h3>
-                    <ul>
-                        <li>Card descriptions and summaries</li>
-                        <li>Long titles in navigation menus</li>
-                        <li>Product descriptions in listings</li>
-                        <li>User-generated content previews</li>
-                    </ul>
-                </div>
-
-                <div class="nds-content-block">
-                    <h3 class="nds-block-title">Accessibility</h3>
-                    <ul>
-                        <li>Consider providing full text via tooltip or expand option</li>
-                        <li>Use title attribute for single-line truncation</li>
-                        <li>Ensure truncated content doesn't lose essential meaning</li>
-                        <li>Test with screen readers for proper content exposure</li>
-                    </ul>
-                </div>
-        </div>
-    </div>
-</section>
-
-<!-- CSS Implementation -->
-<section id="truncateCSS" class="nds-content-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">CSS Implementation</h2>
-            <p class="nds-section-description">The underlying CSS that powers the truncate utility</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-showcase">
-
-            <div class="nds-demo-card">
-                <div class="demo-header">
-                    <div class="demo-label">CSS Code</div>
-                </div>
-                <div class="demo-container">
-                    <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example">
-                            <code class="lang-css code">
-.nds-truncate {
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: var(--truncate, 1);
-    line-clamp: var(--truncate, 1);
-    text-overflow: ellipsis;
-}
-
-/* Usage Examples */
-.single-line {
-    /* Default: 1 line truncation */
-}
-
-.two-lines {
-    --truncate: 2;
-}
-
-.three-lines {
-    --truncate: 3;
-}
-</code>
-                        </div>
-                    </div>
-                </div>
+            <div class="nds-content-block">
+                <h3 class="nds-block-title">Best Practices</h3>
+                <ul>
+                    <li>Use <code class="nds-inline-code lang-html">nds-truncate</code> for text that may overflow in constrained layouts such as <a class="nds-color" href="{{ 'components/cards' | relative_url }}">Cards</a>, table cells, navigation labels, and list items</li>
+                    <li>Use multi-line truncation (<code class="nds-inline-code lang-html">--truncate: 2</code> or <code class="nds-inline-code lang-html">--truncate: 3</code>) for descriptions and summaries where a single line removes too much context</li>
+                    <li>Pair with a <code class="nds-inline-code lang-html">title</code> attribute or a tooltip so users can access the full text on hover</li>
+                    <li>Do not truncate text that the user must read in full to complete a task, such as form labels, error messages, or legal disclaimers. Show the full text or use <a class="nds-color" href="{{ 'utilities/expandable-content' | relative_url }}">Expandable Content</a> instead</li>
+                    <li>Do not use truncation as a substitute for writing concise content. If every card description is being clipped, the content itself is too long</li>
+                    <li>Choose the line count based on the content type: 1 line for titles and labels, 2 lines for short descriptions, 3 lines for content previews where the opening sentence matters</li>
+                    <li>When truncating inside flex or grid children, ensure the element has a constrained width (from the parent or an explicit <code class="nds-inline-code lang-html">max-width</code>). Without a width boundary, the text will not overflow and truncation will not activate</li>
+                    <li>Test truncated content with screen readers to verify the full text is still announced. The <code class="nds-inline-code lang-html">nds-truncate</code> class only clips visually; the DOM text remains intact</li>
+                    <li>Prefer <a class="nds-color" href="{{ 'utilities/expandable-content' | relative_url }}">Expandable Content</a> over truncation when users need on-page access to the full text. Truncation hides content permanently unless the user navigates elsewhere; expandable content reveals it in place</li>
+                </ul>
             </div>
 
+            <div class="nds-content-block">
+                <h3 class="nds-block-title">CSS Custom Properties</h3>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">--truncate</code></td><td><code class="nds-inline-code lang-html">1</code></td><td>Number of visible lines before the text is clipped with an ellipsis. Set to any positive integer.</td></tr>
+                    </tbody>
+                </table>
             </div>
-        </div>
-    </div>
-</section>
-
-<!-- Comparison -->
-<section id="truncateComparison" class="nds-content-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Truncate vs Expandable</h2>
-            <p class="nds-section-description">When to use text truncation vs expandable content</p>
-        </div>
-        <div class="nds-section-body">
-
-                <div class="nds-content-block">
-                    <h3 class="nds-block-title">Use Truncate Text When:</h3>
-                    <ul>
-                        <li>Content is short to medium length</li>
-                        <li>Preview/summary is sufficient</li>
-                        <li>Space is limited (cards, lists)</li>
-                        <li>Users scan rather than read</li>
-                        <li>Content importance is low</li>
-                    </ul>
-                </div>
-
-                <div class="nds-content-block">
-                    <h3 class="nds-block-title">Use Expandable Content When:</h3>
-                    <ul>
-                        <li>Content is long and important</li>
-                        <li>Users need access to full content</li>
-                        <li>Interactive expansion is acceptable</li>
-                        <li>Content has varying lengths</li>
-                        <li>Reading experience matters</li>
-                    </ul>
-                </div>
 
         </div>
     </div>

@@ -15,6 +15,10 @@
  * data-toggler='["attr1=value1 attr2", ".target", "type", "attr"]'
  * data-toggler='["disabled checked", ".target", "type", "attr"]'  // for boolean attributes
  *
+ * Inline style / CSS custom property toggling:
+ * data-toggler='["--truncate:2", ".target", "type", "style"]'
+ * data-toggler='["--truncate:2 --max-height:200px", ".target", "type", "style"]'  // multiple props
+ *
  * Multiple operations:
  * data-toggler='[["class1", ".target1", "type1"], ["class2", ".target2", "type2", "add"]]'
  */
@@ -375,6 +379,8 @@
                         value.trim().split(/\s+/).forEach(function(prop) {
                             if (prop) el[prop] = true;
                         });
+                    } else if (op === 'style') {
+                        handleStyleToggling(el, value);
                     } else if (op === 'content-prepend' || op === 'content-append') {
                         handleContentToggling(el, value, op);
                     } else {
@@ -457,6 +463,8 @@
                                     handleDataStateToggling(targetElement, classNamesOrAttrs, demoCard);
                                 } else if (deselectionOperationType === 'prop') {
                                     handlePropertyDeselection(targetElement, classNamesOrAttrs);
+                                } else if (deselectionOperationType === 'style') {
+                                    handleStyleDeselection(targetElement, classNamesOrAttrs);
                                 } else if (deselectionOperationType === 'content-prepend' || deselectionOperationType === 'content-append') {
                                     handleContentToggling(targetElement, classNamesOrAttrs, deselectionOperationType);
                                     updateCodeExampleForContent(demoCard, targetElement, classNamesOrAttrs, deselectionOperationType);
@@ -535,6 +543,13 @@
                 } else if (operationType === 'prop') {
                     // Handle native JS property toggling (e.g. indeterminate)
                     handlePropertyToggling(targetElement, classNamesOrAttrs);
+                } else if (operationType === 'style') {
+                    // Handle inline style / CSS custom property toggling
+                    if (isDeselecting) {
+                        handleStyleDeselection(targetElement, classNamesOrAttrs);
+                    } else {
+                        handleStyleToggling(targetElement, classNamesOrAttrs);
+                    }
                 } else if (operationType === 'chart') {
                     // Handle chart option toggling via NDSChart API
                     handleChartToggling(targetElement, button, isDeselecting);
@@ -915,6 +930,28 @@
             if (prop === 'indeterminate' && window.NDS && window.NDS.Forms && window.NDS.Forms.setIndeterminate) {
                 window.NDS.Forms.setIndeterminate(targetElement, false);
             }
+        });
+    }
+
+    // Handle inline style / CSS custom property toggling
+    // Format: "--prop:value" or "--prop:value otherProp:value" (space-separated pairs)
+    function handleStyleToggling(targetElement, propsString) {
+        propsString.trim().split(/\s+/).forEach(function(pair) {
+            var colonIdx = pair.indexOf(':');
+            if (colonIdx === -1) return;
+            var prop = pair.substring(0, colonIdx).trim();
+            var value = pair.substring(colonIdx + 1).trim();
+            targetElement.style.setProperty(prop, value);
+        });
+    }
+
+    // Handle style deselection - removes previously set properties
+    function handleStyleDeselection(targetElement, propsString) {
+        propsString.trim().split(/\s+/).forEach(function(pair) {
+            var colonIdx = pair.indexOf(':');
+            if (colonIdx === -1) return;
+            var prop = pair.substring(0, colonIdx).trim();
+            targetElement.style.removeProperty(prop);
         });
     }
 
