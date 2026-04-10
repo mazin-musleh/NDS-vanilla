@@ -62,6 +62,9 @@
     border: 1px solid var(--_card-border);
   }
 
+  &:is(.nds-full-width, .nds-full){
+    --card-width: 100%;
+  }
 
   &:is(.nds-center, .nds-statistic) {
     :is(.nds-card-header, .nds-card-content > *, .nds-card-text > *, .nds-card-tags, .nds-card-actions) {
