@@ -80,6 +80,43 @@ direction: ltr
                                     </div>
                                 </div>
                             </div>
+                            <div class="nds-dropmenu demo-toggle-menu">
+                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Color: ">
+                                    <span class="nds-label">Color: None</span>
+                                </button>
+                                <div class="nds-dropmenu-menu" hidden>
+                                    <div class="nds-dropmenu-scroll">
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected" data-card-color="none">
+                                            <span class="nds-label">None</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-color="gold">
+                                            <span class="nds-label">Gold</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-color="neutral">
+                                            <span class="nds-label">Neutral</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-color="lavendar">
+                                            <span class="nds-label">Lavendar</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-color="yellow">
+                                            <span class="nds-label">Yellow</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-color="red">
+                                            <span class="nds-label">Red</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-color="blue">
+                                            <span class="nds-label">Blue</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-color="oncolor">
+                                            <span class="nds-label">Oncolor</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-color", ".nds-card", "cardColor"]'>
+                                <span class="nds-label">Color fill</span>
+                            </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
                                 data-toggler='["nds-stroke", ".nds-card", "cardStroke"]'>
                                 <span class="nds-label">Stroke</span>
@@ -235,6 +272,43 @@ direction: ltr
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-action">
+                            <div class="nds-dropmenu demo-toggle-menu">
+                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Color: ">
+                                    <span class="nds-label">Color: None</span>
+                                </button>
+                                <div class="nds-dropmenu-menu" hidden>
+                                    <div class="nds-dropmenu-scroll">
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected" data-card-color="none">
+                                            <span class="nds-label">None</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-color="gold">
+                                            <span class="nds-label">Gold</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-color="neutral">
+                                            <span class="nds-label">Neutral</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-color="lavendar">
+                                            <span class="nds-label">Lavendar</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-color="yellow">
+                                            <span class="nds-label">Yellow</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-color="red">
+                                            <span class="nds-label">Red</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-color="blue">
+                                            <span class="nds-label">Blue</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-color="oncolor">
+                                            <span class="nds-label">Oncolor</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-color", ".nds-card", "cardColor"]'>
+                                <span class="nds-label">Color fill</span>
+                            </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
                                 data-toggler='["nds-stroke", ".nds-card", "cardStroke"]'>
                                 <span class="nds-label">Stroke</span>

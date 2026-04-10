@@ -62,6 +62,7 @@
         initializeCardModeToggles();
         initializeCardStateToggles();
         initializeCardHeaderToggles();
+        initializeCardColorToggles();
         initializeCardContentToggles();
         initializeFormFixToggles();
         initializeFormFixDropmenu();
@@ -1808,6 +1809,32 @@
                     if (headerType === 'avatar' && avatarSection) avatarSection.removeAttribute('hidden');
                     if (headerType === 'image' && imageSection) imageSection.removeAttribute('hidden');
                 }
+
+                rebuildCardCode(demoCard);
+            });
+        });
+    }
+
+    // Card color dropmenu — mutually exclusive color variants
+    var CARD_COLOR_CLASSES = ['nds-gold', 'nds-neutral', 'nds-lavendar', 'nds-yellow', 'nds-red', 'nds-blue', 'nds-oncolor'];
+    function initializeCardColorToggles() {
+        document.querySelectorAll('[data-card-color]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const demoCard = this.closest('.nds-demo-card');
+                if (!demoCard) return;
+
+                const color = this.dataset.cardColor;
+                selectDropmenuItem(this, '[data-card-color]');
+
+                const container = demoCard.querySelector('.demo-container');
+                const cards = demoCard.querySelectorAll('.demo-container .nds-card');
+                cards.forEach(card => {
+                    card.classList.remove(...CARD_COLOR_CLASSES);
+                    if (color !== 'none') card.classList.add('nds-' + color);
+                });
+
+                // Toggle dark background for oncolor variant
+                if (container) container.classList.toggle('dark-bg', color === 'oncolor');
 
                 rebuildCardCode(demoCard);
             });
