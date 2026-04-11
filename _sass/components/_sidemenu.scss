@@ -14,7 +14,6 @@
     --btn-width: 40px;
     --_toggle-height: var(--toggle-height, var(--nds-sidemenu-toggle-height, 40px));
     width: var(--nds-sidemenu-width);
-    min-width: var(--nds-sidemenu-width);
     background-color: var(--background-menu);
     box-shadow: var(--shadow-md);
     padding: var(--spacing-md);
@@ -26,7 +25,7 @@
     border-radius: var(--radius-md);
 }
 
-#nds-sidemenu-toggle {
+.nds-sidemenu-toggle {
     --_toggle-transform: var(--toggle-transform, unset);
     --_toggle-pos: var(--toggle-pos, 40svh);
     display: none;
@@ -37,11 +36,8 @@
    ======================================== */
 
 .nds-sidemenu>nav.nds-drawer {
-
     position: sticky;
     top: calc(var(--nds-nav-height) + var(--spacing-md));
-    width: 100%;
-
 }
 
 /* ========================================
@@ -69,44 +65,8 @@
         border-bottom: 0;
     }
 
-    // ========================================
-    // SLIDER MODE STATES - Horizontal sliding (tablet/mobile)
-    // ========================================
-    .nds-sidemenu:not(.nds-top) {
-        position: fixed;
-        top: 0;
-        bottom: 0;
-        z-index: 899;
-
-        // RTL: slide out to the right
-        transform: translateX(100%);
-
-        @include ltr {
-            // LTR: slide out to the left
-            transform: translateX(-100%);
-        }
-
-        // Open state: slide in to on-screen position
-        &[data-state~="open"] {
-            transform: translateX(0px) !important;
-            transition: transform var(--nds-transition);
-        }
-
-        // Closing state: slide back to off-screen position
-        &[data-state~="closing"] {
-            // RTL: slide out to the right
-            transform: translateX(100%) !important;
-            transition: transform var(--nds-transition);
-
-            @include ltr {
-                // LTR: slide out to the left
-                transform: translateX(-100%) !important;
-            }
-        }
-    }
-
     /* Side Menu Toggle Button */
-    #nds-sidemenu-toggle:not([hidden]) {
+    .nds-sidemenu-toggle:not([hidden]) {
         --btn-size: 40px;
         border: unset;
         outline: none;
@@ -120,7 +80,7 @@
         box-shadow: var(--shadow-md);
     }
 
-    #nds-sidemenu-toggle i {
+    .nds-sidemenu-toggle i {
         font-size: 1.5rem;
         color: var(--text-oncolor-primary);
         scale: -1;
@@ -130,15 +90,15 @@
 
     /* LTR Support */
     @include ltr {
-        #nds-sidemenu-toggle i {
+        .nds-sidemenu-toggle i {
             scale: 1;
         }
 
-        .nds-sidemenu {
+        .nds-sidemenu:not(.nds-top) {
             transform: translateX(-100%);
         }
 
-        #nds-sidemenu-toggle {
+        .nds-sidemenu-toggle {
             right: unset;
             left: 0;
             --toggle-transform: translate(calc(var(--nds-sidemenu-width)), var(--_toggle-pos));
@@ -150,13 +110,41 @@
         }
     }
 
+    // ========================================
+    // SLIDER MODE - Horizontal sliding (tablet/mobile)
+    // ========================================
     .nds-sidemenu:not(.nds-top) {
-
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        z-index: 899;
         --btn-height: 72px;
         --toggle-height: var(--btn-height);
 
-        & #nds-sidemenu-toggle {
+        // RTL: slide out to the right
+        transform: translateX(100%);
 
+        @include ltr {
+            transform: translateX(-100%);
+        }
+
+        // Open state
+        &[data-state~="open"] {
+            transform: translateX(0px) !important;
+            transition: transform var(--nds-transition);
+        }
+
+        // Closing state
+        &[data-state~="closing"] {
+            transform: translateX(100%) !important;
+            transition: transform var(--nds-transition);
+
+            @include ltr {
+                transform: translateX(-100%) !important;
+            }
+        }
+
+        .nds-sidemenu-toggle {
             transform: var(--_toggle-transform);
             transition: transform var(--nds-transition);
             --btn-indicator-size: 3px;
@@ -221,9 +209,8 @@
         border-radius: 0;
         transform: translateX(0px) !important;
         z-index: 900;
-        flex: unset;
 
-        #nds-sidemenu-toggle {
+        .nds-sidemenu-toggle {
             --btn-width: 100%;
             --btn-bg: var(--background-nav);
             --btn-bg-hover: var(--button-background-neutral-hovered);
@@ -289,7 +276,7 @@
             border-radius: 0;
             margin-bottom: 1rem;
 
-            #nds-sidemenu-toggle {
+            .nds-sidemenu-toggle {
                 position: sticky;
                 top: var(--nds-nav-height);
             }

@@ -31,7 +31,7 @@ direction: ltr
                             <div class="nds-expandable-content">
                                 <code class="lang-html code">
 aside.nds-sidemenu
-&#9500;&#9472;&#9472; button#nds-sidemenu-toggle.nds-sidemenu-toggle.nds-btn.nds-peek
+&#9500;&#9472;&#9472; button.nds-sidemenu-toggle.nds-btn.nds-peek
 &#9474;   &#9500;&#9472;&#9472; i.hgi.hgi-stroke.hgi-menu-02.nds-icon
 &#9474;   &#9492;&#9472;&#9472; span.nds-label.nds-truncate (toggle label, hidden on desktop)
 &#9474;
@@ -92,7 +92,7 @@ aside.nds-sidemenu
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
 &lt;aside class="nds-sidemenu" aria-label="Sidebar"&gt;
-  &lt;button id="nds-sidemenu-toggle" class="nds-sidemenu-toggle nds-btn nds-peek" aria-label="Sidebar Menu" hidden&gt;
+  &lt;button class="nds-sidemenu-toggle nds-btn nds-peek" aria-label="Sidebar Menu" hidden&gt;
     &lt;i class="hgi hgi-stroke hgi-menu-02 nds-icon"&gt;&lt;/i&gt;
     &lt;span class="nds-label nds-truncate" hidden&gt;Side menu&lt;/span&gt;
   &lt;/button&gt;
@@ -107,7 +107,7 @@ aside.nds-sidemenu
         &lt;/li&gt;
         &lt;!-- Accordion group --&gt;
         &lt;li&gt;
-          &lt;button class="nds-btn nds-subtle nds-menu-btn nds-indicator" aria-expanded="false"&gt;
+          &lt;button class="nds-btn nds-subtle nds-indicator" aria-expanded="false"&gt;
             &lt;span class="nds-label"&gt;Components&lt;/span&gt;
           &lt;/button&gt;
           &lt;ul&gt;
@@ -130,7 +130,7 @@ aside.nds-sidemenu
         &lt;/li&gt;
         &lt;!-- Another accordion group --&gt;
         &lt;li&gt;
-          &lt;button class="nds-btn nds-subtle nds-menu-btn nds-indicator" aria-expanded="false"&gt;
+          &lt;button class="nds-btn nds-subtle nds-indicator" aria-expanded="false"&gt;
             &lt;span class="nds-label"&gt;Layout&lt;/span&gt;
           &lt;/button&gt;
           &lt;ul&gt;
@@ -155,64 +155,6 @@ aside.nds-sidemenu
 &lt;/aside&gt;
                                         </code>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Content Layout Integration -->
-<section id="sideNavLayout" class="nds-content-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Content Layout Integration</h2>
-            <p class="nds-section-description">The side menu is placed inside a <code class="nds-inline-code lang-html">nds-content-layout</code> wrapper alongside <code class="nds-inline-code lang-html">nds-main-content</code>. Layout modifier classes on the wrapper control how the sidebar appears and behaves.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Layout Wrapper</div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
-                            <div class="nds-tab-list-container">
-                                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-sidenav-layout-1" id="tab-sidenav-layout-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-sidenav-layout-1" aria-labelledby="tab-sidenav-layout-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                        </button>
-                                    </div>
-                                    <code class="lang-html code">
-&lt;!-- Default sidebar layout --&gt;
-&lt;div class="nds-content-layout"&gt;
-  &lt;aside class="nds-sidemenu" aria-label="Sidebar"&gt;...&lt;/aside&gt;
-  &lt;main class="nds-main-content"&gt;...&lt;/main&gt;
-&lt;/div&gt;
-
-&lt;!-- Card view: rounded sidebar corners --&gt;
-&lt;div class="nds-content-layout nds-cardView"&gt;
-  &lt;aside class="nds-sidemenu" aria-label="Sidebar"&gt;...&lt;/aside&gt;
-  &lt;main class="nds-main-content"&gt;...&lt;/main&gt;
-&lt;/div&gt;
-
-&lt;!-- Top submenu mode: sidebar becomes a horizontal dropdown on tablet/mobile --&gt;
-&lt;div class="nds-content-layout"&gt;
-  &lt;aside class="nds-sidemenu nds-top" aria-label="Sidebar"&gt;...&lt;/aside&gt;
-  &lt;main class="nds-main-content"&gt;...&lt;/main&gt;
-&lt;/div&gt;
-                                    </code>
                                 </div>
                             </div>
                         </div>
@@ -295,7 +237,7 @@ aside.nds-sidemenu
             <div class="nds-content-block" style="margin-top: var(--spacing-3xl);">
                 <h3 class="nds-block-title">Mode Comparison</h3>
                 <table class="nds-table nds-responsive">
-                    <thead><tr><th>Mode</th><th>Layout Class</th><th>Mobile Behavior</th><th>Best For</th></tr></thead>
+                    <thead><tr><th>Mode</th><th>Class / Front Matter</th><th>Mobile Behavior</th><th>Best For</th></tr></thead>
                     <tbody>
                         <tr>
                             <td>Slider</td>
@@ -348,7 +290,7 @@ aside.nds-sidemenu
                                     <code class="lang-html code">
 &lt;ul class="nds-drawer-list"&gt;
   &lt;li&gt;
-    &lt;button class="nds-btn nds-subtle nds-menu-btn nds-indicator" aria-expanded="false"&gt;
+    &lt;button class="nds-btn nds-subtle nds-indicator" aria-expanded="false"&gt;
       &lt;span class="nds-label"&gt;Components&lt;/span&gt;
     &lt;/button&gt;
     &lt;ul&gt;
@@ -377,94 +319,6 @@ aside.nds-sidemenu
     </div>
 </section>
 
-<!-- Data-Driven Menu -->
-<section id="sideNavDataDriven" class="nds-content-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Data-Driven Menu (Jekyll)</h2>
-            <p class="nds-section-description">In the NDS Jekyll site the side menu is generated from a YAML data file. Each page can override which data file to load through the <code class="nds-inline-code lang-html">sidemenu</code> front matter property, making it possible to show different navigation trees for different site sections.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">YAML Data Format</div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
-                            <div class="nds-tab-list-container">
-                                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-sidenav-yaml-1" id="tab-sidenav-yaml-1">
-                                        <span class="nds-tab-label">YAML</span>
-                                    </button>
-                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false" aria-controls="panel-sidenav-yaml-2" id="tab-sidenav-yaml-2">
-                                        <span class="nds-tab-label">Front Matter</span>
-                                    </button>
-                                </nav>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-sidenav-yaml-1" aria-labelledby="tab-sidenav-yaml-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                        </button>
-                                    </div>
-                                    <div class="nds-expandable-content">
-                                        <code class="lang-html code">
-# _data/sidemenu/sidemenu.yml
-
-- label: "Home"
-  url: "/"
-  href: "/"
-
-- label: "Components"
-  has_sub: true
-  children:
-    - label: "Accordion"
-      url: "/components/accordion"
-      href: "/components/accordion.html"
-    - label: "Alert"
-      url: "/components/alert"
-      href: "/components/alert.html"
-    - label: "Buttons"
-      url: "/components/button"
-      href: "/components/button.html"
-
-- label: "Layout"
-  has_sub: true
-  children:
-    - label: "Grid"
-      url: "/layout/grid"
-      href: "/layout/grid.html"
-    - label: "Section"
-      url: "/layout/section"
-      href: "/layout/section.html"
-                                        </code>
-                                    </div>
-                                </div>
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-sidenav-yaml-2" aria-labelledby="tab-sidenav-yaml-2" hidden>
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                        </button>
-                                    </div>
-                                    <code class="lang-html code">
----
-# Load a custom sidemenu data file
-# Reads from _data/sidemenu/{value}.yml
-sidemenu: my-section-nav
----
-                                    </code>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
 <!-- Built-in Features -->
 <section id="sideNavFeatures" class="nds-content-section">
     <div class="nds-section-wrapper">
@@ -478,7 +332,7 @@ sidemenu: my-section-nav
                         <i class="hgi hgi-stroke hgi-plug-socket nds-icon"></i>
                         <span class="nds-label">Auto-initialization</span>
                     </span>
-                    <p class="nds-item-desc">Activates when <code class="nds-inline-code lang-html">.nds-sidemenu</code> is on the page. Accordion groups, toggle button, close-on-click-outside, and Escape key handling all attach automatically.</p>
+                    <p class="nds-item-desc">Activates when <code class="nds-inline-code lang-html">.nds-sidemenu</code> is on the page. Toggle button, close-on-click-outside, and Escape key handling all attach automatically. Accordion behavior is provided by the <a class="nds-color" href="{{ 'components/drawer' | relative_url }}">Drawer</a> component.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -492,7 +346,7 @@ sidemenu: my-section-nav
                         <i class="hgi hgi-stroke hgi-layout-04 nds-icon"></i>
                         <span class="nds-label">Dual Responsive Modes</span>
                     </span>
-                    <p class="nds-item-desc">Choose between a slide-in sidebar panel or a top dropdown bar for mobile. Switch modes with a single layout class on the wrapper.</p>
+                    <p class="nds-item-desc">Choose between a slide-in sidebar panel or a top dropdown bar for mobile. Switch modes by adding <code class="nds-inline-code lang-html">nds-top</code> to the sidemenu or setting <code class="nds-inline-code lang-html">sidemenu_mode: top</code> in front matter.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -541,7 +395,6 @@ sidemenu: my-section-nav
                     <li>Group related pages under a single accordion parent with a clear category label. Avoid mixing unrelated items in the same group</li>
                     <li>Add <code class="nds-inline-code lang-html">nds-cardView</code> to the layout wrapper when the page design calls for rounded, card-like containers. This applies border-radius to the sidebar</li>
                     <li>Hide the side menu entirely with <code class="nds-inline-code lang-html">sidemenu_mode: false</code> in front matter on pages that do not need section navigation (landing pages, full-width dashboards)</li>
-                    <li>To serve different navigation trees for different site sections, create separate YAML files in <code class="nds-inline-code lang-html">_data/sidemenu/</code> and set <code class="nds-inline-code lang-html">sidemenu: filename</code> in each page's front matter</li>
                 </ul>
             </div>
 
@@ -562,7 +415,7 @@ sidemenu: my-section-nav
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">nds-peek</code></td>
-                            <td><code class="nds-inline-code lang-html">#nds-sidemenu-toggle</code></td>
+                            <td><code class="nds-inline-code lang-html">.nds-sidemenu-toggle</code></td>
                             <td>Enables the proximity-aware peek animation on the toggle button</td>
                         </tr>
                         <tr>
@@ -646,16 +499,15 @@ sidemenu: my-section-nav
 NDS.Sidemenu.init();
 
 // ── What init() sets up ─────────────────────────────
-// - Accordion toggle: clicking a group header expands it
-//   and collapses sibling groups with animated transitions
-// - Active state: walks up from li[data-state="active"]
-//   and opens all ancestor accordion groups
 // - Toggle button: shown on tablet/mobile, opens/closes
 //   the sidebar with backdrop overlay
 // - Close triggers: click outside, Escape key, or
 //   viewport width change all close the menu
 // - Peek behavior: the toggle button flashes on load
 //   and reappears when the cursor moves near it
+//
+// Accordion toggle and active state expansion are handled
+// by the drawer component (NDS.Drawer) automatically.
 
 // ── Backdrop integration ────────────────────────────
 // Uses NDS.Backdrop.show() / .hide() for the overlay.
@@ -668,40 +520,6 @@ NDS.Sidemenu.init();
 </code>
                     </div>
                 </div>
-            </div>
-
-            <div class="nds-content-block">
-                <h3 class="nds-block-title">YAML Data File Format</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">label</code></td>
-                            <td>String</td>
-                            <td>Display text for the menu item</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">href</code></td>
-                            <td>String</td>
-                            <td>Link destination (used in the rendered <code class="nds-inline-code lang-html">&lt;a&gt;</code> element)</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">url</code></td>
-                            <td>String</td>
-                            <td>Canonical URL path (used for active state comparison with <code class="nds-inline-code lang-html">page.url</code>)</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">has_sub</code></td>
-                            <td>Boolean</td>
-                            <td>Set to <code class="nds-inline-code lang-html">true</code> to create an accordion group with children</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">children</code></td>
-                            <td>Array</td>
-                            <td>List of child items (each with <code class="nds-inline-code lang-html">label</code>, <code class="nds-inline-code lang-html">url</code>, <code class="nds-inline-code lang-html">href</code>)</td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
 
         </div>

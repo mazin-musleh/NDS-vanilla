@@ -16,80 +16,9 @@
         const topbarBottom = topbar ? Math.max(0, topbar.getBoundingClientRect().bottom) : 0;
         const visibleHeader = Math.max(navBottom, topbarBottom);
 
-        accMenu.style.paddingTop = visibleHeader + 'px';
-        drawer.style.setProperty('--drawer-max-height', Math.max(window.innerHeight - visibleHeader, 100) + 'px');
+        accMenu.style.paddingTop = (visibleHeader > 0 ? visibleHeader + 8 : 0) + 'px';
+        drawer.style.setProperty('--drawer-max-height', Math.max(window.innerHeight - visibleHeader - 16, 100) + 'px');
     };
-
-    function initializeActiveStates(accMenu) {
-        accMenu.querySelectorAll('li[data-state~="active"]').forEach(activeItem => {
-            let current = activeItem;
-            while (current && current !== accMenu) {
-                if (current.classList.contains("has-sub")) addState(current, 'open');
-                current = current.parentElement.closest("li");
-            }
-        });
-    }
-
-    function setupAccordionToggle(accMenu, ac) {
-        const handler = (e) => {
-            const anchor = e.target.closest("li.has-sub > a");
-            if (!anchor) return;
-
-            e.preventDefault();
-            const li = anchor.parentElement;
-            const submenu = li.querySelector(":scope > ul");
-            if (!submenu) return;
-
-            const isOpen = hasState(li, 'open');
-            anchor.setAttribute('aria-expanded', !isOpen);
-
-            if (!isOpen) {
-                // Batch: read all heights first, then write — single reflow
-                const closingSiblings = [];
-                [...li.parentElement.children].forEach(sibling => {
-                    if (sibling === li || !sibling.classList.contains("has-sub")) return;
-                    const siblingSub = sibling.querySelector(":scope > ul");
-                    if (!hasState(sibling, 'open') || !siblingSub) return;
-                    closingSiblings.push({ sibling, siblingSub, height: siblingSub.scrollHeight });
-                });
-                const openHeight = submenu.scrollHeight;
-
-                // Write phase — one forced reflow for all transitions
-                closingSiblings.forEach(({ sibling, siblingSub, height }) => {
-                    const siblingAnchor = sibling.querySelector(":scope > a");
-                    if (siblingAnchor) siblingAnchor.setAttribute('aria-expanded', 'false');
-                    addState(sibling, 'closing');
-                    siblingSub.style.height = height + "px";
-                });
-                addState(li, 'open', 'opening');
-                submenu.style.height = "0px";
-
-                submenu.offsetHeight; // Single reflow to commit start heights
-
-                closingSiblings.forEach(({ sibling, siblingSub }) => {
-                    siblingSub.style.height = "0px";
-                    setTimeout(() => { clearState(sibling); siblingSub.style.height = ""; }, 250);
-                });
-                submenu.style.height = openHeight + "px";
-
-                submenu.addEventListener("transitionend", function handler() {
-                    removeState(li, 'opening');
-                    submenu.style.height = "";
-                    submenu.removeEventListener("transitionend", handler);
-                });
-            } else {
-                // Close current — read then write
-                const height = submenu.scrollHeight;
-                addState(li, 'closing');
-                submenu.style.height = height + "px";
-                submenu.offsetHeight;
-                submenu.style.height = "0px";
-                setTimeout(() => { clearState(li); submenu.style.height = ""; }, 250);
-            }
-        };
-        accMenu.addEventListener("click", handler);
-        ac.signal.addEventListener('abort', () => accMenu.removeEventListener("click", handler));
-    }
 
     // Scroll lock helpers for top mode
     const lockBodyScroll = () => {
@@ -338,7 +267,7 @@
 
         const ac = new AbortController();
 
-        const toggleBtn = document.getElementById("nds-sidemenu-toggle");
+        const toggleBtn = accMenu.querySelector(".nds-sidemenu-toggle");
         const isTopMode = accMenu.classList.contains('nds-top');
         const animTarget = isTopMode ? accMenu.querySelector('.nds-drawer') : accMenu;
         const drawer = accMenu.querySelector('.nds-drawer');
@@ -348,9 +277,6 @@
 
         // Store for cleanup
         currentInstance = ctx;
-
-        initializeActiveStates(accMenu);
-        setupAccordionToggle(accMenu, ac);
 
         // Toggle button
         if (toggleBtn) {

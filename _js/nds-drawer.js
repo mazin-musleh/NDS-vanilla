@@ -229,6 +229,10 @@
             const button = li.querySelector(':scope > .nds-btn');
             if (!button) return;
 
+            if (!button.classList.contains('nds-menu-btn')) {
+                button.classList.add('nds-menu-btn');
+            }
+
             button.addEventListener('click', (e) => {
                 // Don't toggle if drawer is in always-open mode
                 if (hasState(drawer, 'always-open')) {
