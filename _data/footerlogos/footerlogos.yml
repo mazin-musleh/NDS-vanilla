@@ -3,9 +3,11 @@
   height: 40
   alt: "National Design System Logo"
   url: "#"
+  class: nds-oncolor
 
 - image: assets/img/2030-vision.svg
   width: 60
   height: 40
   alt: "Saudi Vision 2030"
   url: "https://www.vision2030.gov.sa/"
+  class: nds-oncolor
