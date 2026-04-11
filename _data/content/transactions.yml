@@ -1,6 +1,7 @@
 - id: "TXN-2026-001"
   name: "Business License Renewal"
-  amount: "2,500 SAR"
+  amount: 2500
+  currency: "SAR"
   status: "completed"
   date: "2026-03-15"
   category: "Licensing"
@@ -8,7 +9,8 @@
 
 - id: "TXN-2026-002"
   name: "Visa Processing Fee"
-  amount: "800 SAR"
+  amount: 800
+  currency: "SAR"
   status: "pending"
   date: "2026-03-14"
   category: "Immigration"
@@ -16,7 +18,8 @@
 
 - id: "TXN-2026-003"
   name: "Property Transfer Tax"
-  amount: "15,000 SAR"
+  amount: 15000
+  currency: "SAR"
   status: "completed"
   date: "2026-03-12"
   category: "Real Estate"
@@ -24,7 +27,8 @@
 
 - id: "TXN-2026-004"
   name: "Vehicle Registration Fee"
-  amount: "450 SAR"
+  amount: 450
+  currency: "SAR"
   status: "completed"
   date: "2026-03-10"
   category: "Transport"
@@ -32,7 +36,8 @@
 
 - id: "TXN-2026-005"
   name: "Building Permit Application"
-  amount: "3,200 SAR"
+  amount: 3200
+  currency: "SAR"
   status: "failed"
   date: "2026-03-08"
   category: "Construction"
@@ -40,7 +45,8 @@
 
 - id: "TXN-2026-006"
   name: "Health Insurance Premium"
-  amount: "1,800 SAR"
+  amount: 1800
+  currency: "SAR"
   status: "completed"
   date: "2026-03-06"
   category: "Healthcare"
@@ -48,7 +54,8 @@
 
 - id: "TXN-2026-007"
   name: "School Enrollment Fee"
-  amount: "600 SAR"
+  amount: 600
+  currency: "SAR"
   status: "pending"
   date: "2026-03-05"
   category: "Education"
@@ -56,7 +63,8 @@
 
 - id: "TXN-2026-008"
   name: "Court Case Filing Fee"
-  amount: "350 SAR"
+  amount: 350
+  currency: "SAR"
   status: "completed"
   date: "2026-03-03"
   category: "Legal"
@@ -64,7 +72,8 @@
 
 - id: "TXN-2026-009"
   name: "VAT Quarterly Payment"
-  amount: "8,750 SAR"
+  amount: 8750
+  currency: "SAR"
   status: "completed"
   date: "2026-03-01"
   category: "Tax"
@@ -72,7 +81,8 @@
 
 - id: "TXN-2026-010"
   name: "Certificate Authentication"
-  amount: "200 SAR"
+  amount: 200
+  currency: "SAR"
   status: "pending"
   date: "2026-02-28"
   category: "Education"
@@ -80,7 +90,8 @@
 
 - id: "TXN-2026-011"
   name: "Passport Renewal Fee"
-  amount: "500 SAR"
+  amount: 500
+  currency: "SAR"
   status: "completed"
   date: "2026-02-25"
   category: "Identity"
@@ -88,8 +99,801 @@
 
 - id: "TXN-2026-012"
   name: "Work Permit Processing"
-  amount: "1,100 SAR"
+  amount: 1100
+  currency: "SAR"
   status: "failed"
   date: "2026-02-22"
   category: "Employment"
   icon: '<i class="hgi hgi-stroke hgi-briefcase-01 nds-icon"></i>'
+
+- id: "TXN-2026-013"
+  name: "National Address Registration"
+  amount: 50
+  currency: "SAR"
+  status: "completed"
+  date: "2026-02-20"
+  category: "Identity"
+  icon: '<i class="hgi hgi-stroke hgi-location-01 nds-icon"></i>'
+
+- id: "TXN-2026-014"
+  name: "Commercial Registration Renewal"
+  amount: 1200
+  currency: "SAR"
+  status: "completed"
+  date: "2026-02-18"
+  category: "Licensing"
+  icon: '<i class="hgi hgi-stroke hgi-store-01 nds-icon"></i>'
+
+- id: "TXN-2026-015"
+  name: "Driving License Issuance"
+  amount: 400
+  currency: "SAR"
+  status: "completed"
+  date: "2026-02-16"
+  category: "Transport"
+  icon: '<i class="hgi hgi-stroke hgi-license nds-icon"></i>'
+
+- id: "TXN-2026-016"
+  name: "Birth Certificate Request"
+  amount: 100
+  currency: "SAR"
+  status: "completed"
+  date: "2026-02-14"
+  category: "Identity"
+  icon: '<i class="hgi hgi-stroke hgi-baby-01 nds-icon"></i>'
+
+- id: "TXN-2026-017"
+  name: "Environmental Compliance Fee"
+  amount: 5600
+  currency: "SAR"
+  status: "pending"
+  date: "2026-02-12"
+  category: "Environment"
+  icon: '<i class="hgi hgi-stroke hgi-leaf-01 nds-icon"></i>'
+
+- id: "TXN-2026-018"
+  name: "Ambulance Service Payment"
+  amount: 750
+  currency: "SAR"
+  status: "completed"
+  date: "2026-02-10"
+  category: "Healthcare"
+  icon: '<i class="hgi hgi-stroke hgi-ambulance nds-icon"></i>'
+
+- id: "TXN-2026-019"
+  name: "University Tuition Installment"
+  amount: 12500
+  currency: "SAR"
+  status: "completed"
+  date: "2026-02-08"
+  category: "Education"
+  icon: '<i class="hgi hgi-stroke hgi-graduation-scroll nds-icon"></i>'
+
+- id: "TXN-2026-020"
+  name: "Trade Mark Registration"
+  amount: 3000
+  currency: "SAR"
+  status: "pending"
+  date: "2026-02-06"
+  category: "Licensing"
+  icon: '<i class="hgi hgi-stroke hgi-stamp-01 nds-icon"></i>'
+
+- id: "TXN-2026-021"
+  name: "Zakat Annual Payment"
+  amount: 22000
+  currency: "SAR"
+  status: "completed"
+  date: "2026-02-04"
+  category: "Tax"
+  icon: '<i class="hgi hgi-stroke hgi-mosque-01 nds-icon"></i>'
+
+- id: "TXN-2026-022"
+  name: "Electricity Bill Payment"
+  amount: 320
+  currency: "SAR"
+  status: "completed"
+  date: "2026-02-02"
+  category: "Utilities"
+  icon: '<i class="hgi hgi-stroke hgi-plug-01 nds-icon"></i>'
+
+- id: "TXN-2026-023"
+  name: "Water Service Fee"
+  amount: 180
+  currency: "SAR"
+  status: "completed"
+  date: "2026-01-31"
+  category: "Utilities"
+  icon: '<i class="hgi hgi-stroke hgi-renewable-energy-01 nds-icon"></i>'
+
+- id: "TXN-2026-024"
+  name: "Parking Violation Fine"
+  amount: 150
+  currency: "SAR"
+  status: "completed"
+  date: "2026-01-29"
+  category: "Transport"
+  icon: '<i class="hgi hgi-stroke hgi-parking-area-circle nds-icon"></i>'
+
+- id: "TXN-2026-025"
+  name: "Dental Treatment Copay"
+  amount: 300
+  currency: "SAR"
+  status: "completed"
+  date: "2026-01-27"
+  category: "Healthcare"
+  icon: '<i class="hgi hgi-stroke hgi-dental-care nds-icon"></i>'
+
+- id: "TXN-2026-026"
+  name: "Factory Operating License"
+  amount: 8000
+  currency: "SAR"
+  status: "pending"
+  date: "2026-01-25"
+  category: "Licensing"
+  icon: '<i class="hgi hgi-stroke hgi-factory-01 nds-icon"></i>'
+
+- id: "TXN-2026-027"
+  name: "Taxi Permit Renewal"
+  amount: 650
+  currency: "SAR"
+  status: "completed"
+  date: "2026-01-23"
+  category: "Transport"
+  icon: '<i class="hgi hgi-stroke hgi-taxi nds-icon"></i>'
+
+- id: "TXN-2026-028"
+  name: "Legal Consultation Fee"
+  amount: 2000
+  currency: "SAR"
+  status: "completed"
+  date: "2026-01-21"
+  category: "Legal"
+  icon: '<i class="hgi hgi-stroke hgi-justice-scale-01 nds-icon"></i>'
+
+- id: "TXN-2026-029"
+  name: "Credit Card Annual Fee"
+  amount: 500
+  currency: "SAR"
+  status: "completed"
+  date: "2026-01-19"
+  category: "Finance"
+  icon: '<i class="hgi hgi-stroke hgi-credit-card nds-icon"></i>'
+
+- id: "TXN-2026-030"
+  name: "Flight Booking Tax"
+  amount: 280
+  currency: "SAR"
+  status: "completed"
+  date: "2026-01-17"
+  category: "Travel"
+  icon: '<i class="hgi hgi-stroke hgi-airplane-01 nds-icon"></i>'
+
+- id: "TXN-2026-031"
+  name: "Restaurant Health Inspection"
+  amount: 1500
+  currency: "SAR"
+  status: "completed"
+  date: "2026-01-15"
+  category: "Licensing"
+  icon: '<i class="hgi hgi-stroke hgi-restaurant-01 nds-icon"></i>'
+
+- id: "TXN-2026-032"
+  name: "Scholarship Disbursement"
+  amount: 4000
+  currency: "SAR"
+  status: "completed"
+  date: "2026-01-13"
+  category: "Education"
+  icon: '<i class="hgi hgi-stroke hgi-book-01 nds-icon"></i>'
+
+- id: "TXN-2026-033"
+  name: "Customs Clearance Fee"
+  amount: 6200
+  currency: "SAR"
+  status: "pending"
+  date: "2026-01-11"
+  category: "Trade"
+  icon: '<i class="hgi hgi-stroke hgi-delivery-box-01 nds-icon"></i>'
+
+- id: "TXN-2026-034"
+  name: "Blood Test Lab Fee"
+  amount: 250
+  currency: "SAR"
+  status: "completed"
+  date: "2026-01-09"
+  category: "Healthcare"
+  icon: '<i class="hgi hgi-stroke hgi-stethoscope nds-icon"></i>'
+
+- id: "TXN-2026-035"
+  name: "Residential Compound Security"
+  amount: 900
+  currency: "SAR"
+  status: "completed"
+  date: "2026-01-07"
+  category: "Real Estate"
+  icon: '<i class="hgi hgi-stroke hgi-shield-01 nds-icon"></i>'
+
+- id: "TXN-2026-036"
+  name: "Marriage Certificate Fee"
+  amount: 150
+  currency: "SAR"
+  status: "completed"
+  date: "2026-01-05"
+  category: "Identity"
+  icon: '<i class="hgi hgi-stroke hgi-agreement-01 nds-icon"></i>'
+
+- id: "TXN-2026-037"
+  name: "Import License Application"
+  amount: 4500
+  currency: "SAR"
+  status: "failed"
+  date: "2026-01-03"
+  category: "Trade"
+  icon: '<i class="hgi hgi-stroke hgi-delivery-tracking-01 nds-icon"></i>'
+
+- id: "TXN-2026-038"
+  name: "Hotel Tourism Tax"
+  amount: 380
+  currency: "SAR"
+  status: "completed"
+  date: "2026-01-01"
+  category: "Travel"
+  icon: '<i class="hgi hgi-stroke hgi-hotel-01 nds-icon"></i>'
+
+- id: "TXN-2026-039"
+  name: "Fuel Subsidy Reimbursement"
+  amount: 1200
+  currency: "SAR"
+  status: "completed"
+  date: "2025-12-30"
+  category: "Utilities"
+  icon: '<i class="hgi hgi-stroke hgi-fuel-station nds-icon"></i>'
+
+- id: "TXN-2026-040"
+  name: "Pharmacy Prescription Copay"
+  amount: 85
+  currency: "SAR"
+  status: "completed"
+  date: "2025-12-28"
+  category: "Healthcare"
+  icon: '<i class="hgi hgi-stroke hgi-medicine-01 nds-icon"></i>'
+
+- id: "TXN-2026-041"
+  name: "Municipality Service Fee"
+  amount: 700
+  currency: "SAR"
+  status: "completed"
+  date: "2025-12-26"
+  category: "Government"
+  icon: '<i class="hgi hgi-stroke hgi-building-02 nds-icon"></i>'
+
+- id: "TXN-2026-042"
+  name: "Solar Panel Installation Permit"
+  amount: 2800
+  currency: "SAR"
+  status: "pending"
+  date: "2025-12-24"
+  category: "Construction"
+  icon: '<i class="hgi hgi-stroke hgi-house-solar-panel nds-icon"></i>'
+
+- id: "TXN-2026-043"
+  name: "ID Card Replacement"
+  amount: 100
+  currency: "SAR"
+  status: "completed"
+  date: "2025-12-22"
+  category: "Identity"
+  icon: '<i class="hgi hgi-stroke hgi-id-verified nds-icon"></i>'
+
+- id: "TXN-2026-044"
+  name: "Construction Safety Inspection"
+  amount: 1800
+  currency: "SAR"
+  status: "completed"
+  date: "2025-12-20"
+  category: "Construction"
+  icon: '<i class="hgi hgi-stroke hgi-structure-02 nds-icon"></i>'
+
+- id: "TXN-2026-045"
+  name: "Disability Support Allowance"
+  amount: 3500
+  currency: "SAR"
+  status: "completed"
+  date: "2025-12-18"
+  category: "Social"
+  icon: '<i class="hgi hgi-stroke hgi-wheelchair nds-icon"></i>'
+
+- id: "TXN-2026-046"
+  name: "Export Documentation Fee"
+  amount: 1600
+  currency: "SAR"
+  status: "completed"
+  date: "2025-12-16"
+  category: "Trade"
+  icon: '<i class="hgi hgi-stroke hgi-delivery-sent-01 nds-icon"></i>'
+
+- id: "TXN-2026-047"
+  name: "Professional Certification Exam"
+  amount: 950
+  currency: "SAR"
+  status: "pending"
+  date: "2025-12-14"
+  category: "Education"
+  icon: '<i class="hgi hgi-stroke hgi-certificate-02 nds-icon"></i>'
+
+- id: "TXN-2026-048"
+  name: "Banking Service Charge"
+  amount: 75
+  currency: "SAR"
+  status: "completed"
+  date: "2025-12-12"
+  category: "Finance"
+  icon: '<i class="hgi hgi-stroke hgi-bank nds-icon"></i>'
+
+- id: "TXN-2026-049"
+  name: "Vehicle Technical Inspection"
+  amount: 120
+  currency: "SAR"
+  status: "completed"
+  date: "2025-12-10"
+  category: "Transport"
+  icon: '<i class="hgi hgi-stroke hgi-car-01 nds-icon"></i>'
+
+- id: "TXN-2026-050"
+  name: "Waste Management Fee"
+  amount: 220
+  currency: "SAR"
+  status: "completed"
+  date: "2025-12-08"
+  category: "Environment"
+  icon: '<i class="hgi hgi-stroke hgi-recycle-01 nds-icon"></i>'
+
+- id: "TXN-2026-051"
+  name: "Labor Office Service Fee"
+  amount: 400
+  currency: "SAR"
+  status: "completed"
+  date: "2025-12-06"
+  category: "Employment"
+  icon: '<i class="hgi hgi-stroke hgi-briefcase-01 nds-icon"></i>'
+
+- id: "TXN-2026-052"
+  name: "Notary Public Service"
+  amount: 300
+  currency: "SAR"
+  status: "completed"
+  date: "2025-12-04"
+  category: "Legal"
+  icon: '<i class="hgi hgi-stroke hgi-stamp-02 nds-icon"></i>'
+
+- id: "TXN-2026-053"
+  name: "Childcare Subsidy Payment"
+  amount: 2000
+  currency: "SAR"
+  status: "completed"
+  date: "2025-12-02"
+  category: "Social"
+  icon: '<i class="hgi hgi-stroke hgi-baby-02 nds-icon"></i>'
+
+- id: "TXN-2026-054"
+  name: "Fingerprint Verification Fee"
+  amount: 50
+  currency: "SAR"
+  status: "completed"
+  date: "2025-11-30"
+  category: "Identity"
+  icon: '<i class="hgi hgi-stroke hgi-fingerprint-scan nds-icon"></i>'
+
+- id: "TXN-2026-055"
+  name: "Income Tax Declaration"
+  amount: 14000
+  currency: "SAR"
+  status: "completed"
+  date: "2025-11-28"
+  category: "Tax"
+  icon: '<i class="hgi hgi-stroke hgi-invoice-02 nds-icon"></i>'
+
+- id: "TXN-2026-056"
+  name: "Courier Delivery License"
+  amount: 1400
+  currency: "SAR"
+  status: "pending"
+  date: "2025-11-26"
+  category: "Licensing"
+  icon: '<i class="hgi hgi-stroke hgi-delivery-box-01 nds-icon"></i>'
+
+- id: "TXN-2026-057"
+  name: "Swimming Pool Safety Permit"
+  amount: 850
+  currency: "SAR"
+  status: "completed"
+  date: "2025-11-24"
+  category: "Construction"
+  icon: '<i class="hgi hgi-stroke hgi-swimming nds-icon"></i>'
+
+- id: "TXN-2026-058"
+  name: "Bus Route Operating License"
+  amount: 5000
+  currency: "SAR"
+  status: "completed"
+  date: "2025-11-22"
+  category: "Transport"
+  icon: '<i class="hgi hgi-stroke hgi-bus-01 nds-icon"></i>'
+
+- id: "TXN-2026-059"
+  name: "Document Translation Service"
+  amount: 350
+  currency: "SAR"
+  status: "completed"
+  date: "2025-11-20"
+  category: "Government"
+  icon: '<i class="hgi hgi-stroke hgi-document-validation nds-icon"></i>'
+
+- id: "TXN-2026-060"
+  name: "Real Estate Valuation Fee"
+  amount: 2200
+  currency: "SAR"
+  status: "completed"
+  date: "2025-11-18"
+  category: "Real Estate"
+  icon: '<i class="hgi hgi-stroke hgi-home-01 nds-icon"></i>'
+
+- id: "TXN-2026-061"
+  name: "DNA Testing Service"
+  amount: 1500
+  currency: "SAR"
+  status: "pending"
+  date: "2025-11-16"
+  category: "Healthcare"
+  icon: '<i class="hgi hgi-stroke hgi-dna nds-icon"></i>'
+
+- id: "TXN-2026-062"
+  name: "Commercial Lease Agreement"
+  amount: 45000
+  currency: "SAR"
+  status: "completed"
+  date: "2025-11-14"
+  category: "Real Estate"
+  icon: '<i class="hgi hgi-stroke hgi-contracts nds-icon"></i>'
+
+- id: "TXN-2026-063"
+  name: "Sports Club Membership"
+  amount: 3600
+  currency: "SAR"
+  status: "completed"
+  date: "2025-11-12"
+  category: "Recreation"
+  icon: '<i class="hgi hgi-stroke hgi-gymnastic nds-icon"></i>'
+
+- id: "TXN-2026-064"
+  name: "Livestock Import Permit"
+  amount: 7500
+  currency: "SAR"
+  status: "failed"
+  date: "2025-11-10"
+  category: "Trade"
+  icon: '<i class="hgi hgi-stroke hgi-coins-01 nds-icon"></i>'
+
+- id: "TXN-2026-065"
+  name: "QR Code Business Registration"
+  amount: 200
+  currency: "SAR"
+  status: "completed"
+  date: "2025-11-08"
+  category: "Licensing"
+  icon: '<i class="hgi hgi-stroke hgi-qr-code nds-icon"></i>'
+
+- id: "TXN-2026-066"
+  name: "Blood Bank Donation Receipt"
+  amount: 0
+  currency: "SAR"
+  status: "completed"
+  date: "2025-11-06"
+  category: "Healthcare"
+  icon: '<i class="hgi hgi-stroke hgi-blood nds-icon"></i>'
+
+- id: "TXN-2026-067"
+  name: "Residential Parking Permit"
+  amount: 500
+  currency: "SAR"
+  status: "completed"
+  date: "2025-11-04"
+  category: "Transport"
+  icon: '<i class="hgi hgi-stroke hgi-parking-area-square nds-icon"></i>'
+
+- id: "TXN-2026-068"
+  name: "Warehouse Rental Contract"
+  amount: 18000
+  currency: "SAR"
+  status: "completed"
+  date: "2025-11-02"
+  category: "Real Estate"
+  icon: '<i class="hgi hgi-stroke hgi-garage nds-icon"></i>'
+
+- id: "TXN-2026-069"
+  name: "Mosque Construction Donation"
+  amount: 10000
+  currency: "SAR"
+  status: "completed"
+  date: "2025-10-31"
+  category: "Social"
+  icon: '<i class="hgi hgi-stroke hgi-mosque-02 nds-icon"></i>'
+
+- id: "TXN-2026-070"
+  name: "Tree Planting Initiative Fee"
+  amount: 150
+  currency: "SAR"
+  status: "completed"
+  date: "2025-10-29"
+  category: "Environment"
+  icon: '<i class="hgi hgi-stroke hgi-tree-01 nds-icon"></i>'
+
+- id: "TXN-2026-071"
+  name: "Food Safety Certification"
+  amount: 1100
+  currency: "SAR"
+  status: "pending"
+  date: "2025-10-27"
+  category: "Licensing"
+  icon: '<i class="hgi hgi-stroke hgi-coffee-01 nds-icon"></i>'
+
+- id: "TXN-2026-072"
+  name: "Court Judgment Enforcement"
+  amount: 2500
+  currency: "SAR"
+  status: "completed"
+  date: "2025-10-25"
+  category: "Legal"
+  icon: '<i class="hgi hgi-stroke hgi-court-law nds-icon"></i>'
+
+- id: "TXN-2026-073"
+  name: "Retirement Fund Contribution"
+  amount: 6000
+  currency: "SAR"
+  status: "completed"
+  date: "2025-10-23"
+  category: "Finance"
+  icon: '<i class="hgi hgi-stroke hgi-coins-01 nds-icon"></i>'
+
+- id: "TXN-2026-074"
+  name: "Flower Shop Operating License"
+  amount: 800
+  currency: "SAR"
+  status: "completed"
+  date: "2025-10-21"
+  category: "Licensing"
+  icon: '<i class="hgi hgi-stroke hgi-flower nds-icon"></i>'
+
+- id: "TXN-2026-075"
+  name: "Hajj Travel Package"
+  amount: 25000
+  currency: "SAR"
+  status: "completed"
+  date: "2025-10-19"
+  category: "Travel"
+  icon: '<i class="hgi hgi-stroke hgi-mosque-03 nds-icon"></i>'
+
+- id: "TXN-2026-076"
+  name: "Medical Device Import Fee"
+  amount: 9200
+  currency: "SAR"
+  status: "failed"
+  date: "2025-10-17"
+  category: "Trade"
+  icon: '<i class="hgi hgi-stroke hgi-medicine-02 nds-icon"></i>'
+
+- id: "TXN-2026-077"
+  name: "Shopping Mall Lease Payment"
+  amount: 35000
+  currency: "SAR"
+  status: "completed"
+  date: "2025-10-15"
+  category: "Real Estate"
+  icon: '<i class="hgi hgi-stroke hgi-shopping-bag-01 nds-icon"></i>'
+
+- id: "TXN-2026-078"
+  name: "Face ID Enrollment Fee"
+  amount: 50
+  currency: "SAR"
+  status: "completed"
+  date: "2025-10-13"
+  category: "Identity"
+  icon: '<i class="hgi hgi-stroke hgi-face-id nds-icon"></i>'
+
+- id: "TXN-2026-079"
+  name: "Renewable Energy Subsidy"
+  amount: 4000
+  currency: "SAR"
+  status: "completed"
+  date: "2025-10-11"
+  category: "Environment"
+  icon: '<i class="hgi hgi-stroke hgi-renewable-energy nds-icon"></i>'
+
+- id: "TXN-2026-080"
+  name: "Public Transit Monthly Pass"
+  amount: 200
+  currency: "SAR"
+  status: "completed"
+  date: "2025-10-09"
+  category: "Transport"
+  icon: '<i class="hgi hgi-stroke hgi-bus-02 nds-icon"></i>'
+
+- id: "TXN-2026-081"
+  name: "Patent Filing Fee"
+  amount: 6500
+  currency: "SAR"
+  status: "pending"
+  date: "2025-10-07"
+  category: "Licensing"
+  icon: '<i class="hgi hgi-stroke hgi-license-draft nds-icon"></i>'
+
+- id: "TXN-2026-082"
+  name: "Embassy Document Attestation"
+  amount: 400
+  currency: "SAR"
+  status: "completed"
+  date: "2025-10-05"
+  category: "Government"
+  icon: '<i class="hgi hgi-stroke hgi-stamp-01 nds-icon"></i>'
+
+- id: "TXN-2026-083"
+  name: "Private School Annual Fee"
+  amount: 28000
+  currency: "SAR"
+  status: "completed"
+  date: "2025-10-03"
+  category: "Education"
+  icon: '<i class="hgi hgi-stroke hgi-book-02 nds-icon"></i>'
+
+- id: "TXN-2026-084"
+  name: "Fire Safety Inspection"
+  amount: 1300
+  currency: "SAR"
+  status: "completed"
+  date: "2025-10-01"
+  category: "Construction"
+  icon: '<i class="hgi hgi-stroke hgi-alert-02 nds-icon"></i>'
+
+- id: "TXN-2026-085"
+  name: "Charity Organization License"
+  amount: 500
+  currency: "SAR"
+  status: "completed"
+  date: "2025-09-29"
+  category: "Social"
+  icon: '<i class="hgi hgi-stroke hgi-agreement-02 nds-icon"></i>'
+
+- id: "TXN-2026-086"
+  name: "Vehicle Emission Test"
+  amount: 90
+  currency: "SAR"
+  status: "completed"
+  date: "2025-09-27"
+  category: "Environment"
+  icon: '<i class="hgi hgi-stroke hgi-leaf-02 nds-icon"></i>'
+
+- id: "TXN-2026-087"
+  name: "Housing Fund Installment"
+  amount: 5400
+  currency: "SAR"
+  status: "completed"
+  date: "2025-09-25"
+  category: "Real Estate"
+  icon: '<i class="hgi hgi-stroke hgi-house-01 nds-icon"></i>'
+
+- id: "TXN-2026-088"
+  name: "Telecom License Renewal"
+  amount: 15000
+  currency: "SAR"
+  status: "pending"
+  date: "2025-09-23"
+  category: "Licensing"
+  icon: '<i class="hgi hgi-stroke hgi-plug-02 nds-icon"></i>'
+
+- id: "TXN-2026-089"
+  name: "Airport Duty Free Tax"
+  amount: 180
+  currency: "SAR"
+  status: "completed"
+  date: "2025-09-21"
+  category: "Travel"
+  icon: '<i class="hgi hgi-stroke hgi-airplane-02 nds-icon"></i>'
+
+- id: "TXN-2026-090"
+  name: "Contractor Registration Fee"
+  amount: 3000
+  currency: "SAR"
+  status: "completed"
+  date: "2025-09-19"
+  category: "Construction"
+  icon: '<i class="hgi hgi-stroke hgi-factory-02 nds-icon"></i>'
+
+- id: "TXN-2026-091"
+  name: "Money Transfer Service Fee"
+  amount: 45
+  currency: "SAR"
+  status: "completed"
+  date: "2025-09-17"
+  category: "Finance"
+  icon: '<i class="hgi hgi-stroke hgi-coins-swap nds-icon"></i>'
+
+- id: "TXN-2026-092"
+  name: "Death Certificate Issuance"
+  amount: 50
+  currency: "SAR"
+  status: "completed"
+  date: "2025-09-15"
+  category: "Identity"
+  icon: '<i class="hgi hgi-stroke hgi-document-validation nds-icon"></i>'
+
+- id: "TXN-2026-093"
+  name: "Veterinary Clinic License"
+  amount: 2200
+  currency: "SAR"
+  status: "failed"
+  date: "2025-09-13"
+  category: "Licensing"
+  icon: '<i class="hgi hgi-stroke hgi-stethoscope-02 nds-icon"></i>'
+
+- id: "TXN-2026-094"
+  name: "Cloud Server Hosting Fee"
+  amount: 4800
+  currency: "SAR"
+  status: "completed"
+  date: "2025-09-11"
+  category: "Technology"
+  icon: '<i class="hgi hgi-stroke hgi-cloud-server nds-icon"></i>'
+
+- id: "TXN-2026-095"
+  name: "Freight Customs Duty"
+  amount: 11000
+  currency: "SAR"
+  status: "completed"
+  date: "2025-09-09"
+  category: "Trade"
+  icon: '<i class="hgi hgi-stroke hgi-delivery-secure-01 nds-icon"></i>'
+
+- id: "TXN-2026-096"
+  name: "Library Membership Fee"
+  amount: 100
+  currency: "SAR"
+  status: "completed"
+  date: "2025-09-07"
+  category: "Education"
+  icon: '<i class="hgi hgi-stroke hgi-book-03 nds-icon"></i>'
+
+- id: "TXN-2026-097"
+  name: "Residential Permit Renewal"
+  amount: 650
+  currency: "SAR"
+  status: "pending"
+  date: "2025-09-05"
+  category: "Immigration"
+  icon: '<i class="hgi hgi-stroke hgi-passport-valid nds-icon"></i>'
+
+- id: "TXN-2026-098"
+  name: "Court Arbitration Fee"
+  amount: 4200
+  currency: "SAR"
+  status: "completed"
+  date: "2025-09-03"
+  category: "Legal"
+  icon: '<i class="hgi hgi-stroke hgi-court-house nds-icon"></i>'
+
+- id: "TXN-2026-099"
+  name: "Garden Landscaping Permit"
+  amount: 1700
+  currency: "SAR"
+  status: "completed"
+  date: "2025-09-01"
+  category: "Construction"
+  icon: '<i class="hgi hgi-stroke hgi-flower-pot nds-icon"></i>'
+
+- id: "TXN-2026-100"
+  name: "Annual Audit Compliance Fee"
+  amount: 7000
+  currency: "SAR"
+  status: "completed"
+  date: "2025-08-30"
+  category: "Finance"
+  icon: '<i class="hgi hgi-stroke hgi-credit-card-validation nds-icon"></i>'

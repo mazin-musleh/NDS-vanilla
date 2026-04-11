@@ -156,8 +156,6 @@
 .nds-section-wrapper {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
-    align-content: flex-start;
     column-gap: var(--_section-col-gap);
     row-gap: var(--_section-row-gap);
 
@@ -178,7 +176,7 @@
         align-items: self-start;
         align-self: self-start;
 
-        .nds-label {
+       > .nds-btn > .nds-label {
             text-align: center;
         }
     }
