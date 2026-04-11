@@ -10,27 +10,31 @@ main {
 .nds-content-layout {
     --_layout-min-height: var(--layout-min-height, 400px);
     --_layout-gap: var(--layout-gap, 0);
-    --_main-min-width: var(--main-min-width, 300px);
     --_main-padding-block: var(--main-padding-block, 0);
     --_main-padding-inline: var(--main-padding-inline, 0);
     --_main-gap: var(--main-gap, 0);
 
     position: relative;
     min-height: var(--_layout-min-height);
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr;
     gap: var(--_layout-gap);
 
+    @include desktop(min) {
+        &.nds-wSideMenu {
+            grid-template-columns: var(--nds-sidemenu-width) 1fr;
+        }
+    }
+
     .nds-main-content {
-        width: 100%;
-        min-width: var(--_main-min-width);
         display: flex;
         flex-wrap: wrap;
-        align-content: flex-start;
+        align-content: stretch;
         position: relative;
         padding-block: var(--_main-padding-block);
         padding-inline: var(--_main-padding-inline);
         gap: var(--_main-gap);
-        flex: 1;
+        min-width: 0;
     }
 
     /* ── Middle (centered/hero) ── */
@@ -108,11 +112,13 @@ main {
         --main-padding-block: var(--spacing-xl);
         --main-gap: var(--spacing-4xl);
 
-        .nds-main-content {
-            @include desktop(min) {
-                margin-inline: 0 var(--nds-viewport-padding);
-            }
+        @include desktop(min) {
+            --main-padding-block: 0;
+            padding-inline: var(--nds-viewport-padding);
+            padding-block: var(--spacing-xl);
+        }
 
+        .nds-main-content {
             section:not(.nds-hero-section, .nds-ghost) {
                 --section-shadow: var(--shadow-md);
                 --section-border-radius: var(--radius-md);
@@ -135,6 +141,10 @@ main {
         .nds-content-section.nds-ghost {
             --section-padding-block: 0;
 
+            @include desktop(min) {
+                --_wrapper-padding: 0;
+            }
+
             @include tablet(max) {
                 --_wrapper-padding: 0;
 
@@ -146,19 +156,6 @@ main {
                 .nds-section-head {
                     padding-inline: var(--nds-viewport-padding);
                 }
-            }
-        }
-
-        @include desktop(min) {
-            .nds-sidemenu {
-                margin-block: var(--spacing-xl);
-                margin-inline: var(--nds-viewport-padding) 0;
-            }
-        }
-
-        @include large-desktop(min) {
-            :is(.nds-main-content, .nds-sidemenu) {
-                margin-inline: 0;
             }
         }
     }
@@ -188,10 +185,6 @@ main {
             max-width: var(--nds-content-MaxWidth);
             margin-inline: auto;
         }
-
-        &:is(.nds-wSideMenu) .nds-main-content {
-            width: 100%;
-        }
     }
 
     /* ── Section striping ── */
@@ -216,11 +209,6 @@ main {
 
     @include mobile {
         --layout-gap: 0 !important;
-
-        .nds-sidemenu {
-            min-width: 0;
-            flex: 0;
-        }
     }
 }
 

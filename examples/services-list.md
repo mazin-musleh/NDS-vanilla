@@ -8,7 +8,7 @@ breadcrumb:
 hero_title: "Government Services"
 hero_description: "Browse all available government digital services"
 layout_class:
-hideSidemenu: true
+sidemenu_mode: false
 exclude_showcase: false
 ---
 

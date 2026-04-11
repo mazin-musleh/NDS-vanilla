@@ -93,7 +93,8 @@ Content Layout Modifiers
 .toEdge                     → .nds-toEdge
 .wSideMenu                  → .nds-wSideMenu
 .wSideInfo                  → .nds-wSideInfo
-.topSubMenu                 → .nds-topSideMenu
+.topSubMenu                 → .nds-topSideMenu → sidemenu_mode: top (front matter) / .nds-top (on .nds-sidemenu)
+hideSidemenu: true          → sidemenu_mode: false
 .post                       → .nds-post
 .noBg                       → .nds-noBg
 

@@ -6,7 +6,8 @@ direction: ltr
 breadcrumb: ["Faculty Members"]
 hero_title: "Dr. Mohammed Ahmed Al-Salem"
 hero_description: "Associate Professor - College of Computer Science"
-layout_class: nds-cardView nds-topSideMenu
+layout_class: nds-cardView
+sidemenu_mode: top
 ---
 
 <section id="facultyInfo" class="nds-content-section nds-user">

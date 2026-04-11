@@ -11,7 +11,7 @@ breadcrumb:
 lang: en
 direction: ltr
 heroaction: heroaction-service
-hideSidemenu: true
+sidemenu_mode: false
 ---
 <section id="serviceTabs" class="nds-content-section nds-sideinfo-section">
     <div class="nds-section-body">

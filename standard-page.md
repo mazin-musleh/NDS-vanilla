@@ -18,7 +18,7 @@ hero_description: Brief description of this page
 breadcrumb: ["Components"]     # or: [["Parent", "/url"], "Child"]
 # breadcrumb_root: Home        # override root label (default: Home / الرئيسية)
 # breadcrumb_root_url: /       # override root URL
-# hideSidemenu: false          # hide side navigation (page layout only)
+# sidemenu_mode:               # omit = default slider | top = top dropdown | false = hidden
 # hideFeedback: false          # hide user feedback section (page layout only)
 
 # === Data Overrides ===
@@ -29,7 +29,7 @@ breadcrumb: ["Components"]     # or: [["Parent", "/url"], "Child"]
 
 # === Layout & Body ===
 # body_class: fullWidth
-# layout_class: nds-cardView nds-topSideMenu  # nds-cardView | nds-middle | nds-toEdge | nds-topSideMenu (combinable)
+# layout_class: nds-cardView  # nds-cardView | nds-middle | nds-toEdge (combinable)
 
 # === Custom Assets ===
 # custom_css:
