@@ -1,4 +1,4 @@
-<aside class="nds-sidemenu" aria-label="Sidebar">
+<aside class="nds-sidemenu{%- if page.sidemenu_mode == 'top' %} nds-top{%- endif %}" aria-label="Sidebar">
     <button id="nds-sidemenu-toggle" class="nds-sidemenu-toggle nds-btn nds-peek" aria-label="Sidebar Menu" hidden>
         <i class="hgi hgi-stroke hgi-menu-02 nds-icon"></i>
         <span class="nds-label nds-truncate" hidden>Side menu</span>

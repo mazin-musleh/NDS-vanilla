@@ -72,7 +72,7 @@
     // ========================================
     // SLIDER MODE STATES - Horizontal sliding (tablet/mobile)
     // ========================================
-    .nds-content-layout:not(.nds-topSideMenu) .nds-sidemenu {
+    .nds-sidemenu:not(.nds-top) {
         position: fixed;
         top: 0;
         bottom: 0;
@@ -150,7 +150,7 @@
         }
     }
 
-    .nds-content-layout:not(.nds-topSideMenu) .nds-sidemenu {
+    .nds-sidemenu:not(.nds-top) {
 
         --btn-height: 72px;
         --toggle-height: var(--btn-height);
@@ -206,108 +206,102 @@
     // ========================================
     // TOP SUBMENU MODE - Vertical dropdown (tablet/mobile)
     // ========================================
-    .nds-content-layout.nds-topSideMenu {
-        flex-direction: column;
-        gap: 0 !important;
+    .nds-sidemenu.nds-top {
+        grid-column: 1 / -1;
         --btn-gap: var(--spacing-md);
+        position: sticky;
+        top: calc(var(--nds-nav-height));
+        --nds-sidemenu-width: 100%;
+        --drawer-max-height: 60svh;
+        background-color: unset;
+        overflow: clip;
+        height: var(--_toggle-height);
+        min-height: 40px;
+        padding: 0;
+        border-radius: 0;
+        transform: translateX(0px) !important;
+        z-index: 900;
+        flex: unset;
 
-        .nds-sidemenu {
-            position: sticky;
+        #nds-sidemenu-toggle {
+            --btn-width: 100%;
+            --btn-bg: var(--background-nav);
+            --btn-bg-hover: var(--button-background-neutral-hovered);
+            --btn-bg-active: var(--button-background-neutral-pressed);
+            --btn-bg-selected: var(--button-background-neutral-selected);
+            --btn-indicator-size: 3px;
+            --btn-height: var(--_toggle-height);
+            max-width: var(--nds-content-MaxWidth, 1280px);
+            margin: 0 auto;
+            padding: 0 var(--nds-viewport-padding, 32px);
+            border-radius: 0;
+            position: relative;
+            top: unset;
+            --toggle-transform: unset;
+            z-index: 1;
+
+            .nds-label {
+                &[hidden] {
+                    visibility: hidden;
+                    display: block;
+                }
+
+                flex: 1;
+            }
+
+            i {
+                color: var(--text-primary);
+            }
+        }
+
+        .nds-drawer {
             top: calc(var(--nds-nav-height));
-            --nds-sidemenu-width: 100%;
-            --drawer-max-height: 60svh;
-            background-color: unset;
-            overflow: clip;
-            height: var(--_toggle-height);
-            min-height: 40px;
+            background-color: var(--background-menu);
+            box-shadow: var(--shadow-md);
+            padding: var(--spacing-md);
+            border-radius: 0 0 var(--radius-md) var(--radius-md);
+            transform: translateY(-110%);
+            transition: transform var(--nds-transition);
+        }
+
+        // Opening state (coexists with open)
+        .nds-drawer[data-state~="opening"] {
+            transform: translateY(-100%);
+        }
+
+        // Open state
+        .nds-drawer[data-state~="open"] {
+            transform: translateY(0);
+        }
+
+        // Closing state overrides open (coexists with open)
+        .nds-drawer[data-state~="closing"] {
+            transform: translateY(-100%);
+        }
+
+        // Backdrop effect when sideMenu is open or closing (matches modal backdrop)
+        &:is([data-state~="open"], [data-state~="closing"]) {
+
+            top: 0;
+            height: fit-content;
+            box-shadow: unset;
             padding: 0;
             border-radius: 0;
-            transform: translateX(0px) !important;
-            z-index: 900;
-            flex: unset;
+            margin-bottom: 1rem;
 
             #nds-sidemenu-toggle {
-                --btn-width: 100%;
-                --btn-bg: var(--background-nav);
-                --btn-bg-hover: var(--button-background-neutral-hovered);
-                --btn-bg-active: var(--button-background-neutral-pressed);
-                --btn-bg-selected: var(--button-background-neutral-selected);
-                --btn-indicator-size: 3px;
-                --btn-height: var(--_toggle-height);
-                max-width: var(--nds-content-MaxWidth, 1280px);
-                margin: 0 auto;
-                padding: 0 var(--nds-viewport-padding, 32px);
-                border-radius: 0;
-                position: relative;
-                top: unset;
-                --toggle-transform: unset;
-                z-index: 1;
-
-
-
-                .nds-label {
-                    &[hidden] {
-                        visibility: hidden;
-                        display: block;
-                    }
-
-                    flex: 1;
-                }
-
-                i {
-                    color: var(--text-primary);
-                }
-            }
-
-            .nds-drawer {
-                top: calc(var(--nds-nav-height));
-                background-color: var(--background-menu);
-                box-shadow: var(--shadow-md);
-                padding: var(--spacing-md);
-                border-radius: 0 0 var(--radius-md) var(--radius-md);
-                transform: translateY(-110%);
-                transition: transform var(--nds-transition);
-            }
-
-            // Opening state (coexists with open)
-            .nds-drawer[data-state~="opening"] {
-                transform: translateY(-100%);
-            }
-
-            // Open state
-            .nds-drawer[data-state~="open"] {
-                transform: translateY(0);
-            }
-
-            // Closing state overrides open (coexists with open)
-            .nds-drawer[data-state~="closing"] {
-                transform: translateY(-100%);
-            }
-
-            // Backdrop effect when sideMenu is open or closing (matches modal backdrop)
-            &:is([data-state~="open"], [data-state~="closing"]) {
-
-                top: 0;
-                height: fit-content;
-                box-shadow: unset;
-                padding: 0;
-                border-radius: 0;
-                margin-bottom: 1rem;
-
-                #nds-sidemenu-toggle {
-                    position: sticky;
-                    top: var(--nds-nav-height);
-                }
-            }
-
-            .nds-drawer-scroll {
-                padding-top: var(--nds-nav-height);
+                position: sticky;
+                top: var(--nds-nav-height);
             }
         }
 
-        // Add padding-top to mainContent when drawer is open
-        .nds-sidemenu[data-state~="open"]~.nds-main-content {
-            margin-top: calc((var(--_topsubmenu-height) - var(--nds-sidemenu-toggle-height, 40px) + 16px) * -1);
+        .nds-drawer-scroll {
+            padding-top: var(--nds-nav-height);
         }
+    }
+
+    // Add padding-top to mainContent when drawer is open
+    .nds-sidemenu.nds-top[data-state~="open"]~.nds-main-content {
+        margin-top: calc((var(--_topsubmenu-height) - var(--nds-sidemenu-toggle-height, 40px) + 16px) * -1);
     }
 }

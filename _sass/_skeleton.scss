@@ -63,8 +63,6 @@
 }
 
 .nds-sidemenu {
-    width: var(--nds-sidemenu-width);
-    min-width: var(--nds-sidemenu-width);
     background-color: var(--background-menu);
 
     @include tablet(max) {

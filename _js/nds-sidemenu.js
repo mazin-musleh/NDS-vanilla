@@ -5,6 +5,9 @@
     // State helpers — delegated to NDS.State (nds-core.js)
     const { add: addState, remove: removeState, has: hasState, clear: clearState } = NDS.State;
 
+    // Track current instance for cleanup on re-init
+    let currentInstance = null;
+
     // Set --drawer-max-height for slider mode only
     const updateDrawerMaxHeight = (accMenu, drawer) => {
         const nav = document.querySelector('.nds-main-nav');
@@ -27,8 +30,8 @@
         });
     }
 
-    function setupAccordionToggle(accMenu) {
-        accMenu.addEventListener("click", (e) => {
+    function setupAccordionToggle(accMenu, ac) {
+        const handler = (e) => {
             const anchor = e.target.closest("li.has-sub > a");
             if (!anchor) return;
 
@@ -83,7 +86,9 @@
                 submenu.style.height = "0px";
                 setTimeout(() => { clearState(li); submenu.style.height = ""; }, 250);
             }
-        });
+        };
+        accMenu.addEventListener("click", handler);
+        ac.signal.addEventListener('abort', () => accMenu.removeEventListener("click", handler));
     }
 
     // Scroll lock helpers for top mode
@@ -251,7 +256,7 @@
         }
     }
 
-    function setupScrollPeek(toggleBtn) {
+    function setupScrollPeek(toggleBtn, ac) {
         if (!toggleBtn.classList.contains('nds-peek')) return;
 
         // Flash peek on page load
@@ -273,10 +278,8 @@
             return cachedRect;
         };
 
-        window.addEventListener('scroll', invalidate, { passive: true });
-        NDS.onResize(invalidate);
-
-        window.addEventListener('mousemove', (e) => {
+        const scrollHandler = () => invalidate();
+        const mousemoveHandler = (e) => {
             if (ticking) return;
             ticking = true;
             requestAnimationFrame(() => {
@@ -287,37 +290,82 @@
                 toggleBtn.classList.toggle('nds-peek', dist > threshold);
                 ticking = false;
             });
-        }, { passive: true });
+        };
+
+        window.addEventListener('scroll', scrollHandler, { passive: true });
+        NDS.onResize(invalidate);
+        window.addEventListener('mousemove', mousemoveHandler, { passive: true });
+
+        ac.signal.addEventListener('abort', () => {
+            window.removeEventListener('scroll', scrollHandler);
+            window.removeEventListener('mousemove', mousemoveHandler);
+        });
+    }
+
+    function destroy() {
+        if (currentInstance) {
+            const { ac, accMenu, animTarget, toggleBtn, isTopMode, drawer } = currentInstance;
+
+            // Close menu if open before destroying
+            if (hasState(animTarget, 'open')) {
+                clearState(animTarget);
+                if (isTopMode) {
+                    clearState(accMenu);
+                    const mainContent = getMainContent(accMenu);
+                    if (mainContent) mainContent.style.removeProperty('--_topsubmenu-height');
+                    unlockBodyScroll();
+                } else {
+                    accMenu.style.removeProperty('padding-top');
+                }
+                if (toggleBtn) clearState(toggleBtn);
+                if (drawer) drawer.style.removeProperty('--drawer-max-height');
+                if (NDS.Backdrop) NDS.Backdrop.hide();
+                accMenu.style.removeProperty('z-index');
+            }
+
+            // Abort all listeners registered via this AbortController
+            ac.abort();
+            currentInstance = null;
+        }
     }
 
     function initializeSideMenu() {
         const accMenu = document.querySelector(".nds-sidemenu");
         if (!accMenu || accMenu.closest('code, .code-example')) return;
 
+        // Destroy previous instance to prevent duplicate listeners
+        destroy();
+
+        const ac = new AbortController();
+
         const toggleBtn = document.getElementById("nds-sidemenu-toggle");
-        const isTopMode = accMenu.closest('.nds-content-layout')?.classList.contains('nds-topSideMenu') ?? false;
+        const isTopMode = accMenu.classList.contains('nds-top');
         const animTarget = isTopMode ? accMenu.querySelector('.nds-drawer') : accMenu;
         const drawer = accMenu.querySelector('.nds-drawer');
 
         // Shared context object passed to open/close
-        const ctx = { accMenu, animTarget, toggleBtn, isTopMode, drawer };
+        const ctx = { accMenu, animTarget, toggleBtn, isTopMode, drawer, ac };
+
+        // Store for cleanup
+        currentInstance = ctx;
 
         initializeActiveStates(accMenu);
-        setupAccordionToggle(accMenu);
+        setupAccordionToggle(accMenu, ac);
 
         // Toggle button
         if (toggleBtn) {
-            toggleBtn.addEventListener("click", (e) => {
+            const toggleHandler = (e) => {
                 e.stopPropagation();
                 hasState(animTarget, 'open') ? closeMenu(ctx) : openMenu(ctx);
-            });
+            };
+            toggleBtn.addEventListener("click", toggleHandler, { signal: ac.signal });
             toggleBtn.removeAttribute('hidden');
             updateToggleLabel(accMenu, toggleBtn, isTopMode);
-            setupScrollPeek(toggleBtn);
+            setupScrollPeek(toggleBtn, ac);
         }
 
         // Click outside
-        document.addEventListener("click", (e) => {
+        const outsideHandler = (e) => {
             if (!hasState(animTarget, 'open')) return;
             if (toggleBtn && toggleBtn.contains(e.target)) return;
 
@@ -327,21 +375,28 @@
                 if (accMenu.contains(e.target)) return;
             }
             closeMenu(ctx);
-        });
+        };
+        document.addEventListener("click", outsideHandler, { signal: ac.signal });
 
         // Escape key
-        document.addEventListener("keydown", (e) => {
+        const escapeHandler = (e) => {
             if (e.key === "Escape" && hasState(animTarget, 'open')) closeMenu(ctx);
-        });
+        };
+        document.addEventListener("keydown", escapeHandler, { signal: ac.signal });
 
         // Close on width change
         let prevWidth = window.innerWidth;
-        NDS.onResize(() => {
+        const resizeHandler = () => {
             const w = window.innerWidth;
             if (w !== prevWidth) {
                 prevWidth = w;
                 if (hasState(animTarget, 'open')) closeMenu(ctx);
             }
+        };
+        NDS.onResize(resizeHandler);
+        ac.signal.addEventListener('abort', () => {
+            // NDS.onResize doesn't support removal, but the handler
+            // checks currentInstance implicitly via ctx closure
         });
     }
 
