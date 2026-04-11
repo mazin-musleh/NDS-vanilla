@@ -18,7 +18,7 @@
     class NDSDropmenu {
         constructor(dropmenuElement) {
             this.dropmenu = dropmenuElement;
-            this.trigger = dropmenuElement.querySelector('.nds-dropmenu-trigger');
+            this.trigger = dropmenuElement.querySelector('.nds-dropmenu-trigger') || dropmenuElement;
             this.menu = dropmenuElement.querySelector('.nds-dropmenu-menu');
             this.isOpen = false;
 
@@ -142,12 +142,14 @@
         // ==============================================
 
         setupEventListeners() {
-            // Trigger click
-            this.trigger.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                this.toggle();
-            });
+            // Trigger click (skip if programmatic-only mode)
+            if (!this.dropmenu.hasAttribute('data-dropmenu-no-click')) {
+                this.trigger.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.toggle();
+                });
+            }
 
             // Outside click
             this.handleOutsideClick = (e) => {

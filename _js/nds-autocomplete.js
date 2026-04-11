@@ -68,11 +68,8 @@
         }
 
         setupDropmenu() {
-            // Add nds-dropmenu class to container
-            this.container.classList.add('nds-dropmenu');
-
-            // Use form-control as the dropmenu trigger
-            this.formControl.classList.add('nds-dropmenu-trigger');
+            // Autocomplete dropmenu is scoped to form-control
+            this.formControl.classList.add('nds-dropmenu');
 
             // Create and append the menu
             var menu = document.createElement('div');
@@ -93,8 +90,9 @@
             this.scroll = scroll;
             this.menuId = menuId;
 
-            // Initialize NDSDropmenu on the container
-            this.dropmenuInstance = NDS.Dropmenu.create(this.container);
+            // Initialize NDSDropmenu on form-control (no click-to-toggle, open/close is programmatic)
+            this.formControl.setAttribute('data-dropmenu-no-click', '');
+            this.dropmenuInstance = NDS.Dropmenu.create(this.formControl);
         }
 
         setupAria() {
