@@ -66,6 +66,16 @@
             this.appliedContainer = filterContainer.querySelector('.nds-filter-applied')
                 || (this.targetId && document.querySelector(`.nds-filter-applied[data-filter-target="${this.targetId}"]`));
 
+            // Resolve external search box linked by data-filter-target
+            this.searchBoxElement = this.targetId
+                ? document.querySelector(`.nds-search-box[data-filter-target="${this.targetId}"]`)
+                : null;
+
+            // Resolve external auto-fill linked by data-filter-target
+            this.autoFillElement = this.targetId
+                ? document.querySelector(`.nds-auto-fill[data-filter-target="${this.targetId}"]`)
+                : null;
+
             this.filterLabels = {};  // { filterName: { value: label } } — auto-built from data-filter-value
 
             this.init();
@@ -674,8 +684,9 @@
             const chipsContainer = appliedContainer.querySelector('.nds-chips');
             if (!chipsContainer) return;
 
-            // Find auto-fill container (optional)
-            const autoFillContainer = this.filterContainer.querySelector('.nds-auto-fill');
+            // Find auto-fill container (optional): external first, then internal
+            const autoFillContainer = this.autoFillElement
+                || this.filterContainer.querySelector('.nds-auto-fill');
 
             // Clear chips container
             chipsContainer.innerHTML = '';
@@ -850,6 +861,25 @@
                         this.setupDirectSearch(input, clearBtn);
                         break;
                     }
+                }
+            }
+
+            // Auto-detect external search input (linked by data-filter-target)
+            if (!this.searchInputs.direct && this.searchBoxElement) {
+                const input = this.searchBoxElement.querySelector(
+                    'input.nds-search-input, input[name="search"], input[type="search"]'
+                );
+                if (input && !input.hasAttribute('data-filter-ignore') && !input.closest('[data-filter-ignore]')) {
+                    const wrapper = input.closest('.nds-form-control') || input.parentElement;
+                    const clearBtn = wrapper?.querySelector('.nds-clear, [aria-label*="مسح"], [aria-label*="clear"]');
+
+                    this.searchInputs.direct = {
+                        input: input,
+                        clearBtn: clearBtn,
+                        element: wrapper || input
+                    };
+
+                    this.setupDirectSearch(input, clearBtn);
                 }
             }
         }

@@ -1172,45 +1172,43 @@ direction: ltr
                 </div>
                 <div class="demo-container">
                     <div class="state-demo">
-                        <div class="nds-filter" data-filter-target="paginatedTableBody">
-                            <div class="nds-dropmenu">
-                                <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
-                                    <i class="hgi hgi-stroke hgi-filter nds-icon"></i>
-                                    <span class="nds-label">Filter</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <div data-filter="system" data-filter-type="checkbox"
-                                            data-filter-legend="System"
-                                            data-filter-values='{"Identity & Records":"Identity & Records","Transport & Vehicles":"Transport & Vehicles","Healthcare & Social":"Healthcare & Social","Business & Finance":"Business & Finance","Education & Justice":"Education & Justice"}'
-                                            data-no-auto-close>
-                                        </div>
-                                        <hr class="nds-divider">
-                                        <div data-filter="popularity" data-filter-type="radio"
-                                            data-filter-legend="Popularity"
-                                            data-filter-values='{"most_used":"Most Used","standard":"Standard"}'
-                                            data-no-auto-close>
-                                        </div>
+                        <div class="nds-dropmenu nds-filter" data-filter-target="paginatedTableBody">
+                            <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
+                                <i class="hgi hgi-stroke hgi-filter nds-icon"></i>
+                                <span class="nds-label">Filter</span>
+                            </button>
+                            <div class="nds-dropmenu-menu" hidden>
+                                <div class="nds-dropmenu-scroll">
+                                    <div data-filter="system" data-filter-type="checkbox"
+                                        data-filter-legend="System"
+                                        data-filter-values='{"Identity & Records":"Identity & Records","Transport & Vehicles":"Transport & Vehicles","Healthcare & Social":"Healthcare & Social","Business & Finance":"Business & Finance","Education & Justice":"Education & Justice"}'
+                                        data-no-auto-close>
                                     </div>
-                                    <div class="nds-dropmenu-footer">
-                                        <hr class="nds-divider">
-                                        <div class="nds-dropmenu-action nds-grid">
-                                            <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
-                                                data-filter-action="clear" data-no-auto-close>
-                                                <span class="nds-label">Reset</span>
-                                            </button>
-                                            <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
-                                                data-filter-action="apply">
-                                                <span class="nds-label">Filter</span>
-                                            </button>
-                                        </div>
+                                    <hr class="nds-divider">
+                                    <div data-filter="popularity" data-filter-type="radio"
+                                        data-filter-legend="Popularity"
+                                        data-filter-values='{"most_used":"Most Used","standard":"Standard"}'
+                                        data-no-auto-close>
+                                    </div>
+                                </div>
+                                <div class="nds-dropmenu-footer">
+                                    <hr class="nds-divider">
+                                    <div class="nds-dropmenu-action nds-grid">
+                                        <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
+                                            data-filter-action="clear" data-no-auto-close>
+                                            <span class="nds-label">Reset</span>
+                                        </button>
+                                        <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
+                                            data-filter-action="apply">
+                                            <span class="nds-label">Filter</span>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
-                            <div class="nds-filter-applied" hidden>
-                                <span class="nds-label">Applied Filters:</span>
-                                <div class="nds-chips"></div>
-                            </div>
+                        </div>
+                        <div class="nds-filter-applied" data-filter-target="paginatedTableBody" hidden>
+                            <span class="nds-label">Applied Filters:</span>
+                            <div class="nds-chips"></div>
                         </div>
                         <div class="nds-paged-content" style="--per-page: 5;" hidden>
                             <table class="nds-table nds-compact nds-sortable">

@@ -24,88 +24,10 @@
 
 .nds-filter {
     --dropmenu-min-width: 250px;
-    display: flex;
-    gap: var(--spacing-lg);
-    width: 100%;
-    margin-bottom: 1rem;
-    flex-wrap: wrap;
-    align-items: flex-start;
-
-    &:is(.nds-section-action, .nds-section-search) {
-        align-items: flex-start;
-        
-
-    }
-
-    &.nds-section-action {
-        position: relative !important;
-    }
-
-    .nds-search-box {
-        padding: 0;
-        margin-inline-start: 0;
-        flex: 1;
-        max-width: unset;
-        gap: var(--spacing-2xl);
-
-        @include mobile {
-            .nds-search-content {
-                gap: var(--spacing-sm);
-            }
-        }
-    }
-
-    .nds-auto-fill:not([hidden]) {
-        flex: 1 1 100%;
-        flex-wrap: wrap;
-        flex-direction: row;
-        gap: var(--spacing-md);
-        min-width: 0;
-        align-items: center;
-
-        >.nds-label {
-            font-size: var(--nds-text-lg-FS);
-            font-weight: 500;
-            color: var(--text-default);
-        }
-    }
-
-    .nds-filter-applied:not([hidden]) {
-        flex: 1 1 100%;
-    }
-
-    @include desktop(min) {
-        &.nds-section-action {
-            flex-direction: row;
-            justify-content: flex-end;
-            max-width: 200px;
-
-            .nds-filter-applied {
-                justify-content: flex-end;
-            }
-        }
-    }
-
-    @include mobile {
-
-        column-gap: var(--spacing-md);
-
-        &.nds-section-search {
-
-            :is(.nds-search-btn, .nds-filter-btn)>.nds-label {
-                display: none;
-            }
-        }
-
-    }
-
-    .nds-form-control {
-        min-width: unset;
-    }
 }
 
 // ==============================================
-// APPLIED FILTERS (standalone or nested)
+// APPLIED FILTERS (standalone)
 // ==============================================
 
 .nds-filter-applied:not([hidden]) {
@@ -114,10 +36,6 @@
     gap: var(--spacing-md);
     min-width: 0;
     align-items: center;
-
-    &:not(.nds-filter *) {
-        margin-bottom: 1rem;
-    }
 
     >.nds-label {
         font-size: var(--nds-text-lg-FS);
@@ -170,17 +88,33 @@
 .nds-search-box {
     display: flex;
     gap: var(--spacing-lg);
-    max-width: 800px;
     margin: 0 auto;
     justify-content: center;
-    padding: var(--spacing-lg);
     align-items: flex-start;
     flex-direction: column;
+    width: 100%;
 
     .nds-search-content {
         display: flex;
         gap: var(--spacing-lg);
         width: 100%;
+
+        @include mobile {
+            :is(.nds-search-btn, .nds-filter-btn) > .nds-label {
+                display: none;
+            }
+        }
     }
 
+    .nds-auto-fill:not([hidden]) {
+        flex-direction: row;
+        flex: 1 1 100%;
+        align-items: center;
+
+        >.nds-label {
+            font-size: var(--nds-text-lg-FS);
+            font-weight: 500;
+            color: var(--text-default);
+        }
+    }
 }

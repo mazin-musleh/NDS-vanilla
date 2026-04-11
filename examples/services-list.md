@@ -13,83 +13,80 @@ exclude_showcase: false
 ---
 
 <section id="servicesList" class="nds-content-section">
-    <div class="nds-section-head">
-        <div class="nds-section-search nds-filter nds-demo-showcase" data-filter-target="services_list_content" hidden>
-            <div class="nds-form-container nds-search-box"
-                data-url="{{ '/assets/data/services-autocomplete.json' | relative_url }}" data-name="Title"
-                data-query-param="q">
-                <div class="nds-search-content">
-                    <div class="nds-form-control">
-                        <i class="hgi hgi-stroke hgi-search-01 nds-icon"></i>
-                        <input id="filterSearch" type="text" class="nds-search-input" name="search" autocomplete="on"
-                            placeholder="Search in services...">
-                        <div class="nds-form-action">
-                            <button class="nds-btn nds-subtle nds-clear" hidden><i
-                                    class="hgi hgi-stroke hgi-cancel-01 nds-icon"></i></button>
-                            <button class="nds-btn nds-subtle nds-voice-input"><i
-                                    class="hgi hgi-stroke hgi-mic-01 nds-icon"></i></button>
+    <div class="nds-section-wrapper">
+        <div class="nds-form-container nds-search-box nds-demo-showcase" data-filter-target="services_list_content"
+            data-url="{{ '/assets/data/services-autocomplete.json' | relative_url }}" data-name="Title"
+            data-query-param="q">
+            <div class="nds-search-content">
+                <div class="nds-form-control">
+                    <i class="hgi hgi-stroke hgi-search-01 nds-icon"></i>
+                    <input id="filterSearch" type="text" class="nds-search-input" name="search" autocomplete="on"
+                        placeholder="Search in services...">
+                    <div class="nds-form-action">
+                        <button class="nds-btn nds-subtle nds-clear" hidden><i
+                                class="hgi hgi-stroke hgi-cancel-01 nds-icon"></i></button>
+                        <button class="nds-btn nds-subtle nds-voice-input"><i
+                                class="hgi hgi-stroke hgi-mic-01 nds-icon"></i></button>
+                    </div>
+                </div>
+                <button class="nds-btn nds-primary nds-search-btn" type="button">
+                    <i class="hgi hgi-stroke hgi-search-01 nds-icon"></i>
+                    <span class="nds-label">Search</span>
+                </button>
+                <div class="nds-dropmenu nds-filter" data-filter-target="services_list_content">
+                    <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
+                        <i class="hgi hgi-stroke hgi-filter nds-icon"></i>
+                        <span class="nds-label">Filter</span>
+                    </button>
+                    <div class="nds-dropmenu-menu" style="min-width: 300px;" hidden>
+                        <div class="nds-dropmenu-scroll">
+                            <!-- Filter by Most Used -->
+                            <div data-filter="most-used" data-filter-legend="Most Used"
+                                data-filter-type="switch" data-no-auto-close></div>
+                            <hr class="nds-divider">
+                            <!-- Filter by System -->
+                            <div data-filter="system" data-filter-legend="System"
+                                data-filter-type="checkbox" data-no-auto-close></div>
+                        </div>
+                        <div class="nds-dropmenu-footer">
+                            <hr class="nds-divider">
+                            <div class="nds-dropmenu-action nds-grid">
+                                <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
+                                    data-filter-action="clear" data-no-auto-close>
+                                    <span class="nds-label">Reset</span>
+                                </button>
+                                <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
+                                    data-filter-action="apply">
+                                    <span class="nds-label">Filter</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                    <button class="nds-btn nds-primary nds-search-btn" type="button">
-                        <i class="hgi hgi-stroke hgi-search-01 nds-icon"></i>
-                        <span class="nds-label">Search</span>
+                </div>
+            </div>
+            <div class="nds-auto-fill" data-target="filterSearch" data-filter-target="services_list_content">
+                <span class="nds-label">Most Searched:</span>
+                <div class="nds-chips">
+                    <button class="nds-chip nds-neutral nds-rounded nds-item">
+                        <i class="hgi hgi-stroke hgi-rounded hgi-plus-sign"></i>
+                        <span class="nds-label">Tag 1</span>
+                    </button>
+                    <button class="nds-chip nds-neutral nds-rounded nds-item">
+                        <i class="hgi hgi-stroke hgi-rounded hgi-plus-sign"></i>
+                        <span class="nds-label">Tag 2</span>
+                    </button>
+                    <button class="nds-chip nds-neutral nds-rounded nds-item">
+                        <i class="hgi hgi-stroke hgi-rounded hgi-plus-sign"></i>
+                        <span class="nds-label">Tag 3</span>
                     </button>
                 </div>
-                <div class="nds-auto-fill" data-target="filterSearch">
-                    <span class="nds-label">Most Searched:</span>
-                    <div class="nds-chips">
-                        <button class="nds-chip nds-neutral nds-rounded nds-item">
-                            <i class="hgi hgi-stroke hgi-rounded hgi-plus-sign"></i>
-                            <span class="nds-label">Tag 1</span>
-                        </button>
-                        <button class="nds-chip nds-neutral nds-rounded nds-item">
-                            <i class="hgi hgi-stroke hgi-rounded hgi-plus-sign"></i>
-                            <span class="nds-label">Tag 2</span>
-                        </button>
-                        <button class="nds-chip nds-neutral nds-rounded nds-item">
-                            <i class="hgi hgi-stroke hgi-rounded hgi-plus-sign"></i>
-                            <span class="nds-label">Tag 3</span>
-                        </button>
-                    </div>
-                </div>
             </div>
-            <div class="nds-dropmenu">
-                <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
-                    <i class="hgi hgi-stroke hgi-filter nds-icon"></i>
-                    <span class="nds-label">Filter</span>
-                </button>
-                <div class="nds-dropmenu-menu" style="min-width: 300px;" hidden>
-                    <div class="nds-dropmenu-scroll">
-                        <!-- Filter by Most Used -->
-                        <div data-filter="most-used" data-filter-legend="Most Used"
-                            data-filter-type="switch" data-no-auto-close></div>
-                        <hr class="nds-divider">
-                        <!-- Filter by System -->
-                        <div data-filter="system" data-filter-legend="System"
-                            data-filter-type="checkbox" data-no-auto-close></div>
-                    </div>
-                    <div class="nds-dropmenu-footer">
-                        <hr class="nds-divider">
-                        <div class="nds-dropmenu-action nds-grid">
-                            <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
-                                data-filter-action="clear" data-no-auto-close>
-                                <span class="nds-label">Reset</span>
-                            </button>
-                            <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
-                                data-filter-action="apply">
-                                <span class="nds-label">Filter</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="nds-filter-applied" hidden>
+            <div class="nds-filter-applied" data-filter-target="services_list_content" hidden>
                 <span class="nds-label">Applied Filters:</span>
                 <div class="nds-chips"></div>
             </div>
         </div>
-    </div>
-    <div class="nds-section-body">
+        <div class="nds-section-body">
         <div id="services_list_content" class="nds-paged-content nds-grid" hidden
             style="--per-page: 12; --max-col: 3; --mid-col: 2; --min-col: 1;">
 
@@ -133,5 +130,6 @@ exclude_showcase: false
 
         </div>
         <nav class="nds-pagination" data-auto-pagination aria-label="Pagination"></nav>
+        </div>
     </div>
 </section>
