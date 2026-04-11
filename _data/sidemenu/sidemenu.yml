@@ -26,6 +26,9 @@
     - label: "Program"
       url: "/examples/program"
       href: "/examples/program.html"
+    - label: "404"
+      url: "/examples/404"
+      href: "/examples/404.html"
       
 
 - label: "Components"

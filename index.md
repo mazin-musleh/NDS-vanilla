@@ -1,7 +1,7 @@
 ---
 layout: home
 title: "NDS - Vanilla National Design System"
-description: "An open-source vanilla implementation of Saudi Arabia's National Design System. 52 components in plain HTML, CSS, and JavaScript with zero dependencies."
+description: "An open-source vanilla implementation of Saudi Arabia's National Design System. 53 components in plain HTML, CSS, and JavaScript with zero dependencies."
 
 lang: en
 direction: ltr
@@ -41,18 +41,41 @@ direction: ltr
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
                                 <span class="nds-featured-icon nds-circle nds-xl">
+                                    <i class="hgi hgi-stroke hgi-menu-square nds-icon"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <h3 class="nds-card-title">Service Page</h3>
+                                <p class="nds-card-description">Government digital service with side info, breadcrumbs, and structured content layout.</p>
+                            </div>
+                        </div>
+                        <div class="nds-card-actions">
+                            <a href="{{ '/examples/service.html' | relative_url }}" class="nds-btn nds-primary">
+                                <span class="nds-label">View Page</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nds-swiper-slide">
+                    <div class="nds-card nds-stroke">
+                        <div class="nds-card-header">
+                            <div class="nds-card-featured-icon">
+                                <span class="nds-featured-icon nds-circle nds-xl">
                                     <i class="hgi hgi-stroke hgi-dashboard-browsing nds-icon"></i>
                                 </span>
                             </div>
                         </div>
                         <div class="nds-card-content">
                             <div class="nds-card-text">
-                                <h3 class="nds-card-title">Dashboard</h3>
-                                <p class="nds-card-description">Charts, stat cards, and data tables in an analytics layout.</p>
+                                <h3 class="nds-card-title">Console</h3>
+                                <p class="nds-card-description">Admin console with charts, transactions, and team directory.</p>
                             </div>
                         </div>
                         <div class="nds-card-actions">
-                            <a href="{{ '/examples/dashboard-demo.html' | relative_url }}" class="nds-btn nds-primary">
+                            <a href="{{ '/examples/console-demo.html' | relative_url }}" class="nds-btn nds-primary">
                                 <span class="nds-label">View Page</span>
                             </a>
                         </div>
@@ -87,29 +110,6 @@ direction: ltr
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
                                 <span class="nds-featured-icon nds-circle nds-xl">
-                                    <i class="hgi hgi-stroke hgi-menu-square nds-icon"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="nds-card-content">
-                            <div class="nds-card-text">
-                                <h3 class="nds-card-title">Service Page</h3>
-                                <p class="nds-card-description">Government digital service with side info, breadcrumbs, and structured content layout.</p>
-                            </div>
-                        </div>
-                        <div class="nds-card-actions">
-                            <a href="{{ '/examples/service.html' | relative_url }}" class="nds-btn nds-primary">
-                                <span class="nds-label">View Page</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="nds-swiper-slide">
-                    <div class="nds-card nds-stroke">
-                        <div class="nds-card-header">
-                            <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon nds-circle nds-xl">
                                     <i class="hgi hgi-stroke hgi-school nds-icon"></i>
                                 </span>
                             </div>
@@ -122,6 +122,52 @@ direction: ltr
                         </div>
                         <div class="nds-card-actions">
                             <a href="{{ '/examples/faculty.html' | relative_url }}" class="nds-btn nds-primary">
+                                <span class="nds-label">View Page</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nds-swiper-slide">
+                    <div class="nds-card nds-stroke">
+                        <div class="nds-card-header">
+                            <div class="nds-card-featured-icon">
+                                <span class="nds-featured-icon nds-circle nds-xl">
+                                    <i class="hgi hgi-stroke hgi-grid-view nds-icon"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <h3 class="nds-card-title">Services List</h3>
+                                <p class="nds-card-description">Filterable government services catalog with search and category filters.</p>
+                            </div>
+                        </div>
+                        <div class="nds-card-actions">
+                            <a href="{{ '/examples/services-list.html' | relative_url }}" class="nds-btn nds-primary">
+                                <span class="nds-label">View Page</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nds-swiper-slide">
+                    <div class="nds-card nds-stroke">
+                        <div class="nds-card-header">
+                            <div class="nds-card-featured-icon">
+                                <span class="nds-featured-icon nds-circle nds-xl">
+                                    <i class="hgi hgi-stroke hgi-alert-02 nds-icon"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <h3 class="nds-card-title">404 Page</h3>
+                                <p class="nds-card-description">Custom error page with illustration and back-to-home action.</p>
+                            </div>
+                        </div>
+                        <div class="nds-card-actions">
+                            <a href="{{ '/examples/404.html' | relative_url }}" class="nds-btn nds-primary">
                                 <span class="nds-label">View Page</span>
                             </a>
                         </div>
@@ -149,7 +195,7 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Components</h2>
-            <p class="nds-section-description">52 components, each with markup, styling, and JavaScript behavior. All built from scratch.</p>
+            <p class="nds-section-description">53 components, each with markup, styling, and JavaScript behavior. All built from scratch.</p>
         </div>
         <div class="nds-form-container nds-search-box" data-filter-target="components_list">
             <div class="nds-search-content">

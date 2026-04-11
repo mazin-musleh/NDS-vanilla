@@ -182,8 +182,8 @@ main {
 
     @include desktop(min) {
         &:is(.nds-wSideMenu):not(.nds-toEdge) {
-            max-width: var(--nds-content-MaxWidth);
             margin-inline: auto;
+            padding-inline: max(var(--nds-viewport-padding), calc((100% - var(--nds-content-MaxWidth)) / 2));
         }
     }
 

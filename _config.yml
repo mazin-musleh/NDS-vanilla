@@ -105,4 +105,7 @@ exclude:
   - notes.txt
   - nul
   - NUL
+  - standard-page.md
+  - subsite.md
+  - class-rename-map.txt
 
