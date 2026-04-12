@@ -1115,8 +1115,8 @@ section.nds-content-section          (responsive padding for content constrainin
                     <div class="demo-container">
                         <div class="state-demo">
                             <section class="nds-content-section nds-horizontal">
-                                <div class="nds-section-wrapper nds-grid">
-                                    <div class="nds-section-head col-sm-12 col-lg-5">
+                                <div class="nds-section-wrapper nds-grid" style="--max-track: 5fr 7fr; --mid-track: 1fr;">
+                                    <div class="nds-section-head">
                                         <h2 class="nds-section-title">Side by Side</h2>
                                         <p class="nds-section-description">Head and content are displayed in a horizontal grid on desktop screens.</p>
                                         <div class="nds-section-action">
@@ -1125,7 +1125,7 @@ section.nds-content-section          (responsive padding for content constrainin
                                             </a>
                                         </div>
                                     </div>
-                                    <div class="nds-section-body col-sm-12 col-lg-7">
+                                    <div class="nds-section-body">
                                         <img src="https://placehold.co/600x400/e2e8f0/475569?text=Content+Image" alt="Placeholder image" style="border-radius: var(--radius-lg); width: 100%;">
                                     </div>
                                 </div>
@@ -1150,8 +1150,8 @@ section.nds-content-section          (responsive padding for content constrainin
                                 </div>
                                 <code class="lang-html code">
 <section class="nds-content-section nds-horizontal">
-    <div class="nds-section-wrapper nds-grid">
-        <div class="nds-section-head col-sm-12 col-lg-5">
+    <div class="nds-section-wrapper nds-grid" style="--max-track: 5fr 7fr; --mid-track: 1fr;">
+        <div class="nds-section-head">
             <h2 class="nds-section-title">Side by Side</h2>
             <p class="nds-section-description">Head and content are displayed in a horizontal grid on desktop screens.</p>
             <div class="nds-section-action">
@@ -1160,7 +1160,7 @@ section.nds-content-section          (responsive padding for content constrainin
                 </a>
             </div>
         </div>
-        <div class="nds-section-body col-sm-12 col-lg-7">
+        <div class="nds-section-body">
             <img src="https://placehold.co/600x400/e2e8f0/475569?text=Content+Image" alt="Placeholder image" style="border-radius: var(--radius-lg); width: 100%;">
         </div>
     </div>

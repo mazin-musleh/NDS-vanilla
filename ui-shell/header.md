@@ -244,9 +244,9 @@ header
                                         <code class="lang-html code">
 &lt;div id="nds-digitalStamp" role="region" aria-label="Digital government stamp" hidden&gt;
   &lt;div class="nds-content-wrapper"&gt;
-    &lt;div class="nds-digitalStamp-notices nds-grid"&gt;
+    &lt;div class="nds-digitalStamp-notices"&gt;
       &lt;!-- Domain Verification Notice --&gt;
-      &lt;div class="nds-digitalStamp-card col-sm-12 col-lg-6"&gt;
+      &lt;div class="nds-digitalStamp-card"&gt;
         &lt;div class="nds-digitalStamp-icon"&gt;
           &lt;i class="hgi hgi-stroke hgi-link-04 nds-icon"&gt;&lt;/i&gt;
         &lt;/div&gt;
@@ -260,7 +260,7 @@ header
         &lt;/div&gt;
       &lt;/div&gt;
       &lt;!-- HTTPS Security Notice --&gt;
-      &lt;div class="nds-digitalStamp-card col-sm-12 col-lg-6"&gt;
+      &lt;div class="nds-digitalStamp-card"&gt;
         &lt;div class="nds-digitalStamp-icon"&gt;
           &lt;i class="hgi hgi-stroke hgi-square-lock-01 nds-icon"&gt;&lt;/i&gt;
         &lt;/div&gt;
@@ -273,15 +273,15 @@ header
           &lt;/div&gt;
         &lt;/div&gt;
       &lt;/div&gt;
-      &lt;!-- DGA Registration --&gt;
-      &lt;div class="nds-digitalStamp-register col-12"&gt;
-        &lt;img src="dga-logo-icon.svg" width="21" height="31" alt="Digital Government Authority" loading="lazy"&gt;
-        &lt;div&gt;
-          &lt;span&gt;Registered on Digital Government Authority: &lt;/span&gt;
-          &lt;a class="nds-digitalStamp-registration nds-primary nds-underline"
-              href="https://raqmi.dga.gov.sa/platforms/DigitalStamp/ShowCertificate/4990"
-              target="_blank"&gt;20240520402&lt;/a&gt;
-        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;!-- DGA Registration --&gt;
+    &lt;div class="nds-digitalStamp-register"&gt;
+      &lt;img src="dga-logo-icon.svg" width="21" height="31" alt="Digital Government Authority" loading="lazy"&gt;
+      &lt;div&gt;
+        &lt;span&gt;Registered on Digital Government Authority: &lt;/span&gt;
+        &lt;a class="nds-digitalStamp-registration nds-primary nds-underline"
+            href="https://raqmi.dga.gov.sa/platforms/DigitalStamp/ShowCertificate/4990"
+            target="_blank"&gt;20240520402&lt;/a&gt;
       &lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
