@@ -2,7 +2,7 @@
 layout: page
 title: Grid
 hero_title: Grid System - National Design System
-hero_description: A responsive grid system for arranging page content into columns with fixed counts, auto-fit wrapping, responsive breakpoints, and customizable spacing and alignment.
+hero_description: A responsive CSS grid for arranging content into auto-fit or explicit column layouts, with per-breakpoint column counts, custom track templates, and adaptive gap scaling.
 breadcrumb: ["Layout"]
 lang: en
 direction: ltr
@@ -13,8 +13,7 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Basic Grid</h2>
-            <p class="nds-section-description">The .nds-grid class creates a CSS grid that auto-fits children
-                into equal columns. Use --max-col to set a fixed column count, or --col-width to set minimum column width for automatic wrapping.</p>
+            <p class="nds-section-description">The <code class="nds-inline-code lang-html">.nds-grid</code> class creates a CSS grid that distributes children into equal columns. Use <code class="nds-inline-code lang-html">--max-col</code> to set a fixed column count, or <code class="nds-inline-code lang-html">--min-width</code> to set a minimum column width for automatic wrapping.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
@@ -39,14 +38,14 @@ direction: ltr
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                                    aria-controls="panel-basic" id="tab-basic">
+                                    aria-controls="panel-grid-basic-1" id="tab-grid-basic-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
                             </nav>
                         </div>
                         <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-basic"
-                                aria-labelledby="tab-basic">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-grid-basic-1"
+                                aria-labelledby="tab-grid-basic-1">
                                 <div class="nds-code-action">
                                     <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
@@ -73,7 +72,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-grid" style="--col-width: 200px;">
+                            <div class="nds-grid" style="--min-width: 200px;">
                                 <div class="nds-card nds-stroke">1</div>
                                 <div class="nds-card nds-stroke">2</div>
                                 <div class="nds-card nds-stroke">3</div>
@@ -88,21 +87,21 @@ direction: ltr
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                                    aria-controls="panel-autofill" id="tab-autofill">
+                                    aria-controls="panel-grid-basic-2" id="tab-grid-basic-2">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
                             </nav>
                         </div>
                         <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-autofill"
-                                aria-labelledby="tab-autofill">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-grid-basic-2"
+                                aria-labelledby="tab-grid-basic-2">
                                 <div class="nds-code-action">
                                     <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-<div class="nds-grid" style="--col-width: 200px;">
+<div class="nds-grid" style="--min-width: 200px;">
     <div class="nds-card nds-stroke">1</div>
     <div class="nds-card nds-stroke">2</div>
     <div class="nds-card nds-stroke">3</div>
@@ -121,35 +120,24 @@ direction: ltr
     </div>
 </section>
 
-<!-- 12-Column Spans -->
-<section id="column-spans" class="nds-content-section">
+<!-- Custom Tracks -->
+<section id="tracks" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
-            <h2 class="nds-section-title">12-Column Spans</h2>
-            <p class="nds-section-description">Use col-{n} classes to explicitly span columns in a 12-column grid. The
-                grid automatically switches to 12 columns when column classes are detected.</p>
+            <h2 class="nds-section-title">Custom Track Layouts</h2>
+            <p class="nds-section-description">Use <code class="nds-inline-code lang-html">--max-track</code> to define an explicit <code class="nds-inline-code lang-html">grid-template-columns</code> value for asymmetric layouts like a sidebar next to a main column, or a mix of fixed and flexible tracks.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
-                        <div class="demo-label">Column Spans</div>
+                        <div class="demo-label">Asymmetric Tracks</div>
                     </div>
                     <div class="demo-container">
-                        <div class="state-demo nds-grid-demo">
-                            <div class="nds-grid">
-                                <div class="col-12 nds-card nds-stroke">col-12</div>
-                                <div class="col-6 nds-card nds-stroke">col-6</div>
-                                <div class="col-6 nds-card nds-stroke">col-6</div>
-                                <div class="col-4 nds-card nds-stroke">col-4</div>
-                                <div class="col-4 nds-card nds-stroke">col-4</div>
-                                <div class="col-4 nds-card nds-stroke">col-4</div>
-                                <div class="col-3 nds-card nds-stroke">col-3</div>
-                                <div class="col-3 nds-card nds-stroke">col-3</div>
-                                <div class="col-3 nds-card nds-stroke">col-3</div>
-                                <div class="col-3 nds-card nds-stroke">col-3</div>
-                                <div class="col-8 nds-card nds-stroke">col-8</div>
-                                <div class="col-4 nds-card nds-stroke">col-4</div>
+                        <div class="state-demo">
+                            <div class="nds-grid" style="--max-track: 3fr 1fr; --mid-track: 2fr 1fr; --min-track: 1fr;">
+                                <div class="nds-card nds-stroke">Primary</div>
+                                <div class="nds-card nds-stroke">Secondary</div>
                             </div>
                         </div>
                     </div>
@@ -158,33 +146,23 @@ direction: ltr
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                                    aria-controls="panel-spans" id="tab-spans">
+                                    aria-controls="panel-grid-track-1" id="tab-grid-track-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
                             </nav>
                         </div>
                         <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-spans"
-                                aria-labelledby="tab-spans">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-grid-track-1"
+                                aria-labelledby="tab-grid-track-1">
                                 <div class="nds-code-action">
                                     <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-<div class="nds-grid">
-    <div class="col-12 nds-card nds-stroke">col-12</div>
-    <div class="col-6 nds-card nds-stroke">col-6</div>
-    <div class="col-6 nds-card nds-stroke">col-6</div>
-    <div class="col-4 nds-card nds-stroke">col-4</div>
-    <div class="col-4 nds-card nds-stroke">col-4</div>
-    <div class="col-4 nds-card nds-stroke">col-4</div>
-    <div class="col-3 nds-card nds-stroke">col-3</div>
-    <div class="col-3 nds-card nds-stroke">col-3</div>
-    <div class="col-3 nds-card nds-stroke">col-3</div>
-    <div class="col-3 nds-card nds-stroke">col-3</div>
-    <div class="col-8 nds-card nds-stroke">col-8</div>
-    <div class="col-4 nds-card nds-stroke">col-4</div>
+<div class="nds-grid" style="--max-track: 3fr 1fr; --mid-track: 2fr 1fr; --min-track: 1fr;">
+    <div class="nds-card nds-stroke">Primary</div>
+    <div class="nds-card nds-stroke">Secondary</div>
 </div>
 </code>
                             </div>
@@ -192,39 +170,16 @@ direction: ltr
                     </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Responsive Columns -->
-<section id="responsive" class="nds-content-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Responsive Columns</h2>
-            <p class="nds-section-description">Use breakpoint-prefixed column classes to change spans at different viewport widths. Available prefixes: col-sm- (base), col-md- (600px+), col-lg- (960px+), col-xl- (1280px+).</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
-                        <div class="demo-label">Responsive</div>
+                        <div class="demo-label">Collapse Auto-fit at Narrow Viewports</div>
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-grid">
-                                <div class="col-12 col-md-6 col-lg-3 nds-card nds-stroke">
-                                    12 / md-6 / lg-3
-                                </div>
-                                <div class="col-12 col-md-6 col-lg-3 nds-card nds-stroke">
-                                    12 / md-6 / lg-3
-                                </div>
-                                <div class="col-12 col-md-6 col-lg-3 nds-card nds-stroke">
-                                    12 / md-6 / lg-3
-                                </div>
-                                <div class="col-12 col-md-6 col-lg-3 nds-card nds-stroke">
-                                    12 / md-6 / lg-3
-                                </div>
+                            <div class="nds-grid" style="--mid-track: 1fr;">
+                                <div class="nds-card nds-stroke">A</div>
+                                <div class="nds-card nds-stroke">B</div>
+                                <div class="nds-card nds-stroke">C</div>
                             </div>
                         </div>
                     </div>
@@ -233,25 +188,25 @@ direction: ltr
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                                    aria-controls="panel-responsive" id="tab-responsive">
+                                    aria-controls="panel-grid-track-2" id="tab-grid-track-2">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
                             </nav>
                         </div>
                         <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-responsive"
-                                aria-labelledby="tab-responsive">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-grid-track-2"
+                                aria-labelledby="tab-grid-track-2">
                                 <div class="nds-code-action">
                                     <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-<div class="nds-grid">
-    <div class="col-12 col-md-6 col-lg-3 nds-card nds-stroke">12 / md-6 / lg-3</div>
-    <div class="col-12 col-md-6 col-lg-3 nds-card nds-stroke">12 / md-6 / lg-3</div>
-    <div class="col-12 col-md-6 col-lg-3 nds-card nds-stroke">12 / md-6 / lg-3</div>
-    <div class="col-12 col-md-6 col-lg-3 nds-card nds-stroke">12 / md-6 / lg-3</div>
+<!-- Auto-fit at large, forced single column at medium and below -->
+<div class="nds-grid" style="--mid-track: 1fr;">
+    <div class="nds-card nds-stroke">A</div>
+    <div class="nds-card nds-stroke">B</div>
+    <div class="nds-card nds-stroke">C</div>
 </div>
 </code>
                             </div>
@@ -269,7 +224,7 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Responsive Auto-fit</h2>
-            <p class="nds-section-description">Without column classes, the grid uses auto-fit mode and adapts column count based on viewport width using --max-col, --mid-col, and --min-col tokens. Each token cascades: if --mid-col is not set, it falls back to --max-col. If --min-col is not set, it falls back to --mid-col then --max-col.</p>
+            <p class="nds-section-description">Use <code class="nds-inline-code lang-html">--max-col</code>, <code class="nds-inline-code lang-html">--mid-col</code>, and <code class="nds-inline-code lang-html">--min-col</code> to set column count per viewport. Each token cascades: <code class="nds-inline-code lang-html">--mid-col</code> falls back to <code class="nds-inline-code lang-html">--max-col</code>, and <code class="nds-inline-code lang-html">--min-col</code> falls back to <code class="nds-inline-code lang-html">--mid-col</code> then <code class="nds-inline-code lang-html">--max-col</code>.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
@@ -292,14 +247,14 @@ direction: ltr
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                                    aria-controls="panel-autofit" id="tab-autofit">
+                                    aria-controls="panel-grid-autofit-1" id="tab-grid-autofit-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
                             </nav>
                         </div>
                         <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-autofit"
-                                aria-labelledby="tab-autofit">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-grid-autofit-1"
+                                aria-labelledby="tab-grid-autofit-1">
                                 <div class="nds-code-action">
                                     <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
@@ -328,48 +283,10 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Responsive Breakpoints</h2>
-            <p class="nds-section-description">The grid uses viewport media queries for responsive column spans and auto-fit behavior. Breakpoints align with the design system's standard responsive mixins.</p>
+            <p class="nds-section-description">The grid switches between <code class="nds-inline-code lang-html">--max-*</code>, <code class="nds-inline-code lang-html">--mid-*</code>, and <code class="nds-inline-code lang-html">--min-*</code> tokens at standard design-system breakpoints. Gap values halve automatically below the large breakpoint.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Responsive Breakpoints</div>
-                    </div>
-                    <div class="demo-container nds-noBg">
-                        <table class="nds-table nds-responsive nds-striped" style="--min-width:500px;">
-                            <thead>
-                                <tr>
-                                    <th>Prefix</th>
-                                    <th>Viewport Width</th>
-                                    <th>Description</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>col-sm- / col-</td>
-                                    <td>0px+</td>
-                                    <td>Base (mobile-first default)</td>
-                                </tr>
-                                <tr>
-                                    <td>col-md-</td>
-                                    <td>600px+</td>
-                                    <td>Medium viewports</td>
-                                </tr>
-                                <tr>
-                                    <td>col-lg-</td>
-                                    <td>960px+</td>
-                                    <td>Large viewports</td>
-                                </tr>
-                                <tr>
-                                    <td>col-xl-</td>
-                                    <td>1280px+</td>
-                                    <td>Extra-large viewports</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-label">Auto-fit Breakpoints</div>
@@ -385,18 +302,18 @@ direction: ltr
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>960px+</td>
-                                    <td>--max-col</td>
+                                    <td>961px+</td>
+                                    <td>--max-col / --max-track</td>
                                     <td>auto-fit</td>
                                 </tr>
                                 <tr>
-                                    <td>600px – 960px</td>
-                                    <td>--mid-col</td>
+                                    <td>601px to 960px</td>
+                                    <td>--mid-col / --mid-track</td>
                                     <td>--max-col &rarr; auto-fit</td>
                                 </tr>
                                 <tr>
-                                    <td>Below 600px</td>
-                                    <td>--min-col</td>
+                                    <td>Below 601px</td>
+                                    <td>--min-col / --min-track</td>
                                     <td>--mid-col &rarr; --max-col &rarr; auto-fit</td>
                                 </tr>
                             </tbody>
@@ -413,85 +330,27 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Customization Tokens</h2>
-            <p class="nds-section-description">Override these CSS custom properties on .nds-grid to customize gap, alignment, and column behavior.</p>
+            <p class="nds-section-description">Override these CSS custom properties on <code class="nds-inline-code lang-html">.nds-grid</code> to customize column count, track template, gap, and alignment.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
-                        <div class="demo-label">Tokens</div>
-                    </div>
-                    <div class="demo-container nds-noBg">
-                        <table class="nds-table nds-responsive nds-striped" style="--min-width:600px;">
-                            <thead>
-                                <tr>
-                                    <th>Token</th>
-                                    <th>Default</th>
-                                    <th>Description</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>--max-col</td>
-                                    <td>auto-fit</td>
-                                    <td>Column count at large viewport width (960px+). Also used as the base value when --mid-col and --min-col are not set</td>
-                                </tr>
-                                <tr>
-                                    <td>--mid-col</td>
-                                    <td>var(--max-col)</td>
-                                    <td>Column count at medium viewport width (600px–960px). Falls back to --max-col</td>
-                                </tr>
-                                <tr>
-                                    <td>--min-col</td>
-                                    <td>var(--mid-col)</td>
-                                    <td>Column count at small viewport width (below 600px). Falls back to --mid-col then --max-col</td>
-                                </tr>
-                                <tr>
-                                    <td>--col-width</td>
-                                    <td>0px</td>
-                                    <td>Minimum column width for auto-fit wrapping (e.g. 250px)</td>
-                                </tr>
-                                <tr>
-                                    <td>--gap</td>
-                                    <td>var(--spacing-2xl)</td>
-                                    <td>Gap between grid items (halved automatically at smaller breakpoints)</td>
-                                </tr>
-                                <tr>
-                                    <td>--row-gap</td>
-                                    <td>var(--spacing-2xl)</td>
-                                    <td>Row gap override (halved automatically at smaller breakpoints)</td>
-                                </tr>
-                                <tr>
-                                    <td>--col-gap</td>
-                                    <td>var(--spacing-2xl)</td>
-                                    <td>Column gap override (halved automatically at smaller breakpoints)</td>
-                                </tr>
-                                <tr>
-                                    <td>--justify</td>
-                                    <td>stretch</td>
-                                    <td>Horizontal alignment of grid items (justify-items)</td>
-                                </tr>
-                                <tr>
-                                    <td>--align</td>
-                                    <td>start</td>
-                                    <td>Vertical alignment of grid items (align-items)</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="demo-label">Customization Examples</div>
                     </div>
                     <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
                         <div class="nds-tab-list-container">
                             <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                                    aria-controls="panel-tokens" id="tab-tokens">
+                                    aria-controls="panel-grid-tokens-1" id="tab-grid-tokens-1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
                             </nav>
                         </div>
                         <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-tokens"
-                                aria-labelledby="tab-tokens">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-grid-tokens-1"
+                                aria-labelledby="tab-grid-tokens-1">
                                 <div class="nds-code-action">
                                     <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
                                         <i class="hgi hgi-stroke hgi-copy-01"></i>
@@ -506,7 +365,7 @@ direction: ltr
 </div>
 
 <!-- Minimum column width (auto-wraps when items can't fit at 250px) -->
-<div class="nds-grid" style="--col-width: 250px;">
+<div class="nds-grid" style="--min-width: 250px;">
     <div>...</div>
     <div>...</div>
     <div>...</div>
@@ -516,6 +375,12 @@ direction: ltr
 <div class="nds-grid" style="--max-col: 4; --mid-col: 2; --min-col: 1;">
     <div>...</div>
     <div>...</div>
+</div>
+
+<!-- Explicit track template with responsive collapse -->
+<div class="nds-grid" style="--max-track: 3fr 1fr; --min-track: 1fr;">
+    <div>Primary</div>
+    <div>Secondary</div>
 </div>
 
 <!-- Centered grid items -->
@@ -546,14 +411,14 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-layout-grid nds-icon"></i>
                         <span class="nds-label">Auto-fit Columns</span>
                     </span>
-                    <p class="nds-item-desc">Grid children distribute into equal columns automatically, with optional minimum width constraints for natural wrapping.</p>
+                    <p class="nds-item-desc">Grid children distribute into equal columns automatically, filling available width without manual column counts.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layout-3-column nds-icon"></i>
-                        <span class="nds-label">12-Column Detection</span>
+                        <i class="hgi hgi-stroke hgi-resize-01 nds-icon"></i>
+                        <span class="nds-label">Minimum Width Wrapping</span>
                     </span>
-                    <p class="nds-item-desc">Switches to a 12-column grid automatically when any child uses a <code class="nds-inline-code lang-html">col-*</code> class, no extra configuration needed.</p>
+                    <p class="nds-item-desc">Set <code class="nds-inline-code lang-html">--min-width</code> to wrap items naturally once they cannot fit the specified minimum, no media queries needed.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -564,17 +429,17 @@ direction: ltr
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-arrow-shrink nds-icon"></i>
-                        <span class="nds-label">Adaptive Gap Scaling</span>
+                        <i class="hgi hgi-stroke hgi-layout-3-column nds-icon"></i>
+                        <span class="nds-label">Custom Track Layouts</span>
                     </span>
-                    <p class="nds-item-desc">Gap and row-gap values halve automatically at tablet and mobile breakpoints to keep spacing proportional on smaller screens.</p>
+                    <p class="nds-item-desc">Define explicit <code class="nds-inline-code lang-html">grid-template-columns</code> per breakpoint with <code class="nds-inline-code lang-html">--max-track</code>, <code class="nds-inline-code lang-html">--mid-track</code>, and <code class="nds-inline-code lang-html">--min-track</code> for asymmetric layouts.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-resize-01 nds-icon"></i>
-                        <span class="nds-label">Breakpoint Column Classes</span>
+                        <i class="hgi hgi-stroke hgi-arrow-shrink nds-icon"></i>
+                        <span class="nds-label">Adaptive Gap Scaling</span>
                     </span>
-                    <p class="nds-item-desc">Responsive prefixes (<code class="nds-inline-code lang-html">col-md-</code>, <code class="nds-inline-code lang-html">col-lg-</code>, <code class="nds-inline-code lang-html">col-xl-</code>) let each child span different column counts at each viewport width.</p>
+                    <p class="nds-item-desc">Gap and row-gap values halve automatically at tablet and mobile breakpoints, keeping spacing proportional on smaller screens.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -599,14 +464,14 @@ direction: ltr
             <div class="nds-content-block">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
-                    <li>Use <strong>auto-fit mode</strong> (no <code class="nds-inline-code lang-html">col-*</code> classes) for uniform card grids, gallery layouts, and any collection where items should wrap naturally into equal columns</li>
-                    <li>Use <strong>12-column spans</strong> when you need asymmetric layouts like a sidebar paired with a main content area, or mixed column widths in the same row</li>
-                    <li>Use <strong>responsive column tokens</strong> (<code class="nds-inline-code lang-html">--max-col</code>, <code class="nds-inline-code lang-html">--mid-col</code>, <code class="nds-inline-code lang-html">--min-col</code>) for auto-fit grids that need specific column counts per breakpoint rather than fluid wrapping</li>
+                    <li>Use <strong>auto-fit mode</strong> (no column tokens) for uniform card grids, gallery layouts, and collections where items should wrap naturally into equal columns</li>
+                    <li>Use <strong>responsive column tokens</strong> (<code class="nds-inline-code lang-html">--max-col</code>, <code class="nds-inline-code lang-html">--mid-col</code>, <code class="nds-inline-code lang-html">--min-col</code>) when you want specific column counts per breakpoint rather than fluid wrapping</li>
+                    <li>Use <strong>track tokens</strong> (<code class="nds-inline-code lang-html">--max-track</code>, <code class="nds-inline-code lang-html">--mid-track</code>, <code class="nds-inline-code lang-html">--min-track</code>) for asymmetric layouts like sidebar + main content where columns need different widths</li>
+                    <li>Set <code class="nds-inline-code lang-html">--mid-track: 1fr</code> or <code class="nds-inline-code lang-html">--min-track: 1fr</code> alone (without <code class="nds-inline-code lang-html">--max-track</code>) to keep auto-fit behavior at large viewports while forcing a single-column stack below</li>
+                    <li>Prefer <code class="nds-inline-code lang-html">--min-width</code> over <code class="nds-inline-code lang-html">--max-col</code> when the ideal column count depends on available space rather than a fixed number</li>
                     <li>Do not use the grid for single-column page flow. Standard block layout handles this without extra markup</li>
-                    <li>Do not nest <code class="nds-inline-code lang-html">.nds-grid</code> inside <code class="nds-inline-code lang-html">.nds-grid</code> for complex layouts. Use <a class="nds-color" href="{{ 'layout/section' | relative_url }}">Section</a> to organize content into visual blocks</li>
-                    <li>Prefer <code class="nds-inline-code lang-html">--col-width</code> over <code class="nds-inline-code lang-html">--max-col</code> when the ideal column count depends on available space rather than a fixed number</li>
-                    <li>Combine responsive prefixes from small to large: start with <code class="nds-inline-code lang-html">col-12</code> (full width on mobile), then add <code class="nds-inline-code lang-html">col-md-6</code> and <code class="nds-inline-code lang-html">col-lg-*</code> for wider viewports</li>
-                    <li>Use <code class="nds-inline-code lang-html">col-full</code> or <code class="nds-inline-code lang-html">col-{breakpoint}-full</code> to span a child across all 12 columns, useful for section headers or dividers within a grid</li>
+                    <li>Do not nest <code class="nds-inline-code lang-html">.nds-grid</code> inside <code class="nds-inline-code lang-html">.nds-grid</code> for complex page structures. Use <a class="nds-color" href="{{ 'layout/section' | relative_url }}">Section</a> to organize content into visual blocks</li>
+                    <li>Always set <code class="nds-inline-code lang-html">--min-col</code> or <code class="nds-inline-code lang-html">--min-track</code> (commonly to <code class="nds-inline-code lang-html">1</code> or <code class="nds-inline-code lang-html">1fr</code>) when using responsive tokens, so layouts collapse cleanly on narrow viewports</li>
                     <li>Override <code class="nds-inline-code lang-html">--gap</code> with a spacing token when the default <code class="nds-inline-code lang-html">var(--spacing-2xl)</code> is too wide for compact layouts like form fields or icon grids</li>
                 </ul>
             </div>
@@ -617,13 +482,6 @@ direction: ltr
                     <thead><tr><th>Class</th><th>Description</th></tr></thead>
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">nds-center</code></td><td>Centers grid items horizontally (sets <code class="nds-inline-code lang-html">--justify: center</code>)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">col-{1-12}</code></td><td>Span the specified number of columns in a 12-column grid</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">col-full</code></td><td>Span all 12 columns (full width)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">col-sm-{1-12}</code></td><td>Column span at base/small viewport (alias for <code class="nds-inline-code lang-html">col-{n}</code>)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">col-md-{1-12}</code></td><td>Column span at 600px+ viewport</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">col-lg-{1-12}</code></td><td>Column span at 960px+ viewport</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">col-xl-{1-12}</code></td><td>Column span at 1280px+ viewport</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">col-{breakpoint}-full</code></td><td>Full-width span at the specified breakpoint (<code class="nds-inline-code lang-html">sm</code>, <code class="nds-inline-code lang-html">md</code>, <code class="nds-inline-code lang-html">lg</code>, <code class="nds-inline-code lang-html">xl</code>)</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -633,11 +491,14 @@ direction: ltr
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">--max-col</code></td><td>auto-fit</td><td>Column count at 960px+ viewport. Fallback for --mid-col and --min-col</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--mid-col</code></td><td>var(--max-col)</td><td>Column count at 600px to 960px viewport</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--min-col</code></td><td>var(--mid-col)</td><td>Column count below 600px viewport</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--col-width</code></td><td>0px</td><td>Minimum column width for auto-fit wrapping</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--gap</code></td><td>var(--spacing-2xl)</td><td>Shorthand for both row and column gap</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--max-col</code></td><td>auto-fit</td><td>Column count at large viewport (961px+). Base value for the fallback chain</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--mid-col</code></td><td>var(--max-col)</td><td>Column count at medium viewport (601px to 960px)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--min-col</code></td><td>var(--mid-col)</td><td>Column count below 601px</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--max-track</code></td><td>(unset)</td><td>Explicit <code class="nds-inline-code lang-html">grid-template-columns</code> value at large viewport. Overrides <code class="nds-inline-code lang-html">--max-col</code></td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--mid-track</code></td><td>var(--max-track)</td><td>Track template at medium viewport</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--min-track</code></td><td>var(--mid-track)</td><td>Track template below 601px</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--min-width</code></td><td>0</td><td>Minimum column width inside <code class="nds-inline-code lang-html">minmax()</code> for auto-fit wrapping (e.g. 250px)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--gap</code></td><td>var(--spacing-2xl)</td><td>Shorthand for both row and column gap. Halved automatically below the large breakpoint</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--row-gap</code></td><td>var(--spacing-2xl)</td><td>Row gap override</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--col-gap</code></td><td>var(--spacing-2xl)</td><td>Column gap override</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--justify</code></td><td>stretch</td><td>Horizontal alignment of grid items (justify-items)</td></tr>

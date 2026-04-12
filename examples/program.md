@@ -30,8 +30,8 @@ layout_class: nds-cardView
         <h2 class="nds-section-title">Program Details</h2>
     </div>
     <div class="nds-section-body">
-        <div class="nds-content-block nds-grid">
-            <div class="nds-block-item col-sm-12 col-lg-6">
+        <div class="nds-content-block nds-grid" style="--mid-track: 1fr;">
+            <div class="nds-block-item">
                 <dl class="nds-definition-list nds-divided">
                     <div class="nds-definition-item">
                         <dt>
@@ -95,8 +95,7 @@ layout_class: nds-cardView
                 </dl>
             </div>
 
-            <div class="program-overview-cards nds-block-item nds-grid col-sm-12 col-lg-6">
-                <div class="nds-grid" style="--max-col: 2;--mid-col: 4;--min-col: 2;--col-width: 100px;--gap: 12px;">
+            <div class="program-overview-cards nds-block-item nds-grid" style="--max-col: 2;--mid-col: 4;--min-col: 2;--min-width: 100px;--gap: 12px;">
                     <div class="nds-card nds-stroke nds-statistic">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
@@ -161,7 +160,6 @@ layout_class: nds-cardView
                             </div>
                         </div>
                     </div>
-                </div>
             </div>
         </div>
     </div>

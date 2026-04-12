@@ -2,73 +2,51 @@
 @use './mixins' as *;
 
 .nds-grid {
-  $col-selector: '> :is([class^="col-"], [class*=" col-"])';
+  // Reset public props so they don't inherit from an ancestor grid.
+  --max-col: initial;
+  --mid-col: initial;
+  --min-col: initial;
+  --max-track: initial;
+  --mid-track: initial;
+  --min-track: initial;
+  --min-width: initial;
+
   --_gap-min: var(--spacing-md);
-  --grid-col: var(--max-col, auto-fit);
+  --_cols: var(--max-col, auto-fit);
+  --_tracks: var(--max-track);
+  --_row-gap: var(--row-gap, var(--gap, var(--spacing-2xl)));
+  --_col-gap: var(--col-gap, var(--gap, var(--spacing-2xl)));
 
   &:not([hidden]) {
     display: grid !important;
-    grid-template-columns: repeat(var(--grid-col, 12), minmax(var(--col-width, 0px), 1fr));
+    grid-template-columns: var(--_tracks, repeat(var(--_cols), minmax(var(--min-width, 0), 1fr)));
   }
 
-  --_row-gap: var(--row-gap, var(--gap, var(--spacing-2xl)));
-  --_col-gap: var(--col-gap, var(--gap, var(--spacing-2xl)));
   row-gap: var(--_row-gap);
   column-gap: var(--_col-gap);
   justify-items: var(--justify, stretch);
   align-items: var(--align, start);
   width: 100%;
 
-  >* {
+  > * {
     max-width: 100% !important;
     min-width: 0;
     height: 100%;
   }
 
-  &:not(:has(#{$col-selector})) {
-    @include tablet(max) {
-      --grid-col: var(--mid-col, var(--max-col, auto-fit));
-      --_row-gap: max(var(--_gap-min), calc(var(--row-gap, var(--gap, var(--spacing-4xl))) / 2));
-      --_col-gap: max(var(--_gap-min), calc(var(--col-gap, var(--gap, var(--spacing-4xl))) / 2));
-    }
-
-    @include mobile {
-      --grid-col: var(--min-col, var(--mid-col, var(--max-col, auto-fit)));
-    }
+  @include tablet(max) {
+    --_cols: var(--mid-col, var(--max-col, auto-fit));
+    --_tracks: var(--mid-track, var(--max-track));
+    --_row-gap: max(var(--_gap-min), calc(var(--row-gap, var(--gap, var(--spacing-4xl))) / 2));
+    --_col-gap: max(var(--_gap-min), calc(var(--col-gap, var(--gap, var(--spacing-4xl))) / 2));
   }
 
-  &:has(#{$col-selector}) {
-    --col-width: 0 !important;
-    --grid-col: 12;
+  @include mobile {
+    --_cols: var(--min-col, var(--mid-col, var(--max-col, auto-fit)));
+    --_tracks: var(--min-track, var(--mid-track, var(--max-track)));
   }
 
   &.nds-center {
     --justify: center;
-  }
-}
-
-/* ── Column spans ── */
-
-@for $i from 1 through 12 {
-  :is(.col-#{$i}, .col-sm-#{$i}) {
-    grid-column: span #{$i};
-  }
-}
-
-:is(.col-full, .col-sm-full) {
-  grid-column: 1 / -1;
-}
-
-@each $breakpoint, $width in $grid-breakpoints {
-  @media (min-width: #{$width}) {
-    @for $i from 1 through 12 {
-      .col-#{$breakpoint}-#{$i} {
-        grid-column: span #{$i};
-      }
-    }
-
-    .col-#{$breakpoint}-full {
-      grid-column: 1 / -1;
-    }
   }
 }
