@@ -19,21 +19,19 @@
         display: flex;
         align-items: center;
     }
-}
 
-@mixin dl-tableView-item {
     .nds-definition-item {
         grid-column: 1 / -1;
         display: grid;
         grid-template-columns: subgrid;
-        row-gap: var(--_dl-gap, var(--spacing-lg));
+        row-gap: var(--_dl-gap);
         column-gap: var(--col-gap, var(--gap, var(--spacing-xl)));
     }
 }
 
 @mixin dl-divided-stacked {
     .nds-definition-item {
-        padding-bottom: var(--_dl-gap, var(--spacing-lg));
+        padding-bottom: var(--_dl-gap);
         border-bottom: 1px solid var(--divider-color);
 
         &:last-child,
@@ -41,6 +39,12 @@
             border-bottom: none;
             padding-bottom: 0;
         }
+    }
+}
+
+@mixin dl-stacked-icon-indent {
+    .nds-definition-item:has(> :is(dt, .nds-item-title) .nds-icon) :is(dd, .nds-item-desc) {
+        padding-inline-start: calc(var(--_dl-icon-size) + var(--_dl-icon-gap) + 2px);
     }
 }
 
@@ -69,23 +73,22 @@
     --_dl-gap: var(--row-gap, var(--gap, var(--spacing-lg)));
     display: flex;
     flex-direction: column;
-    row-gap: var(--_dl-gap, var(--spacing-lg));
+    row-gap: var(--_dl-gap);
 
     // Always-on tableView
     &.nds-tableView:not([class*="nds-tableView-"]) {
         @include dl-tableView;
-        @include dl-tableView-item;
     }
 
     // Responsive variants
     &.nds-tableView-sm {
-        @include mobile { @include dl-tableView; @include dl-tableView-item; }
+        @include mobile { @include dl-tableView; }
     }
     &.nds-tableView-md {
-        @include tablet('min') { @include dl-tableView; @include dl-tableView-item; }
+        @include tablet('min') { @include dl-tableView; }
     }
     &.nds-tableView-lg {
-        @include desktop('min') { @include dl-tableView; @include dl-tableView-item; }
+        @include desktop('min') { @include dl-tableView; }
     }
 }
 
@@ -136,8 +139,18 @@
     color: var(--text-secondary-paragraph);
 }
 
-.nds-definition-list:not([class*="nds-tableView"]) .nds-definition-item:has(> :is(dt, .nds-item-title) .nds-icon) :is(dd, .nds-item-desc) {
-    padding-inline-start: calc(var(--_dl-icon-size) + var(--_dl-icon-gap) + 2px);
+// Icon indent applies in stacked mode (not tableView at current breakpoint)
+.nds-definition-list:not([class*="nds-tableView"]) {
+    @include dl-stacked-icon-indent;
+}
+.nds-definition-list.nds-tableView-sm {
+    @include tablet('min') { @include dl-stacked-icon-indent; }
+}
+.nds-definition-list.nds-tableView-md {
+    @include mobile { @include dl-stacked-icon-indent; }
+}
+.nds-definition-list.nds-tableView-lg {
+    @include tablet('max') { @include dl-stacked-icon-indent; }
 }
 
 // ==============================================
