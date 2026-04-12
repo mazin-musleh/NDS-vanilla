@@ -6,9 +6,10 @@
 .nds-footer {
     background: var(--colors-neutral-100);
     padding-block: var(--spacing-4xl);
+    z-index: 1;
 
-    :root[data-theme="dark"] & {
-        background: var(--colors-neutral-800);
+    :root[data-theme="dark"] &:not(.nds-green) {
+        background: var(--colors-neutral-700);
     }
 }
 

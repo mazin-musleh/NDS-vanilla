@@ -139,6 +139,7 @@
 
 .nds-inline-code {
   font-weight: 600;
+  white-space: nowrap;
 }
 
 :is(.nds-code, .nds-inline-code) {
