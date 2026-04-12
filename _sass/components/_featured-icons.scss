@@ -14,7 +14,7 @@
   // Custom properties with fallbacks for parent override
   --featuredicons-bg-color: var(--icon-bg-color, var(--featuredicons-background-brand-light));
   --featuredicons-icon-color: var(--icon-color, var(--featuredicons-icon-primary));
-  --featuredicons-dark-bg-color: var(--dark-bg-color, var(--featuredicons-icon-primary));
+  --featuredicons-dark-bg-color: var(--dark-bg-color, var(--background-success));
 
   display: inline-flex;
   align-items: center;
@@ -62,31 +62,31 @@
   &[data-status="success"] {
     --icon-bg-color: var(--featuredicons-background-success-light);
     --icon-color: var(--featuredicons-icon-success);
-    --dark-bg-color: var(--featuredicons-icon-success);
+    --dark-bg-color: var(--background-success);
   }
 
   &[data-status="info"] {
     --icon-bg-color: var(--featuredicons-background-info-light);
     --icon-color: var(--featuredicons-icon-info);
-    --dark-bg-color: var(--featuredicons-icon-info);
+    --dark-bg-color: var(--background-info);
   }
 
   &[data-status="warning"] {
     --icon-bg-color: var(--featuredicons-background-warning-light);
     --icon-color: var(--featuredicons-icon-warning);
-    --dark-bg-color: var(--featuredicons-icon-warning);
+    --dark-bg-color: var(--background-warning);
   }
 
   &[data-status="error"] {
     --icon-bg-color: var(--featuredicons-background-error-light);
     --icon-color: var(--featuredicons-icon-error);
-    --dark-bg-color: var(--featuredicons-icon-error);
+    --dark-bg-color: var(--background-error);
   }
 
   &[data-status="neutral"] {
     --icon-bg-color: var(--featuredicons-background-default-light);
     --icon-color: var(--featuredicons-icon-neutral);
-    --dark-bg-color: var(--featuredicons-icon-default);
+    --dark-bg-color: var(--background-default);
   }
 
   // ==============================================
