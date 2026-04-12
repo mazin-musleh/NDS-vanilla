@@ -7,6 +7,58 @@
 @use '../mixins' as *;
 
 // ==============================================
+// TABLE-VIEW MIXINS
+// ==============================================
+
+@mixin dl-tableView {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    height: 100%;
+
+    :is(dd, .nds-item-desc) {
+        display: flex;
+        align-items: center;
+    }
+}
+
+@mixin dl-tableView-item {
+    .nds-definition-item {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: subgrid;
+        row-gap: var(--_dl-gap, var(--spacing-lg));
+        column-gap: var(--col-gap, var(--gap, var(--spacing-xl)));
+    }
+}
+
+@mixin dl-divided-stacked {
+    .nds-definition-item {
+        padding-bottom: var(--_dl-gap, var(--spacing-lg));
+        border-bottom: 1px solid var(--divider-color);
+
+        &:last-child,
+        &.nds-last-row {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+    }
+}
+
+@mixin dl-divided-tableView {
+    gap: 0;
+
+    .nds-definition-item {
+        padding: var(--spacing-md) 0;
+        border-bottom: 1px solid var(--divider-color);
+
+        &:last-child,
+        &.nds-last-row {
+            border-bottom: none;
+        }
+    }
+}
+
+// ==============================================
 // BASE DEFINITION LIST STYLES
 // ==============================================
 
@@ -19,17 +71,22 @@
     flex-direction: column;
     row-gap: var(--_dl-gap, var(--spacing-lg));
 
-    &.nds-tableView {
-        display: grid;
-        grid-template-columns: auto 1fr;
-        height: 100%;
-
-        :is(dd, .nds-item-desc) {
-            display: flex;
-            align-items: center;
-        }
+    // Always-on tableView
+    &.nds-tableView:not([class*="nds-tableView-"]) {
+        @include dl-tableView;
+        @include dl-tableView-item;
     }
 
+    // Responsive variants
+    &.nds-tableView-sm {
+        @include mobile { @include dl-tableView; @include dl-tableView-item; }
+    }
+    &.nds-tableView-md {
+        @include tablet('min') { @include dl-tableView; @include dl-tableView-item; }
+    }
+    &.nds-tableView-lg {
+        @include desktop('min') { @include dl-tableView; @include dl-tableView-item; }
+    }
 }
 
 // ==============================================
@@ -42,16 +99,6 @@
     gap: var(--spacing-xs);
     text-align: start;
     width: 100%;
-}
-
-.nds-definition-list.nds-tableView {
-    .nds-definition-item {
-        grid-column: 1 / -1;
-        display: grid;
-        grid-template-columns: subgrid;
-        row-gap: var(--_dl-gap, var(--spacing-lg));
-        column-gap: var(--col-gap, var(--gap, var(--spacing-xl)));
-    }
 }
 
 // ==============================================
@@ -89,7 +136,7 @@
     color: var(--text-secondary-paragraph);
 }
 
-.nds-definition-list:not(.nds-tableView) .nds-definition-item:has(> :is(dt, .nds-item-title) .nds-icon) :is(dd, .nds-item-desc) {
+.nds-definition-list:not([class*="nds-tableView"]) .nds-definition-item:has(> :is(dt, .nds-item-title) .nds-icon) :is(dd, .nds-item-desc) {
     padding-inline-start: calc(var(--_dl-icon-size) + var(--_dl-icon-gap) + 2px);
 }
 
@@ -99,31 +146,21 @@
 
 .nds-definition-list.nds-divided {
 
-    // For non-tableView variant
-    &:not(.nds-tableView) .nds-definition-item {
-        padding-bottom: var(--_dl-gap, var(--spacing-lg));
-        border-bottom: 1px solid var(--divider-color);
+    // Stacked divided (default for all)
+    @include dl-divided-stacked;
 
-        &:last-child,
-        &.nds-last-row {
-            border-bottom: none;
-            padding-bottom: 0;
-        }
+    // TableView divided overrides
+    &.nds-tableView:not([class*="nds-tableView-"]) {
+        @include dl-divided-tableView;
     }
-
-    // For tableView variant
-    &.nds-tableView {
-        gap: 0;
-
-        .nds-definition-item {
-            padding: var(--spacing-md) 0;
-            border-bottom: 1px solid var(--divider-color);
-
-            &:last-child,
-            &.nds-last-row {
-                border-bottom: none;
-            }
-        }
+    &.nds-tableView-sm {
+        @include mobile { @include dl-divided-tableView; }
+    }
+    &.nds-tableView-md {
+        @include tablet('min') { @include dl-divided-tableView; }
+    }
+    &.nds-tableView-lg {
+        @include desktop('min') { @include dl-divided-tableView; }
     }
 }
 

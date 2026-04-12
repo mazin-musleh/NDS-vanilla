@@ -36,6 +36,18 @@ direction: ltr
                                             <span class="nds-label">Table View</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["nds-tableView-sm", ".nds-definition-list", "dlLayout"]'>
+                                            <span class="nds-label">Table View (Mobile)</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["nds-tableView-md", ".nds-definition-list", "dlLayout"]'>
+                                            <span class="nds-label">Table View (Tablet+)</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["nds-tableView-lg", ".nds-definition-list", "dlLayout"]'>
+                                            <span class="nds-label">Table View (Desktop+)</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-grid", ".nds-definition-list", "dlLayout"]'
                                             data-toggle-style=".nds-definition-list { --max-col:2; --mid-col:2; --min-col:1; width:fit-content }">
                                             <span class="nds-label">Grid View</span>
@@ -319,10 +331,17 @@ direction: ltr
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-smartphone-wifi nds-icon"></i>
+                        <span class="nds-label">Responsive Table View</span>
+                    </span>
+                    <p class="nds-item-desc">Breakpoint variants let you choose when the table view activates: mobile only, tablet and up, or desktop and up.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
                         <i class="hgi hgi-stroke hgi-border-all-01 nds-icon"></i>
                         <span class="nds-label">Divided Borders</span>
                     </span>
-                    <p class="nds-item-desc">Optional border separators between items. Works in both default and table view layouts.</p>
+                    <p class="nds-item-desc">Optional border separators between items. Works in both default and table view layouts, including responsive variants.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -338,6 +357,13 @@ direction: ltr
                     </span>
                     <p class="nds-item-desc">Control icon size, gap, title font size, and row spacing through custom properties without overriding styles.</p>
                 </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-text-indent nds-icon"></i>
+                        <span class="nds-label">Automatic Icon Indent</span>
+                    </span>
+                    <p class="nds-item-desc">Descriptions auto-indent to align with the label text when icons are present in stacked layout.</p>
+                </div>
             </div>
         </div>
     </div>
@@ -352,17 +378,47 @@ direction: ltr
         <div class="nds-section-body">
 
             <div class="nds-content-block">
-                <h3 class="nds-block-title">When to Use</h3>
+                <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use <strong>semantic markup</strong> (<code class="nds-inline-code lang-html">&lt;dl&gt;/&lt;dt&gt;/&lt;dd&gt;</code>) for data display like user profiles, service details, or specifications where screen reader semantics matter</li>
                     <li>Use <strong>generic markup</strong> (<code class="nds-inline-code lang-html">.nds-item-title</code> / <code class="nds-inline-code lang-html">.nds-item-desc</code>) for feature lists, highlights, or content grids where semantic term-definition relationships don't apply</li>
-                    <li>Use <strong>default layout</strong> for vertical stacking. Best when descriptions vary in length or include multiple lines</li>
-                    <li>Use <strong>table view</strong> (<code class="nds-inline-code lang-html">nds-tableView</code>) for compact side-by-side key-value display. Subgrid keeps columns aligned. Only works with <code class="nds-inline-code lang-html">&lt;dt&gt;/&lt;dd&gt;</code> markup</li>
-                    <li>Use <strong>grid layout</strong> (<code class="nds-inline-code lang-html">nds-grid</code>) for multi-column responsive layouts. Configure breakpoints with <code class="nds-inline-code lang-html">--max-col</code>, <code class="nds-inline-code lang-html">--mid-col</code>, <code class="nds-inline-code lang-html">--min-col</code></li>
+                    <li>Use <strong>default layout</strong> for vertical stacking when descriptions vary in length or include multiple lines</li>
+                    <li>Use <strong>table view</strong> (<code class="nds-inline-code lang-html">nds-tableView</code>) for compact side-by-side key-value display. Subgrid keeps all columns aligned</li>
+                    <li>Use <strong>responsive table view</strong> variants to control when the two-column layout activates: <code class="nds-inline-code lang-html">nds-tableView-md</code> for tablet and up (stacked on mobile), <code class="nds-inline-code lang-html">nds-tableView-lg</code> for desktop and up, or <code class="nds-inline-code lang-html">nds-tableView-sm</code> for mobile only</li>
+                    <li>Use <strong>grid layout</strong> (<code class="nds-inline-code lang-html">nds-grid</code>) for multi-column responsive grids. Configure breakpoints with <code class="nds-inline-code lang-html">--max-col</code>, <code class="nds-inline-code lang-html">--mid-col</code>, <code class="nds-inline-code lang-html">--min-col</code></li>
+                    <li>Do not use definition list for navigation or action items. Use a <a class="nds-color" href="{{ 'components/dropmenu' | relative_url }}">Dropmenu</a> or standard list instead</li>
                     <li>Combine <strong>styles</strong> independently with any layout: <code class="nds-inline-code lang-html">nds-divided</code> for border separators, <code class="nds-inline-code lang-html">nds-card nds-stroke</code> on items for card appearance</li>
-                    <li>Add icons to titles for visual identification. The component auto-indents descriptions to align with the label text</li>
-                    <li>Customize sizing with CSS custom properties: <code class="nds-inline-code lang-html">--dl-icon-size</code>, <code class="nds-inline-code lang-html">--dl-icon-gap</code>, <code class="nds-inline-code lang-html">--dl-title-FS</code>, <code class="nds-inline-code lang-html">--row-gap</code>, <code class="nds-inline-code lang-html">--col-gap</code></li>
+                    <li>The <code class="nds-inline-code lang-html">nds-divided</code> style adapts automatically to responsive table view variants, showing stacked dividers outside the active breakpoint and table view dividers inside it</li>
+                    <li>Add icons to titles for visual identification. The component auto-indents descriptions to align with the label text in stacked layout</li>
                 </ul>
+            </div>
+
+            <div class="nds-content-block">
+                <h3 class="nds-block-title">Modifier Classes</h3>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Class</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">nds-tableView</code></td><td>Two-column key-value grid layout at all screen sizes</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-tableView-sm</code></td><td>Table view on mobile only (max-width: 600px), stacked on larger screens</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-tableView-md</code></td><td>Table view from tablet and up (min-width: 601px), stacked on mobile</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-tableView-lg</code></td><td>Table view from desktop and up (min-width: 961px), stacked below</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-divided</code></td><td>Adds border separators between items. Adapts styling for table view and stacked layouts</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="nds-content-block">
+                <h3 class="nds-block-title">CSS Custom Properties</h3>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">--dl-icon-size</code></td><td>18px</td><td>Width and height of title icons</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--dl-icon-gap</code></td><td>half of icon size</td><td>Gap between the icon and label text</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--dl-title-FS</code></td><td>--nds-text-clamp-lg-FS</td><td>Font size of term/title text</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--row-gap</code></td><td>--spacing-lg</td><td>Vertical spacing between items</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--col-gap</code></td><td>--spacing-xl</td><td>Horizontal spacing between columns in table view</td></tr>
+                    </tbody>
+                </table>
             </div>
 
         </div>
