@@ -27,6 +27,11 @@
         row-gap: var(--_dl-gap);
         column-gap: var(--col-gap, var(--gap, var(--spacing-xl)));
     }
+
+    // Reset stacked icon indent in tableView mode
+    .nds-definition-item:has(> :is(dt, .nds-item-title) .nds-icon) :is(dd, .nds-item-desc) {
+        padding-inline-start: 0;
+    }
 }
 
 @mixin dl-divided-stacked {
@@ -139,18 +144,9 @@
     color: var(--text-secondary-paragraph);
 }
 
-// Icon indent applies in stacked mode (not tableView at current breakpoint)
-.nds-definition-list:not([class*="nds-tableView"]) {
+// Icon indent: always on by default, reset when tableView activates
+.nds-definition-list {
     @include dl-stacked-icon-indent;
-}
-.nds-definition-list.nds-tableView-sm {
-    @include tablet('min') { @include dl-stacked-icon-indent; }
-}
-.nds-definition-list.nds-tableView-md {
-    @include mobile { @include dl-stacked-icon-indent; }
-}
-.nds-definition-list.nds-tableView-lg {
-    @include tablet('max') { @include dl-stacked-icon-indent; }
 }
 
 // ==============================================
