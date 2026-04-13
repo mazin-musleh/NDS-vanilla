@@ -177,106 +177,26 @@ Tag Color Variants
 
 Grid Columns (col-* classes removed)
 ------------------------------------
-Child col-* classes on .nds-grid are removed. Migrate by setting track
-templates on the parent .nds-grid via inline style, and removing ALL
-col-* classes from the children.
+Remove all col-* classes from children. Set track tokens on parent .nds-grid:
 
-OLD SYSTEM (for reference):
-  col-{n}         span {n} at all viewport widths (no media query)
-  col-sm-{n}      same as col-{n} (no media query, mobile baseline)
-  col-md-{n}      span {n} at ≥ 600px (overrides col-{n} above that width)
-  col-lg-{n}      span {n} at ≥ 960px (overrides col-md-{n} above that width)
-  col-xl-{n}      span {n} at ≥ 1280px (treat as col-lg for migration)
-  col-full        span all 12 columns
-  col-{bp}-full   span all 12 columns at breakpoint
+  --max-track   columns at ≥961px   (from col-lg/col-xl spans)
+  --mid-track   columns at 601-960  (from col-md spans, omit if same as max)
+  --min-track   columns at <601     (from col/col-sm spans, omit if same as mid)
 
-NEW SYSTEM (cascade is upward-fallback):
-  --max-track    grid-template-columns at ≥ 961px (the cascade root)
-  --mid-track    at 601-960px        (falls back to --max-track if unset)
-  --min-track    below 601px         (falls back to --mid-track, then --max-track)
+Convert spans to simplified fr ratios:
+  col-4 + col-8 → 1fr 2fr    col-3 + col-9 → 1fr 3fr    col-6 + col-6 → 1fr 1fr
+  col-12 → 1fr (stacked)     col-full → style="grid-column: 1 / -1" on child
 
-MIGRATION ALGORITHM:
-  For each row of children in the old grid, determine the span layout
-  at three viewport ranges and set the corresponding tracks prop:
+Equal-width grids: prefer --max-col/--mid-col/--min-col over track tokens.
+  four col-lg-3 + col-md-6 + col-12 → --max-col: 4; --mid-col: 2; --min-col: 1;
 
-    ≥ 961px   (large)   → --max-track    use col-lg-{n} / col-xl-{n} spans
-    601-960px (medium)  → --mid-track    use col-md-{n} spans
-    < 601px   (small)   → --min-track    use col-{n} / col-sm-{n} spans
+Auto-fit shortcut: omit --max-track when equal children match auto-fit naturally.
+  col-sm-12 col-lg-6 × 2 → --mid-track: 1fr;  (auto-fit handles large)
 
-  If a breakpoint has no override class on the child, inherit the span
-  from the next-smaller breakpoint (this mirrors how CSS min-width media
-  queries cascade in the old system).
-
-  Then OMIT any tracks prop whose value equals the next-larger tracks
-  prop (the cascade handles it). --max-track is NOT required: if unset,
-  the grid falls back to the column-based auto-fit path at large viewport,
-  which is correct when the old layout had no col-lg-* / col-xl-* classes.
-
-TRANSLATING SPANS TO TRACK VALUES:
-  Convert each child's span at a given breakpoint into an fr unit.
-  Spans always sum to 12.
-
-    col-lg-4 + col-lg-8      →  1fr 2fr           (ratio 4:8, simplified)
-    col-lg-3 + col-lg-9      →  1fr 3fr           (ratio 3:9)
-    col-lg-6 + col-lg-6      →  1fr 1fr           (equal width)
-    col-12   (single child)  →  1fr               (full-width stacked)
-    Fixed + fluid            →  280px 1fr         (literal width + fr)
-    col-full                 →  add style="grid-column: 1 / -1" on the child
-
-  If all children stack full-width at a breakpoint (all col-12), use 1fr
-  as the tracks value so the grid collapses to a single column.
-
-EXAMPLE (sidebar + main, stacks on mobile+tablet):
-
-  OLD:
-    <div class="nds-grid">
-      <div class="col-12 col-lg-4">sidebar</div>
-      <div class="col-12 col-lg-8">main</div>
-    </div>
-
-  Ranges:
-    ≥ 961px   → col-lg-4 + col-lg-8  → 1fr 2fr   → --max-track: 1fr 2fr
-    601-960   → col-12 + col-12      → 1fr       → --mid-track: 1fr
-    < 601     → col-12 + col-12      → 1fr       → (omit, inherits --mid-track)
-
-  NEW:
-    <div class="nds-grid" style="--max-track: 1fr 2fr; --mid-track: 1fr;">
-      <div>sidebar</div>
-      <div>main</div>
-    </div>
-
-SHORTCUT (auto-fit-friendly layouts):
-  When the large-viewport layout matches what auto-fit produces naturally
-  (N equal children fill N equal columns), omit --max-track entirely and
-  set only --mid-track and/or --min-track to force stacking below.
-
-  Example: col-sm-12 col-lg-6 + col-sm-12 col-lg-6
-    Two equal halves at ≥961 = auto-fit default with 2 children.
-    Stacked (1fr) at 601-960 and below.
-
-    Full form:       --max-track: 1fr 1fr; --mid-track: 1fr;
-    Shortcut form:   --mid-track: 1fr;
-
-  Prefer the shortcut when the children count is stable and the large-
-  viewport layout is "everyone gets equal share."
-
-EQUAL-WIDTH GRIDS (all children identical span):
-  These typically did not use col-*; they already use --max-col / --mid-col /
-  --min-col on the parent. No migration needed.
-
-  If equal-width children DO use col-* (e.g. four col-lg-3 children), prefer
-  --max-col over --max-track:
-    four col-lg-3 + col-md-6 + col-12  →  --max-col: 4; --mid-col: 2; --min-col: 1;
+Example:
+  OLD:  <div class="nds-grid"><div class="col-12 col-lg-4">sidebar</div><div class="col-12 col-lg-8">main</div></div>
+  NEW:  <div class="nds-grid" style="--max-track: 1fr 2fr; --mid-track: 1fr;"><div>sidebar</div><div>main</div></div>
 
 Grid Custom Properties (renamed)
 --------------------------------
---col-width                 → --min-width             (on .nds-grid, minimum column width inside minmax())
-
-  OLD:
-    <div class="nds-grid" style="--col-width: 250px;">...</div>
-
-  NEW:
-    <div class="nds-grid" style="--min-width: 250px;">...</div>
-
-Default changed from 0px to 0 (unitless). Unset behavior is unchanged: columns
-stretch freely unless --min-width is set.
+--col-width → --min-width   (on .nds-grid, minimum column width inside minmax())
