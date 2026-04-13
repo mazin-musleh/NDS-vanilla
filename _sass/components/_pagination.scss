@@ -82,13 +82,9 @@
 // ==============================================
 
 .nds-pagination-item:is(.nds-pagination-prev, .nds-pagination-next) {
-  .nds-btn {
-
-    // Icons for prev/next
-    i {
-      @include ltr {
-        transform: scale(-1);
-      }
+  .nds-btn i {
+    @include ltr {
+      transform: scaleX(-1);
     }
   }
 }

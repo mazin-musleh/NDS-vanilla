@@ -687,7 +687,8 @@
 
       background: currentColor;
 
-      mask: var(--nds-icon-arrow-down-01) center / contain no-repeat;
+      mask: var(--nds-icon-arrow-left-01) center / contain no-repeat;
+      rotate: -90deg;
       transition: transform 0.1s ease;
     }
   }

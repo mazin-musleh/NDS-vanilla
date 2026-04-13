@@ -405,11 +405,12 @@ fieldset {
 
             background: currentColor;
 
-            mask: var(--nds-icon-arrow-down-01) center / contain no-repeat;
+            mask: var(--nds-icon-arrow-left-01) center / contain no-repeat;
+            rotate: -90deg;
 
             top: 50%;
 
-            transform: translateY(-50%);
+            translate: 0 -50%;
 
             @include ltr {
                 & {
@@ -424,7 +425,7 @@ fieldset {
     }
 
     .nds-select[data-state~="open"]>&::after {
-        transform: translateY(-50%) rotate(180deg);
+        transform: rotate(180deg);
     }
 
     // Custom dropdown styles for nds-select when using input instead of select element
