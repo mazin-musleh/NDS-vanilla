@@ -33,7 +33,7 @@ sidemenu_mode: false
                         </button>
                     </nav>
                     <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more">
-                        <i class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i>
+                        <i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
                     </button>
                 </div>
                 <div class="nds-tab-content">
@@ -64,21 +64,21 @@ sidemenu_mode: false
             <dl class="nds-definition-list">
                 <div class="nds-definition-item">
                     <dt>
-                        <i class="hgi hgi-stroke hgi-user-multiple-02 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-user-multiple-02"></i>
                         <span class="nds-label">Beneficiaries</span>
                     </dt>
                     <dd>Citizens, Residents, Government Employees</dd>
                 </div>
                 <div class="nds-definition-item">
                     <dt>
-                        <i class="hgi hgi-stroke hgi-clock-01 nds-icon"></i>
+                        <i class="nds-icon nds-hgi-clock-01" aria-hidden="true"></i>
                         <span class="nds-label">Request completion duration</span>
                     </dt>
                     <dd>Immediately</dd>
                 </div>
                 <div class="nds-definition-item">
                     <dt>
-                        <i class="hgi hgi-stroke hgi-computer-phone-sync nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-computer-phone-sync"></i>
                         <span class="nds-label">Delivery Channel</span>
                     </dt>
                     <dd>National E-services Portal - Government Services Platform</dd>
@@ -97,7 +97,7 @@ sidemenu_mode: false
                 </div>
                 <div class="nds-definition-item">
                     <dt>
-                        <i class="hgi hgi-stroke hgi-translate nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-translate"></i>
                         <span class="nds-label">Supported Languages</span>
                     </dt>
                     <dd>Arabic Language,English Language</dd>
@@ -107,14 +107,14 @@ sidemenu_mode: false
                 </div>
                 <div class="nds-definition-item">
                     <dt>
-                        <i class="hgi hgi-stroke hgi-help-circle nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-help-circle"></i>
                         <span class="nds-label">Common Questions</span>
                     </dt>
                     <dd><a href="#faq" class="nds-btn nds-transparent nds-color"><span class="nds-label">FAQ</span></a></dd>
                 </div>
                 <div class="nds-definition-item">
                     <dt>
-                        <i class="hgi hgi-stroke hgi-book-open-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-book-open-01"></i>
                         <span class="nds-label">User guide</span>
                     </dt>
                     <dd>
@@ -125,7 +125,7 @@ sidemenu_mode: false
                 </div>
                 <div class="nds-definition-item">
                     <dt>
-                        <i class="hgi hgi-stroke hgi-checkmark-badge-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-checkmark-badge-01"></i>
                         <span class="nds-label">Service Level</span>
                     </dt>
                     <dd><a href="#user-guide" class="nds-primary">
@@ -135,7 +135,7 @@ sidemenu_mode: false
                 </div>
                 <div class="nds-definition-item">
                     <dt>
-                        <i class="hgi hgi-stroke hgi-headphones nds-icon"></i>
+                        <i class="nds-icon nds-hgi-headphones" aria-hidden="true"></i>
                         <span class="nds-label">Customer Service</span>
                     </dt>
                     <dd>
@@ -204,11 +204,9 @@ sidemenu_mode: false
             <div class="nds-swiper-navigation">
                 <div class="nds-swiper-buttons">
                     <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-swiper-button-prev"
-                        type="button" aria-label="Previous slide"><i
-                            class="hgi hgi-stroke hgi-arrow-right-01 nds-icon"></i></button>
+                        type="button" aria-label="Previous slide"><i class="nds-icon nds-hgi-arrow-right-01" aria-hidden="true"></i></button>
                     <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-swiper-button-next"
-                        type="button" aria-label="Next slide"><i
-                            class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i></button>
+                        type="button" aria-label="Next slide"><i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i></button>
                 </div>
                 <div class="nds-swiper-pagination"></div>
             </div>

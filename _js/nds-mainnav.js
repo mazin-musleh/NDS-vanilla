@@ -931,13 +931,6 @@
             setTimeout(() => removeCollapseHidden(), 2000);
         }
 
-        if (typeof window.waitForFontFile === 'function') {
-            window.waitForFontFile('hgi-stroke-rounded', (loaded) => {
-                if (loaded) {
-                    setTimeout(() => { state.invalidateCache(); _navMaxWidthLast = 0; scheduleUpdate(); }, 100);
-                }
-            });
-        }
     }
 
     // Keep reduced-motion in sync

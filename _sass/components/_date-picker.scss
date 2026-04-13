@@ -12,6 +12,7 @@
 
 .nds-date-picker {
     position: relative;
+
     --btn-size: 32px;
 
     // Arrow styling for date picker input (same as select)
@@ -24,30 +25,33 @@
 
 
         &::after {
-            content: "㭚";
+            content: "";
+
             pointer-events: none;
-            font-family: "hgi-stroke-rounded" !important;
-            font-style: normal;
-            opacity: var(--hgi-icon-opacity);
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            position: absolute;
+            position: absolute;
+
             left: var(--spacing-md);
+
             transition: transform 0.1s ease;
-            display: inline-flex;
+
+            display: inline-block;
+
             width: 20px;
+
             height: 20px;
-            font-size: 20px;
-            line-height: 20px;
-            justify-content: center;
-            align-content: center;
-            align-items: center;
+
+            background: currentColor;
+
+            mask: var(--nds-icon-arrow-down-01) center / contain no-repeat;
+
             top: 50%;
+
             transform: translateY(-50%);
 
             @include ltr {
                 & {
                     left: unset;
+
                     right: var(--spacing-md);
                 }
             }
@@ -65,18 +69,31 @@
 
     .nds-date-picker-dropdown {
         position: absolute;
+
         top: 100%;
+
         left: 0;
+
         right: 0;
+
         z-index: 11;
+
         margin-top: 4px;
+
         padding: 0;
+
         max-width: 500px;
+
         min-width: 350px;
+
         width: 100%;
+
         background-color: var(--form-field-background-default);
+
         border: 1px solid var(--form-field-border-default);
+
         border-radius: var(--radius-md, 8px);
+
         box-shadow: var(--shadow-md);
 
         &[data-state~="hidden"] {
@@ -85,11 +102,14 @@
 
         @include mobile {
             right: 50%;
+
             transform: translateX(50%);
 
             @include ltr {
                 right: 0;
+
                 left: 50%;
+
                 transform: translateX(-50%);
             }
         }
@@ -101,15 +121,21 @@
 
     .nds-calendar-header {
         display: flex;
+
         align-items: center;
+
         justify-content: space-between;
+
         padding: var(--spacing-md);
+
         border-bottom: 1px solid var(--divider-color);
     }
 
     .nds-calendar-title {
         flex: 1;
+
         display: flex;
+
         justify-content: space-between;
     }
 
@@ -128,20 +154,26 @@
     :is(.nds-month-dropmenu, .nds-year-dropmenu) {
         .nds-dropmenu-menu {
             min-width: unset;
+
             padding: var(--spacing-md);
         }
 
         .nds-dropmenu-scroll {
             max-height: 200px;
+
             display: flex;
+
             flex-direction: column;
+
             gap: var(--spacing-xs);
         }
 
         .nds-dropmenu-trigger .nds-label {
             @include mobile {
                 max-width: 100px;
+
                 overflow: clip;
+
                 text-overflow: ellipsis;
             }
         }
@@ -157,17 +189,25 @@
 
     .nds-calendar-weekdays {
         display: grid;
+
         grid-template-columns: repeat(7, 1fr);
+
         gap: 4px;
+
         margin-bottom: 8px;
 
         .nds-weekday {
             
             text-align: center;
+
             font-size: var(--nds-text-md-FS);
+
             font-weight: 400;
+
             color: var(--text-primary-paragraph);
+
             padding: var(--spacing-md) var(--spacing-xs);
+
             min-width: var(--btn-size);
 
             @include mobile {
@@ -178,17 +218,25 @@
 
     .nds-calendar-dates {
         display: grid;
+
         grid-template-columns: repeat(7, 1fr);
+
         gap: 4px;
+
         justify-items: center;
+
         overflow: hidden;
 
         .nds-date-cell {
 
             border-radius: 50% !important;
+
             width: var(--btn-size);
+
             height: var(--btn-size);
+
             font-weight: 400;
+
             padding: 0;
 
             .nds-label {
@@ -197,11 +245,17 @@
 
             &::before {
                 display: none;
+
                 content: "";
+
                 position: absolute;
+
                 background-color: var(--form-datecell-background-100);
+
                 width: var(--btn-size);
+
                 height: var(--btn-size);
+
                 z-index: -1;
             }
 
@@ -211,13 +265,18 @@
 
             &[data-state~="today"] {
                 background-color: unset;
+
                 border: 2px solid var(--button-background-primary-default);
+
                 color: var(--text-primary);
+
                 font-weight: 700;
 
                 &[data-state~="selected"] {
                     outline: 2px solid var(--button-background-primary-default);
+
                     outline-offset: -2px !important;
+
                     box-shadow: inset 0 0 0 2px var(--colors-base-white);
                 }
 
@@ -228,6 +287,7 @@
 
             &[data-state~="selected"] {
                 background-color: var(--button-background-primary-default);
+
                 color: var(--text-oncolor-primary);
 
                 &:hover {
@@ -241,14 +301,17 @@
 
             &:is([data-state~="range-start"], [data-state~="range-end"]) {
                 background-color: var(--form-datecell-background-default);
+
                 color: var(--text-oncolor-primary);
 
                 &[data-state~="today"] {
                     outline: 2px solid var(--form-datecell-background-default);
+
                     outline-offset: -2px !important;
 
                     &:hover {
                         background-color: var(--form-datecell-background-hovered);
+
                         outline: 2px solid var(--form-datecell-background-hovered);
                     }
                 }
@@ -261,6 +324,7 @@
             &[data-state~="range-start"]:not([data-state~="range-end"])[data-state~="has-range-end"] {
                 &::before {
                     display: block;
+
                     transform: scaleX(1) translateX(-50%);
 
                     @include ltr {
@@ -272,7 +336,9 @@
             &[data-state~="range-end"]:not([data-state~="range-start"])[data-state~="has-range-start"] {
                 &::before {
                     content: "";
+
                     display: block;
+
                     transform: scaleX(1) translateX(50%);
 
                     @include ltr {
@@ -286,7 +352,9 @@
 
                 &::before {
                     content: "";
+
                     display: block;
+
                     transform: scaleX(2);
                 }
 
@@ -313,13 +381,18 @@
 
     .nds-calendar-footer {
         display: flex;
+
         justify-content: space-between;
+
         padding: var(--spacing-md);
+
         border-top: 1px solid var(--divider-color);
+
         gap: var(--spacing-2xl);
 
         :is(.nds-calendar-action-start, .nds-calendar-action-end) {
             display: flex;
+
             gap: var(--spacing-md);
         }
     }

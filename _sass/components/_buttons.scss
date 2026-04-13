@@ -23,7 +23,9 @@
 
   // Apply internal properties
   background-color: var(--_btn-bg);
+
   color: var(--_btn-color);
+
   border-color: var(--_btn-border);
 
   .nds-label {
@@ -36,26 +38,34 @@
 
   &:is(:hover, [data-state~="hover"]) {
     background-color: var(--_btn-bg-hover);
+
     color: var(--_btn-color-hover);
+
     border-color: var(--_btn-border-hover);
   }
 
   &:is([data-state~="selected"], [data-state~="open"], [data-state~="active"], [data-state~="current"]) {
     background-color: var(--_btn-bg-selected);
+
     border-color: var(--_btn-border-selected);
   }
 
   &:is(:active, [data-state~="pressed"]) {
     background-color: var(--_btn-bg-active);
+
     border-color: var(--_btn-border-active);
   }
 
 
   &:is(:disabled, [data-state~="disabled"], [aria-disabled="true"]) {
     background-color: var(--_btn-bg-disabled);
+
     color: var(--_btn-color-disabled);
+
     border-color: var(--_btn-border-disabled);
+
     cursor: not-allowed;
+
     pointer-events: none;
   }
 
@@ -69,41 +79,49 @@
 
   &[data-status="success"] {
     --btn-bg-hover: var(--button-status-success-bg) !important;
+
     --btn-bg: var(--button-status-success-bg) !important;
+
     --btn-color: var(--button-status-success-text) !important;
 
-    :is(i, .nds-icon)::before {
-      content: "㶦";
+    :is(i, .nds-icon) {
+      --nds-icon: var(--nds-icon-checkmark-circle-01);
     }
   }
 
   &[data-status="error"] {
     --btn-bg-hover: var(--button-status-error-bg) !important;
+
     --btn-bg: var(--button-status-error-bg) !important;
+
     --btn-color: var(--button-status-error-text) !important;
 
-    :is(i, .nds-icon)::before {
-      content: "㵅";
+    :is(i, .nds-icon) {
+      --nds-icon: var(--nds-icon-cancel-circle);
     }
   }
 
   &[data-status="info"] {
     --btn-bg-hover: var(--button-status-info-bg) !important;
+
     --btn-bg: var(--button-status-info-bg) !important;
+
     --btn-color: var(--button-status-info-text) !important;
 
-    :is(i, .nds-icon)::before {
-      content: "䆾";
+    :is(i, .nds-icon) {
+      --nds-icon: var(--nds-icon-information-circle);
     }
   }
 
   &[data-status="warning"] {
     --btn-bg-hover: var(--button-status-warning-bg) !important;
+
     --btn-bg: var(--button-status-warning-bg) !important;
+
     --btn-color: var(--button-status-warning-text) !important;
 
-    :is(i, .nds-icon)::before {
-      content: "㬃";
+    :is(i, .nds-icon) {
+      --nds-icon: var(--nds-icon-alert-circle);
     }
   }
 
@@ -114,16 +132,19 @@
   // nds-lg is the default size — no explicit .nds-lg class needed
   & {
     --btn-size: 40px;
+
     --btn-indicator-size: 3px;
   }
 
   &.nds-md {
     --btn-size: 32px;
+
     --btn-indicator-size: 3px;
   }
 
   &.nds-sm {
     --btn-size: 24px;
+
     --btn-indicator-size: 2px;
   }
 
@@ -135,78 +156,123 @@
   /* Primary Button (Green) */
   &.nds-primary {
     --btn-bg: var(--button-background-primary-default);
+
     --btn-bg-hover: var(--button-background-primary-hovered);
+
     --btn-bg-active: var(--button-background-primary-pressed);
+
     --btn-bg-selected: var(--button-background-primary-selected);
+
     --btn-color: var(--text-oncolor-primary);
+
     --btn-indicator-color: var(--background-primary-400);
+
     --btn-indicator-active: var(--background-primary-400);
+
     --btn-indicator-selected: var(--background-primary-400);
+
     --btn-loading-color: var(--text-oncolor-primary);
+
     --btn-loading-track: var(--alpha-white-20);
   }
 
   /* Neutral Button (Dark Gray) */
   &.nds-neutral {
     --btn-bg: var(--button-background-black-default);
+
     --btn-bg-hover: var(--button-background-black-hovered);
+
     --btn-bg-active: var(--button-background-black-pressed);
+
     --btn-bg-selected: var(--button-background-black-selected);
+
     --btn-color: var(--text-oncolor-primary);
+
     --btn-indicator-color: var(--background-primary-400);
+
     --btn-indicator-active: var(--background-primary-400);
+
     --btn-indicator-selected: var(--background-primary-400);
+
     --btn-loading-color: var(--text-oncolor-primary);
+
     --btn-loading-track: var(--alpha-white-20);
   }
 
   /* Secondary Solid Button (Light Gray) */
   &.nds-secondary {
     --btn-bg: var(--button-background-neutral-default);
+
     --btn-bg-hover: var(--button-background-neutral-hovered);
+
     --btn-bg-active: var(--button-background-neutral-pressed);
+
     --btn-bg-selected: var(--button-background-neutral-selected);
+
     --btn-color: var(--text-default);
   }
 
   /* Secondary Outline Button */
   &.nds-secondary-outline {
     --btn-bg: var(--button-background-transparent-default);
+
     --btn-bg-hover: var(--button-background-neutral-default);
+
     --btn-bg-active: var(--button-background-neutral-pressed);
+
     --btn-bg-selected: var(--button-background-neutral-selected);
+
     --btn-bg-disabled: var(--button-background-transparent-default);
+
     --btn-color: var(--text-default);
+
     --btn-border: var(--border-neutral-primary);
+
     --btn-border-hover: var(--border-neutral-secondary);
+
     --btn-border-active: var(--border-neutral-primary);
+
     --btn-border-selected: var(--border-neutral-primary);
+
     --btn-border-disabled: var(--border-neutral-secondary);
   }
 
   /* Subtle Button */
   &.nds-subtle {
     --btn-bg: var(--button-background-transparent-default);
+
     --btn-bg-hover: var(--button-background-neutral-default);
+
     --btn-bg-active: var(--button-background-neutral-pressed);
+
     --btn-bg-selected: var(--button-background-neutral-selected);
+
     --btn-bg-disabled: transparent;
+
     --btn-color: var(--text-default);
   }
 
   /* Transparent Button */
   &.nds-transparent {
     --btn-bg: var(--button-background-transparent-default);
+
     --btn-bg-hover: var(--button-background-transparent-hovered);
+
     --btn-bg-active: var(--button-background-transparent-pressed);
+
     --btn-bg-selected: var(--button-background-transparent-selected);
+
     --btn-bg-disabled: transparent;
+
     --btn-color: var(--text-default);
+
     --btn-color-hover: var(--button-background-primary-hovered);
+
     --btn-loading-color: var(--background-primary);
 
     &.nds-color {
       --btn-color: var(--button-background-primary-default);
+
       --btn-color-hover: var(--text-default);
     }
 
@@ -231,12 +297,19 @@
 
   &.nds-oncolor:is(.nds-primary, .nds-neutral) {
     --btn-bg: var(--button-background-oncolor-default);
+
     --btn-bg-hover: var(--button-background-oncolor-hovered);
+
     --btn-bg-active: var(--button-background-oncolor-pressed);
+
     --btn-bg-selected: var(--button-background-oncolor-selected);
+
     --btn-bg-disabled: var(--button-background-disabled-on-color);
+
     --btn-color-disabled: var(--text-default-oncolor-disabled);
+
     --btn-color: var(--background-black);
+
     --btn-loading-color: var(--background-black);
 
     &:is(.focus, :focus-visible) {
@@ -257,56 +330,92 @@
     .nds-btn.nds-oncolor,
     :root[data-theme="dark"] .nds-btn:not(.nds-primary, .nds-neutral) {
       --btn-color-disabled: var(--text-default-oncolor-disabled);
+
       --btn-indicator-color: var(--alpha-white-40);
+
       --btn-indicator-active: var(--alpha-white-60);
+
       --btn-indicator-selected: var(--background-white);
 
       &.nds-secondary {
         --btn-bg: var(--button-background-transparent-hovered);
+
         --btn-bg-hover: var(--button-background-transparent-hovered);
+
         --btn-bg-active: var(--button-background-transparent-pressed);
+
         --btn-bg-selected: var(--button-background-transparent-selected);
+
         --btn-bg-disabled: var(--button-background-disabled-on-color);
+
         --btn-indicator-active: var(--button-background-disabled-on-color);
+
         --btn-color: var(--text-oncolor-primary);
+
         --btn-loading-color: var(--text-oncolor-primary);
+
         --btn-loading-track: var(--alpha-white-20);
       }
 
       &.nds-secondary-outline {
         --btn-bg: var(--button-background-transparent-default);
+
         --btn-bg-hover: var(--button-background-transparent-hovered);
+
         --btn-bg-active: var(--button-background-transparent-pressed);
+
         --btn-bg-selected: var(--button-background-transparent-selected);
+
         --btn-bg-disabled: var(--button-background-transparent-default);
+
         --btn-color: var(--colors-base-white);
+
         --btn-border: var(--border-white-40);
+
         --btn-border-hover: var(--border-white-40);
+
         --btn-border-active: var(--border-white-40);
+
         --btn-border-selected: var(--border-white-40);
+
         --btn-loading-color: var(--colors-base-white);
+
         --btn-loading-track: var(--alpha-white-20);
       }
 
       &.nds-subtle {
         --btn-bg: transparent;
+
         --btn-bg-hover: var(--button-background-transparent-hovered);
+
         --btn-bg-active: var(--button-background-transparent-pressed);
+
         --btn-bg-selected: var(--button-background-transparent-selected);
+
         --btn-bg-disabled: transparent;
+
         --btn-color: var(--text-oncolor-primary);
+
         --btn-loading-color: var(--text-oncolor-primary);
+
         --btn-loading-track: var(--alpha-white-20);
       }
 
       &.nds-transparent {
         --btn-bg: transparent;
+
         --btn-bg-hover: transparent;
+
         --btn-bg-active: transparent;
+
         --btn-bg-selected: transparent;
+
         --btn-color: var(--text-oncolor-primary);
+
         --btn-color-hover: var(--button-label-transparent-hovered-on-color);
+
         --btn-loading-color: var(--text-oncolor-primary);
+
         --btn-loading-track: var(--alpha-white-20);
 
         &:is([data-state~="selected"], [data-state~="open"], [data-state~="active"], [data-state~="current"]) {
@@ -327,56 +436,91 @@
   &.nds-destructive {
     &.nds-primary {
       --btn-bg: var(--button-background-danger-primary-default);
+
       --btn-bg-hover: var(--button-background-danger-primary-hovered);
+
       --btn-bg-active: var(--button-background-danger-primary-pressed);
+
       --btn-bg-selected: var(--button-background-danger-primary-selected);
+
       --btn-color: var(--text-oncolor-primary);
+
       --btn-loading-color: var(--text-oncolor-primary);
+
       --btn-loading-track: var(--alpha-white-20);
     }
 
     &.nds-secondary {
       --btn-bg: var(--button-background-danger-secondary-default);
+
       --btn-bg-hover: var(--button-background-danger-secondary-hovered);
+
       --btn-bg-active: var(--button-background-danger-secondary-pressed);
+
       --btn-bg-selected: var(--button-background-danger-secondary-selected);
+
       --btn-color: var(--text-error);
+
       --btn-loading-color: var(--button-background-danger-primary-default);
     }
 
     &.nds-secondary-outline {
       --btn-bg: transparent;
+
       --btn-bg-hover: var(--button-background-danger-secondary-hovered);
+
       --btn-bg-active: var(--button-background-danger-secondary-pressed);
+
       --btn-bg-selected: var(--button-background-danger-secondary-selected);
+
       --btn-bg-disabled: var(--button-background-transparent-default);
+
       --btn-color: var(--text-error);
+
       --btn-border: var(--button-border-error);
+
       --btn-border-hover: var(--button-border-error);
+
       --btn-border-active: var(--button-border-error);
+
       --btn-border-selected: var(--button-border-error);
+
       --btn-border-disabled: var(--border-neutral-secondary);
+
       --btn-loading-color: var(--button-background-danger-primary-default);
     }
 
     &.nds-subtle {
       --btn-bg: transparent;
+
       --btn-bg-hover: var(--button-background-danger-secondary-default);
+
       --btn-bg-active: var(--button-background-danger-secondary-hovered);
+
       --btn-bg-selected: var(--button-background-danger-secondary-selected);
+
       --btn-bg-disabled: transparent;
+
       --btn-color: var(--text-error);
+
       --btn-loading-color: var(--button-background-danger-primary-default);
     }
 
     &.nds-transparent {
       --btn-bg: var(--button-background-transparent-default);
+
       --btn-bg-hover: var(--button-background-transparent-hovered);
+
       --btn-bg-active: var(--button-background-transparent-pressed);
+
       --btn-bg-selected: var(--button-background-transparent-selected);
+
       --btn-bg-disabled: var(--button-background-transparent-default);
+
       --btn-color: var(--button-background-danger-primary-default);
+
       --btn-color-hover: var(--button-background-danger-primary-hovered);
+
       --btn-loading-color: var(--button-background-danger-primary-default);
 
       &:is([data-state~="selected"], [data-state~="open"], [data-state~="active"], [data-state~="current"]) {
@@ -398,36 +542,56 @@
     .nds-btn.nds-oncolor.nds-destructive,
     :root[data-theme="dark"] .nds-btn.nds-destructive {
       --btn-loading-color: var(--colors-base-white);
+
       --btn-loading-track: var(--alpha-white-20);
 
       &.nds-primary {
         --btn-bg: var(--button-background-danger-primary-default);
+
         --btn-bg-hover: var(--button-background-danger-primary-hovered);
+
         --btn-bg-active: var(--button-background-danger-primary-pressed);
+
         --btn-bg-selected: var(--button-background-danger-primary-selected);
+
         --btn-color: var(--text-oncolor-primary);
       }
 
       &.nds-secondary {
         --btn-bg: var(--button-background-danger-secondary-default);
+
         --btn-bg-hover: var(--button-background-danger-secondary-hovered);
+
         --btn-bg-active: var(--button-background-danger-secondary-pressed);
+
         --btn-bg-selected: var(--button-background-danger-secondary-selected);
+
         --btn-color: var(--button-background-danger-primary-default);
       }
 
       &.nds-secondary-outline {
         --btn-bg: transparent;
+
         --btn-bg-hover: var(--button-background-danger-secondary-hovered);
+
         --btn-bg-active: var(--button-background-danger-secondary-pressed);
+
         --btn-bg-selected: var(--button-background-danger-secondary-selected);
+
         --btn-bg-disabled: var(--button-background-transparent-default);
+
         --btn-color: var(--button-label-danger-primary-default-oncolor);
+
         --btn-color-hover: var(--button-background-danger-primary-hovered);
+
         --btn-border: var(--button-border-error);
+
         --btn-border-hover: var(--button-border-error);
+
         --btn-border-active: var(--button-border-error);
+
         --btn-border-selected: var(--button-border-error);
+
         --btn-border-disabled: var(--border-neutral-secondary);
 
         &:is([data-state~="selected"], [data-state~="open"], [data-state~="active"], [data-state~="current"]) {
@@ -441,11 +605,17 @@
 
       &.nds-subtle {
         --btn-bg: transparent;
+
         --btn-bg-hover: var(--button-background-danger-secondary-default);
+
         --btn-bg-active: var(--button-background-danger-secondary-hovered);
+
         --btn-bg-selected: var(--button-background-danger-secondary-selected);
+
         --btn-bg-disabled: transparent;
+
         --btn-color: var(--button-label-danger-primary-default-oncolor);
+
         --btn-color-hover: var(--button-background-danger-primary-hovered);
 
         &:is([data-state~="selected"], [data-state~="open"], [data-state~="active"], [data-state~="current"]) {
@@ -459,6 +629,7 @@
 
       &.nds-transparent {
         --btn-color: var(--button-label-danger-primary-default-oncolor);
+
         --btn-color-hover: var(--button-label-danger-primary-hovered-oncolor);
 
         &:is([data-state~="selected"], [data-state~="open"], [data-state~="active"], [data-state~="current"]) {
@@ -504,22 +675,20 @@
 
   &:is(.nds-menu-btn, .nds-next, .nds-prev, .nds-up, .nds-down) {
     &::after {
-      content: "㭚";
-      font-family: "hgi-stroke-rounded" !important;
-      font-style: normal;
-      opacity: var(--hgi-icon-opacity);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
+      content: "";
+
+      display: inline-block;
+
       position: relative;
-      transition: transform 0.1s ease;
-      display: inline-flex;
+
       width: var(--_btn-icon-size);
+
       height: var(--_btn-icon-size);
-      font-size: var(--_btn-icon-size);
-      line-height: var(--_btn-icon-size);
-      justify-content: center;
-      align-content: center;
-      align-items: center;
+
+      background: currentColor;
+
+      mask: var(--nds-icon-arrow-down-01) center / contain no-repeat;
+      transition: transform 0.1s ease;
     }
   }
 
@@ -573,7 +742,9 @@
 
   &.nds-full {
     width: 100% !important;
+
     justify-content: center !important;
+
     min-width: var(--btn-size);
 
     .nds-label {
@@ -594,11 +765,14 @@
   /* Icon-Only Button Configurations */
   &:is(.nds-icon-only, .nds-circle/*, :has(i, img, svg):not(:has(span, p, div, h1, h2, h3, h4, h5, h6)) */) {
     justify-content: center;
+
     width: var(--btn-size);
+
     padding: 0 var(--spacing-md);
 
     &.nds-menu-btn {
       width: fit-content;
+
       padding: 0 var(--spacing-lg);
 
       &.nds-sm {
@@ -624,9 +798,13 @@
   /* Icon Sizing */
   &.nds-btn i {
     flex-shrink: 0;
+
     width: var(--_btn-icon-size);
+
     height: var(--_btn-icon-size);
+
     font-size: var(--_btn-icon-size);
+
     line-height: var(--_btn-icon-size);
   }
 
@@ -636,7 +814,9 @@
 
   &:is(.nds-loading, [data-state~="loading"]) {
     --loading-color: var(--_btn-loading-color);
+
     --loading-track: var(--_btn-loading-track);
+
     color: transparent !important;
   }
 
@@ -649,14 +829,20 @@
 
     .nds-progress-circle {
       display: block;
+
       position: absolute;
+
       inset: 0;
+
       margin: auto;
+
       pointer-events: none;
 
       // Inherit button colors
       --progress-track-color: var(--_btn-loading-track, var(--alpha-black-10));
+
       --progress-color: var(--_btn-color);
+
       --progress-size: calc(var(--btn-size) - 8px);
 
       // Hide text/percentage display
@@ -668,6 +854,7 @@
       svg circle.nds-progress-bar {
         // Static progress value (default)
         stroke-dashoffset: calc(var(--progress-circumference, 62.83) - (var(--progress-circumference, 62.83) * min(var(--progress-value, 0), 100) / 100));
+
         transition: stroke-dashoffset 0.3s ease;
       }
     }
@@ -677,6 +864,7 @@
       svg circle.nds-progress-bar {
         // Override static value with animation
         animation: button-progress-countdown linear forwards;
+
         animation-duration: var(--progress-duration, 4000ms);
       }
     }
@@ -684,6 +872,7 @@
     // On-color variant adjustments
     &.nds-oncolor .nds-progress-circle {
       --progress-track-color: var(--alpha-white-20);
+
       --progress-color: var(--text-oncolor-primary);
     }
   }
@@ -698,20 +887,35 @@
 
   .nds-badge {
     position: absolute;
+
     inset-block-start: -6px;
+
     inset-inline-end: -6px;
+
     font-size: 9px;
+
     font-family: var(--nds-font-family);
+
     background-color: var(--background-error);
+
     color: var(--text-oncolor-primary);
+
     min-width: 16px;
+
     height: 16px;
+
     border-radius: 50%;
+
     display: flex;
+
     justify-content: center;
+
     align-items: center;
+
     line-height: normal;
+
     padding: 4px;
+
     pointer-events: none;
   }
 }
@@ -722,10 +926,15 @@
 
 .nds-btn-group {
   --btn-group-radius: var(--radius-md);
+
   display: flex;
+
   border-radius: var(--btn-group-radius);
+
   gap: 0 !important;
+
   width: fit-content;
+
   flex-wrap: nowrap;
 
   &:has(> .nds-md, > .nds-sm) {
@@ -734,7 +943,9 @@
 
   .nds-btn {
     --btn-radius: 0;
+
     position: relative;
+
     z-index: 1;
 
     &:not(:last-child) {
@@ -747,13 +958,17 @@
 
     &:first-child {
       --btn-radius: 0;
+
       border-start-start-radius: var(--btn-group-radius);
+
       border-end-start-radius: var(--btn-group-radius);
     }
 
     &:last-child {
       --btn-radius: 0;
+
       border-start-end-radius: var(--btn-group-radius);
+
       border-end-end-radius: var(--btn-group-radius);
     }
 
@@ -796,6 +1011,7 @@
   .nds-btn,
   .nds-btn::after {
     transition: none;
+
     animation: none;
   }
 }
@@ -803,7 +1019,9 @@
 @include print-media {
   .nds-btn {
     background: transparent !important;
+
     color: #000 !important;
+
     border: 1px solid #000 !important;
   }
 }

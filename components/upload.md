@@ -76,7 +76,7 @@ direction: ltr
                                 <div class="nds-form-control">
                                     <input type="file" id="fileUploadInput" multiple accept=".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx,.txt" class="nds-file-input" />
                                     <div class="nds-upload-zone">
-                                        <i class="hgi hgi-stroke hgi-file-upload nds-upload-icon nds-icon"></i>
+                                        <i class="hgi hgi-stroke hgi-file-upload nds-upload-icon"></i>
                                         <div class="nds-upload-text">
                                             <span class="nds-drop-hint">Drag and drop files here to upload</span>
                                         </div>
@@ -99,7 +99,7 @@ direction: ltr
                                     <div class="nds-file-item">
                                         <span class="nds-feedback">
                                             <span class="nds-feedback-icon">
-                                                <i class="hgi hgi-stroke nds-icon"></i>
+                                                <i class="nds-icon" aria-hidden="true"></i>
                                             </span>
                                         </span>
 
@@ -125,7 +125,7 @@ direction: ltr
 
                                         <div class="nds-file-actions">
                                             <button type="button" class="nds-btn nds-subtle nds-md nds-icon-only nds-remove-file" aria-label="Remove file">
-                                                <i class="hgi hgi-stroke hgi-cancel-01 nds-icon"></i>
+                                                <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                                             </button>
                                         </div>
                                     </div>
@@ -164,7 +164,7 @@ direction: ltr
   <div class="nds-form-control">
     <input type="file" id="fileUploadInput" multiple accept=".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx,.txt" class="nds-file-input" />
     <div class="nds-upload-zone">
-      <i class="hgi hgi-stroke hgi-file-upload nds-upload-icon nds-icon"></i>
+      <i class="hgi hgi-stroke hgi-file-upload nds-upload-icon"></i>
       <div class="nds-upload-text">
         <span class="nds-drop-hint">Drag and drop files here to upload</span>
       </div>
@@ -187,7 +187,7 @@ direction: ltr
     <div class="nds-file-item">
       <span class="nds-feedback">
         <span class="nds-feedback-icon">
-          <i class="hgi hgi-stroke nds-icon"></i>
+          <i class="nds-icon" aria-hidden="true"></i>
         </span>
       </span>
 
@@ -213,7 +213,7 @@ direction: ltr
 
       <div class="nds-file-actions">
         <button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only nds-remove-file" aria-label="Remove file">
-          <i class="hgi hgi-stroke hgi-cancel-01 nds-icon"></i>
+          <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
         </button>
       </div>
     </div>
@@ -241,56 +241,56 @@ direction: ltr
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-plug-socket"></i>
                         <span class="nds-label">Auto-initialization</span>
                     </span>
                     <p class="nds-item-desc">Activates when <code class="nds-inline-code lang-html">.nds-file-upload</code> is on the page. Dynamic elements added later are picked up automatically.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-drag-drop nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-drag-drop"></i>
                         <span class="nds-label">Drag and Drop</span>
                     </span>
                     <p class="nds-item-desc">Files can be dragged onto the drop zone with visual feedback on hover. Toggled on and off with <code class="nds-inline-code lang-html">data-state="dropbox"</code>.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-file-validation nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-file-validation"></i>
                         <span class="nds-label">Client-side Validation</span>
                     </span>
                     <p class="nds-item-desc">Validates file size, extension, and MIME type before upload. Rejected files appear in the list with an error message in Arabic or English.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-shield-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-shield-01"></i>
                         <span class="nds-label">Security</span>
                     </span>
                     <p class="nds-item-desc">File names are sanitized to strip path traversal sequences, null bytes, and control characters before display and upload.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-refresh nds-icon"></i>
+                        <i class="nds-icon nds-hgi-refresh" aria-hidden="true"></i>
                         <span class="nds-label">Upload Lifecycle</span>
                     </span>
                     <p class="nds-item-desc">Five status stages (ready, uploading, processing, complete, error) with progress tracking, retry for failures, and abort for in-progress uploads.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-api nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-api"></i>
                         <span class="nds-label">Programmatic Control</span>
                     </span>
                     <p class="nds-item-desc">Full JavaScript API to add, remove, upload, retry, and abort files. Intercept uploads via the cancelable <code class="nds-inline-code lang-js">beforeUpload</code> event to set custom headers.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-translation nds-icon"></i>
+                        <i class="nds-icon nds-hgi-translation" aria-hidden="true"></i>
                         <span class="nds-label">Bilingual Messages</span>
                     </span>
                     <p class="nds-item-desc">Error and validation messages display in Arabic or English based on the page language setting.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-code nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-code"></i>
                         <span class="nds-label">Event-driven Integration</span>
                     </span>
                     <p class="nds-item-desc">Nine custom events cover the full upload lifecycle, letting you hook into file selection, progress updates, success, and error handling.</p>

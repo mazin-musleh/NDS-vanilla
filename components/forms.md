@@ -76,7 +76,7 @@ direction: ltr
                   <input type="text" id="demo-textInput" class="nds-input" placeholder="Enter your full name...">
                   <div class="nds-form-action">
                     <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
-                      <i class="hgi hgi-stroke hgi-cancel-01 nds-icon"></i>
+                      <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                     </button>
                   </div>
                 </div>
@@ -114,7 +114,7 @@ direction: ltr
     <input type="text" id="text-input-1" class="nds-input" placeholder="Enter your full name...">
     <div class="nds-form-action">
       <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
-        <i class="hgi hgi-stroke hgi-cancel-01 nds-icon"></i>
+        <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
       </button>
     </div>
   </div>
@@ -411,9 +411,9 @@ direction: ltr
                   </label>
                 </div>
                 <div class="nds-form-control">
-                  <div class="nds-form-action nds-prefix"><button class="nds-btn nds-secondary nds-number-increment" type="button" aria-label="Increase value"><i class="hgi hgi-stroke hgi-add-01 nds-icon"></i></button></div>
+                  <div class="nds-form-action nds-prefix"><button class="nds-btn nds-secondary nds-number-increment" type="button" aria-label="Increase value"><i class="hgi hgi-stroke hgi-add-01"></i></button></div>
                   <input type="text" id="demo-numberInput" class="nds-input nds-center" inputmode="numeric" value="1" min="0" max="1000" step="1" placeholder="0">
-                  <div class="nds-form-action nds-suffix"><button class="nds-btn nds-secondary nds-number-decrement" type="button" aria-label="Decrease value"><i class="hgi hgi-stroke hgi-minus-sign nds-icon"></i></button></div>
+                  <div class="nds-form-action nds-suffix"><button class="nds-btn nds-secondary nds-number-decrement" type="button" aria-label="Decrease value"><i class="hgi hgi-stroke hgi-minus-sign"></i></button></div>
                 </div>
                 <div class="nds-form-footer" data-feedback-target hidden></div>
               </div>
@@ -446,9 +446,9 @@ direction: ltr
     </label>
   </div>
   <div class="nds-form-control">
-    <div class="nds-form-action nds-prefix"><button class="nds-btn nds-secondary nds-number-increment" type="button" aria-label="Increase value"><i class="hgi hgi-stroke hgi-add-01 nds-icon"></i></button></div>
+    <div class="nds-form-action nds-prefix"><button class="nds-btn nds-secondary nds-number-increment" type="button" aria-label="Increase value"><i class="hgi hgi-stroke hgi-add-01"></i></button></div>
     <input type="text" id="number-input-1" class="nds-input nds-center" inputmode="numeric" value="1" min="0" max="1000" step="1" placeholder="0">
-    <div class="nds-form-action nds-suffix"><button class="nds-btn nds-secondary nds-number-decrement" type="button" aria-label="Decrease value"><i class="hgi hgi-stroke hgi-minus-sign nds-icon"></i></button></div>
+    <div class="nds-form-action nds-suffix"><button class="nds-btn nds-secondary nds-number-decrement" type="button" aria-label="Decrease value"><i class="hgi hgi-stroke hgi-minus-sign"></i></button></div>
   </div>
   <div class="nds-form-footer" data-feedback-target hidden></div>
 </div>
@@ -529,15 +529,15 @@ direction: ltr
                   </label>
                 </div>
                 <div class="nds-form-control">
-                  <i class="hgi hgi-stroke hgi-search-01 nds-icon"></i>
+                  <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
                   <input type="text" id="demo-searchInput" class="nds-search-input" name="search"
                     placeholder="Search services...">
                   <div class="nds-form-action">
                     <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear search" hidden>
-                      <i class="hgi hgi-stroke hgi-cancel-01 nds-icon"></i>
+                      <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                     </button>
                     <button class="nds-btn nds-subtle nds-voice-input" type="button" aria-label="Voice input">
-                      <i class="hgi hgi-stroke hgi-mic-01 nds-icon"></i>
+                      <i class="nds-icon nds-hgi-mic-01" aria-hidden="true"></i>
                     </button>
                   </div>
                 </div>
@@ -572,14 +572,14 @@ direction: ltr
     </label>
   </div>
   <div class="nds-form-control">
-    <i class="hgi hgi-stroke hgi-search-01 nds-icon"></i>
+    <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
     <input type="text" id="search-input-1" class="nds-search-input" name="search" placeholder="Search services...">
     <div class="nds-form-action">
       <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear search" hidden>
-        <i class="hgi hgi-stroke hgi-cancel-01 nds-icon"></i>
+        <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
       </button>
       <button class="nds-btn nds-subtle nds-voice-input" type="button" aria-label="Voice input">
-        <i class="hgi hgi-stroke hgi-mic-01 nds-icon"></i>
+        <i class="nds-icon nds-hgi-mic-01" aria-hidden="true"></i>
       </button>
     </div>
   </div>
@@ -662,11 +662,11 @@ direction: ltr
                   </label>
                 </div>
                 <div class="nds-form-control">
-                  <i class="hgi hgi-stroke hgi-mail-01 nds-icon"></i>
+                  <i class="nds-icon nds-hgi-mail-01" aria-hidden="true"></i>
                   <input type="email" id="demo-emailInput" class="nds-input" placeholder="Enter your email...">
                   <div class="nds-form-action">
                     <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear email" hidden>
-                      <i class="hgi hgi-stroke hgi-cancel-01 nds-icon"></i>
+                      <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                     </button>
                   </div>
                 </div>
@@ -701,11 +701,11 @@ direction: ltr
     </label>
   </div>
   <div class="nds-form-control">
-    <i class="hgi hgi-stroke hgi-mail-01 nds-icon"></i>
+    <i class="nds-icon nds-hgi-mail-01" aria-hidden="true"></i>
     <input type="email" id="email-input-1" class="nds-input" placeholder="Enter your email...">
     <div class="nds-form-action">
       <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear email" hidden>
-        <i class="hgi hgi-stroke hgi-cancel-01 nds-icon"></i>
+        <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
       </button>
     </div>
   </div>
@@ -790,13 +790,13 @@ direction: ltr
                 <div class="nds-form-control">
                   <div class="nds-form-action">
                     <button class="nds-btn nds-subtle nds-toggle-password" type="button" aria-label="Show password">
-                      <i class="hgi hgi-stroke hgi-view-off nds-icon"></i>
+                      <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
                     </button>
                   </div>
                   <input type="password" id="demo-passwordInput" class="nds-input" placeholder="Enter password...">
                   <div class="nds-form-action">
                     <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear password" hidden>
-                      <i class="hgi hgi-stroke hgi-cancel-01 nds-icon"></i>
+                      <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                     </button>
                   </div>
                 </div>
@@ -833,13 +833,13 @@ direction: ltr
   <div class="nds-form-control">
     <div class="nds-form-action">
       <button class="nds-btn nds-subtle nds-toggle-password" type="button" aria-label="Show password">
-        <i class="hgi hgi-stroke hgi-view-off nds-icon"></i>
+        <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
       </button>
     </div>
     <input type="password" id="password-input-1" class="nds-input" placeholder="Enter password...">
     <div class="nds-form-action">
       <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear password" hidden>
-        <i class="hgi hgi-stroke hgi-cancel-01 nds-icon"></i>
+        <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
       </button>
     </div>
   </div>
@@ -1165,7 +1165,7 @@ direction: ltr
                     placeholder="Enter your national ID...">
                   <div class="nds-form-action">
                     <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
-                      <i class="hgi hgi-stroke hgi-cancel-01 nds-icon"></i>
+                      <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                     </button>
                   </div>
                 </div>
@@ -1207,7 +1207,7 @@ direction: ltr
     <input type="text" id="national-id" class="nds-input" placeholder="Enter your national ID...">
     <div class="nds-form-action">
       <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
-        <i class="hgi hgi-stroke hgi-cancel-01 nds-icon"></i>
+        <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
       </button>
     </div>
   </div>
@@ -1283,14 +1283,14 @@ var status = NDS.Forms.getStatus(field);
                   <input type="text" id="permanent-demo-input" class="nds-input" placeholder="Enter username...">
                   <div class="nds-form-action">
                     <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
-                      <i class="hgi hgi-stroke hgi-cancel-01 nds-icon"></i>
+                      <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                     </button>
                   </div>
                 </div>
                 <div class="nds-form-footer" data-feedback-target>
                   <span class="nds-feedback nds-outline nds-sm" data-status="neutral" data-permanent>
                     <span class="nds-feedback-icon">
-                      <i class="hgi hgi-stroke nds-icon"></i>
+                      <i class="nds-icon" aria-hidden="true"></i>
                     </span>
                     <span class="nds-feedback-message">Use 3-20 characters, letters and numbers only</span>
                   </span>
@@ -1333,14 +1333,14 @@ var status = NDS.Forms.getStatus(field);
     <input type="text" id="username" class="nds-input" placeholder="Enter username...">
     <div class="nds-form-action">
       <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
-        <i class="hgi hgi-stroke hgi-cancel-01 nds-icon"></i>
+        <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
       </button>
     </div>
   </div>
   <div class="nds-form-footer" data-feedback-target>
     <span class="nds-feedback nds-outline nds-sm" data-status="neutral" data-permanent>
       <span class="nds-feedback-icon">
-        <i class="hgi hgi-stroke nds-icon"></i>
+        <i class="nds-icon" aria-hidden="true"></i>
       </span>
       <span class="nds-feedback-message">Use 3-20 characters, letters and numbers only</span>
     </span>
@@ -1393,56 +1393,56 @@ NDS.Forms.clearStatus(container);</code>
       <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1;">
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket nds-icon"></i>
+            <i class="hgi hgi-stroke hgi-plug-socket"></i>
             <span class="nds-label">Auto-initialization</span>
           </span>
           <p class="nds-item-desc">All form inputs auto-initialize on page load. Two-way state binding syncs <code class="nds-inline-code lang-html">disabled</code> and <code class="nds-inline-code lang-html">data-required</code> between inputs and containers. For dynamic content, call <code class="nds-inline-code lang-js">NDS.Forms.init()</code>.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-checkmark-circle-02 nds-icon"></i>
+            <i class="nds-icon nds-hgi-checkmark-circle-02" aria-hidden="true"></i>
             <span class="nds-label">Validation</span>
           </span>
           <p class="nds-item-desc">Uses HTML5 validity checks but replaces browser popups with styled inline feedback. Error messages auto-clear on blur or change once the field is corrected. Custom messages via <code class="nds-inline-code lang-html">data-error-message</code>.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-notification-03 nds-icon"></i>
+            <i class="hgi hgi-stroke hgi-notification-03"></i>
             <span class="nds-label">Status Feedback</span>
           </span>
           <p class="nds-item-desc">Four status types: error, success, warning, info. Feedback messages render into <code class="nds-inline-code lang-html">data-feedback-target</code> elements. Permanent hints survive validation cycles with <code class="nds-inline-code lang-html">data-permanent</code>.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-cursor-02 nds-icon"></i>
+            <i class="hgi hgi-stroke hgi-cursor-02"></i>
             <span class="nds-label">Interactive States</span>
           </span>
           <p class="nds-item-desc">Focus, active, typing, filled, and disabled states are tracked automatically via <code class="nds-inline-code lang-html">data-state</code>. Clear buttons auto-show when the input has a value and hide when empty.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-view nds-icon"></i>
+            <i class="hgi hgi-stroke hgi-view"></i>
             <span class="nds-label">Password Toggle</span>
           </span>
           <p class="nds-item-desc">Add a button with <code class="nds-inline-code lang-html">nds-toggle-password</code> class to toggle between password and text input. The icon updates automatically to show the current visibility state.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-mic-01 nds-icon"></i>
+            <i class="nds-icon nds-hgi-mic-01" aria-hidden="true"></i>
             <span class="nds-label">Voice Input</span>
           </span>
           <p class="nds-item-desc">Add a button with <code class="nds-inline-code lang-html">nds-voice-input</code> class to enable speech-to-text on any input. Uses the Web Speech API with automatic language detection from the page.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-language-circle nds-icon"></i>
+            <i class="hgi hgi-stroke hgi-language-circle"></i>
             <span class="nds-label">Arabic Character Filtering</span>
           </span>
           <p class="nds-item-desc">Password fields automatically strip Arabic and RTL characters on input, ensuring passwords contain only compatible characters without manual validation logic.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plus-minus-01 nds-icon"></i>
+            <i class="hgi hgi-stroke hgi-plus-minus-01"></i>
             <span class="nds-label">Number Input Controls</span>
           </span>
           <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">nds-number-increment</code> and <code class="nds-inline-code lang-html">nds-number-decrement</code> buttons as prefix/suffix actions. Supports <code class="nds-inline-code lang-html">min</code>, <code class="nds-inline-code lang-html">max</code>, and <code class="nds-inline-code lang-html">step</code> attributes, with accelerated stepping on long press.</p>

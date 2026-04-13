@@ -290,7 +290,7 @@ async function handleFormSubmit(form) {
                                     </div>
                                     <code class="lang-html code">
 <button class="nds-btn nds-primary nds-lg">
-  <i class="hgi hgi-stroke hgi-plus-sign"></i>
+  <i class="nds-icon nds-hgi-plus-sign" aria-hidden="true"></i>
   <span class="nds-label">Button Text</span>
 </button>
                                     </code>
@@ -388,7 +388,7 @@ async function handleFormSubmit(form) {
 <div class="nds-alert nds-card" data-status="success">
   <span class="nds-feedback nds-alert-icon nds-outline">
     <span class="nds-feedback-icon">
-      <i class="hgi hgi-stroke nds-icon"></i>
+      <i class="nds-icon" aria-hidden="true"></i>
     </span>
   </span>
   <div class="nds-alert-content">

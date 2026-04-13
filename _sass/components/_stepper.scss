@@ -12,24 +12,35 @@
 
 .nds-stepper {
     --stepper-size: 32px;
+
     --stepper-gap: var(--progressindicator-progress-indicator-gap);
     --_content-gap: var(--gap, var(--spacing-xl));
+
     display: flex;
+
     flex-direction: row;
+
     flex-wrap: nowrap;
+
     gap: var(--stepper-gap);
+
     font-family: 'IBM Plex Sans Arabic', sans-serif;
+
     width: 100%;
+
     align-items: flex-start;
+
     counter-reset: step-counter;
 
     &.nds-lg {
         --stepper-size: 40px;
+
         --stepper-gap: calc(var(--progressindicator-progress-indicator-gap) * 1.2);
     }
 
     &.nds-xl {
         --stepper-size: 48px;
+
         --stepper-gap: calc(var(--progressindicator-progress-indicator-gap) * 1.5);
     }
 
@@ -61,7 +72,9 @@
 
     .nds-stepper-content {
         text-align: start;
+
         justify-content: center;
+
         padding: 0;
 
     }
@@ -73,19 +86,29 @@
 
 .nds-stepper-step {
     display: flex;
+
     flex-direction: column;
+
     gap: var(--progressindicator-progress-text-content-side-padding);
+
     position: relative;
+
     counter-increment: step-counter;
 
     // Horizontal connecting line (default on all steps except last)
     .nds-stepper-base::after {
         content: '';
+
         position: absolute;
+
         top: calc(var(--stepper-size) /2);
+
         inset-inline-start: var(--stepper-size);
+
         inset-inline-end: calc(var(--stepper-gap) * -1);
+
         height: 2px;
+
         background-color: var(--stepper-line-current);
     }
 
@@ -122,6 +145,7 @@
 
         .nds-stepper-content {
             align-items: center;
+
             text-align: center;
         }
     }
@@ -133,8 +157,11 @@
 
 .nds-stepper-base {
     display: flex;
+
     align-items: center;
+
     justify-content: flex-start;
+
     position: relative;
 }
 
@@ -144,24 +171,39 @@
 
 .nds-stepper-circle {
     display: flex;
+
     align-items: center;
+
     justify-content: center;
+
     width: var(--stepper-size);
+
     height: var(--stepper-size);
+
     border-radius: 50%;
+
     border: 2px solid var(--stepper-button-current);
+
     background-color: var(--stepper-button-background);
+
     color: var(--stepper-button-current);
+
     font-size: calc(var(--stepper-size)/2);
+
     font-weight: 500;
+
     transition: var(--nds-transition);
+
     position: relative;
+
     z-index: 1;
+
     flex-shrink: 0;
 
     // Current state (default)
     &:hover {
         border-color: var(--stepper-button-current-hovered);
+
         color: var(--stepper-button-current-hovered);
     }
 
@@ -170,19 +212,25 @@
 
     &::before {
         content: counter(step-counter);
+
         font-size: calc(var(--stepper-size)/2);
+
         font-weight: 500;
+
         color: inherit;
     }
 
     // Data attribute support for custom text
     &[data-step-text] {
         font-size: 0;
+
         line-height: 1;
 
         &::before {
             content: attr(data-step-text);
+
             font-size: calc(var(--stepper-size)/2);
+
             font-weight: 500;
         }
     }
@@ -195,34 +243,47 @@
 
 .nds-stepper-content {
     display: flex;
+
     flex-direction: column;
+
     gap: var(--_content-gap);
 }
 
 .nds-stepper-text {
     display: flex;
+
     flex-direction: column;
+
     line-height: normal;
+
     gap: calc(var(--progress-size) / 16);
 }
 
 .nds-stepper-title {
     font-size: var(--nds-text-md-FS);
+
     font-weight: 500;
+
     color: var(--stepper-text-primary);
+
     margin: 0;
 }
 
 .nds-stepper-description {
     font-size: var(--nds-text-sm-FS);
+
     font-weight: 400;
+
     color: var(--stepper-text-secondary);
+
     margin: 0;
 }
 
 .nds-stepper-action {
     display: flex;
+
     flex-wrap: wrap;
+
     gap: var(--spacing-md);
 
     .nds-btn {
@@ -238,32 +299,31 @@
 .nds-stepper-step[data-state~="completed"] {
     .nds-stepper-circle {
         border-color: var(--stepper-button-completed);
+
         background-color: var(--stepper-button-completed);
+
         color: var(--colors-base-white);
 
         &:hover {
             border-color: var(--stepper-button-completed-hovered);
+
             background-color: var(--stepper-button-completed-hovered);
         }
 
         // Default content override for completed state
         &::before,
         &[data-step-text]::before {
-            content: "䤈" !important;
-            font-family: "hgi-stroke-rounded" !important;
-            font-style: normal;
-            opacity: var(--hgi-icon-opacity);
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            position: relative;
-            display: inline-flex;
-            justify-content: center;
-            width: var(--stepper-size);
-            height: var(--stepper-size);
-            font-size: calc(var(--stepper-size)/2);
-            line-height: var(--stepper-size);
-            font-weight: 600;
-        }
+            content: "" !important;
+
+            display: inline-block;
+
+            width: calc(var(--stepper-size)/2);
+
+            height: calc(var(--stepper-size)/2);
+
+            background: currentColor;
+
+            mask: var(--nds-icon-tick-02) center / contain no-repeat;        }
     }
 }
 
@@ -271,10 +331,12 @@
 .nds-stepper-step[data-state~="current"] {
     .nds-stepper-circle {
         border-color: var(--stepper-button-current);
+
         color: var(--stepper-button-current);
 
         &:hover {
             border-color: var(--stepper-button-current-hovered);
+
             color: var(--stepper-button-current-hovered);
         }
 
@@ -292,10 +354,12 @@
 .nds-stepper-step[data-state~="upcoming"] {
     .nds-stepper-circle {
         border-color: var(--stepper-button-upcomming);
+
         color: var(--stepper-button-upcomming);
 
         &:hover {
             border-color: var(--stepper-button-upcomming-hovered);
+
             color: var(--stepper-button-upcomming-hovered);
         }
     }
@@ -320,10 +384,15 @@
         &::before,
         &[data-step-text]::before {
             content: '' !important;
+
             font-size: 0 !important;
+
             width: 8px;
+
             height: 8px;
+
             border-radius: 50%;
+
             background-color: var(--colors-base-white);
         }
     }
@@ -385,20 +454,28 @@
 // Enhanced vertical stepper with vertical connecting lines
 .nds-stepper.nds-vertical {
     flex-direction: column;
+
     --stepper-gap: calc(var(--stepper-size)*1.5);
 
     .nds-stepper-step {
         position: relative;
+
         flex-direction: row;
 
         // Override horizontal line to vertical
         .nds-stepper-base::after {
             top: var(--stepper-size);
+
             inset-inline-start: calc((var(--stepper-size) / 2) - 1px);
+
             inset-inline-end: unset;
+
             bottom: calc(var(--stepper-gap) * -1);
+
             width: 2px;
+
             height: unset;
+
             z-index: 0;
         }
 
@@ -412,7 +489,9 @@
 
         .nds-stepper-base {
             flex-direction: row;
+
             align-items: flex-start;
+
             gap: var(--spacing-md);
         }
 
@@ -449,13 +528,17 @@
 
 .nds-stepper.nds-radial {
     --stepper-size: 64px;
+
     --progress-size: var(--stepper-size);
+
     --stepper-gap: calc(var(--progress-size)/8);
+
 
     align-items: center;
 
     .nds-stepper-step {
         flex-direction: row;
+
         position: relative;
     }
 
@@ -483,6 +566,7 @@
 
     .nds-stepper-content {
         --content-gap: 0;
+
         width: 100%;
 
 
@@ -496,6 +580,7 @@
 
         .nds-stepper-next {
             font-size: clamp(10px, calc(var(--stepper-size) * 0.056 + 7.3px), 14px);
+
             color: var(--stepper-text-tertiary);
         }
     }
@@ -510,8 +595,11 @@
 
     .nds-progress-circle {
         --progress-size: var(--stepper-size);
+
         --progress-track-color: var(--colors-neutral-100);
+
         --progress-color: var(--background-primary);
+
         align-self: flex-start;
 
         @include dark {
@@ -523,25 +611,35 @@
         // Progress based on steps
         svg circle.nds-progress-bar {
             stroke-dasharray: 62.83 !important;
+
             stroke-dashoffset: calc(62.83 - (62.83 * var(--current-step) / var(--total-steps)));
+
             transition: stroke-dashoffset 0.3s ease !important;
         }
 
 
         .nds-progress-steps {
             display: flex !important;
+
             align-items: center;
+
             flex-wrap: nowrap;
+
             justify-content: center;
+
             font-size: calc(var(--progress-size) / 5);
             /* font-size: clamp(10px, calc(var(--progress-size) * 0.2), 24px) !important; */
             font-weight: 700;
+
             white-space: nowrap;
+
             gap: clamp(2px, calc(var(--progress-size) * 0.05), 4px);
+
             line-height: 1;
         }
 
         position: relative;
+
         flex-shrink: 0;
     }
 
@@ -574,12 +672,16 @@
 
         .nds-stepper-circle {
             border-color: var(--alpha-white-30);
+
             background-color: var(--alpha-white-10);
+
             color: var(--alpha-white-50);
 
             &:hover {
                 border-color: var(--alpha-white-60);
+
                 background-color: var(--alpha-white-20);
+
                 color: var(--alpha-white-60);
             }
 
@@ -598,6 +700,7 @@
 
             .nds-stepper-circle {
                 border-color: var(--background-surface-oncolor);
+
                 color: var(--colors-base-white);
 
                 &:hover {
@@ -624,10 +727,12 @@
 
             .nds-stepper-circle {
                 border-color: var(--background-surface-oncolor);
+
                 background-color: var(--background-surface-oncolor);
 
                 &:hover {
                     border-color: var(--background-surface-oncolor);
+
                     background-color: var(--alpha-white-80);
                 }
 
@@ -678,6 +783,7 @@
 
         .nds-stepper-step[data-state~="upcoming"] .nds-stepper-circle {
             background-color: transparent;
+
             border-color: var(--alpha-white-30);
         }
     }
@@ -685,6 +791,7 @@
     &.nds-radial {
         .nds-progress-circle {
             --progress-track-color: var(--alpha-white-30);
+
             --progress-color: var(--background-surface-oncolor);
         }
 

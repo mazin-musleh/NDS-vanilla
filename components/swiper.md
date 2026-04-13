@@ -85,11 +85,10 @@ direction: ltr
                             <div class="nds-swiper-pagination"></div>
                             <button
                                 class="nds-btn nds-subtle nds-icon-only nds-xl nds-circle nds-oncolor nds-swiper-button-prev"
-                                aria-label="Previous slide"><i
-                                    class="hgi hgi-stroke hgi-arrow-right-01 nds-icon"></i></button>
+                                aria-label="Previous slide"><i class="nds-icon nds-hgi-arrow-right-01" aria-hidden="true"></i></button>
                             <button
                                 class="nds-btn nds-subtle nds-icon-only nds-xl nds-circle nds-oncolor nds-swiper-button-next"
-                                aria-label="Next slide"><i class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i></button>
+                                aria-label="Next slide"><i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i></button>
                         </div>
                     </div>
                 </div>
@@ -123,10 +122,10 @@ direction: ltr
                                     </div>
                                     <div class="nds-swiper-pagination"></div>
                                     <button class="nds-btn nds-subtle nds-icon-only nds-xl nds-oncolor nds-swiper-button-prev" aria-label="Previous slide">
-                                        <i class="hgi hgi-stroke hgi-arrow-right-01 nds-icon"></i>
+                                        <i class="nds-icon nds-hgi-arrow-right-01" aria-hidden="true"></i>
                                     </button>
                                     <button class="nds-btn nds-subtle nds-icon-only nds-xl nds-oncolor nds-swiper-button-next" aria-label="Next slide">
-                                        <i class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i>
+                                        <i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
                                     </button>
                                 </div>
                             </code>
@@ -189,11 +188,10 @@ direction: ltr
                             <div class="nds-swiper-pagination"></div>
                             <button
                                 class="nds-btn nds-subtle nds-icon-only nds-xl nds-circle nds-oncolor nds-swiper-button-prev"
-                                aria-label="Previous slide"><i
-                                    class="hgi hgi-stroke hgi-arrow-right-01 nds-icon"></i></button>
+                                aria-label="Previous slide"><i class="nds-icon nds-hgi-arrow-right-01" aria-hidden="true"></i></button>
                             <button
                                 class="nds-btn nds-subtle nds-icon-only nds-xl nds-circle nds-oncolor nds-swiper-button-next"
-                                aria-label="Next slide"><i class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i></button>
+                                aria-label="Next slide"><i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i></button>
                         </div>
                     </div>
                 </div>
@@ -319,8 +317,8 @@ direction: ltr
                             </div>
                             <div class="nds-swiper-navigation">
                                 <div class="nds-swiper-buttons">
-                                    <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-swiper-button-prev" type="button" aria-label="Previous slide"><i class="hgi hgi-stroke hgi-arrow-right-01 nds-icon"></i></button>
-                                    <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-swiper-button-next" type="button" aria-label="Next slide"><i class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i></button>
+                                    <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-swiper-button-prev" type="button" aria-label="Previous slide"><i class="nds-icon nds-hgi-arrow-right-01" aria-hidden="true"></i></button>
+                                    <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-swiper-button-next" type="button" aria-label="Next slide"><i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i></button>
                                 </div>
                                 <div class="nds-swiper-pagination"></div>
                             </div>
@@ -360,8 +358,8 @@ direction: ltr
                                     </div>
                                     <div class="nds-swiper-navigation">
                                         <div class="nds-swiper-buttons">
-                                            <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-swiper-button-prev" type="button" aria-label="Previous slide"><i class="hgi hgi-stroke hgi-arrow-right-01 nds-icon"></i></button>
-                                            <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-swiper-button-next" type="button" aria-label="Next slide"><i class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i></button>
+                                            <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-swiper-button-prev" type="button" aria-label="Previous slide"><i class="nds-icon nds-hgi-arrow-right-01" aria-hidden="true"></i></button>
+                                            <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-swiper-button-next" type="button" aria-label="Next slide"><i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i></button>
                                         </div>
                                         <div class="nds-swiper-pagination"></div>
                                     </div>
@@ -453,8 +451,8 @@ direction: ltr
                             </div>
                             <div class="nds-swiper-navigation">
                                 <div class="nds-swiper-buttons">
-                                    <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-swiper-button-prev" type="button" aria-label="Previous slide"><i class="hgi hgi-stroke hgi-arrow-right-01 nds-icon"></i></button>
-                                    <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-swiper-button-next" type="button" aria-label="Next slide"><i class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i></button>
+                                    <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-swiper-button-prev" type="button" aria-label="Previous slide"><i class="nds-icon nds-hgi-arrow-right-01" aria-hidden="true"></i></button>
+                                    <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-swiper-button-next" type="button" aria-label="Next slide"><i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i></button>
                                 </div>
                                 <div class="nds-swiper-pagination"></div>
                             </div>
@@ -489,8 +487,8 @@ direction: ltr
                                     </div>
                                     <div class="nds-swiper-navigation">
                                         <div class="nds-swiper-buttons">
-                                            <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-swiper-button-prev" type="button" aria-label="Previous slide"><i class="hgi hgi-stroke hgi-arrow-right-01 nds-icon"></i></button>
-                                            <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-swiper-button-next" type="button" aria-label="Next slide"><i class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i></button>
+                                            <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-swiper-button-prev" type="button" aria-label="Previous slide"><i class="nds-icon nds-hgi-arrow-right-01" aria-hidden="true"></i></button>
+                                            <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-swiper-button-next" type="button" aria-label="Next slide"><i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i></button>
                                         </div>
                                         <div class="nds-swiper-pagination"></div>
                                     </div>
@@ -516,56 +514,56 @@ direction: ltr
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-zap nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-zap"></i>
                         <span class="nds-label">Auto-initialization</span>
                     </span>
                     <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">nds-swiper</code> on the page initializes automatically on load with no setup code required.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-scroll-horizontal nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-scroll-horizontal"></i>
                         <span class="nds-label">Native Scroll-Snap</span>
                     </span>
                     <p class="nds-item-desc">Slides snap into place using CSS scroll-snap, giving smooth drag-to-scroll on desktop and natural swipe gestures on touch devices.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layers-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-layers-01"></i>
                         <span class="nds-label">Responsive Breakpoints</span>
                     </span>
                     <p class="nds-item-desc">Three-tier slide counts (<code class="nds-inline-code lang-html">slides-max</code>, <code class="nds-inline-code lang-html">slides-mid</code>, <code class="nds-inline-code lang-html">slides-min</code>) adjust the visible slides at 960px and 600px breakpoints.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-image-02 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-image-02"></i>
                         <span class="nds-label">Lazy Loading</span>
                     </span>
                     <p class="nds-item-desc">Images with <code class="nds-inline-code lang-html">data-src</code> or <code class="nds-inline-code lang-html">data-srcset</code> load automatically as slides approach the viewport, reducing initial page weight.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-keyboard nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-keyboard"></i>
                         <span class="nds-label">Keyboard Navigation</span>
                     </span>
                     <p class="nds-item-desc">Arrow keys navigate between slides, Home jumps to the first, and End to the last. All keys are direction-aware for RTL layouts.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-eye nds-icon"></i>
+                        <i class="nds-icon nds-hgi-eye" aria-hidden="true"></i>
                         <span class="nds-label">Peek Preview</span>
                     </span>
                     <p class="nds-item-desc">Set a <code class="nds-inline-code lang-html">peek</code> value in pixels to reveal partial adjacent slides, signaling that more content is available.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-play-circle nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-play-circle"></i>
                         <span class="nds-label">Visibility Handling</span>
                     </span>
                     <p class="nds-item-desc">Swipers inside hidden containers like tabs or modals re-measure and render correctly when they become visible.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-touch-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-touch-01"></i>
                         <span class="nds-label">Programmatic Control</span>
                     </span>
                     <p class="nds-item-desc">Access any swiper instance via <code class="nds-inline-code lang-js">element._ndsSwiper</code> to call <code class="nds-inline-code lang-js">slideTo()</code>, <code class="nds-inline-code lang-js">prev()</code>, <code class="nds-inline-code lang-js">next()</code>, or <code class="nds-inline-code lang-js">destroy()</code>.</p>

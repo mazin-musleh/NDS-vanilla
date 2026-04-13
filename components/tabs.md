@@ -101,8 +101,7 @@ direction: ltr
                                         <span class="nds-label">Settings</span>
                                     </button>
                                 </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i
-                                        class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i>
+                                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
                                 </button>
                             </div>
                             <div class="nds-tab-content">
@@ -226,8 +225,7 @@ direction: ltr
                                     <span class="nds-label">HTML</span>
                                 </button>
                             </nav>
-                            <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i
-                                    class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i>
+                            <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
                             </button>
                         </div>
                         <div class="nds-tab-content">
@@ -286,7 +284,7 @@ direction: ltr
             </button>
         </nav>
         <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more">
-            <i class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i>
+            <i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
         </button>
     </div>
     <div class="nds-tab-content">
@@ -479,8 +477,7 @@ direction: ltr
                                         <span class="nds-label">Settings</span>
                                     </button>
                                 </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i
-                                        class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i>
+                                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
                                 </button>
                             </div>
                             <div class="nds-tab-content">
@@ -517,8 +514,7 @@ direction: ltr
                                     <span class="nds-label">HTML</span>
                                 </button>
                             </nav>
-                            <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i
-                                    class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i>
+                            <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
                             </button>
                         </div>
                         <div class="nds-tab-content">
@@ -551,7 +547,7 @@ direction: ltr
             </button>
         </nav>
         <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more">
-            <i class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i>
+            <i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
         </button>
     </div>
     <div class="nds-tab-content">
@@ -600,56 +596,56 @@ direction: ltr
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-plug-socket"></i>
                         <span class="nds-label">Auto-initialization</span>
                     </span>
                     <p class="nds-item-desc">Activates when <code class="nds-inline-code lang-html">.nds-tabs</code> is on the page. Tab switching, keyboard handling, and scroll behavior attach automatically.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-keyboard nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-keyboard"></i>
                         <span class="nds-label">Full Keyboard Navigation</span>
                     </span>
                     <p class="nds-item-desc">Arrow keys move between tabs, Home and End jump to first and last, and Enter or Space activates the focused tab.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-flip-horizontal nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-flip-horizontal"></i>
                         <span class="nds-label">RTL-Aware Navigation</span>
                     </span>
                     <p class="nds-item-desc">Arrow key direction reverses automatically in RTL layouts so navigation always feels natural to the reading direction.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-mouse-scroll-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-mouse-scroll-01"></i>
                         <span class="nds-label">Overflow Scrolling</span>
                     </span>
                     <p class="nds-item-desc">Long tab lists scroll horizontally with gradient fade indicators, drag-to-scroll, mouse wheel support, and a show-more button.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layout-left nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-layout-left"></i>
                         <span class="nds-label">Vertical Layout</span>
                     </span>
                     <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">nds-vertical</code> for a side-stacked tab list with sticky positioning and vertical indicator bars.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-dashboard-speed-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-dashboard-speed-01"></i>
                         <span class="nds-label">High Contrast and Reduced Motion</span>
                     </span>
                     <p class="nds-item-desc">Enhanced borders appear in high-contrast mode, and all transitions are disabled when the user prefers reduced motion.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-notification-square nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-notification-square"></i>
                         <span class="nds-label">Tab Change Events</span>
                     </span>
                     <p class="nds-item-desc">Every tab switch dispatches an <code class="nds-inline-code lang-js">nds:tab:change</code> event with the new and previous tab and panel references.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-api nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-api"></i>
                         <span class="nds-label">Programmatic Control</span>
                     </span>
                     <p class="nds-item-desc">Switch tabs, query the active panel, or destroy instances through the JS API on <code class="nds-inline-code lang-js">NDS.Tabs</code> or each element's <code class="nds-inline-code lang-js">.ndsTabs</code> property.</p>

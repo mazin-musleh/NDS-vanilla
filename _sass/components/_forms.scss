@@ -2,27 +2,38 @@
 
 .nds-form-container:not([hidden]) {
     --_form-width: var(--form-width, 100%);
+
     display: flex;
+
     gap: var(--spacing-md);
+
     flex-direction: column;
+
     width: var(--_form-width);
 
     .nds-form-header {
 
         display: flex;
+
         flex-direction: column;
 
         label {
             display: flex;
+
             flex-direction: column;
+
             cursor: pointer;
         }
 
         .nds-label {
             color: var(--form-field-text-label);
+
             font-size: var(--nds-text-md-FS);
+
             line-height: var(--nds-text-md-LH);
+
             font-weight: 500;
+
             cursor: pointer;
         }
     }
@@ -33,6 +44,7 @@
         .nds-form-header .nds-label::after,
         >.nds-label::after {
             content: " *";
+
             color: var(--controls-control-text-error);
         }
     }
@@ -102,7 +114,9 @@
         }
 
         border-color: var(--form-field-border-default);
+
         background-color: var(--form-field-background-darker);
+
         box-shadow: var(--shadow-md);
 
         &,
@@ -114,7 +128,9 @@
     // Readonly state
     &[data-state~="readonly"] .nds-form-control {
         border-color: var(--border-neutral-primary);
+
         background-color: transparent;
+
         color: var(--form-field-text-readonly);
 
         ::-webkit-input-placeholder {
@@ -123,6 +139,7 @@
 
         &:hover {
             border-color: var(--border-neutral-primary);
+
             color: var(--form-field-text-readonly);
 
             ::-webkit-input-placeholder {
@@ -140,9 +157,13 @@
 
         .nds-form-control {
             background-color: transparent;
+
             color: var(--text-default-disabled);
+
             border-color: var(--border-disabled);
+
             pointer-events: none;
+
             user-select: none;
 
             ::-webkit-input-placeholder {
@@ -155,29 +176,40 @@
 :is(.nds-form-container, .nds-form-group) {
     .nds-label+.nds-info {
         color: var(--text-primary-paragraph);
+
         font-size: var(--nds-text-sm-FS);
+
         line-height: var(--nds-text-sm-LH);
+
         min-width: 200px;
     }
 
     .nds-label+.nds-note {
         color: var(--text-secondary-paragraph);
+
         font-weight: 300;
     }
 }
 
 fieldset {
     border: 0;
+
     padding: 0;
+
     margin: 0;
+
     min-width: 0; // Fix for flexbox overflow
 
     &>legend,
     >legend>.nds-label {
         padding: 0;
+
         margin-bottom: var(--spacing-xl);
+
         font-size: var(--nds-text-lg-FS);
+
         font-weight: 500;
+
         line-height: 1;
     }
 
@@ -187,6 +219,7 @@ fieldset {
         >legend>.nds-label::after,
         >.nds-label::after {
             content: " *";
+
             color: var(--controls-control-text-error);
         }
     }
@@ -196,24 +229,39 @@ fieldset {
 .nds-form-control {
     --_input-size: var(--input-size, 40px);
     --_input-radius: var(--input-radius, var(--radius-sm));
+
     display: flex;
+
     min-height: var(--_input-size);
+
     height: var(--_input-size);
+
     width: 100%;
+
     justify-content: flex-start;
+
     align-items: self-start;
+
     padding: var(--spacing-none) var(--spacing-md);
+
     border-radius: var(--_input-radius);
+
     gap: var(--spacing-md);
+
     border: 1px solid var(--form-field-border-default);
+
     background-color: var(--form-field-background-default);
+
     position: relative;
 
 
     :is(input, textarea, select):not(:disabled) {
         color: var(--form-field-text-focused);
+
         outline: unset !important;
+
         outline-offset: unset !important;
+
         box-shadow: unset !important;
     }
 
@@ -233,21 +281,32 @@ fieldset {
 
     &::before {
         content: "";
+
         position: absolute;
+
         bottom: 0px;
+
         left: 50%;
+
         width: 0%;
+
         height: 2px;
+
         border-radius: 0 0 3px 3px;
+
         transform: translateX(-50%);
+
         background-color: var(--form-field-border-pressed);
+
         transition: width var(--nds-transition);
+
         z-index: 2;
     }
 
     // Size: Medium (32px)
     .nds-md>& {
         --_input-size: 32px;
+
         font-size: var(--nds-text-sm-FS);
 
         .nds-form-action > .nds-btn {
@@ -275,12 +334,19 @@ fieldset {
 
     >input {
         background-color: transparent;
+
         border: 0px;
+
         outline: 0px;
+
         height: 100%;
+
         width: 100%;
+
         outline: unset !important;
+
         outline-offset: unset !important;
+
         box-shadow: unset !important;
 
         &:focus {
@@ -290,12 +356,16 @@ fieldset {
 
     .nds-textarea>& {
         padding: var(--form-textarea-padding);
+
         height: fit-content;
+
         width: 100%;
 
         >textarea {
             padding: var(--spacing-md);
+
             min-height: 40px;
+
             min-width: 100%;
         }
     }
@@ -304,39 +374,47 @@ fieldset {
 
         >select {
             -webkit-appearance: none;
+
             -moz-appearance: none;
+
             appearance: none;
+
             cursor: pointer;
+
             width: 100%;
+
             height: 100%;
         }
 
 
         &::after {
-            content: "㭚";
+            content: "";
+
             pointer-events: none;
-            font-family: "hgi-stroke-rounded" !important;
-            font-style: normal;
-            opacity: var(--hgi-icon-opacity);
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            position: absolute;
+            position: absolute;
+
             left: var(--spacing-md);
+
             transition: transform 0.1s ease;
-            display: inline-flex;
+
+            display: inline-block;
+
             width: 20px;
+
             height: 20px;
-            font-size: 20px;
-            line-height: 20px;
-            justify-content: center;
-            align-content: center;
-            align-items: center;
+
+            background: currentColor;
+
+            mask: var(--nds-icon-arrow-down-01) center / contain no-repeat;
+
             top: 50%;
+
             transform: translateY(-50%);
 
             @include ltr {
                 & {
                     left: unset;
+
                     right: var(--spacing-md);
                 }
             }
@@ -356,26 +434,41 @@ fieldset {
 
     .nds-select-dropdown {
         position: absolute;
+
         top: 100%;
+
         left: 0;
+
         right: 0;
+
         z-index: 999;
+
         margin-top: 4px;
+
         padding: var(--spacing-xs, 4px);
+
         background-color: var(--form-field-background-default);
+
         border: 1px solid var(--form-field-border-default);
+
         border-radius: var(--radius-md, 8px);
+
         box-shadow: var(--shadow-md);
+
         max-height: 200px;
+
         overflow-y: auto;
 
         .nds-select-options {
             display: flex;
+
             flex-direction: column;
+
             gap: var(--spacing-xs);
 
             .nds-btn {
                 justify-content: start;
+
                 width: 100%;
             }
         }
@@ -388,35 +481,55 @@ fieldset {
 
     .nds-form-action:not([hidden]) {
         display: flex;
+
         gap: var(--spacing-sm);
+
         flex-direction: row;
+
         margin-inline-end: calc(var(--spacing-md) * -1);
+
         height: 100%;
 
         &:first-child {
             margin-inline-end: unset;
+
             margin-inline-start: calc(var(--spacing-md) * -1);
         }
 
         >*:not([hidden]):not(.nds-dropmenu,.nds-dropmenu-menu,.nds-browse-btn) {
             --btn-height: 100%;
+
             --btn-height-min: var(--btn-height);
+
             --btn-radius: var(--_input-radius);
+
             padding-block: 0;
+
             position: relative;
+
             height: var(--btn-height);
+
             display: flex;
+
             align-items: center;
+
             justify-content: center;
 
             &:not(:first-child):not([hidden] + *)::before {
                 content: '';
+
                 width: 1px;
+
                 background-color: var(--border-neutral-primary);
+
                 height: calc(100% - var(--spacing-lg));
+
                 position: absolute;
+
                 inset-inline-start: calc(var(--spacing-sm) / -1.5);
+
                 top: 50%;
+
                 transform: translateY(-50%);
             }
         }
@@ -424,6 +537,7 @@ fieldset {
         // Prefix/Suffix modifiers
         &:is(.nds-prefix, .nds-suffix) {
             gap: 0;
+
             white-space: nowrap;
 
             >*:not([hidden]){
@@ -442,16 +556,19 @@ fieldset {
         &.nds-suffix {
             >*:last-child {
                 border-start-end-radius: var(--_input-radius);
+
                 border-end-end-radius: var(--_input-radius);
             }
         }
 
         &.nds-prefix {
             margin-inline-end: unset;
+
             margin-inline-start: calc(var(--spacing-md) * -1);
 
             >*:first-child {
                 border-start-start-radius: var(--_input-radius);
+
                 border-end-start-radius: var(--_input-radius);
             }
         }
@@ -463,6 +580,6 @@ fieldset {
     animation: colorCycle 1s linear infinite alternate;
 }
 
-.nds-toggle-password.show i::before {
-    content: "㿦";
+.nds-toggle-password.show i {
+    --nds-icon: var(--nds-icon-eye);
 }

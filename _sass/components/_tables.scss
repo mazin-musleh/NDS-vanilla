@@ -181,12 +181,12 @@
     }
 
     // Sort icon swaps
-    th[data-state~="sorted-asc"] .nds-sort-icon::before {
-        content: "䝹";
+    th[data-state~="sorted-asc"] .nds-sort-icon {
+        --nds-icon: var(--nds-icon-sort-by-up-02);
     }
 
-    th[data-state~="sorted-desc"] .nds-sort-icon::before {
-        content: "䝷";
+    th[data-state~="sorted-desc"] .nds-sort-icon {
+        --nds-icon: var(--nds-icon-sort-by-down-02);
     }
 
     // ── Accessibility ──

@@ -162,11 +162,6 @@
             }
 
             &.nds-peek {
-                body[data-font-loaded*="hgi-stroke-rounded"] i {
-                    opacity: 1;
-                    transition: opacity var(--nds-transition);
-                }
-
                 &:not([data-state="open"]) {
                     --toggle-transform: translate(calc((var(--nds-sidemenu-width) - var(--btn-width)/1.5) * -1), var(--_toggle-pos));
                     --btn-indicator-size: 5px;

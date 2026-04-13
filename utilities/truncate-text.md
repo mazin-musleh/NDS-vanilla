@@ -174,28 +174,28 @@ direction: ltr
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-code nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-code"></i>
                         <span class="nds-label">CSS-Only</span>
                     </span>
                     <p class="nds-item-desc">Works with a single class and zero JavaScript. No initialization, no event listeners, no cleanup.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-text-wrap nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-text-wrap"></i>
                         <span class="nds-label">Configurable Line Count</span>
                     </span>
                     <p class="nds-item-desc">Set <code class="nds-inline-code lang-html">--truncate</code> to any number to control how many lines remain visible before the ellipsis.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-text-font nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-text-font"></i>
                         <span class="nds-label">Any Text Element</span>
                     </span>
                     <p class="nds-item-desc">Apply to headings, paragraphs, spans, divs, or any element that contains text content.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-horizontal-resize nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-horizontal-resize"></i>
                         <span class="nds-label">Width-Responsive</span>
                     </span>
                     <p class="nds-item-desc">Truncation recalculates automatically when the parent container resizes, with no additional code required.</p>

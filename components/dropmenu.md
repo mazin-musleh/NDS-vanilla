@@ -31,7 +31,7 @@ direction: ltr
                         <div class="state-demo">
                             <div class="nds-dropmenu">
                                 <button class="nds-btn nds-secondary-outline nds-dropmenu-trigger">
-                                    <i class="hgi hgi-stroke hgi-menu-01"></i>
+                                    <i class="nds-icon nds-hgi-menu-01" aria-hidden="true"></i>
                                     <span class="nds-label">Actions</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
@@ -45,7 +45,7 @@ direction: ltr
                                             <span class="nds-label">Duplicate</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item">
-                                            <i class="hgi hgi-stroke hgi-share-01"></i>
+                                            <i class="nds-icon nds-hgi-share-01" aria-hidden="true"></i>
                                             <span class="nds-label">Share</span>
                                         </button>
                                         <hr class="nds-divider">
@@ -80,7 +80,7 @@ direction: ltr
                                         <code class="lang-html code">
 <div class="nds-dropmenu">
   <button class="nds-btn nds-secondary-outline nds-dropmenu-trigger">
-    <i class="hgi hgi-stroke hgi-menu-01"></i>
+    <i class="nds-icon nds-hgi-menu-01" aria-hidden="true"></i>
     <span class="nds-label">Actions</span>
   </button>
   <div class="nds-dropmenu-menu" hidden>
@@ -94,7 +94,7 @@ direction: ltr
         <span class="nds-label">Duplicate</span>
       </button>
       <button class="nds-btn nds-subtle nds-dropmenu-item">
-        <i class="hgi hgi-stroke hgi-share-01"></i>
+        <i class="nds-icon nds-hgi-share-01" aria-hidden="true"></i>
         <span class="nds-label">Share</span>
       </button>
       <hr class="nds-divider">
@@ -248,7 +248,7 @@ direction: ltr
                         <div class="state-demo">
                             <div class="nds-dropmenu">
                                 <button class="nds-btn nds-neutral nds-menu-btn nds-dropmenu-trigger">
-                                    <i class="hgi hgi-stroke hgi-settings-02 nds-icon"></i>
+                                    <i class="hgi hgi-stroke hgi-settings-02"></i>
                                     <span class="nds-label">Settings</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden style="min-width: 220px;">
@@ -393,7 +393,7 @@ direction: ltr
                                         <code class="lang-html code">
 <div class="nds-dropmenu">
   <button class="nds-btn nds-neutral nds-menu-btn nds-dropmenu-trigger">
-    <i class="hgi hgi-stroke hgi-settings-02 nds-icon"></i>
+    <i class="hgi hgi-stroke hgi-settings-02"></i>
     <span class="nds-label">Settings</span>
   </button>
   <div class="nds-dropmenu-menu" hidden style="min-width: 220px;">
@@ -474,42 +474,42 @@ direction: ltr
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-menu-11 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-menu-11"></i>
                         <span class="nds-label">Auto-initialization</span>
                     </span>
                     <p class="nds-item-desc">Dropmenus initialize automatically on page load and can be dynamically reinitialized using <code class="nds-inline-code lang-js">NDS.Dropmenu.reinit()</code> for content added after initial load.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-location-star-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-location-star-01"></i>
                         <span class="nds-label">Smart Positioning</span>
                     </span>
                     <p class="nds-item-desc">Menus stay fully visible regardless of where the trigger sits on the page, flipping direction when near screen edges.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-keyboard nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-keyboard"></i>
                         <span class="nds-label">Keyboard Navigation</span>
                     </span>
                     <p class="nds-item-desc">Full keyboard support with arrow keys, Home, End, Tab, Escape, and special handling for input fields inside menus using Alt+Arrow combinations.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-shield-user nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-shield-user"></i>
                         <span class="nds-label">Accessibility</span>
                     </span>
                     <p class="nds-item-desc">ARIA roles and states are applied automatically, and animations respect the user's reduced-motion preference.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-settings-02 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-settings-02"></i>
                         <span class="nds-label">Data Attributes</span>
                     </span>
                     <p class="nds-item-desc">Menu items with <code class="nds-inline-code lang-html">data-no-auto-close</code> stay open on click, letting users interact with checkboxes, inputs, and filter controls without interruption.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-code-circle nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-code-circle"></i>
                         <span class="nds-label">Programmatic Control</span>
                     </span>
                     <p class="nds-item-desc">Programmatic control with instance methods <code class="nds-inline-code lang-js">open()</code>, <code class="nds-inline-code lang-js">close()</code>, <code class="nds-inline-code lang-js">toggle()</code>, and custom events for state changes.</p>

@@ -92,7 +92,7 @@
             let html = `
                 <span class="nds-feedback nds-alert-icon${iconStyle}">
                     <span class="nds-feedback-icon">
-                        <i class="hgi hgi-stroke nds-icon"></i>
+                        <i class="nds-icon" aria-hidden="true"></i>
                     </span>
                 </span>
                 <div class="nds-alert-content">
@@ -119,7 +119,7 @@
 
                 html += `
                     <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close${progressClass}" aria-label="Close"${progressStyle}>
-                        <i class="hgi hgi-stroke hgi-cancel-01"></i>
+                        <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                         ${progressSVG}
                     </button>
                 `;

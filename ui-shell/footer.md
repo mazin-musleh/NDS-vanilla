@@ -166,19 +166,19 @@ footer.nds-footer.nds-content-wrapper
         &lt;ul&gt;
           &lt;li&gt;
             &lt;a class="nds-btn nds-subtle nds-indicator" href="#"&gt;
-              &lt;i class="hgi hgi-stroke hgi-location-01 nds-icon"&gt;&lt;/i&gt;
+              &lt;i class="nds-icon nds-hgi-location-01" aria-hidden="true"&gt;&lt;/i&gt;
               &lt;span class="nds-label"&gt;Riyadh, King Fahd Road&lt;/span&gt;
             &lt;/a&gt;
           &lt;/li&gt;
           &lt;li&gt;
             &lt;a class="nds-btn nds-subtle nds-indicator" href="tel:920000000"&gt;
-              &lt;i class="hgi hgi-stroke hgi-headphones nds-icon"&gt;&lt;/i&gt;
+              &lt;i class="nds-icon nds-hgi-headphones" aria-hidden="true"&gt;&lt;/i&gt;
               &lt;span class="nds-label"&gt;920 000 000&lt;/span&gt;
             &lt;/a&gt;
           &lt;/li&gt;
           &lt;li&gt;
             &lt;a class="nds-btn nds-subtle nds-indicator" href="mailto:info@example.gov.sa"&gt;
-              &lt;i class="hgi hgi-stroke hgi-mail-01 nds-icon"&gt;&lt;/i&gt;
+              &lt;i class="nds-icon nds-hgi-mail-01" aria-hidden="true"&gt;&lt;/i&gt;
               &lt;span class="nds-label"&gt;info@example.gov.sa&lt;/span&gt;
             &lt;/a&gt;
           &lt;/li&gt;
@@ -240,16 +240,16 @@ footer.nds-footer.nds-content-wrapper
     &lt;li class="nds-footer-social-wrapper"&gt;
       &lt;div class="nds-footer-social-icons"&gt;
         &lt;a class="nds-btn nds-secondary-outline nds-icon-only" href="#" target="_blank" aria-label="Twitter"&gt;
-          &lt;i class="hgi hgi-stroke hgi-new-twitter"&gt;&lt;/i&gt;
+          &lt;i class="nds-icon nds-hgi-new-twitter" aria-hidden="true"&gt;&lt;/i&gt;
         &lt;/a&gt;
         &lt;a class="nds-btn nds-secondary-outline nds-icon-only" href="#" target="_blank" aria-label="Facebook"&gt;
-          &lt;i class="hgi hgi-stroke hgi-facebook-02"&gt;&lt;/i&gt;
+          &lt;i class="nds-icon nds-hgi-facebook-02" aria-hidden="true"&gt;&lt;/i&gt;
         &lt;/a&gt;
         &lt;a class="nds-btn nds-secondary-outline nds-icon-only" href="#" target="_blank" aria-label="YouTube"&gt;
-          &lt;i class="hgi hgi-stroke hgi-youtube"&gt;&lt;/i&gt;
+          &lt;i class="nds-icon nds-hgi-youtube" aria-hidden="true"&gt;&lt;/i&gt;
         &lt;/a&gt;
         &lt;a class="nds-btn nds-secondary-outline nds-icon-only" href="#" target="_blank" aria-label="LinkedIn"&gt;
-          &lt;i class="hgi hgi-stroke hgi-linkedin-02"&gt;&lt;/i&gt;
+          &lt;i class="nds-icon nds-hgi-linkedin-02" aria-hidden="true"&gt;&lt;/i&gt;
         &lt;/a&gt;
       &lt;/div&gt;
     &lt;/li&gt;
@@ -393,42 +393,42 @@ footer.nds-footer.nds-content-wrapper
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layout-03 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-layout-03"></i>
                         <span class="nds-label">Multi-Column Layout</span>
                     </span>
                     <p class="nds-item-desc">Content columns flow across 4 columns on desktop, 2 on tablet, and stack to 1 on mobile with no extra configuration.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-menu-02 nds-icon"></i>
+                        <i class="nds-icon nds-hgi-menu-02" aria-hidden="true"></i>
                         <span class="nds-label">Collapsible Accordion</span>
                     </span>
                     <p class="nds-item-desc">Column headings become accordion toggles on mobile via the <a class="nds-color" href="{{ 'components/drawer' | relative_url }}">Drawer</a> component. On tablet and above, columns stay expanded automatically with <code class="nds-inline-code lang-html">data-always-open-on="tablet"</code>.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-share-01 nds-icon"></i>
+                        <i class="nds-icon nds-hgi-share-01" aria-hidden="true"></i>
                         <span class="nds-label">Social and App Columns</span>
                     </span>
                     <p class="nds-item-desc">Dedicated column types for social media icon buttons and mobile app store badges with flex-wrap layout and consistent spacing.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-image-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-image-01"></i>
                         <span class="nds-label">Logo Bar</span>
                     </span>
                     <p class="nds-item-desc">A flexible logo strip in the bottom bar. Add <code class="nds-inline-code lang-html">nds-oncolor</code> to individual images to invert them to white on dark backgrounds.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-mobile-programming-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-mobile-programming-01"></i>
                         <span class="nds-label">Responsive Stacking</span>
                     </span>
                     <p class="nds-item-desc">The bottom bar switches from horizontal (links left, logos right) to centered vertical stacking on mobile.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-dark-mode nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-dark-mode"></i>
                         <span class="nds-label">Light and Green Variants</span>
                     </span>
                     <p class="nds-item-desc">Default light neutral background adapts to dark mode automatically. Add <code class="nds-inline-code lang-html">nds-green</code> for a dark green footer with white text and on-color button tokens.</p>

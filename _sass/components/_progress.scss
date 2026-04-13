@@ -172,8 +172,8 @@
     display: flex;
   }
 
-  &:not([data-status]) .nds-feedback .nds-icon::before {
-    content: "䆾"; // information-circle (default)
+  &:not([data-status]) .nds-feedback .nds-icon {
+    --nds-icon: var(--nds-icon-information-circle);
   }
 
   // ─── Size variants ───

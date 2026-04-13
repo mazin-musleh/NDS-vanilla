@@ -65,7 +65,7 @@
                         {%- endunless %}
                         <a class="nds-btn nds-subtle nds-indicator" href="{{ url_output }}"
                             {%- if link.target %} target="{{ link.target }}"{%- endif %}>
-                            {%- if link.icon %}<i class="hgi hgi-stroke {{ link.icon }} nds-icon"></i>{%- endif %}
+                            {%- if link.icon %}<i class="nds-icon {{ link.icon }}" aria-hidden="true"></i>{%- endif %}
                             <span class="nds-label">{{ link.label }}</span>
                         </a>
                     </li>
@@ -77,7 +77,7 @@
                             {%- for social in column.social_icons %}
                             <a class="nds-btn nds-secondary-outline nds-icon-only" href="{{ social.url }}"
                                 target="_blank" aria-label="{{ social.label }}">
-                                <i class="hgi hgi-stroke {{ social.icon }}"></i>
+                                <i class="nds-icon {{ social.icon }}" aria-hidden="true"></i>
                             </a>
                             {%- endfor %}
                         </div>

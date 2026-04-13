@@ -101,7 +101,7 @@ direction: ltr
                     <div class="demo-container">
                         <div class="state-demo">
                             <span class="nds-featured-icon">
-                                <i class="hgi hgi-stroke hgi-stars nds-icon"></i>
+                                <i class="hgi hgi-stroke hgi-stars"></i>
                             </span>
                         </div>
                     </div>
@@ -125,7 +125,7 @@ direction: ltr
                                     </div>
                                     <code class="lang-html code">
 <span class="nds-featured-icon">
-  <i class="hgi hgi-stroke hgi-stars nds-icon"></i>
+  <i class="hgi hgi-stroke hgi-stars"></i>
 </span>
                                     </code>
                                 </div>
@@ -148,28 +148,28 @@ direction: ltr
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-colors nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-colors"></i>
                         <span class="nds-label">Six Color Variants</span>
                     </span>
                     <p class="nds-item-desc">Brand, success, info, warning, error, and neutral. Each sets the background and icon color automatically through design tokens.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-resize-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-resize-01"></i>
                         <span class="nds-label">Four Sizes</span>
                     </span>
                     <p class="nds-item-desc">From 32px to 56px. Icon and padding scale proportionally through the <code class="nds-inline-code lang-html">--nds-icon-size</code> property.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-square-circle nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-square-circle"></i>
                         <span class="nds-label">Shape and Style Modifiers</span>
                     </span>
                     <p class="nds-item-desc">Rounded square by default, with circle, outline, and dark fill options that combine freely with any color and size.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-paint-board nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-paint-board"></i>
                         <span class="nds-label">Custom Color Override</span>
                     </span>
                     <p class="nds-item-desc">Set <code class="nds-inline-code lang-html">--icon-bg-color</code> and <code class="nds-inline-code lang-html">--icon-color</code> directly on the element without a variant class to create custom color pairings beyond the built-in variants.</p>

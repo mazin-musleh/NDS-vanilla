@@ -8,7 +8,7 @@ tags:
     #icon: "hgi-government"
   - label: "Most Used"
     style: "nds-green"
-    #icon: "hgi-checkmark-circle-02"
+    #icon: "nds-hgi-checkmark-circle-02"
 
 float_actions:
   class: nds-wrap

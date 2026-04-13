@@ -225,21 +225,15 @@
     // ==============================================
 
     &:is(:checked, :indeterminate)::after {
-        content: "䤈" !important;
-        font-family: "hgi-stroke-rounded" !important;
-        font-style: normal;
-        opacity: var(--hgi-icon-opacity);
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        position: relative;
-        display: flex;
+        content: "";
         width: var(--nds-input-size);
         height: var(--nds-input-size);
-        font-size: calc(var(--nds-input-size) - 4px);
-        line-height: var(--nds-input-size);
-        font-weight: 600;
         background-color: var(--controls-control-primary-checked);
-        color: var(--controls-control-primary-checked);
+        background-image: var(--nds-icon-tick-02);
+        background-size: 70% 70%;
+        background-position: center;
+        background-repeat: no-repeat;
+        color: var(--colors-base-white);
         box-shadow: 0 0 0 1px var(--controls-control-primary-checked);
         border-color: var(--background-default);
     }
@@ -298,7 +292,7 @@
     // ==============================================
 
     &:indeterminate::after {
-        content: "䗵" !important;
+        background-image: var(--nds-icon-remove-01);
     }
 
     // ==============================================

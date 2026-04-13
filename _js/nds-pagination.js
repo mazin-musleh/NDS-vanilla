@@ -436,7 +436,7 @@
         html += `
             <li class="nds-pagination-item nds-pagination-prev">
                 <button type="button" class="nds-btn nds-subtle" aria-label="Previous page"${prevDisabled}>
-                    <i class="hgi hgi-stroke hgi-arrow-right-01"></i>
+                    <i class="nds-icon nds-hgi-arrow-right-01" aria-hidden="true"></i>
                 </button>
             </li>`;
 
@@ -457,7 +457,7 @@
         html += `
             <li class="nds-pagination-item nds-pagination-next">
                 <button type="button" class="nds-btn nds-subtle" aria-label="Next page"${nextDisabled}>
-                    <i class="hgi hgi-stroke hgi-arrow-left-01"></i>
+                    <i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
                 </button>
             </li>
         </ul>`;

@@ -27,9 +27,13 @@ $all-spacers: $spacers;
 
 .nds-flex {
   display: flex;
+
   justify-content: var(--justify, flex-start);
+
   align-items: var(--align, center);
+
   gap: var(--gap, var(--spacing-xl));
+
   width: 100%;
 }
 
@@ -95,9 +99,13 @@ $all-spacers: $spacers;
 
 .nds-number-format {
   --_number-icon-size: var(--number-icon-size, 1em);
+
   display: inline-flex;
+
   align-items: baseline;
+
   line-height: normal;
+
   gap: var(--spacing-xs);
 
   @include ltr{
@@ -106,7 +114,9 @@ $all-spacers: $spacers;
 
   >.nds-icon {
     width: var(--_number-icon-size);
+
     height: var(--_number-icon-size);
+
     align-self: center;
 
     @include dark {
@@ -120,10 +130,15 @@ $all-spacers: $spacers;
 
   &[data-currency="SAR"]::after {
     content: "";
+
     display: inline-block;
+
     width: var(--_number-icon-size);
+
     height: var(--_number-icon-size);
+
     background: currentColor;
+
     mask: url('../icon/saudi-riyal.svg') no-repeat center / contain;
   }
 
@@ -162,13 +177,21 @@ $all-spacers: $spacers;
 
 :where(.nds-truncate:not([hidden])) {
   --_truncate: var(--truncate, 1);
+
   overflow: hidden;
+
   display: -webkit-box;
+
   -webkit-box-orient: vertical;
+
   -webkit-line-clamp: var(--_truncate);
+
   line-clamp: var(--_truncate);
+
   text-overflow: ellipsis;
+
   white-space: wrap;
+
   line-height: normal;
 }
 
@@ -182,6 +205,7 @@ $all-spacers: $spacers;
 // Base center alignment class (applies to all screens unless overridden)
 .nds-center {
   text-align: center !important;
+
   margin-inline: auto;
 }
 
@@ -198,14 +222,19 @@ $all-spacers: $spacers;
 
 .nds-flush {
   padding: 0 !important;
+
   margin: 0 !important;
+
   border: 0 !important;
+
   border-radius: 0 !important;
 }
 
 .nds-circle {
   clip-path: circle(50%);
+
   border-radius: 50%;
+
   aspect-ratio: 1 / 1;
 }
 
@@ -219,6 +248,7 @@ $all-spacers: $spacers;
   // Default constrained state to prevent CLS
   .nds-expandable-content {
     overflow-y: hidden;
+
     max-height: var(--max-height, 300px);
   }
 }
@@ -236,16 +266,22 @@ $all-spacers: $spacers;
 
   .nds-expand-btn {
     position: absolute;
+
     bottom: 0;
+
     z-index: 6;
+
     inset-inline-end: 0;
   }
 
   &[data-state~="expanded"] {
     .nds-expandable-content {
       max-height: 100%;
+
       padding-bottom: var(--spacing-4xl);
+
       mask-image: none;
+
       -webkit-mask-image: none;
     }
   }
@@ -254,26 +290,22 @@ $all-spacers: $spacers;
 .nds-external,
 a[target="_blank"]:not(.nds-btn, :has(>*)) {
   display: inline-flex;
+
   gap: var(--spacing-xs);
+
   align-items: center;
 
   &::after {
-    content: "䊔";
-    font-family: "hgi-stroke-rounded" !important;
-    font-style: normal;
-    opacity: var(--hgi-icon-opacity);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    position: relative;
-    display: inline-flex;
-    width: var(--_btn-FS);
-    height: var(--_btn-FS);
-    font-size: var(--_btn-FS);
-    line-height: var(--_btn-FS);
-    justify-content: center;
-    align-content: center;
-    align-items: center;
-  }
+    content: "";
+
+    display: inline-block;
+
+    width: 1em;
+    height: 1em;
+
+    background: currentColor;
+
+    mask: var(--nds-icon-link-square-02) center / contain no-repeat;  }
 
   >.nds-label {
     flex: unset !important;

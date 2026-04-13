@@ -194,28 +194,28 @@ direction: ltr
       <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1;">
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket nds-icon"></i>
+            <i class="hgi hgi-stroke hgi-plug-socket"></i>
             <span class="nds-label">Form Integration</span>
           </span>
           <p class="nds-item-desc">Auto-initializes with the forms system. Two-way binding syncs <code class="nds-inline-code lang-html">disabled</code> and <code class="nds-inline-code lang-html">required</code> states between inputs and containers.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-checkmark-circle-02 nds-icon"></i>
+            <i class="nds-icon nds-hgi-checkmark-circle-02" aria-hidden="true"></i>
             <span class="nds-label">Group Validation</span>
           </span>
           <p class="nds-item-desc">Required selection enforced on form submit. Auto-revalidates on change once an error is shown. Call <code class="nds-inline-code lang-js">NDS.Forms.clearStatus()</code> to reset.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-cursor-02 nds-icon"></i>
+            <i class="hgi hgi-stroke hgi-cursor-02"></i>
             <span class="nds-label">Visual Feedback</span>
           </span>
           <p class="nds-item-desc">Ripple effect on hover, smooth state transitions, and three sizes (SM, MD, LG) with proportional scaling.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layout-01 nds-icon"></i>
+            <i class="hgi hgi-stroke hgi-layout-01"></i>
             <span class="nds-label">Responsive Layout</span>
           </span>
           <p class="nds-item-desc">Column layout by default, row layout with nds-rowView class. Gaps adjust on mobile for touch-friendly spacing.</p>

@@ -54,7 +54,7 @@ direction: ltr
                                 <ul class="nds-pagination-list">
                                     <li class="nds-pagination-item nds-pagination-prev">
                                         <button type="button" class="nds-btn nds-subtle nds-icon-only" aria-label="Previous page" disabled>
-                                            <i class="hgi hgi-stroke hgi-arrow-right-01"></i>
+                                            <i class="nds-icon nds-hgi-arrow-right-01" aria-hidden="true"></i>
                                         </button>
                                     </li>
                                     <li class="nds-pagination-item">
@@ -84,7 +84,7 @@ direction: ltr
                                     </li>
                                     <li class="nds-pagination-item nds-pagination-next">
                                         <button type="button" class="nds-btn nds-subtle nds-icon-only" aria-label="Next page">
-                                            <i class="hgi hgi-stroke hgi-arrow-left-01"></i>
+                                            <i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
                                         </button>
                                     </li>
                                 </ul>
@@ -114,7 +114,7 @@ direction: ltr
     <ul class="nds-pagination-list">
         <li class="nds-pagination-item nds-pagination-prev">
             <button type="button" class="nds-btn nds-subtle nds-icon-only" aria-label="Previous page" disabled>
-                <i class="hgi hgi-stroke hgi-arrow-right-01"></i>
+                <i class="nds-icon nds-hgi-arrow-right-01" aria-hidden="true"></i>
             </button>
         </li>
         <li class="nds-pagination-item">
@@ -144,7 +144,7 @@ direction: ltr
         </li>
         <li class="nds-pagination-item nds-pagination-next">
             <button type="button" class="nds-btn nds-subtle nds-icon-only" aria-label="Next page">
-                <i class="hgi hgi-stroke hgi-arrow-left-01"></i>
+                <i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
             </button>
         </li>
     </ul>
@@ -281,7 +281,7 @@ direction: ltr
                                 <ul class="nds-pagination-list">
                                     <li class="nds-pagination-item nds-pagination-prev">
                                         <button type="button" class="nds-btn nds-subtle nds-icon-only" aria-label="Previous page">
-                                            <i class="hgi hgi-stroke hgi-arrow-right-01"></i>
+                                            <i class="nds-icon nds-hgi-arrow-right-01" aria-hidden="true"></i>
                                         </button>
                                     </li>
                                     <li class="nds-pagination-item">
@@ -336,7 +336,7 @@ direction: ltr
                                     </li>
                                     <li class="nds-pagination-item nds-pagination-next">
                                         <button type="button" class="nds-btn nds-subtle nds-icon-only" aria-label="Next page">
-                                            <i class="hgi hgi-stroke hgi-arrow-left-01"></i>
+                                            <i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
                                         </button>
                                     </li>
                                 </ul>
@@ -367,7 +367,7 @@ direction: ltr
     <ul class="nds-pagination-list">
         <li class="nds-pagination-item nds-pagination-prev">
             <button type="button" class="nds-btn nds-subtle nds-icon-only" aria-label="Previous page">
-                <i class="hgi hgi-stroke hgi-arrow-right-01"></i>
+                <i class="nds-icon nds-hgi-arrow-right-01" aria-hidden="true"></i>
             </button>
         </li>
         <li class="nds-pagination-item">
@@ -422,7 +422,7 @@ direction: ltr
         </li>
         <li class="nds-pagination-item nds-pagination-next">
             <button type="button" class="nds-btn nds-subtle nds-icon-only" aria-label="Next page">
-                <i class="hgi hgi-stroke hgi-arrow-left-01"></i>
+                <i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
             </button>
         </li>
     </ul>
@@ -816,42 +816,42 @@ direction: ltr
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-plug-socket"></i>
                         <span class="nds-label">Auto-initialization</span>
                     </span>
                     <p class="nds-item-desc">Scans for <code class="nds-inline-code lang-html">nds-pagination</code> elements on the page. Active states, disabled buttons, and ellipsis collapse configure themselves from the markup.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-more-horizontal nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-more-horizontal"></i>
                         <span class="nds-label">Ellipsis Collapse</span>
                     </span>
                     <p class="nds-item-desc">Paginations with more than five pages automatically collapse middle pages into a dropdown menu, keeping the first three and last page visible.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layers-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-layers-01"></i>
                         <span class="nds-label">Content Pagination</span>
                     </span>
                     <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">data-auto-pagination</code> to any <code class="nds-inline-code lang-html">nds-pagination</code> after a <code class="nds-inline-code lang-html">nds-paged-content</code> container and the pagination controls, page visibility, and scroll behavior are handled automatically.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-filter nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-filter"></i>
                         <span class="nds-label">Filter-Aware Refresh</span>
                     </span>
                     <p class="nds-item-desc">When used with filtered content, call <code class="nds-inline-code lang-js">NDS.Pagination.refresh()</code> to recalculate page counts and reset to page one with only visible items.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-mobile-programming-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-mobile-programming-01"></i>
                         <span class="nds-label">Responsive Adaptation</span>
                     </span>
                     <p class="nds-item-desc">Buttons shrink on mobile viewports and content pagination watches for <code class="nds-inline-code lang-html">--per-page</code> changes on resize, rebuilding pages to match the new layout.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-api nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-api"></i>
                         <span class="nds-label">Programmatic Control</span>
                     </span>
                     <p class="nds-item-desc">Navigate to any page, refresh after content changes, or create new pagination instances through the <code class="nds-inline-code lang-js">NDS.Pagination</code> API.</p>

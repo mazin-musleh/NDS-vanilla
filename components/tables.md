@@ -350,7 +350,7 @@ direction: ltr
                                     <td>
                                         <span class="nds-feedback" data-status="success">
                                             <span class="nds-feedback-icon">
-                                                <i class="hgi hgi-stroke nds-icon"></i>
+                                                <i class="nds-icon" aria-hidden="true"></i>
                                             </span>
                                         </span>
                                     </td>
@@ -371,7 +371,7 @@ direction: ltr
                                     <td>
                                         <span class="nds-feedback" data-status="warning">
                                             <span class="nds-feedback-icon">
-                                                <i class="hgi hgi-stroke nds-icon"></i>
+                                                <i class="nds-icon" aria-hidden="true"></i>
                                             </span>
                                         </span>
                                     </td>
@@ -392,7 +392,7 @@ direction: ltr
                                     <td>
                                         <span class="nds-feedback" data-status="error">
                                             <span class="nds-feedback-icon">
-                                                <i class="hgi hgi-stroke nds-icon"></i>
+                                                <i class="nds-icon" aria-hidden="true"></i>
                                             </span>
                                         </span>
                                     </td>
@@ -413,7 +413,7 @@ direction: ltr
                                     <td>
                                         <span class="nds-feedback" data-status="info">
                                             <span class="nds-feedback-icon">
-                                                <i class="hgi hgi-stroke nds-icon"></i>
+                                                <i class="nds-icon" aria-hidden="true"></i>
                                             </span>
                                         </span>
                                     </td>
@@ -469,7 +469,7 @@ direction: ltr
       <td>
         <span class="nds-feedback" data-status="success">
           <span class="nds-feedback-icon">
-            <i class="hgi hgi-stroke nds-icon"></i>
+            <i class="nds-icon" aria-hidden="true"></i>
           </span>
         </span>
       </td>
@@ -490,7 +490,7 @@ direction: ltr
       <td>
         <span class="nds-feedback" data-status="warning">
           <span class="nds-feedback-icon">
-            <i class="hgi hgi-stroke nds-icon"></i>
+            <i class="nds-icon" aria-hidden="true"></i>
           </span>
         </span>
       </td>
@@ -511,7 +511,7 @@ direction: ltr
       <td>
         <span class="nds-feedback" data-status="error">
           <span class="nds-feedback-icon">
-            <i class="hgi hgi-stroke nds-icon"></i>
+            <i class="nds-icon" aria-hidden="true"></i>
           </span>
         </span>
       </td>
@@ -532,7 +532,7 @@ direction: ltr
       <td>
         <span class="nds-feedback" data-status="info">
           <span class="nds-feedback-icon">
-            <i class="hgi hgi-stroke nds-icon"></i>
+            <i class="nds-icon" aria-hidden="true"></i>
           </span>
         </span>
       </td>
@@ -1174,7 +1174,7 @@ direction: ltr
                     <div class="state-demo">
                         <div class="nds-dropmenu nds-filter" data-filter-target="paginatedTableBody">
                             <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
-                                <i class="hgi hgi-stroke hgi-filter nds-icon"></i>
+                                <i class="hgi hgi-stroke hgi-filter"></i>
                                 <span class="nds-label">Filter</span>
                             </button>
                             <div class="nds-dropmenu-menu" hidden>
@@ -1286,7 +1286,7 @@ direction: ltr
 <div class="nds-filter" data-filter-target="paginatedTableBody">
   <div class="nds-dropmenu">
     <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
-      <i class="hgi hgi-stroke hgi-filter nds-icon"></i>
+      <i class="hgi hgi-stroke hgi-filter"></i>
       <span class="nds-label">Filter</span>
     </button>
     <div class="nds-dropmenu-menu" hidden>
@@ -1413,56 +1413,56 @@ direction: ltr
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-plug-socket"></i>
                         <span class="nds-label">Auto-initialization</span>
                     </span>
                     <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">.nds-table</code> on the page is automatically wrapped in a responsive scroll container with gradient fade masks.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-sorting-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-sorting-01"></i>
                         <span class="nds-label">Column Sorting</span>
                     </span>
                     <p class="nds-item-desc">Columns cycle through ascending, descending, and original order. Numbers, dates, and text are detected and sorted appropriately.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-checkmark-square-02 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-checkmark-square-02"></i>
                         <span class="nds-label">Row Selection</span>
                     </span>
                     <p class="nds-item-desc">Header checkbox toggles all rows with indeterminate state support. Selected rows receive a distinct background highlight that persists across striped rows.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-scroll-horizontal nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-scroll-horizontal"></i>
                         <span class="nds-label">Scroll Awareness</span>
                     </span>
                     <p class="nds-item-desc">Gradient masks appear on the overflow edges, updating as the user scrolls to indicate more content in either direction.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-keyboard nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-keyboard"></i>
                         <span class="nds-label">Keyboard Accessible</span>
                     </span>
                     <p class="nds-item-desc">Sort headers are focusable buttons that respond to Enter and Space. Interactive elements within cells receive visible focus rings.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layout-table-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-layout-table-01"></i>
                         <span class="nds-label">Striped Rows</span>
                     </span>
                     <p class="nds-item-desc">Alternating row backgrounds and hover highlighting are applied automatically for easier scanning of large datasets.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-loading-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-loading-01"></i>
                         <span class="nds-label">Loading State</span>
                     </span>
                     <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">data-state="loading"</code> to show a shimmer animation across all cells while data is being fetched.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-api nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-api"></i>
                         <span class="nds-label">Programmatic Control</span>
                     </span>
                     <p class="nds-item-desc">Access sort state, reset sorting, and reinitialize tables after dynamic content changes through the <code class="nds-inline-code lang-js">NDS.Tables</code> namespace.</p>

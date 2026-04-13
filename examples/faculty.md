@@ -27,28 +27,28 @@ sidemenu_mode: top
             <dl class="nds-definition-list nds-tableView nds-divided" style="--max-col:4;--mid-col:2;--min-col:2;">
                 <div class="nds-definition-item">
                     <dt>
-                        <i class="hgi hgi-stroke hgi-school nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-school"></i>
                         <span class="nds-label">College</span>
                     </dt>
                     <dd>College of Computer and Information Sciences</dd>
                 </div>
                 <div class="nds-definition-item">
                     <dt>
-                        <i class="hgi hgi-stroke hgi-building-02 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-building-02"></i>
                         <span class="nds-label">Department</span>
                     </dt>
                     <dd>Department of Computer Science</dd>
                 </div>
                 <div class="nds-definition-item">
                     <dt>
-                        <i class="hgi hgi-stroke hgi-book-open-02 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-book-open-02"></i>
                         <span class="nds-label">General Specialization</span>
                     </dt>
                     <dd>Computer Science</dd>
                 </div>
                 <div class="nds-definition-item">
                     <dt>
-                        <i class="hgi hgi-stroke hgi-book-02 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-book-02"></i>
                         <span class="nds-label">Specific Specialization</span>
                     </dt>
                     <dd>Artificial Intelligence and Machine Learning</dd>
@@ -89,7 +89,7 @@ sidemenu_mode: top
                     </button>
                 </nav>
                 <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more">
-                    <i class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i>
+                    <i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
                 </button>
             </div>
             <div class="nds-tab-content">

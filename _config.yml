@@ -2,6 +2,11 @@ title: National Design System
 description: The National Design System provides comprehensive design guidelines, components, and resources for creating consistent and accessible digital experiences across government services in Saudi Arabia.
 baseurl: "/_site"
 
+# HGI icon font from CDN: loads the font site-wide when true so any
+# `<i class="hgi hgi-stroke hgi-NAME">` markup in content/demo/doc pages renders.
+# Chrome tier-1 icons always render via mask-image regardless.
+use_hgi_font: true
+
 # Jekyll server settings
 port: 4002
 host: 0.0.0.0  # Allow network access for mobile testing
@@ -102,6 +107,7 @@ exclude:
   - .claude
   - package.json
   - package-lock.json
+  - scripts
   - notes.txt
   - nul
   - NUL

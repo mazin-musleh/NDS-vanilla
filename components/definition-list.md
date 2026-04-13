@@ -87,28 +87,28 @@ direction: ltr
                             <dl class="nds-definition-list">
                                 <div class="nds-definition-item">
                                     <dt>
-                                        <i class="hgi hgi-stroke hgi-user-account nds-icon"></i>
+                                        <i class="hgi hgi-stroke hgi-user-account"></i>
                                         <span class="nds-label">Full Name</span>
                                     </dt>
                                     <dd>Mohammed Al-Harbi</dd>
                                 </div>
                                 <div class="nds-definition-item">
                                     <dt>
-                                        <i class="hgi hgi-stroke hgi-building-02 nds-icon"></i>
+                                        <i class="hgi hgi-stroke hgi-building-02"></i>
                                         <span class="nds-label">Organization</span>
                                     </dt>
                                     <dd>Digital Services Department</dd>
                                 </div>
                                 <div class="nds-definition-item">
                                     <dt>
-                                        <i class="hgi hgi-stroke hgi-briefcase-02 nds-icon"></i>
+                                        <i class="hgi hgi-stroke hgi-briefcase-02"></i>
                                         <span class="nds-label">Position</span>
                                     </dt>
                                     <dd>Senior Developer</dd>
                                 </div>
                                 <div class="nds-definition-item">
                                     <dt>
-                                        <i class="hgi hgi-stroke hgi-location-01 nds-icon"></i>
+                                        <i class="nds-icon nds-hgi-location-01" aria-hidden="true"></i>
                                         <span class="nds-label">Location</span>
                                     </dt>
                                     <dd>Riyadh</dd>
@@ -139,28 +139,28 @@ direction: ltr
 <dl class="nds-definition-list">
   <div class="nds-definition-item">
     <dt>
-      <i class="hgi hgi-stroke hgi-user-account nds-icon"></i>
+      <i class="hgi hgi-stroke hgi-user-account"></i>
       <span class="nds-label">Full Name</span>
     </dt>
     <dd>Mohammed Al-Harbi</dd>
   </div>
   <div class="nds-definition-item">
     <dt>
-      <i class="hgi hgi-stroke hgi-building-02 nds-icon"></i>
+      <i class="hgi hgi-stroke hgi-building-02"></i>
       <span class="nds-label">Organization</span>
     </dt>
     <dd>Digital Services Department</dd>
   </div>
   <div class="nds-definition-item">
     <dt>
-      <i class="hgi hgi-stroke hgi-briefcase-02 nds-icon"></i>
+      <i class="hgi hgi-stroke hgi-briefcase-02"></i>
       <span class="nds-label">Position</span>
     </dt>
     <dd>Senior Developer</dd>
   </div>
   <div class="nds-definition-item">
     <dt>
-      <i class="hgi hgi-stroke hgi-location-01 nds-icon"></i>
+      <i class="nds-icon nds-hgi-location-01" aria-hidden="true"></i>
       <span class="nds-label">Location</span>
     </dt>
     <dd>Riyadh</dd>
@@ -223,28 +223,28 @@ direction: ltr
                             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                                 <div class="nds-definition-item">
                                     <span class="nds-item-title">
-                                        <i class="hgi hgi-stroke hgi-checkmark-circle-02 nds-icon"></i>
+                                        <i class="nds-icon nds-hgi-checkmark-circle-02" aria-hidden="true"></i>
                                         <span class="nds-label">Accessibility</span>
                                     </span>
                                     <p class="nds-item-desc">WCAG 2.1 compliant with full keyboard navigation and screen reader support.</p>
                                 </div>
                                 <div class="nds-definition-item">
                                     <span class="nds-item-title">
-                                        <i class="hgi hgi-stroke hgi-shield-01 nds-icon"></i>
+                                        <i class="hgi hgi-stroke hgi-shield-01"></i>
                                         <span class="nds-label">Security</span>
                                     </span>
                                     <p class="nds-item-desc">Built-in XSS protection and content security policy headers.</p>
                                 </div>
                                 <div class="nds-definition-item">
                                     <span class="nds-item-title">
-                                        <i class="hgi hgi-stroke hgi-clock-01 nds-icon"></i>
+                                        <i class="nds-icon nds-hgi-clock-01" aria-hidden="true"></i>
                                         <span class="nds-label">Performance</span>
                                     </span>
                                     <p class="nds-item-desc">Lazy loading and staggered initialization for fast page loads.</p>
                                 </div>
                                 <div class="nds-definition-item">
                                     <span class="nds-item-title">
-                                        <i class="hgi hgi-stroke hgi-star nds-icon"></i>
+                                        <i class="hgi hgi-stroke hgi-star"></i>
                                         <span class="nds-label">Theming</span>
                                     </span>
                                     <p class="nds-item-desc">CSS custom properties for full visual customization without overrides.</p>
@@ -275,28 +275,28 @@ direction: ltr
 <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap:24px; --col-gap:32px;">
   <div class="nds-definition-item">
     <span class="nds-item-title">
-      <i class="hgi hgi-stroke hgi-checkmark-circle-02 nds-icon"></i>
+      <i class="nds-icon nds-hgi-checkmark-circle-02" aria-hidden="true"></i>
       <span class="nds-label">Accessibility</span>
     </span>
     <p class="nds-item-desc">WCAG 2.1 compliant with full keyboard navigation and screen reader support.</p>
   </div>
   <div class="nds-definition-item">
     <span class="nds-item-title">
-      <i class="hgi hgi-stroke hgi-shield-01 nds-icon"></i>
+      <i class="hgi hgi-stroke hgi-shield-01"></i>
       <span class="nds-label">Security</span>
     </span>
     <p class="nds-item-desc">Built-in XSS protection and content security policy headers.</p>
   </div>
   <div class="nds-definition-item">
     <span class="nds-item-title">
-      <i class="hgi hgi-stroke hgi-clock-01 nds-icon"></i>
+      <i class="nds-icon nds-hgi-clock-01" aria-hidden="true"></i>
       <span class="nds-label">Performance</span>
     </span>
     <p class="nds-item-desc">Lazy loading and staggered initialization for fast page loads.</p>
   </div>
   <div class="nds-definition-item">
     <span class="nds-item-title">
-      <i class="hgi hgi-stroke hgi-star nds-icon"></i>
+      <i class="hgi hgi-stroke hgi-star"></i>
       <span class="nds-label">Theming</span>
     </span>
     <p class="nds-item-desc">CSS custom properties for full visual customization without overrides.</p>
@@ -324,42 +324,42 @@ direction: ltr
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layout-table-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-layout-table-01"></i>
                         <span class="nds-label">Table View Layout</span>
                     </span>
                     <p class="nds-item-desc">Two-column grid with CSS subgrid for perfect alignment across all term-definition pairs.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-smartphone-wifi nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-smartphone-wifi"></i>
                         <span class="nds-label">Responsive Table View</span>
                     </span>
                     <p class="nds-item-desc">Breakpoint variants let you choose when the table view activates: mobile only, tablet and up, or desktop and up.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-border-all-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-border-all-01"></i>
                         <span class="nds-label">Divided Borders</span>
                     </span>
                     <p class="nds-item-desc">Optional border separators between items. Works in both default and table view layouts, including responsive variants.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-grid-view nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-grid-view"></i>
                         <span class="nds-label">Grid Layout</span>
                     </span>
                     <p class="nds-item-desc">Multi-column responsive grid with configurable breakpoints via --max-col, --mid-col, and --min-col properties.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-paint-board nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-paint-board"></i>
                         <span class="nds-label">CSS Custom Properties</span>
                     </span>
                     <p class="nds-item-desc">Control icon size, gap, title font size, and row spacing through custom properties without overriding styles.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-text-indent nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-text-indent"></i>
                         <span class="nds-label">Automatic Icon Indent</span>
                     </span>
                     <p class="nds-item-desc">Descriptions auto-indent to align with the label text when icons are present in stacked layout.</p>

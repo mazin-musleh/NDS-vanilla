@@ -316,28 +316,28 @@ direction: ltr
       <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1;">
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket nds-icon"></i>
+            <i class="hgi hgi-stroke hgi-plug-socket"></i>
             <span class="nds-label">Form Integration</span>
           </span>
           <p class="nds-item-desc">Auto-initializes with the forms system. Two-way binding syncs <code class="nds-inline-code lang-html">disabled</code> state between inputs and containers. Use <code class="nds-inline-code lang-html">data-state="disabled"</code> on the group to disable all switches at once.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-cursor-02 nds-icon"></i>
+            <i class="hgi hgi-stroke hgi-cursor-02"></i>
             <span class="nds-label">Visual Feedback</span>
           </span>
           <p class="nds-item-desc">Ripple effect on hover, thumb stretch on press, and smooth slide animation. Three sizes (SM, MD, LG) with proportional scaling.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-keyboard nds-icon"></i>
+            <i class="hgi hgi-stroke hgi-keyboard"></i>
             <span class="nds-label">Keyboard Support</span>
           </span>
           <p class="nds-item-desc">Space and Enter keys toggle the switch. Track click, label click, and keyboard all fire the <code class="nds-inline-code lang-js">switchChange</code> event.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layout-01 nds-icon"></i>
+            <i class="hgi hgi-stroke hgi-layout-01"></i>
             <span class="nds-label">Responsive Layout</span>
           </span>
           <p class="nds-item-desc">Column layout by default, row layout with <code class="nds-inline-code lang-html">nds-rowView</code> class. Gaps adjust on mobile for touch-friendly spacing.</p>

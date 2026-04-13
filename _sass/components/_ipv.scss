@@ -13,25 +13,20 @@
 .nds-ipv-image-card {
 
   &.showZoom::before {
-    font-style: normal;
-    -webkit-font-smoothing: antialiased;
+    content: "";
     position: absolute;
-    color: rgb(255, 255, 255);
     z-index: 999;
-    font-size: 1.5rem;
     inset-block-end: 8px;
     inset-inline-end: 8px;
-    content: "䪷";
-    line-height: normal;
-    text-shadow: rgba(22, 22, 22, 0.5) 1px 1px 3px;
-    pointer-events: none;
-    background-color: rgba(0, 0, 0, 0.3);
     width: 32px;
     height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: hgi-stroke-rounded !important;
+    background-color: rgba(0, 0, 0, 0.3);
+    background-image: var(--nds-icon-zoom-in-area);
+    background-size: 24px 24px;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: rgb(255, 255, 255);
+    pointer-events: none;
     border-radius: 8px;
   }
 

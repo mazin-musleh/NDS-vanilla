@@ -77,7 +77,7 @@ primary_nav:
 # ──────────────────────────────────────────────────────────────
 secondary_nav:
   - label: "Search"
-    icon: "hgi-search-01"
+    icon: "nds-hgi-search-01"
     button_style: "nds-nav-link nds-btn nds-subtle nds-indicator"
     custom_class: "nds-icon-only nds-search nds-PAB"
 
@@ -85,7 +85,7 @@ secondary_nav:
     type: "dropdown"
 
   - label: "Notifications"
-    icon: "hgi-notification-02"
+    icon: "nds-hgi-notification-02"
     custom_class: "nds-icon-only nds-PAB"
     button_style: "nds-nav-link nds-btn nds-subtle nds-indicator"
     badge: "3"
@@ -98,18 +98,18 @@ secondary_nav:
     content_limit: 3
     items:
       - label: "View all notifications"
-        icon: "hgi-notification-02"
+        icon: "nds-hgi-notification-02"
         url: "/notifications"
 
   - label: "Login"
-    icon: "hgi-user"
+    icon: "nds-hgi-user"
     custom_class: "nds-icon-only nds-guest"
     template: "mainnav-login.html"
     type: "dropdown"
     content_class: "nds-fit"
 
   - label: "Ahmed"
-    icon: "hgi-user"
+    icon: "nds-hgi-user"
     avatar: true
     img_icon: "assets/img/avatar3.png"
     custom_class: "nds-login nds-icon-only nds-auth"
@@ -121,12 +121,12 @@ secondary_nav:
     attr: "hidden"
 
   - label: "Toggle theme"
-    icon: "hgi-moon-02"
+    icon: "nds-hgi-moon-02"
     custom_class: "nds-icon-only"
     id: "ndsThemeToggle"
 
   - label: "English"
-    icon: "hgi-translation"
+    icon: "nds-hgi-translation"
     custom_class: "nds-icon-only lang"
     id: "langToggleBtn"
 

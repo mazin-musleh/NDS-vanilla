@@ -149,7 +149,7 @@
         }
 
         if (content) {
-            const html = `<i class="hgi hgi-stroke hgi-calendar-03 nds-icon"></i><span class="text">${content}</span>`;
+            const html = `<i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"></i><span class="text">${content}</span>`;
             el.innerHTML = html;
             el.style.display = '';
             
@@ -171,7 +171,7 @@
         const s = now.getSeconds();
         const time = `${h % 12 || 12}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')} ${h >= 12 ? 'PM' : 'AM'}`;
         
-        el.innerHTML = `<i class="hgi hgi-stroke hgi-clock-01 nds-icon"></i><span class="text">${time}</span>`;
+        el.innerHTML = `<i class="nds-icon nds-hgi-clock-01" aria-hidden="true"></i><span class="text">${time}</span>`;
     }
 
 

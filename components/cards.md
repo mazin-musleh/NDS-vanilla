@@ -154,11 +154,11 @@ direction: ltr
                                     </div>
                                     <div class="nds-card-featured-icon">
                                         <span class="nds-featured-icon nds-circle nds-lg">
-                                            <i class="hgi hgi-stroke hgi-stars nds-icon"></i>
+                                            <i class="hgi hgi-stroke hgi-stars"></i>
                                         </span>
                                     </div>
                                     <div class="nds-avatar nds-xl" hidden>
-                                        <i class="hgi hgi-stroke hgi-user nds-icon"></i>
+                                        <i class="nds-icon nds-hgi-user" aria-hidden="true"></i>
                                     </div>
                                     <div class="nds-card-checkbox" hidden>
                                         <div class="nds-form-container nds-check-container">
@@ -199,7 +199,7 @@ direction: ltr
                                 </div>
                                 <div class="nds-card-actions" hidden>
                                     <a href="#" class="nds-btn nds-secondary-outline nds-lg nds-trail-icon">
-                                        <i class="hgi hgi-stroke hgi-link-square-02 nds-icon"></i>
+                                        <i class="nds-icon nds-hgi-link-square-02" aria-hidden="true"></i>
                                         <span class="nds-label">Learn More</span>
                                     </a>
                                 </div>
@@ -230,7 +230,7 @@ direction: ltr
     <div class="nds-card-header">
         <div class="nds-card-featured-icon">
             <span class="nds-featured-icon nds-circle nds-lg">
-                <i class="hgi hgi-stroke hgi-stars nds-icon"></i>
+                <i class="hgi hgi-stroke hgi-stars"></i>
             </span>
         </div>
     </div>
@@ -329,7 +329,7 @@ direction: ltr
                                 <div class="nds-card-header">
                                     <div class="nds-card-featured-icon">
                                         <span class="nds-featured-icon nds-circle nds-xl">
-                                            <i class="hgi hgi-stroke hgi-user nds-icon"></i>
+                                            <i class="nds-icon nds-hgi-user" aria-hidden="true"></i>
                                         </span>
                                     </div>
                                 </div>
@@ -365,7 +365,7 @@ direction: ltr
     <div class="nds-card-header">
         <div class="nds-card-featured-icon">
             <span class="nds-featured-icon nds-circle nds-xl">
-                <i class="hgi hgi-stroke hgi-user nds-icon"></i>
+                <i class="nds-icon nds-hgi-user" aria-hidden="true"></i>
             </span>
         </div>
     </div>
@@ -420,7 +420,7 @@ direction: ltr
                                     <div class="nds-card-header">
                                         <div class="nds-card-featured-icon">
                                             <span class="nds-featured-icon nds-circle nds-xl">
-                                                <i class="hgi hgi-stroke hgi-user-multiple nds-icon"></i>
+                                                <i class="hgi hgi-stroke hgi-user-multiple"></i>
                                             </span>
                                         </div>
                                     </div>
@@ -435,7 +435,7 @@ direction: ltr
                                     <div class="nds-card-header">
                                         <div class="nds-card-featured-icon">
                                             <span class="nds-featured-icon nds-circle nds-xl">
-                                                <i class="hgi hgi-stroke hgi-checkmark-circle-02 nds-icon"></i>
+                                                <i class="nds-icon nds-hgi-checkmark-circle-02" aria-hidden="true"></i>
                                             </span>
                                         </div>
                                     </div>
@@ -450,7 +450,7 @@ direction: ltr
                                     <div class="nds-card-header">
                                         <div class="nds-card-featured-icon">
                                             <span class="nds-featured-icon nds-circle nds-xl">
-                                                <i class="hgi hgi-stroke hgi-star nds-icon"></i>
+                                                <i class="hgi hgi-stroke hgi-star"></i>
                                             </span>
                                         </div>
                                     </div>
@@ -465,7 +465,7 @@ direction: ltr
                                     <div class="nds-card-header">
                                         <div class="nds-card-featured-icon">
                                             <span class="nds-featured-icon nds-circle nds-xl">
-                                                <i class="hgi hgi-stroke hgi-queue-01 nds-icon"></i>
+                                                <i class="hgi hgi-stroke hgi-queue-01"></i>
                                             </span>
                                         </div>
                                     </div>
@@ -504,7 +504,7 @@ direction: ltr
         <div class="nds-card-header">
             <div class="nds-card-featured-icon">
                 <span class="nds-featured-icon nds-circle nds-xl">
-                    <i class="hgi hgi-stroke hgi-user-multiple nds-icon"></i>
+                    <i class="hgi hgi-stroke hgi-user-multiple"></i>
                 </span>
             </div>
         </div>
@@ -540,42 +540,42 @@ direction: ltr
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-customize nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-customize"></i>
                         <span class="nds-label">CSS Custom Properties</span>
                     </span>
                     <p class="nds-item-desc">Override padding, gap, colors, border, and width through CSS variables on any card instance.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layout-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-layout-01"></i>
                         <span class="nds-label">Responsive Layout</span>
                     </span>
                     <p class="nds-item-desc">Card actions stack vertically on mobile. Use nds-grid for responsive multi-card layouts.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-puzzle nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-puzzle"></i>
                         <span class="nds-label">Flexible Structure</span>
                     </span>
                     <p class="nds-item-desc">Mix and match header, content, meta, tags, rating, checkbox, and action sub-components.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layers-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-layers-01"></i>
                         <span class="nds-label">Shared Foundation</span>
                     </span>
                     <p class="nds-item-desc">Used as the base structure for alerts, modals, and other container components across the design system.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-image-02 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-image-02"></i>
                         <span class="nds-label">Image Control</span>
                     </span>
                     <p class="nds-item-desc">Set aspect ratio, position, and overlay opacity through CSS custom properties on the image container.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-cursor-02 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-cursor-02"></i>
                         <span class="nds-label">Interactive States</span>
                     </span>
                     <p class="nds-item-desc">Hover and active feedback on shadow and stroke variants. Works on div, anchor, or button elements.</p>

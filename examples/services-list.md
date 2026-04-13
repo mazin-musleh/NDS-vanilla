@@ -19,23 +19,21 @@ exclude_showcase: false
             data-query-param="q">
             <div class="nds-search-content">
                 <div class="nds-form-control">
-                    <i class="hgi hgi-stroke hgi-search-01 nds-icon"></i>
+                    <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
                     <input id="filterSearch" type="text" class="nds-search-input" name="search" autocomplete="on"
                         placeholder="Search in services...">
                     <div class="nds-form-action">
-                        <button class="nds-btn nds-subtle nds-clear" hidden><i
-                                class="hgi hgi-stroke hgi-cancel-01 nds-icon"></i></button>
-                        <button class="nds-btn nds-subtle nds-voice-input"><i
-                                class="hgi hgi-stroke hgi-mic-01 nds-icon"></i></button>
+                        <button class="nds-btn nds-subtle nds-clear" hidden><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
+                        <button class="nds-btn nds-subtle nds-voice-input"><i class="nds-icon nds-hgi-mic-01" aria-hidden="true"></i></button>
                     </div>
                 </div>
                 <button class="nds-btn nds-primary nds-search-btn" type="button">
-                    <i class="hgi hgi-stroke hgi-search-01 nds-icon"></i>
+                    <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
                     <span class="nds-label">Search</span>
                 </button>
                 <div class="nds-dropmenu nds-filter" data-filter-target="services_list_content">
                     <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
-                        <i class="hgi hgi-stroke hgi-filter nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-filter"></i>
                         <span class="nds-label">Filter</span>
                     </button>
                     <div class="nds-dropmenu-menu" style="min-width: 300px;" hidden>

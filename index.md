@@ -41,7 +41,7 @@ direction: ltr
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
                                 <span class="nds-featured-icon nds-circle nds-xl">
-                                    <i class="hgi hgi-stroke hgi-menu-square nds-icon"></i>
+                                    <i class="hgi hgi-stroke hgi-menu-square"></i>
                                 </span>
                             </div>
                         </div>
@@ -64,7 +64,7 @@ direction: ltr
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
                                 <span class="nds-featured-icon nds-circle nds-xl">
-                                    <i class="hgi hgi-stroke hgi-dashboard-browsing nds-icon"></i>
+                                    <i class="hgi hgi-stroke hgi-dashboard-browsing"></i>
                                 </span>
                             </div>
                         </div>
@@ -87,7 +87,7 @@ direction: ltr
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
                                 <span class="nds-featured-icon nds-circle nds-xl">
-                                    <i class="hgi hgi-stroke hgi-file-validation nds-icon"></i>
+                                    <i class="hgi hgi-stroke hgi-file-validation"></i>
                                 </span>
                             </div>
                         </div>
@@ -110,7 +110,7 @@ direction: ltr
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
                                 <span class="nds-featured-icon nds-circle nds-xl">
-                                    <i class="hgi hgi-stroke hgi-school nds-icon"></i>
+                                    <i class="hgi hgi-stroke hgi-school"></i>
                                 </span>
                             </div>
                         </div>
@@ -133,7 +133,7 @@ direction: ltr
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
                                 <span class="nds-featured-icon nds-circle nds-xl">
-                                    <i class="hgi hgi-stroke hgi-grid-view nds-icon"></i>
+                                    <i class="hgi hgi-stroke hgi-grid-view"></i>
                                 </span>
                             </div>
                         </div>
@@ -156,7 +156,7 @@ direction: ltr
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
                                 <span class="nds-featured-icon nds-circle nds-xl">
-                                    <i class="hgi hgi-stroke hgi-alert-02 nds-icon"></i>
+                                    <i class="hgi hgi-stroke hgi-alert-02"></i>
                                 </span>
                             </div>
                         </div>
@@ -178,11 +178,9 @@ direction: ltr
             <div class="nds-swiper-navigation">
                 <div class="nds-swiper-buttons">
                     <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-swiper-button-prev"
-                        type="button" aria-label="Previous slide"><i
-                            class="hgi hgi-stroke hgi-arrow-right-01 nds-icon"></i></button>
+                        type="button" aria-label="Previous slide"><i class="nds-icon nds-hgi-arrow-right-01" aria-hidden="true"></i></button>
                     <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-swiper-button-next"
-                        type="button" aria-label="Next slide"><i
-                            class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i></button>
+                        type="button" aria-label="Next slide"><i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i></button>
                 </div>
                 <div class="nds-swiper-pagination"></div>
             </div>
@@ -200,21 +198,20 @@ direction: ltr
         <div class="nds-form-container nds-search-box" data-filter-target="components_list">
             <div class="nds-search-content">
                 <div class="nds-form-control">
-                    <i class="hgi hgi-stroke hgi-search-01 nds-icon"></i>
+                    <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
                     <input id="componentSearch" type="text" class="nds-search-input" name="search" autocomplete="off"
                         placeholder="Search components...">
                     <div class="nds-form-action">
-                        <button class="nds-btn nds-subtle nds-clear" hidden><i
-                                class="hgi hgi-stroke hgi-cancel-01 nds-icon"></i></button>
+                        <button class="nds-btn nds-subtle nds-clear" hidden><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
                     </div>
                 </div>
                 <button class="nds-btn nds-primary nds-search-btn" type="button">
-                    <i class="hgi hgi-stroke hgi-search-01 nds-icon"></i>
+                    <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
                     <span class="nds-label">Search</span>
                 </button>
                 <div class="nds-dropmenu nds-filter" data-filter-target="components_list">
                     <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
-                        <i class="hgi hgi-stroke hgi-filter nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-filter"></i>
                         <span class="nds-label">Filter</span>
                     </button>
                     <div class="nds-dropmenu-menu" style="min-width: 300px;" hidden>
@@ -295,56 +292,56 @@ direction: ltr
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:32px; --dl-title-FS: var(--nds-text-xl-FS); --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-plug-socket"></i>
                         <span class="nds-label">Zero Dependencies</span>
                     </span>
                     <p class="nds-item-desc">No Bootstrap, Tailwind, jQuery, or framework runtime. The output is plain HTML, CSS, and JavaScript that works in any environment. No conflicts with existing scripts or stylesheets. Drop it into any project regardless of tech stack.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-cpu-charge nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-cpu-charge"></i>
                         <span class="nds-label">Smart Component Loader</span>
                     </span>
                     <p class="nds-item-desc">A single DOM sweep on page load detects which components are present and initializes them in priority order. The rest remain idle with zero runtime cost. Resources are only allocated for what the page actually uses.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-arrow-data-transfer-horizontal nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-arrow-data-transfer-horizontal"></i>
                         <span class="nds-label">RTL/LTR Native</span>
                     </span>
                     <p class="nds-item-desc">Built with CSS Logical Properties from the start. Margins, paddings, borders, and positions adapt automatically. No separate RTL stylesheet. No overrides. Switch direction with a single HTML attribute.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-paint-brush-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-paint-brush-01"></i>
                         <span class="nds-label">3-Tier Design Tokens</span>
                     </span>
                     <p class="nds-item-desc">Color tokens, semantic tokens, and component tokens, all defined as CSS custom properties. Each component exposes public properties for customization while keeping internal styles private, no overrides needed.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-zap nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-zap"></i>
                         <span class="nds-label">~6 KB Critical CSS (gzipped)</span>
                     </span>
                     <p class="nds-item-desc">Critical styles load immediately for instant render. The rest is deferred and loads asynchronously without blocking the page. Styles are split between critical and non-critical at the build level.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-code-circle nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-code-circle"></i>
                         <span class="nds-label">~67 KB Total JS (gzipped)</span>
                     </span>
                     <p class="nds-item-desc">The full component library in a single bundle for better compression, simpler deployment, and minimum requests. Components initialize as needed.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-chart-line-data-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-chart-line-data-01"></i>
                         <span class="nds-label">Web Vitals Compliant</span>
                     </span>
                     <p class="nds-item-desc">100% Google PageSpeed score. LCP, CLS, and INP all pass. Measured and optimized for real-world conditions. Tested across desktop and mobile on both fast and limited connections.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-dashboard-speed-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-dashboard-speed-01"></i>
                         <span class="nds-label">Sleek Animations</span>
                     </span>
                     <p class="nds-item-desc">GPU-accelerated animations with optimized scheduling deliver smooth transitions even on lower-end devices, with a native application feel. Off-screen elements are not rendered until needed.</p>
@@ -368,42 +365,42 @@ direction: ltr
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:32px; --dl-title-FS: var(--nds-text-xl-FS); --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-paint-brush-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-paint-brush-01"></i>
                         <span class="nds-label">Sass Architecture</span>
                     </span>
                     <p class="nds-item-desc">Sass with a modular file structure. Each component has its own stylesheet. Variables, mixins, and design tokens are shared across all files. Jekyll compiles and minifies everything into a single CSS output.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-code nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-code"></i>
                         <span class="nds-label">Modular JavaScript</span>
                     </span>
                     <p class="nds-item-desc">Vanilla JavaScript with one file per component, controlled by a smart loader. Only active components initialize on each page. A Ruby processor bundles and minifies using <a href="https://terser.org/" target="_blank" class="nds-primary">Terser</a>.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layout-03 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-layout-03"></i>
                         <span class="nds-label">Liquid Templates</span>
                     </span>
                     <p class="nds-item-desc">Jekyll's built-in template engine. Supports layouts, includes, partials, loops, conditions, and data binding. Pages are composed from reusable blocks with no duplicated markup.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-database nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-database"></i>
                         <span class="nds-label">YAML-Driven Data</span>
                     </span>
                     <p class="nds-item-desc">YAML files act as a flat-file database for the project. Menus, navigation, hero content, and site configuration are stored as structured data and fed into templates at build time.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-puzzle nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-puzzle"></i>
                         <span class="nds-label">Custom Plugins</span>
                     </span>
                     <p class="nds-item-desc">Custom Ruby scripts that extend Jekyll's build process. Handle JS bundling, HTML compression, baseurl resolution, and more. Each plugin is project-specific and fully editable.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-artificial-intelligence-04 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-artificial-intelligence-04"></i>
                         <span class="nds-label">AI Integration</span>
                     </span>
                     <p class="nds-item-desc">Configured for <a href="https://claude.ai/" target="_blank" class="nds-primary">Claude Code</a> AI assistant with custom skills for documentation, content creation, code review, and component auditing. The codebase is structured for effective AI-assisted development.</p>
@@ -426,7 +423,7 @@ direction: ltr
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-xl">
-                                <i class="hgi hgi-stroke hgi-package nds-icon"></i>
+                                <i class="hgi hgi-stroke hgi-package"></i>
                             </span>
                         </div>
                     </div>
@@ -446,7 +443,7 @@ direction: ltr
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-xl">
-                                <i class="hgi hgi-stroke hgi-git-fork nds-icon"></i>
+                                <i class="hgi hgi-stroke hgi-git-fork"></i>
                             </span>
                         </div>
                     </div>
@@ -466,7 +463,7 @@ direction: ltr
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-xl">
-                                <i class="hgi hgi-stroke hgi-git-pull-request nds-icon"></i>
+                                <i class="hgi hgi-stroke hgi-git-pull-request"></i>
                             </span>
                         </div>
                     </div>

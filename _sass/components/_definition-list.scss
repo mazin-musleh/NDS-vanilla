@@ -29,7 +29,7 @@
     }
 
     // Reset stacked icon indent in tableView mode
-    .nds-definition-item:has(> :is(dt, .nds-item-title) .nds-icon) :is(dd, .nds-item-desc) {
+    .nds-definition-item:has(> :is(dt, .nds-item-title) :is(.nds-icon, i)) :is(dd, .nds-item-desc) {
         padding-inline-start: 0;
     }
 }
@@ -48,7 +48,7 @@
 }
 
 @mixin dl-stacked-icon-indent {
-    .nds-definition-item:has(> :is(dt, .nds-item-title) .nds-icon) :is(dd, .nds-item-desc) {
+    .nds-definition-item:has(> :is(dt, .nds-item-title) :is(.nds-icon, i)) :is(dd, .nds-item-desc) {
         padding-inline-start: calc(var(--_dl-icon-size) + var(--_dl-icon-gap) + 2px);
     }
 }
@@ -121,7 +121,7 @@
     color: var(--text-primary-paragraph);
     margin: 0;
 
-    .nds-icon {
+    :is(.nds-icon, i) {
         color: var(--text-primary);
         min-width: var(--_dl-title-FS);
         width: var(--_dl-icon-size);

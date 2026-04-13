@@ -93,7 +93,7 @@ aside.nds-sidemenu
                                         <code class="lang-html code">
 &lt;aside class="nds-sidemenu" aria-label="Sidebar"&gt;
   &lt;button class="nds-sidemenu-toggle nds-btn nds-peek" aria-label="Sidebar Menu" hidden&gt;
-    &lt;i class="hgi hgi-stroke hgi-menu-02 nds-icon"&gt;&lt;/i&gt;
+    &lt;i class="nds-icon nds-hgi-menu-02" aria-hidden="true"&gt;&lt;/i&gt;
     &lt;span class="nds-label nds-truncate" hidden&gt;Side menu&lt;/span&gt;
   &lt;/button&gt;
   &lt;nav class="nds-drawer nds-divided nds-full-height" hidden&gt;
@@ -149,7 +149,7 @@ aside.nds-sidemenu
       &lt;/ul&gt;
     &lt;/div&gt;
     &lt;button class="nds-show-more nds-btn nds-subtle"&gt;
-      &lt;i class="hgi hgi-stroke hgi-arrow-down-01"&gt;&lt;/i&gt;
+      &lt;i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"&gt;&lt;/i&gt;
     &lt;/button&gt;
   &lt;/nav&gt;
 &lt;/aside&gt;
@@ -186,7 +186,7 @@ aside.nds-sidemenu
                             <div class="nds-alert nds-card nds-inline" data-status="info" role="alert" style="margin-top: var(--spacing-md);">
                                 <span class="nds-feedback nds-alert-icon">
                                     <span class="nds-feedback-icon">
-                                        <i class="hgi hgi-stroke nds-icon"></i>
+                                        <i class="nds-icon" aria-hidden="true"></i>
                                     </span>
                                 </span>
                                 <div class="nds-alert-content">
@@ -329,42 +329,42 @@ aside.nds-sidemenu
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-plug-socket"></i>
                         <span class="nds-label">Auto-initialization</span>
                     </span>
                     <p class="nds-item-desc">Activates when <code class="nds-inline-code lang-html">.nds-sidemenu</code> is on the page. Toggle button, close-on-click-outside, and Escape key handling all attach automatically. Accordion behavior is provided by the <a class="nds-color" href="{{ 'components/drawer' | relative_url }}">Drawer</a> component.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-target-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-target-01"></i>
                         <span class="nds-label">Active Page Tracking</span>
                     </span>
                     <p class="nds-item-desc">Set <code class="nds-inline-code lang-html">data-state="active"</code> on a menu item and all parent accordion groups expand on load so the current page is always visible.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layout-04 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-layout-04"></i>
                         <span class="nds-label">Dual Responsive Modes</span>
                     </span>
                     <p class="nds-item-desc">Choose between a slide-in sidebar panel or a top dropdown bar for mobile. Switch modes by adding <code class="nds-inline-code lang-html">nds-top</code> to the sidemenu or setting <code class="nds-inline-code lang-html">sidemenu_mode: top</code> in front matter.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-menu-02 nds-icon"></i>
+                        <i class="nds-icon nds-hgi-menu-02" aria-hidden="true"></i>
                         <span class="nds-label">Animated Accordion Groups</span>
                     </span>
                     <p class="nds-item-desc">Nested groups expand and collapse with smooth height transitions. Opening one group automatically closes its siblings.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-cursor-02 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-cursor-02"></i>
                         <span class="nds-label">Peek Toggle Button</span>
                     </span>
                     <p class="nds-item-desc">The floating toggle button reveals itself briefly on page load and reappears as the cursor approaches, giving users a visual hint without obstructing content.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-api nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-api"></i>
                         <span class="nds-label">Programmatic Control</span>
                     </span>
                     <p class="nds-item-desc">Call <code class="nds-inline-code lang-js">NDS.Sidemenu.init()</code> to re-initialize after dynamic content changes or SPA route transitions.</p>

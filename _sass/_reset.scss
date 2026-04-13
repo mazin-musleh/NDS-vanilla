@@ -142,7 +142,8 @@ table {
     border-spacing: 0;
 }
 
-address{
+address,
+.nds-icon {
     font-style: normal;
 }
 
@@ -165,12 +166,6 @@ header {
     header {
         display: contents;
     }
-}
-
-/* ── Icon font FOUT prevention ── */
-
-body[data-font-loaded*="hgi-stroke-rounded"] {
-    --hgi-icon-opacity: 1;
 }
 
 /* ========================================

@@ -1,25 +1,25 @@
 - label: "Dashboard"
-  icon: '<i class="hgi hgi-stroke hgi-dashboard-square-01 nds-icon"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-dashboard-square-01"></i>'
   url: "#"
   type: "link"
 
 - label: "My Services"
-  icon: '<i class="hgi hgi-stroke hgi-briefcase-01 nds-icon"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-briefcase-01"></i>'
   url: "#"
   type: "link"
 
 - label: "Notifications"
-  icon: '<i class="hgi hgi-stroke hgi-notification-02 nds-icon"></i>'
+  icon: '<i class="nds-icon nds-hgi-notification-02" aria-hidden="true"></i>'
   url: "#"
   type: "link"
 
 - label: "Documents"
-  icon: '<i class="hgi hgi-stroke hgi-folder-01 nds-icon"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-folder-01"></i>'
   url: "#"
   type: "link"
 
 - label: "Payments"
-  icon: '<i class="hgi hgi-stroke hgi-wallet-01 nds-icon"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-wallet-01"></i>'
   url: "#"
   type: "link"
 
@@ -27,12 +27,12 @@
   type: "divider"
 
 - label: "Profile Settings"
-  icon: '<i class="hgi hgi-stroke hgi-user-settings-01 nds-icon"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-user-settings-01"></i>'
   url: "#"
   type: "link"
 
 - label: "Help Center"
-  icon: '<i class="hgi hgi-stroke hgi-help-circle nds-icon"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-help-circle"></i>'
   url: "#"
   type: "link"
 
@@ -40,7 +40,7 @@
   type: "divider"
 
 - label: "Sign Out"
-  icon: '<i class="hgi hgi-stroke hgi-logout-03 nds-icon"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-logout-03"></i>'
   url: "#"
   type: "action"
   destructive: true

@@ -374,7 +374,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <button class="nds-btn nds-primary nds-lg nds-demo">
-                            <i class="hgi hgi-stroke hgi-plus-sign"></i>
+                            <i class="nds-icon nds-hgi-plus-sign" aria-hidden="true"></i>
                             <span class="nds-label">Add Item</span>
                         </button>
                     </div>
@@ -398,7 +398,7 @@ direction: ltr
                                     </div>
                                     <code class="lang-html code">
 <button class="nds-btn nds-primary">
-  <i class="hgi hgi-stroke hgi-plus-sign"></i>
+  <i class="nds-icon nds-hgi-plus-sign" aria-hidden="true"></i>
   <span class="nds-label">Add Item</span>
 </button>
                                     </code>
@@ -736,7 +736,7 @@ direction: ltr
                     <div class="demo-container">
                         <button class="nds-btn nds-primary nds-icon-only nds-progress nds-lg"
                             style="--progress-duration: 4000ms;" aria-label="Close">
-                            <i class="hgi hgi-stroke hgi-cancel-01"></i>
+                            <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                             <div class="nds-progress-circle" hidden>
                                 <svg width="100%" height="100%" viewBox="0 0 24 24">
                                     <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2"></circle>
@@ -755,8 +755,7 @@ direction: ltr
                                         <span class="nds-tab-label">HTML</span>
                                     </button>
                                 </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i
-                                        class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i>
+                                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
                                 </button>
                             </div>
                             <div class="nds-tab-content">
@@ -772,7 +771,7 @@ direction: ltr
 <button class="nds-btn nds-primary nds-icon-only nds-progress"
         style="--progress-duration: 4000ms;"
         aria-label="Close">
-  <i class="hgi hgi-stroke hgi-cancel-01"></i>
+  <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
   <div class="nds-progress-circle" hidden>
     <svg width="100%" height="100%" viewBox="0 0 24 24">
       <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2"></circle>
@@ -895,8 +894,7 @@ direction: ltr
                                         <span class="nds-tab-label">HTML</span>
                                     </button>
                                 </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i
-                                        class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i>
+                                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
                                 </button>
                             </div>
                             <div class="nds-tab-content">
@@ -1060,7 +1058,7 @@ btn.addEventListener('click', () => copyAction(btn));
                                 <i class="hgi hgi-stroke hgi-notification-03"><span class="nds-badge">3</span></i>
                             </button>
                             <button class="nds-btn nds-icon-only nds-subtle">
-                                <i class="hgi hgi-stroke hgi-mail-01"><span class="nds-badge">12</span></i>
+                                <i class="nds-icon nds-hgi-mail-01" aria-hidden="true"><span class="nds-badge">12</span></i>
                             </button>
                             <button class="nds-btn nds-icon-only nds-subtle">
                                 <i class="hgi hgi-stroke hgi-shopping-cart-01"><span class="nds-badge">5</span></i>
@@ -1112,42 +1110,42 @@ btn.addEventListener('click', () => copyAction(btn));
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-tag-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-tag-01"></i>
                         <span class="nds-label">Pure CSS</span>
                     </span>
                     <p class="nds-item-desc">No JavaScript required. All variants, sizes, and states render from HTML markup with design tokens.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-colors nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-colors"></i>
                         <span class="nds-label">Six Variants</span>
                     </span>
                     <p class="nds-item-desc">Primary, neutral, secondary, secondary-outline, subtle, and transparent with full state coverage.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-resize-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-resize-01"></i>
                         <span class="nds-label">Three Sizes</span>
                     </span>
                     <p class="nds-item-desc">24px to 40px. Font, icon, and indicator scale proportionally.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-cursor-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-cursor-01"></i>
                         <span class="nds-label">Layout Options</span>
                     </span>
                     <p class="nds-item-desc">Lead icon, trail icon, icon-only, label-only, circular, full-width, and loading state.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-eye nds-icon"></i>
+                        <i class="nds-icon nds-hgi-eye" aria-hidden="true"></i>
                         <span class="nds-label">Accessibility</span>
                     </span>
                     <p class="nds-item-desc">High contrast borders, reduced motion fallback, print styles, and focus-visible ring.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-puzzle nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-puzzle"></i>
                         <span class="nds-label">Composable</span>
                     </span>
                     <p class="nds-item-desc">Combine with destructive, on-color, loading, progress, status, badge, indicator, and groups.</p>

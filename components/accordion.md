@@ -114,8 +114,7 @@ direction: ltr
                                         <span class="nds-tab-label">HTML</span>
                                     </button>
                                 </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i
-                                        class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i>
+                                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
                                 </button>
                             </div>
                             <div class="nds-tab-content">
@@ -236,7 +235,7 @@ direction: ltr
                                 <h3 class="nds-accordion-header" id="accordion-icon-heading-1">
                                     <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
                                         aria-expanded="true" aria-controls="accordion-icon-collapse-1">
-                                        <i class="nds-accordion-leading-icon hgi hgi-stroke hgi-home-01"></i>
+                                        <i class="hgi hgi-stroke hgi-home-01 nds-accordion-leading-icon"></i>
                                         <span class="nds-accordion-title">Housing</span>
                                     </button>
                                 </h3>
@@ -254,7 +253,7 @@ direction: ltr
                                 <h3 class="nds-accordion-header" id="accordion-icon-heading-2">
                                     <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
                                         aria-expanded="false" aria-controls="accordion-icon-collapse-2">
-                                        <i class="nds-accordion-leading-icon hgi hgi-stroke hgi-graduation-scroll"></i>
+                                        <i class="hgi hgi-stroke hgi-graduation-scroll nds-accordion-leading-icon"></i>
                                         <span class="nds-accordion-title">Education</span>
                                     </button>
                                 </h3>
@@ -272,7 +271,7 @@ direction: ltr
                                 <h3 class="nds-accordion-header" id="accordion-icon-heading-3">
                                     <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
                                         aria-expanded="false" aria-controls="accordion-icon-collapse-3">
-                                        <i class="nds-accordion-leading-icon hgi hgi-stroke hgi-car-01"></i>
+                                        <i class="hgi hgi-stroke hgi-car-01 nds-accordion-leading-icon"></i>
                                         <span class="nds-accordion-title">Vehicles</span>
                                     </button>
                                 </h3>
@@ -296,8 +295,7 @@ direction: ltr
                                         <span class="nds-tab-label">HTML</span>
                                     </button>
                                 </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i
-                                        class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i>
+                                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
                                 </button>
                             </div>
                             <div class="nds-tab-content">
@@ -315,7 +313,7 @@ direction: ltr
         <h3 class="nds-accordion-header" id="icon-heading-1">
             <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
                 aria-expanded="true" aria-controls="icon-collapse-1">
-                <i class="nds-accordion-leading-icon hgi hgi-stroke hgi-home-01"></i>
+                <i class="hgi hgi-stroke hgi-home-01 nds-accordion-leading-icon"></i>
                 <span class="nds-accordion-title">Housing</span>
             </button>
         </h3>
@@ -331,7 +329,7 @@ direction: ltr
         <h3 class="nds-accordion-header" id="icon-heading-2">
             <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
                 aria-expanded="false" aria-controls="icon-collapse-2">
-                <i class="nds-accordion-leading-icon hgi hgi-stroke hgi-graduation-scroll"></i>
+                <i class="hgi hgi-stroke hgi-graduation-scroll nds-accordion-leading-icon"></i>
                 <span class="nds-accordion-title">Education</span>
             </button>
         </h3>
@@ -347,7 +345,7 @@ direction: ltr
         <h3 class="nds-accordion-header" id="icon-heading-3">
             <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
                 aria-expanded="false" aria-controls="icon-collapse-3">
-                <i class="nds-accordion-leading-icon hgi hgi-stroke hgi-car-01"></i>
+                <i class="hgi hgi-stroke hgi-car-01 nds-accordion-leading-icon"></i>
                 <span class="nds-accordion-title">Vehicles</span>
             </button>
         </h3>
@@ -382,42 +380,42 @@ direction: ltr
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-plug-socket"></i>
                         <span class="nds-label">Auto-initialization</span>
                     </span>
                     <p class="nds-item-desc">Activates when .nds-accordion is on the page. No JavaScript setup required.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-motion-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-motion-01"></i>
                         <span class="nds-label">Smooth Animations</span>
                     </span>
                     <p class="nds-item-desc">CSS grid transitions with automatic fallback when users prefer reduced motion.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-keyboard nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-keyboard"></i>
                         <span class="nds-label">Keyboard Navigation</span>
                     </span>
                     <p class="nds-item-desc">Arrow keys, Home, End, Enter, and Space for full keyboard control.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-api nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-api"></i>
                         <span class="nds-label">JavaScript API</span>
                     </span>
                     <p class="nds-item-desc">Public API to open, close, and toggle items. Custom events fire on state change for analytics or dependent UI.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-printer nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-printer"></i>
                         <span class="nds-label">Print-ready</span>
                     </span>
                     <p class="nds-item-desc">All panels expand automatically so no content is hidden on paper.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-eye nds-icon"></i>
+                        <i class="nds-icon nds-hgi-eye" aria-hidden="true"></i>
                         <span class="nds-label">Accessibility</span>
                     </span>
                     <p class="nds-item-desc">High contrast and screen reader support built into every state.</p>

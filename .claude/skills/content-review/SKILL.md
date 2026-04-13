@@ -28,7 +28,7 @@ Lightweight health check on any single page. Does NOT run Smart Merge (that's `/
 ### Steps
 
 1. **Read the target page**
-2. **Icon validation**: grep all `hgi-*` classes on the page, verify each exists in `_sass/_hgiRoundedStroke.scss`
+2. **Icon validation**: grep all `hgi-*` and `nds-hgi-*` classes on the page. Verify each `hgi-NAME` exists in the HGI CDN font (check `node_modules/@hugeicons/core-free-icons/dist/esm/{Pascal}Icon.js`) and each `nds-hgi-NAME` exists in `TIER_1_INLINE` of `scripts/generate-icons-scss.mjs`
 3. **Placeholder text detection**: scan for Lorem ipsum, "Sample", "Test", generic "Tag 1/2/3", "Content coming soon"
 4. **Component class validation**: grep all `nds-*` classes used, verify each exists in `_sass/components/` or `_sass/layout/`
 5. **Sidemenu registration**: check that the page has an entry in `_data/sidemenu/sidemenu.yml`
@@ -124,9 +124,11 @@ Scan all `.md` files and `_data/` YAML files for `hgi-*` icon classes and valida
 1. **Grep all files** for `hgi-` class patterns:
    - All `.md` files in `components/`, `ui-shell/`, `layout/`, `utilities/`, `examples/`, and root
    - All `.yml` files in `_data/`
-2. **Extract unique icon class names** (e.g., `hgi-search-01`, `hgi-award-03`)
-3. **Verify each** against `_sass/_hgiRoundedStroke.scss`
-4. **Report broken icons** with file locations
+2. **Extract unique icon class names** (e.g., `hgi-search-01`, `nds-hgi-award-03`)
+3. **Verify each**:
+   - `hgi-NAME` (font, used in content/demo): check `node_modules/@hugeicons/core-free-icons/dist/esm/{Pascal}Icon.js` exists
+   - `nds-hgi-NAME` (mask, used in chrome / structural): check NAME is in `TIER_1_INLINE` of `scripts/generate-icons-scss.mjs`
+4. **Report broken icons** with file locations and which mechanism the file expects
 
 ### Output
 

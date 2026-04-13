@@ -738,7 +738,7 @@
             chip.setAttribute('data-filter-value', value);
 
             const icon = document.createElement('i');
-            icon.className = 'hgi hgi-stroke hgi-cancel-01 nds-icon';
+            icon.className = 'nds-icon nds-hgi-cancel-01';
 
             const label = document.createElement('span');
             label.className = 'nds-label';
@@ -967,7 +967,7 @@
                                    searchInput.closest('.nds-search-content')?.parentElement ||
                                    searchInput.parentElement;
             const searchBtn = searchContainer?.querySelector(
-                'button.nds-search-btn, button[type="submit"], button:has(.hgi-search-01)'
+                'button.nds-search-btn, button[type="submit"], button:has(.nds-hgi-search-01)'
             );
 
             searchInput.addEventListener('input', () => {
@@ -1582,8 +1582,8 @@
         // ==============================================
 
         setupResetButton() {
-            const resetBtn = this.filterContainer.querySelector('[class*="refresh"], button:has(.hgi-refresh)');
-            const resetByIcon = this.filterContainer.querySelector('.hgi-refresh-ccw-02, .hgi-refresh');
+            const resetBtn = this.filterContainer.querySelector('[class*="refresh"], button:has(.nds-hgi-refresh)');
+            const resetByIcon = this.filterContainer.querySelector('.nds-hgi-refresh-ccw-02, .nds-hgi-refresh');
             const resetButton = resetBtn || (resetByIcon ? resetByIcon.closest('button') : null);
 
             if (resetButton) {

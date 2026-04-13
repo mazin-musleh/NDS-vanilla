@@ -67,7 +67,7 @@ direction: ltr
                                 <span class="nds-label">On Color</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["<i class=\"hgi hgi-stroke hgi-add-01 icon\"></i>", ".nds-chip", "chipIcon", "content-prepend"]'>
+                                data-toggler='["<i class=\"hgi hgi-stroke hgi-add-01\"></i>", ".nds-chip", "chipIcon", "content-prepend"]'>
                                 <span class="nds-label">Icon</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
@@ -219,28 +219,28 @@ direction: ltr
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-tag-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-tag-01"></i>
                         <span class="nds-label">Pure CSS</span>
                     </span>
                     <p class="nds-item-desc">No JavaScript required. All variants, sizes, and states render from HTML markup.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-cursor-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-cursor-01"></i>
                         <span class="nds-label">Interactive States</span>
                     </span>
                     <p class="nds-item-desc">Hover, pressed, selected, focused, and disabled with focus-visible ring.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-more-horizontal nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-more-horizontal"></i>
                         <span class="nds-label">Label Truncation</span>
                     </span>
                     <p class="nds-item-desc">Labels auto-truncate with ellipsis, configurable via --truncate.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-puzzle nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-puzzle"></i>
                         <span class="nds-label">Composable</span>
                     </span>
                     <p class="nds-item-desc">Combine with icons, rounded shape, on-color variant, and chip groups.</p>

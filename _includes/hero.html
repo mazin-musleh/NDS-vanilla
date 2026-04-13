@@ -39,27 +39,27 @@ Resolution: page front matter → data file → defaults
             <div id="nds-sharePage" class="nds-dropmenu">
                 <button id="nds-sharePageBtn" class="nds-btn nds-secondary-outline nds-dropmenu-trigger"
                     aria-label="Share Page">
-                    <i class="hgi hgi-stroke hgi-share-01 nds-icon"></i>
+                    <i class="nds-icon nds-hgi-share-01" aria-hidden="true"></i>
                     <span class="nds-label">Share Page</span>
                 </button>
                 <div id="nds-sharePage-dropdown" class="nds-dropmenu-menu" hidden>
                     <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-x" type="button" aria-label="Share on X">
-                        <i class="hgi hgi-stroke hgi-new-twitter nds-icon"></i>
+                        <i class="nds-icon nds-hgi-new-twitter" aria-hidden="true"></i>
                         <span class="nds-label">X</span>
                     </button>
                     <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-linkedin" type="button"
                         aria-label="Share on LinkedIn">
-                        <i class="hgi hgi-stroke hgi-linkedin-02 nds-icon"></i>
+                        <i class="nds-icon nds-hgi-linkedin-02" aria-hidden="true"></i>
                         <span class="nds-label">LinkedIn</span>
                     </button>
                     <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-whatsapp" type="button"
                         aria-label="Share on WhatsApp">
-                        <i class="hgi hgi-stroke hgi-whatsapp nds-icon"></i>
+                        <i class="nds-icon nds-hgi-whatsapp" aria-hidden="true"></i>
                         <span class="nds-label">WhatsApp</span>
                     </button>
                     <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-copy" type="button" aria-label="Copy Link"
                         data-copied-text="Link Copied!" data-no-auto-close>
-                        <i class="hgi hgi-stroke hgi-link-04 nds-icon"></i>
+                        <i class="nds-icon nds-hgi-link-04" aria-hidden="true"></i>
                         <span class="nds-label">Copy Link</span>
                     </button>
                 </div>
@@ -100,11 +100,11 @@ Resolution: page front matter → data file → defaults
                     aria-label="{{ item.aria_label | default: item.label }}"
                     {%- if item.target %} target="{{ item.target }}"{%- endif %}>
                     {%- if item.icon and item.icon_position != "trailing" %}
-                    <i class="hgi hgi-stroke {{ item.icon }} nds-icon"></i>
+                    <i class="nds-icon {{ item.icon }}" aria-hidden="true"></i>
                     {%- endif %}
                     <span class="nds-label">{{ item.label }}</span>
                     {%- if item.icon and item.icon_position == "trailing" %}
-                    <i class="hgi hgi-stroke {{ item.icon }} nds-icon"></i>
+                    <i class="nds-icon {{ item.icon }}" aria-hidden="true"></i>
                     {%- endif %}
                 </a>
                 {%- endif %}
@@ -117,7 +117,7 @@ Resolution: page front matter → data file → defaults
                 <div class="nds-section-tags">
                     {%- for tag in hero_tags %}
                     <span class="nds-tag {{ tag.style | default: 'nds-gray' }} {{ tag.modifiers }} nds-sm">
-                        {%- if tag.icon %}<i class="hgi hgi-stroke {{ tag.icon }} nds-icon"></i>{%- endif %}
+                        {%- if tag.icon %}<i class="nds-icon {{ tag.icon }}" aria-hidden="true"></i>{%- endif %}
                         <span class="nds-label">{{ tag.label }}</span>
                     </span>
                     {%- endfor %}
@@ -168,11 +168,11 @@ Resolution: page front matter → data file → defaults
                 aria-label="{{ action.aria_label | default: action.label }}"
                 {%- if action.target %} target="{{ action.target }}"{%- endif %}>
                 {%- if action.icon and action.icon_position != "trailing" %}
-                <i class="hgi hgi-stroke {{ action.icon }} nds-icon"></i>
+                <i class="nds-icon {{ action.icon }}" aria-hidden="true"></i>
                 {%- endif %}
                 <span class="nds-label">{{ action.label }}</span>
                 {%- if action.icon and action.icon_position == "trailing" %}
-                <i class="hgi hgi-stroke {{ action.icon }} nds-icon"></i>
+                <i class="nds-icon {{ action.icon }}" aria-hidden="true"></i>
                 {%- endif %}
             </a>
             {%- endif %}
@@ -243,11 +243,11 @@ Determine hero sliders source:
         <div class="nds-swiper-pagination"></div>
         <button class="nds-btn nds-subtle nds-oncolor nds-icon-only nds-swiper-button-prev"
             aria-label="Previous slide">
-            <i class="hgi hgi-stroke hgi-arrow-right-01 nds-icon"></i>
+            <i class="nds-icon nds-hgi-arrow-right-01" aria-hidden="true"></i>
         </button>
         <button class="nds-btn nds-subtle nds-oncolor nds-icon-only nds-swiper-button-next"
             aria-label="Next slide">
-            <i class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i>
+            <i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
         </button>
     </div>
 </section>

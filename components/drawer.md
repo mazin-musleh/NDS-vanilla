@@ -61,7 +61,7 @@ direction: ltr
                                         <li data-state="active">
                                             <a href="#" class="nds-btn nds-subtle nds-indicator">
                                                 <span class="nds-featured-icon nds-sm">
-                                                    <i class="hgi hgi-stroke hgi-home-01 nds-icon"></i>
+                                                    <i class="hgi hgi-stroke hgi-home-01"></i>
                                                 </span>
                                                 <span class="nds-label">Dashboard</span>
                                             </a>
@@ -69,7 +69,7 @@ direction: ltr
                                         <li>
                                             <button class="nds-btn nds-subtle nds-menu-btn nds-indicator" aria-expanded="false">
                                                 <span class="nds-featured-icon nds-sm">
-                                                    <i class="hgi hgi-stroke hgi-layout-grid nds-icon"></i>
+                                                    <i class="hgi hgi-stroke hgi-layout-grid"></i>
                                                 </span>
                                                 <span class="nds-label">Components</span>
                                             </button>
@@ -94,7 +94,7 @@ direction: ltr
                                         <li>
                                             <button class="nds-btn nds-subtle nds-menu-btn nds-indicator" aria-expanded="false">
                                                 <span class="nds-featured-icon nds-sm">
-                                                    <i class="hgi hgi-stroke hgi-settings-01 nds-icon"></i>
+                                                    <i class="hgi hgi-stroke hgi-settings-01"></i>
                                                 </span>
                                                 <span class="nds-label">Settings</span>
                                             </button>
@@ -114,7 +114,7 @@ direction: ltr
                                         <li>
                                             <a href="#" class="nds-btn nds-subtle nds-indicator">
                                                 <span class="nds-featured-icon nds-sm">
-                                                    <i class="hgi hgi-stroke hgi-help-circle nds-icon"></i>
+                                                    <i class="hgi hgi-stroke hgi-help-circle"></i>
                                                 </span>
                                                 <span class="nds-label">Help</span>
                                             </a>
@@ -150,7 +150,7 @@ direction: ltr
       <li data-state="active">
         <a href="#" class="nds-btn nds-subtle nds-indicator">
           <span class="nds-featured-icon nds-sm">
-            <i class="hgi hgi-stroke hgi-home-01 nds-icon"></i>
+            <i class="hgi hgi-stroke hgi-home-01"></i>
           </span>
           <span class="nds-label">Dashboard</span>
         </a>
@@ -158,7 +158,7 @@ direction: ltr
       <li>
         <button class="nds-btn nds-subtle nds-menu-btn nds-indicator" aria-expanded="false">
           <span class="nds-featured-icon nds-sm">
-            <i class="hgi hgi-stroke hgi-layout-grid nds-icon"></i>
+            <i class="hgi hgi-stroke hgi-layout-grid"></i>
           </span>
           <span class="nds-label">Components</span>
         </button>
@@ -183,7 +183,7 @@ direction: ltr
       <li>
         <button class="nds-btn nds-subtle nds-menu-btn nds-indicator" aria-expanded="false">
           <span class="nds-featured-icon nds-sm">
-            <i class="hgi hgi-stroke hgi-settings-01 nds-icon"></i>
+            <i class="hgi hgi-stroke hgi-settings-01"></i>
           </span>
           <span class="nds-label">Settings</span>
         </button>
@@ -203,7 +203,7 @@ direction: ltr
       <li>
         <a href="#" class="nds-btn nds-subtle nds-indicator">
           <span class="nds-featured-icon nds-sm">
-            <i class="hgi hgi-stroke hgi-help-circle nds-icon"></i>
+            <i class="hgi hgi-stroke hgi-help-circle"></i>
           </span>
           <span class="nds-label">Help</span>
         </a>
@@ -385,7 +385,7 @@ direction: ltr
                                         <li>
                                             <a href="#" class="nds-btn nds-subtle nds-indicator">
                                                 <span class="nds-featured-icon nds-sm">
-                                                    <i class="hgi hgi-stroke hgi-promotion nds-icon"></i>
+                                                    <i class="hgi hgi-stroke hgi-promotion"></i>
                                                 </span>
                                                 <span class="nds-label">Item 1</span>
                                             </a>
@@ -393,7 +393,7 @@ direction: ltr
                                         <li>
                                             <a href="#" class="nds-btn nds-subtle nds-indicator">
                                                 <span class="nds-featured-icon nds-sm">
-                                                    <i class="hgi hgi-stroke hgi-promotion nds-icon"></i>
+                                                    <i class="hgi hgi-stroke hgi-promotion"></i>
                                                 </span>
                                                 <span class="nds-label">Item 2</span>
                                             </a>
@@ -401,7 +401,7 @@ direction: ltr
                                         <li data-state="active">
                                             <a href="#" class="nds-btn nds-subtle nds-indicator">
                                                 <span class="nds-featured-icon nds-sm">
-                                                    <i class="hgi hgi-stroke hgi-promotion nds-icon"></i>
+                                                    <i class="hgi hgi-stroke hgi-promotion"></i>
                                                 </span>
                                                 <span class="nds-label">Item 3</span>
                                             </a>
@@ -409,7 +409,7 @@ direction: ltr
                                         <li>
                                             <a href="#" class="nds-btn nds-subtle nds-indicator">
                                                 <span class="nds-featured-icon nds-sm">
-                                                    <i class="hgi hgi-stroke hgi-promotion nds-icon"></i>
+                                                    <i class="hgi hgi-stroke hgi-promotion"></i>
                                                 </span>
                                                 <span class="nds-label">Item 4</span>
                                             </a>
@@ -417,7 +417,7 @@ direction: ltr
                                         <li>
                                             <a href="#" class="nds-btn nds-subtle nds-indicator">
                                                 <span class="nds-featured-icon nds-sm">
-                                                    <i class="hgi hgi-stroke hgi-promotion nds-icon"></i>
+                                                    <i class="hgi hgi-stroke hgi-promotion"></i>
                                                 </span>
                                                 <span class="nds-label">Item 5</span>
                                             </a>
@@ -425,7 +425,7 @@ direction: ltr
                                         <li>
                                             <a href="#" class="nds-btn nds-subtle nds-indicator">
                                                 <span class="nds-featured-icon nds-sm">
-                                                    <i class="hgi hgi-stroke hgi-promotion nds-icon"></i>
+                                                    <i class="hgi hgi-stroke hgi-promotion"></i>
                                                 </span>
                                                 <span class="nds-label">Item 6</span>
                                             </a>
@@ -434,7 +434,7 @@ direction: ltr
                                 </div>
                                 <button class="nds-show-more nds-btn nds-subtle">
                                     <span class="nds-label">Show more</span>
-                                    <i class="hgi hgi-stroke hgi-arrow-down-01"></i>
+                                    <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                                 </button>
                             </nav>
                         </div>
@@ -465,7 +465,7 @@ direction: ltr
       <li>
         <a href="#" class="nds-btn nds-subtle nds-indicator">
           <span class="nds-featured-icon nds-sm">
-            <i class="hgi hgi-stroke hgi-promotion nds-icon"></i>
+            <i class="hgi hgi-stroke hgi-promotion"></i>
           </span>
           <span class="nds-label">Item 1</span>
         </a>
@@ -473,7 +473,7 @@ direction: ltr
       <li>
         <a href="#" class="nds-btn nds-subtle nds-indicator">
           <span class="nds-featured-icon nds-sm">
-            <i class="hgi hgi-stroke hgi-promotion nds-icon"></i>
+            <i class="hgi hgi-stroke hgi-promotion"></i>
           </span>
           <span class="nds-label">Item 2</span>
         </a>
@@ -481,7 +481,7 @@ direction: ltr
       <li data-state="active">
         <a href="#" class="nds-btn nds-subtle nds-indicator">
           <span class="nds-featured-icon nds-sm">
-            <i class="hgi hgi-stroke hgi-promotion nds-icon"></i>
+            <i class="hgi hgi-stroke hgi-promotion"></i>
           </span>
           <span class="nds-label">Item 3</span>
         </a>
@@ -489,7 +489,7 @@ direction: ltr
       <li>
         <a href="#" class="nds-btn nds-subtle nds-indicator">
           <span class="nds-featured-icon nds-sm">
-            <i class="hgi hgi-stroke hgi-promotion nds-icon"></i>
+            <i class="hgi hgi-stroke hgi-promotion"></i>
           </span>
           <span class="nds-label">Item 4</span>
         </a>
@@ -497,7 +497,7 @@ direction: ltr
       <li>
         <a href="#" class="nds-btn nds-subtle nds-indicator">
           <span class="nds-featured-icon nds-sm">
-            <i class="hgi hgi-stroke hgi-promotion nds-icon"></i>
+            <i class="hgi hgi-stroke hgi-promotion"></i>
           </span>
           <span class="nds-label">Item 5</span>
         </a>
@@ -505,7 +505,7 @@ direction: ltr
       <li>
         <a href="#" class="nds-btn nds-subtle nds-indicator">
           <span class="nds-featured-icon nds-sm">
-            <i class="hgi hgi-stroke hgi-promotion nds-icon"></i>
+            <i class="hgi hgi-stroke hgi-promotion"></i>
           </span>
           <span class="nds-label">Item 6</span>
         </a>
@@ -514,7 +514,7 @@ direction: ltr
   </div>
   <button class="nds-show-more nds-btn nds-subtle">
     <span class="nds-label">Show more</span>
-    <i class="hgi hgi-stroke hgi-arrow-down-01"></i>
+    <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
   </button>
 </nav>
                                         </code>
@@ -592,7 +592,7 @@ direction: ltr
                                             </ul>
                                         </div>
                                         <button class="nds-show-more nds-btn nds-subtle">
-                                            <i class="hgi hgi-stroke hgi-arrow-down-01"></i>
+                                            <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                                         </button>
                                     </nav>
                                 </div>
@@ -605,61 +605,61 @@ direction: ltr
                                                 <li>
                                                     <a class="nds-btn nds-subtle nds-indicator" href="#">
                                                         <span class="nds-featured-icon nds-sm">
-                                                            <i class="hgi hgi-stroke hgi-link-02 nds-icon"></i>
+                                                            <i class="hgi hgi-stroke hgi-link-02"></i>
                                                         </span>
                                                         <span class="nds-label nds-truncate">Services Portal</span>
-                                                        <i class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i>
+                                                        <i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
                                                     </a>
                                                 </li>
                                                 <li>
                                                     <a class="nds-btn nds-subtle nds-indicator" href="#">
                                                         <span class="nds-featured-icon nds-sm">
-                                                            <i class="hgi hgi-stroke hgi-link-02 nds-icon"></i>
+                                                            <i class="hgi hgi-stroke hgi-link-02"></i>
                                                         </span>
                                                         <span class="nds-label nds-truncate">Laws and Regulations</span>
-                                                        <i class="hgi hgi-stroke hgi-link-square-02 nds-icon"></i>
+                                                        <i class="nds-icon nds-hgi-link-square-02" aria-hidden="true"></i>
                                                     </a>
                                                 </li>
                                                 <li>
                                                     <a class="nds-btn nds-subtle nds-indicator" href="#">
                                                         <span class="nds-featured-icon nds-sm">
-                                                            <i class="hgi hgi-stroke hgi-link-02 nds-icon"></i>
+                                                            <i class="hgi hgi-stroke hgi-link-02"></i>
                                                         </span>
                                                         <span class="nds-label nds-truncate">Careers</span>
-                                                        <i class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i>
+                                                        <i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
                                                     </a>
                                                 </li>
                                                 <li>
                                                     <a class="nds-btn nds-subtle nds-indicator" href="#">
                                                         <span class="nds-featured-icon nds-sm">
-                                                            <i class="hgi hgi-stroke hgi-link-02 nds-icon"></i>
+                                                            <i class="hgi hgi-stroke hgi-link-02"></i>
                                                         </span>
                                                         <span class="nds-label nds-truncate">Open Data</span>
-                                                        <i class="hgi hgi-stroke hgi-link-square-02 nds-icon"></i>
+                                                        <i class="nds-icon nds-hgi-link-square-02" aria-hidden="true"></i>
                                                     </a>
                                                 </li>
                                                 <li>
                                                     <a class="nds-btn nds-subtle nds-indicator" href="#">
                                                         <span class="nds-featured-icon nds-sm">
-                                                            <i class="hgi hgi-stroke hgi-link-02 nds-icon"></i>
+                                                            <i class="hgi hgi-stroke hgi-link-02"></i>
                                                         </span>
                                                         <span class="nds-label nds-truncate">Media Center</span>
-                                                        <i class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i>
+                                                        <i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
                                                     </a>
                                                 </li>
                                                 <li>
                                                     <a class="nds-btn nds-subtle nds-indicator" href="#">
                                                         <span class="nds-featured-icon nds-sm">
-                                                            <i class="hgi hgi-stroke hgi-link-02 nds-icon"></i>
+                                                            <i class="hgi hgi-stroke hgi-link-02"></i>
                                                         </span>
                                                         <span class="nds-label nds-truncate">Contact Directory</span>
-                                                        <i class="hgi hgi-stroke hgi-link-square-02 nds-icon"></i>
+                                                        <i class="nds-icon nds-hgi-link-square-02" aria-hidden="true"></i>
                                                     </a>
                                                 </li>
                                             </ul>
                                         </div>
                                         <button class="nds-show-more nds-btn nds-subtle">
-                                            <i class="hgi hgi-stroke hgi-arrow-down-01"></i>
+                                            <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                                         </button>
                                     </nav>
                                 </div>
@@ -728,7 +728,7 @@ direction: ltr
         </ul>
       </div>
       <button class="nds-show-more nds-btn nds-subtle">
-        <i class="hgi hgi-stroke hgi-arrow-down-01"></i>
+        <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
       </button>
     </nav>
   </div>
@@ -741,61 +741,61 @@ direction: ltr
           <li>
             <a class="nds-btn nds-subtle nds-indicator" href="#">
               <span class="nds-featured-icon nds-sm">
-                <i class="hgi hgi-stroke hgi-link-02 nds-icon"></i>
+                <i class="hgi hgi-stroke hgi-link-02"></i>
               </span>
               <span class="nds-label nds-truncate">Services Portal</span>
-              <i class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i>
+              <i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
             </a>
           </li>
           <li>
             <a class="nds-btn nds-subtle nds-indicator" href="#">
               <span class="nds-featured-icon nds-sm">
-                <i class="hgi hgi-stroke hgi-link-02 nds-icon"></i>
+                <i class="hgi hgi-stroke hgi-link-02"></i>
               </span>
               <span class="nds-label nds-truncate">Laws and Regulations</span>
-              <i class="hgi hgi-stroke hgi-link-square-02 nds-icon"></i>
+              <i class="nds-icon nds-hgi-link-square-02" aria-hidden="true"></i>
             </a>
           </li>
           <li>
             <a class="nds-btn nds-subtle nds-indicator" href="#">
               <span class="nds-featured-icon nds-sm">
-                <i class="hgi hgi-stroke hgi-link-02 nds-icon"></i>
+                <i class="hgi hgi-stroke hgi-link-02"></i>
               </span>
               <span class="nds-label nds-truncate">Careers</span>
-              <i class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i>
+              <i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
             </a>
           </li>
           <li>
             <a class="nds-btn nds-subtle nds-indicator" href="#">
               <span class="nds-featured-icon nds-sm">
-                <i class="hgi hgi-stroke hgi-link-02 nds-icon"></i>
+                <i class="hgi hgi-stroke hgi-link-02"></i>
               </span>
               <span class="nds-label nds-truncate">Open Data</span>
-              <i class="hgi hgi-stroke hgi-link-square-02 nds-icon"></i>
+              <i class="nds-icon nds-hgi-link-square-02" aria-hidden="true"></i>
             </a>
           </li>
           <li>
             <a class="nds-btn nds-subtle nds-indicator" href="#">
               <span class="nds-featured-icon nds-sm">
-                <i class="hgi hgi-stroke hgi-link-02 nds-icon"></i>
+                <i class="hgi hgi-stroke hgi-link-02"></i>
               </span>
               <span class="nds-label nds-truncate">Media Center</span>
-              <i class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i>
+              <i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
             </a>
           </li>
           <li>
             <a class="nds-btn nds-subtle nds-indicator" href="#">
               <span class="nds-featured-icon nds-sm">
-                <i class="hgi hgi-stroke hgi-link-02 nds-icon"></i>
+                <i class="hgi hgi-stroke hgi-link-02"></i>
               </span>
               <span class="nds-label nds-truncate">Contact Directory</span>
-              <i class="hgi hgi-stroke hgi-link-square-02 nds-icon"></i>
+              <i class="nds-icon nds-hgi-link-square-02" aria-hidden="true"></i>
             </a>
           </li>
         </ul>
       </div>
       <button class="nds-show-more nds-btn nds-subtle">
-        <i class="hgi hgi-stroke hgi-arrow-down-01"></i>
+        <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
       </button>
     </nav>
   </div>
@@ -822,42 +822,42 @@ direction: ltr
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-plug-socket"></i>
                         <span class="nds-label">Auto-initialization</span>
                     </span>
                     <p class="nds-item-desc">Works on page load with just HTML markup. For dynamically added drawers, call <code class="nds-inline-code lang-js">reinit()</code> to activate new instances.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layers-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-layers-01"></i>
                         <span class="nds-label">Accordion Submenus</span>
                     </span>
                     <p class="nds-item-desc">Smooth animated expand and collapse with automatic sibling closing, detected via CSS <code class="nds-inline-code lang-html">:has()</code> without extra classes.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-cursor-move-02 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-cursor-move-02"></i>
                         <span class="nds-label">State Management</span>
                     </span>
                     <p class="nds-item-desc">Open, closing, and active states tracked via <code class="nds-inline-code lang-html">data-state</code> with custom events on every transition. Active nested items auto-reveal their parent menus on load.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-mobile-programming-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-mobile-programming-01"></i>
                         <span class="nds-label">Breakpoint-Driven Modes</span>
                     </span>
                     <p class="nds-item-desc">Static expanded list on desktop that collapses into an accordion on mobile, controlled per-drawer or per-item with a single data attribute.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-arrow-shrink nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-arrow-shrink"></i>
                         <span class="nds-label">Scroll Overflow</span>
                     </span>
                     <p class="nds-item-desc">Height-constrained mode with gradient fade and a show-more button that auto-detects overflow and flips at scroll end.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-api nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-api"></i>
                         <span class="nds-label">JavaScript API</span>
                     </span>
                     <p class="nds-item-desc">Programmatic toggle, overflow check, init, destroy, and custom events fired on every submenu open and close.</p>

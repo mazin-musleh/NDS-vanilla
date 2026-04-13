@@ -442,7 +442,7 @@ section.nds-content-section          (responsive padding for content constrainin
                                     <div class="nds-section-head">
                                         <div class="nds-section-action">
                                             <a href="#" class="nds-btn nds-primary" aria-label="View All">
-                                                <i class="hgi hgi-stroke hgi-arrow-right-01 nds-icon"></i>
+                                                <i class="nds-icon nds-hgi-arrow-right-01" aria-hidden="true"></i>
                                                 <span class="nds-label">View All</span>
                                             </a>
                                         </div>
@@ -478,7 +478,7 @@ section.nds-content-section          (responsive padding for content constrainin
         <div class="nds-section-head">
             <div class="nds-section-action">
                 <a href="#" class="nds-btn nds-primary" aria-label="View All">
-                    <i class="hgi hgi-stroke hgi-arrow-right-01 nds-icon"></i>
+                    <i class="nds-icon nds-hgi-arrow-right-01" aria-hidden="true"></i>
                     <span class="nds-label">View All</span>
                 </a>
             </div>
@@ -560,7 +560,7 @@ section.nds-content-section          (responsive padding for content constrainin
                                     <div class="nds-section-head">
                                         <div class="nds-section-action">
                                             <a href="#" class="nds-btn nds-subtle">
-                                                <i class="hgi hgi-stroke hgi-share-01"></i>
+                                                <i class="nds-icon nds-hgi-share-01" aria-hidden="true"></i>
                                                 <span class="nds-label">Share</span>
                                             </a>
                                         </div>
@@ -604,7 +604,7 @@ section.nds-content-section          (responsive padding for content constrainin
         <div class="nds-section-head">
             <div class="nds-section-action">
                 <a href="#" class="nds-btn nds-subtle">
-                    <i class="hgi hgi-stroke hgi-share-01"></i>
+                    <i class="nds-icon nds-hgi-share-01" aria-hidden="true"></i>
                     <span class="nds-label">Share</span>
                 </a>
             </div>
@@ -805,7 +805,7 @@ section.nds-content-section          (responsive padding for content constrainin
                                 <div class="nds-section-wrapper">
                                     <div class="nds-section-image">
                                         <div class="nds-avatar">
-                                            <i class="hgi hgi-stroke hgi-user"></i>
+                                            <i class="nds-icon nds-hgi-user" aria-hidden="true"></i>
                                         </div>
                                     </div>
                                     <div class="nds-section-head">
@@ -845,7 +845,7 @@ section.nds-content-section          (responsive padding for content constrainin
     <div class="nds-section-wrapper">
         <div class="nds-section-image">
             <div class="nds-avatar">
-                <i class="hgi hgi-stroke hgi-user"></i>
+                <i class="nds-icon nds-hgi-user" aria-hidden="true"></i>
             </div>
         </div>
         <div class="nds-section-head">
@@ -972,8 +972,8 @@ section.nds-content-section          (responsive padding for content constrainin
                                         </div>
                                         <div class="nds-swiper-navigation">
                                             <div class="nds-swiper-buttons">
-                                                <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-swiper-button-prev" type="button" aria-label="Previous slide"><i class="hgi hgi-stroke hgi-arrow-right-01 nds-icon"></i></button>
-                                                <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-swiper-button-next" type="button" aria-label="Next slide"><i class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i></button>
+                                                <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-swiper-button-prev" type="button" aria-label="Previous slide"><i class="nds-icon nds-hgi-arrow-right-01" aria-hidden="true"></i></button>
+                                                <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-swiper-button-next" type="button" aria-label="Next slide"><i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i></button>
                                             </div>
                                             <div class="nds-swiper-pagination"></div>
                                         </div>
@@ -1020,7 +1020,7 @@ section.nds-content-section          (responsive padding for content constrainin
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
                                 <span class="nds-featured-icon nds-circle nds-xl">
-                                    <i class="hgi hgi-stroke hgi-user-id-verification nds-icon"></i>
+                                    <i class="hgi hgi-stroke hgi-user-id-verification"></i>
                                 </span>
                             </div>
                         </div>
@@ -1040,8 +1040,8 @@ section.nds-content-section          (responsive padding for content constrainin
             </div>
             <div class="nds-swiper-navigation">
                 <div class="nds-swiper-buttons">
-                    <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-swiper-button-prev" type="button" aria-label="Previous slide"><i class="hgi hgi-stroke hgi-arrow-right-01 nds-icon"></i></button>
-                    <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-swiper-button-next" type="button" aria-label="Next slide"><i class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i></button>
+                    <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-swiper-button-prev" type="button" aria-label="Previous slide"><i class="nds-icon nds-hgi-arrow-right-01" aria-hidden="true"></i></button>
+                    <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-swiper-button-next" type="button" aria-label="Next slide"><i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i></button>
                 </div>
                 <div class="nds-swiper-pagination"></div>
             </div>
@@ -1304,42 +1304,42 @@ section.nds-content-section          (responsive padding for content constrainin
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layers-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-layers-01"></i>
                         <span class="nds-label">Progressive Tiers</span>
                     </span>
                     <p class="nds-item-desc">Start with a minimal title and body, then layer in wrappers, actions, images, and full-width breakouts as the layout demands.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-paint-board nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-paint-board"></i>
                         <span class="nds-label">Color Themes</span>
                     </span>
                     <p class="nds-item-desc">Apply primary, neutral, brand, gradient, or ghost backgrounds with a single class. Text colors adapt automatically to maintain contrast.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layout-02 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-layout-02"></i>
                         <span class="nds-label">Horizontal Layout</span>
                     </span>
                     <p class="nds-item-desc">Switch to a side-by-side grid with <code class="nds-inline-code lang-html">nds-horizontal</code> for sections where the head and content sit next to each other on desktop.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-cursor-move-02 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-cursor-move-02"></i>
                         <span class="nds-label">Float and Dual Actions</span>
                     </span>
                     <p class="nds-item-desc">Place actions beside the title as a float, outside the head as a standard row, or both at once for primary and secondary controls.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-arrow-expand-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-arrow-expand-01"></i>
                         <span class="nds-label">Full-Width Breakout</span>
                     </span>
                     <p class="nds-item-desc">Content marked with <code class="nds-inline-code lang-html">nds-max-width</code> breaks out of the content padding to span the full available width, ideal for carousels and media.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-text-font nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-text-font"></i>
                         <span class="nds-label">Fluid Typography</span>
                     </span>
                     <p class="nds-item-desc">Title and description sizes scale smoothly between mobile and desktop using clamp-based tokens, with every value overridable through CSS custom properties.</p>

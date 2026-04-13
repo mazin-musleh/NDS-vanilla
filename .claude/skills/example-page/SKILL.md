@@ -66,7 +66,7 @@ Build a new example or promotional page from a brief.
    - `examples/faculty.md` — reference for profile/detail page with `nds-cardView` and `sidemenu_mode: top`
 2. **Read the SCSS** for each NDS component the page will use — verify class names and available variants
 3. **Check `_data/content/`** for available YAML data — use existing data via Liquid loops where applicable
-4. **Look up icons** in `_sass/_hgiRoundedStroke.scss` — verify every icon class. **NEVER guess icon class names.**
+4. **Look up icons**: check `node_modules/@hugeicons/core-free-icons/dist/esm/{Pascal}Icon.js` exists for each name (or browse hugeicons.com). **NEVER guess.** Use `<i class="hgi hgi-stroke hgi-NAME">` for content/demo icons (CDN font); only use `<i class="nds-icon nds-hgi-NAME" aria-hidden="true">` if NAME is in `TIER_1_INLINE` of `scripts/generate-icons-scss.mjs`.
 
 ### Front Matter Conventions
 
@@ -87,7 +87,7 @@ All example pages set `lang` and `direction` based on content language (English 
 - **Realistic Saudi-context content** — Saudi names (Ahmed, Fatima, Khalid), gov.sa domains, SAR currency, Saudi cities
 - **No placeholder text** — every heading, description, and data point must be meaningful
 - **Use `_data/content/` YAML** via Liquid loops when listing repeated items (services, users, etc.)
-- **Verified icons only** — every `hgi-*` class must exist in `_sass/_hgiRoundedStroke.scss`
+- **Verified icons only** — every `hgi-*` class must exist in `@hugeicons/core-free-icons`
 - **The page itself is a showcase** — it demonstrates how NDS components compose together in a real interface
 
 ### Page Structure
@@ -113,7 +113,7 @@ Update an existing example page.
 2. **Read SCSS** for every NDS component used on the page — check for renamed/removed classes, new variants
 3. **Check content quality**:
    - No placeholder text (Lorem ipsum, "Sample", "Test", "Tag 1", "Tag 2")
-   - Icons verified against `_sass/_hgiRoundedStroke.scss`
+   - Icons verified against `@hugeicons/core-free-icons`
    - Content is realistic and Saudi-context appropriate
 4. **Check component usage**:
    - All NDS class names still exist in current SCSS
@@ -132,7 +132,7 @@ Check all example pages for health issues. Read-only — report findings without
 1. List all `.md` files in `examples/` and any promotional pages (homepage, etc.)
 2. For each page, check:
    - **Component classes**: grep all `nds-*` classes used, verify each exists in `_sass/components/` or `_sass/layout/`
-   - **Icons**: grep all `hgi-*` classes, verify against `_sass/_hgiRoundedStroke.scss`
+   - **Icons**: grep all `hgi-*` classes, verify against `@hugeicons/core-free-icons`
    - **Placeholder text**: scan for Lorem ipsum, "Sample", "Test", generic "Tag 1/2/3"
    - **Content sourcing**: check if page uses `site.data.content.*` Liquid loops or hardcodes repeated data
    - **Front matter**: has `lang`, `direction`, `breadcrumb`

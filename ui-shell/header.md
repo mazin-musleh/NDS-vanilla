@@ -120,7 +120,7 @@ header
     &lt;span id="nds-weatherInfo" class="nds-text-icon"
         data-latitude="24.7136" data-longitude="46.6753"&gt;&lt;/span&gt;
     &lt;button class="nds-btn nds-subtle nds-theme-toggle-wrap" data-theme-toggle aria-label="Toggle dark mode"&gt;
-      &lt;i class="hgi hgi-stroke hgi-moon-02"&gt;&lt;/i&gt;
+      &lt;i class="nds-icon nds-hgi-moon-02" aria-hidden="true"&gt;&lt;/i&gt;
     &lt;/button&gt;
   &lt;/div&gt;
 &lt;/div&gt;
@@ -248,7 +248,7 @@ header
       &lt;!-- Domain Verification Notice --&gt;
       &lt;div class="nds-digitalStamp-card"&gt;
         &lt;div class="nds-digitalStamp-icon"&gt;
-          &lt;i class="hgi hgi-stroke hgi-link-04 nds-icon"&gt;&lt;/i&gt;
+          &lt;i class="nds-icon nds-hgi-link-04" aria-hidden="true"&gt;&lt;/i&gt;
         &lt;/div&gt;
         &lt;div class="nds-digitalStamp-content"&gt;
           &lt;div class="nds-digitalStamp-heading"&gt;
@@ -262,7 +262,7 @@ header
       &lt;!-- HTTPS Security Notice --&gt;
       &lt;div class="nds-digitalStamp-card"&gt;
         &lt;div class="nds-digitalStamp-icon"&gt;
-          &lt;i class="hgi hgi-stroke hgi-square-lock-01 nds-icon"&gt;&lt;/i&gt;
+          &lt;i class="nds-icon nds-hgi-square-lock-01" aria-hidden="true"&gt;&lt;/i&gt;
         &lt;/div&gt;
         &lt;div class="nds-digitalStamp-content"&gt;
           &lt;div class="nds-digitalStamp-heading"&gt;
@@ -340,7 +340,7 @@ header
     &lt;ul class="nds-nav-minimal"&gt;
       &lt;li class="nds-mainNav-toggler nds-nav-item"&gt;
         &lt;button class="nds-nav-link nds-btn nds-subtle nds-indicator" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="ndsNavCollapse"&gt;
-          &lt;i class="hgi hgi-stroke hgi-menu-01"&gt;&lt;/i&gt;
+          &lt;i class="nds-icon nds-hgi-menu-01" aria-hidden="true"&gt;&lt;/i&gt;
         &lt;/button&gt;
       &lt;/li&gt;
     &lt;/ul&gt;
@@ -360,13 +360,13 @@ header
         &lt;/ul&gt;
         &lt;div class="nds-nav-item nds-show-more"&gt;
           &lt;a class="nds-nav-link nds-btn nds-subtle nds-indicator nds-full"&gt;
-            &lt;i class="hgi hgi-stroke hgi-arrow-down-01"&gt;&lt;/i&gt;
+            &lt;i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"&gt;&lt;/i&gt;
           &lt;/a&gt;
         &lt;/div&gt;
         &lt;ul class="nds-nav-secondary"&gt;
           &lt;li class="nds-nav-item"&gt;
             &lt;a href="/search" class="nds-nav-link nds-btn nds-subtle nds-indicator"&gt;
-              &lt;i class="hgi hgi-stroke hgi-search-01 nds-icon"&gt;&lt;/i&gt;
+              &lt;i class="nds-icon nds-hgi-search-01" aria-hidden="true"&gt;&lt;/i&gt;
               &lt;span class="nds-label"&gt;Search&lt;/span&gt;
             &lt;/a&gt;
           &lt;/li&gt;
@@ -397,84 +397,84 @@ header
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-plug-socket"></i>
                         <span class="nds-label">Auto-initialization</span>
                     </span>
                     <p class="nds-item-desc">Activates when <code class="nds-inline-code lang-html">.nds-main-nav</code> is on the page. Dropdowns, collapse, overflow detection, DGA stamp, and scroll behavior attach automatically.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-smart-phone-01 nds-icon"></i>
+                        <i class="nds-icon nds-hgi-smart-phone-01" aria-hidden="true"></i>
                         <span class="nds-label">Responsive Collapse</span>
                     </span>
                     <p class="nds-item-desc">Switches from a horizontal nav bar to a hamburger menu at a configurable breakpoint, with animated expand and collapse transitions.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-mouse-scroll-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-mouse-scroll-01"></i>
                         <span class="nds-label">Overflow Detection</span>
                     </span>
                     <p class="nds-item-desc">Primary nav items that exceed the available width become scrollable, with a show-more button that scrolls through hidden items.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layout-grid nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-layout-grid"></i>
                         <span class="nds-label">Dropdown Columns</span>
                     </span>
                     <p class="nds-item-desc">Dropdown content can be organized in column, row, or multi-column list layouts that adapt to narrower screens.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-navigation-03 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-navigation-03"></i>
                         <span class="nds-label">Scroll-to-Anchor</span>
                     </span>
                     <p class="nds-item-desc">Same-page anchor links in the nav close open menus and scroll smoothly to the target section.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-drag-drop nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-drag-drop"></i>
                         <span class="nds-label">Drag and Wheel Scrolling</span>
                     </span>
                     <p class="nds-item-desc">Primary nav supports horizontal drag scrolling and converts vertical mouse wheel input to horizontal scroll when items overflow.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-sidebar-right nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-sidebar-right"></i>
                         <span class="nds-label">RTL Support</span>
                     </span>
                     <p class="nds-item-desc">Scroll direction, drag behavior, and layout flip automatically in right-to-left contexts.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-shield-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-shield-01"></i>
                         <span class="nds-label">Reduced Motion</span>
                     </span>
                     <p class="nds-item-desc">All header transitions respect the <code class="nds-inline-code lang-html">prefers-reduced-motion</code> setting, skipping animations for users who have requested it.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-pin-location-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-pin-location-01"></i>
                         <span class="nds-label">Persistent Action Buttons</span>
                     </span>
                     <p class="nds-item-desc">Nav items marked with <code class="nds-inline-code lang-html">nds-PAB</code> automatically relocate to the minimal nav bar on small screens and return to their original position on larger viewports.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layers-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-layers-01"></i>
                         <span class="nds-label">Backdrop Overlay</span>
                     </span>
                     <p class="nds-item-desc">Opening a dropdown or the mobile collapse displays a backdrop that closes the menu on outside clicks, preventing interaction with page content beneath.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-target-02 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-target-02"></i>
                         <span class="nds-label">DGA Stamp Toggle</span>
                     </span>
                     <p class="nds-item-desc">The topbar button expands and collapses the digital stamp panel with animated grid-row transitions, automatically closing any open nav menus first.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layout-top nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-layout-top"></i>
                         <span class="nds-label">Live Topbar Widgets</span>
                     </span>
                     <p class="nds-item-desc">Date, clock, city, and weather widgets populate automatically from external APIs with local caching. Each widget activates independently when its element ID is on the page and hides gracefully on smaller screens.</p>

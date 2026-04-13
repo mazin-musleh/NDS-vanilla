@@ -62,7 +62,7 @@ breadcrumb: ["Examples"]
               <input type="text" id="university-id" class="nds-input" placeholder="" value="" required>
               <div class="nds-form-action">
                 <button class="nds-btn nds-subtle nds-clear" hidden type="button" aria-label="Clear input">
-                  <i class="hgi hgi-stroke hgi-cancel-01 nds-icon"></i>
+                  <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                 </button>
               </div>
             </div>
@@ -116,7 +116,7 @@ breadcrumb: ["Examples"]
             <div class="nds-form-control">
               <div class="nds-form-action">
                 <button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle" aria-label="Calendar Toggler">
-                  <i class="hgi hgi-stroke hgi-calendar-03 nds-icon"></i>
+                  <i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"></i>
                 </button>
               </div>
               <input type="text" id="date-of-birth" class="nds-input nds-date-input" placeholder="mm/dd/yyyy"
@@ -197,13 +197,13 @@ breadcrumb: ["Examples"]
             <div class="nds-form-control">
               <div class="nds-form-action">
                 <button type="button" class="nds-btn nds-subtle nds-md" aria-label="Email icon">
-                  <i class="hgi hgi-stroke hgi-mail-01 nds-icon"></i>
+                  <i class="nds-icon nds-hgi-mail-01" aria-hidden="true"></i>
                 </button>
               </div>
               <input type="email" id="email-address" class="nds-input" placeholder="" value="" required>
               <div class="nds-form-action">
                 <button class="nds-btn nds-subtle nds-clear" hidden type="button" aria-label="Clear input">
-                  <i class="hgi hgi-stroke hgi-cancel-01 nds-icon"></i>
+                  <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                 </button>
               </div>
             </div>

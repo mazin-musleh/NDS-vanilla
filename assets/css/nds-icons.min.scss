@@ -1,0 +1,9 @@
+---
+# NDS Icons — separate bundle so the ~70 KB of data-URI icon tokens
+# can cache independently of the main stylesheet.
+---
+/*!
+ * National Design System — Icons
+ * Auto-regenerated via scripts/generate-icons-scss.mjs.
+ */
+@use 'icons';

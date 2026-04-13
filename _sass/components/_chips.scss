@@ -197,7 +197,7 @@
   // CHIP WITH ICONS
   // ==============================================
 
-  .nds-icon {
+  :is(.nds-icon, i) {
     color: var(--_chip-icon);
   }
 

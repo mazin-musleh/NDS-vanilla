@@ -285,42 +285,42 @@ direction: ltr
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-plug-socket"></i>
                         <span class="nds-label">Auto-initialization</span>
                     </span>
                     <p class="nds-item-desc">Activates on every <code class="nds-inline-code lang-html">.nds-expandable</code> element at page load. The toggle button is added only when the content actually overflows.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-resize-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-resize-01"></i>
                         <span class="nds-label">Responsive Height Detection</span>
                     </span>
                     <p class="nds-item-desc">Continuously monitors content size and shows or hides the toggle button when the viewport or container dimensions change.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-transition-bottom nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-transition-bottom"></i>
                         <span class="nds-label">Gradient Fade Indicator</span>
                     </span>
                     <p class="nds-item-desc">A configurable gradient mask fades the bottom of truncated content, signaling that more content is available below.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-translate nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-translate"></i>
                         <span class="nds-label">Bilingual Labels</span>
                     </span>
                     <p class="nds-item-desc">The toggle button label switches between English ("Show More" / "Show Less") and Arabic automatically based on the page language.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-link-backward nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-link-backward"></i>
                         <span class="nds-label">Sibling Sync</span>
                     </span>
                     <p class="nds-item-desc">Wrap multiple expandable containers in an <code class="nds-inline-code lang-html">nds-expand-all</code> parent and expanding one will expand all siblings together.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-api nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-api"></i>
                         <span class="nds-label">Programmatic Control</span>
                     </span>
                     <p class="nds-item-desc">Expand, collapse, toggle, and query state through instance methods on <code class="nds-inline-code lang-js">element.ndsExpandable</code>.</p>

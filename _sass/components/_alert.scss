@@ -330,7 +330,7 @@
     }
 
     // Critical uses warning triangle icon
-    &[data-status="critical"] .nds-icon:before { content: "㬃"; }
+    &[data-status="critical"] .nds-icon { --nds-icon: var(--nds-icon-alert-circle); }
 
     .nds-alert-title,
     .nds-alert-description {

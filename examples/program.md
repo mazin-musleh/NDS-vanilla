@@ -35,7 +35,7 @@ layout_class: nds-cardView
                 <dl class="nds-definition-list nds-divided">
                     <div class="nds-definition-item">
                         <dt>
-                            <i class="hgi hgi-stroke hgi-school nds-icon"></i>
+                            <i class="hgi hgi-stroke hgi-school"></i>
                             <span class="nds-label">College:</span>
                         </dt>
                         <dd>College of Computer and Information Sciences</dd>
@@ -43,7 +43,7 @@ layout_class: nds-cardView
 
                     <div class="nds-definition-item">
                         <dt>
-                            <i class="hgi hgi-stroke hgi-building-02 nds-icon"></i>
+                            <i class="hgi hgi-stroke hgi-building-02"></i>
                             <span class="nds-label">Department:</span>
                         </dt>
                         <dd>Department of Artificial Intelligence</dd>
@@ -51,7 +51,7 @@ layout_class: nds-cardView
 
                     <div class="nds-definition-item">
                         <dt>
-                            <i class="hgi hgi-stroke hgi-book-open-02 nds-icon"></i>
+                            <i class="hgi hgi-stroke hgi-book-open-02"></i>
                             <span class="nds-label">Specialization:</span>
                         </dt>
                         <dd>Artificial Intelligence and Machine Learning</dd>
@@ -59,7 +59,7 @@ layout_class: nds-cardView
 
                     <div class="nds-definition-item">
                         <dt>
-                            <i class="hgi hgi-stroke hgi-layers-01 nds-icon"></i>
+                            <i class="hgi hgi-stroke hgi-layers-01"></i>
                             <span class="nds-label">Degree:</span>
                         </dt>
                         <dd>Bachelor of Science</dd>
@@ -67,7 +67,7 @@ layout_class: nds-cardView
 
                     <div class="nds-definition-item">
                         <dt>
-                            <i class="hgi hgi-stroke hgi-mentoring nds-icon"></i>
+                            <i class="hgi hgi-stroke hgi-mentoring"></i>
                             <span class="nds-label">Study Mode:</span>
                         </dt>
                         <dd>On-Campus</dd>
@@ -75,7 +75,7 @@ layout_class: nds-cardView
 
                     <div class="nds-definition-item">
                         <dt>
-                            <i class="hgi hgi-stroke hgi-clock-01 nds-icon"></i>
+                            <i class="nds-icon nds-hgi-clock-01" aria-hidden="true"></i>
                             <span class="nds-label">Study Type:</span>
                         </dt>
                         <dd>Full-Time</dd>
@@ -83,12 +83,12 @@ layout_class: nds-cardView
 
                     <div class="nds-definition-item">
                         <dt>
-                            <i class="hgi hgi-stroke hgi-file-02 nds-icon"></i>
+                            <i class="hgi hgi-stroke hgi-file-02"></i>
                             <span class="nds-label">Program Specification</span>
                         </dt>
                         <dd>
                             <a class="nds-btn nds-secondary-outline nds-md" href="#" target="_blank"
-                                aria-label="Download program specification"><i class="hgi hgi-stroke hgi-pdf-01 nds-icon"></i>
+                                aria-label="Download program specification"><i class="hgi hgi-stroke hgi-pdf-01"></i>
                             </a>
                         </dd>
                     </div>
@@ -100,7 +100,7 @@ layout_class: nds-cardView
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
                                 <span class="nds-featured-icon nds-circle nds-lg">
-                                    <i class="hgi hgi-stroke hgi-clock-01 nds-icon"></i>
+                                    <i class="nds-icon nds-hgi-clock-01" aria-hidden="true"></i>
                                 </span>
                             </div>
                         </div>
@@ -116,7 +116,7 @@ layout_class: nds-cardView
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
                                 <span class="nds-featured-icon nds-circle nds-lg">
-                                    <i class="hgi hgi-stroke hgi-certificate-01 nds-icon"></i>
+                                    <i class="hgi hgi-stroke hgi-certificate-01"></i>
                                 </span>
                             </div>
                         </div>
@@ -132,7 +132,7 @@ layout_class: nds-cardView
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
                                 <span class="nds-featured-icon nds-circle nds-lg">
-                                    <i class="hgi hgi-stroke hgi-layers-01 nds-icon"></i>
+                                    <i class="hgi hgi-stroke hgi-layers-01"></i>
                                 </span>
                             </div>
                         </div>
@@ -148,7 +148,7 @@ layout_class: nds-cardView
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
                                 <span class="nds-featured-icon nds-circle nds-lg">
-                                    <i class="hgi hgi-stroke hgi-calendar-02 nds-icon"></i>
+                                    <i class="hgi hgi-stroke hgi-calendar-02"></i>
                                 </span>
                             </div>
                         </div>
@@ -193,7 +193,7 @@ layout_class: nds-cardView
                     </button>
                 </nav>
                 <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more">
-                    <i class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i>
+                    <i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
                 </button>
             </div>
             <div class="nds-tab-content">
@@ -324,7 +324,7 @@ layout_class: nds-cardView
                                 <td>
                                     <a class="nds-btn nds-secondary-outline" href="#" target="_blank"
                                         aria-label="Download course specification">
-                                        <i class="hgi hgi-stroke hgi-pdf-01 nds-icon"></i>
+                                        <i class="hgi hgi-stroke hgi-pdf-01"></i>
                                     </a>
                                 </td>
                             </tr>
@@ -336,7 +336,7 @@ layout_class: nds-cardView
                                 <td>
                                     <a class="nds-btn nds-secondary-outline" href="#" target="_blank"
                                         aria-label="Download course specification">
-                                        <i class="hgi hgi-stroke hgi-pdf-01 nds-icon"></i>
+                                        <i class="hgi hgi-stroke hgi-pdf-01"></i>
                                     </a>
                                 </td>
                             </tr>
@@ -348,7 +348,7 @@ layout_class: nds-cardView
                                 <td>
                                     <a class="nds-btn nds-secondary-outline" href="#" target="_blank"
                                         aria-label="Download course specification">
-                                        <i class="hgi hgi-stroke hgi-pdf-01 nds-icon"></i>
+                                        <i class="hgi hgi-stroke hgi-pdf-01"></i>
                                     </a>
                                 </td>
                             </tr>
@@ -360,7 +360,7 @@ layout_class: nds-cardView
                                 <td>
                                     <a class="nds-btn nds-secondary-outline" href="#" target="_blank"
                                         aria-label="Download course specification">
-                                        <i class="hgi hgi-stroke hgi-pdf-01 nds-icon"></i>
+                                        <i class="hgi hgi-stroke hgi-pdf-01"></i>
                                     </a>
                                 </td>
                             </tr>
@@ -372,7 +372,7 @@ layout_class: nds-cardView
                                 <td>
                                     <a class="nds-btn nds-secondary-outline" href="#" target="_blank"
                                         aria-label="Download course specification">
-                                        <i class="hgi hgi-stroke hgi-pdf-01 nds-icon"></i>
+                                        <i class="hgi hgi-stroke hgi-pdf-01"></i>
                                     </a>
                                 </td>
                             </tr>
@@ -384,7 +384,7 @@ layout_class: nds-cardView
                                 <td>
                                     <a class="nds-btn nds-secondary-outline" href="#" target="_blank"
                                         aria-label="Download course specification">
-                                        <i class="hgi hgi-stroke hgi-pdf-01 nds-icon"></i>
+                                        <i class="hgi hgi-stroke hgi-pdf-01"></i>
                                     </a>
                                 </td>
                             </tr>
@@ -396,7 +396,7 @@ layout_class: nds-cardView
                                 <td>
                                     <a class="nds-btn nds-secondary-outline" href="#" target="_blank"
                                         aria-label="Download course specification">
-                                        <i class="hgi hgi-stroke hgi-pdf-01 nds-icon"></i>
+                                        <i class="hgi hgi-stroke hgi-pdf-01"></i>
                                     </a>
                                 </td>
                             </tr>
@@ -408,7 +408,7 @@ layout_class: nds-cardView
                                 <td>
                                     <a class="nds-btn nds-secondary-outline" href="#" target="_blank"
                                         aria-label="Download course specification">
-                                        <i class="hgi hgi-stroke hgi-pdf-01 nds-icon"></i>
+                                        <i class="hgi hgi-stroke hgi-pdf-01"></i>
                                     </a>
                                 </td>
                             </tr>
@@ -420,7 +420,7 @@ layout_class: nds-cardView
                                 <td>
                                     <a class="nds-btn nds-secondary-outline" href="#" target="_blank"
                                         aria-label="Download course specification">
-                                        <i class="hgi hgi-stroke hgi-pdf-01 nds-icon"></i>
+                                        <i class="hgi hgi-stroke hgi-pdf-01"></i>
                                     </a>
                                 </td>
                             </tr>
@@ -432,7 +432,7 @@ layout_class: nds-cardView
                                 <td>
                                     <a class="nds-btn nds-secondary-outline" href="#" target="_blank"
                                         aria-label="Download course specification">
-                                        <i class="hgi hgi-stroke hgi-pdf-01 nds-icon"></i>
+                                        <i class="hgi hgi-stroke hgi-pdf-01"></i>
                                     </a>
                                 </td>
                             </tr>
@@ -444,7 +444,7 @@ layout_class: nds-cardView
                                 <td>
                                     <a class="nds-btn nds-secondary-outline" href="#" target="_blank"
                                         aria-label="Download course specification">
-                                        <i class="hgi hgi-stroke hgi-pdf-01 nds-icon"></i>
+                                        <i class="hgi hgi-stroke hgi-pdf-01"></i>
                                     </a>
                                 </td>
                             </tr>
@@ -456,7 +456,7 @@ layout_class: nds-cardView
                                 <td>
                                     <a class="nds-btn nds-secondary-outline" href="#" target="_blank"
                                         aria-label="Download course specification">
-                                        <i class="hgi hgi-stroke hgi-pdf-01 nds-icon"></i>
+                                        <i class="hgi hgi-stroke hgi-pdf-01"></i>
                                     </a>
                                 </td>
                             </tr>
@@ -468,7 +468,7 @@ layout_class: nds-cardView
                                 <td>
                                     <a class="nds-btn nds-secondary-outline" href="#" target="_blank"
                                         aria-label="Download course specification">
-                                        <i class="hgi hgi-stroke hgi-pdf-01 nds-icon"></i>
+                                        <i class="hgi hgi-stroke hgi-pdf-01"></i>
                                     </a>
                                 </td>
                             </tr>
@@ -480,7 +480,7 @@ layout_class: nds-cardView
                                 <td>
                                     <a class="nds-btn nds-secondary-outline" href="#" target="_blank"
                                         aria-label="Download course specification">
-                                        <i class="hgi hgi-stroke hgi-pdf-01 nds-icon"></i>
+                                        <i class="hgi hgi-stroke hgi-pdf-01"></i>
                                     </a>
                                 </td>
                             </tr>

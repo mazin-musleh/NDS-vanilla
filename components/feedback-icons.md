@@ -85,7 +85,7 @@ direction: ltr
                         <div class="state-demo">
                             <span class="nds-feedback" data-status="success">
                                 <span class="nds-feedback-icon">
-                                    <i class="hgi hgi-stroke nds-icon"></i>
+                                    <i class="nds-icon" aria-hidden="true"></i>
                                 </span>
                             </span>
                         </div>
@@ -115,7 +115,7 @@ direction: ltr
                                     <code class="lang-html code">
 <span class="nds-feedback" data-status="success">
   <span class="nds-feedback-icon">
-    <i class="hgi hgi-stroke nds-icon"></i>
+    <i class="nds-icon" aria-hidden="true"></i>
   </span>
 </span>
                                     </code>
@@ -220,7 +220,7 @@ direction: ltr
                         <div class="state-demo">
                             <span class="nds-feedback nds-sm" data-status="error">
                                 <span class="nds-feedback-icon">
-                                    <i class="hgi hgi-stroke nds-icon"></i>
+                                    <i class="nds-icon" aria-hidden="true"></i>
                                 </span>
                                 <span class="nds-feedback-message">This field is required</span>
                             </span>
@@ -251,7 +251,7 @@ direction: ltr
                                     <code class="lang-html code">
 <span class="nds-feedback nds-sm" data-status="error">
   <span class="nds-feedback-icon">
-    <i class="hgi hgi-stroke nds-icon"></i>
+    <i class="nds-icon" aria-hidden="true"></i>
   </span>
   <span class="nds-feedback-message">This field is required</span>
 </span>
@@ -291,28 +291,28 @@ direction: ltr
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-colors nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-colors"></i>
                         <span class="nds-label">Auto Icon by Status</span>
                     </span>
                     <p class="nds-item-desc">Set <code class="nds-inline-code lang-html">data-status</code> and the correct icon glyph appears automatically: checkmark for success, alert for warning, X for error, info circle for info.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layers-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-layers-01"></i>
                         <span class="nds-label">Parent Status Inheritance</span>
                     </span>
                     <p class="nds-item-desc">Place a feedback icon inside any element with <code class="nds-inline-code lang-html">data-status</code> and it inherits the status color and icon without needing its own attribute.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-square-circle nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-square-circle"></i>
                         <span class="nds-label">Three Visual Styles</span>
                     </span>
                     <p class="nds-item-desc">Solid fill by default, outline for lighter weight, and ring for extra emphasis. Combine freely with any status and size.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-code-circle nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-code-circle"></i>
                         <span class="nds-label">Programmatic Control</span>
                     </span>
                     <p class="nds-item-desc">Create, dismiss, and manage feedback lifecycle with <code class="nds-inline-code lang-js">NDS.Feedback.create()</code>. Permanent feedback survives status changes and restores automatically.</p>

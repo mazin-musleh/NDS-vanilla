@@ -579,42 +579,42 @@ direction: ltr
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-loading-03 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-loading-03"></i>
                         <span class="nds-label">Auto-initialization</span>
                     </span>
                     <p class="nds-item-desc">Activates when <code class="nds-inline-code lang-html">.nds-stepper</code> is on the page. Step states, progress display, and control button handlers attach automatically.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layout-grid nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-layout-grid"></i>
                         <span class="nds-label">Three Layout Modes</span>
                     </span>
                     <p class="nds-item-desc">Horizontal, vertical, and radial layouts cover wide forms, narrow sidebars, and compact dashboard widgets respectively.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-workflow-circle-06 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-workflow-circle-06"></i>
                         <span class="nds-label">Automatic State Management</span>
                     </span>
                     <p class="nds-item-desc">Set <code class="nds-inline-code lang-html">data-current</code> and all steps update their completed, current, or upcoming states automatically.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-cursor-pointer-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-cursor-pointer-01"></i>
                         <span class="nds-label">Declarative Control Buttons</span>
                     </span>
                     <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">data-stepper-control</code> to any button to navigate steps without writing JavaScript.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-notification-03 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-notification-03"></i>
                         <span class="nds-label">Step Change Events</span>
                     </span>
                     <p class="nds-item-desc">The <code class="nds-inline-code lang-js">nds:stepper:change</code> event fires on every navigation with current step, total, and percentage in the detail.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-target-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-target-01"></i>
                         <span class="nds-label">Programmatic Control</span>
                     </span>
                     <p class="nds-item-desc">Navigate with <code class="nds-inline-code lang-js">NDS.Stepper.next(id)</code>, <code class="nds-inline-code lang-js">NDS.Stepper.previous(id)</code>, and <code class="nds-inline-code lang-js">NDS.Stepper.goTo(id, step)</code>.</p>

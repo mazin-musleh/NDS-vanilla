@@ -131,56 +131,56 @@ direction: ltr
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-plug-socket"></i>
                         <span class="nds-label">Auto-initialization</span>
                     </span>
                     <p class="nds-item-desc">Any image with the <code class="nds-inline-code lang-html">nds-ipv-thumbnail</code> class becomes clickable and opens in the full-screen viewer. No extra markup or JS calls needed. For dynamically added images, call <code class="nds-inline-code lang-js">NDS.Ipv.init()</code>.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-zoom nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-zoom"></i>
                         <span class="nds-label">Multi-input Zoom</span>
                     </span>
                     <p class="nds-item-desc">Zoom into images using mouse wheel (centered on cursor position), keyboard shortcuts (+/-), pinch-to-zoom on touch devices, or the on-screen zoom buttons. Supports 0.1x to 10x magnification.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-move nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-move"></i>
                         <span class="nds-label">Drag to Pan</span>
                     </span>
                     <p class="nds-item-desc">Click and drag on desktop or swipe on touch devices to pan around zoomed images. Double-click or double-tap resets the view to the original position and zoom level.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-arrow-left-right nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-arrow-left-right"></i>
                         <span class="nds-label">Gallery Navigation</span>
                     </span>
                     <p class="nds-item-desc">When multiple thumbnails share a gallery container, arrow buttons and keyboard left/right keys navigate between images. An image counter displays the current position.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-keyboard nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-keyboard"></i>
                         <span class="nds-label">Keyboard Controls</span>
                     </span>
                     <p class="nds-item-desc">Full keyboard support: Escape closes the viewer, +/- adjusts zoom, 0 resets the view, H toggles the control UI, and arrow keys navigate between images.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-touch-interaction-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-touch-interaction-01"></i>
                         <span class="nds-label">Touch Gestures</span>
                     </span>
                     <p class="nds-item-desc">Pinch-to-zoom with two fingers centers on the gesture midpoint. Single-finger drag pans the image. All gestures work alongside on-screen controls on mobile.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-eye nds-icon"></i>
+                        <i class="nds-icon nds-hgi-eye" aria-hidden="true"></i>
                         <span class="nds-label">Distraction-free Mode</span>
                     </span>
                     <p class="nds-item-desc">Press H or tap the toggle button to hide all controls, navigation, and overlays for a clean viewing experience. Toggle again to restore the full UI.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-image-02 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-image-02"></i>
                         <span class="nds-label">Adaptive Image Loading</span>
                     </span>
                     <p class="nds-item-desc">Thumbnails load at a small size for fast page rendering, then the full-resolution image loads on demand when opened. A loading spinner displays while the full image is fetched.</p>

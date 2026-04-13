@@ -69,7 +69,7 @@ direction: ltr
                             <div class="nds-alert nds-card" data-status="success" role="alert">
                                 <span class="nds-feedback nds-alert-icon nds-outline">
                                     <span class="nds-feedback-icon">
-                                        <i class="hgi hgi-stroke nds-icon"></i>
+                                        <i class="nds-icon" aria-hidden="true"></i>
                                     </span>
                                 </span>
                                 <div class="nds-alert-content">
@@ -80,7 +80,7 @@ direction: ltr
                                 </div>
                                 <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close"
                                     aria-label="Close alert">
-                                    <i class="hgi hgi-stroke hgi-cancel-01"></i>
+                                    <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                                 </button>
                             </div>
                         </div>
@@ -111,7 +111,7 @@ direction: ltr
 <div class="nds-alert nds-card" data-status="success" role="alert">
   <span class="nds-feedback nds-alert-icon nds-outline">
     <span class="nds-feedback-icon">
-      <i class="hgi hgi-stroke nds-icon"></i>
+      <i class="nds-icon" aria-hidden="true"></i>
     </span>
   </span>
   <div class="nds-alert-content">
@@ -121,7 +121,7 @@ direction: ltr
     </div>
   </div>
   <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close" aria-label="Close alert">
-    <i class="hgi hgi-stroke hgi-cancel-01"></i>
+    <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
   </button>
 </div>
                                     </code>
@@ -205,7 +205,7 @@ direction: ltr
                             <div class="nds-alert nds-card nds-inline" data-status="critical" role="alert">
                                 <span class="nds-feedback nds-alert-icon">
                                     <span class="nds-feedback-icon">
-                                        <i class="hgi hgi-stroke nds-icon"></i>
+                                        <i class="nds-icon" aria-hidden="true"></i>
                                     </span>
                                 </span>
                                 <div class="nds-alert-content">
@@ -219,7 +219,7 @@ direction: ltr
                                 </div>
                                 <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close"
                                     aria-label="Close alert">
-                                    <i class="hgi hgi-stroke hgi-cancel-01"></i>
+                                    <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                                 </button>
                             </div>
                         </div>
@@ -250,7 +250,7 @@ direction: ltr
 <div class="nds-alert nds-card nds-inline" data-status="critical" role="alert">
   <span class="nds-feedback nds-alert-icon">
     <span class="nds-feedback-icon">
-      <i class="hgi hgi-stroke nds-icon"></i>
+      <i class="nds-icon" aria-hidden="true"></i>
     </span>
   </span>
   <div class="nds-alert-content">
@@ -263,7 +263,7 @@ direction: ltr
     </div>
   </div>
   <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close" aria-label="Close alert">
-    <i class="hgi hgi-stroke hgi-cancel-01"></i>
+    <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
   </button>
 </div>
                                     </code>
@@ -327,7 +327,7 @@ direction: ltr
                             <div class="nds-alert nds-card" data-status="info" role="alert">
                                 <span class="nds-feedback nds-alert-icon nds-outline">
                                     <span class="nds-feedback-icon">
-                                        <i class="hgi hgi-stroke nds-icon"></i>
+                                        <i class="nds-icon" aria-hidden="true"></i>
                                     </span>
                                 </span>
                                 <div class="nds-alert-content">
@@ -346,7 +346,7 @@ direction: ltr
                                 </div>
                                 <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close"
                                     aria-label="Close alert">
-                                    <i class="hgi hgi-stroke hgi-cancel-01"></i>
+                                    <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                                 </button>
                             </div>
                         </div>
@@ -377,7 +377,7 @@ direction: ltr
 <div class="nds-alert nds-card" data-status="info" role="alert">
   <span class="nds-feedback nds-alert-icon nds-outline">
     <span class="nds-feedback-icon">
-      <i class="hgi hgi-stroke nds-icon"></i>
+      <i class="nds-icon" aria-hidden="true"></i>
     </span>
   </span>
   <div class="nds-alert-content">
@@ -395,7 +395,7 @@ direction: ltr
     </div>
   </div>
   <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close" aria-label="Close alert">
-    <i class="hgi hgi-stroke hgi-cancel-01"></i>
+    <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
   </button>
 </div>
                                     </code>
@@ -482,7 +482,7 @@ direction: ltr
                                 <span class="nds-label">Show Toast</span>
                             </button>
                             <span class="nds-feedback nds-sm nds-outline" data-status="neutral">
-                                <span class="nds-feedback-icon"><i class="hgi hgi-stroke nds-icon"></i></span>
+                                <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
                                 Select a variant and position above, then click the button to preview
                             </span>
                         </div>
@@ -514,7 +514,7 @@ direction: ltr
   <div class="nds-alert nds-card nds-toast nds-shadow" data-status="success" role="alert" data-toast-state="show">
     <span class="nds-feedback nds-alert-icon nds-outline">
       <span class="nds-feedback-icon">
-        <i class="hgi hgi-stroke nds-icon"></i>
+        <i class="nds-icon" aria-hidden="true"></i>
       </span>
     </span>
     <div class="nds-alert-content">
@@ -524,7 +524,7 @@ direction: ltr
       </div>
     </div>
     <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close nds-progress" aria-label="Close alert" style="--progress-duration: 4000ms;">
-      <i class="hgi hgi-stroke hgi-cancel-01"></i>
+      <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
       <div class="nds-progress-circle">
         <svg width="100%" height="100%" viewBox="0 0 24 24">
           <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2"></circle>
@@ -572,42 +572,42 @@ direction: ltr
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-plug-socket"></i>
                         <span class="nds-label">Auto-initialization</span>
                     </span>
                     <p class="nds-item-desc">Activates when .nds-alert is on the page. Close button handlers attach automatically.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-colors nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-colors"></i>
                         <span class="nds-label">Six Status Variants</span>
                     </span>
                     <p class="nds-item-desc">Success, info, warning, error, critical, and neutral with automatic icon and color theming.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-notification-square nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-notification-square"></i>
                         <span class="nds-label">Toast Notifications</span>
                     </span>
                     <p class="nds-item-desc">Fixed positioning with auto-dismiss timer and progress indicator.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-minus-sign nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-minus-sign"></i>
                         <span class="nds-label">Inline Layout</span>
                     </span>
                     <p class="nds-item-desc">Single-line variant for contextual messages with actions pushed to the end.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-api nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-api"></i>
                         <span class="nds-label">Programmatic Control</span>
                     </span>
                     <p class="nds-item-desc">Create, dismiss, and bulk-clear alerts through the JS API without writing HTML.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-mobile-programming-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-mobile-programming-01"></i>
                         <span class="nds-label">Responsive Layout</span>
                     </span>
                     <p class="nds-item-desc">Stacks vertically on mobile with stripe repositioned to the top.</p>

@@ -142,7 +142,7 @@
     background-color: var(--_feedback-bg);
     color: var(--_feedback-color);
 
-    body[data-font-loaded*="hgi-stroke-rounded"] & i {
+    & i {
         position: relative;
         z-index: 1;
     }
@@ -152,26 +152,17 @@
     // ==============================================
 
     .nds-feedback:not(.nds-outline)>& i {
-        &:before {
-            filter: brightness(0) invert(1);
-            clip-path: inset(25%);
-        }
+        // Solid variant: icon paints white (via currentColor) over the colored
+        // chip background. Clip the SVG's outer circle stroke so only the inner
+        // glyph shows — the feedback chip already provides the circular background.
+        color: var(--colors-base-white);
+        clip-path: inset(25%);
     }
 
     .nds-feedback.nds-outline>& {
+        // Outline variant: no chip background — the icon itself (including its own
+        // circle stroke) is the whole visual, painted in the status color.
         background-color: transparent;
-
-        &::before {
-            display: none;
-        }
-
-        .nds-icon::before {
-            font-family: "hgi-stroke-rounded" !important;
-        }
-
-        .nds-icon::after {
-            background-color: transparent;
-        }
     }
 
     .nds-feedback.nds-ring>& {
@@ -183,22 +174,22 @@
     // ==============================================
 
     // Default icon (information-circle)
-    .nds-icon:before {
-        content: "䆾";
+    .nds-icon {
+        --nds-icon: var(--nds-icon-information-circle);
     }
 
     // Success icon
-    [data-status="success"] & .nds-icon:before {
-        content: "㶧";
+    [data-status="success"] & .nds-icon {
+        --nds-icon: var(--nds-icon-checkmark-circle-02);
     }
 
     // Warning icon
-    [data-status="warning"] & .nds-icon:before {
-        content: "㬃";
+    [data-status="warning"] & .nds-icon {
+        --nds-icon: var(--nds-icon-alert-circle);
     }
 
     // Error icon
-    [data-status="error"] & .nds-icon:before {
-        content: "㵅";
+    [data-status="error"] & .nds-icon {
+        --nds-icon: var(--nds-icon-cancel-circle);
     }
 }

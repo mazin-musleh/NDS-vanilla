@@ -26,21 +26,20 @@ direction: ltr
                             <div class="nds-form-container nds-search-box" data-filter-target="basicFilterCards">
                                 <div class="nds-search-content">
                                     <div class="nds-form-control">
-                                        <i class="hgi hgi-stroke hgi-search-01 nds-icon"></i>
+                                        <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
                                         <input type="text" class="nds-search-input" placeholder="Search cards...">
                                         <div class="nds-form-action">
-                                            <button class="nds-btn nds-subtle nds-clear" hidden><i
-                                                    class="hgi hgi-stroke hgi-cancel-01 nds-icon"></i></button>
+                                            <button class="nds-btn nds-subtle nds-clear" hidden><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
                                         </div>
                                     </div>
                                     <button class="nds-btn nds-primary nds-search-btn" type="button">
-                                        <i class="hgi hgi-stroke hgi-search-01 nds-icon"></i>
+                                        <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
                                         <span class="nds-label">Search</span>
                                     </button>
                                     <div class="nds-dropmenu nds-filter" data-filter-target="basicFilterCards">
                                         <button
                                             class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
-                                            <i class="hgi hgi-stroke hgi-filter nds-icon"></i>
+                                            <i class="hgi hgi-stroke hgi-filter"></i>
                                             <span class="nds-label">Filter</span>
                                         </button>
                                         <div class="nds-dropmenu-menu" hidden>
@@ -120,21 +119,21 @@ direction: ltr
 <div class="nds-form-container nds-search-box" data-filter-target="basicFilterCards">
   <div class="nds-search-content">
     <div class="nds-form-control">
-      <i class="hgi hgi-stroke hgi-search-01 nds-icon"></i>
+      <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
       <input type="text" class="nds-search-input" placeholder="Search cards...">
       <div class="nds-form-action">
         <button class="nds-btn nds-subtle nds-clear" hidden>
-          <i class="hgi hgi-stroke hgi-cancel-01 nds-icon"></i>
+          <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
         </button>
       </div>
     </div>
     <button class="nds-btn nds-primary nds-search-btn" type="button">
-      <i class="hgi hgi-stroke hgi-search-01 nds-icon"></i>
+      <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
       <span class="nds-label">Search</span>
     </button>
     <div class="nds-dropmenu nds-filter" data-filter-target="basicFilterCards">
       <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
-        <i class="hgi hgi-stroke hgi-filter nds-icon"></i>
+        <i class="hgi hgi-stroke hgi-filter"></i>
         <span class="nds-label">Filter</span>
       </button>
       <div class="nds-dropmenu-menu" hidden>
@@ -223,7 +222,7 @@ direction: ltr
                         <div class="state-demo">
                             <div class="nds-dropmenu nds-filter" data-filter-target="checkboxCards">
                                 <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
-                                    <i class="hgi hgi-stroke hgi-filter nds-icon"></i>
+                                    <i class="hgi hgi-stroke hgi-filter"></i>
                                     <span class="nds-label">Filter</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" style="min-width: 260px;" hidden>
@@ -315,7 +314,7 @@ direction: ltr
 <!-- Filter (merged with dropmenu) -->
 <div class="nds-dropmenu nds-filter" data-filter-target="checkboxCards">
   <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
-    <i class="hgi hgi-stroke hgi-filter nds-icon"></i>
+    <i class="hgi hgi-stroke hgi-filter"></i>
     <span class="nds-label">Filter</span>
   </button>
   <div class="nds-dropmenu-menu" style="min-width: 260px;" hidden>
@@ -416,7 +415,7 @@ direction: ltr
                         <div class="state-demo">
                             <div class="nds-dropmenu nds-filter" data-filter-target="radioCards">
                                 <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
-                                    <i class="hgi hgi-stroke hgi-filter nds-icon"></i>
+                                    <i class="hgi hgi-stroke hgi-filter"></i>
                                     <span class="nds-label">Filter</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" style="min-width: 260px;" hidden>
@@ -508,7 +507,7 @@ direction: ltr
 <!-- Filter (merged with dropmenu) -->
 <div class="nds-dropmenu nds-filter" data-filter-target="radioCards">
   <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
-    <i class="hgi hgi-stroke hgi-filter nds-icon"></i>
+    <i class="hgi hgi-stroke hgi-filter"></i>
     <span class="nds-label">Filter</span>
   </button>
   <div class="nds-dropmenu-menu" style="min-width: 260px;" hidden>
@@ -608,7 +607,7 @@ direction: ltr
                         <div class="state-demo">
                             <div class="nds-dropmenu nds-filter" data-filter-target="switchCards">
                                 <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
-                                    <i class="hgi hgi-stroke hgi-filter nds-icon"></i>
+                                    <i class="hgi hgi-stroke hgi-filter"></i>
                                     <span class="nds-label">Filter</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" style="min-width: 260px;" hidden>
@@ -712,7 +711,7 @@ direction: ltr
 <!-- Filter (merged with dropmenu) -->
 <div class="nds-dropmenu nds-filter" data-filter-target="switchCards">
   <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
-    <i class="hgi hgi-stroke hgi-filter nds-icon"></i>
+    <i class="hgi hgi-stroke hgi-filter"></i>
     <span class="nds-label">Filter</span>
   </button>
   <div class="nds-dropmenu-menu" style="min-width: 260px;" hidden>
@@ -830,7 +829,7 @@ direction: ltr
                         <div class="state-demo">
                             <div class="nds-dropmenu nds-filter" data-filter-target="staticCards">
                                 <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
-                                    <i class="hgi hgi-stroke hgi-filter nds-icon"></i>
+                                    <i class="hgi hgi-stroke hgi-filter"></i>
                                     <span class="nds-label">Filter</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
@@ -941,7 +940,7 @@ direction: ltr
 <!-- Object form: keys = machine values, values = display labels -->
 <div class="nds-dropmenu nds-filter" data-filter-target="staticCards">
   <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
-    <i class="hgi hgi-stroke hgi-filter nds-icon"></i>
+    <i class="hgi hgi-stroke hgi-filter"></i>
     <span class="nds-label">Filter</span>
   </button>
   <div class="nds-dropmenu-menu" hidden>
@@ -1045,7 +1044,7 @@ direction: ltr
 <div class="nds-dropmenu nds-filter" id="apiFilter"
   data-filter-target="results">
   <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
-    <i class="hgi hgi-stroke hgi-filter nds-icon"></i>
+    <i class="hgi hgi-stroke hgi-filter"></i>
     <span class="nds-label">Filter</span>
   </button>
   <div class="nds-dropmenu-menu" hidden>
@@ -1209,7 +1208,7 @@ NDS.Filter.whenReady('#apiFilter', (filter) => {
   data-name="Title" data-query-param="searchKeyword">
   <div class="nds-search-content">
     <div class="nds-form-control">
-      <i class="hgi hgi-stroke hgi-search-01 nds-icon"></i>
+      <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
       <input type="text" class="nds-search-input"
         name="search" placeholder="Search...">
     </div>
@@ -1222,7 +1221,7 @@ NDS.Filter.whenReady('#apiFilter', (filter) => {
       data-filter-submit data-ajax
       method="GET" action="https://api.example.com/search">
       <button class="nds-btn nds-neutral nds-dropmenu-trigger">
-        <i class="hgi hgi-stroke hgi-filter nds-icon"></i>
+        <i class="hgi hgi-stroke hgi-filter"></i>
         <span class="nds-label">Filter</span>
       </button>
       <div class="nds-dropmenu-menu" hidden>
@@ -1381,70 +1380,70 @@ filterForm.addEventListener('nds:filterFormAjax', (e) => {
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-plug-socket"></i>
                         <span class="nds-label">Auto-initialization</span>
                     </span>
                     <p class="nds-item-desc">Activates when <code class="nds-inline-code lang-html">.nds-filter</code> is on the page. Search, filter inputs, chips, and URL sync are set up automatically.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-filter nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-filter"></i>
                         <span class="nds-label">Auto-Generated Filters</span>
                     </span>
                     <p class="nds-item-desc">Builds checkbox, radio, or switch inputs automatically. Values come from card content, a JSON attribute (<code class="nds-inline-code lang-html">data-filter-values</code>), or the <code class="nds-inline-code lang-js">populateFilter()</code> API — no manual HTML required.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-link-circle-02 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-link-circle-02"></i>
                         <span class="nds-label">Shareable URL State</span>
                     </span>
                     <p class="nds-item-desc">Filter selections and search terms sync to URL query parameters automatically, producing bookmarkable and shareable links that restore the exact filter state.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-tag-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-tag-01"></i>
                         <span class="nds-label">Applied Filter Chips</span>
                     </span>
                     <p class="nds-item-desc">Active filters display as removable chips below the filter bar. Clicking a chip removes that filter and re-applies the remaining criteria.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-search-01 nds-icon"></i>
+                        <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
                         <span class="nds-label">No Results Alert</span>
                     </span>
                     <p class="nds-item-desc">Shows a warning alert with a "Clear Filter" action when no cards match the current criteria. The alert dismisses automatically when results reappear.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-refresh nds-icon"></i>
+                        <i class="nds-icon nds-hgi-refresh" aria-hidden="true"></i>
                         <span class="nds-label">Dynamic and Cascading Filters</span>
                     </span>
                     <p class="nds-item-desc">Use <code class="nds-inline-code lang-js">populateFilter()</code> to generate or replace filter inputs at runtime. Supports cascading filters where one selection drives another filter's options via API.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-globe-02 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-globe-02"></i>
                         <span class="nds-label">AJAX Form Submission</span>
                     </span>
                     <p class="nds-item-desc">Supports server-side filtering via AJAX with automatic HTML response injection and JSON response events for custom rendering.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layout-grid nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-layout-grid"></i>
                         <span class="nds-label">Custom Item Selectors</span>
                     </span>
                     <p class="nds-item-desc">Filter any element type by setting <code class="nds-inline-code lang-html">data-filter-items</code> on the target container. Works with list items, table rows, drawers, or any custom structure beyond the default <code class="nds-inline-code lang-html">.nds-card</code>.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-translate nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-translate"></i>
                         <span class="nds-label">Value and Label Mapping</span>
                     </span>
                     <p class="nds-item-desc">Separate machine values from display labels using <code class="nds-inline-code lang-html">data-filter-value</code> on items or the object form of <code class="nds-inline-code lang-html">data-filter-values</code> on filter groups. Labels are derived automatically from visible text content.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-code nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-code"></i>
                         <span class="nds-label">Programmatic Control</span>
                     </span>
                     <p class="nds-item-desc">Set filters, search terms, and reset state through the <code class="nds-inline-code lang-js">NDS.Filter</code> API. Access instances by selector, target ID, or the <code class="nds-inline-code lang-js">whenReady</code> helper.</p>

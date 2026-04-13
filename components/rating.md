@@ -333,42 +333,42 @@ direction: ltr
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-plug-socket"></i>
                         <span class="nds-label">Auto-initialization</span>
                     </span>
                     <p class="nds-item-desc">Activates when <code class="nds-inline-code lang-html">.nds-rating</code> is on the page. Components added dynamically are detected and initialized automatically.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-tap-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-tap-01"></i>
                         <span class="nds-label">Automatic Mode Detection</span>
                     </span>
                     <p class="nds-item-desc">Stars built with <code class="nds-inline-code lang-html">&lt;button&gt;</code> elements become interactive with hover preview and click selection. Stars built with <code class="nds-inline-code lang-html">&lt;span&gt;</code> elements render as display-only.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-favourite nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-favourite"></i>
                         <span class="nds-label">Half-Star Precision</span>
                     </span>
                     <p class="nds-item-desc">Decimal ratings display half stars automatically. Values with a decimal of 0.3 or higher show a half star; below 0.3 rounds down to the nearest whole.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-keyboard nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-keyboard"></i>
                         <span class="nds-label">Keyboard Navigation</span>
                     </span>
                     <p class="nds-item-desc">Full arrow key traversal (RTL-aware), Enter and Space to select, Home and End to jump, and Escape to blur focus.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-smart-phone-01 nds-icon"></i>
+                        <i class="nds-icon nds-hgi-smart-phone-01" aria-hidden="true"></i>
                         <span class="nds-label">Responsive Sizing</span>
                     </span>
                     <p class="nds-item-desc">Large stars scale down from 48px to 40px on mobile viewports, keeping proportions balanced on smaller screens.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-api nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-api"></i>
                         <span class="nds-label">Programmatic Control</span>
                     </span>
                     <p class="nds-item-desc">Get, set, disable, and enable ratings through the instance API. Listen for <code class="nds-inline-code lang-js">ratingChange</code> events to react to user selections.</p>

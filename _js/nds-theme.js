@@ -52,10 +52,10 @@
             // Button toggles: sync aria
             el.setAttribute('aria-pressed', isDark);
             // Icon swap
-            const icon = el.querySelector('.hgi');
+            const icon = el.querySelector('.nds-icon');
             if (icon) {
-                icon.classList.toggle('hgi-sun-01', isDark);
-                icon.classList.toggle('hgi-moon-02', !isDark);
+                icon.classList.toggle('nds-hgi-sun-01', isDark);
+                icon.classList.toggle('nds-hgi-moon-02', !isDark);
             }
         }
     }

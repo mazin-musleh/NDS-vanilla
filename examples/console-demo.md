@@ -20,7 +20,7 @@ hideFeedback: true
             <div class="nds-alert nds-card nds-inline" data-status="warning" role="alert">
                 <span class="nds-feedback nds-alert-icon">
                     <span class="nds-feedback-icon">
-                        <i class="hgi hgi-stroke nds-icon"></i>
+                        <i class="nds-icon" aria-hidden="true"></i>
                     </span>
                 </span>
                 <div class="nds-alert-content">
@@ -30,7 +30,7 @@ hideFeedback: true
                     </div>
                 </div>
                 <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close" aria-label="Close alert">
-                    <i class="hgi hgi-stroke hgi-cancel-01"></i>
+                    <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                 </button>
             </div>
         </div>
@@ -105,7 +105,7 @@ hideFeedback: true
                 <div class="nds-card-header">
                     <div class="nds-card-featured-icon">
                         <span class="nds-featured-icon nds-circle nds-xl">
-                            <i class="hgi hgi-stroke hgi-checkmark-circle-01 nds-icon"></i>
+                            <i class="nds-icon nds-hgi-checkmark-circle-01" aria-hidden="true"></i>
                         </span>
                     </div>
                 </div>
@@ -117,7 +117,7 @@ hideFeedback: true
                     <div class="nds-card-meta">
                         <div class="nds-card-tags">
                             <span class="nds-tag nds-green nds-sm">
-                                <i class="hgi hgi-stroke hgi-analytics-up nds-icon"></i>
+                                <i class="hgi hgi-stroke hgi-analytics-up"></i>
                                 <span class="nds-label">Up 18% this quarter</span>
                             </span>
                         </div>
@@ -128,7 +128,7 @@ hideFeedback: true
                 <div class="nds-card-header">
                     <div class="nds-card-featured-icon">
                         <span class="nds-featured-icon nds-circle nds-xl">
-                            <i class="hgi hgi-stroke hgi-clock-01 nds-icon"></i>
+                            <i class="nds-icon nds-hgi-clock-01" aria-hidden="true"></i>
                         </span>
                     </div>
                 </div>
@@ -140,7 +140,7 @@ hideFeedback: true
                     <div class="nds-card-meta">
                         <div class="nds-card-tags">
                             <span class="nds-tag nds-yellow nds-sm">
-                                <i class="hgi hgi-stroke hgi-alert-02 nds-icon"></i>
+                                <i class="hgi hgi-stroke hgi-alert-02"></i>
                                 <span class="nds-label">8 require attention</span>
                             </span>
                         </div>
@@ -151,7 +151,7 @@ hideFeedback: true
                 <div class="nds-card-header">
                     <div class="nds-card-featured-icon">
                         <span class="nds-featured-icon nds-circle nds-xl">
-                            <i class="hgi hgi-stroke hgi-user-multiple nds-icon"></i>
+                            <i class="hgi hgi-stroke hgi-user-multiple"></i>
                         </span>
                     </div>
                 </div>
@@ -163,7 +163,7 @@ hideFeedback: true
                     <div class="nds-card-meta">
                         <div class="nds-card-tags">
                             <span class="nds-tag nds-blue nds-sm">
-                                <i class="hgi hgi-stroke hgi-building-06 nds-icon"></i>
+                                <i class="hgi hgi-stroke hgi-building-06"></i>
                                 <span class="nds-label">Across 5 departments</span>
                             </span>
                         </div>
@@ -174,7 +174,7 @@ hideFeedback: true
                 <div class="nds-card-header">
                     <div class="nds-card-featured-icon">
                         <span class="nds-featured-icon nds-circle nds-xl">
-                            <i class="hgi hgi-stroke hgi-notification-02 nds-icon"></i>
+                            <i class="nds-icon nds-hgi-notification-02" aria-hidden="true"></i>
                         </span>
                     </div>
                 </div>
@@ -186,7 +186,7 @@ hideFeedback: true
                     <div class="nds-card-meta">
                         <div class="nds-card-tags">
                             <span class="nds-tag nds-red nds-sm">
-                                <i class="hgi hgi-stroke hgi-shield-01 nds-icon"></i>
+                                <i class="hgi hgi-stroke hgi-shield-01"></i>
                                 <span class="nds-label">2 critical alerts</span>
                             </span>
                         </div>
@@ -203,7 +203,7 @@ hideFeedback: true
         <div class="nds-section-head">
             <div class="nds-section-action nds-minimal">
                 <button class="nds-btn nds-primary nds-lead-icon">
-                    <i class="hgi hgi-stroke hgi-download-04 nds-icon"></i>
+                    <i class="hgi hgi-stroke hgi-download-04"></i>
                     <span class="nds-label">Export</span>
                 </button>
             </div>
@@ -213,20 +213,19 @@ hideFeedback: true
         <div class="nds-form-container nds-search-box" data-filter-target="transactionsTableBody">
             <div class="nds-search-content">
                 <div class="nds-form-control">
-                    <i class="hgi hgi-stroke hgi-search-01 nds-icon"></i>
+                    <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
                     <input type="text" class="nds-search-input" placeholder="Search transactions...">
                     <div class="nds-form-action">
-                        <button class="nds-btn nds-subtle nds-clear" hidden><i
-                                class="hgi hgi-stroke hgi-cancel-01 nds-icon"></i></button>
+                        <button class="nds-btn nds-subtle nds-clear" hidden><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
                     </div>
                 </div>
                 <button class="nds-btn nds-primary nds-search-btn" type="button">
-                    <i class="hgi hgi-stroke hgi-search-01 nds-icon"></i>
+                    <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
                     <span class="nds-label">Search</span>
                 </button>
                 <div class="nds-dropmenu nds-filter" data-filter-target="transactionsTableBody">
                     <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
-                        <i class="hgi hgi-stroke hgi-filter nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-filter"></i>
                         <span class="nds-label">Filter</span>
                     </button>
                     <div class="nds-dropmenu-menu" hidden>
@@ -352,10 +351,10 @@ hideFeedback: true
                         <td class="actions-column">
                             <div class="table-actions">
                                 <button class="nds-btn nds-subtle nds-sm nds-icon-only" aria-label="View transaction details">
-                                    <i class="hgi hgi-stroke hgi-eye nds-icon"></i>
+                                    <i class="nds-icon nds-hgi-eye" aria-hidden="true"></i>
                                 </button>
                                 <button class="nds-btn nds-subtle nds-sm nds-icon-only" aria-label="Download receipt">
-                                    <i class="hgi hgi-stroke hgi-download-04 nds-icon"></i>
+                                    <i class="hgi hgi-stroke hgi-download-04"></i>
                                 </button>
                             </div>
                         </td>
@@ -375,7 +374,7 @@ hideFeedback: true
         <div class="nds-section-head">
             <div class="nds-section-action nds-minimal">
                 <button class="nds-btn nds-primary nds-lead-icon">
-                    <i class="hgi hgi-stroke hgi-user-add-01 nds-icon"></i>
+                    <i class="hgi hgi-stroke hgi-user-add-01"></i>
                     <span class="nds-label">Add Member</span>
                 </button>
             </div>
@@ -385,20 +384,19 @@ hideFeedback: true
         <div class="nds-form-container nds-search-box" data-filter-target="teamDirectoryGrid">
             <div class="nds-search-content">
                 <div class="nds-form-control">
-                    <i class="hgi hgi-stroke hgi-search-01 nds-icon"></i>
+                    <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
                     <input type="text" class="nds-search-input" placeholder="Search team members...">
                     <div class="nds-form-action">
-                        <button class="nds-btn nds-subtle nds-clear" hidden><i
-                                class="hgi hgi-stroke hgi-cancel-01 nds-icon"></i></button>
+                        <button class="nds-btn nds-subtle nds-clear" hidden><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
                     </div>
                 </div>
                 <button class="nds-btn nds-primary nds-search-btn" type="button">
-                    <i class="hgi hgi-stroke hgi-search-01 nds-icon"></i>
+                    <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
                     <span class="nds-label">Search</span>
                 </button>
                 <div class="nds-dropmenu nds-filter" data-filter-target="teamDirectoryGrid">
                     <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
-                        <i class="hgi hgi-stroke hgi-filter nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-filter"></i>
                         <span class="nds-label">Filter</span>
                     </button>
                     <div class="nds-dropmenu-menu" hidden>
@@ -446,7 +444,7 @@ hideFeedback: true
                                     {% if user.avatar %}
                                     <img src="{{ user.avatar | relative_url }}" alt="{{ user.name }}" loading="lazy">
                                     {% else %}
-                                    <i class="hgi hgi-stroke hgi-user"></i>
+                                    <i class="nds-icon nds-hgi-user" aria-hidden="true"></i>
                                     {% endif %}
                                 </span>
                             </div>
@@ -479,7 +477,7 @@ hideFeedback: true
                         </div>
                         <div class="nds-card-actions">
                             <a href="mailto:{{ user.email }}" class="nds-btn nds-secondary-outline nds-lg nds-lead-icon">
-                                <i class="hgi hgi-stroke hgi-mail-01 nds-icon"></i>
+                                <i class="nds-icon nds-hgi-mail-01" aria-hidden="true"></i>
                                 <span class="nds-label">Contact</span>
                             </a>
                         </div>

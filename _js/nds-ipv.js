@@ -400,28 +400,28 @@
                 <div class="nds-ipv-popup-container">
                     <div class="nds-ipv-popup-controls">
                         <button class="nds-ipv-control-btn nds-ipv-zoom-in-btn" title="Zoom In">
-                            <i class="hgi hgi-stroke hgi-zoom-in-area"></i>
+                            <i class="nds-icon nds-hgi-zoom-in-area" aria-hidden="true"></i>
                         </button>
                         <button class="nds-ipv-control-btn nds-ipv-zoom-out-btn" title="Zoom Out">
-                            <i class="hgi hgi-stroke hgi-zoom-out-area"></i>
+                            <i class="nds-icon nds-hgi-zoom-out-area" aria-hidden="true"></i>
                         </button>
                         <button class="nds-ipv-control-btn nds-ipv-reset-zoom-btn" title="Reset Zoom">
-                            <i class="hgi hgi-stroke hgi-square-arrow-shrink-01"></i>
+                            <i class="nds-icon nds-hgi-square-arrow-shrink-01" aria-hidden="true"></i>
                         </button>
                         <button class="nds-ipv-control-btn nds-ipv-ui-toggle-btn" title="Hide UI">
-                            <i class="hgi hgi-stroke hgi-eye"></i>
+                            <i class="nds-icon nds-hgi-eye" aria-hidden="true"></i>
                         </button>
                         <button class="nds-ipv-control-btn nds-ipv-close-btn" title="Close">
-                            <i class="hgi hgi-stroke hgi-cancel-01"></i>
+                            <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                         </button>
                     </div>
 
                     <div class="nds-ipv-navigation-controls">
                         <button class="nds-ipv-control-btn nds-ipv-prev-btn" title="Previous Image">
-                            <i class="hgi hgi-stroke hgi-arrow-right-01"></i>
+                            <i class="nds-icon nds-hgi-arrow-right-01" aria-hidden="true"></i>
                         </button>
                         <button class="nds-ipv-control-btn nds-ipv-next-btn" title="Next Image">
-                            <i class="hgi hgi-stroke hgi-arrow-left-01"></i>
+                            <i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
                         </button>
                     </div>
 

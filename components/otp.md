@@ -461,42 +461,42 @@ document.getElementById('clear-btn').addEventListener('click', function() {
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-plug-socket"></i>
                         <span class="nds-label">Auto-initialization</span>
                     </span>
                     <p class="nds-item-desc">Initializes on page load and detects dynamically added groups via MutationObserver. No manual setup needed.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-keyboard nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-keyboard"></i>
                         <span class="nds-label">Keyboard Navigation</span>
                     </span>
                     <p class="nds-item-desc">Arrow keys move between inputs (RTL-aware). Backspace clears and moves back. Delete clears and moves forward. Auto-advances on digit entry.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-clipboard nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-clipboard"></i>
                         <span class="nds-label">Paste Support</span>
                     </span>
                     <p class="nds-item-desc">Pasting a multi-digit string distributes digits across all inputs from the first position. Non-numeric characters are stripped automatically.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-link-square-02 nds-icon"></i>
+                        <i class="nds-icon nds-hgi-link-square-02" aria-hidden="true"></i>
                         <span class="nds-label">Hidden Field Sync</span>
                     </span>
                     <p class="nds-item-desc">A hidden input with <code class="nds-inline-code lang-html">nds-otp-value</code> class stays in sync with the concatenated value for form submission.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-notification-03 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-notification-03"></i>
                         <span class="nds-label">Custom Events</span>
                     </span>
                     <p class="nds-item-desc">Fires <code class="nds-inline-code lang-js">nds:otpChange</code> on any input change, <code class="nds-inline-code lang-js">nds:otpComplete</code> when all digits are filled, and <code class="nds-inline-code lang-js">nds:otpClear</code> on clear.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-eye nds-icon"></i>
+                        <i class="nds-icon nds-hgi-eye" aria-hidden="true"></i>
                         <span class="nds-label">Accessibility</span>
                     </span>
                     <p class="nds-item-desc">High-contrast mode thickens input borders. Reduced motion disables transitions. <code class="nds-inline-code lang-html">autocomplete="one-time-code"</code> enables autofill on mobile.</p>

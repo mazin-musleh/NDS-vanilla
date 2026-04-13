@@ -91,7 +91,7 @@ direction: ltr
                                 </svg>
                                 <div class="nds-progress-info">
                                     <span class="nds-feedback nds-sm">
-                                        <span class="nds-feedback-icon"><i class="hgi hgi-stroke nds-icon"></i></span>
+                                        <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
                                     </span>
                                     <span class="nds-progress-percentage">
                                         <span class="nds-progress-number"></span>
@@ -129,7 +129,7 @@ direction: ltr
   </svg>
   <div class="nds-progress-info">
     <span class="nds-feedback nds-sm">
-      <span class="nds-feedback-icon"><i class="hgi hgi-stroke nds-icon"></i></span>
+      <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
     </span>
     <span class="nds-progress-percentage">
       <span class="nds-progress-number"></span>
@@ -223,7 +223,7 @@ direction: ltr
                                     <div class="nds-progress-fill"></div>
                                 </div>
                                 <span class="nds-feedback nds-sm">
-                                    <span class="nds-feedback-icon"><i class="hgi hgi-stroke nds-icon"></i></span>
+                                    <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
                                     <span class="nds-feedback-message">Processing your file...</span>
                                 </span>
                             </div>
@@ -254,7 +254,7 @@ direction: ltr
     <div class="nds-progress-fill"></div>
   </div>
   <span class="nds-feedback nds-sm">
-    <span class="nds-feedback-icon"><i class="hgi hgi-stroke nds-icon"></i></span>
+    <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
     <span class="nds-feedback-message">Processing your file...</span>
   </span>
 </div>
@@ -280,42 +280,42 @@ direction: ltr
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-percent-circle nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-percent-circle"></i>
                         <span class="nds-label">Automatic Percentage Display</span>
                     </span>
                     <p class="nds-item-desc">Set <code class="nds-inline-code lang-html">--progress-value</code> and the displayed number updates to match, with no JavaScript required for rendering.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-resize-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-resize-01"></i>
                         <span class="nds-label">Scalable Sizes</span>
                     </span>
                     <p class="nds-item-desc">Five circle sizes from 24px compact counters to 240px hero displays, plus three bar heights, with text and icons that scale proportionally.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-colors nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-colors"></i>
                         <span class="nds-label">Status Feedback</span>
                     </span>
                     <p class="nds-item-desc">Success and error statuses swap the percentage for a feedback icon and apply the matching color automatically.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-chart-bar-line nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-chart-bar-line"></i>
                         <span class="nds-label">Inline Bar Percentage</span>
                     </span>
                     <p class="nds-item-desc">The large progress bar displays the current percentage inside the fill track, keeping the value visible without extra labels.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-variable nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-variable"></i>
                         <span class="nds-label">CSS Custom Property Control</span>
                     </span>
                     <p class="nds-item-desc">Override <code class="nds-inline-code lang-html">--progress-color</code>, <code class="nds-inline-code lang-html">--progress-size</code>, and <code class="nds-inline-code lang-html">--progress-height</code> to customize appearance without modifying SCSS.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-motion-02 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-motion-02"></i>
                         <span class="nds-label">Smooth Transitions</span>
                     </span>
                     <p class="nds-item-desc">Both circle and bar fills animate smoothly when the progress value changes, giving users clear visual feedback during updates.</p>

@@ -119,7 +119,7 @@
 
 }
 
-.nds-digitalStamp-icon>.nds-icon {
+.nds-digitalStamp-icon>:is(.nds-icon, i) {
     color: var(--text-primary);
 }
 

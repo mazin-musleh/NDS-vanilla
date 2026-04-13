@@ -167,7 +167,7 @@ direction: ltr
                     <div class="demo-container">
                         <div class="state-demo">
                             <div class="nds-avatar nds-lg">
-                                <i class="hgi hgi-stroke hgi-user"></i>
+                                <i class="nds-icon nds-hgi-user" aria-hidden="true"></i>
                             </div>
                         </div>
                     </div>
@@ -190,7 +190,7 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code"><div class="nds-avatar nds-lg">
-  <i class="hgi hgi-stroke hgi-user"></i>
+  <i class="nds-icon nds-hgi-user" aria-hidden="true"></i>
 </div></code>
                                 </div>
                             </div>
@@ -365,7 +365,7 @@ direction: ltr
                     <div class="demo-container">
                         <div class="state-demo">
                             <a href="#" class="nds-avatar nds-lg">
-                                <i class="hgi hgi-stroke hgi-user"></i>
+                                <i class="nds-icon nds-hgi-user" aria-hidden="true"></i>
                             </a>
                         </div>
                     </div>
@@ -388,7 +388,7 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code"><a href="/user/profile" class="nds-avatar nds-lg">
-  <i class="hgi hgi-stroke hgi-user"></i>
+  <i class="nds-icon nds-hgi-user" aria-hidden="true"></i>
 </a></code>
                                 </div>
                             </div>
@@ -463,7 +463,7 @@ direction: ltr
                         <div class="state-demo">
                             <div class="nds-dropmenu">
                                 <button type="button" class="nds-avatar nds-lg nds-dropmenu-trigger" aria-label="Open user menu">
-                                    <i class="hgi hgi-stroke hgi-user"></i>
+                                    <i class="nds-icon nds-hgi-user" aria-hidden="true"></i>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
@@ -490,8 +490,7 @@ direction: ltr
                                         <span class="nds-tab-label">HTML</span>
                                     </button>
                                 </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i
-                                        class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i>
+                                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
                                 </button>
                             </div>
                             <div class="nds-tab-content">
@@ -506,7 +505,7 @@ direction: ltr
                                         <code class="lang-html code">
 <div class="nds-dropmenu">
     <button type="button" class="nds-avatar nds-lg nds-dropmenu-trigger" aria-label="Open user menu">
-        <i class="hgi hgi-stroke hgi-user"></i>
+        <i class="nds-icon nds-hgi-user" aria-hidden="true"></i>
     </button>
     <div class="nds-dropmenu-menu" hidden>
         <div class="nds-dropmenu-scroll">
@@ -626,8 +625,7 @@ direction: ltr
                                         <span class="nds-tab-label">HTML</span>
                                     </button>
                                 </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i
-                                        class="hgi hgi-stroke hgi-arrow-left-01 nds-icon"></i>
+                                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
                                 </button>
                             </div>
                             <div class="nds-tab-content">
@@ -682,28 +680,28 @@ direction: ltr
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-tag-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-tag-01"></i>
                         <span class="nds-label">Pure CSS</span>
                     </span>
                     <p class="nds-item-desc">No JavaScript required. Renders immediately from HTML markup.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-resize-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-resize-01"></i>
                         <span class="nds-label">Seven Sizes</span>
                     </span>
                     <p class="nds-item-desc">From 24px (XS) to 120px (3XL). Font and icon scale proportionally.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-puzzle nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-puzzle"></i>
                         <span class="nds-label">Element Agnostic</span>
                     </span>
                     <p class="nds-item-desc">Works on div, a, or button elements for display, navigation, or actions.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-user-group nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-user-group"></i>
                         <span class="nds-label">Group Layout</span>
                     </span>
                     <p class="nds-item-desc">Stack avatars with overlapping or spaced arrangement and overflow count.</p>

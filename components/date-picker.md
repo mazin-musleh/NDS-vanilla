@@ -55,7 +55,7 @@ direction: ltr
                     <div class="nds-form-action">
                       <button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle"
                         aria-label="Calendar Toggler">
-                        <i class="hgi hgi-stroke hgi-calendar-03 nds-icon"></i>
+                        <i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"></i>
                       </button>
                     </div>
                     <input type="text" id="demo-datePickerInput" class="nds-input nds-date-input" placeholder="DD/MM/YYYY"
@@ -101,7 +101,7 @@ direction: ltr
     <div class="nds-form-action">
       <button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle"
         aria-label="Calendar Toggler">
-        <i class="hgi hgi-stroke hgi-calendar-03 nds-icon"></i>
+        <i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"></i>
       </button>
     </div>
     <input type="text" id="date-picker-1" class="nds-input nds-date-input"
@@ -132,42 +132,42 @@ direction: ltr
       <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1;">
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket nds-icon"></i>
+            <i class="hgi hgi-stroke hgi-plug-socket"></i>
             <span class="nds-label">Auto-initialization</span>
           </span>
           <p class="nds-item-desc">Initializes automatically via the forms system when a <code class="nds-inline-code lang-html">.nds-date-input</code> is found inside <code class="nds-inline-code lang-html">.nds-form-control</code>. Calendar dropdown is created lazily on first click. For dynamic content, call <code class="nds-inline-code lang-js">NDS.Datepicker.reinit()</code>.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-exchange-01 nds-icon"></i>
+            <i class="hgi hgi-stroke hgi-exchange-01"></i>
             <span class="nds-label">Dual Calendar System</span>
           </span>
           <p class="nds-item-desc">Supports both Gregorian and Hijri (Islamic lunar) calendars. Add the <code class="nds-inline-code lang-html">nds-hijri</code> class to the container to switch. Conversion uses an accurate API reference with browser Intl and mathematical fallbacks.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-calendar-check-in-01 nds-icon"></i>
+            <i class="hgi hgi-stroke hgi-calendar-check-in-01"></i>
             <span class="nds-label">Date Range Selection</span>
           </span>
           <p class="nds-item-desc">Add the <code class="nds-inline-code lang-html">dateRange</code> class to enable start/end date selection. Visual indicators highlight the range with connected cells between start and end dates.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-calendar-setting-01 nds-icon"></i>
+            <i class="hgi hgi-stroke hgi-calendar-setting-01"></i>
             <span class="nds-label">Flexible Year Range</span>
           </span>
           <p class="nds-item-desc">Control the year dropdown range with <code class="nds-inline-code lang-html">data-year-before</code> and <code class="nds-inline-code lang-html">data-year-after</code> attributes on the input. Defaults work for most use cases.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-globe-02 nds-icon"></i>
+            <i class="hgi hgi-stroke hgi-globe-02"></i>
             <span class="nds-label">Bilingual Support</span>
           </span>
           <p class="nds-item-desc">Month names, weekday labels, and button text render in Arabic or English based on the page language. Add <code class="nds-inline-code lang-html">data-lang="ar"</code> on the input to override. Supports RTL and LTR layouts with correct dropdown positioning.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-arrow-shrink-02 nds-icon"></i>
+            <i class="hgi hgi-stroke hgi-arrow-shrink-02"></i>
             <span class="nds-label">Smart Positioning</span>
           </span>
           <p class="nds-item-desc">Calendar dropdown automatically flips above the input when there is not enough space below. On mobile, the dropdown centers horizontally for better visibility.</p>

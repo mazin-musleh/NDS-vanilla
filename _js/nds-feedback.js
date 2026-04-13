@@ -104,7 +104,7 @@
             if (showIcon) {
                 html += `
                     <span class="nds-feedback-icon">
-                        <i class="hgi hgi-stroke nds-icon"></i>
+                        <i class="nds-icon" aria-hidden="true"></i>
                     </span>
                 `;
             }

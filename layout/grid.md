@@ -408,42 +408,42 @@ direction: ltr
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layout-grid nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-layout-grid"></i>
                         <span class="nds-label">Auto-fit Columns</span>
                     </span>
                     <p class="nds-item-desc">Grid children distribute into equal columns automatically, filling available width without manual column counts.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-resize-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-resize-01"></i>
                         <span class="nds-label">Minimum Width Wrapping</span>
                     </span>
                     <p class="nds-item-desc">Set <code class="nds-inline-code lang-html">--min-width</code> to wrap items naturally once they cannot fit the specified minimum, no media queries needed.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-mobile-programming-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-mobile-programming-01"></i>
                         <span class="nds-label">Responsive Column Tokens</span>
                     </span>
                     <p class="nds-item-desc">Set different column counts per viewport with <code class="nds-inline-code lang-html">--max-col</code>, <code class="nds-inline-code lang-html">--mid-col</code>, and <code class="nds-inline-code lang-html">--min-col</code>, each cascading to the next as a fallback.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layout-3-column nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-layout-3-column"></i>
                         <span class="nds-label">Custom Track Layouts</span>
                     </span>
                     <p class="nds-item-desc">Define explicit <code class="nds-inline-code lang-html">grid-template-columns</code> per breakpoint with <code class="nds-inline-code lang-html">--max-track</code>, <code class="nds-inline-code lang-html">--mid-track</code>, and <code class="nds-inline-code lang-html">--min-track</code> for asymmetric layouts.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-arrow-shrink nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-arrow-shrink"></i>
                         <span class="nds-label">Adaptive Gap Scaling</span>
                     </span>
                     <p class="nds-item-desc">Gap and row-gap values halve automatically at tablet and mobile breakpoints, keeping spacing proportional on smaller screens.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-align-box-middle-center nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-align-box-middle-center"></i>
                         <span class="nds-label">Alignment Tokens</span>
                     </span>
                     <p class="nds-item-desc">Control horizontal and vertical alignment of grid items through <code class="nds-inline-code lang-html">--justify</code> and <code class="nds-inline-code lang-html">--align</code> custom properties.</p>

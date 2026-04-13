@@ -25,16 +25,9 @@
     <meta name="description"
         content="{{ page.description | default: page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}">
     <title>{%- if page.title %}{{ page.title }} | {%- endif %}{{ site_title }}</title>
-    <!-- Define deferred assets loader BEFORE any links that call it -->
+    <!-- Defer non-critical favicon load -->
     <script>
         function loadDeferredAssets() {
-            // Load icon font CSS
-            var iconLink = document.createElement('link');
-            iconLink.rel = 'stylesheet';
-            iconLink.href = '{{ "assets/css/hgi-rounded-stroke-min.css?ver=1.001" | relative_url }}';
-            document.head.appendChild(iconLink);
-
-            // Load favicon
             var favicon = document.createElement('link');
             favicon.rel = 'icon';
             favicon.type = 'image/svg+xml';
@@ -42,10 +35,23 @@
             document.head.appendChild(favicon);
         }
     </script>
-    <!-- Icon FOUT prevention (inline – must beat deferred main CSS) -->
-    <style>i.hgi-stroke{opacity:var(--hgi-icon-opacity,0)}</style>
     <!-- Critical CSS - Blocking (small, cacheable) -->
     <link rel="stylesheet" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver=1.009">
+    <!-- Icons CSS (core) - Tier 1 inlined, always loaded -->
+    <link rel="preload" href="{{ 'assets/css/nds-icons.min.css' | relative_url }}?ver=1.000" as="style"
+        onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="{{ 'assets/css/nds-icons.min.css' | relative_url }}?ver=1.000">
+    </noscript>
+    <!-- HGI icon font from CDN - renders `.hgi.hgi-stroke.hgi-*` markup in content/demo/doc.
+         Opt in via `use_hgi_font: true` in _config.yml or page front-matter. -->
+    {%- if site.use_hgi_font or page.use_hgi_font %}
+    <link rel="preload" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" as="style"
+        onload="this.onload=null;this.rel='stylesheet'" crossorigin="anonymous">
+    <noscript>
+        <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" crossorigin="anonymous">
+    </noscript>
+    {%- endif %}
     <!-- Main CSS - Deferred loading for below-the-fold content -->
     <link rel="preload" href="{{ 'assets/css/nds-main.min.css' | relative_url }}?ver=1.064" as="style"
         onload="this.onload=null;this.rel='stylesheet';loadDeferredAssets()">
@@ -62,7 +68,6 @@
     {%- endfor %}
     {%- endif %}
     <noscript>
-        <link rel="stylesheet" href="{{ 'assets/css/hgi-rounded-stroke-min.css' | relative_url }}">
         <link rel="icon" type="image/svg+xml" href="{{ 'assets/img/favicon.svg' | relative_url }}">
     </noscript>
     {%- if site.debug %}

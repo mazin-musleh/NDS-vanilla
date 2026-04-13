@@ -59,10 +59,10 @@ direction: ltr
                                 aria-hidden="true" hidden>
                                 <div class="nds-card-header">
                                     <span class="nds-featured-icon nds-circle" data-status="neutral">
-                                        <i class="hgi hgi-stroke hgi-information-circle nds-icon"></i>
+                                        <i class="nds-icon nds-hgi-information-circle" aria-hidden="true"></i>
                                     </span>
                                     <button class="nds-close nds-modal-close nds-btn nds-subtle" aria-label="Close modal">
-                                        <i class="hgi hgi-stroke hgi-cancel-01 nds-icon"></i>
+                                        <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                                     </button>
                                 </div>
                                 <div class="nds-card-content">
@@ -85,7 +85,7 @@ direction: ltr
                                         <div class="nds-form-footer">
                                             <span class="nds-feedback nds-outline nds-sm">
                                                 <span class="nds-feedback-icon">
-                                                    <i class="hgi hgi-stroke nds-icon"></i>
+                                                    <i class="nds-icon" aria-hidden="true"></i>
                                                 </span>
                                                 <span class="msg"></span>
                                             </span>
@@ -134,10 +134,10 @@ direction: ltr
     aria-hidden="true" hidden>
   <div class="nds-card-header">
     <span class="nds-featured-icon nds-circle" data-status="neutral">
-      <i class="hgi hgi-stroke hgi-information-circle nds-icon"></i>
+      <i class="nds-icon nds-hgi-information-circle" aria-hidden="true"></i>
     </span>
     <button class="nds-close nds-modal-close nds-btn nds-subtle" aria-label="Close modal">
-      <i class="hgi hgi-stroke hgi-cancel-01 nds-icon"></i>
+      <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
     </button>
   </div>
   <div class="nds-card-content">
@@ -159,7 +159,7 @@ direction: ltr
       <div class="nds-form-footer">
         <span class="nds-feedback nds-outline nds-sm">
           <span class="nds-feedback-icon">
-            <i class="hgi hgi-stroke nds-icon"></i>
+            <i class="nds-icon" aria-hidden="true"></i>
           </span>
           <span class="msg"></span>
         </span>
@@ -198,56 +198,56 @@ direction: ltr
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-plug-socket"></i>
                         <span class="nds-label">Auto-initialization</span>
                     </span>
                     <p class="nds-item-desc">Modals wire up from <code class="nds-inline-code lang-html">data-modal-target</code> and <code class="nds-inline-code lang-html">data-modal-close</code> attributes with no JavaScript init call required.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-focus-point nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-focus-point"></i>
                         <span class="nds-label">Focus Trap</span>
                     </span>
                     <p class="nds-item-desc">Tab and Shift+Tab cycle through focusable elements inside the modal, keeping keyboard users contained until they dismiss it.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-keyboard nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-keyboard"></i>
                         <span class="nds-label">Keyboard Dismissal</span>
                     </span>
                     <p class="nds-item-desc">Pressing Escape closes the modal and its backdrop without any extra wiring.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-paint-board nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-paint-board"></i>
                         <span class="nds-label">Backdrop Overlay</span>
                     </span>
                     <p class="nds-item-desc">A dimmed, blurred overlay covers the page behind the modal. Clicking the backdrop closes the modal automatically.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-lock-key nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-lock-key"></i>
                         <span class="nds-label">Body Scroll Lock</span>
                     </span>
                     <p class="nds-item-desc">Page scrolling is disabled while a modal is open and restored when it closes.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-mobile-programming-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-mobile-programming-01"></i>
                         <span class="nds-label">Mobile Bottom Sheet</span>
                     </span>
                     <p class="nds-item-desc">On small screens the modal slides up from the bottom with rounded top corners, and action buttons expand to full width.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-motion-02 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-motion-02"></i>
                         <span class="nds-label">Animated Transitions</span>
                     </span>
                     <p class="nds-item-desc">Fade and scale on desktop, slide on mobile. The closing state drives the exit animation automatically.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-code-circle nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-code-circle"></i>
                         <span class="nds-label">Programmatic Control</span>
                     </span>
                     <p class="nds-item-desc">Open, close, and check state with <code class="nds-inline-code lang-js">NDS.Modal.open()</code>, <code class="nds-inline-code lang-js">NDS.Modal.close()</code>, and <code class="nds-inline-code lang-js">NDS.Modal.isOpen()</code>.</p>

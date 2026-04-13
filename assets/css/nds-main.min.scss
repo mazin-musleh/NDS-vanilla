@@ -22,6 +22,9 @@
 // Import mixins
 @use 'mixins' as *;
 
+// NOTE: Icon tokens + .nds-icon base are in assets/css/nds-icons.min.css
+// (loaded as a separate stylesheet via _includes/head.html).
+
 // Import base styles (dividers, links, interactive elements)
 @use 'base';
 

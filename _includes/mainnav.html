@@ -29,7 +29,7 @@
             <li class="nds-mainNav-toggler nds-nav-item">
                 <button class="nds-nav-link nds-btn nds-subtle nds-indicator" aria-label="Toggle navigation menu"
                     aria-expanded="false" aria-controls="ndsNavCollapse">
-                    <i class="hgi hgi-stroke hgi-menu-01 nds-icon"></i>
+                    <i class="nds-icon nds-hgi-menu-01" aria-hidden="true"></i>
                 </button>
             </li>
         </ul>
@@ -64,7 +64,7 @@
                 </ul>
                 <div class="nds-nav-item nds-show-more">
                     <a href="#" class="nds-nav-link nds-btn nds-subtle nds-indicator nds-full" title="Show More">
-                        <i class="hgi hgi-stroke hgi-arrow-down-01 nds-icon"></i>
+                        <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                     </a>
                 </div>
                 {%- endif %}
@@ -85,7 +85,7 @@
                                 <img src="{{ item.img_icon | relative_url }}" alt="{{ item.label }}" class="nds-icon">
                                 {%- if item.avatar %}</div>{%- endif %}
                             {%- elsif item.icon %}
-                            <i class="hgi hgi-stroke {{ item.icon }} nds-icon">{%- if item.badge %}<span class="nds-badge">{{ item.badge }}</span>{%- endif %}</i>
+                            <i class="nds-icon {{ item.icon }}" aria-hidden="true">{%- if item.badge %}<span class="nds-badge">{{ item.badge }}</span>{%- endif %}</i>
                             {%- endif %}
                             <span class="nds-label{%- if item.custom_class == 'lang' %} nds-lang-current{%- endif %}"
                                 {%- if item.id=='langToggleBtn' %} id="currentLangLabel"{%- endif %}>{{ item.label }}</span>
@@ -100,7 +100,7 @@
                                 <img src="{{ item.img_icon | relative_url }}" alt="{{ item.label }}" class="nds-icon">
                                 {%- if item.avatar %}</div>{%- endif %}
                             {%- elsif item.icon %}
-                            <i class="hgi hgi-stroke {{ item.icon }} nds-icon">{%- if item.badge %}<span class="nds-badge">{{ item.badge }}</span>{%- endif %}</i>
+                            <i class="nds-icon {{ item.icon }}" aria-hidden="true">{%- if item.badge %}<span class="nds-badge">{{ item.badge }}</span>{%- endif %}</i>
                             {%- endif %}
                             <span class="nds-label{%- if item.custom_class == 'lang' %} nds-lang-current{%- endif %}"
                                 {%- if item.id=='langToggleBtn' %} id="currentLangLabel"{%- endif %}>{{ item.label }}</span>

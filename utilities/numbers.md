@@ -295,7 +295,7 @@ direction: ltr
                                 <div class="nds-card-header">
                                     <div class="nds-card-featured-icon">
                                         <span class="nds-featured-icon nds-circle nds-xl">
-                                            <i class="hgi hgi-stroke hgi-award-03 nds-icon"></i>
+                                            <i class="hgi hgi-stroke hgi-award-03"></i>
                                         </span>
                                     </div>
                                 </div>
@@ -310,7 +310,7 @@ direction: ltr
                                 <div class="nds-card-header">
                                     <div class="nds-card-featured-icon">
                                         <span class="nds-featured-icon nds-circle nds-xl">
-                                            <i class="hgi hgi-stroke hgi-user-group nds-icon"></i>
+                                            <i class="hgi hgi-stroke hgi-user-group"></i>
                                         </span>
                                     </div>
                                 </div>
@@ -325,7 +325,7 @@ direction: ltr
                                 <div class="nds-card-header">
                                     <div class="nds-card-featured-icon">
                                         <span class="nds-featured-icon nds-circle nds-xl">
-                                            <i class="hgi hgi-stroke hgi-chart-line-data-02 nds-icon"></i>
+                                            <i class="hgi hgi-stroke hgi-chart-line-data-02"></i>
                                         </span>
                                     </div>
                                 </div>
@@ -364,7 +364,7 @@ direction: ltr
         <div class="nds-card-header">
             <div class="nds-card-featured-icon">
                 <span class="nds-featured-icon nds-circle nds-xl">
-                    <i class="hgi hgi-stroke hgi-award-03 nds-icon"></i>
+                    <i class="hgi hgi-stroke hgi-award-03"></i>
                 </span>
             </div>
         </div>
@@ -380,7 +380,7 @@ direction: ltr
         <div class="nds-card-header">
             <div class="nds-card-featured-icon">
                 <span class="nds-featured-icon nds-circle nds-xl">
-                    <i class="hgi hgi-stroke hgi-user-group nds-icon"></i>
+                    <i class="hgi hgi-stroke hgi-user-group"></i>
                 </span>
             </div>
         </div>
@@ -396,7 +396,7 @@ direction: ltr
         <div class="nds-card-header">
             <div class="nds-card-featured-icon">
                 <span class="nds-featured-icon nds-circle nds-xl">
-                    <i class="hgi hgi-stroke hgi-chart-line-data-02 nds-icon"></i>
+                    <i class="hgi hgi-stroke hgi-chart-line-data-02"></i>
                 </span>
             </div>
         </div>
@@ -431,42 +431,42 @@ direction: ltr
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-plug-socket"></i>
                         <span class="nds-label">Auto-initialization</span>
                     </span>
                     <p class="nds-item-desc">Both number formatting and counter animations activate automatically on page load with no extra JavaScript required.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-calculator-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-calculator-01"></i>
                         <span class="nds-label">Locale-aware Formatting</span>
                     </span>
                     <p class="nds-item-desc">Numbers are formatted with thousand separators based on the user's browser locale, preserving any surrounding text, signs, or suffixes.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-coins-dollar nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-coins-dollar"></i>
                         <span class="nds-label">Currency Symbols</span>
                     </span>
                     <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">data-currency</code> for automatic currency symbols including SAR (Saudi Riyal icon), USD, EUR, GBP, JPY, CNY, INR, KRW, and TRY.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-chart-increase nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-chart-increase"></i>
                         <span class="nds-label">Scroll-triggered Counters</span>
                     </span>
                     <p class="nds-item-desc">Counter animations begin when the element scrolls into view, with configurable start value, target, duration, and decimal precision.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-slow-winds nds-icon"></i>
+                        <i class="nds-icon nds-hgi-slow-winds" aria-hidden="true"></i>
                         <span class="nds-label">Reduced Motion Support</span>
                     </span>
                     <p class="nds-item-desc">Users who prefer reduced motion see the final counter value immediately with no animation, respecting the <code class="nds-inline-code lang-html">prefers-reduced-motion</code> media query.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-api nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-api"></i>
                         <span class="nds-label">Programmatic Control</span>
                     </span>
                     <p class="nds-item-desc">Call <code class="nds-inline-code lang-js">NDS.Numbers.reinit()</code> after dynamically adding numbers to format and animate new elements.</p>

@@ -341,28 +341,28 @@ direction: ltr
       <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1;">
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket nds-icon"></i>
+            <i class="hgi hgi-stroke hgi-plug-socket"></i>
             <span class="nds-label">Form Integration</span>
           </span>
           <p class="nds-item-desc">Auto-initializes with the forms system. Two-way binding syncs <code class="nds-inline-code lang-html">disabled</code> and <code class="nds-inline-code lang-html">required</code> states between inputs and containers.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-minus-sign nds-icon"></i>
+            <i class="hgi hgi-stroke hgi-minus-sign"></i>
             <span class="nds-label">Indeterminate State</span>
           </span>
           <p class="nds-item-desc">Set via <code class="nds-inline-code lang-js">NDS.Forms.setIndeterminate()</code>. Auto-clears on user click. Fires <code class="nds-inline-code lang-js">nds:indeterminateChange</code> event with <code class="nds-inline-code lang-js">detail.indeterminate</code> boolean.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-checkmark-circle-02 nds-icon"></i>
+            <i class="nds-icon nds-hgi-checkmark-circle-02" aria-hidden="true"></i>
             <span class="nds-label">Group Validation</span>
           </span>
           <p class="nds-item-desc">Min/max constraints with <code class="nds-inline-code lang-html">data-min-checked</code> and <code class="nds-inline-code lang-html">data-max-checked</code>. Auto-revalidates on change once an error is shown. Call <code class="nds-inline-code lang-js">NDS.Forms.clearStatus()</code> to reset.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layout-01 nds-icon"></i>
+            <i class="hgi hgi-stroke hgi-layout-01"></i>
             <span class="nds-label">Responsive Layout</span>
           </span>
           <p class="nds-item-desc">Column layout by default, row layout with <code class="nds-inline-code lang-html">nds-rowView</code> class. Gaps adjust on mobile for touch-friendly spacing.</p>

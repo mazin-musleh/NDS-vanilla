@@ -106,7 +106,7 @@
     background-color: var(--featuredicons-dark-bg-color);
     border: 2px solid transparent;
 
-    .nds-icon {
+    :is(.nds-icon, i) {
       color: var(--icon-oncolor);
     }
 

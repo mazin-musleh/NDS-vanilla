@@ -79,7 +79,7 @@ direction: ltr
                                 <span class="nds-label">Rounded</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["<i class=\"hgi hgi-stroke hgi-tag-01 icon\"></i>", ".nds-tag", "tagIcon", "content-prepend"]'>
+                                data-toggler='["<i class=\"hgi hgi-stroke hgi-tag-01\"></i>", ".nds-tag", "tagIcon", "content-prepend"]'>
                                 <span class="nds-label">Icon</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
@@ -286,7 +286,7 @@ direction: ltr
                                 <span class="nds-label">Rounded</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["<i class=\"hgi hgi-stroke hgi-star icon\"></i>", ".nds-tag", "oncolorIcon", "content-prepend"]'>
+                                data-toggler='["<i class=\"hgi hgi-stroke hgi-star\"></i>", ".nds-tag", "oncolorIcon", "content-prepend"]'>
                                 <span class="nds-label">Icon</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
@@ -414,7 +414,7 @@ direction: ltr
                     <div class="demo-container">
                         <div class="state-demo">
                             <span class="nds-tag nds-gray nds-icon-only">
-                                <i class="hgi hgi-stroke hgi-tag-01 nds-icon"></i>
+                                <i class="hgi hgi-stroke hgi-tag-01"></i>
                             </span>
                         </div>
                     </div>
@@ -438,7 +438,7 @@ direction: ltr
                                     </div>
                                     <code class="lang-html code">
 <span class="nds-tag nds-gray nds-icon-only">
-  <i class="hgi hgi-stroke hgi-tag-01 nds-icon"></i>
+  <i class="hgi hgi-stroke hgi-tag-01"></i>
 </span>
                                     </code>
                                 </div>
@@ -461,28 +461,28 @@ direction: ltr
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-tag-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-tag-01"></i>
                         <span class="nds-label">Pure CSS</span>
                     </span>
                     <p class="nds-item-desc">No JavaScript required. Tags render immediately from HTML markup.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-text-wrap nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-text-wrap"></i>
                         <span class="nds-label">Auto-truncation</span>
                     </span>
                     <p class="nds-item-desc">Labels truncate to a single line with ellipsis, configurable via --truncate.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-colors nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-colors"></i>
                         <span class="nds-label">Flexible Color API</span>
                     </span>
                     <p class="nds-item-desc">Set color via class (nds-green) for normal tags, or data-status attribute for status indicators.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-puzzle nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-puzzle"></i>
                         <span class="nds-label">Works Anywhere</span>
                     </span>
                     <p class="nds-item-desc">Drop into any component. Works as labels, badges, status indicators, or metadata display.</p>

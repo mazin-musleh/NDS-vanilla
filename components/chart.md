@@ -583,42 +583,42 @@ NDS.Chart.create('#my-chart', {
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-plug-socket"></i>
                         <span class="nds-label">Auto-initialization</span>
                     </span>
                     <p class="nds-item-desc">Charts with <code class="nds-inline-code lang-html">data-chart-*</code> attributes initialize on page load. Call <code class="nds-inline-code lang-js">NDS.Chart.init()</code> to re-scan after adding new chart elements dynamically.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-resize-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-resize-01"></i>
                         <span class="nds-label">Responsive Sizing</span>
                     </span>
                     <p class="nds-item-desc">Charts resize automatically when their container width changes. No manual resize calls needed.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-customize nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-customize"></i>
                         <span class="nds-label">CSS Theming</span>
                     </span>
                     <p class="nds-item-desc">Override colors, grid, tooltips, and labels with CSS custom properties. Dark mode adapts automatically.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-analytics-up nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-analytics-up"></i>
                         <span class="nds-label">Smart Scaling</span>
                     </span>
                     <p class="nds-item-desc">Automatic nice-number axis scaling, number formatting (K/M suffixes), and legend wrapping.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-printer nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-printer"></i>
                         <span class="nds-label">Print and Accessibility</span>
                     </span>
                     <p class="nds-item-desc">Tooltips hidden in print, transitions disabled for reduced-motion preference. SVG output includes ARIA labels for screen readers.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-chart-line-data-01 nds-icon"></i>
+                        <i class="hgi hgi-stroke hgi-chart-line-data-01"></i>
                         <span class="nds-label">Programmatic Control</span>
                     </span>
                     <p class="nds-item-desc">Create, update, and destroy charts with <code class="nds-inline-code lang-js">NDS.Chart.create()</code>. Options deep-merge on update for live reconfiguration.</p>

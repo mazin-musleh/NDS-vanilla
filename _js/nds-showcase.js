@@ -1929,7 +1929,7 @@
             if (isActive) {
                 if (!childBtn.querySelector('i.hgi')) {
                     var icon = document.createElement('i');
-                    icon.className = 'hgi hgi-stroke hgi-award-05';
+                    icon.className = 'nds-icon nds-hgi-award-05';
                     childBtn.insertBefore(icon, childBtn.firstChild);
                 }
             } else {

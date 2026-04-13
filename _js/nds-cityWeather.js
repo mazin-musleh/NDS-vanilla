@@ -66,38 +66,38 @@
             if (code <= 1) {
                 arabicDesc = "صافي";
                 englishDesc = "Clear";
-                icon = isNight ? "hgi-moon-02" : "hgi-sun-03";
+                icon = isNight ? "nds-hgi-moon-02" : "nds-hgi-sun-03";
             } else if (code === 2) {
                 arabicDesc = "غائم جزئيًا";
                 englishDesc = "Partly Cloudy";
-                icon = isNight ? "hgi-moon-cloud" : "hgi-sun-cloud-01";
+                icon = isNight ? "nds-hgi-moon-cloud" : "nds-hgi-sun-cloud-01";
             } else if (code === 3) {
                 arabicDesc = "غائم";
                 englishDesc = "Overcast";
-                icon = "hgi-cloud";
+                icon = "nds-hgi-cloud";
             } else if (code >= 45 && code <= 48) {
                 arabicDesc = "ضباب";
                 englishDesc = "Fog";
-                icon = "hgi-slow-winds";
+                icon = "nds-hgi-slow-winds";
             } else if (code >= 51 && code <= 67) {
                 arabicDesc = "أمطار";
                 englishDesc = "Rain";
-                icon = "hgi-cloud-angled-rain";
+                icon = "nds-hgi-cloud-angled-rain";
             } else if (code >= 71 && code <= 77) {
                 arabicDesc = "ثلوج";
                 englishDesc = "Snow";
-                icon = "hgi-cloud-snow";
+                icon = "nds-hgi-cloud-snow";
             } else if (code >= 80 && code <= 99) {
                 arabicDesc = "عاصفة";
                 englishDesc = "Storm";
-                icon = "hgi-cloud-angled-rain-zap";
+                icon = "nds-hgi-cloud-angled-rain-zap";
             } else {
                 throw new Error('Unknown weather code');
             }
 
             // Create both language versions from single API response
-            const arabicHtml = `<i class="hgi hgi-stroke ${icon} nds-icon"></i><span class="text">${arabicDesc}, ${temp}°C</span>`;
-            const englishHtml = `<i class="hgi hgi-stroke ${icon} nds-icon"></i><span class="text">${englishDesc}, ${temp}°C</span>`;
+            const arabicHtml = `<i class="nds-icon ${icon}" aria-hidden="true"></i><span class="text">${arabicDesc}, ${temp}°C</span>`;
+            const englishHtml = `<i class="nds-icon ${icon}" aria-hidden="true"></i><span class="text">${englishDesc}, ${temp}°C</span>`;
             
             el.innerHTML = isArabic ? arabicHtml : englishHtml;
             el.style.display = '';
@@ -145,7 +145,7 @@
 
             if (!city) throw new Error('No city found');
 
-            const html = `<i class="hgi hgi-stroke hgi-location-01 nds-icon"></i><span class="text">${city}</span>`;
+            const html = `<i class="nds-icon nds-hgi-location-01" aria-hidden="true"></i><span class="text">${city}</span>`;
             
             cityEl.innerHTML = html;
             cityEl.style.display = '';
