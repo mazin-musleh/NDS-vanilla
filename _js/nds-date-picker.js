@@ -1,10 +1,6 @@
 (() => {
     'use strict';
 
-    function setState(el, token, add) {
-        add ? NDS.State.add(el, token) : NDS.State.remove(el, token);
-    }
-
     /**
      * Helper to get current date in Saudi Arabia timezone (GMT+3)
      * Returns a Date object representing Saudi time
@@ -916,13 +912,13 @@
             var isNowOpen = NDS.State.has(this.elements.dropdown, 'hidden');
 
             if (isNowOpen) {
-                setState(this.elements.dropdown, 'hidden', false);
+                NDS.State.remove(this.elements.dropdown, 'hidden');
                 NDS.State.add(this.elements.container, 'open');
 
                 this.initializeCalendar();
                 this.adjustDropdownPosition();
             } else {
-                setState(this.elements.dropdown, 'hidden', true);
+                NDS.State.add(this.elements.dropdown, 'hidden');
                 NDS.State.remove(this.elements.container, 'open');
                 this.cleanup();
             }
@@ -1368,12 +1364,12 @@
 
             // Add appropriate classes
             if (type === 'other-month') {
-                setState(btn,'other-month');
+                NDS.State.add(btn, 'other-month');
             }
 
             // Check if today using calendar-aware method
             if (this.isTodayDate(date)) {
-                setState(btn,'today');
+                NDS.State.add(btn, 'today');
             }
 
             // Check selection states
@@ -1394,7 +1390,7 @@
             if (this.isRangeMode()) {
                 this.applyRangeStates(btn, date);
             } else if (this.state.selectedDate && this.isSameCalendarDate(date, this.state.selectedDate)) {
-                setState(btn,'selected');
+                NDS.State.add(btn, 'selected');
             }
         },
 
@@ -1438,23 +1434,23 @@
                 this.isDateInRange(date, this.state.rangeStart, this.state.rangeEnd);
 
             if (isRangeStart) {
-                setState(btn,'range-start');
+                NDS.State.add(btn, 'range-start');
             }
 
             if (isRangeEnd) {
-                setState(btn,'range-end');
+                NDS.State.add(btn, 'range-end');
             }
 
             if (isInRange) {
-                setState(btn,'in-range');
+                NDS.State.add(btn, 'in-range');
             }
 
             // Add visual continuity tokens for styling
             if (isRangeStart && this.state.rangeEnd) {
-                setState(btn,'has-range-end');
+                NDS.State.add(btn, 'has-range-end');
             }
             if (isRangeEnd && this.state.rangeStart) {
-                setState(btn,'has-range-start');
+                NDS.State.add(btn, 'has-range-start');
             }
         },
 
@@ -1481,15 +1477,13 @@
                 today._hijriYear = todaysHijriDate.year;
             }
 
-            if (this.isRangeMode()) {
-                this.handleRangeSelection(today);
-            } else {
+            // In range mode, just navigate to today's month (preserve selection)
+            if (!this.isRangeMode()) {
                 this.state.selectedDate = copyDateWithHijri(today);
             }
 
-            // Navigate to today's month for Hijri calendar
+            // Navigate to today's month
             if (this.state.calendarType === 'hijri') {
-                // Set current date to show today's Hijri month
                 var calendar = this.getCurrentCalendar();
                 var todaysGregorianEquivalent = calendar.hijriToGregorian(today._hijriYear, today._hijriMonth, 1);
                 todaysGregorianEquivalent._hijriDay = 1;
@@ -1499,10 +1493,12 @@
             } else {
                 this.state.currentDate = new Date(today);
             }
-            
+
             this.updateDropdowns();
             this.renderCalendarDates();
-            this.updateInput();
+            if (!this.isRangeMode()) {
+                this.updateInput();
+            }
         },
 
         clearSelection: function () {
@@ -1602,7 +1598,7 @@
                 // Close entire calendar if clicked outside container
                 if (self.isDropdownCreated && !self.elements.container.contains(clickTarget)) {
                     if (self.elements.dropdown) {
-                        setState(self.elements.dropdown, 'hidden', true);
+                        NDS.State.add(self.elements.dropdown, 'hidden');
                     }
                     NDS.State.remove(self.elements.container, 'open');
                     self.cleanup();
@@ -1633,7 +1629,7 @@
                     index === self.getCurrentMonth();        // For Gregorian: compare 0-based with 0-based
 
                 if (isSelected) {
-                    setState(btn,'selected');
+                    NDS.State.add(btn, 'selected');
                 }
 
                 btn.addEventListener('click', function (e) {
@@ -1696,7 +1692,7 @@
                 btn.innerHTML = '<span class="nds-label">' + year + '</span>';
 
                 if (year === currentYear) {
-                    setState(btn,'selected');
+                    NDS.State.add(btn, 'selected');
                 }
 
                 btn.addEventListener('click', function (e) {
