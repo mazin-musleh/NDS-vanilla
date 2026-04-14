@@ -2,6 +2,10 @@
     {%- assign site_title = page.siteTitle | default: site.title -%}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description"
+        content="{{ page.description | default: page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}">
+    <title>{%- if page.title %}{{ page.title }} | {%- endif %}{{ site_title }}</title>
+    <!-- Blocking scripts — FOUC / direction-mismatch prevention -->
     <script>
         // Apply cached theme before rendering to prevent FOUC
         (function() {
@@ -22,10 +26,23 @@
         })();
     </script>
     {%- endunless %}
-    <meta name="description"
-        content="{{ page.description | default: page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}">
-    <title>{%- if page.title %}{{ page.title }} | {%- endif %}{{ site_title }}</title>
-    <!-- Defer non-critical favicon load -->
+    <!-- Critical CSS - Blocking (small, cacheable) -->
+    <link rel="stylesheet" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver=1.009">
+    <!-- Icons — Tier 1 inlined (core) + HGI font (content/demo/doc) -->
+    <link rel="preload" href="{{ 'assets/css/nds-icons.min.css' | relative_url }}?ver=1.000" as="style"
+        onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="{{ 'assets/css/nds-icons.min.css' | relative_url }}?ver=1.000">
+    </noscript>
+    {%- if site.use_hgi_font or page.use_hgi_font %}
+    <style>i.hgi-stroke{opacity:0}body[data-font-loaded~="hgi-stroke-rounded"] i.hgi-stroke{opacity:1}</style>
+    <link rel="preload" href="{{ 'assets/css/hgi-rounded-stroke-min.css' | relative_url }}?ver=1.001" as="style"
+        onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="{{ 'assets/css/hgi-rounded-stroke-min.css' | relative_url }}?ver=1.001">
+    </noscript>
+    {%- endif %}
+    <!-- Main CSS - Deferred loading for below-the-fold content -->
     <script>
         function loadDeferredAssets() {
             var favicon = document.createElement('link');
@@ -35,24 +52,6 @@
             document.head.appendChild(favicon);
         }
     </script>
-    <!-- Critical CSS - Blocking (small, cacheable) -->
-    <link rel="stylesheet" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver=1.009">
-    <!-- Icons CSS (core) - Tier 1 inlined, always loaded -->
-    <link rel="preload" href="{{ 'assets/css/nds-icons.min.css' | relative_url }}?ver=1.000" as="style"
-        onload="this.onload=null;this.rel='stylesheet'">
-    <noscript>
-        <link rel="stylesheet" href="{{ 'assets/css/nds-icons.min.css' | relative_url }}?ver=1.000">
-    </noscript>
-    <!-- HGI icon font from CDN - renders `.hgi.hgi-stroke.hgi-*` markup in content/demo/doc.
-         Opt in via `use_hgi_font: true` in _config.yml or page front-matter. -->
-    {%- if site.use_hgi_font or page.use_hgi_font %}
-    <link rel="preload" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" as="style"
-        onload="this.onload=null;this.rel='stylesheet'" crossorigin="anonymous">
-    <noscript>
-        <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" crossorigin="anonymous">
-    </noscript>
-    {%- endif %}
-    <!-- Main CSS - Deferred loading for below-the-fold content -->
     <link rel="preload" href="{{ 'assets/css/nds-main.min.css' | relative_url }}?ver=1.064" as="style"
         onload="this.onload=null;this.rel='stylesheet';loadDeferredAssets()">
     <noscript>
