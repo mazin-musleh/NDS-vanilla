@@ -75,7 +75,8 @@
   font-size: calc(var(--_avatar-size) / 3);
 
   i {
-    font-size: calc(var(---_avatar-size) / 2);
+    width: calc(var(--_avatar-size) / 2);
+    height: calc(var(--_avatar-size) / 2);
   }
 
   &.nds-btn {
@@ -130,16 +131,6 @@
   }
 }
 
-// ==============================================
-// AVATAR TYPES
-// ==============================================
-
-.nds-avatar {
-  :is(.nds-label, i) {
-    width: 100%;
-    height: 100%;
-  }
-}
 
 // ==============================================
 // AVATAR GROUP
