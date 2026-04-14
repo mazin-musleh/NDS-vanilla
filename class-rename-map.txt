@@ -201,3 +201,14 @@ Example:
 Grid Custom Properties (renamed)
 --------------------------------
 --col-width → --min-width   (on .nds-grid, minimum column width inside minmax())
+
+Icon Classes (hgi font → nds-icon mask-image)
+----------------------------------------------
+<i class="hgi hgi-stroke hgi-NAME">        → <i class="nds-icon nds-hgi-NAME" aria-hidden="true">  (chrome/structural only)
+.hgi-NAME (SCSS selectors)                 → .nds-hgi-NAME
+.hgi (bare icon selector)                  → :is(.nds-icon, i)
+.hgi-loaded (font-load guard)              → (removed — tier-1 icons always render)
+JS: querySelector('.hgi')                  → querySelector('.nds-icon')
+JS: classList 'hgi-NAME'                   → classList 'nds-hgi-NAME'
+
+Note: Content/demo markup keeps <i class="hgi hgi-stroke hgi-NAME"> — rendered by CDN font.

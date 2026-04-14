@@ -202,13 +202,13 @@
   }
 
   &.nds-lead-icon {
-    .hgi:first-child {
+    :is(.nds-icon, i):first-child {
       margin-inline-end: var(--spacing-xs);
     }
   }
 
   &.nds-trail-icon {
-    .hgi:last-child {
+    :is(.nds-icon, i):last-child {
       margin-inline-start: var(--spacing-xs);
     }
   }

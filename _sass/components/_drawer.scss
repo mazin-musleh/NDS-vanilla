@@ -96,12 +96,6 @@
             white-space: normal;
         }
 
-        .hgi-arrow-left-01 {
-            @include ltr {
-                transform: scaleX(-1);
-            }
-        }
-
         &:is(:hover,[data-state~="active"]) .nds-featured-icon {
             --icon-bg-color: var(--featuredicons-background-default-light);
             --icon-color: var(--featuredicons-icon-neutral);
@@ -127,10 +121,6 @@
 
     // Hide arrow icons in always-open mode
     .nds-drawer-list>li>.nds-btn {
-        .hgi-arrow-left-01 {
-            display: none;
-        }
-
         // Hide pseudo-element arrows (for menu buttons)
         &.nds-menu-btn::after {
             display: none;
