@@ -852,7 +852,7 @@
       }
 
       // Progress circle SVG
-      svg circle.nds-progress-bar {
+      svg circle.nds-progress-track {
         // Static progress value (default)
         stroke-dashoffset: calc(var(--progress-circumference, 62.83) - (var(--progress-circumference, 62.83) * min(var(--progress-value, 0), 100) / 100));
 
@@ -862,7 +862,7 @@
 
     // Animated countdown when duration is set
     &:not(.nds-progress-static) .nds-progress-circle {
-      svg circle.nds-progress-bar {
+      svg circle.nds-progress-track {
         // Override static value with animation
         animation: button-progress-countdown linear forwards;
 

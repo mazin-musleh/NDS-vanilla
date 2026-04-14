@@ -12,7 +12,7 @@
 
 .nds-progress-circle {
   --_progress-size: var(--progress-size, 64px);
-  --_progress-value: var(--progress-value, 0); // Default progress value (0-100)
+  --_progress-value: var(--progress-value, 0);
   --_progress-circumference: var(--progress-circumference, 62.83); // 2πr where r=10
 
   @include progress-circle-base(var(--_progress-size), -90deg);
@@ -26,19 +26,29 @@
   counter-reset: progress-counter min(var(--_progress-value), 100);
 
   // Dynamic progress using CSS custom property
-  svg circle.nds-progress-bar {
+  svg circle.nds-progress-track {
     stroke-dasharray: var(--_progress-circumference) !important;
-    stroke-dashoffset: calc(var(--_progress-circumference) - (var(--_progress-circumference) * min(var(--progress-value), 100) / 100));
+    stroke-dashoffset: calc(var(--_progress-circumference) - (var(--_progress-circumference) * min(var(--_progress-value), 100) / 100));
     transition: stroke-dashoffset 0.3s ease !important;
   }
 
   // Auto-update progress number from CSS counter
-  .nds-progress-number {
+  .nds-progress-percentage .nds-progress-number {
 
     &::before {
       content: counter(progress-counter);
       line-height: normal;
       letter-spacing: clamp(0rem, calc(var(--_progress-size) * -0.0006), -0.12rem);
+    }
+  }
+
+  // "Out of" display (e.g. 3.75/5)
+  .nds-progress-out-of {
+    align-items: baseline !important;
+
+    .nds-progress-of {
+      font-weight: 400;
+      color: var(--text-muted);
     }
   }
 
@@ -109,7 +119,7 @@
 // ==============================================
 
 // Wrapper: label + bar + feedback (like form fields)
-.nds-progress-group {
+.nds-progress-bar {
   --_progress-height: var(--progress-height, 8px);
   --_progress-value: var(--progress-value, 0);
   --_progress-color: var(--progress-color, var(--background-primary));
@@ -129,7 +139,7 @@
   }
 
   // ─── Bar track ───
-  .nds-progress-bar {
+  .nds-progress-track {
     width: 100%;
     height: var(--_progress-height);
     background-color: var(--colors-neutral-100);

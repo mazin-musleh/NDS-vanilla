@@ -106,7 +106,7 @@ direction: ltr
                                         <div class="nds-progress-circle" style="--progress-size: 24px; --progress-value: 0;">
                                             <svg width="24" height="24" viewBox="0 0 24 24">
                                                 <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="3" />
-                                                <circle class="nds-progress-bar" cx="12" cy="12" r="10" fill="none" stroke-width="3"
+                                                <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="3"
                                                     stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" />
                                             </svg>
                                             <div class="nds-progress-info">
@@ -194,7 +194,7 @@ direction: ltr
       <div class="nds-progress-circle" style="--progress-size: 24px; --progress-value: 0;">
         <svg width="24" height="24" viewBox="0 0 24 24">
           <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="3" />
-          <circle class="nds-progress-bar" cx="12" cy="12" r="10" fill="none" stroke-width="3"
+          <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="3"
             stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" />
         </svg>
         <div class="nds-progress-info">

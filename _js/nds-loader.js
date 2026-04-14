@@ -77,6 +77,11 @@
             init: () => NDS.Drawer?.init?.(),
         },
         {
+            name: 'progress',
+            selector: '.nds-progress-circle, .nds-progress-bar',
+            init: () => NDS.Progress?.init?.(),
+        },
+        {
             name: 'numbers',
             selector: '.nds-number-format, .nds-counter-value',
             init: () => NDS.Numbers?.init?.(),

@@ -62,7 +62,8 @@ Nav Component
 Progress Components
 -------------------
 .progress-bg                → .nds-progress-bg
-.progress-bar (SVG circle)  → .nds-progress-bar   (scoped under .nds-progress-circle)
+.progress-bar (SVG circle)  → .nds-progress-track  (SVG stroke in circle, track div in bar)
+.progress-group             → .nds-progress-bar    (bar component wrapper)
 .progress-info              → .nds-progress-info
 .progress-number            → .nds-progress-number
 .progress-symbol            → .nds-progress-symbol

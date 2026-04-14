@@ -376,7 +376,7 @@ textarea {
         stroke: var(--_progress-track-color);
       }
 
-      &.nds-progress-bar {
+      &.nds-progress-track {
         stroke: var(--_progress-color);
       }
     }
@@ -395,12 +395,13 @@ textarea {
   .nds-progress-info {
     padding: 0 clamp(8px, calc(var(--_progress-size, #{$size}) * 0.2), 40px) !important;
 
-    .nds-progress-percentage {
+    :is(.nds-progress-percentage, .nds-progress-out-of) {
       display: flex;
       flex-wrap: nowrap;
       flex-direction: row;
       align-items: center;
       justify-content: center;
+      gap: var(--spacing-xxs);
       letter-spacing: clamp(0rem, calc(var(--_progress-size, #{$size}) * -0.0006), -0.12rem) !important;
     }
 
@@ -409,7 +410,10 @@ textarea {
       font-weight: 700 !important;
       line-height: normal;
     }
-
+    .nds-progress-of {
+      font-size: clamp(14px, calc(var(--_progress-size, #{$size}) * 0.1 + 4px), 30px);
+      line-height: normal;
+    }
     .nds-progress-text {
       font-size: clamp(10px, calc(var(--_progress-size, #{$size}) * 0.1), 20px);
       line-height: clamp(20px, calc(var(--_progress-size, #{$size}) * 0.125 + 5px), 30px);
@@ -425,7 +429,7 @@ textarea {
   $clamped-percent: min($percent, 100);
   $offset: calc(#{$circumference} - (#{$circumference} * #{$clamped-percent} / 100));
 
-  svg circle.nds-progress-bar {
+  svg circle.nds-progress-track {
     stroke-dasharray: $circumference !important;
     stroke-dashoffset: $offset;
     transition: stroke-dashoffset 0.3s ease !important;

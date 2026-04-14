@@ -740,7 +740,7 @@ direction: ltr
                             <div class="nds-progress-circle" hidden>
                                 <svg width="100%" height="100%" viewBox="0 0 24 24">
                                     <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2"></circle>
-                                    <circle class="nds-progress-bar" cx="12" cy="12" r="10" fill="none" stroke-width="2"
+                                    <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2"
                                         stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round"></circle>
                                 </svg>
                             </div>
@@ -775,7 +775,7 @@ direction: ltr
   <div class="nds-progress-circle" hidden>
     <svg width="100%" height="100%" viewBox="0 0 24 24">
       <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2"></circle>
-      <circle class="nds-progress-bar" cx="12" cy="12" r="10" fill="none" stroke-width="2"
+      <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2"
               stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round"></circle>
     </svg>
   </div>
@@ -879,7 +879,7 @@ direction: ltr
                             <div class="nds-progress-circle" hidden>
                                 <svg width="100%" height="100%" viewBox="0 0 24 24">
                                     <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2"></circle>
-                                    <circle class="nds-progress-bar" cx="12" cy="12" r="10" fill="none" stroke-width="2"
+                                    <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2"
                                         stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round"></circle>
                                 </svg>
                             </div>
@@ -914,7 +914,7 @@ direction: ltr
   <div class="nds-progress-circle" hidden>
     <svg width="100%" height="100%" viewBox="0 0 24 24">
       <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2"></circle>
-      <circle class="nds-progress-bar" cx="12" cy="12" r="10" fill="none" stroke-width="2"
+      <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2"
               stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round"></circle>
     </svg>
   </div>

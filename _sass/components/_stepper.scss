@@ -609,7 +609,7 @@
         @include progress-circle-base(var(--progress-size), -90deg);
 
         // Progress based on steps
-        svg circle.nds-progress-bar {
+        svg circle.nds-progress-track {
             stroke-dasharray: 62.83 !important;
 
             stroke-dashoffset: calc(62.83 - (62.83 * var(--current-step) / var(--total-steps)));

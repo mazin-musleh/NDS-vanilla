@@ -31,40 +31,6 @@
 
         setupObserver() {
             this.isInternalUpdate = false;
-
-            this.observer = new MutationObserver(() => {
-                if (this.isInternalUpdate) return;
-
-                const newCurrent = parseInt(this.element.dataset.current);
-                const newTotal = parseInt(this.element.dataset.total);
-                let changed = false;
-
-                // Check if total steps changed externally first
-                if (newTotal > 0 && newTotal !== this.totalSteps) {
-                    this.totalSteps = newTotal;
-                    this.steps = this.element.querySelectorAll('.nds-stepper-step');
-                    changed = true;
-                }
-
-                // Check if current step changed externally
-                if (newCurrent >= 1 && newCurrent !== this.currentStep) {
-                    // For radial steppers: clamp to totalSteps
-                    // For non-radial: allow currentStep > totalSteps for completion state
-                    this.currentStep = this.isRadial ? Math.min(newCurrent, this.totalSteps) : newCurrent;
-                    changed = true;
-                }
-
-                if (changed) {
-                    this.updateProgressDisplay();
-                    this.syncStepStates();
-                    this.dispatchEvent();
-                }
-            });
-
-            this.observer.observe(this.element, {
-                attributes: true,
-                attributeFilter: ['data-current', 'data-total']
-            });
         }
 
         isValidStep(stepNumber) {
@@ -253,6 +219,35 @@
                 steppers.set(element.id, stepper);
             }
         });
+
+        // Shared attribute observer for all steppers
+        NDS.onAttrChange('.nds-stepper', ['data-current', 'data-total'], els => {
+            els.forEach(el => {
+                const stepper = el.ndsStepper;
+                if (!stepper || stepper.isInternalUpdate) return;
+
+                const newCurrent = parseInt(el.dataset.current);
+                const newTotal = parseInt(el.dataset.total);
+                let changed = false;
+
+                if (newTotal > 0 && newTotal !== stepper.totalSteps) {
+                    stepper.totalSteps = newTotal;
+                    stepper.steps = el.querySelectorAll('.nds-stepper-step');
+                    changed = true;
+                }
+
+                if (newCurrent >= 1 && newCurrent !== stepper.currentStep) {
+                    stepper.currentStep = stepper.isRadial ? Math.min(newCurrent, stepper.totalSteps) : newCurrent;
+                    changed = true;
+                }
+
+                if (changed) {
+                    stepper.updateProgressDisplay();
+                    stepper.syncStepStates();
+                    stepper.dispatchEvent();
+                }
+            });
+        });
     }
 
     function get(id) {
@@ -318,7 +313,7 @@
  *   <div class="nds-progress-circle">
  *     <svg width="64" height="64" viewBox="0 0 24 24">
  *       <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="3" />
- *       <circle class="nds-progress-bar" cx="12" cy="12" r="10" fill="none" stroke-width="3"
+ *       <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="3"
  *         stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" />
  *     </svg>
  *     <div class="nds-progress-info">

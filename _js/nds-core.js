@@ -150,6 +150,33 @@
     NDS.onDOMAdd = (sel, fn) => { domBus.addSubs.push({ sel, fn }); domBus.start(); };
     NDS.onDOMRemove = (sel, fn) => { domBus.removeSubs.push({ sel, fn }); domBus.start(); };
 
+    // ── Attribute Change Observer ────────────────────────────────────
+    // Single MutationObserver on body for attribute changes, selector-based dispatch
+    // Usage: NDS.onAttrChange('.nds-progress-circle', ['data-value', 'data-num'], els => { ... })
+    const attrSubs = [];
+    NDS.onAttrChange = (sel, attrs, fn) => {
+        if (attrSubs.some(s => s.sel === sel && s.fn === fn)) return;
+        attrSubs.push({ sel, attrs: new Set(attrs), fn });
+        if (attrSubs.length === 1 && document.body) {
+            new MutationObserver(mutations => {
+                const changed = new Map();
+                for (let i = 0; i < mutations.length; i++) {
+                    const el = mutations[i].target;
+                    if (!changed.has(el)) changed.set(el, new Set());
+                    changed.get(el).add(mutations[i].attributeName);
+                }
+                for (let s = 0; s < attrSubs.length; s++) {
+                    const hits = [];
+                    changed.forEach((attrs, el) => {
+                        if (!el.matches(attrSubs[s].sel)) return;
+                        for (const a of attrs) { if (attrSubs[s].attrs.has(a)) { hits.push(el); break; } }
+                    });
+                    if (hits.length) attrSubs[s].fn(hits);
+                }
+            }).observe(document.body, { attributes: true, subtree: true });
+        }
+    };
+
     // ── State Management (data-state) ─────────────────────────────────
     // Space-separated token management for data-state attribute
     // Usage: NDS.State.add(el, 'open', 'active')
