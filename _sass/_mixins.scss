@@ -402,6 +402,7 @@ textarea {
       align-items: center;
       justify-content: center;
       gap: var(--spacing-xxs);
+      direction: ltr;
       letter-spacing: clamp(0rem, calc(var(--_progress-size, #{$size}) * -0.0006), -0.12rem) !important;
     }
 
