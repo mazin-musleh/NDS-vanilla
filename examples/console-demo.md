@@ -444,7 +444,7 @@ hideFeedback: true
                                     {% if user.avatar %}
                                     <img src="{{ user.avatar | relative_url }}" alt="{{ user.name }}" loading="lazy">
                                     {% else %}
-                                    <i class="nds-icon nds-hgi-user" aria-hidden="true"></i>
+                                    <i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>
                                     {% endif %}
                                 </span>
                             </div>

@@ -102,14 +102,14 @@ secondary_nav:
         url: "/notifications"
 
   - label: "Login"
-    icon: "nds-hgi-user"
+    icon: "nds-icon-avatar"
     custom_class: "nds-icon-only nds-guest"
     template: "mainnav-login.html"
     type: "dropdown"
     content_class: "nds-fit"
 
   - label: "Ahmed"
-    icon: "nds-hgi-user"
+    icon: "nds-icon-avatar"
     avatar: true
     img_icon: "assets/img/avatar3.png"
     custom_class: "nds-login nds-icon-only nds-auth"

@@ -1,83 +1,103 @@
 ---
 name: add-nds-icon
-description: Add one or more HGI icons to the inline UI-icon set so they render as mask-image via `.nds-icon.nds-hgi-{name}`. Use when components or chrome need a new icon that must paint immediately (no font wait, no FOUT). Content/demo pages should keep using `<i class="hgi hgi-stroke hgi-NAME">` — the local HGI font handles those automatically.
-argument-hint: "<icon-name> [<icon-name> ...]"
+description: Add an HGI icon, a raw SVG, or a Figma icon to the inline UI-icon set so it renders as mask-image via `.nds-icon.nds-hgi-{name}`. Use when components or chrome need a new icon that must paint immediately (no font wait, no FOUT). Triggers on "add HGI icon", "inline this SVG as an icon", and "add icon from Figma". Content/demo pages should keep using `<i class="hgi hgi-stroke hgi-NAME">` — the local HGI font handles those automatically.
+argument-hint: "<icon-name> [--from-figma <figma-url>] [--from-svg]"
 ---
 
 # Add UI Icon
 
-Adds each HGI icon name to `UI_ICONS` in `scripts/generate-icons-scss.mjs`, regenerates `_sass/_icons.scss`, and verifies the icons exist in `@hugeicons/core-free-icons`.
+Appends one `--nds-icon-{name}` token and one `.nds-hgi-{name}` alias to `_sass/_icons.scss`. The SCSS file is the source of truth and hand-editable; this skill only appends.
 
-## Inputs
+## Naming convention for style/type variants
 
-`$ARGUMENTS` is a whitespace-separated list of kebab-case HGI icon names (as shown on hugeicons.com — for example `star-circle`, `award-03`, `flame`). One or more. No prefix.
+HGI icons come in multiple styles (Stroke, Solid, Bulk, Twotone, Duotone) × types (Rounded, Sharp, Standard). Register each variant under its own kebab name: `{base}-{style}-{type}`. Omit segments that are the default (`stroke`, `rounded`).
 
-If `$ARGUMENTS` is empty, ask the user which icon name(s) they want.
+Examples for the `user` base:
 
-## Step 1: Validate each name against the npm package
+```
+user                           → Stroke + Rounded  (the default — no suffix)
+user-sharp                     → Stroke + Sharp
+user-standard                  → Stroke + Standard
+user-solid                     → Solid + Rounded
+user-solid-sharp               → Solid + Sharp
+user-bulk                      → Bulk + Rounded
+user-twotone                   → Twotone + Rounded
+user-duotone                   → Duotone + Rounded
+```
 
-For each name, check that `node_modules/@hugeicons/core-free-icons/dist/esm/{PascalCase}Icon.js` exists. The conversion is kebab-to-Pascal per word (e.g. `star-circle` → `StarCircleIcon`).
+Each variant becomes its own token/alias — don't try to combine styles via modifier classes.
 
-If a name is missing, report it and skip it. Do not proceed to Step 2 for that name.
+Source per variant is independent of the name. Any variant (including the default Stroke+Rounded) can come from npm (Source A), Figma (Source C), or raw SVG (Source B). The npm free package happens to ship only Stroke+Rounded, so other variants most often come from Figma — but that's a supply constraint, not a naming rule.
 
-Example check (Node one-liner):
+## Custom (non-HGI) icons — use a different class
+
+For brand marks, logos, or bespoke glyphs that aren't HGI icons, pass `--class` to override the default `.nds-hgi-{name}` alias. The token stays `--nds-icon-{name}` (project-wide convention), only the selector changes.
 
 ```bash
-node -e "
-const fs=require('fs'),path=require('path');
-const names=process.argv.slice(1);
-const dir='node_modules/@hugeicons/core-free-icons/dist/esm';
-const toPascal=n=>n.split('-').map(p=>p.charAt(0).toUpperCase()+p.slice(1)).join('')+'Icon';
-for(const n of names){
-  const f=path.join(dir,toPascal(n)+'.js');
-  console.log(n,fs.existsSync(f)?'OK':'MISSING');
-}
-" <icon-name> <icon-name> ...
+node scripts/add-icon.mjs brand-sdaia --class nds-brand-sdaia --stdin < file.svg
+# → --nds-icon-brand-sdaia: url(...);
+# → .nds-brand-sdaia { --nds-icon: var(--nds-icon-brand-sdaia); }
 ```
 
-## Step 2: Insert into `UI_ICONS`
-
-Edit `scripts/generate-icons-scss.mjs`. The `UI_ICONS` array is grouped by section (pseudo-element, chrome, data-driven, JS-injected, sort). New icons go in a **"manually added"** section at the end of the array, sorted alphabetically within that section.
-
-If the section does not yet exist, add it:
-
-```js
-  // manually added
-  'flame', 'star-circle',
+Usage:
+```html
+<i class="nds-icon nds-brand-sdaia" aria-hidden="true"></i>
 ```
 
-Never add an icon that is already present (deduplicate by checking the array first).
+Suggested name prefixes: `brand-*`, `logo-*`, `illus-*`. Pick something that signals "not an HGI icon" so it doesn't get confused with the stroke/solid/bulk variants above.
 
-## Step 3: Regenerate the SCSS
+## Routing: pick the source of the SVG
+
+### Source A — HGI icon name (most common)
+
+User says e.g. `/add-nds-icon star-circle` or "add the HGI flame icon". The name is kebab-case as shown on hugeicons.com.
 
 ```bash
-node scripts/generate-icons-scss.mjs
+node scripts/add-icon.mjs <name>
 ```
 
-Expected output: `wrote .../_sass/_icons.scss (XX KB, N UI icons)` where N has grown by the number of new icons.
+This pulls the path data from `@hugeicons/core-free-icons` and appends. On failure (missing name), the script exits with `missing icon in @hugeicons/core-free-icons: …`. Suggest the user pick a different name, paste the SVG directly (Source B), or extract from Figma (Source C).
 
-## Step 4: Report usage
+### Source B — raw SVG the user pasted
 
-For each successfully added icon, print the usage snippet:
+User pastes `<svg>…</svg>` markup into the chat and asks to turn it into a UI icon. Write the markup to a temp file and pipe via stdin:
 
+```bash
+node scripts/add-icon.mjs <name> --stdin < /tmp/<name>.svg
 ```
-<i class="nds-icon nds-hgi-{name}" aria-hidden="true"></i>
+
+The name is chosen by the user (or suggested by you in kebab-case).
+
+### Source C — Figma link or current Figma selection
+
+User provides a Figma URL like `https://www.figma.com/design/…?node-id=3509-301549`, or says "import the selected Figma node" (no nodeId — MCP uses the active selection).
+
+1. **`mcp__figma__get_metadata` first.** This reveals whether the selected node is a component instance with variants. The returned `name` (e.g. `Style=Bulk, Type=Rounded`) tells you exactly which variant the user picked. Skipping this step leads to importing the component's *default* variant instead of the selected one — a real failure mode.
+2. `mcp__figma__get_design_context` with the same nodeId — returns the SVG asset URL(s). If the component has multiple variants, the code it returns will branch between several `imgElements*` constants. Match the SVG URL to the variant name from step 1 (e.g. `Style=Bulk` → the branch guarded by `isBulkAndRounded`).
+3. `mcp__figma__get_screenshot` to visually confirm the right glyph.
+4. `curl -s <svg-url>` to fetch the raw SVG from the Figma MCP's localhost asset server.
+5. Pipe through `sed` to replace `var(--fill-0, #XXXXXX)` and `var(--stroke-0, #XXXXXX)` with `currentColor` so the glyph inherits text color through the mask.
+6. Pipe the result into `node scripts/add-icon.mjs <name> --stdin`.
+
+One-liner template:
+```bash
+curl -s <svg-url> | sed "s|var(--fill-0, #[0-9A-Fa-f]*)|currentColor|g; s|var(--stroke-0, #[0-9A-Fa-f]*)|currentColor|g" | node scripts/add-icon.mjs <name> --stdin
 ```
 
-And the `--nds-icon-{name}` token name for anyone wanting a component-scoped override.
+If the Figma node is a frame with multiple children (background rects, labels, etc.), extract only the icon glyph before piping.
 
-## Step 5: Suggest rebuild
+## After any source
 
-Remind the user to hard-reload the browser (or restart `jekyll serve` if incremental caching is stale).
-
-## Failure modes
-
-- **Missing from free package**: suggest the user either pick a different name from hugeicons.com or — if the icon is content-only — use `<i class="hgi hgi-stroke hgi-{name}">` in markup (the local HGI font covers the full library).
-- **Already in `UI_ICONS`**: report as "already present, skipped" and still print the usage snippet.
-- **`@hugeicons/core-free-icons` not installed**: run `npm install` first (it is in `devDependencies`).
+1. The script prints `added: {name}` (or `already present, skipped: {name}`).
+2. Tell the user to use it in markup / `_js` / YAML:
+   ```html
+   <i class="nds-icon nds-hgi-{name}" aria-hidden="true"></i>
+   ```
+3. Mention the `--nds-icon-{name}` token for component-scoped overrides.
+4. Remind them to hard-reload the browser (or restart `jekyll serve` if SCSS caching is stale).
 
 ## Do NOT
 
-- Create SVG files in `assets/icon/hgi/` — the generator reads from npm directly; there is no on-disk SVG folder.
-- Edit `_sass/_icons.scss` by hand — it is auto-generated.
-- Add a content-only icon to `UI_ICONS` — content icons render via the HGI font, no registration needed.
+- Edit `_sass/_icons.scss` by hand for net-new icons — use the script so the data URI encoding is correct.
+- Add a content-only icon — content icons render via the local HGI font, no registration needed.
+- Register mirrored/rotated variants as new tokens. Add them as plain SCSS at the bottom of `_icons.scss` next to the existing `arrow-right-01` / `arrow-up-01` / etc. (reuse another token + `transform`).

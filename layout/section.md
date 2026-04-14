@@ -805,7 +805,7 @@ section.nds-content-section          (responsive padding for content constrainin
                                 <div class="nds-section-wrapper">
                                     <div class="nds-section-image">
                                         <div class="nds-avatar">
-                                            <i class="nds-icon nds-hgi-user" aria-hidden="true"></i>
+                                            <i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>
                                         </div>
                                     </div>
                                     <div class="nds-section-head">
@@ -845,7 +845,7 @@ section.nds-content-section          (responsive padding for content constrainin
     <div class="nds-section-wrapper">
         <div class="nds-section-image">
             <div class="nds-avatar">
-                <i class="nds-icon nds-hgi-user" aria-hidden="true"></i>
+                <i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>
             </div>
         </div>
         <div class="nds-section-head">

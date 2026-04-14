@@ -18,7 +18,7 @@
 
 - title: "Avatar"
   description: "Profile images, initials, and group stacks"
-  icon: '<i class="nds-icon nds-hgi-user" aria-hidden="true"></i>'
+  icon: '<i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>'
   category: "UI"
   tags: ["CSS"]
   url: "/components/avatar.html"

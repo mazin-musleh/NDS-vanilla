@@ -158,7 +158,7 @@ direction: ltr
                                         </span>
                                     </div>
                                     <div class="nds-avatar nds-xl" hidden>
-                                        <i class="nds-icon nds-hgi-user" aria-hidden="true"></i>
+                                        <i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>
                                     </div>
                                     <div class="nds-card-checkbox" hidden>
                                         <div class="nds-form-container nds-check-container">
@@ -329,7 +329,7 @@ direction: ltr
                                 <div class="nds-card-header">
                                     <div class="nds-card-featured-icon">
                                         <span class="nds-featured-icon nds-circle nds-xl">
-                                            <i class="nds-icon nds-hgi-user" aria-hidden="true"></i>
+                                            <i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>
                                         </span>
                                     </div>
                                 </div>
@@ -365,7 +365,7 @@ direction: ltr
     <div class="nds-card-header">
         <div class="nds-card-featured-icon">
             <span class="nds-featured-icon nds-circle nds-xl">
-                <i class="nds-icon nds-hgi-user" aria-hidden="true"></i>
+                <i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>
             </span>
         </div>
     </div>

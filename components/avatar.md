@@ -167,7 +167,7 @@ direction: ltr
                     <div class="demo-container">
                         <div class="state-demo">
                             <div class="nds-avatar nds-lg">
-                                <i class="nds-icon nds-hgi-user" aria-hidden="true"></i>
+                                <i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>
                             </div>
                         </div>
                     </div>
@@ -190,7 +190,7 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code"><div class="nds-avatar nds-lg">
-  <i class="nds-icon nds-hgi-user" aria-hidden="true"></i>
+  <i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>
 </div></code>
                                 </div>
                             </div>
@@ -365,7 +365,7 @@ direction: ltr
                     <div class="demo-container">
                         <div class="state-demo">
                             <a href="#" class="nds-avatar nds-lg">
-                                <i class="nds-icon nds-hgi-user" aria-hidden="true"></i>
+                                <i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>
                             </a>
                         </div>
                     </div>
@@ -388,7 +388,7 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code"><a href="/user/profile" class="nds-avatar nds-lg">
-  <i class="nds-icon nds-hgi-user" aria-hidden="true"></i>
+  <i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>
 </a></code>
                                 </div>
                             </div>
@@ -463,7 +463,7 @@ direction: ltr
                         <div class="state-demo">
                             <div class="nds-dropmenu">
                                 <button type="button" class="nds-avatar nds-lg nds-dropmenu-trigger" aria-label="Open user menu">
-                                    <i class="nds-icon nds-hgi-user" aria-hidden="true"></i>
+                                    <i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
@@ -505,7 +505,7 @@ direction: ltr
                                         <code class="lang-html code">
 <div class="nds-dropmenu">
     <button type="button" class="nds-avatar nds-lg nds-dropmenu-trigger" aria-label="Open user menu">
-        <i class="nds-icon nds-hgi-user" aria-hidden="true"></i>
+        <i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>
     </button>
     <div class="nds-dropmenu-menu" hidden>
         <div class="nds-dropmenu-scroll">
