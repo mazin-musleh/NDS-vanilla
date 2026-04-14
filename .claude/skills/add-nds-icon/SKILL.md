@@ -1,12 +1,12 @@
 ---
 name: add-nds-icon
-description: Add one or more HGI icons to the inline tier-1 set so they render as mask-image via `.nds-icon.nds-hgi-{name}`. Use when components or chrome need a new icon that must paint immediately (no CDN font wait, no FOUT). Content/demo pages should keep using `<i class="hgi hgi-stroke hgi-NAME">` — the HGI CDN font handles those automatically.
+description: Add one or more HGI icons to the inline UI-icon set so they render as mask-image via `.nds-icon.nds-hgi-{name}`. Use when components or chrome need a new icon that must paint immediately (no font wait, no FOUT). Content/demo pages should keep using `<i class="hgi hgi-stroke hgi-NAME">` — the local HGI font handles those automatically.
 argument-hint: "<icon-name> [<icon-name> ...]"
 ---
 
-# Add Tier-1 NDS Icon
+# Add UI Icon
 
-Adds each HGI icon name to `TIER_1_INLINE` in `scripts/generate-icons-scss.mjs`, regenerates `_sass/_icons.scss`, and verifies the icons exist in `@hugeicons/core-free-icons`.
+Adds each HGI icon name to `UI_ICONS` in `scripts/generate-icons-scss.mjs`, regenerates `_sass/_icons.scss`, and verifies the icons exist in `@hugeicons/core-free-icons`.
 
 ## Inputs
 
@@ -35,9 +35,9 @@ for(const n of names){
 " <icon-name> <icon-name> ...
 ```
 
-## Step 2: Insert into `TIER_1_INLINE`
+## Step 2: Insert into `UI_ICONS`
 
-Edit `scripts/generate-icons-scss.mjs`. The `TIER_1_INLINE` array is grouped by section (pseudo-element, chrome, data-driven, JS-injected, sort). New icons go in a **"manually added"** section at the end of the array, sorted alphabetically within that section.
+Edit `scripts/generate-icons-scss.mjs`. The `UI_ICONS` array is grouped by section (pseudo-element, chrome, data-driven, JS-injected, sort). New icons go in a **"manually added"** section at the end of the array, sorted alphabetically within that section.
 
 If the section does not yet exist, add it:
 
@@ -54,7 +54,7 @@ Never add an icon that is already present (deduplicate by checking the array fir
 node scripts/generate-icons-scss.mjs
 ```
 
-Expected output: `wrote .../_sass/_icons.scss (XX KB, N tier-1 icons)` where N has grown by the number of new icons.
+Expected output: `wrote .../_sass/_icons.scss (XX KB, N UI icons)` where N has grown by the number of new icons.
 
 ## Step 4: Report usage
 
@@ -72,13 +72,12 @@ Remind the user to hard-reload the browser (or restart `jekyll serve` if increme
 
 ## Failure modes
 
-- **Missing from free package**: suggest the user either pick a different name from hugeicons.com or — if the icon is content-only — use `<i class="hgi hgi-stroke hgi-{name}">` in markup (the CDN font covers the full library).
-- **Already in `TIER_1_INLINE`**: report as "already present, skipped" and still print the usage snippet.
-- **`@hugeicons/core-free-icons` not installed**: run `npm install @hugeicons/core-free-icons --no-save` first.
+- **Missing from free package**: suggest the user either pick a different name from hugeicons.com or — if the icon is content-only — use `<i class="hgi hgi-stroke hgi-{name}">` in markup (the local HGI font covers the full library).
+- **Already in `UI_ICONS`**: report as "already present, skipped" and still print the usage snippet.
+- **`@hugeicons/core-free-icons` not installed**: run `npm install` first (it is in `devDependencies`).
 
 ## Do NOT
 
 - Create SVG files in `assets/icon/hgi/` — the generator reads from npm directly; there is no on-disk SVG folder.
 - Edit `_sass/_icons.scss` by hand — it is auto-generated.
-- Add icons to any other tier list — there is only tier-1 inline now.
-- Run `scripts/hgi-to-svg.mjs` — it is obsolete and `assets/icon/hgi/` no longer exists.
+- Add a content-only icon to `UI_ICONS` — content icons render via the HGI font, no registration needed.

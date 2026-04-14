@@ -4,7 +4,7 @@ baseurl: "/_site"
 
 # HGI icon font from CDN: loads the font site-wide when true so any
 # `<i class="hgi hgi-stroke hgi-NAME">` markup in content/demo/doc pages renders.
-# Chrome tier-1 icons always render via mask-image regardless.
+# UI icons always render via mask-image regardless.
 use_hgi_font: true
 
 # Jekyll server settings

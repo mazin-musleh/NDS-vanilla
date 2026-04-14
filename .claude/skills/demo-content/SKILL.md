@@ -23,19 +23,19 @@ Component documentation pages pull demo content from `_data/content/` YAML files
 
 1. **Read the target file** (`_data/content/$0.yml`) if it exists — understand what's there before changing it
 2. **Read `_data/content/services.yml`** as the reference structure if creating a new file
-3. **Browse hugeicons.com or `ls node_modules/@hugeicons/core-free-icons/dist/esm/`** for icon name candidates relevant to the content type — this is where you verify and discover icons
+3. **Grep `_sass/_hgiRoundedStroke.scss`** for icon name candidates relevant to the content type — this is where you verify and discover the glyphs the shipped HGI font actually contains
 4. **Check which pages use this content** — grep for the filename across `components/` and `_includes/` so you don't break existing references
 
 ## Icon Verification
 
-Broken icons are the most common problem in content files. Every icon must exist in `@hugeicons/core-free-icons` — content uses the HGI CDN font (loaded when `use_hgi_font: true`), which serves the same name namespace.
+Broken icons are the most common problem in content files. Every icon in a content file must exist in `_sass/_hgiRoundedStroke.scss` — that is the authoritative list of glyphs the local HGI font ships with.
 
 For each icon class in the file:
-1. Convert the kebab name to PascalCase + `Icon.js` and check `node_modules/@hugeicons/core-free-icons/dist/esm/` (e.g. `hgi-passport` → `PassportIcon.js`)
+1. Grep for the exact class name (e.g., `hgi-passport`) in `_sass/_hgiRoundedStroke.scss`
 2. If it doesn't exist, search for alternatives using related keywords (e.g., `passport` → try `travel`, `document`, `visa`)
 3. Pick the most contextually fitting alternative — a health service deserves a health-related icon, not a generic file icon
 
-Icon HTML format for content: `<i class="hgi hgi-stroke hgi-{name}"></i>` (CDN font handles rendering).
+Icon HTML format for content: `<i class="hgi hgi-stroke hgi-{name}"></i>` (font renders glyph; loaded when `use_hgi_font: true`).
 
 ## Content Quality
 
@@ -89,7 +89,7 @@ When creating a file from the list above (or a new type not listed):
 1. **Include 8–20 entries** — enough for list, table, and grid demos without being excessive
 2. **Vary the data realistically** — mix statuses, dates, categories, and icon types so demos look like real applications, not test data
 3. **Use Saudi-appropriate names and context** — names like Ahmed, Fatima, Khalid; gov.sa email domains; SAR currency; Saudi cities
-4. **Verify every icon** before saving — check each `hgi-NAME` against `node_modules/@hugeicons/core-free-icons/dist/esm/{Pascal}Icon.js`
+4. **Verify every icon** before saving — grep each `hgi-NAME` class against `_sass/_hgiRoundedStroke.scss`
 
 ## JSON Data Files
 
@@ -112,7 +112,7 @@ When the content is unique to a JS component and doesn't overlap with YAML conte
 ## Auditing (when argument is `all`)
 
 1. List all files in `_data/content/`
-2. For each file, check every icon class against `node_modules/@hugeicons/core-free-icons/dist/esm/{Pascal}Icon.js`
+2. For each file, grep every icon class against `_sass/_hgiRoundedStroke.scss`
 3. Report which icons are broken and what you replaced them with
 4. Flag any placeholder-quality content and improve it
 5. Check for structural consistency within each file (same fields across entries)

@@ -83,12 +83,9 @@ Read source files to build a complete understanding of the component. **The sour
 - `standard-page.md`: front matter template (new pages)
 - `layout/section.md`: section hierarchy and tiers (new pages or adding sections)
 - `playground.md`: existing demo HTML if available
-- Icon class lookup: **NEVER guess icon class names.** Two ways to verify a name exists:
-  1. Browse hugeicons.com and copy the kebab-case slug (e.g. `award-01`, `star-circle`).
-  2. Confirm against the npm package: `ls node_modules/@hugeicons/core-free-icons/dist/esm/ | grep -i NAME` (PascalCase + `Icon.js`).
-  Two icon mechanisms exist — pick the right one per usage:
-  - **Tier-1 mask-image** (`<i class="nds-icon nds-hgi-NAME" aria-hidden="true">`): only for the ~58 names listed in `TIER_1_INLINE` of `scripts/generate-icons-scss.mjs`. Used by chrome, pseudo-elements, JS-injected. To add a new tier-1 icon, run the `/add-nds-icon NAME` skill.
-  - **CDN font** (`<i class="hgi hgi-stroke hgi-NAME">`): for any other HGI icon used in doc/demo content. Renders via the HGI CDN font (loaded when `use_hgi_font: true`). No registration needed — the full HGI library works.
+- Icon class lookup: **NEVER guess icon class names.** Two icon mechanisms exist — pick the right one per usage:
+  - **Content icons (font)** (`<i class="hgi hgi-stroke hgi-NAME">`): renders via the local HGI font (loaded when `use_hgi_font: true`). Verify each NAME exists in `_sass/_hgiRoundedStroke.scss` — that is the authoritative list of glyphs the shipped font actually contains.
+  - **UI icons (mask)** (`<i class="nds-icon nds-hgi-NAME" aria-hidden="true">`): only for names in `UI_ICONS` of `scripts/generate-icons-scss.mjs`. Used by chrome, pseudo-elements, JS-injected. To add a new UI icon, run `/add-nds-icon NAME`.
 - **Additional reference pages** for complex components: `components/chart.md` (API-heavy with options reference), `components/cards.md` (builder-style multi-dropmenu demos). Judge whether the component's complexity warrants reading these.
 
 ---
@@ -222,7 +219,7 @@ Its own section (NOT inside Usage Guidelines). Uses `nds-definition-list` grid w
   - **Internal mechanisms are not**: CSS selectors (`:has()`), DOM detection techniques, CSS positioning strategies (`fixed positioning`), internal state tracking. The developer never touches these.
   - **Mention code references only when the developer writes or calls them**: `data-state="active"` (developer sets this in HTML) is useful. `aria-expanded` (auto-applied by JS) is noise.
   - Example shift: "Automatically detects viewport boundaries and adjusts positioning" becomes "Menus stay fully visible regardless of trigger position, flipping direction near screen edges."
-- Verify icon names against hugeicons.com or `node_modules/@hugeicons/core-free-icons/dist/esm/`. **NEVER guess.** Use `<i class="hgi hgi-stroke hgi-NAME">` for content icons (CDN font); use `<i class="nds-icon nds-hgi-NAME" aria-hidden="true">` only if NAME is in `TIER_1_INLINE` of `scripts/generate-icons-scss.mjs`.
+- Verify icon names against `_sass/_hgiRoundedStroke.scss` (font glyphs). **NEVER guess.** Use `<i class="hgi hgi-stroke hgi-NAME">` for content icons; use `<i class="nds-icon nds-hgi-NAME" aria-hidden="true">` only if NAME is in `UI_ICONS` of `scripts/generate-icons-scss.mjs`.
 - Aim for an **even number** of items (4, 6, 8) for the 2-column grid
 - For components with JS: include "Auto-initialization" (first item) and "Programmatic Control" (last item)
 
@@ -315,7 +312,7 @@ Before finishing, validate your work against this checklist. Every item MUST pas
 - [ ] All demo card HTML structure matches `alert.md` patterns
 - [ ] All code tabs contain production-ready, copy-paste markup
 - [ ] Code tab markup is a direct copy of the live demo (same structure, classes, attributes, content, number of items. No abbreviation or placeholders)
-- [ ] All icons verified against hugeicons.com or `@hugeicons/core-free-icons` (none guessed); chosen mechanism (`nds-hgi-` for tier-1 vs `hgi hgi-stroke hgi-` for content) matches the usage context
+- [ ] All icons verified against `_sass/_hgiRoundedStroke.scss` (content-icon names) or `UI_ICONS` in `scripts/generate-icons-scss.mjs` (UI-icon names) — none guessed; chosen mechanism (`nds-hgi-` for UI vs `hgi hgi-stroke hgi-` for content) matches the usage context
 - [ ] Built-in Features section exists with even number of items
 - [ ] Usage Guidelines has "Best Practices" block
 - [ ] Usage Guidelines has "JS API" block (if component has JS)
